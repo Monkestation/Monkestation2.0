@@ -24,7 +24,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	flags_1 = SUPERMATTER_IGNORES_1
 
-	/// The singularity component to move around Rat'var.
+	/// The singularity component to move around Ratvar.
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity
 
@@ -50,7 +50,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	. = ..()
 	desc = "[text2ratvar("That's Ratvar, the Clockwork Justicar. The great one has risen.")]"
 	sound_to_playing_players('monkestation/sound/effects/ratvar_reveal.ogg', 100)
-	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Rat'var, his light shall shine upon all mortals!")))
+	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!")))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
@@ -64,7 +64,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(area)
 		var/mutable_appearance/alert_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
 		notify_ghosts(
-			"Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
+			"Ratvar has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
 			source = src,
 			alert_overlay = alert_overlay,
 			action = NOTIFY_PLAY,
@@ -143,7 +143,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_pre_ending)), 50 SECONDS)
 
 /proc/clockcult_pre_ending()
-	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENG'INE")].", \
+	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENGINE")].", \
 					  "Central Command Anomolous Materials Division", 'sound/machines/alarm.ogg')
 	for(var/mob/player_mob in GLOB.player_list)
 		if(player_mob.client)

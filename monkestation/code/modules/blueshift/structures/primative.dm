@@ -97,7 +97,6 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	beauty_modifier = 20 / SHEET_MATERIAL_AMOUNT
 	color = "#59595a"
 	greyscale_colors = "#59595a"
-	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.75, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
 	turf_sound_override = FOOTSTEP_PLATING
 
@@ -268,6 +267,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 		return
 
 	drop_everything_contained()
+	update_appearance()
 	balloon_alert(user, "cleared board")
 	return
 
@@ -612,7 +612,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	return ..()
 
 /obj/structure/millstone/deconstruct(disassembled)
-	var/obj/item/stack/sheet/mineral/stone = new (drop_location())
+	var/obj/item/stack/sheet/mineral/stone/stone = new (drop_location())
 	stone.amount = 6
 	stone.update_appearance(UPDATE_ICON)
 	transfer_fingerprints_to(stone)
@@ -651,11 +651,11 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/millstone/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	balloon_alert_to_viewers("disassembling...")
-	if(!do_after(user, 2 SECONDS, src))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
+		return ITEM_INTERACT_BLOCKING
 	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/millstone/attackby(obj/item/attacking_item, mob/user)
 	if(istype(attacking_item, /obj/item/storage/bag))
@@ -825,10 +825,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/griddle/stone/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 #define OVEN_TRAY_Y_OFFSET -12
 
@@ -896,10 +896,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/oven/stone/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 #undef OVEN_TRAY_Y_OFFSET
 
@@ -936,10 +936,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/primitive_stove/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /// Stove component subtype with changed visuals and not much else
 /datum/component/stove/primitive
@@ -1166,10 +1166,12 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	if(has_clay)
 		new /obj/item/stack/clay(get_turf(src))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/throwing_wheel/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	anchored = !anchored
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/throwing_wheel/proc/use_clay(spawn_type, mob/user)
 	var/spinning_speed = user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER) * DEFAULT_SPIN

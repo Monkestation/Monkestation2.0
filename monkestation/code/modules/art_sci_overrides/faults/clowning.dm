@@ -1,5 +1,5 @@
 /datum/artifact_fault/clown
-	name = "Funny Fault"
+	name = "Clown Fault"
 	trigger_chance = 5
 	inspect_warning = list(
 		"Smells faintly of bananas",

@@ -496,7 +496,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(istype(O, /obj/item/weapon/virusdish) && is_type_in_typecache(O, chemfridge_typecache))
+	if(isvirusdish(O) && is_type_in_typecache(O, chemfridge_typecache))
 		return TRUE
 	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT))
 		return FALSE

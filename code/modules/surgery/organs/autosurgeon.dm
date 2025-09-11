@@ -134,6 +134,12 @@
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 
+/obj/item/autosurgeon/perfect_serverlink
+	name = "autosurgeon"
+	desc = "A single use autosurgeon that contains an advanced serverlink augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt
+
 // monkestation edit start
 /obj/item/autosurgeon/security_hud
 	name = "autosurgeon"

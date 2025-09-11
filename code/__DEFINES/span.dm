@@ -96,6 +96,7 @@
 #define span_prioritytitle(str) ("<span class='prioritytitle'>" + str + "</span>")
 #define span_progenitor(str) ("<span class='progenitor'>" + str + "</span>")
 #define span_purple(str) ("<span class='purple'>" + str + "</span>")
+#define span_purplelarge(str) ("<span class='purplelarge'>" + str + "</span>")
 #define span_radio(str) ("<span class='radio'>" + str + "</span>")
 #define span_reallybig(str) ("<span class='reallybig'>" + str + "</span>")
 #define span_red(str) ("<span class='red'>" + str + "</span>")

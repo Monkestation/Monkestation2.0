@@ -669,6 +669,20 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
+/obj/item/toy/foamblade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible, \
+		initial_reagents = list( \
+			/datum/reagent/consumable/nutriment = 6, \
+			/datum/reagent/consumable/nutriment/protein = 4, \
+		), \
+		food_flags = FOOD_FINGER_FOOD, \
+		tastes = list("foam" = 2, "violence" = 2, "meat" = 1), \
+		eatverbs = list("swallow" = 1), \
+		foodtypes = JUNKFOOD, \
+	)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
