@@ -12,12 +12,13 @@
 				continue
 			controller.blackboard[BB_GROUP_DATUM] = found_group
 			found_group.group_mobs |= controller.pawn
-			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+			finish_action(controller, TRUE)
+			break
 
 	var/datum/group_planning/new_group = new group_to_find
 	controller.blackboard[BB_GROUP_DATUM] = new_group
 	new_group.group_mobs |= controller.pawn
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/attempt_group_find/fish
 	group_to_find = /datum/group_planning/fish

@@ -64,7 +64,7 @@
 
 /datum/ai_behavior/setup_hideout/perform(seconds_per_tick, datum/ai_controller/controller, ...)
 	. = ..()
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/setup_hideout/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()
@@ -84,7 +84,7 @@
 
 /datum/ai_behavior/gary_retrieve_item/perform(seconds_per_tick, datum/ai_controller/controller, ...)
 	. = ..()
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/gary_retrieve_item/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()
@@ -118,10 +118,12 @@
 	var/atom/target = ref.resolve()
 
 	if(!held_item) //if held_item is null, we pretend that action was succesful
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		finish_action(controller, TRUE)
+		return
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		finish_action(controller, FALSE)
+		return
 
 	var/mob/living/living_target = target
 
@@ -135,11 +137,12 @@
 	if(!do_after(pawn, 1 SECONDS, living_target))
 		return
 
-	return try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
+	try_to_give_item(controller, living_target, held_item, actually_give = TRUE)
 
 /datum/ai_behavior/gary_give_item/proc/try_to_give_item(datum/ai_controller/controller, mob/living/target, obj/item/held_item, actually_give)
 	if(QDELETED(held_item) || QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		finish_action(controller, FALSE)
+		return FALSE
 
 	var/has_left_pocket = target.can_equip(held_item, ITEM_SLOT_LPOCKET)
 	var/has_right_pocket = target.can_equip(held_item, ITEM_SLOT_RPOCKET)
@@ -155,17 +158,18 @@
 	if(!has_left_pocket && !has_right_pocket && !has_valid_hand)
 		held_item.forceMove(get_turf(target))
 		SEND_SIGNAL(held_item, COMSIG_ITEM_GARY_LOOTED, pawn)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+		finish_action(controller, FALSE)
+		return FALSE
 
 	if(!actually_give)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		return TRUE
 
 	if(!has_valid_hand || prob(50))
 		target.equip_to_slot_if_possible(held_item, (!has_left_pocket ? ITEM_SLOT_RPOCKET : (prob(50) ? ITEM_SLOT_LPOCKET : ITEM_SLOT_RPOCKET)))
 	else
 		target.put_in_hands(held_item)
 	SEND_SIGNAL(held_item, COMSIG_ITEM_GARY_LOOTED, pawn)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/gary_give_item/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()

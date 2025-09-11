@@ -7,15 +7,16 @@
 	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
+	. = ..()
 	if (controller.blackboard_key_exists(set_key))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	if(QDELETED(controller.pawn))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+		finish_action(controller, TRUE)
+		return
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
-	if(isnull(find_this_thing))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(QDELETED(controller.pawn) || isnull(find_this_thing))
+		finish_action(controller, FALSE)
+		return
 	controller.set_blackboard_key(set_key, find_this_thing)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	return locate(locate_path) in oview(search_range, controller.pawn)
