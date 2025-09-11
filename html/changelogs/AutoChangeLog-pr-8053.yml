@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - balance: "deswords no longer have a low price, as was unintentionally given to them."

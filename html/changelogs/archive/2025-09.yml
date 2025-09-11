@@ -296,3 +296,50 @@
       to glasses
   - bugfix: Spellbook Charges properly increase the spellbooks point count
   - bugfix: Battlemage Armour Charges increase Wiz Armour Charges Again
+2025-09-10:
+  TheColorCyan:
+  - balance: werewolf is no longer obtainable through charged black crossbreed
+  - balance: stabilized bluespace will only teleport you if you enter soft-crit
+  - balance: burning black extracts now immediately transform you into slime upon
+      activation
+  - balance: slime transformation cooldown 0->10
+  - balance: bloodchill gun now lowers body temperature instead of doing burn
+  - balance: bloodchilled slowdown 3->2
+  - bugfix: (imedial) bloodless species no longer have a free bonechiller
+  - rscadd: added santashy's admin plushie - birdion
+  Wisemonster:
+  - balance: Clothing that covers the chest with an armor rating of at least II now
+      block nut shots
+  - balance: Lowered the weight of round-start nukies, ass ops, commando ops, and
+      darkspawn to 3, 3, 4, and 4 respectively. (Down from 4, 4, 5, and 8)
+2025-09-11:
+  JohnFulpWillard, sprites by PopLop:
+  - rscadd: Added a new pyroclastic anomaly locked item, the Space Furnace. Grants
+      space immunity to people nearby while active.
+  Lawlolawl:
+  - bugfix: fixed reagent scanning for pathology sunglasses and nvgs.
+  MrBagHead:
+  - bugfix: Bileworms no longer skip the Burrow Ability Cooldown and properly attack
+      before burrowing again
+  SyncIt21:
+  - rscadd: Access secured closets. Personal closets can have their access overwritten
+      by an new id in it's unlocked state
+  - rscadd: Access secured freezers.
+  - rscadd: Access secured suit storage units.
+  - bugfix: 'Suit storage unit not having access restrictions. fix: airlock electronics
+      not properly getting removed after screwing them out from round start lockers'
+  - bugfix: 'round spawned open crates run timing when closed fix: open crates hiding
+      stuff in plain sight'
+  - bugfix: open closets/crates sucking up contents during late initialize causing
+      them appear empty & open
+  Xander3359:
+  - bugfix: fixed centrifuge only holding 1 tube
+  - rscadd: CMO starts with an advanced serverlink in his locker
+  throwawayuseless:
+  - spellcheck: Enrolls the local clock cult in a Ratvarian 201 class, so that they
+      might maybe stop pronouncing Ratvar incorrectly. It's not that hard, guys. Unrelatedly,
+      they got better at poetry.
+  - spellcheck: One of the scripture invocations is a dragonforce joke. If you can
+      tell me which one without checking the code, you get a novelty sugar cookie
+      shaped like a cogwheel. Except you don't because ratvarian worship is illegal.
+      oh well.

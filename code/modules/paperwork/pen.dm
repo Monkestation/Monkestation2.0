@@ -519,3 +519,29 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))
+
+/obj/item/pen/monkey
+	name = "monkey pen"
+	icon_state = "monkey_pen"
+	desc = "This pen is shaped like a monkey ."
+	colour = "#000000"
+
+/obj/item/pen/banana
+	name = "banana pen"
+	icon_state = "banana_pen"
+	desc = "Its a banana shaped pen!"
+	colour = "#000000"
+
+/obj/item/pen/banana/attack_self(mob/living/carbon/user)
+	. = ..()
+	var/chosen_color = "black"
+	switch(colour)
+		if("#FFFF00")
+			colour = "#FFFF00"
+			chosen_color = "yellow"
+		else
+			colour = "#000000"
+	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
+	desc = "It's a fancy banana pen, set to [chosen_color]."
+	balloon_alert(user, "clicked")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)

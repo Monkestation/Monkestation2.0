@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Surgical kits and advanced med kits no longer start with more items than they can normally hold."
+  - bugfix: "Drones inbuilt tools are now properly bulky containers as intended."

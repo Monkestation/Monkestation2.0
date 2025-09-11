@@ -1,0 +1,11 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - bugfix: "Fixed capacitors not being able to polarize windows."
+  - bugfix: "Fixed wringing out the mop into a bucket not actually doing anything,"
+  - bugfix: "Drone can now deploy flat packed machinery."
+  - bugfix: "Seating indicator can remove its holosigns again."
+  - bugfix: "Chicken feed can be spread on the ground again."
+  - bugfix: "(jlsnow301) Fixed a resource dupe in the ORM."
+  - bugfix: "Molotovs thrown by bartenders now actually break"
+  - bugfix: "Neglected fern can be swabbed for samples again."
