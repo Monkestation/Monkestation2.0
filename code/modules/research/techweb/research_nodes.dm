@@ -116,6 +116,7 @@
 		"anomaly_neutralizer",
 		"reactive_armour",
 		"cybernetic_heart_anomalock",
+		"space_furnace",
 		//"artifact_heater", //MONKESTATION EDIT REMOVAL
 		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
 	)
