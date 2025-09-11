@@ -405,16 +405,19 @@
 		/datum/surgery/advanced/bioware/cortex_folding,
 	)
 
-/obj/item/surgical_processor/cmo
+/obj/item/surgical_processor/cmo // Include the weaker surgeries in the given research unless we have mutiple surgeries showing up.
 	loaded_surgeries = list(
 		/datum/surgery/healing/burn/upgraded,
-		/datum/surgery/healing/brute/upgraded,
-		/datum/surgery/robot_healing/experimental
-		/datum/surgery/healing/combo // Unless we have the weaker upgrades the prior ones to these wont clear.
-		/datum/surgery/healing/combo/upgraded,
-		/datum/surgery/healing/brute/upgraded/femto,
 		/datum/surgery/healing/burn/upgraded/femto,
+		/datum/surgery/healing/brute/upgraded,
+		/datum/surgery/healing/brute/upgraded/femto,
+		/datum/surgery/robot_healing/upgraded
 		/datum/surgery/robot_healing/experimental,
+		/datum/surgery/healing/combo,
+		/datum/surgery/healing/combo/upgraded,
+		/datum/surgery/robot_healing/experimental,
+		/datum/surgery/blood_filter/upgraded,
 		/datum/surgery/blood_filter/femto,
 		/datum/surgery/advanced/dna_recovery,
+		/datum/surgery/advanced/wing_reconstruction,
 	)
