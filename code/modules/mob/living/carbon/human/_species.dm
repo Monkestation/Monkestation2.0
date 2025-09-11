@@ -1271,7 +1271,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
 				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
 				target.emote("scream", message="screams for dear life!")
-				playsound(target.loc, 'sound/effects/hit_on_shattered_glass.ogg')
+				playsound(get_turf(target), 'sound/effects/glassbr1.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
