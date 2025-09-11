@@ -30,14 +30,14 @@
 	if(!iscarbon(conversion_target) && !is_oozeling_core(conversion_target))
 		return FALSE
 	if(length(vassals) == return_current_max_vassals())
-		to_chat(owner.current, span_danger("You find that your powers run thin and are unable to dominate their mind with your blood!"))
+		to_chat(owner.current, span_danger("You find that your powers run thin, and are unable to dominate [conversion_target.p_their()] mind with your blood!"))
 		return FALSE
 	// No Mind!
 	if(!conversion_target.mind)
 		to_chat(owner.current, span_danger("[conversion_target] isn't self-aware enough to be made into a Vassal."))
 		return FALSE
 	if(AmValidAntag(conversion_target) == VASSALIZATION_BANNED)
-		to_chat(owner.current, span_danger("[conversion_target] resists the power of your blood to dominate their mind!"))
+		to_chat(owner.current, span_danger("[conversion_target] resists the power of your blood to dominate [conversion_target.p_their()] mind!"))
 		return FALSE
 	var/mob/living/master = conversion_target.mind.enslaved_to?.resolve()
 	if(!master || (master == owner.current))
