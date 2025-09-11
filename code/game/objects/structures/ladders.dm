@@ -125,7 +125,9 @@
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
 	if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
-		user.adjust_bodytemperature((user.bodytemp_heat_damage_limit - user.standard_body_temperature) * 0.6)
+		if(iscarbon(user))
+			var/mob/living/carbon/guy = user
+			guy.adjust_bodytemperature((guy.bodytemp_heat_damage_limit - guy.standard_body_temperature) * 0.6)
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)
