@@ -563,7 +563,7 @@
 	. = ..()
 	if(!panel_open)
 		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
+	if(default_unfasten_wrench(user, tool, time = 3 SECONDS))
 		unbuckle_all_mobs(TRUE)
 		return ITEM_INTERACT_SUCCESS
 	return FALSE

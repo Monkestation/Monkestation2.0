@@ -2931,9 +2931,7 @@
 /area/station/command/bridge)
 "aTx" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -5482,11 +5480,7 @@
 	dir = 1
 	},
 /obj/structure/bed/dogbed,
-/mob/living/basic/pet/dog/bullterrier{
-	name = "Walter";
-	real_name = "Walter";
-	desc = "It's Walter!"
-	},
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "bNK" = (
@@ -6081,9 +6075,7 @@
 /area/station/security/prison/mess)
 "bVW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -9826,9 +9818,7 @@
 "dbp" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -17113,10 +17103,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/mob/living/basic/pet/dog/bullterrier/walter,
 /obj/structure/bed/dogbed{
 	name = "Walter's Dogbed"
 	},
+/mob/living/basic/pet/dog/dobermann/walter,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "ftU" = (
@@ -18675,9 +18665,7 @@
 /area/station/cargo/storage)
 "fQb" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -26719,9 +26707,7 @@
 /area/station/maintenance/port/fore)
 "ikZ" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -27148,9 +27134,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "iqp" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
 /obj/item/storage/box/lights/mixed,
@@ -37227,7 +37211,7 @@
 "lxU" = (
 /obj/effect/turf_decal/bot,
 /obj/item/storage/box/lights/mixed,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lyb" = (
@@ -37576,9 +37560,7 @@
 "lDa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
@@ -42485,9 +42467,7 @@
 /area/station/science/genetics)
 "ngl" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ngt" = (
@@ -52790,9 +52770,7 @@
 /obj/item/flashlight/flare,
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/west,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
@@ -59493,9 +59471,7 @@
 /area/station/science/ordnance)
 "sDe" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -63435,9 +63411,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 4
 	},
