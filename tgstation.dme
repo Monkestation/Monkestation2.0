@@ -1733,6 +1733,7 @@
 #include "code\datums\quirks\negative_quirks\prosthetic_organ.dm"
 #include "code\datums\quirks\negative_quirks\pushover.dm"
 #include "code\datums\quirks\negative_quirks\quadruple_amputee.dm"
+#include "code\datums\quirks\negative_quirks\running_hot.dm"
 #include "code\datums\quirks\negative_quirks\social_anxiety.dm"
 #include "code\datums\quirks\negative_quirks\softspoken.dm"
 #include "code\datums\quirks\negative_quirks\tin_man.dm"
