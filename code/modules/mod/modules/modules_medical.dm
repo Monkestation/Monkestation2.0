@@ -404,3 +404,13 @@
 		/datum/surgery/advanced/bioware/cortex_imprint,
 		/datum/surgery/advanced/bioware/cortex_folding,
 	)
+
+/obj/item/surgical_processor/cmo
+	loaded_surgeries = list(
+		/datum/surgery/healing/combo/upgraded,
+		/datum/surgery/healing/brute/upgraded/femto,
+		/datum/surgery/healing/burn/upgraded/femto,
+		/datum/surgery/robot_healing/experimental,
+		/datum/surgery/blood_filter/femto,
+		/datum/surgery/advanced/dna_recovery,
+	)
