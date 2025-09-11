@@ -128,6 +128,28 @@
 		qdel(src)
 	return
 
+/obj/item/restraints/handcuffs/silver
+	name = "silver handcuffs"
+	desc = "A pair of silver handcuffs. Completely ineffective on normal crew, but some say they can contain certain creatures of the night..."
+	breakouttime = 1 SECONDS
+
+	color = list(
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1,
+		0.4,0.4,0.4
+	)
+
+/obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
+	. = ..()
+
+	if (target.handcuffed)
+		if (IS_BLOODSUCKER_OR_VASSAL(target))
+			breakouttime = 60 SECONDS
+			target.apply_status_effect(/datum/status_effect/silver_cuffed)
+		else
+			breakouttime = initial(breakouttime)
+
 /**
  * # Alien handcuffs
  *
