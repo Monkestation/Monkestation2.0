@@ -59,6 +59,8 @@
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * 0.7) //0.5 * cost Means almost infinnite sprint due to regen
 		else
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST)
+		if(has_trait(user, TRAIT_EXERTION_OVERHEAT))
+			user.adjust_bodytemperature((user.bodytemp_heat_damage_limit - user.standard_body_temperature) * 0.15)
 	else if(sprinting)
 		stopSprint()
 
