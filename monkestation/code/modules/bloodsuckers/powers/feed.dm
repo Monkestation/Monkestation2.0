@@ -125,7 +125,7 @@
 	var/noticed = FALSE
 	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE, owner) - feed_target)
 		if(check_for_masquerade_infraction(viewer))
-			viewer.balloon_alert(owner, "!!!")
+			viewer.balloon_alert(owner, "!!!") // only the bloodsucker actually sees this balloon alert - this is just so it's not confusing if you get noticed when nobody is seemingly nearby
 			noticed = TRUE
 
 	if(noticed)
