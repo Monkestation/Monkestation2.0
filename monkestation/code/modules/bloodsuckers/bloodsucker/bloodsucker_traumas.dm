@@ -137,7 +137,7 @@
 		return FALSE
 	if(!isturf(target_turf))
 		return FALSE
-	if(GET_SIMPLE_LUMCOUNT(target_turf) <= 0.1)
+	if(GET_SIMPLE_LUMCOUNT(target_turf) <= SHADOW_SPECIES_DIM_LIGHT)
 		return FALSE
 	for(var/mob/living/nearby_viewers in viewers(target_turf))
 		if(nearby_viewers == subject)

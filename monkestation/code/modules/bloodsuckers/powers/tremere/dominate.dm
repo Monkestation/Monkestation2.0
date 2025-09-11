@@ -63,13 +63,13 @@
 	. += "This also works on Oozeling cores."
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckValidTarget(atom/target_atom)
-	// you can use dominate to revive/vassalize oozeling cores
-	if(is_oozeling_core(target_atom))
-		var/obj/item/organ/internal/brain/slime/oozeling_core = target_atom
-		if(level_current >= DOMINATE_VASSALIZE_LEVEL && oozeling_core.mind)
-			return TRUE
-		return FALSE
-	return ..()
+	// oozeling cores have special snowflake checks
+	if(!is_oozeling_core(target_atom))
+		return ..()
+	var/obj/item/organ/internal/brain/slime/oozeling_core = target_atom
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL && oozeling_core.mind)
+		return TRUE
+	return FALSE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckCanTarget(atom/target_atom)
 	var/mob/living/selected_target = target_atom
