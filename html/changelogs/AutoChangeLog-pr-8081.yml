@@ -1,0 +1,4 @@
+author: "MrBagHead"
+delete-after: True
+changes:
+  - bugfix: "Bileworms no longer skip the Burrow Ability Cooldown and properly attack before burrowing again"

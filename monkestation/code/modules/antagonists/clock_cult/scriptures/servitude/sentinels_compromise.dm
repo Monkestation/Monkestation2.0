@@ -7,7 +7,7 @@
 	power_cost = 150
 	cogs_required = 1
 	invocation_time = 1 SECONDS //short invocation but using it also takes some time afterwards
-	invocation_text = list("By the light of Eng'Ine...") //the second line is said when used on someone
+	invocation_text = list("By the light of Engine...") //the second line is said when used on someone
 	button_icon_state = "Sentinel's Compromise"
 	category = SPELLTYPE_SERVITUDE //you have a healing spell please please PLEASE use it
 	slab_overlay = "compromise"

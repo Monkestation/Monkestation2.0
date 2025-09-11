@@ -143,7 +143,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_pre_ending)), 50 SECONDS)
 
 /proc/clockcult_pre_ending()
-	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENG'INE")].", \
+	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENGINE")].", \
 					  "Central Command Anomolous Materials Division", 'sound/machines/alarm.ogg')
 	for(var/mob/player_mob in GLOB.player_list)
 		if(player_mob.client)
