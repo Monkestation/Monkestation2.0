@@ -312,3 +312,127 @@
       block nut shots
   - balance: Lowered the weight of round-start nukies, ass ops, commando ops, and
       darkspawn to 3, 3, 4, and 4 respectively. (Down from 4, 4, 5, and 8)
+2025-09-11:
+  Absolucy:
+  - refactor: (Whoneedspacee) Legions abilities have been changed into actions that
+      can be added to any mob.
+  - bugfix: (Whoneedspacee) Ash drake's fire breath attack has proper cooldowns again
+  - bugfix: (SmArtKar) Bubblegum can no longer bloodcrawl to other Z levels.
+  - bugfix: (Hatterhat) The blood-drunk miner has remembered how to swing their cleaving
+      saw quickly without having to flick it out first.
+  - balance: (1393F) megafauna will now gut instead of dusting or gibbing.
+  - balance: (Melbert) Changelings gutted by Megafauna now take 8x as long to finalize
+      revival stasis (~5 minutes).
+  - balance: (Jacquerel) The melee attacks from small mobs spawned by Legions can
+      now be dodged.
+  - balance: (Jacquerel) Legions spawn their mobs less often.
+  - bugfix: (Jacquerel) Legions cannot spawn mobs while inside pipes or closets.
+  - sound: (DrDiasyl, Jacquerel, TheSmallBlue, cats4gold) Nanotrasen have started
+      installing music players in the elevators to boost workers' morale.
+  - bugfix: (MTandi) Made it impossible to change tram/elevator button styles that
+      couldn't be reverted back.
+  - image: (MTandi) Changed button styles, added tram/elevator button overlays
+  - refactor: (MTandi) Refactored the way button sprites are applied, updated sprite
+      names to make more sense.
+  - rscdel: (MTandi) Removed unused button sprites.
+  - rscadd: (LT3) Immovable rod will now battle the unstoppable tram should they cross
+      paths.
+  - bugfix: (LT3) Tramstation's exterior light fixtures no longer get destroyed as
+      soon as the tram moves.
+  - code_imp: (LT3) Tram landmarks are now all subtyped instead of map varedits.
+  - bugfix: Voltaic Combat Cyberhearts now actually accept flux anomaly cores.
+  EnterTheJake:
+  - rscadd: A new Anomaly organ has been introduced, The Voltaic Combat Cyberheart!
+  EssentialTomato:
+  - rscadd: (Jacquerel) Eggs (and all other edible food) left in a hot place will
+      fry.
+  - bugfix: Fixed capacitors not being able to polarize windows.
+  - bugfix: Fixed wringing out the mop into a bucket not actually doing anything,
+  - bugfix: Drone can now deploy flat packed machinery.
+  - bugfix: Seating indicator can remove its holosigns again.
+  - bugfix: Chicken feed can be spread on the ground again.
+  - bugfix: (jlsnow301) Fixed a resource dupe in the ORM.
+  - bugfix: Molotovs thrown by bartenders now actually break
+  - bugfix: Neglected fern can be swabbed for samples again.
+  - rscadd: (BobDABuilder9001) You can upgrade solars using different non-reinforced
+      glass to get more power out of them (glass, titaniumglass, plasmaglass, plastitaniumglass)
+      (they also have sprites so you can tell which is which)
+  - balance: (BobDABuilder9001) Solars now make 2.5kw each instead of 1.5kw
+  Ice-Type:
+  - balance: deswords no longer have a low price, as was unintentionally given to
+      them.
+  JohnFulpWillard, sprites by PopLop:
+  - rscadd: Added a new pyroclastic anomaly locked item, the Space Furnace. Grants
+      space immunity to people nearby while active.
+  Lawlolawl:
+  - bugfix: fixed reagent scanning for pathology sunglasses and nvgs.
+  - bugfix: Fixed forensic scanner not working with detective arm implant
+  MrBagHead:
+  - bugfix: Bileworms no longer skip the Burrow Ability Cooldown and properly attack
+      before burrowing again
+  SyncIt21:
+  - rscadd: Access secured closets. Personal closets can have their access overwritten
+      by an new id in it's unlocked state
+  - rscadd: Access secured freezers.
+  - rscadd: Access secured suit storage units.
+  - bugfix: 'Suit storage unit not having access restrictions. fix: airlock electronics
+      not properly getting removed after screwing them out from round start lockers'
+  - bugfix: 'round spawned open crates run timing when closed fix: open crates hiding
+      stuff in plain sight'
+  - bugfix: open closets/crates sucking up contents during late initialize causing
+      them appear empty & open
+  TheColorCyan:
+  - rscadd: moths can now customize their skin color
+  ThePooba:
+  - rscadd: Added monkey and banana pen to loadout under toys
+  Xander3359:
+  - bugfix: fixed centrifuge only holding 1 tube
+  - rscadd: CMO starts with an advanced serverlink in his locker
+  - bugfix: fixed delta and blueshift maps giving the blueshield duplicate items
+  lemoninthedark, ben10omintrix:
+  - refactor: refactors how AI behaviors handle their failures and successes
+  notghosti:
+  - rscadd: Bingle pit spawns now are temporary ghost roles, meaning after you bingled
+      youll return to your body on death.
+  - qol: while in a temporary body medical huds will show you as defibable and unique
+      examine text upon revival
+  - bugfix: Surgical kits and advanced med kits no longer start with more items than
+      they can normally hold.
+  - bugfix: Drones inbuilt tools are now properly bulky containers as intended.
+  - rscadd: Abductee status is now cured alongside the removal of the abductee gland.
+  - balance: Shrink rays no longer force drop all clothing, rather just what's in
+      the users hands.
+  - balance: abductor batons now have 5 charges, recharge in 15 seconds, from 3 charges
+      and 5 seconds,
+  - balance: Abductor batons now only induce paralysis for 1 minute, rather than sleep
+      for 2 minutes.
+  - bugfix: Alien pistols will deal damage properly again
+  - bugfix: The 'odd announcement' device, found in opfors, now properly announce
+      instead of runtiming.
+  - bugfix: Mecha designs for fire extinguisher, plasma generator, and light amplification
+      now properly only show once on their corresponding mechs.
+  throwawayuseless:
+  - spellcheck: Enrolls the local clock cult in a Ratvarian 201 class, so that they
+      might maybe stop pronouncing Ratvar incorrectly. It's not that hard, guys. Unrelatedly,
+      they got better at poetry.
+  - spellcheck: One of the scripture invocations is a dragonforce joke. If you can
+      tell me which one without checking the code, you get a novelty sugar cookie
+      shaped like a cogwheel. Except you don't because ratvarian worship is illegal.
+      oh well.
+  - bugfix: If you kick someone in the crotch it now properly plays a glass shattering
+      noise.
+  - rscadd: Neutered Borrers, token and traitor, can use Willing Host.
+  - rscadd: Adds a Comically Large Straw. Use it to drink entire containers in one
+      gulp, or to speed up blood and/or DNA zuccing if you happen to be a monster
+      of one of those persuasions.
+  - bugfix: Bloodsucker blood drinking moodlet now actually triggers if you aggressively
+      drink blood.
+2025-09-12:
+  Absolucy:
+  - bugfix: Fixed spawning bingles not working.
+  Absolucy, Bisar:
+  - code_imp: Heat capacity calculation for gas mixtures has been slightly optimized.
+  Uristthedorf:
+  - bugfix: Fixes oozelings having their burn modifier applied twice.
+  Xander3359:
+  - rscadd: Blueshield and brig physician have had their ID access updated.
