@@ -208,7 +208,7 @@
 /datum/objective/bloodsucker/kindred/check_completion()
 	for(var/obj/item/book/kindred/archive as anything in GLOB.kindred_archives)
 		var/mob/living/holder = get(archive, /mob/living)
-		if(HAS_MIND_TRAIT(holder, TRAIT_BLOODSUCKER_ALIGNED))
+		if(holder && HAS_MIND_TRAIT(holder, TRAIT_BLOODSUCKER_ALIGNED))
 			return TRUE
 	return FALSE
 
