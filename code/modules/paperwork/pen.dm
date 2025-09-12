@@ -564,13 +564,13 @@
 	force = 31 //mightier than the sword. it's a good pen.
 	throwforce = 60
 	throw_speed = 5
-	embedding = list(embed_chance = 100)
-	custom_materials = list()
+	embedding = list(embed_chance = 100, remove_pain_mult = 60)
 	icon_state = "pen-fountain-g"
 	desc = "This sterling piece of stationery sits before you. Its spear-point nib shines sharp as a sunbeam, slashing silent soliloquies into your visual cortex. This is no normal pen. <b>You are unworthy of it.</b>"
 	sharpness = SHARP_EDGED | SHARP_POINTY
 	wound_bonus = 30
 	resistance_flags = FIRE_PROOF | UNACIDABLE | LAVA_PROOF
+	item_flags = NO_BLOOD_ON_ITEM | NO_MAT_REDEMPTION
 	tool_behaviour = TOOL_MINING
 	toolspeed = 0.8
 	colour = COLOR_SYNDIE_RED
@@ -590,10 +590,11 @@
 			desc = initial(desc)
 			force = initial(force)
 			throwforce = initial(throwforce)
-			throwspeed = initial(throwspeed)
+			throw_speed = initial(throwspeed)
 			icon_state = initial(icon_state)
 			resistance_flags = initial(resistance_flags)
 			tool_behavior = initial(tool_behavior)
+			color = initial(color)
 			disguised = FALSE
 		else
 			name = /obj/item/pen::name
@@ -602,6 +603,7 @@
 			throwforce = /obj/item/pen::throwforce
 			throw_speed = /obj/item/pen::throw_speed
 			icon_state = /obj/item/pen::icon_state
+			color = /obj/item/pen::color
 			tool_behavior = null
 			resistance_flags = FIRE_PROOF | UNACIDABLE | LAVA_PROOF | HIDE_RESISTANCE
 			disguised = TRUE
