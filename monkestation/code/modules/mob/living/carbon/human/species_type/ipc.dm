@@ -84,6 +84,10 @@
 	var/blending
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
+	///their fone
+	var/obj/item/modular_computer/pda/ipc/myfone
+	///their fone action
+	var/datum/action/innate/use_fone/use_fone
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
