@@ -11,8 +11,29 @@
 
 /proc/gen_voice_packs()
 	if(!fexists(VOICE_PACKS_FILE))
-		log_config("No voice packs file found.")
-		return list()
+		log_config("No voice packs file found, generating fallback")
+
+		var/datum/voice_pack/voicepack = new()
+		voicepack.id = "fallback.fallback"
+		voicepack.name = "Fallback"
+		voicepack.group_name = "Fallback"
+		voicepack.sounds = list(
+			sound('sound/effects/adminhelp.ogg'),
+			sound('sound/effects/adminhelp.ogg'),
+			sound('sound/effects/adminhelp.ogg'),
+		)
+		voicepack.max_pitch = VOICE_DEFAULT_MAXPITCH
+		voicepack.min_pitch = VOICE_DEFAULT_MINPITCH
+		voicepack.max_speed = VOICE_DEFAULT_MAXSPEED
+		voicepack.min_speed = VOICE_DEFAULT_MINSPEED
+		voicepack.volume = 1
+		voicepack.hidden = FALSE
+		voicepack.is_goon = TRUE
+
+		GLOB.voice_pack_groups_visible["Fallback"] = list(voicepack)
+		GLOB.voice_pack_groups_all["Fallback"] = list(voicepack)
+		GLOB.random_voice_packs = list("fallback.fallback")
+		return list("fallback.fallback" = voicepack)
 	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
 
 	var/list/voice_pack_list = list()

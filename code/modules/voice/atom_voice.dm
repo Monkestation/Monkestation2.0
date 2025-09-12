@@ -24,8 +24,6 @@
 	pitch_range = prefs.read_preference(/datum/preference/numeric/bark_pitch_range)
 
 /datum/atom_voice/proc/randomise(atom/who)
-	if (length(GLOB.random_voice_packs) == 0)
-		return null
 	set_voice_pack(pick(GLOB.random_voice_packs))
 	pitch = ((who.gender == MALE ? rand(60, 120) : (who.gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
 	pitch_range = 0.2
