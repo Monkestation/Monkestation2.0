@@ -667,6 +667,7 @@
 #include "code\_globalvars\lists\quirks.dm"
 #include "code\_globalvars\lists\rtd.dm"
 #include "code\_globalvars\lists\typecache.dm"
+#include "code\_globalvars\lists\voice.dm"
 #include "code\_globalvars\lists\wiremod.dm"
 #include "code\_globalvars\lists\xenobiology.dm"
 #include "code\_globalvars\traits\_traits.dm"
