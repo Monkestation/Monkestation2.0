@@ -8,7 +8,7 @@
 	power_cost = 1000
 	vitality_cost = 100
 	invocation_time = 30 SECONDS
-	invocation_text = list("Through the fires and flames...", "nothing outshines Eng'Ine!")
+	invocation_text = list("Through the fires and flames...", "We fly ever free...", "nothing outshines Engine!")
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 6
 	invokers_required = 3

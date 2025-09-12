@@ -11428,7 +11428,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "duI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "duP" = (
@@ -16684,7 +16684,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "eYb" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -17416,7 +17416,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "fhj" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/circuitboard/machine/thermomachine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -31899,7 +31899,7 @@
 /turf/open/floor/plating,
 /area/station/security/bitden)
 "jus" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -42236,9 +42236,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms/laundry)
 "mlH" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/wheelys/rollerskates{
@@ -51770,9 +51768,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "pfE" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
@@ -55844,9 +55840,7 @@
 "qnd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/machinery/airalarm/directional/south,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass/fifty{
@@ -68895,7 +68889,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "tXI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
