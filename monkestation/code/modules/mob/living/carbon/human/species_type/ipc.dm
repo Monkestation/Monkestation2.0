@@ -214,7 +214,7 @@
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
 	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
-		switch_to_screen(booting_ipc, "Console")
+		switch_to_screen(booting_ipc, saved_screen)
 		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
@@ -442,9 +442,12 @@
 /datum/species/ipc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/ipc, seconds_per_tick, times_fired)
 	if(chem?.synthetic_boozepwr)
 		var/booze_power = chem.synthetic_boozepwr
+		if(ipc.nutrition < NUTRITION_LEVEL_FULL)
+			ipc.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
 		if(HAS_TRAIT(ipc, TRAIT_ALCOHOL_TOLERANCE))
 			booze_power *= 0.7
 		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
 		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
+		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
 	return ..()

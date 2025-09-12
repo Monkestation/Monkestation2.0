@@ -81,13 +81,13 @@
 		// but if it does, then we just prevent the throw.
 		return COMPONENT_CANCEL_THROW
 
-/obj/item/slasher_machette/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/slasher_machette/throw_impact(mob/living/hit_living, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(iscarbon(hit_atom))
-		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
-	if(isliving(hit_atom))
-		var/mob/living/hit_living = hit_atom
+	if(isliving(hit_living))
 		hit_living.Knockdown(1.5 SECONDS)
+		if(iscarbon(hit_living))
+			playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
+
 
 /obj/item/slasher_machette/proc/post_throw(obj/item/source, datum/thrownthing, spin)
 	SIGNAL_HANDLER
@@ -95,32 +95,30 @@
 	throwforce = pre_throw_force
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!user.mind.has_antag_datum(/datum/antagonist/slasher))
-			forceMove(get_turf(user))
-			user.emote("scream")
-			living_user.adjustBruteLoss(force)
-			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
-			return FALSE
+	if(force_drop_machete(user))
+		return FALSE
 	var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(user)
-	if(slasherdatum?.active_action && istype(slasherdatum.active_action, /datum/action/cooldown/slasher/soul_steal))
+	if(istype(slasherdatum?.active_action, /datum/action/cooldown/slasher/soul_steal))
 		return FALSE // Blocks the attack
 	return ..() // Proceeds with normal attack if no soul steal is active
 
 /obj/item/slasher_machette/attack(mob/living/target_mob, mob/living/user, params)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!IS_SLASHER(user))
-			forceMove(get_turf(user))
-			user.emote("scream")
-			living_user.adjustBruteLoss(force)
-			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
-			return
+	if(force_drop_machete(user))
+		return TRUE
 	var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(user)
 	if(slasherdatum?.active_action)
 		return TRUE // Blocks the attack
 	return ..()
+
+/obj/item/slasher_machette/proc/force_drop_machete(mob/living/victim)
+	if(!isliving(victim) || IS_SLASHER(victim))
+		return FALSE
+	var/hand_zone = ((victim.get_held_index_of_item(src) || victim.active_hand_index) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	victim.emote("scream")
+	to_chat(victim, span_warning("You scream out in pain as you hold the [src]!"))
+	victim.apply_damage(force, def_zone = hand_zone, sharpness = SHARP_EDGED)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/attack_slasher_machete(atom/target, mob/living/user)
 	if(!IS_SLASHER(user))

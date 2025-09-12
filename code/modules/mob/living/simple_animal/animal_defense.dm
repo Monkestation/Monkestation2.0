@@ -89,7 +89,7 @@
 	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
 		. = attack_threshold_check(damage)
-		if(.)
+		if(. && !HAS_TRAIT(L, TRAIT_NEUTERED)) //neutered larva can't grow by biting
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/user, list/modifiers)

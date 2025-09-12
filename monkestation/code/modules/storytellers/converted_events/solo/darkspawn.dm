@@ -38,7 +38,7 @@
 	//title_icon = "darkspawn"
 	earliest_start = 0 SECONDS
 	denominator = 25 //slightly more people for additional darkspawns
-	weight = 8
+	weight = 4
 	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/darkspawn

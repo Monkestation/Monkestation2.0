@@ -20,8 +20,7 @@
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
 
-/obj/item/detective_scanner/interact(mob/user)
-	. = ..()
+/obj/item/detective_scanner/attack_self(mob/user)
 	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 	ui_interact(user)

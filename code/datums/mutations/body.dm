@@ -602,3 +602,55 @@
 
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+// Soft crit is disabed
+/datum/mutation/inexorable
+	name = "Inexorable"
+	desc = "Your body can push on beyond the limits of normal human endurance. \
+		However, pushing it too far can cause severe damage to your body."
+	quality = POSITIVE
+	// instability = POSITIVE_INSTABILITY_MODERATE // AWAITING TG#83439
+	instability = 25
+	text_gain_indication = span_notice("You feel inexorable.")
+	text_lose_indication = span_notice("You suddenly feel more human.")
+	difficulty = 24
+	synchronizer_coeff = 1
+	// mutation_traits = list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA, TRAIT_NO_PAIN_EFFECTS) // AWAITING TG#83439
+
+/datum/mutation/inexorable/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
+		return
+	acquirer.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA, TRAIT_NO_PAIN_EFFECTS), GENETIC_MUTATION)
+	RegisterSignal(acquirer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
+	check_health()
+
+/datum/mutation/inexorable/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA, TRAIT_NO_PAIN_EFFECTS), GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+
+/datum/mutation/inexorable/proc/check_health(...)
+	SIGNAL_HANDLER
+	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS)
+		REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	else
+		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+
+/datum/mutation/inexorable/on_life(seconds_per_tick, times_fired)
+	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
+		return
+	var/multiplier = GET_MUTATION_SYNCHRONIZER(src)
+	if(HAS_TRAIT(owner, TRAIT_NOCRITDAMAGE))
+		multiplier *= 0.5
+	// Gives you 30 seconds of being in soft crit... give or take
+	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		owner.adjustBruteLoss(1 * seconds_per_tick * multiplier, forced = TRUE, updating_health = FALSE)
+	else
+		owner.adjustToxLoss(0.5 * seconds_per_tick * multiplier, forced = TRUE, updating_health = FALSE)
+		owner.adjustBruteLoss(0.5 * seconds_per_tick * multiplier, forced = TRUE, updating_health = FALSE)
+	// Offsets suffocation but not entirely
+	owner.adjustOxyLoss(-0.5 * seconds_per_tick, forced = TRUE)

@@ -113,17 +113,26 @@
 /obj/item/storage/belt/slasher
 	name = "slasher's trap fanny pack"
 	desc = "A place to put all your traps."
+	/// reference to the owning slasher datum
+	var/datum/antagonist/slasher/slasher_owner
 
 /obj/item/storage/belt/slasher/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 15
-	atom_storage.max_slots = 5
+	atom_storage.max_slots = 3
 	atom_storage.set_holdable(/obj/item/restraints/legcuffs/beartrap/slasher)
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/storage/belt/slasher/equipped(mob/living/user, slot)
+	. = ..()
+	slasher_owner = IS_SLASHER(user)
+	if(!slasher_owner)
+		return
+	for(var/obj/item/restraints/legcuffs/beartrap/slasher/trap in src)
+		trap.set_slasher(slasher_owner)
 
 /obj/item/storage/belt/slasher/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
-	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
@@ -131,6 +140,20 @@
 /obj/item/restraints/legcuffs/beartrap/slasher
 	name = "barbed bear trap"
 	breakouttime = 2 SECONDS
+	alpha = 160
+	var/datum/antagonist/slasher/slasher_owner
+
+/obj/item/restraints/legcuffs/beartrap/slasher/Destroy()
+	if(slasher_owner)
+		slasher_owner.linked_traps -= src
+	return ..()
+
+/obj/item/restraints/legcuffs/beartrap/slasher/proc/set_slasher(datum/antagonist/slasher/slasherdatum)
+	if(slasher_owner)
+		slasher_owner.linked_traps -= src
+	slasher_owner = slasherdatum
+	if(slasher_owner)
+		slasher_owner.linked_traps += src
 
 /obj/item/storage/belt/slasher/cluwne
 	name = "cluwne's trap fanny pack"
