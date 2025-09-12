@@ -4242,7 +4242,6 @@
 "aQr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "aQu" = (
@@ -9102,11 +9101,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/science/robotics/lab)
 "bMr" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/ai_monitored/security/armory)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/security/warden)
 "bMt" = (
 /obj/structure/rack/shelf,
 /obj/effect/spawner/random/sakhno/ammo,
@@ -9425,8 +9425,6 @@
 	dir = 8
 	},
 /obj/machinery/flasher/portable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -30276,7 +30274,6 @@
 /area/station/tcommsat/computer)
 "fOw" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
@@ -30288,6 +30285,7 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/crowbar/large,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "fOy" = (
@@ -48998,6 +48996,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
+"jyh" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/security/armory)
 "jyn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -53913,8 +53917,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/rack,
 /obj/item/clothing/glasses/hud/security,
 /obj/item/clothing/glasses/hud/security,
@@ -67586,6 +67588,7 @@
 "nbW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "nca" = (
@@ -84328,6 +84331,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/side,
 /area/station/ai_monitored/security/armory)
 "qqa" = (
@@ -159592,7 +159597,7 @@ klA
 ksL
 hLn
 aQr
-bMr
+tZD
 gkm
 cwS
 iTA
@@ -159848,7 +159853,7 @@ xJn
 uhR
 rNT
 rNT
-nbW
+aQr
 aCN
 gkm
 iLK
@@ -160362,7 +160367,7 @@ xJn
 lhR
 rNT
 rNT
-nbW
+aQr
 dMt
 xJn
 vyY
@@ -160620,9 +160625,9 @@ xnI
 vvs
 aLr
 nbW
-tZD
+jyh
 qpZ
-vye
+bMr
 mVF
 fWt
 ksn
