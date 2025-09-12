@@ -397,7 +397,7 @@
 		to_chat(user, span_warning("[src] had their casting cut short!"))
 		return ITEM_INTERACT_BLOCKING
 
-		target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
+	target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
 
 	return ..()
 
