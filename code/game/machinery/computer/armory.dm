@@ -168,7 +168,7 @@
 	message += "\n\n[selected_reason].\n"
 
 	if (extra_details != initial(extra_details))
-		message += "\nExtra details: [extra_details].\n"
+		message += "\nExtra details: [extra_details]\n"
 
 	message += "\nAuthorized by: "
 
