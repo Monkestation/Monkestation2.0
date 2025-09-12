@@ -91,7 +91,7 @@
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
 
 /datum/objective/bloodsucker/survive/check_completion()
-	return ..() || !bloodsucker_datum?.final_death
+	return ..() || (!QDELETED(owner.current) && !bloodsucker_datum?.final_death)
 
 // WIN CONDITIONS?
 // Handled by parent
