@@ -60,6 +60,8 @@
 	return assoc_to_keys(GLOB.voice_pack_list)
 
 /datum/preference/choiced/voice_pack/is_valid(value)
+	if (!istext(value))
+		return FALSE
 	var/datum/voice_pack/voicepack = GLOB.voice_pack_list[value]
 	if (!voicepack)
 		return FALSE
