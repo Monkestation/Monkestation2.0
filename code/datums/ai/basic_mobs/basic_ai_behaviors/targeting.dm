@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -18,9 +19,8 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	return ..()
 
 /datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	var/mob/living/living_mob = controller.pawn
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
-
+	var/mob/living/living_mob = controller.pawn
 	if(!targeting_strategy)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
