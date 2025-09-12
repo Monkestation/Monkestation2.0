@@ -1,9 +1,9 @@
-/datum/component/mycomponent
+/datum/component/antag_examine
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	var/examine_result = "This is a default antag-datum exclusive message. If you see this anywhere, *especially* if you aren't an antag, please report it. Something has royally fucked up."
+	var/examine_result = "This is a default antag-datum exclusive message. If you see this anywhere, *especially* if you aren't a traitor (the default datum this message should be exclusive to), please report it. Something has royally fucked up."
 	var/datums_allowed = list(/datum/antagonist/traitor)
 
-/datum/component/mycomponent/Initialize(message, allowed_datums)
+/datum/component/antag_examine/Initialize(message, allowed_datums)
 	if(message)
 		examine_result = message
 	if(allowed_datums)
