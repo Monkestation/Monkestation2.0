@@ -143,7 +143,6 @@
 	return .
 
 /obj/item/nif_hud_adapter/interact_with_atom(atom/interacting_with, mob/user, list/modifiers)
-	. = ..()
 	if(!istype(interacting_with, /obj/item/clothing/glasses))
 		return NONE
 

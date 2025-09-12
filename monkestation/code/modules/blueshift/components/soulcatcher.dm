@@ -83,8 +83,7 @@
 	linked_soulcatcher.ui_interact(user)
 
 /obj/item/attachable_soulcatcher/interact_with_atom(atom/interacting_with, mob/user)
-	. = ..()
-	if(!istype(interacting_with, /obj/item))
+	if(!isitem(interacting_with))
 		return NONE
 	var/obj/item/target_item = interacting_with
 	if(target_item.GetComponent(/datum/component/soulcatcher))
