@@ -28,7 +28,7 @@
 		return NONE
 	if(isfloorturf(interacting_with) && use_paint(user))
 		paint_floor(interacting_with)
-		return ITEM_INTERACT_SUCESSS
+		return ITEM_INTERACT_SUCCESS
 	return NONE
 
 /**
