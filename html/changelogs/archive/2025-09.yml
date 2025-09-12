@@ -427,3 +427,12 @@
       of one of those persuasions.
   - bugfix: Bloodsucker blood drinking moodlet now actually triggers if you aggressively
       drink blood.
+2025-09-12:
+  Absolucy:
+  - bugfix: Fixed spawning bingles not working.
+  Absolucy, Bisar:
+  - code_imp: Heat capacity calculation for gas mixtures has been slightly optimized.
+  Uristthedorf:
+  - bugfix: Fixes oozelings having their burn modifier applied twice.
+  Xander3359:
+  - rscadd: Blueshield and brig physician have had their ID access updated.
