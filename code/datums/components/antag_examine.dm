@@ -22,4 +22,4 @@
 		if(user?.mind?.has_antag_datum(thingy))
 			isgood = TRUE
 	if(isgood)
-		examine_list += span_danger("[source.p_theyre(TRUE)] covered in a corrosive liquid!")
+		examine_list += examine_result
