@@ -69,6 +69,8 @@
 	target.set_voice_pack(value)
 
 /datum/preference/choiced/voice_pack/create_default_value()
+	if (length(GLOB.random_voice_packs) == 0)
+		return null
 	return pick(GLOB.random_voice_packs)
 
 /*

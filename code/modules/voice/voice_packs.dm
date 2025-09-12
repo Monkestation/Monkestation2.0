@@ -1,3 +1,5 @@
+#define VOICE_PACKS_FILE "config/monkestation/voice_packs.toml"
+
 /proc/get_voice_pack_sound(voice_pack_obj, group_path, sound_name)
 	var/sound_path = voice_pack_obj[sound_name]
 	if (!sound_path)
@@ -8,7 +10,10 @@
 		return sound(sound_path)
 
 /proc/gen_voice_packs()
-	var/output = rustg_read_toml_file("config/monkestation/voice_packs.toml")
+	if(!fexists(VOICE_PACKS_FILE))
+		log_config("No voice packs file found.")
+		return
+	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
 
 	var/list/voice_pack_list = list()
 
@@ -120,3 +125,5 @@
 
 	var/is_goon
 	var/datum/voice_pack/goon_equiv
+
+#undef VOICE_PACKS_FILE

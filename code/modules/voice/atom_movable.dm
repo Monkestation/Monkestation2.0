@@ -26,6 +26,8 @@
 	return FALSE
 
 /mob/initial_voice_pack_id()
+	if (length(GLOB.random_voice_packs) == 0)
+		return null
 	return pick(GLOB.random_voice_packs)
 
 /mob/can_long_bark()
