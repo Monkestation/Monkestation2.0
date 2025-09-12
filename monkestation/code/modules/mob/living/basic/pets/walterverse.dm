@@ -24,7 +24,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter/negative
 	name = "Negative Walter"
 	real_name = "Negative Walter"
-	desc = "Nar'sie and ratvar are a lot compared to the might of this skcurtretsnom despising god."
+	desc = "Nar'sie and Ratvar are a lot compared to the might of this skcurtretsnom despising god."
 	icon = 'monkestation/icons/mob/walterverse.dmi'
 	icon_state = "negative"
 	icon_living = "negative"
@@ -180,7 +180,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter/smallter
 	name = "Smallter"
 	real_name = "Smallter"
-	desc = "Nar'sie and ratvar are nothing compared to the might of this tiny dog."
+	desc = "Nar'sie and Ratvar are nothing compared to the might of this tiny dog."
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/basic/pet/dog/bullterrier/walter/smallter/Initialize(mapload)
