@@ -158,6 +158,7 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(current_mob, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, PROC_REF(after_expose_reagents))
 	RegisterSignal(current_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(life_tick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
@@ -193,7 +194,7 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	cleanup_limbs(current_mob)
@@ -580,3 +581,11 @@
 	if(affected_limbs[deleted_limb.body_zone])
 		affected_limbs[deleted_limb.body_zone] = null
 		UnregisterSignal(deleted_limb, COMSIG_QDELETING)
+
+/datum/antagonist/bloodsucker/proc/after_expose_reagents(mob/source_mod, list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
+	SIGNAL_HANDLER
+	var/datum/reagent/blood/blood_reagent = locate() in reagents
+	if(blood_reagent)
+		var/blood_volume = round(reagents[blood_reagent], 0.1)
+		if(blood_volume > 0)
+			bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
