@@ -5,7 +5,7 @@
 	button_icon_state = "Sigil of Submission"
 	power_cost = 200
 	invocation_time = 5 SECONDS
-	invocation_text = list("Relax you animal...", "for I shall show you the truth.")
+	invocation_text = list("Relax, animal...", "for I shall show you the truth.")
 	summoned_structure = /obj/structure/destructible/clockwork/sigil/submission
 	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE

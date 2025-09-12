@@ -1007,7 +1007,7 @@
 "xM" = (
 /obj/item/radio/intercom/directional/west,
 /obj/effect/decal/cleanable/oil,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating,
 /area/station/commons/lounge)

@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - code_imp: "(necromanceranne) The paper mache robe now works a bit better under the hood."
+  - balance: "(Improvedname) Weakens summoned stickmen to be 1 or 2 hit"
