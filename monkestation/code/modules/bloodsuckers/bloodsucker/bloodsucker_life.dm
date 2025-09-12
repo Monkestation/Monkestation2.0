@@ -314,6 +314,7 @@
 		COMSIG_SOL_RISE_TICK,
 		COMSIG_SOL_WARNING_GIVEN,
 	))
+	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
 	if(!iscarbon(owner.current))

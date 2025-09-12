@@ -89,22 +89,9 @@
 /datum/objective/bloodsucker/survive
 	name = "bloodsuckersurvive"
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
-	completed = TRUE
 
-/datum/objective/bloodsucker/survive/New(text, datum/mind/owner)
-	. = ..()
-	if(bloodsucker_datum)
-		RegisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_final_death))
-
-/datum/objective/bloodsucker/survive/Destroy()
-	if(bloodsucker_datum)
-		UnregisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH)
-	return ..()
-
-/datum/objective/bloodsucker/survive/proc/on_final_death()
-	SIGNAL_HANDLER
-	completed = FALSE
-	UnregisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH)
+/datum/objective/bloodsucker/survive/check_completion()
+	return ..() || !bloodsucker_datum?.final_death
 
 // WIN CONDITIONS?
 // Handled by parent
