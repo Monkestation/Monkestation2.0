@@ -337,7 +337,6 @@
 					dispensed_item.forceMove(drop_location())
 					adjust_item_drop_location(dispensed_item)
 				use_power(active_power_usage)
-				dispensed_amount++
 				amount--
 			if (visible_contents)
 				update_appearance()
