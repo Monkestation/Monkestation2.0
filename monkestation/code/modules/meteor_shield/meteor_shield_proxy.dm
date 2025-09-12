@@ -11,9 +11,9 @@
 		return INITIALIZE_HINT_QDEL
 	src.parent = parent
 	src.monitor = new(src, parent.kill_range, TRUE, parent)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_deleted))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_parent_z_changed))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_moved))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
 
 /obj/effect/abstract/meteor_shield_proxy/Destroy(force)
 	QDEL_NULL(monitor)

@@ -123,6 +123,9 @@
 /datum/armament_entry/company_import/deforest/medpens/robo_cleaner
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
 
+/datum/armament_entry/company_import/deforest/medpens/robo_painkiller
+	item_type = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin
 	contraband = TRUE

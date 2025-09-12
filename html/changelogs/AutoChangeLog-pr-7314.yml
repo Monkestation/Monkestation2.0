@@ -1,0 +1,5 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - balance: "Acarp DD combo now does oxy damage instead of brute, to preserve it's nonlethal nature from Scarp."
+  - balance: "Acarp can now snap necks while strangling, not just while neckgrabbing."

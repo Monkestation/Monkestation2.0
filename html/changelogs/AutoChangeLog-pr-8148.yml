@@ -1,0 +1,7 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - rscadd: "adds beetmin, lil beet mobs that skidaddle and spawn from vent clogs"
+  - bugfix: "fixes rack and reinforced table unwrenching"
+  - balance: "mining guardian limited to one"
+  - balance: "reduces laser damage for base lasers and hellfire to 22 from 25"

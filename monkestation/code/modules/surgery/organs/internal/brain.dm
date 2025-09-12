@@ -85,6 +85,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/drg_callout, // skillchips are in the brain anyways
 		/datum/quirk/prosthetic_limb,
 		/datum/quirk/quadruple_amputee,
+		/datum/quirk/stowaway,
 	))
 
 	var/rebuilt = TRUE
@@ -244,12 +245,14 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(target_ling)
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
+				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 180 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	if(stored_dna)
@@ -269,7 +272,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 /// Makes it so that when a slime's core has plasma poured on it, it builds a new body and moves the brain into it.
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 			user.balloon_alert(user, "too little plasma!")
 			return FALSE
@@ -376,6 +379,14 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	GLOB.dead_oozeling_cores -= src
 	set_organ_damage(0) // heals the brain fully
+
+	if(istype(loc, /obj/effect/abstract/chasm_storage))
+		// oh fuck we're reviving in a chasm somehow, uhhhh, quick, find us the nearest non-chasm turf
+		for(var/turf/turf as anything in spiral_range_turfs(5, get_turf(src), TRUE))
+			if(!isopenturf(turf) || isgroundlessturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
+				continue
+			forceMove(turf)
+			break
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
 		gps_active = FALSE

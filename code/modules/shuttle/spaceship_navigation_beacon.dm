@@ -51,10 +51,10 @@
 	.=..()
 	. += "<span class='[locked ? "warning" : "nicegreen"]'>Status: [locked ? "LOCKED" : "Stable"] </span>"
 
-/obj/machinery/spaceship_navigation_beacon/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "core-open", "core", W))
+/obj/machinery/spaceship_navigation_beacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "core-open", "core", attacking_item))
 		return
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()

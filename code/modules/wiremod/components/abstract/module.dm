@@ -229,9 +229,9 @@
 	. = list()
 	.["global_port_types"] = GLOB.wiremod_basic_types
 
-/obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/circuit_component))
-		internal_circuit.attackby(I, user, params)
+/obj/item/circuit_component/module/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/circuit_component))
+		internal_circuit.attackby(attacking_item, user, modifiers, attack_modifiers)
 		return
 	return ..()
 

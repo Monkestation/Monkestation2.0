@@ -145,6 +145,9 @@
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
+	if(!..() && !force)
+		return FALSE
+
 	if(rigged && amount > 0)
 		explode()
 		return FALSE
@@ -280,10 +283,6 @@
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
 
-/obj/item/stock_parts/cell/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
-	var/obj/item/mod/control/mod = storage_holder
-	return !(istype(mod) && mod.open)
-
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty
 	empty = TRUE
@@ -404,7 +403,8 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use()
+/obj/item/stock_parts/cell/infinite/use(amount, force)
+	..()
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor

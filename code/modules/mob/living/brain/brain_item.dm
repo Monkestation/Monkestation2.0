@@ -10,6 +10,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL | ORGAN_PROMINENT
+	var/can_fit_in_mmi
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -387,6 +388,9 @@
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
+
+/obj/item/organ/internal/brain/blob_act(obj/structure/blob/B)
+	set_organ_damage(maxHealth)
 
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"

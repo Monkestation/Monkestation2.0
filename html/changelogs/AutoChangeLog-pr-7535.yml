@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - code_imp: "Adds a fauna_mod variable, that can be used to add a damage multiplier against lavaland fauna to any projectile."
