@@ -468,7 +468,7 @@
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 	var/datum/mind/ghost_mind = selected.mind
-	ghost_mind.active = TRUE
+	ghost_mind?.active = TRUE
 
 	var/mob/living/basic/bingle/bingle = new(spawn_loc, src)
 	bingle.key = selected.key
