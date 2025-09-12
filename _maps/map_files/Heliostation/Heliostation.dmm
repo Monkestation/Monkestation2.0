@@ -8496,7 +8496,9 @@
 /area/station/hallway/primary/fore)
 "aSE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -9096,7 +9098,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/crate/preopen{
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
 	name = "Chemistry Supplies"
 	},
 /obj/item/storage/box/beakers,
@@ -9121,7 +9124,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aVi" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/stack/spacecash/c50,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -16605,7 +16610,9 @@
 /area/station/science/lab)
 "bzN" = (
 /obj/effect/spawner/random/maintenance/two,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "bzQ" = (
@@ -21715,7 +21722,9 @@
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/department/science/central)
 "csr" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -24294,7 +24303,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "cOn" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -45661,7 +45672,9 @@
 /area/station/science/xenobiology)
 "kvP" = (
 /obj/structure/railing,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/clothing/under/costume/soviet,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
@@ -51222,7 +51235,9 @@
 "mHE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -62883,7 +62898,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "rdd" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 3
 	},
@@ -63131,7 +63148,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "rgw" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
@@ -69291,7 +69310,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "tzN" = (
-/obj/structure/closet/crate/preopen,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/item/mop,
 /obj/item/storage/bag/trash,
 /turf/open/floor/plating,
@@ -81064,9 +81085,6 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space,
-/area/space,
-/area/space,
 /area/space)
 "yeW" = (
 /turf/closed/wall,
@@ -106721,7 +106739,7 @@ aaa
 aaa
 aaa
 aaP
-ldx
+aaa
 aaa
 aaa
 aak
