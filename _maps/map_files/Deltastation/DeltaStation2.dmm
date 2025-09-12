@@ -9256,7 +9256,7 @@
 /area/station/maintenance/port/fore)
 "cdr" = (
 /obj/machinery/door/poddoor{
-	id = "armouryaccess";
+	id = "armory";
 	name = "Armoury Access"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -80877,9 +80877,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/armory{
-	linked_ID = "armouryaccess"
-	},
+/obj/machinery/computer/armory,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "tch" = (

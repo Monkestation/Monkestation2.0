@@ -4361,8 +4361,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/armory{
-	dir = 1;
-	linked_ID = "sidearmory"
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
@@ -55191,7 +55190,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
-	id = "sidearmory";
+	id = "armory";
 	name = "Side Armoury Shutter"
 	},
 /turf/open/floor/iron/dark,

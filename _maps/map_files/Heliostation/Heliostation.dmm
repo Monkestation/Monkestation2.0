@@ -3058,7 +3058,7 @@
 "apJ" = (
 /obj/machinery/door/poddoor/shutters/window{
 	dir = 1;
-	id = "secarmory";
+	id = "armory";
 	name = "Armory Shutters"
 	},
 /obj/effect/turf_decal/caution/stand_clear{
@@ -45702,10 +45702,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"kwf" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/security/prison/visit)
 "kwL" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -106485,7 +106481,7 @@ aaa
 abp
 oJh
 aaB
-kwf
+aak
 aaB
 ukf
 abp

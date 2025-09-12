@@ -4,11 +4,10 @@
 	icon_screen = "commsyndie"
 	icon_keyboard = "security_key"
 	light_color = COLOR_SOFT_RED
-	resistance_flags = INDESTRUCTIBLE
 
 	circuit = /obj/item/circuitboard/computer/armory
 
-	///The linked ID for the integrated controller to be set to. Can be overriden by mappers as needed.
+	///The linked ID for the integrated controller to be set to. Mappers should ensure that all armory shutters are connected to this.
 	var/linked_ID = "armory"
 	///The integrated controller that actually opens and closes the armory shutters.
 	var/obj/item/assembly/control/door_controller
