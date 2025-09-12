@@ -25448,6 +25448,14 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 1;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "fXQ" = (
@@ -50805,11 +50813,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lQh" = (
-/obj/machinery/button/door/directional/south{
-	id = "armouryaccess";
-	name = "Armoury Access";
-	req_access = list("armory")
-	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 10
 	},
@@ -80873,6 +80876,9 @@
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
+	},
+/obj/machinery/computer/armory{
+	linked_ID = "armouryaccess"
 	},
 /turf/open/floor/iron,
 /area/station/security/lockers)

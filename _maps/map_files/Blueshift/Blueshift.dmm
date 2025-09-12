@@ -117,7 +117,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
 "abJ" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -127,6 +126,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -9104,9 +9104,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/science/robotics/lab)
 "bMr" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "bMt" = (
@@ -9427,6 +9427,8 @@
 	dir = 8
 	},
 /obj/machinery/flasher/portable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -12927,8 +12929,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "cwS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/brig)
@@ -24642,14 +24642,10 @@
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "eIM" = (
-/obj/item/clothing/glasses/hud/security/sunglasses/gars,
-/obj/item/clothing/glasses/hud/security,
-/obj/item/clothing/glasses/hud/security,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/rack,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/brig)
 "eIR" = (
@@ -26547,15 +26543,16 @@
 /turf/open/floor/iron/dark/small,
 /area/station/cargo/miningdock)
 "faI" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "Armoury Shutter"
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security{
+	name = "Armory"
+	},
+/turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "faJ" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -32724,13 +32721,23 @@
 "gnD" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/table,
-/obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
+/obj/machinery/recharger{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/machinery/recharger{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -36024,6 +36031,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
+/obj/machinery/computer/armory,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -37489,10 +37497,6 @@
 /area/station/hallway/primary/port)
 "hka" = (
 /obj/structure/table/reinforced,
-/obj/item/poster/random_official{
-	pixel_y = 5
-	},
-/obj/item/poster/random_official,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -48878,12 +48882,10 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/eva_shed/starboard)
 "jwR" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "Armoury Shutter"
-	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/iron/dark,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "jwV" = (
 /obj/structure/cable,
@@ -53936,6 +53938,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/rack,
+/obj/item/clothing/glasses/hud/security,
+/obj/item/clothing/glasses/hud/security,
+/obj/item/clothing/glasses/hud/security/sunglasses/gars,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "kro" = (
@@ -56574,9 +56582,6 @@
 /obj/effect/turf_decal/trimline/red/end{
 	dir = 1
 	},
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "kSe" = (
@@ -56907,16 +56912,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/hydroponics/chicken)
-"kXe" = (
-/obj/machinery/door/airlock/security{
-	name = "Armory"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
-/turf/open/floor/iron/dark/side,
-/area/station/ai_monitored/security/armory)
 "kXj" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/south,
@@ -71119,16 +71114,16 @@
 "nMS" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -6;
-	pixel_y = 4
+	pixel_x = -38;
+	pixel_y = 5
 	},
 /obj/item/clothing/mask/gas/sechailer{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = -25;
+	pixel_y = -4
 	},
 /obj/item/assembly/flash/handheld{
-	pixel_x = 6;
-	pixel_y = 13
+	pixel_x = 22;
+	pixel_y = 43
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/recharger{
@@ -100803,6 +100798,10 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/poster/random_official{
+	pixel_y = 5
+	},
+/obj/item/poster/random_official,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "txl" = (
@@ -106648,15 +106647,9 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "uBa" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor/left/directional/west{
-	name = "Armoury Desk";
-	req_access = list("armory")
-	},
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	name = "Armoury Desk";
-	req_access = list("armory")
+/obj/machinery/door/poddoor/shutters{
+	id = "armory";
+	name = "Armoury Shutter"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
@@ -111670,6 +111663,9 @@
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
 /obj/structure/disposalpipe/segment,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "vxL" = (
@@ -113149,12 +113145,6 @@
 /area/station/hallway/primary/starboard)
 "vLE" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/button/door{
-	id = "armory";
-	name = "Armory Shutters";
-	pixel_x = -27;
-	req_access = list("armory")
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -159640,7 +159630,7 @@ ksL
 hLn
 aQr
 bMr
-kXe
+gkm
 cwS
 iTA
 oIz

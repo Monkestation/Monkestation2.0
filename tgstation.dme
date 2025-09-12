@@ -2063,6 +2063,7 @@
 #include "code\game\machinery\computer\aifixer.dm"
 #include "code\game\machinery\computer\apc_control.dm"
 #include "code\game\machinery\computer\arena.dm"
+#include "code\game\machinery\computer\armory.dm"
 #include "code\game\machinery\computer\atmos_alert.dm"
 #include "code\game\machinery\computer\buildandrepair.dm"
 #include "code\game\machinery\computer\camera.dm"
