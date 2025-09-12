@@ -2169,3 +2169,34 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+//Saimin, a Hawaiian noodle soup
+/datum/reagent/consumable/nutriment/soup/saimin
+	name = "Saimin"
+	description = "A traditional hawaiian noodle soup."
+	data = list("eggs"= 1, "onion" = 1, "cabbage" = 1, "noodles" = 1)
+	color = "#9dc530"
+
+/datum/glass_style/has_foodtype/soup/saimin
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/saimin
+	icon = 'icons/obj/food/martian.dmi'
+	name = "saimin"
+	icon_state = "saimin"
+	drink_type = VEGETABLES | GRAIN
+
+/datum/chemical_reaction/food/soup/saimin
+	required_reagents = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/soysauce = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/spaghetti/rawnoodles = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/saimin = 30,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)

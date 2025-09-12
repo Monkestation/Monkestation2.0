@@ -504,7 +504,7 @@
 /area/shuttle/ruin/free_miner)
 "nh" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator/emagged,
 /obj/machinery/button/door/directional/north{
 	id = "freeminer_production_port"
 	},

@@ -47,8 +47,42 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
 	max_ammo = 3
 
+/obj/item/ammo_box/magazine/internal/shot/buckshotroulette
+	name = "buckshotroulette shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/spent
+	max_ammo = 6
+
 /obj/item/ammo_box/magazine/internal/shot/levergun
 	name = "brush gun internal magazine"
 	ammo_type = /obj/item/ammo_casing/g45l
 	caliber = CALIBER_45L
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/shot/six
+	name = "six-barrel shotgun internal magazine"
+	max_ammo = 1
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/six
+
+/obj/item/ammo_box/magazine/internal/shot/hundred
+	name = "hundred-barrel shotgun internal magazine"
+	max_ammo = 1
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/hundred
+
+/obj/item/ammo_box/magazine/internal/shot/dual/kinetic
+	name = "kinetic double barrel shotgun internal magazine"
+	desc = "how did you break my gun like this, please report whatever you did then feel bad!!!"
+	ammo_type = /obj/item/ammo_casing/shotgun/kinetic
+	caliber = MINER_SHOTGUN
+	max_ammo = 2
+
+//You cant just pry these shells out with your fingers, youll have to eject them by breaking open the shotgun
+/obj/item/ammo_box/magazine/internal/shot/dual/kinetic/give_round(obj/item/ammo_casing/R)
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+		return FALSE
+
+	else if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.forceMove(src)
+		return TRUE
+	return FALSE
+

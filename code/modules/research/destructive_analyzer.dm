@@ -59,7 +59,7 @@
 	data["server_connected"] = !!stored_research
 	data["node_data"] = list()
 	if(loaded_item)
-		data["item_icon"] = text_ref(loaded_item.icon)
+		data["item_icon"] = loaded_item.icon
 		data["item_icon_state"] = loaded_item.icon_state
 		data["indestructible"] = !(loaded_item.resistance_flags & INDESTRUCTIBLE)
 		data["loaded_item"] = loaded_item
@@ -184,6 +184,7 @@
 	if(!destroy_item())
 		return FALSE
 	stored_research.unhide_node(SSresearch.techweb_node_by_id(node_to_discover.id))
+	stored_research.update_node_status(SSresearch.techweb_node_by_id(node_to_discover.id))
 	return TRUE
 
 #undef DESTRUCTIVE_ANALYZER_DESTROY_POINTS

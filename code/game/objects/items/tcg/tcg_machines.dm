@@ -24,9 +24,9 @@
 	var/summon_offset_x = 0
 	var/summon_offset_y = 1
 
-/obj/machinery/trading_card_holder/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/tcgcard) && current_summon == null)
-		current_card = I
+/obj/machinery/trading_card_holder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/tcgcard) && current_summon == null)
+		current_card = attacking_item
 		card_template = current_card.extract_datum()
 		if(card_template.cardtype == "Creature")
 			if(!user.transferItemToLoc(current_card, src))

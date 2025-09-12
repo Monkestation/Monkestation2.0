@@ -116,7 +116,7 @@
 		for(var/mob/living/target in listed_turf.contents)
 			if(pre_hit_callback)
 				pre_hit_callback.Invoke(parent, target, user, targeted_turfs)
-			item_parent.multi_attack(target, user, attacking_direction)
+			item_parent.attack(target, user)
 			if(after_hit_callback)
 				after_hit_callback.Invoke(parent, target, user, targeted_turfs)
 			if(!continues_travel)

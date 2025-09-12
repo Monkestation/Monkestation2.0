@@ -1,5 +1,5 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, armour_ignorance = null, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
 	var/our_armor = getarmor(def_zone, attack_flag)
 
 	if(our_armor <= 0)
@@ -11,7 +11,7 @@
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		our_armor = armour_penetration == 100 ? 0 : 100 * max(our_armor - armour_penetration, 0) / (100 - armour_penetration)
+		our_armor = clamp(round((our_armor * ((100 - armour_penetration) * 0.01)), 1) - armour_ignorance, min(our_armor, 0), 100) //Armor penetration is now a percent reduction - I.E. 20 AP = armor is 20% *less* effective
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else

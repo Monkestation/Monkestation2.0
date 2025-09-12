@@ -235,10 +235,10 @@
 
 
 //Buttbot Production
-/obj/item/organ/internal/butt/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/bodypart/arm/left/robot) || istype(I, /obj/item/bodypart/arm/right/robot))
+/obj/item/organ/internal/butt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/bodypart/arm/left/robot) || istype(attacking_item, /obj/item/bodypart/arm/right/robot))
 		var/mob/living/simple_animal/bot/buttbot/new_butt = new(get_turf(src))
-		qdel(I)
+		qdel(attacking_item)
 		switch(src.type) //A BUTTBOT FOR EVERYONE!
 			if(/obj/item/organ/internal/butt/atomic)
 				new_butt.name = "Atomic Buttbot"

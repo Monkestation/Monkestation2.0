@@ -119,7 +119,7 @@
 		if(!can_hold_items())
 			return FALSE
 	if(full_checks)
-		if(TIMER_COOLDOWN_CHECK(src, REF(table)))
+		if(TIMER_COOLDOWN_RUNNING(src, REF(table)))
 			return FALSE
 		if(DOING_INTERACTION_WITH_TARGET(src, table))
 			return FALSE
@@ -282,7 +282,7 @@
 				items.len--
 			if(!do_after(cat, CAT_KNOCK_OFF_TIME, src, progress = FALSE))
 				break
-			if(!TIMER_COOLDOWN_CHECK(cat, COOLDOWN_CAT_MEOW))
+			if(TIMER_COOLDOWN_FINISHED(cat, COOLDOWN_CAT_MEOW))
 				playsound(get_turf(cat), SFX_MEOW, vol = 20, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MOB_SOUNDS)
 				TIMER_COOLDOWN_START(cat, COOLDOWN_CAT_MEOW, MAX_CAT_MEOW_LENGTH)
 			cat_knock_thing_off_table(cat, thing)

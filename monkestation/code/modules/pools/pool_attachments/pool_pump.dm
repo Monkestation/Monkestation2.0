@@ -53,7 +53,7 @@
 			turned_on = FALSE
 			STOP_PROCESSING(SSmachines, src)
 		to_chat(user, span_notice("You unwrench the [src]"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(istype(source_turf, /turf/open/floor/lowered/iron/pool))
 		return
 	for(var/turf/open/open_turf in source_turf.atmos_adjacent_turfs)
@@ -61,7 +61,7 @@
 			connect(open_turf)
 			anchored = TRUE
 			to_chat(user, span_notice("You wrench the [src] securely to the ground"))
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pool_pump/proc/connect(turf/open/floor/lowered/iron/pool/found_pool)
 	if(!found_pool.cached_group)

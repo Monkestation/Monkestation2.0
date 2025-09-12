@@ -245,7 +245,7 @@
 	var/hornsound = 'sound/items/carhorn.ogg'
 
 /datum/action/vehicle/sealed/horn/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
@@ -323,13 +323,13 @@
 /datum/action/vehicle/ridden/wheelchair/bell
 	name = "Bell Ring"
 	desc = "Ring the bell."
-	button_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon = 'icons/obj/service/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
 	check_flags = AB_CHECK_CONSCIOUS
 	var/bell_cooldown
 
 /datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+	if(TIMER_COOLDOWN_RUNNING(src, bell_cooldown))
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
@@ -350,13 +350,14 @@
 		return
 	var/mob/living/rider = owner
 	var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
-	rider.stamina.adjust(-vehicle.instability* 0.75)
+	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
+	rider.stamina.adjust(-vehicle.instability * 0.75 * tony_hawk)
 	if (rider.stamina.loss >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		vehicle.unbuckle_mob(rider)
 		rider.throw_at(landing_turf, 2, 2)
-		rider.Paralyze(40)
+		rider.Paralyze(40 * tony_hawk)
 		vehicle.visible_message(span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
 		return
 	if((locate(/obj/structure/table) in landing_turf) || (locate(/obj/structure/fluff/tram_rail) in landing_turf))
@@ -386,13 +387,14 @@
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip/Trigger(trigger_flags)
 	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
 	var/mob/living/rider = owner
+	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
 
-	rider.stamina.adjust(-board.instability)
+	rider.stamina.adjust(-board.instability * tony_hawk)
 	if (rider.stamina.loss >= 100)
 		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
 		board.unbuckle_mob(rider)
-		rider.Paralyze(50)
-		if(prob(15))
+		rider.Paralyze(50 * tony_hawk)
+		if(prob(15) && (tony_hawk != 0.5))
 			rider.visible_message(
 				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
 				span_userdanger("You smack against the board, hard."),

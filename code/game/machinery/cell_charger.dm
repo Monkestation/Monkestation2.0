@@ -39,10 +39,10 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
+/obj/machinery/cell_charger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stock_parts/cell) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))
 			return
@@ -53,7 +53,7 @@
 			to_chat(user, span_warning("There is already a cell in the charger!"))
 			return
 		//MONKESTATION EDIT ADDITION
-		var/obj/item/stock_parts/cell/inserting_cell = W
+		var/obj/item/stock_parts/cell/inserting_cell = attacking_item
 		if(inserting_cell.chargerate <= 0)
 			to_chat(user, span_warning("[inserting_cell] cannot be recharged!"))
 			return
@@ -65,16 +65,16 @@
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
 				to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
 				return
-			if(!user.transferItemToLoc(W,src))
+			if(!user.transferItemToLoc(attacking_item,src))
 				return
 
-			charging = W
+			charging = attacking_item
 			user.visible_message(span_notice("[user] inserts a cell into [src]."), span_notice("You insert a cell into [src]."))
 			update_appearance()
 	else
-		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
+		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(W))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 		return ..()
 

@@ -67,7 +67,7 @@
 	if(istype(taser, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/taser_equipment = taser
 		if(!taser_equipment.chassis \
-			|| !taser_equipment.activated \
+			|| !taser_equipment.active \
 			|| taser_equipment.get_integrity() <= 1 \
 			|| taser_equipment.chassis.is_currently_ejecting \
 			|| taser_equipment.chassis.equipment_disabled \
@@ -115,7 +115,9 @@
 
 	taser = null
 	firer = null
-	QDEL_NULL(tase_line)
+	if(!QDELETED(tase_line))
+		qdel(tase_line)
+	tase_line = null
 
 /datum/status_effect/tased/tick(seconds_between_ticks)
 	if(!do_tase_with(taser, seconds_between_ticks))

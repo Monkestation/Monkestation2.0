@@ -1,8 +1,19 @@
 // RAPID LIGHTING DEVICE
 
-#define GLOW_MODE 3
+// modes of operation
+#define GLOW_MODE 1
 #define LIGHT_MODE 2
-#define REMOVE_MODE 1
+#define REMOVE_MODE 3
+
+// operation costs
+#define LIGHT_TUBE_COST 10
+#define FLOOR_LIGHT_COST 15
+#define GLOW_STICK_COST 20
+#define DECONSTRUCT_COST 10
+
+//operation delays
+#define BUILD_DELAY 10
+#define REMOVE_DELAY 15
 
 /obj/item/construction/rld
 	name = "Rapid Lighting Device"
@@ -23,7 +34,7 @@
 	var/mode = LIGHT_MODE
 	var/wallcost = 10
 	var/floorcost = 15
-	var/launchcost = 5
+	var/launchcost = 20
 	var/deconcost = 10
 
 	var/condelay = 10
@@ -84,59 +95,59 @@
 		else
 			toggle_silo(user)
 
-/obj/item/construction/rld/afterattack(atom/A, mob/user)
+/obj/item/construction/rld/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!range_check(interacting_with, user))
+		return NONE
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!range_check(A,user))
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)
-			if(!istype(A, /obj/machinery/light/))
-				return FALSE
+			if(!istype(interacting_with, /obj/machinery/light))
+				return NONE
 
 			//resource sanity checks before & after delay
-			if(!checkResource(deconcost, user))
-				return FALSE
-			var/beam = user.Beam(A,icon_state="light_beam", time = 15)
-			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(user, decondelay, target = A))
+			if(!checkResource(DECONSTRUCT_COST, user))
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = 15)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, REMOVE_DELAY, target = interacting_with))
 				qdel(beam)
-				return FALSE
-			if(!checkResource(deconcost, user))
-				return FALSE
-
-			if(!useResource(deconcost, user))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
+			if(!checkResource(DECONSTRUCT_COST, user))
+				return ITEM_INTERACT_BLOCKING
+			if(!useResource(DECONSTRUCT_COST, user))
+				return ITEM_INTERACT_BLOCKING
 			activate()
-			qdel(A)
-			return TRUE
+			qdel(interacting_with)
+			return ITEM_INTERACT_SUCCESS
 
 		if(LIGHT_MODE)
 			//resource sanity checks before & after delay
-			if(!checkResource(floorcost, user))
-				return FALSE
-			var/beam = user.Beam(A,icon_state="light_beam", time = condelay)
+			var/cost = iswallturf(interacting_with) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
+
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
 			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
-			if(!do_after(user, condelay, target = A))
+			if(!do_after(user, BUILD_DELAY, target = interacting_with))
 				qdel(beam)
-				return FALSE
-			if(!checkResource(floorcost, user))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
 
-			if(iswallturf(A))
+			if(iswallturf(interacting_with))
 				var/turf/open/winner = null
 				var/winning_dist = null
-				var/skip = FALSE
 				for(var/direction in GLOB.cardinals)
-					var/turf/C = get_step(A, direction)
+					var/turf/C = get_step(interacting_with, direction)
 					//turf already has a light
-					skip = FALSE
-					for(var/obj/machinery/light/dupe in C)
-						if(istype(dupe, /obj/machinery/light))
-							skip = TRUE
-							break
-					if(skip)
+					if(locate(/obj/machinery/light) in C)
 						continue
 					//can't put a light here
 					if(!(isspaceturf(C) || TURF_SHARES(C)))
@@ -153,43 +164,58 @@
 						winning_dist = contender
 				if(!winner)
 					balloon_alert(user, "no valid target!")
-					return FALSE
-
-				if(!useResource(wallcost, user))
-					return FALSE
+					return ITEM_INTERACT_BLOCKING
+				if(!useResource(cost, user))
+					return ITEM_INTERACT_BLOCKING
 				activate()
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
-				L.setDir(get_dir(winner, A))
+				L.setDir(get_dir(winner, interacting_with))
 				L.color = color_choice
 				L.set_light_color(color_choice)
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
-			if(isfloorturf(A))
-				var/turf/target = get_turf(A)
-				for(var/obj/machinery/light/floor/dupe in target)
-					if(istype(dupe))
-						return FALSE
-
-				if(!useResource(floorcost, user))
-					return FALSE
+			if(isfloorturf(interacting_with))
+				var/turf/target = get_turf(interacting_with)
+				if(locate(/obj/machinery/light/floor) in target)
+					return ITEM_INTERACT_BLOCKING
+				if(!useResource(cost, user))
+					return ITEM_INTERACT_BLOCKING
 				activate()
 				var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(target)
 				FL.color = color_choice
 				FL.set_light_color(color_choice)
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
 		if(GLOW_MODE)
-			if(!useResource(launchcost, user))
-				return FALSE
-			activate()
-			var/obj/item/flashlight/glowstick/G = new /obj/item/flashlight/glowstick(start)
-			G.color = color_choice
-			G.set_light_color(G.color)
-			G.throw_at(A, 9, 3, user)
-			G.on = TRUE
-			G.update_brightness()
+	//resource sanity checks before & after delay
+			var/cost = iswallturf(interacting_with) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
 
-			return TRUE
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
+			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+			playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+			if(!do_after(user, BUILD_DELAY, target = interacting_with))
+				qdel(beam)
+				return ITEM_INTERACT_BLOCKING
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
+			if(!useResource(GLOW_STICK_COST, user))
+				return ITEM_INTERACT_BLOCKING
+			activate()
+
+			if(!useResource(GLOW_STICK_COST, user))
+				return ITEM_INTERACT_BLOCKING
+			activate()
+			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start)
+			new_stick.color = color_choice
+			new_stick.set_light_color(new_stick.color)
+			new_stick.throw_at(interacting_with, 9, 3, user)
+			new_stick.attack_self()
+			new_stick.update_brightness()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device"
@@ -200,6 +226,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 100
 	max_matter = 100
+
+#undef LIGHT_TUBE_COST
+#undef FLOOR_LIGHT_COST
+#undef GLOW_STICK_COST
+#undef DECONSTRUCT_COST
+
+#undef BUILD_DELAY
+#undef REMOVE_DELAY
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

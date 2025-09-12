@@ -14,9 +14,9 @@
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
-/obj/structure/easel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/canvas = I
+/obj/structure/easel/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/canvas))
+		var/obj/item/canvas/canvas = attacking_item
 		user.dropItemToGround(canvas)
 		painting = canvas
 		canvas.forceMove(get_turf(src))
@@ -109,7 +109,7 @@
 		ui = new(user, src, "Canvas", name)
 		ui.open()
 
-/obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
+/obj/item/canvas/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 	else
@@ -489,10 +489,10 @@
 	. = ..()
 	SSpersistent_paintings.painting_frames -= src
 
-/obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
-	if(!current_canvas && istype(I, /obj/item/canvas))
-		frame_canvas(user,I)
-	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
+/obj/structure/sign/painting/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!current_canvas && istype(attacking_item, /obj/item/canvas))
+		frame_canvas(user,attacking_item)
+	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(attacking_item,/obj/item/pen))
 		if(try_rename(user))
 			SStgui.update_uis(src)
 	else

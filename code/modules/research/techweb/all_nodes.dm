@@ -187,6 +187,15 @@
 		"wirecutters",
 		"wrench",
 		"pickaxe",
+		//monkestation start
+		"industrial_lathe",
+		"industrial_lathe_workstation",
+		"industrial_lathe_furnace",
+		"industrial_lathe_tablesaw",
+		"industrial_lathe_drophammer",
+		"industrial_lathe_tailor",
+		"industrial_lathe_drillpress",
+		//monkestation end
 	)
 
 /datum/techweb_node/basic_medical

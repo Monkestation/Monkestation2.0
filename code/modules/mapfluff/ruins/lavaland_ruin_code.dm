@@ -38,7 +38,7 @@
 
 	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
 
-/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
+/obj/item/golem_shell/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	var/static/list/golem_shell_species_types = list(
 		/obj/item/stack/sheet/iron = /datum/species/golem,
@@ -71,9 +71,9 @@
 		/obj/item/stack/sheet/mineral/metal_hydrogen= /datum/species/golem/mhydrogen,
 	)
 
-	if(!isstack(I))
+	if(!isstack(attacking_item))
 		return
-	var/obj/item/stack/stuff_stack = I
+	var/obj/item/stack/stuff_stack = attacking_item
 	var/species = golem_shell_species_types[stuff_stack.merge_type]
 	if(!species)
 		to_chat(user, span_warning("You can't build a golem out of this kind of material!"))

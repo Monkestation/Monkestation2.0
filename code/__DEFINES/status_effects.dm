@@ -160,6 +160,11 @@
 #define set_silence(duration) set_timed_status_effect(duration, /datum/status_effect/silenced)
 #define set_silence_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/silenced, TRUE)
 
+#define adjust_emote_mute(duration) adjust_timed_status_effect(duration, /datum/status_effect/emote_mute)
+#define adjust_emote_mute_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/emote_mute, up_to)
+#define set_emote_mute(duration) set_timed_status_effect(duration, /datum/status_effect/emote_mute)
+#define set_emote_mute_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/emote_mute, TRUE)
+
 #define adjust_hallucinations(duration) adjust_timed_status_effect(duration, /datum/status_effect/hallucination)
 #define adjust_hallucinations_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/hallucination, up_to)
 #define set_hallucinations(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination)
@@ -170,8 +175,8 @@
 #define set_drowsiness(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness)
 #define set_drowsiness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness, TRUE)
 
-#define adjust_pacifism(duration) adjust_timed_status_effect(/datum/status_effect/pacify, duration)
-#define set_pacifism(duration) set_timed_status_effect(/datum/status_effect/pacify, duration)
+#define adjust_pacifism(duration) adjust_timed_status_effect(duration, /datum/status_effect/pacify)
+#define set_pacifism(duration) set_timed_status_effect(duration, /datum/status_effect/pacify)
 
 #define adjust_eye_blur(duration) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur)
 #define adjust_eye_blur_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur, up_to)

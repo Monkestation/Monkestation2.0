@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_master/attackby(obj/item/item, mob/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 		var/container_data = list()
 		for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
 			container_data += list(list(
-				"icon" = text_ref(initial(container.icon)),
+				"icon" = initial(container.icon),
 				"icon_state" = initial(container.icon_state),
 				"ref" = REF(container),
 				"name" = initial(container.name),
