@@ -123,7 +123,7 @@
 	var/glide_delay = add_delay
 	if(NSCOMPONENT(direct) && EWCOMPONENT(direct))
 		glide_delay = FLOOR(glide_delay * sqrt(2), world.tick_lag)
-	mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(glide_delay)) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
