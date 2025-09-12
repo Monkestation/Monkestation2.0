@@ -158,11 +158,6 @@
 		if (is_species(human_victim, /datum/species/golem/sand))
 			. = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
-
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
 	desc = "A shimmering forcefield protecting the colossus."
@@ -574,6 +569,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

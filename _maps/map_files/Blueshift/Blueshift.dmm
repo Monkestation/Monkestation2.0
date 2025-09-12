@@ -7012,9 +7012,7 @@
 /area/station/security/prison/safe)
 "brQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/package_wrap,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
@@ -11019,7 +11017,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/item/clothing/neck/mantle/bsmantle,
 /obj/machinery/duct,
 /obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/carpet/executive,
@@ -13743,9 +13740,7 @@
 /turf/open/floor/plating/rust,
 /area/station/maintenance/department/science/xenobiology)
 "cEe" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
@@ -14543,9 +14538,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "cKc" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/upper)
 "cKf" = (
@@ -24683,9 +24676,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "eIY" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
@@ -26670,9 +26661,7 @@
 /turf/open/floor/carpet/red,
 /area/station/security/warden)
 "fbR" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -29347,9 +29336,7 @@
 /area/station/hallway/primary/starboard)
 "fEC" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/storage/belt/bandolier,
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
@@ -31821,9 +31808,7 @@
 /area/station/hallway/primary/central/fore)
 "gel" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
@@ -33022,9 +33007,7 @@
 "gqV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -39665,9 +39648,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "hGU" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -46285,9 +46266,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "iXC" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/law)
@@ -51415,9 +51394,7 @@
 "jUA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash/mess,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
 "jUF" = (
@@ -53307,9 +53284,7 @@
 /area/station/solars/starboard/aft)
 "klX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/clothing/under/color/grey,
 /obj/item/clothing/mask/gas{
@@ -61361,9 +61336,7 @@
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "lPA" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
@@ -61956,9 +61929,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/pathology)
 "lVC" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -89777,9 +89748,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rqz" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/decoration/carpet,
 /turf/open/floor/plating,
@@ -102612,9 +102581,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
 "tNN" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -106363,9 +106330,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/wrench,
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 8
@@ -123825,9 +123790,7 @@
 "xND" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/contraband/narcotics,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
