@@ -62,7 +62,6 @@
 		"mech_punching_face",
 		"clown_firing_pin",
 		"borg_upgrade_cringe",
-		"honk_nanite",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY) //The dread upon security when they hear this...

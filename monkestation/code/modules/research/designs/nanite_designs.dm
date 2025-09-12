@@ -127,13 +127,6 @@
 	program_type = /datum/nanite_program/mitosis
 	category = list("Utility Nanites")
 
-/datum/design/nanites/honk
-	name = "Honk Synthesis"
-	desc = "Forces the host to honk."
-	id = "honk_nanite"
-	program_type = /datum/nanite_program/honk
-	category = list("Utility Nanites")
-
 ////////////////////MEDICAL NANITES//////////////////////////////////////
 /datum/design/nanites/regenerative
 	name = "Accelerated Regeneration"
