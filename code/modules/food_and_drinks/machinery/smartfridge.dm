@@ -320,8 +320,6 @@
 			var/amount = text2num(params["amount"])
 			if(isnull(amount) || !isnum(amount))
 				return TRUE
-			var/dispensed_amount = 0
-
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
 				return TRUE
