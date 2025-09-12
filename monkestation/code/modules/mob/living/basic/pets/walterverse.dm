@@ -1,7 +1,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter
 	name = "Walter"
 	real_name = "Walter"
-	desc = "Nar'sie and rat'var are nothing compared to the might of this monstertruck loving dog."
+	desc = "Nar'sie and Ratvar are nothing compared to the might of this monstertruck loving dog."
 	unique_pet = TRUE
 
 /mob/living/basic/pet/dog/bullterrier/walter/saulter
