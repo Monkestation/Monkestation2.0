@@ -585,7 +585,8 @@
 /datum/antagonist/bloodsucker/proc/after_expose_reagents(mob/source_mod, list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
 	SIGNAL_HANDLER
 	var/datum/reagent/blood/blood_reagent = locate() in reagents
-	if(blood_reagent)
-		var/blood_volume = round(reagents[blood_reagent], 0.1)
-		if(blood_volume > 0)
-			bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
+	if(!blood_reagent)
+		return
+	var/blood_volume = round(reagents[blood_reagent], 0.1)
+	if(blood_volume > 0)
+		bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
