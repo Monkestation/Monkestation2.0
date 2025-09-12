@@ -547,7 +547,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		var/mob/living/silicon/ai/aiPlayer = i
 		var/datum/mind/aiMind = aiPlayer.deployed_shell?.mind || aiPlayer.mind
 		if(aiMind)
-			var/show_key = aiPlayer.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits)
+			var/show_key = GLOB.roundend_hidden_ckeys[ckey(aiMind.key)]
 			parts += "<b>[aiPlayer.name]</b>[show_key ? " (Played by: <b>[aiMind.key]</b>)" : null]'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was [span_redtext("deactivated")]"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
@@ -559,14 +559,14 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-					var/show_key = robo.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits)
+					var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
 					parts += "<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null][robo.stat == DEAD ? " [span_redtext("(Deactivated)")]" : ""][borg_num ?", ":""]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-			var/show_key = robo.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits)
+			var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
 			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null] [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
@@ -779,7 +779,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	if(!is_unassigned_job(ply.assigned_role))
 		jobtext = " the <b>[ply.assigned_role.title]</b>"
 	var/text
-	var/show_key = ply.current.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits)
+	var/show_key = GLOB.roundend_hidden_ckeys[ckey(ply.key)]
 	if(show_key)
 		text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
 	else
