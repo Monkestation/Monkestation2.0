@@ -3866,7 +3866,7 @@
 /area/station/maintenance/department/science)
 "axG" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -3877,9 +3877,7 @@
 /area/station/cargo/storage)
 "axI" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "axJ" = (
@@ -3906,7 +3904,7 @@
 "ayd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -3935,9 +3933,7 @@
 "ayG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/cardboard{
 	amount = 23
 	},
@@ -7477,6 +7473,9 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_cargo_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
@@ -12522,9 +12521,7 @@
 	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
 	name = "funny slipper :)"
 	},
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "cPx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -13277,7 +13274,7 @@
 /area/station/security/prison/safe)
 "ddV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "dec" = (
@@ -20051,6 +20048,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_lower_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_lower_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
 "fju" = (
@@ -21232,10 +21232,9 @@
 /area/ruin/powered/clownplanet)
 "fBK" = (
 /obj/structure/industrial_lift/tram/white,
-/obj/effect/landmark/tram/tramstation/central,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/obj/effect/landmark/tram/platform/tramstation/central,
+/obj/effect/landmark/tram/nav/tramstation/main,
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
 /obj/effect/landmark/event_spawn,
@@ -25118,9 +25117,7 @@
 	icon_state = "tram_window-3"
 	},
 /obj/machinery/computer/tram_controls/directional/west,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "gOF" = (
 /obj/structure/fluff/tram_rail/floor{
@@ -25788,7 +25785,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "gZc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "gZq" = (
@@ -27993,9 +27990,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stock_parts/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -30700,6 +30695,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_dorm_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_dorm_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
 "iDP" = (
@@ -33279,9 +33277,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
@@ -36389,9 +36385,7 @@
 /area/station/security/prison/garden)
 "kpb" = (
 /obj/structure/industrial_lift/tram/white,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "kpd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
@@ -38663,9 +38657,7 @@
 	icon_state = "tram_window-3"
 	},
 /obj/machinery/computer/tram_controls/directional/east,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "kWN" = (
 /obj/structure/table,
@@ -38984,6 +38976,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "laz" = (
@@ -39548,10 +39541,8 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "lkr" = (
-/obj/effect/landmark/tram/tramstation/west,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/obj/effect/landmark/tram/platform/tramstation/west,
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "lkv" = (
 /obj/structure/table,
@@ -40383,9 +40374,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "lxH" = (
 /obj/structure/cable,
@@ -47407,9 +47396,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "nJq" = (
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "nJF" = (
 /obj/structure/bookcase/random/adult,
@@ -47938,9 +47925,7 @@
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "nRO" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -49198,9 +49183,7 @@
 /turf/closed/wall,
 /area/station/maintenance/department/security)
 "omp" = (
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "omu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
@@ -49943,9 +49926,7 @@
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "ozQ" = (
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "ozR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53667,9 +53648,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "pHM" = (
 /obj/structure/lattice,
@@ -56225,9 +56204,7 @@
 "qvZ" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qwl" = (
 /obj/structure/sign/warning/electric_shock/directional/south,
@@ -56375,10 +56352,8 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qyI" = (
-/obj/effect/landmark/tram/tramstation/east,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/obj/effect/landmark/tram/platform/tramstation/east,
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "qyK" = (
 /obj/effect/turf_decal/siding/thinplating,
@@ -56998,9 +56973,7 @@
 "qHk" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/sign/plaques/tram,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qHl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57471,7 +57444,7 @@
 /turf/closed/wall,
 /area/station/commons/dorms/laundry)
 "qON" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
@@ -58637,9 +58610,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59626,9 +59597,7 @@
 /area/station/hallway/secondary/construction/engineering)
 "rwa" = (
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "rwb" = (
 /obj/structure/disposalpipe/segment{
@@ -61906,6 +61875,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ski" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
 "skt" = (
@@ -63050,9 +63020,7 @@
 "sCG" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "sCO" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -64107,9 +64075,7 @@
 "sTn" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/lift_id,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "sTq" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -65543,9 +65509,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "toY" = (
 /obj/structure/table/wood,
@@ -69077,7 +69041,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/five,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -73434,9 +73398,7 @@
 	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
 	name = "funny slipper :)"
 	},
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "vDG" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -76462,6 +76424,9 @@
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_upper_center_lift"
 	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_upper_center_lift"
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/service)
 "wAr" = (
@@ -78118,6 +78083,9 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "tram_sci_lift"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "tram_sci_lift"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -81174,9 +81142,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate{
-	dir = 4
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "yfw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -81409,7 +81375,7 @@
 /area/station/hallway/secondary/exit)
 "yiX" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron,
