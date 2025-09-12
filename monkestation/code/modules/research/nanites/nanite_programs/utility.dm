@@ -457,14 +457,3 @@
 	program.press()
 	playsound(owner, SFX_BUTTON_CLICK, vol = 20, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
 
-/datum/nanite_program/honk
-	name = "Honk Synthesis"
-	desc = "Forces the host to honk."
-	unique = FALSE						//Lets clown flood cloud with copies of this.
-	can_trigger = TRUE
-	trigger_cost = 1
-	trigger_cooldown = 20
-	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
-
-/datum/nanite_program/honk/on_trigger(comm_message)
-	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, FALSE) //Should this be TRUE?
