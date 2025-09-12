@@ -232,14 +232,13 @@
 		feed_top.color = "#cacc52"
 	add_overlay(feed_top)
 
-/obj/item/chicken_feed/afterattack(atom/attacked_atom, mob/user)
-	if(!user.Adjacent(attacked_atom))
-		return
-	try_place(attacked_atom)
+/obj/item/chicken_feed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	try_place(interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/chicken_feed/proc/try_place(atom/target)
-	if(!isopenturf(target))
-		return FALSE
 	var/turf/open/targeted_turf = get_turf(target)
 	var/list/compiled_reagents = list()
 	for(var/datum/reagent/listed_reagent in reagents.reagent_list)

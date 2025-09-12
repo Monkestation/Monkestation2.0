@@ -411,7 +411,7 @@
  * * user (mob/living) The user to recive the object
  */
 /obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
-	if(!issilicon(user) && in_range(src, user))
+	if(in_range(src, user))
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())

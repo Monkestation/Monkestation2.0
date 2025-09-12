@@ -8,24 +8,23 @@
 	var/obj/machinery/corral_corner/host
 	var/list/corral_corners = list()
 
-/obj/item/corral_linker/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(target == host)
-		if(host.submit_corners(corral_corners))
-			qdel(src)
+/obj/item/corral_linker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with == host && host.submit_corners(corral_corners))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 	if(length(corral_corners) == 4)
 		say("Buffer full!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(target, /obj/machinery/corral_corner))
-		if(target in corral_corners)
-			corral_corners -= target
+	if(istype(interacting_with, /obj/machinery/corral_corner))
+		if(interacting_with in corral_corners)
+			corral_corners -= interacting_with
 			say("Removed corner from buffer!")
-			return
-		corral_corners += target
-		say("Added corner to buffer!")
-		return
+		else
+			corral_corners += interacting_with
+			say("Added corner to buffer!")
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/corral_corner
 	name = "corral fencepost"

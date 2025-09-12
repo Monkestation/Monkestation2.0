@@ -3,7 +3,7 @@
 
 /datum/nanite_program/flesh_eating
 	name = "Cellular Breakdown"
-	desc = "The nanites destroy cellular structures in the host's body, causing brute damage."
+	desc = "The nanites destroy cellular structures in the host's body, causing 1 brute damage per second."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -18,7 +18,7 @@
 
 /datum/nanite_program/poison
 	name = "Poisoning"
-	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing toxin damage and vomiting."
+	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing 1 toxin damage per second, as well as vomiting."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/toxic)
 
@@ -47,7 +47,7 @@
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
 	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even, \
-			and scaling linearly for a net positive of 0.1 production rate per 20 nanite volume beyond that."
+			and scaling linearly for a net positive of 0.1 production rate per 20 nanite volume beyond that. Deals 0.5 brute damage per nanite produced this way."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -58,7 +58,7 @@
 
 /datum/nanite_program/meltdown
 	name = "Meltdown"
-	desc = "Causes an internal meltdown inside the nanites, causing internal burns inside the host as well as rapidly destroying the nanite population.\
+	desc = "Causes an internal meltdown inside the nanites, causing internal burns inside the host which deal 3.5 burn damage per second.\
 			Sets the nanites' safety threshold to 0 when activated."
 	use_rate = 10
 	rogue_types = list(/datum/nanite_program/glitch)
@@ -77,7 +77,7 @@
 
 /datum/nanite_program/explosive
 	name = "Chain Detonation"
-	desc = "Detonates all the nanites inside the host in a chain reaction when triggered."
+	desc = "Detonates all the nanites inside the host in a chain reaction when triggered. The power of the resultant explosion is determined by the number of nanites detonated."
 	can_trigger = TRUE
 	trigger_cost = 25 //plus every idle nanite left afterwards
 	trigger_cooldown = 100 //Just to avoid double-triggering
@@ -96,7 +96,7 @@
 
 /datum/nanite_program/heart_stop
 	name = "Heart-Stopper"
-	desc = "Stops the host's heart when triggered; restarts it if triggered again."
+	desc = "When triggered, stops the host's heart if it's beating and restarts it if it's not."
 	can_trigger = TRUE
 	trigger_cost = 12
 	trigger_cooldown = 10
@@ -137,10 +137,12 @@
 
 /datum/nanite_program/pyro/active_effect()
 	host_mob.adjust_fire_stacks(1)
+	if(host_mob.fire_stacks >= 10 && !host_mob.on_fire)
+		host_mob.ignite_mob()
 
 /datum/nanite_program/cryo
 	name = "Cryogenic Treatment"
-	desc = "The nanites rapidly sink heat through the host's skin, lowering their temperature."
+	desc = "The nanites rapidly sink heat through the host's skin, lowering their body temperature by around 20 Kelvin per second. This stops at a minimum of 50 Kelvin."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/skin_decay, /datum/nanite_program/pyro)
 
@@ -154,7 +156,7 @@
 
 /datum/nanite_program/comm/mind_control
 	name = "Mind Control"
-	desc = "The nanites imprint an absolute directive onto the host's brain for one minute when triggered."
+	desc = "The nanites imprint an absolute directive onto the host's brain for five minutes when triggered."
 	trigger_cost = 30
 	trigger_cooldown = 1800
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)

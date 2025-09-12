@@ -626,7 +626,7 @@
 	pixel_x = -2
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/station/engineering/shipbreaker_hut)
 "ajt" = (
 /obj/structure/cable,
@@ -3744,7 +3744,7 @@
 "beu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/railing,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bew" = (
 /obj/effect/turf_decal/siding/wood{
@@ -4434,9 +4434,6 @@
 /area/station/maintenance/starboard/aft)
 "bqu" = (
 /obj/item/borg/upgrade/transform/clown,
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 1000)
-	},
 /turf/open/floor/mineral/bananium,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "bqv" = (
@@ -4667,7 +4664,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bsS" = (
 /obj/machinery/light/small/directional/north,
@@ -8434,7 +8431,6 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/cheese/royal,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "czI" = (
@@ -11400,8 +11396,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "duh" = (
 /turf/open/floor/iron/stairs{
 	icon_state = "stairs_wood";
@@ -11444,7 +11440,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "duI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "duP" = (
@@ -16698,7 +16694,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "eYb" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -17430,7 +17426,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "fhj" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/circuitboard/machine/thermomachine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -20792,14 +20788,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"gid" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/grille,
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
-	},
-/turf/open/floor/plating,
-/area/station/hallway/primary/central)
 "gij" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24668,7 +24656,7 @@
 	dir = 8
 	},
 /obj/structure/railing,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "hnU" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -26516,8 +26504,8 @@
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "hRw" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/landmark/start/assistant,
@@ -28179,7 +28167,7 @@
 /area/station/engineering/atmos/pumproom)
 "ipC" = (
 /obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/cargo/storage)
 "ipF" = (
 /obj/structure/cable,
@@ -29204,12 +29192,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
-"iEs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/space/nearstation)
 "iEy" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 8
@@ -29879,7 +29861,7 @@
 /area/station/security/office)
 "iOD" = (
 /obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "iOH" = (
 /obj/effect/turf_decal/tile/blue/half,
@@ -31927,7 +31909,7 @@
 /turf/open/floor/plating,
 /area/station/security/bitden)
 "jus" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -33619,7 +33601,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "jTr" = (
 /obj/effect/landmark/start/medical_doctor,
@@ -36385,9 +36367,7 @@
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "kHp" = (
-/mob/living/carbon/human/species/monkey{
-	name = "Hotdog"
-	},
+/obj/effect/mob_spawn/corpse/human/monkey,
 /turf/open/space/basic,
 /area/space)
 "kHs" = (
@@ -37269,6 +37249,7 @@
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/food/cheese/royal,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "kTQ" = (
@@ -37702,7 +37683,7 @@
 "kYz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "kYD" = (
 /obj/effect/spawner/random/trash/cigbutt,
@@ -39544,7 +39525,7 @@
 	default_raw_text = "Should be fine in here... Just need to lay low for a couple days and nobody will notice!";
 	name = "singed note"
 	},
-/turf/open/floor/plating/plasma/rust,
+/turf/open/floor/plating/rust,
 /area/station/maintenance/starboard/aft)
 "lxr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -42266,9 +42247,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms/laundry)
 "mlH" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/wheelys/rollerskates{
@@ -44803,7 +44782,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "naD" = (
 /obj/machinery/status_display/evac/directional/east,
@@ -49683,7 +49662,7 @@
 /obj/item/stack/cable_coil,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/storage/pod/directional/north,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "owt" = (
 /obj/structure/flora/bush/large/style_random,
@@ -51368,7 +51347,7 @@
 /area/station/maintenance/department/medical)
 "oYw" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "oYE" = (
 /turf/open/floor/plating,
@@ -51806,9 +51785,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "pfE" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
@@ -54220,8 +54197,10 @@
 "pSY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
-/turf/open/indestructible/permalube,
-/area/station/maintenance/starboard/aft)
+/turf/open/indestructible/permalube{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/space/nearstation)
 "pTd" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -54329,11 +54308,11 @@
 "pUD" = (
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/spawner/random/structure/table,
+/obj/item/pizzabox/random,
 /obj/effect/spawner/random/food_or_drink/booze{
 	pixel_y = 16;
 	pixel_x = 10
 	},
-/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/spawner/random/food_or_drink/condiment{
 	pixel_y = 7;
@@ -55878,9 +55857,7 @@
 "qnd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/machinery/airalarm/directional/south,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass/fifty{
@@ -57948,7 +57925,7 @@
 "qRo" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/cargo/storage)
 "qRp" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -68919,7 +68896,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "tXI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
@@ -74560,7 +74537,7 @@
 "vCc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "vCd" = (
 /obj/effect/landmark/blobstart,
@@ -78017,12 +77994,8 @@
 /area/station/science/ordnance/freezerchamber)
 "wIl" = (
 /obj/structure/bed/dogbed,
-/mob/living/basic/pet/dog/bullterrier{
-	name = "Walter";
-	real_name = "Walter";
-	desc = "It's Walter!"
-	},
 /obj/item/radio/intercom/directional/south,
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "wIq" = (
@@ -79653,6 +79626,7 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Prison Gym"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "xcI" = (
@@ -80210,9 +80184,6 @@
 /area/station/maintenance/department/medical)
 "xkH" = (
 /obj/effect/spawner/random/structure/grille,
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
-	},
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
 "xkQ" = (
@@ -81827,9 +81798,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "xKw" = (
-/obj/item/kirbyplants/random,
 /obj/structure/sign/poster/official/carwo_magazine/directional/north,
 /obj/effect/turf_decal/delivery/white,
+/mob/living/basic/pet/dog/dobermann/walter,
+/obj/structure/bed/dogbed{
+	name = "Walter's bed"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "xKx" = (
@@ -82355,9 +82329,6 @@
 "xRU" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/spawner/liquids_spawner{
-	reagent_list = list(/datum/reagent/ammonia/urine = 400)
-	},
 /turf/open/floor/plating,
 /area/station/service/theater)
 "xSd" = (
@@ -94968,7 +94939,7 @@ lXw
 iCs
 iCs
 iCs
-iEs
+ijf
 iCs
 iCs
 oYw
@@ -107785,7 +107756,7 @@ ryN
 tCC
 wXs
 ryN
-gid
+tPY
 ryN
 nhC
 nhC

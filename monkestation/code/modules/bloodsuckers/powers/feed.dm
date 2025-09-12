@@ -32,6 +32,7 @@
 	var/silent_feed = TRUE
 	///Have we notified you already that you are at maximum blood?
 	var/notified_overfeeding = FALSE
+	var/datum/looping_sound/zucc/soundloop
 
 /datum/action/cooldown/bloodsucker/feed/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -70,6 +71,8 @@
 	blood_taken = 0
 	notified_overfeeding = initial(notified_overfeeding)
 	REMOVE_TRAITS_IN(user, FEED_TRAIT)
+	if(soundloop.loop_started)
+		soundloop.stop()
 	return ..()
 
 /datum/action/cooldown/bloodsucker/feed/ActivatePower(trigger_flags)
@@ -155,6 +158,8 @@
 		return ..() //Manage our cooldown timers
 	var/mob/living/user = owner
 	var/mob/living/feed_target = target_ref?.resolve()
+	if(!soundloop)
+		soundloop = new(owner, FALSE)
 	if(QDELETED(feed_target))
 		DeactivatePower()
 		return PROCESS_KILL
@@ -188,9 +193,15 @@
 		feed_strength_mult = 1
 	else
 		feed_strength_mult = 0.3
+	var/obj/item/comically_large_straw/held = owner.get_active_held_item()
+	if(istype(held))
+		feed_strength_mult *= held.suck_power
+		soundloop.start()
+	else
+		soundloop.stop()
 	blood_taken += bloodsuckerdatum_power.handle_feeding(feed_target, feed_strength_mult, level_current)
 
-	if(feed_strength_mult > 5 && feed_target.stat < DEAD)
+	if(feed_strength_mult >= 1 && feed_target.stat < DEAD)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood)
 	// Drank mindless as Ventrue? - BAD
 	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(feed_target.mind))

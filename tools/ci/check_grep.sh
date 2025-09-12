@@ -87,6 +87,11 @@ if $grep -i'centcomm' $map_files; then
     echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in maps, please remove the extra M(s).${NC}"
     st=1
 fi;
+if $grep -i"rat'var" $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in maps, please remove the apostrophe(s).${NC}"
+    st=1
+fi;
 
 section "whitespace issues"
 part "space indentation"
@@ -179,6 +184,11 @@ fi;
 if $grep -ni 'nanotransen' $code_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep -ni "rat'var" $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in code, please remove the apostrophe(s).${NC}"
     st=1
 fi;
 part "map json naming"

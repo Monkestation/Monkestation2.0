@@ -48,12 +48,83 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
-	pbk_gentle = TRUE
+
+/obj/item/gun/ballistic/shotgun/riot/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
+// SolFed shotgun (I.E resprited riot shotgun from blueshift)
+
+/obj/item/gun/ballistic/shotgun/riot/sol
+	name = "\improper Renoster Shotgun"
+	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
+	icon_state = "renoster"
+
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
+	worn_icon_state = "renoster"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
+	inhand_icon_state = "renoster"
+
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+
+	SET_BASE_PIXEL(-8, 0)
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/shotgun_heavy.ogg'
+	rack_sound = 'monkestation/code/modules/blueshift/sounds/shotgun_rack.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	can_suppress = TRUE
+
+	suppressor_x_offset = 9
+
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+
+/obj/item/gun/ballistic/shotgun/riot/sol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
+
+/obj/item/gun/ballistic/shotgun/riot/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/shotgun/riot/sol/examine_more(mob/user)
+	. = ..()
+
+	. += "The Renoster was designed at its core as a police shotgun. \
+		As consequence, it holds all the qualities a police force would want \
+		in one. Large shell capacity, sturdy frame, while holding enough \
+		capacity for modification to satiate even the most overfunded of \
+		peacekeeper forces. Inevitably, the weapon made its way into civilian \
+		markets alongside its sale to several military branches that also \
+		saw value in having a heavy shotgun."
+
+	return .
+
+/obj/item/gun/ballistic/shotgun/riot/sol/update_appearance(updates)
+	if(sawn_off)
+		suppressor_x_offset = 0
+		SET_BASE_PIXEL(0, 0)
+
+	. = ..()
+
+// Shotgun but EVIL!
+
+/obj/item/gun/ballistic/shotgun/riot/sol/evil
+	desc = "A twleve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
+
+	icon_state = "renoster_evil"
+	worn_icon_state = "renoster_evil"
+	inhand_icon_state = "renoster_evil"
+	projectile_wound_bonus = 15
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 // Automatic Shotguns//
-
-/obj/item/gun/ballistic/shotgun/automatic
-	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
@@ -67,6 +138,10 @@
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+	pbk_gentle = TRUE
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
@@ -140,6 +215,9 @@
 		return
 	rack()
 
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
 // Bulldog shotgun //
 
 /obj/item/gun/ballistic/shotgun/bulldog
@@ -170,7 +248,6 @@
 	tac_reloads = TRUE
 	projectile_damage_multiplier = 1.2
 	casing_ejector = TRUE
-	pbk_gentle = FALSE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
 	///the secondary magazine
@@ -197,6 +274,7 @@
 	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
 	. += "You can remove a secondary magazine by alt-right-clicking [src]."
 	. += "Right-click to swap the magazine to the secondary position, and vice versa."
+
 
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
@@ -273,6 +351,9 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/shotgun/bulldog/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
@@ -364,10 +445,135 @@
 		return hook.try_fire_gun(target, user, params)
 	return ..()
 
-// Proto Kinetic Double Barrel, used by miners for "Gun Mining"
+// A shotgun, but tis a revolver (Blueshift again)
+// Woe, buckshot be upon ye
 
-/// Caliber used by Ballistic Kinetic weapons for miners (More specifically the proto shotgun)
-#define MINER_SHOTGUN "kinetic shotgun"
+/obj/item/gun/ballistic/revolver/shotgun_revolver
+	name = "\improper Bóbr 12 GA revolver"
+	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev12ga
+	recoil = SAWN_OFF_RECOIL
+	wield_recoil = SAWN_OFF_RECOIL * 0.5
+	weapon_weight = WEAPON_MEDIUM
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon_state = "bobr"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
+	spread = SAWN_OFF_ACC_PENALTY
+	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
+	projectile_wound_bonus = -5  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
+
+/obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/revolver/shotgun_revolver/examine_more(mob/user)
+	. = ..()
+
+	. += "The 'Bóbr' started development as a limited run sporting weapon before \
+		the military took interest. The market quickly changed from sport shooting \
+		targets, to sport shooting SolFed strike teams once the conflict broke out. \
+		This pattern is different from the original civilian version, with a military \
+		standard pistol grip and weather resistant finish. While the 'Bóbr' was not \
+		a weapon standard issued to every CIN soldier, it was available for relatively \
+		cheap, and thus became rather popular among the ranks."
+
+	return .
+
+
+
+/obj/item/gun/ballistic/shotgun/buckshotroulette
+	name = "Buckshot roulette shotgun"
+	desc = "Relic of ancient times, this shotgun seems to have an unremovable firing pin with a label that mocks poor people. Aim at your mouth, IT knows..."
+	icon_state = "riotshotgun"
+	inhand_icon_state = "shotgun"
+	fire_delay = 8
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
+	sawn_desc = "This one doesn't fix itself."
+	can_be_sawn_off = TRUE
+	pin = /obj/item/firing_pin/permit_pin/buckshotroulette
+
+/obj/item/firing_pin/permit_pin/buckshotroulette //no cheating allowed
+	pin_removable = FALSE
+
+
+//god fucking bless brazil
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil
+	name = "six-barreled \"TRABUCO\" shotgun"
+	desc = "Dear fucking god, what the fuck even is this!? Theres a green flag with a blue circle and a yellow diamond around it. Some text in the circle says: \"ORDEM E PROGRESSO.\""
+	icon_state = "shotgun_brazil"
+	slot_flags = NONE
+	icon = 'monkestation/icons/obj/guns/48x32guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	force = 15 //blunt edge and really heavy
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/six
+	burst_size = 6
+	pb_knockback = 12
+	unique_reskin = null
+	recoil = 5
+	weapon_weight = WEAPON_LIGHT
+	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
+	load_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	fire_sound_volume = 50
+	rack_sound_volume = 50
+	can_be_sawn_off = FALSE
+
+	var/knockback_distance = 12
+	var/death = 10
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(user, get_dir(pbtarget, user))
+	user.throw_at(throw_target, knockback_distance, 2)
+	if(prob(death))
+		user.gib()
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death
+	name = "Force of Nature"
+	desc = "So you have chosen death."
+	icon_state = "shotgun_e"
+	worn_icon_state = "none"
+	burst_size = 100
+	pb_knockback = 40
+	recoil = 10
+	fire_sound_volume = 100
+	knockback_distance = 100
+	death = 100
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/hundred
+
+
+//Mining autoshotgun!
+/obj/item/gun/ballistic/shotgun/autoshotgun
+	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
+	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
+	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
+	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_icon_state = "protokshotgunauto"
+	worn_icon_state = "protokshotgunauto"
+	icon_state = "protokshotgunauto"
+	slot_flags = ITEM_SLOT_BACK
+	burst_size = 1
+	fire_delay = 0
+	base_pixel_x = -2
+	pixel_x = -2
+	actions_types = list()
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	mag_display = TRUE
+	empty_indicator = FALSE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
+	pin = /obj/item/firing_pin/wastes
+	bolt_type = BOLT_TYPE_STANDARD
+	semi_auto = TRUE
+	internal_magazine = FALSE
+	show_bolt_icon = FALSE
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	pb_knockback = 0
+
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic
 	name = "Kinetic 'Slayer' Boomstick"
@@ -395,175 +601,5 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling
+	pb_knockback = 0 //you may have your point blank, but you dont get a fling    Why tf are they worried about this when half the mining guns instantly kill you
 
-/obj/item/ammo_box/magazine/internal/shot/dual/kinetic
-	name = "kinetic double barrel shotgun internal magazine"
-	desc = "how did you break my gun like this, please report whatever you did then feel bad!!!"
-	ammo_type = /obj/item/ammo_casing/shotgun/kinetic
-	caliber = MINER_SHOTGUN
-	max_ammo = 2
-
-//You cant just pry these shells out with your fingers, youll have to eject them by breaking open the shotgun
-/obj/item/ammo_box/magazine/internal/shot/dual/kinetic/give_round(obj/item/ammo_casing/R)
-	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
-		return FALSE
-
-	else if (stored_ammo.len < max_ammo)
-		stored_ammo += R
-		R.forceMove(src)
-		return TRUE
-	return FALSE
-
-/obj/item/ammo_casing/shotgun/kinetic //for slaying, works on crowds
-	name = "Kinetic Magnum Buckshot Shell"
-	desc = "A 12 gauge Shell loaded with magnum kinetic projectiles. Penetrates rocky walls and creatures! <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
-	icon_state = "shellproto"
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	caliber = MINER_SHOTGUN
-	pellets = 5
-	variance = 30
-	projectile_type = /obj/projectile/plasma/kineticshotgun
-
-/obj/item/ammo_casing/shotgun/kinetic/sniperslug //slugs essentially
-	name = "Kinetic .50 BMG"
-	desc = "If god did not want us to put 50 BMG in a 12 gauge, he would not have given them similar diameter! A incredibly large 50 BMG round adapted into a kinetic slug. Does not penetrate targets like Magnum Kinetic Buckshot, but still penetrates rock walls. <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
-	icon_state = "slugbmg"
-	pellets = 1
-	variance = 5
-	projectile_type = /obj/projectile/plasma/kineticshotgun/sniperslug
-
-
-/obj/item/ammo_casing/shotgun/kinetic/rockbreaker //for digging!
-	name = "Kinetic Rockbreaker Shell"
-	desc = "A 12 gauge Shell loaded with dozens of special tiny kinetic rockbreaker pellets, perfect for clearing masses of rocks but no good for killing fauna. <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
-	icon_state = "bountyshell"
-	caliber = MINER_SHOTGUN
-	pellets = 10
-	variance = 120
-	projectile_type = /obj/projectile/plasma/kineticshotgun/rockbreaker
-
-/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can punch through mineable turf. Cant be used off of lavaland or off the wastes of icemoon anyways so...
-	name = "magnum kinetic projectile"
-	icon_state = "cryoshot"
-	damage_type = BRUTE
-	damage = 35  //totals 175 damage letting them reach the breakpoint for watcher HP so it one shots them
-	range = 7
-	dismemberment = 0
-	projectile_piercing = PASSMOB
-	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
-	mine_range = 1
-	tracer_type = ""
-	muzzle_type = ""
-	impact_type = ""
-
-/obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
-	name = ".50 BMG kinetic"
-	speed = 0.4
-	damage = 150
-	range = 10
-	icon_state = "gaussstrong"
-	projectile_piercing = NONE
-
-/obj/projectile/plasma/kineticshotgun/rockbreaker // for breaking rocks
-	name = "kinetic rockbreaker"
-	speed = 1 //slower than average
-	damage = 2
-	range = 13
-	icon_state = "guardian"
-	projectile_piercing = NONE
-
-/obj/item/storage/box/kinetic/shotgun //box
-	name = "box of kinetic shells"
-	desc = "A box that can hold up to ten shells of Magnum Kinetic Buckshot for the PKShotgun. Fits inside of explorer webbings."
-	icon_state = "protoshell_box"
-	illustration = "protoshell_box"
-
-/obj/item/storage/box/kinetic/shotgun/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/shotgun/kinetic,
-	))
-
-/obj/item/storage/box/kinetic/shotgun/PopulateContents() //populate
-	for(var/i in 1 to 10)
-		new /obj/item/ammo_casing/shotgun/kinetic(src)
-
-/obj/item/storage/box/kinetic/shotgun/sniperslug //box
-	name = "box of .50 BMG Kinetic"
-	desc = "A box designed to hold up to ten shells of 50 BMG Slugs for the PKShotgun. Fits inside of explorer webbings."
-	icon_state = "bmgshell_box"
-	illustration = "bmgshell_box"
-
-/obj/item/storage/box/kinetic/shotgun/sniperslug/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
-	))
-
-/obj/item/storage/box/kinetic/shotgun/sniperslug/PopulateContents() //populate
-	for(var/i in 1 to 10)
-		new /obj/item/ammo_casing/shotgun/kinetic/sniperslug(src)
-
-/obj/item/storage/box/kinetic/shotgun/rockbreaker //box
-	name = "box of kinetic rock breaker"
-	desc = "A box for holding up to twenty shells of Rockbreaker for the PKShotgun. Surprisingly fits inside of explorer webbings."
-	icon = 'icons/obj/storage/toolbox.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	icon_state = "ammobox"
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/iron
-
-/obj/item/storage/box/kinetic/shotgun/rockbreaker/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 20
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
-	))
-
-/obj/item/storage/box/kinetic/shotgun/rockbreaker/PopulateContents() //populate
-	for(var/i in 1 to 20)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-
-/obj/item/storage/box/kinetic/shotgun/bigcase //box
-	name = "Kinetic 'Slayer' Shotgun Case"
-	desc = "A special and totally original gun case that contains a 'Slayer' Shotgun, eight shells of Rockbreaker, and four shells of Magnum Kinetic Buckshot. Beware, they dont fit back inside once taken out for some reason."
-	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	w_class = WEIGHT_CLASS_BULKY
-	icon_state = "miner_case"
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/iron
-
-/obj/item/storage/box/kinetic/shotgun/bigcase/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 13
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 13
-	atom_storage.set_holdable(list())
-
-/obj/item/storage/box/kinetic/shotgun/bigcase/PopulateContents() //populate
-
-		new /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic(src) //the shotgun
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src) //fuck it we do a little bit of bad code :)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src) //8 shells of rockbreaker
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
-		new /obj/item/ammo_casing/shotgun/kinetic(src) //4 shells of kinetic buckshot
-		new /obj/item/ammo_casing/shotgun/kinetic(src)
-		new /obj/item/ammo_casing/shotgun/kinetic(src)
-		new /obj/item/ammo_casing/shotgun/kinetic(src)
