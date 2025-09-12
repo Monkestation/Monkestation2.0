@@ -7,6 +7,7 @@
 
 /datum/objective/bloodsucker
 	martyr_compatible = TRUE
+	/// The bloodsucker antag datum of this objective's owner.
 	var/datum/antagonist/bloodsucker/bloodsucker_datum
 
 // GENERATE
@@ -15,7 +16,7 @@
 	if(owner)
 		src.owner = owner
 		src.bloodsucker_datum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	..()
+	return ..()
 
 /datum/objective/bloodsucker/Destroy()
 	bloodsucker_datum = null
