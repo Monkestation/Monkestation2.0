@@ -4,7 +4,7 @@
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 	icon = 'icons/obj/modular_console.dmi'
 	icon_state = "console"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
@@ -115,7 +115,7 @@
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
+	if(cpu?.use_energy()) // If it still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_appearance()
 		return

@@ -131,13 +131,11 @@
 
 
 /obj/machinery/chem_dispenser/process(seconds_per_tick)
-	if (recharge_counter >= 8)
-		var/usedpower = cell.give(recharge_amount)
-		if(usedpower)
-			use_power(active_power_usage + recharge_amount)
-		recharge_counter = 0
+	if(cell.maxcharge == cell.charge)
 		return
-	recharge_counter += seconds_per_tick
+	use_energy(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
+	charge_cell(recharge_amount * seconds_per_tick, cell) //This also costs power.
+
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -428,12 +426,12 @@
 /obj/machinery/chem_dispenser/RefreshParts()
 	. = ..()
 	recharge_amount = initial(recharge_amount)
-	var/newpowereff = 0.0666666
+	var/newpowereff = INVERSE(1.5e4)
 	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
 		cell = stock_cell
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		newpowereff += 0.0166666666 * matter_bin.tier
+		newpowereff += matter_bin.tier / 6e4
 		parts_rating += matter_bin.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_amount *= capacitor.tier

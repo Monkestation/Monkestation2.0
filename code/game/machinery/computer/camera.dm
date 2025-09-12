@@ -176,7 +176,6 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 
 /atom/movable/screen/map_view/camera
 	/// All the plane masters that need to be applied.

@@ -130,15 +130,35 @@
 
 	return A.powered(chan) // return power status of the area
 
-// increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = power_channel)
-	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
-	var/area/A = get_area(src) // make sure it's in an area
-	A?.use_power(amount, chan)
+/**
+ * Returns the available energy from the apc's cell and grid that can be used.
+ * Args:
+ * - consider_cell: Whether to count the energy from the APC's cell or not.
+ * Returns: The available energy the machine can access from the APC.
+ */
+/obj/machinery/proc/available_energy(consider_cell = TRUE)
+	var/area/home = get_area(src)
+
+	if(isnull(home))
+		return FALSE
+	if(!home.requires_power)
+		return INFINITY
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(isnull(local_apc))
+		return FALSE
+
+	return consider_cell ? local_apc.available_energy() : local_apc.surplus()
 
 /**
- * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
- * - Amount: How much power the APC's cell is to be costed.
+ * Draws energy from the APC. Will use excess energy from the APC's connected grid,
+ * then use energy from the APC's cell if there wasn't enough energy from the grid, unless ignore_apc is true.
+ * Args:
+ * - amount: The amount of energy to use.
+ * - channel: The power channel to use.
+ * - ignore_apc: If true, do not consider the APC's cell when demanding energy.
+ * - force: If true and if there isn't enough energy, consume the remaining energy. Returns 0 if false and there isn't enough energy.
+ * Returns: The amount of energy used.
  */
 /obj/machinery/proc/directly_use_power(amount)
 	var/area/A = get_area(src)
@@ -161,7 +181,7 @@
  * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
  * the surplus is above zero.
  * Args:
- * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
+ * - amount, the amount of power requested from the powernet. In joules.
  * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
  */
 /obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
@@ -186,6 +206,21 @@
 		amount = surplus
 	local_apc.add_load(amount)
 	return amount
+
+/**
+ * Draws power from the apc's powernet and cell to charge a power cell.
+ * Args:
+ * - amount: The amount of energy given to the cell.
+ * - cell: The cell to charge.
+ * - grid_only: If true, only draw from the grid and ignore the APC's cell.
+ * - channel: The power channel to use.
+ * Returns: The amount of energy the cell received.
+ */
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
+	var/power_given = cell.give(demand)
+	return power_given
+
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
@@ -461,10 +496,9 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy WATTS)
+		source_area.apc?.terminal?.use_energy(drained_energy)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
-		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
+		PN.delayedload += (min(drained_energy, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

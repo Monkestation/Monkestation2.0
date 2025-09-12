@@ -173,6 +173,7 @@
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
 			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
+			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
 			using_power = TRUE
 		update_appearance()
 

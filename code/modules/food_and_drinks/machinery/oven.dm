@@ -96,7 +96,7 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 
 /obj/machinery/oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

@@ -47,8 +47,8 @@
 	/// Used to determine the y position of the component within the UI
 	var/rel_y = 0
 
-	/// The power usage whenever this component receives an input
-	var/power_usage_per_input = 1
+	/// The energy usage whenever this component receives an input.
+	var/energy_usage_per_input = 0.001 * STANDARD_CELL_CHARGE
 
 	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
@@ -347,7 +347,7 @@
 			. += create_ui_notice(initial(shell.name), "green", "plus-square")
 
 	if(length(input_ports))
-		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
+		. += create_ui_notice("Energy Usage Per Input: [display_energy(energy_usage_per_input)]", "orange", "bolt")
 
 /**
  * Called when a special button is pressed on this component in the UI.

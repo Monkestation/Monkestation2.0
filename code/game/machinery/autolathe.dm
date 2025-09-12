@@ -3,7 +3,8 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
+	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 
@@ -43,6 +44,65 @@
 	QDEL_NULL(wires)
 	materials = null
 	return ..()
+
+/obj/machinery/autolathe/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>")
+	if(drop_direction)
+		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
+	else
+		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+
+/obj/machinery/autolathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(drop_direction)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset Drop"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
+	SIGNAL_HANDLER
+
+	//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
+	if(directly_use_energy(ROUND_UP((amount_inserted / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * 0.4 * initial(active_power_usage))))
+		flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "autolathe_mat"), 1 SECONDS)
+
+		var/datum/material/highest_mat_ref
+		var/highest_mat = 0
+		for(var/datum/material/mat as anything in mats_consumed)
+			var/present_mat = mats_consumed[mat]
+			if(present_mat > highest_mat)
+				highest_mat = present_mat
+				highest_mat_ref = mat
+
+		flick_overlay_view(material_insertion_animation(highest_mat_ref.greyscale_colors), 1 SECONDS)
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)

@@ -134,6 +134,9 @@
 	return ..()
 
 
+/**
+ * Returns the percentage of the cell's charge.
+ */
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
@@ -157,15 +160,13 @@
 	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return TRUE
+	return power_used
 
-// recharge the cell
+/// Recharge the cell.
+/// Args:
+/// - amount: The amount of energy to give to the cell in joules.
+/// Returns: The power given to the cell in joules.
 /obj/item/stock_parts/cell/proc/give(amount)
-	if(rigged && amount > 0)
-		explode()
-		return 0
-	if(maxcharge < amount)
-		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
 	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
@@ -195,9 +196,9 @@
 /obj/item/stock_parts/cell/proc/explode()
 	if(!charge)
 		return
-	var/range_devastation = -1 //round(charge/11000)
-	var/range_heavy = round(sqrt(charge)/60)
-	var/range_light = round(sqrt(charge)/30)
+	var/range_devastation = -1
+	var/range_heavy = round(sqrt(charge / (3.6 * STANDARD_CELL_CHARGE)))
+	var/range_light = round(sqrt(charge / (0.9 * STANDARD_CELL_CHARGE)))
 	var/range_flash = range_light
 	if(!range_light)
 		rigged = FALSE
@@ -208,7 +209,6 @@
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_GAME)
 	usr?.log_message("triggered a rigged/corrupted power cell explosion", LOG_VICTIM, log_globally = FALSE)
 
-	//explosion(T, 0, 1, 2, 2)
 	explosion(src, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash)
 	qdel(src)
 
@@ -275,10 +275,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	if(charge >= 1000)
-		return clamp(20 + round(charge/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(charge)
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
