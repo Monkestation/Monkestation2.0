@@ -359,3 +359,14 @@
 		/obj/item/stack/sheet/iron = 30,
 	)
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/tiny_fan
+	name = "Tiny Fan"
+	result = /obj/structure/fans/tiny
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stock_parts/manipulator = 1,
+	)
+	tool_behaviors = list(TOOL_WRENCH) //wrench to make, wrench to dismantle. intuitive? i think.
+	category = CAT_ATMOSPHERIC

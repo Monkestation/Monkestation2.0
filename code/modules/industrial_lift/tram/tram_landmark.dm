@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 
 //map-agnostic landmarks
 
+
 /obj/effect/landmark/tram/nav/immovable_rod
 	name = "DESTINATION/NOT/FOUND"
 	specific_lift_id = IMMOVABLE_ROD_DESTINATIONS
@@ -65,3 +66,6 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	name = HILBERT_TRAM
 	specific_lift_id = TRAM_NAV_BEACONS
 	dir = WEST
+
+	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
+	var/specific_lift_id = MAIN_STATION_TRAM

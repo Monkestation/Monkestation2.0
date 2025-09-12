@@ -1,0 +1,657 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/misc/dirt/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"c" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/tigercultist/perforated,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"d" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"e" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"g" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mob_spawn/corpse/human/clown,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"h" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"i" = (
+/obj/machinery/light/small/dim/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"j" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"k" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"l" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"n" = (
+/turf/closed/wall/rust,
+/area/ruin/icemoon_clown_asteroid)
+"o" = (
+/turf/closed/wall/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"q" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"r" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/clown/directional/south,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"s" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"t" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"u" = (
+/turf/closed/mineral/random/low_chance,
+/area/ruin/icemoon_clown_asteroid)
+"v" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"w" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/nospawn)
+"x" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"A" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/no_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/item/chair{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"B" = (
+/obj/machinery/light/small/dim/directional/south,
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"D" = (
+/turf/closed/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"E" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"F" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"G" = (
+/obj/machinery/light/small/dim/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"H" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"J" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/caution_sign,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"K" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"L" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/knife/combat/survival{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"N" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor/closed,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"P" = (
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/item/gun/ballistic/automatic/wt550/fss/no_mag,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"S" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/door_assembly/door_assembly_mhatch,
+/obj/structure/barricade/wooden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+"T" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/icemoon_clown_asteroid)
+"V" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"X" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Y" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/ammo_casing/spent,
+/turf/open/floor/mineral/bananium,
+/area/ruin/icemoon_clown_asteroid)
+"Z" = (
+/obj/structure/barricade/wooden/crude,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/icemoon_clown_asteroid)
+
+(1,1,1) = {"
+a
+a
+a
+w
+w
+w
+w
+w
+w
+w
+w
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+w
+w
+w
+w
+w
+u
+w
+w
+w
+w
+a
+"}
+(3,1,1) = {"
+a
+w
+w
+w
+u
+u
+u
+u
+u
+u
+w
+w
+a
+"}
+(4,1,1) = {"
+a
+w
+w
+w
+u
+D
+g
+E
+D
+u
+u
+w
+a
+"}
+(5,1,1) = {"
+a
+w
+w
+u
+D
+o
+o
+S
+o
+D
+u
+w
+a
+"}
+(6,1,1) = {"
+w
+w
+u
+D
+Z
+Y
+V
+l
+d
+D
+u
+w
+w
+"}
+(7,1,1) = {"
+w
+u
+u
+n
+o
+q
+P
+h
+r
+n
+D
+u
+w
+"}
+(8,1,1) = {"
+w
+u
+u
+e
+n
+G
+k
+k
+B
+n
+u
+u
+w
+"}
+(9,1,1) = {"
+w
+u
+J
+T
+N
+j
+L
+c
+x
+n
+u
+u
+w
+"}
+(10,1,1) = {"
+w
+u
+u
+e
+n
+A
+c
+K
+n
+n
+u
+w
+w
+"}
+(11,1,1) = {"
+w
+w
+u
+n
+n
+n
+i
+v
+n
+u
+u
+w
+a
+"}
+(12,1,1) = {"
+w
+w
+u
+u
+u
+n
+n
+H
+n
+u
+u
+w
+a
+"}
+(13,1,1) = {"
+a
+w
+X
+u
+u
+n
+t
+F
+n
+u
+b
+w
+a
+"}
+(14,1,1) = {"
+a
+a
+X
+X
+u
+n
+n
+s
+n
+u
+b
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+X
+u
+u
+u
+b
+u
+u
+b
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+X
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+X
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+X
+X
+b
+b
+b
+b
+X
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+X
+b
+b
+b
+b
+X
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+X
+b
+b
+b
+X
+X
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+X
+b
+b
+b
+X
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+X
+X
+b
+b
+X
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+X
+b
+b
+X
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+X
+b
+X
+X
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+a
+X
+b
+X
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+a
+X
+X
+X
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+a
+a
+X
+a
+a
+a
+a
+a
+a
+"}
