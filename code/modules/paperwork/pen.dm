@@ -446,6 +446,12 @@
 /obj/item/pen/red/explosive/empen/detonate()
 	empulse(get_turf(src), 5, 5)
 
+/obj/item/pen/red/explosive/empen
+	tator_lookie = "This pen will release a cloud of choking smoke when the head is rotated. Fuse is 1 second per 10 degrees of rotation."
+
+/obj/item/pen/red/explosive/empen/detonate()
+	empulse(get_turf(src), 5, 5)
+
 /obj/item/pen/blue/taser
 	var/charged = TRUE
 
