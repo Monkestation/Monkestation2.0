@@ -145,7 +145,6 @@
 #define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_SPINAL "spinal_implant"
 #define ORGAN_SLOT_BRAIN_NIF "nif"
-#define ORGAN_SLOT_INTERNAL_PDA "internal_pda"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -228,8 +227,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,
-	ORGAN_SLOT_INTERNAL_PDA,))
+	ORGAN_SLOT_XENO_EGGSAC,))
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"
