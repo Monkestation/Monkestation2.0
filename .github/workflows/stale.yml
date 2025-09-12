@@ -1,4 +1,4 @@
-name: Mark stale issues and pull requests
+name: Mark stale pull requests
 
 on:
   schedule:
@@ -11,7 +11,6 @@ jobs:
   stale:
 
     permissions:
-      issues: write  # for actions/stale to close stale issues
       pull-requests: write  # for actions/stale to close stale PRs
     runs-on: ubuntu-22.04
 
@@ -24,14 +23,9 @@ jobs:
         days-before-pr-close: 7
         stale-pr-label: 'Stale'
         exempt-pr-labels: 'RED LABEL,Good First PR,Process: should testmerge,Process: testmerge only'
-        days-before-issue-stale: 60
-        days-before-issue-close: 14
         stale-issue-label: 'Cleanup Flagged'
         remove-issue-stale-when-updated: true
         operations-per-run: 300
         exempt-draft-pr: true
-        exempt-issue-labels: 'Severity: Major'
-        stale-issue-message: 'This issue has been marked as stale for insufficient activity within 60 days'
-        close-issue-message: 'This issue was closed because it has been stale for 74 days with no activity.'
         
         
