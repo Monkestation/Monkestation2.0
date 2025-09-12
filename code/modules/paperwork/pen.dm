@@ -590,14 +590,20 @@
 			desc = initial(desc)
 			force = initial(force)
 			throwforce = initial(throwforce)
+			throwspeed = initial(throwspeed)
 			icon_state = initial(icon_state)
+			resistance_flags = initial(resistance_flags)
+			tool_behavior = initial(tool_behavior)
 			disguised = FALSE
 		else
 			name = /obj/item/pen::name
 			desc = /obj/item/pen::desc
 			force = /obj/item/pen::force
 			throwforce = /obj/item/pen::throwforce
+			throw_speed = /obj/item/pen::throw_speed
 			icon_state = /obj/item/pen::icon_state
+			tool_behavior = null
+			resistance_flags = FIRE_PROOF | UNACIDABLE | LAVA_PROOF | HIDE_RESISTANCE
 			disguised = TRUE
 
 /obj/item/pen/fountain/cigsynth/examine(mob/user)
