@@ -8803,6 +8803,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table,
+/obj/machinery/ecto_sniffer,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "WS" = (

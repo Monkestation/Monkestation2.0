@@ -74,14 +74,14 @@
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
-/datum/atom_hud/sentient_disease
-	hud_icons = list(SENTIENT_DISEASE_HUD)
-
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
 /datum/atom_hud/data/human/permit
 	hud_icons = list(PERMIT_HUD)
+
+/datum/atom_hud/borer
+	hud_icons = list(BORER_HUD)
 
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	..()
@@ -230,7 +230,7 @@ Medical HUD! Basic mode needs suit sensors on.
 	else if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
+		if(((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)) || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"
@@ -581,13 +581,13 @@ Diagnostic HUDs!
 /atom/proc/get_cached_width()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX

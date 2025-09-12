@@ -18,6 +18,9 @@
 		/obj/item/toy/balloon/syndicate = 10,
 		/obj/item/clothing/suit/syndicatefake = 5,
 		/obj/item/clothing/head/syndicatefake = 5,
+		/obj/item/gun/magic/sickly_blade_toy/rust_toy = 3,
+		/obj/item/gun/magic/sickly_blade_toy/ash_toy = 3,
+		/obj/item/gun/magic/sickly_blade_toy/flesh_toy = 3,
 	)
 	contraband = list(
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,

@@ -4,7 +4,8 @@
 SUBSYSTEM_DEF(starlight)
 	name = "Starlight"
 	init_order = INIT_ORDER_STARLIGHT
-	flags = SS_BACKGROUND | SS_KEEP_TIMING | SS_NO_INIT | SS_HIBERNATE
+	priority = FIRE_PRIORITY_STARLIGHT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // running in the lobby allows us to handle the queue during pre-game
 
 	var/list/turfs_to_update = list()

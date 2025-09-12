@@ -9,8 +9,7 @@ MENTOR_VERB(mentor_requests, R_MENTOR, FALSE, "Mentor Manager", "Open the mentor
 GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 /datum/request_manager/mentor/ui_state(mob/user)
-	//return GLOB.always_state
-	return EXPLICIT_MENTOR_STATE(R_MENTOR | R_HEADMENTOR)
+	return MENTOR_STATE(R_MENTOR)
 
 /datum/request_manager/mentor/pray(client/C, message, is_chaplain)
 	return
@@ -41,28 +40,32 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 		ui.open()
 
 /datum/request_manager/mentor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	// Only admins should be sending actions
-	var/client/mentor_client = usr.client
-	if(!mentor_client || !check_mentor_rights_for(mentor_client, R_MENTOR))
-		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
+	var/mob/user = ui.user
+
+	if(!check_mentor_rights_for(user?.client, R_MENTOR))
+		to_chat(user, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
+		return
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? num2text(params["id"]) : null
 	if (!id)
-		to_chat(mentor_client, "Failed to find a request ID in your action, please report this.", confidential = TRUE)
+		to_chat(user, "Failed to find a request ID in your action, please report this.", confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
+
 	var/datum/request/request = !id ? null : requests_by_id[id]
+
 	if(isnull(request))
 		return
 
 	switch(action)
 		if ("reply")
-			var/mob/M = request.owner?.mob
-			mentor_client.cmd_mentor_pm(M)
+			var/mob/mob = request.owner?.mob
+			user.client.cmd_mentor_pm(mob)
 			return TRUE
 		if ("follow")
-			SSadmin_verbs.dynamic_invoke_mentor_verb(usr, /datum/mentor_verb/mentor_follow, request.owner?.mob)
+			SSadmin_verbs.dynamic_invoke_mentor_verb(user, /datum/mentor_verb/mentor_follow, request.owner?.mob)
 			return TRUE
+
 	return ..()
 
 /datum/request_manager/mentor/ui_data(mob/user)

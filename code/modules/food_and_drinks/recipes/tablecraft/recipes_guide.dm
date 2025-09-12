@@ -81,6 +81,14 @@
 	reaction = /datum/chemical_reaction/food/vanillapudding
 	category = CAT_PASTRY
 
+/datum/crafting_recipe/food/reaction/flan
+	reaction = /datum/chemical_reaction/food/flan
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/reaction/cherrypudding
+	reaction = /datum/chemical_reaction/food/cherrypudding
+	category = CAT_PASTRY
+
 /datum/crafting_recipe/food/reaction/chocolatebar
 	name = "Chocolate bar"
 	reaction = /datum/chemical_reaction/food/chocolate_bar3

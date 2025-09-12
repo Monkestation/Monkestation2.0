@@ -4,6 +4,9 @@
 	id = SPECIES_TUNDRA
 	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
 	external_organs = list(/obj/item/organ/external/wings/moth = "Tundra", /obj/item/organ/external/antennae = "Tundra")
+	inherent_traits = list(
+		TRAIT_HAS_MARKINGS,
+	)
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,
@@ -29,6 +32,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = /obj/item/bodypart/head/moth::head_flags
+	bodypart_traits = /obj/item/bodypart/head/moth::bodypart_traits
 
 /obj/item/bodypart/chest/tundramoth
 	name = "Tundra chest"
@@ -40,6 +44,7 @@
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
+	bodypart_traits = /obj/item/bodypart/chest/moth::bodypart_traits
 
 /obj/item/bodypart/arm/left/tundramoth
 	name = "Tundra left arm"

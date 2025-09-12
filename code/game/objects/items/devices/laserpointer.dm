@@ -49,12 +49,12 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/micro_laser))
+/obj/item/laser_pointer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stock_parts/micro_laser))
 		if(!diode)
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			diode = W
+			diode = attacking_item
 			to_chat(user, span_notice("You install a [diode.name] in [src]."))
 		else
 			to_chat(user, span_warning("[src] already has a diode installed!"))
@@ -69,15 +69,18 @@
 		else
 			. += span_notice("A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.")
 
-/obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	laser_act(target, user, params)
+/obj/item/laser_pointer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	laser_act(interacting_with, user, modifiers)
+	return ITEM_INTERACT_BLOCKING
 
-/obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
-	if( !(user in (viewers(7,target))) )
-		return
-	if (!diode)
+/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+///Handles shining the clicked atom,
+/obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, list/modifiers)
+	if(isnull(diode))
 		to_chat(user, span_notice("You point [src] at [target], but nothing happens!"))
 		return
 	if (!ISADVANCEDTOOLUSER(user))
@@ -154,21 +157,8 @@
 		else
 			H.visible_message(span_notice("[H] stares at the light."), span_warning("You stare at the light..."))
 
-	//cats!
-	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
-		if(prob(effectchance * diode.rating))
-			if(C.resting)
-				C.set_resting(FALSE, instant = TRUE)
-			C.visible_message(span_notice("[C] pounces on the light!"),span_warning("LIGHT!"))
-			C.Move(targloc)
-			C.Immobilize(1 SECONDS)
-		else
-			C.visible_message(span_notice("[C] looks uninterested in your games."),span_warning("You spot [user] shining [src] at you. How insulting!"))
-
-	//laser pointer image
-	icon_state = "pointer_[pointer_icon_state]"
-	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state, 10)
-	var/list/modifiers = params2list(params)
+	//setup pointer blip
+	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))
 			laser.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)

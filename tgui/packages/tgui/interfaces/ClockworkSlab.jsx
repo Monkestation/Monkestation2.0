@@ -93,8 +93,8 @@ const ClockworkHelp = (props) => {
             to unlock more scriptures and siphon power!
           </b>
           <br />
-          Hover over the button for a scripture to get additonal information for
-          it.
+          Hover over the button to invoke a scripture to get additonal
+          information for it.
           <br />
         </Section>
       </Collapsible>

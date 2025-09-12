@@ -9,3 +9,4 @@
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
 	hardcore_value = 4
 	mail_goodies = list(/obj/effect/spawner/random/medical/minor_healing)
+	species_blacklist = list(SPECIES_IPC)

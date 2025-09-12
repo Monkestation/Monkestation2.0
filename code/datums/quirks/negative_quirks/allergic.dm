@@ -23,6 +23,7 @@
 		/datum/reagent/medicine/spaceacillin
 	)
 	var/allergy_string
+	species_blacklist = list(SPECIES_IPC)
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist

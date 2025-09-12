@@ -140,7 +140,7 @@
 	. = ..()
 	if(!anchored || !check_locked(user))
 		default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/signboard/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)

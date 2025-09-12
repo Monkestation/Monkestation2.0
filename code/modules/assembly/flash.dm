@@ -291,7 +291,7 @@
 	..()
 	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
-/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/flash/cyborg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
@@ -376,7 +376,7 @@
 				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
 				M.adjust_pacifism(10 SECONDS)
 			else
-				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+				M.apply_status_effect(/datum/status_effect/trance/hardened, 20 SECONDS, TRUE)
 
 		else if(user)
 			user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to hypno-flash [M]!"))

@@ -101,16 +101,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	fire = 80
 	acid = 50
 
-/obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
+/obj/machinery/portable_atmospherics/canister/Initialize(mapload)
 	. = ..()
 
 	if(mapload)
 		internal_cell = new /obj/item/stock_parts/cell/high(src)
 
-	if(existing_mixture)
-		air_contents.copy_from(existing_mixture)
-	else
-		create_gas()
+	create_gas()
 
 	if(ispath(gas_type, /datum/gas))
 		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"

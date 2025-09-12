@@ -21,7 +21,7 @@
 	var/last_scan_info = ""
 
 	var/processing = FALSE
-
+	/// Reference to the mob that is currently scanning whatever virus is inserted
 	var/mob/scanner = null
 
 /obj/machinery/disease2/diseaseanalyser/RefreshParts()
@@ -31,37 +31,39 @@
 		scancount += M.tier
 	minimum_growth = round((initial(minimum_growth) - (scancount * 6)))
 
-/obj/machinery/disease2/diseaseanalyser/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-
+/obj/machinery/disease2/diseaseanalyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again."))
-		return
+		return NONE
 
-	if (scanner)
+	if(scanner)
 		to_chat(user, span_warning("\The [scanner] is currently busy using this analyzer."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(.)
-		return
-
-	if (dish)
-		if (istype(I,/obj/item/weapon/virusdish))
+	if(dish)
+		if(isvirusdish(tool))
 			to_chat(user, span_warning("There is already a dish in there. Alt+Click or perform the analysis to retrieve it first."))
-		else if (istype(I,/obj/item/reagent_containers))
-			dish.attackby(I,user)
-	else
-		if (istype(I,/obj/item/weapon/virusdish))
-			var/obj/item/weapon/virusdish/D = I
-			if (D.open)
-				visible_message(span_notice("\The [user] inserts \the [I] in \the [src]."),span_notice("You insert \the [I] in \the [src]."))
-				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				user.dropItemToGround(I, TRUE)
-				I.forceMove(src)
-				dish = I
-				update_appearance()
-			else
-				to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
+			return ITEM_INTERACT_BLOCKING
+		if(is_reagent_container(tool))
+			// If you click on the machine with a reagent container, you can interact directly with the dish
+			return dish.item_interaction(user, tool, modifiers)
+
+	// There's no dish so lets insert one
+	if(!isvirusdish(tool))
+		return NONE
+
+	var/obj/item/weapon/virusdish/inserting_dish = tool
+	if(!inserting_dish.open)
+		to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
+		return ITEM_INTERACT_BLOCKING
+	visible_message(span_notice("\The [user] inserts \the [tool] in \the [src]."),
+					span_notice("You insert \the [tool] in \the [src]."))
+	playsound(loc, 'sound/machines/click.ogg', 50, 1)
+	user.dropItemToGround(tool, TRUE)
+	tool.forceMove(src)
+	dish = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disease2/diseaseanalyser/attack_hand(mob/user)
 	. = ..()
@@ -70,7 +72,7 @@
 		return
 	if(machine_stat & (NOPOWER))
 		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive."))
-		if (dish)
+		if(dish)
 			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			dish.forceMove(loc)
 			dish = null
@@ -80,18 +82,18 @@
 	if(.)
 		return
 
-	if (scanner)
+	if(scanner)
 		to_chat(user, span_warning("\The [scanner] is currently busy using this analyzer."))
 		return
 
-	if (!dish)
+	if(!dish)
 		to_chat(user, span_notice("Place an open growth dish first to analyse its pathogen."))
 		return
 
-	if (dish.growth < minimum_growth)
+	if(dish.growth < minimum_growth)
 		say("Pathogen growth insufficient. Minimal required growth: [minimum_growth]%.")
 		to_chat(user,span_notice("Add some virus food to the dish and incubate."))
-		if (minimum_growth == 100)
+		if(minimum_growth == 100)
 			to_chat(user,span_notice("Replacing the machine's scanning modules with better parts will lower the growth requirement."))
 		dish.forceMove(loc)
 		dish = null
@@ -124,13 +126,13 @@
 			update_appearance()
 			scanner = null
 			return
-		if (dish.contained_virus.addToDB())
+		if(dish.contained_virus.addToDB())
 			say("Added new pathogen to database.")
 		var/datum/data/record/v = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
 		dish.info = dish.contained_virus.get_info()
 		dish.update_desc()
 		last_scan_name = dish.contained_virus.name(TRUE)
-		if (v)
+		if(v)
 			last_scan_name += v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""
 
 		dish.name = "growth dish ([last_scan_name])"
@@ -157,10 +159,10 @@
 	if(processing)
 		icon_state = "analyzer-processing"
 
-	if (machine_stat & (NOPOWER))
+	if(machine_stat & (NOPOWER))
 		icon_state = "analyser0"
 
-	if (machine_stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		icon_state = "analyserb"
 
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -178,9 +180,9 @@
 		. += emissive_appearance(icon,"analyser_light",src)
 
 	. += emissive_appearance(icon, "analyzer-emissive", src)
-	if (dish)
+	if(dish)
 		.+= mutable_appearance(icon, "smalldish-outline",src)
-		if (dish.contained_virus)
+		if(dish.contained_virus)
 			var/mutable_appearance/I = mutable_appearance(icon,"smalldish-color",src)
 			I.color = dish.contained_virus.color
 			.+= I
@@ -220,7 +222,7 @@
 		scanner = null
 		return
 
-	if (scanner && !(scanner in range(src,1)))
+	if(scanner && !(scanner in range(src,1)))
 		update_appearance()
 		processing = FALSE
 		scanner = null
@@ -230,7 +232,7 @@
 	if((!usr.Adjacent(src) || usr.incapacitated()))
 		return ..()
 
-	if (dish && !scanner)
+	if(dish && !scanner)
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		dish.forceMove(loc)
 		dish = null
@@ -255,3 +257,11 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
+
+
+/obj/machinery/disease2/diseaseanalyser/attack_ai(mob/user)
+	if(!panel_open)
+		return attack_hand(user)
+
+/obj/machinery/disease2/diseaseanalyser/attack_robot(mob/user)
+	return attack_ai(user)

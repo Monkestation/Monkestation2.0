@@ -2,6 +2,7 @@
 	name = "large crate"
 	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
 	icon_state = "largecrate"
+	base_icon_state = "largecrate"
 	density = TRUE
 	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/mineral/wood
@@ -29,8 +30,8 @@
 	else
 		to_chat(user, span_warning("You need a crowbar to pry this open!"))
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_CROWBAR)
+/obj/structure/closet/crate/large/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
 		if(!open(user))

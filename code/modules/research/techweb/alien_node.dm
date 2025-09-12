@@ -29,6 +29,7 @@
 	hidden = TRUE
 
 /datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
+		. = ..()
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_bio
@@ -70,6 +71,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_4_POINTS)
 	hidden = TRUE
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/alien_engi
 	id = "alien_engi"
@@ -101,3 +103,4 @@
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)

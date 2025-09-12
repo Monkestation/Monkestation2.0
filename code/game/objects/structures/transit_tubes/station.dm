@@ -97,8 +97,8 @@
 				break
 
 
-/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_CROWBAR)
+/obj/structure/transit_tube/station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else
