@@ -210,7 +210,7 @@
 	desc = "An outfit designed exclusively from duct tape. It was hard to put on."
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
-
+/*
 /obj/item/clothing/suit/wizrobe/durathread
 	name = "durathread robe"
 	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much more stylish."
@@ -218,7 +218,7 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
 	allowed = /obj/item/clothing/suit/apron::allowed
-	//fishing_modifier = -6 // MONKE EDIT: not a var
+	fishing_modifier = -6
 
 /datum/armor/robe_durathread
 	melee = 15
@@ -228,7 +228,7 @@
 	bomb = 10
 	fire = 30
 	acid = 40
-/*
+
 /obj/item/clothing/suit/wizrobe/durathread/fire
 	name = "pyromancer robe"
 	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
