@@ -1,12 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  Section,
-  Stack,
-  Grid,
-} from '../components';
+import { Box, Button, LabeledList, Section, Stack, Grid } from '../components';
 import { EditableText } from './common/EditableText';
 import { Window } from '../layouts';
 
@@ -29,14 +22,11 @@ export const ArmoryAuthorizationComputer = (props) => {
             <Box inline bold>
               CURRENT STATUS:
             </Box>
-            <Box inline color={armory_open ? "good" : "bad"} ml={1}>
-              {armory_open ? "OPEN" : "CLOSED"}
+            <Box inline color={armory_open ? 'good' : 'bad'} ml={1}>
+              {armory_open ? 'OPEN' : 'CLOSED'}
             </Box>
           </Box>
-          <Section
-            title="Armory Authorization"
-            level={2}
-          >
+          <Section title="Armory Authorization" level={2}>
             <Grid>
               <Grid.Column>
                 <Button
@@ -44,7 +34,7 @@ export const ArmoryAuthorizationComputer = (props) => {
                   icon="exclamation-triangle"
                   color="good"
                   content="AUTHORIZE"
-                  disabled={is_authorized || authorizations_remaining == 0}
+                  disabled={is_authorized || authorizations_remaining === 0}
                   onClick={() => act('authorize')}
                 />
               </Grid.Column>
@@ -63,7 +53,8 @@ export const ArmoryAuthorizationComputer = (props) => {
               level={3}
               buttons={
                 <Box inline bold>
-                  {'Remaining: ' + (is_authorized ? '0' : authorizations_remaining)}
+                  {'Remaining: ' +
+                    (is_authorized ? '0' : authorizations_remaining)}
                 </Box>
               }
             >
@@ -84,58 +75,58 @@ export const ArmoryAuthorizationComputer = (props) => {
                 </Box>
               )}
             </Section>
-            <Section
-              title="Reason"
-              level={4}
-            >
-            <Stack vertical>
+            <Section title="Reason" level={4}>
+              <Stack vertical>
                 {valid_reasons.map((legal_reason) => {
                   const isSelected = legal_reason === selected_reason;
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <Stack.Item>
                       <Button
-                        color={isSelected ? "good" : "average"}
+                        color={isSelected ? 'good' : 'average'}
                         disabled={!is_authorized || armory_open}
-                        onClick={() => act('reason_select', { reason: legal_reason })}
+                        onClick={() =>
+                          act('reason_select', { reason: legal_reason })
+                        }
                       >
-                      {legal_reason}
+                        {legal_reason}
                       </Button>
                     </Stack.Item>
                   );
                 })}
-              <Stack.Item>
-                <LabeledList>
-                  <LabeledList.Item label="EXTRA DETAILS">
-                    <EditableText
-                    field="note"
-                    target_ref={null}
-                    text={extra_details}
-                    />
-                  </LabeledList.Item>
-                </LabeledList>
-              </Stack.Item>
-            </Stack>
+                <Stack.Item>
+                  <LabeledList>
+                    <LabeledList.Item label="EXTRA DETAILS">
+                      <EditableText
+                        field="note"
+                        target_ref={null}
+                        text={extra_details}
+                      />
+                    </LabeledList.Item>
+                  </LabeledList>
+                </Stack.Item>
+              </Stack>
             </Section>
-						<Grid>
-							<Grid.Column>
-								<Button
+            <Grid>
+              <Grid.Column>
+                <Button
                   fluid
-              		color="good"
-              		onClick={() => act('open_armory')}
-              		disabled={!is_authorized}
-              		content="OPEN"
-              	/>
+                  color="good"
+                  onClick={() => act('open_armory')}
+                  disabled={!is_authorized}
+                  content="OPEN"
+                />
               </Grid.Column>
               <Grid.Column>
                 <Button
                   fluid
-              		color="bad"
-              		onClick={() => act('close_armory')}
-              		disabled={!is_authorized}
-              		content="CLOSE"
-              	/>
+                  color="bad"
+                  onClick={() => act('close_armory')}
+                  disabled={!is_authorized}
+                  content="CLOSE"
+                />
               </Grid.Column>
-						</Grid>
+            </Grid>
           </Section>
         </Section>
       </Window.Content>
