@@ -221,7 +221,7 @@
 		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
 		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
+		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt,
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout,
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook,
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,

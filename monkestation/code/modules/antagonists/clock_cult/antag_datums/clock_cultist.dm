@@ -20,7 +20,7 @@
 	///ref to our turf_healing component, used for deletion when deconverted
 	var/datum/component/turf_healing/owner_turf_healing
 	///used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list
-	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENG'INE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
+	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENGINE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
 																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
 
 														"seizure" = list("Your failure shall not delay my freedom.", "The blind will see only darkness.",

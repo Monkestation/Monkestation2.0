@@ -43,11 +43,11 @@
 	balloon_alert(user, "style meter attached")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	if(!iscarbon(interacting_with.loc))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 	var/mob/living/carbon/carbon_wearer = interacting_with.loc
 	if(carbon_wearer.glasses != interacting_with)
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled)
 	return ITEM_INTERACT_SUCCESS
