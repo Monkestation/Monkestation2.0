@@ -12,7 +12,7 @@
 /proc/gen_voice_packs()
 	if(!fexists(VOICE_PACKS_FILE))
 		log_config("No voice packs file found.")
-		return
+		return list()
 	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
 
 	var/list/voice_pack_list = list()
