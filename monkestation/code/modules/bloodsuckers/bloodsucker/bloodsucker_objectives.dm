@@ -130,7 +130,7 @@
 /datum/objective/bloodsucker/conversion/check_completion()
 	var/living_vassals = 0
 	for(var/datum/antagonist/vassal/vassal in bloodsucker_datum?.vassals)
-		if(considered_alive(vassal.owner))
+		if(considered_alive(vassal.owner, enforce_human = FALSE))
 			living_vassals++
 		if(living_vassals >= target_amount)
 			return TRUE
