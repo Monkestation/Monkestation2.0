@@ -283,7 +283,9 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		passenger.forceMove(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
 		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
-		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
+		var/obj/vehicle/sealed/mecha/ripley/miner = chassis
+		if(miner)
+			log_message("Unloaded [passenger]. Cargo compartment capacity: [miner.cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
 	return ..()
 

@@ -10,7 +10,8 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
-
+	bodytemp_heat_damage_limit = INFINITY
+	bodytemp_cold_damage_limit = -1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	pass_flags = PASSFLAPS
@@ -150,7 +151,6 @@
 
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	path_hud = new /datum/atom_hud/data/bot_path()
@@ -263,25 +263,10 @@
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(HAS_SILICON_ACCESS(user) || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!maints_access_required) // No requirements to access it.
-		return TRUE
+/mob/living/simple_animal/bot/allowed(mob/living/user)
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
 	return TRUE
@@ -416,7 +401,7 @@
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -934,7 +919,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["settings"] = list()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
@@ -973,7 +958,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!HAS_SILICON_ACCESS(user))
+			if(!(issilicon(user) || isAdminGhostAI(user)))
 				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
@@ -981,28 +966,18 @@ Pass a positive integer as an argument to override a bot's default speed.
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
 				user.log_message("disabled safety lock of [src]", LOG_GAME)
 				bot_reset()
-				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
-				to_chat(src, span_boldnotice(get_emagged_message()))
-				return
-			if(!(bot_cover_flags & BOT_COVER_HACKED))
+			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(user, span_boldannounce("You fail to repair [src]'s [hackables]."))
-				return
-			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
-			to_chat(user, span_notice("You reset the [src]'s [hackables]."))
-			user.log_message("re-enabled safety lock of [src]", LOG_GAME)
-			bot_reset()
-			to_chat(src, span_userdanger("Software restored to standard."))
-			to_chat(src, span_boldnotice(possessed_message))
-		if("eject_pai")
-			if(!paicard)
-				return
-			to_chat(user, span_notice("You eject [paicard] from [initial(src.name)]."))
-			ejectpai(user)
+			else
+				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
+				to_chat(user, span_notice("You reset the [src]'s [hackables]."))
+				user.log_message("re-enabled safety lock of [src]", LOG_GAME)
+				bot_reset()
 		if("toggle_personality")
 			if (can_be_possessed)
 				disable_possession(user)
 			else
-				enable_possession(user)
+				enable_possession()
 		if("rename")
 			rename(user)
 

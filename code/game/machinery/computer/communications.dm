@@ -189,7 +189,7 @@
 				return
 			//monkestation edit start:
 			if(istype(get_area(src), /area/shuttle/syndicate/cruiser)) // monkestation edit: Prevents assault ops from modifying the alert level from their shuttle
-				to_chat(usr, span_warning("Unable to connect to security level systems due to local interference"))
+				to_chat(user, span_warning("Unable to connect to security level systems due to local interference"))
 				return
 			//monkestation edit end
 
@@ -212,7 +212,7 @@
 				return
 			var/datum/security_level/current_sec_level = SSsecurity_level.current_security_level
 			if(!current_sec_level.can_crew_change_alert)
-				to_chat(usr, span_warning("Alert cannot be manually lowered from the current security level!"))
+				to_chat(user, span_warning("Alert cannot be manually lowered from the current security level!"))
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 				return
 			if(!new_sec_level.can_set_via_comms_console)
@@ -302,8 +302,16 @@
 			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated(user) || HAS_SILICON_ACCESS(user) || syndicate)
+			var/clock_user = IS_CLOCK(user) //monkestation edit
+			if (!authenticated(user) || HAS_SILICON_ACCESS(user) || syndicate || (clock_user && GLOB.main_clock_cult?.member_recalled)) //monkestation edit: adds the CWC check
 				return
+//monkestation edit start:
+			if(clock_user)
+				GLOB.main_clock_cult?.member_recalled = TRUE
+			if(istype(get_area(src), /area/shuttle/syndicate/cruiser)) // monkestation edit: Prevents assault ops from recalling from their shuttle
+				to_chat(user, span_warning("Unable to connect to shuttle systems due to local interference"))
+				return
+//monkestation edit end
 			SSshuttle.cancelEvac(user)
 		if ("requestNukeCodes")
 			if (!authenticated_as_non_silicon_captain(user))
@@ -349,7 +357,7 @@
 					return
 				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
-				GLOB.communications_controller.soft_filtering = TRUE
+				SScommunications.soft_filtering = TRUE
 
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
@@ -360,13 +368,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), user, destination, message), GLOB.communications_controller.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), user, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -519,7 +527,7 @@
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
-	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
+	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -780,7 +788,7 @@
 		)
 
 	var/list/players = get_communication_players()
-	GLOB.communications_controller.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
+	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/get_communication_players()
