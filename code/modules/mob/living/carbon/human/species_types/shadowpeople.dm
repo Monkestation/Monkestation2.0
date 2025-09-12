@@ -215,7 +215,8 @@
 	changesource_flags = MIRROR_BADMIN //never put this in the pride pool because they look super valid and can never be changed off of
 	siemens_coeff = 0
 	armor = 10
-	burnmod = 1.2
+	brutemod = 0.8
+	burnmod = 1
 	heatmod = 1.5
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE | ITEM_SLOT_EYES
 	inherent_traits = list(

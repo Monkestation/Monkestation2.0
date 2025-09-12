@@ -1,7 +1,7 @@
 /obj/item/melee/baton/abductor
-	var/charges = 3
-	var/max_charges = 3
-	var/charge_rate = 5 SECONDS
+	var/charges = 5
+	var/max_charges = 5
+	var/charge_rate = 15 SECONDS
 	var/charging = FALSE
 	COOLDOWN_DECLARE(next_charge)
 

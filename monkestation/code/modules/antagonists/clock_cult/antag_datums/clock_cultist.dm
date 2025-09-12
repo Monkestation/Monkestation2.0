@@ -1,5 +1,5 @@
 /datum/antagonist/clock_cultist
-	name = "\improper Servant of Rat'var"
+	name = "\improper Servant of Ratvar"
 	antagpanel_category = "Clock Cultist"
 	preview_outfit = /datum/outfit/clock/preview
 	job_rank = ROLE_CLOCK_CULTIST
@@ -20,7 +20,7 @@
 	///ref to our turf_healing component, used for deletion when deconverted
 	var/datum/component/turf_healing/owner_turf_healing
 	///used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list
-	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENG'INE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
+	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENGINE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
 																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
 
 														"seizure" = list("Your failure shall not delay my freedom.", "The blind will see only darkness.",
@@ -36,7 +36,7 @@
 	objectives |= clock_team.objectives
 	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
-	current.log_message("has been converted to the cult of Rat'var!", LOG_ATTACK, color="#960000")
+	current.log_message("has been converted to the cult of Ratvar!", LOG_ATTACK, color="#960000")
 	if(issilicon(current))
 		handle_silicon_conversion(current)
 	. = ..() //have to call down here so objectives display correctly
@@ -81,7 +81,7 @@
 
 		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
-		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+		handle_clown_mutation(current, mob_override ? null : "The light of Ratvar allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		add_forbearance(current)
 
 /datum/antagonist/clock_cultist/remove_innate_effects(mob/living/mob_override)
@@ -111,8 +111,8 @@
 /datum/antagonist/clock_cultist/on_removal()
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), \
-									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
-	owner.current.log_message("has renounced the cult of Rat'var!", LOG_ATTACK, color="#960000")
+									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Ratvar."))
+	owner.current.log_message("has renounced the cult of Ratvar!", LOG_ATTACK, color="#960000")
 	handle_equipment_removal()
 	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
@@ -123,13 +123,13 @@
 
 /datum/antagonist/clock_cultist/on_mindshield(mob/implanter)
 	if(!silent)
-		to_chat(owner.current, span_warning("You feel something pushing away the light of Rat'var, but you resist it!"))
+		to_chat(owner.current, span_warning("You feel something pushing away the light of Ratvar, but you resist it!"))
 	return
 
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Rat'var.")
-	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Rat'var.")
+	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Ratvar.")
+	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Ratvar.")
 
 /datum/antagonist/clock_cultist/admin_remove(mob/user)
 	silent = TRUE
@@ -218,7 +218,7 @@
 
 //these can just solo invoke things that normally take multiple servants
 /datum/antagonist/clock_cultist/solo
-	name = "Servant of Rat'var (Solo)"
+	name = "Servant of Ratvar (Solo)"
 
 //putting this here to avoid extra edits to the main file
 /datum/antagonist/cult

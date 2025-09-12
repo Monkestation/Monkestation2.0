@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(sounds)
 	* v = singleton sound_effect datum ref
 	* initialized in SSsounds init
 	*/
-	var/alist/sfx_datum_by_key = alist()
+	var/alist/sfx_datum_by_key
 
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
@@ -176,6 +176,7 @@ SUBSYSTEM_DEF(sounds)
 	return length(channel_list) - random_channels_min
 
 /datum/controller/subsystem/sounds/proc/init_sound_keys()
+	sfx_datum_by_key = alist()
 	for(var/datum/sound_effect/sfx as anything in subtypesof(/datum/sound_effect))
 		// this is for the assoc subtype
 		if(!isnull(sfx.key))

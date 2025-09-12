@@ -629,12 +629,14 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+#ifndef UNIT_TESTS // please no
 /obj/machinery/microwave/hell/Initialize(mapload)
 	. = ..()
 	//We want there to be some chance of them getting a working microwave (eventually).
 	if(prob(95))
 		//The microwave should turn off asynchronously from any other microwaves that initialize at the same time. Keep in mind this will not turn off, since there is nothing to call the proc that ends this microwave's looping
-		addtimer(CALLBACK(src, PROC_REF(wzhzhzh)), rand(0.5 SECONDS, 3 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(wzhzhzh)), rand(0.5 SECONDS, 3 SECONDS), TIMER_DELETE_ME)
+#endif
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK
