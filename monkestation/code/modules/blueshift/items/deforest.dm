@@ -1123,11 +1123,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/biogenerator/medstation, 29)
 
 /obj/item/wallframe/frontier_medstation/Initialize(mapload, biomass)
 	. = ..()
+	if(isnull(biomass))
+		return
 	stored_biomass = biomass // Preserves stored biomass when deconstructed
 
 /obj/item/wallframe/frontier_medstation/after_attach(obj/attached_to)
 	. = ..()
 	var/obj/machinery/biogenerator/medstation/wall_vendor = attached_to
-	if(!istype(wall_vendor))
+	if(!istype(wall_vendor) || isnull(stored_biomass))
 		return
 	wall_vendor.biomass = stored_biomass
