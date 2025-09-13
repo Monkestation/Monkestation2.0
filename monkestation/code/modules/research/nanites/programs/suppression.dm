@@ -109,6 +109,7 @@
 	. = ..()
 	host_mob.cure_fakedeath("nanites")
 
+///Receives transmissions from a nanite communication remote for customized messages
 /datum/nanite_program/comm
 	can_trigger = TRUE
 	var/comm_message = ""
@@ -118,9 +119,9 @@
 
 /datum/nanite_program/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
 	var/datum/nanite_extra_setting/comm_code = extra_settings[NES_COMM_CODE]
-	if(!activated || !comm_code)
+	if(!activated || !comm_code.get_value())
 		return
-	if(signal_comm_code == comm_code)
+	if(signal_comm_code == comm_code.get_value())
 		host_mob.investigate_log("'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.", INVESTIGATE_NANITES)
 		trigger(FALSE, comm_message)
 

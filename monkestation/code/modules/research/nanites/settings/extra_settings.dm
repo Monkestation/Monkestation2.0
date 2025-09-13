@@ -36,7 +36,7 @@
 	if(isnull(value))
 		src.value = !src.value
 		return
-	. = ..()
+	return ..()
 
 /datum/nanite_extra_setting/boolean/get_copy()
 	return new /datum/nanite_extra_setting/boolean(value, true_text, false_text)
