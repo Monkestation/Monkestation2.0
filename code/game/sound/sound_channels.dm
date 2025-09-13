@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_SQUEAK,
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
+	CHANNEL_VOICES,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -32,6 +33,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_SQUEAK,
 	CHANNEL_MOB_EMOTES,
 	CHANNEL_SILICON_EMOTES,
+	CHANNEL_VOICES,
 ))
 
 GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
