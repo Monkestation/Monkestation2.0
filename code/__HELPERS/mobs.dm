@@ -428,6 +428,14 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/mob/living/carbon/human/human_target = target
 	return human_target.dna?.species?.type == /datum/species/human
 
+/// Returns if the given target is a monkey, but NOT a simian.
+/proc/ismonkeybasic(target)
+	if (!ishuman(target))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target
+	return human_target.dna?.species?.type == /datum/species/monkey
+
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
 	if(!T)
