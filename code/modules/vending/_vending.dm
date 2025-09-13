@@ -1082,7 +1082,7 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (HAS_AI_ACCESS(user))
+	if (!Adjacent(user))
 		return ..()
 
 	if(seconds_electrified && !(machine_stat & NOPOWER))

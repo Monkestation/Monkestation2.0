@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	fully_replace_character_name(real_name, new_name)
 
 /mob/living/basic/bot/check_access(mob/living/user, obj/item/card/id)
-	if(HAS_SILICON_ACCESS(user) || isAdminGhostAI(user)) // Silicon and Admins always have access.
+	if(HAS_SILICON_ACCESS(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
 		return FALSE

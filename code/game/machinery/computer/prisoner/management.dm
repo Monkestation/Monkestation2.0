@@ -57,132 +57,45 @@
 
 	if(isliving(usr))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-	var/dat = ""
-	if(screen == 0)
-		dat += "<HR><A href='byond://?src=[REF(src)];lock=1'>{Log In}</A>"
-	else if(screen == 1)
-		dat += "<H3>Prisoner ID Management</H3>"
-		if(contained_id)
-			dat += text("<A href='byond://?src=[REF(src)];id=eject'>[contained_id]</A><br>")
-			dat += text("Collected Points: [contained_id.points]. <A href='byond://?src=[REF(src)];id=reset'>Reset.</A><br>")
-			dat += text("Card goal: [contained_id.goal].  <A href='byond://?src=[REF(src)];id=setgoal'>Set </A><br>")
-			dat += text("Space Law recommends quotas of 100 points per minute they would normally serve in the brig.<BR>")
-		else
-			dat += text("<A href='byond://?src=[REF(src)];id=insert'>Insert Prisoner ID.</A><br>")
-		dat += "<H3>Prisoner Implant Management</H3>"
-		dat += "<HR>Chemical Implants<BR>"
-		var/turf/current_turf = get_turf(src)
-		for(var/obj/item/implant/chem/C in GLOB.tracked_chem_implants)
-			var/turf/implant_turf = get_turf(C)
-			if(!is_valid_z_level(current_turf, implant_turf))
-				continue//Out of range
-			if(!C.imp_in)
-				continue
-			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
-			dat += "| Inject: "
-			dat += "<A href='byond://?src=[REF(src)];inject1=[REF(C)]'>(<font class='bad'>(1)</font>)</A>"
-			dat += "<A href='byond://?src=[REF(src)];inject5=[REF(C)]'>(<font class='bad'>(5)</font>)</A>"
-			dat += "<A href='byond://?src=[REF(src)];inject10=[REF(C)]'>(<font class='bad'>(10)</font>)</A><BR>"
-			dat += "********************************<BR>"
-		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/implant/tracking/T in GLOB.tracked_implants)
-			if(!isliving(T.imp_in))
-				continue
-			var/turf/implant_turf = get_turf(T)
-			if(!is_valid_z_level(current_turf, implant_turf))
-				continue//Out of range
 
-			var/loc_display = "Unknown"
-			var/mob/living/M = T.imp_in
-			if(is_station_level(implant_turf.z) && !isspaceturf(M.loc))
-				var/turf/mob_loc = get_turf(M)
-				loc_display = mob_loc.loc
-
-			dat += "ID: [T.imp_in.name] | Location: [loc_display]<BR>"
-			dat += "<A href='byond://?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> | [add_destroy_topic(T)]<BR>"
-			dat += "********************************<BR>"
-		dat += "<HR><A href='byond://?src=[REF(src)];lock=1'>{Log Out}</A>"
-	var/datum/browser/popup = new(usr, "computer", "Prisoner Management Console", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/machinery/computer/prisoner/management/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(attacking_item))
-		if(screen)
-			id_insert(user)
-		else
-			to_chat(user, span_danger("Unauthorized access."))
-	else
-		return ..()
-
-/obj/machinery/computer/prisoner/management/process()
-	if(!..())
-		src.updateDialog()
-	return
-
-/obj/machinery/computer/prisoner/management/Topic(href, href_list)
-	if(..())
-		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
-		usr.set_machine(src)
-
-		if(href_list["id"])
-			if(href_list["id"] == "insert" && !contained_id)
-				id_insert(usr)
-			else if(contained_id)
-				switch(href_list["id"])
-					if("eject")
-						id_eject(usr)
-					if("reset")
-						contained_id.points = 0
-					if("setgoal")
-						var/num = tgui_input_text(usr, "Enter the prisoner's goal", "Prisoner Management", 1, 1000, 1)
-						if(isnull(num))
-							return
-						contained_id.goal = round(num)
-		else if(href_list["inject1"])
-			var/obj/item/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(1)
-		else if(href_list["inject5"])
-			var/obj/item/implant/I = locate(href_list["inject5"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(5)
-		else if(href_list["inject10"])
-			var/obj/item/implant/I = locate(href_list["inject10"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(10)
-
-		else if(href_list["lock"])
+	switch(action)
+		if("login")
 			if(allowed(usr))
-				screen = !screen
+				authenticated = TRUE
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 			else
-				to_chat(usr, span_danger("Unauthorized access."))
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+			return TRUE
 
-		else if(href_list["warn"])
-			var/warning = tgui_input_text(usr, "Enter your message here", "Messaging")
-			if(!warning)
-				return
-			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants
-			if(I && istype(I) && I.imp_in)
-				var/mob/living/R = I.imp_in
-				to_chat(R, span_hear("You hear a voice in your head saying: '[warning]'"))
-				log_directed_talk(usr, R, warning, LOG_SAY, "implant message")
+		if("logout")
+			authenticated = FALSE
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			return TRUE
 
-		else if(href_list["self_destruct"])
-			var/obj/item/implant/our_implant = locate(href_list["self_destruct"]) in GLOB.tracked_implants
-			if(our_implant && istype(our_implant) && our_implant.imp_in)
-				var/mob/living/victim = our_implant.imp_in
-				to_chat(victim, span_hear("You feel a tiny jolt from inside of you as one of your implants fizzles out."))
-				do_sparks(number = 2, cardinal_only = FALSE, source = our_implant)
-				qdel(our_implant)
+		if("insert_id")
+			id_insert(usr, usr.get_active_held_item())
+			return TRUE
 
-		src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+		if("eject_id")
+			id_eject(usr)
+			return TRUE
 
-///Adds a topic for remotely destroying a security implant.
-/obj/machinery/computer/prisoner/management/proc/add_destroy_topic(obj/item/implant/our_implant)
-	return "<A href='byond://?src=[REF(src)];self_destruct=[REF(our_implant)]'>(<font class='bad'>Destroy</font>)</A><BR>"
+		if("set_id_goal")
+			var/num = tgui_input_number(usr, "Enter the prisoner's goal", "Prisoner Management", 100, 1000, 1)
+			if(!isnum(num) || QDELETED(src) || QDELETED(contained_id) || QDELETED(usr))
+				return TRUE
+			if(!is_operational || !usr.can_perform_action(src, NEED_DEXTERITY|ALLOW_SILICON_REACH))
+				return TRUE
+
+			contained_id.goal = num
+			return TRUE
+
+		if("reset_id")
+			contained_id.points = 0
+			return TRUE
+
+		if("handle_implant")
+			var/obj/item/implant/affected_implant = locate(params["implant_ref"]) in GLOB.tracked_implants
+			if(affected_implant?.is_shown_on_console(src))
+				affected_implant.handle_management_console_action(usr, params, src)
+			return TRUE

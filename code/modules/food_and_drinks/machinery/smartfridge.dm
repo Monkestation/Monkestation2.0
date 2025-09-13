@@ -153,6 +153,7 @@
  */
 /obj/machinery/smartfridge/proc/accept_check(obj/item/weapon)
 	var/static/list/accepted_items = list(
+		/obj/item/food,
 		/obj/item/food/grown,
 		/obj/item/seeds,
 		/obj/item/grown,

@@ -109,10 +109,18 @@
 ///is our control panel currently open
 #define BOT_CONTROL_PANEL_OPEN (1<<1)
 
-///bitfield for our access flags
+///bitfield, used by basic bots, for our access flags
 DEFINE_BITFIELD(bot_access_flags, list(
-	"MAINTS_OPEN" = BOT_MAINTS_PANEL_OPEN,
-	"CONTROL_OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
+
+///bitfield, used by simple bots, for our access flags
+DEFINE_BITFIELD(bot_cover_flags, list(
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
 	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
 	"COVER_HACKED" = BOT_COVER_HACKED,
 ))
