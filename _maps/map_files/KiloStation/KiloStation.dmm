@@ -4347,14 +4347,18 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "btg" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/recharger{
+	pixel_x = 58;
+	pixel_y = 1
+	},
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/computer/armory{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -7862,7 +7866,10 @@
 /area/station/service/chapel/monastery)
 "csM" = (
 /obj/structure/table,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 1
+	},
 /obj/structure/sign/warning/electric_shock/directional/south,
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 4
@@ -55165,13 +55172,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
-	id = "sidearmory";
+	id = "armory";
 	name = "Side Armoury Shutter"
-	},
-/obj/machinery/button/door/directional/south{
-	id = "sidearmory";
-	name = "Armoury Shutter Toggle";
-	req_access = list("armory")
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)

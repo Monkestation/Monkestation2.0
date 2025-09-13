@@ -24722,18 +24722,6 @@
 	name = "security camera"
 	},
 /obj/machinery/button/door/directional/east{
-	id = "armory_side_access";
-	name = "Armory Side Access";
-	req_access = list("armory");
-	pixel_y = -6
-	},
-/obj/machinery/button/door/directional/east{
-	id = "armory_desk";
-	name = "Armory Desk Shutters Control";
-	req_access = list("armory");
-	pixel_y = 6
-	},
-/obj/machinery/button/door/directional/east{
 	id = "armory_window_shutters";
 	name = "Armory Window Shutters Control";
 	req_access = list("armory");
@@ -32560,12 +32548,6 @@
 	dir = 10
 	},
 /obj/machinery/light/small/directional/west,
-/obj/machinery/button/door/directional/west{
-	id = "armory_side_access";
-	name = "Armory Side Access";
-	pixel_y = 6;
-	req_access = list("armory")
-	},
 /obj/machinery/button/door/directional/west{
 	id = "sec_locker_shutters";
 	name = "Locker Room Shutters Control";
@@ -41663,6 +41645,11 @@
 	},
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
+"nrw" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/vending/security,
+/turf/open/floor/iron/dark,
+/area/station/security/lockers)
 "nrz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -61617,7 +61604,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/security,
+/obj/machinery/computer/armory{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "tQS" = (
@@ -65913,11 +65902,6 @@
 	name = "Armory Desk";
 	req_access = list("armory")
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "armory_desk";
-	name = "Armory Desk Shutters";
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vip" = (
@@ -68578,7 +68562,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters{
-	id = "armory_side_access";
+	id = "armory";
 	name = "Armory Side Access";
 	dir = 4
 	},
@@ -106729,7 +106713,7 @@ uol
 uRD
 uol
 wfF
-kPm
+nrw
 mcY
 que
 sHr

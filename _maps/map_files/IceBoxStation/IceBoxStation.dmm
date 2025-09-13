@@ -24738,12 +24738,13 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "hEC" = (
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/light/directional/south,
 /obj/machinery/light_switch/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/computer/armory{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -35846,13 +35847,6 @@
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"lab" = (
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "Secure Weapons Storage";
-	req_access = list("armory")
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "laf" = (
 /obj/structure/cable,
 /obj/structure/chair{
@@ -38729,10 +38723,10 @@
 /area/station/science/genetics)
 "lTN" = (
 /obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/recharger,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -40043,13 +40037,6 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "mqz" = (
-/obj/machinery/button/door/directional/east{
-	id = "armory";
-	name = "Armory Shutters";
-	pixel_x = -9;
-	pixel_y = 30;
-	req_access = list("armory")
-	},
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
 	pixel_x = -3;
@@ -74165,6 +74152,8 @@
 /area/station/maintenance/aft/greater)
 "wRs" = (
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "wRx" = (
@@ -171057,7 +171046,7 @@ yiL
 ghe
 cxO
 pgL
-lab
+cxO
 gIk
 yiL
 aym

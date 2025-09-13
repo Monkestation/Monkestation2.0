@@ -5979,15 +5979,8 @@
 /turf/open/floor/carpet/red,
 /area/station/security/checkpoint/engineering)
 "bQH" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig/upper)
 "bQO" = (
@@ -9804,11 +9797,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "cUw" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/stairs/right,
+/turf/open/floor/iron,
 /area/station/security/brig/upper)
 "cUx" = (
 /obj/machinery/light/directional/west,
@@ -10889,14 +10878,13 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/machinery/turretid{
 	pixel_y = 65;
 	req_access = list("armory");
 	control_area = "/area/station/ai_monitored/security/armory";
 	name = "Armory control panel"
 	},
-/turf/open/floor/iron/stairs/left,
+/turf/open/floor/iron,
 /area/station/security/brig/upper)
 "dnS" = (
 /obj/structure/closet/crate/internals,
@@ -12167,10 +12155,12 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/entry)
 "dFZ" = (
-/obj/structure/closet/secure_closet/evidence,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
+	},
+/obj/structure/closet{
+	name = "Evidence Closet 2"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
@@ -37129,11 +37119,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "kSc" = (
-/obj/machinery/door/airlock/security{
-	name = "Armory"
+/obj/machinery/door/poddoor/shutters{
+	id = "armory";
+	name = "Armory Shutter"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "kSf" = (
@@ -43313,14 +43302,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "mCV" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = -1;
+	pixel_x = 22
+	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "mCW" = (
@@ -50004,14 +49992,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "oAX" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/computer/armory,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "oBa" = (
@@ -65065,6 +65048,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"sWR" = (
+/obj/structure/cable,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/structure/table,
+/obj/item/hand_labeler,
+/turf/open/floor/iron,
+/area/station/security/brig/upper)
 "sWU" = (
 /obj/machinery/vending/engivend,
 /obj/effect/turf_decal/bot,
@@ -74868,8 +74861,7 @@
 "vHl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/stairs/medium,
+/turf/open/floor/iron,
 /area/station/security/brig/upper)
 "vHq" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
@@ -75539,6 +75531,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "vRP" = (
@@ -76746,9 +76739,11 @@
 /area/station/engineering/lobby)
 "wmF" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/closet/secure_closet/evidence,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
+	},
+/obj/structure/closet{
+	name = "Evidence Closet 1"
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
@@ -79294,8 +79289,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "wWY" = (
@@ -108479,9 +108472,9 @@ qRM
 jdw
 fRp
 vXD
-chz
-rzG
-mCV
+oAX
+cUw
+rdl
 xtM
 wmF
 hPd
@@ -108736,9 +108729,9 @@ vXD
 vXD
 vXD
 vXD
-hWB
-rzG
-oAX
+sWR
+mCV
+rdl
 xtM
 dFZ
 xhM
@@ -108993,7 +108986,7 @@ nhC
 nhC
 lXw
 vXD
-vXD
+rzG
 rzG
 vRJ
 wWW

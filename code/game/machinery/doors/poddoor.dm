@@ -46,10 +46,18 @@
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", isnum(id) ? id : null, 100)
+
+	var/change_id = tgui_input_text(user, "Set the door controllers ID (Current: [id])", "Door Controller ID", "[id]", 50)
 	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	id = change_id
+
+	//We try setting this as a number because ANNOYINGLY this value can be a number or string so we need to be able to set it to either
+	var/as_num_id = text2num(change_id)
+	if (as_num_id)
+		id = as_num_id
+	else
+		id = change_id
+
 	to_chat(user, span_notice("You change the ID to [id]."))
 	balloon_alert(user, "id changed")
 	return ITEM_INTERACT_SUCCESS

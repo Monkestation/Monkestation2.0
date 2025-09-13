@@ -51394,11 +51394,6 @@
 	pixel_x = -4
 	},
 /obj/structure/table,
-/obj/machinery/button/door/directional/east{
-	id = "armory";
-	name = "Armory Shutters";
-	req_access = list("armory")
-	},
 /obj/item/melee/baton/security,
 /obj/item/melee/baton/security,
 /obj/item/melee/baton/security,
@@ -54691,6 +54686,9 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/computer/armory{
+	dir = 4
+	},
 /turf/open/floor/plastic,
 /area/station/security/lockers)
 "xxS" = (
