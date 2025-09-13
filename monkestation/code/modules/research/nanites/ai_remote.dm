@@ -112,7 +112,7 @@
 	button_icon_state = "nanite_remote"
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//Seems good enough?
-	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites.")
+	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites. Click the ability again to disconnect from the cloud.")
 	disable_text = span_notice("You disconnect from the nanite cloud.")
 	var/datum/nanite_remote_settings/remote_settings
 
