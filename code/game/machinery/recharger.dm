@@ -183,7 +183,7 @@
 			if(power_pack.stored_ammo.len >= power_pack.max_ammo)
 				break
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_power(active_power_usage * seconds_per_tick)
+			use_energy(active_power_usage * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return

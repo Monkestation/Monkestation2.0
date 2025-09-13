@@ -106,7 +106,7 @@
 			QDEL_NULL(transmitting)
 			return
 		do_teleport(P.item, get_turf(P.uplink))
-		use_power(power_usage_per_teleport / power_efficiency)
+		use_energy(energy_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
 
 		recharge_cooldown = recharge_time

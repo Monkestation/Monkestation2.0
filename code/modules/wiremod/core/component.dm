@@ -249,7 +249,7 @@
 		parent.current_size += circuit_size
 
 /obj/item/circuit_component/proc/check_power_modifictions()
-	return power_usage_per_input
+	return energy_usage_per_input
 
 /**
  * Called whether this circuit component should receive an input.

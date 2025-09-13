@@ -526,7 +526,7 @@
 				pre_success(cooker)
 		return
 	time--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(loop), type, time, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()

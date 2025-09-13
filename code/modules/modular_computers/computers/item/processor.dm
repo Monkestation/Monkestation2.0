@@ -43,5 +43,12 @@
 	machinery_computer = null
 	return ..()
 
+/obj/item/modular_computer/processor/use_energy(amount = 0, check_programs = TRUE)
+	var/obj/machinery/machine_holder = physical
+	if(machine_holder.powered())
+		machine_holder.use_energy(amount)
+		return TRUE
+	return ..()
+
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)

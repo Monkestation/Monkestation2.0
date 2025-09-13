@@ -791,7 +791,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!ismecha(owner))
 		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_power(amount * MASS_TO_ENERGY))
+	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
 		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
 	return TRUE

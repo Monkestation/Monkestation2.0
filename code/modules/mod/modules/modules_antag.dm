@@ -138,7 +138,7 @@
 
 /obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 		return SHIELD_BLOCK
 	return NONE
 
@@ -150,7 +150,7 @@
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 25 //monkestation edit: from 15 to 25
 	recharge_start_delay = 1 MINUTES //monkestation edit: from 0 SECONDS to 1 MINUTES
 	charge_recovery = 25 //monkestation edit: from 8 to 25
@@ -554,7 +554,7 @@ monkestation end */
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act), override = TRUE)
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth), override = TRUE)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
 	if(bumpoff)

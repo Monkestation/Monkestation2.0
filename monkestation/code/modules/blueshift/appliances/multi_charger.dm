@@ -111,7 +111,7 @@
 		return
 
 	for(var/obj/item/stock_parts/cell/charging_cell in charging_queue)
-		use_power(charge_current * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
+		use_energy(charge_current * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
 		charge_cell(charge_current, charging_cell, grid_only = TRUE)
 
 	LAZYNULL(charging_queue)
@@ -209,18 +209,3 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-
-/**
- * Draws power from the apc's powernet and cell to charge a power cell.
- * Args:
- * - amount: The amount of energy given to the cell.
- * - cell: The cell to charge.
- * - grid_only: If true, only draw from the grid and ignore the APC's cell.
- * - channel: The power channel to use.
- * Returns: The amount of energy the cell received.
- */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
-	var/demand = use_power_from_net(min(amount, cell.used_charge()))
-	var/power_given = cell.give(demand)
-	return power_given

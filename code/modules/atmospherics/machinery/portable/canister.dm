@@ -524,7 +524,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
 		var/power_consumed = power_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
+			use_energy(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE
 		else if(internal_cell?.use(power_consumed * 0.025))
 			protected_contents = TRUE

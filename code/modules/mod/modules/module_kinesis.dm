@@ -60,7 +60,7 @@
 	if(!can_grab(target))
 		balloon_alert(mod.wearer, "can't grab!")
 		return
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	grabbed_atom = target
 	if(isliving(grabbed_atom))
 		var/mob/living/grabbed_mob = grabbed_atom

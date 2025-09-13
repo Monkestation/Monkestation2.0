@@ -495,7 +495,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
+	if(!drain_power(use_energy_cost*levels))
 		return
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
@@ -776,7 +776,7 @@
 	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
 	icon_state = "no_baton"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/shock_absorber)
 
 /obj/item/mod/module/shock_absorber/on_suit_activation()
@@ -789,7 +789,7 @@
 
 /obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)
 	SIGNAL_HANDLER
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()

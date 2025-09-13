@@ -148,18 +148,16 @@
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
-	if(!..() && !force)
-		return FALSE
-
-	if(rigged && amount > 0)
+	var/power_used = min(used, charge)
+	if(rigged && power_used > 0)
 		explode()
-		return FALSE
-	if(!force && charge < amount)
-		return FALSE
-	charge = max(charge - amount, 0)
-	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
+		return 0 // The cell decided to explode so we won't be able to use it.
+	if(!force && charge < used)
+		return 0
+	charge -= power_used
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
+	SEND_SIGNAL(src, COMSIG_CELL_CHANGE_POWER)
 	return power_used
 
 /// Recharge the cell.

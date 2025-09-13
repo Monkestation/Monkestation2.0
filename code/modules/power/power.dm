@@ -160,18 +160,55 @@
  * - force: If true and if there isn't enough energy, consume the remaining energy. Returns 0 if false and there isn't enough energy.
  * Returns: The amount of energy used.
  */
-/obj/machinery/proc/directly_use_power(amount)
-	var/area/A = get_area(src)
-	var/obj/machinery/power/apc/local_apc
-	if(!A)
+/obj/machinery/proc/use_energy(amount, channel = power_channel, ignore_apc = FALSE, force = TRUE)
+	if(amount <= 0) //just in case
 		return FALSE
-	local_apc = A.apc
-	if(!local_apc)
+	var/area/home = get_area(src)
+
+	if(isnull(home))
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
-	if(!local_apc.cell)
+
+	// Surplus from the grid.
+	var/surplus = local_apc.surplus()
+	var/grid_used = min(surplus, amount)
+	var/apc_used = 0
+	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
+		apc_used = local_apc.cell.use(amount - grid_used, force = force)
+
+	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
 		return FALSE
-	local_apc.cell.use(amount)
-	return TRUE
+
+	// Use the grid's and APC's energy.
+	amount = grid_used + apc_used
+	local_apc.add_load(grid_used JOULES)
+	home.use_energy(amount JOULES, channel)
+	return amount
+
+/**
+ * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to prioritising the grid.
+ * Args:
+ * - amount: How much energy the APC's cell is to be costed.
+ * - force: If true, consumes the remaining energy of the cell if there isn't enough energy to supply the demand.
+ * Returns: The amount of energy that got used by the cell.
+ */
+/obj/machinery/proc/directly_use_energy(amount, force = FALSE)
+	var/area/my_area = get_area(src)
+	if(isnull(my_area))
+		stack_trace("machinery is somehow not in an area, nullspace?")
+		return FALSE
+	if(!my_area.requires_power)
+		return amount
+
+	var/obj/machinery/power/apc/my_apc = my_area.apc
+	if(isnull(my_apc) || !my_apc.operating || QDELETED(my_apc.cell))
+		return FALSE
+	return my_apc.cell.use(amount, force = force)
 
 /**
  * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
@@ -195,8 +232,9 @@
 		return amount //Shuttles get free power, don't ask why
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
+
 	var/surplus = local_apc.surplus()
 	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
 		return FALSE
@@ -216,7 +254,7 @@
  * - channel: The power channel to use.
  * Returns: The amount of energy the cell received.
  */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/power_store/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
 	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
 	return power_given

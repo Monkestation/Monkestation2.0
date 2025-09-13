@@ -61,7 +61,7 @@
 		var/recycle_reward = morselstack.amount * morselstack.point_value
 		reclaimed += recycle_reward
 		playsound(src, item_recycle_sound, (50 + morselstack.amount), TRUE, morselstack.amount)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		var/datum/bank_account/dept_budget = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		var/payee_key = morselstack.fingerprintslast
 

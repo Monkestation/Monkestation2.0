@@ -242,7 +242,7 @@
 		remove_boulder(chosen_boulder)
 		say("Nothing to process!")
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
+	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
 	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/boulder/disposable_boulder = new (src)

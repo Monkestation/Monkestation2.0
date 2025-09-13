@@ -115,7 +115,7 @@
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(0.5 SECONDS)
 
-	use_power(active_power_usage) // Use a lot of power.
+	use_energy(active_power_usage) // Use a lot of power.
 
 	// monkestation edit start PR #5133
 	if(is_ipc_mode || HAS_MIND_TRAIT(victim, TRAIT_UNBORGABLE)) // can't escape by just being unborgable
