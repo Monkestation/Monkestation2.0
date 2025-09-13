@@ -56,6 +56,7 @@
 		/datum/reagent/fuel,
 		/datum/reagent/medicine/nanite_slurry,
 		/datum/reagent/medicine/painkiller/robopiates,
+		/datum/reagent/drug/methamphetamine/robo,
 	)
 
 /datum/borer_evolution/synthetic_chems_positive/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
