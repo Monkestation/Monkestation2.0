@@ -121,7 +121,7 @@
 	if(!activated || !comm_code)
 		return
 	if(signal_comm_code == comm_code)
-		log_game("[host_mob]'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.")
+		host_mob.investigate_log("'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.", INVESTIGATE_NANITES)
 		trigger(comm_message)
 
 /datum/nanite_program/comm/speech
@@ -208,3 +208,49 @@
 /datum/nanite_program/bad_mood/disable_passive_effect()
 	. = ..()
 	host_mob.clear_mood_event("nanite_sadness")
+
+/datum/nanite_program/conversation_filter
+	name = "Conversation Filter"
+	desc = "The nanites pre-process words, granting the ability to filter out certain phrases."
+	use_rate = 0.1
+	unique = FALSE
+	rogue_types = list(/datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/conversation_filter/register_extra_settings()
+	. = ..()
+	extra_settings[NES_INVALID_PHRASE] = new /datum/nanite_extra_setting/text("")
+	extra_settings[NES_PHRASE_REPLACEMENT] = new /datum/nanite_extra_setting/text("\[Invalid Phrase Detected.\]")
+	extra_settings[NES_REPLACEMENT_MODE] = new /datum/nanite_extra_setting/boolean(TRUE, "Whole Sentence", "Phrase Only")
+
+/datum/nanite_program/conversation_filter/on_mob_add()
+	. = ..()
+	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
+
+/datum/nanite_program/conversation_filter/on_mob_remove()
+	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR)
+	return ..()
+
+/datum/nanite_program/conversation_filter/proc/on_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(!activated)
+		return
+
+	var/datum/nanite_extra_setting/phrase = extra_settings[NES_INVALID_PHRASE]
+	var/datum/nanite_extra_setting/replacement_mode = extra_settings[NES_REPLACEMENT_MODE]
+	var/datum/nanite_extra_setting/replacement_setting = extra_settings[NES_PHRASE_REPLACEMENT]
+	var/replacement_phrase = replacement_setting.get_value()
+
+	if(!phrase.get_value())
+		return
+
+	if(!replacement_phrase)
+		replacement_phrase = ""
+
+	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], phrase.get_value()))
+		return
+	if (replacement_mode.get_value())
+		hearing_args[HEARING_RAW_MESSAGE] = replacement_phrase
+	else
+		var/message = hearing_args[HEARING_RAW_MESSAGE]
+		message = replacetext(message, phrase.get_value(), replacement_phrase)
+		hearing_args[HEARING_RAW_MESSAGE] = message

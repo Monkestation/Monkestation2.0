@@ -74,7 +74,7 @@
 	var/datum/nanite_cloud_backup/backup = new(src, cloud_id)
 	var/datum/component/nanites/cloud_copy = backup.AddComponent(/datum/component/nanites, linked_techweb)
 	backup.set_nanites(cloud_copy)
-	log_game("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]")
+	investigate_log("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
 
 /obj/machinery/computer/nanite_cloud_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -180,7 +180,7 @@
 		data["cloud_backups"] = backup_list
 	return data
 
-/obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
+/obj/machinery/computer/nanite_cloud_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -208,7 +208,7 @@
 				return TRUE
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			qdel(backup)
-			log_game("[key_name(usr)] deleted the nanite cloud backup #[current_view]")
+			investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			return TRUE
 		if("upload_program")
 			if(disk && disk.program)
@@ -218,7 +218,7 @@
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
 				nanites.add_program(null, disk.program.copy())
-				log_game("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]")
+				investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
 			return TRUE
 		if("remove_program")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
@@ -227,7 +227,7 @@
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/cloud_program = nanites.programs[text2num(params["program_id"])]
-			log_game("[key_name(usr)] deleted program [cloud_program.name] from cloud #[current_view]")
+			investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 			qdel(cloud_program)
 			return TRUE
 		if("add_rule")
@@ -241,7 +241,8 @@
 					var/datum/component/nanites/nanites = backup.nanites
 					var/datum/nanite_program/ruled_program = nanites.programs[text2num(params["program_id"])]
 					var/datum/nanite_rule/rule = rule_template.make_rule(ruled_program)
-					log_game("[key_name(usr)] added rule [rule.display()] to program [ruled_program.name] in cloud #[current_view]")
+					if(rule)
+						investigate_log("[key_name(usr)] added rule [rule.display()] to program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 			return TRUE
 		if("remove_rule")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
@@ -251,8 +252,9 @@
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/ruleless_program = nanites.programs[text2num(params["program_id"])]
 			var/datum/nanite_rule/rule = ruleless_program.rules[text2num(params["rule_id"])]
-			rule.remove()
-			log_game("[key_name(usr)] removed rule [rule.display()] from program [ruleless_program.name] in cloud #[current_view]")
+			if(rule)
+				investigate_log("[key_name(usr)] removed rule [rule.display()] from program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
+				rule.remove()
 			return TRUE
 		if("toggle_rule_logic")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
@@ -262,5 +264,5 @@
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/logical_program = nanites.programs[text2num(params["program_id"])]
 			logical_program.all_rules_required = !logical_program.all_rules_required
-			log_game("[key_name(usr)] edited rule logic for program [logical_program.name] into [logical_program.all_rules_required ? "All" : "Any"] in cloud #[current_view]")
+			investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
 			return TRUE

@@ -81,3 +81,10 @@
 	id = "bad_mood_nanites"
 	category = list(NANITES_CATEGORY_SUPPRESSION)
 	program_type = /datum/nanite_program/bad_mood
+
+/datum/design/nanites/conversation_filter
+	name = "Conversation Filter"
+	desc = "The nanites pre-process words, granting the ability to filter out certain phrases."
+	id = "word_filter_nanites"
+	category = list(NANITES_CATEGORY_SUPPRESSION)
+	program_type = /datum/nanite_program/conversation_filter

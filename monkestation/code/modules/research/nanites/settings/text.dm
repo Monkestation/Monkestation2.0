@@ -4,6 +4,9 @@
 /datum/nanite_extra_setting/text/New(initial)
 	value = initial
 
+/datum/nanite_extra_setting/text/get_value()
+	return html_encode(value)
+
 /datum/nanite_extra_setting/text/set_value(value)
 	src.value = trim(value)
 

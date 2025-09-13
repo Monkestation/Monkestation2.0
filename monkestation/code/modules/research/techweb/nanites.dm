@@ -78,6 +78,8 @@
 		"sensor_death_nanites",
 		"sensor_health_nanites",
 		"sensor_damage_nanites",
+		"sensor_blood_nanites",
+		"sensor_nutrition_nanites",
 		"sensor_species_nanites",
 	)
 	research_costs = list(
@@ -95,6 +97,7 @@
 		"brainheal_nanites",
 		"paralyzing_nanites",
 		"stun_nanites",
+		"word_filter_nanites",
 		"selfscan_nanites",
 		"good_mood_nanites",
 		"bad_mood_nanites",
@@ -132,6 +135,7 @@
 		"aggressive_nanites",
 		"defib_nanites",
 		"regenerative_plus_nanites",
+		"oxygen_rush_nanites",
 		"brainheal_plus_nanites",
 		"purging_plus_nanites",
 		"adrenaline_nanites",
@@ -186,10 +190,8 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_5_POINTS,
 	)
-	hidden = TRUE
-	experimental = TRUE
 
 /datum/techweb_node/nanite_storage_protocols
 	id = TECHWEB_NODE_NANITE_STORAGE
@@ -204,7 +206,5 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_5_POINTS,
 	)
-	hidden = TRUE
-	experimental = TRUE

@@ -165,7 +165,7 @@
 
 	return data
 
-/obj/machinery/nanite_program_hub/ui_act(action, params)
+/obj/machinery/nanite_program_hub/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

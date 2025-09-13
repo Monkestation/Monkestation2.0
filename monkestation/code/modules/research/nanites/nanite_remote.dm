@@ -102,7 +102,7 @@
 	data["program_name"] = current_program_name
 	return data
 
-/obj/item/nanite_remote/ui_act(action, params)
+/obj/item/nanite_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -215,7 +215,7 @@
 	data["program_name"] = current_program_name
 	return data
 
-/obj/item/nanite_remote/comm/ui_act(action, params)
+/obj/item/nanite_remote/comm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

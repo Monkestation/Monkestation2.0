@@ -34,6 +34,9 @@
 	///Boolean whether the program is currently activated. Off programs won't proceess or have passive effects, but won't consume nanites.
 	var/activated = TRUE
 
+	/// Whether or not the program is forcibly disabled by a software error. This is cleared by cloud syncs.
+	var/force_disabled = FALSE
+
 	///How many deciseconds to wait upon deactivation before self-reactivating. Also works if the program begins deactivated.
 	var/timer_restart = 0
 	///How many deciseconds to wait upon activation before self-deactivating. Also works if the program begins activated.
@@ -99,6 +102,7 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
+	target.force_disabled = force_disabled
 
 	target.rules = list()
 	for(var/datum/nanite_rule/rule as anything in rules)
@@ -189,12 +193,10 @@
 	if(timer_trigger && world.time > timer_trigger_next)
 		trigger()
 		timer_trigger_next = world.time + timer_trigger
-		return
 
 	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
 		trigger(delayed = TRUE)
 		timer_trigger_delay_next = 0
-		return
 
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
@@ -208,6 +210,8 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	if(force_disabled)
+		return FALSE
 	if(!LAZYLEN(rules))
 		return TRUE
 	for(var/datum/nanite_rule/rule as anything in rules)
@@ -256,21 +260,28 @@
 	if(program_flags & NANITE_EMP_IMMUNE)
 		return
 	if(prob(80 / severity))
+		host_mob.investigate_log("[src] nanite program received a software error due to emp.", INVESTIGATE_NANITES)
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
 	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to shock.", INVESTIGATE_NANITES)
 			software_error()
 		else if(prob(33))
+			host_mob.investigate_log("[src] nanite program was deleted due to shock.", INVESTIGATE_NANITES)
 			qdel(src)
 
 /datum/nanite_program/proc/on_minor_shock()
 	if(!(program_flags & NANITE_SHOCK_IMMUNE))
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()
 
 /datum/nanite_program/proc/on_death(gibbed)
+	return
+
+/datum/nanite_program/proc/on_revive(full_heal, admin_revive)
 	return
 
 #define SOFTWARE_ERROR_DELETE 1
@@ -290,22 +301,28 @@
 	var/error_type = pick_weight(software_errors_weighted)
 	switch(error_type)
 		if(SOFTWARE_ERROR_DELETE)
+			host_mob.investigate_log("[src] nanite program was deleted by software error.", INVESTIGATE_NANITES)
 			qdel(src) //kill switch
 		if(SOFTWARE_ERROR_DEPROGRAM) //deprogram codes
+			host_mob.investigate_log("[src] nanite program was de-programmed by software error.", INVESTIGATE_NANITES)
 			activation_code = 0
 			deactivation_code = 0
 			kill_code = 0
 			trigger_code = 0
 		if(SOFTWARE_ERROR_TOGGLE)
-			toggle() //enable/disable
+			host_mob.investigate_log("[src] nanite program was disabled by software error.", INVESTIGATE_NANITES)
+			force_disabled = TRUE
 		if(SOFTWARE_ERROR_TRIGGER)
 			if(can_trigger)
+				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)
 				trigger()
 			else
+				host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
 				toggle() //enable/disable
 		if(SOFTWARE_ERROR_ROGUE) //Program is scrambled and does something different
 			var/rogue_type = pick(rogue_types)
 			var/datum/nanite_program/rogue = new rogue_type
+			host_mob.investigate_log("[src] nanite program was converted into [rogue.name] by software error.", INVESTIGATE_NANITES)
 			nanites.add_program(null, rogue, src)
 			qdel(src)
 
@@ -316,16 +333,36 @@
 #undef SOFTWARE_ERROR_ROGUE
 
 /datum/nanite_program/proc/receive_signal(code, source)
+	if (!code) // makes code 0 invalid
+		return
 	if(activation_code && code == activation_code && !activated)
 		activate()
-		log_game("[host_mob]'s [name] nanite program was activated by [source] with code [code].")
+		host_mob.investigate_log("'s [name] nanite program was activated by [source] with code [code].", INVESTIGATE_NANITES)
 	else if(deactivation_code && code == deactivation_code && activated)
 		deactivate()
-		log_game("[host_mob]'s [name] nanite program was deactivated by [source] with code [code].")
+		host_mob.investigate_log("'s [name] nanite program was deactivated by [source] with code [code].", INVESTIGATE_NANITES)
 	if(can_trigger && trigger_code && code == trigger_code)
 		trigger()
-		log_game("[host_mob]'s [name] nanite program was triggered by [source] with code [code].")
+		host_mob.investigate_log("'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
 	if(kill_code && code == kill_code)
-		log_game("[host_mob]'s [name] nanite program was deleted by [source] with code [code].")
+		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
 
+/datum/nanite_program/proc/send_code_any(setting)
+	if (!activated)
+		return
+
+	var/datum/nanite_extra_setting/code_setting = extra_settings[setting]
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code_setting.get_value(), "a [name] program")
+
+/datum/nanite_program/proc/send_code()
+	send_code_any(NES_SENT_CODE)
+
+/datum/nanite_program/proc/send_code_inverted()
+	send_code_any(NES_SENT_CODE_INVERTED)
+
+/datum/nanite_program/proc/send_trigger_code()
+	send_code_any(NES_SENT_CODE_TRIGGER)
+
+/datum/nanite_program/proc/send_trigger_code_inverted()
+	send_code_any(NES_SENT_CODE_TRIGGER_INVERTED)

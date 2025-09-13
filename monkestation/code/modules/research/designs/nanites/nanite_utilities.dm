@@ -60,14 +60,14 @@
 	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
 	id = "repeater_nanites"
 	category = list(NANITE_CATEGORY_UTILITIES)
-	program_type = /datum/nanite_program/sensor/repeat
+	program_type = /datum/nanite_program/repeat
 
 /datum/design/nanites/relay_repeater
 	name = "Relay Signal Repeater"
 	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
 	id = "relay_repeater_nanites"
 	category = list(NANITE_CATEGORY_UTILITIES)
-	program_type = /datum/nanite_program/sensor/relay_repeat
+	program_type = /datum/nanite_program/relay_repeat
 
 /datum/design/nanites/emp
 	name = "Electromagnetic Resonance"

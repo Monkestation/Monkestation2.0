@@ -148,7 +148,7 @@ const NaniteChamberControlContent = (props) => {
                       minValue={0}
                       maxValue={500}
                       width="39px"
-                      onChange={(value) =>
+                      onChange={(e, value) =>
                         act('set_safety', {
                           value: value,
                         })
@@ -163,9 +163,9 @@ const NaniteChamberControlContent = (props) => {
                       step={1}
                       stepPixelSize={3}
                       width="39px"
-                      onChange={(value) =>
+                      onChange={(e, new_value: number) =>
                         act('set_cloud', {
-                          value: value,
+                          value: new_value,
                         })
                       }
                     />
