@@ -1,0 +1,7 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - bugfix: "Fixed being unable to scoop up ice cream from the vat."
+  - bugfix: "Fixed plushies and the nuclear authentication disk not wanting to be tucked in bed. (It's bedtime, go to sleep.)"
+  - bugfix: "Fixed plushies being silent when hitting someone with them."
+  - bugfix: "Fixed being unable to roast sausages on the singularity."
