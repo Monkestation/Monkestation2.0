@@ -294,14 +294,13 @@
 
 		var/list/gases = air.gases
 		if(gases[/datum/gas/plasma])
-			air.assert_gas(/datum/gas/nitrogen)
-			gases[/datum/gas/nitrogen][MOLES] += gases[/datum/gas/plasma][MOLES]
+			air.assert_gas(GAS_N2)
+			gases[GAS_N2][MOLES] += gases[/datum/gas/plasma][MOLES]
 			gases[/datum/gas/plasma][MOLES] = 0
 			air.garbage_collect()
 
 		for(var/obj/effect/hotspot/fire in chilly)
 			qdel(fire)
-		chilly.air_update_turf(FALSE, FALSE)
 
 	if(weldvents)
 		for(var/obj/machinery/atmospherics/components/unary/comp in chilly)

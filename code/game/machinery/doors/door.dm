@@ -77,7 +77,7 @@
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 	register_context()
 	GLOB.airlocks += src
 	if(elevator_mode)
@@ -145,7 +145,7 @@
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	return ..()
 
 /**
@@ -414,7 +414,7 @@
 	update_appearance()
 	set_opacity(0)
 	operating = FALSE
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
@@ -465,7 +465,7 @@
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 	update_freelook_sight()
 
 	if(!can_crush)
@@ -531,10 +531,10 @@
 	if(!glass && GLOB.thrallnet)
 		GLOB.thrallnet.updateVisibility(src, 0)
 
-/obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
-	if(opacity || heat_proof)
-		return 1
-	return 0
+/obj/machinery/door/BlockThermalConductivity() // All non-glass airlocks block heat, this is intended.
+	if(heat_proof && density)
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'

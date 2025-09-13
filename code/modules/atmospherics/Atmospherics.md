@@ -38,7 +38,7 @@ Now then, into the breach.
  The air controller is, at its core, quite simple, yet it is absolutely fundamental to the atmospheric system. The air controller is the clock which triggers all continuous actions within the atmos system, such as vents distributing air or gas moving between tiles. The actions taken by the air controller are quite simple, and will be enumerated here. Much of the substance of the air ticker is due to the game's master controller, whose intricacies I will not delve into for this document. I will however go into more detail about how SSAir in particular works in Chapter 6. In any case, this is a simplified list of the air controller's actions in a single tick:
 1. Rebuild Pipenets
     - Runs each time SSAir processes, sometimes out of order. It ensures that no pipeline sit unresolved or unbuilt
-    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun 
+    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun
 2. Pipenets
     - Updates the internal gasmixes of attached pipe machinery, and reacts the gases in a pipeline
 	- Calls `process()` on each `/datum/pipenet` in the `networks` list
@@ -113,11 +113,11 @@ Each type of gas is defined by defining a new subtype of /datum/gas. These datum
 
 ```DM
 var/datum/gas_mixture/air = new
-air.assert_gas(/datum/gas/oxygen)
-air.gases[/datum/gas/oxygen][MOLES] = 100
-world << air.gases[/datum/gas/oxygen][GAS_META][META_GAS_NAME] //outputs "Oxygen"
+air.assert_gas(GAS_O2)
+air.gases[GAS_O2][MOLES] = 100
+world << air.gases[GAS_O2][GAS_META][META_GAS_NAME] //outputs "Oxygen"
 world << air.gases.heat_capacity() //outputs 2000 (100 mol * 20 J/K/mol)
-air.gases[/datum/gas/oxygen][MOLES] -= 110
+air.gases[GAS_O2][MOLES] -= 110
 air.garbage_collect() //oxygen is now removed from the gases list, since it was empty
 ```
 *Snippet 4.2: gas mixture usage examples*
@@ -180,7 +180,7 @@ You may notice something like this in `process_cell()`. It's not quite the same 
 
 Back in the old FEA days, neighbor count was hardcoded to 4 (Likely because this is what cell sharing on an infinite grid would look like). This means that turf A -> turf B is the same as turf B -> turf A, because they're each portioning up the gas in the same way.
 
-But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog). 
+But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog).
 We need this so things like multiz can work, and so tiles in a corner share in a way that makes sense.
 
 Because of this, turf A -> turf B was no longer the same as turf B -> turf A, assuming one of those turfs had a different neighbor count, from I DON'T KNOW WALLS?

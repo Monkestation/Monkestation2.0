@@ -64,7 +64,7 @@
 			icon_state ="[base_state]open"
 			sleep(7 DECISECONDS)
 			set_density(FALSE)
-			air_update_turf(TRUE, FALSE)
+			air_update_turf()
 		if("close")
 			if((obj_flags & EMAGGED) || malfunctioning)
 				flick("[base_state]spark", src)
@@ -81,7 +81,7 @@
 					for(var/mob/living/crushee in get_turf(src))
 						crush()
 					sleep(2 DECISECONDS)
-			air_update_turf(TRUE, TRUE)
+			air_update_turf()
 			operating = FALSE
 			set_density(TRUE)
 

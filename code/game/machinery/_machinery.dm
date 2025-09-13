@@ -161,6 +161,9 @@
 	var/appearance_power_state = -1
 	armor_type = /datum/armor/obj_machinery
 
+	///Boolean on whether this machines interact with atmos
+	var/atmos_processing = FALSE
+
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10

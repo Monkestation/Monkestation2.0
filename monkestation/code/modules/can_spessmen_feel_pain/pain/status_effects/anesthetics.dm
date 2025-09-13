@@ -43,7 +43,7 @@
 /obj/item/organ/internal/lungs/too_much_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, n2o_pp, old_n2o_pp)
 	. = ..()
 	if(HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-		breather.apply_status_effect(/datum/status_effect/grouped/anesthetic, /datum/gas/nitrous_oxide)
+		breather.apply_status_effect(/datum/status_effect/grouped/anesthetic, GAS_NITROUS)
 
 /datum/status_effect/anesthesia_grog
 	id = "anesthesia_grog"

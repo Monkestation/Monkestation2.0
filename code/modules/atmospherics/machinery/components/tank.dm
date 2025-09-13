@@ -435,50 +435,50 @@
 
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
-	fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * 0.5))
-	fill_to_pressure(/datum/gas/nitrogen, safety_margin = (N2STANDARD * 0.5))
+	fill_to_pressure(GAS_O2, safety_margin = (O2STANDARD * 0.5))
+	fill_to_pressure(GAS_N2, safety_margin = (N2STANDARD * 0.5))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
-	gas_type = /datum/gas/carbon_dioxide
+	gas_type = GAS_CO2
 
 /obj/machinery/atmospherics/components/tank/plasma
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/atmospherics/components/tank/nitrogen
-	gas_type = /datum/gas/nitrogen
+	gas_type = GAS_N2
 
 /obj/machinery/atmospherics/components/tank/oxygen
-	gas_type = /datum/gas/oxygen
+	gas_type = GAS_O2
 
 /obj/machinery/atmospherics/components/tank/nitrous
-	gas_type = /datum/gas/nitrous_oxide
+	gas_type = GAS_NITROUS
 
 /obj/machinery/atmospherics/components/tank/bz
-	gas_type = /datum/gas/bz
+	gas_type = GAS_BZ
 
 /obj/machinery/atmospherics/components/tank/freon
-	gas_type = /datum/gas/freon
+	gas_type = GAS_FREON
 
 /obj/machinery/atmospherics/components/tank/halon
-	gas_type = /datum/gas/halon
+	gas_type = GAS_HALON
 
 /obj/machinery/atmospherics/components/tank/healium
-	gas_type = /datum/gas/healium
+	gas_type = GAS_HEALIUM
 
 /obj/machinery/atmospherics/components/tank/hydrogen
-	gas_type = /datum/gas/hydrogen
+	gas_type = GAS_H2
 
 /obj/machinery/atmospherics/components/tank/hypernoblium
-	gas_type = /datum/gas/hypernoblium
+	gas_type = GAS_HYPERNOB
 
 /obj/machinery/atmospherics/components/tank/miasma
-	gas_type = /datum/gas/miasma
+	gas_type = GAS_MIASMA
 
 /obj/machinery/atmospherics/components/tank/nitrium
-	gas_type = /datum/gas/nitrium
+	gas_type = GAS_NITRIUM
 
 /obj/machinery/atmospherics/components/tank/pluoxium
-	gas_type = /datum/gas/pluoxium
+	gas_type = GAS_PLUOXIUM
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
@@ -487,16 +487,16 @@
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/atmospherics/components/tank/water_vapor
-	gas_type = /datum/gas/water_vapor
+	gas_type = GAS_H2O
 
 /obj/machinery/atmospherics/components/tank/zauker
-	gas_type = /datum/gas/zauker
+	gas_type = GAS_ZAUKER
 
 /obj/machinery/atmospherics/components/tank/helium
 	gas_type = /datum/gas/helium
 
 /obj/machinery/atmospherics/components/tank/antinoblium
-	gas_type = /datum/gas/antinoblium
+	gas_type = GAS_ANTINOB
 
 ///////////////////////////////////////////////////////////////////
 // Tank Frame Structure

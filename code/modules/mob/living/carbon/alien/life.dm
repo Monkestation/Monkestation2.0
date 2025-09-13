@@ -18,7 +18,7 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	breath.assert_gases(/datum/gas/plasma, GAS_O2)
 
 	//Partial pressure of the plasma in our breath
 	var/Plasma_pp = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
@@ -34,7 +34,7 @@
 
 	//Breathe in plasma and out oxygen
 	breath_gases[/datum/gas/plasma][MOLES] -= plasma_used
-	breath_gases[/datum/gas/oxygen][MOLES] += plasma_used
+	breath_gases[GAS_O2][MOLES] += plasma_used
 
 	breath.garbage_collect()
 

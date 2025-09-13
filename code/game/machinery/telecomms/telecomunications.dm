@@ -48,6 +48,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	/// Is it a hidden machine?
 	var/hide = FALSE
 
+	var/generates_heat = TRUE 	//yogs turn off tcomms generating heat
+	var/heatoutput = 2500		//yogs modify power output per trafic removed(usual heat capacity of the air in server room is 1600J/K)
+
 	///Looping sounds for any servers
 	var/datum/looping_sound/server/soundloop
 
@@ -162,7 +165,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/process(seconds_per_tick)
 	update_power()
-
+	update_speed()
 	if(traffic > 0)
 		traffic -= netspeed * seconds_per_tick
 
@@ -177,3 +180,30 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)
+
+/obj/machinery/telecomms/proc/update_speed()
+	if(!on)
+		return
+	var/speedloss = 0
+	var/datum/gas_mixture/env = return_air()
+	var/temperature = env?.return_temperature()
+	if(temperature <= 150)				// 150K optimal operating parameters
+		net_efective = 100
+	else
+		if(temperature >= 1150)		// at 1000K above 150K the efectivity becomes 0
+			net_efective = 0
+			speedloss = netspeed
+		else
+			var/ratio = 1000/netspeed			// temp per one unit of speedloss
+			speedloss = round((temperature - 150)/ratio)	// exact speedloss
+			net_efective = 100 - speedloss/netspeed		// percantage speedloss ui use only
+
+	if(traffic > 0)
+		var/deltaT = netspeed - speedloss  //yogs start
+		if (traffic < deltaT)
+			deltaT = traffic
+			traffic = 0
+		else
+			traffic -= deltaT
+		if(generates_heat && env.heat_capacity())
+			env.set_temperature(env.return_temperature() + deltaT * heatoutput / env.heat_capacity())   //yogs end

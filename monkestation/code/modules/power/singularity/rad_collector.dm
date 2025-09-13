@@ -85,8 +85,8 @@
 					power_coeff += (GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]) //250 (plasma), 2000 (hypernobi), etc etc
 					var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[id][MOLES])
 					tank_mix.gases[id][MOLES] -= gasdrained
-					tank_mix.assert_gas(/datum/gas/hydrogen) //Produce Hydrogen. Mostly because it explodes.
-					tank_mix.gases[/datum/gas/hydrogen][MOLES] += gasdrained
+					tank_mix.assert_gas(GAS_H2) //Produce Hydrogen. Mostly because it explodes.
+					tank_mix.gases[GAS_H2][MOLES] += gasdrained
 					tank_mix.garbage_collect()
 		if(!tank_mix && loaded_tank)
 			investigate_log("<font color='red'>out of gas.</font>.", INVESTIGATE_ENGINE)

@@ -48,10 +48,10 @@
 	second_gasmix.temperature = 141.3
 
 	first_gasmix.assert_gas(/datum/gas/plasma)
-	second_gasmix.assert_gas(/datum/gas/oxygen)
+	second_gasmix.assert_gas(GAS_O2)
 
 	first_gasmix.gases[/datum/gas/plasma][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
-	second_gasmix.gases[/datum/gas/oxygen][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[GAS_O2][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
 
 /obj/effect/spawner/newbomb/tritium
 
@@ -64,11 +64,11 @@
 	second_gasmix.temperature = 43
 
 	first_gasmix.assert_gas(/datum/gas/plasma)
-	second_gasmix.assert_gas(/datum/gas/oxygen)
+	second_gasmix.assert_gas(GAS_O2)
 	second_gasmix.assert_gas(/datum/gas/tritium)
 
 	first_gasmix.gases[/datum/gas/plasma][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
-	second_gasmix.gases[/datum/gas/oxygen][MOLES] = 0.67 * calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
+	second_gasmix.gases[GAS_O2][MOLES] = 0.67 * calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
 	second_gasmix.gases[/datum/gas/tritium][MOLES] = 0.33 * calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
 
 /obj/effect/spawner/newbomb/isolated_tritium
@@ -81,13 +81,13 @@
 	first_gasmix.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 1
 	second_gasmix.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 1
 
-	first_gasmix.assert_gas(/datum/gas/hypernoblium)
+	first_gasmix.assert_gas(GAS_HYPERNOB)
 	first_gasmix.assert_gas(/datum/gas/tritium)
-	second_gasmix.assert_gas(/datum/gas/oxygen)
+	second_gasmix.assert_gas(GAS_O2)
 
-	first_gasmix.gases[/datum/gas/hypernoblium][MOLES] = REACTION_OPPRESSION_THRESHOLD - 0.01
+	first_gasmix.gases[GAS_HYPERNOB][MOLES] = REACTION_OPPRESSION_THRESHOLD - 0.01
 	first_gasmix.gases[/datum/gas/tritium][MOLES] = 0.5 * calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
-	second_gasmix.gases[/datum/gas/oxygen][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE-1)
+	second_gasmix.gases[GAS_O2][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE-1)
 
 /obj/effect/spawner/newbomb/noblium
 
@@ -99,10 +99,10 @@
 	first_gasmix.temperature = 2.7
 	second_gasmix.temperature = 2.7
 
-	first_gasmix.assert_gas(/datum/gas/nitrogen)
+	first_gasmix.assert_gas(GAS_N2)
 	second_gasmix.assert_gas(/datum/gas/tritium)
 
-	first_gasmix.gases[/datum/gas/nitrogen][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	first_gasmix.gases[GAS_N2][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
 	second_gasmix.gases[/datum/gas/tritium][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)
 
 /obj/effect/spawner/newbomb/pressure
@@ -115,8 +115,8 @@
 	first_gasmix.temperature = 20000
 	second_gasmix.temperature = 2.7
 
-	first_gasmix.assert_gas(/datum/gas/hypernoblium)
+	first_gasmix.assert_gas(GAS_HYPERNOB)
 	second_gasmix.assert_gas(/datum/gas/tritium)
 
-	first_gasmix.gases[/datum/gas/hypernoblium][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
+	first_gasmix.gases[GAS_HYPERNOB][MOLES] = calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
 	second_gasmix.gases[/datum/gas/tritium][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE - 1)

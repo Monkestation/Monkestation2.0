@@ -32,8 +32,8 @@
 	internal_tank.maximum_pressure = maximum_pressure
 	if(start_full)
 		internal_tank.air_contents.temperature = T20C
-		internal_tank.air_contents.add_gases(/datum/gas/oxygen)
-		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
+		internal_tank.air_contents.add_gases(GAS_O2)
+		internal_tank.air_contents.gases[GAS_O2][MOLES] = maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
 	if(chassis)
@@ -81,8 +81,8 @@
 	var/release_pressure = internal_tank.release_pressure
 	if(cabin_air.return_pressure() < release_pressure)
 		tank_air.release_gas_to(cabin_air, release_pressure)
-	if(cabin_air.has_gas(/datum/gas/carbon_dioxide))
-		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, /datum/gas/carbon_dioxide)
+	if(cabin_air.has_gas(GAS_CO2))
+		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, GAS_CO2)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_pump(seconds_per_tick)
 	if(!tank_pump_active)
@@ -91,7 +91,7 @@
 	var/datum/gas_mixture/sending = (tank_pump_direction == PUMP_IN ? local_turf.return_air() : internal_tank.air_contents)
 	var/datum/gas_mixture/receiving = (tank_pump_direction == PUMP_IN ? internal_tank.air_contents : local_turf.return_air())
 	if(sending.pump_gas_to(receiving, tank_pump_pressure))
-		air_update_turf(FALSE, FALSE)
+		air_update_turf()
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
 	SIGNAL_HANDLER

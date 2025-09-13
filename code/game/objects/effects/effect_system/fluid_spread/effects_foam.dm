@@ -252,14 +252,13 @@
 	QDEL_NULL(hotspot)
 	var/datum/gas_mixture/air = location.air
 	var/list/gases = air.gases
-	if (gases[/datum/gas/plasma])
-		var/scrub_amt = min(30, gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
-		gases[/datum/gas/plasma][MOLES] -= scrub_amt
+	if (gases[GAS_PLASMA])
+		var/scrub_amt = min(30, gases[GAS_PLASMA][MOLES]) //Absorb some plasma
+		gases[GAS_PLASMA][MOLES] -= scrub_amt
 		absorbed_plasma += scrub_amt
 	if (air.temperature > T20C)
 		air.temperature = max(air.temperature / 2, T20C)
 	air.garbage_collect()
-	location.air_update_turf(FALSE, FALSE)
 
 //MONKESTATION EDIT START
 /obj/effect/particle_effect/fluid/foam/firefighting/make_result()
@@ -316,10 +315,10 @@
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 /obj/structure/foamedmetal/Destroy()
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
@@ -440,7 +439,7 @@
 		var/list/gases = air.gases
 		for(var/gas_type in gases)
 			switch(gas_type)
-				if(/datum/gas/oxygen, /datum/gas/nitrogen)
+				if(GAS_O2, GAS_N2)
 					continue
 				else
 					gases[gas_type][MOLES] = 0

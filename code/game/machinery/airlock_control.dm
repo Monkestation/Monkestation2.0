@@ -66,6 +66,10 @@
 	var/on = TRUE
 	var/alert = FALSE
 
+/obj/machinery/airlock_sensor/Initialize(mapload)
+	. = ..()
+	SSair.start_processing_machine(src)
+
 /obj/machinery/airlock_sensor/incinerator_ordmix
 	id_tag = INCINERATOR_ORDMIX_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_ORDMIX_AIRLOCK_CONTROLLER
@@ -105,3 +109,7 @@
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
 	update_appearance()
+
+/obj/machinery/air_sensor/Destroy()
+	SSair.stop_processing_machine(src)
+	return ..()

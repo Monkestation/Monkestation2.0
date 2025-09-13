@@ -53,7 +53,7 @@
 	var/datum/gas_mixture/air = cast_on.loc.return_air()
 	var/list/cached_gases = air.gases
 
-	if(cached_gases[/datum/gas/miasma])
+	if(cached_gases[GAS_MIASMA])
 		cast_on.adjust_disgust(sensitivity * 45)
 		to_chat(cast_on, span_warning("With your overly sensitive nose, \
 			you get a whiff of stench and feel sick! Try moving to a cleaner area!"))

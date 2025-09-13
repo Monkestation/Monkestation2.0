@@ -35,6 +35,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		LoadComponent(/datum/component/rot/corpse)
 	else
 		var/bprv = handle_bodyparts(seconds_per_tick, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)

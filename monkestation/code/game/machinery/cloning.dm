@@ -15,8 +15,8 @@
 
 /datum/gas_mixture/immutable/cloner/garbage_collect()
 	..()
-	ADD_GAS(/datum/gas/nitrogen, gases)
-	gases[/datum/gas/nitrogen][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
+	ADD_GAS(GAS_N2, gases)
+	gases[GAS_N2][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()	//hippie end, re-add cloning
 	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20

@@ -150,40 +150,40 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
-	gas_type = /datum/gas/antinoblium
+	gas_type = GAS_ANTINOB
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
-	gas_type = /datum/gas/bz
+	gas_type = GAS_BZ
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
-	gas_type = /datum/gas/carbon_dioxide
+	gas_type = GAS_CO2
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
-	gas_type = /datum/gas/freon
+	gas_type = GAS_FREON
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6696ee#fefb30"
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
-	gas_type = /datum/gas/halon
+	gas_type = GAS_HALON
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
 
 /obj/machinery/portable_atmospherics/canister/healium
 	name = "Healium canister"
-	gas_type = /datum/gas/healium
+	gas_type = GAS_HEALIUM
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#ff0e00"
@@ -197,51 +197,51 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
-	gas_type = /datum/gas/hydrogen
+	gas_type = GAS_H2
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#bdc2c0#ffffff"
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
-	gas_type = /datum/gas/miasma
+	gas_type = GAS_MIASMA
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
-	gas_type = /datum/gas/nitrogen
+	gas_type = GAS_N2
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#d41010"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
-	gas_type = /datum/gas/nitrous_oxide
+	gas_type = GAS_NITROUS
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
-	gas_type = /datum/gas/nitrium
+	gas_type = GAS_NITRIUM
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "Hyper-noblium canister"
-	gas_type = /datum/gas/hypernoblium
+	gas_type = GAS_HYPERNOB
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
-	gas_type = /datum/gas/oxygen
+	gas_type = GAS_O2
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
-	gas_type = /datum/gas/pluoxium
+	gas_type = GAS_PLUOXIUM
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#2786e5"
 
@@ -266,14 +266,14 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "Water vapor canister"
-	gas_type = /datum/gas/water_vapor
+	gas_type = GAS_H2O
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#4c4e4d#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/zauker
 	name = "Zauker canister"
-	gas_type = /datum/gas/zauker
+	gas_type = GAS_ZAUKER
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
@@ -287,9 +287,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_limit = 1e14
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.add_gases(GAS_CO2, /datum/gas/plasma, /datum/gas/tritium)
 	air_contents.gases[/datum/gas/plasma][MOLES] = 1000
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 1000
+	air_contents.gases[GAS_CO2][MOLES] = 1000
 	air_contents.gases[/datum/gas/tritium][MOLES] = 300
 	air_contents.temperature = 10000
 	SSair.start_processing_machine(src)
@@ -301,9 +301,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#9fba6c#3d4680"
 
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
-	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.add_gases(GAS_O2, GAS_NITROUS)
+	air_contents.gases[GAS_O2][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[GAS_NITROUS][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	SSair.start_processing_machine(src)
 
 /**
@@ -338,9 +338,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.add_gases(GAS_O2, GAS_N2)
+	air_contents.gases[GAS_O2][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[GAS_N2][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
@@ -562,7 +562,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 		if(air_contents.release_gas_to(target_air, release_pressure))
 			if(!holding)
-				air_update_turf(FALSE, FALSE)
+				air_update_turf()
 
 	// A bit different than other atmos devices. Wont stop if currently taking damage.
 	if(take_atmos_damage())

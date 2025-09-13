@@ -52,7 +52,7 @@
 	if(!reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 	if(fulltile)
 		setDir()
@@ -298,7 +298,7 @@
 
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
-	air_update_turf(TRUE, anchorvalue)
+	air_update_turf()
 	update_nearby_icons()
 
 /obj/structure/window/proc/check_state(checked_state)
@@ -371,7 +371,7 @@
 	return dropped_debris
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
@@ -396,7 +396,7 @@
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	update_nearby_icons()
 	return ..()
 

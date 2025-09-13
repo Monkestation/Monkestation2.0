@@ -125,20 +125,20 @@
 	var/datum/gas_mixture/canister_mix = C.return_air()
 	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
-								/datum/gas/bz,
-								/datum/gas/nitrium,
-								/datum/gas/hypernoblium,
-								/datum/gas/miasma,
+								GAS_BZ,
+								GAS_NITRIUM,
+								GAS_HYPERNOB,
+								GAS_MIASMA,
 								/datum/gas/tritium,
-								/datum/gas/pluoxium,
-								/datum/gas/freon,
-								/datum/gas/hydrogen,
-								/datum/gas/healium,
+								GAS_PLUOXIUM,
+								GAS_FREON,
+								GAS_H2,
+								GAS_HEALIUM,
 								/datum/gas/proto_nitrate,
-								/datum/gas/zauker,
+								GAS_ZAUKER,
 								/datum/gas/helium,
-								/datum/gas/antinoblium,
-								/datum/gas/halon,
+								GAS_ANTINOB,
+								GAS_HALON,
 								)
 
 	for(var/gasID in gases_to_check)

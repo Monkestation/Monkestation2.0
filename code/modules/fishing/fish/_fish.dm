@@ -127,10 +127,10 @@
 
 	/// When outside of an aquarium, these gases that are checked (as well as pressure and temp) to assert if the environment is safe or not.
 	var/list/safe_air_limits = list(
-		/datum/gas/oxygen = list(12, 100),
-		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 10),
-		/datum/gas/water_vapor,
+		GAS_O2 = list(12, 100),
+		GAS_N2,
+		GAS_CO2 = list(0, 10),
+		GAS_H2O,
 	)
 	/// Outside of an aquarium, the pressure needs to be within these two variables for the environment to be safe.
 	var/min_pressure = WARNING_LOW_PRESSURE

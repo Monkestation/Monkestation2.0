@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
  *
  * Arguments:
  * * gases: The list of gases which contents are being checked
- * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
+ * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. GAS_O2 = list(16, 30)
  * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
  * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
  */

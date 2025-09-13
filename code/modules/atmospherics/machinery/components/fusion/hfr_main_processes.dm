@@ -121,37 +121,37 @@
 	 */
 	///Those are the scaled gases that gets consumed and adjust energy
 	// Gases that increase the amount of energy
-	var/energy_modifiers = scaled_moderator_list[/datum/gas/nitrogen] * 0.35 + \
-								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.55 + \
-								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.95 + \
-								scaled_moderator_list[/datum/gas/zauker] * 1.55 + \
-								scaled_moderator_list[/datum/gas/antinoblium] * 20
+	var/energy_modifiers = scaled_moderator_list[GAS_N2] * 0.35 + \
+								scaled_moderator_list[GAS_CO2] * 0.55 + \
+								scaled_moderator_list[GAS_NITROUS] * 0.95 + \
+								scaled_moderator_list[GAS_ZAUKER] * 1.55 + \
+								scaled_moderator_list[GAS_ANTINOB] * 20
 	// Gases that decrease the amount of energy
-	energy_modifiers -= scaled_moderator_list[/datum/gas/hypernoblium] * 10 + \
-								scaled_moderator_list[/datum/gas/water_vapor] * 0.75 + \
-								scaled_moderator_list[/datum/gas/nitrium] * 0.15 + \
-								scaled_moderator_list[/datum/gas/healium] * 0.45 + \
-								scaled_moderator_list[/datum/gas/freon] * 1.15
+	energy_modifiers -= scaled_moderator_list[GAS_HYPERNOB] * 10 + \
+								scaled_moderator_list[GAS_H2O] * 0.75 + \
+								scaled_moderator_list[GAS_NITRIUM] * 0.15 + \
+								scaled_moderator_list[GAS_HEALIUM] * 0.45 + \
+								scaled_moderator_list[GAS_FREON] * 1.15
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
-	var/power_modifier = scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
-								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.95 + \
-								scaled_moderator_list[/datum/gas/nitrium] * 1.45 + \
-								scaled_moderator_list[/datum/gas/zauker] * 5.55 + \
+	var/power_modifier = scaled_moderator_list[GAS_O2] * 0.55 + \
+								scaled_moderator_list[GAS_CO2] * 0.95 + \
+								scaled_moderator_list[GAS_NITRIUM] * 1.45 + \
+								scaled_moderator_list[GAS_ZAUKER] * 5.55 + \
 								scaled_moderator_list[/datum/gas/plasma] * 0.05 - \
-								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.05 - \
-								scaled_moderator_list[/datum/gas/freon] * 0.75
+								scaled_moderator_list[GAS_NITROUS] * 0.05 - \
+								scaled_moderator_list[GAS_FREON] * 0.75
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
 	var/heat_modifier = scaled_moderator_list[/datum/gas/plasma] * 1.25 - \
-								scaled_moderator_list[/datum/gas/nitrogen] * 0.75 - \
-								scaled_moderator_list[/datum/gas/nitrous_oxide] * 1.45 - \
-								scaled_moderator_list[/datum/gas/freon] * 0.95
+								scaled_moderator_list[GAS_N2] * 0.75 - \
+								scaled_moderator_list[GAS_NITROUS] * 1.45 - \
+								scaled_moderator_list[GAS_FREON] * 0.95
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
-	var/radiation_modifier = scaled_moderator_list[/datum/gas/freon] * 1.15 - \
-									scaled_moderator_list[/datum/gas/nitrogen] * 0.45 - \
+	var/radiation_modifier = scaled_moderator_list[GAS_FREON] * 1.15 - \
+									scaled_moderator_list[GAS_N2] * 0.45 - \
 									scaled_moderator_list[/datum/gas/plasma] * 0.95 + \
-									scaled_moderator_list[/datum/gas/bz] * 1.9 + \
+									scaled_moderator_list[GAS_BZ] * 1.9 + \
 									scaled_moderator_list[/datum/gas/proto_nitrate] * 0.1 + \
-									scaled_moderator_list[/datum/gas/antinoblium] * 10
+									scaled_moderator_list[GAS_ANTINOB] * 10
 
 	if (selected_fuel)
 		// These should probably be static coefficients read from a table rather than things that depend on the current recipe
@@ -287,94 +287,94 @@
 	switch(power_level)
 		if(1)
 			if(moderator_list[/datum/gas/plasma] > 100)
-				internal_output.assert_gases(/datum/gas/nitrous_oxide)
-				internal_output.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
+				internal_output.assert_gases(GAS_NITROUS)
+				internal_output.gases[GAS_NITROUS] += scaled_production * 0.5
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
-			if(moderator_list[/datum/gas/bz] > 150)
-				internal_output.assert_gases(/datum/gas/halon)
-				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.55
-				moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
+			if(moderator_list[GAS_BZ] > 150)
+				internal_output.assert_gases(GAS_HALON)
+				internal_output.gases[GAS_HALON][MOLES] += scaled_production * 0.55
+				moderator_internal.gases[GAS_BZ][MOLES] -= min(moderator_internal.gases[GAS_BZ][MOLES], scaled_production * 0.95)
 		if(2)
 			if(moderator_list[/datum/gas/plasma] > 50)
-				internal_output.assert_gases(/datum/gas/bz)
-				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
+				internal_output.assert_gases(GAS_BZ)
+				internal_output.gases[GAS_BZ][MOLES] += scaled_production * 1.8
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
 			if(moderator_list[/datum/gas/proto_nitrate] > 20)
 				radiation *= 1.55
 				heat_output *= 1.025
-				internal_output.assert_gases(/datum/gas/nitrium)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
+				internal_output.assert_gases(GAS_NITRIUM)
+				internal_output.gases[GAS_NITRIUM][MOLES] += scaled_production * 1.05
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 		if(3, 4)
 			if(moderator_list[/datum/gas/plasma] > 10)
-				internal_output.assert_gases(/datum/gas/freon, /datum/gas/nitrium)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
+				internal_output.assert_gases(GAS_FREON, GAS_NITRIUM)
+				internal_output.gases[GAS_FREON][MOLES] += scaled_production * 0.15
+				internal_output.gases[GAS_NITRIUM][MOLES] += scaled_production * 1.05
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
-			if(moderator_list[/datum/gas/freon] > 50)
+			if(moderator_list[GAS_FREON] > 50)
 				heat_output *= 0.9
 				radiation *= 0.8
 			if(moderator_list[/datum/gas/proto_nitrate]> 15)
-				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/halon)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.25
-				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
+				internal_output.assert_gases(GAS_NITRIUM, GAS_HALON)
+				internal_output.gases[GAS_NITRIUM][MOLES] += scaled_production * 1.25
+				internal_output.gases[GAS_HALON][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
 				radiation *= 1.95
 				heat_output *= 1.25
-			if(moderator_list[/datum/gas/bz] > 100)
-				internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
+			if(moderator_list[GAS_BZ] > 100)
+				internal_output.assert_gases(GAS_HEALIUM, /datum/gas/proto_nitrate)
 				internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
-				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
+				internal_output.gases[GAS_HEALIUM][MOLES] += scaled_production * 1.5
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 
 		if(5)
 			if(moderator_list[/datum/gas/plasma] > 15)
-				internal_output.assert_gases(/datum/gas/freon)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
+				internal_output.assert_gases(GAS_FREON)
+				internal_output.gases[GAS_FREON][MOLES] += scaled_production *0.25
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
-			if(moderator_list[/datum/gas/freon] > 500)
+			if(moderator_list[GAS_FREON] > 500)
 				heat_output *= 0.5
 				radiation *= 0.2
 			if(moderator_list[/datum/gas/proto_nitrate] > 50)
-				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/pluoxium)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.95
-				internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
+				internal_output.assert_gases(GAS_NITRIUM, GAS_PLUOXIUM)
+				internal_output.gases[GAS_NITRIUM][MOLES] += scaled_production * 1.95
+				internal_output.gases[GAS_PLUOXIUM][MOLES] += scaled_production
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 				radiation *= 1.95
 				heat_output *= 1.25
-			if(moderator_list[/datum/gas/bz] > 100)
-				internal_output.assert_gases(/datum/gas/healium, /datum/gas/freon)
-				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
+			if(moderator_list[GAS_BZ] > 100)
+				internal_output.assert_gases(GAS_HEALIUM, GAS_FREON)
+				internal_output.gases[GAS_HEALIUM][MOLES] += scaled_production
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
-			if(moderator_list[/datum/gas/healium] > 100)
+				internal_output.gases[GAS_FREON][MOLES] += scaled_production * 1.15
+			if(moderator_list[GAS_HEALIUM] > 100)
 				if(critical_threshold_proximity > 400)
-					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
-					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-			if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
-				internal_output.assert_gases(/datum/gas/antinoblium)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * seconds_per_tick
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[GAS_HEALIUM] / 100 * seconds_per_tick ), 0)
+					moderator_internal.gases[GAS_HEALIUM][MOLES] -= min(moderator_internal.gases[GAS_HEALIUM][MOLES], scaled_production * 20)
+			if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[GAS_BZ] > 50))
+				internal_output.assert_gases(GAS_ANTINOB)
+				internal_output.gases[GAS_ANTINOB][MOLES] += dirty_production_rate * 0.9 / 0.065 * seconds_per_tick
 		if(6)
-			internal_output.assert_gases(/datum/gas/antinoblium)
+			internal_output.assert_gases(GAS_ANTINOB)
 			if(moderator_list[/datum/gas/plasma] > 30)
-				internal_output.assert_gases(/datum/gas/bz)
-				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
+				internal_output.assert_gases(GAS_BZ)
+				internal_output.gases[GAS_BZ][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 			if(moderator_list[/datum/gas/proto_nitrate])
-				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/nitrium)
-				internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 2.15
+				internal_output.assert_gases(GAS_ZAUKER, GAS_NITRIUM)
+				internal_output.gases[GAS_ZAUKER][MOLES] += scaled_production * 5.35
+				internal_output.gases[GAS_NITRIUM][MOLES] += scaled_production * 2.15
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
 				radiation *= 2
 				heat_output *= 2.25
-			if(moderator_list[/datum/gas/bz])
+			if(moderator_list[GAS_BZ])
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * seconds_per_tick
-			if(moderator_list[/datum/gas/healium] > 100)
+				internal_output.gases[GAS_ANTINOB][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * seconds_per_tick
+			if(moderator_list[GAS_HEALIUM] > 100)
 				if(critical_threshold_proximity > 400)
-					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
-					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-			internal_fusion.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.01 / 0.095 * seconds_per_tick
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[GAS_HEALIUM] / 100 * seconds_per_tick ), 0)
+					moderator_internal.gases[GAS_HEALIUM][MOLES] -= min(moderator_internal.gases[GAS_HEALIUM][MOLES], scaled_production * 20)
+			internal_fusion.gases[GAS_ANTINOB][MOLES] += dirty_production_rate * 0.01 / 0.095 * seconds_per_tick
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
@@ -398,12 +398,12 @@
 	check_lightning_arcs(moderator_list)
 
 	// Oxygen burns away iron content rapidly
-	if(moderator_list[/datum/gas/oxygen] > 150)
+	if(moderator_list[GAS_O2] > 150)
 		if(iron_content > 0)
 			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
 			var/iron_removed = min(max_iron_removable * seconds_per_tick, iron_content)
 			iron_content -= iron_removed
-			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+			moderator_internal.gases[GAS_O2][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
 	check_gravity_pulse(seconds_per_tick)
 
@@ -465,7 +465,7 @@
 	// New nuclear particle emission sytem.
 	if(power_level < 4)
 		return
-	if(moderator_list[/datum/gas/bz] < (150 / power_level))
+	if(moderator_list[GAS_BZ] < (150 / power_level))
 		return
 	var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
 	picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
@@ -473,7 +473,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_lightning_arcs(moderator_list)
 	if(power_level < 4)
 		return
-	if(moderator_list[/datum/gas/antinoblium] <= 50 && critical_threshold_proximity <= 500)
+	if(moderator_list[GAS_ANTINOB] <= 50 && critical_threshold_proximity <= 500)
 		return
 	var/zap_number = power_level - 2
 

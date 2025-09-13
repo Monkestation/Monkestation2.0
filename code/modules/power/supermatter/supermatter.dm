@@ -309,12 +309,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/gas_mixture/merged_gasmix = absorbed_gasmix.copy()
 	merged_gasmix.temperature += device_energy * waste_multiplier / THERMAL_RELEASE_MODIFIER
 	merged_gasmix.temperature = clamp(merged_gasmix.temperature, TCMB, 2500 * waste_multiplier)
-	merged_gasmix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	merged_gasmix.assert_gases(/datum/gas/plasma, GAS_O2)
 	merged_gasmix.gases[/datum/gas/plasma][MOLES] += max(device_energy * waste_multiplier / PLASMA_RELEASE_MODIFIER, 0)
-	merged_gasmix.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + merged_gasmix.temperature * waste_multiplier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	merged_gasmix.gases[GAS_O2][MOLES] += max(((device_energy + merged_gasmix.temperature * waste_multiplier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 	merged_gasmix.garbage_collect()
 	env.merge(merged_gasmix)
-	air_update_turf(FALSE, FALSE)
+	air_update_turf()
 
 	// PART 6: EXTRA BEHAVIOUR
 	emit_radiation()

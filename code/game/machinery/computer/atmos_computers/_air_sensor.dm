@@ -37,6 +37,7 @@
 
 /obj/machinery/air_sensor/Destroy()
 	reset()
+	SSair.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/air_sensor/return_air()
@@ -134,6 +135,7 @@
 
 /obj/item/air_sensor/Initialize(mapload, inlet, outlet)
 	. = ..()
+	SSair.start_processing_machine(src)
 	register_context()
 	input_id = inlet
 	output_id = outlet

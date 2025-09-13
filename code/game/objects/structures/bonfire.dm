@@ -108,7 +108,7 @@
 		var/turf/open/bonfire_turf = loc
 		if(bonfire_turf.air)
 			var/loc_gases = bonfire_turf.air.gases
-			if(loc_gases[/datum/gas/oxygen] && loc_gases[/datum/gas/oxygen][MOLES] >= 5)
+			if(loc_gases[GAS_O2] && loc_gases[GAS_O2][MOLES] >= 5)
 				return TRUE
 	return FALSE
 

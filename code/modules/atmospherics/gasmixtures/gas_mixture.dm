@@ -508,7 +508,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		return
 
 	//Fuck you
-	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
+	if(cached_gases[GAS_HYPERNOB] && cached_gases[GAS_HYPERNOB][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
 		return STOP_REACTIONS
 
 	reaction_results = new
@@ -540,7 +540,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
  * Returns the partial pressure of the gas in the breath based on BREATH_VOLUME
  * eg:
  * Plas_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/plasma][MOLES])
- * O2_PP = get_breath_partial_pressure(gas_mixture.gases[/datum/gas/oxygen][MOLES])
+ * O2_PP = get_breath_partial_pressure(gas_mixture.gases[GAS_O2][MOLES])
  * get_breath_partial_pressure(gas_mole_count) --> PV = nRT, P = nRT/V
  *
  * 10/20*5 = 2.5

@@ -126,11 +126,11 @@
 	var/datum/gas/payload_gas
 	var/list/weighted_gas = list(
 		/datum/gas/plasma = 5,
-		/datum/gas/carbon_dioxide = 10,
-		/datum/gas/nitrous_oxide = 10,
+		GAS_CO2 = 10,
+		GAS_NITROUS = 10,
 		/datum/gas/tritium = 5,
-		/datum/gas/hydrogen = 5,
-		/datum/gas/zauker = 2,
+		GAS_H2 = 5,
+		GAS_ZAUKER = 2,
 	)
 
 /datum/artifact_effect/bomb/gas/setup()
@@ -147,9 +147,9 @@
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(payload_gas)
-	merger.assert_gas(/datum/gas/oxygen)
+	merger.assert_gas(GAS_O2)
 	merger.gases[payload_gas][MOLES] = rand(150,2000)
-	merger.gases[/datum/gas/oxygen][MOLES] = 350
+	merger.gases[GAS_O2][MOLES] = 350
 	merger.temperature = rand(200,3000)
 	O.assume_air(merger)
 	qdel(our_artifact)

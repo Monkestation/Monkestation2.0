@@ -237,6 +237,10 @@
 	START_PROCESSING(SSobj, src)
 	return air_contents.remove(amount)
 
+/obj/item/tank/remove_air_ratio(amount)
+	START_PROCESSING(SSobj, src)
+	return air_contents.remove_ratio(amount)
+
 /obj/item/tank/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
 	START_PROCESSING(SSobj, src)
@@ -249,6 +253,16 @@
 	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
 	handle_tolerances(ASSUME_AIR_DT_FACTOR)
+	return TRUE
+
+/obj/item/tank/assume_air_moles(datum/gas_mixture/giver, moles)
+	START_PROCESSING(SSobj, src)
+	giver.transfer_to(air_contents, moles)
+	return TRUE
+
+/obj/item/tank/assume_air_ratio(datum/gas_mixture/giver, ratio)
+	START_PROCESSING(SSobj, src)
+	giver.transfer_ratio_to(air_contents, ratio)
 	return TRUE
 
 /**
@@ -373,8 +387,7 @@
 	//START_PROCESSING(SSobj, src)
 	var/datum/gas_mixture/our_mix = return_air()
 
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	var/fuel_moles = air_contents.get_moles(GAS_TRITIUM) + air_contents.get_moles(GAS_H2) + air_contents.get_moles(GAS_PLASMA) + air_contents.get_moles(GAS_O2)/6
 	our_mix.garbage_collect()
 	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
 	var/strength = 1

@@ -15,20 +15,20 @@
 	var/use_overlays = TRUE
 	///List of gases that can be scrubbed
 	var/list/scrubbing = list(
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide,
-		/datum/gas/bz,
-		/datum/gas/nitrium,
-		/datum/gas/tritium,
-		/datum/gas/hypernoblium,
-		/datum/gas/water_vapor,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/zauker,
-		/datum/gas/halon,
+		GAS_PLASMA,
+		GAS_CO2,
+		GAS_NITROUS,
+		GAS_BZ,
+		GAS_NITRIUM,
+		GAS_TRITIUM,
+		GAS_HYPERNOB,
+		GAS_H2O,
+		GAS_FREON,
+		GAS_H2,
+		GAS_HEALIUM,
+		GAS_PROTONITRATE,
+		GAS_ZAUKER,
+		GAS_HALON,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
@@ -96,7 +96,7 @@
 	air_contents.merge(filtered) // Store filtered out gasses.
 	mixture.merge(filtering) // Returned the cleaned gas.
 	if(!holding)
-		air_update_turf(FALSE, FALSE)
+		air_update_turf()
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()

@@ -411,13 +411,19 @@
 	return ..()
 
 /obj/structure/chrono_field/assume_air()
-	return FALSE
+	return null
+
+/obj/effect/chrono_field/assume_air_moles()
+	return null
+
+/obj/effect/chrono_field/assume_air_ratio()
+	return null
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/fresh_air = new
-	fresh_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	fresh_air.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	fresh_air.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	fresh_air.add_gases(GAS_O2, GAS_N2)
+	fresh_air.gases[GAS_O2][MOLES] = MOLES_O2STANDARD
+	fresh_air.gases[GAS_N2][MOLES] = MOLES_N2STANDARD
 	fresh_air.temperature = T20C
 	return fresh_air
 

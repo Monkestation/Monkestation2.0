@@ -165,7 +165,7 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/assert_gases()
 	//Assert the gases that will be used/created during the process
 
-	internal_fusion.assert_gas(/datum/gas/antinoblium)
+	internal_fusion.assert_gas(GAS_ANTINOB)
 
 	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info))
 

@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
+		scrubber.filter_types = list(GAS_CO2)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 		scrubber.set_widenet(FALSE)
 
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.update_appearance(UPDATE_ICON)
 
 	var/list/filtered = subtypesof(/datum/gas)
-	filtered -= list(/datum/gas/oxygen, /datum/gas/nitrogen)
+	filtered -= list(GAS_O2, GAS_N2)
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
 		scrubber.filter_types = filtered.Copy()
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
 
-		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
+		scrubber.filter_types = list(GAS_CO2)
 		scrubber.set_widenet(FALSE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = TRUE
-		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
+		scrubber.filter_types = list(GAS_CO2)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 		scrubber.set_widenet(FALSE)
 

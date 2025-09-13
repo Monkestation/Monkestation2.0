@@ -151,22 +151,22 @@
 	other_mix = (target == tank_one ? tank_two : tank_one).return_air()
 
 	if(change_volume)
-		target_mix.volume += other_mix.volume
-
-	target_mix.merge(other_mix.remove_ratio(1))
+		if(!target_self)
+			target.set_volume(target.return_volume() + tank_two.volume)
+		target.set_volume(target.return_volume() + tank_one.air_contents.return_volume())
+	tank_one.air_contents.transfer_ratio_to(target, 1)
+	if(!target_self)
+		tank_two.air_contents.transfer_ratio_to(target, 1)
 	return TRUE
 
 /obj/item/transfer_valve/proc/split_gases()
 	if (!valve_open || !tank_one || !tank_two)
 		return
-	var/datum/gas_mixture/mix_one = tank_one.return_air()
-	var/datum/gas_mixture/mix_two = tank_two.return_air()
 
-	var/volume_ratio = mix_one.volume/mix_two.volume
-	var/datum/gas_mixture/temp
-	temp = mix_two.remove_ratio(volume_ratio)
-	mix_one.merge(temp)
-	mix_two.volume -= mix_one.volume
+	var/ratio1 = tank_one.air_contents.return_volume()/tank_two.air_contents.return_volume()
+
+	tank_two.air_contents.transfer_ratio_to(tank_one.air_contents, ratio1)
+	tank_two.air_contents.set_volume(tank_two.air_contents.return_volume() - tank_one.air_contents.return_volume())
 
 /*
 	Exadv1: I know this isn't how it's going to work, but this was just to check

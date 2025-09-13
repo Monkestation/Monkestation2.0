@@ -7,6 +7,12 @@
  *
  **/
 
+//Init the debugger datum first so we can debug Master
+//You might wonder why not just create the debugger datum global in its own file, since its loaded way earlier than this DM file
+//Well for whatever reason then the Master gets created first and then the debugger when doing that
+//So thats why this code lives here now, until someone finds out how Byond inits globals
+GLOBAL_REAL(Debugger, /datum/debugger)
+
 // See initialization order in /code/game/world.dm
 GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master

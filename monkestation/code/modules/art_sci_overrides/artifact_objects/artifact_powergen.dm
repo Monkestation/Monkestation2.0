@@ -94,8 +94,8 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 		explosion(powerholder, flame_range = rand(1,2), adminlog = FALSE) //doesnt log to not spam
 	else
 		var/datum/gas_mixture/merger = new
-		merger.assert_gas(/datum/gas/carbon_dioxide)
-		merger.gases[/datum/gas/carbon_dioxide][MOLES] = rand(10,120)
+		merger.assert_gas(GAS_CO2)
+		merger.gases[GAS_CO2][MOLES] = rand(10,120)
 		merger.temperature = rand(200,1000)
 		var/turf/holder_turf = get_turf(our_artifact.holder)
 		holder_turf.assume_air(merger)

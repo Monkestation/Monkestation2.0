@@ -93,9 +93,9 @@
 	var/co2_pp = 0
 	var/plasma_pp = 0
 	if(test_breath.total_moles() > 0)
-		oxygen_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, /datum/gas/oxygen))
-		nitro_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, /datum/gas/nitrogen))
-		co2_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, /datum/gas/carbon_dioxide))
+		oxygen_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, GAS_O2))
+		nitro_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, GAS_N2))
+		co2_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, GAS_CO2))
 		plasma_pp = test_breath.get_breath_partial_pressure(GET_MOLES(test_breath, /datum/gas/plasma))
 
 	// Minimum and maximum gas tolerances for the 4 main life-sustaining gases.
@@ -129,9 +129,9 @@
 	lungs_test_alert_max(lab_rat, test_lungs, ALERT_TOO_MUCH_PLASMA, max_plasma, plasma_pp)
 
 	// Track the volumes of O2 and CO2 which are expected to be exhaled.
-	var/expected_oxygen = GET_MOLES(test_breath_backup, /datum/gas/oxygen)
-	var/expected_nitro = GET_MOLES(test_breath_backup, /datum/gas/nitrogen)
-	var/expected_co2 = GET_MOLES(test_breath_backup, /datum/gas/carbon_dioxide)
+	var/expected_oxygen = GET_MOLES(test_breath_backup, GAS_O2)
+	var/expected_nitro = GET_MOLES(test_breath_backup, GAS_N2)
+	var/expected_co2 = GET_MOLES(test_breath_backup, GAS_CO2)
 	var/expected_plasma = GET_MOLES(test_breath_backup, /datum/gas/plasma)
 
 	// Setup expectations for main gas exchange tests.
@@ -139,7 +139,7 @@
 		expected_co2 += expected_oxygen
 		expected_oxygen = 0
 	if(min_nitro)
-		expected_co2 += GET_MOLES(test_breath_backup, /datum/gas/nitrogen)
+		expected_co2 += GET_MOLES(test_breath_backup, GAS_N2)
 		expected_nitro = 0
 	if(min_plasma)
 		expected_co2 += GET_MOLES(test_breath_backup, /datum/gas/plasma)
@@ -147,14 +147,14 @@
 
 	// Validate conversion of inhaled gas to exhaled gas.
 	if(min_oxygen)
-		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/oxygen), expected_oxygen), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Oxygen initially present in the breath."))
-		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Oxygen into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, GAS_O2), expected_oxygen), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Oxygen initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, GAS_CO2), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Oxygen into an equivalent volume of CO2."))
 	if(min_nitro)
-		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/nitrogen), expected_nitro), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Nitrogen initially present in the breath."))
-		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Nitrogen into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, GAS_N2), expected_nitro), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Nitrogen initially present in the breath."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, GAS_CO2), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Nitrogen into an equivalent volume of CO2."))
 	if(min_plasma)
 		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/plasma), expected_plasma), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should consume all Plasma initially present in the breath."))
-		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Plasma into an equivalent volume of CO2."))
+		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, GAS_CO2), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Plasma into an equivalent volume of CO2."))
 
 /// Tests minimum gas alerts by comparing gas pressure.
 /datum/unit_test/lungs/proc/lungs_test_alert_min(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, min_pressure, pressure)
@@ -181,11 +181,11 @@
 
 /// Set up an O2/N2 gas mix which is "ideal" for organic life.
 /datum/unit_test/lungs/proc/create_standard_mix()
-	return create_gas_mix(list(/datum/gas/oxygen = O2STANDARD, /datum/gas/nitrogen = N2STANDARD))
+	return create_gas_mix(list(GAS_O2 = O2STANDARD, GAS_N2 = N2STANDARD))
 
 /// Set up a pure Nitrogen gas mix.
 /datum/unit_test/lungs/proc/create_nitrogen_mix()
-	return create_gas_mix(list(/datum/gas/nitrogen = 1))
+	return create_gas_mix(list(GAS_N2 = 1))
 
 /// Set up an O2/N2 gas mix which is "ideal" for plasmamen.
 /datum/unit_test/lungs/proc/create_plasma_mix()

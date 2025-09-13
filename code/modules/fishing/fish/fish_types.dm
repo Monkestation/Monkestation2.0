@@ -241,13 +241,13 @@
 	required_temperature_max = 400
 	min_pressure = HAZARD_LOW_PRESSURE
 	safe_air_limits = list(
-		/datum/gas/oxygen = list(2, 100),
-		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 20),
-		/datum/gas/water_vapor,
+		GAS_O2 = list(2, 100),
+		GAS_N2,
+		GAS_CO2 = list(0, 20),
+		GAS_H2O,
 		/datum/gas/plasma = list(0, 5),
-		/datum/gas/bz = list(0, 5),
-		/datum/gas/miasma = list(0, 5),
+		GAS_BZ = list(0, 5),
+		GAS_MIASMA = list(0, 5),
 	)
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)

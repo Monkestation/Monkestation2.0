@@ -20,19 +20,19 @@
 	///List of gases that can be scrubbed
 	var/list/scrubbing = list(
 		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide,
-		/datum/gas/bz,
-		/datum/gas/nitrium,
+		GAS_CO2,
+		GAS_NITROUS,
+		GAS_BZ,
+		GAS_NITRIUM,
 		/datum/gas/tritium,
-		/datum/gas/hypernoblium,
-		/datum/gas/water_vapor,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
-		/datum/gas/healium,
+		GAS_HYPERNOB,
+		GAS_H2O,
+		GAS_FREON,
+		GAS_H2,
+		GAS_HEALIUM,
 		/datum/gas/proto_nitrate,
-		/datum/gas/zauker,
-		/datum/gas/halon,
+		GAS_ZAUKER,
+		GAS_HALON,
 	)
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/Initialize(mapload)

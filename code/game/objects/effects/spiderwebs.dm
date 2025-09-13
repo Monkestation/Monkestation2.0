@@ -82,7 +82,7 @@
 
 /obj/structure/spider/stickyweb/sealed/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE
@@ -119,7 +119,7 @@
 
 /obj/structure/spider/solid/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 /obj/structure/spider/passage
 	name = "web passage"
@@ -135,7 +135,7 @@
 
 /obj/structure/spider/passage/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 /obj/structure/spider/cocoon
 	name = "cocoon"

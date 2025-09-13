@@ -96,9 +96,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	tlv_collection["temperature"] = new /datum/tlv/temperature
 	var/list/meta_info = GLOB.meta_gas_info // shorthand
 	for(var/gas_path in meta_info)
-		if(ispath(gas_path, /datum/gas/oxygen))
+		if(ispath(gas_path, GAS_O2))
 			tlv_collection[gas_path] = new /datum/tlv/oxygen
-		else if(ispath(gas_path, /datum/gas/carbon_dioxide))
+		else if(ispath(gas_path, GAS_CO2))
 			tlv_collection[gas_path] = new /datum/tlv/carbon_dioxide
 		else if(meta_info[gas_path][META_GAS_DANGER])
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
