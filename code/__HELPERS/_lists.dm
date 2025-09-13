@@ -741,8 +741,6 @@
 		return target
 	return null
 
-
-
 /// Returns datum/data/record
 /proc/find_record_old(field, value, list/L)
 	for(var/datum/data/record/R in L)
