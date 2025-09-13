@@ -254,7 +254,7 @@
  * - channel: The power channel to use.
  * Returns: The amount of energy the cell received.
  */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/power_store/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
 	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
 	return power_given
