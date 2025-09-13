@@ -196,6 +196,12 @@
 	desc = "There's something wiggling in there..."
 	color = COLOR_DARK
 
+/obj/effect/decal/cleanable/vomit/nanites
+	name = "nanite-infested vomit"
+	desc = "Gosh, you can see something moving in there."
+	icon_state = "vomitnanite_1"
+	random_icon_states = list("vomitnanite_1", "vomitnanite_2", "vomitnanite_3", "vomitnanite_4")
+
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
