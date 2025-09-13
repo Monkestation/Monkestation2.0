@@ -168,7 +168,6 @@
 	if(full_overwrite)
 		QDEL_LIST(programs_to_remove)
 		cloud_id = source.cloud_id
-		cloud_active = source.cloud_active
 		safety_threshold = source.safety_threshold
 	for(var/datum/nanite_program/adding_program as anything in programs_to_add)
 		add_program(null, adding_program.copy())

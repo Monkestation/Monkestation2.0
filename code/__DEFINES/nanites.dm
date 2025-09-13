@@ -39,6 +39,8 @@
 #define NES_SENTENCE "Sentence"
 #define NES_MATCH_MODE "Match Mode"
 #define NES_RACE "Race"
+#define NES_HALLUCINATION_TYPE "Hallucination Type"
+#define NES_HALLUCINATION_DETAIL "Hallucination Detail"
 #define NES_MODE "Mode"
 #define NES_MOOD_MESSAGE "Mood Message"
 #define NES_PROGRAM_OVERWRITE "Program Overwrite"
