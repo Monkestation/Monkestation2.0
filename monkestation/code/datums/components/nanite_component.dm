@@ -329,7 +329,7 @@
 
 ///Adds nanite research points to the linked techweb based on the host's status.
 /datum/component/nanites/proc/add_research()
-	if(host_mob.stat == DEAD || !host_mob.client)
+	if(host_mob.stat == DEAD)
 		return
 	var/research_value = NANITE_BASE_RESEARCH
 	if(!ishuman(host_mob))
