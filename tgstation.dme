@@ -6545,7 +6545,6 @@
 #include "monkestation\code\game\objects\items\devices\compression_kit.dm"
 #include "monkestation\code\game\objects\items\devices\gps.dm"
 #include "monkestation\code\game\objects\items\devices\pocket_heater.dm"
-#include "monkestation\code\game\objects\items\devices\scanners.dm"
 #include "monkestation\code\game\objects\items\devices\radio\encryptionkey.dm"
 #include "monkestation\code\game\objects\items\devices\radio\headset.dm"
 #include "monkestation\code\game\objects\items\devices\radio\radio.dm"

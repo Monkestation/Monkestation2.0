@@ -15,11 +15,15 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 
-/obj/item/nanite_scanner/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/nanite_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] analyzes [target_mob]'s nanites."))
-	balloon_alert(user, "analyzing nanites")
+	user.visible_message(span_notice("[user] analyzes [interacting_with]'s nanites."))
 	playsound(user.loc, 'monkestation/sound/nanites/nanite_scan.mp3', 50)
-	var/response = SEND_SIGNAL(target_mob, COMSIG_NANITE_SCAN, user, TRUE)
-	if(!response)
-		to_chat(user, span_info("No nanites detected in the subject."))
+	var/response = SEND_SIGNAL(interacting_with, COMSIG_NANITE_SCAN, user, TRUE)
+	if(response)
+		balloon_alert(user, "analyzing nanites")
+	else
+		balloon_alert(user, "no nanites detected")
+	return ITEM_INTERACT_SUCCESS

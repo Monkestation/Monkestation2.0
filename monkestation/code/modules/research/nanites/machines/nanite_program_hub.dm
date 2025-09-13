@@ -71,18 +71,19 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/nanite_program_hub/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/disk/nanite_program))
-		return ..()
-	if(!user.transferItemToLoc(weapon, src))
-		return
+/obj/machinery/nanite_program_hub/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk/nanite_program))
+		return NONE
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	if(inserted_disk)
 		balloon_alert(user, "disk swapped")
 		eject(user)
 	else
 		balloon_alert(user, "disk inserted")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	inserted_disk = weapon
+	inserted_disk = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/nanite_program_hub/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
