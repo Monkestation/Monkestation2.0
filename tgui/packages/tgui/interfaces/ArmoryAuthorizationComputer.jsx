@@ -15,7 +15,7 @@ export const ArmoryAuthorizationComputer = (props) => {
     valid_reasons = [],
   } = data;
   return (
-    <Window width={400} height={470}>
+    <Window width={400} height={510}>
       <Window.Content>
         <Section fill scrollable>
           <Box textAlign="center" fontSize="14px" mb={1}>
@@ -27,6 +27,9 @@ export const ArmoryAuthorizationComputer = (props) => {
             </Box>
           </Box>
           <Section title="Armory Authorization" level={2}>
+            <Box textAlign="center" mb={1}>
+              The Armory requires authorization from ONE of the following: Head of Security, Warden, or Captain. Alternatively, 3 Security Officers can provide authorization.
+            </Box>
             <Grid>
               <Grid.Column>
                 <Button
