@@ -1,6 +1,3 @@
-///The research point type that Nanites generates.
-#define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
-
 ///Trait given by Nanites
 #define TRAIT_NANITES "Nanites"
 
