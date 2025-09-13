@@ -67,6 +67,31 @@
 	rounds = 300
 	ammo_type = MECHA_AMMO_LMG
 
+/obj/item/mecha_ammo/minigun
+	name = "minigun ammo box"
+	desc = "A box of linked ammunition, designed for the Avtomat AC 3 exosuit weapon."
+	icon_state = "minigun"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	rounds = 500
+	ammo_type = MECHA_AMMO_PEASHOOTER
+
+
+/obj/item/mecha_ammo/flamer
+	name = "Flamethrower Fuel Drum"
+	desc = "A drum of incendiary jelly, used with the FNX-100."
+	icon_state = "flamer"
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*3)
+	rounds = 40
+	ammo_type = MECHA_AMMO_FLAME
+
+/obj/item/mecha_ammo/heavy
+	name = "20x160mm ammo box"
+	desc = "A box of large caliber rounds, used with the Executor Mech Rifle."
+	icon_state = "heavy"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4)
+	rounds = 40
+	ammo_type = MECHA_AMMO_ATR
+
 /// Missile Ammo
 /// SRM-8 Missile type - Used by Nuclear Operatives
 /obj/item/mecha_ammo/missiles_srm
@@ -105,3 +130,39 @@
 	rounds = 3
 	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG
+
+/obj/item/mecha_ammo/makeshift
+	name = "makeshift shells ammo box"
+	desc = "A improvised box of makeshift ammunition, it looks something out of Mad Max"
+	icon_state = "pipegun_ammo"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3)
+	rounds = 8
+	ammo_type = MECHA_AMMO_PIPEGUN
+
+/obj/item/mecha_ammo/makeshift/peashooter
+	name = "peashooter ammo box"
+	icon_state = "peashooter_ammo"
+	rounds = 30
+	ammo_type = MECHA_AMMO_PEASHOOTER
+
+/obj/item/mecha_ammo/makeshift/isg
+	name = "launchable ieds"
+	desc = "A rusty box filled with refitted IEDs, for use with a jury-rigged cannon. Cannot be primed by hand."
+	icon_state = "isg_ammo"
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
+	rounds = 3
+	ammo_type = MECHA_AMMO_ISG
+
+/obj/item/mecha_ammo/makeshift/lighttankammo
+	name = "40mm tankshells"
+	desc = "An ancient box of 1.6in tank shells, for use with a small tank cannon."
+	icon_state = "light_tank_ammo"
+	rounds = 5
+	ammo_type = MECHA_AMMO_LIGHTTANK
+
+/obj/item/mecha_ammo/makeshift/lighttankmg
+	name = "12.7mm ammo box"
+	icon_state = "lighttankmg_ammo"
+	rounds = 60
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+
