@@ -450,6 +450,10 @@ GLOBAL_LIST_INIT(paintable_decals, init_subtypes(/datum/paintable_decal_category
 	name = "Caution Label"
 	icon_state = "caution"
 
+/datum/paintable_decal/warning/no_step
+	name = "No Step Label"
+	icon_state = "no_step"
+
 /datum/paintable_decal/warning/arrows
 	name = "Directional Arrows"
 	icon_state = "arrows"

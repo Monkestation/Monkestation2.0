@@ -125,7 +125,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
 
-#define SMOOTH_GROUP_WALLS S_OBJ(1) ///turf/closed/wall, /obj/structure/falsewall
+#define SMOOTH_GROUP_WALLS S_OBJ(1) ///turf/closed/wall, /obj/structure/falsewall, /turf/closed/wall/ice
 #define SMOOTH_GROUP_URANIUM_WALLS S_OBJ(2) ///turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium
 #define SMOOTH_GROUP_GOLD_WALLS S_OBJ(3) ///turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold
 #define SMOOTH_GROUP_SILVER_WALLS S_OBJ(4) ///turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver

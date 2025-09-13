@@ -174,6 +174,7 @@
 	var/protect_ruin = TRUE
 	/// The turf that will replace this one if the turf below has the no ruins allowed flag. we use this one so we don't get any potential double whammies
 	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	var/replacement_turf_station = /turf/open/floor/plating/snowed/smoothed/icemoon // station uses different replacement turf to allow shenanigans by players
 	/// If true mineral turfs below this openspace turf will be mined automatically
 	var/drill_below = TRUE
 
@@ -185,7 +186,7 @@
 		return
 	// MONKESTATION ADDITION START: Don't fucking bust open the station from the ceiling lmao.
 	if(istype(T.loc, /area/station) && protect_station)
-		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		ChangeTurf(replacement_turf_station, null, CHANGETURF_IGNORE_AIR)
 		return
 	// MONKESTATION ADDITION END
 	if(T.turf_flags & NO_RUINS && protect_ruin)
@@ -200,6 +201,9 @@
 
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE
+
+/turf/open/openspace/icemoon/keep_below/mapgen
+	protect_station = TRUE
 
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE

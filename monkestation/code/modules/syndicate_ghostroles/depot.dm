@@ -106,7 +106,6 @@
 //misc things; fluff, stun-capable turrets
 
 /obj/machinery/porta_turret/syndicate/depot
-	name = "depot turret"
 	desc = "A ballistic machine-gun auto-turret. This one has had one of its barrels replaced with a taser."
 	stun_projectile = /obj/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'

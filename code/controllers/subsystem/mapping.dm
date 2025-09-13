@@ -292,7 +292,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon/mapgen, /area/icemoon/surface/outdoors/unexplored/rivers) //MONKESTATION EDIT: /mapgen subtype to prevent cracking the station open
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)
