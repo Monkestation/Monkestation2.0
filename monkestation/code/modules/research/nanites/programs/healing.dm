@@ -235,7 +235,7 @@
 	carbon_host.emote("gasp")
 	carbon_host.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	SEND_SIGNAL(carbon_host, COMSIG_LIVING_MINOR_SHOCK)
-	log_game("[carbon_host] has been successfully defibrillated by nanites.")
+	carbon_host.investigate_log("[carbon_host] has been successfully defibrillated by nanites.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/oxygen_rush
 	name = "Alveolic Deoxidation"

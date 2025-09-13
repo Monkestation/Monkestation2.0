@@ -32,6 +32,7 @@
 	var/above = TRUE
 
 /datum/nanite_rule/health/check_rule()
+	var/health_percent = program.host_mob.health / program.host_mob.maxHealth * 100
 	return above == health_percent >= threshold
 
 /datum/nanite_rule/health/display()
@@ -80,6 +81,7 @@
 	var/above = TRUE
 
 /datum/nanite_rule/nanites/check_rule()
+	var/nanite_percent = (program.nanites.nanite_volume - program.nanites.safety_threshold)/(program.nanites.max_nanites - program.nanites.safety_threshold)*100
 	return above == nanite_percent >= threshold
 
 /datum/nanite_rule/nanites/copy_to(datum/nanite_program/new_program)

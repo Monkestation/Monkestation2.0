@@ -227,7 +227,7 @@
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/cloud_program = nanites.programs[text2num(params["program_id"])]
-			investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
+			investigate_log("[key_name(usr)] deleted program [cloud_program.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 			qdel(cloud_program)
 			return TRUE
 		if("add_rule")
@@ -242,7 +242,7 @@
 					var/datum/nanite_program/ruled_program = nanites.programs[text2num(params["program_id"])]
 					var/datum/nanite_rule/rule = rule_template.make_rule(ruled_program)
 					if(rule)
-						investigate_log("[key_name(usr)] added rule [rule.display()] to program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
+						investigate_log("[key_name(usr)] added rule [rule.display()] to program [ruled_program.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 			return TRUE
 		if("remove_rule")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
@@ -253,7 +253,7 @@
 			var/datum/nanite_program/ruleless_program = nanites.programs[text2num(params["program_id"])]
 			var/datum/nanite_rule/rule = ruleless_program.rules[text2num(params["rule_id"])]
 			if(rule)
-				investigate_log("[key_name(usr)] removed rule [rule.display()] from program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
+				investigate_log("[key_name(usr)] removed rule [rule.display()] from program [ruleless_program.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 				rule.remove()
 			return TRUE
 		if("toggle_rule_logic")
@@ -264,5 +264,5 @@
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/logical_program = nanites.programs[text2num(params["program_id"])]
 			logical_program.all_rules_required = !logical_program.all_rules_required
-			investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
+			investigate_log("[key_name(usr)] edited rule logic for program [logical_program.name] into [logical_program.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
 			return TRUE
