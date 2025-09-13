@@ -20,8 +20,8 @@ ZT = 2(σ)/k
 An example of this would be:
 
 MATERIAL STATS
-	thermal = 60
-	conductivity = 100
+thermal = 60
+conductivity = 100
 
 ZT = 2(100)/60
 ZT = 200/60
@@ -29,21 +29,20 @@ ZT = 3.333
 
 The other issue would be that since we are taking out temperature and Seebeck all the outputs would be good for power generation, plus we have a base efficency on the TEG we need to worry about so we would need to add a constant decrease and to make it line up with how the TEG's base efficency works we would need to multiply it afterwards so it would change to
 
-ZT = ((2(100)/60) - a) * b
+ZT = ((2(100)/60) - a) \* b
 
-an example of this now would be 
+an example of this now would be
 
-ZT = ((2(100)/60) - 2) * 10
+ZT = ((2(100)/60) - 2) \* 10
 
-ZT = (1.33) * 10
+ZT = (1.33) \* 10
 
 ZT = 13.3
 
 Which is fine until we get a really really good setup for instance
 
-ZT = ((2(100)/1) - 2) * 10
-ZT = (198) * 10
+ZT = ((2(100)/1) - 2) _ 10
+ZT = (198) _ 10
 ZT = 1980
 
 This means we are going to need to clamp the end value to be reasonable, so we can take the base scale of the engine and clamp at *0.5 and *1.5 so we can't blow shit up.
-

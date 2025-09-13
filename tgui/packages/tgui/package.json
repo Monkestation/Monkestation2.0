@@ -1,21 +1,21 @@
 {
-  "private": true,
-  "name": "tgui",
-  "version": "4.4.0",
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "@types/marked": "^4.0.8",
-    "common": "workspace:*",
-    "csstype": "^3.1.1",
-    "dateformat": "^4.6.2",
-    "dompurify": "^2.4.4",
-    "highlight.js": "^11.9.0",
-    "inferno": "^8.2.1",
-    "inferno-compat": "^8.2.1",
-    "inferno-vnode-flags": "^8.2.1",
-    "js-yaml": "^4.1.0",
-    "marked": "^4.2.12",
-    "tgui-dev-server": "workspace:*",
-    "tgui-polyfill": "workspace:*"
-  }
+	"private": true,
+	"name": "tgui",
+	"version": "4.4.0",
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"@types/marked": "^4.0.8",
+		"common": "workspace:*",
+		"csstype": "^3.1.1",
+		"dateformat": "^4.6.2",
+		"dompurify": "^2.4.4",
+		"highlight.js": "^11.9.0",
+		"inferno": "^8.2.1",
+		"inferno-compat": "^8.2.1",
+		"inferno-vnode-flags": "^8.2.1",
+		"js-yaml": "^4.1.0",
+		"marked": "^4.2.12",
+		"tgui-dev-server": "workspace:*",
+		"tgui-polyfill": "workspace:*"
+	}
 }

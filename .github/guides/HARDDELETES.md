@@ -1,10 +1,10 @@
 # Hard Deletes
 
-> Garbage collection is pretty gothic when you think about it. 
+> Garbage collection is pretty gothic when you think about it.
 >
->An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
+> An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
 >
->There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
+> There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
 >
 > -- <cite>Nanako</cite>
 
@@ -15,7 +15,6 @@
 3. [Detecting hard deletes](#detecting-hard-deletes)
 4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
 5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
-
 
 ## What is Hard Deletion
 
@@ -52,7 +51,7 @@ This of course means they can store that location in memory in another object's 
 
 /proc/someshit(mem_location)
     var/datum/some_obj = new()
-    some_obj.reference = mem_location 
+    some_obj.reference = mem_location
 ```
 
 But what happens when you get rid of the object we're passing around references to? If we just cleared it out from memory, everything that holds a reference to it would suddenly be pointing to nowhere, or worse, something totally different!
@@ -93,15 +92,15 @@ Now that you know the theory, let's go over what can actually cause hard deletes
 
 The BYOND reference has a list [Here](https://secure.byond.com/docs/ref/#/DM/garbage), but it's not a complete one
 
-* Stored in a var
-* An item in a list, or associated with a list item
-* Has a tag
-* Is on the map (always true for turfs)
-* Inside another atom's contents
-* Inside an atom's vis_contents
-* A temporary value in a still-running proc
-* Is a mob with a key
-* Is an image object attached to an atom
+- Stored in a var
+- An item in a list, or associated with a list item
+- Has a tag
+- Is on the map (always true for turfs)
+- Inside another atom's contents
+- Inside an atom's vis_contents
+- A temporary value in a still-running proc
+- Is a mob with a key
+- Is an image object attached to an atom
 
 Let's briefly go over the more painful ones yeah?
 
@@ -141,7 +140,7 @@ You can read more about what each of these do in that file, but the long and sho
 
 It'll tell you what object is holding the ref if it's in an object, or what pattern of list transversal was required to find the ref if it's hiding in a list of some sort
 
-## Techniques For Fixing Hard Deletes 
+## Techniques For Fixing Hard Deletes
 
 Once you've found the issue, it becomes a matter of making sure the ref is cleared as a part of Destroy(). I'm gonna walk you through a few patterns and discuss how you might go about fixing them
 
@@ -284,6 +283,6 @@ If this fails, you're just gonna have to read over this doc. You can skip the th
 > -- <cite>Armhulenn</cite>
 
 - The reference tracker, while powerful, is incredibly easy to break<br>
-If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
+  If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
 - Everyone but me sucks, because everyone but me keeps adding new hard deletes
 - Garbage collection is a spook, best practice is to use a random reference in place of null, it scares the compiler demons

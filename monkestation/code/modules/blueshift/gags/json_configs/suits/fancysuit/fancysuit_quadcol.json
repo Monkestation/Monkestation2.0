@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "part_slacks",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -15,19 +15,19 @@
 			"type": "icon_state",
 			"icon_state": "pencilskirt_suit_base",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "pencilskirt_suit_under",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "pencilskirt_suit_tie",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	]
 }

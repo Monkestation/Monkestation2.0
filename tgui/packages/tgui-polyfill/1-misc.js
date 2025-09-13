@@ -19,11 +19,11 @@
     function t() {
       var e = Array.prototype.slice.call(arguments),
         n = document.createDocumentFragment();
-      e.forEach(function (e) {
+      (e.forEach(function (e) {
         var t = e instanceof Node;
         n.appendChild(t ? e : document.createTextNode(String(e)));
       }),
-        this.appendChild(n);
+        this.appendChild(n));
     }
     // remove
     function n() {
@@ -47,7 +47,7 @@
             writable: !0,
             value: n,
           });
-      }
+      },
     );
   })();
 })();

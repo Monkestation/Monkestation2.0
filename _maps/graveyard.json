@@ -35,7 +35,10 @@
 	"minetype": "none",
 	"job_changes": {
 		"Cook": {
-			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/hallway/secondary/service"]
+			"additional_cqc_areas": [
+				"/area/station/service/bar",
+				"/area/station/hallway/secondary/service"
+			]
 		}
 	}
 }

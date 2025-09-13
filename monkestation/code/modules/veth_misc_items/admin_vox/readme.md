@@ -1,11 +1,12 @@
 ## Title: <!--Title of your addition-->
 
 <!-- uppercase, underscore_connected name of your module, that you use to mark files-->
-MODULE ID: ADMINVOX 
+
+MODULE ID: ADMINVOX
 
 ### Description:
-This PR adds AdminVOX to the game. Piggybacking off the AI vox announcement system, allows admins to make Vox announcements.
 
+This PR adds AdminVOX to the game. Piggybacking off the AI vox announcement system, allows admins to make Vox announcements.
 
 ### Master file additions
 
@@ -21,5 +22,5 @@ This PR adds AdminVOX to the game. Piggybacking off the AI vox announcement syst
 
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Original Coders -->
-Made by Veth
 
+Made by Veth

@@ -14,14 +14,7 @@
 				"H": " CLOCK TICKS... "
 			}
 		},
-		"string_replacements": [
-			"'",
-			"tik",
-			"kth",
-			"toc"
-		],
-		"string_additions": [
-			"cht"
-		]
+		"string_replacements": ["'", "tik", "kth", "toc"],
+		"string_additions": ["cht"]
 	}
 }

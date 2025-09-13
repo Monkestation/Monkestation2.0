@@ -454,7 +454,7 @@
 		"code": "NT-SCR-LRF",
 		"category": "Security Department",
 		"name": "Lawsuit Request Form",
-		"info":[
+		"info": [
 			"<h1><font color=\"red\"><div align=\"center\">Lawsuit Request Form",
 			"<p><strong>Prosecuters's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",

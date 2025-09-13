@@ -7,13 +7,13 @@
 
 [![forthebadge](monkestation/badges/fueled-by-potassium.svg)](https://forthebadge.com) [![resentment](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://www.monkeyuser.com/assets/images/2019/131-bug-free.png) [![resentment](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://user-images.githubusercontent.com/8171642/50290880-ffef5500-043a-11e9-8270-a2e5b697c86c.png) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-| Website                 | Link                                           |
-|-------------------------|------------------------------------------------|
-| Website                 | [https://monkestation.com/](https://monkestation.com/) |
-| Code                    | [https://github.com/Monkestation/Monkestation2.0](https://github.com/Monkestation/Monkestation2.0) |
-| Wiki                    | [https://wiki.monkestation.com/](https://wiki.monkestation.com/) |
-| Codedocs                | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/) |
-| monkestation Discord    | [https://discord.com/invite/monkestation](https://discord.com/invite/monkestation) |
+| Website              | Link                                                                                               |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| Website              | [https://monkestation.com/](https://monkestation.com/)                                             |
+| Code                 | [https://github.com/Monkestation/Monkestation2.0](https://github.com/Monkestation/Monkestation2.0) |
+| Wiki                 | [https://wiki.monkestation.com/](https://wiki.monkestation.com/)                                   |
+| Codedocs             | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)                             |
+| monkestation Discord | [https://discord.com/invite/monkestation](https://discord.com/invite/monkestation)                 |
 
 This is the codebase for the monkestation-flavored fork of Space Station 13.
 
@@ -70,7 +70,7 @@ See [LICENSE](LICENSE) and [GPLv3.txt](GPLv3.txt) for more details.
 
 The TGS DMAPI is licensed as a subproject under the MIT license.
 
-See the footer of [code/__DEFINES/tgs.dm](./code/__DEFINES/tgs.dm) and [code/modules/tgs/LICENSE](./code/modules/tgs/LICENSE) for the MIT license.
+See the footer of [code/\_\_DEFINES/tgs.dm](./code/__DEFINES/tgs.dm) and [code/modules/tgs/LICENSE](./code/modules/tgs/LICENSE) for the MIT license.
 
 ---
 

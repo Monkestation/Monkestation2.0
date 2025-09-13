@@ -12,9 +12,7 @@
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_box"
 	},
-	"particle_weathers": [
-    	"weather_snow"
-    ],
+	"particle_weathers": ["weather_snow"],
 	"traits": [
 		{
 			"Up": true,
