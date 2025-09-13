@@ -128,7 +128,11 @@
 		Their rituals take time, allowing us to disrupt it."
 
 	/// Resets on each new character to be added to the chair. Some effects should lower it...
+#ifdef BLOODSUCKER_TESTING
+	var/convert_progress = 1
+#else
 	var/convert_progress = 3
+#endif
 	/// Mindshielded and Antagonists willingly have to accept you as their Master.
 	var/disloyalty_confirm = FALSE
 	/// Prevents popup spam.
