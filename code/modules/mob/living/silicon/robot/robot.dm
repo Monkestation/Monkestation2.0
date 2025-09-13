@@ -1009,7 +1009,7 @@
 
 /mob/living/silicon/robot/set_stat(new_stat)
 	. = ..()
-	update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
+	//update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
 
 /mob/living/silicon/robot/proc/on_dampen()
 	SIGNAL_HANDLER

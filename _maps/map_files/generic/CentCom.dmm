@@ -23231,7 +23231,8 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/telecomms/relay/preset/ruskie{
 	banned_frequencies = list(1213,1215,1221,1219,1217);
-	id = "CentCom Offices Relay"
+	id = "CentCom Offices Relay";
+	on = "0"
 	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/adminroom)

@@ -108,8 +108,7 @@
 			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || iseminence(AM) || ismob(AM))
 				continue
 			qdel(AM)
-
-		turf.ChangeTurf(/turf/baseturf_bottom)
+		turf.ScrapeAway(3)
 
 /// Sanitizes a block of turfs to prevent writing over undesired locations
 /proc/ReserveTurfsForAsteroidGeneration(turf/center, size, baseturf_only = TRUE)

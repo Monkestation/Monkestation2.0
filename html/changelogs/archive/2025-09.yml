@@ -436,3 +436,34 @@
   - bugfix: Fixes oozelings having their burn modifier applied twice.
   Xander3359:
   - rscadd: Blueshield and brig physician have had their ID access updated.
+2025-09-13:
+  Absolucy:
+  - bugfix: (GoldenAlpharex) Makes checks for the station z level more robust against
+      coders doing less intuitive stuff, thus protecting it from breaking in weirdly
+      difficult and seemingly unrelated places (I'm looking at you, nuke cinematic
+      unit test).
+  - code_imp: (timothymtorres) Add multi-z helper function.
+  Ice-Type:
+  - code_imp: Adds a fauna_mod variable, that can be used to add a damage multiplier
+      against lavaland fauna to any projectile.
+  Some Guy Who's Extremely Inanely Unfathomably Mad At People Misspelling Ratvar:
+  - spellcheck: Rends the final misspelled Ratvar from the face of the cosmos, cementing
+      the spelling of He on Reebe's name forever more as R A T V A R. NO APOSTROPHE.
+  - spellcheck: also the ratvarians are once again better at poetry
+  ThePooba:
+  - rscadd: adds beetmin, lil beet mobs that skidaddle and spawn from vent clogs
+  - bugfix: fixes rack and reinforced table unwrenching
+  - balance: mining guardian limited to one
+  - balance: reduces laser damage for base lasers and hellfire to 22 from 25
+  - bugfix: fixes asteroid tiles showing funny turfs
+  - bugfix: personal lockers can be opened
+  - bugfix: bots can be accessed
+  - balance: shipbreaker gives ~50% more cash to player
+  Xander3359:
+  - code_imp: (necromanceranne) The paper mache robe now works a bit better under
+      the hood.
+  - balance: (Improvedname) Weakens summoned stickmen to be 1 or 2 hit
+  throwawayuseless:
+  - balance: Acarp DD combo now does oxy damage instead of brute, to preserve it's
+      nonlethal nature from Scarp.
+  - balance: Acarp can now snap necks while strangling, not just while neckgrabbing.
