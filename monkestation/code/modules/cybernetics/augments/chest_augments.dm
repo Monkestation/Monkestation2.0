@@ -626,3 +626,6 @@
 		)
 		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
+
+
+
