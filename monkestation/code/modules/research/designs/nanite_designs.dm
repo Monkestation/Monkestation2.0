@@ -608,3 +608,17 @@
 	id = "unsafe_storage_nanites"
 	program_type = /datum/nanite_program/protocol/unsafe_storage
 	category = list("Protocols_Nanites")
+
+/datum/design/nanites/nanite_injector
+	name = "Nanomechanical Injection System"
+	desc = "While active, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
+	id = "injector_nanites"
+	program_type = /datum/nanite_program/nanite_injector
+	category = list("Utility Nanites")
+
+/datum/design/nanites/gravity
+	name = "Gravito-Kinetic Field Conduction"
+	desc = "The nanites channel an artifical gravitational field through the host."
+	id = "gravity_nanites"
+	program_type = /datum/nanite_program/gravity
+	category = list("Suppression Nanites")

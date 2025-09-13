@@ -135,6 +135,8 @@
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
 		"oxygen_rush_nanites",
+		"injector_nanites",
+		"gravity_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 3000)
 
