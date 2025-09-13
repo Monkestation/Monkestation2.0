@@ -57,8 +57,6 @@
 #define TRAIT_SLIME_HYDROPHOBIA "slime_hydrophobia"
 /// Falsifies Health analyzer blood levels
 #define TRAIT_MASQUERADE "masquerade"
-/// Your body is literal room temperature. Does not make you immune to the temp
-#define TRAIT_COLDBLOODED "coldblooded"
 /// Prevents the user from entering stamina crit.
 #define TRAIT_CANT_STAMCRIT "cant_stamcrit"
 /// This mob will automatically revive when healed enough.
