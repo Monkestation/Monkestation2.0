@@ -264,7 +264,7 @@ export const NaniteProgrammerContent = (props) => {
     return <NoticeBox textAlign="center">Download a nanite program</NoticeBox>;
   }
   return (
-    <Section title={name} height="700px" fill scrollable>
+    <Section title={name} height="640px" fill scrollable>
       <Section title="Info" level={2}>
         <Grid>
           <Grid.Column>{desc}</Grid.Column>
@@ -577,7 +577,7 @@ export const NaniteProgramHub = (props) => {
   const programsInCategory = (programs && programs[selectedCategory]) || [];
   return (
     <Section
-      height="700px"
+      height="640px"
       fill
       scrollable
       title="Programs"
@@ -685,7 +685,7 @@ export const NaniteCloudControl = (props) => {
           <Stack.Item width="375px">
             <Section
               scrollable
-              height="700px"
+              height="640px"
               fill
               title="Cloud Storage"
               buttons={
