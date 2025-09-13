@@ -7,21 +7,21 @@
 
 /datum/design/nanites/necrotic
 	name = "Necrosis"
-	desc = "The nanites attack internal tissues indiscriminately, causing widespread damage."
+	desc = "The nanites attack internal tissues indiscriminately, causing 0.75 brute damage per second."
 	id = "necrotic_nanites"
 	category = list(NANITES_CATEGORY_DEFECTIVE)
 	program_type = /datum/nanite_program/necrotic
 
 /datum/design/nanites/toxic
 	name = "Toxin Buildup"
-	desc = "The nanites cause a slow but constant toxin buildup inside the host."
+	desc = "The nanites cause a slow but constant toxin buildup inside the host, dealing 0.5 points of toxin damage per second."
 	id = "toxic_nanites"
 	category = list(NANITES_CATEGORY_DEFECTIVE)
 	program_type = /datum/nanite_program/toxic
 
 /datum/design/nanites/suffocating
 	name = "Hypoxemia"
-	desc = "The nanites prevent the host's blood from absorbing oxygen efficiently."
+	desc = "The nanites prevent the host's blood from absorbing oxygen efficiently, dealing 3 points of oxygen damage per second."
 	id = "suffocating_nanites"
 	category = list(NANITES_CATEGORY_DEFECTIVE)
 	program_type = /datum/nanite_program/suffocating
@@ -35,7 +35,7 @@
 
 /datum/design/nanites/skin_decay
 	name = "Dermalysis"
-	desc = "The nanites attack skin cells, causing irritation, rashes, and minor damage."
+	desc = "The nanites attack skin cells, causing irritation and rashes, as well as 0.25 brute damage per second."
 	id = "skindecay_nanites"
 	category = list(NANITES_CATEGORY_DEFECTIVE)
 	program_type = /datum/nanite_program/skin_decay
@@ -49,7 +49,7 @@
 
 /datum/design/nanites/brain_decay
 	name = "Brain-Eating Nanites"
-	desc = "Damages brain cells, gradually decreasing the host's cognitive functions."
+	desc = "The nanites seek and attack brain cells, causing extensive neural damage to the host. This leads to 1 point of brain damage per second, and occasional halucinations."
 	id = "braindecay_nanites"
 	category = list(NANITES_CATEGORY_DEFECTIVE)
 	program_type = /datum/nanite_program/brain_decay

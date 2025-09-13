@@ -1,6 +1,6 @@
 /datum/design/nanites/nervous
 	name = "Nerve Support"
-	desc = "The nanites act as a secondary nervous system, reducing the amount of time the host is stunned."
+	desc = "The nanites act as a secondary nervous system, halving the time the host is stunned."
 	id = "nervous_nanites"
 	category = list(NANITES_CATEGORY_AUGMENTATION)
 	program_type = /datum/nanite_program/nervous
@@ -14,14 +14,14 @@
 
 /datum/design/nanites/refractive
 	name = "Dermal Refractive Surface"
-	desc = "The nanites form a membrane above the host's skin, reducing the effectiveness of laser and energy impacts."
+	desc = "The nanites form a membrane above the host's skin, reducing the effectiveness of laser and energy impacts by about 20%."
 	id = "refractive_nanites"
 	category = list(NANITES_CATEGORY_AUGMENTATION)
 	program_type = /datum/nanite_program/refractive
 
 /datum/design/nanites/coagulating
 	name = "Rapid Coagulation"
-	desc = "The nanites induce rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	desc = "The nanites re-route circulating blood away from open wounds, halving bleeding rate. Consumes nanites even when host is not bleeding."
 	id = "coagulating_nanites"
 	category = list(NANITES_CATEGORY_AUGMENTATION)
 	program_type = /datum/nanite_program/coagulating

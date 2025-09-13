@@ -1,8 +1,7 @@
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
-	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. \
-		Does not consume nanites if the host is unharmed. \
-		Works better in low-pressure environments."
+	desc = "The nanites boost the host's natural regeneration, healing 0.5 brute and 0.5 burn damage per second. \
+		Will not consume nanites while the host is unharmed, and works better in low-pressure environments."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -26,9 +25,8 @@
 
 /datum/nanite_program/regenerative_advanced
 	name = "Bio-Reconstruction"
-	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration. \
-			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect. \
-			Works better in low-pressure environments."
+	desc = "The nanites manually repair and replace organic cells, healing 2 brute damage and 2 burn damage per second. \
+			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
 	use_rate = 5.5
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
@@ -67,7 +65,8 @@
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
-	desc = "The nanites purge toxins and chemicals from the host's bloodstream."
+	desc = "The nanites purge toxins and chemicals from the host's bloodstream, healing 1 toxin damage and removing 1 unit of each chemical per second. \
+		Consumes nanites even if it has no effect. Ineffective against Radiomagnetic Disruptor."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
@@ -84,7 +83,8 @@
 
 /datum/nanite_program/brain_heal
 	name = "Neural Regeneration"
-	desc = "The nanites fix neural connections in the host's brain, reversing brain damage and minor traumas."
+	desc = "The nanites fix neural connections in the host's brain, reversing 1 point of brain damage per second with a 10% chance to fix minor traumas. \
+		Will not consume nanites while it would not have an effect."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
@@ -92,7 +92,7 @@
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/carbon_host = host_mob
-		if(length(carbon_host.get_traumas()))
+		if(carbon_host.has_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF))
 			problems = TRUE
 	if(host_mob.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
@@ -102,13 +102,14 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/carbon_host = host_mob
-		carbon_host.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+		carbon_host.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 #define NANITE_BLOOD_RESTORE_DEFAULT 2
 
 /datum/nanite_program/blood_restoring
 	name = "Blood Regeneration"
-	desc = "The nanites stimulate and boost blood cell production in the host."
+	desc = "The nanites stimulate and boost blood cell production in the host, regenerating their blood at a rate of 2 units per second. \
+		Will not consume nanites while the host has a safe blood level."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating)
 	///The amount of blood that we restore every active effect tick.
@@ -132,7 +133,8 @@
 
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"
-	desc = "The nanites fix damage in the host's mechanical limbs."
+	desc = "The nanites fix damage in the host's mechanical limbs, healing 1 brute and 1 burn per second. \
+		Will not consume nanites while the host's mechanical limbs are undamaged, or while the host has no mechanical limbs."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -160,8 +162,8 @@
 
 /datum/nanite_program/purging_advanced
 	name = "Selective Blood Purification"
-	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
-			The added processing power required to analyze the chemicals severely increases the nanite consumption rate."
+	desc = "The nanites purge toxins (healing one point of toxin damage per second) and toxic chemicals (purging 1 unit of toxins per second) from the host's bloodstream, while ignoring other chemicals. \
+			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Consumes nanites even if it has no effect."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
@@ -181,7 +183,8 @@
 
 /datum/nanite_program/brain_heal_advanced
 	name = "Neural Reimaging"
-	desc = "The nanites are able to backup and restore the host's neural connections, potentially replacing entire chunks of missing or damaged brain matter."
+	desc = "The nanites are able to backup and restore the host's neural connections, removing 2 points of brain damage per second with a 10% chance to heal deep-rooted traumas. \
+		Consumes nanites even if it has no effect."
 	use_rate = 3
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
@@ -199,7 +202,9 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/carbon_host = host_mob
-		carbon_host.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+		carbon_host.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
+
+#define GHOST_NOTIFY_COOLDOWN_DELAY (1 MINUTES)
 
 /datum/nanite_program/defib
 	name = "Defibrillation"
@@ -208,9 +213,13 @@
 	trigger_cost = 25
 	trigger_cooldown = 120
 	rogue_types = list(/datum/nanite_program/shocking)
+	///The cooldown between alerting the dead player that they're being revived.
+	COOLDOWN_DECLARE(ghost_notify_cooldown)
 
 /datum/nanite_program/defib/on_trigger(comm_message)
-	host_mob.notify_revival("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
+	if(COOLDOWN_FINISHED(src, ghost_notify_cooldown) && check_revivable())
+		host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
+		COOLDOWN_START(src, ghost_notify_cooldown, GHOST_NOTIFY_COOLDOWN_DELAY)
 	addtimer(CALLBACK(src, PROC_REF(start_defibrilation)), 5 SECONDS)
 
 /datum/nanite_program/defib/proc/check_revivable()
@@ -237,10 +246,12 @@
 	SEND_SIGNAL(carbon_host, COMSIG_LIVING_MINOR_SHOCK)
 	carbon_host.investigate_log("[carbon_host] has been successfully defibrillated by nanites.", INVESTIGATE_NANITES)
 
+#undef GHOST_NOTIFY_COOLDOWN_DELAY
+
 /datum/nanite_program/oxygen_rush
 	name = "Alveolic Deoxidation"
-	desc = "The nanites deoxidze the carbon dioxide carried within the blood inside of the host's lungs through rapid electrical stimulus. \
-			However, this process is extremely dangerous, leaving carbon deposits within the lungs as well as causing severe organ damage."
+	desc = "The nanites deoxidze the carbon dioxide carried within the blood inside of the host's lungs through rapid electrical stimulus, healing 10 oxygen damage per second. \
+			However, this process is extremely dangerous, leaving carbon deposits within the lungs and thus causing 4 points of lung damage per second."
 	use_rate = 10
 	rogue_types = list(/datum/nanite_program/suffocating)
 

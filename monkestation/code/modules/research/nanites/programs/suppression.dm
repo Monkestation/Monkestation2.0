@@ -1,6 +1,6 @@
 /datum/nanite_program/sleepy
 	name = "Sleep Induction"
-	desc = "The nanites cause rapid narcolepsy when triggered."
+	desc = "The nanites induce rapid narcolepsy when triggered, putting the host to sleep for around 20 seconds after a random delay." //the "around" is an ass-covering manuever and i do not apologize
 	can_trigger = TRUE
 	trigger_cost = 15
 	trigger_cooldown = 1200
@@ -9,11 +9,11 @@
 /datum/nanite_program/sleepy/on_trigger(comm_message)
 	to_chat(host_mob, span_warning("You start to feel very sleepy..."))
 	host_mob.adjust_drowsiness(2 SECONDS)
-	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living, Sleeping), 200), rand(60,200))
+	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living, Sleeping), 20 SECONDS), rand(60, 200))
 
 /datum/nanite_program/paralyzing
 	name = "Paralysis"
-	desc = "The nanites force muscle contraction, effectively paralyzing the host."
+	desc = "The nanites force muscle contraction, effectively stunning the host." //funny that this is called paralysis and it does stun instead of para
 	use_rate = 3
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
@@ -42,7 +42,7 @@
 
 /datum/nanite_program/stun
 	name = "Neural Shock"
-	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
+	desc = "The nanites pulse the host's nerves when triggered, incapacitating them for about 4 seconds."
 	can_trigger = TRUE
 	trigger_cost = 4
 	trigger_cooldown = 300

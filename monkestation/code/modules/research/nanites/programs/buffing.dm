@@ -1,6 +1,6 @@
 /datum/nanite_program/nervous
 	name = "Nerve Support"
-	desc = "The nanites act as a secondary nervous system, reducing the amount of time the host is stunned."
+	desc = "The nanites act as a secondary nervous system, halving the time the host is stunned."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
@@ -57,7 +57,7 @@
 
 /datum/nanite_program/refractive
 	name = "Dermal Refractive Surface"
-	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts."
+	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts by about 20%."
 	use_rate = 1.0
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
@@ -79,7 +79,7 @@
 
 /datum/nanite_program/coagulating
 	name = "Rapid Coagulation"
-	desc = "The nanites induce rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	desc = "The nanites re-route circulating blood away from open wounds, halving bleeding rate. Consumes nanites even when host is not bleeding."
 	use_rate = 0.10
 	rogue_types = list(/datum/nanite_program/suffocating)
 

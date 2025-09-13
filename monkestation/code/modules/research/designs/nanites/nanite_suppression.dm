@@ -7,21 +7,21 @@
 
 /datum/design/nanites/stun
 	name = "Neural Shock"
-	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
+	desc = "The nanites pulse the host's nerves when triggered, incapacitating them for about 4 seconds."
 	id = "stun_nanites"
 	category = list(NANITES_CATEGORY_SUPPRESSION)
 	program_type = /datum/nanite_program/stun
 
 /datum/design/nanites/sleepy
 	name = "Sleep Induction"
-	desc = "The nanites cause rapid narcolepsy when triggered."
+	desc = "The nanites induce rapid narcolepsy when triggered, putting the host to sleep for around 20 seconds after a random delay."
 	id = "sleep_nanites"
 	category = list(NANITES_CATEGORY_SUPPRESSION)
 	program_type = /datum/nanite_program/sleepy
 
 /datum/design/nanites/paralyzing
 	name = "Paralysis"
-	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
+	desc = "The nanites force muscle contraction, effectively stunning the host."
 	id = "paralyzing_nanites"
 	category = list(NANITES_CATEGORY_SUPPRESSION)
 	program_type = /datum/nanite_program/paralyzing

@@ -8,7 +8,7 @@
 ///The chance at a Nanite program randomly failing when it cannot sync
 #define NANITE_FAILURE_CHANCE 8
 ///The max amount of nanite programs you can have in a cloud at once.
-#define NANITE_PROGRAM_LIMIT 20
+#define NANITE_PROGRAM_LIMIT 50
 ///The delay between sync attempts for nanites to the cloud, if it fails then it will start to corrupt.
 #define NANITE_SYNC_DELAY (30 SECONDS)
 
@@ -168,8 +168,10 @@
 				adding_program.copy_programming(nanite_program, copy_activation)
 				break
 	if(full_overwrite)
-		for(var/X in programs_to_remove)
-			qdel(X)
+		QDEL_LIST(programs_to_remove)
+		cloud_id = source.cloud_id
+		cloud_active = source.cloud_active
+		safety_threshold = source.safety_threshold
 	for(var/datum/nanite_program/adding_program as anything in programs_to_add)
 		add_program(null, adding_program.copy())
 
