@@ -378,7 +378,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
 			ADD_TRAIT(target, TRAIT_SOFTSPOKEN, type)
-			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_SOFTSPOKEN, type), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_SOFTSPOKEN, type), 14 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		if(BATON_SLEEP)
 			SleepAttack(target,user)
 		if(BATON_CUFF)
