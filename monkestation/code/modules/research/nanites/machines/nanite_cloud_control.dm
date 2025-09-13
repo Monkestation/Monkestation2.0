@@ -4,7 +4,6 @@
 	icon = 'monkestation/icons/obj/machines/nanites/nanite_machines.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
-	brightness_on = FALSE
 	icon_keyboard = null
 	icon_screen = null
 
@@ -28,7 +27,7 @@
 /obj/machinery/computer/nanite_cloud_controller/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
+		linked_techweb = SSresearch.science_tech
 
 /obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/disk/nanite_program))
@@ -40,7 +39,7 @@
 		eject(user)
 	else
 		balloon_alert(user, "disk inserted")
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	disk = weapon
 
 /obj/machinery/computer/nanite_cloud_controller/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -199,7 +198,7 @@
 		if("create_backup")
 			var/cloud_id = new_backup_id
 			if(!isnull(cloud_id))
-				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 				cloud_id = clamp(round(cloud_id, 1),1,100)
 				generate_backup(cloud_id, usr)
 			return TRUE
@@ -207,7 +206,7 @@
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(!backup)
 				return TRUE
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			qdel(backup)
 			log_game("[key_name(usr)] deleted the nanite cloud backup #[current_view]")
 			return TRUE
@@ -216,7 +215,7 @@
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(!backup)
 					return TRUE
-				playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 				var/datum/component/nanites/nanites = backup.nanites
 				nanites.add_program(null, disk.program.copy())
 				log_game("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]")
@@ -225,7 +224,7 @@
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(!backup)
 				return TRUE
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/cloud_program = nanites.programs[text2num(params["program_id"])]
 			log_game("[key_name(usr)] deleted program [cloud_program.name] from cloud #[current_view]")
@@ -238,7 +237,7 @@
 					return
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
-					playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 					var/datum/component/nanites/nanites = backup.nanites
 					var/datum/nanite_program/ruled_program = nanites.programs[text2num(params["program_id"])]
 					var/datum/nanite_rule/rule = rule_template.make_rule(ruled_program)
@@ -248,7 +247,7 @@
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(!backup)
 				return TRUE
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/ruleless_program = nanites.programs[text2num(params["program_id"])]
 			var/datum/nanite_rule/rule = ruleless_program.rules[text2num(params["rule_id"])]
@@ -259,7 +258,7 @@
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(!backup)
 				return TRUE
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			var/datum/component/nanites/nanites = backup.nanites
 			var/datum/nanite_program/logical_program = nanites.programs[text2num(params["program_id"])]
 			logical_program.all_rules_required = !logical_program.all_rules_required

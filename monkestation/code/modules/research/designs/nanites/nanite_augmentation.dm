@@ -14,7 +14,7 @@
 
 /datum/design/nanites/refractive
 	name = "Dermal Refractive Surface"
-	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts."
+	desc = "The nanites form a membrane above the host's skin, reducing the effectiveness of laser and energy impacts."
 	id = "refractive_nanites"
 	category = list(NANITES_CATEGORY_AUGMENTATION)
 	program_type = /datum/nanite_program/refractive

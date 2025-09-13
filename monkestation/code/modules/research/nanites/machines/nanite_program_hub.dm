@@ -24,7 +24,7 @@
 /obj/machinery/nanite_program_hub/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
+		linked_techweb = SSresearch.science_tech
 	if(linked_techweb)
 		on_connected_techweb()
 
@@ -67,7 +67,7 @@
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -81,7 +81,7 @@
 		eject(user)
 	else
 		balloon_alert(user, "disk inserted")
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	inserted_disk = weapon
 
 /obj/machinery/nanite_program_hub/crowbar_act(mob/living/user, obj/item/tool)
@@ -183,7 +183,7 @@
 				qdel(inserted_disk.program)
 			inserted_disk.program = new downloaded.program_type
 			inserted_disk.name = "[initial(inserted_disk.name)] \[[inserted_disk.program.name]\]"
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			return TRUE
 		if("refresh")
 			update_static_data(usr)
@@ -196,5 +196,5 @@
 				qdel(inserted_disk.program)
 				inserted_disk.program = null
 				inserted_disk.name = initial(inserted_disk.name)
-				playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 			return TRUE

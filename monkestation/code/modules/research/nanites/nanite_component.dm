@@ -3,19 +3,14 @@
 #define NANITE_DEFAULT_REGEN_RATE 0.5
 #define NANITE_DEFAULT_SAFETY_THRESHOLD 50
 
-///The default amount of nanite research points to generate per person per tick, if unmodified.
-#define NANITE_BASE_RESEARCH 1.5
-///The factor by which we multiply node costs to balance the higher production of nanite points compared to general points.
-#define NANITE_POINT_CONVERSION_RATE 10
+///The default amount of nanite research points to generate per person per tick.
+#define NANITE_BASE_RESEARCH 0.2
 ///The chance at a Nanite program randomly failing when it cannot sync
 #define NANITE_FAILURE_CHANCE 8
 ///The max amount of nanite programs you can have in a cloud at once.
 #define NANITE_PROGRAM_LIMIT 20
 ///The delay between sync attempts for nanites to the cloud, if it fails then it will start to corrupt.
 #define NANITE_SYNC_DELAY (30 SECONDS)
-
-///The time a nanite will remain completely inactive upon being jammed.
-#define NANITE_JAMMER_DURATION (5 MINUTES)
 
 /datum/component/nanites
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -48,8 +43,6 @@
 	var/diagnostics = TRUE
 	///The techweb these Nanites are synced to, to generate Nanite research points
 	var/datum/techweb/linked_techweb
-	///The cooldown triggered when a nanite host is hit with a radio jammer that causes nanites to completely freeze, no updating included.
-	COOLDOWN_DECLARE(nanite_jammer_cooldown)
 
 /datum/component/nanites/Initialize(
 	datum/techweb/linked_techweb,
@@ -93,11 +86,9 @@
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
 	RegisterSignal(parent, COMSIG_NANITE_SCAN, PROC_REF(nanite_scan))
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, PROC_REF(sync))
-	RegisterSignal(parent, COMSIG_RADIO_JAMMED, PROC_REF(on_jammed))
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-		RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_shock))
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(check_viable_biotype))
@@ -120,10 +111,8 @@
 		COMSIG_LIVING_HEALTHSCAN,
 		COMSIG_NANITE_SCAN,
 		COMSIG_NANITE_SYNC,
-		COMSIG_RADIO_JAMMED,
 		COMSIG_ATOM_EMP_ACT,
 		COMSIG_LIVING_DEATH,
-		COMSIG_MOB_TRIED_ACCESS,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 		COMSIG_LIVING_MINOR_SHOCK,
 		COMSIG_MOVABLE_HEAR,
@@ -149,9 +138,6 @@
 		adjust_nanites(null, amount) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	//nanites will do absolutely nothing when jammed, won't lose/gain/update.
-	if(!COOLDOWN_FINISHED(src, nanite_jammer_cooldown))
-		return
 	if(!HAS_TRAIT(host_mob, TRAIT_STASIS))
 		adjust_nanites(null, regen_rate)
 		add_research()
@@ -302,23 +288,6 @@
 	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		qdel(src) //bodytype no longer sustains nanites
 
-/datum/component/nanites/proc/on_tried_access(datum/source, atom/locked_thing)
-	SIGNAL_HANDLER
-
-	if(!isobj(locked_thing))
-		return LOCKED_ATOM_INCOMPATIBLE
-
-	var/list/all_access = list()
-	var/obj/locked_object = locked_thing
-	for(var/datum/nanite_program/access/access_program in programs)
-		if(access_program.activated)
-			all_access += access_program.access
-
-	if(locked_object.check_access_list(all_access))
-		return ACCESS_ALLOWED
-
-	return
-
 /datum/component/nanites/proc/set_volume(datum/source, amount)
 	SIGNAL_HANDLER
 
@@ -343,11 +312,6 @@
 	SIGNAL_HANDLER
 
 	regen_rate = amount
-
-///Called when the radio has been jammed.
-/datum/component/nanites/proc/on_jammed(datum/source, ignore_syndie)
-	SIGNAL_HANDLER
-	COOLDOWN_START(src, nanite_jammer_cooldown, NANITE_JAMMER_DURATION)
 
 /datum/component/nanites/proc/get_data(list/nanite_data)
 	nanite_data["nanite_volume"] = nanite_volume
@@ -463,5 +427,3 @@
 #undef NANITE_FAILURE_CHANCE
 #undef NANITE_PROGRAM_LIMIT
 #undef NANITE_SYNC_DELAY
-
-#undef NANITE_JAMMER_DURATION

@@ -1,21 +1,8 @@
-// See code\__DEFINES\research\techweb_nodes.dm
-#define TECHWEB_NODE_NANITE_BASE "nanite_base"
-#define TECHWEB_NODE_NANITE_SMART "nanite_smart"
-#define TECHWEB_NODE_NANITE_MESH "nanite_mesh"
-#define TECHWEB_NODE_NANITE_BIO "nanite_bio"
-#define TECHWEB_NODE_NANITE_NEURAL "nanite_neural"
-#define TECHWEB_NODE_NANITE_SYNAPTIC "nanite_synaptic"
-#define TECHWEB_NODE_NANITE_HARMONIC "nanite_harmonic"
-#define TECHWEB_NODE_NANITE_MILITARY "nanite_military"
-#define TECHWEB_NODE_NANITE_HAZARD "nanite_hazard"
-#define TECHWEB_NODE_NANITE_REPLICATION "nanite_replication_protocols"
-#define TECHWEB_NODE_NANITE_STORAGE "nanite_storage_protocols"
-
 /datum/techweb_node/nanite_base
 	id = TECHWEB_NODE_NANITE_BASE
-	starting_node = TRUE
 	display_name = "Basic Nanite Programming"
 	description = "The basics of nanite construction and programming."
+	prereq_ids = list("datatheory")
 	design_ids = list(
 		"nanite_disk",
 		"nanite_remote",
@@ -42,7 +29,7 @@
 	id = TECHWEB_NODE_NANITE_SMART
 	display_name = "Smart Nanite Programming"
 	description = "Nanite programs that require nanites to perform complex actions, act independently, roam or seek targets."
-	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, TECHWEB_NODE_ROBOTICS)
+	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, "robotics")
 	design_ids = list(
 		"purging_nanites",
 		"metabolic_nanites",
@@ -53,14 +40,14 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS,
 	)
 
 /datum/techweb_node/nanite_mesh
 	id = TECHWEB_NODE_NANITE_MESH
 	display_name = "Mesh Nanite Programming"
 	description = "Nanite programs that require static structures and membranes."
-	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, TECHWEB_NODE_PARTS_ADV)
+	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, "engineering")
 	design_ids = list(
 		"hardening_nanites",
 		"dermal_button_nanites",
@@ -73,14 +60,14 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS,
 	)
 
 /datum/techweb_node/nanite_bio
 	id = TECHWEB_NODE_NANITE_BIO
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
-	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, TECHWEB_NODE_MEDBAY_EQUIP)
+	prereq_ids = list(TECHWEB_NODE_NANITE_BASE, "biotech")
 	design_ids = list(
 		"regenerative_nanites",
 		"bloodheal_nanites",
@@ -95,7 +82,7 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_1_POINTS,
 	)
 
 /datum/techweb_node/nanite_neural
@@ -114,14 +101,14 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_2_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_2_POINTS,
 	)
 
 /datum/techweb_node/nanite_synaptic
 	id = TECHWEB_NODE_NANITE_SYNAPTIC
 	display_name = "Synaptic Nanite Programming"
 	description = "Nanite programs affecting mind and thoughts."
-	prereq_ids = list(TECHWEB_NODE_NANITE_NEURAL, TECHWEB_NODE_PASSIVE_IMPLANTS)
+	prereq_ids = list(TECHWEB_NODE_NANITE_NEURAL, "neural_programming")
 	design_ids = list(
 		"mindshield_nanites",
 		"pacifying_nanites",
@@ -132,7 +119,7 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_2_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_2_POINTS,
 	)
 
 /datum/techweb_node/nanite_harmonic
@@ -151,14 +138,14 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_4_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_4_POINTS,
 	)
 
 /datum/techweb_node/nanite_combat
 	id = TECHWEB_NODE_NANITE_MILITARY
 	display_name = "Military Nanite Programming"
 	description = "Nanite programs that perform military-grade functions."
-	prereq_ids = list(TECHWEB_NODE_NANITE_HARMONIC, TECHWEB_NODE_SYNDICATE_BASIC)
+	prereq_ids = list(TECHWEB_NODE_NANITE_HARMONIC, "syndicate_basic")
 	design_ids = list(
 		"explosive_nanites",
 		"pyro_nanites",
@@ -168,14 +155,14 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS,
 	)
 
 /datum/techweb_node/nanite_hazard
 	id = TECHWEB_NODE_NANITE_HAZARD
 	display_name = "Hazard Nanite Programs"
 	description = "Extremely advanced Nanite programs with the potential of being extremely dangerous."
-	prereq_ids = list(TECHWEB_NODE_NANITE_HARMONIC, TECHWEB_NODE_ALIENTECH)
+	prereq_ids = list(TECHWEB_NODE_NANITE_HARMONIC, "alientech")
 	design_ids = list(
 		"spreading_nanites",
 		"mindcontrol_nanites",
@@ -183,7 +170,7 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_5_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_5_POINTS,
 	)
 
 /datum/techweb_node/nanite_replication_protocols
@@ -199,7 +186,7 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS,
 	)
 	hidden = TRUE
 	experimental = TRUE
@@ -217,7 +204,7 @@
 	)
 	research_costs = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS,
-		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS*NANITE_POINT_CONVERSION_RATE,
+		TECHWEB_POINT_TYPE_NANITES = TECHWEB_TIER_3_POINTS,
 	)
 	hidden = TRUE
 	experimental = TRUE

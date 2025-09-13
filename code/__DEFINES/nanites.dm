@@ -48,3 +48,16 @@
 #define NANITES_CATEGORY_WEAPONIZED "Weaponized Nanites"
 #define NANITES_CATEGORY_PROTOCOLS "Protocols Nanites"
 #define NANITES_CATEGORY_DEFECTIVE "Defective Nanites"
+
+// To be moved to code\__DEFINES\research\techweb_nodes.dm once reesarch node defines are ported.
+#define TECHWEB_NODE_NANITE_BASE "nanite_base"
+#define TECHWEB_NODE_NANITE_SMART "nanite_smart"
+#define TECHWEB_NODE_NANITE_MESH "nanite_mesh"
+#define TECHWEB_NODE_NANITE_BIO "nanite_bio"
+#define TECHWEB_NODE_NANITE_NEURAL "nanite_neural"
+#define TECHWEB_NODE_NANITE_SYNAPTIC "nanite_synaptic"
+#define TECHWEB_NODE_NANITE_HARMONIC "nanite_harmonic"
+#define TECHWEB_NODE_NANITE_MILITARY "nanite_military"
+#define TECHWEB_NODE_NANITE_HAZARD "nanite_hazard"
+#define TECHWEB_NODE_NANITE_REPLICATION "nanite_replication_protocols"
+#define TECHWEB_NODE_NANITE_STORAGE "nanite_storage_protocols"

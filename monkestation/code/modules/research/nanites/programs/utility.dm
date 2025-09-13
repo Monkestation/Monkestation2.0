@@ -147,24 +147,61 @@
 	///List of all access that the Subdermal ID is currently holding onto.
 	var/list/access = list()
 
-//Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
+/datum/nanite_program/access/on_mob_add()
+	. = ..()
+	RegisterSignal(host_mob, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+
+/datum/nanite_program/access/on_mob_remove()
+	UnregisterSignal(host_mob, COMSIG_MOB_TRIED_ACCESS)
+	return ..()
+
+///Hook we use so the nanite program can be used as access.
+/datum/nanite_program/access/proc/on_tried_access(datum/source, atom/movable/locked_thing)
+	SIGNAL_HANDLER
+
+	if(!length(access))
+		return NONE
+
+	if(!isobj(locked_thing))
+		return LOCKED_ATOM_INCOMPATIBLE
+
+	if(locked_thing.check_access_list(access))
+		return ACCESS_ALLOWED
+
+	return NONE
+
+///Sets the nanites' list of saved accesses to the cumulative access they currently have in their hands, ID slots, and grabs,
+///overwriting what they had there previously.
 /datum/nanite_program/access/on_trigger(comm_message)
 	var/list/new_access = list()
 	var/obj/item/current_item
+	//get your hand ID first
 	current_item = host_mob.get_active_held_item()
 	if(current_item)
 		new_access += current_item.GetAccess()
+	//then your other hand
 	current_item = host_mob.get_inactive_held_item()
 	if(current_item)
 		new_access += current_item.GetAccess()
+	//then whatever they have grabbed but not their hand, used for mobs without an access card slot
+	current_item = host_mob.pulling
+	if(current_item)
+		new_access += current_item.GetAccess()
+	//now we'll check for worn IDs
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/human_host = host_mob
 		current_item = human_host.wear_id
 		if(current_item)
 			new_access += current_item.GetAccess()
+	//animals & corgis have their own special access card slot, we'll grab those too
 	else if(isanimal(host_mob))
 		var/mob/living/simple_animal/animal_host = host_mob
 		current_item = animal_host.access_card
+		if(current_item)
+			new_access += current_item.GetAccess()
+	else if(iscorgi(host_mob))
+		var/mob/living/basic/pet/dog/corgi/corgi_host = host_mob
+		current_item = corgi_host.access_card
 		if(current_item)
 			new_access += current_item.GetAccess()
 	access = new_access

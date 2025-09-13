@@ -102,7 +102,7 @@
 
 /datum/nanite_program/protocol/offline
 	name = "Offline Production Protocol"
-	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to replicate more quickly."
+	desc = "Replication Protocol: while the host is asleep or otherwise unconscious, the nanites exploit the reduced interference to replicate more quickly."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION

@@ -29,7 +29,7 @@
 		eject(user)
 	else
 		balloon_alert(user, "disk inserted")
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	disk = weapon
 	program = disk.program
 

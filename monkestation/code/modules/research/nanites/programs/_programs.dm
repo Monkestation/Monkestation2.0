@@ -154,7 +154,7 @@
 
 /datum/nanite_program/proc/on_mob_remove()
 	SHOULD_CALL_PARENT(TRUE)
-	return
+	host_mob = null
 
 /datum/nanite_program/proc/toggle()
 	if(!activated)

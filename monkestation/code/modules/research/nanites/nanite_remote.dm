@@ -54,29 +54,27 @@
 	if(locked)
 		. += "[base_icon_state]_locked"
 
-/obj/item/nanite_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters, comms_message)
+/obj/item/nanite_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	switch(mode)
-		if(REMOTE_MODE_OFF)
-			return
 		if(REMOTE_MODE_SELF)
 			to_chat(user, span_notice("You activate [src], signaling the nanites in your bloodstream."))
 			signal_mob(user, code, key_name(user))
-			return
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_TARGET)
-			if(isliving(target) && (get_dist(target, get_turf(src)) <= 7))
-				to_chat(user, span_notice("You activate [src], signaling the nanites inside [target]."))
-				signal_mob(target, code, key_name(user))
-				return
+			if(isliving(interacting_with) && (get_dist(interacting_with, get_turf(src)) <= 7))
+				to_chat(user, span_notice("You activate [src], signaling the nanites inside [interacting_with]."))
+				signal_mob(interacting_with, code, key_name(user))
+				return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_AOE)
 			to_chat(user, span_notice("You activate [src], signaling the nanites inside every host around you."))
 			for(var/mob/living/L in view(user, 7))
 				signal_mob(L, code, key_name(user))
-			return
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_RELAY)
 			to_chat(user, span_notice("You activate [src], signaling all connected relay nanites."))
 			signal_relay(code, relay_code, key_name(user))
-			return
-	return ..()
+			return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code, source)
 	SEND_SIGNAL(M, COMSIG_NANITE_SIGNAL, code, source)
