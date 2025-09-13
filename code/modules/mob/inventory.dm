@@ -209,6 +209,12 @@
 	if(QDELETED(I))
 		return FALSE
 
+	// try to put it in a borg apparatus
+	if(istype(src, /mob/living/silicon/robot))
+		for(var/obj/item/borg/apparatus/apparatus in src)
+			if(apparatus.put_in_apparatus(I, src))
+				return TRUE
+
 	// If the item is a stack and we're already holding a stack then merge
 	if (isstack(I))
 		var/obj/item/stack/item_stack = I

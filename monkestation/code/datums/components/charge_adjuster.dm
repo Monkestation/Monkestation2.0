@@ -19,19 +19,19 @@
 	return ..()
 
 /datum/component/charge_adjuster/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(check_hit_atom))
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(check_hit_atom))
 
 /datum/component/charge_adjuster/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM)
 
-/datum/component/charge_adjuster/proc/check_hit_atom(obj/item/source, atom/target, mob/user, proximity_flag)
+/datum/component/charge_adjuster/proc/check_hit_atom(obj/item/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	if(!proximity_flag || !istype(target, type_to_charge_to))
+	if(!istype(target, type_to_charge_to))
 		return
 
 	if(!call(target, called_proc_name)(charges_given))
 		return
 
 	to_chat(user, span_notice("You insert \the [source] in \the [target]."))
-	qdel(parent)
+	qdel(source)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

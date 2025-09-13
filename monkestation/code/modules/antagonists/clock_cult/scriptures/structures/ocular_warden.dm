@@ -7,7 +7,7 @@
 	button_icon_state = "Ocular Warden"
 	power_cost = 300
 	invocation_time = 5 SECONDS
-	invocation_text = list("Summon thee to defend our temple")
+	invocation_text = list("We summon thee to defend our temple!")
 	summoned_structure = /obj/structure/destructible/clockwork/gear_base/powered/ocular_warden
 	cogs_required = 3
 	category = SPELLTYPE_STRUCTURES

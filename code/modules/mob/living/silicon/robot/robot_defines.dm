@@ -19,6 +19,8 @@
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
+	///Variable to store a cyborg's model type incase someone uses a transform module on a cyborg with no client.
+	var/pending_model = null
 
 	radio = /obj/item/radio/borg
 
@@ -105,7 +107,7 @@
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
@@ -248,3 +250,7 @@
 /mob/living/silicon/robot/model/syndicate/kiltborg
 	set_model = /obj/item/robot_model/syndicate/kiltborg
 	icon_state = "peace"
+
+/mob/living/silicon/robot/model/centcom
+	set_model = /obj/item/robot_model/centcom
+	icon_state = "centcomborg"

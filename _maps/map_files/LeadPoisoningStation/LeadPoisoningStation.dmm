@@ -2378,7 +2378,7 @@
 /area/station/science/xenobiology)
 "biU" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -2434,7 +2434,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bjZ" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
@@ -7042,7 +7042,7 @@
 /area/station/hallway/floor2/aft)
 "dAl" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -10729,7 +10729,7 @@
 /area/station/medical/pharmacy)
 "fjN" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -11597,9 +11597,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "fJm" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -17530,7 +17528,7 @@
 /turf/closed/wall,
 /area/station/hallway/primary/central/aft)
 "itQ" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
@@ -20707,7 +20705,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -23319,7 +23317,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "ljb" = (
@@ -25617,7 +25615,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
 "mkR" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -28795,7 +28793,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "nIb" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -28877,7 +28875,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "nJW" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -30681,7 +30679,7 @@
 	name = "Warehouse Door Control";
 	req_access = list("cargo")
 	},
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "oJv" = (
@@ -36728,7 +36726,7 @@
 /area/station/science/xenobiology)
 "rEx" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
@@ -38213,7 +38211,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
 "slR" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -42936,7 +42934,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
 "uwR" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -43934,7 +43932,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uYm" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -47473,7 +47471,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
 "wHc" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/starboard/greater)
 "wHf" = (
@@ -48904,9 +48902,7 @@
 /turf/open/floor/grass,
 /area/station/medical/medbay/lobby)
 "xrt" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,

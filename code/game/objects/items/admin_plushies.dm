@@ -564,3 +564,26 @@
 	name = "McSteal Plush"
 	item_path = /obj/item/toy/plush/admin/mcsteal
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/birdion
+	name = "birdion aziz"
+	desc = "It's Birdion! You feel the urge to beat the shit out of her."
+	icon_state = "birdion"
+	pet_message = "You beat the shit out of birdion. You feel better."
+	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	gender = FEMALE
+
+/obj/item/toy/plush/admin/birdion/AltClick(mob/user)
+	if(icon_state == "birdion")
+		icon_state = "birdion-mask"
+	else
+		icon_state = "birdion"
+
+/datum/loadout_item/plushies/birdion
+	name = "Birdion Plush"
+	item_path = /obj/item/toy/plush/admin/birdion
+
+/datum/store_item/plushies/birdion
+	name = "Birdion Plush"
+	item_path = /obj/item/toy/plush/admin/birdion
+	item_cost = 7500

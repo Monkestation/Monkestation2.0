@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 25
+	damage = 22
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -30,7 +30,7 @@
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
-	damage = 30
+	damage = 25
 	range = 30
 	tracer_type = /obj/effect/projectile/tracer/laser/rifle
 	impact_type = /obj/effect/projectile/impact/laser/rifle
@@ -61,13 +61,13 @@
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 10
+	damage = 9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
-	damage = 30
+	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
