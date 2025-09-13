@@ -297,8 +297,8 @@
 
 /datum/armor/cloak_godslayer
 	melee = 70
-	bullet = 50
-	laser = 30
+	bullet = 25
+	laser = 25
 	energy = 40
 	bomb = 50
 	bio = 50
