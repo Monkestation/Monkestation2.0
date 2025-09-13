@@ -26803,14 +26803,6 @@
 "hWY" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 14
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -8;
-	pixel_y = 5
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = -7;
 	pixel_y = 19
@@ -45912,7 +45904,6 @@
 /area/space)
 "nsV" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "nsY" = (
@@ -58226,7 +58217,6 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -66953,6 +66943,7 @@
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 12
 	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/multitool{
 	pixel_x = -4;
 	pixel_y = 2
@@ -70518,7 +70509,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/nanite_program_hub,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "uOw" = (
