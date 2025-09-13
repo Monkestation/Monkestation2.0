@@ -131,8 +131,8 @@
 
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
-	// Boost when returning to equilibrium
-	if(!ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
+	// Boost when returning to equilibrium (if we're not cold-blooded)
+	if(!HAS_TRAIT(src, TRAIT_COLD_BLOODED) && !ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
 		temp_change *= 2
 
 	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
