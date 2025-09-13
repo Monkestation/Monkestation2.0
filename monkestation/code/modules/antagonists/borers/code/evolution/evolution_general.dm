@@ -54,6 +54,8 @@
 		/datum/reagent/medicine/liquid_solder,
 		/datum/reagent/fuel/oil,
 		/datum/reagent/fuel,
+		/datum/reagent/medicine/nanite_slurry,
+		/datum/reagent/medicine/painkiller/robopiates,
 	)
 
 /datum/borer_evolution/synthetic_chems_positive/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
@@ -71,6 +73,7 @@
 		/datum/reagent/thermite,
 		/datum/reagent/pyrosium,
 		/datum/reagent/oxygen,
+		/datum/reagent/medicine/painkiller/robopiates
 	)
 
 /datum/borer_evolution/synthetic_chems_negative/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
