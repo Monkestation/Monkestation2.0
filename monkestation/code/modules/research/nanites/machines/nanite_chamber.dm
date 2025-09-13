@@ -213,7 +213,7 @@
 /obj/machinery/nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/nanite_chamber/mouse_drop_receive(atom/target, mob/user, params)
+/obj/machinery/nanite_chamber/MouseDrop_T(atom/target, mob/user, params)
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !Adjacent(target) || !user.Adjacent(target) || !(can_be_occupant(target)))
 		return
 	if(close_machine(target))

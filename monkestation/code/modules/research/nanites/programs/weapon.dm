@@ -108,12 +108,13 @@
 	if(!iscarbon(host_mob))
 		return
 	var/mob/living/carbon/C = host_mob
-	var/obj/item/organ/heart/heart = C.get_organ_slot(ORGAN_SLOT_HEART)
-	if(heart)
-		if(heart.is_beating())
-			heart.Stop()
-		else
-			heart.Restart()
+	var/obj/item/organ/internal/heart/heart = C.get_organ_slot(ORGAN_SLOT_HEART)
+	if(!heart)
+		return
+	if(heart.beating)
+		heart.Stop()
+	else
+		heart.Restart()
 
 /datum/nanite_program/emp
 	name = "Electromagnetic Resonance"

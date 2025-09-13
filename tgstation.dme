@@ -8445,7 +8445,6 @@
 #include "monkestation\code\modules\research\nanites\nanite_backup.dm"
 #include "monkestation\code\modules\research\nanites\nanite_component.dm"
 #include "monkestation\code\modules\research\nanites\nanite_disease.dm"
-#include "monkestation\code\modules\research\nanites\nanite_hud.dm"
 #include "monkestation\code\modules\research\nanites\nanite_remote.dm"
 #include "monkestation\code\modules\research\nanites\nanite_scanner.dm"
 #include "monkestation\code\modules\research\nanites\nanite_subsystem.dm"

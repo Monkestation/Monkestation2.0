@@ -42,20 +42,28 @@
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
-	desc = "The nanites adjust the host's internal temperature to an ideal level. Does not consume nanites if the host has a nominal temperature."
+	desc = "The nanites adjust the host's internal temperature to an ideal level at a rate of 10 Kelvin per second. Will not consume nanites while the host is at a normal body temperature."
 	use_rate = 3.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (host_mob.get_body_temp_normal(apply_change = FALSE) - 30) && host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change = FALSE) + 30))
+	if(host_mob.bodytemperature > host_mob.bodytemp_heat_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTHEAT))
+			return FALSE
+	else if(host_mob.bodytemperature < host_mob.bodytemp_cold_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTCOLD))
+			return FALSE
+	else
 		return FALSE
 	return ..()
 
-/datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > host_mob.get_body_temp_normal(apply_change=FALSE))
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, host_mob.get_body_temp_normal(apply_change=FALSE))
-	else if(host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, host_mob.get_body_temp_normal(apply_change=FALSE))
+/datum/nanite_program/temperature/enable_passive_effect()
+	. = ..()
+	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 10 KELVIN, TRUE, TRUE)
+
+/datum/nanite_program/temperature/disable_passive_effect()
+	. = ..()
+	host_mob.remove_homeostasis_level(REF(src))
 
 /datum/nanite_program/purging
 	name = "Blood Purification"

@@ -1,13 +1,15 @@
-import { useBackend } from '../backend';
 import {
   Button,
+  Input,
   LabeledList,
+  NoticeBox,
   NumberInput,
   Section,
-  NoticeBox,
-  Input,
   Table,
 } from '../components';
+import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const NaniteRemote = (props) => {
@@ -20,8 +22,27 @@ export const NaniteRemote = (props) => {
   );
 };
 
+type Data = {
+  code: number;
+  locked: BooleanLike;
+  mode: string;
+  program_name: string;
+  relay_code: number;
+  comms: string;
+  message: string;
+  saved_settings: SettingsData[];
+};
+
+type SettingsData = {
+  id: number;
+  name: string;
+  mode: string;
+  relay_code: number;
+  code: number;
+};
+
 export const NaniteRemoteContent = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
     code,
     locked,
@@ -73,7 +94,7 @@ export const NaniteRemoteContent = (props) => {
               width="47px"
               step={1}
               stepPixelSize={2}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_code', {
                   code: value,
                 })
@@ -102,7 +123,7 @@ export const NaniteRemoteContent = (props) => {
                 width="47px"
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_relay_code', {
                     code: value,
                   })

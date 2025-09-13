@@ -1,5 +1,3 @@
-import { map } from 'common/collections';
-import { useBackend, useSharedState } from '../backend';
 import {
   Button,
   Flex,
@@ -8,13 +6,47 @@ import {
   Section,
   Tabs,
 } from '../components';
+import { BooleanLike } from 'common/react';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
-export const NaniteProgramHub = (props) => {
-  const { act, data } = useBackend();
-  const { detail_view, disk, has_disk, has_program, programs = {} } = data;
-  const [selectedCategory, setSelectedCategory] = useSharedState('category');
+type Data = {
+  detail_view: string;
+  disk: DiskData;
+  has_disk: BooleanLike;
+  has_program: BooleanLike;
+  programs: ProgramData[];
+  categories: string[];
+};
+
+type DiskData = {
+  name: string;
+  desc: string;
+};
+
+type ProgramData = {
+  name: string;
+  desc: string;
+  id: string;
+};
+
+export const NaniteProgramHub = (props, context) => {
+  const { act, data } = useBackend<Data>();
+  const {
+    detail_view,
+    disk,
+    has_disk,
+    has_program,
+    programs = [],
+    categories,
+  } = data;
+  const [selectedCategory, setSelectedCategory] = useSharedState(
+    context,
+    'category',
+  );
   const programsInCategory = (programs && programs[selectedCategory]) || [];
+
   return (
     <Window width={500} height={700}>
       <Window.Content scrollable>
@@ -69,25 +101,23 @@ export const NaniteProgramHub = (props) => {
             </>
           }
         >
-          {programs !== null ? (
+          {programs === null ? (
+            <NoticeBox>No nanite programs are currently researched.</NoticeBox>
+          ) : (
             <Flex>
               <Flex.Item minWidth="110px">
                 <Tabs vertical>
-                  {map((cat_contents, category) => {
-                    const progs = cat_contents || [];
-                    // Backend was sending stupid data that would have been
-                    // annoying to fix
-                    const tabLabel = category.substring(0, category.length - 8);
-                    return (
-                      <Tabs.Tab
-                        key={category}
-                        selected={category === selectedCategory}
-                        onClick={() => setSelectedCategory(category)}
-                      >
-                        {tabLabel}
-                      </Tabs.Tab>
-                    );
-                  })(programs)}
+                  {categories.map((category) => (
+                    <Tabs.Tab
+                      key={category}
+                      selected={category === selectedCategory}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                      }}
+                    >
+                      {category.substring(0, category.length - 8)}
+                    </Tabs.Tab>
+                  ))}
                 </Tabs>
               </Flex.Item>
               <Flex.Item grow={1} basis={0}>
@@ -96,7 +126,6 @@ export const NaniteProgramHub = (props) => {
                     <Section
                       key={program.id}
                       title={program.name}
-                      level={2}
                       buttons={
                         <Button
                           icon="download"
@@ -137,8 +166,6 @@ export const NaniteProgramHub = (props) => {
                 )}
               </Flex.Item>
             </Flex>
-          ) : (
-            <NoticeBox>No nanite programs are currently researched.</NoticeBox>
           )}
         </Section>
       </Window.Content>

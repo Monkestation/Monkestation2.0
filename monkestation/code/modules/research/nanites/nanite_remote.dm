@@ -28,7 +28,7 @@
 	if(locked)
 		. += span_notice("Alt-click to unlock.")
 
-/obj/item/nanite_remote/click_alt(mob/user)
+/obj/item/nanite_remote/AltClick(mob/user)
 	if(!user.can_perform_action(src))
 		return
 	if(allowed(user))
