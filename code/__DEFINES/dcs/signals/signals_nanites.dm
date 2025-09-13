@@ -1,9 +1,7 @@
-///() returns TRUE if nanites have stealth
+///(datum/source) returns TRUE if nanites have stealth
 #define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"
-///() deletes the nanite component
+///(mob/source) deletes the nanite component
 #define COMSIG_NANITE_DELETE "nanite_delete"
-///() makes the input list a copy the nanites' program list
-#define COMSIG_NANITE_GET_PROGRAMS "nanite_get_programs"
 ///(amount) Returns nanite amount
 #define COMSIG_NANITE_GET_VOLUME "nanite_get_volume"
 ///(amount) Sets current nanite volume to the given amount

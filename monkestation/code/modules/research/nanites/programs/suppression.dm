@@ -122,7 +122,7 @@
 		return
 	if(signal_comm_code == comm_code)
 		host_mob.investigate_log("'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.", INVESTIGATE_NANITES)
-		trigger(comm_message)
+		trigger(FALSE, comm_message)
 
 /datum/nanite_program/comm/speech
 	name = "Forced Speech"
@@ -134,6 +134,7 @@
 	var/static/list/blacklist = list(
 		"*surrender",
 		"*collapse",
+		"*faint",
 	)
 
 /datum/nanite_program/comm/speech/register_extra_settings()
@@ -171,7 +172,64 @@
 		sent_message = message_setting.get_value()
 	if(host_mob.stat == DEAD)
 		return
-	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>[sent_message]</span>\"")
+	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+
+/datum/nanite_program/comm/hallucination
+	name = "Hallucination"
+	desc = "The nanites make the host hallucinate something when triggered."
+	trigger_cost = 4
+	trigger_cooldown = 80
+	unique = FALSE
+	rogue_types = list(/datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/comm/hallucination/register_extra_settings()
+	. = ..()
+	var/list/options = list(
+		"Random"
+	)
+	extra_settings[NES_HALLUCINATION_TYPE] = new /datum/nanite_extra_setting/type("Message", options)
+	extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/text("")
+
+/datum/nanite_program/comm/hallucination/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/hal_setting = extra_settings[NES_HALLUCINATION_TYPE]
+	var/hal_type = hal_setting.get_value()
+	var/datum/nanite_extra_setting/hal_detail_setting = extra_settings[NES_HALLUCINATION_DETAIL]
+	var/hal_details = hal_detail_setting.get_value()
+	if(comm_message && (hal_type != "Message")) //Triggered via comm remote, but not set to a message hallucination
+		return
+	var/sent_message = comm_message //Comm remotes can send custom hallucination messages for the chat hallucination
+	if(!sent_message)
+		sent_message = hal_details
+
+	if(!iscarbon(host_mob))
+		return
+	var/mob/living/carbon/C = host_mob
+	if(hal_details == "random")
+		hal_details = null
+	if(hal_type == "Random")
+		C.adjust_hallucinations(1.5 SECONDS)
+
+/datum/nanite_program/comm/hallucination/set_extra_setting(setting, value)
+	. = ..()
+	if(setting != NES_HALLUCINATION_TYPE)
+		return
+	switch(value)
+		if("Message")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/text("")
+		if("Battle")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb"))
+		if("Sound")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack"))
+		if("Weird Sound")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla"))
+		if("Station Message")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter"))
+		if("Health")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","critical","dead","healthy"))
+		if("Alert")
+			extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure"))
+		else
+			extra_settings.Remove(NES_HALLUCINATION_DETAIL)
 
 /datum/nanite_program/good_mood
 	name = "Happiness Enhancer"

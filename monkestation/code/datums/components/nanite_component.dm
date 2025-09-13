@@ -75,7 +75,6 @@
 	RegisterSignal(parent, COMSIG_NANITE_IS_STEALTHY, PROC_REF(check_stealth))
 	RegisterSignal(parent, COMSIG_NANITE_DELETE, PROC_REF(delete_nanites))
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, PROC_REF(nanite_ui_data))
-	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, PROC_REF(get_programs))
 	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, PROC_REF(set_volume))
 	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, PROC_REF(adjust_nanites))
 	RegisterSignal(parent, COMSIG_NANITE_SET_MAX_VOLUME, PROC_REF(set_max_volume))
@@ -101,7 +100,6 @@
 		COMSIG_NANITE_IS_STEALTHY,
 		COMSIG_NANITE_DELETE,
 		COMSIG_NANITE_UI_DATA,
-		COMSIG_NANITE_GET_PROGRAMS,
 		COMSIG_NANITE_SET_VOLUME,
 		COMSIG_NANITE_ADJUST_VOLUME,
 		COMSIG_NANITE_SET_MAX_VOLUME,
@@ -149,7 +147,7 @@
 			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
 
-/datum/component/nanites/proc/delete_nanites()
+/datum/component/nanites/proc/delete_nanites(mob/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
@@ -329,11 +327,6 @@
 	nanite_data["regen_rate"] = regen_rate
 	nanite_data["safety_threshold"] = safety_threshold
 	nanite_data["stealth"] = stealth
-
-/datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
-	SIGNAL_HANDLER
-
-	nanite_programs |= programs
 
 ///Adds nanite research points to the linked techweb based on the host's status.
 /datum/component/nanites/proc/add_research()
