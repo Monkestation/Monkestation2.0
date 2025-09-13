@@ -1,10 +1,8 @@
-///() returns TRUE if nanites are found
-#define COMSIG_HAS_NANITES "has_nanites"
 ///() returns TRUE if nanites have stealth
 #define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"
 ///() deletes the nanite component
 #define COMSIG_NANITE_DELETE "nanite_delete"
-///(list/nanite_programs) - makes the input list a copy the nanites' program list
+///() makes the input list a copy the nanites' program list
 #define COMSIG_NANITE_GET_PROGRAMS "nanite_get_programs"
 ///(amount) Returns nanite amount
 #define COMSIG_NANITE_GET_VOLUME "nanite_get_volume"
@@ -16,8 +14,6 @@
 #define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"
 ///(amount(0-100)) Sets cloud ID to the given amount
 #define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"
-///(method) Modify cloud sync status. Method can be toggle, enable or disable
-#define COMSIG_NANITE_SET_CLOUD_SYNC "nanite_set_cloud_sync"
 ///(amount) Sets safety threshold to the given amount
 #define COMSIG_NANITE_SET_SAFETY "nanite_set_safety"
 ///(amount) Sets regeneration rate to the given amount
