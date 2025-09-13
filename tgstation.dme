@@ -8422,8 +8422,6 @@
 #include "monkestation\code\modules\research\nanites\nanite_chamber_computer.dm"
 #include "monkestation\code\modules\research\nanites\nanite_cloud_controller.dm"
 #include "monkestation\code\modules\research\nanites\nanite_injector.dm"
-#include "monkestation\code\modules\research\nanites\nanite_program_hub.dm"
-#include "monkestation\code\modules\research\nanites\nanite_programmer.dm"
 #include "monkestation\code\modules\research\nanites\nanite_programs.dm"
 #include "monkestation\code\modules\research\nanites\nanite_remote.dm"
 #include "monkestation\code\modules\research\nanites\program_disk.dm"
