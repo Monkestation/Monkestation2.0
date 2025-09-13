@@ -94,7 +94,7 @@
 	if(blood_shield)
 		var/shield = blood_shield?.resolve()
 		owner.visible_message(
-			span_warning("[owner]\'s [blood_shield] loses its form and disappears into [owner.p_their()] hands!"),
+			span_warning("[owner]\'s [shield] loses its form and disappears into [owner.p_their()] hands!"),
 			span_warning("We unform our Blood shield!"),
 			span_hear("You hear liquids sloshing around."),
 		)
@@ -199,13 +199,11 @@
 	// autotarget if we aim at a turf
 	if(isturf(target))
 		var/list/targets = list()
-		for(var/mob/living/possible_target as anything in orange(1, target))
-			if(!ismob(possible_target))
+		for(var/mob/living/possible_target in range(1, target) - user)
+			if(possible_target.stat == DEAD)
 				continue
-			if(possible_target == user)
-				continue
-			var/datum/antagonist/vassal/vassals = IS_VASSAL(possible_target)
-			if(length(bloodsuckerdatum_power?.vassals) && vassals && (vassals in bloodsuckerdatum_power?.vassals))
+			var/datum/antagonist/vassal/vassal = IS_VASSAL(possible_target)
+			if(vassal && (vassal in bloodsuckerdatum_power?.vassals))
 				continue
 			targets += possible_target
 		if(length(targets))
@@ -238,28 +236,24 @@
 	var/datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/bloodsucker_power = power_ref?.resolve()
 	if(!bloodsucker_power)
 		return ..()
-	if(istype(target, /obj/structure/closet) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/structure/closet/hit_closet = target
-		if(hit_closet)
+	if(bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/hit_closet = target
 			hit_closet.welded = FALSE
 			hit_closet.locked = FALSE
 			hit_closet.broken = TRUE
 			hit_closet.update_appearance()
-			return ..()
-	if(istype(target, /obj/machinery/door) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/machinery/door/hit_airlock = target
-		hit_airlock.open(BYPASS_DOOR_CHECKS)
-		qdel(src)
-		return ..()
-	if(ismob(target))
-		if(bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
-			var/mob/living/person_hit = target
-			person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
-			var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
-			if(bloodsucker)
-				bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
-		return ..()
-	. = ..()
+		else if(istype(target, /obj/machinery/door))
+			var/obj/machinery/door/hit_airlock = target
+			hit_airlock.open(BYPASS_DOOR_CHECKS)
+			qdel(src)
+	if(isliving(target) && bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
+		var/mob/living/person_hit = target
+		person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
+		var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
+		if(bloodsucker)
+			bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
+	return ..()
 
 /**
  *	# Blood Shield

@@ -8,17 +8,17 @@
 	name = "Sleepless Dreamer"
 	desc = "The patient, after undergoing untold psychological hardship, believes they can travel between the dreamscapes of this dimension."
 	scan_desc = "awoken sleeper"
-	gain_text = "<span class='notice'>Your mind snaps, and you wake up. You <i>really</i> wake up."
-	lose_text = "<span class='warning'>You succumb once more to the sleepless dream of the unwoken."
+	gain_text = span_notice("Your mind snaps, and you wake up. You <i>really</i> wake up.")
+	lose_text = span_warning("You succumb once more to the sleepless dream of the unwoken.")
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 	///Created tears, only checking the FIRST one, not the one it's created to link to.
 	var/list/created_firsts = list()
 
 ///When the trauma is removed from a mob.
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_lose(silent)
-	for(var/obj/effect/client_image_holder/phobetor/phobetor_tears as anything in created_firsts)
-		qdel(phobetor_tears)
-	..()
+	QDEL_LIST(created_firsts)
+	return ..()
 
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_life(seconds_per_tick, times_fired)
 	if(!COOLDOWN_FINISHED(src, portal_cooldown))
@@ -137,14 +137,14 @@
 		return FALSE
 	if(!isturf(target_turf))
 		return FALSE
-	if(!target_turf.lighting_object || !target_turf.get_lumcount() >= 0.1)
+	if(GET_SIMPLE_LUMCOUNT(target_turf) <= SHADOW_SPECIES_DIM_LIGHT)
 		return FALSE
 	for(var/mob/living/nearby_viewers in viewers(target_turf))
 		if(nearby_viewers == subject)
 			continue
 		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client || nearby_viewers.client?.is_afk())
 			continue
-		if(IS_BLOODSUCKER(nearby_viewers) || IS_VASSAL(nearby_viewers) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
+		if(HAS_MIND_TRAIT(nearby_viewers, TRAIT_BLOODSUCKER_ALIGNED) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
 		if(nearby_viewers.has_unlimited_silicon_privilege || nearby_viewers.is_blind())
 			continue
@@ -154,13 +154,13 @@
 /obj/effect/client_image_holder/phobetor/attack_hand(mob/living/user, list/modifiers)
 	if(user != seer || !linked_to)
 		return
-	if(user.loc != src.loc)
+	if(user.loc != loc)
 		to_chat(user, "Step into the Tear before using it.")
 		return
-	for(var/obj/item/implant/tracking/imp in user.implants)
-		if(imp)
-			to_chat(user, span_warning("[imp] gives you the sense that you're being watched."))
-			return
+	var/obj/item/implant/tracking/tracking_implant = locate() in user.implants
+	if(tracking_implant)
+		to_chat(user, span_warning("[tracking_implant] gives you the sense that you're being watched."))
+		return
 	// Is this, or linked, stream being watched?
 	if(check_location_seen(user, get_turf(user)))
 		to_chat(user, span_warning("Not while you're being watched."))

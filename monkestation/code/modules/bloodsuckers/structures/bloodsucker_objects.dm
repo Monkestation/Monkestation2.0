@@ -292,6 +292,8 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 /obj/item/book/kindred/ui_static_data(mob/user)
 	var/list/clans = list()
 	for(var/datum/bloodsucker_clan/clan_type as anything in subtypesof(/datum/bloodsucker_clan))
+		if(!clan_type::display_in_archive)
+			continue
 		clans += list(list(
 			"name" = clan_type::name,
 			"desc" = clan_type::description,
