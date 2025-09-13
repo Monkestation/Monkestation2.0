@@ -1,7 +1,7 @@
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
-	desc = "The nanites boost the host's natural regeneration, healing 0.5 brute and 0.5 burn damage per second. \
-		Will not consume nanites while the host is unharmed, and works better in low-pressure environments."
+	desc = "The nanites boost the host's natural regeneration, healing 0.3 brute and 0.3 burn damage per second. \
+		Will not consume nanites while the host is unharmed. Grants 0.2 extra healing while in low pressure environments such as Lavaland."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -25,8 +25,9 @@
 
 /datum/nanite_program/regenerative_advanced
 	name = "Bio-Reconstruction"
-	desc = "The nanites manually repair and replace organic cells, healing 2 brute damage and 2 burn damage per second. \
-			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
+	desc = "The nanites manually repair and replace organic cells, healing 1.2 brute damage and 1.2 burn damage per second. \
+			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect. \
+			Grants 0.3 extra healing while in low pressure environments such as Lavaland."
 	use_rate = 5.5
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
