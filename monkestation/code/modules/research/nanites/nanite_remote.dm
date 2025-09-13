@@ -19,7 +19,8 @@
 	var/code = 0
 	var/relay_code = 0
 	var/current_program_name = "Program"
-	var/silicon = FALSE		//Affects whether you can lock it, and use local mode.
+	/// Affects whether you can lock it, and use local mode.
+	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()

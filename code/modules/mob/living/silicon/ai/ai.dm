@@ -119,9 +119,12 @@
 
 	var/jobtitles = TRUE
 
-	var/datum/nanite_remote_settings/nanite_settings = new			//Stores the settings for the AI's nanite remote.
-	var/datum/action/innate/internal_nanite_menu/nanite_menu		//This action opens menu to modify the settings.
-	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote	//This action actually uses the remote.
+	///Stores the settings for the AI's nanite remote.
+	var/datum/nanite_remote_settings/nanite_settings = new
+	///This action opens menu to modify the settings.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	///This action actually uses the remote.
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
 
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)

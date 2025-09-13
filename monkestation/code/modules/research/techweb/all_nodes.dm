@@ -96,7 +96,7 @@
 		"brainheal_nanites",
 		"good_mood_nanites",
 		"nervous_nanites",
-		"paralyzing_nanites",
+		"slowing_nanites",
 		"selfscan_nanites",
 		"word_filter_nanites",
 	)

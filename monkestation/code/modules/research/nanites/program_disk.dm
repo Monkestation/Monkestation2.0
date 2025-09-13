@@ -102,8 +102,8 @@
 /obj/item/disk/nanite_program/sleepy
 	program_type = /datum/nanite_program/sleepy
 
-/obj/item/disk/nanite_program/paralyzing
-	program_type = /datum/nanite_program/paralyzing
+/obj/item/disk/nanite_program/slowing
+	program_type = /datum/nanite_program/slow
 
 /obj/item/disk/nanite_program/fake_death
 	program_type = /datum/nanite_program/fake_death

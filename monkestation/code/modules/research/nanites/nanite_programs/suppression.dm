@@ -13,19 +13,16 @@
 	host_mob.adjust_drowsiness(1 SECONDS)
 	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living, Sleeping), 200), rand(60,200))
 
-/datum/nanite_program/paralyzing
+/datum/nanite_program/slow
 	name = "Muscle Impairment"
 	desc = "The nanites force muscle contraction, slowing the host down."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
-//	/datum/nanite_program/paralyzing/active_effect()
-//		host_mob.Stun(40)
-
 /datum/movespeed_modifier/nanite_paralyze
 	multiplicative_slowdown = 1				//Might need to balance how much this is?
 
-/datum/nanite_program/paralyzing/enable_passive_effect()
+/datum/nanite_program/slow/enable_passive_effect()
 	. = ..()
 	to_chat(host_mob, span_warning("Your muscles seize! Moving becomes hard!"))
 	host_mob.add_movespeed_modifier(/datum/movespeed_modifier/nanite_paralyze)
@@ -33,7 +30,7 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 1.25
 
-/datum/nanite_program/paralyzing/disable_passive_effect()
+/datum/nanite_program/slow/disable_passive_effect()
 	. = ..()
 	to_chat(host_mob, span_notice("Your muscles relax, and you can move easily again."))
 	host_mob.remove_movespeed_modifier(/datum/movespeed_modifier/nanite_paralyze)

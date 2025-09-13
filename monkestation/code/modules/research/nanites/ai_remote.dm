@@ -22,12 +22,18 @@
 	remote_settings.ui_interact(owner)
 
 /datum/nanite_remote_settings
-	var/mode = REMOTE_MODE_OFF					//Which mode the remote is on, is it on targeted mode? is it on AOE mode?
-	var/list/saved_settings = list()			//Stores lists of settings.
-	var/last_id = 0								//Believe this is for which point in list to save to.
-	var/code = 0								//Which code is being targeted.
-	var/relay_code = 0							//Which	relay is being targeted.
-	var/current_program_name = "Program"		//name of the program you're on.
+	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
+	var/mode = REMOTE_MODE_OFF
+	/// Stores lists of settings.
+	var/list/saved_settings = list()
+	/// Believe this is for which point in list to save to.
+	var/last_id = 0
+	/// Which code is being targeted.
+	var/code = 0
+	/// Which relay is being targeted.
+	var/relay_code = 0
+	/// name of the program when you save it.
+	var/current_program_name = "Program"
 
 /datum/nanite_remote_settings/ui_state(mob/user)
 	return GLOB.always_state

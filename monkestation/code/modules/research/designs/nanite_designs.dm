@@ -407,11 +407,11 @@
 	program_type = /datum/nanite_program/sleepy
 	category = list("Suppression Nanites")
 
-/datum/design/nanites/paralyzing
-	name = "Paralysis"
-	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
-	id = "paralyzing_nanites"
-	program_type = /datum/nanite_program/paralyzing
+/datum/design/nanites/slow
+	name = "Muscle Impairment"
+	desc = "The nanites force muscle contraction, slowing the host down."
+	id = "slowing_nanites"
+	program_type = /datum/nanite_program/slow
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/fake_death
