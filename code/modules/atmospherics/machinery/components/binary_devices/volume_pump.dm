@@ -127,7 +127,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

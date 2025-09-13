@@ -51,7 +51,18 @@
 	//Camera action button to move down a Z level
 	if(move_down_action)
 		actions += new move_down_action(src)
-	camnet = GLOB.cameranet //the default cameranet
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	unset_machine()
+	QDEL_NULL(eyeobj)
+	QDEL_LIST(actions)
+	current_user = null
+	return ..()
+
+/obj/machinery/computer/camera_advanced/process()
+	if(!can_use(current_user) || (issilicon(current_user) && !HAS_SILICON_ACCESS(current_user)))
+		unset_machine()
+		return PROCESS_KILL
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
@@ -99,19 +110,13 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
+	if(!can_use(user) || (issilicon(user) && !HAS_SILICON_ACCESS(user)))
 		user.unset_machine()
 
-/obj/machinery/computer/camera_advanced/Destroy()
-	if(eyeobj)
-		QDEL_NULL(eyeobj)
-	QDEL_LIST(actions)
-	current_user = null
-	return ..()
-
-/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
-	if(M == current_user)
-		remove_eye_control(M)
+/obj/machinery/computer/camera_advanced/proc/unset_machine()
+	if(!QDELETED(current_user))
+		remove_eye_control(current_user)
+	end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)

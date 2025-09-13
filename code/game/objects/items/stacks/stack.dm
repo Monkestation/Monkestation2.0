@@ -298,8 +298,9 @@
 	return data
 
 /obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
-		return FALSE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("make")

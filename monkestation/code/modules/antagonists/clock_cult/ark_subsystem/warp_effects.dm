@@ -122,7 +122,7 @@
 				basic_bot.bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN | ~BOT_MAINTS_PANEL_OPEN
 			else if(isbot(selected_atom))
 				var/mob/living/simple_animal/bot/simple_bot = selected_atom
-				simple_bot.bot_cover_flags &= BOT_COVER_OPEN | ~BOT_COVER_LOCKED
+				simple_bot.bot_cover_flags &= BOT_COVER_MAINTS_OPEN | ~BOT_COVER_LOCKED
 			selected_atom.emag_act()
 
 /datum/controller/subsystem/processing/the_ark/proc/crystal_warp_space()
