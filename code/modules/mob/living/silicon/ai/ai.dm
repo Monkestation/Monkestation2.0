@@ -121,7 +121,7 @@
 
 	///This action opens menu to modify the settings.
 	var/datum/action/innate/internal_nanite_menu/nanite_menu
-	///This action actually uses the remote.
+	///This action actually uses the remote. Is hidden from player and is triggered by nanite_menu's UI.
 	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
 
 
@@ -243,6 +243,7 @@
 /mob/living/silicon/ai/Destroy()
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
+	nanite_remote.owner_AI = null
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
