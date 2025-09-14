@@ -14747,11 +14747,6 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "dBE" = (
-/obj/machinery/button/door/directional/east{
-	id = "armory";
-	name = "Armory Shutters";
-	req_access = list("armory")
-	},
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
@@ -56273,10 +56268,10 @@
 /turf/closed/wall,
 /area/station/maintenance/starboard/central)
 "qxT" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
+/obj/machinery/computer/armory,
 /turf/open/floor/iron,
 /area/station/security/office)
 "qxU" = (
