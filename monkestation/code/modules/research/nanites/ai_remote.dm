@@ -28,7 +28,6 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//Seems good enough?
 	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites. Click the button again or close the remote to disconnect from the cloud.")
 	disable_text = span_notice("You disconnect from the nanite cloud.")
-	var/datum/nanite_remote_settings/remote_settings
 	owner_has_control = FALSE	//We use the remote UI to activate.
 
 	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
