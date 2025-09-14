@@ -341,6 +341,21 @@
 				requisition_paper.add_raw_text(requisition_text)
 				requisition_paper.update_appearance()
 
+
+			if(SSshuttle.supply.getDockedId() == docking_home)
+				SSshuttle.supply.export_categories = get_export_categories()
+				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
+				say("The supply shuttle is departing.")
+				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+			else
+				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
+
+			. = TRUE
+
+//not interested in using it in oshan, if else someone wants to use it go ahead
+/*
 			if(!length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 				if(SSshuttle.supply.getDockedId() == docking_home)
 					SSshuttle.supply.export_categories = get_export_categories()
@@ -418,8 +433,7 @@
 						SSeconomy.mail_crate = null
 
 				currently_sending = FALSE
-
-			. = TRUE
+*/
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
 				return
