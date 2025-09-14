@@ -128,7 +128,7 @@
 			. = TRUE
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/ui_close()
-	unset_ranged_ability()
+	unset_ranged_ability(owner_AI)
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/do_ability(mob/living/silicon/ai/user, atom/clicked_on)
 	if(user.incapacitated() || user.control_disabled)
