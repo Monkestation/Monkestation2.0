@@ -1,5 +1,5 @@
 /obj/machinery/computer/nanite_cloud_controller
-	name = "nanite cloud controller"
+	name = "nanite programmer"
 	desc = "Stores and controls nanite cloud backups."
 	icon = 'monkestation/icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
