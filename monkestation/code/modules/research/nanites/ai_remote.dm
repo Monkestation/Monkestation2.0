@@ -7,8 +7,8 @@
 /datum/action/innate/internal_nanite_menu
 	name = "Open Nanite Remote Menu"
 	desc = "Configures your nanite remote"
-	button_icon = 'monkestation/icons/obj/machines/research.dmi'
-	button_icon_state = "nanite_programmer"
+	button_icon = 'monkestation/icons/obj/device.dmi'
+	button_icon_state = "nanite_remote"
 	var/datum/action/innate/ai/ranged/internal_nanite_remote/remote_settings
 
 /datum/action/innate/internal_nanite_menu/New(nanite_menu)
@@ -20,6 +20,29 @@
 
 /datum/action/innate/internal_nanite_menu/Activate()
 	remote_settings.ui_interact(owner)
+
+/datum/action/innate/ai/ranged/internal_nanite_remote
+	name = "Nanite Remote"
+	desc = "Remotely trigger nanite signals in nanite hosting crew."
+
+	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//Seems good enough?
+	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites. Click the button again or close the remote to disconnect from the cloud.")
+	disable_text = span_notice("You disconnect from the nanite cloud.")
+	var/datum/nanite_remote_settings/remote_settings
+	owner_has_control = FALSE	//We use the remote UI to activate.
+
+	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
+	var/mode = REMOTE_MODE_OFF
+	/// Stores lists of settings.
+	var/list/saved_settings = list()
+	/// Believe this is for which point in list to save to.
+	var/last_id = 0
+	/// Which code is being targeted.
+	var/code = 0
+	/// Which relay is being targeted.
+	var/relay_code = 0
+	/// name of the program when you save it.
+	var/current_program_name = "Program"
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/ui_state(mob/user)
 	return GLOB.always_state
@@ -102,32 +125,7 @@
 			. = TRUE
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/ui_close()
-	unset_ranged_ability(owner_AI)
-
-/datum/action/innate/ai/ranged/internal_nanite_remote
-	name = "Nanite Remote"
-	desc = "Remotely trigger nanite signals in nanite hosting crew."
-	button_icon = 'monkestation/icons/obj/device.dmi'
-	button_icon_state = "nanite_remote"
-
-	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//Seems good enough?
-	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites. Click the ability again to disconnect from the cloud.")
-	disable_text = span_notice("You disconnect from the nanite cloud.")
-	var/datum/nanite_remote_settings/remote_settings
-	owner_has_control = FALSE	//We use the remote UI to activate.
-
-	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
-	var/mode = REMOTE_MODE_OFF
-	/// Stores lists of settings.
-	var/list/saved_settings = list()
-	/// Believe this is for which point in list to save to.
-	var/last_id = 0
-	/// Which code is being targeted.
-	var/code = 0
-	/// Which relay is being targeted.
-	var/relay_code = 0
-	/// name of the program when you save it.
-	var/current_program_name = "Program"
+	unset_ranged_ability()
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/do_ability(mob/living/silicon/ai/user, atom/clicked_on)
 	if(user.incapacitated() || user.control_disabled)
@@ -146,7 +144,7 @@
 			for(var/mob/living/L in view(clicked_on, 7))
 				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, code, src)
 		if(REMOTE_MODE_RELAY)
-			unset_ranged_ability(user, span_notice("You activate the relay, signaling all connected relay nanites."))
+			to_chat(user, span_notice("You activate the relay, signaling all connected relay nanites."))
 			for(var/X in SSnanites.nanite_relays)
 				var/datum/nanite_program/relay/N = X
 				N.relay_signal(code, relay_code, src)
