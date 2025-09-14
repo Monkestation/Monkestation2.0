@@ -73621,8 +73621,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/armory{
-	dir = 4;
-	linked_ID = "secarmory"
+	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/lockers)
