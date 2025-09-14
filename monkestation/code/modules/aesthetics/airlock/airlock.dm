@@ -267,6 +267,7 @@
 /obj/machinery/door/airlock
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/public.dmi'
 	overlays_file = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/overlays.dmi'
+	note_overlay_file = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/overlays.dmi'
 
 /obj/machinery/door/airlock/command
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/command.dmi'
