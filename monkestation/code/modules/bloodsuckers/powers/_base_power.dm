@@ -212,7 +212,7 @@
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = get_blood_cost(cost_override)
+	var/bloodcost = get_blood_cost(cost_override = cost_override)
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
