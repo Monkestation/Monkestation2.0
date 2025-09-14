@@ -119,8 +119,6 @@
 
 	var/jobtitles = TRUE
 
-	///Stores the settings for the AI's nanite remote.
-	var/datum/nanite_remote_settings/nanite_settings = new
 	///This action opens menu to modify the settings.
 	var/datum/action/innate/internal_nanite_menu/nanite_menu
 	///This action actually uses the remote.
@@ -190,8 +188,8 @@
 
 	deploy_action.Grant(src)
 
-	nanite_menu = new(nanite_settings)
-	nanite_remote = new(nanite_settings)
+	nanite_remote = new
+	nanite_menu = new(nanite_remote)
 	nanite_menu.Grant(src)
 	nanite_remote.Grant(src)
 

@@ -9,42 +9,28 @@
 	desc = "Configures your nanite remote"
 	button_icon = 'monkestation/icons/obj/machines/research.dmi'
 	button_icon_state = "nanite_programmer"
-	var/datum/nanite_remote_settings/remote_settings
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/remote_settings
 
 /datum/action/innate/internal_nanite_menu/New(nanite_menu)
 	. = ..()
-	if(istype(nanite_menu, /datum/nanite_remote_settings))
+	if(istype(nanite_menu, /datum/action/innate/ai/ranged/internal_nanite_remote))
 		remote_settings = nanite_menu
 	else
-		CRASH("nanite_remote_settings action created with non nanite settings")
+		CRASH("nanite_remote_settings action created with non nanite remote")
 
 /datum/action/innate/internal_nanite_menu/Activate()
 	remote_settings.ui_interact(owner)
 
-/datum/nanite_remote_settings
-	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
-	var/mode = REMOTE_MODE_OFF
-	/// Stores lists of settings.
-	var/list/saved_settings = list()
-	/// Believe this is for which point in list to save to.
-	var/last_id = 0
-	/// Which code is being targeted.
-	var/code = 0
-	/// Which relay is being targeted.
-	var/relay_code = 0
-	/// name of the program when you save it.
-	var/current_program_name = "Program"
-
-/datum/nanite_remote_settings/ui_state(mob/user)
+/datum/action/innate/ai/ranged/internal_nanite_remote/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/nanite_remote_settings/ui_interact(mob/user, datum/tgui/ui)
+/datum/action/innate/ai/ranged/internal_nanite_remote/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "NaniteRemote", "Nanite Remote Settings")
 		ui.open()
 
-/datum/nanite_remote_settings/ui_data(mob/user)
+/datum/action/innate/ai/ranged/internal_nanite_remote/ui_data(mob/user)
 	var/list/data = list()
 	data["code"] = code
 	data["relay_code"] = relay_code
@@ -53,15 +39,19 @@
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
 	data["silicon"] = TRUE
+	data["AI"] = TRUE
 	return data
 
-/datum/nanite_remote_settings/ui_act(action, list/params)
+/datum/action/innate/ai/ranged/internal_nanite_remote/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
 	if(!isAI(usr))
 		return
 	switch(action)
+		if("AItoggle")
+			Trigger()
+			. = TRUE
 		if("set_code")
 			var/new_code = text2num(params["code"])
 			if(!isnull(new_code))
@@ -111,6 +101,9 @@
 			mode = params["mode"]
 			. = TRUE
 
+/datum/action/innate/ai/ranged/internal_nanite_remote/ui_close()
+	unset_ranged_ability(owner_AI)
+
 /datum/action/innate/ai/ranged/internal_nanite_remote
 	name = "Nanite Remote"
 	desc = "Remotely trigger nanite signals in nanite hosting crew."
@@ -121,35 +114,42 @@
 	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites. Click the ability again to disconnect from the cloud.")
 	disable_text = span_notice("You disconnect from the nanite cloud.")
 	var/datum/nanite_remote_settings/remote_settings
+	owner_has_control = FALSE	//We use the remote UI to activate.
 
-/datum/action/innate/ai/ranged/internal_nanite_remote/New(nanite_menu)
-	. = ..()
-	if(istype(nanite_menu, /datum/nanite_remote_settings))
-		remote_settings = nanite_menu
-	else
-		CRASH("nanite_remote_settings action created with non nanite settings")
+	/// Which mode the remote is on, is it on targeted mode? is it on AOE mode?
+	var/mode = REMOTE_MODE_OFF
+	/// Stores lists of settings.
+	var/list/saved_settings = list()
+	/// Believe this is for which point in list to save to.
+	var/last_id = 0
+	/// Which code is being targeted.
+	var/code = 0
+	/// Which relay is being targeted.
+	var/relay_code = 0
+	/// name of the program when you save it.
+	var/current_program_name = "Program"
 
 /datum/action/innate/ai/ranged/internal_nanite_remote/do_ability(mob/living/silicon/ai/user, atom/clicked_on)
 	if(user.incapacitated() || user.control_disabled)
 		unset_ranged_ability(user)
 		return FALSE
-	switch(remote_settings.mode)
+	switch(mode)
 		if(REMOTE_MODE_OFF)
 			unset_ranged_ability(user, span_danger("Your nanite remote was off!"))
 		if(REMOTE_MODE_TARGET)		//For now intentionally not unsetting ability in target and AOE mode in case you want to spam it.
 			if(isliving(clicked_on))
 				var/mob/living/L = clicked_on
 				to_chat(user, span_notice("You signal the nanites inside [L]."))
-				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, remote_settings.code, src)
+				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, code, src)
 		if(REMOTE_MODE_AOE)
 			to_chat(user, span_notice("You activate the nanites in a radius, signaling the nanites inside every host around the point."))
 			for(var/mob/living/L in view(clicked_on, 7))
-				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, remote_settings.code, src)
+				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, code, src)
 		if(REMOTE_MODE_RELAY)
 			unset_ranged_ability(user, span_notice("You activate the relay, signaling all connected relay nanites."))
 			for(var/X in SSnanites.nanite_relays)
 				var/datum/nanite_program/relay/N = X
-				N.relay_signal(remote_settings.code, remote_settings.relay_code, src)
+				N.relay_signal(code, relay_code, src)
 
 	//user.playsound_local(user, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE) Change to something?
 

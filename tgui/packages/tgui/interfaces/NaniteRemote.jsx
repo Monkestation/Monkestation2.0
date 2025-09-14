@@ -32,6 +32,7 @@ export const NaniteRemoteContent = (props) => {
     message,
     saved_settings = [],
     silicon,
+    AI,
   } = data;
 
   const modes = ['Off', 'Local', 'Targeted', 'Area', 'Relay'];
@@ -44,14 +45,22 @@ export const NaniteRemoteContent = (props) => {
     <>
       <Section
         title="Nanite Control"
-        buttons={
-          <Button
-            icon="lock"
-            content="Lock Interface"
-            disabled={silicon}
-            onClick={() => act('lock')}
-          />
-        }
+        buttons={[
+          !silicon && (
+            <Button
+              icon="lock"
+              content="Lock Interface"
+              onClick={() => act('lock')}
+            />
+          ),
+          AI && (
+            <Button
+              icon="tower-broadcast"
+              content="Toggle Remote"
+              onClick={() => act('AItoggle')}
+            />
+          ),
+        ]}
       >
         <LabeledList>
           <LabeledList.Item label="Name">
@@ -113,19 +122,24 @@ export const NaniteRemoteContent = (props) => {
             </LabeledList.Item>
           )}
           <LabeledList.Item label="Signal Mode">
-            {modes.map((key) => (
-              <Button
-                key={key}
-                content={key}
-                selected={mode === key}
-                disabled={silicon && key === 'Local'}
-                onClick={() =>
-                  act('select_mode', {
-                    mode: key,
-                  })
-                }
-              />
-            ))}
+            {modes.map((key) => {
+              if (silicon && key === 'Local') {
+                return null;
+              }
+              return (
+                <Button
+                  key={key}
+                  content={key}
+                  selected={mode === key}
+                  disabled={silicon && key === 'Local'}
+                  onClick={() =>
+                    act('select_mode', {
+                      mode: key,
+                    })
+                  }
+                />
+              );
+            })}
           </LabeledList.Item>
         </LabeledList>
       </Section>
