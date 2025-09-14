@@ -36,6 +36,9 @@
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
 
+	if (auto_clone)
+		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
+
 /obj/machinery/clonepod/experimental/RefreshParts()
 	. = ..()
 	if(!isnull(evil_objective) || !isnull(custom_objective))
