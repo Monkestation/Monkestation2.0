@@ -43,6 +43,10 @@
 	/// name of the program when you save it.
 	var/current_program_name = "Program"
 
+/datum/action/innate/ai/ranged/internal_nanite_remote/Destroy()
+	owner_AI = null
+	return ..()
+
 /datum/action/innate/ai/ranged/internal_nanite_remote/ui_state(mob/user)
 	return GLOB.always_state
 

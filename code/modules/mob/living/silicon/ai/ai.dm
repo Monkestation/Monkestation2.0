@@ -253,7 +253,6 @@
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
 	QDEL_NULL(nanite_menu)
-	nanite_remote.owner_AI = null //I hate this but I hope it works
 	QDEL_NULL(nanite_remote)
 	malfhack = null
 	current = null
