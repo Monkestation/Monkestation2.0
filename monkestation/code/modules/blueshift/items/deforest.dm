@@ -1082,17 +1082,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/biogenerator/medstation, 29)
 	efficiency = 1
 	productivity = 1
 
+/obj/machinery/biogenerator/medstation/wrench_act(mob/living/user, obj/item/tool)
+	if(default_unfasten_wrench(user, tool))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /obj/machinery/biogenerator/medstation/default_unfasten_wrench(mob/user, obj/item/wrench/tool, time)
 	user.balloon_alert(user, "deconstructing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 1 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
-		return
+		return TRUE
 
-/obj/machinery/biogenerator/medstation/on_deconstruction(disassembled)
+/obj/machinery/biogenerator/medstation/deconstruct(disassembled)
 	if(disassembled)
-		new repacked_type(drop_location())
+		new repacked_type(drop_location(), biomass)
+	return ..()
 
 /obj/machinery/biogenerator/medstation/default_deconstruction_crowbar()
 	return
@@ -1104,7 +1110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/biogenerator/medstation, 29)
 	desc = "The innovative technology of a biogenerator to print medical supplies, but able to be mounted neatly on a wall out of the way."
 	icon = 'monkestation/code/modules/blueshift/icons/deforest/medstation.dmi'
 	icon_state = "biogenerator_parts"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/biogenerator/medstation
 	pixel_shift = 29
 	custom_materials = list(
@@ -1112,3 +1118,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/biogenerator/medstation, 29)
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 3,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
 	)
+	/// Amount of biomass stored in the med-station
+	var/stored_biomass = 0
+
+/obj/item/wallframe/frontier_medstation/Initialize(mapload, biomass)
+	. = ..()
+	if(isnull(biomass))
+		return
+	stored_biomass = biomass // Preserves stored biomass when deconstructed
+
+/obj/item/wallframe/frontier_medstation/after_attach(obj/attached_to)
+	. = ..()
+	var/obj/machinery/biogenerator/medstation/wall_vendor = attached_to
+	if(!istype(wall_vendor) || isnull(stored_biomass))
+		return
+	wall_vendor.biomass = stored_biomass
