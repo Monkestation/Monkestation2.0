@@ -60,8 +60,15 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	name = "engorged cortical borer"
 	desc = "the body of a cortical borer, full of human viscera, blood, and more."
 	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_BORER_ORGAN
+	organ_flags = parent_type::organ_flags | ORGAN_PROMINENT
 	/// Ref to the borer who this organ belongs to
 	var/mob/living/basic/cortical_borer/borer
+
+/obj/item/organ/internal/borer_body/get_status_text(advanced, add_tooltips)
+	if(advanced && !(borer.upgrade_flags & BORER_STEALTH_MODE))
+		return conditional_tooltip("<font color='#ff9933'>Parasitic infection</font>", "Administer sugar and remove surgically.", add_tooltips)
+	return ..()
 
 /obj/item/organ/internal/borer_body/Destroy()
 	borer = null
