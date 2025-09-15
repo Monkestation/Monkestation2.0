@@ -91,7 +91,7 @@
 	for(var/datum/reagent/reagent as anything in movable_parent.reagents.reagent_list)
 		reagent.on_plant_grower_apply(parent)
 
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
 			continue
@@ -142,7 +142,7 @@
 	if(istype(seed, /obj/item/seeds/sample))
 		return FALSE
 	if(istype(seed, /obj/item/storage/bag/plants))
-		for(var/id as anything in managed_seeds)
+		for(var/id in managed_seeds)
 			var/obj/item/seeds/harvest = managed_seeds[id]
 			if(!harvest || istype(seed, /obj/item/seeds/sample))
 				continue
@@ -158,7 +158,7 @@
 
 	var/slot_number = 0
 	var/free_slot = FALSE
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		slot_number++
 		if(isnull(managed_seeds[item]))
 			free_slot = TRUE
@@ -183,7 +183,7 @@
 	if(!length(managed_seeds))
 		return
 
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
 			continue
@@ -196,7 +196,7 @@
 
 	pollinated = TRUE
 	var/set_time =  rand(600, 900)
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
 			continue
@@ -295,7 +295,7 @@
 	return TRUE
 
 /datum/component/plant_growing/proc/remove_all_plants(datum/source)
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		managed_seeds[item] = null
 		qdel(seed)
@@ -305,7 +305,7 @@
 	bio_boosted = !bio_boosted
 
 /datum/component/plant_growing/proc/try_secateur(datum/source, mob/user)
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
 			continue
@@ -313,7 +313,7 @@
 	return TRUE
 
 /datum/component/plant_growing/proc/try_graft(datum/source, mob/user, obj/item/graft/snip)
-	for(var/item as anything in managed_seeds)
+	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
 			continue

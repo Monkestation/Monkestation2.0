@@ -198,7 +198,7 @@
 	var/list/alarms_cache = alarms  //Cache for sonic speec
 	for(var/alarm_type in alarms_cache)
 		var/list/alarms_of_type = alarms_cache[alarm_type] //Sonic cache speed forads
-		for(var/area_name as anything in alarms_of_type)
+		for(var/area_name in alarms_of_type)
 			var/list/alarm_packet = alarms_of_type[area_name]
 			if(length(alarm_packet) < 2)
 				continue
