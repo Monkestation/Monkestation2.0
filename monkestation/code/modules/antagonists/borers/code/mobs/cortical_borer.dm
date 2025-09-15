@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 //this allows borers to slide under/through a door
 /obj/machinery/door/Bumped(atom/movable/movable_atom)
 	if(iscorticalborer(movable_atom) && density)
-		if(!do_after(movable_atom, 5 SECONDS, src))
+		if(!do_after(movable_atom, ((cortical_owner.upgrade_flags & BORER_ENERGIC) ? 2.5 SECONDS : 5 SECONDS), src))
 			return ..()
 		movable_atom.forceMove(drop_location())
 		to_chat(movable_atom, span_notice("You squeeze through [src]."))

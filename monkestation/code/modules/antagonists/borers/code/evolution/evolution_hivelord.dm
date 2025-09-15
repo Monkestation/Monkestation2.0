@@ -33,6 +33,7 @@
 /datum/borer_evolution/hivelord/movespeed/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed)
+	cortical_owner.upgrade_flags |= BORER_ENERGIC
 
 // T4
 /datum/borer_evolution/hivelord/stealth_mode
