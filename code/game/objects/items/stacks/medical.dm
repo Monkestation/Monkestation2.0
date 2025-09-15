@@ -559,6 +559,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
+	merge_type = /obj/item/stack/heal_pack
 	/// List of healable limbs, checked during interact and used to heal each limb
 	var/list/healable_limbs = list()
 	/// Amount of brute damage healed on a limb
@@ -621,6 +622,7 @@
 	singular_name = "bruise pack"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "bruise_pack"
+	merge_type = /obj/item/stack/heal_pack/brute_pack
 	brute_heal = 5
 
 /obj/item/stack/heal_pack/brute_pack/can_heal_limb(obj/item/bodypart/limb)
@@ -641,6 +643,7 @@
 	singular_name = "burn pack"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burn_pack"
+	merge_type = /obj/item/stack/heal_pack/burn_pack
 	burn_heal = 5
 
 /obj/item/stack/heal_pack/burn_pack/can_heal_limb(obj/item/bodypart/limb)
