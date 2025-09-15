@@ -258,8 +258,8 @@
 		dropItemToGround(internal_storage)
 	if(head)
 		dropItemToGround(head)
-
-	alert_drones(DRONE_NET_DISCONNECT)
+	var/area = get_area(src)
+	alert_drones(span_danger("DRONE NETWORK: [name] is not responding. Last distress signal sent from [area]."))
 
 
 /mob/living/basic/drone/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
