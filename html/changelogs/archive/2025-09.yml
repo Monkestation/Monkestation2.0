@@ -493,3 +493,9 @@
   - bugfix: You can now deconstruct a deforest wallmed with a wrench
   - qol: deforest wallmed will preserve biomass when deconstructed
   - balance: deforest wallmed is now a bulky item
+2025-09-15:
+  Killermankey:
+  - rscadd: 75mm field cannon
+  - rscadd: 122mm howitzer
+  - bugfix: Widened Devitt so it looks better
+  - bugfix: Fixed 1 wrong word in Devitt's code
