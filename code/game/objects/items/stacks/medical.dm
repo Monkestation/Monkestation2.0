@@ -551,6 +551,8 @@
 /obj/item/stack/heal_pack // Unused parent type to unify code
 	amount = 40
 	max_amount = 40
+	name = "UNUSED ITEM"
+	singular_name = "UNUSED ITEM"
 	desc = "UNUSED ITEM, NOTIFY ADMINS/CODERS IF SEEN"
 	icon = 'icons/obj/medical/stack_medical.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
