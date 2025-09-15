@@ -18,7 +18,10 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	multiplicative_slowdown = -0.4
 
 /datum/movespeed_modifier/borer_speed
-	multiplicative_slowdown = -0.8
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/borer_speed_bonus
+	multiplicative_slowdown = -0.5
 
 /datum/actionspeed_modifier/focus_speed
 	multiplicative_slowdown = -0.3

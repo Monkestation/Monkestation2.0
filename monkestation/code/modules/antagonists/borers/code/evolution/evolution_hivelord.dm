@@ -34,6 +34,8 @@
 	. = ..()
 	cortical_owner.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed)
 	cortical_owner.upgrade_flags |= BORER_ENERGIC
+	if(!(cortical_owner.upgrade_flags & BORER_HIDING))
+		cortical_owner.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus) //bonus movespeed if not hiding
 
 // T4
 /datum/borer_evolution/hivelord/stealth_mode
