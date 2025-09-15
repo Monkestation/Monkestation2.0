@@ -49,6 +49,7 @@
 /datum/borer_evolution/symbiote/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.potential_chemicals |= added_chemicals
+	cortical_owner.add_atom_colour(COLOR_GREEN, FIXED_COLOUR_PRIORITY)
 
 /datum/borer_evolution/symbiote/chem_per_level/t2
 	name = "Chemical Increase II"

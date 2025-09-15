@@ -51,6 +51,7 @@
 /datum/borer_evolution/diveworm/expanded_chemicals/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.potential_chemicals |= added_chemicals
+	cortical_owner.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 
 /datum/borer_evolution/diveworm/health_per_level/t2
 	name = "Health Increase II"
