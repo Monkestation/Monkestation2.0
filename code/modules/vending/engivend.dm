@@ -17,6 +17,7 @@
 		/obj/item/electronics/airalarm = 10,
 		/obj/item/electronics/firealarm = 10,
 		/obj/item/electronics/firelock = 10,
+		/obj/item/storage/bag/construction = 5,
 	)
 	contraband = list(
 		/obj/item/stock_parts/cell/potato = 3,
