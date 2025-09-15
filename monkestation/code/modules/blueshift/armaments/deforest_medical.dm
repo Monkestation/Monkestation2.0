@@ -60,12 +60,12 @@
 	item_type = /obj/item/stack/medical/ointment
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/mesh
-	item_type = /obj/item/stack/medical/mesh
+/datum/armament_entry/company_import/deforest/first_aid/brute_kit
+	item_type = /obj/item/stack/heal_pack/brute_pack
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/sterile_gauze
-	item_type = /obj/item/stack/medical/gauze/sterilized
+/datum/armament_entry/company_import/deforest/first_aid/burn_kit
+	item_type = /obj/item/stack/heal_pack/burn_pack
 	cost = PAYCHECK_LOWER
 
 /datum/armament_entry/company_import/deforest/first_aid/amollin
