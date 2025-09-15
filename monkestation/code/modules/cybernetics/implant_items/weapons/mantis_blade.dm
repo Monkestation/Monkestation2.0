@@ -116,7 +116,7 @@
 		if(!istype(l_hand, r_hand))//Checks for if your hands are the same type (which they would be if you were dual wielding the shields.)
 			to_chat(user, span_warning("You must dual wield blades to enter the stance."))
 			return
-		if(!do_after(user, 15, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
+		if(!do_after(user, 1.5 SECONDS, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
 			to_chat(user, span_warning("You were interrupted!"))
 			return
 		user.apply_status_effect(/datum/status_effect/shield_mantis_defense)
