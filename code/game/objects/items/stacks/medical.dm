@@ -567,6 +567,14 @@
 	/// Amount of burn damage healed on a limb
 	var/burn_heal = 0
 
+/obj/item/stack/heal_pack/update_overlays()
+	. = ..()
+	if(isturf(loc))
+		return
+	var/mutable_appearance/number = mutable_appearance()
+	number.maptext = MAPTEXT(amount)
+	. += number
+
 /obj/item/stack/heal_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ismob(interacting_with))
 		return NONE
