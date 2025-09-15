@@ -22,7 +22,7 @@
 
 /atom/movable/screen/alert/clockwork/clocksense/process()
 	if(GLOB.ratvar_risen)
-		desc = "<b>RAT'VAR HAS RISEN.<b>"
+		desc = "<b>RATVAR HAS RISEN.<b>"
 		return PROCESS_KILL
 
 	var/static/last_process_tick
@@ -33,7 +33,7 @@
 
 /atom/movable/screen/alert/clockwork/clocksense/proc/get_static_desc()
 	if(GLOB.ratvar_risen)
-		return "<b>RAT'VAR HAS RISEN.<b>"
+		return "<b>RATVAR HAS RISEN.<b>"
 
 	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power)]</b>.<br>"
 	new_desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"

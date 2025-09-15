@@ -123,7 +123,7 @@
 			else
 				camera_ref = null
 			if(!spying)
-				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
 			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker)
@@ -173,6 +173,24 @@
 		if(!spying)
 			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
+// this is stupid imo
+// there has to be a better solution for this
+/datum/computer_file/program/secureye/proc/endpoint(atom/source, turf/target_turf)
+	var/turf/current_turf = get_turf(source)
+	var/turf/old_turf = current_turf
+
+	if(current_turf == target_turf)
+		return current_turf
+
+	current_turf = get_step_towards(current_turf, target_turf)
+	while(current_turf != target_turf)
+		if(IS_OPAQUE_TURF(current_turf) || !current_turf)
+			return old_turf
+		old_turf = current_turf
+		current_turf = get_step_towards(current_turf, target_turf)
+
+	return current_turf
+
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	// Show static if can't use the camera
@@ -183,7 +201,11 @@
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
+	var/turf/new_cam_turf = get_turf(active_camera)
+	var/tx = clamp(new_cam_turf.x + active_camera.view_offset_x, 1, world.maxx)
+	var/ty = clamp(new_cam_turf.y + active_camera.view_offset_y, 1, world.maxy)
+	new_cam_turf = locate(tx, ty, new_cam_turf.z)
+	new_cam_turf = endpoint(active_camera, new_cam_turf)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.

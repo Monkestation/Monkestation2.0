@@ -98,7 +98,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_JUDICIAL_MARK)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before marking another tile."))
 		return
@@ -158,7 +158,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before discharging steam again."))
 		return

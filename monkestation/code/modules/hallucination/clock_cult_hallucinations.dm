@@ -32,7 +32,7 @@
 /datum/hallucination/delusion/preset/clock_cultists
 	dynamic_delusion = TRUE
 	random_hallucination_weight = 0
-	delusion_name = "Servant of Rat'var"
+	delusion_name = "Servant of Ratvar"
 	affects_others = TRUE
 	skip_nearby = TRUE
 

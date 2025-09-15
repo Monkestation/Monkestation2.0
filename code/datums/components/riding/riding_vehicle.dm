@@ -138,6 +138,34 @@
 	set_vehicle_dir_offsets(EAST, -48, -48)
 	set_vehicle_dir_offsets(WEST, -48, -48)
 
+/datum/component/riding/vehicle/artillery_light
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	vehicle_move_delay = 5
+
+/datum/component/riding/vehicle/artillery_light/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(-9,0), TEXT_SOUTH = list(9,0), TEXT_EAST = list(-6 , 0), TEXT_WEST = list( 4 , 0)))
+	set_vehicle_dir_offsets(NORTH, -24, 0)
+	set_vehicle_dir_offsets(SOUTH, -24, 0)
+	set_vehicle_dir_offsets(EAST, -24, 0)
+	set_vehicle_dir_offsets(WEST, -24, 0)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+/datum/component/riding/vehicle/artillery_heavy
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	vehicle_move_delay = 9
+
+/datum/component/riding/vehicle/artillery_heavy/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(-9,0), TEXT_SOUTH = list(9,0), TEXT_EAST = list(-6 , 0), TEXT_WEST = list( 4 , 0)))
+	set_vehicle_dir_offsets(NORTH, -40, 0)
+	set_vehicle_dir_offsets(SOUTH, -40, 0)
+	set_vehicle_dir_offsets(EAST, -40, 0)
+	set_vehicle_dir_offsets(WEST, -40,0)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
 /datum/component/riding/vehicle/kingschariot
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 	vehicle_move_delay = 1
@@ -239,6 +267,9 @@
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
+
+/datum/component/riding/vehicle/scooter/skateboard/wheelys/cheap
+	vehicle_move_delay = 1.75
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/rollerskates
 	vehicle_move_delay = 1.5

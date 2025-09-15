@@ -55,24 +55,37 @@
 		return ..()
 	stored.forceMove(user.drop_location())
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored)
+		return stored
+	else
+		return ..()
+
+/obj/item/borg/apparatus/proc/itemcheck(atom/atom)
+	for(var/storable_type in storable)
+		if(istype(atom, storable_type))
+			return TRUE
+	return FALSE
+
+/obj/item/borg/apparatus/proc/put_in_apparatus(atom/atom, mob/user)
 	if(!stored)
 		if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
-			return ..() // Borgs should not be grabbing their own modules
-		var/itemcheck = FALSE
-		for(var/storable_type in storable)
-			if(istype(atom, storable_type))
-				itemcheck = TRUE
-				break
-		if(itemcheck)
+			return FALSE // Borgs should not be grabbing their own modules
+		if(itemcheck(atom))
 			var/obj/item/item = atom
 			item.forceMove(src)
 			stored = item
 			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 			update_appearance()
-			return
-	else
-		stored.melee_attack_chain(user, atom, params)
+			return TRUE
+	return FALSE
+
+/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
+	if(LAZYACCESS(params, RIGHT_CLICK))
+		for(var/atom/atom_content in atom.contents)
+			if(itemcheck(atom_content))
+				return atom.attack_hand_secondary(user, params)
+	if(put_in_apparatus(atom, user))
 		return
 	return ..()
 
@@ -307,3 +320,46 @@
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+//apparatus to allow borgs to cook
+/obj/item/borg/apparatus/cooking
+	name = "service storage apparatus"
+	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
+	icon = 'monkestation/icons/mob/silicon/robot_items.dmi'
+	icon_state = "borg_service_apparatus"
+	storable = list(
+		/obj/item/food,
+		/obj/item/paper,
+		/obj/item/plate,
+		/obj/item/reagent_containers/cup/bowl,
+		/obj/item/reagent_containers/cup/soup_pot,
+		/obj/item/seeds,
+		/obj/item/stack/biocube,
+		/obj/item/folder,
+		/obj/item/clipboard,
+	)
+
+/obj/item/borg/apparatus/cooking/Initialize(mapload)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+	update_appearance()
+	return ..()
+
+/obj/item/borg/apparatus/cooking/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
+	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
+
+/obj/item/borg/apparatus/cooking/update_overlays()
+	. = ..()
+	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
+	if(stored)
+		stored.pixel_x = -3
+		stored.pixel_y = 0
+		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
+			arm.icon_state = "borg_hardware_apparatus_arm2"
+		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
+		stored_copy.layer = FLOAT_LAYER
+		stored_copy.plane = FLOAT_PLANE
+		. += stored_copy
+	. += arm

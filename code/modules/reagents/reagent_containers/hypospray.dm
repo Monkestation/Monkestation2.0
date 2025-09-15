@@ -383,6 +383,14 @@
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/mutadone = 15)
 
+/obj/item/reagent_containers/hypospray/medipen/penthrite
+	name = "penthrite autoinjector"
+	desc = "Experimental heart medication."
+	icon_state = "atropen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "atropen"
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/temperature //not a survival subtype, because a low pressure seal on a medipen as harmless as this is pointless
 	name = "Temperature Stabilization Injector"
 	desc = "A three use medipen with the only purpose being to stabilize body temperature. Handy if you plan to be lit on fire or fight a watcher."
@@ -544,3 +552,12 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 10, /datum/reagent/iron = 20, /datum/reagent/medicine/salglu_solution = 60)
 	stripe_style = "blood"
 	inhand_icon_state = "stimpen"
+
+/obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	name = "positronic neural dampener autoinjector"
+	desc = "An autoinjector that can be used to dampen the stimulus response capabilties and pain senses of robots and positronics. One dose for analgesia, two for anesthesia. May cause slight decrease in motor function after injection."
+	icon_state = "invispen"
+	base_icon_state = "invispen"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	list_reagents = list(/datum/reagent/medicine/painkiller/robopiates = 7.5, /datum/reagent/dinitrogen_plasmide = 2.5)

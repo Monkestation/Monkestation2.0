@@ -16,6 +16,7 @@
 	speed = 1
 	melee_damage_lower = 4
 	melee_damage_upper = 4
+	health = 60
 	maxHealth = 60
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"

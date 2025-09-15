@@ -108,6 +108,37 @@
 	creation_time = 2 SECONDS
 	max_signs = 6
 
+/obj/item/holosign_creator/security/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return ..()
+	var/mob/living/carbon/human = interacting_with
+	if(human.handcuffed) // is our target already handcuffed?
+		user.balloon_alert(user, "already cuffed")
+		return ITEM_INTERACT_BLOCKING
+	if(!human.canBeHandcuffed()) // does he actually have arms?
+		user.balloon_alert(user, "needs two hands")
+		return ITEM_INTERACT_BLOCKING
+	if(DOING_INTERACTION_WITH_TARGET(user, human))
+		return ITEM_INTERACT_BLOCKING
+	log_combat(user, human, "attempted to handcuff")
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	human.visible_message(span_danger("[user] begins restraining [human] with [src]!"), \
+	span_userdanger("[user] begins shaping a holographic field around your hands!"))
+	if(!do_after(user, 4.5 SECONDS, human, extra_checks = CALLBACK(src, PROC_REF(can_handcuff), user))) // he is up for grabs, so lets handcuff them
+		return ITEM_INTERACT_BLOCKING
+	human.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(human))
+	human.update_handcuffed()
+	to_chat(user, span_notice("You restrain [human]."))
+	log_combat(user, human, "handcuffed")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/holosign_creator/security/proc/can_handcuff(mob/living/carbon/victim)
+	if(QDELETED(victim))
+		return FALSE
+	if(victim.handcuffed || victim.num_hands < 2)
+		return FALSE
+	return TRUE
+
 /obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
 	desc = "A holographic projector that creates holographic engineering barriers. You can remotely open barriers with it."

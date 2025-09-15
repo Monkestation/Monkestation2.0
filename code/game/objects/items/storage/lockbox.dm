@@ -34,6 +34,18 @@
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
+	update_icon_state()
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/card/card = tool.GetID()
@@ -72,7 +84,6 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
-		icon_state = src.icon_broken
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
 			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
@@ -258,30 +269,27 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/datum/bank_account/buyer_account
-	var/privacy_lock = TRUE
 
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	add_traits(list(TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_BANNED_FROM_CARGO_SHUTTLE), TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/item/storage/lockbox/order/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	var/obj/item/card/id/id_card = tool.GetID()
-	if(isnull(id_card))
-		return ..()
-
-	if(id_card.registered_account != buyer_account)
+/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if(id_card.registered_account == buyer_account)
+		return TRUE
+	if(!silent)
 		balloon_alert(user, "incorrect bank account!")
-		return ITEM_INTERACT_BLOCKING
+	return FALSE
 
-	if(privacy_lock)
-		toggle_locked(user)
-		REMOVE_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, TRAIT_GENERIC)
-	else
-		toggle_locked(user)
-	privacy_lock = atom_storage.locked
-	user.visible_message(
-		span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
-		span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."),
-	)
-	return ITEM_INTERACT_BLOCKING
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET

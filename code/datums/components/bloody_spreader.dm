@@ -14,8 +14,7 @@
 	if(ismovable(parent))
 		signals_to_add += list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT)
 		if(isitem(parent))
-			//monkestation temp edit: replaced COMSIG_ITEM_ATTACK_ATOM with COMSIG_ITEM_ATTACK_OBJ
-			signals_to_add += list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+			signals_to_add += list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
 		var/atom/atom_parent = parent
 		if(atom_parent.atom_storage)
 			signals_to_add += list(COMSIG_STORAGE_STORED_ITEM)

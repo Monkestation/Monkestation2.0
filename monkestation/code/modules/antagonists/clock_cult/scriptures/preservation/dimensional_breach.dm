@@ -5,7 +5,7 @@
 	button_icon_state = "Spatial Gateway"
 	power_cost = 1500
 	invocation_time = 14 SECONDS
-	invocation_text = list("Oh bright Eng'ine, take my soul...", "to complete, our great goal...", "through the rifts you shall come...", "they will see where the light is from!")
+	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
 	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
