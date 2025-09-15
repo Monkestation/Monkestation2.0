@@ -43,7 +43,7 @@
 		/obj/item/stack/sheet/mineral/silver = 1,
 	)
 	time = 3 SECONDS
-  category = CAT_MISC
+	category = CAT_MISC
 
 /datum/crafting_recipe/comically_large_straw
 	name = "Comically Large Straw"
