@@ -120,7 +120,7 @@
 	)
 
 /datum/design/organic_sterilized_gauze
-	name = "sterilized gauze"
+	name = "sealed aseptic gauze"
 	id = "sterilized_gauze"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 50)

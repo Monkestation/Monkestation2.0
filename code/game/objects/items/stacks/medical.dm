@@ -551,6 +551,7 @@
 /obj/item/stack/heal_pack // Unused parent type to unify code
 	amount = 40
 	max_amount = 40
+	desc = "UNUSED ITEM, NOTIFY ADMINS/CODERS IF SEEN"
 	icon = 'icons/obj/medical/stack_medical.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -616,6 +617,7 @@
 /obj/item/stack/heal_pack/brute_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
+	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "bruise_pack"
 	brute_heal = 5
 
@@ -635,6 +637,7 @@
 /obj/item/stack/heal_pack/burn_pack
 	name = "burn pack"
 	singular_name = "burn pack"
+	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burn_pack"
 	burn_heal = 5
 
