@@ -5,6 +5,15 @@
 // may be opened to change power cell
 // three different channels (lighting/equipment/environ) - may each be set to on, off, or auto
 
+///Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
+#define CHARGELEVEL 0.01
+///Charge percentage at which the lights channel stops working
+#define APC_CHANNEL_LIGHT_TRESHOLD 15
+///Charge percentage at which the equipment channel stops working
+#define APC_CHANNEL_EQUIP_TRESHOLD 30
+///Charge percentage at which the APC icon indicates discharging
+#define APC_CHANNEL_ALARM_TRESHOLD 75
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
@@ -46,6 +55,8 @@
 	var/operating = TRUE
 	///State of the apc charging (not charging, charging, fully charged)
 	var/charging = APC_NOT_CHARGING
+	///Previous state of charging, to detect the change
+	var/last_charging
 	///Can the APC charge?
 	var/chargemode = TRUE
 	///Is the apc interface locked?
@@ -64,6 +75,8 @@
 	var/lastused_environ = 0
 	///Total amount of power used by the three channels
 	var/lastused_total = 0
+	///Total amount of power put into the battery
+	var/lastused_charge = 0
 	///State of the apc external power (no power, low power, has power)
 	var/main_status = APC_NO_POWER
 	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
@@ -71,6 +84,8 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
+	///Counter for displaying the hacked overlay to mobs within view
+	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -125,6 +140,8 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
+	///When did the apc generate last malf ai processing time.
+	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -708,3 +725,8 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+#undef CHARGELEVEL
+#undef APC_CHANNEL_LIGHT_TRESHOLD
+#undef APC_CHANNEL_EQUIP_TRESHOLD
+#undef APC_CHANNEL_ALARM_TRESHOLD

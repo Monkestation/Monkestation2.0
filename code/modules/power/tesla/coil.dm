@@ -1,7 +1,7 @@
 // zap needs to be over this amount to get power
 #define TESLA_COIL_THRESHOLD 80
 // each zap power unit produces 400 joules
-#define ZAP_TO_ENERGY(p) (joules_to_energy((p) * 400))
+#define ZAP_TO_ENERGY(p) (power_to_energy((p) * 400))
 
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
@@ -171,8 +171,8 @@
 /obj/machinery/power/energy_accumulator/grounding_rod/zap_act(energy, zap_flags)
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
-		zap_buckle_check(power)
-		stored_energy += ZAP_TO_ENERGY(power)
+		zap_buckle_check(energy)
+		stored_energy += ZAP_TO_ENERGY(energy)
 		return 0
 	else
 		. = ..()

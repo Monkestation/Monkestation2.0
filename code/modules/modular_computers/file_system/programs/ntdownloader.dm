@@ -53,10 +53,10 @@
 
 	ui_header = "downloader_running.gif"
 
-	if(PRG in main_repo)
+	if(PRG in SSmodular_computers.available_station_software)
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
 		hacked_download = FALSE
-	else if(PRG in antag_repo)
+	else if(PRG in SSmodular_computers.available_antag_software)
 		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = TRUE
 	else

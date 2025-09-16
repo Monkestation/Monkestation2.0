@@ -587,7 +587,7 @@
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
 		if(open_ui)
-			update_tablet_open_uis(user)
+			INVOKE_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -610,7 +610,7 @@
 	active_program = program
 	program.alert_pending = FALSE
 	if(open_ui)
-		update_tablet_open_uis(user)
+		INVOKE_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
