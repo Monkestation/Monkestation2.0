@@ -5271,7 +5271,6 @@
 #include "code\modules\modular_computers\file_system\programs\maintenance\themes.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_data.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_program.dm"
-#include "code\modules\modular_computers\NTNet\NTNRC\conversation.dm"
 #include "code\modules\modular_implants\misc_devices.dm"
 #include "code\modules\modular_implants\nif_actions.dm"
 #include "code\modules\modular_implants\nif_implants.dm"
