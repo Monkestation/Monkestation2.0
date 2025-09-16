@@ -201,7 +201,7 @@
 /obj/structure/chem_separator/proc/can_process(datum/gas_mixture/air)
 	if(!burning)
 		return FALSE
-	if(!air || !air.has_gas(/datum/gas/oxygen, 1))
+	if(!air || !air.has_gas(GAS_O2, 1))
 		return FALSE
 	if(air.temperature > required_temp) // Too hot to condense
 		return FALSE

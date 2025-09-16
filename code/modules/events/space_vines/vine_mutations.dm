@@ -141,7 +141,7 @@
 	if(air.temperature > T20C)
 		delta_temperature *= -1
 	air.temperature += delta_temperature
-	holder.air_update_turf(FALSE, FALSE)
+	holder.air_update_turf()
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
@@ -228,9 +228,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/oxygen])
+		if(!gas_mix.gases[GAS_O2])
 			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.gases[GAS_O2][MOLES] = max(gas_mix.gases[GAS_O2][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -243,9 +243,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/nitrogen])
+		if(!gas_mix.gases[GAS_N2])
 			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.gases[GAS_N2][MOLES] = max(gas_mix.gases[GAS_N2][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -258,9 +258,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
+		if(!gas_mix.gases[GAS_CO2])
 			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.gases[GAS_CO2][MOLES] = max(gas_mix.gases[GAS_CO2][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater

@@ -46,7 +46,7 @@ describe('gas helper functions', () => {
 
     expect(gas).toEqual({
       id: 'antinoblium',
-      path: '/datum/gas/antinoblium',
+      path: 'GAS_ANTINOB',
       name: 'Antinoblium',
       label: 'Anti-Noblium',
       color: 'maroon',
@@ -61,12 +61,12 @@ describe('gas helper functions', () => {
   });
 
   it('should return the gas using a path', () => {
-    const gasPath = '/datum/gas/antinoblium';
+    const gasPath = 'GAS_ANTINOB';
     const gas = getGasFromPath(gasPath);
 
     expect(gas).toEqual({
       id: 'antinoblium',
-      path: '/datum/gas/antinoblium',
+      path: 'GAS_ANTINOB',
       name: 'Antinoblium',
       label: 'Anti-Noblium',
       color: 'maroon',

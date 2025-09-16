@@ -70,7 +70,7 @@
 		stack_trace("SM surge event failed to find a supermatter engine!")
 		return
 
-	sm_gas = LAZYACCESS(engine.current_gas_behavior, /datum/gas/nitrogen)
+	sm_gas = LAZYACCESS(engine.current_gas_behavior, GAS_N2)
 	if(isnull(sm_gas))
 		stack_trace("SM surge event failed to find gas properties for [engine].")
 		return

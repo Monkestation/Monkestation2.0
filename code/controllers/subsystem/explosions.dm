@@ -751,6 +751,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 
 	currentpart = SSEXPLOSIONS_TURFS
 
+#undef SSAIR_REBUILD_PIPENETS // why did katmos add this im unsure
 #undef EXPLOSION_THROW_SPEED
 #undef EXPLOSION_BLOCK_LIGHT
 #undef EXPLOSION_BLOCK_HEAVY

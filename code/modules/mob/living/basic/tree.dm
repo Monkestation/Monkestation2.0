@@ -65,13 +65,13 @@
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc
-	if(!our_turf.air || !our_turf.air.gases[/datum/gas/carbon_dioxide])
+	if(!our_turf.air || !our_turf.air.gases[GAS_CO2])
 		return
 
-	var/co2 = our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/co2 = our_turf.air.gases[GAS_CO2][MOLES]
 	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
-		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
+		our_turf.air.gases[GAS_CO2][MOLES] -= amt
 		our_turf.atmos_spawn_air("o2=[amt]")
 
 /mob/living/basic/tree/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)

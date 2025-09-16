@@ -116,7 +116,7 @@
 	gain = list(10,40)
 	target_amount = list(200,600)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/nitrous_oxide
+	required_gas = GAS_NITROUS
 
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
@@ -124,7 +124,7 @@
 	gain = list(10,30,60)
 	target_amount = list(50,125,400)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/bz
+	required_gas = GAS_BZ
 
 /datum/experiment/ordnance/gaseous/noblium
 	name = "Hypernoblium Gas Shells"
@@ -132,7 +132,7 @@
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/hypernoblium
+	required_gas = GAS_HYPERNOB
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"

@@ -35,6 +35,8 @@
 	var/processing = FALSE
 
 /obj/machinery/airlock_controller/LateInitialize()
+
+	SSair.start_processing_machine(src)
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]
 	if (!isnull(interior_door_tag) && !istype(interior_door))
 		stack_trace("interior_door_tag is set to [interior_door_tag], which is not a door ([interior_door || "null"])")
@@ -60,6 +62,7 @@
 	exterior_door_ref = null
 	pump_ref = null
 	sensor_ref = null
+	SSair.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)

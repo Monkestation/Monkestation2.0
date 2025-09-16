@@ -174,7 +174,8 @@
 #define INIT_ORDER_PATHOGEN 14
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
-#define INIT_ORDER_AIR -1
+#define INIT_ORDER_AIR_MACHINERY -0.5
+#define INIT_ORDER_AIR -2
 #define INIT_ORDER_PERSISTENCE -2
 #define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
 #define INIT_ORDER_VOTE -4 // Needs to be after persistence so that recent maps are not loaded.
@@ -238,6 +239,7 @@
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_CALLBACKS 80
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
 #define FIRE_PRIORITY_MOBS 100
@@ -297,17 +299,22 @@
 */
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
-// Air subsystem subtasks
+// SSair run section
 #define SSAIR_PIPENETS 1
 #define SSAIR_ATMOSMACHINERY 2
-#define SSAIR_ACTIVETURFS 3
-#define SSAIR_HOTSPOTS 4
-#define SSAIR_EXCITEDGROUPS 5
-#define SSAIR_HIGHPRESSURE 6
-#define SSAIR_SUPERCONDUCTIVITY 7
-#define SSAIR_PROCESS_ATOMS 8
+#define SSAIR_EXCITEDGROUPS 3
+#define SSAIR_HIGHPRESSURE 4
+#define SSAIR_HOTSPOTS 5
+#define SSAIR_TURF_CONDUCTION 6
+#define SSAIR_REBUILD_PIPENETS 7
+#define SSAIR_EQUALIZE 8
+#define SSAIR_ACTIVETURFS 9
+#define SSAIR_TURF_POST_PROCESS 10
+#define SSAIR_FINALIZE_TURFS 11
+#define SSAIR_ATMOSMACHINERY_AIR 12
+#define SSAIR_DEFERRED_AIRS 13
 
-// Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
+//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 

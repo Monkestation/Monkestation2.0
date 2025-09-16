@@ -17,6 +17,8 @@
 	///Bitfield of sources preventing the component from rotting
 	var/blockers = NONE
 
+	var/amount = 0
+
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -63,6 +65,38 @@
 		), PROC_REF(check_husk_trait))
 
 	start_up(NONE) //If nothing's blocking it, start
+	if(new_amount)
+		amount = new_amount
+	START_PROCESSING(SSprocessing, src)
+
+/datum/component/rot/process()
+	var/atom/A = parent
+
+	var/turf/open/T = get_turf(A)
+	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
+		return
+	var/area/area = get_area(T)
+	if(area.outdoors)
+		return
+
+	var/datum/gas_mixture/turf_air = T.return_air()
+	if(!turf_air)
+		return
+	var/datum/gas_mixture/stank_breath = T.remove_air(1 / turf_air.return_volume() * turf_air.total_moles())
+	if(!stank_breath)
+		return
+	stank_breath.set_volume(1)
+	var/oxygen_pp = stank_breath.get_moles(GAS_O2) * R_IDEAL_GAS_EQUATION * stank_breath.return_temperature() / stank_breath.return_volume()
+
+	if(oxygen_pp > 18)
+		var/this_amount = min((oxygen_pp - 8) * stank_breath.return_volume() / stank_breath.return_temperature() / R_IDEAL_GAS_EQUATION, amount)
+		stank_breath.adjust_moles(GAS_O2, -this_amount)
+
+		var/datum/gas_mixture/stank = new
+		stank.set_moles(GAS_MIASMA, this_amount)
+		stank.set_temperature(BODYTEMP_NORMAL) // otherwise we have gas below 2.7K which will break our lag generator
+		stank_breath.merge(stank)
+	T.assume_air(stank_breath)
 
 /datum/component/rot/UnregisterFromParent()
 	. = ..()
@@ -172,6 +206,48 @@
 
 	var/note = "Rot Infection Contact [key_name(react_to)]"
 	react_to.try_contact_infect(disease, note = note)
+
+/datum/component/rot/gibs/Initialize(new_amount)
+	START_PROCESSING(SSprocessing, src)
+	if(new_amount)
+		amount = new_amount
+	..()
+
+
+/datum/component/rot/corpse
+	amount = MIASMA_CORPSE_MOLES
+
+/datum/component/rot/corpse/Initialize()
+	if(!iscarbon(parent))
+		return COMPONENT_INCOMPATIBLE
+	. = ..()
+
+/datum/component/rot/corpse/process()
+	var/mob/living/carbon/deadbody = parent
+	if(deadbody.stat != DEAD)
+		qdel(src)
+		return
+
+	// Wait a bit before decaying
+	if(world.time - deadbody.timeofdeath < 2 MINUTES)
+		return
+
+	// Properly stored corpses shouldn't create miasma
+	if(istype(deadbody.loc, /obj/structure/closet/crate/coffin)|| istype(deadbody.loc, /obj/structure/closet/body_bag) || istype(deadbody.loc, /obj/structure/bodycontainer))
+		return
+
+	// No decay if formaldehyde in corpse or when the corpse is charred
+	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
+		return
+
+	// Also no decay if corpse chilled or not organic/undead
+	if(C.bodytemperature <= T0C-10 || (!(deadbody.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))))
+		return
+
+	..()
+
+/datum/component/rot/gibs
+	var/amount = MIASMA_GIBS_MOLES
 
 #undef REAGENT_BLOCKER
 #undef TEMPERATURE_BLOCKER

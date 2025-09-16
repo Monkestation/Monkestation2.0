@@ -198,20 +198,20 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 	id = "co2_cracking"
 	desc = "Conversion of CO2 into equal amounts of O2"
 	requirements = list(
-		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
+		GAS_CO2 = MINIMUM_MOLE_COUNT,
 	)
 	factor = list(
-		/datum/gas/carbon_dioxide = "1 mole of CO2 gets consumed",
-		/datum/gas/oxygen = "1 mole of O2 gets produced",
+		GAS_CO2 = "1 mole of CO2 gets consumed",
+		GAS_O2 = "1 mole of O2 gets produced",
 		"Location" = "Can only happen on turfs with an active CO2 cracker.",
 	)
 
 /datum/cracker_reaction/co2_cracking/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	var/old_heat_capacity = air_mixture.heat_capacity()
-	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen)
-	var/proportion = min(air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
-	air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] -= proportion
-	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
+	air_mixture.assert_gases(GAS_H2O, GAS_O2)
+	var/proportion = min(air_mixture.gases[GAS_CO2][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
+	air_mixture.gases[GAS_CO2][MOLES] -= proportion
+	air_mixture.gases[GAS_O2][MOLES] += proportion
 	var/new_heat_capacity = air_mixture.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)

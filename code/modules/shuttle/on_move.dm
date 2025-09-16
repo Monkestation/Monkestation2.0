@@ -54,9 +54,9 @@ All ShuttleMove procs go here
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
 	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
 	newT.blocks_air = TRUE
-	newT.air_update_turf(TRUE, FALSE)
+	newT.air_update_turf()
 	blocks_air = TRUE
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 	if(isopenturf(newT))
 		var/turf/open/new_open = newT
 		new_open.copy_air_with_tile(src)
@@ -85,9 +85,9 @@ All ShuttleMove procs go here
 
 /turf/proc/lateShuttleMove(turf/oldT)
 	blocks_air = initial(blocks_air)
-	air_update_turf(TRUE, blocks_air)
+	air_update_turf()
 	oldT.blocks_air = initial(oldT.blocks_air)
-	oldT.air_update_turf(TRUE, oldT.blocks_air)
+	oldT.air_update_turf()
 
 	if(outdoor_effect)
 		oldT.outdoor_effect = null
@@ -211,7 +211,7 @@ All ShuttleMove procs go here
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
-		
+
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])

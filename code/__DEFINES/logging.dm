@@ -192,5 +192,10 @@
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
 #define READ_FILE(file, text) DIRECT_INPUT(file, text)
 //This is an external call, "true" and "false" are how rust parses out booleans
+#ifdef EXTOOLS_LOGGING
+#define WRITE_LOG(log, text) extools_log_write(log, text, TRUE)
+#define WRITE_LOG_NO_FORMAT(log, text) extools_log_write(log, text, FALSE)
+#else
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+#endif

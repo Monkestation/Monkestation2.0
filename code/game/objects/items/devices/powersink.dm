@@ -148,7 +148,7 @@
 	var/delta_temperature = temp_to_give / environment.heat_capacity()
 	if(delta_temperature)
 		environment.temperature += delta_temperature
-		air_update_turf(FALSE, FALSE)
+		air_update_turf()
 	if(warning_given && internal_heat < max_heat * 0.75)
 		warning_given = FALSE
 		message_admins("Power sink at ([x],[y],[z] - <A HREF='byond://?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has cooled down and will not explode.")

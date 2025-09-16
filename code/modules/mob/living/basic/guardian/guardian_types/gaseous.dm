@@ -83,13 +83,13 @@
 	var/active_gas = null
 	/// Associative list of types of gases to moles we create every life tick.
 	var/static/list/possible_gases = list(
-		/datum/gas/oxygen = 50,
-		/datum/gas/nitrogen = 750, //overpressurizing is hard!.
-		/datum/gas/water_vapor = 1, //you need incredibly little water vapor for the effects to kick in
-		/datum/gas/nitrous_oxide = 15,
-		/datum/gas/carbon_dioxide = 50,
+		GAS_O2 = 50,
+		GAS_N2 = 750, //overpressurizing is hard!.
+		GAS_H2O = 1, //you need incredibly little water vapor for the effects to kick in
+		GAS_NITROUS = 15,
+		GAS_CO2 = 50,
 		/datum/gas/plasma = 3,
-		/datum/gas/bz = 10,
+		GAS_BZ = 10,
 	)
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Grant(mob/granted_to)

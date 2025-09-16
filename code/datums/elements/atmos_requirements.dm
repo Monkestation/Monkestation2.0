@@ -46,12 +46,12 @@
 		return FALSE
 
 	var/open_turf_gases = open_turf.air.gases
-	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
+	open_turf.air.assert_gases(GAS_O2, GAS_N2, GAS_CO2, /datum/gas/plasma)
 
 	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
-	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
-	var/n2 = open_turf_gases[/datum/gas/nitrogen][MOLES]
-	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
+	var/oxy = open_turf_gases[GAS_O2][MOLES]
+	var/n2 = open_turf_gases[GAS_N2][MOLES]
+	var/co2 = open_turf_gases[GAS_CO2][MOLES]
 
 	open_turf.air.garbage_collect()
 

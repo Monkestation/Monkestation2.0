@@ -282,7 +282,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if (reagents.has_reagent(/datum/reagent/oxygen))
 		return TRUE
 	var/datum/gas_mixture/air = return_air()
-	if (!isnull(air) && air.has_gas(/datum/gas/oxygen, 1))
+	if (!isnull(air) && air.has_gas(GAS_O2, 1))
 		return TRUE
 	if (!iscarbon(user))
 		return FALSE

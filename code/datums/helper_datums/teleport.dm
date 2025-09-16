@@ -155,9 +155,9 @@
 
 	var/list/floor_gases = floor_gas_mixture.gases
 	var/static/list/gases_to_check = list(
-		/datum/gas/oxygen = list(16, 100),
-		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 10)
+		GAS_O2 = list(16, 100),
+		GAS_N2,
+		GAS_CO2 = list(0, 10)
 	)
 	if(!check_gases(floor_gases, gases_to_check))
 		return FALSE

@@ -52,8 +52,8 @@
 		return PROCESS_KILL
 
 	if(oxygen_input)
-		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
-		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
+		oxygen_input.air_contents.assert_gas(GAS_O2, oxygen_input.air_contents)
+		oxygen_moles = oxygen_input.air_contents.gases[GAS_O2][MOLES]
 
 	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
 		return
@@ -62,7 +62,7 @@
 	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
 	for(var/obj/item/potential_boulder as anything in boulders_contained)
 		if(oxygen_input)
-			oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
+			oxygen_input.air_contents.remove_specific(GAS_O2, REQUIRED_OXYGEN_MOLES)
 
 		if(QDELETED(potential_boulder))
 			boulders_contained -= potential_boulder

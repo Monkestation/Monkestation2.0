@@ -22,6 +22,7 @@
 #define META_GAS_FUSION_POWER 7
 ///Short description of the gas.
 #define META_GAS_DESC 8
+
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -182,3 +183,32 @@
 #define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
 /// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
+
+// Gas defines because i hate typepaths
+#define GAS_O2 "o2"
+#define GAS_N2 "n2"
+#define GAS_CO2 "co2"
+#define GAS_PLASMA "plasma"
+#define GAS_H2O "water_vapor"
+#define GAS_HYPERNOB "hypernob"
+#define GAS_NITROUS "n2o"
+#define GAS_NITRIUM "no2"
+#define GAS_TRITIUM "tritium"
+#define GAS_BZ "bz"
+#define GAS_PLUOXIUM "pluox"
+#define GAS_MIASMA "miasma"
+#define GAS_H2 "hydrogen"
+#define GAS_FREON "freon"
+#define GAS_HEALIUM "healium"
+#define GAS_PLUONIUM "pluonium"
+#define GAS_PROTONITRATE "proto_nitrate"
+#define GAS_HALON "halon"
+#define GAS_ANTINOB "antinob"
+#define GAS_ZAUKER "zauker"
+#define GAS_HELIUM "helium"
+//4 da future
+//#define GAS_HEXANE "hexane"
+//#define GAS_DILITHIUM "dilithium"
+
+#define GAS_FLAG_DANGEROUS (1<<0)
+#define GAS_FLAG_BREATH_PROC (1<<1)

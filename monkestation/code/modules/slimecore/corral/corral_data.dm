@@ -16,7 +16,7 @@
 
 /datum/corral_data/proc/setup_pen()
 	for(var/turf/turf as anything in corral_turfs)
-		turf.air_update_turf(update = TRUE, remove = FALSE)
+		turf.air_update_turf()
 		RegisterSignal(turf, COMSIG_ATOM_ENTERED, PROC_REF(check_entered))
 		RegisterSignal(turf, COMSIG_ATOM_EXITED, PROC_REF(check_exited))
 
@@ -41,7 +41,7 @@
 	QDEL_LIST(corral_connectors)
 	for(var/turf/turf as anything in corral_turfs)
 		if(!QDELETED(turf))
-			turf.air_update_turf(update = TRUE, remove = FALSE)
+			turf.air_update_turf()
 	corral_turfs = null
 
 	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)

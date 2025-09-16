@@ -80,7 +80,7 @@
 	for(var/datum/gas_mixture/mix as anything in airs)
 		var/pressure = mix.return_pressure()
 		if(mix.release_gas_to(location.return_air(), pressure, true_rate))
-			location.air_update_turf(FALSE, FALSE)
+			location.air_update_turf()
 
 #undef PROCESS_OBJ
 #undef PROCESS_MACHINE

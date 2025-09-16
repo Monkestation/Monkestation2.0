@@ -230,6 +230,11 @@
 	AddElement(/datum/element/squish_sound)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
+	if(already_rotting)
+		start_rotting(rename=FALSE)
+	else
+		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
+
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
 	LAZYNULL(streak_diseases)
 	return ..()
@@ -241,11 +246,15 @@
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
+/obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
+	name = "rotting [initial(name)]"
+	desc += " It smells terrible."
+	AddComponent(/datum/component/rot/gibs)
+
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
 	if(!.)
 		return
-	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
 #ifndef UNIT_TESTS
 	for(var/obj/effect/decal/cleanable/blood/gibs/other_gibs in loc)
 		if(!other_gibs.dried || other_gibs == src)

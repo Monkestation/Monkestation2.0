@@ -257,8 +257,8 @@
 	var/datum/gas_mixture/tank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
 
-	if(air_transfer.gases[/datum/gas/plasma])
-		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5 //Suffering
+	if(air_transfer.get_moles(GAS_PLASMA))
+		air_transfer.set_moles(GAS_PLASMA, air_transfer.get_moles(GAS_PLASMA) * 5) //Suffering
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
@@ -334,8 +334,7 @@
 	SIGNAL_HANDLER
 	if(ptank)
 		var/datum/gas_mixture/tank_mix = ptank.return_air()
-		tank_mix.assert_gas(/datum/gas/plasma)
-		tank_mix.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
+		tank_mix.set_moles(GAS_PLASMA, ((10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)))
 	else
 		ptank = new /obj/item/tank/internals/plasma/full(src)
 	update_appearance()

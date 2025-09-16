@@ -10,7 +10,7 @@
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE // monkestation edit
 	alternate_worn_layer = ABOVE_HEAD_LAYER // monkestation edit
-	var/gas_type = /datum/gas/oxygen
+	var/gas_type = GAS_O2
 	var/on = FALSE
 	/// If the jetpack will have a speedboost in space/nograv or not
 	var/full_speed = TRUE
@@ -62,7 +62,7 @@
 	if(gas_type)
 		var/datum/gas_mixture/our_mix = return_air()
 		our_mix.assert_gas(gas_type)
-		our_mix.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+		our_mix.set_moles(gas_typegas_type, ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -232,7 +232,7 @@
 	icon_state = "jetpack-black"
 	inhand_icon_state = "jetpack-black"
 	distribute_pressure = 0
-	gas_type = /datum/gas/carbon_dioxide
+	gas_type = GAS_CO2
 
 //MONKESTATION EDIT START
 /obj/item/tank/jetpack/mining //tried to get hardsuit jetpacks to work again took all day with no real progess so this is the compromise
