@@ -802,22 +802,22 @@
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with.atom_storage || (user.istate & ISTATE_HARM))
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, next_use))
 		to_chat(user, span_warning("Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_use))] before using \the [src] again!"))
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_LAVA_STAFF))
 		to_chat(user, span_warning("You're already using \the [src]!"))
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 	var/turf/target_turf = get_turf(interacting_with)
 	if(!isopenturf(target_turf) || is_type_in_typecache(target_turf, banned_turfs))
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 	if(!(target_turf in view(user.client.view, get_turf(user))))
-		return NONE
+		return ITEM_INTERACT_BLOCKING
 	if(islava(target_turf))
 		remove_lava(user, target_turf)
 	else
