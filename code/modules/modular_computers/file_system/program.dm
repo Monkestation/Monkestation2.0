@@ -202,7 +202,7 @@
 	return TRUE
 
 ///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
-/datum/computer_file/program/proc/background_program()
+/datum/computer_file/program/proc/background_program(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(program_flags & PROGRAM_HEADER)
 		return kill_program()
@@ -210,6 +210,7 @@
 	computer.idle_threads.Add(src)
 	computer.active_program = null
 
-	computer.update_tablet_open_uis(usr)
+	if(user)
+		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE

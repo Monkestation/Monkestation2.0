@@ -143,7 +143,7 @@
 		if("PC_minimize")
 			if(!active_program || !internal_cell.charge)
 				return
-			active_program?.background_program()
+			active_program?.background_program(usr)
 			return TRUE
 
 		if("PC_killprogram")

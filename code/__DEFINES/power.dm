@@ -20,7 +20,7 @@
 #define JOULES * JOULE
 
 ///The capacity of a standard power cell
-#define STANDARD_CELL_VALUE (10 KILO)
+#define STANDARD_CELL_VALUE (10 MEGA) // MONKE EDIT: Normal cells have mega power
 	///The amount of energy, in joules, a standard powercell has.
 	#define STANDARD_CELL_CHARGE (STANDARD_CELL_VALUE JOULES) // 10 KJ.
 	///The amount of power, in watts, a standard powercell can give.

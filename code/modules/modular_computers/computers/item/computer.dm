@@ -42,7 +42,7 @@
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
 	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads = list()
+	var/list/datum/computer_file/program/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
@@ -70,14 +70,12 @@
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
+	var/comp_light_color = COLOR_WHITE
 
-	///The last recorded amount of power used.
-	var/last_power_usage = 0
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 75
+	var/base_active_power_usage = 2 WATTS
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
-	var/base_idle_power_usage = 5
+	var/base_idle_power_usage = 1 WATTS
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
@@ -119,7 +117,6 @@
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
-
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
@@ -150,6 +147,7 @@
 	close_all_programs()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
+	looping_sound = FALSE // Necessary to stop a possible runtime trying to call soundloop.stop() when soundloop has been qdel'd
 	QDEL_LIST(stored_files)
 
 	if(istype(inserted_disk))
@@ -162,12 +160,12 @@
 	physical = null
 	return ..()
 
-/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
-	if(active_program?.tap(A, user, params))
-		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+/obj/item/modular_computer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(active_program?.tap(interacting_with, user, modifiers))
+		user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
+		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -329,11 +327,15 @@
 		return FALSE
 
 	. = ..()
+	if(!forced)
+		add_log("manual overriding of permissions and modification of device firmware detected. Reboot and reinstall required.")
 	obj_flags |= EMAGGED
 	device_theme = PDA_THEME_SYNDICATE
 	balloon_alert(user, "syndieOS loaded")
-	if (emag_card)
-		to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+	if(user)
+		balloon_alert(user, "syndieOS loaded")
+		if (emag_card)
+			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
@@ -358,6 +360,9 @@
 			. += "Its identification card slot is currently occupied."
 		. += span_info("Alt-click [src] to eject the identification card.")
 
+	if(internal_cell)
+		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
 	. += "Storage capacity: [used_capacity]/[max_capacity]GQ"
@@ -372,6 +377,9 @@
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove Cell"
+		. = CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -465,7 +473,6 @@
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process(seconds_per_tick)
 	if(!enabled) // The computer is turned off
-		last_power_usage = 0
 		return
 
 	if(atom_integrity <= integrity_failure * max_integrity)
@@ -576,9 +583,12 @@
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
-	if(!program || !istype(program)) // Program not found or it's not executable program.
+	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
 		if(user)
 			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		return FALSE
+
+	if(active_program == program)
 		return FALSE
 
 	// The program is already running. Resume it.
@@ -606,6 +616,8 @@
 
 	if(!program.on_start(user))
 		return FALSE
+
+	active_program?.background_program()
 
 	active_program = program
 	program.alert_pending = FALSE
@@ -728,108 +740,21 @@
 		return
 	name = "[saved_identification] ([saved_job])"
 
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	// Check for ID first
-	if(isidcard(attacking_item) && InsertID(attacking_item, user))
-		return
-
-	// Check for cash next
-	if(computer_id_slot && iscash(attacking_item))
-		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
-		if(inserted_id)
-			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
-			return
-
-	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
-		return
-
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(ismachinery(loc))
-			return
-		if(internal_cell)
-			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
-			return
-		if(user && !user.transferItemToLoc(attacking_item, src))
-			return
-		internal_cell = attacking_item
-		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
-		return
-
-	if(istype(attacking_item, /obj/item/photo))
-		var/obj/item/photo/attacking_photo = attacking_item
-		if(store_file(new /datum/computer_file/picture(attacking_photo.picture)))
-			balloon_alert(user, "photo scanned")
-		else
-			balloon_alert(user, "no space!")
-		return
-
-	// Check if any Applications need it
-	for(var/datum/computer_file/item_holding_app as anything in stored_files)
-		if(item_holding_app.application_attackby(attacking_item, user))
-			return
-
-	if(istype(attacking_item, /obj/item/paper))
-		//MONKESTATION EDIT START
-		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
-		if(istype(attacking_item, /obj/item/paper/paperslip/corporate))
-			return
-		//MONKESTATION EDIT END
-		if(stored_paper >= max_paper)
-			balloon_alert(user, "no more room!")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-			return FALSE
-		balloon_alert(user, "inserted paper")
-		qdel(attacking_item)
-		stored_paper++
-		return
-	if(istype(attacking_item, /obj/item/paper_bin))
-		var/obj/item/paper_bin/bin = attacking_item
-		if(bin.total_paper <= 0)
-			balloon_alert(user, "empty bin!")
-			return
-		var/papers_added //just to keep track
-		while((bin.total_paper > 0) && (stored_paper < max_paper))
-			papers_added++
-			stored_paper++
-			bin.remove_paper()
-		if(!papers_added)
-			return
-		balloon_alert(user, "inserted paper")
-		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
-		bin.update_appearance()
-		return
-
-	// Insert a data disk
-	if(istype(attacking_item, /obj/item/computer_disk))
-		if(inserted_disk)
-			user.put_in_hands(inserted_disk)
-			balloon_alert(user, "disks swapped")
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_disk = attacking_item
-		playsound(src, 'sound/machines/card_slide.ogg', 50)
-		return
-
-	return ..()
+/obj/item/modular_computer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	if(internal_cell)
+		user.balloon_alert(user, "cell removed")
+		internal_cell.forceMove(drop_location())
+		internal_cell = null
+		return ITEM_INTERACT_SUCCESS
+	else
+		user.balloon_alert(user, "no cell!")
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
-	internal_cell?.forceMove(drop_location())
-	computer_id_slot?.forceMove(drop_location())
-	inserted_disk?.forceMove(drop_location())
-	inserted_pai?.forceMove(drop_location())
-	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	deconstruct(TRUE)
 	user.balloon_alert(user, "disassembled")
-	relay_qdel()
-	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
@@ -842,23 +767,127 @@
 		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
+	if(!tool.use_tool(src, user, 20, volume=50))
 		return ITEM_INTERACT_SUCCESS
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair \the [src]."))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/deconstruct(disassembled = TRUE)
-	break_apart()
-	return ..()
+/obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Check for ID first
+	if(isidcard(tool))
+		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-/obj/item/modular_computer/proc/break_apart()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	// Check for cash next
+	if(computer_id_slot && iscash(tool))
+		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
+		if(!inserted_id)
+			balloon_alert(user, "no ID inserted")
+			return ITEM_INTERACT_BLOCKING
+		return inserted_id.insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING // If we do, try and put that attacking object in
+
+	// Inserting a pAI
+	if(istype(tool, /obj/item/pai_card) && !inserted_pai)
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		inserted_pai = tool
+		balloon_alert(user, "inserted pai")
+		update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/cell))
+		if(ismachinery(loc))
+			return ITEM_INTERACT_BLOCKING
+		if(internal_cell)
+			to_chat(user, span_warning("You try to connect \the [tool] to \the [src], but its connectors are occupied."))
+			return ITEM_INTERACT_BLOCKING
+		if(user && !user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		internal_cell = tool
+		to_chat(user, span_notice("You plug \the [tool] to \the [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/photo))
+		var/obj/item/photo/attacking_photo = tool
+		if(!store_file(new /datum/computer_file/picture(attacking_photo.picture)))
+			balloon_alert(user, "no space!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "photo scanned")
+		return ITEM_INTERACT_SUCCESS
+
+	// Check if any Applications need it
+	for(var/datum/computer_file/item_holding_app as anything in stored_files)
+		if(item_holding_app.application_attackby(tool, user))
+			return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		//MONKESTATION EDIT START
+		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		if(istype(tool, /obj/item/paper/paperslip/corporate))
+			return ITEM_INTERACT_BLOCKING
+		//MONKESTATION EDIT END
+		if(stored_paper >= max_paper)
+			balloon_alert(user, "no more room!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return FALSE
+		balloon_alert(user, "inserted paper")
+		qdel(tool)
+		stored_paper++
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper_bin))
+		var/obj/item/paper_bin/bin = tool
+		if(bin.total_paper <= 0)
+			balloon_alert(user, "empty bin!")
+			return ITEM_INTERACT_BLOCKING
+		var/papers_added //just to keep track
+		while((bin.total_paper > 0) && (stored_paper < max_paper))
+			papers_added++
+			stored_paper++
+			bin.remove_paper()
+		if(!papers_added)
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "inserted paper")
+		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+		bin.update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	// Insert a data disk
+	if(istype(tool, /obj/item/computer_disk))
+		if(inserted_disk)
+			user.put_in_hands(inserted_disk)
+			balloon_alert(user, "disks swapped")
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		inserted_disk = tool
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+	var/atom/droploc = drop_location()
+	remove_pai()
+	eject_aicard()
+	internal_cell?.forceMove(droploc)
+	computer_id_slot?.forceMove(droploc)
+	//stored_id?.forceMove(droploc)
+	//alt_stored_id?.forceMove(droploc)
+	inserted_disk?.forceMove(droploc)
+	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
-		var/turf/newloc = get_turf(src)
-		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
+	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel()
+
+// Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
+/obj/item/modular_computer/proc/eject_aicard()
+	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
+	if (program)
+		return program.try_eject(forced = TRUE)
+	return FALSE
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()
@@ -873,6 +902,27 @@
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
+
+/obj/item/modular_computer/proc/remove_pai(mob/user)
+	if(!inserted_pai)
+		return FALSE
+	// MONKE EDIT: Not added
+	//if(inserted_pai.pai)
+	//	inserted_pai.pai.remove_messenger_ability()
+	if(user)
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+	else
+		inserted_pai.forceMove(drop_location())
+	inserted_pai = null
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+/// Get all stored files, including external disk files optionaly
+/obj/item/modular_computer/proc/get_files(include_disk_files = FALSE)
+	if(!include_disk_files || !inserted_disk)
+		return stored_files
+	return stored_files + inserted_disk.stored_files
 
 /// Returns how relevant the current security level is:
 #define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
