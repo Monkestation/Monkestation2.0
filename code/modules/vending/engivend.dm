@@ -11,6 +11,7 @@
 		/obj/item/multitool = 4,
 		/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
 		/obj/item/geiger_counter = 5,
+		/obj/item/storage/bag/construction = 5, //monkestation edit 
 		/obj/item/stock_parts/cell/high = 10,
 		/obj/item/electronics/airlock = 10,
 		/obj/item/electronics/apc = 10,

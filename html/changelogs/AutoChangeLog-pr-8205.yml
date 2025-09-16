@@ -1,0 +1,4 @@
+author: "Tractor Maam"
+delete-after: True
+changes:
+  - bugfix: "Virus Food is no longer impossible to create. As a result, you have to heat it to 400k now instead of cooling it to 200k."

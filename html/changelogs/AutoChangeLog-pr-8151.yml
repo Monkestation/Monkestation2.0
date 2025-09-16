@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Roundend ckey censoring is now one pref instead of two, and it censors AI/borg player ckeys."

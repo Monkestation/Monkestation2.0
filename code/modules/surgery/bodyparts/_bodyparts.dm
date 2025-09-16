@@ -206,6 +206,9 @@
 	var/datum/color_palette/palette
 	var/palette_key
 
+	///limb flags for the specific limb
+	var/limb_flags
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -391,7 +394,7 @@
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
-		if(do_after(user, 54, target = src))
+		if(do_after(user, 5.4 SECONDS, target = src))
 			drop_organs(user, TRUE)
 	else
 		return ..()
@@ -455,6 +458,18 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
+
+	// Limbs heal 1 damage per tick from the corresponding brute/burn kit passively
+	if(limb_flags & LIMB_KITTED_BRUTE)
+		if(brute_dam <= 0)
+			limb_flags &= ~LIMB_KITTED_BRUTE
+		else
+			heal_damage(1, 0)
+	if(limb_flags & LIMB_KITTED_BURN)
+		if(burn_dam <= 0)
+			limb_flags &= ~LIMB_KITTED_BURN
+		else
+			heal_damage(0, 1)
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -561,8 +576,10 @@
 	if(can_inflict <= 0)
 		return FALSE
 	if(brute)
+		limb_flags &= ~LIMB_KITTED_BRUTE
 		set_brute_dam(brute_dam + brute)
 	if(burn)
+		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
 
 	if(owner)

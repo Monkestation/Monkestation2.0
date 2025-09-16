@@ -1,4 +1,0 @@
-author: "Addust"
-delete-after: True
-changes:
-  - bugfix: "is your telecomms relay running? (the one on centcom isn't anymore)"
