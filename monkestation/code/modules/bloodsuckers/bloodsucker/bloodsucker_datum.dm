@@ -197,8 +197,9 @@
 	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
-	cleanup_limbs(current_mob)
+
 	cleanup_tracker()
+	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
