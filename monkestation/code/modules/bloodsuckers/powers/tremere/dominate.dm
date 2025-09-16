@@ -151,10 +151,9 @@
 				return FALSE
 			target.mind?.grab_ghost()
 			target.revive(ADMIN_HEAL_ALL)
-		power_activated_sucessfully(get_vassalize_cooldown())
+		power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 		to_chat(user, span_warning("We revive [target]!"))
 		owner.balloon_alert(owner, "successfully revived!")
-		pay_cost(TEMP_VASSALIZE_COST - bloodcost)
 		log_combat(owner, target, "tremere revived", addition = "Revived their vassal using dominate")
 		return FALSE
 	var/datum/antagonist/vassal/vassal_datum = bloodsuckerdatum_power.make_vassal(target, TREMERE_VASSAL) //don't turn them into a favorite please
@@ -172,7 +171,7 @@
 		target.mind?.grab_ghost(TRUE)
 		target.revive(ADMIN_HEAL_ALL)
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
-	power_activated_sucessfully(get_vassalize_cooldown())
+	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))
 	var/living_time = get_vassal_duration()
 	log_combat(owner, target, "tremere mindslaved", addition = "Revived and converted [target] into a temporary tremere vassal for [DisplayTimeText(living_time)].")
@@ -186,7 +185,6 @@
 	vassals[vassal_datum] = timer_id
 	RegisterSignals(target, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	RegisterSignal(target.mind, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antag_datum_removal))
-	pay_cost(TEMP_VASSALIZE_COST - bloodcost)
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/victim_has_blood(mob/living/target)
