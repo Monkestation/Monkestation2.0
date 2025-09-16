@@ -49,12 +49,11 @@
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
-			did_the_thing = TRUE
-			atom_integrity += min(10, (max_integrity - atom_integrity))
-			audible_message(span_hear("You hear welding."))
-		else
+		if(!welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
 			break
+		did_the_thing = TRUE
+		atom_integrity += min(10, (max_integrity - atom_integrity))
+		audible_message(span_hear("You hear welding."))
 	if(did_the_thing)
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
@@ -122,12 +121,11 @@
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
-			did_the_thing = TRUE
-			atom_integrity += min(10, (max_integrity - atom_integrity))
-			audible_message(span_hear("You hear welding."))
-		else
+		if(!welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
 			break
+		did_the_thing = TRUE
+		atom_integrity += min(10, (max_integrity - atom_integrity))
+		audible_message(span_hear("You hear welding."))
 	if(did_the_thing)
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
