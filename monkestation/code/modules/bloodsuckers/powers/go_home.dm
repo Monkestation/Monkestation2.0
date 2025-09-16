@@ -93,7 +93,7 @@
 				continue
 			if(watchers.is_blind())
 				continue
-			if(!IS_BLOODSUCKER(watchers) && !IS_VASSAL(watchers) && !HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
+			if(!HAS_MIND_TRAIT(watchers, TRAIT_BLOODSUCKER_ALIGNED) && !HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
 				drop_item = TRUE
 				break
 	// Drop all necessary items (handcuffs, legcuffs, items if seen)

@@ -72,7 +72,7 @@
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		if(!do_after(user, 20, target = src))
+		if(!do_after(user, 2 SECONDS, target = src))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
 			return
@@ -102,7 +102,7 @@
 		balloon_alert(user, "you start to insert the board...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		if(!do_after(user, 10, target = src) || has_electronics)
+		if(!do_after(user, 1 SECONDS, target = src) || has_electronics)
 			return
 
 		has_electronics = APC_ELECTRONICS_INSTALLED
@@ -150,7 +150,7 @@
 		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
-			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
+			if(do_after(user, 2 SECONDS, target = src)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
 				update_integrity(30) //needs to be welded to fully repair but can work without
@@ -163,7 +163,7 @@
 			return
 		user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
 		balloon_alert(user, "replacing damaged frame...")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			balloon_alert(user, "replaced frame")
 			qdel(attacking_object)
 			set_machine_stat(machine_stat & ~BROKEN)

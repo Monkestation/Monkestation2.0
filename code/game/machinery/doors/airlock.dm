@@ -1136,7 +1136,7 @@
 		if(check_access_list(fake.access))
 			user.visible_message("<span class='warning'>[user] starts fumbling at \the [src] with a piece of paper!</span>", "<span class='userwarning'>You start swiping \the [fake] in \the [src]!</span>")
 			playsound(src, 'sound/items/handling/paper_pickup.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
-			if(do_after(user, 50, src))
+			if(do_after(user, 5 SECONDS, src))
 				if(open()) //only take a use away if the door actually opens
 					playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 					fake.used()

@@ -180,7 +180,7 @@
 	if(!isnull(user.legcuffed))
 		possible_limbs -= list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/retractable_limbs = list()
-	for(var/zone as anything in possible_limbs)
+	for(var/zone in possible_limbs)
 		var/obj/item/bodypart/limb = user.get_bodypart(zone)
 		if(!isnull(limb))
 			retractable_limbs[limb] = limb.appearance
