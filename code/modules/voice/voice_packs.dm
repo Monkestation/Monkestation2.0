@@ -1,4 +1,4 @@
-#define VOICE_PACKS_FILE "config/monkestation/voice_asfapacks.toml"
+#define VOICE_PACKS_FILE "config/monkestation/voice_packs.toml"
 
 /proc/get_voice_pack_sound(voice_pack_obj, group_path, sound_name)
 	var/sound_path = voice_pack_obj[sound_name]
