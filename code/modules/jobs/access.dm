@@ -43,21 +43,19 @@
 	else if(check_access(accessor.get_active_held_item()) && !istype(accessor.get_active_held_item(), /obj/item/card/id/fake_card))
 		return TRUE
 	//if they are carying a card that has access, that works
-	else if(isliving(accessor))
-		var/mob/living/being = accessor
-		if(check_access(being.get_idcard(TRUE)))
-			return TRUE
-	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
 		if(check_access(human_accessor.wear_id) && !istype(human_accessor.wear_id, /obj/item/card/id/fake_card))
 			return TRUE
-	//monkestation edit start
+	//if they have a hacky abstract animal ID with the required access, let them in i guess...
+	else if(isanimal(accessor))
+		var/mob/living/simple_animal/animal = accessor
+		if(check_access(animal.access_card))
+			return TRUE
 	else if(istype(accessor, /mob/living/basic/possession_holder))
 		var/mob/living/basic/possession_holder/animal = accessor
 		if(check_access(animal.id))
 			return TRUE
-	//monkestation edit end
 	//if they have a hacky abstract animal ID with the required access, let them in i guess...
 	else if(isanimal(accessor))
 		var/mob/living/simple_animal/animal = accessor

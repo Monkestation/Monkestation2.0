@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(species?.inert_mutation)
 		if(islist(species.inert_mutation))
 			var/list/inert_mutations = species.inert_mutation
-			for(var/mutation as anything in inert_mutations)
+			for(var/mutation in inert_mutations)
 				mutations_temp += GET_INITIALIZED_MUTATION(mutation)
 		else
 			mutations_temp += GET_INITIALIZED_MUTATION(species.inert_mutation)

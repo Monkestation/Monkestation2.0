@@ -436,3 +436,140 @@
   - bugfix: Fixes oozelings having their burn modifier applied twice.
   Xander3359:
   - rscadd: Blueshield and brig physician have had their ID access updated.
+2025-09-13:
+  Absolucy:
+  - bugfix: (GoldenAlpharex) Makes checks for the station z level more robust against
+      coders doing less intuitive stuff, thus protecting it from breaking in weirdly
+      difficult and seemingly unrelated places (I'm looking at you, nuke cinematic
+      unit test).
+  - code_imp: (timothymtorres) Add multi-z helper function.
+  Addust:
+  - bugfix: is your telecomms relay running? (the one on centcom isn't anymore)
+  EssentialTomato:
+  - bugfix: Fixed being unable to scoop up ice cream from the vat.
+  - bugfix: Fixed plushies and the nuclear authentication disk not wanting to be tucked
+      in bed. (It's bedtime, go to sleep.)
+  - bugfix: Fixed plushies being silent when hitting someone with them.
+  - bugfix: Fixed being unable to roast sausages on the singularity.
+  Ice-Type:
+  - code_imp: Adds a fauna_mod variable, that can be used to add a damage multiplier
+      against lavaland fauna to any projectile.
+  JohnFulpWillard:
+  - qol: Roundend ckey censoring is now one pref instead of two, and it censors AI/borg
+      player ckeys.
+  Lawlolawl:
+  - bugfix: 'Fixed toolset cybernetic implant multitool retraction issue when using
+      APC scanner feature. Hint: use in hand for APC scanning, right-click on the
+      item in hand to retract! (Or use the UI button.)'
+  Some Guy Who's Extremely Inanely Unfathomably Mad At People Misspelling Ratvar:
+  - spellcheck: Rends the final misspelled Ratvar from the face of the cosmos, cementing
+      the spelling of He on Reebe's name forever more as R A T V A R. NO APOSTROPHE.
+  - spellcheck: also the ratvarians are once again better at poetry
+  ThePooba:
+  - rscadd: adds beetmin, lil beet mobs that skidaddle and spawn from vent clogs
+  - bugfix: fixes rack and reinforced table unwrenching
+  - balance: mining guardian limited to one
+  - balance: reduces laser damage for base lasers and hellfire to 22 from 25
+  - bugfix: fixes asteroid tiles showing funny turfs
+  - bugfix: personal lockers can be opened
+  - bugfix: bots can be accessed
+  - balance: shipbreaker gives ~50% more cash to player
+  Xander3359:
+  - code_imp: (necromanceranne) The paper mache robe now works a bit better under
+      the hood.
+  - balance: (Improvedname) Weakens summoned stickmen to be 1 or 2 hit
+  - bugfix: voltaic heart uses interaction for anomaly installation
+  notghosti:
+  - qol: ' Surgical processor is stored in belts also now'
+  throwawayuseless:
+  - balance: Acarp DD combo now does oxy damage instead of brute, to preserve it's
+      nonlethal nature from Scarp.
+  - balance: Acarp can now snap necks while strangling, not just while neckgrabbing.
+  - rscadd: You can lathe mining light beacons now.
+2025-09-14:
+  RandomDudeFromTheRim:
+  - spellcheck: fixed a SINGLE typo in the brigphys' toolbox's name
+  Xander3359:
+  - bugfix: You can now deconstruct a deforest wallmed with a wrench
+  - qol: deforest wallmed will preserve biomass when deconstructed
+  - balance: deforest wallmed is now a bulky item
+2025-09-15:
+  Killermankey:
+  - rscadd: 75mm field cannon
+  - rscadd: 122mm howitzer
+  - bugfix: Widened Devitt so it looks better
+  - bugfix: Fixed 1 wrong word in Devitt's code
+2025-09-16:
+  Absolucy:
+  - bugfix: (Hopefully) fixed lathe/techfab UIs scrolling back to the beginning when
+      printing shit.
+  - rscadd: Ghost players can now hear deadchat.
+  - bugfix: Simians can now properly do changeling things.
+  - bugfix: Fixed trying to mine rocks with stuff that shouldn't be used to mine rocks.
+  - balance: The cooldowns for using the lava staff are now heavily reduce on lavaland,
+      making it far more viable to use the staff to terraform lavaland with it.
+  - rscadd: Tremere Dominate's revival now works on oozeling cores.
+  - balance: Tremere Obfuscation now makes you near-invisible again by default, however
+      if you attack someone, or are attacked, you will become much more visible for
+      a bit.
+  - balance: Bloodsuckers will always get 3 free ranks from Sol, even if they level
+      up through other means beforehand (via feeding sentient blood, or tremere vassalizing
+      someone)
+  - rscadd: Bloodsuckers now apply a temporary blood regeneration status effect to
+      people they feed off of after they're done (if the victim is still alive)
+  - rscdel: Removed the "steal organic hearts" and "drink X amount of blood" objective
+      for bloodsuckers.
+  - rscadd: Bloodsuckers will now always get an objective related to vassalization.
+  - code_imp: Improved some code for Tremere's Thaumaturgy.
+  - bugfix: Bloodsucker punch damage is properly applied to arms and legs now, even
+      if they're replaced.
+  - qol: Bloodsucker night vision doesn't suck ass anymore.
+  - balance: Favorite Vassals who become a Bloodsucker can no longer join a Clan,
+      they are still apart of their Master and way too young to do their own stuff.
+  - qol: Favorite Vassals who become a Bloodsucker now have their Vassal antag button
+      removed, to avoid the action bar becoming too cluttered.
+  - bugfix: Fixed Tremere's Dominate using the cooldown as the blood cost when reviving
+      someone.
+  Absolucy, kuricityy:
+  - balance: Buffs godslayer armor values to be worth the effort you have to put in
+      to getting it.
+  EssentialTomato:
+  - bugfix: (Lufferly) Destroyed solar panels no longer drop their overlays
+  JupiterJaeden:
+  - rscdel: Removes the passive drain from stun batons.
+  - rscadd: Harmbatonning with a baton on will now cause you to accidentally stun
+      yourself. Better be careful!
+  - bugfix: Fixes a minor animation glitch with clumsy baton self-stunning.
+  KittyNoodle:
+  - bugfix: Fixed ethereal hair not updating.
+  LettuceGuardian:
+  - rscadd: EMT hardened helmet 'Extractor' now available from solfed imports.
+  - rscadd: EMP shielding and holsters can now be bought from cargo.
+  - rscadd: Donk Co vending machines and refills can now be found in their contraband
+      import section. Maybe theres a reason NT doesn't want you to get these so easily.
+  - qol: Synthetic care pens now available from medforest imports.
+  - qol: Synth pens have replaced the patches found inside robotic care medkits.
+  - balance: Hardened armour melee and bullet resistances have gone up to level 3.
+  - image: Added icons for the extractor helmet.
+  Shoddd:
+  - balance: dragnet no longer bolas people
+  - balance: dragnet snares now take one second to deploy
+  ThePooba:
+  - bugfix: fixed morbital recipe
+  - rscadd: Adds morbital. it makes you cringe and your blood hurt and if you drink
+      250 of it you turn into morbius
+  - bugfix: makes bone hurting juice hurting bones again and slightly less terrible
+  - admin: fixed spawn menus
+  - rscadd: new poster in game telling people to join admin
+  Tractor Maam:
+  - bugfix: Virus Food is no longer impossible to create. As a result, you have to
+      heat it to 400k now instead of cooling it to 200k.
+  Xander3359:
+  - rscadd: DeForest now sells unique bruise and burn packs
+  - bugfix: fix being unable to cast blood spells
+  notghosti:
+  - rscadd: Festering oozes are now considered a hazardous organ.
+  throwawayuseless:
+  - bugfix: update some interactions to the new system
+  wonderinghost:
+  - rscadd: Engi Vend vendors now stock with Construction bags
