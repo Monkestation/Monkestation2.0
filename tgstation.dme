@@ -8895,7 +8895,6 @@
 #include "monkestation\code\modules\virology\disease\symtoms\deadly\flesh_eating.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\deadly\killer_dna.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\deadly\killer_toxins.dm"
-#include "monkestation\code\modules\virology\disease\symtoms\deadly\magnitis.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\deadly\rhumba_beat.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\beard.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\disfigured.dm"
