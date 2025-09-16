@@ -219,7 +219,7 @@
 	. = ..()
 	if(stored)
 		balloon_alert(user, "removing blackbox...")
-		if(do_after(user, 60, target = src))
+		if(do_after(user, 6 SECONDS, target = src))
 			stored.forceMove(drop_location())
 			if(Adjacent(user))
 				user.put_in_hands(stored)

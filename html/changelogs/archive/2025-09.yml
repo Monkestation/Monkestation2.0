@@ -443,9 +443,24 @@
       difficult and seemingly unrelated places (I'm looking at you, nuke cinematic
       unit test).
   - code_imp: (timothymtorres) Add multi-z helper function.
+  Addust:
+  - bugfix: is your telecomms relay running? (the one on centcom isn't anymore)
+  EssentialTomato:
+  - bugfix: Fixed being unable to scoop up ice cream from the vat.
+  - bugfix: Fixed plushies and the nuclear authentication disk not wanting to be tucked
+      in bed. (It's bedtime, go to sleep.)
+  - bugfix: Fixed plushies being silent when hitting someone with them.
+  - bugfix: Fixed being unable to roast sausages on the singularity.
   Ice-Type:
   - code_imp: Adds a fauna_mod variable, that can be used to add a damage multiplier
       against lavaland fauna to any projectile.
+  JohnFulpWillard:
+  - qol: Roundend ckey censoring is now one pref instead of two, and it censors AI/borg
+      player ckeys.
+  Lawlolawl:
+  - bugfix: 'Fixed toolset cybernetic implant multitool retraction issue when using
+      APC scanner feature. Hint: use in hand for APC scanning, right-click on the
+      item in hand to retract! (Or use the UI button.)'
   Some Guy Who's Extremely Inanely Unfathomably Mad At People Misspelling Ratvar:
   - spellcheck: Rends the final misspelled Ratvar from the face of the cosmos, cementing
       the spelling of He on Reebe's name forever more as R A T V A R. NO APOSTROPHE.
@@ -463,7 +478,24 @@
   - code_imp: (necromanceranne) The paper mache robe now works a bit better under
       the hood.
   - balance: (Improvedname) Weakens summoned stickmen to be 1 or 2 hit
+  - bugfix: voltaic heart uses interaction for anomaly installation
+  notghosti:
+  - qol: ' Surgical processor is stored in belts also now'
   throwawayuseless:
   - balance: Acarp DD combo now does oxy damage instead of brute, to preserve it's
       nonlethal nature from Scarp.
   - balance: Acarp can now snap necks while strangling, not just while neckgrabbing.
+  - rscadd: You can lathe mining light beacons now.
+2025-09-14:
+  RandomDudeFromTheRim:
+  - spellcheck: fixed a SINGLE typo in the brigphys' toolbox's name
+  Xander3359:
+  - bugfix: You can now deconstruct a deforest wallmed with a wrench
+  - qol: deforest wallmed will preserve biomass when deconstructed
+  - balance: deforest wallmed is now a bulky item
+2025-09-15:
+  Killermankey:
+  - rscadd: 75mm field cannon
+  - rscadd: 122mm howitzer
+  - bugfix: Widened Devitt so it looks better
+  - bugfix: Fixed 1 wrong word in Devitt's code

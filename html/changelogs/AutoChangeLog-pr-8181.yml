@@ -1,4 +1,0 @@
-author: "Lawlolawl"
-delete-after: True
-changes:
-  - bugfix: "Fixed toolset cybernetic implant multitool retraction issue when using APC scanner feature. Hint: use in hand for APC scanning, right-click on the item in hand to retract! (Or use the UI button.)"
