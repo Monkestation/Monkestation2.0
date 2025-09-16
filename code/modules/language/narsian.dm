@@ -1,6 +1,6 @@
 /datum/language/narsie
-	name = "Nar'Sian"
-	desc = "The ancient, blood-soaked, impossibly complex language of Nar'Sian cultists."
+	name = "Nar'Sien"
+	desc = "The ancient, blood-soaked, impossibly complex language of Nar'Sien cultists."
 	key = "n"
 	sentence_chance = 8
 	space_chance = 95 //very high due to the potential length of each syllable
