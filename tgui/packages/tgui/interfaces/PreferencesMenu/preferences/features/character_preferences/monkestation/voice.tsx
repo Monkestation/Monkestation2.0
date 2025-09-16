@@ -26,7 +26,7 @@ const FeatureBarkDropdownInput = (
       <Stack.Item>
         <Button
           onClick={() => {
-            props.act('open_bark_screen');
+            props.act('open_voice_screen');
           }}
           width="100%"
           height="100%"
