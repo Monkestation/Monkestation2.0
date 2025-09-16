@@ -29,23 +29,27 @@
 	fire = 80
 	acid = 10
 
-/obj/vehicle/ridden/artillerylight/welder_act(mob/living/user, obj/item/W)
-	if((user.istate & ISTATE_HARM))
+/obj/vehicle/ridden/artillerylight/Initialize(mapload)
+	. = ..()
+	add_overlay(image(icon, "artillery_light_cover", ABOVE_MOB_LAYER))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
+
+/obj/vehicle/ridden/artillerylight/welder_act(mob/living/user, obj/item/welder)
+	if(user.istate & ISTATE_HARM)
 		return NONE
-	. = ITEM_INTERACT_SUCCESS
-	if(DOING_INTERACTION(user, src))
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		balloon_alert(user, "you're already repairing it!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
-		return
-	if(!W.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!welder.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 1.3 SECONDS, volume=50, amount=1))
+		if(welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
@@ -55,19 +59,16 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	return ITEM_INTERACT_SUCCESS
 
-
-/obj/vehicle/ridden/artillerylight/Initialize(mapload)
-	. = ..()
-	add_overlay(image(icon, "artillery_light_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
-
-/obj/vehicle/ridden/artillerylight/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
-	. = ..()
-	if(!can_be_undeployed || !ishuman(user) || DOING_INTERACTION_WITH_TARGET(user, src))
-		return
-	user.balloon_alert(user, "deploying...")
-	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
+/obj/vehicle/ridden/artillerylight/wrench_act(mob/living/user, obj/item/wrench)
+	if(!can_be_undeployed || !ishuman(user) || (user.istate & ISTATE_HARM))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		balloon_alert(user, "you're already undeploying it!")
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, "undeploying...")
+	if(wrench.use_tool(src, user, undeploy_time, volume = 50))
 		new spawned_on_undeploy(get_turf(src))
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -101,23 +102,27 @@
 	fire = 80
 	acid = 10
 
-/obj/vehicle/ridden/artilleryheavy/welder_act(mob/living/user, obj/item/W)
-	if((user.istate & ISTATE_HARM))
+/obj/vehicle/ridden/artilleryheavy/Initialize(mapload)
+	. = ..()
+	add_overlay(image(icon, "m1938_cover", ABOVE_MOB_LAYER))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
+
+/obj/vehicle/ridden/artilleryheavy/welder_act(mob/living/user, obj/item/welder)
+	if(user.istate & ISTATE_HARM)
 		return NONE
-	. = ITEM_INTERACT_SUCCESS
-	if(DOING_INTERACTION(user, src))
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		balloon_alert(user, "you're already repairing it!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
-		return
-	if(!W.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!welder.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 1.3 SECONDS, volume=50, amount=1))
+		if(welder.use_tool(src, user, 1.3 SECONDS, volume = 50, amount = 1))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
@@ -127,18 +132,16 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/artilleryheavy/Initialize(mapload)
-	. = ..()
-	add_overlay(image(icon, "m1938_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/artillery_light)
-
-/obj/vehicle/ridden/artilleryheavy/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
-	. = ..()
-	if(!can_be_undeployed || !ishuman(user) || DOING_INTERACTION_WITH_TARGET(user, src))
-		return
-	user.balloon_alert(user, "deploying...")
-	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
+/obj/vehicle/ridden/artilleryheavy/wrench_act(mob/living/user, obj/item/wrench)
+	if(!can_be_undeployed || !ishuman(user) || (user.istate & ISTATE_HARM))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		balloon_alert(user, "you're already undeploying it!")
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, "undeploying...")
+	if(wrench.use_tool(src, user, undeploy_time, volume = 50))
 		new spawned_on_undeploy(get_turf(src))
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
