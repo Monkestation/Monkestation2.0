@@ -64,16 +64,12 @@
 
 /obj/vehicle/ridden/artillerylight/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
 	. = ..()
-	if(!can_be_undeployed)
+	if(!can_be_undeployed || !ishuman(user) || DOING_INTERACTION_WITH_TARGET(user, src))
 		return
-	if(!ishuman(user))
-		return
-	used_wrench.play_tool_sound(user)
-	user.balloon_alert(user,"deploying...")
-	if(!do_after(user, undeploy_time))
-		return
-	var/obj/undeployed_obj = new spawned_on_undeploy(get_turf(src))
-	qdel(src)
+	user.balloon_alert(user, "deploying...")
+	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
+		new spawned_on_undeploy(get_turf(src))
+		qdel(src)
 
 
 /obj/vehicle/ridden/artilleryheavy
@@ -139,16 +135,12 @@
 
 /obj/vehicle/ridden/artilleryheavy/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
 	. = ..()
-	if(!can_be_undeployed)
+	if(!can_be_undeployed || !ishuman(user) || DOING_INTERACTION_WITH_TARGET(user, src))
 		return
-	if(!ishuman(user))
-		return
-	used_wrench.play_tool_sound(user)
-	user.balloon_alert(user,"deploying...")
-	if(!do_after(user, undeploy_time))
-		return
-	var/obj/undeployed_obj = new spawned_on_undeploy(get_turf(src))
-	qdel(src)
+	user.balloon_alert(user, "deploying...")
+	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
+		new spawned_on_undeploy(get_turf(src))
+		qdel(src)
 
 
 
