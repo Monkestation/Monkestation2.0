@@ -2,7 +2,7 @@
 	filename = "modsuit_control"
 	filedesc = "MODsuit Control"
 	program_icon_state = "modsuit_control"
-	category = PROGRAM_CATEGORY_SCI
+	category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "This program allows people to connect a MODsuit to it, allowing remote control."
 	size = 2
 	tgui_id = "NtosMODsuit"

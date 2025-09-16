@@ -2,13 +2,13 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	transfer_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_BRIG_PHYSICIAN, ACCESS_DETECTIVE)
-	category = PROGRAM_CATEGORY_CREW
+	download_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_BRIG_PHYSICIAN, ACCESS_DETECTIVE)
+	category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR (classic)
 	program_icon_state = "radarntos"
 	// requires_ntnet = TRUE -- disabled to be constistent with the paramedic's crew monitor
 	available_on_ntnet = TRUE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	usage_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosLifeline"
 	program_icon = "heartbeat"

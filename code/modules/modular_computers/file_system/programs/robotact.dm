@@ -1,14 +1,14 @@
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
-	category = PROGRAM_CATEGORY_SCI
+	category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	undeletable = TRUE
-	usage_flags = PROGRAM_TABLET
+	usage_flags = PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
