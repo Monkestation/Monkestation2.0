@@ -10,16 +10,17 @@
 	SET_BASE_PIXEL(-24, 0)
 	max_buckled_mobs = 1
 	max_occupants = 1
-	pass_flags_self = null
+	pass_flags_self = NONE
 	max_integrity = 300
 	cover_amount = 66
 	armor_type = /datum/armor/artillery
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/can_be_undeployed = TRUE
 	var/always_anchored = TRUE
 	var/undeploy_time = 3 SECONDS
-	move_force = MOVE_FORCE_VERY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/spawned_on_undeploy = /obj/machinery/deployable_turret/artillerylight
+
 /datum/armor/artillery
 	melee = 10
 	bullet = 80
@@ -28,11 +29,10 @@
 	fire = 80
 	acid = 10
 
-
 /obj/vehicle/ridden/artillerylight/welder_act(mob/living/user, obj/item/W)
 	if((user.istate & ISTATE_HARM))
-		return
-	. = TRUE
+		return NONE
+	. = ITEM_INTERACT_SUCCESS
 	if(DOING_INTERACTION(user, src))
 		balloon_alert(user, "you're already repairing it!")
 		return
@@ -82,16 +82,17 @@
 	SET_BASE_PIXEL(-40, 0)
 	max_buckled_mobs = 1
 	max_occupants = 1
-	pass_flags_self = null
+	pass_flags_self = NONE
 	max_integrity = 450
 	cover_amount = 88
 	armor_type = /datum/armor/artillery
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/can_be_undeployed = TRUE
 	var/always_anchored = TRUE
 	var/undeploy_time = 6 SECONDS
-	move_force = MOVE_FORCE_VERY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/spawned_on_undeploy = /obj/machinery/deployable_turret/artilleryheavy
+
 /datum/armor/artillery
 	melee = 10
 	bullet = 80
@@ -100,11 +101,10 @@
 	fire = 80
 	acid = 10
 
-
 /obj/vehicle/ridden/artilleryheavy/welder_act(mob/living/user, obj/item/W)
 	if((user.istate & ISTATE_HARM))
-		return
-	. = TRUE
+		return NONE
+	. = ITEM_INTERACT_SUCCESS
 	if(DOING_INTERACTION(user, src))
 		balloon_alert(user, "you're already repairing it!")
 		return
@@ -127,7 +127,6 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-
 
 /obj/vehicle/ridden/artilleryheavy/Initialize(mapload)
 	. = ..()
