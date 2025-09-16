@@ -499,3 +499,22 @@
   - rscadd: 122mm howitzer
   - bugfix: Widened Devitt so it looks better
   - bugfix: Fixed 1 wrong word in Devitt's code
+2025-09-16:
+  Absolucy:
+  - bugfix: (Hopefully) fixed lathe/techfab UIs scrolling back to the beginning when
+      printing shit.
+  - rscadd: Ghost players can now hear deadchat.
+  - bugfix: Simians can now properly do changeling things.
+  Absolucy, kuricityy:
+  - balance: Buffs godslayer armor values to be worth the effort you have to put in
+      to getting it.
+  Tractor Maam:
+  - bugfix: Virus Food is no longer impossible to create. As a result, you have to
+      heat it to 400k now instead of cooling it to 200k.
+  Xander3359:
+  - rscadd: DeForest now sells unique bruise and burn packs
+  - bugfix: fix being unable to cast blood spells
+  notghosti:
+  - rscadd: Festering oozes are now considered a hazardous organ.
+  wonderinghost:
+  - rscadd: Engi Vend vendors now stock with Construction bags
