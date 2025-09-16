@@ -1,7 +1,8 @@
 ## Title: <!--Title of your addition-->
 
 <!-- uppercase, underscore_connected name of your module, that you use to mark files-->
-MODULE ID: WIREMOD_CHEM 
+
+MODULE ID: WIREMOD_CHEM
 
 ### Description:
 
@@ -16,7 +17,6 @@ This PR aims to replace plumbing with a wiremod varient
 ### Defines:
 
 <!-- If you needed to add any defines, mention the files you added those defines in -->
-	
 
 ### Master file additions
 
@@ -32,4 +32,5 @@ This PR aims to replace plumbing with a wiremod varient
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Orignal Coders -->
 <!-- Orignal Coders -->
+
 Coded by Dwasint
