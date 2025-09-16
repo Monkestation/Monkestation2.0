@@ -1193,7 +1193,7 @@
 			affected_mob.say("I SOLD ONE MORBILLION TICKETS!", forced = /datum/reagent/toxin/morbital)
 		if(volume >= 250 && transform == 1)
 			affected_mob.set_species(/datum/species/vampire)
-			affected_mob.say("NOW WERE MORBIN", forced = /datum/reagent/toxin/morbital)
+			affected_mob.say("NOW WE'RE MORBIN", forced = /datum/reagent/toxin/morbital)
 			transform = 0
 	return ..()
 
