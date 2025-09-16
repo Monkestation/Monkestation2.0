@@ -199,7 +199,7 @@
 	// autotarget if we aim at a turf
 	if(isturf(target))
 		var/list/targets = list()
-		for(var/mob/living/possible_target as anything in orange(1, target))
+		for(var/mob/living/possible_target in orange(1, target))
 			if(!ismob(possible_target))
 				continue
 			if(possible_target == user)

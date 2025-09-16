@@ -179,8 +179,8 @@
 /obj/machinery/vending/proc/remove_products(list/paths_to_remove)
 	if(!length(paths_to_remove))
 		return
-	for(var/typepath as anything in products)
-		for(var/to_remove as anything in paths_to_remove)
+	for(var/typepath in products)
+		for(var/to_remove in paths_to_remove)
 			if(ispath(typepath, to_remove))
 				products.Remove(typepath)
 

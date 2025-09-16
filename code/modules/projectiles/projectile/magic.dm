@@ -22,7 +22,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -52,7 +52,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -81,7 +81,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
