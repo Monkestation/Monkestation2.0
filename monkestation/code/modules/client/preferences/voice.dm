@@ -12,18 +12,18 @@
 
 	action_delegations = list(
 		"play_bark" = PROC_REF(play_bark),
-		"open_bark_screen" = PROC_REF(open_bark_screen),
+		"open_voice_screen" = PROC_REF(open_voice_screen),
 	)
-	var/datum/bark_screen/bark_screen
+	var/datum/voice_screen/voice_screen
 	var/atom/movable/barker
 
-/datum/preference_middleware/bark/proc/open_bark_screen(list/params, mob/user)
-	if(bark_screen)
-		bark_screen.ui_interact(user)
+/datum/preference_middleware/bark/proc/open_voice_screen(list/params, mob/user)
+	if(voice_screen)
+		voice_screen.ui_interact(user)
 		return TRUE
 	else
-		bark_screen = new(src)
-		bark_screen.ui_interact(user)
+		voice_screen = new(src)
+		voice_screen.ui_interact(user)
 		return FALSE
 	// return TRUE
 

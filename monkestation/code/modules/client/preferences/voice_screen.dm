@@ -1,23 +1,23 @@
-/datum/bark_screen
+/datum/voice_screen
 	var/datum/preference_middleware/bark/owner
 
-/datum/bark_screen/New(datum/preference_middleware/bark/owner)
+/datum/voice_screen/New(datum/preference_middleware/bark/owner)
 	src.owner = owner
 
-/datum/bark_screen/Destroy(force)
+/datum/voice_screen/Destroy(force)
 	owner = null
 	return ..()
 
-/datum/bark_screen/ui_interact(mob/user, datum/tgui/ui)
+/datum/voice_screen/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "VoiceScreen")
 		ui.open()
 
-/datum/bark_screen/ui_state(mob/user)
+/datum/voice_screen/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/bark_screen/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/voice_screen/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -40,13 +40,13 @@
 		if("play")
 			usr.playsound_local(get_turf(usr), voicepack.sounds[1], 300 * voicepack.volume, FALSE, 1, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
-/datum/bark_screen/ui_data(mob/user)
+/datum/voice_screen/ui_data(mob/user)
 	var/list/data = list()
 
 	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/voice_pack)
 	return data
 
-/datum/bark_screen/ui_static_data()
+/datum/voice_screen/ui_static_data()
 	var/list/data = list()
 
 	data["voice_pack_groups"] = list()
