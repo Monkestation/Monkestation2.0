@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param obj/item/thing the item we're inserting
  * @param override skip feedback, only do animation check
  */
-/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
+/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
@@ -539,7 +539,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/newLoc where we're placing the item
  * @param silent if TRUE, we won't play any exit sounds
  */
-/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE)
+/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(newLoc)
 
 		if(rustle_sound && !silent)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 	else
 		thing.moveToNullspace()
 
@@ -762,7 +762,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
-/datum/storage/proc/dump_content_at(atom/dest_object, mob/user)
+/datum/storage/proc/dump_content_at(atom/dest_object, mob/user, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(locked)
 		return
 	if(!user.CanReach(parent) || !user.CanReach(dest_object))
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(rustle_sound)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			if(to_dump.loc != real_location)
@@ -796,6 +796,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	remove_all(dump_loc)
+	SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_ONTO_POST_TRANSFER, dest_object, user)
 
 /// Signal handler for whenever something gets mouse-dropped onto us.
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
@@ -953,7 +954,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/to_show, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return FALSE
 
@@ -996,7 +997,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	return TRUE
 

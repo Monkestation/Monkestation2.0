@@ -2544,14 +2544,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard)
-"aMy" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/machinery/gbp_redemption,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "aMU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -6105,17 +6097,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
-"bWI" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "bWP" = (
 /obj/structure/table,
 /obj/item/clothing/shoes/sneakers/orange{
@@ -22450,6 +22431,14 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"hcz" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "hcA" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/light/directional/north,
@@ -38189,6 +38178,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
+"lMY" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "lNe" = (
 /obj/docking_port/stationary/mining_home/common/kilo,
 /turf/open/floor/plating,
@@ -103558,7 +103558,7 @@ lbO
 lbO
 lbO
 dcf
-bWI
+lMY
 lbO
 fWu
 eVO
@@ -114612,7 +114612,7 @@ vZB
 xtC
 sPd
 gcq
-aMy
+hcz
 dEw
 okJ
 liB

@@ -228,6 +228,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_MUFFLED_SPEECH "muffspeech"
+
 #define SFX_BUTTON_CLICK "button_click"
 #define SFX_BUTTON_FAIL	"button_fail"
 #define SFX_LIGHTSWITCH	 "lightswitch"
@@ -240,3 +241,16 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_PORTAL_CLOSE "portal_closed"
 #define SFX_PORTAL_CREATED "portal_created"
 #define SFX_SCREECH "screech"
+
+#define SFX_DJSTATION_OPENTAKEOUT "djstation_opentakeout"
+#define SFX_DJSTATION_PUTINANDCLOSE "djstation_putinandclose"
+#define SFX_DJSTATION_OPENPUTINANDCLOSE "djstation_openputinandclose"
+#define SFX_DJSTATION_OPENTAKEOUTANDCLOSE "djstation_opentakeoutandclose"
+#define SFX_DJSTATION_PLAY "djstation_play"
+#define SFX_DJSTATION_STOP "djstation_stop"
+#define SFX_DJSTATION_TRACKSWITCH "djstation_trackswitch"
+
+#define SFX_CASSETTE_PUT_IN "cassette_tape_put_in"
+#define SFX_CASSETTE_TAKE_OUT "cassette_tape_take_out"
+#define SFX_CASSETTE_DUMP "cassette_tape_dump"
+#define SFX_CASSETTE_ASMR "cassette_tape_asmr"
