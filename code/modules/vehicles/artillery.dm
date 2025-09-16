@@ -70,7 +70,8 @@
 	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
 		new spawned_on_undeploy(get_turf(src))
 		qdel(src)
-
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/vehicle/ridden/artilleryheavy
 	name = "M1938 122mm Artillery Gun"
@@ -141,8 +142,5 @@
 	if(used_wrench.use_tool(src, user, undeploy_time, volume = 50))
 		new spawned_on_undeploy(get_turf(src))
 		qdel(src)
-
-
-
-
-
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
