@@ -772,7 +772,7 @@ const ModuleSection = (props) => {
                       width: '60px',
                     }}
                   >
-                    {formatPower(module.idle_power)}
+                    {formatSiUnit(module.idle_power, 0)}
                   </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
@@ -782,7 +782,7 @@ const ModuleSection = (props) => {
                       width: '60px',
                     }}
                   >
-                    {formatPower(module.active_power)}
+                    {formatSiUnit(module.active_power, 0)}
                   </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">
@@ -792,7 +792,7 @@ const ModuleSection = (props) => {
                       width: '60px',
                     }}
                   >
-                    {formatEnergy(module.use_energy)}
+                    {formatSiUnit(module.use_energy, 0)}
                   </div>
                 </Table.Cell>
                 <Table.Cell textAlign="center">

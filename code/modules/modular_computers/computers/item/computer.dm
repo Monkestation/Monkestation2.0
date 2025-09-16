@@ -451,7 +451,7 @@
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(use_energy()) // use_energy() checks if the PC is powered
+	if(use_energy(base_active_power_usage)) // use_energy() checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
@@ -698,7 +698,7 @@
  * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight(mob/user)
-	if(!has_light || !internal_cell || !internal_cell.charge)
+	if(!has_light || !internal_cell?.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(user, "disrupted!")
