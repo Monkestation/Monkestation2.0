@@ -19,11 +19,11 @@
 
 /datum/preference_middleware/bark/proc/open_bark_screen(list/params, mob/user)
 	if(bark_screen)
-		bark_screen.ui_interact(usr)
+		bark_screen.ui_interact(user)
 		return TRUE
 	else
 		bark_screen = new(src)
-		bark_screen.ui_interact(usr)
+		bark_screen.ui_interact(user)
 		return FALSE
 	// return TRUE
 

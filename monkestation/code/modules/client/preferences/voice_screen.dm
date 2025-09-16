@@ -4,6 +4,10 @@
 /datum/bark_screen/New(datum/preference_middleware/bark/owner)
 	src.owner = owner
 
+/datum/bark_screen/Destroy(force)
+	owner = null
+	return ..()
+
 /datum/bark_screen/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

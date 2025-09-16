@@ -1,4 +1,4 @@
-#define VOICE_PACKS_FILE "config/monkestation/voice_packs.toml"
+#define VOICE_PACKS_FILE "config/monkestation/voice_asfapacks.toml"
 
 /proc/get_voice_pack_sound(voice_pack_obj, group_path, sound_name)
 	var/sound_path = voice_pack_obj[sound_name]
@@ -13,27 +13,11 @@
 	if(!fexists(VOICE_PACKS_FILE))
 		log_config("No voice packs file found, generating fallback")
 
-		var/datum/voice_pack/voicepack = new()
-		voicepack.id = "fallback.fallback"
-		voicepack.name = "Fallback"
-		voicepack.group_name = "Fallback"
-		voicepack.sounds = list(
-			sound('sound/effects/adminhelp.ogg'),
-			sound('sound/effects/adminhelp.ogg'),
-			sound('sound/effects/adminhelp.ogg'),
-		)
-		voicepack.max_pitch = VOICE_DEFAULT_MAXPITCH
-		voicepack.min_pitch = VOICE_DEFAULT_MINPITCH
-		voicepack.max_speed = VOICE_DEFAULT_MAXSPEED
-		voicepack.min_speed = VOICE_DEFAULT_MINSPEED
-		voicepack.volume = 1
-		voicepack.hidden = FALSE
-		voicepack.is_goon = TRUE
-
-		GLOB.voice_pack_groups_visible["Fallback"] = list(voicepack)
-		GLOB.voice_pack_groups_all["Fallback"] = list(voicepack)
-		GLOB.random_voice_packs = list("fallback.fallback")
-		return list("fallback.fallback" = voicepack)
+		var/datum/voice_pack/fallback/voicepack = new()
+		GLOB.voice_pack_groups_visible[voicepack.group_name] = list(voicepack)
+		GLOB.voice_pack_groups_all[voicepack.group_name] = list(voicepack)
+		GLOB.random_voice_packs = list(voicepack.id)
+		return list(voicepack.id = voicepack)
 	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
 
 	var/list/voice_pack_list = list()
@@ -135,15 +119,30 @@
 	// 3 : exclaim
 	var/list/sounds
 
-	var/max_pitch
-	var/min_pitch
-	var/max_speed
-	var/min_speed
+	var/max_pitch = VOICE_DEFAULT_MAXPITCH
+	var/min_pitch = VOICE_DEFAULT_MINPITCH
+	var/max_speed = VOICE_DEFAULT_MAXSPEED
+	var/min_speed = VOICE_DEFAULT_MINSPEED
 	var/volume = 1
 
 	var/hidden = TRUE
 
 	var/is_goon
 	var/datum/voice_pack/goon_equiv
+
+/datum/voice_pack/fallback
+	name = "Fallback"
+	id = "fallback.fallback"
+	group_name = "Fallback"
+
+	sounds = list(
+		sound('sound/effects/adminhelp.ogg'),
+		sound('sound/effects/adminhelp.ogg'),
+		sound('sound/effects/adminhelp.ogg'),
+	)
+	hidden = FALSE
+
+	is_goon = TRUE
+
 
 #undef VOICE_PACKS_FILE
