@@ -39,7 +39,7 @@
 
 // Operates TGUI
 /obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
-	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY) || !use_energy())
+	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY))
 		ui?.close()
 		return
 
