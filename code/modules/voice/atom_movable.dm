@@ -6,8 +6,7 @@
 /atom/movable/proc/initial_voice_pack_id()
 	return null
 
-/atom/movable/proc/get_voice()
-	RETURN_TYPE(/datum/atom_voice/)
+/atom/movable/proc/get_voice() as /datum/atom_voice
 	if (voice)
 		return voice
 	voice = new()

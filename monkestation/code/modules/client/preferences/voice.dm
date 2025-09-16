@@ -39,7 +39,7 @@
 	return TRUE
 
 /datum/preference_middleware/bark/Destroy()
-	qdel(barker)
+	QDEL_NULL(barker)
 	return ..()
 
 /*

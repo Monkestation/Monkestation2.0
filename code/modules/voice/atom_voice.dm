@@ -81,7 +81,7 @@
 	for (var/i in 0 to num_barks)
 		if (total_delay > (1.5 SECONDS))
 			break
-		addtimer(CALLBACK(src, /datum/atom_voice/proc/short_bark, hearers, sound_range, volume, speaker.long_bark_start_time, speaker), total_delay)
+		addtimer(CALLBACK(src, PROC_REF(short_bark), hearers, sound_range, volume, speaker.long_bark_start_time, speaker), total_delay)
 		total_delay += (DS2TICKS(base_duration) + rand(DS2TICKS(base_duration * (is_yell ? 0.5 : 1)))) TICKS
 	return total_delay
 

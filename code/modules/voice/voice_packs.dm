@@ -51,10 +51,9 @@
 			stack_trace("Group " + group_id + " has no name")
 			continue
 
-		for (var/voice_pack_id in group_obj)
+		for (var/voice_pack_id, voice_pack_obj in group_obj)
 			if (voice_pack_id == "name" || voice_pack_id == "path")
 				continue
-			var/voice_pack_obj = group_obj[voice_pack_id]
 			var/datum/voice_pack/voice_pack = new()
 
 			voice_pack.id = group_id + "." + voice_pack_id

@@ -45,10 +45,10 @@
 
 ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Voices", "Toggles atom talk sounds.", ADMIN_CATEGORY_SERVER)
 	GLOB.voices_enabled = !GLOB.voices_enabled
-	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.voices_enabled ? "enabled" : "disabled"].</B></span>")
+	to_chat(world, span_oocplain("<B>Vocal barks have been globally [GLOB.voices_enabled ? "enabled" : "disabled"].</B>"))
 
-	log_admin("[key_name(usr)] toggled Voice Barks.")
-	message_admins("[key_name_admin(usr)] toggled Voice Barks.")
+	log_admin("[key_name(user)] toggled Voice Barks.")
+	message_admins("[key_name_admin(user)] toggled Voice Barks.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.voices_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(reload_voice_packs_file, R_SERVER, FALSE, "Reload Voice Packs", "", ADMIN_CATEGORY_SERVER)
