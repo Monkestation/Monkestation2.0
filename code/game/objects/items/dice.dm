@@ -554,4 +554,7 @@
 		for(var/this_die in our_list_of_dice)
 			QDEL_IN(this_die, delete_delay SECONDS)
 		return final_result
+
+/obj/item/
+
 #undef MIN_SIDES_ALERT
