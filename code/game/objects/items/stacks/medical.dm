@@ -547,3 +547,122 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
 	healed_mob.adjustOxyLoss(amount_healed)
+
+/obj/item/stack/heal_pack // Unused parent type to unify code
+	amount = 40
+	max_amount = 40
+	name = "UNUSED ITEM"
+	singular_name = "UNUSED ITEM"
+	desc = "UNUSED ITEM, NOTIFY ADMINS/CODERS IF SEEN"
+	icon = 'icons/obj/medical/stack_medical.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	full_w_class = WEIGHT_CLASS_TINY
+	merge_type = /obj/item/stack/heal_pack
+	/// List of healable limbs, checked during interact and used to heal each limb
+	var/list/healable_limbs = list()
+	/// Amount of brute damage healed on a limb
+	var/brute_heal = 0
+	/// Amount of burn damage healed on a limb
+	var/burn_heal = 0
+
+/obj/item/stack/heal_pack/update_overlays()
+	. = ..()
+	if(isturf(loc))
+		return
+	var/mutable_appearance/number = mutable_appearance()
+	number.maptext = MAPTEXT(amount)
+	. += number
+
+/obj/item/stack/heal_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	if(!ishuman(interacting_with))
+		user.balloon_alert(user, "not a human")
+		return ITEM_INTERACT_BLOCKING
+	if(DOING_INTERACTION_WITH_TARGET(user, interacting_with))
+		user.balloon_alert(user, "busy")
+		return ITEM_INTERACT_BLOCKING
+
+	var/mob/living/carbon/human/human_target = interacting_with
+	healable_limbs = list()
+	for(var/obj/item/bodypart/limb in human_target.bodyparts)
+		if(!can_heal_limb(limb))
+			continue
+		healable_limbs += limb
+	if(length(healable_limbs) <= 0) // If no limbs qualify then we have nothing to heal
+		user.balloon_alert(user, "can't heal")
+		return ITEM_INTERACT_BLOCKING
+
+	do_limb_healing(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/// return TRUE if a given limb can be healed by src, FALSE otherwise
+/obj/item/stack/heal_pack/proc/can_heal_limb(obj/item/bodypart/limb)
+	if(!limb || QDELETED(limb)) // Can't heal what does not exist
+		return FALSE
+	if(!(limb.bodytype & BODYTYPE_ORGANIC)) // Only works on bio limbs
+		return FALSE
+	return TRUE
+
+/// Heals all limbs, one at a time
+/obj/item/stack/heal_pack/proc/do_limb_healing(mob/living/doctor, mob/living/carbon/human/patient)
+	doctor.balloon_alert_to_viewers("kitting")
+	var/delay = doctor == patient ? 2 SECONDS : 0.5 SECONDS
+	while(length(healable_limbs) && (amount >= 1))
+		if(!do_after(doctor, delay, patient))
+			doctor.balloon_alert_to_viewers("stopped kitting")
+			return FALSE
+		var/obj/item/bodypart/target_limb = popleft(healable_limbs)
+		target_limb.heal_damage(brute_heal, burn_heal)
+		use(1)
+		after_heal(target_limb)
+	doctor.balloon_alert_to_viewers("finished tending")
+	return TRUE
+
+/// Applies the healing flag after the limb is healed
+/obj/item/stack/heal_pack/proc/after_heal()
+	return NONE
+
+/obj/item/stack/heal_pack/brute_pack
+	name = "bruise pack"
+	singular_name = "bruise pack"
+	desc = "An advanced trauma kit for severe injuries."
+	icon_state = "bruise_pack"
+	merge_type = /obj/item/stack/heal_pack/brute_pack
+	brute_heal = 5
+
+/obj/item/stack/heal_pack/brute_pack/can_heal_limb(obj/item/bodypart/limb)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(limb.limb_flags & LIMB_KITTED_BRUTE) // Can't heal if already brute kitted
+		return FALSE
+	if(limb.brute_dam <= 0)
+		return FALSE
+	return TRUE
+
+/obj/item/stack/heal_pack/brute_pack/after_heal(obj/item/bodypart/limb)
+	limb.limb_flags |= LIMB_KITTED_BRUTE
+
+/obj/item/stack/heal_pack/burn_pack
+	name = "burn pack"
+	singular_name = "burn pack"
+	desc = "An advanced treatment kit for severe burns."
+	icon_state = "burn_pack"
+	merge_type = /obj/item/stack/heal_pack/burn_pack
+	burn_heal = 5
+
+/obj/item/stack/heal_pack/burn_pack/can_heal_limb(obj/item/bodypart/limb)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(limb.limb_flags & LIMB_KITTED_BURN) // Can't heal if already burn kitted
+		return FALSE
+	if(limb.burn_dam <= 0)
+		return FALSE
+	return TRUE
+
+/obj/item/stack/heal_pack/burn_pack/after_heal(obj/item/bodypart/limb)
+	limb.limb_flags |= LIMB_KITTED_BURN

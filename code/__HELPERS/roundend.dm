@@ -446,7 +446,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
 		if(mode.roundend_threat_log.len)
 			parts += "[FOURSPACES]Threat edits:"
-			for(var/entry as anything in mode.roundend_threat_log)
+			for(var/entry in mode.roundend_threat_log)
 				parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)

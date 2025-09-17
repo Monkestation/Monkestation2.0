@@ -23,7 +23,7 @@
 	for(var/trait in hud_traits)
 		ADD_TRAIT(linked_mob, trait, GLASSES_TRAIT)
 
-	for(var/trait as anything in added_eyewear_traits)
+	for(var/trait in added_eyewear_traits)
 		ADD_TRAIT(linked_mob, trait, TRAIT_NIFSOFT)
 
 	linked_mob.update_sight()

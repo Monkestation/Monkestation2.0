@@ -439,7 +439,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/synthcare
 	name = "Small Synthetic Care Pen"
-	desc = "A single use applicator made to care for synthetic parts on the go anywhere, be it a single prosthetic or an IPC. Contains chemicals that are safe but otherwise worthless for organics. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS CAN PROVE HAZARDOUS TO SYNTHETICS. DOES NOT WORK ON CYBORGS. UNDER NO CIRCUMSTANCES IS THIS TO BE MIXED WITH ADVANCED NANITE SLURRY (FOUND IN THE ADVANCED SYNTHETIC CARE PEN)</b>"
+	desc = "A single use applicator made to care for synthetic parts, be it a single prosthetic or an IPC. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS CAN PROVE HAZARDOUS TO SYNTHETICS. DOES NOT WORK ON CYBORGS. DO NOT MIX WITH ADVANCED NANITE SLURRY.</b>"
 	icon_state = "syndipen"
 	base_icon_state = "syndipen"
 	amount_per_transfer_from_this = 9
