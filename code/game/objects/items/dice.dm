@@ -65,6 +65,8 @@
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
 
+	var/roll_on_all_impacts
+
 /obj/item/dice/Initialize(mapload)
 	. = ..()
 	if(!result)
@@ -213,7 +215,7 @@
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
-	if(thrown_by)
+	if(thrown_by || roll_on_all_impacts)
 		diceroll(thrown_by)
 	return ..()
 
@@ -525,5 +527,31 @@
 		asoundout = 'sound/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
-
+/proc/dicesplosion(atom/A, num_dice, multiplier=1, additive=0, die_type=/obj/item/dice/d6, throwing_distance=2, do_balloon_alert=TRUE, delay=1, delete_delay=1)
+	var/max_per_die = die_type::sides
+	var/final_result = 0
+	var/our_list_of_dice = list()
+	for(var/i in 1 to num_dice)
+		var/our_current_die = new(get_turf(A), die_type)
+		var/our_number = roll(max_per_die)
+		our_current_die.resistance_flags |= INDESTRUCTABLE
+		our_current_die.rigged = DICE_TOTALLY_RIGGED
+		our_current_die.rigged_value = our_number
+		our_current_die.roll_on_all_impacts = TRUE
+		our_current_die.throw_at(roll(throwing_distance), get_ranged_target_turf(get_turf(our_current_die), pick(GLOB.alldirs))
+		our_list_of_dice += our_current_die
+	final_result *= multiplier
+	final_result += additive
+	spawn(delay SECONDS)
+		if(do_balloon_alert)
+			var/the_message = "[num_dice]d[max_per_die]"
+			if(multiplier != 1)
+				the_message += " [(multiplier >= 1) ? "*" : "/"] [multiplier]"
+			if(additive)
+				the_message += " [(additive >= 0) ? "+" : "-"] [additive]"
+			the_message += " = [final_result]"
+			A.balloon_alert_to_viewers(the_message)
+		for(var/this_die in our_list_of_dice)
+			QDEL_IN(this_die, delete_delay SECONDS)
+		return final_result
 #undef MIN_SIDES_ALERT
