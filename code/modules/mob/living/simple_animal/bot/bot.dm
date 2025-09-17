@@ -932,7 +932,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!check_access(usr))
+	if(!allowed(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return
 
