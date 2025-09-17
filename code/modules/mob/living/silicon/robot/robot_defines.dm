@@ -43,7 +43,7 @@
 	///Used for deconstruction to remember what the borg was constructed out of.
 	var/obj/item/robot_suit/robot_suit = null
 	///If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
 
 	///If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
@@ -206,7 +206,7 @@
 		Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_model = /obj/item/robot_model/syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/model/syndicate/Initialize(mapload)

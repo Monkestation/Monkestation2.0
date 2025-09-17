@@ -77,7 +77,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 /obj/item/mod/core/standard/Destroy()
 	if(cell)
@@ -112,21 +112,21 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.give(amount)
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.use(amount, TRUE)
@@ -135,7 +135,7 @@
 	return charge_amount() >= amount
 
 /obj/item/mod/core/standard/update_charge_alert()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 		return
@@ -211,7 +211,7 @@
 	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return FALSE
 	if(!mod.open)
 		mod.balloon_alert(user, "open the cover first!")

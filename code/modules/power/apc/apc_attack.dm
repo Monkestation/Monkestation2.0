@@ -22,7 +22,7 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 
-	if(istype(attacking_object, /obj/item/stock_parts/cell) && opened)
+	if(istype(attacking_object, /obj/item/stock_parts/power_store/cell) && opened)
 		if(cell)
 			balloon_alert(user, "cell already installed!")
 			return
@@ -130,7 +130,7 @@
 				return
 			if(!pseudocircuit.adapt_circuit(user, 500))
 				return
-			var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
+			var/obj/item/stock_parts/power_store/cell/crap/empty/bad_cell = new(src)
 			bad_cell.forceMove(src)
 			cell = bad_cell
 			user.visible_message(span_notice("[user] fabricates a weak power cell and places it into [src]."), \

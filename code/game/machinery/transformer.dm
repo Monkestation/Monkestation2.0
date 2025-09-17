@@ -126,7 +126,7 @@
 		victim.heal_damage_type(max(0, 80 - victim.getBruteLoss()), BRUTE)
 	else
 		var/mob/living/silicon/robot/new_borg = victim.Robotize()
-		new_borg.cell = new /obj/item/stock_parts/cell/upgraded/plus(new_borg, robot_cell_charge)
+		new_borg.cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(new_borg, robot_cell_charge)
 
 		// So he can't jump out the gate right away.
 		new_borg.SetLockdown()

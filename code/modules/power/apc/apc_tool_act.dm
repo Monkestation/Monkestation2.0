@@ -200,9 +200,9 @@
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		var/obj/item/stock_parts/cell/crap/empty/C = new(src)
-		C.forceMove(src)
-		cell = C
+		var/obj/item/stock_parts/power_store/battery/crap/empty/bad_cell = new(src)
+		bad_cell.forceMove(src)
+		cell = bad_cell
 		balloon_alert(user, "power cell installed")
 		update_appearance()
 		return TRUE

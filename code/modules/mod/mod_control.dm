@@ -428,7 +428,7 @@
 /obj/item/mod/control/get_cell()
 	if(!open)
 		return
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	var/obj/item/stock_parts/power_store/cell/cell = get_charge_source()
 	if(!istype(cell))
 		return
 	return cell

@@ -24,13 +24,13 @@
 	processing_flags = NONE
 
 	/// The cell used to dispense reagents
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// Efficiency used when converting cell power to reagents. Joule per volume.
-	var/power_cost = 0.1 MEGA WATTS
+	var/power_cost = 0.1 KILO WATTS
 	/// The current amount this machine is dispensing
 	var/amount = 30
 	/// The rate at which this machine recharges the power cell.
-	var/recharge_amount = 0.3 MEGA WATTS
+	var/recharge_amount = 0.3 KILO WATTS
 	var/recharge_counter = 0
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	///If the UI has the pH meter shown
@@ -494,10 +494,10 @@
 	recharge_amount = initial(recharge_amount)
 	var/new_power_cost = initial(power_cost)
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell/stock_cell in component_parts)
 		cell = stock_cell
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		new_power_cost -= (matter_bin.tier * 0.25 MEGA WATTS) // MONKE EDIT: Mega watts
+		new_power_cost -= (matter_bin.tier * 0.25 KILO WATTS)
 		parts_rating += matter_bin.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_amount *= capacitor.tier
@@ -509,7 +509,7 @@
 			dispensable_reagents |= upgrade_reagents2
 		if (manipulator.tier > 3)
 			dispensable_reagents |= upgrade_reagents3
-	power_cost = max(new_power_cost, 0.1 MEGA WATTS) // MONKE EDIT: Mega watts
+	power_cost = max(new_power_cost, 0.1 KILO WATTS)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

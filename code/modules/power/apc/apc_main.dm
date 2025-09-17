@@ -36,11 +36,11 @@
 	///Mapper helper to tie an apc to another area
 	var/areastring = null
 	///Reference to our internal cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Initial cell charge %
 	var/start_charge = 90
 	///Type of cell we start with
-	var/cell_type = /obj/item/stock_parts/cell/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
@@ -158,8 +158,7 @@
 	//APCs get added to their own processing tasks for the machines subsystem.
 	if (!(datum_flags & DF_ISPROCESSING))
 		datum_flags |= DF_ISPROCESSING
-		SSmachines.apc_early_processing += src
-		SSmachines.apc_late_processing += src
+		SSmachines.processing_apcs += src
 
 	//Pixel offset its appearance based on its direction
 	dir = ndir
@@ -620,6 +619,39 @@
 	else if(charging != last_charging)
 		queue_icon_update()
 
+// charge until the battery is full or to the treshold of the provided channel
+/obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
+	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
+		return
+
+	// no overcharge past the next treshold
+	var/need_charge_for_channel
+	switch(channel)
+		if(SSMACHINES_APCS_ENVIRONMENT)
+			need_charge_for_channel = (cell.maxcharge * 0.05) - cell.charge
+		if(SSMACHINES_APCS_LIGHTS)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_LIGHT_TRESHOLD + 5) * 0.01) - cell.charge
+		if(SSMACHINES_APCS_EQUIPMENT)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_EQUIP_TRESHOLD + 5) * 0.01) - cell.charge
+		else
+			need_charge_for_channel = cell.used_charge()
+
+	var/charging_used = area ? area.energy_usage[AREA_USAGE_APC_CHARGE] : 0
+	var/remaining_charge_rate = min(cell.chargerate, cell.maxcharge * CHARGELEVEL) - charging_used
+	var/need_charge = min(need_charge_for_channel, remaining_charge_rate) * seconds_per_tick
+	//check if we can charge the battery
+	if(need_charge < 0)
+		return
+
+	charge_cell(need_charge, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
+
+	// show cell as fully charged if so
+	if(cell.charge >= cell.maxcharge)
+		cell.charge = cell.maxcharge
+		charging = APC_FULLY_CHARGED
+	else
+		charging = APC_CHARGING
+
 /obj/machinery/power/apc/proc/reset(wire)
 	switch(wire)
 		if(WIRE_IDSCAN)
@@ -640,7 +672,7 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(!operating || shorted)
 		return
-	if(cell && cell.use(20 KILO JOULES))
+	if(cell && cell.use(0.02 * STANDARD_BATTERY_CHARGE))
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
@@ -675,12 +707,12 @@
 
 ///Used for cell_5k apc helper, which installs 5k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_5k()
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	cell = new cell_type(src)
 
 /// Used for cell_10k apc helper, which installs 10k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_10k()
-	cell_type = /obj/item/stock_parts/cell/high
+	cell_type = /obj/item/stock_parts/power_store/battery/high
 	cell = new cell_type(src)
 
 /// Used for unlocked apc helper, which unlocks the apc.

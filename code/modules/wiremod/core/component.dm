@@ -275,7 +275,7 @@
 
 		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage)
 		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
-			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			var/obj/item/stock_parts/power_store/cell/cell = parent.get_cell()
 			if(!cell?.use(power_usage))
 				return FALSE
 

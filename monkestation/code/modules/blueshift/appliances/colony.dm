@@ -120,7 +120,7 @@
 		/datum/reagent/consumable/enzyme,
 	)
 	/// Since we don't have a board to take from, we use this to give the dispenser a cell on spawning
-	var/cell_we_spawn_with = /obj/item/stock_parts/cell/crap/empty
+	var/cell_we_spawn_with = /obj/item/stock_parts/power_store/cell/crap/empty
 
 /obj/machinery/chem_dispenser/frontier_appliance/Initialize(mapload)
 	. = ..()

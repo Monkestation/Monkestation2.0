@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/shielding_powered = FALSE
 
-	var/obj/item/stock_parts/cell/internal_cell
+	var/obj/item/stock_parts/power_store/cell/internal_cell
 
 	var/cell_container_opened = FALSE
 
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 
 	if(mapload)
-		internal_cell = new /obj/item/stock_parts/cell/high(src)
+		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 	create_gas()
 
@@ -418,8 +418,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(!cell_container_opened)
 			balloon_alert(user, "open the hatch first")
 			return

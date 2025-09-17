@@ -305,13 +305,21 @@
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
 
-/obj/machinery/proc/locate_machinery()
-	return
+///Early process for machines added to SSmachines.processing_early to prioritize power draw
+/obj/machinery/proc/process_early()
+	set waitfor = FALSE
+	return PROCESS_KILL
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
+///Late process for machines added to SSmachines.processing_late to gather accurate recordings
+/obj/machinery/proc/process_late()
+	set waitfor = FALSE
+	return PROCESS_KILL
+
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
+	set waitfor = FALSE
 	return PROCESS_KILL
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
@@ -1021,8 +1029,8 @@
 			if(!istype(secondary_part, required_type))
 				continue
 			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
-			if(istype(secondary_part, /obj/item/stock_parts/cell) && replacer_tool.works_from_distance)
-				var/obj/item/stock_parts/cell/checked_cell = secondary_part
+			if(istype(secondary_part, /obj/item/stock_parts/power_store/cell) && replacer_tool.works_from_distance)
+				var/obj/item/stock_parts/power_store/cell/checked_cell = secondary_part
 				// If it's rigged or corrupted, max the charge. Then explode it.
 				if(checked_cell.rigged || checked_cell.corrupted)
 					checked_cell.charge = checked_cell.maxcharge

@@ -57,7 +57,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	. += "defib"
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/C = get_cell()
+		var/obj/item/stock_parts/power_store/cell/C = get_cell()
 		. += (defib.safety ? "online" : "emagged")
 		var/ratio = C.charge / C.maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
@@ -206,7 +206,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/charging/loaded, 
 
 
 /obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell/cell = get_cell()
 	if(!cell || !is_operational)
 		return PROCESS_KILL
 	if(cell.charge < cell.maxcharge)

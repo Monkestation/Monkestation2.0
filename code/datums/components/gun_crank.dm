@@ -1,7 +1,7 @@
 // Cranking feature on the laser musket and smoothbore disabler, could possibly be used on more than guns
 /datum/component/gun_crank
 	/// Our cell to charge
-	var/obj/item/stock_parts/cell/charging_cell
+	var/obj/item/stock_parts/power_store/cell/charging_cell
 	/// How much charge we give our cell on each crank
 	var/charge_amount
 	/// How long is the cooldown time between each charge
@@ -20,7 +20,7 @@
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/cell))
+	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/power_store/cell))
 		return COMPONENT_INCOMPATIBLE
 	src.charging_cell = charging_cell
 	src.charge_amount = charge_amount

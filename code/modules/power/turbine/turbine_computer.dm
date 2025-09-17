@@ -13,18 +13,16 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/turbine_computer/LateInitialize()
+/obj/machinery/computer/turbine_computer/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/computer/turbine_computer/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
-	for(var/obj/machinery/power/turbine/core_rotor/main in GLOB.machines)
+	for(var/obj/machinery/power/turbine/core_rotor/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/turbine/core_rotor))
 		if(main.mapping_id != mapping_id)
 			continue
 		register_machine(main)
-		return
+		break
 
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/tool)
 	var/obj/item/multitool/multitool = tool

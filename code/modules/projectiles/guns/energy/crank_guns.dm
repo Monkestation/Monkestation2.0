@@ -119,7 +119,7 @@
 	icon = 'monkestation/icons/obj/weapons/guns/plasmacoresixe.dmi'
 	icon_state = "plasma_core_six"
 	charge_sections = 6
-	cell_type = /obj/item/stock_parts/cell/plasmacore
+	cell_type = /obj/item/stock_parts/power_store/cell/plasmacore
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 	can_charge = FALSE
@@ -155,7 +155,7 @@
 	. = ..()
 	. += "plasma_core_six_cell_[cranking ? "forwards" : "backwards"]"
 
-/obj/item/stock_parts/cell/plasmacore
+/obj/item/stock_parts/power_store/cell/plasmacore
 	name = "PlasmaCore-6e experimental cell"
 	maxcharge = 600 //same as the secborg cell but i'm not reusing that here
 	icon = 'icons/obj/power.dmi'

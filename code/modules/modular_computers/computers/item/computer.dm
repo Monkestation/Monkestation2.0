@@ -17,7 +17,7 @@
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
 	///The power cell the computer uses to run on.
-	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell/internal_cell = /obj/item/stock_parts/power_store/cell
 	///A pAI currently loaded into the modular computer.
 	var/obj/item/pai_card/inserted_pai
 	///Does the console update the crew manifest when the ID is removed?
@@ -796,7 +796,7 @@
 		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(ismachinery(loc))
 			return ITEM_INTERACT_BLOCKING
 		if(internal_cell)

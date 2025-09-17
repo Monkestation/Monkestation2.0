@@ -257,7 +257,7 @@
 		balloon_alert(user, "open the panel first!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "already installed!")
 			return ITEM_INTERACT_BLOCKING

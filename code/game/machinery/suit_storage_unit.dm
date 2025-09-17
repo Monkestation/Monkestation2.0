@@ -547,7 +547,7 @@
 			dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	if(suit && istype(suit))
 		cell = suit.cell
 	if(mod)
