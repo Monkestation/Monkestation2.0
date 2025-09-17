@@ -87,7 +87,7 @@
 
 	//Software Variables
 	///How many programs can the NIF store at once?
-	var/max_nifsofts = 5
+	var/max_nifsofts = 20
 	///What programs are currently loaded onto the NIF?
 	var/list/loaded_nifsofts = list()
 	///What programs come already installed on the NIF?
