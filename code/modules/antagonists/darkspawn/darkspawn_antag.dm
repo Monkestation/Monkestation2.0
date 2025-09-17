@@ -345,6 +345,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		COOLDOWN_START(src, psi_cooldown, psi_regen_delay)
 	psi = round(psi - amount, 0.1)
 	update_psi_hud()
+	owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
@@ -356,6 +357,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	update_psi_hud()
 	if(psi >= psi_cap || !COOLDOWN_FINISHED(src, psi_cooldown))
 		psi_regenerating = FALSE
+		owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 		return
 	var/delay = (1/psi_per_second) SECONDS
 	addtimer(CALLBACK(src, PROC_REF(regenerate_psi)), delay, TIMER_UNIQUE) //tick it up very quickly
@@ -375,7 +377,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		owner.current.clear_alert("psiblock")
 
 /datum/antagonist/darkspawn/proc/update_psi_hud()
-	if(!owner.current || !owner.current.hud_used)
+	if(!owner.current?.hud_used)
 		return
 	var/atom/movable/screen/counter = owner.current.hud_used.psi_counter
 	counter.maptext = ANTAG_MAPTEXT(psi, COLOR_DARKSPAWN_PSI)
