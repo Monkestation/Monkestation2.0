@@ -527,34 +527,63 @@
 		asoundout = 'sound/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
-/proc/dicesplosion(atom/A, num_dice, multiplier=1, additive=0, die_type=/obj/item/dice/d6, throwing_distance=2, do_balloon_alert=TRUE, delay=1, delete_delay=1)
+/proc/dicesplosion(atom/A, num_dice, multiplier=1, additive=0, obj/item/dice/die_type=/obj/item/dice/d6, throwing_distance=3, do_balloon_alert=TRUE, delay=1, delete_delay=1)
 	var/max_per_die = die_type::sides
 	var/final_result = 0
 	var/our_list_of_dice = list()
 	for(var/i in 1 to num_dice)
-		var/our_current_die = new(get_turf(A), die_type)
-		var/our_number = roll(max_per_die)
-		our_current_die.resistance_flags |= INDESTRUCTABLE
+		var/ourdir = pick(GLOB.alldirs)
+		var/obj/item/dice/our_current_die = new(get_step(A, ourdir), die_type)
+		var/our_number = rand(1, max_per_die)
+		final_result += our_number
+		our_current_die.resistance_flags |= INDESTRUCTIBLE
 		our_current_die.rigged = DICE_TOTALLY_RIGGED
 		our_current_die.rigged_value = our_number
 		our_current_die.roll_on_all_impacts = TRUE
-		our_current_die.throw_at(roll(throwing_distance), get_ranged_target_turf(get_turf(our_current_die), pick(GLOB.alldirs))
+		var/ourrange = rand(1, throwing_distance)
+		our_current_die.throw_at(get_edge_target_turf(A, get_dir(A, our_current_die)), ourrange, 3, spin=TRUE)
 		our_list_of_dice += our_current_die
 	final_result *= multiplier
 	final_result += additive
-	spawn(delay SECONDS)
-		if(do_balloon_alert)
-			var/the_message = "[num_dice]d[max_per_die]"
-			if(multiplier != 1)
-				the_message += " [(multiplier >= 1) ? "*" : "/"] [multiplier]"
-			if(additive)
-				the_message += " [(additive >= 0) ? "+" : "-"] [additive]"
-			the_message += " = [final_result]"
-			A.balloon_alert_to_viewers(the_message)
-		for(var/this_die in our_list_of_dice)
-			QDEL_IN(this_die, delete_delay SECONDS)
-		return final_result
+	sleep(delay SECONDS)
+	if(do_balloon_alert)
+		var/the_message = "[num_dice]d[max_per_die]"
+		if(multiplier != 1)
+			the_message += " [(multiplier >= 1) ? "*" : "/"] [multiplier]"
+		if(additive)
+			the_message += " [(additive >= 0) ? "+" : "-"] [additive]"
+		the_message += " = [final_result]"
+		A.balloon_alert_to_viewers(the_message)
+	for(var/this_die in our_list_of_dice)
+		QDEL_IN(this_die, delete_delay SECONDS)
+	return final_result
 
-/obj/item/
+/obj/item/toy/toy_dagger/dnd
+	name = "\improper Dungeoneer's Dagger"
+	desc = "A strange relic, recovered from an ancient warehouse belonging to \"Piezo Inc.\", whoever they were." //and you thought it was a DND joke... but it was I... PATHFINDER
+
+/obj/item/toy/toy_dagger/dnd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!iscarbon(interacting_with))
+		user.balloon_alert(user, "cant backstab that")
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/carbon/stabbystabbed = interacting_with
+	var/backstab_dir = get_dir(user, stabbystabbed)
+	// Backstab bonus
+	if(!((user.dir & backstab_dir) && (stabbystabbed.dir & backstab_dir)))
+		user.balloon_alert(user, "must backstab")
+		return ITEM_INTERACT_BLOCKING
+	if(do_after(user, 2 SECONDS, stabbystabbed))
+		if(!((user.dir & backstab_dir) && (stabbystabbed.dir & backstab_dir)))
+			user.balloon_alert(user, "must backstab")
+			return ITEM_INTERACT_BLOCKING
+		else
+			stabbystabbed.balloon_alert_to_viewers("SNEAK ATTACK!")
+			var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbystabbed, 12, 1.5, 0, /obj/item/dice/d6, 3, TRUE, 2, 2)
+			var/sneak_attack_damage = sneakycallback.Invoke()
+			var/obj/item/bodypart/back_that_we_stab = stabbystabbed.get_bodypart(BODY_ZONE_CHEST)
+			back_that_we_stab.receive_damage(brute=sneak_attack_damage)
+			return ITEM_INTERACT_BLOCKING
+
 
 #undef MIN_SIDES_ALERT
