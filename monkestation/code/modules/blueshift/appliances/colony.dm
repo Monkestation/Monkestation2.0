@@ -97,8 +97,8 @@
 	anchored_tabletop_offset = 4
 	anchored = FALSE
 	circuit = null
-	powerefficiency = 0.5
-	recharge_amount = 50
+	// powerefficiency = 0.5 XANTODO Figure out if this is supposed to be higher or lower  //power_cost
+	// recharge_amount = 50 // Balance I guess?
 	show_ph = FALSE
 	// God's strongest coffee machine
 	dispensable_reagents = list(
@@ -133,7 +133,7 @@
 
 /obj/machinery/chem_dispenser/frontier_appliance/RefreshParts()
 	. = ..()
-	powerefficiency = 0.5
+	// powerefficiency = 0.5 XANTODO Figure out if this is supposed to be higher or lower  //power_cost
 	recharge_amount = 50
 
 /obj/machinery/chem_dispenser/frontier_appliance/examine(mob/user)

@@ -170,6 +170,8 @@
 /obj/item/stock_parts/cell/proc/give(amount)
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	if(rigged && amount > 0)
+		explode()
 	SEND_SIGNAL(src,COMSIG_CELL_CHANGE_POWER)
 	return power_used
 
