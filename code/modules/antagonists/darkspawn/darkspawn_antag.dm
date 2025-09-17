@@ -75,10 +75,10 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 /datum/antagonist/darkspawn/on_removal()
 	STOP_PROCESSING(SSprocessing, src)
 	owner.special_role = null
-	if(team)
-		team.remove_member(owner)
-	owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
-	owner.current.hud_used.psi_counter.maptext = ""
+	team?.remove_member(owner)
+	if(owner.current?.hud_used?.psi_counter)
+		owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
+		owner.current.hud_used.psi_counter.maptext = ""
 	QDEL_NULL(picked_class)
 	return ..()
 
