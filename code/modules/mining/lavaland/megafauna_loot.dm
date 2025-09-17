@@ -797,52 +797,66 @@
 	var/create_cooldown = 10 SECONDS
 	var/create_delay = 3 SECONDS
 	var/reset_cooldown = 5 SECONDS
-	var/timer = 0
+	/// Cooldown for when this can be used again.
+	COOLDOWN_DECLARE(next_use)
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with.atom_storage || (user.istate & ISTATE_HARM))
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(timer > world.time)
-		return NONE
-	if(is_type_in_typecache(interacting_with, banned_turfs))
-		return NONE
-	if(!(interacting_with in view(user.client.view, get_turf(user))))
-		return NONE
-	var/turf/open/T = get_turf(interacting_with)
-	if(!istype(T))
-		return NONE
-	if(!islava(T))
-		var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
-		L.alpha = 0
-		animate(L, alpha = 255, time = create_delay)
-		user.visible_message(span_danger("[user] points [src] at [T]!"))
-		timer = world.time + create_delay + 1
-		if(do_after(user, create_delay, target = T))
-			var/old_name = T.name
-			if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
-				user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
-				message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
-				user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
-				timer = world.time + create_cooldown
-				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
-		else
-			timer = world.time
-		qdel(L)
+	if(!COOLDOWN_FINISHED(src, next_use))
+		to_chat(user, span_warning("Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_use))] before using \the [src] again!"))
+		return ITEM_INTERACT_BLOCKING
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_LAVA_STAFF))
+		to_chat(user, span_warning("You're already using \the [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/target_turf = get_turf(interacting_with)
+	if(!isopenturf(target_turf) || is_type_in_typecache(target_turf, banned_turfs))
+		return ITEM_INTERACT_BLOCKING
+	if(!(target_turf in view(user.client.view, get_turf(user))))
+		return ITEM_INTERACT_BLOCKING
+	if(islava(target_turf))
+		remove_lava(user, target_turf)
 	else
-		var/old_name = T.name
-		if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
-			user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
-			timer = world.time + reset_cooldown
-			playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+		create_lava(user, target_turf)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/lava_staff/proc/create_lava(mob/living/user, turf/open/target)
+	var/obj/effect/temp_visual/lavastaff/lava_visual = new(target)
+	animate(lava_visual, alpha = 255, time = create_delay)
+	user.visible_message(span_danger("[user] points [src] at [target]!"))
+	if(do_after(user, create_delay, target, interaction_key = DOAFTER_SOURCE_LAVA_STAFF))
+		var/old_name = target.name
+		if(target.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
+			// 2x faster on lavaland
+			var/cooldown = create_cooldown
+			if(is_mining_level(target.z))
+				cooldown *= 0.5
+			COOLDOWN_START(src, next_use, cooldown)
+			user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(target)]")
+			user.log_message("fired the lava staff at [AREACOORD(target)].", LOG_ATTACK)
+			playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
+	qdel(lava_visual)
+
+/obj/item/lava_staff/proc/remove_lava(mob/living/user, turf/open/lava/target)
+	var/old_name = target.name
+	if(target.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
+		// reset cooldown is 10x faster on lavaland!
+		var/cooldown = reset_cooldown
+		if(is_mining_level(target.z))
+			cooldown *= 0.1
+		COOLDOWN_START(src, next_use, cooldown)
+		user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
+		playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
-	duration = 50
+	duration = 5 SECONDS
+	alpha = 0 // animated upon creation
 
 /turf/open/lava/smooth/weak
 	lava_damage = 10

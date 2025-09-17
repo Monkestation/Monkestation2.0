@@ -506,11 +506,61 @@
   - rscadd: Ghost players can now hear deadchat.
   - bugfix: Simians can now properly do changeling things.
   - bugfix: Fixed trying to mine rocks with stuff that shouldn't be used to mine rocks.
+  - balance: The cooldowns for using the lava staff are now heavily reduce on lavaland,
+      making it far more viable to use the staff to terraform lavaland with it.
+  - rscadd: Tremere Dominate's revival now works on oozeling cores.
+  - balance: Tremere Obfuscation now makes you near-invisible again by default, however
+      if you attack someone, or are attacked, you will become much more visible for
+      a bit.
+  - balance: Bloodsuckers will always get 3 free ranks from Sol, even if they level
+      up through other means beforehand (via feeding sentient blood, or tremere vassalizing
+      someone)
+  - rscadd: Bloodsuckers now apply a temporary blood regeneration status effect to
+      people they feed off of after they're done (if the victim is still alive)
+  - rscdel: Removed the "steal organic hearts" and "drink X amount of blood" objective
+      for bloodsuckers.
+  - rscadd: Bloodsuckers will now always get an objective related to vassalization.
+  - code_imp: Improved some code for Tremere's Thaumaturgy.
+  - bugfix: Bloodsucker punch damage is properly applied to arms and legs now, even
+      if they're replaced.
+  - qol: Bloodsucker night vision doesn't suck ass anymore.
+  - balance: Favorite Vassals who become a Bloodsucker can no longer join a Clan,
+      they are still apart of their Master and way too young to do their own stuff.
+  - qol: Favorite Vassals who become a Bloodsucker now have their Vassal antag button
+      removed, to avoid the action bar becoming too cluttered.
+  - bugfix: Fixed Tremere's Dominate using the cooldown as the blood cost when reviving
+      someone.
   Absolucy, kuricityy:
   - balance: Buffs godslayer armor values to be worth the effort you have to put in
       to getting it.
+  EssentialTomato:
+  - bugfix: (Lufferly) Destroyed solar panels no longer drop their overlays
+  JupiterJaeden:
+  - rscdel: Removes the passive drain from stun batons.
+  - rscadd: Harmbatonning with a baton on will now cause you to accidentally stun
+      yourself. Better be careful!
+  - bugfix: Fixes a minor animation glitch with clumsy baton self-stunning.
   KittyNoodle:
   - bugfix: Fixed ethereal hair not updating.
+  LettuceGuardian:
+  - rscadd: EMT hardened helmet 'Extractor' now available from solfed imports.
+  - rscadd: EMP shielding and holsters can now be bought from cargo.
+  - rscadd: Donk Co vending machines and refills can now be found in their contraband
+      import section. Maybe theres a reason NT doesn't want you to get these so easily.
+  - qol: Synthetic care pens now available from medforest imports.
+  - qol: Synth pens have replaced the patches found inside robotic care medkits.
+  - balance: Hardened armour melee and bullet resistances have gone up to level 3.
+  - image: Added icons for the extractor helmet.
+  Shoddd:
+  - balance: dragnet no longer bolas people
+  - balance: dragnet snares now take one second to deploy
+  ThePooba:
+  - bugfix: fixed morbital recipe
+  - rscadd: Adds morbital. it makes you cringe and your blood hurt and if you drink
+      250 of it you turn into morbius
+  - bugfix: makes bone hurting juice hurting bones again and slightly less terrible
+  - admin: fixed spawn menus
+  - rscadd: new poster in game telling people to join admin
   Tractor Maam:
   - bugfix: Virus Food is no longer impossible to create. As a result, you have to
       heat it to 400k now instead of cooling it to 200k.
@@ -519,5 +569,10 @@
   - bugfix: fix being unable to cast blood spells
   notghosti:
   - rscadd: Festering oozes are now considered a hazardous organ.
+  throwawayuseless:
+  - bugfix: update some interactions to the new system
   wonderinghost:
   - rscadd: Engi Vend vendors now stock with Construction bags
+2025-09-17:
+  Absolucy, necromanceranne:
+  - bugfix: Caps how much eyeblur can be caused by things like projectiles.
