@@ -315,7 +315,6 @@
 
 /obj/item/stock_parts/power_store/proc/ethereal_drain(mob/living/carbon/human/user, obj/item/organ/internal/stomach/ethereal/used_stomach)
 	var/charge_limit = ETHEREAL_BLOOD_CHARGE_DANGEROUS - CELL_POWER_GAIN
-	var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 	if(charge < CELL_POWER_DRAIN)
 		to_chat(user, span_warning("[src] doesn't have enough power!"))
 		return
