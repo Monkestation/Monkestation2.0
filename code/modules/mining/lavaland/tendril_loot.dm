@@ -232,6 +232,7 @@
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/effect/wisp/wisp
 
 /obj/item/wisp_lantern/attack_self(mob/user)
