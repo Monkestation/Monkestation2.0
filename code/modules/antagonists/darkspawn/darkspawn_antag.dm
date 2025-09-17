@@ -80,8 +80,6 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
 	owner.current.hud_used.psi_counter.maptext = ""
 	QDEL_NULL(picked_class)
-	UnregisterSignal(owner, COMSIG_MIND_CHECK_ANTAG_RESOURCE)
-	UnregisterSignal(owner, COMSIG_MIND_SPEND_ANTAG_RESOURCE)
 	return ..()
 
 /datum/antagonist/darkspawn/apply_innate_effects(mob/living/mob_override)
@@ -125,6 +123,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		for(var/datum/action/cooldown/spell/divulge/divulge in current_mob.actions) //remove divulge if they haven't yet
 			divulge.Remove(current_mob)
 			qdel(divulge)
+		UnregisterSignal(current_mob, list(COMSIG_MIND_CHECK_ANTAG_RESOURCE, COMSIG_MIND_SPEND_ANTAG_RESOURCE))
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
