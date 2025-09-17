@@ -206,6 +206,11 @@ if $grep -ni "rat'var" $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in code, please remove the apostrophe(s).${NC}"
     st=1
 fi;
+if $grep -ni "oozling" $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Oozeling detected in code, please ensure there is an e before 'ling'.${NC}"
+    st=1
+fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
