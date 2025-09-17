@@ -19614,6 +19614,13 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
+"fbJ" = (
+/obj/item/clothing/head/costume/garland/sunflower{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "fbR" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -21224,6 +21231,7 @@
 "fBK" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/tram/platform/tramstation/central,
+/obj/effect/landmark/tram/nav/tramstation/main,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "fBX" = (
@@ -107920,7 +107928,7 @@ vXM
 vXM
 vXM
 vXM
-aac
+fbJ
 hFr
 nqq
 xMy
