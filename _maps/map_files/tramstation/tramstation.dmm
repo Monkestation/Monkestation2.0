@@ -38977,6 +38977,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "laz" = (
@@ -61827,6 +61828,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ski" = (
+/obj/effect/landmark/tram/nav/immovable_rod,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
 "skt" = (

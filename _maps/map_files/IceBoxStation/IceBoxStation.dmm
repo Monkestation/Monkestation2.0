@@ -9345,6 +9345,9 @@
 	pixel_x = 2;
 	pixel_y = -32
 	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Mining B-1 South Airlock"
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "cKn" = (
@@ -10962,6 +10965,9 @@
 "diI" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Mining B-1 Mechbay"
+	},
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
 "diL" = (
@@ -30292,6 +30298,10 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Mining B-2 Hallway West";
+	dir = 9
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -39096,10 +39106,6 @@
 "lYc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/camera{
-	c_tag = "Mining B-2 Hallway";
-	dir = 9
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -46285,6 +46291,9 @@
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
 	pixel_x = 30
 	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Mining B-1 Airlock North"
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "oeT" = (
@@ -48621,6 +48630,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/camera/directional/south{
+	c_tag = "Mining B-2 Hallway East"
+	},
 /turf/open/floor/iron/dark/side,
 /area/mine/eva/lower)
 "oOO" = (
@@ -66960,6 +66972,9 @@
 	frequency = 1453;
 	name = "Kitchen Intercom"
 	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Kitchen Freezer"
+	},
 /turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "uCN" = (
@@ -70036,6 +70051,9 @@
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = 2;
 	pixel_y = -32
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Mining B-1 Crater Airlock"
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/living_quarters)
