@@ -188,7 +188,7 @@
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")
-	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
 	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))

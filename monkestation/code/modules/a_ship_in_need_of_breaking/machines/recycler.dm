@@ -70,7 +70,7 @@
 			var/mob/living/carbon/human/payee_mob = get_mob_by_key(payee_key)
 			if(payee_mob.account_id != null)
 				var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[payee_mob.account_id]"]
-				account.adjust_money(recycle_reward*0.2, "Shipbreaker Scrap Processed. Payout:[recycle_reward*0.2]")
+				account.adjust_money(recycle_reward*0.5, "Shipbreaker Scrap Processed. Payout:[recycle_reward*0.5]")
 		if(morsel?.custom_materials)
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			var/material_amount = materials.get_item_material_amount(morselstack)

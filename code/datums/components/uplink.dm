@@ -241,7 +241,7 @@
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
-			"icon" = text_ref(actual_item.icon),
+			"icon" = actual_item.icon,
 			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
@@ -256,7 +256,7 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/item as anything in stock_list)
+	for(var/item in stock_list)
 		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock

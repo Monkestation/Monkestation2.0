@@ -7,3 +7,5 @@
 #define COMSIG_KB_LIVING_PIXEL_SHIFT_UP			"keybinding_living_pixelshift_up"
 
 #define COMSIG_KB_LIVING_TOGGLE_WIELD "keybinding_living_toggle_wield"
+
+#define COMSIG_KB_LIVING_COMBAT_INDICATOR "keybinding_living_combat_indicator"

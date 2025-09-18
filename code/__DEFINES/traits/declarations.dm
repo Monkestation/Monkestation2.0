@@ -167,6 +167,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait can switch their base color to be greyscale
+#define TRAIT_GREYSCALE_TOGGLE "toggle_greyscale"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
@@ -339,6 +341,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
+
+/// Given to mobs which have been implanted with a sponsorship implant
+#define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -762,7 +767,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the crate's contents are immune to the missing item manifest error
 #define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 ///If the crate is immune to the wrong content in manifest error
-/* #define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error" */
+#define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error"
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"
@@ -1096,7 +1101,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage" */
 
 ///Deathmatch traits
-/* #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants" */
+#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
@@ -1318,6 +1323,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
+///Trait given to atoms currently affected by projectile dampeners
+#define TRAIT_GOT_DAMPENED "got_dampened"
+
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
@@ -1336,6 +1344,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+// /datum/mind + /mob/living
+/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
+#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// You have special interactions with bloodsuckers and the occult.
+#define TRAIT_OCCULTIST "occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE "unborgable"
+/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
+#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+
+// /datum/mind
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW "joined_as_crew"
 
 ///Darkspawn traits
 ///lets darkspawns walk through weak light

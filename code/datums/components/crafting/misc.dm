@@ -34,3 +34,11 @@
 	)
 	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
+
+/datum/crafting_recipe/comically_large_straw
+	name = "Comically Large Straw"
+	result = /obj/item/comically_large_straw
+	time = 10 SECONDS
+	reqs = list(/obj/item/stack/sheet/plastic = 10)
+	tool_behaviors = list(TOOL_WELDER)
+	category = CAT_MISC

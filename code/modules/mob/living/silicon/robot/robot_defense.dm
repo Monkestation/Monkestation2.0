@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, span_notice("You start fixing yourself..."))
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 5 SECONDS, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		to_chat(user, span_notice("You begin to place [attacking_item] on [src]'s head..."))
 		to_chat(src, span_notice("[user] is placing [attacking_item] on your head..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
 				place_on_head(attacking_item)
 		return
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit start
 	if(IS_CLOCK(src)) //cant emag clock borgs
-		to_chat(src, span_brass("The light of Rat'var protects you from subversion!"))
+		to_chat(src, span_brass("The light of Ratvar protects you from subversion!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were a clockwork borg.")
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit end

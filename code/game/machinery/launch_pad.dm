@@ -290,7 +290,7 @@
 		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
 		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 30, target = usr))
+		if(do_after(usr, 3 SECONDS, target = usr))
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
@@ -329,22 +329,22 @@
 		return
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 30, target = user))
+	if(do_after(user, 3 SECONDS, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage?.close_all() // monke edit: fix runtime
 
-/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/remote = inserted
-		if(remote.pad == WEAKREF(src.pad))
-			return TRUE
-		remote.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [remote]."))
-		return FALSE // no insert
-	return TRUE
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"

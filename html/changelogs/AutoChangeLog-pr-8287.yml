@@ -1,0 +1,6 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - rscadd: "Added makarov and some ammo to black market uplink."
+  - rscadd: "Added weapons authorization to purchase from the syndicate uplink."
+  - rscdel: "Removed mk58 crafting recipes"

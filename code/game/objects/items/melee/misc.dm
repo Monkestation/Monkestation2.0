@@ -300,29 +300,6 @@
 	)
 	shard.Bump(turf)
 
-/obj/item/melee/curator_whip
-	name = "curator's whip"
-	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
-	icon = 'icons/obj/weapons/whip.dmi'
-	icon_state = "whip"
-	inhand_icon_state = "chain"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	worn_icon_state = "whip"
-	slot_flags = ITEM_SLOT_BELT
-	force = 15
-	demolition_mod = 0.25
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
-	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/weapons/whip.ogg'
-
-/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, click_parameters)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		human_target.drop_all_held_items()
-		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
-
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
@@ -423,6 +400,7 @@
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
 		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
+		finish_roasting(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -437,7 +415,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
+	if(do_after(user, 10 SECONDS, target = user) && held_sausage)
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)

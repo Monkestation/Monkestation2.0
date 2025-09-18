@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			return
 		else
 			to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
-			if(do_after(user, 30, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !catwalk)
 					PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -152,13 +152,13 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			qdel(C)
 			new /obj/structure/trench_ladder(src)
 
 	if(istype(C, /obj/item/mining_charge) && !catwalk)
 		to_chat(user, span_notice("You begin laying down a breaching charge..."))
-		if(do_after(user, 15, target = src))
+		if(do_after(user, 1.5 SECONDS, target = src))
 			var/obj/item/mining_charge/boom = C
 			user.dropItemToGround(boom)
 			boom.Move(src)

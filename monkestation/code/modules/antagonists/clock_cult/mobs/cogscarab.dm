@@ -16,13 +16,13 @@
 	visualAppearance = CLOCKDRONE
 	bubble_icon = "clock"
 	picked = TRUE
-	flavortext = span_brass("You are a cogscarab, an intricate machine that has been granted sentient by Rat'var.<br>\
+	flavortext = span_brass("You are a cogscarab, an intricate machine that has been granted sentient by Ratvar.<br>\
 		After a long and destructive conflict, Reebe has been left mostly empty;\
-		you and the other cogscarabs like you were bought into existence to construct Reebe into the image of Rat'var.<br>\
+		you and the other cogscarabs like you were bought into existence to construct Reebe into the image of Ratvar.<br>\
 		Construct defences, traps and forgeries, \
 		for opening the Ark requires an unimaginable amount of power which is bound to get the attention of selfish lifeforms interested only in their own self-preservation.")
-	laws = "You are have been granted the gift of sentience from Rat'var.<br>\
-		You are not bound by any laws, do whatever you must to serve Rat'var!"
+	laws = "You are have been granted the gift of sentience from Ratvar.<br>\
+		You are not bound by any laws, do whatever you must to serve Ratvar!"
 	chat_color = LIGHT_COLOR_CLOCKWORK
 	initial_language_holder = /datum/language_holder/clockmob
 	shy = FALSE
@@ -80,7 +80,7 @@
 	prompt_name = "a cogscarab"
 	you_are_text = "You are a cogscarab!"
 	flavour_text = "You are a cogscarab, a tiny building construct of Ratvar. While you're weak and can't leave Reebe, \
-	you have a set of quick tools, as well as a replica fabricator that can create brass for construction. Work with the servants of Rat'var \
+	you have a set of quick tools, as well as a replica fabricator that can create brass for construction. Work with the servants of Ratvar \
 	to construct and maintain defenses at the City of Cogs."
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/Initialize(mapload)

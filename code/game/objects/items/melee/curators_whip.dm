@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	worn_icon_state = "whip"
 	slot_flags = ITEM_SLOT_BELT
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	force = 15
 	pain_damage = 5
 	demolition_mod = 0.25
@@ -58,10 +59,14 @@
 	else
 		return ..()
 
-/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(whip_trip(user, target))
+/obj/item/melee/curator_whip/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/melee/curator_whip/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with) && whip_trip(user, interacting_with))
 		user.changeNext_move(CLICK_CD_WHIP)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /// Tries to find a target to throw a a disarmed item towards.
 /// It will ignore anything adjacent to the user or target.
