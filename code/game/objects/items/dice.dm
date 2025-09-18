@@ -599,7 +599,7 @@
 			return ITEM_INTERACT_BLOCKING
 		else
 			stabbystabbed.balloon_alert_to_viewers(funny_alert_message)
-			do_the_stab(stabby_stabbed, user, mode)
+			do_the_stab(stabbystabbed, user, mode)
 			return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -610,15 +610,26 @@
 		var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
 		back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
 	if(mode == "nonlethal")
-		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE), TRAIT_DAGGERFX)
+		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 		DO_FLOATING_ANIM(stabbed)
-		var/datum/callback/saving_thow_roller = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 1, 0.5)
+		var/datum/callback/saving_throw_roller = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 1, 0.5)
 		stabbed.balloon_alert_to_viewers("mute 3 rounds: Will DC 16 reduces") //round is 6 seconds *nod
 		var/will_saving_throw = saving_throw_roller.Invoke()
-		if(will_saving_throw > 16)
-			ADD_TRAIT(stabbed, TRAIT_SOFTSPOKEN, REF(src))
-			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_SOFTSPOKEN, REF(src)), 18 SECONDS)
-		else:
-		
+		stabbed.balloon_alert_to_viewers("Paralyze 2 rounds: Fortitude DC 14 negates") //round is 6 seconds *nod
+		var/fort_saving_throw = saving_throw_roller.Invoke()
+		stabbed.balloon_alert_to_viewers("Sleep 1 round: Reflex DC 14 negates") //round is 6 seconds *nod
+		var/reflex_saving_throw = saving_throw_roller.Invoke()
+		STOP_FLOATING_ANIM(stabbed)
+		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
+		if(will_saving_throw > 16 - (HAS_TRAIT(stabbed, TRAIT_MINDSHIELD) ? 6 : 0)) // mindshields are a Will bonus now iunno
+			ADD_TRAIT(stabbed, TRAIT_SOFTSPOKEN, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_SOFTSPOKEN, type), 18 SECONDS)
+		else
+			ADD_TRAIT(stabbed, TRAIT_MUTE, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_MUTE, type), 18 SECONDS)
+		if(fort_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
+			stabbed.Paralyze(12 SECONDS)
+		if(reflex_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
+			stabbed.Unconscious(6 SECONDS)
 
 #undef MIN_SIDES_ALERT
