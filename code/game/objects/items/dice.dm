@@ -601,7 +601,7 @@
 			var/sneak_attack_damage = sneakycallback.Invoke()
 			var/obj/item/bodypart/back_that_we_stab = stabbystabbed.get_bodypart(BODY_ZONE_CHEST)
 			back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
-			return ITEM_INTERACT_BLOCKING
+			return ITEM_INTERACT_SUCCESS
 
 
 #undef MIN_SIDES_ALERT
