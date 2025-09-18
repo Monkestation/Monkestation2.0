@@ -574,6 +574,8 @@
 	var/flat_bonus = 5 //they have really good dex iunno
 	var/funny_alert_message = "SNEAK ATTACK!"
 	var/backstab_time = 1 SECOND
+	var/modes = list("lethal", "nonlethal")
+	var/mode = "lethal"
 
 /obj/item/toy/toy_dagger/dnd/Initialize(mapload)
 	. = ..()
@@ -582,10 +584,10 @@
 
 /obj/item/toy/toy_dagger/dnd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!iscarbon(interacting_with))
+	if(!ishuman(interacting_with) || HAS_TRAIT(interacting_with, TRAIT_GODMODE))
 		user.balloon_alert(user, "cant backstab that")
 		return ITEM_INTERACT_BLOCKING
-	var/mob/living/carbon/stabbystabbed = interacting_with
+	var/mob/living/carbon/human/stabbystabbed = interacting_with
 	var/backstab_dir = get_dir(user, stabbystabbed)
 	// Backstab bonus
 	if(!((user.dir & backstab_dir) && (stabbystabbed.dir & backstab_dir)))
@@ -597,11 +599,26 @@
 			return ITEM_INTERACT_BLOCKING
 		else
 			stabbystabbed.balloon_alert_to_viewers(funny_alert_message)
-			var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbystabbed, sneak_attack_dice, damage_mult, flat_bonus, /obj/item/dice/d6, 3, TRUE, 2, 2)
-			var/sneak_attack_damage = sneakycallback.Invoke()
-			var/obj/item/bodypart/back_that_we_stab = stabbystabbed.get_bodypart(BODY_ZONE_CHEST)
-			back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
+			do_the_stab(stabby_stabbed, user, mode)
 			return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
+/obj/item/toy/toy_dagger/dnd/proc/do_the_stab(mob/living/carbon/human/stabbed, mob/living/user, mode)
+	if(mode == "lethal")
+		var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, sneak_attack_dice, damage_mult, flat_bonus, /obj/item/dice/d6, 3, TRUE, 2, 2)
+		var/sneak_attack_damage = sneakycallback.Invoke()
+		var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
+		back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
+	if(mode == "nonlethal")
+		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE), TRAIT_DAGGERFX)
+		DO_FLOATING_ANIM(stabbed)
+		var/datum/callback/saving_thow_roller = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 1, 0.5)
+		stabbed.balloon_alert_to_viewers("mute 3 rounds: Will DC 16 reduces") //round is 6 seconds *nod
+		var/will_saving_throw = saving_throw_roller.Invoke()
+		if(will_saving_throw > 16)
+			ADD_TRAIT(stabbed, TRAIT_SOFTSPOKEN, REF(src))
+			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_SOFTSPOKEN, REF(src)), 18 SECONDS)
+		else:
+		
 
 #undef MIN_SIDES_ALERT
