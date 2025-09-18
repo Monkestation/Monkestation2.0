@@ -561,6 +561,24 @@
 /obj/item/toy/toy_dagger/dnd
 	name = "\improper Dungeoneer's Dagger"
 	desc = "A strange relic, recovered from an ancient warehouse belonging to \"Piezo Inc.\", whoever they were." //and you thought it was a DND joke... but it was I... PATHFINDER
+	inhand_icon_state = ""
+	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = ""
+	override_notes = TRUE
+	sharpness = SHARP_POINTY
+	tool_behaviour = TOOL_KNIFE
+	force_string = "Extremely robust... when backstabbing"
+
+	///our power
+	var/sneak_attack_dice = 14
+	var/damage_mult = 2 //guarenteed to crit on backstab because all traitors take the assassin archetype ig
+	var/flat_bonus = 5 //they have really good dex iunno
+	var/funny_alert_message = "SNEAK ATTACK!"
+	var/backstab_time = 1 SECOND
+
+/obj/item/toy/toy_dagger/dnd/Initialize(mapload)
+	. = ..()
+	offensive_notes = "Deals [sneak_attack_dice]d6[(damage_mult != 1) ? " * [damage_mult]" : "" ][(flat_bonus != 0) ? " + [flat_bonus]" : ""] brute damage when stabbing from behind. This takes a few seconds."
 
 /obj/item/toy/toy_dagger/dnd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -573,16 +591,16 @@
 	if(!((user.dir & backstab_dir) && (stabbystabbed.dir & backstab_dir)))
 		user.balloon_alert(user, "must backstab")
 		return ITEM_INTERACT_BLOCKING
-	if(do_after(user, 2 SECONDS, stabbystabbed))
+	if(do_after(user, backstab_time, stabbystabbed))
 		if(!((user.dir & backstab_dir) && (stabbystabbed.dir & backstab_dir)))
 			user.balloon_alert(user, "must backstab")
 			return ITEM_INTERACT_BLOCKING
 		else
-			stabbystabbed.balloon_alert_to_viewers("SNEAK ATTACK!")
-			var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbystabbed, 12, 1.5, 0, /obj/item/dice/d6, 3, TRUE, 2, 2)
+			stabbystabbed.balloon_alert_to_viewers(funny_alert_message)
+			var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbystabbed, sneak_attack_dice, damage_mult, flat_bonus, /obj/item/dice/d6, 3, TRUE, 2, 2)
 			var/sneak_attack_damage = sneakycallback.Invoke()
 			var/obj/item/bodypart/back_that_we_stab = stabbystabbed.get_bodypart(BODY_ZONE_CHEST)
-			back_that_we_stab.receive_damage(brute=sneak_attack_damage)
+			back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
 			return ITEM_INTERACT_BLOCKING
 
 
