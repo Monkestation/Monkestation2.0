@@ -51,8 +51,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	adjusted_flags = ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 
-	visor_flags_inv = HIDEFACIALHAIR
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	greyscale_config = /datum/greyscale_config/kitsune
