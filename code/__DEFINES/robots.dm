@@ -27,14 +27,14 @@
 ///Malfunctioning AI hijacking mecha
 #define AI_MECH_HACK 3
 
-/** Cyborg defines */
+// Cyborg defines
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
 /// How many watts per lamp power is consumed while the lamp is on.
-#define BORG_LAMP_POWER_CONSUMPTION (1000 WATTS)
+#define BORG_LAMP_POWER_CONSUMPTION (5 WATTS)
 /// The minimum power consumption of a cyborg.
-#define BORG_MINIMUM_POWER_CONSUMPTION (500 WATTS)
+#define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
