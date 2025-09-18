@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - spellcheck: "Fixed all instances of \"oozeling\" being mispelled as \"oozling\"."

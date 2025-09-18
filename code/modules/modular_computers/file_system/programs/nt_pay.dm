@@ -30,7 +30,7 @@
 			if(token == current_user.pay_token)
 				return to_chat(usr, span_notice("You can't send credits to yourself."))
 
-			for(var/account as anything in SSeconomy.bank_accounts_by_id)
+			for(var/account in SSeconomy.bank_accounts_by_id)
 				var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
 				if(acc.pay_token == token)
 					recipient = acc

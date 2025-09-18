@@ -1088,7 +1088,7 @@
 
 	if(tilted && !user.buckled && !isAdminGhostAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
+		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
 		return
 

@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		balloon_alert(user, "access panel must be closed!")
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		balloon_alert(user, "no access")
 		return
 	bot_access_flags ^= BOT_CONTROL_PANEL_OPEN
@@ -570,7 +570,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_access_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
 	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(.)
 		return
 	var/mob/the_user = ui.user
-	if(!check_access(the_user))
+	if(!allowed(the_user))
 		balloon_alert(the_user, "access denied!")
 		return
 
@@ -728,7 +728,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Ejects the pAI remotely.
 /mob/living/basic/bot/proc/eject_pai_remote(mob/user)
-	if(!check_access(user) || !paicard)
+	if(!allowed(user) || !paicard)
 		return
 	speak("Ejecting personality chip.", radio_channel)
 	ejectpai(user)

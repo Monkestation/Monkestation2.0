@@ -1,0 +1,9 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - rscadd: "Adds the Armory Authorization Computer. Can be authorized by the HOS, Warden, Captain, or 3 Secoffs. When authorized, opens the armory shutters and plays a station wide announcement containing the reason the armory was opened and who authorized it. Closing it works the same way but does not play a station announcement."
+  - map: "All maps now have an armory authorization computer. Normal armory shutter buttons have been removed."
+  - map: "Minor improvements to many brig maps."
+  - map: "Any maps with public facing armory shutters have had them removed, and replaced with locker room facing armory shutters if applicable. Public facing armory doors can still be set to EA/bolted open to allow the crew in."
+  - map: "The gulag shuttle & gulag equipment is now functional once again on heliostation."
+  - qol: "You can now input either text or a number when modifying the ID of a shutter door. Set it to \"armory\" to link with the armory authorization computer, if you wanna renovate the brig."

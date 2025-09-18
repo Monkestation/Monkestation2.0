@@ -468,10 +468,10 @@
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 	var/datum/mind/ghost_mind = selected.mind
-	ghost_mind.active = TRUE
+	ghost_mind?.active = TRUE
 
 	var/mob/living/basic/bingle/bingle = new(spawn_loc, src)
-	bingle.key = selected.key
+	bingle.PossessByPlayer(selected.key)
 
 	if(ghost_mind)
 		bingle.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)

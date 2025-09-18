@@ -12,12 +12,11 @@
   $fg-lightness: -10%
 );
 @use '../base.scss' with (
-    // $color-fg: #000000,
-    // $color-bg: darkblue,
-    $color-bg-start: lightblue,
-    $color-bg-end: darkblue,
-    // $color-bg-grad-spread: 50%,
-  );
+  // $color-fg: #000000,
+  // $color-bg: darkblue,
+  $color-bg-start: lightblue,
+  $color-bg-end: darkblue // $color-bg-grad-spread: 50%,
+);
 
 $font-size: 24px;
 

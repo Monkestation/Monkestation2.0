@@ -40,7 +40,9 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
 
-	var/static/list/crate_paint_jobs = list(
+	var/static/list/crate_paint_jobs
+	if(isnull(crate_paint_jobs))
+		crate_paint_jobs = list(
 		"Internals" = list("icon_state" = "o2crate"),
 		"Medical" = list("icon_state" = "medicalcrate"),
 		"Radiation" = list("icon_state" = "radiation"),
@@ -49,7 +51,7 @@
 		"Solar" = list("icon_state" = "engi_e_crate"),
 		"Engineering" = list("icon_state" = "engi_crate")
 	)
-	if(!isnull(paint_jobs))
+	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE

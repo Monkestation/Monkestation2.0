@@ -87,6 +87,12 @@
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
 
+// limb_flags
+///Flag for if the wound is currently bandaged by a bruise kit
+#define LIMB_KITTED_BRUTE (1<<0)
+///Flag for if the wound is currently bandaged by a burn kit
+#define LIMB_KITTED_BURN (1<<1)
+
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
 #define GIB_TYPE_ROBOTIC "robotic"
