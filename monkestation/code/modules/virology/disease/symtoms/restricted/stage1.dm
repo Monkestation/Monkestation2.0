@@ -192,4 +192,5 @@
 			if(prob(12))
 				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
 				mob.set_silence_if_lower(5 SECONDS)
+				mob.set_emote_mute_if_lower(5 SECONDS)
 	multiplier_tweak(0.1)

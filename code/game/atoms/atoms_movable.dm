@@ -108,6 +108,14 @@
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
 
+	// Access levels, used in modules\jobs\access.dm
+	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
+	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
+	var/list/req_access
+	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
+	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
+	var/list/req_one_access
+
 	///can we grab this object?
 	var/cant_grab = FALSE
 
@@ -116,8 +124,8 @@
 /mutable_appearance/emissive_blocker/New()
 	. = ..()
 	// Need to do this here because it's overriden by the parent call
+	// This is a microop which is the sole reason why this child exists, because its static this is a really cheap way to set color without setting or checking it every time we create an atom
 	color = EM_BLOCK_COLOR
-	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
 /atom/movable/Initialize(mapload, ...)
 	. = ..()
@@ -154,8 +162,8 @@
 		blocker.icon = icon
 		blocker.icon_state = icon_state
 		blocker.dir = dir
-		blocker.appearance_flags |= appearance_flags
-		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
+		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
@@ -1124,6 +1132,7 @@
 	else
 		CRASH("No valid destination passed into forceMove")
 
+///For items that deploy and can be picked up again
 /atom/movable/proc/moveToNullspace()
 	return doMove(null)
 

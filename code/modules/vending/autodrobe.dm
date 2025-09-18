@@ -71,13 +71,14 @@
 		        /obj/item/clothing/under/costume/bb_dress = 1,
 				/obj/item/clothing/head/wizard/ralsei = 1,
 				/obj/item/clothing/suit/wizrobe/ralsei = 1,
-				/obj/item/clothing/neck/ralsei = 1, 
+				/obj/item/clothing/neck/ralsei = 1,
 				/obj/item/clothing/glasses/ralsei = 1,
 				/obj/item/clothing/under/costume/susie = 1,
 				/obj/item/clothing/under/costume/kris = 1,
-				/obj/item/clothing/neck/kris = 1, 
+				/obj/item/clothing/neck/kris = 1,
 				/obj/item/clothing/shoes/kris = 1,
 				/obj/item/clothing/gloves/kris = 1,
+				/obj/item/clothing/under/dress/hula = 1,
 				//Monkestation Addition end
 			),
 		),
@@ -106,6 +107,10 @@
 				/obj/item/clothing/gloves/infinity_gloves = 5,
 				/obj/item/clothing/suit/thekiller_robe = 1,
 				/obj/item/clothing/head/thekiller_head = 1,
+				/obj/item/clothing/head/costume/dio = 1,
+				/obj/item/clothing/suit/costume/dio = 1,
+				/obj/item/clothing/under/costume/dio = 1,
+				/obj/item/clothing/shoes/dio = 1,
 				//Monkestation Addition end
 			),
 		),
@@ -129,6 +134,7 @@
 				/obj/item/clothing/shoes/clown_shoes/green_jester_shoes =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/head/costume/jester/alt =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/rank/civilian/clown/jester/alt =1, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/costume/jimbo = 2, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/villain = 1,
 				/obj/item/clothing/suit/costume/joker = 1,
 				/obj/item/clothing/under/costume/joker = 1,
@@ -143,6 +149,8 @@
 				/obj/item/clothing/under/costume/harlequin =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/shoes/clown_shoes/harlequin_boots =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/tragic = 2,
+				/obj/item/clothing/head/batterhat = 2,//MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/costume/batter = 2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/streetmime = 1,
 				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
 				/obj/item/clothing/shoes/clown_shoes/yellow = 1,

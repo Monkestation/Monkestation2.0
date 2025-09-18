@@ -162,11 +162,13 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 
 //Update the arrow towards another atom
 /datum/component/team_monitor/proc/update_atom_dir(datum/component/tracking_beacon/beacon)
-	if(!updating || !updating.hud_used || !beacon || !beacon.visible)
+	if(!updating?.hud_used || !beacon?.visible)
 		return
 	var/atom/movable/screen/arrow/screen = tracking[beacon]
 	var/turf/target_turf = get_turf(beacon.parent)
 	var/turf/parent_turf = get_turf(parent)
+	if(!target_turf || !parent_turf)
+		return
 	var/share_z = target_turf.z == parent_turf.z
 	if((!share_z && (!multiz)) || target_turf == parent_turf)
 		if(screen)

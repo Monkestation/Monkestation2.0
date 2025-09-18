@@ -22,7 +22,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	weight = 13
+	weight = 18
 	event_icon_state = "traitor"
 
 /datum/round_event_control/antagonist/solo/traitor/roundstart

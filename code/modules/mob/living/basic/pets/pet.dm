@@ -13,6 +13,9 @@
 
 	/// Our collar
 	var/obj/item/clothing/neck/petcollar/collar
+	var/static/list/pet_foods = list(
+		/obj/item/food/
+	)
 
 /mob/living/basic/pet/Initialize(mapload)
 	. = ..()
@@ -20,7 +23,11 @@
 	/// Can set the collar var beforehand to start the pet with a collar.
 	if(collar)
 		collar = new(src)
-
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
+	AddElement(/datum/element/dextrous)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
+	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = pet_foods)
+	AddComponent(/datum/component/personal_crafting)
 	update_icon(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/Destroy()

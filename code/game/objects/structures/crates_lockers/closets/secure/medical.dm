@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/muzzle/breath(src)
+		new /obj/item/clothing/mask/breath/muzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -83,6 +83,7 @@
 	new /obj/item/defibrillator/compact/loaded(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/autosurgeon/medical_hud(src)
+	new /obj/item/autosurgeon/perfect_serverlink(src) // MONKE EDIT: Adds serverlink implanter
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)

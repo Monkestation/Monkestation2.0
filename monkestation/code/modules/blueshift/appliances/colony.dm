@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 		allowed_materials, \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
-		_after_insert = TYPE_PROC_REF(/obj/machinery/colony_recycler, has_eaten_materials), \
+		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/colony_recycler, has_eaten_materials)), \
 	)
 
 /obj/machinery/colony_recycler/Destroy()

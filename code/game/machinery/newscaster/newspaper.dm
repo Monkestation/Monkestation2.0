@@ -1,7 +1,7 @@
 /obj/item/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "newspaper"
 	inhand_icon_state = "newspaper"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
@@ -13,14 +13,29 @@
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
-	var/list/datum/feed_channel/news_content = list()
-	var/scribble=""
-	var/scribble_page = null
 	var/wantedAuthor
 	var/wantedCriminal
 	var/wantedBody
 	var/wantedPhoto
+	///List of news feeed channels the newspaper can see.
+	var/list/datum/feed_channel/news_content = list()
+	///The time the newspaper was made in terms of newscaster's last action, used to tell the newspaper whether a story should be in it.
 	var/creation_time
+	///The page in the newspaper currently being read. 0 is the title screen while the last is the security screen.
+	var/current_page = 0
+	///The currently scribbled text written in scribble_page
+	var/scribble_text
+	///The page with something scribbled on it, can only have one at a time.
+	var/scribble_page
+
+	///Stored information of the wanted criminal's name, if one existed at the time of creation.
+	var/saved_wanted_criminal
+	///Stored information of the wanted criminal's description, if one existed at the time of creation.
+	var/saved_wanted_body
+	///Stored icon of the wanted criminal, if one existed at the time of creation.
+	var/icon/saved_wanted_icon
+	///Do we have eyeholes punctured?
+	var/punctured = FALSE
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!"))
@@ -58,7 +73,7 @@
 					dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
 				dat+="</ul>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<HR><DIV STYLE='float:right;'><A href='byond://?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='byond://?src=[REF(user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 		if(1) // X channel pages inbetween.
 			for(var/datum/feed_channel/NP in news_content)
@@ -87,7 +102,7 @@
 						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.return_author(notContent(MESSAGE.author_censor_time))]</FONT>\]</FONT><BR><BR>"
 					dat+="</ul>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<BR><HR><DIV STYLE='float:left;'><A href='byond://?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='byond://?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
 		if(2) //Last page
 			for(var/datum/feed_channel/NP in news_content)
@@ -105,7 +120,7 @@
 			else
 				dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<HR><DIV STYLE='float:left;'><A href='byond://?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
 	dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
 	user << browse(dat, "window=newspaper_main;size=300x400")
@@ -153,12 +168,12 @@
 		if(ismob(loc))
 			attack_self(loc)
 
-/obj/item/newspaper/attackby(obj/item/W, mob/living/user, params)
-	if(burn_paper_product_attackby_check(W, user))
+/obj/item/newspaper/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
 
-	if(istype(W, /obj/item/pen))
-		if(!user.can_write(W))
+	if(istype(attacking_item, /obj/item/pen))
+		if(!user.can_write(attacking_item))
 			return
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))
@@ -169,7 +184,7 @@
 			if(!user.can_perform_action(src))
 				return
 			scribble_page = curr_page
-			scribble = s
+			scribble_text = s
 			attack_self(user)
 			add_fingerprint(user)
 	else

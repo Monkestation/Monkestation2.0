@@ -70,11 +70,10 @@
 
 /**
  * Standard mob ClickOn()
- * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
  *
  * After that, mostly just check your state, check whether you're holding an item,
- * check whether you're adjacent to the target, then pass off the click to whoever
- * is receiving it.
+ * check whether you're adjacent to the target, then pass off the click to whoever is receiving it.
+ *
  * The most common are:
  * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
  * * [atom/proc/attackby] (item,user) - used only when adjacent
@@ -164,7 +163,7 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -185,25 +184,19 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1, modifiers)
+			UnarmedAttack(A , 1, modifiers)
 	else
 		if(W)
-			if((istate & ISTATE_SECONDARY))
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
-
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A,src,0,params)
+			A.base_ranged_item_interaction(src, W, modifiers)
 		else
 			if((istate & ISTATE_SECONDARY))
 				ranged_secondary_attack(A, modifiers)
 			else
-				RangedAttack(A,modifiers)
+				RangedAttack(A, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

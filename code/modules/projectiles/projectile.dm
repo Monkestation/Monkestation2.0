@@ -121,6 +121,8 @@
 	var/ricochet_incidence_leeway = 40
 	/// Can our ricochet autoaim hit our firer?
 	var/ricochet_shoots_firer = TRUE
+	/// Do we bounce off of everything reasonable to bounce, or based off of armor flags
+	var/expanded_bounce = FALSE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -324,7 +326,7 @@
 			var/turf/closed/wall/target_wall = target_turf
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 			//monkestation edit start
-			if(damage_walls)
+			if(damage_walls && target_wall.uses_integrity)
 				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
 			//monkestation edit end
 
@@ -332,7 +334,7 @@
 
 	var/mob/living/living_target = target
 
-	if(living_target.buckled)
+	if(isobj(living_target.buckled))
 		var/obj/buck_source = living_target.buckled
 		if(buck_source.cover_amount != 0)
 			if(prob(buck_source.cover_amount))
@@ -776,6 +778,9 @@
 		return TRUE
 
 	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+		return TRUE
+
+	if(expanded_bounce && (A.flags_ricochet & (RICOCHET_HARD | RICOCHET_SHINY)))
 		return TRUE
 
 	return FALSE

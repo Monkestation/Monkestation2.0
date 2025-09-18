@@ -309,8 +309,8 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
+/obj/item/solar_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
@@ -319,10 +319,10 @@
 			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
 			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
 		)
-		W.play_tool_sound(src, 75)
+		attacking_item.play_tool_sound(src, 75)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(istype(attacking_item, /obj/item/stack/sheet/glass) || istype(attacking_item, /obj/item/stack/sheet/rglass))
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
 			return
@@ -330,9 +330,9 @@
 		if(locate(/obj/machinery/power/solar) in solarturf)
 			to_chat(user, span_warning("A solar panel is already assembled here."))
 			return
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/stack/sheet/S = attacking_item
 		if(S.use(2))
-			glass_type = W.type
+			glass_type = attacking_item.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 			if(tracker)
@@ -345,16 +345,16 @@
 		return TRUE
 
 	if(!tracker)
-		if(istype(W, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(W))
+		if(istype(attacking_item, /obj/item/electronics/tracker))
+			if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 				return
 			tracker = TRUE
 			update_appearance()
-			qdel(W)
+			qdel(attacking_item)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
 	else
-		if(W.tool_behaviour == TOOL_CROWBAR)
+		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
@@ -522,9 +522,9 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/power/solar_control/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(I.use_tool(src, user, 20, volume=50))
+/obj/machinery/power/solar_control/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(attacking_item.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
 				to_chat(user, span_notice("The broken glass falls out."))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
@@ -548,7 +548,7 @@
 				A.icon_state = "4"
 				A.set_anchored(TRUE)
 				qdel(src)
-	else if(!(user.istate & ISTATE_HARM) && !(I.item_flags & NOBLUDGEON))
+	else if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & NOBLUDGEON))
 		attack_hand(user)
 	else
 		return ..()

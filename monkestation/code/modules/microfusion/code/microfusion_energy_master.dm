@@ -235,7 +235,7 @@
 			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			. = span_danger("[user] casually lights [to_ignite.loc == user ? "[user.p_their()] [to_ignite.name]" : to_ignite] with [src]. Damn.")
 
-/obj/item/gun/microfusion/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/gun/microfusion/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return

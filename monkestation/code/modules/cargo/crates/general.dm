@@ -39,3 +39,11 @@
 	)
 	crate_name = "Basic Smithing Crate"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/sponsorship
+	name = "Sponsorship Implant Crate"
+	desc = "A pack of 4 sponsorship implants with a complimentary implanter. \
+		Can be used to connect willing participants to the NT Advertisement network for a small revenue stream."
+	cost = CARGO_CRATE_VALUE * 1.5
+	contains = list(/obj/item/storage/briefcase/sponsorship)
+	crate_name = "sponsorship implant crate"

@@ -92,8 +92,6 @@ GLOBAL_LIST_EMPTY(all_languages)
 ///List of all languages ("name" = type)
 GLOBAL_LIST_EMPTY(language_types_by_name)
 
-GLOBAL_LIST_EMPTY(sentient_disease_instances)
-
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)

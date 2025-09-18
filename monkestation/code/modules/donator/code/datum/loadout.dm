@@ -915,7 +915,7 @@
 	requires_purchase = FALSE
 
 //AdamCoal
-/datum/loadout_item/pocket_items/donator/cyber_huskey
+/datum/loadout_item/pocket_items/donator/cyber_husky
 	name = "Pet Delivery Beacon - Cyber Huskey"
 	item_path = /obj/item/choice_beacon/pet/donator/cyber_husky
 	donator_only = TRUE
@@ -961,6 +961,18 @@
 	name = "Robotics trench Coat"
 	item_path = /obj/item/clothing/suit/robo_trenchcoat
 	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/ai
+	name = "Artificial Intelligence Plush"
+	item_path = /obj/item/toy/plush/ai
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_husky
+	ckeywhitelist = list("AdamCoal")
+	name = "Cyber Husky"
+	item_path = /obj/item/effect_granter/donator/cyber_husky
 	requires_purchase = FALSE
 
 //hunterowl17
