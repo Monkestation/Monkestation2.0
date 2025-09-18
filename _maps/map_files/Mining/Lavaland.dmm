@@ -2803,10 +2803,8 @@
 /area/mine/laborcamp/production)
 "ps" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "pu" = (
@@ -5158,10 +5156,8 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/production)
 "Ee" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "Eg" = (

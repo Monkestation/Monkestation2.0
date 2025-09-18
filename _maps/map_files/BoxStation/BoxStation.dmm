@@ -54911,7 +54911,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/structure/cable,
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,

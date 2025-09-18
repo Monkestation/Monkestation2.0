@@ -64166,7 +64166,7 @@
 	dir = 1
 	},
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/structure/cable,

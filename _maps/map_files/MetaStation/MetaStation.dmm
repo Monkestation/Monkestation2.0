@@ -32590,7 +32590,7 @@
 /area/station/medical/medbay/central)
 "lmA" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -64496,15 +64496,13 @@
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
 "wgB" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
 	pixel_x = -22
 	},
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "wha" = (

@@ -7238,7 +7238,6 @@
 #include "monkestation\code\modules\blueshift\machines\posi_alert.dm"
 #include "monkestation\code\modules\blueshift\machines\power_storage_unit.dm"
 #include "monkestation\code\modules\blueshift\machines\rtg.dm"
-#include "monkestation\code\modules\blueshift\machines\smes.dm"
 #include "monkestation\code\modules\blueshift\machines\solar_panel.dm"
 #include "monkestation\code\modules\blueshift\machines\solid_fuel_generator.dm"
 #include "monkestation\code\modules\blueshift\machines\station_armament.dm"

@@ -751,13 +751,11 @@
 	},
 /area/shuttle/ruin/caravan/pirate)
 "We" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "Wi" = (

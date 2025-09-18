@@ -61595,7 +61595,7 @@
 /area/station/maintenance/abandon_wrestle)
 "tme" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
