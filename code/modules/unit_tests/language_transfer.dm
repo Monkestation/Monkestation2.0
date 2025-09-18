@@ -18,11 +18,11 @@
 
 	dummy.set_species(/datum/species/lizard)
 
-	TEST_ASSERT(length(holder.spoken_languages) == 3, \
-		"Dummy should speak two languages - Common, Draconic and Ashtongue! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
+	TEST_ASSERT(length(holder.spoken_languages) == 2, \
+		"Dummy should speak two languages - Common and Draconic! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
 
-	TEST_ASSERT(length(holder.understood_languages) == 3, \
-		"Dummy should understand two languages - Common, Draconic and Ashtongue! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
+	TEST_ASSERT(length(holder.understood_languages) == 2, \
+		"Dummy should understand two languages - Common and Draconic! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
 	dummy.set_species(/datum/species/human)
 
