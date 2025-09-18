@@ -348,9 +348,8 @@
 		return
 	use_energy(7.5 KILO JOULES / severity)
 	new /obj/effect/temp_visual/emp(loc)
-
-		if(prob(70/severity))
-			set_active_language(get_random_spoken_language())
+	if(prob(70/severity))
+		set_active_language(get_random_spoken_language())
 
 /**
  * Opens the machine.
