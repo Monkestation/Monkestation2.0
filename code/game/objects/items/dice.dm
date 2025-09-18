@@ -563,7 +563,6 @@
 	desc = "A strange relic, recovered from an ancient warehouse belonging to \"Piezo Inc.\", whoever they were." //and you thought it was a DND joke... but it was I... PATHFINDER
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_SMALL
-	pickup_sound = ""
 	override_notes = TRUE
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_KNIFE
@@ -579,6 +578,7 @@
 /obj/item/toy/toy_dagger/dnd/Initialize(mapload)
 	. = ..()
 	offensive_notes = "Deals [sneak_attack_dice]d6[(damage_mult != 1) ? " * [damage_mult]" : "" ][(flat_bonus != 0) ? " + [flat_bonus]" : ""] brute damage when stabbing from behind. This takes a few seconds."
+	ADD_TRAIT(src, TRAIT_EXAMINE_SKIP, TRAIT_GENERIC)
 
 /obj/item/toy/toy_dagger/dnd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
