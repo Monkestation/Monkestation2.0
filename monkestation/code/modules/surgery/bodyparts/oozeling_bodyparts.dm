@@ -1,7 +1,7 @@
 /obj/item/bodypart/head/oozeling
 	limb_id = SPECIES_OOZELING
 	is_dimorphic = TRUE
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
@@ -12,7 +12,7 @@
 /obj/item/bodypart/chest/oozeling
 	limb_id = SPECIES_OOZELING
 	is_dimorphic = TRUE
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
@@ -24,7 +24,7 @@
 
 /obj/item/bodypart/arm/left/oozeling
 	limb_id = SPECIES_OOZELING
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
@@ -34,7 +34,7 @@
 
 /obj/item/bodypart/arm/right/oozeling
 	limb_id = SPECIES_OOZELING
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
@@ -44,7 +44,7 @@
 
 /obj/item/bodypart/leg/left/oozeling
 	limb_id = SPECIES_OOZELING
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
@@ -54,7 +54,7 @@
 
 /obj/item/bodypart/leg/right/oozeling
 	limb_id = SPECIES_OOZELING
-	biological_state = BIO_INORGANIC
+	biological_state = BIO_SLIME
 
 	dmg_overlay_type = null
 	composition_effects = list(/datum/element/soft_landing = 0.5)
