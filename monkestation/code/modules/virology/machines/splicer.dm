@@ -171,6 +171,7 @@
 		if(x == target_slot)
 			var/datum/symptom/e = effects[x]
 			effects[x] = memorybank.Copy(dish.contained_virus)
+			effects[x].OnAdd(dish.contained_virus)
 			dish.contained_virus.log += "<br />[ROUND_TIME()] [memorybank.name] spliced in by [key_name(usr)] (replaces [e.name])"
 			break
 
