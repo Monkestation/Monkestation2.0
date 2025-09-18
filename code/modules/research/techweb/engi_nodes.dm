@@ -56,6 +56,7 @@
 		"welding_goggles",
 		"teg",
 		"teg-circ",
+		"marker_beacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TECHWEB_TIER_3_POINTS)

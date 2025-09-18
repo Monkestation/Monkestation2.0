@@ -5,6 +5,8 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+/// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
+#define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 
 //Message modes. Each one defines a radio channel, more or less.
 //if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.

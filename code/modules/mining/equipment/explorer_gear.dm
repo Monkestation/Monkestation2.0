@@ -296,10 +296,10 @@
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /datum/armor/cloak_godslayer
-	melee = 50
+	melee = 70
 	bullet = 25
 	laser = 25
-	energy = 25
+	energy = 40
 	bomb = 50
 	bio = 50
 	fire = 100

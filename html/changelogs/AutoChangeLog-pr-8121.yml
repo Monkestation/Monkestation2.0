@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "fixed delta and blueshift maps giving the blueshield duplicate items"

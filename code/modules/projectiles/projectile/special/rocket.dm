@@ -72,6 +72,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
+/// 122mm artillery shell - this should be admin spawn only, so its fucking yuge.
+/obj/projectile/bullet/rocket/artilleryshell
+	name = "\improper 122mm artillery shell"
+	desc = "static warfare in spess."
+	icon_state = "LIGHTTANKSHELL"
+	damage = 80
+	armour_penetration = 100
+	dismemberment = 100
+	anti_armour_damage = 350
+
+/obj/projectile/bullet/rocket/artilleryshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 8, flame_range = 15, flash_range = 11, adminlog = TRUE)
+
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"

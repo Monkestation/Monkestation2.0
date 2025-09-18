@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "dustyshard"
 	theme = GUARDIAN_THEME_MINER
-	allow_multiple = TRUE
+	allow_multiple = FALSE
 	use_message = span_holoparasite("You pierce your skin with the shard...")
 	used_message = span_holoparasite("This shard seems to have lost all its power...")
 	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")

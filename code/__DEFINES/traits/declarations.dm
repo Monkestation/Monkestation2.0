@@ -167,6 +167,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait can switch their base color to be greyscale
+#define TRAIT_GREYSCALE_TOGGLE "toggle_greyscale"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
@@ -1342,6 +1344,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+// /datum/mind + /mob/living
+/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
+#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// You have special interactions with bloodsuckers and the occult.
+#define TRAIT_OCCULTIST "occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE "unborgable"
+/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
+#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+
+// /datum/mind
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW "joined_as_crew"
 
 ///Darkspawn traits
 ///lets darkspawns walk through weak light

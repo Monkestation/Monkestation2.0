@@ -103,7 +103,7 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-	. += span_hypnophrase("Enchanted by the Mansus!")
+	. += span_hypnophrase("Enchanted by The Mansus!")
 	. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
 	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
 	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
