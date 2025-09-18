@@ -486,7 +486,7 @@
 
 /obj/item/nanite_injection_tentacle
 	name = "nanomechanical mass"
-	desc = "This condensed mass of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users, or even those without nanites."
+	desc = "This condensed tendril of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users. It can even be used as a substitute implantation device, though the process is both slow and exceedingly painful."
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
@@ -523,7 +523,7 @@
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
 			if(ishuman(goofygoober))
 				var/mob/living/carbon/human/yeowch = goofygoober
-				yeowch.sharp_pain(BODY_ZONE_CHEST, 70, BURN, 15 SECONDS) //yeowch
+				yeowch.sharp_pain(BODY_ZONE_CHEST, 90, BURN, 15 SECONDS) //yeowch
 			goofygoober.emote("scream")
 			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
 		return ITEM_INTERACT_SUCCESS
