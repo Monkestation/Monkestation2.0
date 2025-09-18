@@ -97,8 +97,8 @@
 	anchored_tabletop_offset = 4
 	anchored = FALSE
 	circuit = null
-	// powerefficiency = 0.5 XANTODO Figure out if this is supposed to be higher or lower  //power_cost
-	// recharge_amount = 50 // Balance I guess?
+	power_cost = 0.02 KILO WATTS // 250 units with the crap cell it has
+	recharge_amount = 0.05 KILO WATTS // 5 units recharged per process
 	show_ph = FALSE
 	// God's strongest coffee machine
 	dispensable_reagents = list(
@@ -133,8 +133,8 @@
 
 /obj/machinery/chem_dispenser/frontier_appliance/RefreshParts()
 	. = ..()
-	// powerefficiency = 0.5 XANTODO Figure out if this is supposed to be higher or lower  //power_cost
-	recharge_amount = 50
+	power_cost = 0.02 KILO WATTS // 250 units with the crap cell it has
+	recharge_amount = 0.05 KILO WATTS // 5 units recharged per process
 
 /obj/machinery/chem_dispenser/frontier_appliance/examine(mob/user)
 	. = ..()
@@ -418,8 +418,8 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 	anchored = TRUE
 	density = FALSE
 	circuit = null
-	heating_power = 20 KW
-	efficiency = 10000
+	heating_energy = 20 KILO JOULES
+	efficiency = 100 MEGA JOULES / STANDARD_CELL_CHARGE
 	display_panel = TRUE
 	/// What this repacks into when its wrenched off a wall
 	var/repacked_type = /obj/item/wallframe/wall_heater
@@ -433,8 +433,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/space_heater/wall_mounted, 29)
 
 /obj/machinery/space_heater/wall_mounted/RefreshParts()
 	. = ..()
-	heating_power = 20 KW
-	efficiency = 10000
+	heating_energy = 20 KILO JOULES
+	efficiency = 100 MEGA JOULES / STANDARD_CELL_CHARGE
 
 /obj/machinery/space_heater/wall_mounted/default_deconstruction_crowbar()
 	return
