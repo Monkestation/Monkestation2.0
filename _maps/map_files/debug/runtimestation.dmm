@@ -2000,7 +2000,7 @@
 /area/station/bitrunning/den)
 "sH" = (
 /obj/structure/table,
-/obj/item/storage/box/debugtools,
+/obj/item/storage/box/debugbox/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "sU" = (
