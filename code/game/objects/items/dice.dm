@@ -654,7 +654,7 @@
 		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 		DO_FLOATING_ANIM(stabbed)
 		var/datum/callback/kerplodydice = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 5, 6)
-		stabbed.balloon_alert_to_viewers("Damage: d1, Crit Damage Mult: 7e500")
+		stabbed.balloon_alert_to_viewers("Damage: d1, Crit Damage Mult: 7e500") //shit kills you so hard your soul dies too
 		var/explosion_roll = kerplodydice.Invoke()
 		if(explosion_roll == 20) //UTTERLY HILLARIOUS I TELL YOU
 			stabbed.balloon_alert_to_viewers("...Uh oh.")
@@ -676,7 +676,12 @@
 			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [initials] are carved where the twenty should be."
 			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
 			if(stabbed.mind)
-			stabbed.gib(TRUE, FALSE, FALSE)
+				var/obj/item/soulstone/anybody/stone = new(our_souviner)
+				stone.capture_soul(stabbed, forced=TRUE)
+				for(var/mob/living/basic/shade/die_prisoner in our_souviner.contents)
+					ADD_TRAIT(die_prisoner, TRAIT_SOFTSPOKEN, REF(our_souviner))
+					die_prisoner.name = stabbed.real_name
+					die_prisoner.real_name = stabbed.real_name
 		else
 			var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
 			back_that_we_stab.receive_damage(brute=1)
