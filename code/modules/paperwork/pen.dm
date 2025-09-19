@@ -558,3 +558,23 @@
 	if(!did_it_work)
 		to_chat(user, span_warning("Could not sample biomarkers."))
 
+/obj/item/pen/monkecannon
+	var/ammunition = 7
+	charged = TRUE
+
+/obj/item/pen/monkecannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!charged || ammunition < 1)
+		return
+	ammunition -= 1
+	var/mob/living/carbon/human/species/monkey/angry/cannonball = new(src.loc)
+	ADD_TRAIT(cannonball, TRAIT_EMOTEMUTE, type)
+	cannonball.death_sound = ""
+	cannonball.death()
+	REMOVE_TRAIT(cannonball, TRAIT_EMOTEMUTE, type)
+	cannonball.death_sound = initial(cannonball.death_sound)
+	cannonball.throw_at(interacting_with, 10, 7, user, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 15 SECONDS)
+
+/obj/item/pen/monkecannon/proc/recharge()
+	charged = TRUE
