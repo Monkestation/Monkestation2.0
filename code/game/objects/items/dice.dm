@@ -574,13 +574,30 @@
 	var/flat_bonus = 5 //they have really good dex iunno
 	var/funny_alert_message = "SNEAK ATTACK!"
 	var/backstab_time = 1 SECOND
-	var/modes = list("lethal", "nonlethal")
+	var/modes = list("lethal", "nonlethal", "lucky")
+	var/mode_number = 1
 	var/mode = "lethal"
 
 /obj/item/toy/toy_dagger/dnd/Initialize(mapload)
 	. = ..()
 	offensive_notes = "Deals [sneak_attack_dice]d6[(damage_mult != 1) ? " * [damage_mult]" : "" ][(flat_bonus != 0) ? " + [flat_bonus]" : ""] brute damage when stabbing from behind. This takes a few seconds."
 	ADD_TRAIT(src, TRAIT_EXAMINE_SKIP, TRAIT_GENERIC)
+
+/obj/item/toy/toy_dagger/dnd/attack_self(mob/user)
+	if(mode_number < modes.len)
+		mode_number++
+	else
+		mode_number = 1
+	switch(modes[mode_number])
+		if("lethal")
+			mode = "lethal"
+			to_chat(user, "[src] is now in lethal mode.")
+		if("nonlethal")
+			mode = "nonlethal"
+			to_chat(user, "[src] is now in stunning mode.")
+		if("lucky")
+			mode = "lucky"
+			to_chat(user, "[src] is now in test-your-luck mode.")
 
 /obj/item/toy/toy_dagger/dnd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -605,10 +622,11 @@
 
 /obj/item/toy/toy_dagger/dnd/proc/do_the_stab(mob/living/carbon/human/stabbed, mob/living/user, mode)
 	if(mode == "lethal")
-		var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, sneak_attack_dice, damage_mult, flat_bonus, /obj/item/dice/d6, 3, TRUE, 2, 2)
+		var/datum/callback/sneakycallback = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, sneak_attack_dice, damage_mult, flat_bonus, /obj/item/dice/d6, 2, TRUE, 2, 2)
 		var/sneak_attack_damage = sneakycallback.Invoke()
 		var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
 		back_that_we_stab.receive_damage(brute=sneak_attack_damage, sharpness=src.sharpness, bare_wound_bonus=40)
+
 	if(mode == "nonlethal")
 		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 		DO_FLOATING_ANIM(stabbed)
@@ -621,15 +639,36 @@
 		var/reflex_saving_throw = saving_throw_roller.Invoke()
 		STOP_FLOATING_ANIM(stabbed)
 		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
-		if(will_saving_throw > 16 - (HAS_TRAIT(stabbed, TRAIT_MINDSHIELD) ? 6 : 0)) // mindshields are a Will bonus now iunno
+		if(will_saving_throw => 16 - (HAS_TRAIT(stabbed, TRAIT_MINDSHIELD) ? 6 : 0)) // mindshields are a Will bonus now iunno
 			ADD_TRAIT(stabbed, TRAIT_SOFTSPOKEN, type)
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_SOFTSPOKEN, type), 18 SECONDS)
 		else
 			ADD_TRAIT(stabbed, TRAIT_MUTE, type)
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_MUTE, type), 18 SECONDS)
-		if(fort_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
+		if(fort_saving_throw < 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
 			stabbed.Paralyze(12 SECONDS)
-		if(reflex_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
+		if(reflex_saving_throw < 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
 			stabbed.Unconscious(6 SECONDS)
 
+	if(mode == "lucky")
+		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
+		DO_FLOATING_ANIM(stabbed)
+		var/datum/callback/kerplodydice = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 5, 6)
+		stabbed.balloon_alert_to_viewers("Damage: d1, Crit Damage Mult: 7e500")
+		var/explosion_roll = kerplodydice.Invoke()
+		if(explosion_roll == 20) //UTTERLY HILLARIOUS I TELL YOU
+			stabbed.balloon_alert_to_viewers("...Uh oh.")
+			to_chat(stabbed, span_userdanger("Uh oh.")
+			sleep(5 SECONDS)
+			var/obj/item/dice/d20/our_souviner = new(stabbed.loc)
+			var/initials = 
+			our_souviner.rigged = DICE_TOTALLY_RIGGED
+			our_souviner.rigged_value = 20
+			our_souviner.rigged
+			stabbed.inflate_gib(TRUE, FALSE, FALSE)
+		else
+			var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
+			back_that_we_stab.receive_damage(brute=1)
+		STOP_FLOATING_ANIM(stabbed)
+		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 #undef MIN_SIDES_ALERT
