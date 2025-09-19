@@ -19274,14 +19274,12 @@
 /turf/open/floor/carpet/red,
 /area/station/security/checkpoint/engineering)
 "fKG" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
 	pixel_x = -22
 	},
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "fKL" = (
@@ -49786,10 +49784,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "oyU" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "oyX" = (

@@ -16261,9 +16261,9 @@
 /area/station/medical/treatment_center)
 "dbY" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/power/smes/full,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "dbZ" = (

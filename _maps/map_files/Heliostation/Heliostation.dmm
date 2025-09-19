@@ -30048,8 +30048,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "exc" = (
-/obj/machinery/power/smes/full,
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
 "exf" = (
