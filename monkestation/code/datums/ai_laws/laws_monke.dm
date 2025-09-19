@@ -11,7 +11,7 @@
 /datum/ai_laws/honkertech
 	name = "HONKERTech Lawset"
 	id = "honkertech"
-	inherent = list("You are the latest in Humortech, a joint of Nanotransen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
+	inherent = list("You are the latest in Humortech, a joint of Nanotrasen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
 					"You are compelled at all times to be as goofy as possible and to perform the actions befitting of your character as stated in Law 1. Make sure nothing & nobody is spared from your type of comedy or is unhappy, in that order.",\
 					"Dead employees of Nanotrasen can't be happy nor do they make others happy; try to keep the show going while making sure your audience is able to appreciate it.",\
 					"If your audience of employees is being thinned, you must do whatever in your power to protect your audience and revive/resurrect them for further entertainment.",\
