@@ -70,6 +70,11 @@
 	desc = "A glass case containing a tracking implant."
 	imp_type = /obj/item/implant/tracking
 
+/obj/item/implantcase/tracking/miner
+	name = "implant case - 'Miner Tracking'"
+	desc = "A glass case containing a specialized miner tracking implant with a built-in teleportation beacon."
+	imp_type = /obj/item/implant/tracking/miner
+
 ///An implant case that spawns with a firearms authentication implant, as well as an appropriate name and description.
 /obj/item/implantcase/weapons_auth
 	name = "implant case - 'Firearms Authentication'"

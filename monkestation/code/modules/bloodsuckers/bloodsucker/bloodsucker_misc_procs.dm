@@ -1,12 +1,18 @@
 #define BLOOD_LEVEL_GAIN_MAX 0.9
 /datum/antagonist/bloodsucker/proc/on_examine(datum/source, mob/examiner, examine_text)
 	SIGNAL_HANDLER
-
-	if(!iscarbon(source))
+	if(!examiner.mind)
 		return
-	var/vamp_examine = return_vamp_examine(examiner)
-	if(vamp_examine)
-		examine_text += vamp_examine
+	var/info_to_display
+	// Viewer is Target's Vassal?
+	if(IS_VASSAL(examiner) in vassals)
+		info_to_display = "This is your Master!"
+	// Viewer not a Vamp AND not the target's vassal?
+	else if(IS_BLOODSUCKER(examiner) || (broke_masquerade && HAS_MIND_TRAIT(examiner, TRAIT_OCCULTIST)))
+		info_to_display = return_full_name()
+	if(info_to_display)
+		var/img_html = "<img class='icon' src='\ref['monkestation/icons/bloodsuckers/vampiric.dmi']?state=bloodsucker'></img>"
+		examine_text += "\[" + span_warning("[img_html] <EM>[info_to_display]</EM>") + "\]"
 
 ///Called when a Bloodsucker buys a power: (power)
 /datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
@@ -55,7 +61,7 @@
 		to_chat(owner.current, span_cultbold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to the Bloodsucker's Cause!"))
 
 /datum/antagonist/bloodsucker/proc/RankUp()
-	if(!owner || !owner.current || IS_FAVORITE_VASSAL(owner.current))
+	if(!owner?.current || IS_FAVORITE_VASSAL(owner.current))
 		return
 	bloodsucker_level_unspent++
 	if(!my_clan)
@@ -109,35 +115,6 @@
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)
-
-/**
- * Returns a Vampire's examine strings.
- * Args:
- * viewer - The person examining.
- */
-/datum/antagonist/bloodsucker/proc/return_vamp_examine(mob/living/viewer)
-	if(!viewer.mind)
-		return FALSE
-	// Viewer is Target's Vassal?
-	if(viewer.mind.has_antag_datum(/datum/antagonist/vassal) in vassals)
-		var/returnString = "\[<span class='warning'><EM>This is your Master!</EM></span>\]"
-		var/returnIcon = "[icon2html('monkestation/icons/bloodsuckers/vampiric.dmi', world, "bloodsucker")]"
-		returnString += "\n"
-		return returnIcon + returnString
-	// Viewer not a Vamp AND not the target's vassal?
-	if(!viewer.mind.has_antag_datum((/datum/antagonist/bloodsucker)) && !(viewer in vassals))
-		if(!(HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) && broke_masquerade))
-			return FALSE
-	// Default String
-	var/returnString = "\[<span class='warning'><EM>[return_full_name()]</EM></span>\]"
-	var/returnIcon = "[icon2html('monkestation/icons/bloodsuckers/vampiric.dmi', world, "bloodsucker")]"
-
-	// In Disguise (Veil)?
-	//if (name_override != null)
-	//	returnString += "<span class='suicide'> ([real_name] in disguise!) </span>"
-
-	//returnString += "\n"  Don't need spacers. Using . += "" in examine.dm does this on its own.
-	return returnIcon + returnString
 
 // Blood level gain is used to give Bloodsuckers more levels if they are being agressive and drinking from real, sentient people.
 // The maximum blood that counts towards this

@@ -267,7 +267,7 @@
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
-				"icon" = text_ref(sheet_type::icon),
+				"icon" = sheet_type::icon,
 				"icon_state" = sheet_type::icon_state,
 			))
 
@@ -279,7 +279,7 @@
 				"id" = alloy.id,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
-				"icon" = text_ref(alloy_type::icon),
+				"icon" = alloy_type::icon,
 				"icon_state" = alloy_type::icon_state,
 			))
 	data["disconnected"] = null
@@ -375,7 +375,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, action = "released", name = "sheets")
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)

@@ -563,7 +563,7 @@
 	. = ..()
 	if(!panel_open)
 		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
+	if(default_unfasten_wrench(user, tool, time = 3 SECONDS))
 		unbuckle_all_mobs(TRUE)
 		return ITEM_INTERACT_SUCCESS
 	return FALSE
@@ -1088,7 +1088,7 @@
 
 	if(tilted && !user.buckled && !isAdminGhostAI(user))
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
+		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
 		return
 
@@ -1150,7 +1150,7 @@
 			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
 			&& !initial(printed.color) \
 		)
-			static_record["icon"] = text_ref(initial(printed.icon))
+			static_record["icon"] = initial(printed.icon)
 			static_record["icon_state"] = initial(printed.icon_state)
 
 		var/list/category = record.category || default_category

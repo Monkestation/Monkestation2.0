@@ -40,7 +40,7 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
+	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	return ..()
 
@@ -198,7 +198,7 @@
 				)
 				if(!mod.upgrade)
 					var/datum/action/power_type = mod.power_type
-					item_data["icon"] = text_ref(power_type::button_icon)
+					item_data["icon"] = power_type::button_icon
 					item_data["icon_state"] = power_type::button_icon_state
 				cat["items"] += list(item_data)
 				// monkestation end

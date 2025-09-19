@@ -20,6 +20,9 @@
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
 
+/obj/item/gun/energy/ionrifle/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
+
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
@@ -172,7 +175,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+	return (..() && (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld)))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks, interaction_key)
 
@@ -297,6 +300,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
+	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
@@ -332,6 +336,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot, /obj/item/ammo_casing/energy/temp/cryo)
 	cell_type = /obj/item/stock_parts/cell/high
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/energy/temperature/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"

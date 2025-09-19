@@ -236,51 +236,45 @@
 	log_combat(user, M, "stabbed", src)
 	return TRUE
 
-/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	. = ..()
-
-	if (!proximity)
-		return .
-
-	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
-	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.can_perform_action(O))
+// Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
+/obj/item/pen/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with) || !(interacting_with.obj_flags & UNIQUE_RENAME))
+		return NONE
+	. = ITEM_INTERACT_BLOCKING
+	var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
+	if(QDELETED(interacting_with) || !user.can_perform_action(interacting_with))
+		return
+	if(penchoice == "Rename")
+		var/input = tgui_input_text(user, "What do you want to name [interacting_with]?", "Object Name", html_decode("[interacting_with.name]"), MAX_NAME_LEN)
+		var/oldname = interacting_with.name
+		if(QDELETED(interacting_with) || !user.can_perform_action(interacting_with))
 			return
-		if(penchoice == "Rename")
-			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
-			var/oldname = O.name
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-			if(input == oldname || !input)
-				to_chat(user, span_notice("You changed [O] to... well... [O]."))
-			else
-				O.AddComponent(/datum/component/rename, input, O.desc)
-				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				// monkestation removal ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
+		if(input == oldname || !input)
+			to_chat(user, span_notice("You changed [interacting_with] to... well... [interacting_with]."))
+		else
+			interacting_with.AddComponent(/datum/component/rename, input, interacting_with.desc)
+			to_chat(user, span_notice("You have successfully renamed \the [oldname] to [interacting_with]."))
+			interacting_with.update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
 
-		if(penchoice == "Description")
-			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
-			var/olddesc = O.desc
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-			if(input == olddesc || !input)
-				to_chat(user, span_notice("You decide against changing [O]'s description."))
-			else
-				O.AddComponent(/datum/component/rename, O.name, input)
-				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				// monkestation removal ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-				O.update_appearance(UPDATE_ICON)
+	else if(penchoice == "Description")
+		var/input = tgui_input_text(user, "Describe [interacting_with]", "Description", html_decode("[interacting_with.desc]"), 140)
+		var/olddesc = interacting_with.desc
+		if(QDELETED(interacting_with) || !user.can_perform_action(interacting_with))
+			return
+		if(input == olddesc || !input)
+			to_chat(user, span_notice("You decide against changing [interacting_with]'s description."))
+		else
+			interacting_with.AddComponent(/datum/component/rename, interacting_with.name, input)
+			to_chat(user, span_notice("You have successfully changed [interacting_with]'s description."))
+			interacting_with.update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
 
-		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.can_perform_action(O))
-				return
-
-			qdel(O.GetComponent(/datum/component/rename))
-			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			// monkestation removal REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-			O.update_appearance(UPDATE_ICON)
+	else if(penchoice == "Reset")
+		qdel(interacting_with.GetComponent(/datum/component/rename))
+		to_chat(user, span_notice("You have successfully reset [interacting_with]'s name and description."))
+		interacting_with.update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/pen/get_writing_implement_details()
 	if (HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -525,3 +519,29 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))
+
+/obj/item/pen/monkey
+	name = "monkey pen"
+	icon_state = "monkey_pen"
+	desc = "This pen is shaped like a monkey ."
+	colour = "#000000"
+
+/obj/item/pen/banana
+	name = "banana pen"
+	icon_state = "banana_pen"
+	desc = "Its a banana shaped pen!"
+	colour = "#000000"
+
+/obj/item/pen/banana/attack_self(mob/living/carbon/user)
+	. = ..()
+	var/chosen_color = "black"
+	switch(colour)
+		if("#FFFF00")
+			colour = "#FFFF00"
+			chosen_color = "yellow"
+		else
+			colour = "#000000"
+	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
+	desc = "It's a fancy banana pen, set to [chosen_color]."
+	balloon_alert(user, "clicked")
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)

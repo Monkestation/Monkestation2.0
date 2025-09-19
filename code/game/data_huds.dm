@@ -80,6 +80,9 @@
 /datum/atom_hud/data/human/permit
 	hud_icons = list(PERMIT_HUD)
 
+/datum/atom_hud/borer
+	hud_icons = list(BORER_HUD)
+
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	..()
 	if(!new_viewer || hud_users.len != 1)
@@ -227,7 +230,7 @@ Medical HUD! Basic mode needs suit sensors on.
 	else if(HAS_TRAIT(src, TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES) || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
+		if(((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)) || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
 			holder.icon_state = "huddefib"
 		else
 			holder.icon_state = "huddead"

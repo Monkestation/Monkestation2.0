@@ -60,7 +60,7 @@
 				loc_display = mob_loc.loc
 
 			dat += "ID: [T.imp_in.name] | Location: [loc_display]<BR>"
-			dat += "<A href='byond://?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
+			dat += "<A href='byond://?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> | [add_destroy_topic(T)]<BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='byond://?src=[REF(src)];lock=1'>{Log Out}</A>"
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
@@ -132,6 +132,18 @@
 				to_chat(R, span_hear("You hear a voice in your head saying: '[warning]'"))
 				log_directed_talk(usr, R, warning, LOG_SAY, "implant message")
 
+		else if(href_list["self_destruct"])
+			var/obj/item/implant/our_implant = locate(href_list["self_destruct"]) in GLOB.tracked_implants
+			if(our_implant && istype(our_implant) && our_implant.imp_in)
+				var/mob/living/victim = our_implant.imp_in
+				to_chat(victim, span_hear("You feel a tiny jolt from inside of you as one of your implants fizzles out."))
+				do_sparks(number = 2, cardinal_only = FALSE, source = our_implant)
+				qdel(our_implant)
+
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+///Adds a topic for remotely destroying a security implant.
+/obj/machinery/computer/prisoner/management/proc/add_destroy_topic(obj/item/implant/our_implant)
+	return "<A href='byond://?src=[REF(src)];self_destruct=[REF(our_implant)]'>(<font class='bad'>Destroy</font>)</A><BR>"

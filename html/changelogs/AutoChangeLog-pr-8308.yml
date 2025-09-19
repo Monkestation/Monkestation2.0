@@ -1,0 +1,8 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "Sarcophagi now have a icon."
+  - bugfix: "Sarcophagi are now ordered from the regular cargo window, no longer getting stuck in your goodie case."
+  - spellcheck: "fixed a typo in closet/crate access control tooltips."
+  - bugfix: "Updated some admin notes for some escape shuttles so they aren't blatant lies anymore."
+  - spellcheck: "\"locksthe locker.\" no longer happens."

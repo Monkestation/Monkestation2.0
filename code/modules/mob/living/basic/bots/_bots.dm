@@ -270,27 +270,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/basic/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-	if(!length(maints_access_required)) // No requirements to access it.
-		return TRUE
-	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
-		return TRUE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-
-	return FALSE
-
 /mob/living/basic/bot/bee_friendly()
 	return TRUE
 
@@ -393,7 +372,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		balloon_alert(user, "access panel must be closed!")
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		balloon_alert(user, "no access")
 		return
 	bot_access_flags ^= BOT_CONTROL_PANEL_OPEN
@@ -591,7 +570,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_access_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
 	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
@@ -610,7 +589,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(.)
 		return
 	var/mob/the_user = ui.user
-	if(!check_access(the_user))
+	if(!allowed(the_user))
 		balloon_alert(the_user, "access denied!")
 		return
 
@@ -749,7 +728,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Ejects the pAI remotely.
 /mob/living/basic/bot/proc/eject_pai_remote(mob/user)
-	if(!check_access(user) || !paicard)
+	if(!allowed(user) || !paicard)
 		return
 	speak("Ejecting personality chip.", radio_channel)
 	ejectpai(user)
@@ -777,9 +756,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
 	SIGNAL_HANDLER
 
-	if(door_attempt.check_access(access_card))
-		return ACCESS_ALLOWED
-	return ACCESS_DISALLOWED
+	return (door_attempt.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED)
 
 /mob/living/basic/bot/proc/generate_speak_list()
 	return null

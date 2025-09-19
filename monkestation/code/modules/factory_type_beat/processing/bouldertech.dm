@@ -349,7 +349,7 @@
  * @param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.
  */
 /obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
-	for(var/material as anything in boulder_mats)
+	for(var/material in boulder_mats)
 		if(is_type_in_list(material, processable_materials))
 			return TRUE
 	return FALSE

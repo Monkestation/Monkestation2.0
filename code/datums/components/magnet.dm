@@ -55,7 +55,7 @@
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/magnet/process(seconds_per_tick)
-	for (var/atom/movable/thing as anything in orange(pull_range, parent))
+	for (var/atom/movable/thing in orange(pull_range, parent))
 		if (!is_type_in_typecache(thing, attracted_typecache))
 			continue
 		var/range = get_dist(thing, parent)

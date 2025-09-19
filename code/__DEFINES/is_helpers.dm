@@ -242,6 +242,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
