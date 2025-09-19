@@ -574,7 +574,7 @@
 	var/flat_bonus = 5 //they have really good dex iunno
 	var/funny_alert_message = "SNEAK ATTACK!"
 	var/backstab_time = 1 SECOND
-	var/modes = list("lethal", "nonlethal", "lucky")
+	var/list/modes = list("lethal", "nonlethal", "lucky")
 	var/mode_number = 1
 	var/mode = "lethal"
 
@@ -639,7 +639,7 @@
 		var/reflex_saving_throw = saving_throw_roller.Invoke()
 		STOP_FLOATING_ANIM(stabbed)
 		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
-		if(will_saving_throw => 16 - (HAS_TRAIT(stabbed, TRAIT_MINDSHIELD) ? 6 : 0)) // mindshields are a Will bonus now iunno
+		if(will_saving_throw >= 16 - (HAS_TRAIT(stabbed, TRAIT_MINDSHIELD) ? 6 : 0)) // mindshields are a Will bonus now iunno
 			ADD_TRAIT(stabbed, TRAIT_SOFTSPOKEN, type)
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_SOFTSPOKEN, type), 18 SECONDS)
 		else
@@ -647,7 +647,7 @@
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_MUTE, type), 18 SECONDS)
 		if(fort_saving_throw < 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
 			stabbed.Paralyze(12 SECONDS)
-		if(reflex_saving_throw = 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
+		if(reflex_saving_throw < 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
 			stabbed.Unconscious(6 SECONDS)
 
 	if(mode == "lucky")
@@ -658,7 +658,7 @@
 		var/explosion_roll = kerplodydice.Invoke()
 		if(explosion_roll == 20) //UTTERLY HILLARIOUS I TELL YOU
 			stabbed.balloon_alert_to_viewers("...Uh oh.")
-			to_chat(stabbed, span_userdanger("Uh oh.")
+			to_chat(stabbed, span_userdanger("Uh oh."))
 			new /obj/effect/temp_visual/circle_wave/dndagger(get_turf(stabbed))
 			sleep(5 SECONDS)
 			var/obj/item/dice/d20/our_souviner = new(stabbed.loc)
@@ -675,19 +675,19 @@
 				initials += "."
 			our_souviner.name = "\improper Isocahedral Memento"
 			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [span_hypnophrase(initials)] are carved where the twenty should be."
-			our_souviner.resistance_flags |= INDESTRUCTABLE
+			our_souviner.resistance_flags |= INDESTRUCTIBLE
 			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
 			if(stabbed.mind)
 				var/obj/item/soulstone/anybody/stone = new(our_souviner)
-				stone.resistance_flags |= INDESTRUCTABLE
+				stone.resistance_flags |= INDESTRUCTIBLE
 				stone.capture_soul(stabbed, forced=TRUE)
-				for(var/mob/living/basic/shade/die_prisoner in our_souviner.contents)
+				for(var/mob/living/basic/shade/die_prisoner in stone.contents)
 					ADD_TRAIT(die_prisoner, TRAIT_SOFTSPOKEN, REF(our_souviner))
 					die_prisoner.name = stabbed.real_name
 					die_prisoner.real_name = stabbed.real_name
 					die_prisoner.mind.add_antag_datum(/datum/antagonist/shade_imprisoned)
 					to_chat(die_prisoner, span_hypnophrase("Your soul writhes and buckles as a surge of metaphysical probability evaporates your body!"))
-					to_chat(die_prisoner, span_hypnophrase("And yet, you persist. Trapped, forever and <i>ad infinitum</i>, within the very thing that doomed you.")
+					to_chat(die_prisoner, span_hypnophrase("And yet, you persist. Trapped, forever and <i>ad infinitum</i>, within the very thing that doomed you."))
 					to_chat(die_prisoner, span_hypnophrase(span_reallybig("You cannot kill a spirit, but you can certainly make it bleed.")))
 			else
 				stabbed.dust(TRUE, FALSE, TRUE) //you ded big time
