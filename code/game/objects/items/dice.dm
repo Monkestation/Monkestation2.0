@@ -653,7 +653,7 @@
 	if(mode == "lucky")
 		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 		DO_FLOATING_ANIM(stabbed)
-		var/datum/callback/kerplodydice = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 5, 6)
+		var/datum/callback/kerplodydice = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 5, 5)
 		stabbed.balloon_alert_to_viewers("Damage: d1, Crit Damage Mult: 7e500") //shit kills you so hard your soul dies too
 		var/explosion_roll = kerplodydice.Invoke()
 		if(explosion_roll == 20) //UTTERLY HILLARIOUS I TELL YOU
@@ -673,7 +673,8 @@
 				initials += uppertext(our_name_list[2][1])
 				initials += "."
 			our_souviner.name = "\improper Isocahedral Memento"
-			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [initials] are carved where the twenty should be."
+			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [span_hypnophrase(initials)] are carved where the twenty should be."
+			our_souviner.resistance_flags |= INDESTRUCTABLE
 			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
 			if(stabbed.mind)
 				var/obj/item/soulstone/anybody/stone = new(our_souviner)
@@ -682,9 +683,12 @@
 					ADD_TRAIT(die_prisoner, TRAIT_SOFTSPOKEN, REF(our_souviner))
 					die_prisoner.name = stabbed.real_name
 					die_prisoner.real_name = stabbed.real_name
+					to_chat(die_prisoner, span_hypnophrase("Your soul writhes and buckles as a surge of metaphysical probability evaporates your body!"))
+					to_chat(die_prisoner, span_hypnophrase("And yet, you persist. Trapped, forever and <i>ad infinitum</i>, within the very thing that doomed you.")
+					to_chat(die_prisoner, span_hypnophrase(span_reallybig("You cannot kill a spirit, but you can certainly make it bleed."))) 
 		else
+			STOP_FLOATING_ANIM(stabbed)
+			stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 			var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
 			back_that_we_stab.receive_damage(brute=1)
-		STOP_FLOATING_ANIM(stabbed)
-		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 #undef MIN_SIDES_ALERT
