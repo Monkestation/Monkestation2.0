@@ -569,7 +569,7 @@
 	force_string = "Extremely robust... when backstabbing"
 
 	///our power
-	var/sneak_attack_dice = 14
+	var/sneak_attack_dice = 12
 	var/damage_mult = 2 //guarenteed to crit on backstab because all traitors take the assassin archetype ig
 	var/flat_bonus = 5 //they have really good dex iunno
 	var/funny_alert_message = "SNEAK ATTACK!"
@@ -612,12 +612,12 @@
 	if(mode == "nonlethal")
 		stabbed.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
 		DO_FLOATING_ANIM(stabbed)
-		var/datum/callback/saving_throw_roller = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 1, 0.5)
+		var/datum/callback/saving_throw_roller = CALLBACK(src, GLOBAL_PROC_REF(dicesplosion), stabbed, 1, 1, 0, /obj/item/dice/d20, 1, TRUE, 1.5, 0.5)
 		stabbed.balloon_alert_to_viewers("mute 3 rounds: Will DC 16 reduces") //round is 6 seconds *nod
 		var/will_saving_throw = saving_throw_roller.Invoke()
 		stabbed.balloon_alert_to_viewers("Paralyze 2 rounds: Fortitude DC 14 negates") //round is 6 seconds *nod
 		var/fort_saving_throw = saving_throw_roller.Invoke()
-		stabbed.balloon_alert_to_viewers("Sleep 1 round: Reflex DC 14 negates") //round is 6 seconds *nod
+		stabbed.balloon_alert_to_viewers("Sleep 1 round: Reflex DC 12 negates") //round is 6 seconds *nod
 		var/reflex_saving_throw = saving_throw_roller.Invoke()
 		STOP_FLOATING_ANIM(stabbed)
 		stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
@@ -629,7 +629,7 @@
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_MUTE, type), 18 SECONDS)
 		if(fort_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
 			stabbed.Paralyze(12 SECONDS)
-		if(reflex_saving_throw <= 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
+		if(reflex_saving_throw <= 12 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
 			stabbed.Unconscious(6 SECONDS)
 
 #undef MIN_SIDES_ALERT
