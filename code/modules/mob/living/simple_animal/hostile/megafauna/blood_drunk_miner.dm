@@ -27,7 +27,7 @@ Difficulty: Medium
 	icon_living = "miner"
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	speak_emote = list("roars")
