@@ -5,8 +5,8 @@
 	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	harmful = FALSE
 
-/obj/item/ammo_casing/energy/electrode/hos //monkestation edit
-	e_cost = 300
+/obj/item/ammo_casing/energy/electrode/hos // MONKE EDIT: 4th shot mode
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
@@ -27,11 +27,11 @@
 
 /obj/item/ammo_casing/energy/disabler/smg
 	projectile_type = /obj/projectile/beam/disabler/weak
-	e_cost = 25 //monkestation edit: half the damage but twice the ammo roughly
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
-	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE) // MONKE EDIT: 20 -> 30 shots
 
 /obj/item/ammo_casing/energy/disabler/smoothbore
 	projectile_type = /obj/projectile/beam/disabler/smoothbore

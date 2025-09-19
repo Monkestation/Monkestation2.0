@@ -34,7 +34,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2) // MONKE EDIT: 10 -> 20 shots
 
 /obj/item/ammo_casing/energy/laser/musket
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'

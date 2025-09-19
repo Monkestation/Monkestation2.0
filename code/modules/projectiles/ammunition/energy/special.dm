@@ -5,7 +5,7 @@
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
-	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE * 1.2) // MONKE EDIT: 4 -> 6 shots
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/projectile/energy/declone
@@ -45,7 +45,7 @@
 /obj/item/ammo_casing/energy/temp/cryo
 	projectile_type = /obj/projectile/temp/cryo
 	select_name = "freeze"
-	e_cost = 500
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 10)
 
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
@@ -61,7 +61,7 @@
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/projectile/energy/trap
 	select_name = "snare"
-	e_cost = 200 //monkestation addition
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon
