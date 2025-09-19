@@ -659,6 +659,7 @@
 		if(explosion_roll == 20) //UTTERLY HILLARIOUS I TELL YOU
 			stabbed.balloon_alert_to_viewers("...Uh oh.")
 			to_chat(stabbed, span_userdanger("Uh oh.")
+			new /obj/effect/temp_visual/circle_wave/dndagger(get_turf(stabbed))
 			sleep(5 SECONDS)
 			var/obj/item/dice/d20/our_souviner = new(stabbed.loc)
 			var/initials = ""
@@ -678,14 +679,18 @@
 			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
 			if(stabbed.mind)
 				var/obj/item/soulstone/anybody/stone = new(our_souviner)
+				stone.resistance_flags |= INDESTRUCTABLE
 				stone.capture_soul(stabbed, forced=TRUE)
 				for(var/mob/living/basic/shade/die_prisoner in our_souviner.contents)
 					ADD_TRAIT(die_prisoner, TRAIT_SOFTSPOKEN, REF(our_souviner))
 					die_prisoner.name = stabbed.real_name
 					die_prisoner.real_name = stabbed.real_name
+					die_prisoner.mind.add_antag_datum(/datum/antagonist/shade_imprisoned)
 					to_chat(die_prisoner, span_hypnophrase("Your soul writhes and buckles as a surge of metaphysical probability evaporates your body!"))
 					to_chat(die_prisoner, span_hypnophrase("And yet, you persist. Trapped, forever and <i>ad infinitum</i>, within the very thing that doomed you.")
-					to_chat(die_prisoner, span_hypnophrase(span_reallybig("You cannot kill a spirit, but you can certainly make it bleed."))) 
+					to_chat(die_prisoner, span_hypnophrase(span_reallybig("You cannot kill a spirit, but you can certainly make it bleed.")))
+			else
+				stabbed.dust(TRUE, FALSE, TRUE) //you ded big time
 		else
 			STOP_FLOATING_ANIM(stabbed)
 			stabbed.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_GODMODE, TRAIT_NOBREATH, TRAIT_STASIS), DND_DAGGER_FX_TRAIT)
