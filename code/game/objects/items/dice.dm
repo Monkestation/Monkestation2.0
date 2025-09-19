@@ -647,7 +647,7 @@
 			addtimer(TRAIT_CALLBACK_REMOVE(stabbed, TRAIT_MUTE, type), 18 SECONDS)
 		if(fort_saving_throw < 14 - (HAS_TRAIT(stabbed, TRAIT_BATON_RESISTANCE) ? 4 : 0))
 			stabbed.Paralyze(12 SECONDS)
-		if(reflex_saving_throw <= 12 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
+		if(reflex_saving_throw = 14 - (HAS_TRAIT(stabbed, TRAIT_LIGHT_SLEEPER) ? 4 : 0))
 			stabbed.Unconscious(6 SECONDS)
 
 	if(mode == "lucky")
