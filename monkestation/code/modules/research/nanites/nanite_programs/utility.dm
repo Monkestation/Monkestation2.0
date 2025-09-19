@@ -537,7 +537,7 @@
 				to_chat(goofygoober, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
 				if(ishuman(goofygoober))
 					var/mob/living/carbon/human/less_ough_but_still_ough = goofygoober
-					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 40, BRUTE, 10 SECONDS)
+					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
 	if(success)
 		nanos.consume_nanites(200)
 		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrible burning sensation flows into your blood"] as the [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
@@ -550,7 +550,7 @@
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
 			if(ishuman(goofygoober))
 				var/mob/living/carbon/human/yeowch = goofygoober
-				yeowch.sharp_pain(BODY_ZONES_ALL, 50, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
+				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			goofygoober.emote("scream")
 			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
 			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg'))
