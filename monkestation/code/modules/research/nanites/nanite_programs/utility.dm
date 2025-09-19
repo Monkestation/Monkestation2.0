@@ -511,9 +511,36 @@
 	var/none_mod = goofygoober.GetComponent(/datum/component/nanites) ? 1 : 3
 	visible_message(span_warning("[user] jabs the [src] into [goofygoober], and it begins flowing into [goofygoober.p_their()] skin."), ignored_mobs=list(user,goofygoober))
 	to_chat(goofygoober, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing the [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
-	if(do_after(user, 5 SECONDS * none_mod, goofygoober))
+	var/success = FALSE
+	if(none_mod == 1)
+		if(do_after(user, 5 SECONDS, goofygoober))
+			success = TRUE
+	else
+		playsound(goofygoober.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
+		goofygoober.emote("scream")
+		if(do_after(user, 5 SECONDS, goofygoober))
+			playsound(goofygoober.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
+			goofygoober.emote("scream")
+			to_chat(goofygoober, span_danger("[user] wrenches the [src] around, the amalgamated metal mass frothing as it drills through you!"))
+			if(do_after(user, 5 SECONDS, goofygoober))
+				playsound(goofygoober.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1) 
+				goofygoober.emote("scream")
+				to_chat(goofygoober, span_danger("A web of searing tendrils extrude from the [src] and spread through your body!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded. 
+				if(do_after(user, 5 SECONDS, goofygoober))
+					success = TRUE
+				else
+					to_chat(goofygoober, span_danger("The [src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]."))
+					if(ishuman(goofygoober))
+						var/mob/living/carbon/human/ough = goofygoober
+						ough.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
+			else
+				to_chat(goofygoober, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
+				if(ishuman(goofygoober))
+					var/mob/living/carbon/human/less_ough_but_still_ough = goofygoober
+					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 40, BRUTE, 10 SECONDS)
+	if(success)
 		nanos.consume_nanites(200)
-		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrible burning spreads through your body"] as the [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]"))
+		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrible burning sensation flows into your blood"] as the [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(goofygoober.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
@@ -523,7 +550,7 @@
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
 			if(ishuman(goofygoober))
 				var/mob/living/carbon/human/yeowch = goofygoober
-				yeowch.sharp_pain(BODY_ZONE_CHEST, 90, BURN, 15 SECONDS) //yeowch
+				yeowch.sharp_pain(BODY_ZONES_ALL, 50, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			goofygoober.emote("scream")
 			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
 		return ITEM_INTERACT_SUCCESS
