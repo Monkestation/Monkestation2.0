@@ -553,6 +553,7 @@
 				yeowch.sharp_pain(BODY_ZONES_ALL, 50, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			goofygoober.emote("scream")
 			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
+			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg'))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
