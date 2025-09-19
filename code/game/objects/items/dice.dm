@@ -661,11 +661,22 @@
 			to_chat(stabbed, span_userdanger("Uh oh.")
 			sleep(5 SECONDS)
 			var/obj/item/dice/d20/our_souviner = new(stabbed.loc)
-			var/initials = 
-			our_souviner.rigged = DICE_TOTALLY_RIGGED
-			our_souviner.rigged_value = 20
-			our_souviner.rigged
-			stabbed.inflate_gib(TRUE, FALSE, FALSE)
+			var/initials = ""
+			var/list/our_name_list = splittext(stabbed.real_name, " ")
+			if(our_name_list.len == 1)
+				initials += uppertext(our_name_list[1][1])
+				initials += uppertext(our_name_list[1][2])
+				initials += "."
+			else
+				initials += uppertext(our_name_list[1][1])
+				initials += "."
+				initials += uppertext(our_name_list[2][1])
+				initials += "."
+			our_souviner.name = "\improper Isocahedral Memento"
+			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [initials] are carved where the twenty should be."
+			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
+			if(stabbed.mind)
+			stabbed.gib(TRUE, FALSE, FALSE)
 		else
 			var/obj/item/bodypart/back_that_we_stab = stabbed.get_bodypart(BODY_ZONE_CHEST)
 			back_that_we_stab.receive_damage(brute=1)
