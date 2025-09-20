@@ -397,7 +397,7 @@
 	if(bot_cover_flags & BOT_COVER_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!check_access(user))
+	if(!allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -914,7 +914,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
-	data["has_access"] = check_access(user)
+	data["has_access"] = allowed(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["settings"] = list()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
@@ -931,7 +931,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!check_access(usr))
+	if(!allowed(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return
 

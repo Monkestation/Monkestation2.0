@@ -70,7 +70,7 @@
 
 // Check if an item has access to this object
 /atom/movable/proc/check_access(obj/item/I)
-	return check_access_list(I ? I.GetAccess() : null)
+	return check_access_list(I?.GetAccess())
 
 /atom/movable/proc/check_access_list(list/access_list)
 	if(!length(req_access) && !length(req_one_access))
