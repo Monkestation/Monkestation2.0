@@ -48,7 +48,6 @@
 		TRUE, \
 	)
 
-	create_reagents(0, OPENCONTAINER)
 	if(stored_research)
 		update_designs()
 	RefreshParts()
@@ -189,13 +188,6 @@
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 
-	if(reagents)
-		reagents.maximum_volume = 0
-
-		for(var/obj/item/reagent_containers/cup/beaker in component_parts)
-			reagents.maximum_volume += beaker.volume
-			beaker.reagents.trans_to(src, beaker.reagents.total_volume)
-
 	if(materials)
 		var/total_storage = 0
 
@@ -210,12 +202,6 @@
 		total_rating -= manipulator.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
-
-/obj/machinery/rnd/production/on_deconstruction()
-	for(var/obj/item/reagent_containers/cup/G in component_parts)
-		reagents.trans_to(G, G.reagents.maximum_volume)
-
-	return ..()
 
 /obj/machinery/rnd/production/proc/build_efficiency(path)
 	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
@@ -270,10 +256,6 @@
 	if(!materials.mat_container.has_materials(materials_per_item, multiplier = print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
 		return FALSE
-	for(var/reagent in design.reagents_list)
-		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient))
-			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
-			return FALSE
 
 	//use power
 	var/power = active_power_usage
