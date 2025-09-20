@@ -25804,11 +25804,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "hGB" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "hGK" = (
