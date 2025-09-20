@@ -44,6 +44,10 @@
 	name = "\improper Combat boots"
 	desc = "Replica of a high speed (not anymore), no drag combat boots."
 
+/obj/item/clothing/shoes/combat/nutcracker
+	desc = "High speed, low drag combat boots. The toe looks weirdly rigid."
+	clothing_traits = list(TRAIT_NUTCRACKER) //evil meanie shoes for bullying people
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
