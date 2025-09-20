@@ -69779,23 +69779,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 1;
-	pixel_y = 16
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 8;
-	pixel_y = 7
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 7
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 0;
 	pixel_y = 21
 	},
 /obj/structure/railing/wood,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/wood/large,
 /area/station/science/circuits)
 "nzB" = (
@@ -83815,7 +83804,6 @@
 "qkH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "qkR" = (
@@ -89156,7 +89144,6 @@
 "rkC" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "rkF" = (

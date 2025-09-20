@@ -119,6 +119,12 @@
 
 	var/jobtitles = TRUE
 
+	///This action opens menu to modify the settings.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	///This action actually uses the remote.
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
+
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -182,6 +188,11 @@
 
 	deploy_action.Grant(src)
 
+	nanite_remote = new
+	nanite_menu = new(nanite_remote)
+	nanite_menu.Grant(src)
+	nanite_remote.Grant(src)
+
 	if(isturf(loc))
 		add_verb(src, list(
 			/mob/living/silicon/ai/proc/ai_network_change,
@@ -241,6 +252,8 @@
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
+	QDEL_NULL(nanite_menu)
+	QDEL_NULL(nanite_remote)
 	malfhack = null
 	current = null
 	bot_ref = null
