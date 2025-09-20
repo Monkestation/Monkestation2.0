@@ -81,6 +81,10 @@ map pubbystation
 endmap
 
 map graveyard
+
+map crater
+	minplayers 4
+	votable
 endmap
 
 map leadpoisoningstation
