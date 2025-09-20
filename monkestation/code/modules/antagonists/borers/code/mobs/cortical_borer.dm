@@ -20,6 +20,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /datum/movespeed_modifier/borer_speed
 	multiplicative_slowdown = -0.5
 
+/datum/movespeed_modifier/borer_speed_bonus
+	multiplicative_slowdown = -0.4
+
 /datum/actionspeed_modifier/focus_speed
 	multiplicative_slowdown = -0.3
 	id = ACTIONSPEED_ID_BORER
@@ -39,12 +42,13 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	return FALSE
 
 //this allows borers to slide under/through a door
-/obj/machinery/door/Bumped(atom/movable/movable_atom)
-	if(iscorticalborer(movable_atom) && density)
-		if(!do_after(movable_atom, 5 SECONDS, src))
+/obj/machinery/door/Bumped(atom/movable/AM)
+	if(iscorticalborer(AM) && density)
+		var/mob/living/basic/cortical_borer/borer = AM
+		if(!do_after(borer, ((borer.upgrade_flags & BORER_ENERGIC) ? 2.5 SECONDS : 5 SECONDS), src))
 			return ..()
-		movable_atom.forceMove(drop_location())
-		to_chat(movable_atom, span_notice("You squeeze through [src]."))
+		borer.forceMove(drop_location())
+		to_chat(borer, span_notice("You squeeze through [src]."))
 		return
 	return ..()
 
@@ -60,8 +64,15 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	name = "engorged cortical borer"
 	desc = "the body of a cortical borer, full of human viscera, blood, and more."
 	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_BORER_ORGAN
+	organ_flags = parent_type::organ_flags | ORGAN_PROMINENT
 	/// Ref to the borer who this organ belongs to
 	var/mob/living/basic/cortical_borer/borer
+
+/obj/item/organ/internal/borer_body/get_status_text(advanced, add_tooltips)
+	if(advanced && !(borer.upgrade_flags & BORER_STEALTH_MODE))
+		return conditional_tooltip("<font color='#ff9933'>Parasitic infection</font>", "Administer sugar and remove surgically.", add_tooltips)
+	return ..()
 
 /obj/item/organ/internal/borer_body/Destroy()
 	borer = null
@@ -542,11 +553,11 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	//20:40, 15:30, 10:20, 5:10
 	var/maturity_threshold = 30
 	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
-		maturity_threshold -= 3
+		maturity_threshold -= 5
 	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
-		maturity_threshold -= 15
+		maturity_threshold -= 12.5
 	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
-		maturity_threshold -= 4.5
+		maturity_threshold -= 5
 
 	if(!chem_point_gained && maturity_age >= maturity_threshold)
 		if(chemical_evolution < limited_borer) //you can only have a default of 10 at a time

@@ -1,6 +1,6 @@
 /datum/action/cooldown/borer/stealth_mode
 	name = "Stealth Mode"
-	cooldown_time = 2 MINUTES
+	cooldown_time = 1 MINUTES
 	button_icon_state = "hiding"
 	chemical_cost = 100
 	sugar_restricted = TRUE
