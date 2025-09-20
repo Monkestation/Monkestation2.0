@@ -909,7 +909,7 @@
 		/obj/item/kinetic_crusher/hammer,
 		/obj/item/kinetic_crusher/claw,
 		/obj/item/kinetic_crusher/pilebunker,
-		/obj/item/gun/magic/crusherknives,
+		/obj/item/kinetic_crusher/knives,
 		/obj/item/kinetic_crusher/sickle,
 	))
 	atom_storage.max_total_storage = 100
