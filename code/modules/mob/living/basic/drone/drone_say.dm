@@ -12,7 +12,7 @@
 	if (dead_can_hear && source)
 		for (var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, source)
-			to_chat(dead_mob, span_binarysay("[link] [msg]"), type = MESSAGE_TYPE_RADIO,)
+			to_chat(dead_mob, span_binarysay("[link] [msg]"), type = MESSAGE_TYPE_RADIO)
 	for(var/global_drone in GLOB.drones_list)
 		var/mob/living/basic/drone/drone = global_drone
 		if(istype(drone) && drone.stat != DEAD)
