@@ -60,13 +60,16 @@
 			owner.adjustPlasma(plasma_rate * delta_time)
 		else
 			var/heal_amt = heal_rate
-			if(!isalien(owner))
+			if(!isalien(owner) || owner.bodytemperature >= owner.bodytemp_heat_damage_limit)
 				heal_amt *= 0.2
 			owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
-			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
-			owner.adjustFireLoss(-heal_amt * delta_time_capped)
-			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
-			owner.adjustCloneLoss(-heal_amt * delta_time_capped)
+			var/needs_update = FALSE
+			needs_update += owner.adjustBruteLoss(-heal_amt * delta_time_capped, updating_health = FALSE)
+			needs_update += owner.adjustFireLoss(-(heal_amt * 0.75) * delta_time_capped, updating_health = FALSE)
+			needs_update += owner.adjustOxyLoss(-heal_amt * delta_time_capped, updating_health = FALSE)
+			needs_update += owner.adjustCloneLoss(-heal_amt * delta_time_capped, updating_health = FALSE)
+			if(needs_update)
+				owner.updatehealth()
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
@@ -97,18 +100,17 @@
 	slot = ORGAN_SLOT_XENO_HIVENODE
 	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/cooldown/alien/whisper)
+	organ_traits = list(TRAIT_XENO_IMMUNE)
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
 /obj/item/organ/internal/alien/hivenode/on_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
-	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	organ_owner.grant_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	if(!QDELING(organ_owner))
 		organ_owner.remove_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 	return ..()
@@ -120,13 +122,13 @@
 	if(isalien(owner)) //Different effects for aliens than humans
 		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
 		to_chat(owner, span_danger("You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."))
-		owner.emote("roar")
-		owner.Stun(200) //Actually just slows them down a bit.
+		INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "roar")
+		owner.Stun(20 SECONDS) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
 		to_chat(owner, span_danger("You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"))
-		owner.emote("scream")
-		owner.Paralyze(100)
+		INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
+		owner.Paralyze(10 SECONDS)
 
 	owner.adjust_jitter(1 MINUTES)
 	owner.adjust_confusion(30 SECONDS)
