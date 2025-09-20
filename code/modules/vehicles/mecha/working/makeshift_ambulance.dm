@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/makeshift_ambulance
 	desc = "An haphazardly-built vehicle built upon a porta potty locker as it's main chassis. It appears to function as an impromptu makeshift ambulance"
 	name = "Porta Potty Ambulance"
-	icon = 'monkestation/icons/mecha/makeshift_mechs.dmi'
+	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "pottyambo"
 	base_icon_state = "pottyambo"
 	silicon_icon_state = "null"

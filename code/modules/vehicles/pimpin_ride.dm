@@ -11,6 +11,7 @@
 	var/obj/item/storage/bag/trash/trash_bag
 	/// The installed upgrade, if present
 	var/obj/item/janicart_upgrade/installed_upgrade
+	cover_amount = 35
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()

@@ -8,6 +8,7 @@
 	key_type = /obj/item/key/atv
 	integrity_failure = 0.5
 	var/static/mutable_appearance/atvcover
+	cover_amount = 50
 
 /datum/armor/ridden_atv
 	melee = 50
@@ -115,13 +116,6 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
-
-/obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
-	if(prob(50) || !LAZYLEN(buckled_mobs))
-		return ..()
-	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.bullet_act(P)
-	return BULLET_ACT_HIT
 
 /obj/vehicle/ridden/atv/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
