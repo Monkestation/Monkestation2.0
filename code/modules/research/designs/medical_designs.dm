@@ -558,6 +558,7 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY //  monkestation edit
+	special_design_flags = WHITELISTED_DESIGN
 
 /datum/design/cyberimp_antistun
 	name = "CNS Rebooter Implant"
@@ -576,6 +577,7 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY // monkestation edit
+	special_design_flags = WHITELISTED_DESIGN
 
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
