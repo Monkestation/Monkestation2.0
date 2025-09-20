@@ -272,7 +272,6 @@
 	var/mob/living/victim = exposed_mob
 	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
 		victim.set_eye_blur_if_lower(3 SECONDS)
-		victim.set_confusion_if_lower(5 SECONDS)
 		if(ishuman(victim))
 			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
 		victim.update_damage_hud()
