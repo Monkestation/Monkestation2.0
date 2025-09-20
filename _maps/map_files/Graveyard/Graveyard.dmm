@@ -36043,37 +36043,61 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "nUh" = (
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = 6;
-	pixel_y = -1
-	},
 /obj/structure/closet/secure_closet{
-	name = "security armor"
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
 	},
-/obj/effect/turf_decal/tile/dark_red/anticorner,
-/obj/machinery/light/directional/south,
-/obj/machinery/camera/motion/directional/east,
-/turf/open/floor/iron/dark/textured_corner{
-	dir = 1
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
 	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/tile/dark_red/half,
+/turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "nUi" = (
 /obj/effect/spawner/random/structure/crate,
@@ -44109,39 +44133,60 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rfI" = (
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /obj/structure/closet/secure_closet{
-	name = "security helmets"
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
 	},
-/obj/effect/turf_decal/tile/dark_red/half{
-	dir = 4
+/obj/item/storage/box/lethalshot{
+	pixel_x = -3;
+	pixel_y = -3
 	},
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 4
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
 	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "rfR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -50337,6 +50382,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"tDQ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/machinery/computer/armory,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "tDR" = (
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
@@ -52446,10 +52498,6 @@
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 4
 	},
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -55050,15 +55098,7 @@
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 8
 	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/storage/box/flashes,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -55415,12 +55455,6 @@
 /obj/machinery/ammo_workbench,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 8
-	},
-/obj/machinery/button/door{
-	id = "armory";
-	name = "Armory Shutters";
-	req_access = list("armory");
-	pixel_y = -24
 	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
@@ -57105,12 +57139,6 @@
 /area/station/medical/storage)
 "wjE" = (
 /obj/effect/turf_decal/tile/dark_red/half,
-/obj/machinery/button/door{
-	id = "armory";
-	name = "Armory Shutters";
-	req_access = list("armory");
-	pixel_y = -24
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/rack,
 /obj/item/shield/riot{
@@ -180706,7 +180734,7 @@ bMN
 cAX
 wjE
 ikR
-eBO
+tDQ
 usr
 jVW
 cNU

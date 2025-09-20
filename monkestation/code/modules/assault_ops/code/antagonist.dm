@@ -172,7 +172,7 @@
 	human_target.regenerate_icons()
 
 	if(!human_target.has_language(/datum/language/common, TRUE))
-		human_target.grant_language(/datum/language/common, TRUE, TRUE, LANGUAGE_MIND)
+		human_target.grant_language(/datum/language/common, source = LANGUAGE_MIND)
 
 	return TRUE
 

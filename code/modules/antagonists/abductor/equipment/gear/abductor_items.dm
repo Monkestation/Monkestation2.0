@@ -88,7 +88,7 @@
 		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
-	if(do_after(user, 100, target = target))
+	if(do_after(user, 10 SECONDS, target = target))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
@@ -310,7 +310,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/mode = BATON_STUN
 
-	var/sleep_time = 2 MINUTES
+	var/sleep_time = 1 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
@@ -326,7 +326,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_STUN)
 			txt = "stunning"
 		if(BATON_SLEEP)
-			txt = "sleep inducement"
+			txt = "paralysis inducement"
 		if(BATON_CUFF)
 			txt = "restraining"
 		if(BATON_PROBE)
@@ -404,14 +404,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
 			target.adjust_drowsiness(4 SECONDS)
 			return
-		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
+		target.visible_message(span_danger("[user] paralyzes [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		target.Sleeping(sleep_time)
-		log_combat(user, target, "put to sleep")
+		target.Paralyze(sleep_time)
+		log_combat(user, target, "paralyzed")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our paralysis inducement methods! It seems you've been foiled."))
+			target.visible_message(span_danger("[user] tried to induce paralysis in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
 		target.adjust_drowsiness(2 SECONDS)

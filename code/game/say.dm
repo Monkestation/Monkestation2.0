@@ -32,9 +32,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
+	language ||= get_selected_language()
 	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
+
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -184,12 +184,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 		*/
 		var/datum/language/dialect = GLOB.language_datum_instances[/datum/language/common]
-		return dialect.scramble(raw_message)
+		return dialect.scramble_sentence(raw_message, get_partially_understood_languages())
 		// monkestation edit end
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 

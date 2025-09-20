@@ -427,9 +427,9 @@
 	volume = 20
 	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 20)
 
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling //oozling safe version of the luxury pen!
-	name = "luxury oozling medipen"
-	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZLING LIFE </b>"
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
+	name = "luxury oozeling medipen"
+	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozeling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZELING LIFE </b>"
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"

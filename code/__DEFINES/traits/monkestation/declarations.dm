@@ -72,20 +72,6 @@
 /// Applied when blight is cured. Prevents getting blight again while present.
 #define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
 
-// /datum/mind + /mob/living
-/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
-#define TRAIT_CANT_SIGN_SPELLS	"cant_sign_spells"
-/// You have special interactions with bloodsuckers and the occult.
-#define TRAIT_OCCULTIST			"occultist"
-/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
-#define TRAIT_UNBORGABLE	"unborgable"
-
-// /datum/mind
-/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
-#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
-/// Trait for people that have joined as a crewmember
-#define TRAIT_JOINED_AS_CREW	"joined_as_crew"
-
 // Traits related to food
 /// Trait for Fire Burps
 #define TRAIT_FOOD_FIRE_BURPS	"food_buff_fire_burps"

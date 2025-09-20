@@ -104,7 +104,7 @@
 	if(!growing)
 		return
 
-	for(var/item as anything in growing.managed_seeds)
+	for(var/item in growing.managed_seeds)
 		var/obj/item/seeds/seed = growing.managed_seeds[item]
 		if(!seed)
 			continue
@@ -335,7 +335,7 @@
 
 		if(target_atom.GetComponent(/datum/component/plant_growing))
 			var/datum/component/plant_growing/growing = target_atom.GetComponent(/datum/component/plant_growing)
-			for(var/item as anything in growing.managed_seeds)
+			for(var/item in growing.managed_seeds)
 				var/obj/item/seeds/seed = growing.managed_seeds[item]
 				if(!seed)
 					continue

@@ -87,10 +87,12 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 
-GLOBAL_LIST_EMPTY(language_datum_instances)
-GLOBAL_LIST_EMPTY(all_languages)
-///List of all languages ("name" = type)
-GLOBAL_LIST_EMPTY(language_types_by_name)
+/// List of language prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
+/// List if all language typepaths learnable, IE, those with keys
+GLOBAL_LIST_INIT(all_languages, init_all_languages())
+// /List of language prototypes to reference, assoc "name" = typepath
+GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
@@ -106,6 +108,31 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 
 /// List of all species prototypes to reference, assoc [type] = prototype
 GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_language_prototypes()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+
+		lang_list[lang_type] = new lang_type()
+	return lang_list
+
+/proc/init_all_languages()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list += lang_type
+	return lang_list
+
+/proc/init_language_types_by_name()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list[initial(lang_type.name)] = lang_type
+	return lang_list
 
 /proc/init_species_prototypes()
 	var/list/species_list = list()

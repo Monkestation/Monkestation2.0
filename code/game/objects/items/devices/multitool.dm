@@ -45,9 +45,7 @@
 	return !isitem(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
 /obj/item/multitool/attack_self(mob/user, list/modifiers)
-	. = ..()
-
-	if(. || !apc_scanner)
+	if(!apc_scanner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))
