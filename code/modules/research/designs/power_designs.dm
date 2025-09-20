@@ -8,7 +8,7 @@
 	id = "basic_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.5)
-	construction_time=100
+	construction_time = 3 SECONDS
 	build_path = /obj/item/stock_parts/power_store/cell/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
@@ -21,7 +21,7 @@
 	id = "high_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
-	construction_time=100
+	construction_time = 3 SECONDS
 	build_path = /obj/item/stock_parts/power_store/cell/high/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
@@ -34,7 +34,7 @@
 	id = "super_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
-	construction_time=100
+	construction_time = 3 SECONDS
 	build_path = /obj/item/stock_parts/power_store/cell/super/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
@@ -47,7 +47,7 @@
 	id = "hyper_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
-	construction_time=100
+	construction_time = 3 SECONDS
 	build_path = /obj/item/stock_parts/power_store/cell/hyper/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
@@ -60,7 +60,7 @@
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 8, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
-	construction_time=100
+	construction_time = 3 SECONDS
 	build_path = /obj/item/stock_parts/power_store/cell/bluespace/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
