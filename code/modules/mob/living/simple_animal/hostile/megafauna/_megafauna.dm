@@ -6,7 +6,7 @@
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = MOB_ORGANIC|MOB_EPIC|MOB_MINING
 	obj_damage = 400
 	light_outer_range = 3
 	faction = list(FACTION_MINING, FACTION_BOSS)

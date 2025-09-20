@@ -411,6 +411,15 @@
 		if("examine")
 			examine(user)
 
+/obj/machinery/microwave/wash(clean_types)
+	. = ..()
+	if(operating || !(clean_types & CLEAN_SCRUB))
+		return .
+
+	dirty = 0
+	update_appearance()
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+
 /obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
 	for(var/atom/movable/movable_ingredient as anything in ingredients)
