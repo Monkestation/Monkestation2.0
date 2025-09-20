@@ -22,7 +22,10 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 
-	if(istype(attacking_object, /obj/item/stock_parts/power_store/cell) && opened)
+	if(istype(attacking_object, /obj/item/stock_parts/power_store) && opened)
+		if(istype(attacking_object, /obj/item/stock_parts/power_store/cell/microfusion))
+			balloon_alert(user, "cell not compatible!")
+			return
 		if(cell)
 			balloon_alert(user, "cell already installed!")
 			return

@@ -102,7 +102,9 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	initial_language_holder = /datum/language_holder/synthetic
 
+	///see code/__DEFINES/stat.dm
 	var/machine_stat = NONE
+	///see code/__DEFINES/machines.dm
 	var/use_power = IDLE_POWER_USE
 		//0 = dont use power
 		//1 = use idle_power_usage
@@ -113,35 +115,34 @@
 	var/active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	///the current amount of static power usage this machine is taking from its area
 	var/static_power_usage = 0
+	//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/power_channel = AREA_USAGE_EQUIP
-		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	///A combination of factors such as having power, not being broken and so on. Boolean.
 	var/is_operational = TRUE
-	var/wire_compatible = FALSE
-
-	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	///list of all the parts used to build it, if made from certain kinds of frames.
+	var/list/component_parts = null
+	///Is the machines maintainence panel open.
 	var/panel_open = FALSE
+	///Is the machine open or closed
 	var/state_open = FALSE
-	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
-	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
+	///If this machine is critical to station operation and should have the area be excempted from power failures.
+	var/critical_machine = FALSE
+	///if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
+	var/list/occupant_typecache
+	///The mob that is sealed inside the machine
 	var/atom/movable/occupant = null
-	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
+	///Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
 	var/processing_flags = START_PROCESSING_ON_INIT
-	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
+	///What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
 	var/subsystem_type = /datum/controller/subsystem/machines
-	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
-
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
-	var/fair_market_price = 69
-	var/market_verb = "Customer"
+	///Circuit to be created and inserted when the machinery is created
+	var/obj/item/circuitboard/circuit
+	///See code/DEFINES/interaction_flags.dm
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE // MONKE EDIT: INTERACT_MACHINE_SET_MACHINE
+	///The department we are paying to use this machine
 	var/payment_department = ACCOUNT_ENG
-
-	/// sound volume played on succesful click
-	var/clickvol = 40
-	/// value to compare with world.time for whether to play clicksound according to CLICKSOUND_INTERVAL
-	var/next_clicksound = 0
-	/// sound played on succesful interface use by a carbon lifeform
-	var/clicksound
+	///Used in NAP violation, pay fine
+	var/fair_market_price = 69 // MONKE EDIT: 5 -> 69
 
 	/// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
@@ -160,6 +161,16 @@
 	/// TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
 	armor_type = /datum/armor/obj_machinery
+
+	var/market_verb = "Customer"
+	var/wire_compatible = FALSE
+
+	/// sound volume played on succesful click
+	var/clickvol = 40
+	/// value to compare with world.time for whether to play clicksound according to CLICKSOUND_INTERVAL
+	var/next_clicksound = 0
+	/// sound played on succesful interface use by a carbon lifeform
+	var/clicksound
 
 /datum/armor/obj_machinery
 	melee = 25

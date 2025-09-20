@@ -900,10 +900,8 @@
 /area/shuttle/pirate)
 "yN" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/ship,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "yP" = (
