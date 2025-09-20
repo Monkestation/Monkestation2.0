@@ -271,3 +271,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_antag_rep(text, list/data)
 	logger.Log(LOG_CATEGORY_ANTAG_REP, text, data)
+
+/proc/log_hotspot(text, list/data)
+	logger.Log(LOG_CATEGORY_HOTSPOTS, text, data)

@@ -57,7 +57,7 @@
 	var/centered = FALSE
 	var/turf/source_turf = get_turf(src)
 	var/turf/center_turf
-	for(var/datum/hotspot/listed_hotspot in SShotspots.retrieve_hotspot_list(get_turf(src)))
+	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(get_turf(src)))
 		center_turf = listed_hotspot.center.return_turf()
 
 		if(source_turf == center_turf)

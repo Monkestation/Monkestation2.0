@@ -33,6 +33,12 @@
 	. = ..()
 	drift_direction = pick(GLOB.alldirs)
 
+/datum/hotspot/Destroy(force)
+	SShotspots.generated_hotspots -= src
+	SShotspots.currentrun -= src
+	QDEL_NULL(center)
+	return ..()
+
 /datum/hotspot/proc/move_center(turf/destination, force = FALSE)
 	if(!can_drift && !force)
 		return
@@ -53,11 +59,8 @@
 
 	///list of heat dousing rods in the radius
 	var/list/dousing_rods = list()
-	for(var/turf/listed_turf in range(radius, destination))
-		if(!istype(listed_turf, /turf/open/floor/plating/ocean))
-			continue
+	for(var/turf/open/floor/plating/ocean/listed_ocean in range(radius, destination))
 		///assign the ocean turf and check if captured if so add to {vent_count}
-		var/turf/open/floor/plating/ocean/listed_ocean = listed_turf
 		if(listed_ocean.captured)
 			vent_count++
 
@@ -80,7 +83,7 @@
 	if(destination.z != SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 		return TRUE
 	///okay so um, you can somehow get values higher than world.maxx or world.maxy according to runtimes so this fixes that
-	if(destination.x >= world.maxx || destination.x <= 1 || destination.y >= world.maxy || destination.y <= 1)
+	if(!ISINRANGE(destination.x, 1, world.maxx) || !ISINRANGE(destination.y, 1, world.maxy))
 		return TRUE
 	return FALSE
 
@@ -164,9 +167,7 @@
 			if(isliving(listed_mob))
 				var/mob/living/listed_living = listed_mob
 				listed_living.adjustBruteLoss(5)
-				if(iscarbon(listed_mob))
-					var/mob/living/carbon/carbon_mob = listed_mob
-					carbon_mob.stamina.adjust(-30)
+				listed_living.stamina?.adjust(-30)
 
 	if(!istype(calculation_point, /turf/open/floor/plating/ocean))
 		if(event_flags & WEAK_FIRE)
@@ -188,9 +189,9 @@
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 
-	if((istype(calculation_point.loc, /area/station) && heat > 4500) || heat > SUBCALL_HEATCOST * subcalls)
+	if((istype(calculation_point.loc, /area/station) && heat > 4500) || heat > (SUBCALL_HEATCOST * subcalls))
 		message_admins(message)
-	log_admin(message)
+	log_hotspot(message)
 
 #undef SUBCALL_HEATCOST
 

@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(hotspots)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	///the list of all the hotspots generated
-	var/list/generated_hotspots = list()
+	var/list/datum/hotspot/generated_hotspots = list()
 	///the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds
 	var/hotspots_to_generate = 30
 	///the map_start map icon
@@ -15,11 +15,13 @@ SUBSYSTEM_DEF(hotspots)
 	///the map icon with all the hotspots rendered ontop
 	var/icon/finished_map
 	///colors used in generating the map
-	var/list/colors = list(
+	var/static/list/colors = list(
 		"empty" = rgb(0, 0, 50),
 		"solid" = rgb(0, 0, 255),
 		"station" = rgb(0, 255, 149),
-		"other" = rgb(73, 160, 194))
+		"other" = rgb(73, 160, 194),
+	)
+	var/list/currentrun = list()
 
 /datum/controller/subsystem/hotspots/Initialize()
 	if(!length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
@@ -29,14 +31,25 @@ SUBSYSTEM_DEF(hotspots)
 	generate_map()
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/hotspots/fire()
-	if(!length(generated_hotspots))
-		return
-	for(var/datum/hotspot/generated_hotspot as anything in generated_hotspots)
+/datum/controller/subsystem/hotspots/Recover()
+	generated_hotspots = SShotspots.generated_hotspots
+	map = SShotspots.map
+	finished_map = SShotspots.finished_map
+
+/datum/controller/subsystem/hotspots/fire(resumed = FALSE)
+	if(!resumed)
+		currentrun = generated_hotspots.Copy()
+
+	var/list/current_run = currentrun
+	while(length(current_run))
+		var/datum/hotspot/generated_hotspot = current_run[length(current_run)]
+		current_run.len--
 		generated_hotspot.drift_count++
 		if(generated_hotspot.drift_count >= generated_hotspot.drift_speed)
 			generated_hotspot.drift_count = 0
 			generated_hotspot.move_center(get_step(generated_hotspot.center.return_turf(), generated_hotspot.drift_direction))
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/hotspots/proc/generate_hotspots()
 	var/datum/hotspot/new_hotspot
@@ -61,12 +74,10 @@ SUBSYSTEM_DEF(hotspots)
 
 ///attempts to retrieve a hotspot in this turf, if none found return FALSE.
 ///This only retrieves the first hotspot found, to retrieve a list call [retrieve_hotspot_list]
-/datum/controller/subsystem/hotspots/proc/retrieve_hotspot(turf/pinged)
-	. = FALSE
-	for(var/datum/hotspot/listed_hotspot in generated_hotspots)
+/datum/controller/subsystem/hotspots/proc/retrieve_hotspot(turf/pinged) as /datum/hotspot
+	for(var/datum/hotspot/listed_hotspot as anything in generated_hotspots)
 		if(listed_hotspot.get_tile_heat(pinged))
-			. = listed_hotspot
-			break
+			return listed_hotspot
 
 ///works like [retrieve_hotspot] but on failure returns empty list, so check against length to determine if found.
 /datum/controller/subsystem/hotspots/proc/retrieve_hotspot_list(turf/pinged)
@@ -96,7 +107,7 @@ SUBSYSTEM_DEF(hotspots)
 /datum/controller/subsystem/hotspots/proc/kerpow(turf/source)
 	var/list/mob/targets = get_flash_targets(get_turf(source), 3, FALSE)
 	for(var/mob/living/carbon/nearby_carbon in targets)
-		nearby_carbon.flash_act(1,1)
+		nearby_carbon.flash_act(1, 1)
 	return TRUE
 
 /datum/controller/subsystem/hotspots/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
