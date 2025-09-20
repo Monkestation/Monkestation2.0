@@ -249,22 +249,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost
 
-	//monkestation edit
-	///Play a sound to indicate we just spoke
-	if(client && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
-		var/ending = copytext_char(message, -1)
-		var/sound/speak_sound
-		if(HAS_TRAIT(src, TRAIT_HELIUM))
-			speak_sound = sound('monkestation/sound/effects/helium_squeak.ogg')
-		else if(ending == "?")
-			speak_sound = voice_type2sound[voice_type]["?"]
-		else if(ending == "!")
-			speak_sound = voice_type2sound[voice_type]["!"]
-		else
-			speak_sound = voice_type2sound[voice_type][voice_type]
-		playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-	//monkestation edit end
-
 	if(succumbed)
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
@@ -280,7 +264,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(radio_freq && can_hear())
 		var/atom/movable/virtualspeaker/V = speaker
 		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			playsound_local(get_turf(src), 'goon/sounds/misc/talk/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 	//monkestation edit end
 
 	var/deaf_message
@@ -373,6 +357,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
 			listening.Remove(listening_movable)
 
+	var/talk_icon_state = say_test(message_raw)
+
+	if (!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		if(!HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			get_voice().start_barking(message_raw, listening, message_range, talk_icon_state, is_speaker_whispering, src)
+		else if (!is_speaker_whispering)
+			var/sound/sound = sound(pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg'))
+			get_voice().short_bark(listening, message_range + 1, 100, 0, src, sound_override=sound)
+
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
@@ -403,7 +396,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
-	var/talk_icon_state = say_test(message_raw)
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
