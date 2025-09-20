@@ -518,7 +518,9 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
@@ -1018,7 +1020,9 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
@@ -7492,6 +7496,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "cut" = (
@@ -12497,11 +12502,6 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 6
 	},
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
-	},
-/mob/living/basic/rabbit/daisy,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "dXt" = (
@@ -22727,14 +22727,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "hln" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sink/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/disease2/diseaseanalyser,
+/obj/effect/turf_decal/box/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "hlG" = (
@@ -26453,12 +26453,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "itv" = (
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/door/airlock{
 	name = "Kitchen"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "itA" = (
@@ -28618,6 +28618,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "jeZ" = (
@@ -35591,10 +35592,14 @@
 /turf/open/floor/iron/white/textured,
 /area/station/security/checkpoint/medical)
 "lmr" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
 /turf/open/floor/wood,
 /area/station/service/library)
 "lms" = (
@@ -36173,6 +36178,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination/cryo,
 /turf/open/floor/iron/dark/textured,
 /area/station/common/cryopods)
 "lxP" = (
@@ -41139,6 +41145,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "ncF" = (
@@ -47238,6 +47245,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/poster/random/directional/west,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "oWq" = (
@@ -48409,6 +48417,7 @@
 "pmI" = (
 /obj/machinery/telecomms/hub/preset,
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "pmN" = (
@@ -48742,6 +48751,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "prq" = (
@@ -50994,8 +51004,9 @@
 	name = "Service Hallway"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "qdm" = (
@@ -56539,6 +56550,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "rQT" = (
@@ -57696,14 +57708,14 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "slV" = (
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/door/airlock{
 	name = "Kitchen"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination/kitchen,
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "smf" = (
@@ -61057,12 +61069,12 @@
 /area/station/engineering/break_room)
 "tnj" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "Monkey Pen";
-	req_access = list("virology")
+	name = "Monkey Pen"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "tnI" = (
@@ -76128,7 +76140,6 @@
 /obj/machinery/door/airlock/research{
 	name = "Research and Development Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -76142,6 +76153,7 @@
 	dir = 4
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "xUj" = (
