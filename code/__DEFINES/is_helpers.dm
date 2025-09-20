@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
+#define isoceanturf(A) (istype(A, /turf/open/floor/plating/ocean))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
