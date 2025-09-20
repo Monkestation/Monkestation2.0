@@ -20,10 +20,12 @@
 
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
-	desc = "Three vests of well-rounded, decently-protective armor."
-	cost = CARGO_CRATE_VALUE * 2
+	desc = "Three sets of well-rounded, decently-protective armor."
+	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/clothing/suit/armor/vest = 3)
+	contains = list(/obj/item/clothing/suit/armor/vest = 3,
+					/obj/item/clothing/head/helmet/sec = 3,
+				)
 	crate_name = "armor crate"
 
 /datum/supply_pack/security/disabler
@@ -49,13 +51,6 @@
 					/obj/item/clothing/head/fedora/det_hat,
 				)
 	crate_name = "forensics crate"
-
-/datum/supply_pack/security/helmets
-	name = "Helmets Crate"
-	desc = "Contains three standard-issue brain buckets."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/helmet/sec = 3)
-	crate_name = "helmet crate"
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
