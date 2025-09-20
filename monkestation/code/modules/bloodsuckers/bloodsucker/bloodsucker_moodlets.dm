@@ -35,7 +35,7 @@
 
 /datum/mood_event/daylight
 	description = span_boldwarning("I have been scorched by the unforgiving rays of the sun.")
-	mood_change = -6
+	mood_change = -15
 	timeout = 6 MINUTES
 
 ///Candelabrum's mood event to non Bloodsucker/Vassals
