@@ -781,7 +781,6 @@
 	item = /obj/item/storage/box/syndie_kit/imp_fakemacro
 	cost = 16
 	purchasable_from = UPLINK_NUKE_OPS
-	restricted = TRUE
 
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"

@@ -40,6 +40,9 @@
 	. = ..()
 	if(!cause || !imp_in || active)
 		return FALSE
+	for(var/X in imp_in.implants)
+		if(istype(X, /obj/item/implant/fakemacro))
+			return FALSE
 	if(cause == "action_button")
 		if(popup)
 			return FALSE
@@ -158,7 +161,7 @@
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
 	icon_state = "explosive"
-	var/delay = 7
+	var/delay = 70
 
 /obj/item/implant/fakemacro/proc/do_revive()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
@@ -185,8 +188,11 @@
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
+	imp_in.bruteloss = max(imp_in.bruteloss - 200, 100)
+	imp_in.fireloss = max(imp_in.fireloss - 200, 100)
 	imp_in.revive(excess_healing=50, force_grab_ghost=TRUE) //tadaa
 	qdel(src)
+
 
 /obj/item/implant/fakemacro/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -213,3 +219,8 @@
 				<b>Special Features:</b> Appears exactly as a macrobomb before revival.<BR>
 				"}
 	return dat
+
+/obj/item/implant/fakemacro/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(.)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
