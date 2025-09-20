@@ -55,9 +55,9 @@
 	else
 		. += "It has no sorting tags set."
 
-/obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/O = I
+/obj/structure/disposalpipe/sorting/mail/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/O = attacking_item
 
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)

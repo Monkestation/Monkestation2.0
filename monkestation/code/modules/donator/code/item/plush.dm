@@ -186,3 +186,9 @@
 	desc = "A hug from this doll ensures your day is better- it loves you all and MonkeStation!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "ellie_valentine"
+
+/obj/item/toy/plush/ai
+	name = "Artificial Intelligence Plush"
+	desc = "Computer! Turn off that noise!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "ai_plush"

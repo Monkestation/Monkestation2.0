@@ -52,6 +52,18 @@
 	objective.owner = owner
 	objectives += objective
 
+//Related code for neutered xenomorphs
+/datum/antagonist/xeno/neutered
+	name = "\improper Neutered Xenomorph"
+
+/datum/antagonist/xeno/neutered/forge_objectives()
+	var/datum/objective/survive/objective = new
+	objective.owner = owner
+	objectives += objective
+
+/datum/objective/survive/New()
+
+
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
 	///Our associated antagonist team for captive xenomorphs
@@ -155,6 +167,9 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
+	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered
+		mind.add_antag_datum(/datum/antagonist/xeno/neutered)
+		return
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
 		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)

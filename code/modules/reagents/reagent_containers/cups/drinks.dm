@@ -170,8 +170,17 @@
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
-	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
+	list_reagents = list(/datum/reagent/consumable/hot_coco = 20, /datum/reagent/consumable/sugar = 5)
 	drink_type = SUGAR
+	resistance_flags = FREEZE_PROOF
+	custom_price = PAYCHECK_CREW * 1.2
+
+/obj/item/reagent_containers/cup/glass/mug/britcup/bogril
+	name = "Bogril"
+	desc = "A piping hot meaty drink, reminiscent of broth."
+	icon_state = "britcup"
+	list_reagents = list(/datum/reagent/consumable/bogril = 20, /datum/reagent/consumable/nutriment/protein = 5)
+	drink_type = MEAT
 	resistance_flags = FREEZE_PROOF
 	custom_price = PAYCHECK_CREW * 1.2
 
@@ -290,20 +299,18 @@
 
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/reagent_containers/cup/glass/waterbottle/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !(user.istate & ISTATE_HARM))))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
+	if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
 		var/obj/item/reagent_containers/cup/glass/waterbottle/other_bottle = target
 		if(other_bottle.cap_on)
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	return . | ..()
+	return ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

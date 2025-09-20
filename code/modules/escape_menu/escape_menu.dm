@@ -55,7 +55,10 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	QDEL_NULL(page_holder)
 
 	GLOB.escape_menus -= ckey
-	plane_master_controller.remove_filter("escape_menu_blur")
+	if(!QDELETED(client))
+		plane_master_controller?.remove_filter("escape_menu_blur")
+	plane_master_controller = null
+	client = null
 
 	return ..()
 

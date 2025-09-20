@@ -10,7 +10,7 @@
 		"surgery_filter_upgrade", // monke edit: improved blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
-
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/adv_surgery
 	id = "adv_surgery"
@@ -26,6 +26,7 @@
 		"surgery_filter_upgrade_femto", // monkestation edit: advanced blood filter surgery
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/exp_surgery
 	id = "exp_surgery"
@@ -48,6 +49,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/alien_surgery
 	id = "alien_surgery"
@@ -60,3 +62,4 @@
 		"surgery_zombie",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)

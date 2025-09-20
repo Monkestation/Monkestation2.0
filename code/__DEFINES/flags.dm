@@ -159,6 +159,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GHOSTS_DURING_ROUND (1<<19)
 /// This area does not allow virtual entities to enter.
 #define VIRTUAL_SAFE_AREA (1<<20)
+/// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<21)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -208,6 +210,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FREEZE_PROOF (1<<7)
 /// can't be shuttle crushed.
 #define SHUTTLE_CRUSH_PROOF (1<<8)
+/// if you examine it the resistances dont show up
+#define HIDE_RESISTANCE (1<<9)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)

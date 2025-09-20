@@ -4,7 +4,7 @@
 	id = "extrapolator"
 	build_path = /obj/item/extrapolator
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2000, /datum/material/gold = 1500)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
@@ -16,7 +16,7 @@
 	id = "linked_surgery"
 	build_path = /obj/item/organ/internal/cyberimp/brain/linked_surgery
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 1000, /datum/material/bluespace = 250)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT*2.5)
 	construction_time = 6 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
@@ -40,7 +40,7 @@
 	id =  "surgical_gloves"
 	build_path = /obj/item/clothing/gloves/latex/surgical
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500, /datum/material/silver = 20000, /datum/material/gold = 1500)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*10, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -87,7 +87,7 @@
 	id = "ci-sprinter"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 1000, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/organ/internal/cyberimp/leg/sprinter
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
@@ -99,7 +99,7 @@
 	desc = "Glasses that can fix vision."
 	id = "pglasses"
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/glass = 500)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/glasses/regular
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -122,7 +122,7 @@
 	desc = "A pair of night vision goggles fitted with an analyzer for viral particles and reagents."
 	id = "nv_pathology_goggles"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = 350)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*3.5)
 	build_path = /obj/item/clothing/glasses/night/pathology
 	category = list(RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
@@ -140,7 +140,7 @@
 	id = "ci-meson"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/organ/internal/eyes/robotic/meson
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
@@ -153,7 +153,7 @@
 	id = "ci-pathohud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/pathology
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
@@ -166,7 +166,7 @@
 	id = "ci-scihud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6, /datum/material/gold = SMALL_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/fakehud/science
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY

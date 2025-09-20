@@ -89,10 +89,10 @@
 	else
 		return 0
 
-/obj/item/holochip/attackby(obj/item/I, mob/user, params)
+/obj/item/holochip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
-	if(istype(I, /obj/item/holochip))
-		var/obj/item/holochip/H = I
+	if(istype(attacking_item, /obj/item/holochip))
+		var/obj/item/holochip/H = attacking_item
 		credits += H.credits
 		to_chat(user, span_notice("You insert the credits into [src]."))
 		update_appearance()

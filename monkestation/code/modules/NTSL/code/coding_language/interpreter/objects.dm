@@ -79,15 +79,15 @@ GLOBAL_LIST_EMPTY(ntsl_methods)
 	src.properties = property_list
 
 /datum/n_struct/proc/get_clean_property(name, compare)
-	var/x = properties[name]
-	if(istext(x))
-		x = sanitize(x)
-		if(compare && x != compare && isnotpretty(x)) // Pretty filter stuff
-			var/log_message = "An NTSL script just tripped the pretty filter, setting variable [name] from [compare] to value [x]!"
+	var/value = properties[name]
+	if(istext(value) && (!compare || value != compare))
+		value = sanitize(value)
+		if(isnotpretty(value)) // Pretty filter stuff
+			var/log_message = "An NTSL script just tripped the pretty filter, setting variable [name] from [compare] to value [value]!"
 			message_admins(log_message)
 			logger.Log(LOG_NTSL, "[key_name(src)] [log_message] [loc_name(src)]")
 			return FALSE
-	return x
+	return value
 
 /datum/n_struct/ntsl_get(key, datum/scope/scope, datum/n_Interpreter/interp, node)
 	if(properties.Find(key))

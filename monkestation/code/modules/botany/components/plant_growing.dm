@@ -82,9 +82,9 @@
 	if(!length(managed_seeds))
 		return
 	var/atom/movable/movable_parent = parent
-	movable_parent.update_appearance()
 	if((world.time < next_work) && !bio_boosted)
 		return
+	movable_parent.update_appearance()
 	next_work = world.time + work_processes
 	work_cycle++
 

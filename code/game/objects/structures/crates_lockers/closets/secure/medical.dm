@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/muzzle/breath(src)
+		new /obj/item/clothing/mask/breath/muzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -89,8 +89,8 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
-//	new /obj/item/extrapolator(src) //MONKESTATION EDIT: extrapolators are not useful! missed this single case! -Dexee, 04/13/24
-
+	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
+	
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 

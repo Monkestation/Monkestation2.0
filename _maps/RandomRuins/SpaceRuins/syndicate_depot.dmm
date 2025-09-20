@@ -1329,7 +1329,7 @@
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "om" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/vehicle/sealed/mecha/working/ripley/cargo{
+/obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "APLU 'Cairngorm'";
 	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted. A drawing of an old Syndicate battlecruiser is below the pilot's seat."
 	},

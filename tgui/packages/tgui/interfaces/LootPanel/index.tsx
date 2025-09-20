@@ -86,7 +86,7 @@ export class LootPanel extends Component<{}, LootPanelState> {
         buttons={
           <Stack align="center">
             <Input
-              onChange={(_, value) => this.setState({ searchText: value })}
+              onInput={(_, value) => this.setState({ searchText: value })}
               placeholder="Search items..."
               value={this.state.searchText}
             />

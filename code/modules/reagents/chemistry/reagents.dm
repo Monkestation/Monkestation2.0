@@ -128,6 +128,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/added_traits
 	///are we able to merge
 	var/can_merge = TRUE
+	///does it intoxicate IPCs and if so how much
+	var/synthetic_boozepwr
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

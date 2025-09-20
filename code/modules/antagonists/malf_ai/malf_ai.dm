@@ -10,6 +10,7 @@
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
+	stinger_sound = 'sound/ambience/antag/malf.ogg'
 	///the name of the antag flavor this traitor has.
 	var/employer
 	///assoc list of strings set up after employer is given
@@ -39,7 +40,6 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 
 	return ..()
@@ -198,7 +198,7 @@
 				)
 				if(!mod.upgrade)
 					var/datum/action/power_type = mod.power_type
-					item_data["icon"] = text_ref(power_type::button_icon)
+					item_data["icon"] = power_type::button_icon
 					item_data["icon_state"] = power_type::button_icon_state
 				cat["items"] += list(item_data)
 				// monkestation end

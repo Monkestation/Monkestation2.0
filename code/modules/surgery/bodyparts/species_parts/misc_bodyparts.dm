@@ -217,11 +217,13 @@
 */
 	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 //MONKESTATION ADDITION END
+	bodypart_traits = list(TRAIT_ANTENNAE)
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/external/wings/functional/fly)
+	bodypart_traits = list(TRAIT_TACKLING_FRAIL_ATTACKER)
 
 /obj/item/bodypart/arm/left/fly
 	limb_id = SPECIES_FLYPERSON
@@ -240,38 +242,40 @@
 	should_draw_greyscale = FALSE
 
 ///SHADOW
-/obj/item/bodypart/head/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/head/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = NONE
 
-/obj/item/bodypart/chest/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/chest/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/left/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/arm/left/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/right/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/arm/right/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/left/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/leg/left/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/leg/right/shadow
-	limb_id = SPECIES_SHADOW
+/obj/item/bodypart/leg/right/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/left/shadow/nightmare
-	hand_traits = list(TRAIT_CHUNKYFINGERS)
+/obj/item/bodypart/arm/left/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
+	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/arm/right/shadow/nightmare
-	hand_traits = list(TRAIT_CHUNKYFINGERS)
+/obj/item/bodypart/arm/right/shadow/darkspawn
+	limb_id = SPECIES_DARKSPAWN
+	should_draw_greyscale = FALSE
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
@@ -727,4 +731,37 @@
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 
-//
+//DARKSPAWN
+///SHADOW
+/obj/item/bodypart/head/shadow
+	limb_id = SPECIES_SHADOW
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+	head_flags = NONE
+
+/obj/item/bodypart/chest/shadow
+	limb_id = SPECIES_SHADOW
+	is_dimorphic = FALSE
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/shadow
+	limb_id = SPECIES_SHADOW
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/right/shadow
+	limb_id = SPECIES_SHADOW
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/left/shadow
+	limb_id = SPECIES_SHADOW
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/right/shadow
+	limb_id = SPECIES_SHADOW
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/shadow/nightmare
+	hand_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/right/shadow/nightmare
+	hand_traits = list(TRAIT_CHUNKYFINGERS)

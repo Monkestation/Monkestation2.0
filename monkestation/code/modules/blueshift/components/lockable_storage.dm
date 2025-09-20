@@ -37,7 +37,7 @@
 
 	src.lock_code = lock_code
 	if(!isnull(lock_code))
-		atom_parent.atom_storage.locked = STORAGE_FULLY_LOCKED
+		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	src.can_hack_open = can_hack_open
 
 	atom_parent.update_appearance()
@@ -177,7 +177,7 @@
 			//you can't lock it if it's already locked or lacks a lock code.
 			if(source.atom_storage.locked || isnull(lock_code))
 				return TRUE
-			source.atom_storage.locked = STORAGE_FULLY_LOCKED
+			source.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 			source.atom_storage.hide_contents(usr)
 			source.update_appearance(UPDATE_ICON)
 			return TRUE
@@ -194,7 +194,7 @@
 			if(numeric_input != lock_code)
 				return TRUE
 			var/atom/source = parent
-			source.atom_storage.locked = STORAGE_NOT_LOCKED
+			source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 			numeric_input = ""
 			source.update_appearance(UPDATE_ICON)
 			return TRUE

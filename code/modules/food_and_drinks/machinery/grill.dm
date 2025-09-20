@@ -36,39 +36,39 @@
 	icon_state = "grill_open"
 	return ..()
 
-/obj/machinery/grill/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/S = I
+/obj/machinery/grill/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal) || istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/S = attacking_item
 		var/stackamount = S.get_amount()
-		to_chat(user, span_notice("You put [stackamount] [I]s in [src]."))
-		if(istype(I, /obj/item/stack/sheet/mineral/coal))
+		to_chat(user, span_notice("You put [stackamount] [attacking_item]s in [src]."))
+		if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal))
 			grill_fuel += (500 * stackamount)
 		else
 			grill_fuel += (50 * stackamount)
 		S.use(stackamount)
 		update_appearance()
 		return
-	if(I.resistance_flags & INDESTRUCTIBLE)
-		to_chat(user, span_warning("You don't feel it would be wise to grill [I]..."))
+	if(attacking_item.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, span_warning("You don't feel it would be wise to grill [attacking_item]..."))
 		return ..()
-	if(istype(I, /obj/item/reagent_containers/cup/glass))
-		if(I.reagents.has_reagent(/datum/reagent/consumable/monkey_energy))
-			grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
+	if(istype(attacking_item, /obj/item/reagent_containers/cup/glass))
+		if(attacking_item.reagents.has_reagent(/datum/reagent/consumable/monkey_energy))
+			grill_fuel += (20 * (attacking_item.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
 			to_chat(user, span_notice("You pour the Monkey Energy in [src]."))
-			I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
+			attacking_item.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, attacking_item.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
 			update_appearance()
 			return
-	else if(IS_EDIBLE(I))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+	else if(IS_EDIBLE(attacking_item))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || (attacking_item.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
-		else if(HAS_TRAIT(I, TRAIT_FOOD_GRILLED))
-			to_chat(user, span_notice("[I] has already been grilled!"))
+		else if(HAS_TRAIT(attacking_item, TRAIT_FOOD_GRILLED))
+			to_chat(user, span_notice("[attacking_item] has already been grilled!"))
 			return
 		else if(grill_fuel <= 0)
 			to_chat(user, span_warning("There is not enough fuel!"))
 			return
-		else if(!grilled_item && user.transferItemToLoc(I, src))
-			grilled_item = I
+		else if(!grilled_item && user.transferItemToLoc(attacking_item, src))
+			grilled_item = attacking_item
 			RegisterSignal(grilled_item, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
 			to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 			update_appearance()

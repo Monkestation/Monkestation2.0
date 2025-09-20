@@ -30,18 +30,19 @@
 		QDEL_NULL(builtin_bodycamera)
 	return ..()
 
-/obj/item/bodycam_upgrade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(.)
-		return
-	if(!proximity_flag || !isitem(target))
-		return
-	var/obj/item/interacting_item = target
+/obj/item/bodycam_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
+	if(!isitem(interacting_with))
+		return NONE
+	var/obj/item/interacting_item = interacting_with
 	if(!(interacting_item.slot_flags & ITEM_SLOT_OCLOTHING))
-		return
+		user.balloon_alert(user, "only fits on suits!")
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_item.item_flags & (ABSTRACT|DROPDEL)) //things like changeling suits don't get body cameras.
-		return
-	install_camera(interacting_item, user)
+		user.balloon_alert(user, "cannot attach!")
+		return ITEM_INTERACT_BLOCKING
+	if(install_camera(interacting_item, user))
+		return ITEM_INTERACT_SUCCESS
 
 ///Installs the bodycamera into a piece of clothing, updating the overlays on the mob if they're actively wearing it.
 /obj/item/bodycam_upgrade/proc/install_camera(obj/item/installing_into, mob/user)
@@ -50,7 +51,7 @@
 		//this is where your mouse is, so more likely where you're looking.
 		installing_into.balloon_alert(user, "camera already installed!")
 		playsound(installing_into, 'sound/machines/buzz-two.ogg', 20, TRUE, -1)
-		return
+		return FALSE
 	installing_into.add_overlay(equipped_overlay)
 	forceMove(installing_into)
 	playsound(installing_into, 'sound/items/drill_use.ogg', 20, TRUE, -1)
@@ -62,6 +63,7 @@
 	if(user.get_item_by_slot(ITEM_SLOT_OCLOTHING) == installing_into)
 		user.update_worn_oversuit()
 		turn_on(user)
+	return TRUE
 
 ///Uninstalls the bodycamera from a piece of clothing.
 /obj/item/bodycam_upgrade/proc/uninstall_camera(obj/item/taking_from, mob/user)

@@ -1582,7 +1582,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/template_noop)
 "Xu" = (
-/obj/vehicle/sealed/mecha/working/ripley/cargo,
+/obj/vehicle/sealed/mecha/ripley/cargo,
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "Xv" = (

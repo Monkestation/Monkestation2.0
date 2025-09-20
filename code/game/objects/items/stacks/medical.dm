@@ -277,18 +277,18 @@
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+/obj/item/stack/medical/gauze/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER || attacking_item.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")
 			return
-		new /obj/item/stack/sheet/cloth(I.drop_location())
+		new /obj/item/stack/sheet/cloth(attacking_item.drop_location())
 		if(user.CanReach(src))
-			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
-				span_notice("You cut [src] into pieces of cloth with [I]."), \
+			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [attacking_item]."), \
+				span_notice("You cut [src] into pieces of cloth with [attacking_item]."), \
 				span_hear("You hear cutting."))
 		else //telekinesis
-			visible_message(span_notice("[I] cuts [src] into pieces of cloth."), \
+			visible_message(span_notice("[attacking_item] cuts [src] into pieces of cloth."), \
 				blind_message = span_hear("You hear cutting."))
 		use(2)
 	else

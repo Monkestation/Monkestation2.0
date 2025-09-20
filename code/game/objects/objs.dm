@@ -30,14 +30,6 @@
 	///If set to true, we can reskin this item as much as we want.
 	var/infinite_reskin = FALSE
 
-	// Access levels, used in modules\jobs\access.dm
-	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
-	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
-	var/list/req_access
-	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
-	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
-	var/list/req_one_access
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
@@ -421,3 +413,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
 		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod

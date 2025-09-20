@@ -229,6 +229,32 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/salad/pineapple_rice
+	name = "Hawaiian pineapple rice"
+	desc = "A simple hawaiian rice dish served directly out of a pineapple."
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "pineapple_rice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+	)
+	tastes = list("rice" = 2, "pineapple" = 3)
+	foodtypes = GRAIN | FRUIT | PINEAPPLE
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/salad/pineapple_friedrice
+	name = "Hawaiian pineapple fried rice"
+	desc = "You're telling me a hawaiian pineapple fried this rice?"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "pineapple_friedrice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 16,
+	)
+	tastes = list("rice" = 2, "pineapple" = 3, "chili" = 1, "citrus" = 1, "veggies" = 1)
+	foodtypes = GRAIN | FRUIT | PINEAPPLE | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/salad/ketchup_fried_rice
 	name = "ketchup fried rice"
 	desc = "A classic Japanese comfort food, made with sausage, veggies, worchestershire sauce, rice- oh, and of course, ketchup."

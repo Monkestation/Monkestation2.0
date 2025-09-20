@@ -31,6 +31,8 @@
 	var/charge_delay = 8
 	///whether the gun's cell drains the cyborg user's cell to recharge
 	var/use_cyborg_cell = FALSE
+	///amount to multiply the cost by if we're using a cyborg cell.
+	var/cyborg_cost_multiplier = 1
 	///set to true so the gun is given an empty cell
 	var/dead_cell = FALSE
 
@@ -170,7 +172,7 @@
 			var/mob/living/silicon/robot/R = loc
 			if(R.cell)
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-				if(R.cell.use(shot.e_cost)) //Take power from the borg...
+				if(R.cell.use(shot.e_cost*cyborg_cost_multiplier)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]

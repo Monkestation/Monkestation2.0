@@ -50,9 +50,13 @@
 	var/particle_blending = BLEND_DEFAULT
 	/// our animate_holder
 	var/datum/animate_holder/animate_holder
+	/// If the effect is currently paused.
+	var/paused = FALSE
 
 /datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 	if(icon_file)
 		src.icon_file = icon_file
 	if(particle_state)
@@ -79,28 +83,31 @@
 	animate_holder.animates_self = FALSE
 	adjust_animate_steps()
 
-	if(processes)
+	if(processes && source_object.loc)
 		START_PROCESSING(SSactualfastprocess, src)
 	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
 	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
+	RegisterSignal(source_object, COMSIG_MOVABLE_MOVED, PROC_REF(update_processing))
 
 	if(lifetime)
 		QDEL_IN(src, lifetime)
 
 /datum/component/particle_spewer/Destroy(force)
-	. = ..()
 	UnregisterSignal(source_object, list(
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_POST_UNEQUIP,
+		COMSIG_MOVABLE_MOVED,
 	))
-
 	STOP_PROCESSING(SSactualfastprocess, src)
 	QDEL_LIST(living_particles)
 	QDEL_LIST(dead_particles)
 	source_object = null
 	QDEL_NULL(animate_holder)
+	return ..()
 
 /datum/component/particle_spewer/process(seconds_per_tick)
+	if(!get_turf(source_object) || paused)
+		return PROCESS_KILL
 	if(spawn_interval != 1)
 		count++
 		if(count < spawn_interval)
@@ -108,15 +115,22 @@
 	count = 0
 	spawn_particles()
 
+/datum/component/particle_spewer/proc/update_processing()
+	SIGNAL_HANDLER
+	if(QDELETED(src) || QDELETED(source_object) || !processes || !get_turf(source_object) || paused)
+		STOP_PROCESSING(SSactualfastprocess, src)
+	else
+		START_PROCESSING(SSactualfastprocess, src)
+
 /datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
 	var/burstees = burst_amount
 	if(random_bursts)
 		burstees = rand(1, burst_amount)
 
+	var/turf/spawn_loc = get_turf(source_object)
 	for(var/i = 0 to burstees)
 		//create and assign particle its stuff
-		var/obj/effect/abstract/particle/spawned
-		spawned = new(get_turf(source_object))
+		var/obj/effect/abstract/particle/spawned = new(spawn_loc)
 		if(offsets)
 			spawned.pixel_x = offset_x
 			spawned.pixel_y = offset_y
