@@ -1,7 +1,7 @@
 /datum/round_event_control/plague_rat
 	name = "Spawn Plague Rats"
 	typepath = /datum/round_event/ghost_role/plague_rat
-	weight = 2
+	weight = 0
 	max_occurrences = 1
 	track = EVENT_TRACK_MAJOR
 	min_players = 35 //monke edit: 20 to 35

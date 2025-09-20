@@ -24,7 +24,7 @@
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 2
 	min_players = 15
-	weight = 4
+	weight = 0
 	track = EVENT_TRACK_MAJOR //monkie edit
 	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_HEALTH
@@ -159,7 +159,7 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 3 //monkestation change 15 ==> 3
+	weight = 0 //monkestation change 15 ==> 3
 	min_players = 35 // To avoid shafting lowpop
 	earliest_start = 40 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
