@@ -3,7 +3,8 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
+	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 
@@ -43,6 +44,34 @@
 	QDEL_NULL(wires)
 	materials = null
 	return ..()
+
+/obj/machinery/autolathe/examine(mob/user)
+	. += ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
+
+/obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
+	SIGNAL_HANDLER
+
+	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))
+		directly_use_energy(SHEET_MATERIAL_AMOUNT / 10)
+	else if(item_inserted.has_material_type(/datum/material/glass))
+		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
+	else
+		flick("autolathe_o", src)//plays metal insertion animation
+
+		directly_use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
+		update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -196,7 +225,7 @@
 		var/total_amount = 0
 		for(var/material in being_built.materials)
 			total_amount += being_built.materials[material]
-		use_power(max(active_power_usage, (total_amount) * multiplier / 5))
+		use_energy(max(active_power_usage, (total_amount) * multiplier / 5))
 
 		//use materials
 		materials.use_materials(materials_used, coeff, multiplier)
@@ -279,19 +308,6 @@
 		return
 
 	return SECONDARY_ATTACK_CALL_NORMAL
-
-/obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
-	SIGNAL_HANDLER
-
-	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		use_power(SHEET_MATERIAL_AMOUNT / 10)
-	else if(item_inserted.has_material_type(/datum/material/glass))
-		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
-	else
-		flick("autolathe_o", src)//plays metal insertion animation
-
-		use_power(min(active_power_usage * 0.25, amount_inserted / 100))
-		update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/proc/make_item(list/picked_materials, multiplier, is_stack, mob/user)
 	var/atom/A = drop_location()

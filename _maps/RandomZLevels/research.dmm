@@ -88,8 +88,8 @@
 	},
 /obj/structure/frame/machine,
 /obj/item/circuitboard/machine/smes,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aw" = (
@@ -118,12 +118,12 @@
 /area/awaymission/research/interior/engineering)
 "az" = (
 /obj/effect/gibspawner/human,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aA" = (
 /obj/item/stack/sheet/plasteel,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aB" = (
@@ -147,11 +147,11 @@
 "aF" = (
 /obj/item/stack/rods,
 /obj/item/stack/sheet/iron,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aG" = (
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aH" = (
@@ -183,7 +183,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aM" = (
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aO" = (
@@ -1178,7 +1178,7 @@
 /area/awaymission/research/interior/security)
 "fw" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/structure/cable,

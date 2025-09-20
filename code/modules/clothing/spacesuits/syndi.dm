@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 		/obj/item/storage/belt/holster/energy,
 	) //monkestation edit: updated list
 	armor_type = /datum/armor/space_syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
 	slowdown = 0.25 //monkestation edit: syndicate have a theme of no slowdown on their gear. e.g: syndicate duffel bags
 

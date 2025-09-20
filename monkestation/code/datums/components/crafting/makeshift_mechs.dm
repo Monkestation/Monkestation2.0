@@ -72,7 +72,7 @@
 		/obj/item/chair = 2,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/stack/sheet/cloth = 10,
-		/obj/item/stock_parts/cell = 2,
+		/obj/item/stock_parts/power_store/cell = 2,
 		/obj/item/stock_parts/manipulator = 4,
 		/obj/item/light/tube = 1,
 		/obj/item/toy/crayon/spraycan = 1,
@@ -84,7 +84,7 @@
 /datum/crafting_recipe/makeshift_sleeper
 	name = "Makeshift Sleeper Module"
 	result = /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
-	reqs = list(/obj/item/stock_parts/cell = 1,
+	reqs = list(/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/stack/sheet/cloth = 5,
 		/obj/item/stack/rods = 10,
 		/obj/item/stock_parts/manipulator = 1,
@@ -118,7 +118,7 @@
 			/obj/item/chair = 1,
 			/obj/item/stack/sheet/cloth = 10,
 			/obj/item/stack/conveyor = 5,
-			/obj/item/stock_parts/cell = 1,
+			/obj/item/stock_parts/power_store/cell = 1,
 		)
 	machinery = list(/obj/machinery/disposal/bin = CRAFTING_MACHINERY_CONSUME)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)

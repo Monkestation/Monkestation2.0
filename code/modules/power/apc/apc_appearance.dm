@@ -116,3 +116,16 @@
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
 	icon_update_needed = TRUE
+
+// Shows a dark-blue interface for a moment. Shouldn't appear on cameras.
+/obj/machinery/power/apc/proc/flicker_hacked_icon()
+	var/image/hacker_image = image(icon = 'icons/obj/machines/wallmounts.dmi', loc = src, icon_state = "apcemag", layer = FLOAT_LAYER)
+	var/list/mobs_to_show = list()
+	// Collecting mobs the APC can see for this animation, rather than mobs that can see the APC. Important distinction, intended such that mobs on camera / with XRAY cannot see the flicker.
+	for(var/mob/viewer in view(src))
+		if(viewer.client)
+			mobs_to_show += viewer.client
+	if(malfai?.client)
+		mobs_to_show |= malfai.client
+	flick_overlay_global(hacker_image, mobs_to_show, 1 SECONDS)
+	hacked_flicker_counter = rand(3, 5) //The counter is decrimented in the process() proc, which runs every two seconds.

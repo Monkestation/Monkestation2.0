@@ -117,11 +117,11 @@
 	var/stack_name
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		stack_name = "bluespace"
-		use_power(SHEET_MATERIAL_AMOUNT / 10)
+		use_energy(SHEET_MATERIAL_AMOUNT / 10)
 	else
 		var/obj/item/stack/S = item_inserted
 		stack_name = S.name
-		use_power(min(active_power_usage, (amount_inserted / 100)))
+		use_energy(min(active_power_usage, (amount_inserted / 100)))
 	add_overlay("protolathe_[stack_name]")
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "protolathe_[stack_name]"), 10)
 	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates

@@ -10,6 +10,8 @@ import {
   Slider,
   Tabs,
 } from '../components';
+import { formatEnergy } from '../format';
+import { formatPower } from '../format';
 import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props) => {
@@ -31,6 +33,7 @@ export const NtosRobotactContent = (props) => {
     maxcharge,
     integrity,
     lampIntensity,
+    lampConsumption,
     cover,
     locomotion,
     wireModule,
@@ -105,7 +108,10 @@ export const NtosRobotactContent = (props) => {
                     bad: [-Infinity, 0.1],
                   }}
                 >
-                  <AnimatedNumber value={charge} />
+                  <AnimatedNumber
+                    value={charge}
+                    format={(charge) => formatEnergy(charge)}
+                  />
                 </ProgressBar>
                 Chassis Integrity:
                 <ProgressBar
@@ -132,7 +138,7 @@ export const NtosRobotactContent = (props) => {
                     })
                   }
                 />
-                Lamp power usage: {lampIntensity / 2} watts
+                Lamp power usage: {formatPower(lampIntensity * lampConsumption)}
               </Section>
             </Flex.Item>
             <Flex.Item width="50%" ml={1}>

@@ -13,15 +13,15 @@ For adding unique abilities to microfusion cells. These cannot directly interact
 	var/attachment_overlay_icon_state
 
 
-/obj/item/microfusion_cell_attachment/proc/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/proc/add_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	SHOULD_CALL_PARENT(TRUE)
 	START_PROCESSING(SSobj, microfusion_cell)
 	return
 
-/obj/item/microfusion_cell_attachment/proc/process_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell, seconds_per_tick)
+/obj/item/microfusion_cell_attachment/proc/process_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell, seconds_per_tick)
 	return PROCESS_KILL
 
-/obj/item/microfusion_cell_attachment/proc/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/proc/remove_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	SHOULD_CALL_PARENT(TRUE)
 	STOP_PROCESSING(SSobj, microfusion_cell)
 	return
@@ -43,13 +43,13 @@ Increases the cell capacity by a set percentage.
 	/// The initial capacity of the cell before this upgrade is added!
 	var/initial_charge_capacity = 0
 
-/obj/item/microfusion_cell_attachment/overcapacity/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/overcapacity/add_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	initial_charge_capacity = microfusion_cell.maxcharge
 	var/capacity_to_add = microfusion_cell.maxcharge / 100 * capacity_increase
 	microfusion_cell.maxcharge += capacity_to_add
 
-/obj/item/microfusion_cell_attachment/overcapacity/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/overcapacity/remove_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	microfusion_cell.charge = min(microfusion_cell.charge, initial_charge_capacity)
 	microfusion_cell.maxcharge = initial_charge_capacity
@@ -68,11 +68,11 @@ The cell is stable and will not emit sparks when firing.
 	icon_state = "attachment_stabiliser"
 	attachment_overlay_icon_state = "microfusion_stabiliser"
 
-/obj/item/microfusion_cell_attachment/stabiliser/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/stabiliser/add_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	microfusion_cell.stabilised = TRUE
 
-/obj/item/microfusion_cell_attachment/stabiliser/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/stabiliser/remove_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	microfusion_cell.stabilised = FALSE
 
@@ -96,15 +96,15 @@ If the cell isn't stabilised by a stabiliser, it may emit a radiation pulse.
 	. = ..()
 	. += span_warning("WARNING: May cause radiation burns and weapon instability if not stabilized with recommended attachment!")
 
-/obj/item/microfusion_cell_attachment/selfcharging/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/selfcharging/add_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	microfusion_cell.self_charging = TRUE
 
-/obj/item/microfusion_cell_attachment/selfcharging/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+/obj/item/microfusion_cell_attachment/selfcharging/remove_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell)
 	. = ..()
 	microfusion_cell.self_charging = FALSE
 
-/obj/item/microfusion_cell_attachment/selfcharging/process_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell, seconds_per_tick)
+/obj/item/microfusion_cell_attachment/selfcharging/process_attachment(obj/item/stock_parts/power_store/cell/microfusion/microfusion_cell, seconds_per_tick)
 	if(!microfusion_cell.parent_gun)
 		return
 	if(microfusion_cell.charge < microfusion_cell.maxcharge)

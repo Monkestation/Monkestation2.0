@@ -1,3 +1,4 @@
+import { round } from 'common/math';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -14,10 +15,25 @@ import { Window } from '../layouts';
 // Common power multiplier
 const POWER_MUL = 1e3;
 
-export const Smes = (props) => {
-  const { act, data } = useBackend();
+type Data = {
+  capacityPercent: number;
+  capacity: number;
+  charge: number;
+  inputAttempt: number;
+  inputting: number;
+  inputLevel: number;
+  inputLevelMax: number;
+  inputAvailable: number;
+  outputAttempt: number;
+  outputting: number;
+  outputLevel: number;
+  outputLevelMax: number;
+  outputUsed: number;
+};
+
+export const Smes = () => {
+  const { act, data } = useBackend<Data>();
   const {
-    capacityPercent,
     capacity,
     charge,
     inputAttempt,
@@ -31,6 +47,7 @@ export const Smes = (props) => {
     outputLevelMax,
     outputUsed,
   } = data;
+  const capacityPercent = round(100 * (charge / capacity), 0.1);
   const inputState =
     (capacityPercent >= 100 && 'good') || (inputting && 'average') || 'bad';
   const outputState =

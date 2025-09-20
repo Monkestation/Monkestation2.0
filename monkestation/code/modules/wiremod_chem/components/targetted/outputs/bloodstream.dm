@@ -1,7 +1,7 @@
 /obj/item/circuit_component/chem/bci/bloodstream
 	display_name = "Chemical Pump Integration"
 	desc  = "A component that integrates directly into your veins to inject you with a reagents."
-	power_usage_per_input = 1
+	energy_usage_per_input = 1
 
 	var/datum/port/input/input_reagents
 	var/datum/port/input/input_heat

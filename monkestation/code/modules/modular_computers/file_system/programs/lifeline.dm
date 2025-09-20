@@ -2,13 +2,11 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	transfer_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_BRIG_PHYSICIAN, ACCESS_DETECTIVE)
-	category = PROGRAM_CATEGORY_CREW
+	download_access = list(ACCESS_MEDICAL, ACCESS_BLUESHIELD, ACCESS_BRIG_PHYSICIAN, ACCESS_DETECTIVE)
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR (classic)
-	program_icon_state = "radarntos"
-	// requires_ntnet = TRUE -- disabled to be constistent with the paramedic's crew monitor
-	available_on_ntnet = TRUE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	program_open_overlay = "radarntos"
+	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosLifeline"
 	program_icon = "heartbeat"
@@ -23,7 +21,7 @@
 	var/sort_by = "dist"
 	var/blueshield = FALSE
 
-	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_appearance() calls
+	///Used to keep track of the last value program_open_overlay was set to, to prevent constant unnecessary update_appearance() calls
 	var/last_icon_state = ""
 
 
@@ -126,27 +124,27 @@
 	var/atom/movable/signal = locate(selected) in GLOB.human_list
 	var/turf/here_turf = get_turf(computer)
 	if(GLOB.crewmonitor.get_tracking_level(signal, here_turf.z, nt_net=FALSE, validation=FALSE) != SENSOR_COORDS)
-		program_icon_state = "[initial(program_icon_state)]lost"
-		if(last_icon_state != program_icon_state)
+		program_open_overlay = "[initial(program_open_overlay)]lost"
+		if(last_icon_state != program_open_overlay)
 			computer.update_appearance()
-			last_icon_state = program_icon_state
+			last_icon_state = program_open_overlay
 		return
 
 	var/turf/target_turf = get_turf(signal)
 	var/trackdistance = get_dist_euclidean(here_turf, target_turf)
 	switch(trackdistance)
 		if(0)
-			program_icon_state = "[initial(program_icon_state)]direct"
+			program_open_overlay = "[initial(program_open_overlay)]direct"
 		if(1 to 12)
-			program_icon_state = "[initial(program_icon_state)]close"
+			program_open_overlay = "[initial(program_open_overlay)]close"
 		if(13 to 24)
-			program_icon_state = "[initial(program_icon_state)]medium"
+			program_open_overlay = "[initial(program_open_overlay)]medium"
 		if(25 to INFINITY)
-			program_icon_state = "[initial(program_icon_state)]far"
+			program_open_overlay = "[initial(program_open_overlay)]far"
 
-	if(last_icon_state != program_icon_state)
+	if(last_icon_state != program_open_overlay)
 		computer.update_appearance()
-		last_icon_state = program_icon_state
+		last_icon_state = program_open_overlay
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.

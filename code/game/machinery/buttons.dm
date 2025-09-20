@@ -231,7 +231,7 @@
 		return
 
 	playsound(src, SFX_BUTTON_CLICK, vol = 45, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY) // monkestation edit: button sounds
-	use_power(5)
+	use_energy(5)
 	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)

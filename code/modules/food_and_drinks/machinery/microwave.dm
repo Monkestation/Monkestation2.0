@@ -45,9 +45,9 @@
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
 	/// The cell we charge with
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// The cell we're charging
-	var/obj/item/stock_parts/cell/vampire_cell
+	var/obj/item/stock_parts/power_store/cell/vampire_cell
 	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
 	/// Charge contents of microwave instead of cook
@@ -291,7 +291,7 @@
 			return ITEM_INTERACT_BLOCKING
 		return NONE
 
-	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+	if(istype(item, /obj/item/stock_parts/power_store/cell) && cell_powered)
 		var/swapped = FALSE
 		if(!isnull(cell))
 			cell.forceMove(drop_location())
@@ -535,7 +535,7 @@
 				pre_success(cooker)
 		return
 	time--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(loop), type, time, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()

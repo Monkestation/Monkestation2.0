@@ -503,7 +503,7 @@
 	uses = 1
 
 /// This cell is only meant for use in items temporarily created by a NIF. Do not let players extract this from devices.
-/obj/item/stock_parts/cell/infinite/nif_cell
+/obj/item/stock_parts/power_store/cell/infinite/nif_cell
 	name = "Nanite Cell"
 	desc = "If you see this, please make an issue on GitHub."
 

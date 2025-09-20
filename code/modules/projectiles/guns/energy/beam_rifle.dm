@@ -29,7 +29,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	actions_types = list(/datum/action/item_action/zoom_lock_action)
-	cell_type = /obj/item/stock_parts/cell/beam_rifle
+	cell_type = /obj/item/stock_parts/power_store/cell/beam_rifle
 	canMouseDown = TRUE
 	var/aiming = FALSE
 	var/aiming_time = 12
@@ -88,7 +88,7 @@
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
-	cell_type = /obj/item/stock_parts/cell/infinite
+	cell_type = /obj/item/stock_parts/power_store/cell/infinite
 	aiming_time = 0
 	recoil = 0
 	pin = /obj/item/firing_pin
@@ -428,7 +428,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 10000
+	e_cost = LASER_SHOTS(5, 50000) // Beam rifle has a custom cell
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/projectile/beam/beam_rifle

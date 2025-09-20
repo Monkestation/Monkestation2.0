@@ -63,7 +63,7 @@
 	return TRUE
 
 /obj/item/mod/core/infinite/subtract_charge(amount)
-	return TRUE
+	return amount
 
 /obj/item/mod/core/infinite/check_charge(amount)
 	return TRUE
@@ -77,7 +77,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 /obj/item/mod/core/standard/Destroy()
 	if(cell)
@@ -112,21 +112,21 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.give(amount)
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.use(amount, TRUE)
@@ -135,7 +135,7 @@
 	return charge_amount() >= amount
 
 /obj/item/mod/core/standard/update_charge_alert()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 		return
@@ -211,7 +211,7 @@
 	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return FALSE
 	if(!mod.open)
 		mod.balloon_alert(user, "open the cover first!")
@@ -276,8 +276,7 @@
 	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
-	charge_source.adjust_charge(-amount*charge_modifier)
-	return TRUE
+	return -charge_source.adjust_charge(-amount*charge_modifier)
 
 /obj/item/mod/core/ethereal/check_charge(amount)
 	return charge_amount() >= amount*charge_modifier
@@ -289,17 +288,20 @@
 		return
 	mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 
+#define PLASMA_CORE_ORE_CHARGE (1.5 * STANDARD_CELL_CHARGE)
+#define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
+
 /obj/item/mod/core/plasma
 	name = "MOD plasma core"
 	icon_state = "mod-core-plasma"
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
 		through plasma fuel, allowing for easy continued use by their mining squads."
 	/// How much charge we can store.
-	var/maxcharge = 10000
+	var/maxcharge = 10 * STANDARD_CELL_CHARGE
 	/// How much charge we are currently storing.
-	var/charge = 10000
+	var/charge = 10 * STANDARD_CELL_CHARGE
 	/// Associated list of charge sources and how much they charge, only stacks allowed.
-	var/list/charger_list = list(/obj/item/stack/ore/plasma = 1500, /obj/item/stack/sheet/mineral/plasma =SHEET_MATERIAL_AMOUNT)
+	var/list/charger_list = list(/obj/item/stack/ore/plasma = PLASMA_CORE_ORE_CHARGE, /obj/item/stack/sheet/mineral/plasma = PLASMA_CORE_SHEET_CHARGE)
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
@@ -361,3 +363,6 @@
 	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE
+
+#undef PLASMA_CORE_ORE_CHARGE
+#undef PLASMA_CORE_SHEET_CHARGE

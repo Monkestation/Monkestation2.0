@@ -100,7 +100,7 @@
 	slowdown = 2
 	armor_type = /datum/armor/space_fragile
 	strip_delay = 65
-	cell = /obj/item/stock_parts/cell/crap //might wanna actually increase this to a better cell, currently it runs out in a minute of use
+	cell = /obj/item/stock_parts/power_store/cell/crap //might wanna actually increase this to a better cell, currently it runs out in a minute of use
 
 /datum/armor/space_fragile
 	melee = 5

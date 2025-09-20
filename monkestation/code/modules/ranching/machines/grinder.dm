@@ -71,7 +71,7 @@
 		start_grinding(user)
 
 /obj/machinery/chicken_grinder/proc/start_grinding(mob/user)
-	use_power(1000)
+	use_energy(1000)
 	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, 1)
 	update_icon()

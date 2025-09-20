@@ -132,7 +132,7 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aA" = (
@@ -314,7 +314,7 @@
 /area/shuttle/abandoned)
 "bb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bc" = (

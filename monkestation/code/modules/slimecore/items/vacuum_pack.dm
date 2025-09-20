@@ -419,7 +419,7 @@
 		user.visible_message(span_warning("[user] sucks [living_target] into their [pack]!"), span_notice("You successfully suck [living_target] into your [src] and recycle it."))
 		qdel(living_target)
 		playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
-		pack.linked.use_power(500)
+		pack.linked.use_energy(500)
 		pack.linked.stored_matter += pack.linked.cube_production * pack.linked.recyclable_types[living_target.type]
 		return TRUE
 

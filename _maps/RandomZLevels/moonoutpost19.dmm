@@ -3048,7 +3048,7 @@
 "wS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -4673,7 +4673,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/radio/off,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -5974,7 +5974,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/light/small/directional/west,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/engineering,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

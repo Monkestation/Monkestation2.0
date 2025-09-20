@@ -34,7 +34,7 @@
 		if(usedpower)
 			var/amount = max(usedpower, 0) // make sure we don't use negative power
 			var/area/A = get_area(src) // make sure it's in an area
-			A?.use_power(amount, AREA_USAGE_EQUIP)
+			A?.use_energy(amount, AREA_USAGE_EQUIP)
 		recharge_counter = 0
 		return
 	recharge_counter += seconds_per_tick

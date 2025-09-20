@@ -168,7 +168,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
 
-	use_power(5)
+	use_energy(5)
 	icon_state = "[skin]1"
 
 	if(device)

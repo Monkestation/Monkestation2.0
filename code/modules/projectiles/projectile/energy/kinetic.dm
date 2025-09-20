@@ -78,7 +78,7 @@
 /obj/item/ammo_casing/energy/kinetic/smg ///magazine-based gun, 45 rounds
 	projectile_type = /obj/projectile/kinetic/smg
 	select_name = "kinetic"
-	e_cost = 0
+	e_cost = 0 // Can't use the macro
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 
 
@@ -105,7 +105,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/repeater
 	projectile_type = /obj/projectile/kinetic/repeater
-	e_cost = 150 //about three shots
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE * 0.5)
 
 /obj/projectile/kinetic/repeater
 	name = "rapid kinetic force"
@@ -125,7 +125,7 @@
 
 /obj/item/ammo_casing/energy/kinetic/meme
 	projectile_type = /obj/projectile/kinetic/meme
-	e_cost = 1
+	e_cost = 0  // Can't use the macro
 	pellets = 69
 	variance = 90
 	fire_sound = 'sound/effects/adminhelp.ogg'

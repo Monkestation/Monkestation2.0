@@ -234,7 +234,7 @@
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 	if(mod_link.link_call)
-		subtract_charge((DEFAULT_CHARGE_DRAIN * 0.25) * seconds_per_tick)
+		subtract_charge(0.25 * DEFAULT_CHARGE_DRAIN * seconds_per_tick)
 	if(!active)
 		return
 	if(!get_charge() && active && !activating)
@@ -242,7 +242,7 @@
 		return
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
-		malfunctioning_charge_drain = rand(1,20)
+		malfunctioning_charge_drain = rand(0.2 * DEFAULT_CHARGE_DRAIN, 4 * DEFAULT_CHARGE_DRAIN) // About triple power usage on average.
 	subtract_charge((charge_drain + malfunctioning_charge_drain) * seconds_per_tick)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -428,7 +428,7 @@
 /obj/item/mod/control/get_cell()
 	if(!open)
 		return
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	var/obj/item/stock_parts/power_store/cell/cell = get_charge_source()
 	if(!istype(cell))
 		return
 	return cell

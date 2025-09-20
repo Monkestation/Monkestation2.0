@@ -4229,7 +4229,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/crowbar,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	req_access = list("away_general")
@@ -4305,11 +4305,11 @@
 	name = "radiation suit crate"
 	},
 /obj/item/circuitboard/machine/smes,
-/obj/item/stock_parts/cell/high/empty,
-/obj/item/stock_parts/cell/high/empty,
-/obj/item/stock_parts/cell/high/empty,
-/obj/item/stock_parts/cell/high/empty,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /obj/item/stock_parts/capacitor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -5811,7 +5811,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},

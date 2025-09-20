@@ -44,7 +44,7 @@
 
 //cant put new parts in
 /obj/vehicle/sealed/mecha/steam_helios/populate_parts()
-	cell = new /obj/item/stock_parts/cell/clock(src)
+	cell = new /obj/item/stock_parts/power_store/cell/clock(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic/clock(src) //walking is free
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic/clock(src)
 	manipulator = new /obj/item/stock_parts/manipulator/femto/clock(src)

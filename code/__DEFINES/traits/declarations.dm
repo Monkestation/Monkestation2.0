@@ -953,9 +953,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This one denotes a PDA has received a rigged message and will explode when the user tries to reply to a rigged PDA message
 #define TRAIT_PDA_CAN_EXPLODE "pda_can_explode"
 ///The download speeds of programs from the dowloader is halved.
-/* #define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed" */
+#define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed"
 ///Dictates whether a user (source) is interacting with the frame of a stationary modular computer or the pc inside it. Needed for circuits I guess.
-/* #define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame" */
+#define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame"
 
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"

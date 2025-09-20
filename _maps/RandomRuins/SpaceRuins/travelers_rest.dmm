@@ -364,7 +364,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/item/stock_parts/cell/bluespace,
+/obj/item/stock_parts/power_store/cell/bluespace,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
 "Lx" = (
@@ -480,7 +480,7 @@
 /obj/item/storage/box/lights/tubes,
 /obj/item/clothing/glasses/night,
 /obj/item/stock_parts/capacitor/super,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},

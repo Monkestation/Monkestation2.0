@@ -23,7 +23,7 @@
 	armor_type = /datum/armor/ert
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this feels right?
-	cell = /obj/item/stock_parts/cell/bluespace
+	cell = /obj/item/stock_parts/power_store/cell/bluespace
 	allowed = list(
 		/obj/item/tank/jetpack/oxygen,
 		/obj/item/tank/jetpack/harness,

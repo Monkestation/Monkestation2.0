@@ -1,3 +1,6 @@
+// HEY IF THIS IS EVER UPDATED TO TG, MAKE SURE TO CHECK OVER IMPLEMENTATIONS
+// Some uses of name2reagent have edits to make them function how they are supposed to on TG
+
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -7,6 +10,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+// MONKE EDIT: Copium proc that cleans up reagents to allow search in name2reagent
+/proc/clean_reagent_name(reagent)
+	if(!istext(reagent))
+		CRASH("Tried to call clean_reagent_name with the passed argument not being text")
+	var/static/regex/chem_regex = new(@"[^a-z]", "g")
+	return replacetext(lowertext(reagent), chem_regex, "")
 
 //Various reagents
 //Toxin & acid reagents

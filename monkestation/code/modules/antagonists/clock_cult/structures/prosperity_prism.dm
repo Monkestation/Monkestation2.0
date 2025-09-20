@@ -25,7 +25,7 @@
 		return
 
 	for(var/mob/living/possible_cultist in range(3, src))
-		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist) || possible_cultist.health >= possible_cultist.maxHealth || !use_power(-POWER_PER_USE))
+		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist) || possible_cultist.health >= possible_cultist.maxHealth || !use_energy(-POWER_PER_USE))
 			continue
 
 		var/healed_amount = HEAL_PER_USE * seconds_per_tick

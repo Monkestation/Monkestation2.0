@@ -13,7 +13,7 @@
 	//We don't use area power
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
 	///Is the machine on?
 	var/on = FALSE
 	/// do we use power from wire instead
@@ -97,7 +97,7 @@
 
 /obj/machinery/power/portagrav/attackby(obj/item/tool, mob/living/user, params)
 	. = NONE
-	if(!istype(tool, /obj/item/stock_parts/cell))
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return
 	if(!panel_open)
 		balloon_alert(user, "must open panel!")

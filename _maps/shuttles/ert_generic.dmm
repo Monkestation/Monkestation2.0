@@ -1324,11 +1324,11 @@
 /area/shuttle/ert/bridge)
 "QX" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/hyper{
+/obj/item/stock_parts/power_store/cell/hyper{
 	pixel_x = 10;
 	pixel_y = 11
 	},
-/obj/item/stock_parts/cell/hyper{
+/obj/item/stock_parts/power_store/cell/hyper{
 	pixel_x = 10;
 	pixel_y = 7
 	},

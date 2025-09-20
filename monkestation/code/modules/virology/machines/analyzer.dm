@@ -109,7 +109,7 @@
 		var/mutable_appearance/I = mutable_appearance(icon,"analyser_light",src)
 		I.plane = ABOVE_LIGHTING_PLANE
 		add_overlay(I)
-	use_power(1000)
+	use_energy(1000)
 	set_light(2,2)
 	playsound(src, 'sound/machines/chime.ogg', 50)
 

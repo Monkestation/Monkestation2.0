@@ -66,7 +66,7 @@
 
 	Beam(component.parent, icon_state="lightning[rand(1,12)]", time = pulse_cooldown_time)
 	playsound(get_turf(src), 'sound/magic/lightningshock.ogg', 60, TRUE, extrarange = 2)
-	use_power(chosen_level)
+	use_energy(chosen_level)
 	if(!into_wand_mode)
 		component.process_stimuli(STIMULUS_SHOCK, chosen_level)
 	else

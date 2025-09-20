@@ -29831,7 +29831,7 @@
 	desc = "A heavier stun baton, equipped with a more powerful capacitor and a tungsten core for ideal home defence. Somethingsomething bluespace.";
 	force = 20;
 	stamina_damage = 200;
-	preload_cell_type = /obj/item/stock_parts/cell/bluespace;
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace;
 	cell_hit_cost = 1500
 	},
 /obj/item/clothing/suit/hooded/cloak/zuliecloak,

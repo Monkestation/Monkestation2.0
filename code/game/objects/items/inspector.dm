@@ -23,13 +23,13 @@
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	///Power used per print in cell units
-	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-	///Power used to say an error message
-	var/power_to_speak = 1
+	///Energy used per print.
+	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Energy used to say an error message.
+	var/energy_to_speak = 1 KILO JOULES
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
@@ -66,7 +66,7 @@
 	return TRUE
 
 /obj/item/inspector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(cell_cover_open && istype(attacking_item, /obj/item/stock_parts/cell))
+	if(cell_cover_open && istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
@@ -117,8 +117,8 @@
 	if(cell.charge == 0)
 		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 		return
-	if(!cell.use(power_per_print))
-		if(cell.use(power_to_speak))
+	if(!cell.use(energy_per_print))
+		if(cell.use(energy_to_speak))
 			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
 		return
 
@@ -244,8 +244,8 @@
  *
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
- * origami master. Printing at full power costs INSPECTOR_POWER_USAGE_HONK cell units
- * instead of INSPECTOR_POWER_USAGE_NORMAL cell units.
+ * origami master. Printing at full power costs INSPECTOR_ENERGY_USAGE_HONK cell units
+ * instead of INSPECTOR_ENERGY_USAGE_NORMAL cell units.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
@@ -264,11 +264,11 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
-		if(cell.use(power_to_speak))
+		if(cell.use(energy_to_speak))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+		energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -302,7 +302,7 @@
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		return ..()
 	if(paper_charges == 0)
-		if(cell.use(power_to_speak))
+		if(cell.use(energy_to_speak))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
@@ -314,7 +314,7 @@
 	var/message
 	switch(time_mode)
 		if(INSPECTOR_TIME_MODE_HONK)
-			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+			energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
 		if(INSPECTOR_TIME_MODE_SLOW)
@@ -322,7 +322,7 @@
 			message = "LIGHTNING FAST."
 		else
 			time_mode = INSPECTOR_TIME_MODE_HONK
-			power_per_print = INSPECTOR_POWER_USAGE_HONK
+			energy_per_print = INSPECTOR_ENERGY_USAGE_HONK
 			message = "HONK!"
 	balloon_alert(user, "scanning speed set to [message]")
 
