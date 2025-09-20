@@ -55,8 +55,8 @@
 	var/list/unattached_flesh
 	var/flesh_number = 0
 	var/datum/bank_account/current_insurance
-	/// Whether autoprocessing will automatically clone, or just scan.
-	var/auto_clone = TRUE
+	/// Whether autoprocessing is enabled on this pod.
+	var/auto_clone = FALSE
 	fair_market_price = 5 // He nodded, because he knew I was right. Then he swiped his credit card to pay me for arresting him.
 	payment_department = ACCOUNT_MED
 
@@ -104,7 +104,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>"
 		if(efficiency > 5)
-			. += "<span class='notice'>Pod has been upgraded to support autoprocessing and apply beneficial mutations.<span>"
+			. += "<span class='notice'>Pod has been upgraded to [auto_clone ? "support autoprocessing and " : ""]apply beneficial mutations.<span>"
 
 //Clonepod
 
