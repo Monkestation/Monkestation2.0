@@ -304,7 +304,7 @@
 	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
-	update_static_data_for_all_viewers()
+	SStgui.update_uis(src)
 	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, build_time_per_item, build_count), build_time_per_item)
 
 /// Callback for start_making, actually makes the item
@@ -354,7 +354,7 @@
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
 	busy = FALSE
-	update_static_data_for_all_viewers()
+	SStgui.update_uis(src)
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
