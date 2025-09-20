@@ -40,6 +40,11 @@
 	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
 	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
 
+/obj/item/soulscythe/Destroy(force)
+	soul.ghostize()
+	QDEL_NULL(soul)
+	return ..()
+
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
@@ -129,7 +134,7 @@
 	if(ismineralturf(hit_atom))
 		var/turf/closed/mineral/hit_rock = hit_atom
 		hit_rock.gets_drilled()
-	if(isliving(hit_atom))
+	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom
 		if(hit_mob.stat != DEAD)
 			give_blood(15)
@@ -242,11 +247,6 @@
 /obj/item/soulscythe/proc/reset_spin()
 	animate(src)
 	SpinAnimation(15)
-
-/obj/item/soulscythe/Destroy(force)
-	soul.ghostize()
-	QDEL_NULL(soul)
-	return ..()
 
 /// Soulscythe mob, just a way for players to control the scythe.
 /mob/living/basic/soulscythe
