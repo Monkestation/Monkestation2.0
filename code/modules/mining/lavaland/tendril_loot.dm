@@ -232,6 +232,7 @@
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/effect/wisp/wisp
 
 /obj/item/wisp_lantern/attack_self(mob/user)
@@ -1108,7 +1109,7 @@
 	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
 		span_notice("You shatter [src] over [target]!"))
 	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
-	target.apply_damage(damage = ishostile(target) ? 75 : 35, wound_bonus = 20)
+	target.apply_damage(damage = ismining(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 	shattered = TRUE
