@@ -121,17 +121,4 @@
 		}
 	},
 
-	"Latejoin": {
-		"Syndicate Infiltrator": {
-			"weight": 0
-		},
-
-		"Provocateur": {
-			"weight": 0
-		},
-
-		"Heretic Smuggler": {
-			"weight": 0
-		}
-	}
 }
