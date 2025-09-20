@@ -651,7 +651,7 @@
 	if(!did_it_work)
 		to_chat(user, span_warning("Could not sample biomarkers."))
 
-<<<<<<< HEAD
+
 /obj/item/pen/monkecannon
 	var/ammunition = 7
 	charged = TRUE
@@ -672,7 +672,7 @@
 
 /obj/item/pen/monkecannon/proc/recharge()
 	charged = TRUE
-=======
+
 
 //The Security holopen
 /obj/item/pen/red/security
