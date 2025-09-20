@@ -605,7 +605,7 @@
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
+	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine. When used in a dead body, will prevent organ decay."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#B4004B"
