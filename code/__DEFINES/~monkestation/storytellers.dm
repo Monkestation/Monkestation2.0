@@ -30,6 +30,8 @@
 #define TAG_ALIEN "alien"
 /// When the event is magical in nature
 #define TAG_MAGICAL "magical"
+/// When the event is mundane in nature (complete opposite of the above)
+#define TAG_MUNDANE "mundane"
 
 #define EVENT_TRACK_MUNDANE "Mundane"
 #define EVENT_TRACK_MODERATE "Moderate"

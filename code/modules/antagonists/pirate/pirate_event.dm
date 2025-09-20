@@ -15,7 +15,7 @@
 	map_flags = EVENT_SPACE_ONLY
 //monkestation edit start
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 	repeated_mode_adjust = TRUE
