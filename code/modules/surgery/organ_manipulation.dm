@@ -240,8 +240,8 @@
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
-			if(istype(tool, /obj/item/organ/internal/shadowtumor/thrall))//Thralls resist deconversion
-				var/obj/item/organ/internal/shadowtumor/thrall/tumor = tool
+			if(istype(target_organ, /obj/item/organ/internal/shadowtumor/thrall))//Thralls resist deconversion
+				var/obj/item/organ/internal/shadowtumor/thrall/tumor = target_organ
 				if(tumor.resist(target))
 					return FALSE
 			display_results(

@@ -9,7 +9,7 @@
 	var/obj/machinery/camera/bodcam
 
 /datum/component/internal_cam/Initialize(list/networks = list("ss13"))
-	if (!parent || !isliving(parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	bodcam = new(parent)
@@ -18,6 +18,10 @@
 	bodcam.network = networks
 	bodcam.setViewRange(10)//standard mob viewrange
 	bodcam.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+
+/datum/component/internal_cam/Destroy(force, silent)
+	. = ..()
+	QDEL_NULL(bodcam) // has to be AFTER UnregisterFromParent runs
 
 /datum/component/internal_cam/RegisterWithParent()
 	bodcam.status = TRUE
@@ -31,14 +35,8 @@
 	bodcam.built_in = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
-/datum/component/internal_cam/Destroy(force, silent)
-	QDEL_NULL(bodcam)
-	return ..()
-
 ///Changes the camera net used by the interal camera, currently only used for the darkspawn cameranet
 /datum/component/internal_cam/proc/change_cameranet(datum/cameranet/newnet)
-	if(!newnet)
-		return
 	bodcam.change_camnet(newnet)
 
 ///Updates the camera net, telling it that the camera has moved
