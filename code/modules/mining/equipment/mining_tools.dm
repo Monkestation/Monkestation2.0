@@ -195,6 +195,10 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
+	/// Percent chance for a critical hit.
+	var/crit_chance = 3
+	/// How much the force is multiplied by during a critical hit.
+	var/crit_multiplier = 3
 
 /obj/item/trench_tool/get_all_tool_behaviours()
 	return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
@@ -207,7 +211,10 @@
 	. = ..()
 	. += span_notice("Use in hand to switch configuration.")
 	. += span_notice("It functions as a [tool_behaviour] tool.")
-	. += span_danger("<i>This weapon has no random critical hits.</i>")
+	if(crit_chance > 0)
+		. += span_danger("<i>This weapon has random critical hits!</i>")
+	else
+		. += span_danger("<i>This weapon has no random critical hits.</i>")
 
 /obj/item/trench_tool/update_icon_state()
 	. = ..()
@@ -218,6 +225,14 @@
 			icon_state = inhand_icon_state = "[initial(icon_state)]_shovel"
 		if(TOOL_MINING)
 			icon_state = inhand_icon_state = "[initial(icon_state)]_pick"
+
+/obj/item/trench_tool/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	var/old_force = force
+	if(isliving(target_mob) && target_mob.stat < DEAD && prob(crit_chance))
+		force *= crit_multiplier
+		target_mob.balloon_alert(user, "critical hit!")
+	. = ..()
+	force = old_force
 
 /obj/item/trench_tool/attack_self(mob/user, modifiers)
 	. = ..()
