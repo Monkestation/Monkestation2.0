@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - rscadd: "Scroll Tracking Tolerance is now an experimental option for the chat panel."
