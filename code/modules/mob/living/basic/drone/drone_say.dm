@@ -18,7 +18,7 @@
 		if(istype(drone) && drone.stat != DEAD)
 			if(faction_checked_mob)
 				if(drone.faction_check_atom(faction_checked_mob, exact_faction_match))
-					to_chat(drone, span_binarysay(msg), type = MESSAGE_TYPE_RADIO,)
+					to_chat(drone, span_binarysay(msg), type = MESSAGE_TYPE_RADIO)
 					drone.playsound_local(drone, 'sound/misc/incoming_transmission.ogg', 170, 0, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			else
 				to_chat(drone, span_binarysay(msg), type = MESSAGE_TYPE_RADIO)
