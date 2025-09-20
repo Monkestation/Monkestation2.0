@@ -187,10 +187,10 @@
 		var/mob/B = AM
 		if((isdrone(B) || iscyborg(B)) && B.stat)
 			return
-		if(istype(b, /mob/living/basic/mouse/plague))
-			if(!do_after(movable_atom, 3 SECONDS, src))
-			movable_atom.forceMove(drop_location())
-			to_chat(movable_atom, span_notice("You squeeze through [src]."))
+		if(istype(B, /mob/living/basic/mouse/plague))
+			if(!do_after(B, 3 SECONDS, src))
+			B.forceMove(drop_location())
+			to_chat(B, span_notice("You squeeze through [src]."))
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
