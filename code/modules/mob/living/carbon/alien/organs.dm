@@ -51,7 +51,7 @@
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
-	if(organ_owner.on_fire)
+	if(owner.on_fire)
 		return
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
