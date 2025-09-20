@@ -18,11 +18,11 @@
 
 	dummy.set_species(/datum/species/lizard)
 
-	TEST_ASSERT(length(holder.spoken_languages) == 3, \
-		"Dummy should speak two languages - Common, Draconic and Ashtongue! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
+	TEST_ASSERT(length(holder.spoken_languages) == 2, \
+		"Dummy should speak two languages - Common and Draconic! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
 
-	TEST_ASSERT(length(holder.understood_languages) == 3, \
-		"Dummy should understand two languages - Common, Draconic and Ashtongue! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
+	TEST_ASSERT(length(holder.understood_languages) == 2, \
+		"Dummy should understand two languages - Common and Draconic! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
 	dummy.set_species(/datum/species/human)
 
@@ -145,18 +145,18 @@
 	var/datum/language_holder/holder_A = dummy_A.get_language_holder()
 	var/datum/language_holder/holder_B = dummy_B.get_language_holder()
 
-	// Holder A is a lizard: starts with 3 languages (common, draconic, ashtongue)
+	// Holder A is a lizard: starts with 2 languages (common, draconic)
 	// Holder B is a human with a mind language: starts with 2 language (common, pirate)
 	// Swap occurs
-	// Holder A is a lizard with 3 languages, but should now also have pirate: 3 languages (common, draconic, ashtongue, pirate)
+	// Holder A is a lizard with 2 languages, but should now also have pirate: 3 languages (common, draconic, pirate)
 	// Holder B is a human with just 1 language left over (common)
 
-	TEST_ASSERT_EQUAL(length(holder_A.spoken_languages), 4, \
-		"Holder A / Dummy A / Dummy B mind should speak Common, Draconic, Ashtoongue and Pirate! \
+	TEST_ASSERT_EQUAL(length(holder_A.spoken_languages), 3, \
+		"Holder A / Dummy A / Dummy B mind should speak Common, Draconic, and Pirate! \
 		Instead, it knew the following: [print_language_list(holder_A.spoken_languages)]")
 
-	TEST_ASSERT_EQUAL(length(holder_A.understood_languages), 4, \
-		"Holder A / Dummy A / Dummy B mind should only understand Common, Draconic, Ashtongue and Pirate! \
+	TEST_ASSERT_EQUAL(length(holder_A.understood_languages), 3, \
+		"Holder A / Dummy A / Dummy B mind should only understand Common, Draconic, and Pirate! \
 		Instead, it knew the following: [print_language_list(holder_A.understood_languages)]")
 
 	TEST_ASSERT_EQUAL(length(holder_B.spoken_languages), 1, \
