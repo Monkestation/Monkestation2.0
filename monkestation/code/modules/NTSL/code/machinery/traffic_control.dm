@@ -151,7 +151,7 @@
 			return TRUE
 		if("log_in")
 			var/mob/living/usr_mob = usr
-			if(usr_mob.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr_mob))
 				user_name = "System Administrator"
 			else if(check_access(inserted_id))
 				user_name = "[inserted_id?.registered_name] ([inserted_id?.assignment])"

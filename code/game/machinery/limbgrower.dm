@@ -149,7 +149,7 @@
 	if((user.istate & ISTATE_HARM)) //so we can hit the machine
 		return ..()
 
-/obj/machinery/limbgrower/ui_act(action, list/params)
+/obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

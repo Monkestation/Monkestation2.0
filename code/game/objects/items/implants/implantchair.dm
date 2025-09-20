@@ -54,7 +54,7 @@
 
 	return data
 
-/obj/machinery/implantchair/ui_act(action, params)
+/obj/machinery/implantchair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

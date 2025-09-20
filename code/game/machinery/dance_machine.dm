@@ -122,18 +122,19 @@
 	data["volume"] = volume
 	return data
 
-/obj/machinery/dance_machine/ui_act(action, list/params)
+/obj/machinery/dance_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("toggle")
 			if(QDELETED(src))
 				return
 			if(!active)
 				if(stop > world.time)
-					to_chat(usr, span_warning("Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)]."))
+					to_chat(user, span_warning("Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)]."))
 					if(!COOLDOWN_FINISHED(src, jukebox_error_cd))
 						return
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
@@ -147,7 +148,7 @@
 				return TRUE
 		if("select_track")
 			if(active)
-				to_chat(usr, span_warning("Error: You cannot change the song until the current one is over."))
+				to_chat(user, span_warning("Error: You cannot change the song until the current one is over."))
 				return
 			var/list/available = list()
 			for(var/datum/track/S in songs)

@@ -142,7 +142,7 @@
 /datum/action/cooldown/bloodsucker/feed/proc/check_for_masquerade_infraction(mob/living/viewer, recursed = FALSE)
 	if(QDELETED(viewer) || !viewer.ckey || QDELETED(viewer.client) || viewer.client?.is_afk())
 		return FALSE
-	if(viewer.has_unlimited_silicon_privilege)
+	if(HAS_SILICON_ACCESS(viewer))
 		return FALSE
 	if(viewer.stat >= DEAD)
 		return FALSE
