@@ -191,7 +191,7 @@
 		imp_in.setBruteLoss(99)
 	else
 		imp_in.adjustBruteLoss(-200)
-	if(imp_in.getFireLoss <= 299)
+	if(imp_in.getFireLoss() <= 299)
 		imp_in.setFireLoss(99)
 	else
 		imp_in.adjustFireLoss(-200)
