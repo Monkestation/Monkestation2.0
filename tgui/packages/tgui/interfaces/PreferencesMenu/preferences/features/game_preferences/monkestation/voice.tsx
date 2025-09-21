@@ -1,15 +1,14 @@
 import { CheckboxInput, FeatureToggle } from '../../base';
 
 export const voice_sounds_short: FeatureToggle = {
-  name: 'Single Bark',
+  name: 'Only One Bark',
   category: 'VOICE SOUNDS',
-  description:
-    'When enabled, you will only hear a single sound when players talk.',
+  description: 'When enabled, you will only hear one sound when players talk.',
   component: CheckboxInput,
 };
 
 export const voice_sounds_limited_pitch: FeatureToggle = {
-  name: 'Disable Pitch Modification',
+  name: 'No Pitch Modification',
   category: 'VOICE SOUNDS',
   description:
     'When enabled, voice sounds will not play with any character pitch modifications.',
@@ -17,9 +16,9 @@ export const voice_sounds_limited_pitch: FeatureToggle = {
 };
 
 export const voice_sounds_only_goon: FeatureToggle = {
-  name: 'Only Goonstation',
+  name: 'Only Simple Sounds',
   category: 'VOICE SOUNDS',
   description:
-    'When enabled, characters will only make goonstation voice sounds.',
+    'When enabled, characters will only make simple voice sounds. (Goonstation Speak 1-4)',
   component: CheckboxInput,
 };

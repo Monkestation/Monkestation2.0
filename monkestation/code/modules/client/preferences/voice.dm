@@ -145,16 +145,9 @@
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
 
-/// Should this player hear barks from goonstation
-/datum/preference/toggle/barks_only_goon
+/// Should this player only hear goonstation speak barks
+/datum/preference/toggle/voice_sounds_only_simple
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "voice_sounds_only_goon"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
-
-
-// /// Should this player only hear goonstation speak barks
-// /datum/preference/toggle/barks_only_goon_speak
-// 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-// 	savefile_key = "voice_sounds_disabled"
-// 	savefile_identifier = PREFERENCE_PLAYER

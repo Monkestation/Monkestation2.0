@@ -90,7 +90,7 @@
 			if (all_voice_packs)
 				all_voice_packs += voice_pack
 
-			voice_pack.is_goon = group_id == "goon" || voice_pack.hidden
+			voice_pack.is_simple = voice_pack_obj["allow_random"]
 
 		if (length(visible_voice_packs))
 			GLOB.voice_pack_groups_visible[group_name] = visible_voice_packs
@@ -102,8 +102,8 @@
 	// Setup goon-only voice_packs system
 	for (var/voice_pack_id in voice_pack_list)
 		var/datum/voice_pack/voice_pack = voice_pack_list[voice_pack_id]
-		if (!voice_pack.is_goon)
-			voice_pack.goon_equiv = voice_pack_list[pick(GLOB.random_voice_packs)]
+		if (!voice_pack.is_simple)
+			voice_pack.simple_equiv = voice_pack_list[pick(GLOB.random_voice_packs)]
 
 	return voice_pack_list
 
@@ -127,8 +127,8 @@
 
 	var/hidden = TRUE
 
-	var/is_goon
-	var/datum/voice_pack/goon_equiv
+	var/is_simple
+	var/datum/voice_pack/simple_equiv
 
 /datum/voice_pack/fallback
 	name = "Fallback"
@@ -142,7 +142,7 @@
 	)
 	hidden = FALSE
 
-	is_goon = TRUE
+	is_simple = TRUE
 
 
 #undef VOICE_PACKS_FILE

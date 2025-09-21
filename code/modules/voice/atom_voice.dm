@@ -108,9 +108,9 @@
 		if (sound_override)
 			sound_to_use = sound_override
 		else
-			if (hearer.client.prefs.read_preference(/datum/preference/toggle/barks_only_goon) && !voicepack.is_goon)
-				sound_to_use = voicepack.goon_equiv.sounds[sound_idx]
-				volume *= voicepack.goon_equiv.volume
+			if (hearer.client.prefs.read_preference(/datum/preference/toggle/voice_sounds_only_simple) && !voicepack.is_simple)
+				sound_to_use = voicepack.simple_equiv.sounds[sound_idx]
+				volume *= voicepack.simple_equiv.volume
 			else
 				volume *= voicepack.volume
 				sound_to_use = voicepack.sounds[sound_idx]
