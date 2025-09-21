@@ -40,7 +40,7 @@
 	if(level_current >= 4)
 		owner.add_traits(upgraded_traits, FORTITUDE_TRAIT) // They'll get stun resistance + this, who cares.
 	var/mob/living/carbon/human/bloodsucker_user = owner
-	if(IS_BLOODSUCKER(owner) || IS_VASSAL(owner))
+	if(HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
 		fortitude_resist = max(0.3, 0.7 - level_current * 0.1)
 		bloodsucker_user.physiology.brute_mod *= fortitude_resist
 		bloodsucker_user.physiology.stamina_mod *= fortitude_resist
@@ -67,7 +67,7 @@
 		user.buckled.unbuckle_mob(src, force=TRUE)
 
 /datum/action/cooldown/bloodsucker/fortitude/DeactivatePower()
-	if(ishuman(owner) && (IS_BLOODSUCKER(owner) || IS_VASSAL(owner)))
+	if(ishuman(owner) && HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
 		var/mob/living/carbon/human/bloodsucker_user = owner
 		bloodsucker_user.physiology.brute_mod /= fortitude_resist
 		bloodsucker_user.physiology.stamina_mod /= fortitude_resist

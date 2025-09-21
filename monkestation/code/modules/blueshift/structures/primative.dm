@@ -722,7 +722,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 	user.mind.adjust_experience(/datum/skill/primitive, 5)
 
-	for(var/target_item as anything in contents)
+	for(var/target_item in contents)
 		var/obj/item/food/grown/food_item = target_item
 		if(istype(food_item) && food_item.mill_reagent)
 			reagents.add_reagent(food_item.mill_reagent, food_item.seed.potency * 0.2)
