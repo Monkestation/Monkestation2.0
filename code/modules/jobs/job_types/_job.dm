@@ -224,14 +224,17 @@
 
 /mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
-	var/atom/item_path = null
+	var/obj/item/hat_to_use = null
 
+	// We want the last hat in the list to match the behaviour of humanoid loadouts
 	for (var/datum/loadout_item/head/item in loadout_datums)
-		if (ispath(item.item_path, /obj/item/clothing/head))
-			item_path = item.item_path
+		if (ispath(item.item_path, /obj/item))
+			var/obj/item/hat = new item.item_path()
+			if (hat.slot_flags & ITEM_SLOT_HEAD)
+				hat_to_use = hat
 
-	if (item_path)
-		place_on_head(new item_path())
+	if (hat_to_use)
+		place_on_head(hat_to_use)
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
