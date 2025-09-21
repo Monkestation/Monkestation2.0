@@ -1,4 +1,4 @@
-import { Box, Button, Slider, Stack } from '../../../../../../components';
+import { Box, Button, Slider, Stack } from '../../../../../components';
 
 import {
   FeatureChoiced,
@@ -6,7 +6,7 @@ import {
   FeatureNumeric,
   FeatureNumericData,
   FeatureValueProps,
-} from '../../base';
+} from '../base';
 
 const FeatureBarkDropdownInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,

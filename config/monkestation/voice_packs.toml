@@ -75,7 +75,7 @@ volume = 0.1
 
 [animal]
 name = "Animal"
-path = "monkestation/sound/voice/barks/animal"
+path = "sound/voice/barks/animal"
 
 [animal.moth_squeak]
 name = "Moth Squeak"
@@ -106,7 +106,7 @@ volume = 0.3
 
 [dont_starve]
 name = "Don't Starve"
-path = "monkestation/sound/voice/barks/dont_starve"
+path = "sound/voice/barks/dont_starve"
 
 [dont_starve.wilson]
 name = "Wilson"
