@@ -161,7 +161,7 @@
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
 	icon_state = "explosive"
-	var/delay = 70
+	var/delay = 7 SECONDS
 
 /obj/item/implant/fakemacro/proc/do_revive()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
