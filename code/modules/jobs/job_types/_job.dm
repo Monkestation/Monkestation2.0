@@ -219,9 +219,19 @@
 /datum/job/proc/special_config_check()
 	return FALSE
 
-/mob/living/proc/on_job_equipping(datum/job/equipping)
+/mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	return
 
+/mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
+	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	var/atom/item_path = null
+
+	for (var/datum/loadout_item/head/item in loadout_datums)
+		if (ispath(item.item_path, /obj/item/clothing/head))
+			item_path = item.item_path
+
+	if (item_path)
+		place_on_head(new item_path())
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
