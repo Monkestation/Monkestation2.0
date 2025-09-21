@@ -169,7 +169,7 @@
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
-		imp_in.Paralyze(140)
+		imp_in.Paralyze(14 SECONDS)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 10)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/atropine, 10)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/stimulants, 10)
