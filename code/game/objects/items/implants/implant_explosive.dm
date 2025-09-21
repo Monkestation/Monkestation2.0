@@ -40,9 +40,8 @@
 	. = ..()
 	if(!cause || !imp_in || active)
 		return FALSE
-	for(var/X in imp_in.implants)
-		if(istype(X, /obj/item/implant/fakemacro))
-			return FALSE
+	if(locate(/obj/item/implant/fakemacro) in imp_in.implants)
+		return FALSE
 	if(cause == "action_button")
 		if(popup)
 			return FALSE
