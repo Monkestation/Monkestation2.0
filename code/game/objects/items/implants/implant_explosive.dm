@@ -41,7 +41,7 @@
 	if(!cause || !imp_in || active)
 		return FALSE
 	if(locate(/obj/item/implant/fakemacro) in imp_in.implants)
-		return FALSE
+			return FALSE
 	if(cause == "action_button")
 		if(popup)
 			return FALSE
@@ -187,8 +187,14 @@
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	imp_in.bruteloss = max(imp_in.bruteloss - 200, 100)
-	imp_in.fireloss = max(imp_in.fireloss - 200, 100)
+	if(imp_in.getBruteLoss() <= 299)
+		imp_in.setBruteLoss(99)
+	else
+		imp_in.adjustBruteLoss(-200)
+	if(imp_in.getFireLoss <= 299)
+		imp_in.setFireLoss(99)
+	else
+		imp_in.adjustFireLoss(-200)
 	imp_in.revive(excess_healing=50, force_grab_ghost=TRUE) //tadaa
 	qdel(src)
 
