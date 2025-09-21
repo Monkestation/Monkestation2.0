@@ -207,7 +207,7 @@
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
-/obj/item/implant/explosive/get_data()
+/obj/item/implant/fakemacro/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp RX-79 Employee Protection Implant<BR>
 				<b>Life:</b> Activates upon death.<BR>
