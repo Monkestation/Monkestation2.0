@@ -23,12 +23,12 @@
 /obj/item/bong/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/lighting_text = tool.ignition_effect(src,user)
 	if(lighting_text)
-			if(bonghits <= 0)
-				to_chat(user, "<span class='warning'>There is nothing to smoke!</span>")
-				return ITEM_INTERACT_BLOCKING
-			light(lighting_text)
-			name = "lit [initial(name)]"
-			return ITEM_INTERACT_SUCCESS
+		if(bonghits <= 0)
+			to_chat(user, "<span class='warning'>There is nothing to smoke!</span>")
+			return ITEM_INTERACT_BLOCKING
+		light(lighting_text)
+		name = "lit [initial(name)]"
+		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(tool, /obj/item/food/grown))
 		return NONE
