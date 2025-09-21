@@ -24,7 +24,7 @@
 /atom/movable/proc/can_long_bark()
 	return FALSE
 
-/mob/initial_voice_pack_id()
+/mob/living/initial_voice_pack_id()
 	return pick(GLOB.random_voice_packs)
 
 /mob/can_long_bark()
