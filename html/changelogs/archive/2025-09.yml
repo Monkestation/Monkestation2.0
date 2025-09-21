@@ -640,3 +640,58 @@
   - bugfix: Inorganic Biology and Necrotic Metabolism should work consistently and
       as advertised now.
   - bugfix: The infectable biotype altering virus symptoms should work again
+2025-09-20:
+  Absolucy:
+  - rscdel: Removed the Magnitis symptom, because it's a lagfest that just makes everyone's
+      life miserable.
+  - bugfix: Fixed the "Show" button in the Requests Manager not working.
+  - bugfix: You can now properly add (or remove) Telecommunications Admin access via
+      an ID console.
+  EssentialTomato:
+  - bugfix: Fixed bein unable to clean the microwave.
+  - bugfix: Fixed the supermatter sliver dusting you while being placed into a proper
+      container,
+  - bugfix: Fixed plumbing constructor not being able to deconstruct its buildings.
+  - bugfix: Fixed neon lining not being placeable.
+  - bugfix: Fixed plant analyzers not working from range.
+  - bugfix: Minor airlock overlay fix for pneumatic seals and notes.
+  Ice-Type:
+  - bugfix: deconstructing machining machines gives the appropriate board
+  - qol: detonates the computer of one lucky player
+  JupiterJaeden:
+  - qol: Adds a pref toggle for spinning & flipping making stacks of hats come off.
+      Default is on.
+  - qol: Adds the ability to disassemble stacks of hats by using them in hand with
+      Z.
+  - bugfix: Fixes some bugs with hats not updating their name and description correctly
+      when removed from a stack of hats.
+  TheColorCyan:
+  - bugfix: gibtonite is no longer invisible when exploding on the floor
+  - refactor: (san7890) Soulscythes have undergone a mild refactor, but everything
+      should work as it should. Report any issues.
+  - qol: (TheSwain, JohnFulpWillard) Soulscythes and Vampires now have a blood hud
+      on the left side of their screen rather than a stat panel entry stating how
+      much blood they have.
+  - bugfix: (SmArtKal) Fixed most mining mobs being unaffected by additional damage
+      against them
+  - code_imp: (necromanceranne) MOB_MINING and MOB_CRUSTACEAN are now defined biotypes.
+  - code_imp: (necromanceranne) Audits some mining mob biotypes to make more sense
+      based on what kind of creature they are and to include MOB_MINING in their defines.
+  Tractor-Maam:
+  - bugfix: Sarcophagi now have a icon.
+  - bugfix: Sarcophagi are now ordered from the regular cargo window, no longer getting
+      stuck in your goodie case.
+  - spellcheck: fixed a typo in closet/crate access control tooltips.
+  - bugfix: Updated some admin notes for some escape shuttles so they aren't blatant
+      lies anymore.
+  - spellcheck: '"locksthe locker." no longer happens.'
+  flleeppyy:
+  - rscadd: Scroll Tracking Tolerance is now an experimental option for the chat panel.
+  oh no froggy did another one:
+  - rscadd: Running Hot, a new quirk that makes your body temperature increase, possibly
+      to dangerous levels, when you climb ladders and hop tables and sprint and such.
+  that one particular vaguely frog adjacent goober:
+  - rscadd: the positive synth chems upgrade on borrers now has Positronic Neural
+      Dampener and Nanite Slurry and Positronic Excitation Salts
+  - rscadd: the negative synth chems upgrade on borrers now has Positronic Neural
+      Dampener
