@@ -1382,4 +1382,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
+/// they get warm when they do exercisey things
+#define TRAIT_EXERTION_OVERHEAT "exertion_overheat"
 // END TRAIT DEFINES
