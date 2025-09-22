@@ -4908,6 +4908,7 @@
 	name = "Escape Pod"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "asj" = (
@@ -20341,6 +20342,7 @@
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/service/chapel/dock)
 "bGG" = (
@@ -43083,6 +43085,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/cargo/miningdock)
 "oPH" = (

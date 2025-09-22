@@ -47,22 +47,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-	var/static/list/materials_list = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-		)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		materials_list, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/ore_silo, on_item_consumed), \

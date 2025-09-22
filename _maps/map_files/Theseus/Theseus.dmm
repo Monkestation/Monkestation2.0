@@ -20328,6 +20328,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Public Mining Bay"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "gbK" = (
@@ -79215,6 +79216,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"wVG" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
 "wVR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -128371,7 +128383,7 @@ ijT
 eTj
 yeT
 ujQ
-iOY
+wVG
 nib
 nhC
 nhC

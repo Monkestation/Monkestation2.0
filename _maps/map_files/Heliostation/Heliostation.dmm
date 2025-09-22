@@ -25898,6 +25898,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "cUG" = (
@@ -31776,6 +31777,7 @@
 	name = "Public Mining Access";
 	space_dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},

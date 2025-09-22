@@ -1,0 +1,4 @@
+author: "Sorenon"
+delete-after: True
+changes:
+  - rscadd: "Roundstart / latejoin borgs are now given their loadout hat"

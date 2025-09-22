@@ -1,0 +1,9 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - rscadd: "(mc-oofert) clickdragging an autolathe changes its output direction"
+  - code_imp: "(SyncIt21) autolathe will attempt to award you the \"getting an upgrade\" award only once when printing multiple items & updates UI immediately"
+  - bugfix: "(ZephyrTFA)Autolathes no longer allow you to duplicate materials at higher levels of stock parts"
+  - qol: "(ZephyrTFA) Autolathes now show name instead of typepath when selecting a custom material"
+  - qol: "(ZephyrTFA)Autolathe now print out items one by one instead of waiting for all of them to print at once"
+  - rscdel: "(GPekman) Protolathe/circuit imprinter/techfab designs costing reagents is now totally deprecated."

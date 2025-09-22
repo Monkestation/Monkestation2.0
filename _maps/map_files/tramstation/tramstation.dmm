@@ -19127,6 +19127,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit)
 "eUs" = (
@@ -80455,6 +80456,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "xVK" = (

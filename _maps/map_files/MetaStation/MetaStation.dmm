@@ -9903,6 +9903,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Dock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/hallway/primary/port)
 "dEp" = (
@@ -26208,6 +26209,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "jfC" = (
