@@ -40,7 +40,9 @@
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
 
-	var/static/list/crate_paint_jobs = list(
+	var/static/list/crate_paint_jobs
+	if(isnull(crate_paint_jobs))
+		crate_paint_jobs = list(
 		"Internals" = list("icon_state" = "o2crate"),
 		"Medical" = list("icon_state" = "medicalcrate"),
 		"Radiation" = list("icon_state" = "radiation"),
@@ -49,7 +51,7 @@
 		"Solar" = list("icon_state" = "engi_e_crate"),
 		"Engineering" = list("icon_state" = "engi_crate")
 	)
-	if(!isnull(paint_jobs))
+	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
@@ -302,34 +304,6 @@
 	name = "engineering crate"
 	icon_state = "engi_crate"
 	base_icon_state = "engi_crate"
-
-/obj/structure/closet/crate/engineering/fundedsatellites
-	name = "budgeted meteor satellites"
-	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
-	icon_state = "engi_secure_crate"
-	secure = TRUE
-	locked = TRUE
-
-/obj/structure/closet/crate/engineering/fundedsatellites/PopulateContents()
-	. = ..()
-	if(GLOB.station_goals.len)
-		for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
-			if(istype(station_goal, /datum/station_goal/station_shield))
-				new /obj/item/paper/crumpled/wehavenomoneyhaha(src)
-				return
-		for(var/i in 1 to 20)
-			new /obj/item/meteor_shield_capsule(src)
-	else
-		new /mob/living/basic/spider/giant(src)
-
-/obj/structure/closet/crate/engineering/fundedsatellites/allowed(user)
-	if(GLOB.station_goals.len)
-		return TRUE
-	return FALSE
-
-/obj/item/paper/crumpled/wehavenomoneyhaha
-	name = "note from Centcom's accounting department"
-	default_raw_text = "We ran out of budget."
 
 /obj/structure/closet/crate/engineering/fundedsatellites
 	name = "budgeted meteor satellites"

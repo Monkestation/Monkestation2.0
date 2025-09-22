@@ -474,6 +474,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/wrench{
+	pixel_x = 9
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "abk" = (
@@ -16609,12 +16612,10 @@
 /turf/open/floor/plastic,
 /area/centcom/syndicate_mothership/expansion_fridgerummage)
 "aSq" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/vehicle/ridden/artillerylight,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "aSr" = (
@@ -23231,7 +23232,8 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/telecomms/relay/preset/ruskie{
 	banned_frequencies = list(1213,1215,1221,1219,1217);
-	id = "CentCom Offices Relay"
+	id = "CentCom Offices Relay";
+	on = "0"
 	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/adminroom)

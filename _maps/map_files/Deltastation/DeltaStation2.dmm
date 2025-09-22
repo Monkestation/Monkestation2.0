@@ -9254,7 +9254,7 @@
 /area/station/maintenance/port/fore)
 "cdr" = (
 /obj/machinery/door/poddoor{
-	id = "armouryaccess";
+	id = "armory";
 	name = "Armoury Access"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -14239,6 +14239,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "dqC" = (
@@ -25441,6 +25442,14 @@
 /obj/item/melee/baton/security/loaded{
 	pixel_x = -4;
 	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 1;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -50795,11 +50804,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "lQh" = (
-/obj/machinery/button/door/directional/south{
-	id = "armouryaccess";
-	name = "Armoury Access";
-	req_access = list("armory")
-	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 10
 	},
@@ -54887,6 +54891,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -80860,6 +80865,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/armory,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "tch" = (

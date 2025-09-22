@@ -54,6 +54,10 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
+#define MOB_MINING (1 << 13)
+///The mob is a crustacean. Like crabs. Or lobsters.
+#define MOB_CRUSTACEAN (1 << 14)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -86,6 +90,12 @@
 #define BODYTYPE_ALIEN (1<<7)
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
+
+// limb_flags
+///Flag for if the wound is currently bandaged by a bruise kit
+#define LIMB_KITTED_BRUTE (1<<0)
+///Flag for if the wound is currently bandaged by a burn kit
+#define LIMB_KITTED_BURN (1<<1)
 
 //Species gib types
 #define GIB_TYPE_HUMAN "human"

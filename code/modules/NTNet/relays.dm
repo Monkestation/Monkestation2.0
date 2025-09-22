@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(ntnet_relays)
 	data["dos_crashed"] = dos_failure
 	return data
 
-/obj/machinery/ntnet_relay/ui_act(action, params)
+/obj/machinery/ntnet_relay/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -58,7 +58,7 @@
 	starting_programs = list()
 
 /obj/item/modular_computer/pda/heads/ntrep
-	name = "Nanotransen Representative's PDA"
+	name = "Nanotrasen Representative's PDA"
 	inserted_item = /obj/item/pen/fountain
 
 /obj/item/modular_computer/pda/xenobiologist

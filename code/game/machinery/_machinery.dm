@@ -341,8 +341,7 @@
 		new /obj/effect/temp_visual/emp(loc)
 
 		if(prob(70/severity))
-			var/datum/language_holder/machine_languages = get_language_holder()
-			machine_languages.selected_language = machine_languages.get_random_spoken_language()
+			set_active_language(get_random_spoken_language())
 
 /**
  * Opens the machine.
@@ -691,11 +690,13 @@
 	update_last_used(user)
 	. = ..()
 
-/obj/machinery/ui_act(action, list/params)
-	add_fingerprint(usr)
-	update_last_used(usr)
-	if(isliving(usr) && in_range(src, usr))
-		play_click_sound()
+/obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	var/mob/user = ui.user
+	add_fingerprint(user)
+	update_last_used(user)
+	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+		to_chat(user, span_warning("You can no longer connect to this device!"))
+		return FALSE
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -992,7 +993,7 @@
 	var/list/part_list = replacer_tool.get_sorted_parts(ignore_stacks = TRUE)
 	if(!part_list.len)
 		return FALSE
-	for(var/primary_part_base as anything in component_parts)
+	for(var/primary_part_base in component_parts)
 		//we exchanged all we could time to bail
 		if(!part_list.len)
 			break
@@ -1092,7 +1093,7 @@
 		// we infer the required stack stuff inside the machine from the circuitboards requested components
 		if(istype(component_ref, /obj/item/circuitboard/machine))
 			var/obj/item/circuitboard/machine/board = component_ref
-			for(var/component as anything in board.req_components)
+			for(var/component in board.req_components)
 				if(!ispath(component, /obj/item/stack))
 					continue
 				part_count[component] = board.req_components[component]

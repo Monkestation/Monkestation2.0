@@ -989,7 +989,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	data["name"] = say_name
 	return data
 
-/obj/machinery/ai_voicechanger/ui_act(action, params)
+/obj/machinery/ai_voicechanger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	switch(action)

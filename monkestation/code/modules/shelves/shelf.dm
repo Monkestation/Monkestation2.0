@@ -167,7 +167,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a cargo shelf..."))
-	if(do_after(user, 50, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/cargo_shelf/R = new /obj/structure/cargo_shelf(get_turf(src))

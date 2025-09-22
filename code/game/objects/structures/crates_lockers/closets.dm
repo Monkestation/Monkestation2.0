@@ -116,9 +116,16 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(paint_jobs)
 		paint_jobs = closet_paint_jobs
 
+	var/static/list/card_reader_choices
+	if(isnull(card_reader_choices))
+		card_reader_choices = list(
+			"Personal",
+			"Departmental",
+			"None"
+			)
+
 	if(access_choices)
-		var/static/list/choices = list("Personal", "Departmental", "None")
-		access_choices = choices
+		access_choices = card_reader_choices
 
 	GLOB.closets += src
 	if(is_station_level(z) && mapload)
@@ -297,7 +304,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
 		if(!card_reader_installed && length(access_choices))
-			. += span_notice("You can install a card reader for furthur access control.")
+			. += span_notice("You can install a card reader for further access control.")
 		else if(card_reader_installed)
 			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
@@ -838,7 +845,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	else if(!(user.istate & ISTATE_HARM) || (weapon.item_flags & NOBLUDGEON))
 		var/item_is_id = weapon.GetID()
 		if(!item_is_id)
-			return
+			return FALSE
 		if((item_is_id || !toggle(user)) && !opened)
 			togglelock(user)
 	else
@@ -1044,7 +1051,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(locked) //only apply checks while unlocking else allow anyone to lock it
 		var/error_msg = ""
 		if(!isnull(id_card))
-			var/obj/item/card/id/advanced/prisoner/registered_id = id_card.resolve()
+			var/obj/item/card/id/registered_id = id_card.resolve()
 			if(!registered_id) //id was deleted at some point. make this closet public access again
 				name = initial(name)
 				desc = initial(desc)
@@ -1053,9 +1060,9 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 				req_one_access = null
 				togglelock(user, silent)
 				return
-			if(registered_id !=  user.get_idcard())
+			if(!can_unlock(user, user.get_idcard(), registered_id))
 				error_msg = "not your locker!"
-		else if(!allowed(user)) //allow anyone to lock the closet for safe keeping but apply checks only when unlocking
+		else if(!can_unlock(user, user.get_idcard()))
 			error_msg = "access denied!"
 		if(error_msg)
 			if(!silent)
@@ -1065,7 +1072,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(iscarbon(user))
 		add_fingerprint(user)
 	locked = !locked
-	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
 				span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 	update_appearance()
 

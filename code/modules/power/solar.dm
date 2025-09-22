@@ -48,6 +48,8 @@
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
+	QDEL_NULL(panel)
+	QDEL_NULL(panel_edge)
 	return ..()
 
 /obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -526,7 +528,7 @@
 	data["history"] = history
 	return data
 
-/obj/machinery/power/solar_control/ui_act(action, params)
+/obj/machinery/power/solar_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

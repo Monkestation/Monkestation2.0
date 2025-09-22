@@ -1119,9 +1119,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
 /// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
-
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_SILICON_ACCESS "silicon_access_trait"
+///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_AI_ACCESS "ai_access_trait"
+
 
 ///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
 /* #define TRAIT_SEE_WORN_COLOURS "see_worn_colour" */
@@ -1345,6 +1351,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+// /datum/mind + /mob/living
+/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
+#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// You have special interactions with bloodsuckers and the occult.
+#define TRAIT_OCCULTIST "occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE "unborgable"
+/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
+#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+
+// /datum/mind
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW "joined_as_crew"
+
 ///Darkspawn traits
 ///lets darkspawns walk through weak light
 #define TRAIT_DARKSPAWN_LIGHTRES "darkspawn_lightres"
@@ -1367,4 +1390,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// extra painful groin kicks, oof
 #define TRAIT_NUTCRACKER "nutcracker"
-// END TRAIT DEFINES
+
+/// they get warm when they do exercisey things
+#define TRAIT_EXERTION_OVERHEAT "exertion_overheat"

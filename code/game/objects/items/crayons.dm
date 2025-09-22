@@ -339,7 +339,7 @@
 	.["can_change_colour"] = can_change_colour
 	.["current_colour"] = paint_color
 
-/obj/item/toy/crayon/ui_act(action, list/params)
+/obj/item/toy/crayon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -435,7 +435,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"
@@ -479,7 +479,7 @@
 		wait_time *= 3
 
 	if(!instant)
-		if(!do_after(user, 50, target = target))
+		if(!do_after(user, 5 SECONDS, target = target))
 			return ITEM_INTERACT_BLOCKING
 
 	if(!use_charges(user, cost))
@@ -936,32 +936,18 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
-	if (!proximity)
-		return
-
-	if (!check_allowed_items(target))
-		return .
-
-	var/diff = use_on(target, user, params)
+/obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE)
 	if(!iscyborg(user))
 		to_chat(user, span_notice("How did you get this?"))
 		qdel(src)
-		return .
+		return FALSE
 
 	var/mob/living/silicon/robot/borgy = user
-
-	if(!diff)
-		return .
 	// 25 is our cost per unit of paint, making it cost 25 energy per
 	// normal tag, 50 per window, and 250 per attack
-	var/cost = diff * 25
-	// Cyborgs shouldn't be able to use modules without a cell. But if they do
-	// it's free.
-	if(borgy.cell)
-		borgy.cell.use(cost)
-
-	return .
+	if(!borgy.cell?.use(amount * 25))
+		return FALSE
+	return ..()
 
 /obj/item/toy/crayon/spraycan/hellcan
 	name = "hellcan"
