@@ -6422,6 +6422,7 @@
 #include "monkestation\code\datums\quirks\neutral_quirks\drg_callout.dm"
 #include "monkestation\code\datums\quirks\neutral_quirks\gigantism.dm"
 #include "monkestation\code\datums\quirks\neutral_quirks\jailbird.dm"
+#include "monkestation\code\datums\quirks\neutral_quirks\swedish.dm"
 #include "monkestation\code\datums\quirks\neutral_quirks\unborgable.dm"
 #include "monkestation\code\datums\quirks\positive_quirks\ass.dm"
 #include "monkestation\code\datums\quirks\positive_quirks\bright_eyes.dm"
