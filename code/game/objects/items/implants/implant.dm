@@ -101,6 +101,7 @@
 		log_combat(user, target, "implanted", "\a [name]")
 
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, target, user, silent, force)
+	GLOB.tracked_implants += src
 	return TRUE
 
 /**
@@ -123,6 +124,7 @@
 		human_source.sec_hud_set_implants()
 
 	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, source, silent, special)
+	GLOB.tracked_implants -= src
 	return TRUE
 
 /obj/item/implant/Destroy()
