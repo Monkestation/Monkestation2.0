@@ -520,7 +520,7 @@
 "aim" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/purple/anticorner{
@@ -1285,8 +1285,8 @@
 "avJ" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
@@ -5344,7 +5344,7 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/multitool,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "bPy" = (
@@ -7497,7 +7497,7 @@
 "cIS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "cIU" = (
@@ -22975,7 +22975,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
 /obj/item/assembly/igniter,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -23085,7 +23085,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/camera/directional/north{
 	c_tag = "Science Mechbay";
@@ -24533,7 +24533,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iFR" = (
@@ -26072,7 +26072,7 @@
 "jdB" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -27714,7 +27714,7 @@
 "jEh" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/rcl/pre_loaded,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -31284,7 +31284,7 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
@@ -31322,10 +31322,10 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -4
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -4;
 	pixel_y = -6
 	},
@@ -32557,7 +32557,7 @@
 /area/station/medical/medbay/central)
 "lmA" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -32716,7 +32716,7 @@
 /obj/structure/chemical_manufacturer,
 /obj/item/integrated_circuit/chemical,
 /obj/item/multitool,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "lop" = (
@@ -38253,11 +38253,11 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -38568,7 +38568,7 @@
 "nmt" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light_switch/directional/north,
@@ -40868,7 +40868,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
@@ -43246,7 +43246,7 @@
 /area/station/cargo/warehouse)
 "oQS" = (
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/crap,
+/obj/item/stock_parts/power_store/cell/crap,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
@@ -47545,7 +47545,7 @@
 /area/station/service/library)
 "qqp" = (
 /obj/structure/closet/crate,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
@@ -50142,7 +50142,7 @@
 /obj/structure/chemical_manufacturer,
 /obj/item/integrated_circuit/chemical,
 /obj/item/multitool,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rlg" = (
@@ -50924,7 +50924,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/airalarm/directional/east,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ryJ" = (
@@ -51081,7 +51081,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -51842,7 +51842,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/east,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 8
@@ -55276,11 +55276,9 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "sVx" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "sVz" = (
@@ -60434,15 +60432,15 @@
 /area/station/command/heads_quarters/captain/private)
 "uJe" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
 /obj/item/borg/upgrade/rename{
 	pixel_x = 3;
@@ -64472,15 +64470,13 @@
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
 "wgB" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
 	pixel_x = -22
 	},
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "wha" = (
@@ -66557,7 +66553,7 @@
 	pixel_y = -7
 	},
 /obj/effect/spawner/random/engineering/flashlight,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)

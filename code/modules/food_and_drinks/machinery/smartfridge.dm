@@ -185,7 +185,7 @@
 	if(!M.put_in_hands(O))
 		O.forceMove(drop_location())
 		adjust_item_drop_location(O)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -337,7 +337,7 @@
 				if(!living_mob.put_in_hands(dispensed_item))
 					dispensed_item.forceMove(drop_location())
 					adjust_item_drop_location(dispensed_item)
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 				amount--
 			if (visible_contents)
 				update_appearance()
@@ -377,7 +377,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	if(HAS_TRAIT(O, TRAIT_DRYABLE)) //set on dryable element

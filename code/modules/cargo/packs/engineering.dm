@@ -70,7 +70,7 @@
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard \
 		cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0} = 2) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -87,7 +87,7 @@
 	name = "Power Cell Crate"
 	desc = "Looking for power overwhelming? Look no further. Contains three high-voltage power cells."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/stock_parts/cell/high = 3)
+	contains = list(/obj/item/stock_parts/power_store/cell/high = 3)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 

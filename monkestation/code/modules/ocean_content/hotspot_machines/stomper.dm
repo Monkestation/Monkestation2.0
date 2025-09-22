@@ -12,7 +12,7 @@
 	use_power = FALSE // we suck power ourselves by either checking cell charge or wire connection
 
 	///our inserted cell
-	var/obj/item/stock_parts/cell/installed_cell
+	var/obj/item/stock_parts/power_store/cell/installed_cell
 	///are we currently opened
 	var/opened = FALSE
 	///are we currently active
@@ -96,7 +96,7 @@
 /obj/machinery/power/stomper/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!opened || installed_cell)
 		return ..()
-	if(!istype(attacking_item, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	attacking_item.forceMove(src)
 	installed_cell = attacking_item
