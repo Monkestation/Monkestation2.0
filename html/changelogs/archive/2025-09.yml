@@ -641,6 +641,23 @@
       as advertised now.
   - bugfix: The infectable biotype altering virus symptoms should work again
 2025-09-20:
+  Absolucy:
+  - rscdel: Removed the Magnitis symptom, because it's a lagfest that just makes everyone's
+      life miserable.
+  - bugfix: Fixed the "Show" button in the Requests Manager not working.
+  - bugfix: You can now properly add (or remove) Telecommunications Admin access via
+      an ID console.
+  EssentialTomato:
+  - bugfix: Fixed bein unable to clean the microwave.
+  - bugfix: Fixed the supermatter sliver dusting you while being placed into a proper
+      container,
+  - bugfix: Fixed plumbing constructor not being able to deconstruct its buildings.
+  - bugfix: Fixed neon lining not being placeable.
+  - bugfix: Fixed plant analyzers not working from range.
+  - bugfix: Minor airlock overlay fix for pneumatic seals and notes.
+  Ice-Type:
+  - bugfix: deconstructing machining machines gives the appropriate board
+  - qol: detonates the computer of one lucky player
   JupiterJaeden:
   - qol: Adds a pref toggle for spinning & flipping making stacks of hats come off.
       Default is on.
@@ -648,6 +665,18 @@
       Z.
   - bugfix: Fixes some bugs with hats not updating their name and description correctly
       when removed from a stack of hats.
+  TheColorCyan:
+  - bugfix: gibtonite is no longer invisible when exploding on the floor
+  - refactor: (san7890) Soulscythes have undergone a mild refactor, but everything
+      should work as it should. Report any issues.
+  - qol: (TheSwain, JohnFulpWillard) Soulscythes and Vampires now have a blood hud
+      on the left side of their screen rather than a stat panel entry stating how
+      much blood they have.
+  - bugfix: (SmArtKal) Fixed most mining mobs being unaffected by additional damage
+      against them
+  - code_imp: (necromanceranne) MOB_MINING and MOB_CRUSTACEAN are now defined biotypes.
+  - code_imp: (necromanceranne) Audits some mining mob biotypes to make more sense
+      based on what kind of creature they are and to include MOB_MINING in their defines.
   Tractor-Maam:
   - bugfix: Sarcophagi now have a icon.
   - bugfix: Sarcophagi are now ordered from the regular cargo window, no longer getting
@@ -656,3 +685,75 @@
   - bugfix: Updated some admin notes for some escape shuttles so they aren't blatant
       lies anymore.
   - spellcheck: '"locksthe locker." no longer happens.'
+  flleeppyy:
+  - rscadd: Scroll Tracking Tolerance is now an experimental option for the chat panel.
+  oh no froggy did another one:
+  - rscadd: Running Hot, a new quirk that makes your body temperature increase, possibly
+      to dangerous levels, when you climb ladders and hop tables and sprint and such.
+  that one particular vaguely frog adjacent goober:
+  - rscadd: the positive synth chems upgrade on borrers now has Positronic Neural
+      Dampener and Nanite Slurry and Positronic Excitation Salts
+  - rscadd: the negative synth chems upgrade on borrers now has Positronic Neural
+      Dampener
+2025-09-22:
+  Absolucy:
+  - qol: Mining bags now scoop up ores that get moved under you without you having
+      to shuffle back and forth. Rejoice, magnetization injector enjoyers.
+  - balance: The Mystic storyteller now actually prefers mystical antags - it will
+      NEVER spawn "mundane" antags roundstart, and is heavily weighted against them
+      for midrounds.
+  - bugfix: Fixed roundstart slime extract requestor pads sometimes not linking.
+  - map: Added tinyfans to all the mining docks on all maps (both normal and public
+      mining)
+  - bugfix: The ashen duelist, rockspider, and trench jockey packs no longer have
+      the full belt-satchel slowdowns, as the description says they shouldn't (and
+      it's part of their whole point)
+  - bugfix: Icons in the personal crafting menu are no longer blurry.
+  Absolucy, LemonInTheDark:
+  - balance: AIs viewing the crew monitor will no longer be told ahead of time if
+      they cannot jump to a player.
+  Absolucy, necromanceranne:
+  - qol: The eye of god now protects from the madness inducing effects of supermatter
+      crystals and singularities. This trait is shared by the meson night vision goggles
+      (which this is a better version of)
+  - refactor: The Scan ability has been refactored into a pointed spell.
+  - balance: The Scan ability has a lower cooldown of 35 seconds.
+  - balance: Scanning someone alerts the target as to who is responsible, rather than
+      being completely silent as to the culprit (much to the annoyance of anyone who
+      is victimized by someone using this on them)
+  - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
+      is now called Rebuked.
+  - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+  JohnFulpWillard, Rhials, MrMelbert, Xander3359:
+  - bugfix: Statues don't count as eyes to creatures.
+  - bugfix: Human AIs and Admin ghosts no longer get kicked off of machines that aren't
+      on cameranets.
+  - rscadd: Security implants may now be harmlessly self-destructed at the Prisoner
+      Management Console.
+  - code_imp: Various code improvements and removal of unused vars in the Prisoner
+      Management Console
+  Killermankey:
+  - rscadd: Hardsuit crafts to machining
+  - rscadd: ATV Craft to machining
+  - rscadd: TTV Craft to Machining
+  - rscadd: Shotgun Craft to Machining
+  - rscadd: Couple of ammo crafts to Machining
+  - balance: Lowered pricing on melted plastic, universal Circuits, small motors and
+      advanced tools
+  - balance: Doubled price of fire axe in Machining
+  Sorenon:
+  - rscadd: Roundstart / latejoin borgs are now given their loadout hat
+  TheColorCyan:
+  - rscadd: (mc-oofert) clickdragging an autolathe changes its output direction
+  - code_imp: (SyncIt21) autolathe will attempt to award you the "getting an upgrade"
+      award only once when printing multiple items & updates UI immediately
+  - bugfix: (ZephyrTFA)Autolathes no longer allow you to duplicate materials at higher
+      levels of stock parts
+  - qol: (ZephyrTFA) Autolathes now show name instead of typepath when selecting a
+      custom material
+  - qol: (ZephyrTFA)Autolathe now print out items one by one instead of waiting for
+      all of them to print at once
+  - rscdel: (GPekman) Protolathe/circuit imprinter/techfab designs costing reagents
+      is now totally deprecated.
+  throwawayuseless:
+  - rscadd: Fake macrobomb that actually revives you instead

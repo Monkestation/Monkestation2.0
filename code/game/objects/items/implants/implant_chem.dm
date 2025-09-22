@@ -3,6 +3,8 @@
 	desc = "Injects things."
 	icon_state = "reagents"
 	actions_types = null
+	/// All possible injection sizes for the implant shown in the prisoner management console.
+	var/list/implant_sizes = list(1, 5, 10)
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -20,14 +22,43 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
+/obj/item/implant/chem/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	return is_valid_z_level(get_turf(console), get_turf(imp_in))
+
+/obj/item/implant/chem/get_management_console_data()
+	var/list/info_shown = ..()
+	info_shown["Volume"] = "[reagents.total_volume]u"
+	return info_shown
+
+/obj/item/implant/chem/get_management_console_buttons()
+	var/list/buttons = ..()
+	for(var/i in implant_sizes)
+		UNTYPED_LIST_ADD(buttons, list(
+			"name" = "Inject [i]u",
+			"color" = "good",
+			"action_key" = "inject",
+			"action_params" = list("amount" = i),
+		))
+	return buttons
+
+/obj/item/implant/chem/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+	. = ..()
+	if(.)
+		return
+
+	if(params["implant_action"] == "inject")
+		var/amount = text2num(params["amount"])
+		if(!(amount in implant_sizes))
+			return TRUE
+
+		var/reagents_inside = reagents.get_reagent_log_string()
+		activate(amount)
+		log_combat(user, imp_in, "injected [amount] units of [reagents_inside]", src)
+		return TRUE
+
 /obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	GLOB.tracked_chem_implants += src
-
-/obj/item/implant/chem/Destroy()
-	GLOB.tracked_chem_implants -= src
-	return ..()
 
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -41,7 +72,7 @@
 
 /obj/item/implant/chem/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
-	activate(reagents.total_volume)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/item/implant/chem, activate), reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
 	. = ..()
@@ -65,9 +96,7 @@
 	desc = "A glass case containing a remote chemical implant."
 	imp_type = /obj/item/implant/chem
 
-/obj/item/implantcase/chem/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/reagent_containers/syringe) && imp)
-		attacking_item.afterattack(imp, user, modifiers, attack_modifiers)
-		return TRUE
-	else
-		return ..()
+/obj/item/implantcase/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/syringe) && imp)
+		return NONE
+	return tool.interact_with_atom(imp, user, modifiers)

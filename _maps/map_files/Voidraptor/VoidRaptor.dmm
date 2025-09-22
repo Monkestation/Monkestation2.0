@@ -15324,6 +15324,7 @@
 	name = "Mining Dock Airlock";
 	space_dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/aft)
 "esP" = (
@@ -63811,6 +63812,14 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/pharmacy)
+"rIK" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
+/turf/open/floor/catwalk_floor,
+/area/station/cargo/miningdock)
 "rIN" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/smartfridge/organ,
@@ -130895,7 +130904,7 @@ ttw
 ttw
 ttw
 nwb
-ruV
+rIK
 jBM
 ruV
 aUO
