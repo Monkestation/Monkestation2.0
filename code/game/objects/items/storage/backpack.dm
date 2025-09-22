@@ -23,7 +23,7 @@
 	resistance_flags = NONE
 	max_integrity = 300
 	var/shoulder_carry = FALSE
-	var/satchel_movespeed_modifier = 2
+	var/satchel_movespeed_modifier = PAIRED_STORAGE_DEFAULT_SLOWDOWN
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -857,7 +857,7 @@
 	desc = "A surprisingly flexible and durable bag, capable of carrying up to three mining guns at once, for those who prowl the wastes with a passion for marksmanship. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
 	icon_state = "rockspider"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = 0.3
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/rockspider/Initialize(mapload)
 	. = ..()
@@ -884,7 +884,7 @@
 	desc = "A bag with a mount and holster, capable of carrying any crusher type weapon and a gun, for the aspiring duelist who needs a bit more than just a blade. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
 	icon_state = "ashenduelist"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = 0.3
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/ashduelist/Initialize(mapload)
 	. = ..()
@@ -919,7 +919,7 @@
 	desc = "A exceptionally spacious bag full of slots and pouches for different kinds of ammunition, for those who really need more than just one extra round. Despite its weight, it fits incredibly well with a satchel, and does not hinder your movement as much as a regular backpack would."
 	icon_state = "trenchjockey"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = 0.3
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/trenchjockey/Initialize(mapload)
 	. = ..()
