@@ -1,5 +1,5 @@
-#define TESLA_DEFAULT_ENERGY 86913
-#define TESLA_MINI_ENERGY 43456
+#define TESLA_DEFAULT_ENERGY (695.304 MEGA JOULES)
+#define TESLA_MINI_ENERGY (347.652 MEGA JOULES)
 //Zap constants, speeds up targeting
 #define BIKE (COIL + 1)
 #define COIL (ROD + 1)
@@ -84,7 +84,7 @@
 			var/range = rand(1, clamp(orbiting_balls.len, 2, 3))
 			var/list/temp_shock = list()
 			//We zap off the main ball instead of ourselves to make things looks proper
-			tesla_zap(src, range, TESLA_MINI_ENERGY/7*range, shocked_targets = temp_shock)
+			tesla_zap(source = src, zap_range = range, power = TESLA_MINI_ENERGY / 7 * range, shocked_targets = temp_shock)
 			shocking_info += temp_shock
 		shocked_things += shocking_info
 
