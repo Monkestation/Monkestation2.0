@@ -1644,6 +1644,9 @@ MONKESTATION REMOVAL END */
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+	affected_mob.adjust_jitter(-5 SECONDS * seconds_per_tick)
+	affected_mob.adjust_stutter(-2.5 SECONDS * seconds_per_tick)
+	affected_mob.adjust_slurring(2 SECONDS * seconds_per_tick)
 	if((volume >= 10 && current_cycle > 10) || smacked_the_fuck_out)
 		affected_mob.set_dizzy_if_lower(30 SECONDS)
 		if(smacked_the_fuck_out)
@@ -1651,11 +1654,11 @@ MONKESTATION REMOVAL END */
 		else
 			if(prob(clamp(10 * (current_cycle - 15), 1, 100)))
 				smacked_the_fuck_out = TRUE
+				affected_mob.apply_status_effect(/datum/status_effect/grouped/anesthetic, name)
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_metabolize(mob/living/affected_mob)
 	..()
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	affected_mob.apply_status_effect(/datum/status_effect/grouped/anesthetic, name)
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
