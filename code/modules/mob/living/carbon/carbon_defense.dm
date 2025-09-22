@@ -735,6 +735,10 @@
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()
 	check_passout(.)
+	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
+		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
+			revive(FALSE)
 
 /mob/living/carbon/proc/get_interaction_efficiency(zone)
 	var/obj/item/bodypart/limb = get_bodypart(zone)
