@@ -231,6 +231,14 @@
 	description = "A train but in space, choo choo!"
 	occupancy_limit = "35"
 
+/datum/map_template/shuttle/emergency/crater
+	suffix = "crater"
+	name = "Crater Outpost Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 4
+	description = "A refitted long-haul freighter used as the emergency evacuation shuttle for Crater-series outposts. While it lacks general seating, it has automated sentry turrets to engage hostile fauna and a well-equipped cargo bay."
+	admin_notes = "Has automated turrets that only shoot fauna. Not really relevant on space outposts."
+	occupancy_limit = "45"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""

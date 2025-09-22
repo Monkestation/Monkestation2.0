@@ -91,7 +91,7 @@
 
 /// The maximum temperature of Lavaland
 #define LAVALAND_MAX_TEMPERATURE CELCIUS_TO_KELVIN(76.85 CELCIUS)// 350 KELVIN
-#define ICEBOX_MIN_TEMPERATURE CELCIUS_TO_KELVIN(-93.15 CELCIUS)
+#define ICEBOX_MIN_TEMPERATURE CELCIUS_TO_KELVIN(-43.15 CELCIUS) //INCREASED from -93.15 to -43.15, craterstation was utterly insufferable for all the poor sods that volunteered to test it because of temp
 
 /// A temperature limit which is above the maximum lavaland temperature
 #define BODYTEMP_HEAT_LAVALAND_SAFE (LAVALAND_MAX_TEMPERATURE + 5 KELVIN)

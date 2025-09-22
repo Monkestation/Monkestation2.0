@@ -1,0 +1,723 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aQ" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters{
+	id = "abandoned_comms_outpost_windows";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"by" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/wrapping,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"dc" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/space_heater/wall_mounted/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"du" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/crate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"dA" = (
+/obj/structure/cable,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"gd" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"gg" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"gx" = (
+/turf/template_noop,
+/area/template_noop)
+"hB" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/mixer/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"hX" = (
+/obj/structure/sign/flag/nanotrasen/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"ic" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/layer2{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"iG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/ruin/icemoon_comms_station)
+"kg" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"mL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"ng" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"nw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "Control Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/rd,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"qf" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/machinery/microwave,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"rF" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"sK" = (
+/obj/structure/fence/door/opened,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"sL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"tx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"tG" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/rack,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/item/clothing/mask/gas/explorer{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"wU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/water;
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"wZ" = (
+/turf/closed/wall/rust,
+/area/ruin/icemoon_comms_station)
+"xv" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/obj/machinery/button/door{
+	pixel_x = -7;
+	pixel_y = 8;
+	id = "abandoned_comms_outpost_windows";
+	name = "Window Covers"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"zp" = (
+/obj/structure/fence/cut/large{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"At" = (
+/turf/closed/wall/ice,
+/area/icemoon/surface/outdoors/nospawn)
+"BW" = (
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Dl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Dq" = (
+/obj/machinery/atmospherics/components/trinary/filter/layer2{
+	dir = 8
+	},
+/obj/structure/closet/emcloset/wall/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/plumbed{
+	dir = 1;
+	desc = "A stationary, plumbed, water tank. It has shipping labels indicating its origin as a Kosmoslogistika warehouse. You really hope it's been cleaned."
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"DQ" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Eg" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/science{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/flashlight/lantern/rayne{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"GF" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/super/full,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Hq" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"IZ" = (
+/obj/structure/fence,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"JE" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/icemoon_comms_station)
+"JI" = (
+/obj/structure/cable,
+/obj/machinery/power/colony_wind_turbine,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Ka" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/icemoon_comms_station)
+"KD" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/space_heater/wall_mounted/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/fluff/old_relay,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Mi" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/reagent_dispensers/water_cooler{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"MD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Nk" = (
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper/pamphlet/delta_II,
+/turf/open/floor/carpet/grimey,
+/area/ruin/icemoon_comms_station)
+"NQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/space_heater/wall_mounted/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -14;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/icemoon_comms_station)
+"Of" = (
+/obj/structure/table/wood,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/fax{
+	visible_to_network = 0;
+	name = "Communications Outpost Fax Machine";
+	fax_name = "Communications Relay Post Delta-2"
+	},
+/turf/open/floor/carpet/grimey,
+/area/ruin/icemoon_comms_station)
+"Ri" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper_bin{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/stamp/granted{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/carpet/grimey,
+/area/ruin/icemoon_comms_station)
+"Rp" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Sn" = (
+/turf/closed/wall/r_wall,
+/area/ruin/icemoon_comms_station)
+"TR" = (
+/obj/structure/cable,
+/obj/machinery/computer/terminal/craterstation/comms_station{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/grimey,
+/area/ruin/icemoon_comms_station)
+"Vd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/carpet/grimey,
+/area/ruin/icemoon_comms_station)
+"Ww" = (
+/turf/closed/wall,
+/area/ruin/icemoon_comms_station)
+"Xv" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters{
+	id = "abandoned_comms_outpost_windows"
+	},
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"Yv" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/tank/air,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/plating,
+/area/ruin/icemoon_comms_station)
+"ZE" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+gx
+gx
+gx
+gx
+gx
+gx
+Hq
+gd
+Hq
+gx
+gx
+gx
+Hq
+Hq
+Hq
+gx
+"}
+(2,1,1) = {"
+gx
+gx
+gx
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+gd
+Hq
+"}
+(3,1,1) = {"
+gx
+gx
+gd
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Rp
+Hq
+Hq
+Hq
+Hq
+Hq
+"}
+(4,1,1) = {"
+BW
+At
+IZ
+IZ
+IZ
+wZ
+Ww
+Ww
+Sn
+Sn
+Ka
+JE
+Sn
+Sn
+Hq
+Hq
+"}
+(5,1,1) = {"
+Hq
+rF
+Hq
+Hq
+Hq
+wZ
+Eg
+tG
+Sn
+KD
+GF
+ic
+wU
+Sn
+Hq
+gd
+"}
+(6,1,1) = {"
+gd
+rF
+Hq
+dA
+dA
+mL
+MD
+dc
+sL
+tx
+ng
+hB
+Dq
+Sn
+Hq
+Hq
+"}
+(7,1,1) = {"
+kg
+sK
+kg
+dA
+hX
+Ww
+Ww
+wZ
+Ka
+Yv
+DQ
+Dl
+du
+Sn
+ZE
+Hq
+"}
+(8,1,1) = {"
+Hq
+rF
+Hq
+dA
+Hq
+Hq
+dA
+JI
+Ka
+Ka
+Ka
+nw
+iG
+Sn
+Hq
+Hq
+"}
+(9,1,1) = {"
+Hq
+rF
+Hq
+dA
+Hq
+Hq
+dA
+Hq
+aQ
+Mi
+NQ
+Vd
+Ri
+Sn
+Hq
+ZE
+"}
+(10,1,1) = {"
+Hq
+zp
+Hq
+dA
+dA
+dA
+dA
+JI
+Sn
+xv
+by
+Vd
+TR
+Xv
+Hq
+Hq
+"}
+(11,1,1) = {"
+Hq
+rF
+Hq
+Hq
+Hq
+Hq
+dA
+Hq
+aQ
+qf
+gg
+Of
+Nk
+JE
+Hq
+gd
+"}
+(12,1,1) = {"
+Hq
+rF
+Hq
+Hq
+Hq
+Hq
+dA
+JI
+Sn
+Sn
+Sn
+JE
+JE
+JE
+Hq
+Hq
+"}
+(13,1,1) = {"
+BW
+At
+IZ
+IZ
+IZ
+IZ
+IZ
+IZ
+At
+Hq
+ZE
+Hq
+Hq
+Hq
+Hq
+gx
+"}
+(14,1,1) = {"
+gx
+gx
+gx
+Hq
+Hq
+Hq
+ZE
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+Hq
+gd
+gx
+"}
+(15,1,1) = {"
+gx
+gx
+gx
+gx
+gx
+Hq
+Hq
+gx
+gx
+Hq
+gd
+ZE
+gx
+gx
+gx
+gx
+"}
