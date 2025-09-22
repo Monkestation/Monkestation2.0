@@ -124,5 +124,5 @@
 /obj/item/organ/internal/vocal_cords/colossus/science
 	name = "Compulsive Lingui-synthesizer"
 	desc = "This strange bio-technological implant enables its user to alter the world by voice alone."
-	cooldown_mod = 0.6
+	cooldown_mod = 0.7
 	base_multiplier = 0.5
