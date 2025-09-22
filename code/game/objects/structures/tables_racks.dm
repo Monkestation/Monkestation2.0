@@ -1007,9 +1007,8 @@
 	update_appearance()
 	return TRUE
 
-/obj/structure/table/optable/MouseDrop_T(mob/living/dropping, mob/living/user)
-	. = ..()
-	if (dropping != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+/obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
 		return
 
 	if (!air_tank)
@@ -1027,7 +1026,7 @@
 	if (!do_after(user, 4 SECONDS, patient))
 		return
 
-	if (!air_tank || patient != dropping || !patient.can_breathe_internals())
+	if (!air_tank || patient != over || !patient.can_breathe_internals())
 		return
 
 	patient.open_internals(air_tank, is_external = TRUE)
@@ -1143,15 +1142,6 @@
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
-
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	. = ..()
-	if ((!( isitem(O) ) || user.get_active_held_item() != O))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if(O.loc != src.loc)
-		step(O, get_dir(O, src))
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)
