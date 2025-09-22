@@ -563,6 +563,6 @@
 				robit.Stun(4 SECONDS)
 				robit.Paralyze(4 SECONDS)
 				COOLDOWN_START(src, water_yeowchy, 10 SECONDS)
-		robit.sharp_pain(BODY_ZONES_ALL, (how_much_water / 10), BURN, 10 SECONDS) //ough (for reference a full bluespace beaker of water would be greatly slowing but not quite immobilizing)
-		to_chat(robit, span_robot(span_danger("BZZZTT!!")))
+	robit.sharp_pain(BODY_ZONES_ALL, (how_much_water / 10), BURN, 10 SECONDS) //ough (for reference a full bluespace beaker of water would be greatly slowing but not quite immobilizing)
+	to_chat(robit, span_robot(span_danger("BZZZTT!!")))
 
