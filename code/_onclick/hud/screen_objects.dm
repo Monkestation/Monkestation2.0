@@ -57,7 +57,7 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
-	master = null
+	master_ref = null
 	hud = null
 	return ..()
 
@@ -301,10 +301,12 @@
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/close/Click()
-	var/datum/storage/storage = master
+	var/datum/storage/storage = master_ref?.resolve()
+	if(!storage)
+		return
 	storage.hide_contents(usr)
 	return TRUE
 
@@ -486,10 +488,10 @@
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/storage/Click(location, control, params)
-	var/datum/storage/storage_master = master
+	var/datum/storage/storage_master = master_ref?.resolve()
 	if(!istype(storage_master))
 		return FALSE
 

@@ -734,8 +734,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
-	if(ismecha(user.loc) || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
 		return
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
@@ -745,25 +744,34 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
 		parent.add_fingerprint(user)
+		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	else if(ismob(over_object))
+	if(ismob(over_object))
 		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
+		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	else if(!istype(over_object, /atom/movable/screen))
-		var/action_status
-		if(isturf(over_object))
-			action_status = user.can_perform_turf_action(over_object)
-		else
-			action_status = user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH)
-		if(!action_status)
-			return
+	if(istype(over_object, /atom/movable/screen))
+		return
 
-		parent.add_fingerprint(user)
-		INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, user)
+	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
+		return
+
+	parent.add_fingerprint(user)
+
+	var/atom/dump_loc = over_object.get_dumping_location()
+	if(isnull(dump_loc))
+		return
+
+	/// Don't dump *onto* objects in the same storage as ourselves
+	if (over_object.loc == parent.loc && !isnull(parent.loc.atom_storage) && isnull(over_object.atom_storage))
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, dump_loc, user)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /**
  * Dumps all of our contents at a specific location.
