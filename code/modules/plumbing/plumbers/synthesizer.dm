@@ -88,7 +88,7 @@
 	data["current_reagent"] = ckey(initial(reagent_id.name))
 	return data
 
-/obj/machinery/plumbing/synthesizer/ui_act(action, params)
+/obj/machinery/plumbing/synthesizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

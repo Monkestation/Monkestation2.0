@@ -125,6 +125,8 @@
 	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
 	var/mob/listeningTo
+	var/datum/component/connect_loc_behalf/connector
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_listener_turf_entered))
 	///Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
@@ -144,12 +146,15 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		qdel(connector)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
+	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
 	if(listeningTo)
+		QDEL_NULL(connector)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
@@ -208,6 +213,12 @@
 			)
 
 	spam_protection = FALSE
+
+/obj/item/storage/bag/ore/proc/on_listener_turf_entered(datum/source, atom/movable/thing, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	// isturf(old_loc) check is important, else we just immediately scoop anything we deposit on the floor right back up
+	if(listeningTo && isturf(old_loc) && is_type_in_typecache(thing, atom_storage.can_hold))
+		pickup_ores(listeningTo)
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"

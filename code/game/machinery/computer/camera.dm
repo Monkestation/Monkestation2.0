@@ -91,7 +91,7 @@
 	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
-/obj/machinery/computer/security/ui_act(action, params)
+/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
