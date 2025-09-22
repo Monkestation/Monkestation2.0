@@ -74,10 +74,18 @@
 		return
 	linked_network.connect_train(over, usr)
 
+/obj/machinery/cart/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!Adjacent(dropped))
+		return
+
+/obj/vehicle/ridden/cargo_train/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!Adjacent(dropped))
+		return
+
+// XANTODO, make them each receivers instead of this holy fuck obj/ level proc
 /obj/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
-	if(istype(src, /obj/vehicle/ridden/cargo_train) || istype(src, /obj/machinery/cart))
-		return
+
 	if(istype(over, /obj/machinery/cart))
 		var/obj/machinery/cart/dropped_cart = over
 		if(!dropped_cart.admeme)

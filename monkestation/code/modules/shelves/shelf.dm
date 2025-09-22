@@ -141,8 +141,6 @@
 	return ..()
 
 /obj/structure/closet/crate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	. = ..()
-	var/mob/living/user = usr
 	if(!isliving(user))
 		return // Ghosts busted.
 	if(!isturf(user.loc) || user.incapacitated() || user.body_position == LYING_DOWN)
