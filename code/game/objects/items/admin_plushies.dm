@@ -434,29 +434,6 @@
 	item_path = /obj/item/toy/plush/admin/autumn
 	item_cost = 7500
 
-/obj/item/toy/plush/admin/siro
-	name = "siro yamamuchi"
-	desc = "Our adorable staff coder slimegirl! We love you Siro!"
-	icon_state = "siro-mask"
-	append_note = FALSE
-	attack_verb_continuous = list("bloops", "blurbles", "glomps")
-	attack_verb_simple = list("bloop", "blurble", "glomp")
-	squeak_override = list('sound/effects/footstep/slime1.ogg' = 1)
-	gender = FEMALE
-/datum/loadout_item/plushies/siro
-	name = "Siro Yamamuchi Plush"
-	item_path = /obj/item/toy/plush/admin/siro
-/datum/store_item/plushies/siro
-	name = "Siro Yamamuchi Plush"
-	item_path = /obj/item/toy/plush/admin/siro
-	item_cost = 7500
-/obj/item/toy/plush/admin/siro/AltClick(mob/user)
-	if(icon_state == "siro")
-		icon_state = "siro-mask"
-	else
-		icon_state = "siro"
-
-
 /** SHION PLUSH START **/
 // A collective gift from @Flleeppyy/Chen, @Veth-s/Phatarsh, and Cannibal_Hunter
 /obj/item/toy/plush/admin/shion
