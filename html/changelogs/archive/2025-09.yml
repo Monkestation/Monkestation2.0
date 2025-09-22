@@ -695,3 +695,65 @@
       Dampener and Nanite Slurry and Positronic Excitation Salts
   - rscadd: the negative synth chems upgrade on borrers now has Positronic Neural
       Dampener
+2025-09-22:
+  Absolucy:
+  - qol: Mining bags now scoop up ores that get moved under you without you having
+      to shuffle back and forth. Rejoice, magnetization injector enjoyers.
+  - balance: The Mystic storyteller now actually prefers mystical antags - it will
+      NEVER spawn "mundane" antags roundstart, and is heavily weighted against them
+      for midrounds.
+  - bugfix: Fixed roundstart slime extract requestor pads sometimes not linking.
+  - map: Added tinyfans to all the mining docks on all maps (both normal and public
+      mining)
+  - bugfix: The ashen duelist, rockspider, and trench jockey packs no longer have
+      the full belt-satchel slowdowns, as the description says they shouldn't (and
+      it's part of their whole point)
+  - bugfix: Icons in the personal crafting menu are no longer blurry.
+  Absolucy, LemonInTheDark:
+  - balance: AIs viewing the crew monitor will no longer be told ahead of time if
+      they cannot jump to a player.
+  Absolucy, necromanceranne:
+  - qol: The eye of god now protects from the madness inducing effects of supermatter
+      crystals and singularities. This trait is shared by the meson night vision goggles
+      (which this is a better version of)
+  - refactor: The Scan ability has been refactored into a pointed spell.
+  - balance: The Scan ability has a lower cooldown of 35 seconds.
+  - balance: Scanning someone alerts the target as to who is responsible, rather than
+      being completely silent as to the culprit (much to the annoyance of anyone who
+      is victimized by someone using this on them)
+  - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
+      is now called Rebuked.
+  - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+  JohnFulpWillard, Rhials, MrMelbert, Xander3359:
+  - bugfix: Statues don't count as eyes to creatures.
+  - bugfix: Human AIs and Admin ghosts no longer get kicked off of machines that aren't
+      on cameranets.
+  - rscadd: Security implants may now be harmlessly self-destructed at the Prisoner
+      Management Console.
+  - code_imp: Various code improvements and removal of unused vars in the Prisoner
+      Management Console
+  Killermankey:
+  - rscadd: Hardsuit crafts to machining
+  - rscadd: ATV Craft to machining
+  - rscadd: TTV Craft to Machining
+  - rscadd: Shotgun Craft to Machining
+  - rscadd: Couple of ammo crafts to Machining
+  - balance: Lowered pricing on melted plastic, universal Circuits, small motors and
+      advanced tools
+  - balance: Doubled price of fire axe in Machining
+  Sorenon:
+  - rscadd: Roundstart / latejoin borgs are now given their loadout hat
+  TheColorCyan:
+  - rscadd: (mc-oofert) clickdragging an autolathe changes its output direction
+  - code_imp: (SyncIt21) autolathe will attempt to award you the "getting an upgrade"
+      award only once when printing multiple items & updates UI immediately
+  - bugfix: (ZephyrTFA)Autolathes no longer allow you to duplicate materials at higher
+      levels of stock parts
+  - qol: (ZephyrTFA) Autolathes now show name instead of typepath when selecting a
+      custom material
+  - qol: (ZephyrTFA)Autolathe now print out items one by one instead of waiting for
+      all of them to print at once
+  - rscdel: (GPekman) Protolathe/circuit imprinter/techfab designs costing reagents
+      is now totally deprecated.
+  throwawayuseless:
+  - rscadd: Fake macrobomb that actually revives you instead

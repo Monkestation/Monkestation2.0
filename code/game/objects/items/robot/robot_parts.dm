@@ -447,7 +447,7 @@
 	data["lawsync"] = lawsync
 	return data
 
-/obj/item/robot_suit/ui_act(action, list/params)
+/obj/item/robot_suit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

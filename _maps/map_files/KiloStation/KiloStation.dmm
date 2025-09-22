@@ -17447,6 +17447,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "fyf" = (
@@ -63753,6 +63754,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Dock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
 "tYJ" = (

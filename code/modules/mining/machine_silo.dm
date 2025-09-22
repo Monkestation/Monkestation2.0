@@ -47,22 +47,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-	var/static/list/materials_list = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-		)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		materials_list, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/ore_silo, on_item_consumed), \
@@ -112,6 +99,101 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OreSilo")
+		ui.open()
+
+/obj/machinery/ore_silo/ui_static_data(mob/user)
+	return materials.ui_static_data()
+
+/obj/machinery/ore_silo/ui_data(mob/user)
+	var/list/data = list()
+
+	data["materials"] =  materials.ui_data()
+
+	data["machines"] = list()
+	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
+		var/atom/parent = remote.parent
+		data["machines"] += list(
+			list(
+				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
+				"name" = parent.name,
+				"onHold" = !!holds[remote],
+				"location" = get_area_name(parent, TRUE),
+			)
+		)
+
+	data["logs"] = list()
+	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
+		data["logs"] += list(
+			list(
+				"rawMaterials" = entry.get_raw_materials(""),
+				"machineName" = entry.machine_name,
+				"areaName" = entry.area_name,
+				"action" = entry.action,
+				"amount" = entry.amount,
+				"time" = entry.timestamp,
+				"noun" = entry.noun,
+			)
+		)
+
+	return data
+
+/obj/machinery/ore_silo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("remove")
+			var/index = params["id"]
+			if(isnull(index))
+				return
+
+			index = text2num(index)
+			if(isnull(index))
+				return
+
+			var/datum/component/remote_materials/remote = ore_connected_machines[index]
+			if(isnull(remote))
+				return
+
+			remote.disconnect_from(src)
+			return TRUE
+
+		if("hold")
+			var/index = params["id"]
+			if(isnull(index))
+				return
+
+			index = text2num(index)
+			if(isnull(index))
+				return
+
+			var/datum/component/remote_materials/remote = ore_connected_machines[index]
+			if(isnull(remote))
+				return
+
+			remote.toggle_holding()
+			return TRUE
+
+		if("eject")
+			var/datum/material/ejecting = locate(params["ref"])
+			if(!istype(ejecting))
+				return
+
+			var/amount = params["amount"]
+			if(isnull(amount))
+				return
+
+			amount = text2num(amount)
+			if(isnull(amount))
+				return
+
+			materials.retrieve_sheets(amount, ejecting, drop_location())
+			return TRUE
 
 /**
  * The logic for disconnecting a remote receptacle (RCD, fabricator, etc.) is collected here for sanity's sake

@@ -155,7 +155,7 @@
 	data["pressureLimitTank"] = pressure_limit
 	return data
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
+/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

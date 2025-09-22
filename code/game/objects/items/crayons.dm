@@ -339,7 +339,7 @@
 	.["can_change_colour"] = can_change_colour
 	.["current_colour"] = paint_color
 
-/obj/item/toy/crayon/ui_act(action, list/params)
+/obj/item/toy/crayon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
