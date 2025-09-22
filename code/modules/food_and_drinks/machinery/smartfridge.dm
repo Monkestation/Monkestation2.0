@@ -337,7 +337,7 @@
 				if(!living_mob.put_in_hands(dispensed_item))
 					dispensed_item.forceMove(drop_location())
 					adjust_item_drop_location(dispensed_item)
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 				amount--
 			if (visible_contents)
 				update_appearance()

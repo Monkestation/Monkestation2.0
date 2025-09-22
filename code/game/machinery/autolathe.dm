@@ -66,15 +66,11 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		directly_use_energy(SHEET_MATERIAL_AMOUNT / 10)
-	else if(item_inserted.has_material_type(/datum/material/glass))
-		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
-	else
-		flick("autolathe_o", src)//plays metal insertion animation
+	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-		directly_use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
-		update_static_data_for_all_viewers()
+	use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
+
+	update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -253,7 +249,7 @@
 	var/power_use_amount = 0
 	for(var/material_used in materials_per_item)
 		power_use_amount += materials_per_item[material_used] * 0.2 * build_count
-	if(!directly_use_power(power_use_amount))
+	if(!directly_use_energy(power_use_amount))
 		say("Not enough power in local network to begin production.")
 		return
 
@@ -377,15 +373,6 @@
 		return FALSE
 
 	return ..()
-
-/obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
-	SIGNAL_HANDLER
-
-	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
-
-	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
-
-	update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
