@@ -1262,11 +1262,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "kicked")
 			var/ough = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 4.8 : 1
-			var/damagemod = (ough == 4.8) ? 3 : 1 //yeowch
+			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
 			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
-					if(!(ough == 4.8))
+					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 						if(iter_clothing.clothing_flags & THICKMATERIAL || iter_clothing.get_armor_rating(MELEE) >= 15)
 							if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
 								return TRUE
