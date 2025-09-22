@@ -28,6 +28,8 @@
 
 	action_slots = ALL
 
+	internal_cell = /obj/item/stock_parts/power_store/cell/high // MONKE EDIT: Upgraded cell
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
