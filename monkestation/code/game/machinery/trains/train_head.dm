@@ -37,7 +37,7 @@
 	if(listed_network)
 		listed_network.relay_move(old_loc)
 
-/obj/vehicle/ridden/cargo_train/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/vehicle/ridden/cargo_train/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!Adjacent(over) || !usr.Adjacent(over))
 		return

@@ -169,10 +169,10 @@
 	else
 		return ..()
 
-/obj/item/vacuum_pack/MouseDrop(obj/over_object)
+/obj/item/vacuum_pack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/wearer = loc
-	if(istype(wearer) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/hand = over_object
+	if(istype(wearer) && istype(over, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/hand = over
 		wearer.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 	return ..()
 

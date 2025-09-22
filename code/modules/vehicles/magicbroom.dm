@@ -78,7 +78,7 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/vehicle/ridden/magic_broom/MouseDrop(over_object, src_location, over_location)  //for picking up your floating broom i guess
+/obj/vehicle/ridden/magic_broom/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || QDELETED(folded_item))
 		return FALSE

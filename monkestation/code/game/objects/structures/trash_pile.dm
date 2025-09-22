@@ -136,7 +136,7 @@
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
 
-/obj/structure/trash_pile/MouseDrop_T(mob/living/carbon/dropped_mob, mob/user, params)
+/obj/structure/trash_pile/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(user != dropped_mob || !iscarbon(dropped_mob))
 		return ..()
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_TRASH_PILE) || !(dropped_mob.mobility_flags & MOBILITY_MOVE))

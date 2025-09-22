@@ -56,7 +56,7 @@
 		return
 	linked_network.disconnect_train(src, user)
 
-/obj/machinery/cart/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/machinery/cart/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!Adjacent(over) || !usr.Adjacent(over))
 		return
@@ -74,9 +74,7 @@
 		return
 	linked_network.connect_train(over, usr)
 
-
-
-/obj/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(istype(src, /obj/vehicle/ridden/cargo_train) || istype(src, /obj/machinery/cart))
 		return

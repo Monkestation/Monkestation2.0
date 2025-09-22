@@ -185,11 +185,10 @@
 	return
 MONKESTATION REMOVAL END */
 
-/obj/item/storage/portable_chem_mixer/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -280,7 +279,7 @@ MONKESTATION REMOVAL END */
 			beaker.reagents.remove_all(amount)
 			. = TRUE
 		if("eject")
-			replace_beaker(ui.user)
+			replace_beaker(usr)
 			update_appearance()
 			return TRUE
 

@@ -519,7 +519,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	return holy_successors
 
-/obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
+/obj/machinery/cryopod/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(isobserver(target) && target == user)
 		attempt_return(target)
 		return

@@ -469,7 +469,7 @@
 	else
 		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 	if(isliving(target))

@@ -175,7 +175,7 @@
 	set_density(TRUE)
 	set_anchored(FALSE)
 
-/obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/movable_atom, mob/user)
+/obj/structure/bloodsucker/vassalrack/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
 	var/mob/living/living_target = movable_atom

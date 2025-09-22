@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	if(can_recycle)
 		recycle(item, user, can_recycle)
 
-/obj/machinery/biomass_recycler/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/biomass_recycler/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(!istype(target))
 		return
 

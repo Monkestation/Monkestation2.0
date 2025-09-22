@@ -108,7 +108,7 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/anesthetic_machine/MouseDrop_T(mob/living/carbon/over, mob/living/user)
+/obj/machinery/anesthetic_machine/mouse_drop_receive(mob/living/M, mob/user, params)
 	. = ..()
 	if(!istype(over))
 		return

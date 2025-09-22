@@ -73,7 +73,7 @@
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
-/obj/item/pulsepack/MouseDrop(atom/over_object)
+/obj/item/pulsepack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(armed)
 		return

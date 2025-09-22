@@ -198,7 +198,7 @@
 /obj/machinery/public_nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/public_nanite_chamber/mouse_drop_receive(mob/living/M, mob/user, params)
 	if(!Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
 	if(close_machine(target, user))

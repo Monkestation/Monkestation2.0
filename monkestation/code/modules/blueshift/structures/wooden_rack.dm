@@ -6,7 +6,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/storage.dmi'
 	resistance_flags = FLAMMABLE
 
-/obj/structure/rack/wooden/MouseDrop_T(obj/object, mob/user, params)
+/obj/structure/rack/wooden/mouse_drop_receive(mob/living/M, mob/user, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))

@@ -248,7 +248,7 @@
 	target_range = new_range
 	to_chat(user, "Leaf sight set for [target_range] tiles.")
 
-/obj/item/gun/ballistic/shotgun/china_lake/MouseDrop_T(obj/item/target, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/china_lake/mouse_drop_receive(mob/living/M, mob/user, params)
 	. = ..()
 	if(!istype(target, /obj/item/ammo_casing/a40mm))
 		return
