@@ -84,6 +84,9 @@
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
 
+	/// Cooldown for more major water effects
+	COOLDOWN_DECLARE(water_yeowchy)
+
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
 	 are a race of sentient and unbound humanoid robots."
@@ -163,7 +166,7 @@
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH, COMSIG_ATOM_EXPOSE_REAGENTS))
 	change_screen?.Remove(target)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
@@ -523,11 +526,43 @@
 	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
 		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
-	switch(robit.reagents.get_reagent_amount(/datum/reagent/water))
+	var/how_much_water = robit.reagents.get_reagent_amount(/datum/reagent/water) * water_multiplier
+	switch(how_much_water)
 		if(0 to 5)
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+			spark_system.set_up(1, 0, target.loc)
+			spark_system.start()
+			playsound(src, SFX_SPARKS, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			robit.adjust_jitter_up_to(6 SECONDS, 1 MINUTES)
+		if(5.01 to 20)
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 			spark_system.set_up(4, 0, target.loc)
 			spark_system.start()
 			playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			robit.adjust_jitter_up_to(6 SECONDS, 1 MINUTES)
+			robit.adjust_jitter_up_to(20 SECONDS, 2 MINUTES)
+			robit.adjust_confusion(5 SECONDS)
+		if(20.01 to 49.99)
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+			spark_system.set_up(6, 0, target.loc)
+			spark_system.start()
+			playsound(src, SFX_SPARKS, 60, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			robit.adjust_jitter_up_to(1 MINUTE, 5 MINUTES)
+			robit.adjust_confusion(10 SECONDS)
+			if(COOLDOWN_FINISHED(src, water_yeowchy))
+				robit.Stun(3 SECONDS)
+				robit.Paralyze(2 SECONDS)
+				COOLDOWN_START(src, water_yeowchy, 6 SECONDS)
+		if(50 to INFINITY)
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+			spark_system.set_up(8, 0, target.loc)
+			spark_system.start()
+			playsound(src, SFX_SPARKS, 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			robit.adjust_jitter_up_to(2 MINUTE, 6 MINUTES)
+			robit.adjust_confusion(10 SECONDS)
+			if(COOLDOWN_FINISHED(src, water_yeowchy))
+				robit.Stun(4 SECONDS)
+				robit.Paralyze(4 SECONDS)
+				COOLDOWN_START(src, water_yeowchy, 10 SECONDS)
+		robit.sharp_pain(BODY_ZONES_ALL, (how_much_water / 10), 10 SECONDS) //ough (for reference a full bluespace beaker of water would be greatly slowing but not quite immobilizing)
+		to_chat(robit, span_robot(span_danger("BZZZTT!!")))
 	return NONE
