@@ -113,6 +113,7 @@
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
+	RegisterSignal(C, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
 
 /datum/species/ipc/proc/blood_handled(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
@@ -451,3 +452,82 @@
 		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
 	return ..()
+
+#define WATER_PROTECTION_HEAD 0.3
+#define WATER_PROTECTION_CHEST 0.2
+#define WATER_PROTECTION_GROIN 0.1
+#define WATER_PROTECTION_LEG (0.075 * 2)
+#define WATER_PROTECTION_FOOT (0.025 * 2)
+#define WATER_PROTECTION_ARM (0.075 * 2)
+#define WATER_PROTECTION_HAND (0.025 * 2)
+
+/datum/species/ipc/proc/water_damage_multiplier(mob/living/carbon/human/robit)
+	. = 1
+
+	var/protection_flags = NONE
+	for(var/obj/item/clothing/worn in robit.get_equipped_items())
+		if(worn.clothing_flags & THICKMATERIAL)
+			protection_flags |= worn.body_parts_covered
+
+	var/missing_limbs = FULL_BODY & ~(CHEST|GROIN)
+	for(var/obj/item/bodypart/limb in robit.bodyparts)
+		var/bodypart_flags = limb.body_part
+		// stupid thing needed because arms/legs don't include the hand/foot flags.
+		if(bodypart_flags & ARM_LEFT)
+			bodypart_flags |= HAND_LEFT
+		if(bodypart_flags & ARM_RIGHT)
+			bodypart_flags |= HAND_RIGHT
+		if(bodypart_flags & LEG_LEFT)
+			bodypart_flags |= FOOT_LEFT
+		if(bodypart_flags & LEG_RIGHT)
+			bodypart_flags |= FOOT_RIGHT
+		missing_limbs &= ~bodypart_flags
+
+	protection_flags |= missing_limbs
+
+	if(protection_flags)
+		if(protection_flags & HEAD)
+			. -= WATER_PROTECTION_HEAD
+		if(protection_flags & CHEST)
+			. -= WATER_PROTECTION_CHEST
+		if(protection_flags & GROIN)
+			. -= WATER_PROTECTION_GROIN
+		if(protection_flags & LEGS)
+			. -= WATER_PROTECTION_LEG
+		if(protection_flags & FEET)
+			. -= WATER_PROTECTION_FOOT
+		if(protection_flags & ARMS)
+			. -= WATER_PROTECTION_ARM
+		if(protection_flags & HANDS)
+			. -= WATER_PROTECTION_HAND
+
+	return clamp(FLOOR(., 0.1), 0, 1)
+
+#undef WATER_PROTECTION_HEAD
+#undef WATER_PROTECTION_CHEST
+#undef WATER_PROTECTION_GROIN
+#undef WATER_PROTECTION_LEG
+#undef WATER_PROTECTION_FOOT
+#undef WATER_PROTECTION_ARM
+#undef WATER_PROTECTION_HAND
+
+/datum/species/ipc/proc/on_reagent_expose(mob/living/carbon/human/robit, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+	SIGNAL_HANDLER
+	if(!(locate(/datum/reagent/water) in reagents)) // we only care if we're exposed to water
+		return NONE
+	if(HAS_TRAIT(robit, TRAIT_GODMODE))
+		return NONE
+	water_multiplier = water_damage_multiplier(robit)
+		if(water_multiplier <= 0)
+			return COMPONENT_NO_EXPOSE_REAGENTS
+	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
+		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water!"))
+		return COMPONENT_NO_EXPOSE_REAGENTS
+	switch(robit.reagents.get_reagent_amount(/datum/reagent/water))
+		if(0 to 5)
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+			spark_system.set_up(4, 0, target.loc)
+			spark_system.start()
+			playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			robit.adjust_jitter_up_to(6 SECONDS, 1 MINUTES)
+	return NONE
