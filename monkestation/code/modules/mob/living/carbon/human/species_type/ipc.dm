@@ -520,7 +520,7 @@
 		return NONE
 	if(HAS_TRAIT(robit, TRAIT_GODMODE))
 		return NONE
-	water_multiplier = water_damage_multiplier(robit)
+	var/water_multiplier = water_damage_multiplier(robit)
 		if(water_multiplier <= 0)
 			return COMPONENT_NO_EXPOSE_REAGENTS
 	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
