@@ -374,13 +374,6 @@
 	///Used to calculate the max damage received per tick and if the alarm should be called
 	var/damage_archived = 0
 
-	///Our internal radio
-	var/obj/item/radio/radio
-	///The key our internal radio uses
-	var/radio_key = /obj/item/encryptionkey/headset_eng
-	///The engineering channel
-	var/engineering_channel = "Engineering"
-
 	COOLDOWN_DECLARE(turbine_damage_alert)
 
 /obj/machinery/power/turbine/core_rotor/constructed
@@ -388,16 +381,8 @@
 
 /obj/machinery/power/turbine/core_rotor/Initialize(mapload)
 	. = ..()
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.set_listening(FALSE)
-	radio.recalculateChannels()
 
 	new /obj/item/paper/guides/jobs/atmos/turbine(loc)
-
-/obj/machinery/power/turbine/core_rotor/Destroy()
-	QDEL_NULL(radio)
-	return ..()
 
 /obj/machinery/power/turbine/core_rotor/examine(mob/user)
 	. = ..()
@@ -623,7 +608,7 @@
 			if(rpm < 550000)
 				explosion(src, 2, 5, 7)
 			return PROCESS_KILL
-		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
+		aas_config_announce(/datum/aas_config_entry/engineering_turbine_failure, list("INTEGRITY" = integrity, "LOCATION" = get_area_name(src)), src, list(RADIO_CHANNEL_ENGINEERING))
 		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
 	//================ROTOR WORKING============//
@@ -659,6 +644,16 @@
 	-There are 4 tiers for these items, only the first tier can be printed. The next tier of each part can be made by using various materials on the part (clicking with the material in hand, on the part). The material required to reach the next tier is stated in the part's examine text, try shift clicking it!<BR>\
 	-Each tier increases the efficiency (more power), the max reachable RPM, and the max temperature that the machine can process without taking damage (up to fusion temperatures at the last tier!).<BR>\
 	-A word of warning, the machine is very inefficient in its gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect the unburnt gases and reuse them."
+
+/datum/aas_config_entry/engineering_turbine_failure
+	name = "Engineering Alert: Turbine Failure"
+	announcement_lines_map = list(
+		"Message" = "Warning, turbine at %LOCATION taking damage, current integrity at %INTEGRITY%!",
+	)
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with location of the turbine.",
+		"INTEGRITY" = "with the current integrity of the turbine.",
+	)
 
 #undef PRESSURE_MAX
 #undef MINIMUM_TURBINE_PRESSURE

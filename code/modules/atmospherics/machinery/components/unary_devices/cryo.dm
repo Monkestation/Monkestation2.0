@@ -97,11 +97,10 @@
 
 	var/obj/item/reagent_containers/cup/beaker = null
 	var/consume_gas = FALSE
-
-	var/obj/item/radio/radio
-	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = RADIO_CHANNEL_MEDICAL
 	vent_movement = NONE
+
+	/// For away sites, custom or admin events
+	var/broadcast_channel = RADIO_CHANNEL_MEDICAL
 
 	/// Visual content - Occupant
 	var/atom/movable/visual/cryo_occupant/occupant_vis
@@ -126,12 +125,6 @@
 	initialize_directions = dir
 	if(is_operational)
 		begin_processing()
-
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
-	radio.recalculateChannels()
 
 	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
@@ -199,7 +192,6 @@
 	vis_contents.Cut()
 
 	QDEL_NULL(occupant_vis)
-	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
 	///Take the turf the cryotube is on
 	var/turf/T = get_turf(src)
@@ -314,21 +306,19 @@
 		return
 	if(mob_occupant.stat == DEAD) // Notify doctors and potentially eject if the patient is dead
 		set_on(FALSE)
-		var/msg = "Patient is deceased."
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Deceased")
 		if(autoeject) // Eject if configured.
-			msg += " Auto ejecting patient now."
 			open_machine()
 		// Only need to tell them once
 		if(!patient_dead)
 			playsound(src, 'sound/machines/cryo_warning.ogg', volume)
 			patient_dead = TRUE
-			radio.talk_into(src, msg, radio_channel)
 		return
 
 	// monkestation start: kick no-healers out
 	if(HAS_TRAIT(mob_occupant, TRAIT_NO_HEALS))
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume)
-		radio.talk_into(src, "Patient is unable to be healed, ejecting.", radio_channel)
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list(), src, list(broadcast_channel), "No Heal")
 		set_on(FALSE)
 		open_machine()
 		return
@@ -343,19 +333,16 @@
 				if(!treating_wounds) // if we have wounds and haven't already alerted the doctors we're only dealing with the wounds, let them know
 					treating_wounds = TRUE
 					playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-					var/msg = "Patient vitals fully recovered, continuing automated wound treatment."
-					radio.talk_into(src, msg, radio_channel)
+					aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list(), src, list(broadcast_channel), "Wound Treatment")
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
 
 		if(!treating_wounds)
 			set_on(FALSE)
 			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-			var/msg = "Patient fully restored."
+			aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Fully Recovered")
 			if(autoeject) // Eject if configured.
-				msg += " Auto ejecting patient now."
 				open_machine()
-			radio.talk_into(src, msg, radio_channel)
 			return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -371,7 +358,7 @@
 	for(var/obj/item/organ/internal/brain/slime/malpractice_vic in src.contents)
 		malpractice_vic.forceMove(src.drop_location())
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Unidentified organic material detected in cryo-chamber. Flushing foreign body from system. Auto eject initiated.", radio_channel)
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list(), src, list(broadcast_channel), "Oozeling Core")
 		open_machine()
 	if(!on)
 		return
@@ -379,8 +366,7 @@
 	var/datum/gas_mixture/air1 = airs[1]
 
 	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
-		var/msg = "Insufficient cryogenic gas, shutting down."
-		radio.talk_into(src, msg, radio_channel)
+		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Insufficient Gas")
 		set_on(FALSE)
 		return
 
@@ -658,6 +644,28 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_layer()
 	return
+
+/datum/aas_config_entry/medical_cryo_announcements
+	name = "Medical Alert: Cryogenics Reports"
+	announcement_lines_map = list(
+		"Autoejecting" = "Auto ejecting patient now.",
+		"Deceased" = "Cryogenics report: Patient is deceased. %AUTOEJECTING",
+		"Fully Recovered" = "Cryogenics report: Patient fully restored. %AUTOEJECTING",
+		"Insufficient Gas" = "Cryogenics report: Insufficient cryogenic gas, shutting down. %AUTOEJECTING",
+		"Wound Treatment" = "Cryogenics report: Patient vitals fully recovered, continuing automated wound treatment.",
+		"No Heal" = "Patient is unable to be healed, ejecting.",
+		"Oozeling Core" = "Unidentified organic material detected in cryo-chamber. Flushing foreign body from system. Auto eject initiated.",
+	)
+	vars_and_tooltips_map = list(
+		"AUTOEJECTING" = "will be replaced with Autoejecting line, if system reports it's necessity"
+	)
+
+/datum/aas_config_entry/medical_cryo_announcements/compile_announce(list/variables_map, announcement_line)
+	variables_map["AUTOEJECTING"] = variables_map["EJECTING"] ? announcement_lines_map["Autoejecting"] : ""
+	. = ..()
+	// Why double replacetext_char? Well, to handle cases where variable in the middle of sentence like "also %AUTOEJECTING this", so there will be no double spaces
+	// Yeah I am bad, at this, sorry (it should be a perfect place for regex usage, but I am weak)
+	. = trim(replacetext_char(replacetext_char(., "\[NO DATA\] ", ""), "\[NO DATA\]", ""))
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

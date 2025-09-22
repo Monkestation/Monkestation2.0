@@ -38,21 +38,17 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/spaceport_raided = FALSE
 	var/gameStatus = ORION_STATUS_START
 
-	var/obj/item/radio/radio
 	var/list/gamers = list()
 	var/killed_crew = 0
 
 /obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
-	radio = new /obj/item/radio(src)
-	radio.set_listening(FALSE)
 	setup_events()
 
 /obj/machinery/computer/arcade/orion_trail/proc/setup_events()
 	events = GLOB.orion_events
 
 /obj/machinery/computer/arcade/orion_trail/Destroy()
-	QDEL_NULL(radio)
 	events = null
 	return ..()
 
@@ -127,14 +123,15 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	gamers[gamer]++ // How many games the gamer has 'gamed' (massacred their crew)
 
 	if(gamers[gamer] > ORION_GAMER_REPORT_THRESHOLD && prob(20 * gamers[gamer]))
+		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
+			"PERSON" = gamer.name,
+			"LOCATION" = get_area_name(src),
+			"SOURCE" = name), src, list(RADIO_CHANNEL_SECURITY), RADIO_CHANNEL_SECURITY)
 
-		radio.set_frequency(FREQ_SECURITY)
-		radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
-
-		radio.set_frequency(FREQ_MEDICAL)
-		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
-
-		remove_radio_all(radio)//so we dont keep transmitting sec and medical comms
+		aas_config_announce(/datum/aas_config_entry/orion_violent_behavior_alert, list(
+			"PERSON" = gamer.name,
+			"LOCATION" = get_area_name(src),
+			"SOURCE" = name), src, list(RADIO_CHANNEL_MEDICAL), RADIO_CHANNEL_MEDICAL)
 
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
@@ -560,4 +557,16 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(SPT_PROB(0.5, seconds_per_tick))
 		mezzer()
 
+/datum/aas_config_entry/orion_violent_behavior_alert
+	// Well we don't want to show that only Orion Trails reports violent behavior, eh-h?
+	name = "Violent Behavior Alert"
+	announcement_lines_map = list(
+		RADIO_CHANNEL_SECURITY = "SECURITY ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please watch for violent behavior.",
+		RADIO_CHANNEL_MEDICAL = "PSYCH ALERT: Crewmember %PERSON recorded displaying antisocial tendencies in %LOCATION by %SOURCE. Please schedule psych evaluation.",
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the crewmember reported",
+		"LOCATION" = "with the area of violent behavior",
+		"SOURCE" = "with the reporter",
+	)
 #undef ORION_TRAIL_WINTURN

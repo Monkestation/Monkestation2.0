@@ -24,10 +24,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	/// If this departmental order console currently is on cooldown.
 	var/on_cooldown = FALSE
 
-	/// Our radio object we use to talk to our department.
-	var/obj/item/radio/radio
-	/// The radio key typepath that will be instantiated and inserted into our radio.
-	var/obj/item/encryptionkey/radio_key_typepath
 	/// The radio channel we will speak into by default.
 	var/radio_channel
 
@@ -36,13 +32,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	// All maps should have ONLY ONE of each order console roundstart
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
-	if (radio_channel && radio_key_typepath)
-		radio = new(src)
-		radio.keyslot = new radio_key_typepath
-		radio.subspace_transmission = TRUE
-		radio.canhear_range = 0
-		radio.recalculateChannels()
-
 	if(mapload) //check for mapping errors
 		for(var/delivery_area_type in department_delivery_areas)
 			if(GLOB.areas_by_type[delivery_area_type])
@@ -50,11 +39,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
 		log_mapping("[src] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
 		department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
-
-/obj/machinery/computer/department_orders/Destroy()
-	QDEL_NULL(radio)
-
-	return ..()
 
 /obj/machinery/computer/department_orders/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -167,6 +151,9 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))
+	if(!alert_silenced && alert_able)
+		aas_config_announce(/datum/aas_config_entry/department_orders, list("ORDER" = pack.name, "PERSON" = name), computer.physical, list(radio_channel), "Order Placed")
+		aas_config_announce(/datum/aas_config_entry/department_orders_cargo, list("DEPARTMENT" = linked_department.department_name), computer.physical, list(RADIO_CHANNEL_SUPPLY))
 	say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
@@ -195,7 +182,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if (GLOB.department_order_cooldowns[type] > world.time)
 		on_cooldown = TRUE
 	else if (on_cooldown)
-		radio?.talk_into(src, "Order cooldown has expired! A new order may now be placed!", radio_channel)
+		aas_config_announce(/datum/aas_config_entry/department_orders, list(), computer.physical, list(radio_channel), "Cooldown Reset")
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 		on_cooldown = FALSE
 
@@ -208,7 +195,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_HOP
 	req_one_access = list(ACCESS_SERVICE)
 	dep_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
-	radio_key_typepath = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 
 /obj/machinery/computer/department_orders/engineering
@@ -218,7 +204,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_CE
 	req_one_access = REGION_ACCESS_ENGINEERING
 	dep_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
-	radio_key_typepath = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 
 /obj/machinery/computer/department_orders/science
@@ -228,7 +213,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_RD
 	req_one_access = REGION_ACCESS_RESEARCH
 	dep_groups = list("Science", "Livestock", "Canisters & Materials")
-	radio_key_typepath = /obj/item/encryptionkey/headset_sci
 	radio_channel = RADIO_CHANNEL_SCIENCE
 
 /obj/machinery/computer/department_orders/security
@@ -242,7 +226,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_HOS
 	req_one_access = REGION_ACCESS_SECURITY
 	dep_groups = list("Security", "Armory")
-	radio_key_typepath = /obj/item/encryptionkey/headset_sec
 	radio_channel = RADIO_CHANNEL_SECURITY
 
 /obj/machinery/computer/department_orders/medical
@@ -257,5 +240,24 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	override_access = ACCESS_CMO
 	req_one_access = REGION_ACCESS_MEDBAY
 	dep_groups = list("Medical")
-	radio_key_typepath = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
+
+/datum/aas_config_entry/department_orders
+	name = "Departmental Order Announcement"
+	announcement_lines_map = list(
+		"Order Placed" = "A department order has been placed by %PERSON for %ORDER.",
+		"Cooldown Reset" = "Department order cooldown has expired! A new order may now be placed!",
+	)
+	vars_and_tooltips_map = list(
+		"ORDER" = "will be replaced with the package name",
+		"PERSON" = "with the orderer's name",
+	)
+
+/datum/aas_config_entry/department_orders_cargo
+	name = "Cargo Alert: New Departmental Order"
+	announcement_lines_map = list(
+		"Message" = "New %DEPARTMENT departmental order has been placed"
+	)
+	vars_and_tooltips_map = list(
+		"DEPARTMENT" = "will be replaced with orderer's department."
+	)

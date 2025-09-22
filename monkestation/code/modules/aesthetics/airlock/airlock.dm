@@ -95,6 +95,8 @@
 				light_state = AIRLOCK_LIGHT_EMERGENCY
 				lights_overlay = "lights_emergency"
 				pre_light_color = light_color_emergency
+			else if(has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
 			else
 				lights_overlay = "lights_poweron"
 				pre_light_color = light_color_poweron

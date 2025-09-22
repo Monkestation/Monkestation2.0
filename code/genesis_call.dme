@@ -50,3 +50,14 @@
  */
 /world/proc/_()
 	var/static/_ = world.Genesis()
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+// BEGIN_INCLUDE
+#include "modules\reta\reta_id_card.dm"
+#include "modules\reta\reta_system.dm"
+// END_INCLUDE

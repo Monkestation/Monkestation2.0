@@ -43,8 +43,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
 	var/message_stamped_by = ""
-	/// Reference to the internal radio
-	var/obj/item/radio/radio
 	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
@@ -140,13 +138,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
 
-	radio = new /obj/item/radio(src)
-	radio.set_listening(FALSE)
+	// Register this console for RETA UI updates - code/modules/reta/reta_system.dm
+	var/dept_key = reta_get_user_department_by_name(department)
+	if(dept_key)
+		LAZYADD(GLOB.reta_consoles_by_origin[dept_key], src)
 
 /obj/machinery/requests_console/Destroy()
-	QDEL_NULL(radio)
 	QDEL_LIST(messages)
 	GLOB.req_console_all -= src
+
+	// Remove from RETA console registry
+	var/dept_key = reta_get_user_department_by_name(department)
+	if(dept_key)
+		LAZYREMOVE(GLOB.reta_consoles_by_origin[dept_key], src)
+
 	return ..()
 
 /obj/machinery/requests_console/ui_interact(mob/user, datum/tgui/ui)
@@ -182,20 +187,104 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("set_emergency")
 			if(emergency)
 				return
-			var/radio_freq
-			switch(params["emergency"])
-				if(REQ_EMERGENCY_SECURITY) //Security
-					radio_freq = FREQ_SECURITY
-				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					radio_freq = FREQ_ENGINEERING
-				if(REQ_EMERGENCY_MEDICAL) //Medical
-					radio_freq = FREQ_MEDICAL
-			if(radio_freq)
-				emergency = params["emergency"]
-				radio.set_frequency(radio_freq)
-				radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
-				update_appearance()
-				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
+			// Check for RETA eligibility
+			var/emergency_type = params["emergency"]
+			var/origin_dept = reta_get_user_department_by_name(department)
+			var/target_dept = null
+
+			switch(emergency_type)
+				if(REQ_EMERGENCY_SECURITY)
+					target_dept = "Security"
+				if(REQ_EMERGENCY_ENGINEERING)
+					target_dept = "Engineering"
+				if(REQ_EMERGENCY_MEDICAL)
+					target_dept = "Medical"
+
+			// Check if user can call this emergency (prevent self-calls) RETA
+			var/user_dept = reta_get_user_department(usr)
+			if(user_dept == target_dept)
+				to_chat(usr, span_alert("You cannot call your own department for emergency assistance."))
+				return
+
+			// Check cooldown RETA
+			if(origin_dept && target_dept && reta_on_cooldown(origin_dept, target_dept))
+				to_chat(usr, span_alert("Emergency calls to [target_dept] are on cooldown."))
+				return
+
+			emergency = emergency_type
+
+			// Grant RETA if conditions are met
+			if(origin_dept && target_dept && CONFIG_GET(flag/reta_enabled))
+				// Set cooldown
+				var/cooldown_ds = CONFIG_GET(number/reta_dept_cooldown_ds) || 150
+				reta_set_cooldown(origin_dept, target_dept, cooldown_ds)
+
+				// Find responders and grant access to their ID cards
+				var/duration_ds = CONFIG_GET(number/reta_duration_ds) || 3000
+				var/granted_count = reta_find_and_grant_access(target_dept, origin_dept, duration_ds)
+
+				// Track this call for multiple department analysis
+				reta_track_call(origin_dept, target_dept)
+
+				// Enhanced announcement with caller info
+				var/caller_info = ""
+				if(usr)
+					var/caller_name = usr.real_name || "Unknown"
+					var/caller_title = "Unknown Position"
+					if(usr?.mind?.assigned_role)
+						caller_title = usr.mind.assigned_role.title
+					caller_info = " (Called by [caller_name], [caller_title])"
+
+				var/enhanced_location = "[department][caller_info]"
+
+				switch(emergency_type)
+					if(REQ_EMERGENCY_SECURITY)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					if(REQ_EMERGENCY_ENGINEERING)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					if(REQ_EMERGENCY_MEDICAL)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+
+				// Send confirmation to the calling department about the RETA activation
+				var/calling_message = "RETA activated[caller_info]. [target_dept] personnel now have temporary access to your areas."
+
+				// Get an announcement system to send simple radio messages
+				var/obj/machinery/announcement_system/announcer = get_announcement_system(null, null, list(RADIO_CHANNEL_COMMON))
+				if(announcer)
+					switch(origin_dept)
+						if("Security")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SECURITY)
+						if("Engineering")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_ENGINEERING)
+						if("Medical")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_MEDICAL)
+						if("Science")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SCIENCE)
+						if("Service")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SERVICE)
+						if("Command")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_COMMAND)
+						if("Cargo")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
+						if("Mining")
+							announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
+
+				// Log RETA activity
+				log_game("RETA: [origin_dept] called [target_dept] emergency, granted access to [granted_count] responder IDs for [duration_ds/10] seconds")
+
+				// Push UI updates to consoles in the same origin department
+				reta_push_ui_updates(origin_dept, target_dept)
+			else
+				// Normal emergency call without RETA
+				switch(emergency_type)
+					if(REQ_EMERGENCY_SECURITY)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
+					if(REQ_EMERGENCY_ENGINEERING)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
+					if(REQ_EMERGENCY_MEDICAL)
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+			update_appearance()
+			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
 		if("send_announcement")
 			if(!COOLDOWN_FINISHED(src, announcement_cooldown))
@@ -256,20 +345,22 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 ///Sends the message from the request console
 /obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
-	var/radio_freq
+	var/radio_channel
+	// They all naming them wrong, all the time... I'll probably rewrite this later in separate PR.
+	// Automatically from areas or via mapping helpers. (ther is no "Cargobay Request Console" in any map)
 	switch(ckey(recipient))
 		if("bridge")
-			radio_freq = FREQ_COMMAND
+			radio_channel = RADIO_CHANNEL_COMMAND
 		if("medbay")
-			radio_freq = FREQ_MEDICAL
+			radio_channel = RADIO_CHANNEL_MEDICAL
 		if("science")
-			radio_freq = FREQ_SCIENCE
+			radio_channel = RADIO_CHANNEL_SCIENCE
 		if("engineering")
-			radio_freq = FREQ_ENGINEERING
+			radio_channel = RADIO_CHANNEL_ENGINEERING
 		if("security")
-			radio_freq = FREQ_SECURITY
+			radio_channel = RADIO_CHANNEL_SECURITY
 		if("cargobay", "mining")
-			radio_freq = FREQ_SUPPLY
+			radio_channel = RADIO_CHANNEL_SUPPLY
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"sender_department" = department,
@@ -278,7 +369,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		"verified" = message_verified_by,
 		"stamped" = message_stamped_by,
 		"priority" = priority,
-		"notify_freq" = radio_freq,
+		"notify_channel" = radio_channel,
 		"request_type" = request_type,
 	))
 	signal.send_to_receivers()
@@ -312,6 +403,20 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	data["messages"] = list()
 	for (var/datum/request_message/message in messages)
 		data["messages"] += list(message.message_ui_data())
+
+	// Add RETA data
+	data["reta_enabled"] = CONFIG_GET(flag/reta_enabled)
+	var/origin_dept = reta_get_user_department_by_name(department)
+	var/user_dept = reta_get_user_department(user)
+
+	data["reta_cooldowns"] = list()
+	if(origin_dept)
+		data["reta_cooldowns"]["Security"] = reta_on_cooldown(origin_dept, "Security")
+		data["reta_cooldowns"]["Engineering"] = reta_on_cooldown(origin_dept, "Engineering")
+		data["reta_cooldowns"]["Medical"] = reta_on_cooldown(origin_dept, "Medical")
+
+	data["reta_user_dept"] = user_dept
+
 	return data
 
 
@@ -334,6 +439,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/proc/clear_emergency()
 	emergency = null
 	update_appearance()
+
+/// Updates the UI for all viewers
+/obj/machinery/requests_console/proc/ui_update()
+	SStgui.update_uis(src)
 
 /// From message_server.dm: Console.create_message(data)
 /obj/machinery/requests_console/proc/create_message(data)
@@ -361,15 +470,26 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	SStgui.update_uis(src)
 
-	var/alert = new_message.get_alert()
-
 	if(!silent)
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-		say(alert)
+		say(new_message.get_alert())
 
-	if(new_message.radio_freq)
-		radio.set_frequency(new_message.radio_freq)
-		radio.talk_into(src, "[alert]: <i>[new_message.content]</i>", new_message.radio_freq)
+	if(new_message.radio_channel)
+		var/authentication
+		var/announcement_line = "Unauthenticated"
+		if (new_message.message_verified_by)
+			authentication = new_message.message_verified_by
+			announcement_line = "Verified with ID"
+		else if (new_message.message_stamped_by)
+			authentication = new_message.message_stamped_by
+			announcement_line = "Stamped with stamp"
+
+		aas_config_announce(/datum/aas_config_entry/rc_new_message, list(
+			"AUTHENTICATION" = authentication,
+			"SENDER" = new_message.sender_department,
+			"RECEIVER" = department,
+			"MESSAGE" = new_message.content
+			), null, list(new_message.radio_channel), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
@@ -427,6 +547,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
+
+/datum/aas_config_entry/rc_emergency
+	name = "RC Alert: Emergency"
+	announcement_lines_map = list(
+		"Security" = "SECURITY EMERGENCY in %LOCATION - RETA door access granted to responders!",
+		"Engineering" = "ENGINEERING EMERGENCY in %LOCATION - RETA door access granted to responders!",
+		"Medical" = "MEDICAL EMERGENCY in %LOCATION - RETA door access granted to responders!",
+	)
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with the department name and caller information (Name, Job Title)",
+	)
+
+/datum/aas_config_entry/rc_new_message
+	name = "RC Alert: New Message "
+	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
+	announcement_lines_map = list(
+		"Unauthenticated" = "Message from %SENDER to %RECEIVER: <i>%MESSAGE</i>",
+		"Verified with ID" = "Message from %SENDER to %RECEIVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+		"Stamped with stamp" = "Message from %SENDER to %RECEIVER, Stamped by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+	)
+	vars_and_tooltips_map = list(
+		"AUTHENTICATION" = "will be replaced with ID or stamp, if present",
+		"SENDER" = "with the sender department ",
+		"RECEIVER" = "with the receiver department",
+		"MESSAGE" = "with the message content",
+	)
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

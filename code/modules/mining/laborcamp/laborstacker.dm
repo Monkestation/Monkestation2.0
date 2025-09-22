@@ -10,13 +10,9 @@ GLOBAL_LIST(labor_sheet_values)
 	density = FALSE
 	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine
-	/// Needed to send messages to sec radio
-	var/obj/item/radio/security_radio
 
 /obj/machinery/mineral/labor_claim_console/Initialize(mapload)
 	. = ..()
-	security_radio = new /obj/item/radio(src)
-	security_radio.set_listening(FALSE)
 	locate_stacking_machine()
 	//If we can't find a stacking machine end it all ok?
 	if(!stacking_machine)
@@ -31,7 +27,6 @@ GLOBAL_LIST(labor_sheet_values)
 		GLOB.labor_sheet_values = sort_list(sheet_list, GLOBAL_PROC_REF(cmp_sheet_list))
 
 /obj/machinery/mineral/labor_claim_console/Destroy()
-	QDEL_NULL(security_radio)
 	if(stacking_machine)
 		stacking_machine.labor_console = null
 		stacking_machine = null
@@ -118,8 +113,7 @@ GLOBAL_LIST(labor_sheet_values)
 					to_chat(user_mob, span_alert("No permission to dock could be granted."))
 				else
 					if(!(obj_flags & EMAGGED))
-						security_radio.set_frequency(FREQ_SECURITY)
-						security_radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
+						aas_config_announce(/datum/aas_config_entry/security_labor_stacker, list("PERSON" = user_mob.real_name), src, list(RADIO_CHANNEL_SECURITY))
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
 					to_chat(user_mob, span_notice("Shuttle received message and will be sent shortly."))
 					return TRUE
@@ -190,3 +184,12 @@ GLOBAL_LIST(labor_sheet_values)
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+
+/datum/aas_config_entry/security_labor_stacker
+	name = "Security Alert: Labor Camp Release"
+	announcement_lines_map = list(
+		"Message" = "%PERSON returned to the station. Minerals and Prisoner ID card ready for retrieval."
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the name of the prisoner."
+	)
