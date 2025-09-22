@@ -29,7 +29,7 @@
 	if(affected_mob.immune_system.antibodies && affected_mob.immune_system.strength == 0)
 		var/list/possible_antibodies = list()
 		//only reduce antibodies that arent 1
-		for(var/antibody as anything in affected_mob.immune_system.antibodies)
+		for(var/antibody in affected_mob.immune_system.antibodies)
 			if(affected_mob.immune_system.antibodies[antibody] > 1)
 				possible_antibodies += antibody
 		//checks if there are any antibodies to remove

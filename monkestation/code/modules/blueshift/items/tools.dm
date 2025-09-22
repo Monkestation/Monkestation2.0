@@ -222,7 +222,7 @@
 
 // This is what uses fuel in the parent. We override it here to not use fuel
 /obj/item/weldingtool/electric/use(used = 0)
-	return isOn()
+	return ..() && isOn()
 
 /obj/item/weldingtool/electric/examine()
 	. = ..()

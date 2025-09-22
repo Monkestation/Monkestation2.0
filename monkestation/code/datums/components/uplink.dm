@@ -9,7 +9,7 @@
 		/datum/traitor_objective/target_player/kidnapping/uncommon = STARTING_UNCOMMON_CONTRACTS,
 		/datum/traitor_objective/target_player/kidnapping/rare = STARTING_RARE_CONTRACTS,
 	))
-	for(var/item as anything in subtypesof(/datum/contractor_item))
+	for(var/item in subtypesof(/datum/contractor_item))
 		uplink_handler.contractor_market_items += new item
 
 #undef STARTING_COMMON_CONTRACTS

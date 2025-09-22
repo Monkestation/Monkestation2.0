@@ -474,6 +474,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/wrench{
+	pixel_x = 9
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "abk" = (
@@ -14511,9 +14514,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
 "aML" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
 /obj/item/staff,
@@ -16611,12 +16612,10 @@
 /turf/open/floor/plastic,
 /area/centcom/syndicate_mothership/expansion_fridgerummage)
 "aSq" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/vehicle/ridden/artillerylight,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "aSr" = (
@@ -21599,7 +21598,8 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi';
 	icon_state = "cc";
 	name = "centcom locker";
-	req_access = list("cent_captain")
+	req_access = list("cent_captain");
+	has_closed_overlay = 0
 	},
 /obj/item/radio/headset/headset_cent/commander,
 /obj/item/encryptionkey/heads/captain,
@@ -23232,7 +23232,8 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/telecomms/relay/preset/ruskie{
 	banned_frequencies = list(1213,1215,1221,1219,1217);
-	id = "CentCom Offices Relay"
+	id = "CentCom Offices Relay";
+	on = "0"
 	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/adminroom)

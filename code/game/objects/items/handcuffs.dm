@@ -7,6 +7,7 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -51,14 +52,6 @@
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
-
-/obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
-	. = ..()
-	handcuff_time = modify_fantasy_variable("handcuff_time", handcuff_time, -bonus * 2, minimum = 0.3 SECONDS)
-
-/obj/item/restraints/handcuffs/remove_fantasy_bonuses(bonus)
-	handcuff_time = reset_fantasy_variable("handcuff_time", handcuff_time)
-	return ..()
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -153,6 +146,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -172,6 +166,7 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
@@ -309,7 +304,7 @@
 			to_chat(user, span_warning("You need at least six iron sheets to make good enough weights!"))
 			return
 		to_chat(user, span_notice("You begin to apply [attacking_item] to [src]..."))
-		if(do_after(user, 35, target = src))
+		if(do_after(user, 3.5 SECONDS, target = src))
 			if(M.get_amount() < 6 || !M)
 				return
 			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
@@ -516,7 +511,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 15 SECONDS)
 
 /**
  * Handles energy snares disappearing

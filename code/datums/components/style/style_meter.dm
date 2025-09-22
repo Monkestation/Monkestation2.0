@@ -28,28 +28,29 @@
 	. = ..()
 	. += span_notice("You feel like a <b>multitool</b> could be used on this.")
 
-/obj/item/style_meter/afterattack(atom/movable/attacked_atom, mob/user, proximity_flag, click_parameters)
+/obj/item/style_meter/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!istype(attacked_atom, /obj/item/clothing/glasses))
-		return
+	if(!istype(interacting_with, /obj/item/clothing/glasses))
+		return NONE
 
-	forceMove(attacked_atom)
-	attacked_atom.add_overlay(meter_appearance)
-	RegisterSignal(attacked_atom, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
-	RegisterSignal(attacked_atom, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(attacked_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(attacked_atom, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
-	RegisterSignal(attacked_atom, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
+	forceMove(interacting_with)
+	interacting_with.add_overlay(meter_appearance)
+	RegisterSignal(interacting_with, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
+	RegisterSignal(interacting_with, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(interacting_with, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(interacting_with, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
+	RegisterSignal(interacting_with, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
 	balloon_alert(user, "style meter attached")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	if(!iscarbon(attacked_atom.loc))
-		return
+	if(!iscarbon(interacting_with.loc))
+		return ITEM_INTERACT_SUCCESS
 
-	var/mob/living/carbon/carbon_wearer = attacked_atom.loc
-	if(carbon_wearer.glasses != attacked_atom)
-		return
+	var/mob/living/carbon/carbon_wearer = interacting_with.loc
+	if(carbon_wearer.glasses != interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
 	style_meter = carbon_wearer.AddComponent(/datum/component/style, multitooled)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/style_meter/Moved(atom/old_loc, Dir, momentum_change)
 	. = ..()

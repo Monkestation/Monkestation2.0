@@ -5,6 +5,7 @@
 	antag_datum = /datum/antagonist/darkspawn
 	typepath = /datum/round_event/antagonist/solo/darkspawn
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -38,7 +39,7 @@
 	//title_icon = "darkspawn"
 	earliest_start = 0 SECONDS
 	denominator = 25 //slightly more people for additional darkspawns
-	weight = 8
+	weight = 4
 	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/darkspawn
