@@ -1314,25 +1314,36 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return FALSE
+	if(named)
+		named = FALSE
+		timed = FALSE
+		time_to_assign = initial(time_to_assign)
+		regisitered_name = initial(registered_name)
+		name = initial(name)
+		to_chat(user, "Restating prisoner ID to default parameters.")
+		return
 	if(timed)
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
+
 		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
-	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-	timed = TRUE
+	if(choice)
+		time_to_assign = choice
+		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		timed = TRUE
 	var/name_input=tgui_input_text(user, "Enter prisoner name (will appear on sensors)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
 	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
 	registered_name = name_input
 	name = "[name_input]'s ID Card (Prisoner)"
 	to_chat(user, "You set the ID's identification to [name_input].")
+	named = TRUE
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
