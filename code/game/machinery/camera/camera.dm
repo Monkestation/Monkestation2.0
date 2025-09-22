@@ -374,7 +374,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/pda))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		var/itemname = ""
 		var/info = ""
 

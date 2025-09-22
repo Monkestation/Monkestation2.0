@@ -292,7 +292,7 @@
 					var/obj/item/bodypart/BP = I
 					BP.try_attach_limb(mob_occupant)
 
-			use_power(7500) //This might need tweaking.
+			use_energy(7500) //This might need tweaking.
 
 		else if(mob_occupant && (mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
@@ -316,7 +316,7 @@
 		occupant = null
 		if (!mess && !panel_open)
 			icon_state = "pod_0"
-		use_power(200)
+		use_energy(200)
 
 /obj/machinery/clonepod/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE

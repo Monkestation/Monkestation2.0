@@ -262,7 +262,7 @@
 	for(var/material in design.materials)
 		power += round(design.materials[material] * print_quantity / 35)
 	power = min(active_power_usage, power)
-	use_power(power)
+	use_energy(power)
 
 	// Charge the lathe tax at least once per ten items.
 	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
