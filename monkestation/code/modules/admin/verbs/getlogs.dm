@@ -1,27 +1,18 @@
 GLOBAL_LIST(debug_logfile_names)
 GLOBAL_PROTECT(debug_logfile_names)
 
-/client/proc/getserverlogs_debug()
-	set name = "Get Server Logs (Debug)"
-	set desc = "View/retrieve debug-related logfiles."
-	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
-		return
+ADMIN_VERB(getserverlogs_debug, R_DEBUG,  FALSE, "Get Server Logs (Debug)", "View/retrieve debug-related logfiles.", ADMIN_CATEGORY_DEBUG)
 	get_debug_logfiles()
 	if(!GLOB.debug_logfile_names)
 		return
-	browseserverlogs(whitelist = GLOB.debug_logfile_names, allow_folder = FALSE)
+	user.browseserverlogs(whitelist = GLOB.debug_logfile_names, allow_folder = FALSE)
 
-/client/proc/getcurrentlogs_debug()
-	set name = "Get Current Logs (Debug)"
-	set desc = "View/retrieve debug-related logfiles for the current round."
-	set category = "Debug"
-	if(!check_rights_for(src, R_DEBUG))
-		return
+
+ADMIN_VERB(getcurrentlogs_debug, R_DEBUG, FALSE, "Get Current Logs (Debug)", "View/retrieve debug-related logfiles for the current round.", ADMIN_CATEGORY_DEBUG)
 	get_debug_logfiles()
 	if(!GLOB.debug_logfile_names)
 		return
-	browseserverlogs(current = TRUE, whitelist = GLOB.debug_logfile_names, allow_folder = FALSE)
+	user.browseserverlogs(current = TRUE, whitelist = GLOB.debug_logfile_names, allow_folder = FALSE)
 
 /client/proc/browseserverlogs(current = FALSE, list/whitelist = null, allow_folder = TRUE)
 	var/path = browse_files(current ? BROWSE_ROOT_CURRENT_LOGS : BROWSE_ROOT_ALL_LOGS, whitelist = whitelist, allow_folder = allow_folder)

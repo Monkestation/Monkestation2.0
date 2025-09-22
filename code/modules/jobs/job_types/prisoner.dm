@@ -33,7 +33,7 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(handle_prisoner_joining))
 
-/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/crewmember, rank)
+/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/carbon/human/crewmember, rank)
 	SIGNAL_HANDLER
 	if(rank != title)
 		return //not a prisoner

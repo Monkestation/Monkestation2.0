@@ -122,6 +122,8 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+/// Cranial fissure wound.
+#define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
 // MONKESTATION ADDITION START
 //Have to put it here so it can be used in the global list of wound series wounding_types_to_series
@@ -252,19 +254,19 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
 	var/list/wounding_type_list = list()
-	for (var/wounding_type as anything in wounding_types)
+	for (var/wounding_type in wounding_types)
 		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(wounding_type_list))
+	for (var/series in shuffle(wounding_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
 
 		var/picked_severity
-		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+		for (var/severity_text in shuffle(GLOB.wound_severities_chronological))
 			var/severity = text2num(severity_text)
 			if (severity > severity_min || severity < severity_max)
 				continue

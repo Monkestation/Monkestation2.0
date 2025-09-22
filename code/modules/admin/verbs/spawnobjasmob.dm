@@ -1,11 +1,4 @@
-/datum/admins/proc/spawn_objasmob(object as text)
-	set category = "Debug"
-	set desc = "(obj path) Spawn object-mob"
-	set name = "Spawn object-mob"
-
-	if(!check_rights(R_SPAWN))
-		return
-
+ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, FALSE, "Spawn Object-Mob", "Spawn an object as if it were a mob.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
 
 	if (!chosen)
@@ -15,21 +8,62 @@
 
 	var/obj/chosen_obj = text2path(chosen)
 
-	var/list/settings = list(
-	"mainsettings" = list(
-	"name" = list("desc" = "Name", "type" = "string", "value" = "Bob"),
-			"maxhealth" = list("desc" = "Max. health", "type" = "number", "value" = 100),
-	"access" = list("desc" = "Access ID", "type" = "datum", "path" = "/obj/item/card/id", "value" = "Default"),
-			"objtype" = list("desc" = "Base obj type", "type" = "datum", "path" = "/obj", "value" = "[chosen]"),
-			"googlyeyes" = list("desc" = "Googly eyes", "type" = "boolean", "value" = "No"),
-			"disableai" = list("desc" = "Disable AI", "type" = "boolean", "value" = "Yes"),
-			"idledamage" = list("desc" = "Damaged while idle", "type" = "boolean", "value" = "No"),
-			"dropitem" = list("desc" = "Drop obj on death", "type" = "boolean", "value" = "Yes"),
-			"mobtype" = list("desc" = "Base mob type", "type" = "datum", "path" = "/mob/living/basic/mimic/copy", "value" = "/mob/living/basic/mimic/copy"),
-			"ckey" = list("desc" = "ckey", "type" = "ckey", "value" = "none"),
+	var/list/settings = list("mainsettings" = list(
+	"name" = list(
+		"desc" = "Name",
+		"type" = "string",
+		"value" = "Bob"
+		),
+	"maxhealth" = list(
+		"desc" = "Max. health",
+		"type" = "number",
+		"value" = 100
+		),
+	"access" = list(
+		"desc" = "Access ID",
+		"type" = "datum",
+		"path" = "/obj/item/card/id",
+		"value" = "Default"
+		),
+	"objtype" = list(
+		"desc" = "Base obj type",
+		"type" = "datum",
+		"path" = "/obj", "value" = "[chosen]"
+		),
+	"googlyeyes" = list(
+		"desc" = "Googly eyes",
+		"type" = "boolean",
+		"value" = "No"
+		),
+	"disableai" = list(
+		"desc" = "Disable AI",
+		"type" = "boolean",
+		"value" = "Yes"
+		),
+	"idledamage" = list(
+		"desc" = "Damaged while idle",
+		"type" = "boolean",
+		"value" = "No"
+		),
+	"dropitem" = list(
+		"desc" = "Drop obj on death",
+		"type" = "boolean",
+		"value" = "Yes"
+		),
+	"mobtype" = list(
+		"desc" = "Base mob type",
+		"type" = "datum",
+		"path" = "/mob/living/basic/mimic/copy",
+		"value" = "/mob/living/basic/mimic/copy"
+		),
+	"ckey" = list(
+		"desc" = "ckey",
+		"type" = "ckey",
+		"value" = "none"
+		),
 	))
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = 0, settings=settings)
+	var/list/prefreturn = presentpreflikepicker(user.mob,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = 0, settings=settings)
 	if (prefreturn["button"] == 1)
 		settings = prefreturn["settings"]
 		var/mainsettings = settings["mainsettings"]
@@ -37,9 +71,9 @@
 
 		basemob = text2path(mainsettings["mobtype"]["value"])
 		if (!ispath(basemob, /mob/living/basic/mimic/copy) || !ispath(chosen_obj, /obj))
-			to_chat(usr, "Mob or object path invalid", confidential = TRUE)
+			to_chat(user.mob, "Mob or object path invalid", confidential = TRUE)
 
-		basemob = new basemob(get_turf(usr), new chosen_obj(get_turf(usr)), usr, mainsettings["dropitem"]["value"] == "Yes" ? FALSE : TRUE, (mainsettings["googlyeyes"]["value"] == "Yes" ? FALSE : TRUE))
+		basemob = new basemob(get_turf(user.mob), new chosen_obj(get_turf(user.mob)), user.mob, mainsettings["dropitem"]["value"] == "Yes" ? FALSE : TRUE, (mainsettings["googlyeyes"]["value"] == "Yes" ? FALSE : TRUE))
 
 		if (mainsettings["disableai"]["value"] == "Yes")
 			basemob.ai_controller = null
@@ -67,5 +101,5 @@
 			basemob.PossessByPlayer(mainsettings["ckey"]["value"])
 
 
-		log_admin("[key_name(usr)] spawned a sentient object-mob [basemob] from [chosen_obj] at [AREACOORD(usr)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn object-mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(user.mob)] spawned a sentient object-mob [basemob] from [chosen_obj] at [AREACOORD(user.mob)]")
+		BLACKBOX_LOG_ADMIN_VERB("Spawn object-mob")

@@ -37,6 +37,7 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
+	ambient_buzz = null
 
 /area/misc/testroom
 	requires_power = FALSE

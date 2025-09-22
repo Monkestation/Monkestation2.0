@@ -46,7 +46,7 @@
 /**
 	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.
 
-	Called when the COMSIG_ATOM_ENTERED and COMSIG_ATOM_INITIALIZED_ON signals are sent.
+	Called when the COMSIG_ATOM_ENTERED and COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON signals are sent.
 
 	Arguments:
 	* source - the turf that is listening for the signals.
@@ -81,39 +81,43 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProcessingConsole")
+		ui.open()
+
+/obj/machinery/mineral/processing_unit_console/ui_static_data(mob/user)
+	return processing_machine.ui_static_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
+	return processing_machine.ui_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(!processing_machine)
+	if(.)
 		return
 
-	var/dat = processing_machine.get_machine_data()
+	switch(action)
+		if("setMaterial")
+			var/datum/material/new_material = locate(params["value"])
+			if(!istype(new_material))
+				return
 
-	var/datum/browser/popup = new(user, "processing", "Smelting Console", 300, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-	add_fingerprint(usr)
-
-	if(href_list["material"])
-		var/datum/material/new_material = locate(href_list["material"])
-		if(istype(new_material))
 			processing_machine.selected_material = new_material
 			processing_machine.selected_alloy = null
+			return TRUE
 
-	if(href_list["alloy"])
-		processing_machine.selected_material = null
-		processing_machine.selected_alloy = href_list["alloy"]
+		if("setAlloy")
+			processing_machine.selected_material = null
+			processing_machine.selected_alloy = params["value"]
+			return TRUE
 
-	if(href_list["set_on"])
-		processing_machine.on = (href_list["set_on"] == "on")
-		processing_machine.begin_processing()
-
-	updateUsrDialog()
-	return
+		if("toggle")
+			processing_machine.on = !processing_machine.on
+			if(processing_machine.on)
+				processing_machine.begin_processing()
+			return TRUE
 
 /obj/machinery/mineral/processing_unit_console/Destroy()
 	processing_machine = null
@@ -136,29 +140,27 @@
 	var/datum/techweb/stored_research
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
+	///Material container for materials
+	var/datum/component/material_container/materials
 
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	var/list/allowed_materials = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
+
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		INFINITY, \
+		MATCONTAINER_EXAMINE, \
+		allowed_items = /obj/item/stack \
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
+	materials = null
 	mineral_machine = null
 	stored_research = null
 	return ..()
@@ -166,19 +168,16 @@
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
 		return
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	var/material_amount = materials.get_item_material_amount(O, BREAKDOWN_FLAGS_ORE_PROCESSOR)
+	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)
 	else
-		materials.insert_item(O, breakdown_flags=BREAKDOWN_FLAGS_ORE_PROCESSOR)
-		qdel(O)
+		materials.insert_item(O)
 		if(mineral_machine)
 			mineral_machine.updateUsrDialog()
 
 /obj/machinery/mineral/processing_unit/proc/get_machine_data()
 	var/dat = "<b>Smelter control console</b><br><br>"
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/datum/material/all_materials as anything in materials.materials)
 		var/amount = materials.materials[all_materials]
 		dat += "<span class=\"res_name\">[all_materials.name]: </span>[amount] cm&sup3;"
@@ -232,7 +231,6 @@
 		mineral_machine.updateUsrDialog()
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore(seconds_per_tick = 2)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/datum/material/mat = selected_material
 	if(!mat)
 		return
@@ -255,8 +253,7 @@
 		on = FALSE
 		return
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.use_materials(alloy.materials, amount)
+	materials.use_materials(alloy.materials, multiplier = amount)
 
 	generate_mineral(alloy.build_path)
 
@@ -265,8 +262,6 @@
 		return FALSE
 
 	var/build_amount = SMELT_AMOUNT * seconds_per_tick
-
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	for(var/mat_cat in D.materials)
 		var/required_amount = D.materials[mat_cat]
@@ -279,10 +274,5 @@
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)
-
-/obj/machinery/mineral/processing_unit/on_deconstruction()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all()
-	return ..()
 
 #undef SMELT_AMOUNT

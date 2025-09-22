@@ -20,7 +20,7 @@
 	return ..()
 
 /datum/nobody_wants_to_learn_matrix_math/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/nobody_wants_to_learn_matrix_math/ui_close(mob/user)
 	qdel(src)
@@ -42,7 +42,7 @@
 	data["pixelated"] = target.appearance_flags & PIXEL_SCALE
 	return data
 
-/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params)
+/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

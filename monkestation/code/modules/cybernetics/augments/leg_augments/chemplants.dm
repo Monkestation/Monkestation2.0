@@ -14,8 +14,6 @@
 	. = ..()
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/on_life()
-	if(!check_compatibility())
-		return
 		//Cost of refilling is a little bit of nutrition, some blood and getting jittery
 	if(owner.nutrition > NUTRITION_LEVEL_STARVING && owner.blood_volume > BLOOD_VOLUME_SURVIVE && current_ticks_cooldown > 0)
 
@@ -60,9 +58,8 @@
 		overlays += overlay
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/proc/remove_overlay()
-	QDEL_NULL(overlay)
-
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	overlay = null
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /obj/effect/temp_visual/chempunk
 	icon = 'monkestation/code/modules/cybernetics/icons/96x96.dmi'
@@ -77,7 +74,6 @@
 	desc = "Dangerous implant used by the syndicate to reinforce their assault forces that go on suicide missions."
 	implant_color = "#74942a"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	reagent_list = list(
 		/datum/reagent/determination = 5,
 		/datum/reagent/drug/methamphetamine = 5 ,
@@ -91,7 +87,6 @@
 	name = "deep emergency chemical infuser"
 	desc = "Dangerous implant used by the syndicate to reinforce their assault forces that go on suicide missions."
 	implant_color = "#2a6194"
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	reagent_list = list(
 		/datum/reagent/medicine/atropine = 5,
 		/datum/reagent/medicine/omnizine = 3 ,

@@ -239,6 +239,17 @@
 	var/disabledreload //For weapons with no cache (like the rockets) which are reloaded by hand
 	var/ammo_type
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC,
+		"projectiles" = projectiles,
+		"max_magazine" = initial(projectiles),
+		"projectiles_cache" = projectiles_cache,
+		"projectiles_cache_max" = projectiles_cache_max,
+		"disabledreload" = disabledreload,
+		"ammo_type" = ammo_type,
+	)
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())
 		return FALSE
@@ -246,8 +257,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action == "reload")
 		rearm()
 		return TRUE
@@ -369,12 +379,18 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
+	chassis.use_power(energy_drain)
+	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O, source)
 	O.throw_at(target, missile_range, missile_speed, source, FALSE, diagonals_first = diags_first)
+	sleep(max(0, projectile_delay))
+	if(kickback)
+		chassis.newtonian_move(newtonian_target)
 	return TRUE
 
 //used for projectile initilisation (priming flashbang) and additional logging
@@ -423,9 +439,11 @@
 	projectiles = 15
 	missile_speed = 1.5
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 	movedelay = 0
+	ammo_type = MECHA_AMMO_BANANA_PEEL
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -436,13 +454,14 @@
 	projectiles = 15
 	missile_speed = 1.5
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
 	movedelay = 0
+	ammo_type = MECHA_AMMO_MOUSETRAP
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
-
 
 //Classic extending punching glove, but weaponised!
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
@@ -458,19 +477,20 @@
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 10
 	projectiles_cache = 999
+	projectiles_cache_max = 999
 	harmful = TRUE
 	diags_first = TRUE
 	/// Damage done by the glove on contact. Also used to determine throw distance (damage / 5)
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
+	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_snowflake_data()
-	return list(
-		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"mode" = harmful ? "LETHAL FISTING" : "Cuddles",
-	)
+	. = ..()
+	.["mode"] = harmful ? "LETHAL FISTING" : "Cuddles"
+	.["mode_label"] = "Honk Severity"
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/handle_ui_act(action, list/params)
 	. = ..()
 	if(action == "change_mode")
 		harmful = !harmful
@@ -533,3 +553,51 @@
 	equip_cooldown = 60
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+
+//devitt (the literal fucking tank) weapons
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
+	name = "40mm tank cannon"
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 1
+	projectiles_cache = 10
+	projectiles_cache_max = 35
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
+	name = "12.7mm Malone Mk.1 Ratcatcher"
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_mg"
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 30
+	projectiles_cache = 60
+	projectiles_cache_max = 120
+	projectiles_per_shot = 5
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 4
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/mininuke
+	name = "mininuke"
+	desc = "shouldn't see this unless an admin spawned it, you might survive firing this in the vendozer? It has 100 bomb armor but who fucking knows!"
+	icon_state = "mecha_light_tank_cannon"
+	projectile = /obj/projectile/bullet/rocket/mininuke
+	projectiles = 100000000
+	projectiles_cache = 10000000
+	projectiles_cache_max = 100000000
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK

@@ -76,23 +76,15 @@
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_FASTMED, TRAIT_QUICKER_CARRY), MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
 	name = "MOD advanced quick carry module"
 	removable = FALSE
 	complexity = 0
-
-/obj/item/mod/module/quick_carry/on_suit_activation()
-	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
-
-/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
-	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
@@ -411,4 +403,21 @@
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
 		/datum/surgery/advanced/bioware/cortex_imprint,
 		/datum/surgery/advanced/bioware/cortex_folding,
+	)
+
+/obj/item/surgical_processor/cmo // Include the weaker surgeries in the given research unless we have mutiple surgeries showing up.
+	loaded_surgeries = list(
+		/datum/surgery/healing/burn/upgraded,
+		/datum/surgery/healing/burn/upgraded/femto,
+		/datum/surgery/healing/brute/upgraded,
+		/datum/surgery/healing/brute/upgraded/femto,
+		/datum/surgery/robot_healing/upgraded,
+		/datum/surgery/robot_healing/experimental,
+		/datum/surgery/healing/combo,
+		/datum/surgery/healing/combo/upgraded,
+		/datum/surgery/blood_filter/upgraded,
+		/datum/surgery/blood_filter/femto,
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/dna_recovery,
+		/datum/surgery/advanced/wing_reconstruction,
 	)

@@ -36,7 +36,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/service,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Service Techfab"
@@ -50,7 +49,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/security,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five
 					)
@@ -65,7 +63,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/cargo,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Cargo Techfab"
@@ -79,7 +76,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/medical,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Medical Techfab"
@@ -93,7 +89,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/engineering,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Engineering Protolathe"
@@ -107,7 +102,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/science,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five
 					)

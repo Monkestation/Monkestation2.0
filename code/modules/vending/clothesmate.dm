@@ -53,6 +53,8 @@
 				/obj/item/storage/belt/fannypack = 3,
 				/obj/item/storage/belt/fannypack/blue = 3,
 				/obj/item/storage/belt/fannypack/red = 3,
+				/obj/item/umbrella = 3,
+				/obj/item/umbrella/parasol = 2,
 			),
 		),
 
@@ -144,7 +146,14 @@
 
 				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
 				/obj/item/clothing/under/ethereal_tunic = 3,
-
+				/obj/item/clothing/head/costume/hairpin = 2,
+				/obj/item/clothing/under/costume/yukata = 2,
+				/obj/item/clothing/under/costume/yukata/green = 2,
+				/obj/item/clothing/under/costume/yukata/white = 2,
+				/obj/item/clothing/under/costume/kimono = 2,
+				/obj/item/clothing/under/costume/kimono/red = 2,
+				/obj/item/clothing/under/costume/kimono/purple = 2,
+				/obj/item/clothing/shoes/sandal/alt = 4,
 				/obj/item/clothing/mask/kitsune = 3,
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,

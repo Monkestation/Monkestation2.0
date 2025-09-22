@@ -163,18 +163,18 @@
 	. = ..()
 	AddComponent(/datum/component/charge_adjuster, type_to_charge_to = /obj/item/spellbook, charges_given = 1, called_proc_name = TYPE_PROC_REF(/obj/item/spellbook, adjust_charge))
 
-/obj/item/wizard_armour_charge/pre_attack(atom/A, mob/living/user, params)
+/obj/item/wizard_armour_charge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 
-	var/obj/item/mod/module/energy_shield/wizard/shield = istype(A, /obj/item/mod/module/energy_shield/wizard) || locate(/obj/item/mod/module/energy_shield/wizard) in A.contents
+	var/obj/item/mod/module/energy_shield/wizard/shield = istype(interacting_with, /obj/item/mod/module/energy_shield/wizard) || locate(/obj/item/mod/module/energy_shield/wizard) in interacting_with.contents
 	if(shield)
 		if(isnum(shield))
-			shield = A
+			shield = interacting_with
 		if(shield.max_charges >= (initial(shield.max_charges) + (ADDED_MAX_CHARGE * MAX_CHARGES_ABSORBED)))
 			balloon_alert(user, "\The [shield] cannot take more charges, you can put this back into your spellbook to refund it.")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		shield.max_charges += ADDED_MAX_CHARGE
 		var/datum/component/shielded/shield_comp = shield.mod?.GetComponent(/datum/component/shielded)
@@ -182,6 +182,8 @@
 			shield_comp.max_charges += ADDED_MAX_CHARGE
 			shield_comp.current_charges += (ADDED_MAX_CHARGE - initial(shield_comp.charge_recovery))
 		qdel(src) //should still be able to finish the attack chain
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 #undef ADDED_MAX_CHARGE
 #undef MAX_CHARGES_ABSORBED

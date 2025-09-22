@@ -65,42 +65,42 @@
 		UnregisterSignal(ghostie, COMSIG_QDELETING)
 		ghostie = null
 
-/datum/status_effect/revenant_blight/tick(seconds_per_tick, times_fired)
+/datum/status_effect/revenant_blight/tick(seconds_between_ticks, times_fired)
 	if(owner.reagents?.has_reagent(/datum/reagent/water/holywater))
-		remove_duration(HOLY_WATER_CURE_RATE * seconds_per_tick)
-	owner.mob_mood?.direct_sanity_drain(-rand(2, 10) * seconds_per_tick)
+		remove_duration(HOLY_WATER_CURE_RATE * seconds_between_ticks)
+	owner.mob_mood?.direct_sanity_drain(-rand(2, 10) * seconds_between_ticks)
 	if(!finalstage)
-		if(owner.body_position == LYING_DOWN && owner.IsSleeping() && SPT_PROB(3 * stage, seconds_per_tick)) // Make sure they are sleeping laying down.
+		if(owner.body_position == LYING_DOWN && owner.IsSleeping() && SPT_PROB(3 * stage, seconds_between_ticks)) // Make sure they are sleeping laying down.
 			qdel(src) // Cure the Status effect.
 			return FALSE
-		if(SPT_PROB(1.5 * stage, seconds_per_tick))
+		if(SPT_PROB(1.5 * stage, seconds_between_ticks))
 			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
 			owner.adjust_confusion(4 SECONDS)
-			owner.stamina.adjust(-21 * seconds_per_tick)
+			owner.stamina.adjust(-21 * seconds_between_ticks)
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(stagedamage < stage)
 			stagedamage++
-			owner.adjustToxLoss(1 * stage * seconds_per_tick) //should, normally, do about 30 toxin damage.
+			owner.adjustToxLoss(1 * stage * seconds_between_ticks) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(owner.loc)
-		if(SPT_PROB(25, seconds_per_tick))
-			owner.stamina.adjust(-(stage * 2) * seconds_per_tick)
+		if(SPT_PROB(25, seconds_between_ticks))
+			owner.stamina.adjust(-(stage * 2) * seconds_between_ticks)
 
 	switch(stage)
 		if(2)
-			if(owner.stat == CONSCIOUS && SPT_PROB(2.5, seconds_per_tick))
+			if(owner.stat == CONSCIOUS && SPT_PROB(2.5, seconds_between_ticks))
 				owner.emote("pale")
 		if(3)
-			if(owner.stat == CONSCIOUS && SPT_PROB(5, seconds_per_tick))
+			if(owner.stat == CONSCIOUS && SPT_PROB(5, seconds_between_ticks))
 				owner.emote(pick("pale","shiver"))
 		if(4)
-			if(owner.stat == CONSCIOUS && SPT_PROB(7.5, seconds_per_tick))
+			if(owner.stat == CONSCIOUS && SPT_PROB(7.5, seconds_between_ticks))
 				owner.emote(pick("pale","shiver","cries"))
 		if(5)
 			if(!finalstage)
 				finalstage = TRUE
 				ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, TRAIT_STATUS_EFFECT(id))
 				to_chat(owner, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
-				owner.stamina.adjust(-22.5 * seconds_per_tick, forced = TRUE)
+				owner.stamina.adjust(-22.5 * seconds_between_ticks, forced = TRUE)
 				new /obj/effect/temp_visual/revenant(owner.loc)
 				if(ishuman(owner))
 					var/mob/living/carbon/human/human = owner
@@ -111,7 +111,7 @@
 				owner.add_atom_colour(COLOR_REVENANT, TEMPORARY_COLOUR_PRIORITY)
 				QDEL_IN(src, 10 SECONDS) // Automatically call qdel and removing status on timer.
 
-	if(SPT_PROB(CHANCE_TO_WORSEN, seconds_per_tick)) // Finally check if we should increase the stage.
+	if(SPT_PROB(CHANCE_TO_WORSEN, seconds_between_ticks)) // Finally check if we should increase the stage.
 		adjust_stage(1)
 
 /datum/status_effect/revenant_blight/proc/remove_when_ghost_dies(datum/source)

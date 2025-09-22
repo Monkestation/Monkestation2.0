@@ -35,6 +35,7 @@
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
+	laser = 50
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -239,8 +240,8 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
+/obj/structure/blob/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))

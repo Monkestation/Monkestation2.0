@@ -156,9 +156,6 @@
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
-
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object
 
@@ -213,3 +210,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

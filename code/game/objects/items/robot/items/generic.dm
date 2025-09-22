@@ -199,11 +199,11 @@
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
-/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !iscyborg(user))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/borg/charger/interact_with_atom(atom/target, mob/living/silicon/robot/user, list/modifiers)
+	if(!iscyborg(user))
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/target_machine = target
@@ -212,7 +212,7 @@
 				return
 
 			to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
-			while(do_after(user, 15, target = target_machine, progress = 0))
+			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -246,7 +246,7 @@
 
 			to_chat(user, span_notice("You connect to [target]'s power port..."))
 
-			while(do_after(user, 15, target = target, progress = 0))
+			while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -284,7 +284,7 @@
 
 		to_chat(user, span_notice("You connect to [target]'s power port..."))
 
-		while(do_after(user, 15, target = target, progress = 0))
+		while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
 			if(!user || !user.cell || mode != "charge")
 				return
 

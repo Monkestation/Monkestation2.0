@@ -77,6 +77,8 @@
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eat_target, silent)
+	if(isnull(eat_target))
+		return
 	if(SEND_SIGNAL(eat_target, COMSIG_OOZE_EAT_ATOM, src, edible_food_types) & COMPONENT_ATOM_EATEN)
 		return
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
@@ -197,7 +199,7 @@
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	///The mob thats being consumed by this creature
-	var/mob/living/vored_mob
+	var/mob/living/devoured_mob
 
 ///Register for owner death
 /datum/action/consume/New(Target)
@@ -207,7 +209,7 @@
 
 /datum/action/consume/proc/handle_mob_deletion()
 	SIGNAL_HANDLER
-	stop_consuming() //Shit out the vored mob before u go go
+	stop_consuming() //Shit out the devoured mob before u go go
 
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger(trigger_flags)
@@ -218,11 +220,11 @@
 	if(!isliving(ooze.pulling))
 		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
-	if(vored_mob)
+	if(devoured_mob)
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
 	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 15, target = ooze.pulling))
+	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 
@@ -233,9 +235,9 @@
 
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
-	vored_mob = target
-	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
-	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
+	devoured_mob = target
+	devoured_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
+	RegisterSignal(devoured_mob, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
@@ -243,24 +245,24 @@
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
 	STOP_PROCESSING(SSprocessing, src)
-	vored_mob.forceMove(get_turf(owner))
+	devoured_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
-	UnregisterSignal(vored_mob, COMSIG_QDELETING)
-	vored_mob = null
+	owner.visible_message(span_warning("[owner] pukes out [devoured_mob]!"), span_notice("You puke out [devoured_mob]."))
+	UnregisterSignal(devoured_mob, COMSIG_QDELETING)
+	devoured_mob = null
 
 ///Gain health for the consumption and dump some clone loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	vored_mob.adjustBruteLoss(5)
+	devoured_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
 	///Dump em at 200 cloneloss.
-	if(vored_mob.getBruteLoss() >= 200)
+	if(devoured_mob.getBruteLoss() >= 200)
 		stop_consuming()
 
-///On owner death dump the current vored mob
+///On owner death dump the current devoured mob
 /datum/action/consume/proc/on_owner_death()
 	SIGNAL_HANDLER
 	stop_consuming()

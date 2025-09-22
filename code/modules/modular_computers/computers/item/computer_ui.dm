@@ -132,15 +132,13 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program(usr)
+			active_program?.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
 			return TRUE
 		if("PC_minimize")
-			if(!active_program)
-				return
-			active_program.background_program()
+			active_program?.background_program()
 			return TRUE
 
 		if("PC_killprogram")

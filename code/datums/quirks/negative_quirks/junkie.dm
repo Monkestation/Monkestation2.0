@@ -121,7 +121,7 @@
 	var/mob/living/carbon/carbon_holder = quirk_holder
 	var/obj/item/organ/internal/lungs/smoker_lungs = null
 	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(old_lungs && !(old_lungs.organ_flags & ORGAN_SYNTHETIC))
+	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
 		if(isplasmaman(carbon_holder))
 			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
 		else if(isethereal(carbon_holder))
@@ -192,7 +192,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
 	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(alcohol_liver && !(alcohol_liver.organ_flags & ORGAN_SYNTHETIC)) // robotic livers aren't affected
+	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 

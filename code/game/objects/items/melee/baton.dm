@@ -264,11 +264,14 @@
 
 	if(iscyborg(user))
 		if(affect_cyborg)
+			if(on_stun_sound)
+				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+			if(stun_animation)
+				user.do_attack_animation(user)
+
 			user.flash_act(affect_silicon = TRUE)
 			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
-			if(on_stun_sound)
-				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
@@ -276,17 +279,19 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			human_user.force_say()
+		if(on_stun_sound)
+			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+		if(stun_animation)
+			user.do_attack_animation(user)
+
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
-		if(on_stun_sound)
-			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
-	if(stun_animation)
-		user.do_attack_animation(user)
+
 	return
 
 /obj/item/conversion_kit
@@ -411,7 +416,7 @@
 /obj/item/melee/baton/security
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
-	desc_controls = "Left click to stun, right click to harm."
+	desc_controls = "Left click to stun, right click to harm. Make sure not to harm with it on!"
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -426,11 +431,16 @@
 	stamina_damage = 100 //monke edit
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1.5 SECONDS //monke edit
+	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
+
+	///Does this baton knock the user down if they harmbaton with it on?
+	var/self_knockdown = TRUE
+	///How long this baton will knock the user down if they harmbaton with it on.
+	var/self_knockdown_time = 1 SECONDS
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
@@ -453,6 +463,32 @@
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	update_appearance()
+
+/obj/item/melee/baton/security/baton_attack(mob/living/target, mob/living/user, modifiers)
+	var/parent_proc_result = ..()
+
+	//Comedic self stunning!
+	if (parent_proc_result == BATON_DO_NORMAL_ATTACK && active && self_knockdown && !iscyborg(user))
+		user.visible_message(
+			span_danger("[user] accidentally shocks themselves with the [src] and falls to the ground!"),
+			span_userdanger("You accidentally shock yourself with the [src]!")
+		)
+
+		if(on_stun_sound)
+			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+
+		if(stun_animation)
+			user.do_attack_animation(user)
+
+		user.Knockdown(self_knockdown_time)
+		user.apply_damage(stamina_damage, STAMINA)
+		additional_effects_non_cyborg(user, user) // user is the target here
+
+		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to harmbatonning with the [src] on", src)
+		return BATON_ATTACK_DONE
+	else
+		return parent_proc_result
+
 
 /obj/item/melee/baton/security/get_cell()
 	return cell
@@ -485,6 +521,14 @@
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
 	qdel(src)
+
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!active)
+		return
+	active = FALSE
+	update_appearance()
+	return TRUE
 
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
@@ -651,7 +695,7 @@
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	desc_controls = "Left click to stun, right click to harm."
+	desc_controls = "Left click to stun, right click to harm. Make sure not to harm with it on!"
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
@@ -775,6 +819,7 @@
 	slot_flags = null
 	throw_stun_chance = 50 //I think it'd be funny
 	can_upgrade = FALSE
+	self_knockdown = FALSE
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

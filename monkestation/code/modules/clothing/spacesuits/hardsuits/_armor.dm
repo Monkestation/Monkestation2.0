@@ -45,10 +45,10 @@
 /datum/armor/hardsuit/juggernaut
 	melee = 80
 	bullet = 80
-	laser = 50
+	laser = 60
 	energy = 60
 	fire = 100
-	wound = 25
+	wound = 35
 	acid = 100
 	bomb = 100
 
@@ -61,6 +61,10 @@
 	bio = 100
 	fire = 50
 	acid = 75
+
+/datum/armor/hardsuit/mining/explorer
+	bullet = 30
+	laser = 30
 
 /datum/armor/hardsuit/clown
 	melee = 30

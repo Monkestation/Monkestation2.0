@@ -46,64 +46,53 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
+/obj/item/card/emagfake/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible, \
+		initial_reagents = list( \
+			/datum/reagent/consumable/nutriment = 1, \
+			/datum/reagent/consumable/nutriment/protein = 0.5, \
+		), \
+		food_flags = FOOD_FINGER_FOOD, \
+		tastes = list("crime" = 1), \
+		eatverbs = list("swallow" = 1), \
+		eat_time = 0, \
+		foodtypes = JUNKFOOD, \
+		bite_consumption = 99999, \
+	)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if (!proximity_flag)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/window/tram/)) //list of all typepaths that require a specialized emag to hack.
 
-/obj/item/card/emag/attack()
-	return
+/obj/item/card/emag/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user.istate & ISTATE_HARM)
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!can_emag(target, user))
-		return
-	// monkestation start: microwavable emags
-	if(istype(target, /obj/machinery/microwave))
-		return
-	if (microwaved)
-		if (microwaved_uses_left <= 0)
-			to_chat(user, span_warning("the components [src] starts glowing a bright orange, before the capacitors erupt in a violent explosion!"))
-			to_chat(user, span_notice("How this small thing could have had this large of an explosion is byond you."))
-			A.emp_act(EMP_HEAVY)
-			explosion(src, heavy_impact_range = 0, light_impact_range = 3)
-			log_combat(user, A, "attempted to emag with microwaved emag, emag exploded")
-			if(!QDELETED(src)) //to check if the explosion killed it before we try to delete it
-				qdel(src)
-			return .
-		else
-			A.emp_act(EMP_LIGHT)
-		if (microwaved_uses_left == 1)
-			desc += " The capacitors are leaking."
-			to_chat(user, span_warning("the components on [src] start glowing a burning orange!"))
-			to_chat(user, span_warning("[src] feels way too hot to hold in your hand, and you fumble it on to the floor."))
-			user.dropItemToGround(src)
-			icon_state = "[icon_state]_glow"
-			src.visible_message(span_notice("[user] fumbles [src] and drops it on the ground, a glow fading from hot orange to dim red."))
-		else
-			flick("[icon_state]_spark", src)
-			to_chat(user, span_warning(pick(list("[src] sparks in your hand!", "The components on [src] start glowing!",))))
-		microwaved_uses_left--
-		log_combat(user, A, "attempted to emag with microwaved emag")
-	else
-	// monkestation end
-		log_combat(user, A, "attempted to emag")
-		A.emag_act(user, src)
+/obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE // lets us put things in bags without trying to emag them
+	if(!can_emag(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	log_combat(user, interacting_with, "attempted to emag")
+	if(interacting_with.emag_act(user, src))
+		SSblackbox.record_feedback("tally", "atom_emagged", 1, interacting_with.type)
+		return ITEM_INTERACT_SUCCESS
+	return NONE // In a perfect world this would be blocking, but this is not a perfect world
+
+/obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return prox_check ? NONE : interact_with_atom(interacting_with, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)

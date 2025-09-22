@@ -137,8 +137,8 @@
 #define set_dizzy(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness)
 #define set_dizzy_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness, TRUE)
 
-//#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to) // MONKESTATION EDIT OLD
-#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/stagger, up_to) // MONKESTATION EDIT NEW
+//#define adjust_rebuked_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to) // MONKESTATION EDIT OLD
+#define adjust_rebuked_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/rebuked, up_to) // MONKESTATION EDIT NEW
 
 #define adjust_jitter(duration) adjust_timed_status_effect(duration, /datum/status_effect/jitter)
 #define adjust_jitter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/jitter, up_to)
@@ -160,6 +160,11 @@
 #define set_silence(duration) set_timed_status_effect(duration, /datum/status_effect/silenced)
 #define set_silence_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/silenced, TRUE)
 
+#define adjust_emote_mute(duration) adjust_timed_status_effect(duration, /datum/status_effect/emote_mute)
+#define adjust_emote_mute_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/emote_mute, up_to)
+#define set_emote_mute(duration) set_timed_status_effect(duration, /datum/status_effect/emote_mute)
+#define set_emote_mute_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/emote_mute, TRUE)
+
 #define adjust_hallucinations(duration) adjust_timed_status_effect(duration, /datum/status_effect/hallucination)
 #define adjust_hallucinations_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/hallucination, up_to)
 #define set_hallucinations(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination)
@@ -170,8 +175,8 @@
 #define set_drowsiness(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness)
 #define set_drowsiness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness, TRUE)
 
-#define adjust_pacifism(duration) adjust_timed_status_effect(/datum/status_effect/pacify, duration)
-#define set_pacifism(duration) set_timed_status_effect(/datum/status_effect/pacify, duration)
+#define adjust_pacifism(duration) adjust_timed_status_effect(duration, /datum/status_effect/pacify)
+#define set_pacifism(duration) set_timed_status_effect(duration, /datum/status_effect/pacify)
 
 #define adjust_eye_blur(duration) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur)
 #define adjust_eye_blur_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/eye_blur, up_to)

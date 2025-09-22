@@ -336,11 +336,12 @@
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	name = "Boxed Rebar Crossbow"
-	desc = "A scoped weapon with low armor penetration, but devestating against flesh. Features instruction manual for making specialty ammo."
+	desc = "A scoped weapon with low armor penetration, but devastating against flesh. Features instruction manual for making specialty ammo."
 
 /obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
 	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
 	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+	new /obj/item/storage/bag/rebar_quiver/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
@@ -368,6 +369,12 @@
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
+
+/obj/item/storage/box/syndie_kit/imp_fakemacro
+	name = "macroreviver implant box"
+
+/obj/item/storage/box/syndie_kit/imp_fakemacro/PopulateContents()
+	new /obj/item/implanter/fakemacro(src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
@@ -409,6 +416,8 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
+	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
+	illustration = "syndiesuit"
 
 /obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()
@@ -439,7 +448,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
+	atom_storage.max_slots = 15
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/cup/bottle/polonium(src)
@@ -455,6 +464,7 @@
 	new /obj/item/reagent_containers/cup/bottle/coniine(src)
 	new /obj/item/reagent_containers/cup/bottle/curare(src)
 	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
+	new /obj/item/reagent_containers/cup/bottle/antipathogenic_changeling(src)
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
@@ -543,19 +553,15 @@
 	new /obj/item/book/granter/crafting_recipe/combat_baking(src)
 
 /obj/item/storage/box/syndie_kit/laser_arm/PopulateContents()  // monkestation edit begin: Syndicate implants
-	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/laser_arm (src)
 
 /obj/item/storage/box/syndie_kit/nodrop/PopulateContents()
-	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/nodrop(src)
 
 /obj/item/storage/box/syndie_kit/anti_stun/PopulateContents()
-	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/anti_stun(src)
 
 /obj/item/storage/box/syndie_kit/reviver/PopulateContents()
-	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
 	new /obj/item/autosurgeon/syndicate/reviver(src) //monkestation edit end: Syndicate implants
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
@@ -736,7 +742,7 @@
 	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
 	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+		if((antag_datum.antag_flags & ANTAG_FAKE))
 			faker = TRUE
 
 	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious

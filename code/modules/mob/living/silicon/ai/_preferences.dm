@@ -98,6 +98,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Red",
 	"Static",
 	"Syndicat Meow",
+	"Tenna", 
 	"Text",
 	"Too Deep",
 	"Triumvirate-M",

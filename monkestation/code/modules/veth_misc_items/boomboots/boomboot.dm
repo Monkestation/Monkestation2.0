@@ -37,10 +37,6 @@
 			RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 		update_icon_state()
 
-/obj/item/clothing/shoes/magboots/boomboots/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_FEET)
-		return 1
-
 /obj/item/clothing/shoes/magboots/boomboots/dropped(mob/user)
 	. = ..()
 	QDEL_NULL(waddle)

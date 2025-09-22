@@ -9,6 +9,7 @@ const BASEICONS = {
   Bitrunner: 'gamepad',
   Blueshield: 'chess-rook',
   Botanist: 'seedling',
+  'Bridge Assistant': 'coffee',
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
   Captain: 'crown',
@@ -110,6 +111,13 @@ const ALTTITLES = {
   'Botanical Researcher': BASEICONS['Botanist'],
   Herbalist: BASEICONS['Botanist'],
   Florist: BASEICONS['Botanist'],
+  // Bridge Assistant - coffee
+  'Bridge Assistant': BASEICONS['Bridge Assistant'],
+  'Bridge Staff': BASEICONS['Bridge Assistant'],
+  'Coffee Logistics Officer': BASEICONS['Bridge Assistant'],
+  'Bridge Watchman': BASEICONS['Bridge Assistant'],
+  Helmsman: BASEICONS['Bridge Assistant'],
+  'Command Intern': BASEICONS['Bridge Assistant'],
   // Brig Physician - heart
   'Brig Physician': BASEICONS['Brig Physician'],
   'Jail Doctor': BASEICONS['Brig Physician'],
@@ -308,6 +316,7 @@ const ALTTITLES = {
   // Xenobiologist -
   Cytologist: BASEICONS['Xenobiologist'],
   Cryptozoologist: BASEICONS['Xenobiologist'],
+  'Slime Mage': BASEICONS['Xenobiologist'],
 } as const;
 
 // Combine the Base icons and ALt titles

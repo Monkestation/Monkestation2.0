@@ -93,7 +93,7 @@
 		if(!IS_WEAKREF_OF(clicker, ref))
 			continue
 
-		var/list/offset_to_add = get_icon_dimensions(source.icon)
+		var/alist/offset_to_add = get_icon_dimensions(source.icon)
 		var/y_position = offset_to_add["height"] + 1
 		var/obj/effect/overlay/happiness_overlay/hearts = new(null, clicker)
 		var/lowest_level = friendship_levels[1]
@@ -135,10 +135,10 @@
 	stored_client = clicker.client
 
 /obj/effect/overlay/happiness_overlay/Destroy(force)
-	. = ..()
 	stored_client?.images -= image
-	QDEL_NULL(image)
+	image = null
 	stored_client = null
+	return ..()
 
 /obj/effect/overlay/happiness_overlay/proc/set_hearts(happiness_percentage)
 	hearts_percentage = happiness_percentage

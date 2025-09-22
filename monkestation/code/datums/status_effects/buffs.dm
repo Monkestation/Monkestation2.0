@@ -10,8 +10,8 @@
 	multiplicative_slowdown = -0.6
 
 /atom/movable/screen/alert/status_effect/mayhem
-	name = "<span class='cult'>Mayhem</span>"
-	desc = "<span class='bolddanger'>RIP AND TEAR!!</span>"
+	name = span_cult("Mayhem")
+	desc = span_bolddanger("RIP AND TEAR!!")
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw_on"
 	alerttooltipstyle = "cult"
@@ -77,20 +77,20 @@
 
 	qdel(restraints)
 
-/datum/status_effect/mayhem/tick(seconds_per_tick, times_fired) // Replacement for the Adminordazine it used before.
+/datum/status_effect/mayhem/tick(seconds_between_ticks, times_fired) // Replacement for the Adminordazine it used before.
 	. = ..()
 
-	var/healing_amount = 5 * seconds_per_tick
+	var/healing_amount = 5 * seconds_between_ticks
 
-	owner.heal_overall_damage(healing_amount, healing_amount, STAMINA_MAX / 10 * seconds_per_tick, updating_health = FALSE)
+	owner.heal_overall_damage(healing_amount, healing_amount, STAMINA_MAX / 10 * seconds_between_ticks, updating_health = FALSE)
 	owner.adjustToxLoss(-healing_amount, updating_health = FALSE)
 	owner.adjustOxyLoss(-healing_amount, updating_health = FALSE)
 
-	owner.blood_volume = min(owner.blood_volume + BLOOD_VOLUME_NORMAL / 10 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+	owner.blood_volume = min(owner.blood_volume + BLOOD_VOLUME_NORMAL / 10 * seconds_between_ticks, BLOOD_VOLUME_NORMAL)
 
 	if(iscarbon(owner))
 		var/mob/living/carbon/user = owner
-		if(length(user.all_wounds) && SPT_PROB(20, seconds_per_tick))
+		if(length(user.all_wounds) && SPT_PROB(20, seconds_between_ticks))
 			qdel(pick(user.all_wounds))
 			to_chat(user, span_green("One of your ailments leaves you.")) // Static message so it gets collapsed in chat.
 

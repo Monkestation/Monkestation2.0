@@ -101,26 +101,22 @@
 
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/show_to(mob/new_viewer)
 	. = ..()
-	if(info_maptext && !QDELETED(new_viewer) && !QDELETED(new_viewer.client))
-		new_viewer.client.images |= info_maptext
+	if(info_maptext && !QDELETED(new_viewer))
+		new_viewer.client?.images |= info_maptext
 
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/hide_from(mob/former_viewer, absolute)
 	. = ..()
-	if(info_maptext && !QDELETED(former_viewer) && !QDELETED(former_viewer.client))
-		former_viewer.client.images -= info_maptext
+	if(info_maptext)
+		former_viewer?.client?.images -= info_maptext
 
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/proc/give_info()
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
-		if(QDELETED(user) || QDELETED(user.client))
-			continue
-		user.client.images |= info_maptext
+		user?.client?.images |= info_maptext
 
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/proc/take_cooldowns()
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
-		if(QDELETED(user) || QDELETED(user.client))
-			continue
-		user.client.images -= info_maptext
+		user?.client?.images -= info_maptext

@@ -96,17 +96,18 @@
 
 /obj/machinery/artifact_zapper/multitool_act(mob/living/user, obj/item/tool)
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	into_wand_mode = !into_wand_mode
 	visible_message(span_info("[src] switches to [into_wand_mode ? "attempting to break down artifacts." : "just zapping artifacts." ]"))
-	return TOOL_ACT_MELEE_CHAIN_BLOCKING
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/artifact_zapper/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
 
 /obj/machinery/artifact_zapper/crowbar_act(mob/living/user, obj/item/tool)
-	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)
+	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
 
 /obj/machinery/artifact_zapper/wrench_act_secondary(mob/living/user, obj/item/tool)
-	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? TOOL_ACT_SIGNAL_BLOCKING : default_unfasten_wrench(user, tool)
+	return !COOLDOWN_FINISHED(src,pulse_cooldown) ? ITEM_INTERACT_BLOCKING : default_unfasten_wrench(user, tool)

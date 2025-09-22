@@ -24,6 +24,7 @@
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
+		/obj/item/clothing/gloves/color/black/security = 3,
 		/obj/item/clothing/head/soft/sec/blue = 3, //monkestation edit
 		/obj/item/clothing/head/hats/security_peaked_cap = 3, //monkestation edit
 		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
@@ -40,6 +41,7 @@
 		/obj/item/clothing/head/helmet/blueshirt = 3, //monkestation edit
 		/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3, //monkestation edit
 		/obj/item/clothing/suit/armor/vest/blueshirt = 3, //monkestation edit
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/suit/armor/secduster = 3,
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
@@ -109,9 +111,11 @@
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,
 		/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
+		/obj/item/clothing/suit/toggle/labcoat/medical = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/blue = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/green = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/purple = 4,
+		/obj/item/clothing/under/rank/medical/doctor/utility = 4,
 		/obj/item/clothing/suit/toggle/labcoat = 4,
 		/obj/item/clothing/suit/toggle/labcoat/paramedic = 4,
 		/obj/item/clothing/shoes/sneakers/white = 4,
@@ -258,6 +262,9 @@
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/under/rank/rnd/scientist/skirt = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,
+		/obj/item/clothing/under/rank/rnd/scientist/hlscience = 3,
+		/obj/item/clothing/under/rank/rnd/scientist/utility = 3,
+		/obj/item/clothing/suit/toggle/jacket/sci = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
 		/obj/item/radio/headset/headset_sci = 3,
 		/obj/item/clothing/mask/gas = 3,

@@ -135,7 +135,7 @@
 
 	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER) && !HAS_TRAIT(owner, TRAIT_TOXIMMUNE))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
+			if(toxin.affected_organ_flags && !(organ_flags & toxin.affected_organ_flags ))//this particular toxin does not affect this type of organ
 				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
@@ -241,7 +241,7 @@
 	name = "basic cybernetic liver"
 	icon_state = "liver-c"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
@@ -266,6 +266,25 @@
 	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE // +50%
 	emp_vulnerability = 20
 
+/obj/item/organ/internal/liver/cybernetic/surplus
+	name = "surplus prosthetic liver"
+	desc = "A very cheap prosthetic liver, mass produced for low-functioning alcoholics... It looks more like a water filter than \
+		an actual liver. \
+		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
+		Offers no protection against EMPs."
+	icon_state = "liver-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	alcohol_tolerance = ALCOHOL_RATE * 2 // can barely handle alcohol
+	toxTolerance = 1 //basically can't shrug off any toxins
+	liver_resistance = 0.75 * LIVER_DEFAULT_TOX_RESISTANCE // -25%
+	emp_vulnerability = 100
+
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/liver/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/liver/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -274,7 +293,7 @@
 		owner.adjustToxLoss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN

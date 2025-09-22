@@ -149,10 +149,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
+	data["can_toggle_safety"] = HAS_SILICON_ACCESS(user)
 	return data
 
-/obj/machinery/computer/holodeck/ui_act(action, params)
+/obj/machinery/computer/holodeck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -399,10 +399,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 ///returns TRUE if all floors of the holodeck are present, returns FALSE if any are broken or removed
 /obj/machinery/computer/holodeck/proc/floorcheck()
+	var/list/typecache = GLOB.typecache_holodeck_linked_floorcheck_ok
 	for(var/turf/holo_floor in linked)
-		if (is_type_in_typecache(holo_floor, GLOB.typecache_holodeck_linked_floorcheck_ok))
-			continue
-		return FALSE
+		if(!is_type_in_typecache(holo_floor, typecache))
+			return FALSE
 	return TRUE
 
 ///changes all weapons in the holodeck to do stamina damage if set

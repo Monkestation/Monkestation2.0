@@ -8,6 +8,7 @@
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	clicksound = 'sound/machines/pda_button1.ogg'
 
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
@@ -236,10 +237,11 @@
 
 	return data
 
-/obj/machinery/sleeper/ui_act(action, params)
+/obj/machinery/sleeper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+	playsound(src, 'sound/items/hypospray.ogg', 50, TRUE, 2)
 
 	var/mob/living/mob_occupant = occupant
 	check_nap_violations()

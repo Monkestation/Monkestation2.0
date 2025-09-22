@@ -145,6 +145,9 @@
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
+	if(!..() && !force)
+		return FALSE
+
 	if(rigged && amount > 0)
 		explode()
 		return FALSE
@@ -280,10 +283,6 @@
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
 
-/obj/item/stock_parts/cell/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
-	var/obj/item/mod/control/mod = storage_holder
-	return !(istype(mod) && mod.open)
-
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty
 	empty = TRUE
@@ -291,8 +290,13 @@
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	icon_state = "aa_cell"
 	maxcharge = 500
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
+
+/obj/item/stock_parts/cell/crap/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -300,9 +304,14 @@
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
+	icon_state = "9v_cell"
 	maxcharge = 2500
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = 1000
+
+/obj/item/stock_parts/cell/upgraded/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
@@ -394,7 +403,8 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use()
+/obj/item/stock_parts/cell/infinite/use(amount, force)
+	..()
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor

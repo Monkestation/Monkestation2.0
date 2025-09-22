@@ -70,11 +70,10 @@
 
 /**
  * Standard mob ClickOn()
- * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
  *
  * After that, mostly just check your state, check whether you're holding an item,
- * check whether you're adjacent to the target, then pass off the click to whoever
- * is receiving it.
+ * check whether you're adjacent to the target, then pass off the click to whoever is receiving it.
+ *
  * The most common are:
  * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
  * * [atom/proc/attackby] (item,user) - used only when adjacent
@@ -164,7 +163,7 @@
 	//User itself, current loc, and user inventory
 	if(A in DirectAccess())
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -185,25 +184,19 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1, modifiers)
+			UnarmedAttack(A , 1, modifiers)
 	else
 		if(W)
-			if((istate & ISTATE_SECONDARY))
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
-
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A,src,0,params)
+			A.base_ranged_item_interaction(src, W, modifiers)
 		else
 			if((istate & ISTATE_SECONDARY))
 				ranged_secondary_attack(A, modifiers)
 			else
-				RangedAttack(A,modifiers)
+				RangedAttack(A, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -439,14 +432,47 @@
 		return
 	A.AltClick(src)
 
+/**
+ * Alt click on an atom.
+ * Performs alt-click actions before attempting to open a loot window.
+ * Returns TRUE if successful, FALSE if not.
+ */
 /atom/proc/AltClick(mob/user)
 	if(!user.can_interact_with(src))
 		return FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
-	var/turf/T = get_turf(src)
-	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		user.set_listed_turf(T)
+		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER) && !isobserver(user))
+		return TRUE
+
+	var/turf/tile = get_turf(src)
+	if(isnull(tile))
+		return FALSE
+
+	if(!isturf(loc) && !isturf(src))
+		return FALSE
+
+	if(!user.TurfAdjacent(tile))
+		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
+		return FALSE
+
+	var/datum/lootpanel/panel = user.client?.loot_panel
+	if(isnull(panel))
+		return FALSE
+
+	/// No loot panel if it's on our person
+	if(isobj(src) && iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(src in carbon_user.get_all_gear())
+			to_chat(carbon_user, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
+			return
+
+	panel.open(tile)
+	return TRUE
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -465,14 +491,8 @@
 		user.client.toggle_tag_datum(src)
 		return
 
-/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
-/atom/proc/AltClickNoInteract(mob/user, atom/A)
-	var/turf/T = get_turf(A)
-	if(T && user.TurfAdjacent(T))
-		user.set_listed_turf(T)
-
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
+/mob/proc/TurfAdjacent(turf/tile)
+	return tile.Adjacent(src)
 
 /**
  * Control+Shift click

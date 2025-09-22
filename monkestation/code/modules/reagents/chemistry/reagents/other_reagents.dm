@@ -17,8 +17,8 @@
 	var/uh_oh_message = pick("You rub your eyes.", "Your eyes lose focus for a second.", "Your stomach cramps!")
 	if (SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[uh_oh_message]"))
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organtype = affected_organtype) // Kills your stomach.
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 2 * REM * 1, required_organtype = affected_organtype) // Kills your eyes too.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Kills your stomach.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Kills your eyes too.
 
 
 
@@ -65,6 +65,6 @@
 	var/tummy_ache_message = pick("Your stomach rumbles.", "Your stomach is upset!", "You don't feel very good...")
 	if (SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[tummy_ache_message]"))
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organtype = affected_organtype) // Tumby hurty...
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Tumby hurty...
 
 

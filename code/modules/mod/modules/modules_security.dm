@@ -322,7 +322,7 @@
 	/// Effect image on projectiles.
 	var/image/projectile_effect
 	/// The dampening field
-	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/dampening_field
 
 /obj/item/mod/module/projectile_dampener/Initialize(mapload)
 	. = ..()
@@ -335,28 +335,12 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	QDEL_NULL(dampening_field)
-
-/obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage *= damage_multiplier
-	projectile.speed *= speed_multiplier
-	projectile.add_overlay(projectile_effect)
-
-/obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage /= damage_multiplier
-	projectile.speed /= speed_multiplier
-	projectile.cut_overlay(projectile_effect)
 
 ///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
 /obj/item/mod/module/active_sonar
@@ -386,3 +370,35 @@
 		creatures_detected++
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
+
+/obj/item/mod/module/shove_blocker
+	name = "MOD bulwark module"
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob."
+	icon_state = "bulwark"
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
+
+/obj/item/mod/module/shove_blocker/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SHOVE_RESIST, MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/locked
+	name = "superglued MOD bulwark module"
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob. Good luck removing this one."
+	removable = FALSE
+	complexity = 0
+
+/obj/item/mod/module/quick_cuff
+	name = "MOD restraint assist module"
+	desc = "Enhanced gauntlet grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
+	removable = FALSE
+	complexity = 0
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+
+/obj/item/mod/module/quick_cuff/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
+
+/obj/item/mod/module/quick_cuff/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)

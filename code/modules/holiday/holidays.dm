@@ -903,3 +903,13 @@
 
 /datum/holiday/spring/greet()
 	return "Spring Has Sprung"
+
+/datum/holiday/summer
+	name = SUMMER
+	begin_day = 21
+	begin_month = JUNE
+	end_day = 22
+	end_month = SEPTEMBER
+
+/datum/holiday/summer/greet()
+	return "Spaceman Summer!"

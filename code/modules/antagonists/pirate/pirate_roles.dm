@@ -15,6 +15,7 @@
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	spawner_job_path = /datum/job/space_pirate
 	random_appearance = TRUE
+	dont_be_a_shit = FALSE //explicitly an antag
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
 	///Path of the structure we spawn after creating a pirate.

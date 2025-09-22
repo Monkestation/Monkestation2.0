@@ -73,11 +73,11 @@
 	switch(href_list["action"])
 		if("cancel")
 			message_admins("[key_name_admin(usr)] cancelled scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] cancelled scheduled event [event.name].")
+			log_admin("[key_name(usr)] cancelled scheduled event [event.name].")
 			SSgamemode.remove_scheduled_event(src)
 		if("refund")
 			message_admins("[key_name_admin(usr)] refunded scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] refunded scheduled event [event.name].")
+			log_admin("[key_name(usr)] refunded scheduled event [event.name].")
 			SSgamemode.refund_scheduled_event(src)
 		if("reschedule")
 			var/new_schedule = input(usr, "New schedule time (in seconds):", "Reschedule Event") as num|null
@@ -85,10 +85,10 @@
 				return
 			start_time = world.time + new_schedule * 1 SECONDS
 			message_admins("[key_name_admin(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
-			log_admin_private("[key_name(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
+			log_admin("[key_name(usr)] rescheduled event [event.name] to [new_schedule] seconds.")
 		if("fire")
 			if(!round_started)
 				return
 			message_admins("[key_name_admin(usr)] has fired scheduled event [event.name].")
-			log_admin_private("[key_name(usr)] has fired scheduled event [event.name].")
+			log_admin("[key_name(usr)] has fired scheduled event [event.name].")
 			try_fire()

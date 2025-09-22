@@ -459,6 +459,11 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/mallet_humiliation
+	description = "Getting hit by such a stupid weapon feels rather humiliating..."
+	mood_change = -3
+	timeout = 10 SECONDS
+
 /datum/mood_event/amulette_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
 	mood_change = -6
@@ -474,3 +479,7 @@
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
 	mood_change = -4
 	timeout = 1 MINUTES
+
+/datum/mood_event/no_borer
+	description = "I still can hear that lingering melody, echoing."
+	mood_change = -5

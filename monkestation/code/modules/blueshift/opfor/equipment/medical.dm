@@ -4,8 +4,8 @@
 /datum/opposing_force_equipment/medical/twitch
 	name = "TWitch Sensory Stimulant Injector"
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/twitch
-	description = "A special type of injector containing 10u of TWitch alongside some other chems. Overdosing on this can lead to heart implosion, but give you super speed and bullet immortality."
-	admin_note = "TWITCH IS VERY OVERPOWERED IF OD'D ON. Overdosing gives them a MASSIVE speed boost, with the ability to dodge 100% of ALL projectiles. OD limit is 15u."
+	description = "A special type of injector containing 10u of TWitch alongside some other chems. Overdosing on this can lead to heart implosion, but give you super speed."
+	admin_note = "TWitch no longer gives the user bullet immunity on OD, it just gives a speed boost."
 
 /datum/opposing_force_equipment/medical/demoneye
 	name = "DemonEye Steroid Injector"
@@ -34,13 +34,13 @@
 
 /datum/opposing_force_equipment/medical/satchel_medkit
 	name = "Satchel Medical Kit"
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+	item_type = /obj/item/storage/backpack/deforest_medkit/stocked
 	description = "A large orange satchel able to hold just about any piece of small medical equipment you could think of, you can even wear it on your back or belt! \
 			Keep in mind, however, that this cannot fit inside any normal bag."
 
 /datum/opposing_force_equipment/medical/super_combat_surgeon
 	name = "First Responder Surgical Kit"
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
+	item_type = /obj/item/storage/backpack/deforest_surgical/stocked
 	description = "A large bag able to hold all the surgical tools and first response healing equipment you can think of, you can even wear it! \
 			Keep in mind, however, that this cannot fit inside any normal bag."
 

@@ -34,10 +34,9 @@
 	// Save the old DNA
 	transforming.dna.copy_dna(old_dna)
 	// Makes them into the new DNA
-	new_dna.transfer_identity(transforming)
+	new_dna.copy_dna(transforming.dna, COPY_DNA_SPECIES)
 	transforming.real_name = new_dna.real_name
 	transforming.name = transforming.get_visible_name()
-	transforming.update_name_tag() // monkestation edit: name tags
 	transforming.updateappearance(mutcolor_update = TRUE)
 	transforming.domutcheck()
 	return TRUE
@@ -46,7 +45,7 @@
 	var/mob/living/carbon/transforming = owner
 
 	if(!QDELING(owner)) // Don't really need to do appearance stuff if we're being deleted
-		old_dna.transfer_identity(transforming)
+		old_dna.copy_dna(transforming.dna, COPY_DNA_SPECIES)
 		transforming.updateappearance(mutcolor_update = TRUE)
 		transforming.domutcheck()
 

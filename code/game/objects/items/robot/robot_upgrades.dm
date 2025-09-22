@@ -375,7 +375,7 @@
 			cyborg.cell.use(5)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
@@ -660,7 +660,7 @@
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(. && new_model)
-		R.model.transform_to(new_model)
+		R.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
@@ -782,3 +782,9 @@
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()
+
+/obj/item/borg/upgrade/transform/centcom
+	name = "borg model picker (CentCom)"
+	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
+	icon_state = "cyborg_upgrade3"
+	new_model = /obj/item/robot_model/centcom

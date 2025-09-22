@@ -162,11 +162,13 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 
 //Update the arrow towards another atom
 /datum/component/team_monitor/proc/update_atom_dir(datum/component/tracking_beacon/beacon)
-	if(!updating || !updating.hud_used || !beacon || !beacon.visible)
+	if(!updating?.hud_used || !beacon?.visible)
 		return
 	var/atom/movable/screen/arrow/screen = tracking[beacon]
 	var/turf/target_turf = get_turf(beacon.parent)
 	var/turf/parent_turf = get_turf(parent)
+	if(!target_turf || !parent_turf)
+		return
 	var/share_z = target_turf.z == parent_turf.z
 	if((!share_z && (!multiz)) || target_turf == parent_turf)
 		if(screen)
@@ -197,7 +199,20 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 	rotationMatrix.Scale(1.5)
 	rotationMatrix.Translate(0, -distance)
 	rotationMatrix.Turn(get_angle(target_turf, parent_turf))
-	animate(screen, transform = rotationMatrix, time = 2)
+	var/new_alpha = 240
+	if(share_z)
+		switch(get_dist(target_turf, parent_turf))
+			if(0)
+				new_alpha = 0
+			if(1)
+				new_alpha = 60
+			if(2)
+				new_alpha = 100
+			if(3)
+				new_alpha = 150
+			else
+				new_alpha = 240
+	animate(screen, alpha = new_alpha, transform = rotationMatrix, time = 0.2 SECONDS)
 
 //===========
 // Handles hiding / showing the hud when equipped

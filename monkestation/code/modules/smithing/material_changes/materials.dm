@@ -56,7 +56,7 @@
 	hardness = 60
 	density = 40
 	conductivity = 30
-	material_traits = list(/datum/material_trait/shiny)
+	material_traits = list(/datum/material_trait/shiny, /datum/material_trait/holy)
 
 /datum/material/bluespace
 	density = 60

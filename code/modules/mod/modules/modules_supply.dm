@@ -198,6 +198,8 @@
 		if(QDELETED(ore))
 			return
 		break
+	if(QDELETED(ore))
+		return
 	ore.forceMove(src)
 	ores += ore
 
@@ -206,7 +208,8 @@
 	if(!.)
 		return
 	for(var/obj/item/ore as anything in ores)
-		ore.forceMove(drop_location())
+		if(!QDELETED(ore))
+			ore.forceMove(drop_location())
 		ores -= ore
 	drain_power(use_power_cost)
 
@@ -624,7 +627,7 @@
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
 	for(var/mob/living/mob in range(1, src))
-		mob.apply_damage(damage * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		mob.apply_damage(damage * (ismining(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
 		if(!ishostile(mob) || !firer)
 			continue
 		var/mob/living/simple_animal/hostile/hostile_mob = mob

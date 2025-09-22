@@ -11,7 +11,6 @@
 		/obj/item/weapon/virusdish/random,
 	)
 	crate_name = "virus samples crates"
-	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/medical/rat_cubes
 	name = "Crate of Rat Cube Boxes"

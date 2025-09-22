@@ -361,9 +361,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(greenshift)
 		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound(), color_override = "green")
 	else
-		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
-			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
-		priority_announce("[replacetext_char(SSsecurity_level.current_security_level.elevating_to_announcement, "%STATION_NAME%", station_name())]\n\nA summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT, color_override = SSsecurity_level.current_security_level.announcement_color)
+		priority_announce("Our security and intelligence divisions have completed their quarterly assessment of [station_name()]. A summary has been copied and printed to all communications consoles.", "Security Report", SSstation.announcer.get_rand_report_sound())
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -609,8 +607,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.persistent)
 			current_rules += rule
 		new_snapshot(rule)
+		rule.forget_startup()
 		return TRUE
 	rule.clean_up() // Refund threat, delete teams and so on.
+	rule.forget_startup()
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -658,9 +658,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
+				new_rule.forget_startup()
 				return TRUE
 		else if (forced)
 			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	new_rule.forget_startup()
 	return FALSE
 
 /datum/game_mode/dynamic/process()

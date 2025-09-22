@@ -151,17 +151,19 @@
 	for(var/datum/loadout_item/item as anything in list_of_datums)
 		if(QDELETED(preferences) || QDELETED(preferences.parent))
 			return
+
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
 			if(!(preferences.parent_ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
+
 		if(item.donator_only) //These checks are also performed in the backend.
 			if((!preferences.parent.persistent_client.patreon?.is_donator() && !preferences.parent.persistent_client.twitch?.is_donator()) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
 		if(item.mentor_only) //These checks are also performed in the backend.
-			if(!preferences.parent.mentor_datum && !is_admin(preferences.parent))
+			if(!is_mentor(preferences.parent) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
@@ -203,7 +205,7 @@
 	var/list/formatted_list = new(length(data))
 
 	var/array_index = 1
-	for(var/iter as anything in data)
+	for(var/iter in data)
 		var/list/formatted_item = list()
 		formatted_item["name"] = data[array_index]["name"]
 		formatted_item["path"] = data[array_index]["unusual_type"]

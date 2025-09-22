@@ -16,6 +16,9 @@
 	var/list/recipes = list()
 	var/list/name_to_type = list()
 
+	///for debugging purposes: this will always be perfect
+	var/always_perfect = FALSE
+
 /obj/structure/anvil/Initialize(mapload)
 	. = ..()
 	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))

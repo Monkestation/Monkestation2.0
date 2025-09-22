@@ -65,6 +65,8 @@
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
+	/// If the computer's flashlight/LED light has forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
@@ -665,7 +667,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
-		toggle_flashlight()
+		toggle_flashlight(user)
 		return
 
 	return ..()
@@ -676,12 +678,26 @@
  * Called from ui_act(), does as the name implies.
  * It is separated from ui_act() to be overwritten as needed.
 */
-/obj/item/modular_computer/proc/toggle_flashlight()
+/obj/item/modular_computer/proc/toggle_flashlight(mob/user)
 	if(!has_light)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	return TRUE
+
+//Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+/obj/item/modular_computer/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!has_light)
+		return
+	set_light_on(FALSE)
+	update_appearance()
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
 	return TRUE
 
 /**
@@ -705,7 +721,7 @@
 		return
 	name = "[saved_identification] ([saved_job])"
 
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	// Check for ID first
 	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return
@@ -807,24 +823,24 @@
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("\The [src] does not require repairs."))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	if(!tool.tool_start_check(user, amount=1))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
 	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair \the [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	break_apart()

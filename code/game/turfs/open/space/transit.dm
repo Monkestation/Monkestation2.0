@@ -61,6 +61,8 @@
 
 ///Dump a movable in a random valid spacetile
 /proc/dump_in_space(atom/movable/dumpee)
+	if(QDELETED(dumpee))
+		return
 	if(HAS_TRAIT(dumpee, TRAIT_DEL_ON_SPACE_DUMP))
 		qdel(dumpee)
 		return

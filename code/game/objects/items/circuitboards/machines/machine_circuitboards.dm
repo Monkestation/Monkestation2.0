@@ -53,7 +53,8 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 5,
-		/datum/stock_part/capacitor = 1)
+		/datum/stock_part/capacitor = 1,
+		/obj/item/electronics/airlock = 1)
 
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
@@ -448,8 +449,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 1)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -499,8 +499,7 @@
 	build_path = /obj/machinery/rnd/production/protolathe
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -587,8 +586,7 @@
 	build_path = /obj/machinery/rnd/production/techfab
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -697,6 +695,13 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
+
+/obj/item/circuitboard/machine/vending/donksnackvendor
+	name = "Donk Co Snack Vendor"
+	build_path = /obj/machinery/vending/donksnack
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/vending_refill/donksnackvendor = 1)
 
 /obj/item/circuitboard/machine/bountypad
 	name = "Civilian Bounty Pad"
@@ -958,7 +963,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
@@ -1311,6 +1317,9 @@
 		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/ore_redemption/offstation
+	build_path = /obj/machinery/mineral/ore_redemption/offstation
+
 /obj/item/circuitboard/machine/ore_silo
 	name = "Ore Silo"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -1529,3 +1538,30 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/scrubber
+	name = "Portable Air Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/pump
+	name = "Portable Air Pump"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/vent = 1,
+	)
+
+/obj/item/circuitboard/machine/pipe_scrubber
+	name = "Portable Pipe Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pipe_scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/trinary/flippable/filter = 1,
+	)

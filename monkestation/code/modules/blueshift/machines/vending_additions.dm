@@ -76,17 +76,6 @@
 
 #undef MINIMUM_CLOTHING_STOCK
 
-
-/obj/machinery/vending/wardrobe/medi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_med = 3,
-		/obj/item/clothing/gloves/latex/nitrile = 2,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem/emt = 2,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/red = 4,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/white = 4,
-		/obj/item/clothing/under/rank/medical/doctor/nova/utility = 4,
-	)
-
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	products_monke = list(
 		/obj/item/radio/headset/headset_eng = 3,
@@ -136,13 +125,6 @@
 		/obj/item/healthanalyzer/simple = 2,
 	)
 
-/obj/machinery/vending/wardrobe/science_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/rnd/scientist/nova/hlscience = 3,
-		/obj/item/clothing/under/rank/rnd/scientist/nova/utility = 3,
-		/obj/item/clothing/suit/toggle/jacket/sci = 3,
-	)
-
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	contraband_monke = list(
 		/obj/item/clothing/under/suit/nova/scarface = 2,
@@ -167,12 +149,6 @@
 /obj/machinery/vending/cart
 	products_monke = list(
 		/obj/item/radio/headset/headset_srv = 3,
-	)
-
-/obj/machinery/vending/wardrobe/chem_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal = 2,
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal/skirt = 2,
 	)
 
 /obj/machinery/vending/wardrobe/viro_wardrobe
@@ -203,8 +179,8 @@
 /obj/machinery/vending/proc/remove_products(list/paths_to_remove)
 	if(!length(paths_to_remove))
 		return
-	for(var/typepath as anything in products)
-		for(var/to_remove as anything in paths_to_remove)
+	for(var/typepath in products)
+		for(var/to_remove in paths_to_remove)
 			if(ispath(typepath, to_remove))
 				products.Remove(typepath)
 

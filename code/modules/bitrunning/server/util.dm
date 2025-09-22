@@ -74,7 +74,7 @@
 	var/random_value = rand(0, total_cost)
 	var/accumulated_cost = 0
 
-	for(var/available as anything in random_domains)
+	for(var/available in random_domains)
 		accumulated_cost += available["cost"]
 		if(accumulated_cost >= random_value)
 			domain_randomized = TRUE
@@ -113,6 +113,19 @@
 		nearby_forges += forge
 
 	return nearby_forges
+
+/// Removes all blacklisted items from a mob and returns them to base state
+/obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)
+	for(var/obj/item in person.get_equipped_items(include_pockets = FALSE, include_accessories = FALSE))
+		qdel(item)
+
+	var/datum/antagonist/bitrunning_glitch/antag_datum = person.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
+	if(isnull(antag_datum?.preview_outfit))
+		return
+
+	person.equipOutfit(antag_datum.preview_outfit)
+
+	antag_datum.fix_agent_id()
 
 /// Severs any connected users
 /obj/machinery/quantum_server/proc/sever_connections()

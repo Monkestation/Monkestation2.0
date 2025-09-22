@@ -110,7 +110,6 @@ Des: Removes all infected images from the alien.
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
-		new_xeno.update_name_tag() // monkestation edit: name tags
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
@@ -118,6 +117,13 @@ Des: Removes all infected images from the alien.
 	if(nanites)
 		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
+	if(is_holding_items())
+		for(var/hand_index = 1 to length(held_items))
+			var/obj/item/item_in_hand = held_items[hand_index]
+			if(QDELETED(item_in_hand))
+				continue
+			dropItemToGround(item_in_hand, force = TRUE, silent = TRUE)
+			new_xeno.put_in_hand(item_in_hand, hand_index, forced = TRUE)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

@@ -10,7 +10,7 @@
 		return
 
 	if(victim != attacker)
-		if(!do_after(victim, 5 SECONDS, attacker))
+		if(!do_after(attacker, 5 SECONDS, victim))
 			return
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),
@@ -103,8 +103,8 @@
 	icon = 'monkestation/icons/bloodsuckers/stakes.dmi'
 	icon_state = "wood"
 	inhand_icon_state = "wood"
-	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
+	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -220,8 +220,8 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	starting_title = "the Archive of the Kindred"
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
-	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
+	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"
@@ -292,6 +292,8 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 /obj/item/book/kindred/ui_static_data(mob/user)
 	var/list/clans = list()
 	for(var/datum/bloodsucker_clan/clan_type as anything in subtypesof(/datum/bloodsucker_clan))
+		if(!clan_type::display_in_archive)
+			continue
 		clans += list(list(
 			"name" = clan_type::name,
 			"desc" = clan_type::description,

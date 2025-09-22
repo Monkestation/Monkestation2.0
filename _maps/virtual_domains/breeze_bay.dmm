@@ -40,6 +40,9 @@
 "p" = (
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
+"q" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/safehouse)
 "s" = (
 /obj/structure/fluff/beach_umbrella/cap,
 /turf/open/misc/beach/sand,
@@ -268,7 +271,7 @@ a
 J
 y
 J
-J
+q
 I
 I
 I
@@ -295,7 +298,7 @@ a
 S
 J
 J
-J
+q
 I
 I
 I
@@ -322,7 +325,7 @@ a
 G
 G
 J
-J
+q
 I
 I
 I

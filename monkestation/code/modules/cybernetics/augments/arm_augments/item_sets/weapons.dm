@@ -17,7 +17,6 @@
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
 	items_to_create = list(/obj/item/gun/energy/laser/mounted/augment)
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser/l
@@ -35,7 +34,6 @@
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	items_to_create = list(/obj/item/gun/energy/e_gun/advtaser/mounted)
-	encode_info = AUGMENT_TG_LEVEL
 	icon_state = "toolkit_security"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/gun/taser/l
@@ -46,21 +44,18 @@
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
 	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	items_to_create = list(/obj/item/gun/medbeam)
-	encode_info = AUGMENT_TG_LEVEL
 	icon_state = "toolkit_paramedic"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	icon_state = "toolkit_security"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/flash/Initialize(mapload)
@@ -86,14 +81,12 @@
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
 	items_to_create = list(/obj/item/borg/stun)
-	encode_info = AUGMENT_TG_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis
 	name = "C.H.R.O.M.A.T.A. mantis blade implants"
 	desc = "High tech mantis blade implants, easily portable weapon, that has a high wound potential."
 	icon_state = "toolkit_security"
 	items_to_create = list(/obj/item/mantis_blade)
-	encode_info = AUGMENT_TG_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mantis/l
 	zone = BODY_ZONE_L_ARM
@@ -112,7 +105,6 @@
 	desc = "Modernized mantis blade designed coined by Tiger operatives, much sharper blade with energy actuators makes it a much deadlier weapon."
 	items_to_create = list(/obj/item/mantis_blade/syndicate)
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	icon_state = "toolkit_syndie"
 
 /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
@@ -125,7 +117,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "razorwire"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	items_to_create = list(/obj/item/melee/razorwire)
 	visual_implant = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/simple/razorwire

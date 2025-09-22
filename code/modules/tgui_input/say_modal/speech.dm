@@ -48,10 +48,11 @@
 			client.looc(entry)
 			return TRUE
 		if(ADMIN_CHANNEL)
-			client.cmd_admin_say(entry)
+			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, entry)
 			return TRUE
 		if(MENTOR_CHANNEL)
-			client.cmd_mentor_say(entry)
+			SSadmin_verbs.dynamic_invoke_mentor_verb(client, /datum/mentor_verb/cmd_mentor_say, entry)
+			return TRUE
 	return FALSE
 
 /**

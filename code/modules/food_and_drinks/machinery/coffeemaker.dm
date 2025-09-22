@@ -184,7 +184,7 @@
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
@@ -735,8 +735,25 @@
 	if(!try_brew())
 		return
 	operate_for(brew_time)
-	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
-	coffee.Cut(1,2) //remove the first item from the list
+
+	// create a reference bean reagent list
+	var/list/reference_bean_reagents = list()
+	var/obj/item/food/grown/coffee/reference_bean = new /obj/item/food/grown/coffee(src)
+	for(var/datum/reagent/ref_bean_reagent as anything in reference_bean.reagents.reagent_list)
+		reference_bean_reagents += ref_bean_reagent.name
+
+	// add all the reagents from the coffee beans to the coffeepot (ommit the ones from the reference bean)
+	var/list/reagent_delta = list()
+	var/obj/item/food/grown/coffee/bean = coffee[coffee_amount]
+	for(var/datum/reagent/substance as anything in bean.reagents.reagent_list)
+		if(!(reference_bean_reagents.Find(substance.name)))	// we only add the reagent if it's a non-standard for coffee beans
+			reagent_delta += list(substance.type = substance.volume)
+	coffeepot.reagents.add_reagent_list(reagent_delta)
+
+	qdel(reference_bean)
+
+	// remove the coffee beans from the machine
+	coffee.Cut(1,2)
 	coffee_amount--
 	update_appearance(UPDATE_OVERLAYS)
 

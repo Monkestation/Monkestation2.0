@@ -105,7 +105,7 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	if(chem.type == /datum/reagent/medicine/antihol) //Cures alchol, which they need, to live.
-		to_chat(H, span_danger("You feel your viens constrict as your heads spin"))
+		to_chat(H, span_danger("You feel your veins constrict as your heads spin"))
 		H.adjustOxyLoss(4 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE

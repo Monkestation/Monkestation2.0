@@ -342,7 +342,7 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
+/obj/structure/foamedmetal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	///A speed modifier for how fast the wall is build
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
@@ -352,10 +352,10 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(!istype(W, /obj/item/stack/sheet))
+	if(!istype(attacking_item, /obj/item/stack/sheet))
 		return ..()
 
-	var/obj/item/stack/sheet/sheet_for_plating = W
+	var/obj/item/stack/sheet/sheet_for_plating = attacking_item
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
 			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
@@ -456,6 +456,22 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/metal/resin/halon
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive) // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return FALSE // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return // Doesn't dissolve in heat.
 
 /datum/effect_system/fluid_spread/foam/dirty
 	effect_type = /obj/effect/particle_effect/fluid/foam/dirty

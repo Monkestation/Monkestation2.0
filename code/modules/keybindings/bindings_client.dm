@@ -105,6 +105,9 @@
 	// can hold different keys and releasing any should be handled by the key binding specifically
 	for (var/kb_name in prefs.key_bindings_by_key[_key])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
+		if(isnull(kb))
+			stack_trace("seemingly non-existent keybinding [kb_name] bound to [_key]???")
+			continue
 		if(kb.can_use(src) && kb.up(src))
 			break
 	holder?.key_up(_key, src)

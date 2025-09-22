@@ -71,7 +71,7 @@
 		/obj/item/gun/chem,
 		/obj/item/gun/grenadelauncher,
 		/obj/structure/training_machine,
-		/mob/living/carbon/human) + typesof(/obj/item/gun/syringe, /obj/item/target)
+		/mob/living/carbon/human/ghost) + typesof(/obj/item/gun/syringe, /obj/item/target)
 	. = ..()
 
 //blocks passage if you have a gun

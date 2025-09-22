@@ -1,4 +1,4 @@
-/datum/mutation/human/shock
+/datum/mutation/shock
 	name = "Shock Touch"
 	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others."
 	quality = POSITIVE
@@ -11,7 +11,7 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/shock/modify()
+/datum/mutation/shock/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/touch/shock/to_modify =.
 
@@ -86,7 +86,7 @@
 	icon_state = "zapper"
 	inhand_icon_state = "zapper"
 
-/datum/mutation/human/lay_on_hands
+/datum/mutation/lay_on_hands
 	name = "Mending Touch"
 	desc = "The affected can lay their hands on other people to transfer a small amount of their injuries to themselves."
 	quality = POSITIVE
@@ -101,7 +101,7 @@
 	power_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/lay_on_hands/modify()
+/datum/mutation/lay_on_hands/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/touch/lay_on_hands/to_modify =.
 
@@ -430,7 +430,7 @@
 	if(evil_smite)
 		motherfucker_to_hurt.visible_message(span_warning("[smiter] snaps [smiter.p_their()] fingers in front of [motherfucker_to_hurt]'s face, and [motherfucker_to_hurt]'s body twists violently from an unseen force!"))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BRUTE, spread_damage = TRUE, wound_bonus = 5 * our_smite_multiplier)
-		motherfucker_to_hurt.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 25 SECONDS)
+		motherfucker_to_hurt.adjust_rebuked_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 25 SECONDS)
 		smiter.emote("snap")
 		smite_text_to_target = "crushes you psychically with a snap of [smiter.p_their()] fingers"
 	else

@@ -109,7 +109,7 @@
 /obj/machinery/research/anomaly_refinery/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/research/anomaly_refinery/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]-off", "[base_icon_state]", tool))
@@ -312,7 +312,7 @@
 		ui = new(user, src, "AnomalyRefinery")
 		ui.open()
 
-/obj/machinery/research/anomaly_refinery/ui_act(action, list/params)
+/obj/machinery/research/anomaly_refinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

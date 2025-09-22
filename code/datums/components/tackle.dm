@@ -43,7 +43,7 @@
 	src.min_distance = min_distance
 
 	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and clicking on your target with an empty hand."))
+	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -71,10 +71,10 @@
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.buckled || user.incapacitated())
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -100,9 +100,13 @@
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
+	if (user.pulling)
+		user.stop_pulling()
+
 	user.face_atom(clicked_atom)
 
 	tackling = TRUE
+	user.toggle_throw_mode()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -148,7 +152,6 @@
 		tackle = null
 		return
 
-	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)

@@ -82,14 +82,14 @@
 	else
 		toggle_open()
 
-/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I,/obj/item/skillchip))
+/obj/machinery/skill_station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item,/obj/item/skillchip))
 		if(inserted_skillchip)
 			to_chat(user,span_notice("There's already a skillchip inside."))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		inserted_skillchip = I
+		inserted_skillchip = attacking_item
 		return
 	return ..()
 
@@ -251,7 +251,7 @@
 		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 
-/obj/machinery/skill_station/ui_act(action, list/params)
+/obj/machinery/skill_station/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

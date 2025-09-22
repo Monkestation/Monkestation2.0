@@ -33,7 +33,9 @@
 /datum/config_entry/string/issue_slug
 	protection = CONFIG_ENTRY_LOCKED
 
+//Defines whether the server uses the legacy mentor system with mentors.txt or the SQL system
 /datum/config_entry/flag/mentor_legacy_system
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/looc_enabled
 

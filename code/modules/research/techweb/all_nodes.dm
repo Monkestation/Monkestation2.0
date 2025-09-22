@@ -1,4 +1,3 @@
-
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
@@ -181,7 +180,6 @@
 		"spade",
 		"spraycan",
 		"spraycan_gun", // MONKESTATION ADDITION (monkestation/code/game/objects/items/spraycan_gun.dm)
-		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
@@ -189,6 +187,15 @@
 		"wirecutters",
 		"wrench",
 		"pickaxe",
+		//monkestation start
+		"industrial_lathe",
+		"industrial_lathe_workstation",
+		"industrial_lathe_furnace",
+		"industrial_lathe_tablesaw",
+		"industrial_lathe_drophammer",
+		"industrial_lathe_tailor",
+		"industrial_lathe_drillpress",
+		//monkestation end
 	)
 
 /datum/techweb_node/basic_medical
@@ -215,6 +222,7 @@
 		"large_beaker",
 		"medicalbed",
 		"mmi_m",
+		"monketech_translator",
 		"operating",
 		"petri_dish",
 		"pillbottle",

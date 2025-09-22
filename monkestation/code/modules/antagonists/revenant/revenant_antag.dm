@@ -21,7 +21,7 @@
 
 /proc/find_possible_revenant_spawns()
 	. = list()
-	for(var/mob/living/mob in GLOB.dead_mob_list) //look for any dead bodies
+	for(var/mob/living/carbon/human/mob in GLOB.dead_mob_list) //look for any harvestable bodies
 		var/turf/mob_turf = get_turf(mob)
 		if(is_station_level(mob_turf?.z))
 			. += mob_turf

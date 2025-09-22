@@ -1,4 +1,4 @@
-/datum/mutation/human/adrenaline_rush
+/datum/mutation/adrenaline_rush
 	name = "Adrenaline Rush"
 	desc = "Allows the host to trigger their body's adrenaline response at will."
 	quality = POSITIVE
@@ -11,7 +11,7 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/adrenaline_rush/modify()
+/datum/mutation/adrenaline_rush/setup()
 	. = ..()
 	var/datum/action/cooldown/adrenaline/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -32,7 +32,6 @@
 	var/adrenaline_amount = 10
 	/// How many units of each negative reagent injected after comedown.
 	var/comedown_amount = 7
-
 
 /datum/action/cooldown/adrenaline/Activate(mob/living/carbon/cast_on)
 	. = ..()
