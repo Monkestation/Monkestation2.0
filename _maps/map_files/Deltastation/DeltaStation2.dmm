@@ -14237,6 +14237,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "dqC" = (
@@ -54886,6 +54887,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},

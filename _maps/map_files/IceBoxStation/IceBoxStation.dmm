@@ -1266,6 +1266,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/eva)
 "auJ" = (
@@ -3353,6 +3354,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/living_quarters)
 "bdx" = (
@@ -8511,6 +8513,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "czs" = (
@@ -15604,6 +15607,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
+"eIE" = (
+/obj/effect/turf_decal/stripes/end,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/smooth,
+/area/mine/eva/lower)
 "eII" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -21026,6 +21039,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "gvd" = (
@@ -22027,6 +22041,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "gKk" = (
@@ -23918,6 +23933,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/drone_bay)
 "hpN" = (
@@ -43340,6 +43356,16 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"nqB" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/smooth,
+/area/mine/eva/lower)
 "nqL" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/siding/white{
@@ -43583,6 +43609,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "nup" = (
@@ -53029,6 +53056,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/large,
 /area/mine/mechbay)
 "qll" = (
@@ -61884,6 +61912,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/eva/lower)
 "tae" = (
@@ -72424,6 +72453,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "wrc" = (
@@ -77925,6 +77955,7 @@
 	},
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "xZg" = (
@@ -97353,7 +97384,7 @@ aUC
 xuo
 xuo
 xuo
-dBY
+nqB
 moc
 tGi
 mjy
@@ -97361,7 +97392,7 @@ fdp
 gOO
 dBY
 moc
-tGi
+eIE
 xuo
 xuo
 xuo

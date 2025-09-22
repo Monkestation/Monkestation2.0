@@ -453,8 +453,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 1)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -504,8 +503,7 @@
 	build_path = /obj/machinery/rnd/production/protolathe
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -592,8 +590,7 @@
 	build_path = /obj/machinery/rnd/production/techfab
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"

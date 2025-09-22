@@ -346,7 +346,7 @@
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = HAS_SILICON_ACCESS(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
@@ -418,16 +418,17 @@
 	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE
 
-/obj/machinery/power/apc/ui_act(action, params)
+/obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/user = ui.user
 
-	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(user, 1) || (locked && !HAS_SILICON_ACCESS(user) && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(user))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
-					to_chat(usr, span_warning("The APC does not respond to the command!"))
+					to_chat(user, span_warning("The APC does not respond to the command!"))
 				else
 					locked = !locked
 					update_appearance()
@@ -436,10 +437,10 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
-			toggle_breaker(usr)
+			toggle_breaker(user)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights(usr)
+			toggle_nightshift_lights(user)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -462,17 +463,17 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(user))
 				overload_lighting()
 				. = TRUE
 		if("hack")
-			if(get_malf_status(usr))
-				malfhack(usr)
+			if(get_malf_status(user))
+				malfhack(user)
 		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
+			if(get_malf_status(user))
+				malfoccupy(user)
 		if("deoccupy")
-			if(get_malf_status(usr))
+			if(get_malf_status(user))
 				malfvacate()
 		if("reboot")
 			failure_timer = 0

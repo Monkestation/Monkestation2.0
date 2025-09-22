@@ -633,7 +633,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"cellCharge" = internal_cell?.percent()
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

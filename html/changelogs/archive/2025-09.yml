@@ -579,6 +579,11 @@
 2025-09-18:
   Absolucy:
   - spellcheck: Fixed all instances of "oozeling" being mispelled as "oozling".
+  - bugfix: Fixed brains/cores being labeled as "unknown" if they died without an
+      ID.
+  - balance: Being cold-blooded now actually affects body temperature regulation
+  - balance: Cold-blooded mobs now lose their base/innate temperature insulation.
+  - qol: The spooky lantern is now small instead of normal sized.
   JupiterJaeden:
   - rscadd: Adds the Armory Authorization Computer. Can be authorized by the HOS,
       Warden, Captain, or 3 Secoffs. When authorized, opens the armory shutters and
@@ -597,7 +602,158 @@
       you wanna renovate the brig.
   Mansus-Affiliated Frog Of Moderate Renown:
   - spellcheck: heretic spellychecky
+  MrMelbert, Absolucy:
+  - refactor: ' Refactored language holders, making species changes not delete all
+      of your known languages'
+  - bugfix: Words in other languages will be randomized far less often (depending
+      on how commonly they are used). This bug was 10 years old.
+  - qol: Touches up the language menu
+  - refactor: Makes GLOB.species_list init via the global defines and deletes Language
+      SS
+  - rscadd: Languages can now have partial understanding of other languages. More
+      common English words are more likely to be mutually understood.
+  - rscadd: Those who understand Beachtongue can understand 50% of Common and 33%
+      of Uncommon words.
+  - rscadd: Those who understand Common can understand 33% of Beachtongue and 20%
+      of Uncommon words.
+  - rscadd: Those who understand Uncommon can understand 20% of Common and 20% of
+      Beachtongue words.
+  - qol: If you speak in ALL CAPS in a foreign language, the translated words will
+      also be ALL CAPS.
+  - qol: Many more forms of punctuation are now conveyed across translations.
+  - qol: The 1000 most common English words will now never be scrambled when translating
+      into other languages for the duration of the round. This means you can actually
+      "learn" some words if you are especially attentive! (Until the next round at
+      least)
+  - refactor: Refactored language translations. Report if you see any super odd looking
+      translations.
+  - bugfix: Force-says forcing you to speak common (such as cult invocations) will
+      now correctly force you to speak common (even if you don't know common)
+  - qol: Language translations chunk sentences together better, making partial understanding
+      a bit easier to parse.
+  ThePooba:
+  - rscadd: Added makarov and some ammo to black market uplink.
+  - rscadd: Added weapons authorization to purchase from the syndicate uplink.
+  - rscdel: Removed mk58 crafting recipes
   throwawayuseless:
   - spellcheck: Nanotransen -> Nanotrasen
   - bugfix: Inorganic Biology and Necrotic Metabolism should work consistently and
       as advertised now.
+  - bugfix: The infectable biotype altering virus symptoms should work again
+2025-09-20:
+  Absolucy:
+  - rscdel: Removed the Magnitis symptom, because it's a lagfest that just makes everyone's
+      life miserable.
+  - bugfix: Fixed the "Show" button in the Requests Manager not working.
+  - bugfix: You can now properly add (or remove) Telecommunications Admin access via
+      an ID console.
+  EssentialTomato:
+  - bugfix: Fixed bein unable to clean the microwave.
+  - bugfix: Fixed the supermatter sliver dusting you while being placed into a proper
+      container,
+  - bugfix: Fixed plumbing constructor not being able to deconstruct its buildings.
+  - bugfix: Fixed neon lining not being placeable.
+  - bugfix: Fixed plant analyzers not working from range.
+  - bugfix: Minor airlock overlay fix for pneumatic seals and notes.
+  Ice-Type:
+  - bugfix: deconstructing machining machines gives the appropriate board
+  - qol: detonates the computer of one lucky player
+  JupiterJaeden:
+  - qol: Adds a pref toggle for spinning & flipping making stacks of hats come off.
+      Default is on.
+  - qol: Adds the ability to disassemble stacks of hats by using them in hand with
+      Z.
+  - bugfix: Fixes some bugs with hats not updating their name and description correctly
+      when removed from a stack of hats.
+  TheColorCyan:
+  - bugfix: gibtonite is no longer invisible when exploding on the floor
+  - refactor: (san7890) Soulscythes have undergone a mild refactor, but everything
+      should work as it should. Report any issues.
+  - qol: (TheSwain, JohnFulpWillard) Soulscythes and Vampires now have a blood hud
+      on the left side of their screen rather than a stat panel entry stating how
+      much blood they have.
+  - bugfix: (SmArtKal) Fixed most mining mobs being unaffected by additional damage
+      against them
+  - code_imp: (necromanceranne) MOB_MINING and MOB_CRUSTACEAN are now defined biotypes.
+  - code_imp: (necromanceranne) Audits some mining mob biotypes to make more sense
+      based on what kind of creature they are and to include MOB_MINING in their defines.
+  Tractor-Maam:
+  - bugfix: Sarcophagi now have a icon.
+  - bugfix: Sarcophagi are now ordered from the regular cargo window, no longer getting
+      stuck in your goodie case.
+  - spellcheck: fixed a typo in closet/crate access control tooltips.
+  - bugfix: Updated some admin notes for some escape shuttles so they aren't blatant
+      lies anymore.
+  - spellcheck: '"locksthe locker." no longer happens.'
+  flleeppyy:
+  - rscadd: Scroll Tracking Tolerance is now an experimental option for the chat panel.
+  oh no froggy did another one:
+  - rscadd: Running Hot, a new quirk that makes your body temperature increase, possibly
+      to dangerous levels, when you climb ladders and hop tables and sprint and such.
+  that one particular vaguely frog adjacent goober:
+  - rscadd: the positive synth chems upgrade on borrers now has Positronic Neural
+      Dampener and Nanite Slurry and Positronic Excitation Salts
+  - rscadd: the negative synth chems upgrade on borrers now has Positronic Neural
+      Dampener
+2025-09-22:
+  Absolucy:
+  - qol: Mining bags now scoop up ores that get moved under you without you having
+      to shuffle back and forth. Rejoice, magnetization injector enjoyers.
+  - balance: The Mystic storyteller now actually prefers mystical antags - it will
+      NEVER spawn "mundane" antags roundstart, and is heavily weighted against them
+      for midrounds.
+  - bugfix: Fixed roundstart slime extract requestor pads sometimes not linking.
+  - map: Added tinyfans to all the mining docks on all maps (both normal and public
+      mining)
+  - bugfix: The ashen duelist, rockspider, and trench jockey packs no longer have
+      the full belt-satchel slowdowns, as the description says they shouldn't (and
+      it's part of their whole point)
+  - bugfix: Icons in the personal crafting menu are no longer blurry.
+  Absolucy, LemonInTheDark:
+  - balance: AIs viewing the crew monitor will no longer be told ahead of time if
+      they cannot jump to a player.
+  Absolucy, necromanceranne:
+  - qol: The eye of god now protects from the madness inducing effects of supermatter
+      crystals and singularities. This trait is shared by the meson night vision goggles
+      (which this is a better version of)
+  - refactor: The Scan ability has been refactored into a pointed spell.
+  - balance: The Scan ability has a lower cooldown of 35 seconds.
+  - balance: Scanning someone alerts the target as to who is responsible, rather than
+      being completely silent as to the culprit (much to the annoyance of anyone who
+      is victimized by someone using this on them)
+  - code_imp: The status effect that was called Stagger (not Staggered, which is separate)
+      is now called Rebuked.
+  - balance: Rebuked applies a x2 action delay cooldown, rather than x1.5.
+  JohnFulpWillard, Rhials, MrMelbert, Xander3359:
+  - bugfix: Statues don't count as eyes to creatures.
+  - bugfix: Human AIs and Admin ghosts no longer get kicked off of machines that aren't
+      on cameranets.
+  - rscadd: Security implants may now be harmlessly self-destructed at the Prisoner
+      Management Console.
+  - code_imp: Various code improvements and removal of unused vars in the Prisoner
+      Management Console
+  Killermankey:
+  - rscadd: Hardsuit crafts to machining
+  - rscadd: ATV Craft to machining
+  - rscadd: TTV Craft to Machining
+  - rscadd: Shotgun Craft to Machining
+  - rscadd: Couple of ammo crafts to Machining
+  - balance: Lowered pricing on melted plastic, universal Circuits, small motors and
+      advanced tools
+  - balance: Doubled price of fire axe in Machining
+  Sorenon:
+  - rscadd: Roundstart / latejoin borgs are now given their loadout hat
+  TheColorCyan:
+  - rscadd: (mc-oofert) clickdragging an autolathe changes its output direction
+  - code_imp: (SyncIt21) autolathe will attempt to award you the "getting an upgrade"
+      award only once when printing multiple items & updates UI immediately
+  - bugfix: (ZephyrTFA)Autolathes no longer allow you to duplicate materials at higher
+      levels of stock parts
+  - qol: (ZephyrTFA) Autolathes now show name instead of typepath when selecting a
+      custom material
+  - qol: (ZephyrTFA)Autolathe now print out items one by one instead of waiting for
+      all of them to print at once
+  - rscdel: (GPekman) Protolathe/circuit imprinter/techfab designs costing reagents
+      is now totally deprecated.
+  throwawayuseless:
+  - rscadd: Fake macrobomb that actually revives you instead
