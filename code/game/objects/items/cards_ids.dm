@@ -1327,7 +1327,12 @@
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
 	timed = TRUE
-
+	var/name_input=tgui_input_text(user, "Enter prisoner name (will appear on sensors)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
+	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	registered_name = name_input
+	name = "[name_input]'s ID Card (Prisoner)"
+	to_chat(user, "You set the ID's identification to [name_input].")
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
