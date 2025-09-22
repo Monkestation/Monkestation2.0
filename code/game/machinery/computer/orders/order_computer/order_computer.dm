@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 		if("purchase")
-			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
+			if(!length(grocery_list) || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			if(forced_express)
 				return ui_act(action = "express")
@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			if(!used_id_card || !used_id_card.registered_account)
+			if(!used_id_card?.registered_account)
 				say("No bank account detected!")
 				return
 			if(!purchase_items(used_id_card))
@@ -169,10 +169,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
 		if("express")
-			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
+			if(!length(grocery_list) || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			if(!used_id_card || !used_id_card.registered_account)
+			if(!used_id_card?.registered_account)
 				say("No bank account detected!")
 				return
 			if(!purchase_items(used_id_card, express = TRUE))
