@@ -570,7 +570,7 @@
 
 	///our power
 	var/sneak_attack_dice = 12
-	var/damage_mult = 2 //guarenteed to crit on backstab because all traitors take the assassin archetype ig
+	var/damage_mult = 1.5
 	var/flat_bonus = 5 //they have really good dex iunno
 	var/funny_alert_message = "SNEAK ATTACK!"
 	var/backstab_time = 1 SECOND
