@@ -129,9 +129,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	. = ..()
 	if(.)
 		return
-	if(!isliving(usr))
+	var/mob/living/living_user = ui.user
+	if(!isliving(living_user))
 		return
-	var/mob/living/living_user = usr
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
