@@ -212,7 +212,7 @@
 		/obj/item/gun/ballistic/automatic/proto/pksmg,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 		/obj/item/gun/ballistic/revolver/govmining,
-		)
+	)
 	armor_type = /datum/armor/cloak_drake
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

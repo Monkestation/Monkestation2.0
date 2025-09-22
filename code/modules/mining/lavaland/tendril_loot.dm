@@ -687,6 +687,14 @@
 		/obj/item/kinetic_crusher,
 		/obj/item/resonator,
 		/obj/item/melee/cleaving_saw,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/revolver/govmining,
+		/obj/item/t_scanner/adv_mining_scanner,
 	)
 
 /datum/armor/hooded_berserker
@@ -722,7 +730,8 @@
 
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	clothing_flags = SNUG_FIT|THICKMATERIAL
+	clothing_flags = SNUG_FIT | THICKMATERIAL
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
 	/// Status of berserk
