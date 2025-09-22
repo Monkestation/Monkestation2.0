@@ -174,8 +174,7 @@
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	..()
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	. = ..()
@@ -237,7 +236,7 @@
 
 	return data
 
-/obj/machinery/sleeper/ui_act(action, params)
+/obj/machinery/sleeper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

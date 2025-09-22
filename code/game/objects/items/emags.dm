@@ -67,11 +67,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if (!proximity_flag)
-		return
+/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()

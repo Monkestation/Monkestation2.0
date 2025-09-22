@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/gun/magic/wand/resurrection/debug,
 			//holy fuck why was this enabled
 			/obj/item/debug,
-			/obj/item/storage/box/debugtools,
+			/obj/item/storage/box/debugbox,
 			/obj/item/gun/energy/beam_rifle/debug,
 			/obj/item/multitool/field_debug,
 			/obj/item/bounty_cube/debug_cube,

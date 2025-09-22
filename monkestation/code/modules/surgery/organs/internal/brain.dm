@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	playsound(victim, 'sound/effects/blobattack.ogg', 80, TRUE)
 
 	if(gps_active) // adding the gps signal if they have activated the ability
-		AddComponent(/datum/component/gps/no_bsa, "[victim]'s Core")
+		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")
 
 	if(brainmob)
 		membrane_mur.Grant(brainmob)
