@@ -521,8 +521,8 @@
 	if(HAS_TRAIT(robit, TRAIT_GODMODE))
 		return NONE
 	var/water_multiplier = water_damage_multiplier(robit)
-		if(water_multiplier <= 0)
-			return COMPONENT_NO_EXPOSE_REAGENTS
+	if(water_multiplier <= 0)
+		return COMPONENT_NO_EXPOSE_REAGENTS
 	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
 		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
