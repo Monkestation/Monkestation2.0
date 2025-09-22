@@ -17,17 +17,17 @@
 
 
 /obj/machinery/slime_extract_requestor/Initialize(mapload)
-	. = ..()
+	..()
+	if(!length(extracts))
+		for(var/obj/item/slime_extract/extract as anything in subtypesof(/obj/item/slime_extract))
+			extracts |= list("[extract::name]" = image(icon = extract::icon, icon_state = extract::icon_state))
+			name_to_path |= list("[extract::name]" = extract)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/slime_extract_requestor/LateInitialize()
 	if(GLOB.default_slime_market)
 		console = GLOB.default_slime_market
 		console.request_pad = src
-
-	if(!length(extracts))
-		for(var/obj/item/slime_extract/extract as anything in subtypesof(/obj/item/slime_extract))
-			var/obj/item/slime_extract/new_extract = new extract
-			extracts |= list("[new_extract.name]" = image(icon = new_extract.icon, icon_state = new_extract.icon_state))
-			name_to_path |= list("[new_extract.name]" = new_extract.type)
-			qdel(new_extract)
 
 /obj/machinery/slime_extract_requestor/Destroy()
 	if(console?.request_pad == src)
