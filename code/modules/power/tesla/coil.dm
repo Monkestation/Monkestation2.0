@@ -107,7 +107,7 @@
 		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max(ZAP_TO_ENERGY(power_removed - TESLA_COIL_THRESHOLD), 0)
+	stored_energy += max(power_removed, 0)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/energy_accumulator/tesla_coil/proc/zap()
