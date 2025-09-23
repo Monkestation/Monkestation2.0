@@ -193,6 +193,7 @@
 	var/datum/action/cooldown/spell/summonitem/recall = new
 	recall.mark_item(weapon)
 	recall.Grant(user)
+	powers += recall
 
 	podspawn(list(
 		"target" = get_turf(user),
