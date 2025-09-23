@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Improved the wording of the examine text of oozeling cores, to clarify what snuffing it does, and that you need to CAREFULLY pour plasma."
-  - qol: "Oozeling cores now properly store more implanted organs (vocal cords, cursed heart, all xeno organs) instead of deleting them."
-  - qol: "Pouring plasma on an oozeling core now notifies their ghost that they're being revived, similar to being defibbed."
