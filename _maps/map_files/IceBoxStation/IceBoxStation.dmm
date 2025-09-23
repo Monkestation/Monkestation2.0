@@ -9383,7 +9383,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/reagent_dispensers/fueltank/large,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "cLo" = (
@@ -27581,6 +27581,7 @@
 	pixel_x = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "izJ" = (
@@ -30314,6 +30315,7 @@
 /area/station/maintenance/starboard/lesser)
 "jrj" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "jrk" = (
@@ -46978,6 +46980,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"orD" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "orE" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/beaker/large{
@@ -52694,6 +52700,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"qfl" = (
+/obj/machinery/power/emitter,
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "qfs" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/cable,
@@ -55197,6 +55208,16 @@
 "qTs" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
+"qTE" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/station/engineering/engine_smes)
 "qTI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59791,7 +59812,6 @@
 	id = "Secure Storage";
 	name = "Secure Storage"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "sqL" = (
@@ -63081,13 +63101,6 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"tvF" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/smooth_half{
-	dir = 1
-	},
-/area/station/engineering/engine_smes)
 "tvJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -235937,9 +235950,9 @@ mNY
 oXX
 mNY
 jrj
-hpd
-hpd
-wkw
+orD
+orD
+qfl
 wkw
 wkw
 yaL
@@ -236196,7 +236209,7 @@ mNY
 xMC
 sqv
 sqv
-yaL
+xMC
 yaL
 yaL
 yaL
@@ -236451,8 +236464,8 @@ mNY
 kCn
 mNY
 cKR
+qTE
 sVa
-tvF
 izF
 gTK
 oPo
