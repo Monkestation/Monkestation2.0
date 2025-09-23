@@ -114,7 +114,7 @@
 
 	if(user.client)
 		user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg ? msg : "preformed an emote"]"
+	var/dchatmsg = "<b>[user]</b> [msg ? msg : "preformed an emote."]"
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))

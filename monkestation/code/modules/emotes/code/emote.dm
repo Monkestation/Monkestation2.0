@@ -532,8 +532,8 @@
 /datum/emote/living/alert
 	key = "!"
 	name = "Alert"
-	cooldown = 1 SECONDS
-	audio_cooldown = 1 SECONDS
+	cooldown = 5 SECONDS
+	audio_cooldown = 10 SECONDS //no free *chime
 	emote_type = EMOTE_VISIBLE
 	sound = 'sound/machines/chime.ogg'
 	empty_message_intentional = TRUE
