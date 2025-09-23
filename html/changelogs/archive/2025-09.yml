@@ -758,6 +758,18 @@
   throwawayuseless:
   - rscadd: Fake macrobomb that actually revives you instead
 2025-09-23:
+  Absolucy:
+  - qol: Improved the wording of the examine text of oozeling cores, to clarify what
+      snuffing it does, and that you need to CAREFULLY pour plasma.
+  - qol: Oozeling cores now properly store more implanted organs (vocal cords, cursed
+      heart, all xeno organs) instead of deleting them.
+  - qol: Pouring plasma on an oozeling core now notifies their ghost that they're
+      being revived, similar to being defibbed.
+  EssentialTomato:
+  - rscadd: (MTandi) Added airlock pump atmos device to create cycling airlocks
+  - qol: (Archemagus) Airlock pumps now dock with shuttles in more pleasant way
+  Lawlolawl:
+  - bugfix: Wormhole Projector can now shoot orange portals again.
   Pickle-Coding, GPeckman, JohnFulpWillard, Watermelon, Mayhazah:
   - bugfix: Fixes conservation of energy issues relating to charging powercells.
   - qol: APCs will display how much power they are using to charge their cell. This
@@ -787,3 +799,10 @@
   - spellcheck: fixed a typo in carp scale's description
   Xander3359:
   - admin: adds guns to debug outfit
+  antlersss:
+  - rscdel: Beepsky no longer calls people slurs
+  notghosti:
+  - map: Box station tac locker has correct access
+  - map: Kilostation has standard eva suits in storage.
+  - rscdel: Removed latejoin antag preferences from being chosen, as they confused
+      people into thinking latejoin antags existed here.
