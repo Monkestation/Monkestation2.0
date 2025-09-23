@@ -9381,7 +9381,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
