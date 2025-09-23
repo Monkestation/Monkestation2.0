@@ -7,6 +7,7 @@
 	lose_text = span_notice("You are once again IP68 compliant.") //i see no reason we wouldn't still be using IEEE standards in the far future. they're good standards.
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
 	hardcore_value = 2
+	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/clothing/suit/hooded/ethereal_raincoat) //raincoat! lol
 	species_whitelist = list(SPECIES_IPC)
 	COOLDOWN_DECLARE(water_yeowchy) //this is needed, trust me
@@ -29,7 +30,7 @@
 #define WATER_PROTECTION_ARM (0.075 * 2)
 #define WATER_PROTECTION_HAND (0.025 * 2)
 
-/datum/species/ipc/proc/water_damage_multiplier(mob/living/carbon/human/robit)
+/datum/quirk/shielding_exchange/proc/water_damage_multiplier(mob/living/carbon/human/robit)
 	. = 1
 
 	var/protection_flags = NONE
@@ -79,7 +80,7 @@
 #undef WATER_PROTECTION_ARM
 #undef WATER_PROTECTION_HAND
 
-/datum/species/ipc/proc/on_reagent_expose(mob/living/carbon/human/robit, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+/datum/quirk/shielding_exchange/proc/on_reagent_expose(mob/living/carbon/human/robit, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 	if(!(locate(/datum/reagent/water) in reagents)) // we only care if we're exposed to water
 		return NONE
@@ -128,5 +129,6 @@
 				robit.Stun(4 SECONDS)
 				robit.Paralyze(4 SECONDS)
 				COOLDOWN_START(src, water_yeowchy, 10 SECONDS)
+	robit.force_say()
 	robit.sharp_pain(BODY_ZONES_ALL, (how_much_water / 10), BURN, 10 SECONDS) //ough (for reference a full bluespace beaker of water would be greatly slowing but not quite immobilizing)
 	to_chat(robit, span_robot(span_danger("BZZZTT!!")))
