@@ -248,18 +248,19 @@
 	target_range = new_range
 	to_chat(user, "Leaf sight set for [target_range] tiles.")
 
-/obj/item/gun/ballistic/shotgun/china_lake/mouse_drop_receive(mob/living/M, mob/user, params)
+/obj/item/gun/ballistic/shotgun/china_lake/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
-	if(!istype(target, /obj/item/ammo_casing/a40mm))
+	if(!iscarbon(user))
 		return
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(dropped, /obj/item/ammo_casing/a40mm))
 		return
-	src.attackby(target, user)
-
+	if(!(carbon_user.mobility_flags & MOBILITY_USE) || carbon_user.stat != CONSCIOUS || HAS_TRAIT(carbon_user, TRAIT_HANDS_BLOCKED) || !Adjacent(carbon_user, dropped))
+		return
+	attackby(dropped, carbon_user)
 
 /obj/item/gun/ballistic/shotgun/china_lake/restricted
 	pin = /obj/item/firing_pin/implant/pindicate
-
 
 ///Mining grenade launcher
 

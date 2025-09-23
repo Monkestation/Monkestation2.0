@@ -2,9 +2,6 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
-	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
-	active_power_usage = 0.05 * STANDARD_CELL_RATE
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	/// better parts result in a higher efficiency (and lower value).
@@ -356,23 +353,31 @@
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
 	busy = FALSE
 	SStgui.update_uis(src)
-	icon_state = initial(icon_state)
 
-/obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+// Stuff for the stripe on the department machines
+/obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	. = ..()
-	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/machinery/rnd/production/update_overlays()
+	. = ..()
+
+	if(!stripe_color)
 		return
-	if(busy)
-		balloon_alert(user, "busy printing!")
-		return
-	var/direction = get_dir(src, over_location)
-	if(!direction)
-		return
-	drop_direction = direction
-	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+
+	var/mutable_appearance/stripe = mutable_appearance('monkestation/icons/obj/machines/research.dmi', "protolate_stripe") //monkestation edit
+
+	if(!panel_open)
+		stripe.icon_state = "protolathe_stripe"
+	else
+		stripe.icon_state = "protolathe_stripe_t"
+
+	stripe.color = stripe_color
+
+	. += stripe
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()

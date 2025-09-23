@@ -2192,28 +2192,28 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	playsound(src, 'sound/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
 
 //this will allow click dragging certain items
-/obj/structure/reagent_forge/mouse_drop_receive(mob/living/M, mob/user, params)
+/obj/structure/reagent_forge/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(user))
 		return
 
-	if(!isobj(attacking_item))
+	if(!isobj(dropped))
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
-		refuel(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
+		refuel(dropped, user)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
-		refuel(attacking_item, user, TRUE)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
+		refuel(dropped, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
-		refuel(attacking_item, user, TRUE)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
+		refuel(dropped, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/ore))
-		smelt_ore(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/ore))
+		smelt_ore(dropped, user)
 		return
 
 /obj/structure/reagent_forge/attackby(attacking_item, user, modifiers, attack_modifiers)

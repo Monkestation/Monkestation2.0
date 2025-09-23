@@ -469,17 +469,17 @@
 	else
 		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/living/M, mob/user, params)
-	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(dropped) || !iscarbon(dropped) || !ISADVANCEDTOOLUSER(user))
 		return
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(dropped))
+		var/mob/living/L = dropped
 		if(L.incapacitated())
-			close_machine(target)
+			close_machine(dropped)
 	else
-		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
-		if (do_after(user, 2.5 SECONDS, target=target))
-			close_machine(target)
+		user.visible_message(span_notice("[user] starts shoving [dropped] inside [src]."), span_notice("You start shoving [dropped] inside [src]."))
+		if (do_after(user, 2.5 SECONDS, target = dropped))
+			close_machine(dropped)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
 

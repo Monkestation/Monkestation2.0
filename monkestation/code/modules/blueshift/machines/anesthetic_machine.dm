@@ -108,12 +108,12 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/anesthetic_machine/mouse_drop_receive(mob/living/M, mob/user, params)
+/obj/machinery/anesthetic_machine/mouse_drop_receive(mob/living/carbon/dropped, mob/user, params)
 	. = ..()
-	if(!istype(over))
+	if(!iscarbon(dropped))
 		return
 
-	if((!Adjacent(over)) || !(user.Adjacent(over)))
+	if((!Adjacent(dropped)) || !(user.Adjacent(dropped)))
 		return FALSE
 
 	if(!attached_tank || mask_out)
@@ -125,17 +125,17 @@
 		attached_mask = new /obj/item/clothing/mask/breath/anesthetic(src)
 		update_icon()
 
-	user.visible_message(span_warning("[user] attemps to attach the [attached_mask] to [over]."), span_notice("You attempt to attach the [attached_mask] to [over]"))
-	if(!do_after(user, 5 SECONDS, over))
+	user.visible_message(span_warning("[user] attemps to attach the [attached_mask] to [dropped]."), span_notice("You attempt to attach the [attached_mask] to [dropped]"))
+	if(!do_after(user, 5 SECONDS, dropped))
 		return
-	if(!over.equip_to_appropriate_slot(attached_mask))
-		to_chat(user, span_warning("You are unable to attach the [attached_mask] to [over]!"))
+	if(!dropped.equip_to_appropriate_slot(attached_mask))
+		to_chat(user, span_warning("You are unable to attach the [attached_mask] to [dropped]!"))
 		return
 
-	user.visible_message(span_warning("[user] attaches the [attached_mask] to [over]."), span_notice("You attach the [attached_mask] to [over]"))
+	user.visible_message(span_warning("[user] attaches the [attached_mask] to [dropped]."), span_notice("You attach the [attached_mask] to [dropped]"))
 
 	// Open the tank externally
-	over.open_internals(attached_tank, is_external = TRUE)
+	dropped.open_internals(attached_tank, is_external = TRUE)
 	mask_out = TRUE
 	START_PROCESSING(SSmachines, src)
 	update_icon()

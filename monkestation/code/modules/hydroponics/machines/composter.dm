@@ -168,22 +168,24 @@
 /obj/item/seeds/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !istype(src_location))
+	if(!Adjacent(usr, over) || !isatom(src_location))
 		return
+	var/atom/seed_loc = src_location
 	// ensure the stuff we're mouse dropping is ALSO adjacent
 	var/obj/machinery/composters/dropped = over
 	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(src_location.contents)
+		dropped.compost(seed_loc.contents)
 
 /obj/item/food/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !istype(src_location))
+	if(!Adjacent(usr, over) || !isatom(src_location))
 		return
+	var/atom/food_loc = src_location
 	// ensure the stuff we're mouse dropping is ALSO adjacent
 	var/obj/machinery/composters/dropped = over
 	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(src_location.contents)
+		dropped.compost(food_loc.contents)
 
 /obj/item/stack/biocube
 	name = "biocube"

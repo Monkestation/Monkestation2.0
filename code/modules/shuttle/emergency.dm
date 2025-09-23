@@ -773,12 +773,12 @@
 	// (IE all space suits instead of just the emergency ones)
 	// because an enterprising traitor might be able to hide things,
 	// like their syndicate toolbox or softsuit. may be fun?
-	var/static/list/exception_cache = typecacheof(list(
+	set_holdable(exception_hold_list = list(
 		/obj/item/clothing/suit/space,
 		/obj/item/pickaxe,
 		/obj/item/storage/toolbox,
 	))
-	src.exception_hold = exception_cache
+
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(update_lock))
 	update_lock(new_level = SSsecurity_level.get_current_level_as_number())
 
@@ -836,30 +836,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	new /obj/item/storage/toolbox/emergency(src)
 	new /obj/item/bodybag/environmental(src)
 	new /obj/item/bodybag/environmental(src)
-
-/obj/item/storage/pod/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	return can_interact(user)
-
-/obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
-	if (can_interact(user))
-		atom_storage?.show_contents(user)
-	return TRUE
-
-/obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
-	if(!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
-
-/obj/item/storage/pod/click_alt(mob/user)
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/pod/can_interact(mob/user)
-	if(!..())
-		return FALSE
-	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED || unlocked)
-		return TRUE
-	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
-	return FALSE
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
