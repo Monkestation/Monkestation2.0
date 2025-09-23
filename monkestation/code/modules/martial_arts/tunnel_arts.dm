@@ -12,7 +12,7 @@
 	help_verb = /mob/living/proc/tunnel_arts_help
 	display_combos = TRUE
 	/// Probability of successfully blocking attacks while on throw mode
-	var/block_chance = 50
+	block_chance = 50
 	/// List of traits applied to users of this martial art.
 	var/static/list/tunnel_traits = list(
 		TRAIT_HARDLY_WOUNDED,
@@ -26,38 +26,12 @@
 	. = ..()
 	new_holder.add_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 	new_holder.faction |= FACTION_RAT //:D
 
 /datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
-	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_LIVING_CHECK_BLOCK))
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
-
-/datum/martial_art/the_tunnel_arts/proc/check_block(mob/living/user, atom/movable/hitby, damage, attack_text, attack_type, ...)
-	SIGNAL_HANDLER
-
-	if(!can_use(user) || !user.throw_mode || user.incapacitated(IGNORE_GRAB))
-		return NONE
-	if(attack_type == PROJECTILE_ATTACK)
-		return NONE
-	if(!prob(block_chance))
-		return NONE
-
-	var/mob/living/attacker = GET_ASSAILANT(hitby)
-	if(istype(attacker) && user.Adjacent(attacker))
-		user.visible_message(
-			span_danger("[user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You block [attack_text]!"),
-		)
-		attacker.Stun(4 SECONDS)
-	else
-		user.visible_message(
-			span_danger("[user] blocks [attack_text]!"),
-			span_userdanger("You block [attack_text]!"),
-		)
-	return SUCCESSFUL_BLOCK
 
 /datum/martial_art/the_tunnel_arts/proc/check_streak(mob/living/attacker, mob/living/defender)
 	if(findtext(streak, SPACE_WIND_GOD_FIST_COMBO))
