@@ -21448,7 +21448,7 @@
 /area/station/commons/fitness/recreation)
 "hGk" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/space/basic,
 /area/station/engineering/atmos)
 "hGl" = (
@@ -23373,6 +23373,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
+"ioc" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/area/station/engineering/atmos)
 "iov" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -26143,10 +26147,6 @@
 /mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
-"jgt" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/area/station/engineering/atmos)
 "jgy" = (
 /obj/item/phone{
 	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
@@ -26999,7 +26999,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/space/basic,
-/area/space)
+/area/station/engineering/atmos)
 "juH" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/firealarm/directional/west{
@@ -38479,6 +38479,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"nnD" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Inner Pipe Access";
+	req_access = list("atmospherics")
+	},
+/obj/machinery/atmospherics/components/binary/pump/off/dark/visible/layer1{
+	name = "Gas to Turbine"
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "nog" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/east,
@@ -53458,16 +53468,6 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
-"svj" = (
-/obj/machinery/door/window/left/directional/north{
-	name = "Inner Pipe Access";
-	req_access = list("atmospherics")
-	},
-/obj/machinery/atmospherics/components/binary/pump/off/dark/visible/layer1{
-	name = "Gas to Turbine"
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "svk" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61500,6 +61500,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
+"vmx" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/area/station/engineering/atmos)
 "vmH" = (
 /obj/machinery/door/airlock/security{
 	name = "Customs Desk"
@@ -68305,11 +68309,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/lounge)
-"xEN" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/space/basic,
-/area/station/engineering/atmos)
 "xER" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -69330,6 +69329,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"xXG" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/space/basic,
+/area/station/engineering/atmos)
 "xXK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable/layer3,
@@ -69652,10 +69656,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"ydb" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/area/station/engineering/atmos)
 "ydj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -110857,7 +110857,7 @@ dBZ
 qRM
 cGS
 kkf
-svj
+nnD
 gyg
 uwQ
 cii
@@ -112143,7 +112143,7 @@ cyW
 jvj
 cyW
 mGl
-hGk
+xXG
 tfs
 aaf
 eoU
@@ -113171,7 +113171,7 @@ mTI
 jvj
 cyW
 xoB
-xEN
+hGk
 tfs
 aaf
 eoU
@@ -116512,7 +116512,7 @@ cyW
 cyW
 cyW
 lqS
-ydb
+ioc
 qKR
 gQf
 lpp
@@ -117540,7 +117540,7 @@ cyW
 cyW
 cyW
 xPn
-jgt
+vmx
 qKR
 gQf
 lpp
