@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - balance: "Removes autoprocessing from normal genetics machinery. Still available on the traitor cloning pod, if upgraded."

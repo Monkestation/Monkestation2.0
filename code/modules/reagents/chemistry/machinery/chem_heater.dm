@@ -212,7 +212,7 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
-			use_power(active_power_usage * seconds_per_tick)
+			use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/chem_heater/on_deconstruction()
 	replace_beaker()

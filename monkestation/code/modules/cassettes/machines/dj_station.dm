@@ -94,7 +94,7 @@ GLOBAL_VAR(dj_booth)
 	. = ..()
 	if(!inserted_tape || broadcasting)
 		return
-	if(Adjacent(user) && !issiliconoradminghost(user))
+	if(Adjacent(user) && !HAS_SILICON_ACCESS(user))
 		if(!user.put_in_hands(inserted_tape))
 			inserted_tape.forceMove(drop_location())
 	else
@@ -118,7 +118,7 @@ GLOBAL_VAR(dj_booth)
 		insert_tape(attacked)
 	else
 		if(!broadcasting)
-			if(Adjacent(user) && !issiliconoradminghost(user))
+			if(Adjacent(user) && !HAS_SILICON_ACCESS(user))
 				if(!user.put_in_hands(inserted_tape))
 					inserted_tape.forceMove(drop_location())
 			else

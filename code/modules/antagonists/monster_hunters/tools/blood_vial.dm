@@ -50,10 +50,11 @@
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'monkestation/sound/items/blood_vial_slurp.ogg', vol = 50)
 
-/obj/item/blood_vial/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(proximity_flag && target == user)
+/obj/item/blood_vial/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with == user)
 		attack_self(user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/blood_vial/update_icon_state()
 	icon_state = "[base_icon_state][filled ? "" : "_empty"]"

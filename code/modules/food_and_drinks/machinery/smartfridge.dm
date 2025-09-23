@@ -146,24 +146,38 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O, /obj/item/food/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/) || istype(O, /obj/item/food/))
-		return TRUE
-	return FALSE
+/**
+ * Can this item be accepted by the smart fridge
+ * Arguments
+ * * [weapon][obj/item] - the item to accept
+ */
+/obj/machinery/smartfridge/proc/accept_check(obj/item/weapon)
+	var/static/list/accepted_items = list(
+		/obj/item/food,
+		/obj/item/food/grown,
+		/obj/item/seeds,
+		/obj/item/grown,
+		/obj/item/graft,
+	)
+	return is_type_in_list(weapon, accepted_items)
 
-/obj/machinery/smartfridge/proc/load(obj/item/O)
-	if(ismob(O.loc))
-		var/mob/M = O.loc
-		if(!M.transferItemToLoc(O, src))
-			to_chat(usr, span_warning("\the [O] is stuck to your hand, you cannot put it in \the [src]!"))
+/**
+ * Loads the item into the smart fridge
+ * Arguments
+ * * [weapon][obj/item] - the item to load. If the item is being held by a mo it will transfer it from hand else directly force move
+ */
+/obj/machinery/smartfridge/proc/load(obj/item/weapon, mob/user)
+	if(ismob(weapon.loc))
+		var/mob/owner = weapon.loc
+		if(!owner.transferItemToLoc(weapon, src))
+			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
-		else
-			return TRUE
+		return TRUE
 	else
-		if(O.loc.atom_storage)
-			return O.loc.atom_storage.attempt_remove(O, src)
+		if(weapon.loc.atom_storage)
+			return weapon.loc.atom_storage.attempt_remove(weapon, src, silent = TRUE)
 		else
-			O.forceMove(src)
+			weapon.forceMove(src)
 			return TRUE
 
 ///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
@@ -171,7 +185,7 @@
 	if(!M.put_in_hands(O))
 		O.forceMove(drop_location())
 		adjust_item_drop_location(O)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -295,16 +309,40 @@
 	.["verb"] = "Take"
 	.["drying"] = drying
 
-
-/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+/obj/machinery/smartfridge/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
+	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
+
+	var/mob/living_mob = ui.user
+
 	switch(action)
-		if("Dry")
-			toggle_drying(FALSE)
+		if("Release")
+			var/amount = text2num(params["amount"])
+			if(isnull(amount) || !isnum(amount))
+				return TRUE
+			if(isAI(living_mob))
+				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
+				return TRUE
+
+			for(var/obj/item/dispensed_item in contents)
+				if(amount <= 0)
+					break
+				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
+				if(params["path"] != item_name)
+					continue
+				if(dispensed_item in component_parts)
+					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
+				//dispense the item
+				if(!living_mob.put_in_hands(dispensed_item))
+					dispensed_item.forceMove(drop_location())
+					adjust_item_drop_location(dispensed_item)
+				use_energy(active_power_usage)
+				amount--
+			if (visible_contents)
+				update_appearance()
 			return TRUE
+
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/powered()
@@ -339,7 +377,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	if(HAS_TRAIT(O, TRAIT_DRYABLE)) //set on dryable element

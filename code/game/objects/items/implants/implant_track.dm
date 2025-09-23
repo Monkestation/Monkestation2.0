@@ -50,12 +50,9 @@
 
 /obj/item/implant/tracking/Initialize(mapload)
 	. = ..()
-	GLOB.tracked_implants += src
-
 	internal_radio = new /obj/item/radio/internal_tracker_radio(src)
 
 /obj/item/implant/tracking/Destroy()
-	GLOB.tracked_implants -= src
 	QDEL_NULL(internal_radio)
 	return ..()
 
