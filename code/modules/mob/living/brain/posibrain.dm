@@ -74,7 +74,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
-/obj/item/mmi/posibrain/AltClick(mob/living/user)
+/obj/item/mmi/posibrain/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)

@@ -13,8 +13,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 
-/obj/vehicle/ridden/cargo_train/AltClick(mob/user)
-	. = ..()
+/obj/vehicle/ridden/cargo_train/click_alt(mob/living/user)
 	if(!listed_network)
 		return
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")

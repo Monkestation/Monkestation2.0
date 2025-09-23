@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	return GLOB.glass_variants[rim] = glass_skins
 
 //if this glass can be reskinned, open a radial menu containing the skins, and change the icon_state to whatever is chosen
-/obj/item/reagent_containers/cup/glass/modglass/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/modglass/click_alt(mob/user)
 	if(!glass_skins)
 		return
 	var/choice = show_radial_menu(user, src, glass_skins, radius = 48, require_near = TRUE)

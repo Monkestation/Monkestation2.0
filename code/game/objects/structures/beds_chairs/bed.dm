@@ -116,8 +116,7 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
-/obj/structure/bed/medical/AltClick(mob/user)
-	. = ..()
+/obj/structure/bed/medical/click_alt(mob/living/user)
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()

@@ -408,11 +408,15 @@
 		else
 			. += span_notice("<b>Drag towards a direction</b> (while next to it) to change drop direction.")
 
-/obj/machinery/autolathe/AltClick(mob/user)
-	. = ..()
-	if(drop_direction)
-		balloon_alert(user, "drop direction reset")
-		drop_direction = 0
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
+	if(busy)
+		balloon_alert(user, "busy printing!")
+		return CLICK_ACTION_SUCCESS
+	balloon_alert(user, "drop direction reset")
+	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/proc/reset(wire)
 	switch(wire)

@@ -220,7 +220,7 @@
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/dna_console/AltClick(mob/user)
+/obj/machinery/computer/dna_console/click_alt(mob/user)
 	// Make sure the user can interact with the machine.
 	. = ..()
 	if(!can_interact(user))

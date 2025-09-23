@@ -34,7 +34,7 @@
 	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/volume_pump/click_ctrl(mob/user)
 	if(can_interact(user))
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -42,7 +42,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
+/obj/machinery/atmospherics/components/binary/volume_pump/click_alt(mob/user)
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)

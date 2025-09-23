@@ -102,7 +102,7 @@
 	QDEL_NULL(tracked_soulcatcher)
 	return ..()
 
-/obj/item/gun/energy/modular_laser_rifle/AltClick(mob/user)
+/obj/item/gun/energy/modular_laser_rifle/click_alt(mob/user)
 	tracked_soulcatcher?.ui_interact(user)
 	return
 

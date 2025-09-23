@@ -65,7 +65,7 @@
 		return
 	. = ..()
 
-/obj/structure/chair/AltClick(mob/user)
+/obj/structure/chair/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
@@ -479,7 +479,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
-/obj/structure/chair/bronze/AltClick(mob/user)
+/obj/structure/chair/bronze/click_alt(mob/user)
 	turns = 0
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return

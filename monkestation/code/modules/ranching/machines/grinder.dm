@@ -102,8 +102,7 @@
 		qdel(chicken)
 		stored_chicken_soul += 10
 
-/obj/machinery/chicken_grinder/AltClick(mob/user)
-	. = ..()
+/obj/machinery/chicken_grinder/click_alt(mob/living/user)
 	var/choice = tgui_input_list(user, "Choose an egg type", src, egg_types)
 	if(!choice)
 		return

@@ -80,7 +80,7 @@
 	QDEL_NULL(face_shield)
 	return ..()
 
-/obj/item/clothing/head/helmet/sf_sacrificial/AltClick(mob/user)
+/obj/item/clothing/head/helmet/sf_sacrificial/click_alt(mob/user)
 	remove_face_shield(user)
 	return
 

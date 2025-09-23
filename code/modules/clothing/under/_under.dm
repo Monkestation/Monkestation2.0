@@ -335,16 +335,14 @@
 
 	update_wearer_status()
 
-/obj/item/clothing/under/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
 	update_wearer_status()
+	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
@@ -367,8 +365,7 @@
 
 	return TRUE
 
-/obj/item/clothing/under/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/under/click_alt(mob/living/user)
 	if(.)
 		return
 
@@ -379,7 +376,7 @@
 		return
 	rolldown()
 
-/obj/item/clothing/under/alt_click_secondary(mob/user)
+/obj/item/clothing/under/click_alt_secondary(mob/user)
 	. = ..()
 	if(.)
 		return

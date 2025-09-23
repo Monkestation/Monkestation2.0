@@ -143,7 +143,7 @@
 	else
 		return ..()
 
-/obj/item/airlock_painter/AltClick(mob/user)
+/obj/item/airlock_painter/click_alt(mob/user)
 	if(!ink)
 		return TRUE
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)

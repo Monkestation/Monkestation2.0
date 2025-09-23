@@ -123,23 +123,13 @@
 	return ..()
 
 
-/obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock first to use alt eject!")
 		return CLICK_ACTION_BLOCKING
 	replace_beaker(user)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/user)
-	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
-		replace_beaker(user)
-		SStgui.close_uis(src)
-	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
-
-	to_chat(user, span_notice("You [atom_storage.locked ? "close" : "open"] the chemical storage of \the [src]."))
-	playsound(src, 'sound/items/screwdriver2.ogg', 50)
-	return
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -299,13 +289,9 @@ MONKESTATION REMOVAL END */
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/item_ctrl_click(mob/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
-		atom_storage.locked = STORAGE_NOT_LOCKED
 		replace_beaker(user)
 		SStgui.close_uis(src)
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		atom_storage.hide_contents(usr)
-
-	update_appearance()
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
+	return CLICK_ACTION_SUCCESS

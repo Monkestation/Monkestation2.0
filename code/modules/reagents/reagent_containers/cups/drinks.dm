@@ -121,7 +121,7 @@
 	. += span_notice("Alt-click to toggle cup lid.")
 	return
 
-/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/coffee/click_alt(mob/user)
 	lid_open = !lid_open
 	update_icon_state()
 	return ..()
@@ -256,8 +256,7 @@
 	else
 		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
 
-/obj/item/reagent_containers/cup/glass/waterbottle/AltClick(mob/user)
-	. = ..()
+/obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/living/user)
 	if(cap_lost)
 		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
 		return
@@ -478,8 +477,7 @@
 		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
 		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
 
-/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
-	. = ..()
+/obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return
 

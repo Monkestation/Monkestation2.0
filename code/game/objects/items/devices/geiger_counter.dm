@@ -110,7 +110,7 @@
 
 	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive contamination."))
 
-/obj/item/geiger_counter/AltClick(mob/living/user)
+/obj/item/geiger_counter/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return ..()
 	if(!scanning)

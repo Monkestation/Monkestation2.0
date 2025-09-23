@@ -126,7 +126,7 @@
 	user.set_hairstyle(actual_hairstyle, update = TRUE)
 	actual_hairstyle = null
 
-/obj/item/clothing/head/hair_tie/AltClick(mob/living/user)
+/obj/item/clothing/head/hair_tie/click_alt(mob/living/user)
 	if(!(user.get_slot_by_item(src) == ITEM_SLOT_HANDS))
 		balloon_alert(user, "hold in-hand!")
 		return

@@ -74,7 +74,7 @@
 		open = TRUE
 	update_appearance()
 
-/obj/item/pet_carrier/AltClick(mob/living/user)
+/obj/item/pet_carrier/click_alt(mob/living/user)
 	if(open || !user.can_perform_action(src))
 		return
 	locked = !locked

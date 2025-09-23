@@ -73,7 +73,7 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
-/obj/structure/railing/AltClick(mob/user)
+/obj/structure/railing/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /* monkestation edit: replaced in [monkestation\code\modules\blueshift\structures\wooden_fence.dm]

@@ -47,8 +47,7 @@
 	attached_object.cant_grab = FALSE
 	attached_object = null
 
-/obj/machinery/cart/AltClick(mob/user)
-	. = ..()
+/obj/machinery/cart/click_alt(mob/living/user)
 	if(!linked_network)
 		return
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")

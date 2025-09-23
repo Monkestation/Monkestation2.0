@@ -325,7 +325,7 @@
 	if(has_buckled_mobs())
 		. += railoverlay
 
-/obj/vehicle/ridden/rail_cart/AltClick(mob/user)
+/obj/vehicle/ridden/rail_cart/click_alt(mob/user)
 	attach_trailer()
 	return
 

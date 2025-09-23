@@ -31,8 +31,7 @@
 	if(linked_output)
 		. += span_notice("Is connected to an output device.")
 
-/obj/structure/chemical_tank/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_tank/click_alt(mob/living/user)
 	if(!linked_output)
 		linked_output = new(src.loc)
 		linked_output.chemical_tank = src

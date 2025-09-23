@@ -76,7 +76,7 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/material_alloyer/AltClick(mob/user)
+/obj/machinery/material_alloyer/click_alt(mob/user)
 	if(attempt_material_forge())
 		return TRUE
 	. = ..()

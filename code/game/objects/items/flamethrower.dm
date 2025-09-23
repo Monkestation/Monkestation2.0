@@ -165,7 +165,7 @@
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
-/obj/item/flamethrower/AltClick(mob/user)
+/obj/item/flamethrower/click_alt(mob/user)
 	if(beaker && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		user.put_in_hands(beaker)
 		beaker = null

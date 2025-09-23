@@ -482,7 +482,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		remove_headset_languages(mob_loc)
 		grant_headset_languages(mob_loc)
 
-/obj/item/radio/headset/AltClick(mob/living/user)
+/obj/item/radio/headset/click_alt(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
 		return
 	if (command)

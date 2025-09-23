@@ -56,8 +56,7 @@
 	else if(!harvesting)
 		open_machine()
 
-/obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
+/obj/machinery/harvester/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(harvesting || !user || !isliving(user) || state_open)

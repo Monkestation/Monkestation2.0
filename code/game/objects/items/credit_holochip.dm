@@ -98,7 +98,7 @@
 		update_appearance()
 		qdel(H)
 
-/obj/item/holochip/AltClick(mob/user)
+/obj/item/holochip/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 	if(loc != user)

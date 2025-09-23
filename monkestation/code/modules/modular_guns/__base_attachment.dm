@@ -46,8 +46,7 @@
 
 /obj/item/attachment/proc/unique_attachment_effects_per_reset(obj/item/gun/modular)
 
-/obj/item/attachment/AltClick(mob/user)
-	. = ..()
+/obj/item/attachment/click_alt(mob/living/user)
 	if(attachment_flags & ATTACHMENT_COLORABLE)
 		var/new_choice = tgui_color_picker(user,"","Choose Color",attachment_color)
 		if(new_choice == null)

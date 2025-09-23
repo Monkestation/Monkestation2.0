@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/living/user)
 	if(!panel_open)
 		if(!can_interact(user))
 			return

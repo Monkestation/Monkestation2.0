@@ -534,7 +534,7 @@
 	/// Reference to the item inside the mortar, ready to be grinded
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
+/obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
 	if(!grinded)
 		return CLICK_ACTION_BLOCKING
 	grinded.forceMove(drop_location())

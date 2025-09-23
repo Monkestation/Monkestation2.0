@@ -10,8 +10,7 @@
 	var/image/visual_maptext/stored_maptext
 	var/image/player_image
 
-/obj/machinery/player_hologram/AltClick(mob/user)
-	. = ..()
+/obj/machinery/player_hologram/click_alt(mob/living/user)
 	if(current_mob)
 		unset_player()
 	var/choice = tgui_input_list(user, "Choose a ckey to watch", "[name]", GLOB.alive_player_list)

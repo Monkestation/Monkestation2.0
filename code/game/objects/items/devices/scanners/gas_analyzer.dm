@@ -44,7 +44,7 @@
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
-/obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+/obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
 	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))

@@ -32,7 +32,7 @@
 		. += "Its integrated paper synthetizer seems to still be on cooldown."
 
 
-/obj/item/clipboard/cyborg/AltClick(mob/user)
+/obj/item/clipboard/cyborg/click_alt(mob/user)
 	if(!iscyborg(user))
 		to_chat(user, span_warning("You do not seem to understand how to use [src]."))
 		return

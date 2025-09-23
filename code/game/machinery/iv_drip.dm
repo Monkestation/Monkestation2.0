@@ -232,7 +232,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/iv_drip/AltClick(mob/user)
+/obj/machinery/iv_drip/click_alt(mob/user)
 	if(!can_use_alt_click(user))
 		return ..()
 	toggle_transfer_rate()

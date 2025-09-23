@@ -306,8 +306,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/dna_infuser/AltClick(mob/user)
-	. = ..()
+/obj/machinery/dna_infuser/click_alt(mob/living/user)
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
 		return

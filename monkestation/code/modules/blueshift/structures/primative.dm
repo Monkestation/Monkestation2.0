@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/item/cutting_board/AltClick(mob/user)
+/obj/item/cutting_board/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing on board")
 		return
@@ -416,7 +416,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/structure/large_mortar/AltClick(mob/user)
+/obj/structure/large_mortar/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside")
 		return
@@ -618,18 +618,19 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	transfer_fingerprints_to(stone)
 	return ..()
 
-/obj/structure/millstone/AltClick(mob/user)
+/obj/structure/millstone/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside!")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
-/obj/structure/millstone/CtrlShiftClick(mob/user)
+/obj/structure/millstone/click_ctrl_shift(mob/user)
 	set_anchored(!anchored)
 	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/millstone/proc/drop_everything_contained()

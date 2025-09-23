@@ -521,8 +521,7 @@
 		current_canvas = null
 		update_appearance()
 
-/obj/structure/sign/painting/AltClick(mob/user)
-	. = ..()
+/obj/structure/sign/painting/click_alt(mob/living/user)
 	if(current_canvas?.can_select_frame(user))
 		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
 

@@ -673,7 +673,7 @@
 	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
-/obj/item/card/id/AltClick(mob/living/user)
+/obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
 	if(!registered_account || registered_account.replaceable)
@@ -968,7 +968,7 @@
 	department_name = ACCOUNT_SCI_NAME
 	icon_state = "sci_budget"
 
-/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+/obj/item/card/id/departmental_budget/click_alt(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 
 /obj/item/card/id/advanced

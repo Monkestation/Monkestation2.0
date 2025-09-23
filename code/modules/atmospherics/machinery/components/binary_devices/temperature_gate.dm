@@ -30,7 +30,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set to maximum recommended target temperature"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -38,7 +38,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_alt(mob/user)
 	if(can_interact(user))
 		target_temperature = max_recommended_temperature
 		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)

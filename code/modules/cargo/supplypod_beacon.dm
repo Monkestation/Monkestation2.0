@@ -79,7 +79,7 @@
 		update_status(SP_READY)
 	to_chat(user, span_notice("[src] linked to [C]."))
 
-/obj/item/supplypod_beacon/AltClick(mob/user)
+/obj/item/supplypod_beacon/click_alt(mob/user)
 	if (!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if (express_console)

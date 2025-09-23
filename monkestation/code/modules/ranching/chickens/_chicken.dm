@@ -144,8 +144,7 @@
 	disliked_foods = null
 	return ..()
 
-/mob/living/basic/chicken/AltClick(mob/user)
-	. = ..()
+/mob/living/basic/chicken/click_alt(mob/living/user)
 	is_marked = !is_marked
 	update_appearance()
 

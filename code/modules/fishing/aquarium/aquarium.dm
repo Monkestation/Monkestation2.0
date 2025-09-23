@@ -117,7 +117,7 @@
 	. = ..()
 	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
-/obj/structure/aquarium/AltClick(mob/user)
+/obj/structure/aquarium/click_alt(mob/user)
 	if(!user.can_perform_action(src))
 		return ..()
 	panel_open = !panel_open

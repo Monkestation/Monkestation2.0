@@ -39,8 +39,7 @@
 		worn_icon_state = initial(worn_icon_state)
 		undyeable = initial(undyeable)
 
-/obj/item/clothing/mask/bandana/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/mask/bandana/click_alt(mob/living/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/char = user
 		var/matrix/widen = matrix()

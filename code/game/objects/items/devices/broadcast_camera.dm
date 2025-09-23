@@ -127,7 +127,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/broadcast_camera/AltClick(mob/user)
+/obj/item/broadcast_camera/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 	active_microphone = !active_microphone

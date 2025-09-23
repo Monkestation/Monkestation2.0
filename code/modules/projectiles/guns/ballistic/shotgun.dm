@@ -210,7 +210,7 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	rack()
@@ -321,7 +321,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+/obj/item/gun/ballistic/shotgun/bulldog/click_alt_secondary(mob/user)
 	if(secondary_magazine)
 		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
 		secondary_magazine = null
@@ -385,8 +385,7 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
+/obj/item/gun/ballistic/shotgun/doublebarrel/click_alt(mob/living/user)
 	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 

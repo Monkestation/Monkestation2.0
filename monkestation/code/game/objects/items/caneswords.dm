@@ -113,7 +113,7 @@
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/canesword/civ/AltClick(mob/user)
+/obj/item/storage/canesword/civ/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
@@ -159,7 +159,7 @@
 /obj/item/storage/canesword/CentCom/PopulateContents()
 	new /obj/item/weapon/cane_sword/CentCom(src)
 
-/obj/item/storage/canesword/CentCom/AltClick(mob/user)
+/obj/item/storage/canesword/CentCom/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))
@@ -198,7 +198,7 @@
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/canesword/syndicate/AltClick(mob/user)
+/obj/item/storage/canesword/syndicate/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))

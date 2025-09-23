@@ -125,8 +125,7 @@
 	add_cable(user, cable)
 	return TRUE
 
-/obj/item/rwd/AltClick(mob/user)
-	. = ..()
+/obj/item/rwd/click_alt(mob/living/user)
 	if(industrial)
 		return
 	if(!radial_menu)

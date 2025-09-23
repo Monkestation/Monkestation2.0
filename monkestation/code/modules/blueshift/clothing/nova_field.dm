@@ -238,7 +238,7 @@
 		current_user.remove_client_colour(/datum/client_colour/glass_colour/lightgreen)
 		current_user.update_sight()
 
-/obj/item/clothing/head/helmet/expeditionary_corps/AltClick(mob/user)
+/obj/item/clothing/head/helmet/expeditionary_corps/click_alt(mob/user)
 	if(!current_user)
 		return
 

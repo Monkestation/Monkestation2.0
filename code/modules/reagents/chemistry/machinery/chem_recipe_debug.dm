@@ -62,7 +62,7 @@
 	ui_interact(usr)
 
 ///Enable the machine
-/obj/machinery/chem_recipe_debug/AltClick(mob/living/user)
+/obj/machinery/chem_recipe_debug/click_alt(mob/living/user)
 	. = ..()
 	if(processing)
 		say("currently processing reaction [index]: [cached_reactions[index]] of [cached_reactions.len]")

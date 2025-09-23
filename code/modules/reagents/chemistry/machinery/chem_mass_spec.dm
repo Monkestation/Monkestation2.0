@@ -120,7 +120,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 	update_appearance()
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	. = ..()
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
@@ -129,7 +129,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return ..()
 	replace_beaker(user, BEAKER1)
 
-/obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
+/obj/machinery/chem_mass_spec/click_alt_secondary(mob/living/user)
 	. = ..()
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")

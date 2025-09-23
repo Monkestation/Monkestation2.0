@@ -187,8 +187,7 @@
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/electrolyzer/click_alt(mob/living/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return

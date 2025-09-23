@@ -35,7 +35,7 @@
 	..()
 	chamber_round()
 
-/obj/item/gun/ballistic/revolver/AltClick(mob/user)
+/obj/item/gun/ballistic/revolver/click_alt(mob/user)
 	..()
 	spin()
 

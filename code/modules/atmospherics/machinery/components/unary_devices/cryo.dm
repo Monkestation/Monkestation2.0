@@ -609,7 +609,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_interact(mob/user)
 	return ..() && user.loc != src
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/click_ctrl(mob/user)
 	if(can_interact(user) && !state_open)
 		if(set_on(!on))
 			balloon_alert(user, "turned [on ? "on" : "off"]")

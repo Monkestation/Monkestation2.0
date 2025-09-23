@@ -243,8 +243,7 @@
 		return
 	user.put_in_inactive_hand(items_by_phrase[phrase])
 
-/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/living/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
 	if(!new_prefix)
 		return

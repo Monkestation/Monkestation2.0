@@ -144,8 +144,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/obj/item/clothing/suit/hooded/cloak/goliath/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/suit/hooded/cloak/goliath/click_alt(mob/living/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/char = user
 		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))

@@ -13,7 +13,7 @@
 /obj/item/tank/internals
 	alternate_worn_layer = ABOVE_HEAD_LAYER
 //MONKESTATION EDIT STOP
-/obj/item/tank/internals/AltClick(mob/user)
+/obj/item/tank/internals/click_alt(mob/user)
 	..()
 	if((loc == user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		toggle_internals(user)

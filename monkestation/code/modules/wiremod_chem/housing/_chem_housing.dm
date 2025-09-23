@@ -80,8 +80,7 @@
 		return
 	return ..()
 
-/obj/structure/chemical_manufacturer/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_manufacturer/click_alt(mob/living/user)
 	remove_tank()
 
 /obj/structure/chemical_manufacturer/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)

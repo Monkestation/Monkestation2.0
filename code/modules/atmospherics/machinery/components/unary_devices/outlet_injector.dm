@@ -54,7 +54,7 @@
 	multi_tool.set_buffer(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -62,7 +62,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
 	if(can_interact(user))
 		volume_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)

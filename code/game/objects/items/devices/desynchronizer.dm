@@ -32,7 +32,7 @@
 	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
 	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
 
-/obj/item/desynchronizer/AltClick(mob/living/user)
+/obj/item/desynchronizer/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)

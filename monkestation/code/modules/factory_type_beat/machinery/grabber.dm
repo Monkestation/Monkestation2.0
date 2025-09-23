@@ -308,8 +308,7 @@
 		ui = new(user, src, "BigManipulator")
 		ui.open()
 
-/obj/machinery/big_manipulator/AltClick(mob/user)
-	. = ..()
+/obj/machinery/big_manipulator/click_alt(mob/living/user)
 	if(!filter)
 		return
 	filter.forceMove(get_turf(src))
@@ -422,7 +421,7 @@
 	. += span_notice("Use Alt-Click to reset the sorting list.")
 	. += span_notice("Attack things to attempt to add to the sorting list.")
 
-/obj/item/manipulator_filter/AltClick(mob/user)
+/obj/item/manipulator_filter/click_alt(mob/user)
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	filtered_items = list()

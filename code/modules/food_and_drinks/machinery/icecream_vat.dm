@@ -183,7 +183,7 @@
 		new /obj/item/stack/sheet/iron(loc, 4)
 	qdel(src)
 
-/obj/machinery/icecream_vat/AltClick(mob/living/user)
+/obj/machinery/icecream_vat/click_alt(mob/living/user)
 	. = ..()
 	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return

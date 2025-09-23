@@ -14,7 +14,7 @@
 
 
 
-/obj/machinery/computer/prisoner/AltClick(mob/user)
+/obj/machinery/computer/prisoner/click_alt(mob/user)
 	id_eject(user)
 	return ..()
 

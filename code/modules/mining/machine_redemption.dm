@@ -232,7 +232,7 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
+/obj/machinery/mineral/ore_redemption/click_alt(mob/living/user)
 	. = ..()
 	if(!user.can_perform_action(src))
 		return

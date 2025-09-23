@@ -72,8 +72,7 @@
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
-/obj/item/clothing/mask/kitsune/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
 	weldingvisortoggle(user)
 	return TRUE
 

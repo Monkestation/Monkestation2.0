@@ -86,8 +86,7 @@
 	. = ..()
 	. += span_notice("Alt-click to remove the tag!")
 
-/obj/item/pillow/AltClick(mob/user)
-	. = ..()
+/obj/item/pillow/click_alt(mob/living/user)
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
 		return

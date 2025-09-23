@@ -96,7 +96,7 @@
 			pipe_type = initial(temp.flip_type)
 	update_appearance()
 
-/obj/structure/disposalconstruct/AltClick(mob/user)
+/obj/structure/disposalconstruct/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 // construction/deconstruction

@@ -160,8 +160,7 @@
 		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
-/obj/machinery/sleeper/AltClick(mob/user)
-	. = ..()
+/obj/machinery/sleeper/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(state_open)

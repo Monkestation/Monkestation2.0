@@ -377,8 +377,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/basic/bot/AltClick(mob/user)
-	. = ..()
+/mob/living/basic/bot/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))

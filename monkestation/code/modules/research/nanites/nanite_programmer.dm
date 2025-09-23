@@ -47,7 +47,7 @@
 	disk = null
 	program = null
 
-/obj/machinery/nanite_programmer/AltClick(mob/user)
+/obj/machinery/nanite_programmer/click_alt(mob/user)
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)

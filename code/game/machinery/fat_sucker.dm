@@ -98,7 +98,7 @@
 	else
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
-/obj/machinery/fat_sucker/AltClick(mob/living/user)
+/obj/machinery/fat_sucker/click_alt(mob/living/user)
 	if(!user.can_perform_action(src))
 		return
 	if(user == occupant)

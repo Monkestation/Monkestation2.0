@@ -482,7 +482,7 @@
 
 	return TRUE
 
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
 	cap_on = !cap_on
 	if(!cap_on)
 		icon_state = "syrup_open"

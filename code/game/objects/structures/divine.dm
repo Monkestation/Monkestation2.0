@@ -7,7 +7,7 @@
 	density = FALSE
 	can_buckle = 1
 
-/obj/structure/sacrificealtar/AltClick(mob/living/user)
+/obj/structure/sacrificealtar/click_alt(mob/living/user)
 	..()
 	if(!istype(user) || !user.can_perform_action(src))
 		return

@@ -174,8 +174,7 @@
 		attached_item.throw_at(destination, 4, 1)
 	on_attached_delete()
 
-/obj/structure/training_machine/AltClick(mob/user)
-	. = ..()
+/obj/structure/training_machine/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	if(has_buckled_mobs())
@@ -401,8 +400,7 @@
 	if (!.)
 		check_hit(hit_atom)
 
-/obj/item/training_toolbox/AltClick(mob/user)
-	. = ..()
+/obj/item/training_toolbox/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))

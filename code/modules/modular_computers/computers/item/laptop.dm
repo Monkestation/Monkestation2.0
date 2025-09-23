@@ -87,8 +87,7 @@
 	toggle_open(user)
 
 
-/obj/item/modular_computer/laptop/AltClick(mob/user)
-	. = ..()
+/obj/item/modular_computer/laptop/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(screen_on) // Close it.

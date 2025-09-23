@@ -201,8 +201,7 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
-	. = ..()
+/obj/machinery/mecha_part_fabricator/click_alt(mob/living/user)
 	if(!user.can_perform_action(src))
 		return
 	if(panel_open)

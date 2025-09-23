@@ -147,7 +147,7 @@
 	. = ..()
 	. += span_notice("Alt-click to set your war cry.")
 
-/obj/item/spear/explosive/AltClick(mob/user)
+/obj/item/spear/explosive/click_alt(mob/user)
 	if(user.can_perform_action(src))
 		..()
 		if(istype(user) && loc == user)

@@ -50,7 +50,7 @@
 	stored.attack_self(user)
 
 //Alt click drops the stored item.
-/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.forceMove(user.drop_location())
@@ -239,7 +239,7 @@
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
 	. = ..()
 	if(stored)
 		var/obj/item/organ = stored

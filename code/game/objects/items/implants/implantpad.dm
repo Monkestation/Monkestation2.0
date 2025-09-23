@@ -32,7 +32,7 @@
 	updateSelfDialog()
 	. = ..()
 
-/obj/item/implantpad/AltClick(mob/user)
+/obj/item/implantpad/click_alt(mob/user)
 	..()
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return

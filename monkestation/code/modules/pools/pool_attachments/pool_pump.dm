@@ -127,8 +127,7 @@
 
 	return synthable_reagents
 
-/obj/machinery/pool_pump/AltClick(mob/user)
-	. = ..()
+/obj/machinery/pool_pump/click_alt(mob/living/user)
 	if(!turned_on && length(creatable_reagents))
 		turned_on = TRUE
 		START_PROCESSING(SSmachines, src)

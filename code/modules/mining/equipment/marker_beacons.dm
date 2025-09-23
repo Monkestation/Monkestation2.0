@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/living/user)
+/obj/item/stack/marker_beacon/click_alt(mob/living/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		return
 	return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/living/user)
+/obj/structure/marker_beacon/click_alt(mob/living/user)
 	..()
 	if(!istype(user) || !user.can_perform_action(src))
 		return

@@ -847,7 +847,7 @@
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
+/obj/item/storage/belt/sabre/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(length(contents))

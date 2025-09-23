@@ -170,7 +170,7 @@
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
-/obj/item/plunger/AltClick(mob/user)
+/obj/item/plunger/click_alt(mob/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return
 

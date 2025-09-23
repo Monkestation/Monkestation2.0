@@ -154,12 +154,12 @@
 			C.forceMove(loc)
 	qdel(src)
 
-/obj/machinery/computer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/computer/click_alt(mob/user)
 	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
-		return
+		return CLICK_ACTION_BLOCKING
+	return CLICK_ACTION_SUCCESS // Do nothing I guess?
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)

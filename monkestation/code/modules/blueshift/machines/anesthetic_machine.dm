@@ -78,7 +78,7 @@
 	attached_tank = attacking_item
 	update_icon()
 
-/obj/machinery/anesthetic_machine/AltClick(mob/user)
+/obj/machinery/anesthetic_machine/click_alt(mob/user)
 	if(!attached_tank)
 		return
 

@@ -54,7 +54,7 @@
 		secondary_tank_contents
 	)
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/AltClick(mob/living/user)
+/obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
 	. = ..()
 	return
 

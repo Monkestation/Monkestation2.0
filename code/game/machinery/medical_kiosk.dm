@@ -124,7 +124,7 @@
 		return
 	return ..()
 
-/obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
+/obj/machinery/medical_kiosk/click_alt(mob/living/carbon/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return
 	if(!scanner_wand)

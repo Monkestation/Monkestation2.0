@@ -197,18 +197,17 @@
 		return
 
 /// Open the cell cover when ALT+Click on the suit
-/obj/item/clothing/suit/space/AltClick(mob/living/user)
+/obj/item/clothing/suit/space/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return ..()
 	toggle_spacesuit_cell(user)
 
 /// Remove the cell whent he cover is open on CTRL+Click
-/obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		if(cell_cover_open && cell)
-			remove_cell(user)
-			return
-	return ..()
+/obj/item/clothing/suit/space/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
+	if(cell_cover_open && cell)
+		remove_cell(user)
+		return CLICK_ACTION_SUCCESS
 
 // Remove the cell when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)

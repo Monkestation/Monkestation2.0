@@ -67,8 +67,7 @@
 		P.name = trim("[product_name] bottle")
 		user.put_in_hands(P)
 
-/obj/structure/chemical_tank/factory/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_tank/factory/click_alt(mob/living/user)
 	var/choice_product = tgui_input_list(user, "Pick Product", "[name]", list("pill", "patch", "tube"))
 	if(choice_product)
 		product = choice_product

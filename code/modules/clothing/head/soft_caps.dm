@@ -24,7 +24,7 @@
 	flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(mob/user)
+/obj/item/clothing/head/soft/click_alt(mob/user)
 	..()
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		flip(user)

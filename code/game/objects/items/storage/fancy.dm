@@ -232,8 +232,7 @@
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	. = ..()
+/obj/item/storage/fancy/cigarettes/click_alt(mob/living/user)
 	var/obj/item/lighter = locate(/obj/item/lighter) in contents
 	if(lighter)
 		quick_remove_item(lighter, user)

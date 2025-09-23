@@ -77,8 +77,7 @@
 	else
 		. += span_notice("The tie can be untied with Alt-Click.")
 
-/obj/item/clothing/neck/tie/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/neck/tie/click_alt(mob/living/user)
 	if(clip_on)
 		return
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))

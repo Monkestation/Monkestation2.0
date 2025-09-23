@@ -34,7 +34,7 @@
 		/obj/item/knife/bowie,
 		))
 
-/obj/item/storage/belt/bowie_sheath/AltClick(mob/user)
+/obj/item/storage/belt/bowie_sheath/click_alt(mob/user)
 	if(length(contents))
 		var/obj/item/knife = contents[1]
 		user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))

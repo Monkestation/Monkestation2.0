@@ -23,7 +23,7 @@
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
 
-/obj/item/assembly/infra/AltClick(mob/user)
+/obj/item/assembly/infra/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly/infra/Destroy()

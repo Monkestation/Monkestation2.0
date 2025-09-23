@@ -27,7 +27,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -35,7 +35,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/click_alt(mob/user)
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)

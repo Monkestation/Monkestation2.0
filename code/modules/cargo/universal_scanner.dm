@@ -121,14 +121,14 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
-/obj/item/universal_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/click_alt(mob/living/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
 		return
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null

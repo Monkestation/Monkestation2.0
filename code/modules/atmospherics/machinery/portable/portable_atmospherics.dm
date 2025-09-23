@@ -201,7 +201,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/AltClick(mob/living/user)
+/obj/machinery/portable_atmospherics/click_alt(mob/living/user)
 	. = ..()
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
 		return

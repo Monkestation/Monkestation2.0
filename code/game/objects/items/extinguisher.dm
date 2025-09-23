@@ -273,7 +273,7 @@
 		if(1 to 3)
 			source.delay = 3
 
-/obj/item/extinguisher/AltClick(mob/user)
+/obj/item/extinguisher/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(!user.is_holding(src))

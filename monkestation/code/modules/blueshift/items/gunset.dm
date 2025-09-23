@@ -112,7 +112,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/storage/toolbox/guncase/skyrat/AltClick(mob/user)
+/obj/item/storage/toolbox/guncase/skyrat/click_alt(mob/user)
 	opened = !opened
 	update_icon()
 

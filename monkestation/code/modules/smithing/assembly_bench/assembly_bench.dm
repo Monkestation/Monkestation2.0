@@ -35,7 +35,7 @@
 		for(var/obj/item/item as anything in current_recipe.needed_items)
 			. += span_notice("[current_recipe.needed_items[item]] [initial(item.name)] needed.")
 
-/obj/structure/machine/assembly_bench/AltClick(mob/user)
+/obj/structure/machine/assembly_bench/click_alt(mob/user)
 	if(current_recipe)
 		for(var/obj/item/stored in stored_items)
 			stored.forceMove(user.loc)

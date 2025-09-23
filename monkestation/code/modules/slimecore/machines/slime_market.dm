@@ -33,8 +33,7 @@
 	console = null
 	return ..()
 
-/obj/machinery/slime_market_pad/AltClick(mob/user)
-	. = ..()
+/obj/machinery/slime_market_pad/click_alt(mob/living/user)
 	if(!.)
 		return
 	link_console()

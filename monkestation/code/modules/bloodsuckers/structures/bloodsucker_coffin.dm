@@ -270,8 +270,7 @@
 	return ..()
 
 /// Distance Check (Inside Of)
-/obj/structure/closet/crate/coffin/AltClick(mob/user)
-	. = ..()
+/obj/structure/closet/crate/coffin/click_alt(mob/living/user)
 	if(user in src)
 		LockMe(user, !locked)
 		return

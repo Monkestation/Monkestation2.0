@@ -250,7 +250,7 @@
 	SIGNAL_HANDLER
 	set_light_on(!(machine_stat & NOPOWER))
 
-/obj/machinery/doppler_array/AltClick(mob/user)
+/obj/machinery/doppler_array/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)

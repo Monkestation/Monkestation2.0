@@ -237,7 +237,7 @@
 	. = ..()
 	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")
 
-/obj/item/gun/ballistic/shotgun/china_lake/AltClick(mob/living/user)
+/obj/item/gun/ballistic/shotgun/china_lake/click_alt(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return ..()
 	var/new_range = tgui_input_number(user, "Please set the range", "Leaf Sight Level", 10, maximum_target_range, minimum_target_range)

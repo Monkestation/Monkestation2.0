@@ -474,7 +474,7 @@
 	//	w_class -= I.w_class
 	return ..()
 
-/obj/item/gun/ballistic/AltClick(mob/user)
+/obj/item/gun/ballistic/click_alt(mob/user)
 	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 		return

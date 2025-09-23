@@ -53,7 +53,7 @@
 
 	return ..()
 
-/obj/item/pinpointer/area_pinpointer/AltClick(mob/living/carbon/user)
+/obj/item/pinpointer/area_pinpointer/click_alt(mob/living/carbon/user)
 	if(!istype(user) || !user.can_perform_action(src))
 		return
 	user.visible_message(span_notice("[user] quietly flips a switch in [user.p_their()] pinpointer."), span_notice("You quietly flip the switch your pinpointer."))

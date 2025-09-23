@@ -220,7 +220,7 @@
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 	to_chat(user, span_notice("You bypass the console's security protocols."))
 
-/obj/machinery/computer/telecomms/traffic/AltClick(mob/user)
+/obj/machinery/computer/telecomms/traffic/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY) || !iscarbon(user))
 		return
 

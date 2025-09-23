@@ -71,7 +71,7 @@
 	pen = null
 	update_icon()
 
-/obj/item/clipboard/AltClick(mob/user)
+/obj/item/clipboard/click_alt(mob/user)
 	..()
 	if(pen)
 		if(integrated_pen)

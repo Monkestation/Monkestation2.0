@@ -387,8 +387,7 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
+/mob/living/simple_animal/bot/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))

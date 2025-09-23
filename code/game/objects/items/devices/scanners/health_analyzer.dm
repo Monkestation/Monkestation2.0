@@ -495,7 +495,7 @@
 		// we handled the last <br> so we don't need handholding
 		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
-/obj/item/healthanalyzer/AltClick(mob/user)
+/obj/item/healthanalyzer/click_alt(mob/user)
 	..()
 
 	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())

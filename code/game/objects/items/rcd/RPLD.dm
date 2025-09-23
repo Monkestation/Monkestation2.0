@@ -270,7 +270,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/construction/plumbing/AltClick(mob/user)
+/obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)

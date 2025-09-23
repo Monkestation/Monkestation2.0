@@ -293,7 +293,7 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/structure/window/AltClick(mob/user)
+/obj/structure/window/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/window/set_anchored(anchorvalue)

@@ -30,7 +30,7 @@
 		..()
 
 
-/obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
+/obj/machinery/computer/nanite_cloud_controller/click_alt(mob/user)
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)

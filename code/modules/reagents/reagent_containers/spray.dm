@@ -440,7 +440,7 @@
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
 
-/obj/item/reagent_containers/spray/medical/AltClick(mob/user)
+/obj/item/reagent_containers/spray/medical/click_alt(mob/user)
 	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 

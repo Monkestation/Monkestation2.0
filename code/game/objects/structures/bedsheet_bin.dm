@@ -136,7 +136,7 @@ LINEN BINS
 	else
 		return ..()
 
-/obj/item/bedsheet/AltClick(mob/living/user)
+/obj/item/bedsheet/click_alt(mob/living/user)
 	// double check the canUseTopic args to make sure it's correct
 	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return

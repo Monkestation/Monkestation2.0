@@ -861,7 +861,7 @@
 
 	fire_act(100)
 
-/obj/item/paper/selfdestruct/AltClick(mob/living/user, obj/item/used_item)
+/obj/item/paper/selfdestruct/click_alt(mob/living/user, obj/item/used_item)
 	if(!armed)
 		to_chat(user, span_warning("You arm the incineration mechanism."))
 		armed = TRUE

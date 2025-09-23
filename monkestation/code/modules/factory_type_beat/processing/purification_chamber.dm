@@ -25,8 +25,7 @@
 	var/oxygen_moles = 0
 	var/obj/machinery/portable_atmospherics/purification_input/oxygen_input
 
-/obj/machinery/bouldertech/purification_chamber/AltClick(mob/user)
-	. = ..()
+/obj/machinery/bouldertech/purification_chamber/click_alt(mob/living/user)
 	if(oxygen_input)
 		oxygen_input.disconnect()
 		QDEL_NULL(oxygen_input)

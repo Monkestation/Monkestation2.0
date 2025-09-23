@@ -138,7 +138,7 @@
 		return
 	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
-/obj/item/paper/AltClick(mob/living/user, obj/item/I)
+/obj/item/paper/click_alt(mob/living/user, obj/item/I)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(istype(src, /obj/item/paper/carbon))

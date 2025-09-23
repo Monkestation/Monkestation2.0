@@ -38,8 +38,7 @@
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/living/user)
 	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	if(candy_cooldown < world.time)

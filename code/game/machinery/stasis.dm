@@ -52,8 +52,7 @@
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
-/obj/machinery/stasis/AltClick(mob/user)
-	. = ..()
+/obj/machinery/stasis/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(world.time >= stasis_can_toggle && user.can_perform_action(src, ALLOW_SILICON_REACH))

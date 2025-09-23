@@ -39,7 +39,7 @@
 		inserted_key.forceMove(drop_location())
 	inserted_key = attacking_item
 
-/obj/vehicle/ridden/AltClick(mob/user)
+/obj/vehicle/ridden/click_alt(mob/user)
 	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))
 		return ..()
 	if(!is_occupant(user))

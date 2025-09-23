@@ -25,8 +25,7 @@
 	if(locked)
 		. += span_notice("Alt-click to unlock.")
 
-/obj/item/nanite_remote/AltClick(mob/user)
-	. = ..()
+/obj/item/nanite_remote/click_alt(mob/living/user)
 	if(locked)
 		if(allowed(user))
 			to_chat(user, span_notice("You unlock [src]."))

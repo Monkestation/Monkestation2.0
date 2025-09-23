@@ -21,8 +21,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set Timer"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/oven/AltClick(mob/user)
-	. = ..()
+/obj/machinery/oven/click_alt(mob/living/user)
 	if(!oven_timer)
 		timer_duration = tgui_input_number(user, "How long should the timer be in 10th of a seconds", min_value = 0, max_value = 10000000)
 		if(!timer_duration)

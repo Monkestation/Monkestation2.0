@@ -376,7 +376,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	deconstruct()
 	return TRUE
 
-/obj/structure/showerframe/AltClick(mob/user)
+/obj/structure/showerframe/click_alt(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist

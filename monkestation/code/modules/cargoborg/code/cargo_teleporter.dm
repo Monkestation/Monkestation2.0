@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	spawned_marker.parent_item = src
 	marker_children += spawned_marker
 
-/obj/item/cargo_teleporter/AltClick(mob/user)
+/obj/item/cargo_teleporter/click_alt(mob/user)
 	if(length(marker_children))
 		for(var/obj/effect/decal/cleanable/cargo_mark/destroy_children in marker_children)
 			qdel(destroy_children)

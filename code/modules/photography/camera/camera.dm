@@ -72,7 +72,7 @@
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
-/obj/item/camera/AltClick(mob/user)
+/obj/item/camera/click_alt(mob/user)
 	if(!user.can_perform_action(src))
 		return
 	adjust_zoom(user)

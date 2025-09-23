@@ -412,7 +412,7 @@
 		return
 	return ..()
 
-/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+/obj/item/stack/medical/mesh/click_alt(mob/living/user)
 	if(!is_open)
 		balloon_alert(user, "open it first!")
 		return

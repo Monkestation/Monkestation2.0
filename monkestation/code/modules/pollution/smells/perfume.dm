@@ -34,7 +34,7 @@
 	if(has_cap)
 		. += span_notice("Alt-click [src] to [ cap ? "take the cap off" : "put the cap on"].")
 
-/obj/item/perfume/AltClick(mob/user)
+/obj/item/perfume/click_alt(mob/user)
 	toggle_cap(user)
 
 /obj/item/perfume/attack_self(mob/user, modifiers)

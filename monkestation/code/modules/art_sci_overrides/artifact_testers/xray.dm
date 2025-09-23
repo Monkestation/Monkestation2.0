@@ -67,8 +67,7 @@
 	icon_state = "[base_icon_state]-[state_open]"
 	return ..()
 
-/obj/machinery/artifact_xray/AltClick(mob/user)
-	. = ..()
+/obj/machinery/artifact_xray/click_alt(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(our_disk)

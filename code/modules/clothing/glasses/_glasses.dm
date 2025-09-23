@@ -72,7 +72,7 @@
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.apply_organ_damage(5)
 
-/obj/item/clothing/glasses/AltClick(mob/user)
+/obj/item/clothing/glasses/click_alt(mob/user)
 	if(glass_colour_type && !forced_glass_color && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 
@@ -197,8 +197,7 @@
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
-/obj/item/clothing/glasses/eyepatch/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/glasses/eyepatch/click_alt(mob/living/user)
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
@@ -646,8 +645,7 @@
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.hide_from(user)
 
-/obj/item/clothing/glasses/debug/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/glasses/debug/click_alt(mob/living/user)
 	if(ishuman(user))
 		if(xray)
 			vision_flags -= SEE_MOBS|SEE_OBJS

@@ -88,7 +88,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/toiletbong/AltClick(mob/living/user)
+/obj/structure/toiletbong/click_alt(mob/living/user)
 	if(anchored)
 		return ..()
 	setDir(turn(dir,90))
