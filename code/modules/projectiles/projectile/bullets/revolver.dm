@@ -125,12 +125,13 @@
 	damage = 40
 	demolition_mod = 12
 
-/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin. Deals roughly the same total damage as standard rounds
+/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin, 6u cyanide. Deals somewhat more damage than standard rounds but takes time to work
 	name = ".357 Heartpiercer bullet"
-	damage = 20
-	armour_penetration = 75
+	damage = 15
+	armour_penetration = 100
 	wound_bonus = 0
 	speed = 0.3
+	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
 /obj/projectile/bullet/a357/wallstake
 	name = ".357 Wallstake bullet"
