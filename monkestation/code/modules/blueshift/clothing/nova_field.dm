@@ -21,7 +21,7 @@
 	worn_icon_state = "webbing_exp_corps"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/belts.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/belt.dmi'
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Webbing" = list(
 			RESKIN_ICON_STATE = "webbing_exp_corps",
@@ -92,8 +92,6 @@
 
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	uses_advanced_reskins = FALSE
-	unique_reskin = NONE
 
 /obj/item/clothing/gloves/chief_engineer/expeditionary_corps
 	name = "expeditionary corps insulated gloves"
@@ -132,7 +130,7 @@
 	inhand_icon_state = "backpack"
 	icon = 'monkestation/code/modules/blueshift/icons/backpack.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob_backpack.dmi'
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Backpack" = list(
 			RESKIN_ICON_STATE = "exp_corps",

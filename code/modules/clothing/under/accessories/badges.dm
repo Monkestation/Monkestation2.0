@@ -201,11 +201,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	// We already register context regardless in Initialize.
 	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
-/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
-	. = ..()
-	post_reskin()
-
-/obj/item/clothing/accessory/pride/proc/post_reskin()
+/obj/item/clothing/accessory/pride/post_reskin()
 	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
 			name = "[lowertext(pride_name)] pin"

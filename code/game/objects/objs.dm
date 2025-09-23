@@ -268,8 +268,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || infinite_reskin))
-		. += span_notice("Alt-click it to reskin it.")
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))

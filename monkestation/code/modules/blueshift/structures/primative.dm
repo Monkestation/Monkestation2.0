@@ -737,7 +737,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 #define RESKIN_LINEN "Linen"
 
 /obj/item/storage/bag/plants
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Original" = list(
 			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',
@@ -774,7 +774,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /// A helper for the primitive variant, for mappers.
 /obj/item/storage/bag/plants/primitive
 	current_skin = RESKIN_LINEN // Just so it displays properly when in suit storage
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 	icon = 'monkestation/code/modules/blueshift/icons/plant_bag.dmi'
 	icon_state = "plantbag_primitive"
@@ -793,7 +793,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	bag.make_primitive()
 
 /obj/item/storage/bag/plants/portaseeder
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 
 #undef RESKIN_LINEN

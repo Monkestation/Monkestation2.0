@@ -75,7 +75,12 @@
 
 	to_chat(user, "[src] is now skinned as '[pick].'")
 	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
+	post_reskin(user) // MONKE EDIT: Post reskin
 
+// MONKE EDIT: Post reskin
+/// Automatically called after a reskin, for any extra variable changes.
+/obj/item/proc/post_reskin(mob/our_mob)
+	return
 
 /**
  * Checks if we are allowed to interact with a radial menu for reskins
@@ -160,10 +165,6 @@
 	to_chat(M, "[src] is now skinned as '[pick].'")
 	post_reskin(M)
 	return TRUE
-
-/// Automatically called after a reskin, for any extra variable changes.
-/obj/item/proc/post_reskin(mob/our_mob)
-	return
 
 /obj/click_alt(mob/living/user)
 	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
