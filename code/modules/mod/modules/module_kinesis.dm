@@ -9,7 +9,7 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
@@ -60,7 +60,7 @@
 	if(!can_grab(target))
 		balloon_alert(mod.wearer, "can't grab!")
 		return
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	grabbed_atom = target
 	if(isliving(grabbed_atom))
 		var/mob/living/grabbed_mob = grabbed_atom
@@ -90,7 +90,7 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	drain_power(use_power_cost/10)
+	drain_power(use_energy_cost/10)
 	if(kinesis_catcher.mouse_params)
 		kinesis_catcher.calculate_params()
 	if(!kinesis_catcher.given_turf)
@@ -225,7 +225,7 @@
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype
 	name = "MOD prototype kinesis module"
 	complexity = 0
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE
 
 /atom/movable/screen/fullscreen/cursor_catcher/kinesis
