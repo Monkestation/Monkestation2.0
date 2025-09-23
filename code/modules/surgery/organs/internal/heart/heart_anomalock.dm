@@ -101,14 +101,14 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/cell in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/cell in owner.get_all_contents())
 		if(cell.used_charge())
 			batteries += cell
 
 	if(!length(batteries))
 		return
 
-	var/obj/item/stock_parts/cell/cell = pick(batteries)
+	var/obj/item/stock_parts/power_store/cell/cell = pick(batteries)
 	cell.give(cell.maxcharge * 0.1)
 
 ///Does a few things to try to help you live whatever you may be going through
@@ -130,19 +130,20 @@
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/get_held_mob()
 	return owner
 
-/obj/item/organ/internal/heart/cybernetic/anomalock/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item, required_anomaly))
-		return ..()
+/obj/item/organ/internal/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, required_anomaly))
+		return NONE
 	if(core)
 		balloon_alert(user, "core already in!")
-		return
-	if(!user.transferItemToLoc(item, src))
-		return
-	core = item
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	core = tool
 	balloon_alert(user, "core installed")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/heart/cybernetic/anomalock/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

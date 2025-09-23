@@ -74,7 +74,7 @@
 	var/random_value = rand(0, total_cost)
 	var/accumulated_cost = 0
 
-	for(var/available as anything in random_domains)
+	for(var/available in random_domains)
 		accumulated_cost += available["cost"]
 		if(accumulated_cost >= random_value)
 			domain_randomized = TRUE

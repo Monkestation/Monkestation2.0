@@ -257,12 +257,14 @@
 		/obj/item/scalpel,
 		/obj/item/shears,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/stack/sticky_tape, //surgical tape
 		/obj/item/stamp,
 		/obj/item/sensor_device,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/surgical_drapes, //for true paramedics
+		/obj/item/surgical_processor,
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
@@ -354,7 +356,7 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/stock_parts/cell/microfusion, //monkestation edit
+		/obj/item/stock_parts/power_store/cell/microfusion, //monkestation edit
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -417,6 +419,7 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/marker_beacon,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/stack/ore,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/bone,

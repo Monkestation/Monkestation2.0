@@ -443,10 +443,10 @@
 
 	//we now summarize the chat msgs collected
 	if(!(mat_container_flags & MATCONTAINER_SILENT))
-		for(var/status as anything in chat_msgs)
+		for(var/status in chat_msgs)
 			var/list/status_data = chat_msgs[status]
 
-			for(var/item_name as anything in status_data)
+			for(var/item_name in status_data)
 				//read the params
 				var/list/chat_data = status_data[item_name]
 				var/count = chat_data["count"]
@@ -579,7 +579,9 @@
 		return FALSE
 
 	for(var/x in mats) //Loop through all required materials
-		if(!has_enough_of_material(x, OPTIMAL_COST(mats[x] * coefficient) * multiplier))//Not a category, so just check the normal way
+		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
+		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
+			testing("didnt have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE

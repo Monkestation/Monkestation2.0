@@ -200,9 +200,9 @@
 // Actions received from TGUI
 /mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !(ui.user.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
-	var/mob/living/our_user = ui.user
 	switch(action)
 		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
@@ -218,8 +218,8 @@
 		if("stationary_mode")
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 		if("sync_tech")
-			if(!sync_tech())
-				to_chat(our_user, span_notice("No research techweb connected."))
+			if(!linked_techweb)
+				to_chat(user, span_notice("No research techweb connected."))
 				return
 			/* monkestation start - move sync_tech into its own proc.
 			var/oldheal_amount = heal_amount

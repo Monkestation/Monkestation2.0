@@ -250,13 +250,6 @@
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
-	if(istype(tongs))
-		//try to load shard into core
-		load(tongs, user)
-	else
-		return ..()
-
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
 	desc = "A scalpel with a fragile tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
@@ -299,6 +292,10 @@
 /obj/item/hemostat/supermatter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!sliver)
 		return NONE
+	if (istype(interacting_with, /obj/item/nuke_core_container/supermatter))
+		var/obj/item/nuke_core_container/supermatter/container = interacting_with
+		container.load(src, user)
+		return ITEM_INTERACT_SUCCESS
 	if(ismovable(interacting_with) && interacting_with != sliver)
 		Consume(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS

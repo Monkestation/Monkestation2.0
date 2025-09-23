@@ -128,7 +128,7 @@
 		if(isturf(user.loc))
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
-			if(do_after(user, 50, target = user) && !beacon)
+			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/T = get_turf(user)
 				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
@@ -156,7 +156,7 @@
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
-	if(do_after(user, 40, target = user) && user && beacon)
+	if(do_after(user, 4 SECONDS, target = user) && user && beacon)
 		var/turf/T = get_turf(beacon)
 		var/turf/source = get_turf(user)
 		if(T.is_blocked_turf(TRUE))
@@ -169,7 +169,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
-		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
+		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
 				user.update_mob_action_buttons()
@@ -354,281 +354,6 @@
 	var/datum/client_colour/color = user.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(color, 1 SECONDS)
 
-#define MAX_BLOOD_LEVEL 100
-
-/obj/item/soulscythe
-	name = "soulscythe"
-	desc = "An old relic of hell created by devils to establish themselves as the leadership of hell over the demons. It grows stronger while it possesses a powerful soul."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "soulscythe"
-	inhand_icon_state = "soulscythe"
-	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
-	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
-	attack_verb_simple = list("chop", "slice", "cut", "reap")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	force = 20
-	throwforce = 17
-	armour_penetration = 50
-	sharpness = SHARP_EDGED
-	bare_wound_bonus = 10
-	layer = MOB_LAYER
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	/// Soulscythe mob in the scythe
-	var/mob/living/simple_animal/soulscythe/soul
-	/// Are we grabbing a spirit?
-	var/using = FALSE
-	/// Currently charging?
-	var/charging = FALSE
-	/// Cooldown between moves
-	COOLDOWN_DECLARE(move_cooldown)
-	/// Cooldown between attacks
-	COOLDOWN_DECLARE(attack_cooldown)
-
-/obj/item/soulscythe/Initialize(mapload)
-	. = ..()
-	soul = new(src)
-	RegisterSignal(soul, COMSIG_LIVING_RESIST, PROC_REF(on_resist))
-	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_attack))
-	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, PROC_REF(on_secondary_attack))
-	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(on_integrity_change))
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE)
-
-/obj/item/soulscythe/examine(mob/user)
-	. = ..()
-	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
-
-/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, params)
-	. = ..()
-	if(attacked.stat != DEAD)
-		give_blood(10)
-
-/obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_atom(user))
-		to_chat(user, span_warning("You can't pick up [src]!"))
-		return
-	return ..()
-
-/obj/item/soulscythe/pickup(mob/user)
-	. = ..()
-	if(soul.ckey)
-		animate(src) //stop spinnage
-
-/obj/item/soulscythe/dropped(mob/user, silent)
-	. = ..()
-	if(soul.ckey)
-		reset_spin() //resume spinnage
-
-/obj/item/soulscythe/attack_self(mob/user, modifiers)
-	if(using || soul.ckey || soul.stat)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		balloon_alert(user, "you can't awaken the scythe!")
-		return
-	using = TRUE
-	balloon_alert(user, "you hold the scythe up...")
-	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as [user.real_name]'s soulscythe?",
-		role = ROLE_PAI,
-		check_jobban = ROLE_PAI,
-		poll_time = 10 SECONDS,
-		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
-		alert_pic = src,
-		role_name_text = "soul scythe"
-	)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/picked_ghost = pick(candidates)
-		soul.PossessByPlayer(picked_ghost.ckey)
-		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		soul.update_atom_languages()
-		soul.faction = list("[REF(user)]")
-		balloon_alert(user, "the scythe glows up")
-		add_overlay("soulscythe_gem")
-		density = TRUE
-		if(!ismob(loc))
-			reset_spin()
-	else
-		balloon_alert(user, "the scythe is dormant!")
-	REMOVE_TRAIT(src, TRAIT_NODROP, type)
-	using = FALSE
-
-/obj/item/soulscythe/relaymove(mob/living/user, direction)
-	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)
-		return
-	if(!isturf(loc))
-		balloon_alert(user, "resist out!")
-		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
-		return
-	if(!use_blood(1, FALSE))
-		return
-	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
-		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y, flags = ANIMATION_PARALLEL)
-	try_step_multiz(direction)
-	COOLDOWN_START(src, move_cooldown, (direction in GLOB.cardinals) ? 0.1 SECONDS : 0.2 SECONDS)
-
-/obj/item/soulscythe/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(!charging)
-		return
-	charging = FALSE
-	throwforce *= 0.5
-	reset_spin()
-	if(ismineralturf(hit_atom))
-		var/turf/closed/mineral/hit_rock = hit_atom
-		hit_rock.gets_drilled()
-	if(isliving(hit_atom))
-		var/mob/living/hit_mob = hit_atom
-		if(hit_mob.stat != DEAD)
-			give_blood(15)
-
-/obj/item/soulscythe/AllowClick()
-	return TRUE
-
-/obj/item/soulscythe/proc/use_blood(amount = 0, message = TRUE)
-	if(amount > soul.blood_level)
-		if(message)
-			to_chat(soul, span_warning("Not enough blood!"))
-		return FALSE
-	soul.blood_level -= amount
-	return TRUE
-
-/obj/item/soulscythe/proc/give_blood(amount)
-	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
-
-/obj/item/soulscythe/proc/on_resist(mob/living/user)
-	SIGNAL_HANDLER
-
-	if(isturf(loc))
-		return
-	INVOKE_ASYNC(src, PROC_REF(break_out))
-
-/obj/item/soulscythe/proc/break_out()
-	if(!use_blood(10))
-		return
-	balloon_alert(soul, "you resist...")
-	if(!do_after(soul, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-		balloon_alert(soul, "interrupted!")
-		return
-	balloon_alert(soul, "you break out")
-	if(ismob(loc))
-		var/mob/holder = loc
-		holder.temporarilyRemoveItemFromInventory(src)
-	forceMove(drop_location())
-
-/obj/item/soulscythe/proc/on_integrity_change(datum/source, old_value, new_value)
-	SIGNAL_HANDLER
-
-	soul.set_health(new_value)
-
-/obj/item/soulscythe/proc/on_attack(mob/living/source, atom/attacked_atom, modifiers)
-	SIGNAL_HANDLER
-
-	if(!COOLDOWN_FINISHED(src, attack_cooldown) || !isturf(loc))
-		return
-	if(get_dist(source, attacked_atom) > 1)
-		INVOKE_ASYNC(src, PROC_REF(shoot_target), attacked_atom)
-	else
-		INVOKE_ASYNC(src, PROC_REF(slash_target), attacked_atom)
-
-/obj/item/soulscythe/proc/on_secondary_attack(mob/living/source, atom/attacked_atom, modifiers)
-	SIGNAL_HANDLER
-
-	if(!COOLDOWN_FINISHED(src, attack_cooldown) || !isturf(loc))
-		return
-	INVOKE_ASYNC(src, PROC_REF(charge_target), attacked_atom)
-
-/obj/item/soulscythe/proc/shoot_target(atom/attacked_atom)
-	if(!use_blood(15))
-		return
-	COOLDOWN_START(src, attack_cooldown, 3 SECONDS)
-	var/obj/projectile/projectile = new /obj/projectile/soulscythe(get_turf(src))
-	projectile.preparePixelProjectile(attacked_atom, src)
-	projectile.firer = src
-	projectile.fire(null, attacked_atom)
-	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))
-	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
-
-/obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
-	if(isliving(attacked_atom) && use_blood(10))
-		var/mob/living/attacked_mob = attacked_atom
-		if(attacked_mob.stat != DEAD)
-			give_blood(15)
-		attacked_mob.apply_damage(damage = force * (ishostile(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
-		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
-	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
-		var/obj/attacked_obj = attacked_atom
-		attacked_obj.take_damage(force, BRUTE, MELEE, FALSE)
-	else
-		return
-	COOLDOWN_START(src, attack_cooldown, 1 SECONDS)
-	animate(src)
-	SpinAnimation(5)
-	addtimer(CALLBACK(src, PROC_REF(reset_spin)), 1 SECONDS)
-	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
-	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
-
-/obj/item/soulscythe/proc/charge_target(atom/attacked_atom)
-	if(charging || !use_blood(30))
-		return
-	COOLDOWN_START(src, attack_cooldown, 5 SECONDS)
-	animate(src)
-	charging = TRUE
-	visible_message(span_danger("[src] starts charging..."))
-	balloon_alert(soul, "you start charging...")
-	if(!do_after(soul, 2 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-		balloon_alert(soul, "interrupted!")
-		return
-	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
-	new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
-	SpinAnimation(1)
-	throwforce *= 2
-	throw_at(attacked_atom, 10, 3, soul, FALSE)
-
-/obj/item/soulscythe/proc/reset_spin()
-	animate(src)
-	SpinAnimation(15)
-
-/mob/living/simple_animal/soulscythe
-	name = "mysterious spirit"
-	maxHealth = 200
-	health = 200
-	gender = NEUTER
-	mob_biotypes = MOB_SPIRIT
-	faction = list()
-	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
-	/// Blood level, used for movement and abilities in a soulscythe
-	var/blood_level = MAX_BLOOD_LEVEL
-
-/mob/living/simple_animal/soulscythe/get_status_tab_items()
-	. = ..()
-	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
-
-/mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
-	. = ..()
-	if(!stat)
-		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * seconds_per_tick))
-
-/obj/projectile/soulscythe
-	name = "soulslash"
-	icon_state = "soulslash"
-	armor_flag = MELEE //jokair
-	damage = 15
-	light_outer_range = 1
-	light_power = 1
-	light_color = LIGHT_COLOR_BLOOD_MAGIC
-
-/obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(ishostile(target))
-		damage *= 2
-	return ..()
-
-#undef MAX_BLOOD_LEVEL
-
 //Ash Drake: Spectral Blade, Lava Staff, Dragon's Blood
 
 /obj/item/melee/ghost_sword
@@ -797,52 +522,66 @@
 	var/create_cooldown = 10 SECONDS
 	var/create_delay = 3 SECONDS
 	var/reset_cooldown = 5 SECONDS
-	var/timer = 0
+	/// Cooldown for when this can be used again.
+	COOLDOWN_DECLARE(next_use)
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with.atom_storage || (user.istate & ISTATE_HARM))
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(timer > world.time)
-		return NONE
-	if(is_type_in_typecache(interacting_with, banned_turfs))
-		return NONE
-	if(!(interacting_with in view(user.client.view, get_turf(user))))
-		return NONE
-	var/turf/open/T = get_turf(interacting_with)
-	if(!istype(T))
-		return NONE
-	if(!islava(T))
-		var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
-		L.alpha = 0
-		animate(L, alpha = 255, time = create_delay)
-		user.visible_message(span_danger("[user] points [src] at [T]!"))
-		timer = world.time + create_delay + 1
-		if(do_after(user, create_delay, target = T))
-			var/old_name = T.name
-			if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
-				user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
-				message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
-				user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
-				timer = world.time + create_cooldown
-				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
-		else
-			timer = world.time
-		qdel(L)
+	if(!COOLDOWN_FINISHED(src, next_use))
+		to_chat(user, span_warning("Wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_use))] before using \the [src] again!"))
+		return ITEM_INTERACT_BLOCKING
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_LAVA_STAFF))
+		to_chat(user, span_warning("You're already using \the [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/target_turf = get_turf(interacting_with)
+	if(!isopenturf(target_turf) || is_type_in_typecache(target_turf, banned_turfs))
+		return ITEM_INTERACT_BLOCKING
+	if(!(target_turf in view(user.client.view, get_turf(user))))
+		return ITEM_INTERACT_BLOCKING
+	if(islava(target_turf))
+		remove_lava(user, target_turf)
 	else
-		var/old_name = T.name
-		if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
-			user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
-			timer = world.time + reset_cooldown
-			playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+		create_lava(user, target_turf)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/lava_staff/proc/create_lava(mob/living/user, turf/open/target)
+	var/obj/effect/temp_visual/lavastaff/lava_visual = new(target)
+	animate(lava_visual, alpha = 255, time = create_delay)
+	user.visible_message(span_danger("[user] points [src] at [target]!"))
+	if(do_after(user, create_delay, target, interaction_key = DOAFTER_SOURCE_LAVA_STAFF))
+		var/old_name = target.name
+		if(target.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
+			// 2x faster on lavaland
+			var/cooldown = create_cooldown
+			if(is_mining_level(target.z))
+				cooldown *= 0.5
+			COOLDOWN_START(src, next_use, cooldown)
+			user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(target)]")
+			user.log_message("fired the lava staff at [AREACOORD(target)].", LOG_ATTACK)
+			playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
+	qdel(lava_visual)
+
+/obj/item/lava_staff/proc/remove_lava(mob/living/user, turf/open/lava/target)
+	var/old_name = target.name
+	if(target.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
+		// reset cooldown is 10x faster on lavaland!
+		var/cooldown = reset_cooldown
+		if(is_mining_level(target.z))
+			cooldown *= 0.1
+		COOLDOWN_START(src, next_use, cooldown)
+		user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
+		playsound(target, 'sound/magic/fireball.ogg', vol = 200, vary = TRUE)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
-	duration = 50
+	duration = 5 SECONDS
+	alpha = 0 // animated upon creation
 
 /turf/open/lava/smooth/weak
 	lava_damage = 10

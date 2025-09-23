@@ -53,6 +53,7 @@ Difficulty: Hard
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	mob_biotypes = MOB_ROBOTIC|MOB_EPIC|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -751,7 +752,7 @@ Difficulty: Hard
 		var/obj/item/hierophant_club/H = attacking_item
 		if(H.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 5 SECONDS, target = src))
 				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))

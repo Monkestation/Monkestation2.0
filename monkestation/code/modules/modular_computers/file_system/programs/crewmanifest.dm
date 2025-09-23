@@ -1,5 +1,5 @@
 /datum/computer_file/program/crew_manifest
-	transfer_access = list()
+	download_access = list()
 	detomatix_resistance = NONE
 
 /datum/computer_file/program/crew_manifest/New()

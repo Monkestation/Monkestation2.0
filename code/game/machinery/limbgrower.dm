@@ -149,7 +149,7 @@
 	if((user.istate & ISTATE_HARM)) //so we can hit the machine
 		return ..()
 
-/obj/machinery/limbgrower/ui_act(action, list/params)
+/obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -184,7 +184,7 @@
 				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
-			use_power(power)
+			use_energy(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			var/temp_category = params["active_tab"]

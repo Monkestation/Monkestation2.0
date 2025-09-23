@@ -79,7 +79,7 @@
 		else
 			to_chat(user, span_notice("You start adding [attacking_item] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src) && W.use(5))
+			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
 				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)

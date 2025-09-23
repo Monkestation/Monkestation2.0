@@ -128,8 +128,8 @@
 		balloon_alert(user, "tram dispatched")
 		return TRUE
 
-/obj/item/tram_remote/afterattack(atom/target, mob/user)
-	link_tram(user, target)
+/obj/item/tram_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	link_tram(user, interacting_with)
 
 /obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
 	var/obj/machinery/button/tram/smacked_device = target
