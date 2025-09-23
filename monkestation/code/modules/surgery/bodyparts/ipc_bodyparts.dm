@@ -13,7 +13,6 @@
 	head_flags = HEAD_HAIR |  HEAD_LIPS | HEAD_EYECOLOR | HEAD_LIPS
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 	body_damage_coeff = 0.75	//IPC's Head can dismember	//Monkestation Edit
 	max_damage = 70	//Keep in mind that this value is used in the //Monkestation Edit
@@ -43,7 +42,6 @@
 	max_damage = 340	//Default: 200 ///Monkestation Edit
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 	dmg_overlay_type = "synth"
 
@@ -67,7 +65,6 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 	hp_percent_to_dismemberable = 0.6
 
@@ -93,7 +90,6 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 	hp_percent_to_dismemberable = 0.6
 
@@ -119,7 +115,6 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 	dmg_overlay_type = "synth"
 	step_sounds = list('sound/effects/servostep.ogg')
@@ -144,7 +139,6 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
-	emp_multiplier = 0.5
 
 
 	dmg_overlay_type = "synth"
