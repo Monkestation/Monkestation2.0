@@ -37,7 +37,7 @@
 	)
 
 /datum/species/mush/check_roundstart_eligible()
-	return TRUE //guess what we got stations that are on planets now 
+	return TRUE
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -71,27 +71,27 @@
 	to_add += list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "band-aid",
-			SPECIES_PERK_NAME = "Thick Skin",
-			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 10% health
+			SPECIES_PERK_ICON = "sun",
+			SPECIES_PERK_NAME = "Mycelial Senses",
+			SPECIES_PERK_DESC = "You can see well in the dark and are resistant to light-induced disorientation."
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "bolt",
-			SPECIES_PERK_NAME = "Big Fungus",
-			SPECIES_PERK_DESC = "You can punch people with such immense strength that they go FLYING ACROSS THE ROOM! If they stand still for 2 and a half seconds...", // an extra 20% stun time.
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Martial Mycelium",
+			SPECIES_PERK_DESC = "You have beefy attacks and can punch people with such immense strength that they go FLYING ACROSS THE ROOM! If they stand still for 2 and a half seconds...",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Big Fungus",
-			SPECIES_PERK_DESC = "You're 25% slower than normal.", // 10% slower then normal.
+			SPECIES_PERK_NAME = "Plodding",
+			SPECIES_PERK_DESC = "You're 25% slower than normal.",
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Steel Bones",
-			SPECIES_PERK_DESC = "You're more resistant to being wounded, things like limb loss and lacerations are less likely to happen to you.", // TRAIT_HARDLY_INJURED
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Fungal Biology",
+			SPECIES_PERK_DESC = "You do not breathe, and weed-killer is extra dangerous to you.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
