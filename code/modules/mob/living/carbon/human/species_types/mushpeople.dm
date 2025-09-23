@@ -64,3 +64,41 @@
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	forced_colour = FALSE
 	return ..()
+
+/datum/species/mush/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "band-aid",
+			SPECIES_PERK_NAME = "Thick Skin",
+			SPECIES_PERK_DESC = "Your body is naturally more resillient, having more health then the average shmoe.", // an extra 10% health
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Big Fungus",
+			SPECIES_PERK_DESC = "You can punch people with such immense strength that they go FLYING ACROSS THE ROOM! If they stand still for 2 and a half seconds...", // an extra 20% stun time.
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Big Fungus",
+			SPECIES_PERK_DESC = "You're 25% slower than normal.", // 10% slower then normal.
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Steel Bones",
+			SPECIES_PERK_DESC = "You're more resistant to being wounded, things like limb loss and lacerations are less likely to happen to you.", // TRAIT_HARDLY_INJURED
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-high",
+			SPECIES_PERK_NAME = "Sterilization",
+			SPECIES_PERK_DESC = "You're easily burnt away, taking 25% more burn damage overall and 50% more damage from high temperatures.", // higher cold damage thresholds, the opposite is also true
+		),
+	)
+
+	return to_add
