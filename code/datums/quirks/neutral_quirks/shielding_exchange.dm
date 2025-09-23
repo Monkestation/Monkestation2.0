@@ -1,11 +1,11 @@
 /datum/quirk/shielding_exchange
 	name = "Shielding Exchange"
-	desc = "ROBOT ONLY: Your limbs are resistant to the effects of EMPs! This doesn't protect your organs, though, and it makes you cripplingly non-waterproof." //basically it replaces one bullshit stun with another, weaker but more easily accessable bullshit stun. the illusion of choice, people.
+	desc = "ROBOT ONLY: Your limbs are resistant to the effects of EMPs! This doesn't protect your organs, though, and it makes you cripplingly non-waterproof." //basically it replaces one bullshit stun with another, weaker but more accessable bullshit stun. the illusion of choice, people.
 	icon = FA_ICON_SHIELD_HALVED
 	value = 0
 	gain_text = span_danger("You feel like water might be a problem.")
 	lose_text = span_notice("You are once again IP68 compliant.") //i see no reason we wouldn't still be using IEEE standards in the far future. they're good standards.
-	medical_record_text = "Patient is absurdly easy to injure. Please take all due diligence to avoid possible malpractice suits."
+	medical_record_text = "Patient has exchanged their internal waterproofing for EM insulation."
 	hardcore_value = 2
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/clothing/suit/hooded/ethereal_raincoat) //raincoat! lol
@@ -22,6 +22,8 @@
 	for(var/obj/item/bodypart/part in quirk_holder)
 		part.emp_multiplier = initial(part.emp_multiplier)
 
+
+//shamelessly stolen from oozeling code because it was exactly what i needed (someone make this a mob proc some day [but not me (im lazy)])
 #define WATER_PROTECTION_HEAD 0.3
 #define WATER_PROTECTION_CHEST 0.2
 #define WATER_PROTECTION_GROIN 0.1
@@ -90,7 +92,7 @@
 	if(water_multiplier <= 0)
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
-		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water!"))
+		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water.")) //dont ask how it works its magic robot work good juice ok?
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	var/how_much_water = robit.reagents.get_reagent_amount(/datum/reagent/water) * water_multiplier
 	switch(how_much_water)
