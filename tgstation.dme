@@ -6477,7 +6477,6 @@
 #include "monkestation\code\game\machinery\computer\camera.dm"
 #include "monkestation\code\game\machinery\computer\cloning.dm"
 #include "monkestation\code\game\machinery\computer\crew.dm"
-#include "monkestation\code\game\machinery\computer\dna_console.dm"
 #include "monkestation\code\game\machinery\computer\telescreen.dm"
 #include "monkestation\code\game\machinery\computer\orders\order_veggies.dm"
 #include "monkestation\code\game\machinery\computer\orders\order_items\mining\order_consumables.dm"
