@@ -4542,6 +4542,28 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/space/basic,
 /area/space)
+"bxy" = (
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 4;
+	pixel_y = -7
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "bxE" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Chemistry South";
@@ -39609,16 +39631,8 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/item/shield/riot,
 /obj/item/melee/baton/security/loaded,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/item/melee/baton/security/loaded,
 /obj/item/melee/baton/security/loaded,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nDk" = (
@@ -98113,7 +98127,7 @@ aaa
 aaa
 aeq
 daO
-dRj
+bxy
 sDw
 xJb
 hxF

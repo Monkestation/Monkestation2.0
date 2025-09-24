@@ -26703,16 +26703,19 @@
 /area/station/engineering/supermatter/room)
 "dbH" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 7;
+	pixel_y = -7
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "dbT" = (
@@ -61566,14 +61569,18 @@
 /area/station/cargo/storage)
 "qzT" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/west,
 /obj/structure/sign/poster/official/twelve_gauge/directional/west,
+/obj/item/gun/energy/e_gun{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "qAb" = (

@@ -30273,19 +30273,30 @@
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "fOw" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 7
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/crowbar/large,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/delivery,
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 1;
+	pixel_y = -5
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 1;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "fOy" = (
@@ -54080,13 +54091,9 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
-/obj/item/gun/energy/e_gun/dragnet{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = 0;
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_y = 6
 	},
 /obj/item/flashlight/seclite{
 	pixel_x = 1;
@@ -54100,6 +54107,7 @@
 	pixel_x = 5;
 	pixel_y = -5
 	},
+/obj/item/crowbar/large,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},

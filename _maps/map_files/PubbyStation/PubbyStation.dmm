@@ -51889,10 +51889,17 @@
 /area/station/maintenance/department/security/brig)
 "vIm" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = 3
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 8;
+	pixel_y = -7
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)

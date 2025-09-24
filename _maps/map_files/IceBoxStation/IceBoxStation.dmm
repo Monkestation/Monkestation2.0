@@ -11317,7 +11317,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "dpX" = (
-/obj/structure/rack,
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
@@ -11333,6 +11332,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "dqd" = (
@@ -29924,11 +29924,6 @@
 /area/mine/living_quarters)
 "jko" = (
 /obj/structure/railing,
-/obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -66833,18 +66828,21 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "uDt" = (
-/obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 7;
+	pixel_y = -6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -76057,6 +76055,16 @@
 /area/icemoon/underground/explored)
 "xuA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/rack,
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "xuB" = (
