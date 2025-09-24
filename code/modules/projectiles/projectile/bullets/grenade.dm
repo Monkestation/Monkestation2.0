@@ -209,8 +209,8 @@
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
 	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 
-	explosion(target, flash_range = 2, adminlog = FALSE, explosion_cause = src)
-	do_sparks(rand(5, 9), FALSE, src)
+	explosion(target, flash_range = 1, adminlog = FALSE, explosion_cause = src)
+	do_sparks(rand(3, 5), FALSE, src)
 
 	var/turf/our_turf = get_turf(src)
 
@@ -219,7 +219,7 @@
 			if(prob(50))
 				do_sparks(rand(1, 9), FALSE, nearby_turf)
 			for(var/mob/living/stunned_living in nearby_turf.contents)
-				stunned_living.Paralyze(2 SECONDS)
+				stunned_living.Paralyze(1 SECONDS)
 				stunned_living.Knockdown(8 SECONDS)
 				stunned_living.soundbang_act(1, 200, 10, 15)
 
@@ -254,7 +254,7 @@
 	shrapnel_radius = 3
 	ex_dev = 0
 	ex_heavy = 0
-	ex_light = 1
+	ex_light = 0
 	ex_flame = 0
 
 /obj/projectile/bullet/shrapnel/short_range
@@ -282,7 +282,7 @@
 	shrapnel_type = /obj/projectile/bullet/incendiary/fire/backblast/short_range
 
 /obj/projectile/bullet/incendiary/fire/backblast/short_range
-	range = 3
+	range = 2
 
 
 /obj/projectile/bullet/c980grenade/riot

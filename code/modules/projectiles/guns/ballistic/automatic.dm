@@ -436,12 +436,12 @@
 	can_bayonet = FALSE
 	suppressor_x_offset = 11
 	burst_size = 2
-	fire_delay = 0.3 SECONDS
+	fire_delay = 0.2 SECONDS
 	spread = 7.5
 
 /obj/item/gun/ballistic/automatic/sol_smg/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.8 SECONDS)
 
 /obj/item/gun/ballistic/automatic/sol_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
@@ -897,7 +897,7 @@
 	suppressor_y_offset = 0
 	can_bayonet = FALSE
 	burst_size = 1
-	fire_delay = 1 SECONDS
+	fire_delay = 1.2 SECONDS
 	actions_types = list()
 	recoil = 1.5
 	wield_recoil = 0.5
