@@ -463,25 +463,29 @@
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
 	var/obj/item/nanite_injection_tentacle/pokey
+	COOLDOWN_DECLARE(nospammy)
 
 /datum/nanite_program/nanite_injector/enable_passive_effect()
 	. = ..()
+	if(!COOLDOWN_FINISHED(src, nospammy))
+		return
 	if(pokey)
 		QDEL_NULL(pokey)
 	if(!host_mob)
 		return
+	COOLDOWN_START(src, nospammy, 0.5 SECONDS)
 	pokey = new(host_mob)
 	host_mob.dropItemToGround(host_mob.get_active_held_item())
 	if(!host_mob.put_in_hands(pokey))
 		to_chat(host_mob, span_warning("Your nanites fail to form an injector."))
 		QDEL_NULL(pokey)
 		return
-	host_mob.visible_message(span_notice("A cloud of nanites forms around [host_mob]'s arm."), span_notice("A nanomechanical cloud forms around your arm."))
+	host_mob.visible_message(span_notice("A tendril of silvery dust forms around [host_mob]'s arm."), span_notice("A nanomechanical injection tendril forms around your arm."))
 
 /datum/nanite_program/nanite_injector/disable_passive_effect()
 	. = ..()
 	if(pokey)
-		host_mob.visible_message(span_notice("The mass of nanomachines around [host_mob]'s arm dissolves."), span_notice("Your injection device dissipates."))
+		host_mob.visible_message(span_notice("The mass of metal around [host_mob]'s arm dissolves."), span_notice("Your injection device dissipates."))
 		QDEL_NULL(pokey)
 
 /obj/item/nanite_injection_tentacle
@@ -546,6 +550,8 @@
 					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
 	if(success)
 		nanos.consume_nanites(200)
+		if(!(nonemod == 1))
+			visible_message(span_warning("[goofygoober] slumps forwards, shuddering as some of [src] flows into [goofygoober.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,goofygoober))
 		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows into your blood"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(goofygoober.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
@@ -558,8 +564,8 @@
 				var/mob/living/carbon/human/yeowch = goofygoober
 				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			goofygoober.emote("scream")
-			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
-			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg'))
+			to_chat(goofygoober, span_reallybig(span_robot("Integration complete.")))
+			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg', volume = 150))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
