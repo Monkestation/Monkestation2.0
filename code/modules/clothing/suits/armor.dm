@@ -284,7 +284,7 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
-	slowdown = 0.5
+	slowdown = 0.3
 
 /datum/armor/armor_riot
 	melee = 50
@@ -293,7 +293,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
-	wound = -10  ///You can ignore the crew mobbing you, but the wounding will build up.
+	wound = 0  ///You can ignore the crew mobbing you, but the wounding will build up.
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
@@ -367,7 +367,7 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 25 //monkestation edit: 20 to 25
+	wound = 30 //monkestation edit: 20 to 25
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"

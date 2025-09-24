@@ -18,18 +18,21 @@
 
 /obj/item/ammo_box/a357/nutcracker
 	name = "speed loader (.357 Nutcracker)"
+	icon_state = "357n"
 	desc = "A seven-shot speed loader designed for .357 revolver. \
-			These rounds lose moderate stopping power but are capable of destroying doors and windows quickly."
+			These rounds have pitiful (by comparison) stopping power, but are capable of effortlessly destroying doors and windows."
 	ammo_type = /obj/item/ammo_casing/a357/nutcracker
 
 /obj/item/ammo_box/a357/heartpiercer
 	name = "speed loader (.357 Heartpiercer)"
+	icon_state = "357h"
 	desc = "A seven-shot speed loader designed for .357 revolvers. \
-			These rounds trade lethality for the ability to penetrate through armor and inject poison."
+			These rounds trade lethality for the ability to inject a quanity of lethal toxins through the thickest armor"
 	ammo_type = /obj/item/ammo_casing/a357/heartpiercer
 
 /obj/item/ammo_box/a357/wallstake
 	name = "speed loader (.357 Wallstake)"
+	icon_state = "357w"
 	desc = "A seven-shot speed loader designed for .357 revolvers. \
 			These blunt rounds trade lethality for the ability to knock people against walls, stunning them momentarily."
 	ammo_type = /obj/item/ammo_casing/a357/wallstake

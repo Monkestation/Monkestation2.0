@@ -60,7 +60,7 @@
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/energy/laser = 3)
 	crate_name = "laser crate"
@@ -226,14 +226,14 @@
 	name = "Energy Guns Crate"
 	desc = "Contains two Energy Guns, capable of firing both nonlethal and lethal \
 		blasts of light."
-	cost = CARGO_CRATE_VALUE * 18
+	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/e_gun = 2)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laser_carbine
 	name = "Laser Carbine Crate"
-	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
+	desc = "Contains two laser carbines, capable of rapidly firing weak lasers."
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/laser/carbine = 2)
 	crate_name = "laser carbine crate"
