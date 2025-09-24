@@ -1,6 +1,6 @@
 /datum/quirk/shielding_exchange
 	name = "Shielding Exchange"
-	desc = "ROBOT ONLY: Your limbs are resistant to the effects of EMPs! This doesn't protect your organs, though, and it makes you cripplingly non-waterproof." //basically it replaces one bullshit stun with another, weaker but more accessable bullshit stun. the illusion of choice, people.
+	desc = "IPC ONLY: Your limbs are resistant to the effects of EMPs! This doesn't protect your organs, though, and it makes you cripplingly non-waterproof." //basically it replaces one bullshit stun with another, weaker but more accessable bullshit stun. the illusion of choice, people.
 	icon = FA_ICON_SHIELD_HALVED
 	value = 0
 	gain_text = span_danger("You feel like water might be a problem.")
@@ -14,12 +14,14 @@
 
 /datum/quirk/shielding_exchange/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
-	for(var/obj/item/bodypart/part in quirk_holder)
+	var/mob/living/carbon/human/humie = quirk_holder
+	for(var/obj/item/bodypart/part in humie.bodyparts)
 		part.emp_multiplier = 0
 
 /datum/quirk/shielding_exchange/remove(client/client_source)
 	UnregisterSignal(quirk_holder, COMSIG_ATOM_EXPOSE_REAGENTS)
-	for(var/obj/item/bodypart/part in quirk_holder)
+	var/mob/living/carbon/human/humie = quirk_holder
+	for(var/obj/item/bodypart/part in humie.bodyparts)
 		part.emp_multiplier = initial(part.emp_multiplier)
 
 
@@ -94,7 +96,7 @@
 	if(robit.reagents.has_reagent(/datum/reagent/dinitrogen_plasmide))
 		to_chat(robit, span_warning("The coolant compound protects your internal componentry from the water.")) //dont ask how it works its magic robot work good juice ok?
 		return COMPONENT_NO_EXPOSE_REAGENTS
-	var/how_much_water = robit.reagents.get_reagent_amount(/datum/reagent/water) * water_multiplier
+	var/how_much_water = source.get_reagent_amount(/datum/reagent/water) * water_multiplier
 	switch(how_much_water)
 		if(0 to 5)
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
