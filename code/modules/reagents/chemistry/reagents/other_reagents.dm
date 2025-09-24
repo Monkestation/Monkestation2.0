@@ -266,7 +266,7 @@
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
 	//MONKESTATION EDIT START
-	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+	if(!is_cat_enough(exposed_mob, include_all_anime = FALSE))
 		return
 
 	var/mob/living/victim = exposed_mob
