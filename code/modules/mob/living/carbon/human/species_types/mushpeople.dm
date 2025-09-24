@@ -102,3 +102,7 @@
 	)
 
 	return to_add
+
+
+/datum/species/mush/get_species_description()
+	return "Mushrüm."
