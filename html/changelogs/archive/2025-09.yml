@@ -807,8 +807,12 @@
   - rscdel: Removed latejoin antag preferences from being chosen, as they confused
       people into thinking latejoin antags existed here.
 2025-09-24:
+  Absolucy:
+  - admin: Harvesting plants is now logged.
   JupiterJaeden:
   - balance: Removes autoprocessing from normal genetics machinery. Still available
       on the traitor cloning pod, if upgraded.
+  Loiosh42:
+  - bugfix: Riot shotgun wallstuns are once again removed as intended
   Xander3359:
   - bugfix: fixed brig phys lab coat not having directional sprites
