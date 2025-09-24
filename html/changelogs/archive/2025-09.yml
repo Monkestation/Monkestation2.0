@@ -806,3 +806,9 @@
   - map: Kilostation has standard eva suits in storage.
   - rscdel: Removed latejoin antag preferences from being chosen, as they confused
       people into thinking latejoin antags existed here.
+2025-09-24:
+  JupiterJaeden:
+  - balance: Removes autoprocessing from normal genetics machinery. Still available
+      on the traitor cloning pod, if upgraded.
+  Xander3359:
+  - bugfix: fixed brig phys lab coat not having directional sprites
