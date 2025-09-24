@@ -18,7 +18,7 @@
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
-	var/give_objectives = TRUE
+	var/give_objectives = FALSE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
 	var/give_secondary_objectives = TRUE
 	var/should_give_codewords = TRUE
@@ -54,7 +54,7 @@
 	// Progression elements are best left to the roundstart antagonists
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
-	give_secondary_objectives = TRUE // Changed from FALSE to TRUE - MONKEYSTATION EDIT CHANGE
+	give_secondary_objectives = FALSE
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
