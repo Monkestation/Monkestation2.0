@@ -149,10 +149,6 @@
 			blood_volume = max(blood_volume - amount, 0)
 	else if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
-	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
-		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
-		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
-			revive(FALSE)
 	return ..()
 
 /mob/living/carbon/pre_stamina_change(diff as num, forced)
