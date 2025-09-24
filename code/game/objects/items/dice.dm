@@ -676,7 +676,7 @@
 			our_souviner.name = "\improper Isocahedral Memento"
 			our_souviner.desc = "A die with twenty sides. It feels sad, somehow. The letters [span_hypnophrase(initials)] are carved where the twenty should be."
 			our_souviner.resistance_flags |= INDESTRUCTIBLE
-			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", initials)
+			our_souviner.special_faces = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", span_hypnophrase(initials))
 			if(stabbed.mind)
 				var/obj/item/soulstone/anybody/stone = new(our_souviner)
 				stone.resistance_flags |= INDESTRUCTIBLE
