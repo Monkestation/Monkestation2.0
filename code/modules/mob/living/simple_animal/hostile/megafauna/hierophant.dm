@@ -53,6 +53,7 @@ Difficulty: Hard
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	mob_biotypes = MOB_ROBOTIC|MOB_EPIC|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
@@ -429,15 +430,9 @@ Difficulty: Hard
 		set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
 		..(force_grant = stored_nearby)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
-	for(var/obj/item/W in L)
-		if(!L.dropItemToGround(W))
-			qdel(W)
+/mob/living/simple_animal/hostile/megafauna/hierophant/celebrate_kill(mob/living/L)
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
-	visible_message(span_hierophant_warning("[src] annihilates [L]!"),span_userdanger("You annihilate [L], restoring your health!"))
-	adjustHealth(-L.maxHealth*0.5)
-	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	L.dust()
+	visible_message(span_hierophant_warning("[src] obliterates [L]!"),span_userdanger("You absorb [L]'s life force, restoring your health!"))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
 	. = ..()
@@ -458,7 +453,7 @@ Difficulty: Hard
 		wander = TRUE
 		did_reset = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
 		if(target && isliving(target))
 			var/mob/living/L = target
@@ -471,6 +466,8 @@ Difficulty: Hard
 					burst_range = 3
 					INVOKE_ASYNC(src, PROC_REF(burst), get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
 				OpenFire()
+				if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
+					devour(L)
 			else
 				devour(L)
 		else
@@ -755,7 +752,7 @@ Difficulty: Hard
 		var/obj/item/hierophant_club/H = attacking_item
 		if(H.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 5 SECONDS, target = src))
 				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))

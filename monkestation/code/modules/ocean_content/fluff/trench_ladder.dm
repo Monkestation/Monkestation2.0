@@ -64,13 +64,13 @@
 		return
 
 	to_chat(user, span_notice("You begin climbing down [src]..."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		user.Move(get_turf(linked_ladder))
 
 /obj/structure/trench_ladder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	to_chat(user, span_notice("You begin dismantling [src]..."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		linked_ladder.real_item = null
 		qdel(linked_ladder)
 		real_item.Move(get_turf(src))

@@ -120,12 +120,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = FLOOR(item.cost_per_order * cargo_cost_multiplier, 1),
-			"icon" = text_ref(item.item_path::icon),
+			"icon" = item.item_path::icon,
 			"icon_state" = item.item_path::icon_state,
 		))
 	return data
 
-/obj/machinery/computer/order_console/ui_act(action, params)
+/obj/machinery/computer/order_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

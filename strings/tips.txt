@@ -75,9 +75,6 @@ As a Revenant, your Defile ability removes holy water from tiles in a small radi
 As a Revenant, your essence is also your health, so revealing yourself in front of humans to harvest the essence of the living is much safer if you've already stocked up on essences from poorly guarded corpses.
 As a Revenant, your Malfunction ability in general damages machinery and mechanical objects, possibly even emagging some objects. Experiment!
 As a Revenant, your Overload Lights ability will only shock humans with lights if the lights are still on after a brief delay.
-As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of mindshield implants to turn your fellow revolutionaries against you.
-As a Revolutionary, you cannot convert a head of staff or someone who has a mindshield implant, such as a security officer or those they implant. Implants are often purchased by the Quartermaster, but the implants can be surgically removed. Take control of cargo to keep control of conversions!
-As a Revolutionary, your main power comes from who you convert, choose your converts wisely to ensure you win the round.
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on a bluespace anomaly core, you can build a Phazon mech!
 As a Roboticist, you can augment people with cyborg limbs. Augmented limbs can easily be repaired with cables and welders.
 As a Roboticist, you can greatly help out Shaft Miners by building a Clarke equipped with a hydraulic clamp and plasma cutter. The mech is ash storm proof and can even walk across lava!
@@ -90,7 +87,7 @@ As a Scientist, you can maximize the number of uses you get out of a slime by fe
 As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Security Officer, communicate and coordinate with your fellow officers using the security channel (:s) to avoid confusion.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
-As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
+As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist.
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your disabler or your helmet!
 As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. You can tell by the flashing blue outline around their job icon. Use this to your advantage in a revolution to definitively tell who is on your side!
@@ -158,7 +155,7 @@ As the Blob, you can produce a Blobbernaut from a factory for 40 resources. Blob
 As the Blob, you can re-pick your reagent type from six random options if the crew has adapted and protected themselves against your current one.
 As the Blob, you fight a war of attrition: Take out medbay and fight in choke points to prevent continued assaults and coordinated burst damage attacks!
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
-As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
+As the Captain, you are one of the highest priority targets on the station. Everything from cults, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.

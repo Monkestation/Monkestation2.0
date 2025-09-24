@@ -61,12 +61,13 @@
 
 /datum/psi_web/stamina_res
 	name = "Vigor Sigils"
-	desc = "Unlocking this sigil halves stamina damage taken."
+	desc = "Unlocking this sigil reduces stamina damage taken by 50%, stacks diminishingly."
 	lore_description = "The Kalak sigils, representing eternity, are etched onto the legs."
 	icon_state = "vigor"
 	willpower_cost = 2
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_SCOUT | DARKSPAWN_FIGHTER
+	infinite = TRUE
 
 /datum/psi_web/stamina_res/on_gain()
 	darkspawn.stam_mod *= 0.5
@@ -159,51 +160,51 @@
 //Halves lightburn damage.
 /datum/psi_web/light_resistance
 	name = "Shadowskin Sigil"
-	desc = "Unlocking this sigil reduces light damage taken."
+	desc = "Unlocking this sigil reduces light damage taken by 40%, stacks diminishingly."
 	lore_description = "The Xlynsh sigil, representing refraction, is etched onto the abdomen."
 	icon_state = "shadow_skin"
-	willpower_cost = 2
+	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
 	infinite = TRUE
 
 /datum/psi_web/light_resistance/on_gain()
-	darkspawn.light_burning *= 0.8
+	darkspawn.light_burning *= 0.6
 
 /datum/psi_web/light_resistance/on_loss()
-	darkspawn.light_burning /= 0.8
+	darkspawn.light_burning /= 0.6
 
 /datum/psi_web/brute_res
 	name = "Callous Sigil"
-	desc = "Unlocking this sigil reduces brute damage taken."
+	desc = "Unlocking this sigil reduces brute damage taken by 40%, stacks diminishingly."
 	lore_description = "The Hh'sha sigil, representing perserverance, is etched onto the abdomen."
 	icon_state = "callous"
-	willpower_cost = 2
+	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
 	infinite = TRUE
 
 /datum/psi_web/brute_res/on_gain()
-	darkspawn.brute_mod *= 0.8
+	darkspawn.brute_mod *= 0.6
 
 /datum/psi_web/brute_res/on_loss()
-	darkspawn.brute_mod /= 0.8
+	darkspawn.brute_mod /= 0.6
 
 /datum/psi_web/burn_res
 	name = "Stifle Sigil"
-	desc = "Unlocking this sigil reduces burn damage taken."
+	desc = "Unlocking this sigil reduces burn damage taken by 40%, stacks diminishingly."
 	lore_description = "The Khophg sigil, representing suffocation, is etched onto the abdomen."
 	icon_state = "stifle"
-	willpower_cost = 2
+	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
 	infinite = TRUE
 
 /datum/psi_web/burn_res/on_gain()
-	darkspawn.burn_mod *= 0.85
+	darkspawn.burn_mod *= 0.6
 
 /datum/psi_web/burn_res/on_loss()
-	darkspawn.burn_mod /= 0.85
+	darkspawn.burn_mod /= 0.6
 
 /datum/psi_web/undying
 	name = "Undying Sigils"

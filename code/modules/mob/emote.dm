@@ -94,7 +94,7 @@
 			var/mob/living/carbon/hat_loser = user
 			if(hat_loser.head)
 				var/obj/item/clothing/head/worn_headwear = hat_loser.head
-				if(worn_headwear.contents.len)
+				if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 					worn_headwear.throw_hats(rand(2,3), get_turf(hat_loser), hat_loser)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
@@ -136,7 +136,7 @@
 				var/mob/living/carbon/hat_loser = user
 				if(hat_loser.head)
 					var/obj/item/clothing/head/worn_headwear = hat_loser.head
-					if(worn_headwear.contents.len)
+					if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 						worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)

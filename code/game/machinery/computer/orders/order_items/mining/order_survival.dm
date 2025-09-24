@@ -9,8 +9,8 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 1000
 
-/datum/orderable_item/survival/luxury_pen/oozling //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling
+/datum/orderable_item/survival/luxury_pen/oozeling //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN
@@ -24,6 +24,10 @@
 /datum/orderable_item/survival/synthcaresurgeon //monke edit, basically a medkit implant for synthetics
 	item_path = /obj/item/autosurgeon/toolset/synthcare
 	cost_per_order = 750
+
+/datum/orderable_item/survival/robopiates //monkestation edit Slows you down so only really good for out of fight usage
+	item_path = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	cost_per_order = 500
 
 /datum/orderable_item/survival/temperature //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature

@@ -23,7 +23,7 @@
 	resistance_flags = NONE
 	max_integrity = 300
 	var/shoulder_carry = FALSE
-	var/satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel //added this variable so that you can change the movespeed penalty a backpack gives if paired with a satchel
+	var/satchel_movespeed_modifier = PAIRED_STORAGE_DEFAULT_SLOWDOWN
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -41,13 +41,13 @@
 /obj/item/storage/backpack/proc/check_belt_satchel(mob/user)
 	if(QDELETED(user))
 		return
-	var/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
-	var/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
-	if(istype(back_item, /obj/item/storage/backpack) && istype(belt_item, /obj/item/storage/backpack/satchel))
-		user.add_movespeed_modifier(satchel_movespeed_modifier)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, update = FALSE)
+	var/obj/item/storage/backpack/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
+	var/obj/item/storage/backpack/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(back_item) && istype(belt_item))
+		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
 	else
-		user.remove_movespeed_modifier(satchel_movespeed_modifier)
-
+		user.update_movespeed()
 /*
  * Backpack Types
  */
@@ -857,7 +857,7 @@
 	desc = "A surprisingly flexible and durable bag, capable of carrying up to three mining guns at once, for those who prowl the wastes with a passion for marksmanship. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
 	icon_state = "rockspider"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/rockspider/Initialize(mapload)
 	. = ..()
@@ -884,7 +884,7 @@
 	desc = "A bag with a mount and holster, capable of carrying any crusher type weapon and a gun, for the aspiring duelist who needs a bit more than just a blade. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
 	icon_state = "ashenduelist"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/ashduelist/Initialize(mapload)
 	. = ..()
@@ -919,7 +919,7 @@
 	desc = "A exceptionally spacious bag full of slots and pouches for different kinds of ammunition, for those who really need more than just one extra round. Despite its weight, it fits incredibly well with a satchel, and does not hinder your movement as much as a regular backpack would."
 	icon_state = "trenchjockey"
 	inhand_icon_state = "backpack"
-	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
 
 /obj/item/storage/backpack/trenchjockey/Initialize(mapload)
 	. = ..()

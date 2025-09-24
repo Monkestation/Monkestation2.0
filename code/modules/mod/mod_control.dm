@@ -234,7 +234,7 @@
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 	if(mod_link.link_call)
-		subtract_charge((DEFAULT_CHARGE_DRAIN * 0.25) * seconds_per_tick)
+		subtract_charge(0.25 * DEFAULT_CHARGE_DRAIN * seconds_per_tick)
 	if(!active)
 		return
 	if(!get_charge() && active && !activating)
@@ -242,7 +242,7 @@
 		return
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
-		malfunctioning_charge_drain = rand(1,20)
+		malfunctioning_charge_drain = rand(0.2 * DEFAULT_CHARGE_DRAIN, 4 * DEFAULT_CHARGE_DRAIN) // About triple power usage on average.
 	subtract_charge((charge_drain + malfunctioning_charge_drain) * seconds_per_tick)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -374,6 +374,26 @@
 			return NONE // shoves the card in the storage anyways
 		insert_pai(user, tool)
 		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/mod/paint))
+		var/obj/item/mod/paint/paint_kit = tool
+		if(active || activating)
+			balloon_alert(user, "suit is active!")
+			return ITEM_INTERACT_BLOCKING
+		if(LAZYACCESS(modifiers, RIGHT_CLICK)) // Right click
+			if(paint_kit.editing_mod == src)
+				return ITEM_INTERACT_BLOCKING
+			paint_kit.editing_mod = src
+			paint_kit.proxy_view = new()
+			paint_kit.proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
+
+			paint_kit.proxy_view.appearance = paint_kit.editing_mod.appearance
+			paint_kit.proxy_view.color = null
+			paint_kit.proxy_view.display_to(user)
+			paint_kit.ui_interact(user)
+			return ITEM_INTERACT_SUCCESS
+		else // Left click
+			paint_kit.paint_skin(src, user)
+			return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
@@ -408,7 +428,7 @@
 /obj/item/mod/control/get_cell()
 	if(!open)
 		return
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	var/obj/item/stock_parts/power_store/cell/cell = get_charge_source()
 	if(!istype(cell))
 		return
 	return cell

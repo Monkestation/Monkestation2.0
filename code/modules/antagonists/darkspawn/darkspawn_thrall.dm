@@ -62,20 +62,18 @@
 	if(!current_mob)
 		return //sanity check
 
-	if(team)
-		team.add_thrall(current_mob.mind)
+	team?.add_thrall(owner)
 
 	add_team_hud(current_mob)
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(thrall_life))
 	RegisterSignal(current_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	current_mob.update_appearance(UPDATE_OVERLAYS)
-	current_mob.grant_language(/datum/language/darkspawn)
+	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction |= FACTION_DARKSPAWN
 
 	current_mob.AddComponent(/datum/component/internal_cam, list(ROLE_DARKSPAWN))
 	var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-	if(cam)
-		cam.change_cameranet(GLOB.thrallnet)
+	cam?.change_cameranet(GLOB.thrallnet)
 
 	for(var/spell in abilities)
 		if(isarachnid(current_mob) && ispath(spell, /datum/action/cooldown/spell/toggle/nightvision))
@@ -96,13 +94,12 @@
 	if(!current_mob)
 		return //sanity check
 
-	if(team)
-		team.remove_thrall(current_mob.mind)
+	team?.remove_thrall(owner)
 
 	UnregisterSignal(current_mob, COMSIG_LIVING_LIFE)
 	UnregisterSignal(current_mob, COMSIG_ATOM_UPDATE_OVERLAYS)
 	current_mob.update_appearance(UPDATE_OVERLAYS)
-	current_mob.remove_language(/datum/language/darkspawn)
+	current_mob.remove_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction -= FACTION_DARKSPAWN
 
 	qdel(current_mob.GetComponent(/datum/component/internal_cam))
@@ -110,9 +107,7 @@
 		if(spells.type in abilities)//no keeping your abilities
 			spells.Remove(current_mob)
 			qdel(spells)
-	var/obj/item/organ/tumor = get_shadow_tumor(current_mob)
-	if(tumor)
-		qdel(tumor)
+	qdel(get_shadow_tumor(current_mob))
 	current_mob.update_sight()
 
 ////////////////////////////////////////////////////////////////////////////////////

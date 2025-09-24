@@ -64,21 +64,22 @@
 	if(on)
 		to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
 		return ITEM_INTERACT_BLOCKING
-	var/obj/item/reagent_containers/cup/tube/tube = tool
-	for(var/i = 1 to tubes.len)
-		if(!tubes[i])
-			tubes[i] = tube
-			tube_valid[i] = tube_has_antibodies(tube)
-			visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
-			playsound(loc, 'sound/machines/click.ogg', 50, 1)
-			user.transferItemToLoc(tube, loc)
-			tube.forceMove(src)
-			update_appearance()
-			updateUsrDialog()
-			return ITEM_INTERACT_SUCCESS
+	var/obj/item/reagent_containers/cup/tube/inserting_tube = tool
+	for(var/to_insert in 1 to length(tubes))
+		if(tubes[to_insert] != null)
+			continue
+		tubes[to_insert] = inserting_tube
+		tube_valid[to_insert] = tube_has_antibodies(inserting_tube)
+		visible_message(span_notice("\The [user] adds \the [inserting_tube] to \the [src]."),span_notice("You add \the [inserting_tube] to \the [src]."))
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
+		user.transferItemToLoc(inserting_tube, loc)
+		inserting_tube.forceMove(src)
+		update_appearance()
+		updateUsrDialog()
+		return ITEM_INTERACT_SUCCESS
 
-		to_chat(user,span_warning("There is no room for more tubes.") )
-		return ITEM_INTERACT_BLOCKING
+	to_chat(user,span_warning("There is no room for more tubes.") )
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/disease2/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
 	if (!tube)

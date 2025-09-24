@@ -167,6 +167,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait can switch their base color to be greyscale
+#define TRAIT_GREYSCALE_TOGGLE "toggle_greyscale"
 /// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS_SECONDARY "mutcolors_secondary"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
@@ -765,7 +767,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the crate's contents are immune to the missing item manifest error
 #define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 ///If the crate is immune to the wrong content in manifest error
-/* #define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error" */
+#define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error"
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"
@@ -951,9 +953,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This one denotes a PDA has received a rigged message and will explode when the user tries to reply to a rigged PDA message
 #define TRAIT_PDA_CAN_EXPLODE "pda_can_explode"
 ///The download speeds of programs from the dowloader is halved.
-/* #define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed" */
+#define TRAIT_MODPC_HALVED_DOWNLOAD_SPEED "modpc_halved_download_speed"
 ///Dictates whether a user (source) is interacting with the frame of a stationary modular computer or the pc inside it. Needed for circuits I guess.
-/* #define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame" */
+#define TRAIT_MODPC_INTERACTING_WITH_FRAME "modpc_interacting_with_frame"
 
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"
@@ -1117,9 +1119,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
 /// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
-
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_SILICON_ACCESS "silicon_access_trait"
+///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_AI_ACCESS "ai_access_trait"
+
 
 ///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
 /* #define TRAIT_SEE_WORN_COLOURS "see_worn_colour" */
@@ -1321,6 +1329,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
+///Trait given to atoms currently affected by projectile dampeners
+#define TRAIT_GOT_DAMPENED "got_dampened"
+
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
@@ -1339,6 +1350,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+// /datum/mind + /mob/living
+/// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
+#define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
+/// You have special interactions with bloodsuckers and the occult.
+#define TRAIT_OCCULTIST "occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE "unborgable"
+/// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
+/// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
+#define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+
+// /datum/mind
+/// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
+#define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW "joined_as_crew"
 
 ///Darkspawn traits
 ///lets darkspawns walk through weak light
@@ -1360,4 +1388,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
+/// they get warm when they do exercisey things
+#define TRAIT_EXERTION_OVERHEAT "exertion_overheat"
 // END TRAIT DEFINES

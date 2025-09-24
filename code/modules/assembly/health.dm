@@ -87,3 +87,33 @@
 /obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Health: [round((source.health / source.maxHealth) * 100)]%"
+
+
+/obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
+	return is_secured(user) ? ..() : UI_CLOSE
+
+/obj/item/assembly/health/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HealthSensor", name)
+		ui.open()
+
+/obj/item/assembly/health/ui_data(mob/user)
+	var/list/data = list()
+	data["health"] = health_scan
+	data["scanning"] = scanning
+	data["target"] = alarm_health
+	return data
+
+/obj/item/assembly/health/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return .
+
+	switch(action)
+		if("scanning")
+			toggle_scan()
+			return TRUE
+		if("target")
+			AltClick(ui.user)
+			return TRUE

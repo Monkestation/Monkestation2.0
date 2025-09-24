@@ -314,6 +314,7 @@
 		harvest_counter++
 		if(istype(item_grown))
 			product_name = item_grown.seed.plantname
+	user.log_message("harvested [harvest_amount] of [product_name] (with [seed_counter] seeds)", LOG_GAME)
 	if(harvest_amount >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result

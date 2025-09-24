@@ -8,6 +8,7 @@
 	icon_state = "defibrillator_mount"
 	density = FALSE
 	use_power = NO_POWER_USE
+	active_power_usage = 40 * BASE_MACHINE_ACTIVE_CONSUMPTION
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_COMMAND, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE
@@ -56,7 +57,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	. += "defib"
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/C = get_cell()
+		var/obj/item/stock_parts/power_store/cell/C = get_cell()
 		. += (defib.safety ? "online" : "emagged")
 		var/ratio = C.charge / C.maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
@@ -131,7 +132,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
 	span_notice("You begin overriding the clamps on [src]..."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	if(!do_after(user, 100, target = src) || !clamps_locked)
+	if(!do_after(user, 10 SECONDS, target = src) || !clamps_locked)
 		return
 	user.visible_message(span_notice("[user] pulses [multitool], and [src]'s clamps slide up."), \
 	span_notice("You override the locking clamps on [src]!"))
@@ -205,12 +206,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/charging/loaded, 
 
 
 /obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/C = get_cell()
-	if(!C || !is_operational)
+	var/obj/item/stock_parts/power_store/cell/cell = get_cell()
+	if(!cell || !is_operational)
 		return PROCESS_KILL
-	if(C.charge < C.maxcharge)
-		use_power(active_power_usage * seconds_per_tick)
-		C.give(40 * seconds_per_tick)
+	if(cell.charge < cell.maxcharge)
+		charge_cell(active_power_usage * seconds_per_tick, cell)
 		defib.update_power()
 
 //wallframe, for attaching the mounts easily

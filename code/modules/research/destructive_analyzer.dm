@@ -59,7 +59,7 @@
 	data["server_connected"] = !!stored_research
 	data["node_data"] = list()
 	if(loaded_item)
-		data["item_icon"] = text_ref(loaded_item.icon)
+		data["item_icon"] = loaded_item.icon
 		data["item_icon_state"] = loaded_item.icon_state
 		data["indestructible"] = !(loaded_item.resistance_flags & INDESTRUCTIBLE)
 		data["loaded_item"] = loaded_item
@@ -134,7 +134,7 @@
 	flick("[base_icon_state]_process", src)
 	busy = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), 2.4 SECONDS)
-	use_power(DESTRUCTIVE_ANALYZER_POWER_USAGE)
+	use_energy(DESTRUCTIVE_ANALYZER_POWER_USAGE)
 	var/list/all_contents = loaded_item.get_all_contents()
 	for(var/innerthing in all_contents)
 		destroy_item_individual(innerthing, gain_research_points)

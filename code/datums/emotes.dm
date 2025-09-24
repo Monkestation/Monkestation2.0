@@ -110,7 +110,8 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, LOG_EMOTE)
+	if(user.client)
+		user.log_message(msg, LOG_EMOTE)
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
@@ -144,7 +145,7 @@
 				to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
-	SSblackbox.record_feedback("tally", "emote_used", 1, name)
+	// SSblackbox.record_feedback("tally", "emote_used", 1, name)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -327,18 +328,21 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/atom/proc/manual_emote(text)
-	if(!text)
+/atom/proc/manual_emote(text, log_emote = TRUE)
+	if (!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
-	log_message(text, LOG_EMOTE)
+	if (log_emote)
+		log_message(text, LOG_EMOTE)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 	return TRUE
 
-/mob/manual_emote(text)
+/mob/manual_emote(text, log_emote = null)
 	if (stat != CONSCIOUS)
 		return FALSE
-	. = ..()
+	if (isnull(log_emote))
+		log_emote = !isnull(client)
+	. = ..(text, log_emote)
 	if (!.)
 		return FALSE
 	if (!client)

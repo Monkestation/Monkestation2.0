@@ -75,9 +75,9 @@
 	playsound(M,'sound/effects/tendril_destroyed.ogg', 80, 1)
 	to_chat(M, span_progenitor("<b><i>NOT LIKE THIS!</i></b>"))
 	M.visible_message(span_danger("[M] suddenly slams upward and knocks everyone back!"))
-	M.resting = FALSE //Remove all stuns
+	M.set_resting(FALSE, instant = TRUE)
 	M.SetAllImmobility(0, TRUE)
-	for(var/mob/living/user as anything in range(2, get_turf(src)))
+	for(var/mob/living/user in range(2, get_turf(src)))
 		if(!istype(user))
 			continue
 		if(IS_TEAM_DARKSPAWN(user))

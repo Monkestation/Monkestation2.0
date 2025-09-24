@@ -240,6 +240,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 
+/// Checks if the given mob is a abductee.
+#define IS_ABDUCTEE(mob) (mob.mind?.has_antag_datum(/datum/antagonist/abductee))
+
 // Antag resource defines
 #define ANTAG_RESOURCE_DARKSPAWN "psi"
 
@@ -359,6 +362,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define FLAG_ANTAG_CAP_TEAM				(1 << 3)
 
 #define FREEDOM_IMPLANT_CHARGES 4
+
+#define MALF_MAX_PP 400
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1

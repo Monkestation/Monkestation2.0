@@ -100,7 +100,7 @@
 	. = ..()
 	if(!held_container)
 		return
-	if(Adjacent(usr) && !issiliconoradminghost(usr))
+	if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 		if (!usr.put_in_hands(held_container))
 			held_container.forceMove(drop_location())
 	else

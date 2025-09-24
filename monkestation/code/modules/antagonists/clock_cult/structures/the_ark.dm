@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 	///current charge state of the ark
 	var/current_state = ARK_STATE_BASE
-	///tracker for how long until rat'var is summoned in ARK_STATE_ACTIVE/ARK_STATE_SUMMONING
+	///tracker for how long until ratvar is summoned in ARK_STATE_ACTIVE/ARK_STATE_SUMMONING
 	var/charging_for = 0
 
 /obj/structure/destructible/clockwork/the_ark/Initialize(mapload)
