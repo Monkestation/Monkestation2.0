@@ -4,7 +4,7 @@
 	var/sprinting = FALSE
 	var/sustained_moves = 0
 	var/last_dust
-	var/debilitate_bonus_drain = 1
+	var/sprint_stamina_modifier = 1
 	///Our very own dust
 	var/obj/effect/sprint_dust/dust = new(null)
 
@@ -56,15 +56,11 @@
 					dust.appear("sprint_cloud_tiny", direct, get_turf(carbon_parent), 0.3 SECONDS)
 					last_dust = world.time
 				sustained_moves = 0
-		var/datum/status_effect/stacking/debilitated/effect = carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated)
-		if(effect)
-			debilitate_bonus_drain = 1.3
-		else
-			debilitate_bonus_drain = 1
+		if(carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated))
+			sprint_stamina_modifier *= 1.3
 		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * 0.7 * debilitate_bonus_drain) //0.5 * cost Means almost infinnite sprint due to regen
-		else
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * debilitate_bonus_drain)
+			sprint_stamina_modifier *= 0.7
+		carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * sprint_stamina_modifier)
 		if(HAS_TRAIT(carbon_parent, TRAIT_EXERTION_OVERHEAT))
 			carbon_parent.adjust_bodytemperature((carbon_parent.bodytemp_heat_damage_limit - carbon_parent.standard_body_temperature) * 0.15)
 	else if(sprinting)
