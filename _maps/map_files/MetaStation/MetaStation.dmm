@@ -15300,7 +15300,7 @@
 	name = s
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "fzd" = (
 /obj/effect/turf_decal/stripes/line{
@@ -16115,7 +16115,7 @@
 	},
 /obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "fPh" = (
 /obj/machinery/gateway/centerstation,
@@ -21449,7 +21449,7 @@
 "hGk" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "hGl" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -23376,6 +23376,7 @@
 "ioc" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "iov" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -26330,6 +26331,7 @@
 	},
 /obj/machinery/meter,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "jis" = (
 /obj/machinery/door/firedoor,
@@ -26997,8 +26999,7 @@
 	dir = 1;
 	name = "O2 to Airmix"
 	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "juH" = (
 /obj/item/kirbyplants/random,
@@ -30330,6 +30331,7 @@
 "kBh" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/dark/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "kBl" = (
 /obj/machinery/airalarm/directional/north,
@@ -32702,7 +32704,7 @@
 	dir = 1;
 	name = "Plasma to Pure"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "lqT" = (
 /obj/structure/table,
@@ -36495,7 +36497,7 @@
 	name = "N2 to Pure"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "mGy" = (
 /obj/structure/sign/warning/vacuum/directional/west,
@@ -49449,6 +49451,7 @@
 "rcq" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "rcF" = (
 /obj/structure/table/wood,
@@ -52315,7 +52318,7 @@
 	name = "CO2 to Pure"
 	},
 /obj/effect/turf_decal/tile/dark/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "rZY" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -54258,7 +54261,7 @@
 	name = "Mix Outlet Pump"
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "sKt" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
@@ -61503,6 +61506,7 @@
 "vmx" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vmH" = (
 /obj/machinery/door/airlock/security{
@@ -67493,7 +67497,7 @@
 	dir = 1;
 	name = "O2 To Pure"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xoC" = (
 /obj/effect/landmark/event_spawn,
@@ -68844,7 +68848,7 @@
 	name = "N2O to Pure"
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xPy" = (
 /obj/machinery/camera/directional/north{
@@ -69332,7 +69336,7 @@
 "xXG" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xXK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
