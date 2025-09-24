@@ -8,10 +8,12 @@
 	random_sensor = FALSE
 
 /datum/armor/plasmaman_security
-	melee = 10
+	melee = 15
+	bullet = 10
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/security/warden
 	name = "warden plasma envirosuit"
