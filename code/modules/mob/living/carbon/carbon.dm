@@ -295,10 +295,6 @@
 		to_chat(src, span_notice("You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
 		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 			. = clear_cuffs(I, cuff_break)
-
-			if (istype(I, /obj/item/restraints/handcuffs/silver) && !IS_BLOODSUCKER_OR_VASSAL(src))
-				visible_message(span_danger("As [src] removes the silver handcuffs, they shatter into a hundred pieces!"))
-				qdel(I)
 		else
 			to_chat(src, span_warning("You fail to remove [I]!"))
 
