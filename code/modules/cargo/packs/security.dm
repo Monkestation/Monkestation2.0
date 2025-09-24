@@ -255,7 +255,7 @@
 	contains = list(/obj/item/storage/box/exileimp)
 	crate_name = "exile implant crate"
 
-	/datum/supply_pack/security/armory/teleport_blocker_imp
+/datum/supply_pack/security/armory/teleport_blocker_imp
 	name = "Bluespace Grounding Implants Crate"
 	desc = "Contains four Bluespace Grounding implants."
 	cost = CARGO_CRATE_VALUE * 7
