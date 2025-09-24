@@ -471,8 +471,7 @@
 	icon_state = "sindano_evil"
 	inhand_icon_state = "sindano_evil"
 	spread = 5
-	projectile_wound_bonus = 15
-	projectile_damage_multiplier = 1
+	projectile_wound_bonus = 10
 	fire_delay = 0.1 SECONDS
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate

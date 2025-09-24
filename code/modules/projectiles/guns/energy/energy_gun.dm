@@ -7,7 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = TRUE
 	ammo_x_offset = 3
-	cell_type = /obj/item/stock_parts/cell/upgraded
+	cell_type = /obj/item/stock_parts/power_store/cell/e_gun
 
 /obj/item/gun/energy/e_gun/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
@@ -18,6 +18,11 @@
 
 /obj/item/gun/energy/e_gun/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
+
+
+/obj/item/stock_parts/power_store/cell/e_gun
+	name = "miniature energy gun power cell"
+	maxcharge = STANDARD_CELL_CHARGE * 2
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"

@@ -17,7 +17,6 @@
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
-	armour_penetration = -30
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
@@ -29,6 +28,7 @@
 	impact_type = /obj/effect/projectile/impact/laser
 	wound_bonus = -30
 	bare_wound_bonus = 40
+	armour_penetration = -30
 
 /obj/projectile/beam/laser/heavylaser
 	generic_name = "concentrated laser beam"
@@ -37,7 +37,8 @@
 	pass_flags = PASSTABLE | PASSGLASS
 	projectile_piercing = PASSGRILLE
 	wound_bonus = -35
-	bare_wound_bonus = 20
+	bare_wound_bonus = 5
+	armour_penetration = 0
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"

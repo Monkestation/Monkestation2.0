@@ -130,18 +130,18 @@
 	damage = 10
 	armour_penetration = 100
 	wound_bonus = 0
-	speed = 0.3
+	speed = 0.6
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
 /obj/projectile/bullet/a357/wallstake
 	name = ".357 Wallstake bullet"
-	damage = 45
-	armour_penetration = 0
+	damage = 30
+	armour_penetration = 50w
 	sharpness = NONE
 	demolition_mod = 2
 	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
-	var/piercecount = 1
-	speed = 0.6
+	var/piercecount = 3
+	speed = 0.2
 
 /obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(pierces > piercecount)
@@ -164,9 +164,13 @@
 			if(ismob(moveable_mob))
 				thrown_mobs++
 				moveable_mob.throw_at(throw_at_turf, 3, 3)
+				qdel(src)
+				return
+
 
 /obj/projectile/bullet/a357/wallstake/admeme  //This lets you chain-toss people down a hallway causing a terrible and PAINFUL death
 	piercecount = 10
+	speed = 0.6
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

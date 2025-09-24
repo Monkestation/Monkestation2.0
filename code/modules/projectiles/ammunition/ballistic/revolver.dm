@@ -36,6 +36,11 @@
 	desc = "A .357 Wallstake bullet casing."
 	projectile_type = /obj/projectile/bullet/a357/wallstake
 
+/obj/item/ammo_casing/a357/wallstake/admeme
+	name = ".357 Wallstake bullet casing"
+	desc = "An unusually hefty .357 Wallstake bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/wallstake/admeme
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

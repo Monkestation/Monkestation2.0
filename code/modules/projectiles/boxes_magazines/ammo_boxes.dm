@@ -37,6 +37,14 @@
 			These blunt rounds trade lethality for the ability to knock people against walls, stunning them momentarily."
 	ammo_type = /obj/item/ammo_casing/a357/wallstake
 
+/obj/item/ammo_box/a357/wallstake/admeme
+	name = "speed loader (.357 Wallstake)"
+	icon_state = "357w"
+	desc = "A seven-shot speed loader designed for .357 revolvers. \
+			These blunt rounds trade lethality for the ability to knock people against walls, stunning them momentarily.\
+			Why does it weigh SO MUCH?"
+	ammo_type = /obj/item/ammo_casing/a357/wallstake/admeme
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
 	desc = "Designed to quickly reload revolvers."
