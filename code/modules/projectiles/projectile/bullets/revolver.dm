@@ -125,9 +125,9 @@
 	damage = 20
 	demolition_mod = 22
 
-/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 4u amatin, 4u cyanide. Deals somewhat more damage than standard rounds but takes time to work
+/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 4u amatin, 2u cyanide. Deals somewhat more damage than standard rounds but takes time to work
 	name = ".357 Heartpiercer bullet"
-	damage = 15
+	damage = 10
 	armour_penetration = 100
 	wound_bonus = 0
 	speed = 0.3
@@ -139,8 +139,8 @@
 	armour_penetration = 0
 	sharpness = NONE
 	demolition_mod = 2
-	projectile_piercing = PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
-	var/piercecount = 2
+	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
+	var/piercecount = 1
 	speed = 0.6
 
 /obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -166,7 +166,6 @@
 				moveable_mob.throw_at(throw_at_turf, 3, 3)
 
 /obj/projectile/bullet/a357/wallstake/admeme  //This lets you chain-toss people down a hallway causing a terrible and PAINFUL death
-	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
 	piercecount = 10
 
 // admin only really, for ocelot memes

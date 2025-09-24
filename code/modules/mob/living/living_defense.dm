@@ -114,7 +114,7 @@
 	)
 	if(hitting_projectile.stamina)
 		apply_damage(
-			damage = hitting_projectile.stamina,
+			damage = round(hitting_projectile.stamina  * (100 - src.run_armor_check(attack_flag = ENERGY)) * 0.01, 0.1),
 			damagetype = STAMINA,
 			def_zone = def_zone,
 			blocked = src.run_armor_check(attack_flag = ENERGY),
