@@ -41258,6 +41258,7 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
+/obj/item/storage/box/teleport_blocker,
 /obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)

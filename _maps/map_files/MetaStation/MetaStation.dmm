@@ -59522,6 +59522,10 @@
 	pixel_x = -9;
 	pixel_y = 8
 	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 5;
+	pixel_x = -1
+	},
 /obj/item/gun/grenadelauncher,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -65363,17 +65367,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/rack,
 /obj/item/storage/box/chemimp{
-	pixel_x = 0;
-	pixel_y = 8
+	pixel_x = 6;
+	pixel_y = 7
 	},
 /obj/item/storage/box/trackimp{
-	pixel_x = -6;
-	pixel_y = -3
+	pixel_x = -7;
+	pixel_y = 7
 	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = -4;
-	pixel_x = 8
-	},
+/obj/item/storage/box/teleport_blocker,
 /obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -65985,6 +65986,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
+"wMp" = (
+/obj/item/storage/box/teleport_blocker,
+/turf/open/space/basic,
+/area/space)
 "wMx" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
@@ -72821,7 +72826,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wMp
 aaa
 aaa
 aaa
