@@ -6,6 +6,8 @@
 #define FLASH_BLUR_FADE_OUT_TIME (0.5 SECONDS)
 
 /mob/living
+	/// Timer ID for removing the screenblur from being flashed.
+	/// Needed to prevent jank where being re-flashed while the blur is fading out can just completely remove the blur.
 	var/flash_timer
 
 /mob/living/Destroy()
@@ -15,6 +17,7 @@
 	return ..()
 
 /datum/status_effect/flash_blur
+	id = "flash_blur"
 	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
