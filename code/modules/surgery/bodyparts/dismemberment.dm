@@ -210,6 +210,9 @@
 	for (var/datum/wound/iterated_wound as anything in wounds)
 		base_chance += iterated_wound.get_dismember_chance_bonus(base_chance)
 
+	if (body_zone == BODY_ZONE_CHEST)
+		base_chance = base_chance * WOUND_DISEMBOWEL_MODIFIER
+
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
