@@ -122,10 +122,10 @@
 
 /obj/projectile/bullet/a357/nutcracker
 	name = ".357 Nutcracker bullet"
-	damage = 40
-	demolition_mod = 12
+	damage = 20
+	demolition_mod = 22
 
-/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin, 6u cyanide. Deals somewhat more damage than standard rounds but takes time to work
+/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 4u amatin, 4u cyanide. Deals somewhat more damage than standard rounds but takes time to work
 	name = ".357 Heartpiercer bullet"
 	damage = 15
 	armour_penetration = 100
@@ -135,15 +135,16 @@
 
 /obj/projectile/bullet/a357/wallstake
 	name = ".357 Wallstake bullet"
-	damage = 60
+	damage = 45
 	armour_penetration = 0
 	sharpness = NONE
 	demolition_mod = 2
-	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
+	projectile_piercing = PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
+	var/piercecount = 2
 	speed = 0.6
 
 /obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(pierces > 2)
+	if(pierces > piercecount)
 		projectile_piercing = NONE
 	return ..()
 
@@ -164,6 +165,9 @@
 				thrown_mobs++
 				moveable_mob.throw_at(throw_at_turf, 3, 3)
 
+/obj/projectile/bullet/a357/wallstake/admeme  //This lets you chain-toss people down a hallway causing a terrible and PAINFUL death
+	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
+	piercecount = 10
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

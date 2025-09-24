@@ -25,8 +25,8 @@
 	. = ..()
 	create_reagents(18, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
-	reagents.add_reagent(/datum/reagent/toxin/cyanide, 6)
-	reagents.add_reagent(/datum/reagent/toxin, 6)
+	reagents.add_reagent(/datum/reagent/toxin/cyanide, 4)
+	reagents.add_reagent(/datum/reagent/toxin/amanitin, 4)
 
 /obj/item/ammo_casing/a357/heartpiercer/attackby()
 	return
