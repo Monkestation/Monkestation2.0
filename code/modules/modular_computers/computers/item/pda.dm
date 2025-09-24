@@ -18,7 +18,7 @@
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
-	hardware_flag = PROGRAM_TABLET
+	hardware_flag = PROGRAM_PDA
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
@@ -27,6 +27,8 @@
 	looping_sound = FALSE
 
 	action_slots = ALL
+
+	internal_cell = /obj/item/stock_parts/power_store/cell/high // MONKE EDIT: Upgraded cell
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen

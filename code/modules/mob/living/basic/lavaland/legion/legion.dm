@@ -10,7 +10,7 @@
 	icon_living = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 3
 	maxHealth = 75
@@ -59,7 +59,7 @@
 
 /mob/living/basic/mining/legion/death(gibbed)
 	if (isnull(stored_mob))
-		for(var/obj/item/organ/internal/brain/slime in contents) // If oozling brain in contents eject instead of corpse.
+		for(var/obj/item/organ/internal/brain/slime in contents) // If oozeling brain in contents eject instead of corpse.
 			slime.forceMove(get_turf(slime))
 			return ..()
 		new corpse_type(loc)

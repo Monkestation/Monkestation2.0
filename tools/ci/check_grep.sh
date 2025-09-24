@@ -206,6 +206,11 @@ if $grep -ni "rat'var" $code_files; then
     echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in code, please remove the apostrophe(s).${NC}"
     st=1
 fi;
+if $grep -ni "oozling" $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Oozeling detected in code, please ensure there is an e before 'ling'.${NC}"
+    st=1
+fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
@@ -270,7 +275,7 @@ if [ "$pcre2_support" -eq 1 ]; then
 		st=1
 	fi
 	part "datum stockpart sanity"
-	if $grep -P 'for\b.*/obj/item/stock_parts/(?!cell)(?![\w_]+ in )' $code_files; then
+	if $grep -P 'for\b.*/obj/item/stock_parts/(?!power_store)(?![\w_]+ in )' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Should be using datum/stock_part instead"
 		st=1
