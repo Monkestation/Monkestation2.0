@@ -550,7 +550,7 @@
 					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
 	if(success)
 		nanos.consume_nanites(200)
-		if(!(nonemod == 1))
+		if(!(none_mod == 1))
 			visible_message(span_warning("[goofygoober] slumps forwards, shuddering as some of [src] flows into [goofygoober.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,goofygoober))
 		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(goofygoober.GetComponent(/datum/component/nanites))
