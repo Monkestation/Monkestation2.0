@@ -1,0 +1,4 @@
+author: "Loiosh42"
+delete-after: True
+changes:
+  - bugfix: "Riot shotgun wallstuns are once again removed as intended"
