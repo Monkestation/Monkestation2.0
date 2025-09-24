@@ -556,7 +556,7 @@
 	burst_size = 3
 	fire_delay = 1
 
-/obj/item/gun/ballistic/automatic/sol_rifle ///The standard rifle rifle, it just works
+/obj/item/gun/ballistic/automatic/sol_rifle ///The standard rifle rifle, it just works. Same DPS as basic lasers, larger mags, lower wounding
 	name = "\improper Carwo-Cawil Battle Rifle"
 	desc = "A light battle rifle firing .40 Sol. Commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
@@ -583,7 +583,7 @@
 	fire_delay = 0.4 SECONDS
 	actions_types = list()
 	spread = 7.5
-	projectile_wound_bonus = -10
+	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/sol_rifle/Initialize(mapload)
 	. = ..()

@@ -37,11 +37,12 @@
 
 /obj/item/gun/energy/laser/heavylaser/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, allow_akimbo = FALSE)
+	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS, allow_akimbo = FALSE)
 
 /obj/item/stock_parts/cell/quickcharge
-	name = "Fast-charge energy cell"
-	chargerate = 255
+	name = "Fast-charging energy cell"
+	maxcharge = 3000
+	chargerate = 500
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"

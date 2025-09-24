@@ -290,7 +290,7 @@
 	melee = 50
 	bullet = 10
 	laser = 10
-	energy = 10
+	energy = 20
 	fire = 80
 	acid = 80
 	wound = 0  ///You can ignore the crew mobbing you, but the wounding will build up.
@@ -309,7 +309,7 @@
 /datum/armor/balloon_vest
 	melee = 10
 	laser = 10
-	energy = 10
+	energy = 20
 	fire = 60
 	acid = 50
 
@@ -341,7 +341,7 @@
 	melee = 35
 	bullet = 25
 	laser = 25
-	energy = 20
+	energy = 0
 	bomb = 25
 	fire = 50
 	acid = 50
@@ -386,7 +386,7 @@
 	melee = 10
 	bullet = 10
 	laser = 60
-	energy = 60
+	energy = 50
 	fire = 100
 	acid = 100
 

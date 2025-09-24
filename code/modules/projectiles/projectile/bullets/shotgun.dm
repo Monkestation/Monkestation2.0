@@ -18,7 +18,7 @@
 /obj/projectile/bullet/shotgun_slug/apds
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
-	damage = 25 //10 less than slugs.
+	damage = 25
 	speed = 0.3 //sub-caliber + lighter = speed. (Smaller number = faster)
 	armour_penetration = 50
 	wound_bonus = -30
@@ -27,7 +27,7 @@
 	ricochet_auto_aim_range = 0
 	ricochet_incidence_leeway = 50
 	embedding = null
-	demolition_mod = 2 //High-velocity tungsten > steel doors
+	demolition_mod = 3 //High-velocity tungsten > steel doors
 	projectile_piercing = PASSMOB
 
 /obj/projectile/bullet/shotgun_slug/apds/pierce/on_hit(atom/target, blocked = 0, pierce_hit)

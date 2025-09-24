@@ -28,7 +28,7 @@
 
 /obj/item/ammo_casing/energy/laser/heavylaser
 	projectile_type = /obj/projectile/beam/laser/heavylaser
-	e_cost = LASER_SHOTS(30, 1000)
+	e_cost = 100 //30 shots
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/carbine

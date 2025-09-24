@@ -16,6 +16,7 @@
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
+	armour_penetration = -30
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
@@ -31,7 +32,7 @@
 /obj/projectile/beam/laser/heavylaser
 	generic_name = "concentrated laser beam"
 	icon_state = "heavylaser"
-	damage = 25
+	damage = 23
 	pass_flags = PASSTABLE | PASSGLASS
 	projectile_piercing = PASSGRILLE
 	wound_bonus = -35
