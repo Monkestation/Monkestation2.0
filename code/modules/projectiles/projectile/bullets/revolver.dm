@@ -141,7 +141,7 @@
 	demolition_mod = 2
 	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
 	var/piercecount = 3
-	speed = 0.2
+	speed = 0.3
 
 /obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(pierces > piercecount)
@@ -164,13 +164,14 @@
 			if(ismob(moveable_mob))
 				thrown_mobs++
 				moveable_mob.throw_at(throw_at_turf, 3, 3)
-				qdel(src)
-				return
+				if(piercecount < 4) ///Really stupid way to allow the admeme rounds to function
+					qdel(src)
+					return
 
 
 /obj/projectile/bullet/a357/wallstake/admeme  //This lets you chain-toss people down a hallway causing a terrible and PAINFUL death
 	piercecount = 10
-	speed = 0.6
+	speed = 0.4
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match
