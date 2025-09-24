@@ -495,7 +495,7 @@
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated())
+	if(usr.incapacitated(IGNORE_CRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
