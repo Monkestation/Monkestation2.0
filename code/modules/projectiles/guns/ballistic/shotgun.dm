@@ -48,6 +48,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
+	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/riot/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -121,6 +122,7 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 	rack_delay = 4
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
@@ -255,6 +257,7 @@
 	var/secondary_magazine_type
 	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
 	. = ..()
@@ -387,6 +390,7 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()

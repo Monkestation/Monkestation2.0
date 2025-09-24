@@ -441,7 +441,7 @@
 
 /obj/item/gun/ballistic/automatic/sol_smg/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.8 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.6 SECONDS)
 
 /obj/item/gun/ballistic/automatic/sol_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
@@ -471,8 +471,10 @@
 	icon_state = "sindano_evil"
 	inhand_icon_state = "sindano_evil"
 	spread = 5
-	projectile_wound_bonus = 5
-	projectile_damage_multiplier = 1.25
+	projectile_wound_bonus = 15
+	projectile_damage_multiplier = 1
+	fire_delay = 0.1 SECONDS
+	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag

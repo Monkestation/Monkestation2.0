@@ -52,7 +52,7 @@
 /obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here. Slightly better than .35 auto 'cause CASELESS
 	name = ".35 Sol Short bullet"
 	damage = 15
-	wound_bonus = -5 // Normal bullets are 20
+	wound_bonus = -15
 	bare_wound_bonus = 5
 	embed_falloff_tile = -4
 

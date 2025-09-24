@@ -321,9 +321,14 @@
 	suppressor_x_offset = 3
 	w_class = WEIGHT_CLASS_SMALL
 	can_suppress = TRUE
+	fire_delay = 0.6 SECONDS
+	projectile_wound_bonus = 15
+	projectile_damage_multiplier = 1.35
 
 /obj/item/gun/ballistic/revolver/sol/evil
 	pin = /obj/item/firing_pin/implant/pindicate
+	fire_delay = 0.3 SECONDS
+
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
