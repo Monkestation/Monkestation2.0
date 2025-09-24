@@ -18,9 +18,9 @@
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
-	var/give_objectives = FALSE
+	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
-	var/give_secondary_objectives = TRUE
+	var/give_secondary_objectives = FALSE
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
