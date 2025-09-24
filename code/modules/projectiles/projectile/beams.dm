@@ -39,6 +39,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 10
 	armour_penetration = 0
+	demolition_mod = 1.3
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
