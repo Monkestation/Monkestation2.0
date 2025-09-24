@@ -53,6 +53,9 @@
 	spark_system.start()
 	return COMPONENT_BLOCK_JAUNT
 
+/obj/item/implant/teleport_blocker/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	return is_valid_z_level(get_turf(console), get_turf(imp_in))
+
 /obj/item/implantcase/teleport_blocker
 	name = "implant case - 'Bluespace Grounding'"
 	desc = "A glass case containing a bluespace grounding implant."
