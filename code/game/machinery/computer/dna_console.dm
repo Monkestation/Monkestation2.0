@@ -250,7 +250,7 @@
 	if(!disk.can_write(src, user))
 		return
 	if(!length(stored_mutations))
-		balloon_alert("nothing to download!")
+		balloon_alert(user, "nothing to download!")
 		return
 	balloon_alert(user, "downloading to disk...")
 	if(!do_after(user, 2 SECONDS, src, extra_checks = CALLBACK(disk, TYPE_PROC_REF(/obj/item/disk/data, can_write), src, user)))
