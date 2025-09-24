@@ -74,3 +74,8 @@
 	item_path = /obj/item/fishing_hook/rescue
 	desc = "A large hook for fishing people out of chasms. You will need to provide your own rod and string..."
 	cost_per_order = 500
+
+/datum/orderable_item/survival/chasm_filler
+	item_path = /obj/item/chasm_filler
+	desc = "A capsule that can be thrown into chasms to fill them with thick dirt."
+	cost_per_order = 500
