@@ -184,6 +184,13 @@
 	else
 		return ..()
 
+/obj/machinery/computer/dna_console/CtrlClick(mob/user)
+	if(can_interact(user))
+		var/obj/item/disk/data/disk = user.get_active_held_item()
+		if(istype(disk))
+			download_disk(user, disk)
+	return ..()
+
 /// Store chromosomes in the console if there's room
 /obj/machinery/computer/dna_console/proc/store_chromosome(mob/living/user, obj/item/chromosome/chromosome)
 	chromosome.forceMove(src)
@@ -216,18 +223,51 @@
 	if(!do_after(user, 2 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING
 	var/list/unlocked_names
+	var/list/existing_ids
+	for(var/datum/mutation/mutation in stored_mutations)
+		LAZYADD(existing_ids, mutation.id_string())
+	var/uploaded = 0
 	for(var/datum/mutation/mutation in disk.mutations)
+		if(mutation.id_string() in existing_ids)
+			continue
 		var/datum/mutation/stored = mutation.make_copy()
 		stored_mutations += stored
+		uploaded++
 
 		var/datum/mutation/mutation_type = stored.type
 		if(stored_research && !(mutation_type in stored_research.discovered_mutations))
 			stored_research.discovered_mutations += mutation_type
 			LAZYADD(unlocked_names, "[stored.name]")
+	balloon_alert(user, "uploaded [uploaded] mutation\s")
 	// avoids spam if we upload a disk with a lot of unknown mutations somehow, by just grouping them into one message
 	if(LAZYLEN(unlocked_names))
 		say("Successfully unlocked [english_list(unlocked_names)].")
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/dna_console/proc/download_disk(mob/living/user, obj/item/disk/data/disk)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	if(!disk.can_write(src, user))
+		return
+	if(!length(stored_mutations))
+		balloon_alert("nothing to download!")
+		return
+	balloon_alert(user, "downloading to disk...")
+	if(!do_after(user, 2 SECONDS, src, extra_checks = CALLBACK(disk, TYPE_PROC_REF(/obj/item/disk/data, can_write), src, user)))
+		return
+	var/list/existing_ids
+	for(var/datum/mutation/mutation in disk.mutations)
+		LAZYADD(existing_ids, mutation.id_string())
+	var/uploaded = 0
+	for(var/datum/mutation/mutation in stored_mutations)
+		if(mutation.id_string() in existing_ids)
+			continue
+		var/datum/mutation/stored = mutation.make_copy()
+		disk.mutations += stored
+		uploaded++
+		if(length(disk.mutations) >= disk.max_mutations)
+			break
+	balloon_alert(user, "downloaded [uploaded] mutation\s to disk")
 
 /// Recycle non-activator used injectors
 /// Turn activator used injectors (aka research injectors) to chromosomes
@@ -303,6 +343,7 @@
 	else if(istype(held_item, /obj/item/disk/data))
 		context[SCREENTIP_CONTEXT_LMB] = diskette ? "Swap disk" : "Insert disk"
 		context[SCREENTIP_CONTEXT_RMB] = "Upload disk contents"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Download to disk"
 	else if(istype(held_item, /obj/item/chromosome))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert chromosome"
 	else if(istype(held_item, /obj/item/dnainjector/activator))
