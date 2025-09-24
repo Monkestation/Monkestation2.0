@@ -33,10 +33,6 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
 	cost_per_order = 200
 
-/datum/orderable_item/survival/magnetic //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
-	cost_per_order = 250
-
 /datum/orderable_item/survival/speed //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
 	cost_per_order = 550
