@@ -407,12 +407,14 @@
 	icon_state = "workstation"
 	machinery_type = MACHINING_WORKSTATION
 	operating_sound = 'sound/items/screwdriver.ogg'
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/workstation
 
 /obj/machinery/lathe/furnace
 	name = "furnace"
 	desc = "A furnace used to melt down metal and other materials."
 	icon_state = "furnace"
 	machinery_type = MACHINING_FURNACE
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/furnace
 
 /obj/machinery/lathe/tablesaw
 	name = "tablesaw"
@@ -420,6 +422,7 @@
 	icon_state = "tablesaw"
 	machinery_type = MACHINING_TABLESAW
 	operating_sound = 'sound/weapons/chainsawhit.ogg'
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/tablesaw
 
 /obj/machinery/lathe/drophammer
 	name = "drophammer"
@@ -427,6 +430,7 @@
 	icon_state = "drophammer"
 	machinery_type = MACHINING_DROPHAMMER
 	operating_sound = 'sound/effects/picaxe3.ogg'
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/drophammer
 
 /obj/machinery/lathe/tailor
 	name = "tailor"
@@ -434,6 +438,7 @@
 	icon_state = "tailorstation"
 	machinery_type = MACHINING_TAILOR
 	operating_sound = 'sound/items/screwdriver.ogg'
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/tailor
 
 /obj/machinery/lathe/drillpress
 	name = "drill press"
@@ -441,6 +446,7 @@
 	icon_state = "drillpress"
 	machinery_type = MACHINING_DRILLPRESS
 	operating_sound = 'sound/weapons/drill.ogg'
+	circuit = /obj/item/circuitboard/machine/industrial_lathe/drillpress
 
 
 /*

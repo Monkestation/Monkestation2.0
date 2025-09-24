@@ -102,7 +102,7 @@
 	air_output.merge(remove_output)
 
 	if(power_usage)
-		use_power(power_usage)
+		use_energy(power_usage)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -120,7 +120,7 @@
 	data["max_temperature"] = round(max_temperature)
 	return data
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -94,6 +94,8 @@
 				user.Immobilize(adjusted_climb_stun)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
+		if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
+			user.adjust_bodytemperature((user.bodytemp_heat_damage_limit - user.standard_body_temperature) * 0.4)
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 

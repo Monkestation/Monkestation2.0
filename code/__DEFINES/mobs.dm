@@ -54,6 +54,10 @@
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
+///The mob is a mining-related mob. It's the plasma, you see. Gets in ya bones.
+#define MOB_MINING (1 << 13)
+///The mob is a crustacean. Like crabs. Or lobsters.
+#define MOB_CRUSTACEAN (1 << 14)
 
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
@@ -299,15 +303,16 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+// The standard charge all other Ethereal charge defines are scaled against.
+#define STANDARD_ETHEREAL_CHARGE (1 * STANDARD_CELL_CHARGE)
+// Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
-
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_ETHEREAL_CHARGE)
 
 //Monkestation Addition: Ethereal Blood Charge
 #define ETHEREAL_BLOOD_CHARGE_NONE 0
