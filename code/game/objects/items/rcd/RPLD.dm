@@ -237,21 +237,20 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	for(var/category_name in plumbing_design_types)
-		var/list/designs = plumbing_design_types[category_name]
 
-		for(var/obj/machinery/recipe as anything in designs)
-			if(interacting_with.type != recipe)
-				continue
+	for(var/obj/machinery/recipe as anything in plumbing_design_types)
+		if(interacting_with.type != recipe)
+			continue
 
-			var/obj/machinery/machine_target = interacting_with
-			if(machine_target.anchored)
-				balloon_alert(user, "unanchor first!")
-				return ITEM_INTERACT_BLOCKING
-			if(do_after(user, 2 SECONDS, target = interacting_with))
-				machine_target.deconstruct() //Let's not substract matter
-				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+		var/obj/machinery/machine_target = interacting_with
+		if(machine_target.anchored)
+			balloon_alert(user, "unanchor first!")
+			return ITEM_INTERACT_BLOCKING
+		if(do_after(user, 2 SECONDS, target = interacting_with))
+			machine_target.deconstruct() //Let's not substract matter
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 
 	if(!isopenturf(interacting_with))
 		return NONE
@@ -270,21 +269,6 @@
 		balloon_alert(user, "using [current_color], layer [current_layer]")
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
-
-/obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(target, /obj/machinery/plumbing))
-		var/obj/machinery/machine_target = target
-		if(machine_target.anchored)
-			balloon_alert(user, "anchor first!")
-			return
-		if(do_after(user, 20, target = target))
-			machine_target.deconstruct() //Let's not substract matter
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
-	else
-		create_machine(target, user)
 
 /obj/item/construction/plumbing/AltClick(mob/user)
 	ui_interact(user)

@@ -66,7 +66,7 @@
 	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
 		var/delta = min(recharge_power * seconds_per_tick, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 		recharging_mech.give_power(delta)
-		use_power(delta + active_power_usage)
+		use_energy(delta + active_power_usage)
 	else
 		recharge_console.update_appearance()
 	if(recharging_mech.loc != recharging_turf)
@@ -112,7 +112,7 @@
 		ui = new(user, src, "MechBayPowerConsole", name)
 		ui.open()
 
-/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
+/obj/machinery/computer/mech_bay_power_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

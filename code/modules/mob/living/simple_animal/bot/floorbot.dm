@@ -140,9 +140,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/floorbot/ui_act(action, params)
+/mob/living/simple_animal/bot/floorbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -160,8 +161,8 @@
 			if(tilestack)
 				tilestack.forceMove(drop_location())
 		if("line_mode")
-			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
-			if(isnull(setdir))
+			var/setdir = tgui_input_list(user, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
+			if(isnull(setdir) || QDELETED(ui) || ui.status != UI_INTERACTIVE)
 				return
 			switch(setdir)
 				if("north")
@@ -326,7 +327,7 @@
 		toggle_magnet()
 		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
 		mode = BOT_REPAIRING
-		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
+		if(do_after(src, 5 SECONDS, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
 				if(replacetiles && tilestack)
 					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
@@ -348,14 +349,14 @@
 			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message(span_notice("[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"]."))
-			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
+			if(do_after(src, 5 SECONDS, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
 			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
-			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
+			if(do_after(src, 5 SECONDS, target = target_turf) && mode == BOT_REPAIRING && tilestack)
 				success = TRUE
 
 		if(success)

@@ -52,7 +52,7 @@ Slimecrossing Potions
 		peace_target.visible_message(span_danger("[user] starts to drink [src]!"),
 			span_danger("You start to drink [src]!"))
 
-	if(!do_after(user, 100, target = peace_target))
+	if(!do_after(user, 10 SECONDS, target = peace_target))
 		return
 	if(peace_target != user)
 		to_chat(user, span_notice("You feed [peace_target] [src]!"))
@@ -89,7 +89,7 @@ Slimecrossing Potions
 	love_target.visible_message(span_danger("[user] starts to feed [love_target] a love potion!"),
 		span_userdanger("[user] starts to feed you a love potion!"))
 
-	if(!do_after(user, 50, target = love_target))
+	if(!do_after(user, 5 SECONDS, target = love_target))
 		return
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
@@ -105,10 +105,8 @@ Slimecrossing Potions
 	icon_state = "potblue"
 	var/uses = 2
 
-//// monkestation start: allow using on storage items via right clicking or combat mode
-///obj/item/slimepotion/spaceproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-//	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
-//// monkestation end XANTODO
+/obj/item/slimepotion/spaceproof/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
 /obj/item/slimepotion/spaceproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -155,10 +153,8 @@ Slimecrossing Potions
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
-//// monkestation start: allow using on storage items via right clicking or combat mode
-///obj/item/slimepotion/lavaproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-//	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
-//// monkestation end XANTODO
+/obj/item/slimepotion/lavaproof/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
 /obj/item/slimepotion/lavaproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

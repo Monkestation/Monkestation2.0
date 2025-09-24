@@ -206,6 +206,9 @@
 	var/datum/color_palette/palette
 	var/palette_key
 
+	///limb flags for the specific limb
+	var/limb_flags
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -391,7 +394,7 @@
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
-		if(do_after(user, 54, target = src))
+		if(do_after(user, 5.4 SECONDS, target = src))
 			drop_organs(user, TRUE)
 	else
 		return ..()
@@ -455,6 +458,18 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
+
+	// Limbs heal 1 damage per tick from the corresponding brute/burn kit passively
+	if(limb_flags & LIMB_KITTED_BRUTE)
+		if(brute_dam <= 0)
+			limb_flags &= ~LIMB_KITTED_BRUTE
+		else
+			heal_damage(1, 0)
+	if(limb_flags & LIMB_KITTED_BURN)
+		if(burn_dam <= 0)
+			limb_flags &= ~LIMB_KITTED_BURN
+		else
+			heal_damage(0, 1)
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -561,8 +576,10 @@
 	if(can_inflict <= 0)
 		return FALSE
 	if(brute)
+		limb_flags &= ~LIMB_KITTED_BRUTE
 		set_brute_dam(brute_dam + brute)
 	if(burn)
+		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
 
 	if(owner)
@@ -578,7 +595,7 @@
 
 	var/bio_status = NONE
 
-	for (var/state as anything in GLOB.bio_state_anatomy)
+	for (var/state in GLOB.bio_state_anatomy)
 		var/flag = text2num(state)
 		if (!(biological_state & flag))
 			continue
@@ -931,6 +948,11 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
+	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
+		if (human_owner.greyscale_limbs)
+			should_draw_greyscale = TRUE
+		else
+			should_draw_greyscale = FALSE
 	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
 	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
@@ -1354,7 +1376,7 @@
 /obj/item/bodypart/proc/check_removal_composition(mob/living/carbon/remover)
 	var/precent = return_compoostion_precent(remover)
 
-	for(var/item as anything in composition_effects)
+	for(var/item in composition_effects)
 		if(composition_effects[item] < precent)
 			continue
 		if(!ispath(item))
@@ -1372,7 +1394,7 @@
 /obj/item/bodypart/proc/check_adding_composition(mob/living/carbon/adder)
 	var/precent = return_compoostion_precent(adder)
 
-	for(var/item as anything in composition_effects)
+	for(var/item in composition_effects)
 		if(composition_effects[item] > precent)
 			continue
 		if(!ispath(item))

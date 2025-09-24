@@ -1,3 +1,4 @@
+/*
 import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
 
@@ -15,3 +16,4 @@ const BloodsuckerBreakout: Antagonist = {
 };
 
 export default BloodsuckerBreakout;
+*/

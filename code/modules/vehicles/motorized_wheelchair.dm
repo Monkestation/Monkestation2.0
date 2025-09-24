@@ -20,7 +20,7 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/cell/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
@@ -90,7 +90,7 @@
 	if(!panel_open)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else

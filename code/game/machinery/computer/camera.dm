@@ -60,7 +60,7 @@
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
@@ -91,7 +91,7 @@
 	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
-/obj/machinery/computer/security/ui_act(action, params)
+/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -108,6 +108,24 @@
 
 		return TRUE
 
+// this is stupid imo
+// there has to be a better solution for this
+/obj/machinery/computer/security/proc/endpoint(atom/source, turf/target_turf)
+	var/turf/current_turf = get_turf(source)
+	var/turf/old_turf = current_turf
+
+	if(current_turf == target_turf)
+		return current_turf
+
+	current_turf = get_step_towards(current_turf, target_turf)
+	while(current_turf != target_turf)
+		if(IS_OPAQUE_TURF(current_turf) || !current_turf)
+			return old_turf
+		old_turf = current_turf
+		current_turf = get_step_towards(current_turf, target_turf)
+
+	return current_turf
+
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
@@ -117,7 +135,11 @@
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
+	var/turf/new_cam_turf = get_turf(active_camera)
+	var/tx = clamp(new_cam_turf.x + active_camera.view_offset_x, 1, world.maxx)
+	var/ty = clamp(new_cam_turf.y + active_camera.view_offset_y, 1, world.maxy)
+	new_cam_turf = locate(tx, ty, new_cam_turf.z)
+	new_cam_turf = endpoint(active_camera, new_cam_turf)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
@@ -154,7 +176,6 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 
 /atom/movable/screen/map_view/camera
 	/// All the plane masters that need to be applied.

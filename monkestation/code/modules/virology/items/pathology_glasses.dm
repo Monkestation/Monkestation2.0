@@ -22,6 +22,8 @@
 	icon_state = "sunhudpatho_on"
 	worn_icon_state = "sunhudpatho_on"
 
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+
 /obj/item/clothing/glasses/sunglasses/pathology/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/pathology_glasses, icon_state_on = "sunhudpatho_on", icon_state_off = "sunhudpatho_off")
@@ -34,6 +36,8 @@
 	worn_icon = 'monkestation/icons/obj/clothing/eyes.dmi'
 	icon_state = "pathohudnight_on"
 	worn_icon_state = "pathohudnight_on"
+
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/night/pathology/Initialize(mapload)
 	. = ..()

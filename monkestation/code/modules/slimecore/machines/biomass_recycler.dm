@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	stored_matter += cube_production * recyclable_types[recycable_type]
 	addtimer(VARSET_CALLBACK(src, pixel_x, base_pixel_x))
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, span_notice("The machine now has [stored_matter] unit\s of biomass stored.")))
@@ -177,10 +177,9 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	var/list/printable_types = list()
 	var/list/vacuum_printable_types = list()
 
-/obj/item/disk/biomass_upgrade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(istype(target, /obj/machinery/biomass_recycler))
-		var/obj/machinery/biomass_recycler/recycler = target
+/obj/item/disk/biomass_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/biomass_recycler))
+		var/obj/machinery/biomass_recycler/recycler = interacting_with
 		to_chat(user, span_notice("You install [src] into [recycler]."))
 		playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
@@ -189,6 +188,8 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 
 		for(var/print_type in vacuum_printable_types)
 			recycler.vacuum_printable_types[print_type] = vacuum_printable_types[print_type]
+
+		return ITEM_INTERACT_SUCCESS
 
 /*
 /obj/item/disk/biomass_upgrade/wobble

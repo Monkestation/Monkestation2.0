@@ -774,6 +774,14 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
 
+/datum/uplink_item/implants/fakemacro
+	name = "Macrorevival Implant"
+	desc = "An implant injected into the body, and later activated automatically upon death. \
+			Upon death, fakes the effects of a macrobomb before injecting a variety of medicines and restarting your heart. Only works once."
+	item = /obj/item/storage/box/syndie_kit/imp_fakemacro
+	cost = 16
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."

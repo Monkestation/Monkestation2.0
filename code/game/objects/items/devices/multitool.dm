@@ -41,10 +41,11 @@
 	. = ..()
 	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
 
-/obj/item/multitool/attack_self(mob/user, list/modifiers)
-	. = ..()
+/obj/item/multitool/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !isitem(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
-	if(. || !apc_scanner)
+/obj/item/multitool/attack_self(mob/user, list/modifiers)
+	if(!apc_scanner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))

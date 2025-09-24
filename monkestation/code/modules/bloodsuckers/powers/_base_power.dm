@@ -193,7 +193,7 @@
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
-/datum/action/cooldown/bloodsucker/StartCooldown()
+/datum/action/cooldown/bloodsucker/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	// Calculate Cooldown (by power's level)
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
 		cooldown_time = initial(cooldown_time)
@@ -212,7 +212,7 @@
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = get_blood_cost(cost_override)
+	var/bloodcost = get_blood_cost(cost_override = cost_override)
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
