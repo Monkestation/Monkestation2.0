@@ -136,7 +136,7 @@
 /obj/projectile/bullet/a357/wallstake
 	name = ".357 Wallstake bullet"
 	damage = 30
-	armour_penetration = 50w
+	armour_penetration = 50
 	sharpness = NONE
 	demolition_mod = 2
 	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE

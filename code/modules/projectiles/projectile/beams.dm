@@ -36,8 +36,8 @@
 	damage = 23
 	pass_flags = PASSTABLE | PASSGLASS
 	projectile_piercing = PASSGRILLE
-	wound_bonus = -35
-	bare_wound_bonus = 5
+	wound_bonus = -30
+	bare_wound_bonus = 10
 	armour_penetration = 0
 
 /obj/projectile/beam/laser/lasrifle

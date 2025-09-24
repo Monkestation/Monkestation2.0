@@ -58,7 +58,7 @@
 				sustained_moves = 0
 		var/datum/status_effect/stacking/debilitated/effect = carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated)
 		if(effect)
-			debilitate_bonus_drain = 1.5
+			debilitate_bonus_drain = 1.2
 		else
 			debilitate_bonus_drain = 1
 		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
