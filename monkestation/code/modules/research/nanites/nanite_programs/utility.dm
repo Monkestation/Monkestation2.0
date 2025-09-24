@@ -552,7 +552,7 @@
 		nanos.consume_nanites(200)
 		if(!(nonemod == 1))
 			visible_message(span_warning("[goofygoober] slumps forwards, shuddering as some of [src] flows into [goofygoober.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,goofygoober))
-		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows into your blood"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
+		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(goofygoober.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
@@ -560,12 +560,14 @@
 			goofygoober.AddComponent(/datum/component/nanites, 150)
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SYNC, nanos)
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			to_chat(goofygoober, span_big(span_danger("...Why can I feel my blood? WHY CAN I FEEL M-"))) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
 			if(ishuman(goofygoober))
 				var/mob/living/carbon/human/yeowch = goofygoober
 				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
 			goofygoober.emote("scream")
 			to_chat(goofygoober, span_reallybig(span_robot("Integration complete.")))
 			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg', volume = 150))
+			to_chat(goofygoober, span_robot("Integration-Shock should begin to recede in approximately FIFTEEN seconds."))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
