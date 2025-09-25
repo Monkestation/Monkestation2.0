@@ -324,7 +324,7 @@
 	worn_icon_state = "wylom"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
-	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom
+	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom_internal
 	can_suppress = FALSE
 	can_bayonet = FALSE
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/amr_fire.ogg'
@@ -332,7 +332,7 @@
 	recoil = 6
 	wield_recoil = 3
 	weapon_weight = WEAPON_HEAVY
-	rack_delay = 1.5 SECONDS
+	rack_delay = 2 SECONDS
 	actions_types = list()
 	force = 15 // I mean if you're gonna beat someone with the thing you might as well get damage appropriate for how big the fukken thing is
 

@@ -434,6 +434,18 @@
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 
 
+
+/obj/item/ammo_box/wylom
+	name = ".60 Strela stripper clip"
+	desc = "A stripper clip."
+	icon_state = "wylom_stripper"
+	ammo_type = /obj/item/ammo_casing/a357
+	max_ammo = 3
+	caliber = CALIBER_60STRELA
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	w_class = WEIGHT_CLASS_MEDIUM
+
+
 ///MISC
 
 /obj/item/ammo_box/foambox
