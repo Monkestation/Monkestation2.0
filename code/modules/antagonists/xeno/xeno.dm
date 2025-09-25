@@ -56,7 +56,7 @@
 // xenos in captivity do not count
 /datum/antagonist/xeno/should_count_for_antag_cap()
 	. = ..()
-	if(!.)
+	if(!. || !SScommunications.captivity_area)
 		return
 	if(istype(get_area(owner.current), SScommunications.captivity_area))
 		return FALSE
