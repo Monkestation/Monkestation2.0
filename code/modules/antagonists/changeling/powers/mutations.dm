@@ -192,7 +192,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	armour_penetration = 50
+	armour_penetration = 30
 	wound_bonus = -20
 	bare_wound_bonus = 20
 	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
@@ -519,7 +519,7 @@
 /datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. Cannot be used in lesser form."
+	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and projectile weapons. Cannot be used in lesser form."
 	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 1
@@ -547,8 +547,8 @@
 /datum/armor/armor_changeling
 	melee = 40
 	bullet = 55
-	laser = 50
-	energy = 20
+	laser = 20
+	energy = 30
 	bomb = 10
 	bio = 10
 	/*fire = 90*/ //MONKESTATION REMOVAL
