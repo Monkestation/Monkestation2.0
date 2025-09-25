@@ -12,7 +12,6 @@
 	demo_mech.setDir(EAST)
 
 	var/expected_melee_armor = demo_mech.get_armor_rating(MELEE)
-	var/expected_laser_armor = demo_mech.get_armor_rating(LASER)
 	var/expected_bullet_armor = demo_mech.get_armor_rating(BULLET)
 
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
@@ -26,14 +25,7 @@
 	// The energy axe is chosen here due to having a high base force, to make sure we get over the equipment DT.
 	var/obj/item/dummy_melee = allocate(/obj/item/melee/energy/axe)
 	var/expected_melee_damage = round(dummy_melee.force * (1 - expected_melee_armor / 100) * dummy_melee.demolition_mod, DAMAGE_PRECISION)
-/*
-	// Get a sample laser weapon.    ///fuck this test, this is a testmerge PR anyway. Yes, I know lasers have negative AP now
-	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.
-//	var/obj/item/gun/energy/laser/dummy_laser = allocate(/obj/item/gun/energy/laser/captain)
-//	var/obj/item/ammo_casing/laser_ammo = dummy_laser.ammo_type[1]
-//	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
-//	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100), DAMAGE_PRECISION)
-*/
+
 	// Get a sample ballistic weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
 	var/obj/item/gun/ballistic/dummy_gun = allocate(/obj/item/gun/ballistic/revolver/mecha_test)
@@ -55,15 +47,7 @@
 
 	check_integrity(demo_mech, pre_melee_integrity, expected_melee_damage, "hit with a melee item")
 	check_integrity(left_arm_equipment, pre_melee_arm_integrity, expected_melee_damage, "hit with a melee item")
-/*
-	// BLAST IT
-//	var/pre_laser_integrity = demo_mech.get_integrity()
-//	var/pre_laser_arm_integrity = left_arm_equipment.get_integrity()
-//	dummy_laser.fire_gun(demo_mech, dummy, FALSE)
 
-//	check_integrity(demo_mech, pre_laser_integrity, expected_laser_damage, "shot with a laser")
-//	check_integrity(left_arm_equipment, pre_laser_arm_integrity, expected_laser_damage, "shot with a laser")
-*/
 	// SHOOT IT
 	var/pre_bullet_integrity = demo_mech.get_integrity()
 	var/pre_bullet_arm_integrity = left_arm_equipment.get_integrity()
