@@ -79,7 +79,7 @@
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
 		var/mob/living/carbon/human/human = M
@@ -203,7 +203,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

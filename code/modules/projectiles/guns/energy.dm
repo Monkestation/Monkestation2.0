@@ -5,8 +5,8 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 
 	/// What type of power cell this uses
-	var/obj/item/stock_parts/cell/cell
-	var/cell_type = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell/cell
+	var/cell_type = /obj/item/stock_parts/power_store/cell
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
@@ -150,7 +150,7 @@
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
-		cell.give(100)
+		cell.give(STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * seconds_per_tick)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
 		update_appearance()
@@ -169,10 +169,10 @@
 		return
 	if(use_cyborg_cell && !no_cyborg_drain)
 		if(iscyborg(loc))
-			var/mob/living/silicon/robot/R = loc
-			if(R.cell)
+			var/mob/living/silicon/robot/robot = loc
+			if(robot.cell)
 				var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-				if(R.cell.use(shot.e_cost*cyborg_cost_multiplier)) //Take power from the borg...
+				if(robot.cell.use(shot.e_cost*cyborg_cost_multiplier)) //Take power from the borg...
 					cell.give(shot.e_cost) //... to recharge the shot
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]

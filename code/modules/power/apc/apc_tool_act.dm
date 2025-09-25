@@ -200,12 +200,10 @@
 		if(machine_stat & MAINT)
 			balloon_alert(user, "no board for a cell!")
 			return FALSE
-		var/obj/item/stock_parts/cell/crap/empty/C = new(src)
-		C.forceMove(src)
-		cell = C
-		chargecount = 0
-		user.visible_message(span_notice("[user] fabricates a weak power cell and places it into [src]."), \
-		span_warning("Your [the_rcd.name] whirrs with strain as you create a weak power cell and place it into [src]!"))
+		var/obj/item/stock_parts/power_store/battery/crap/empty/bad_cell = new(src)
+		bad_cell.forceMove(src)
+		cell = bad_cell
+		balloon_alert(user, "power cell installed")
 		update_appearance()
 		return TRUE
 

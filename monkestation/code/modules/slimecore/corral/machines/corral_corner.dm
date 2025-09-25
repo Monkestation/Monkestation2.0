@@ -43,11 +43,9 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/corral_corner/LateInitialize()
+/obj/machinery/corral_corner/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/corral_corner/locate_machinery(multitool_connection)
 	if(!mapping_id || connected_data)
 		return
 	var/list/found_corners = list()
