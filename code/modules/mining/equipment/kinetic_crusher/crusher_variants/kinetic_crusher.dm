@@ -67,6 +67,7 @@
 			speed = 6 SECONDS, \
 			effectiveness = 110, \
 	)
+	register_context()
 
 /obj/item/kinetic_crusher/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
