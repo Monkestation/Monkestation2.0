@@ -443,7 +443,7 @@
 	max_ammo = 3
 	caliber = CALIBER_60STRELA
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	w_class = WEIGHT_CLASS_MEDIUM
+	w_class = WEIGHT_CLASS_SMALL
 
 
 ///MISC

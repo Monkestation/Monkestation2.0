@@ -200,7 +200,7 @@
 	desc = "A small submachinegun, this one is painted in tacticool black. Accepts any standard Sol pistol magazine."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano
-	cost = 4
+	cost = 6
 
 /datum/uplink_item/dangerous/wespe
 	name = "Wespe Pistol"

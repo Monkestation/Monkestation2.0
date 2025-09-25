@@ -51,8 +51,8 @@
 
 /obj/item/storage/toolbox/guncase/nova/opfor/amr/PopulateContents()
 	new /obj/item/gun/ballistic/automatic/wylom(src)
-	new /obj/item/ammo_box/magazine/wylom(src)
-	new /obj/item/ammo_box/magazine/wylom(src)
+	new /obj/item/ammo_box/wylom(src)
+	new /obj/item/ammo_box/wylom(src)
 
 /datum/opposing_force_equipment/ranged/lmg
 	name = "L6 SAW LMG"
