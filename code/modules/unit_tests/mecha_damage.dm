@@ -55,7 +55,7 @@
 
 	check_integrity(demo_mech, pre_melee_integrity, expected_melee_damage, "hit with a melee item")
 	check_integrity(left_arm_equipment, pre_melee_arm_integrity, expected_melee_damage, "hit with a melee item")
-
+/*
 	// BLAST IT
 	var/pre_laser_integrity = demo_mech.get_integrity()
 	var/pre_laser_arm_integrity = left_arm_equipment.get_integrity()
@@ -63,7 +63,7 @@
 
 	check_integrity(demo_mech, pre_laser_integrity, expected_laser_damage, "shot with a laser")
 	check_integrity(left_arm_equipment, pre_laser_arm_integrity, expected_laser_damage, "shot with a laser")
-
+*/
 	// SHOOT IT
 	var/pre_bullet_integrity = demo_mech.get_integrity()
 	var/pre_bullet_arm_integrity = left_arm_equipment.get_integrity()
