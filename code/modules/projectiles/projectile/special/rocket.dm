@@ -154,3 +154,17 @@ among other potential differences. This granularity is helpful for things like t
 	damage_walls = TRUE
 /obj/projectile/bullet/rocket/mininuke/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 20, heavy_impact_range = 30, light_impact_range = 35, flame_range = 38, flash_range = 25, adminlog = TRUE)
+
+
+/// Ignifist rocket launcher - AT only, nearly non effective on crew.
+/obj/projectile/bullet/rocket/ignifis
+	name = "\improper Ignifist rocket"
+	desc = "anti mechanized warfare in spess."
+	icon_state = "atrocket"
+	damage = 25
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 125
+
+/obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)

@@ -50,3 +50,11 @@
 /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_gas
 	ammo_type = /obj/item/ammo_casing/c980grenade/riot
 
+/obj/item/ammo_box/magazine/ignifist
+	name = "Ignifist rocket"
+	icon_state = "ignifist"
+	ammo_type = /obj/item/ammo_casing/caseless/ignifist
+	caliber = CALIBER_60MM
+	max_ammo = 1
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
