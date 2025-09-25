@@ -23,8 +23,8 @@
 	projectile_type = /obj/projectile/bullet/gyro
 
 /obj/item/ammo_casing/caseless/ignifist
-name = "\improper 60mm Ignifist"
-desc = "A 60mm anti tank rocket. Lightly tickles flesh, sledge hammers steel."
-caliber = CALIBER_60MM
-icon_state = "ignifist-full"
-projectile_type = /obj/projectile/bullet/rocket/ignifist
+	name = "\improper 60mm Ignifist"
+	desc = "A 60mm anti tank rocket. Lightly tickles flesh, sledge hammers steel."
+	caliber = CALIBER_60MM
+	icon_state = "ignifist-full"
+	projectile_type = /obj/projectile/bullet/rocket/ignifist
