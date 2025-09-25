@@ -430,7 +430,6 @@
 	)
 	crate_name = "\improper Modular Laser Rifle Crate"
 
-//monke from here down
 /datum/supply_pack/security/armory/bobr
 	name = "Tactical Bóbr Crate"
 	desc = "Two Bóbr shotgun revolvers, with matching Tutel ballistic shields and ammo for each."
@@ -441,4 +440,13 @@
 		/obj/item/ammo_box/advanced/s12gauge = 2,
 	)
 	crate_name = "Tactical Bóbr Crate"
+
+/datum/supply_pack/security/armory/antitank
+	name = "Disposable Anti-Tank Rocket Crate"
+	desc = "Contains a singular antiquated anti-tank rocket."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/ballistic/ignifist
+				)
+	crate_name = "Anti-Tank Rocket crate"
+	dangerous = TRUE
 
