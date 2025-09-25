@@ -344,7 +344,7 @@
 	name = "Executor Mech Rifle"
 	desc = "A large bore rifle designed to fire armor peircing rounds, will bring down men and mech alike."
 	icon_state = "mecha_heavy"
-	equip_cooldown = 1.6 SECONDS
+	equip_cooldown = 3.4 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 20
