@@ -10,7 +10,7 @@
 
 // ignifist rocket
 /obj/item/ammo_box/magazine/ignifist
-	name = "Ignifist Rocket"
+	name = "Ignifist 30 Rocket"
 	icon_state = "ignifist"
 	ammo_type = /obj/item/ammo_casing/caseless/ignifist
 	caliber = CALIBER_60MM
