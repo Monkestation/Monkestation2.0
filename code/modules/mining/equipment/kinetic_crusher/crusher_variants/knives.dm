@@ -31,6 +31,7 @@
 	overrides_twohandrequired = TRUE
 	override_twohandedsprite = TRUE
 	override_light_overlay_sprite = TRUE
+	crusher_destabilizer = /obj/projectile/destabilizer/longrange
 	/// Max amount of charges we can have
 	var/max_knife_charges = 5
 	/// How many charges we currently have
@@ -38,7 +39,7 @@
 	///Knife recharge rate
 	var/knife_charge_rate = 5
 	/// Reload timer
-	var/charge_timer = 0
+	var/knife_charge_timer = 0
 
 /obj/item/kinetic_crusher/knives/Initialize(mapload)
 	. = ..()
@@ -59,13 +60,13 @@
 
 /obj/item/kinetic_crusher/knives/process(seconds_per_tick)
 	if (current_knife_charges >= max_knife_charges)
-		charge_timer = 0
+		knife_charge_timer = 0
 		return FALSE
 	update_appearance()
-	charge_timer += seconds_per_tick
-	if(charge_timer < knife_charge_rate)
+	knife_charge_timer += seconds_per_tick
+	if(knife_charge_timer < knife_charge_rate)
 		return FALSE
-	charge_timer = 0
+	knife_charge_timer = 0
 	playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
 	current_knife_charges++
 	return TRUE
@@ -88,6 +89,11 @@
 	knife.hammer_synced = src
 	playsound(user, 'sound/weapons/fwoosh.ogg', 100, TRUE)
 	knife.fire()
+
+/obj/projectile/destabilizer/longrange //This does not get all its procs copy pasted because its actually a subtype of destabilizer
+	name = "destabilizing shot"
+	range = 15 //its an actual knife you throw
+	log_override = TRUE
 
 /obj/projectile/knives
 	name = "thrown proto-kinetic knife"

@@ -34,12 +34,6 @@
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=force_wielded)
 
-/obj/item/kinetic_crusher/pilebunker/Recharge()
-	if(!charged)
-		charged = TRUE
-		update_appearance()
-		playsound(src.loc, 'sound/weapons/autoguninsert.ogg', 60, TRUE)
-
 /obj/item/kinetic_crusher/pilebunker/attack(mob/living/target, mob/living/carbon/user)
 	if(!armed)
 		to_chat(user, span_warning("The pilebunker is not armed, re-arm it! (Right click while unarmed!)"))
@@ -166,6 +160,7 @@
 	override_twohandedsprite = TRUE
 	force_wielded = 100
 	var/armed = FALSE
+	crusher_destabilizer = /obj/projectile/destabilizer/admin
 
 /obj/item/kinetic_crusher/adminpilebunker/Initialize(mapload)
 	. = ..()
@@ -246,25 +241,6 @@
 	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/kinetic_crusher/adminpilebunker/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
-	if(!charged)
-		return
-	var/modifiers = params2list(clickparams)
-	var/turf/proj_turf = user.loc
-	if(!isturf(proj_turf))
-		return
-	var/obj/projectile/destabilizer/admin/destabilizer = new(proj_turf)
-	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
-		attached_trophy.on_projectile_fire(destabilizer, user)
-	destabilizer.preparePixelProjectile(target, user, modifiers)
-	destabilizer.firer = user
-	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
-	destabilizer.fire()
-	if(charge_time > 0)
-		charged = FALSE
-		update_appearance()
-		addtimer(CALLBACK(src, PROC_REF(Recharge)), charge_time)
 
 /obj/item/kinetic_crusher/adminpilebunker/update_icon_state()
 	if(!armed)
