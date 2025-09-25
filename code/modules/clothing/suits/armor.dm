@@ -14,14 +14,14 @@
 	armor_type = /datum/armor/suit_armor
 
 /datum/armor/suit_armor
-	melee = 30
-	bullet = 40
+	melee = 35
+	bullet = 30
 	laser = 30
-	energy = 15
+	energy = 40
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 15
+	wound = 10
 
 /obj/item/clothing/suit/armor/Initialize(mapload)
 	. = ..()
@@ -100,9 +100,9 @@
 
 /datum/armor/vest_marine
 	melee = 50
-	bullet = 60
+	bullet = 50
 	laser = 30
-	energy = 20
+	energy = 25
 	bomb = 50
 	bio = 100
 	fire = 40
@@ -113,7 +113,7 @@
 	melee = 40
 	bullet = 50
 	laser = 60
-	energy = 30
+	energy = 50
 	bomb = 50
 	bio = 100
 	acid = 50
@@ -173,10 +173,10 @@
 	strip_delay = 80
 
 /datum/armor/armor_hos
-	melee = 35
-	bullet = 40
-	laser = 40
-	energy = 20
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 40
 	bomb = 25
 	fire = 70
 	acid = 90
@@ -250,7 +250,7 @@
 	melee = 50
 	bullet = 40
 	laser = 50
-	energy = 30
+	energy = 50
 	bomb = 25
 	fire = 100
 	acid = 90
@@ -284,16 +284,15 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
-	slowdown = 0.3
 
 /datum/armor/armor_riot
-	melee = 60
+	melee = 50
 	bullet = 10
-	laser = 20
-	energy = 20
+	laser = 10
+	energy = 10
 	fire = 80
 	acid = 80
-	wound = 0
+	wound = 20
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
@@ -309,7 +308,7 @@
 /datum/armor/balloon_vest
 	melee = 10
 	laser = 10
-	energy = 20
+	energy = 10
 	fire = 60
 	acid = 50
 
@@ -341,7 +340,7 @@
 	melee = 35
 	bullet = 25
 	laser = 25
-	energy = 0
+	energy = 35
 	bomb = 25
 	fire = 50
 	acid = 50
@@ -349,25 +348,23 @@
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
-	desc = "A Type III heavy plate carrier that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bulletproof
-	body_parts_covered = CHEST|GROIN|ARMS
 	strip_delay = 70
 	equip_delay_other = 50
-	slowdown = 0.3
 
 /datum/armor/armor_bulletproof
-	melee = 10
+	melee = 15
 	bullet = 60
 	laser = 10
 	energy = 10
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 30 //monkestation edit: 20 to 25
+	wound = 25 //monkestation edit: 20 to 25
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
@@ -386,7 +383,7 @@
 	melee = 10
 	bullet = 10
 	laser = 60
-	energy = 50
+	energy = 60
 	fire = 100
 	acid = 100
 
@@ -428,10 +425,10 @@
 //All of the armor below is mostly unused
 
 /datum/armor/armor_swat
-	melee = 50
-	bullet = 50 //monkestation edit, 30 to 40
-	laser = 40
-	energy = 30
+	melee = 40
+	bullet = 40 //monkestation edit, 30 to 40
+	laser = 30
+	energy = 40
 	bomb = 50
 	bio = 90
 	fire = 100
@@ -560,7 +557,7 @@
 	melee = 20
 	bullet = 10
 	laser = 30
-	energy = 30
+	energy = 40
 	bomb = 15
 	fire = 40
 	acid = 50
