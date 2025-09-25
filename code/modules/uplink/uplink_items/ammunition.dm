@@ -64,7 +64,7 @@
 			For when you really need a lot of things dead."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/a357
-	cost = 1
+	cost = 2
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 

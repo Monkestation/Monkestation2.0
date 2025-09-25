@@ -228,7 +228,7 @@
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/ammo_box/magazine/wylom = 3,
+		/obj/item/ammo_box/wylom = 3,
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko
