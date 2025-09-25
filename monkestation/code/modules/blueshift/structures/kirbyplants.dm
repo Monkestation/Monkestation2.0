@@ -15,6 +15,8 @@
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE
+	// Does the plant have an internal storage
+	var/can_hide_items_in_self = TRUE
 	/// Whether this plant is dead and requires a seed to revive
 	var/dead = FALSE
 	///If it's a special named plant, set this to true to prevent dead-name overriding.
@@ -25,7 +27,8 @@
 
 /obj/item/kirbyplants/Initialize(mapload)
 	. = ..()
-	create_storage(storage_type = /datum/storage/kirbyplants)
+	if(can_hide_items_in_self)
+		create_storage(storage_type = /datum/storage/kirbyplants)
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
 	AddElement(/datum/element/beauty, 500)
@@ -52,17 +55,17 @@
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
 
-/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+/obj/item/kirbyplants/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && attacking_item.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
 		if(do_after(user,3 SECONDS,target=src))
 			to_chat(user,span_notice("You finish trimming [src]."))
 			change_visual()
-	if(dead && istype(I, /obj/item/seeds))
+	if(dead && istype(attacking_item, /obj/item/seeds))
 		to_chat(user,span_notice("You start planting a new seed into the pot."))
 		if(do_after(user,3 SECONDS,target=src))
-			qdel(I)
+			qdel(attacking_item)
 			dead = FALSE
 			update_appearance()
 
@@ -153,6 +156,7 @@
 	desc = "An old botanical research sample collected on a long forgotten jungle planet."
 	icon_state = "fern"
 	trimmable = FALSE
+	can_hide_items_in_self = FALSE
 
 /obj/item/kirbyplants/fern/Initialize(mapload)
 	. = ..()

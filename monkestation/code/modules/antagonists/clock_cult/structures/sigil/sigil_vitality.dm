@@ -24,9 +24,14 @@
 	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
+
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently siphoning [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/apply_effects(mob/living/affected_mob)
 	. = ..()
@@ -64,8 +69,13 @@
 				affected_mob.PossessByPlayer(chosen_one.key)
 				revived = TRUE
 		if(revived)
+			var/pronoun_appropriate_demonym = "CLOCK-SIBLING"
+			if(affected_mob.gender == MALE)
+				pronoun_appropriate_demonym = "CLOCK-BROTHER"
+			if(affected_mob.gender == FEMALE)
+				pronoun_appropriate_demonym = "CLOCK-SISTER"
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
-			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("MY LIGHT SHINES THROUGH YOU, YOUR SERVITUDE IS NOT FINISHED.")]\""))
+			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("YOUR SERVITUDE IS NOT FINISHED, [uppertext(affected_mob.real_name)]. RISE, [pronoun_appropriate_demonym], AND BE RENEWED.")]\""))
 			affected_mob.visible_message(span_warning("[affected_mob] draws in a huge breath, a bright light shining from [affected_mob.p_their()] eyes."), \
 									   span_bigbrass("You awaken suddenly from the void. You're alive!"))
 		return
@@ -86,7 +96,9 @@
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, MAX_CLOCK_VITALITY) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit
 		if(affected_mob.client)
-			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
+			if(GLOB.clock_ark.current_state >= ARK_STATE_ACTIVE)
+				new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
+
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
 			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)) && !HAS_MIND_TRAIT(affected_mob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
 				new_vessel.transfer_personality(affected_mob)

@@ -9,6 +9,7 @@
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoMonsterHunter"
+	stinger_sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg'
 	var/list/datum/action/powers = list()
 	/// Have we chosen a weapon yet?
 	var/weapon_claimed = FALSE
@@ -82,6 +83,7 @@
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
 	track.Grant(owner.current)
+	powers += track
 	return ..()
 
 /datum/antagonist/monsterhunter/on_removal()
@@ -149,7 +151,7 @@
 			"id" = trick_weapon,
 			"name" = trick_weapon::name,
 			"desc" = trick_weapon::ui_desc,
-			"icon" = text_ref(trick_weapon::icon_preview || trick_weapon::icon),
+			"icon" = trick_weapon::icon_preview || trick_weapon::icon,
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
 	return list("weapons" = weapons)
@@ -192,6 +194,7 @@
 	var/datum/action/cooldown/spell/summonitem/recall = new
 	recall.mark_item(weapon)
 	recall.Grant(user)
+	powers += recall
 
 	podspawn(list(
 		"target" = get_turf(user),
@@ -256,7 +259,6 @@
 	to_chat(owner.current, span_announce("While we can kill anyone in our way to destroy the monsters lurking around, <b>causing property damage is unacceptable</b>."))
 	to_chat(owner.current, span_announce("However, security WILL detain us if they discover our mission."))
 	to_chat(owner.current, span_announce("In exchange for our services, it shouldn't matter if a few items are gone missing for our... personal collection."))
-	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/monster_hunter.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/monsterhunter/proc/insight_gained()

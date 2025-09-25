@@ -1,5 +1,5 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
-//#define BLOODSUCKER_TESTING
+// #define BLOODSUCKER_TESTING
 
 #ifdef BLOODSUCKER_TESTING
 #ifdef CIBUILDING
@@ -60,6 +60,7 @@
 #define CLAN_VENTRUE "Ventrue Clan"
 #define CLAN_MALKAVIAN "Malkavian Clan"
 #define CLAN_TZIMISCE "Tzimisce Clan"
+#define CLAN_VASSAL "your Master"
 
 #define TREMERE_VASSAL "tremere_vassal"
 #define FAVORITE_VASSAL "favorite_vassal"
@@ -143,6 +144,7 @@
 #define DANGER_LEVEL_SOL_ROSE 4
 #define DANGER_LEVEL_SOL_ENDED 5
 
+
 /**
  * Clan defines
  *
@@ -177,3 +179,6 @@
 
 //Used in bloodsucker_life.dm
 #define MARTIALART_FRENZYGRAB "frenzy grabbing"
+
+/// The level needed to complete the Tremere objective.
+#define TREMERE_OBJECTIVE_POWER_LEVEL 5

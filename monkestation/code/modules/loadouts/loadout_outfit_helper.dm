@@ -51,7 +51,7 @@
 
 			SSwardrobe.provide_type(item.item_path, briefcase)
 		var/list/numbers = list()
-		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+		for(var/num in preference_source?.special_loadout_list["unusual"])
 			if(num in numbers)
 				continue
 			numbers += num
@@ -85,7 +85,7 @@
 		equipOutfit(equipped_outfit, visuals_only)
 
 	if(!spawned_briefcase) // avoid double spawning unusuals
-		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+		for(var/num in preference_source?.special_loadout_list["unusual"])
 			var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
 			var/unusual_idx = text2num(num)
 			if(length(unusuals) < unusual_idx)

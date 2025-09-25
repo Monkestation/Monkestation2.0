@@ -41,7 +41,7 @@
 /obj/machinery/splicer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/splicer/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -144,7 +144,7 @@
 
 /obj/machinery/splicer/proc/eject_seed(obj/item/seeds/ejected_seed)
 	if (ejected_seed)
-		if(Adjacent(usr) && !issiliconoradminghost(usr))
+		if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 			if (!usr.put_in_hands(ejected_seed))
 				ejected_seed.forceMove(drop_location())
 		else
@@ -153,7 +153,7 @@
 
 /obj/machinery/splicer/proc/eject_beaker()
 	if (held_beaker)
-		if(Adjacent(usr) && !issiliconoradminghost(usr))
+		if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 			if (!usr.put_in_hands(held_beaker))
 				held_beaker.forceMove(drop_location())
 		else
@@ -228,7 +228,7 @@
 	for(var/reag_id in new_seed.reagents_add)
 		new_seed.genes += new /datum/plant_gene/reagent(reag_id, new_seed.reagents_add[reag_id])
 
-	if(Adjacent(usr) && !issiliconoradminghost(usr))
+	if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 		if (!usr.put_in_hands(new_seed))
 			new_seed.forceMove(drop_location())
 	else

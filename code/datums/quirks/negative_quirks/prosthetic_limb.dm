@@ -10,6 +10,7 @@
 	var/slot_string = "limb"
 	/// The slot to replace, in GLOB.limb_zones (both arms and both legs)
 	var/limb_zone
+	species_blacklist = list(SPECIES_OOZELING)
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/body_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]

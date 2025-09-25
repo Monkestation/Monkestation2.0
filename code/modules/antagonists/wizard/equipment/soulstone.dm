@@ -77,7 +77,7 @@
 			whatever spark it once held long extinguished."
 
 ///signal called whenever a soulstone is smacked by a bible
-/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, ...)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
 
@@ -222,19 +222,19 @@
 
 		on_release_spirits()
 
-/obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
-	var/mob/living/basic/shade/occupant = (locate() in src)
-	var/obj/item/storage/toolbox/mechanical/target_toolbox = A
-	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
-		return ..()
+/obj/item/soulstone/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/mob/living/basic/shade/occupant = locate() in src
+	var/obj/item/storage/toolbox/mechanical/target_toolbox = interacting_with
+	if(isnull(occupant) || !istype(target_toolbox) || target_toolbox.has_soul)
+		return NONE
 
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!role_check(user))
 		user.Unconscious(10 SECONDS)
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message("<span class='notice'>[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!", \
 		span_notice("You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!"), ignored_mobs = occupant)
@@ -251,6 +251,7 @@
 	target_toolbox.icon_state = "toolbox_blue_old"
 	target_toolbox.has_soul = TRUE
 	target_toolbox.has_latches = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -389,8 +390,7 @@
 	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
-	soulstone_spirit.update_atom_languages()
-	soulstone_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
+	soulstone_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	if(user)
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))

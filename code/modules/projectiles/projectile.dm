@@ -174,6 +174,7 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+	var/fauna_mod = 1 // What is the multiplier vs lavaland fauna and megafauna?
 
 	// Status effects applied on hit
 	var/stun = 0 SECONDS
@@ -326,7 +327,7 @@
 			var/turf/closed/wall/target_wall = target_turf
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 			//monkestation edit start
-			if(damage_walls)
+			if(damage_walls && target_wall.uses_integrity)
 				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
 			//monkestation edit end
 
@@ -334,7 +335,7 @@
 
 	var/mob/living/living_target = target
 
-	if(living_target.buckled)
+	if(isobj(living_target.buckled))
 		var/obj/buck_source = living_target.buckled
 		if(buck_source.cover_amount != 0)
 			if(prob(buck_source.cover_amount))
@@ -349,6 +350,8 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
+		if(faction_check(living_target.faction, FACTION_MINING || FACTION_BOSS))
+			damage *= fauna_mod
 		if (damage)
 			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 				var/splatter_dir = dir

@@ -58,13 +58,13 @@
 	if(pods)
 		for(var/P in pods)
 			var/obj/machinery/clonepod/pod = P
-			if(pod.is_operational && pod.efficiency > 5)
+			if(pod.is_operational && pod.efficiency > 5 && pod.auto_clone)
 				return TRUE
 
-/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null, cloning = FALSE)
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
 	if(pods)
 		for(var/obj/machinery/clonepod/pod as anything in pods)
-			if(cloning & !pod.auto_clone)
+			if(!pod.auto_clone)
 				continue
 			if(pod.occupant && pod.clonemind == mind)
 				return pod
@@ -82,7 +82,7 @@
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/record in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"], TRUE)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"])
 
 		if(QDELETED(pod) || !pod.auto_clone || !QDELETED(pod.occupant))
 			return
@@ -137,35 +137,38 @@
 	pod.connected = null
 	LAZYREMOVE(pods, pod)
 
-/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
-		if (!diskette)
-			if (!user.transferItemToLoc(W,src))
-				return
-			diskette = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			updateUsrDialog()
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+/obj/machinery/computer/cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
 
-		if(istype(P.buffer, /obj/machinery/clonepod))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.set_buffer(null)
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/pod = P.buffer
-			pod.connected?.DetachCloner(pod)
-			AttachCloner(pod)
-		else
-			P.set_buffer(src)
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
-		return
-	else
-		return ..()
+	if(!istype(multi.buffer, /obj/machinery/clonepod))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
+
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/pod = multi.buffer
+	pod.connected?.DetachCloner(pod)
+	AttachCloner(pod)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/cloning/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(!istype(tool, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		return NONE
+
+	if(!diskette || !user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	diskette = tool
+	to_chat(user, "<span class='notice'>You insert [tool].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	updateUsrDialog()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	. = ..()
@@ -180,8 +183,6 @@
 			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
 		else
 			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
-	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 	switch(menu)

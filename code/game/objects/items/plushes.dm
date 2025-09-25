@@ -125,19 +125,21 @@
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.get_sharpness())
+/obj/item/toy/plush/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, span_warning("You already murdered it!"))
 				return
 			if(!divine)
 				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
-				I.play_tool_sound(src)
+				attacking_item.play_tool_sound(src)
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
+				if(isliving(user))
+					var/mob/living/living_user = user
+					living_user.adjust_drunk_effect(20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
@@ -152,22 +154,22 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(isgrenade(I))
+	if(isgrenade(attacking_item))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
 		if(grenade)
 			to_chat(user, span_warning("[src] already has a grenade!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
-		span_danger("You slide [I] into [src]."))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
+		span_danger("You slide [attacking_item] into [src]."))
+		grenade = attacking_item
+		user.log_message("added a grenade ([attacking_item.name]) to [src]", LOG_GAME)
 		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
+	if(istype(attacking_item, /obj/item/toy/plush))
+		love(attacking_item, user)
 		return
 	return ..()
 

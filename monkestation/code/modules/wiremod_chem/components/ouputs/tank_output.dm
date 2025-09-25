@@ -13,7 +13,7 @@
 	var/buffer = 500
 	var/component_name = "Tank Output"
 
-/obj/structure/chemical_tank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
@@ -44,7 +44,7 @@
 
 /obj/structure/chemical_tank/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		to_chat(user, span_notice("You finish plunging the [name]."))
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()

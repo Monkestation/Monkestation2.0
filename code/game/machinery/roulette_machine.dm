@@ -98,7 +98,7 @@
 
 	return data
 
-/obj/machinery/roulette/ui_act(action, params)
+/obj/machinery/roulette/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -116,15 +116,15 @@
 	update_appearance() // Not applicable to all objects.
 
 ///Handles setting ownership and the betting itself.
-/obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
-	if(machine_stat & MAINT && is_wire_tool(W))
+/obj/machinery/roulette/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(machine_stat & MAINT && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return
 	if(playing)
 		return ..()
-	var/obj/item/card/id/player_card = W.GetID()
+	var/obj/item/card/id/player_card = attacking_item.GetID()
 	if(player_card)
-		if(isidcard(W))
+		if(isidcard(attacking_item))
 			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
@@ -226,7 +226,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 30)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"

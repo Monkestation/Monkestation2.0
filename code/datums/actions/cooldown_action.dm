@@ -167,10 +167,13 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
+	var/cooldown_multiplier = (owner && HAS_TRAIT(owner, TRAIT_FAST_COOLDOWNS)) ? 0.66 : 1
 	if(isnum(override_cooldown_time))
-		next_use_time = world.time + override_cooldown_time
+		next_use_time = world.time + (override_cooldown_time * cooldown_multiplier)
 	else
-		next_use_time = world.time + cooldown_time
+		next_use_time = world.time + (cooldown_time * cooldown_multiplier)
+	if(next_use_time == world.time)
+		return
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SScooldown_actions, src)
 
@@ -186,6 +189,31 @@
 			shared_ability.StartCooldownSelf(override_cooldown_time)
 		else
 			shared_ability.StartCooldownSelf(cooldown_time)
+
+/// Resets the cooldown of this ability
+/datum/action/cooldown/proc/ResetCooldown()
+	next_use_time = world.time
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables this cooldown action
+/datum/action/cooldown/proc/enable()
+	action_disabled = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Disables this cooldown action
+/datum/action/cooldown/proc/disable()
+	action_disabled = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables all cooldown actions
+/datum/action/cooldown/proc/enable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.enable()
+
+/// Disables all cooldown actions
+/datum/action/cooldown/proc/disable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.disable()
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()

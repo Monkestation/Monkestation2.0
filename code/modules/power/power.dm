@@ -60,19 +60,21 @@
 	return can_change_cable_layer
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
-	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
-	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-	cable_layer = GLOB.cable_name_to_layer[choice]
-	balloon_alert(user, "now operating on the [choice]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(can_change_cable_layer)
+		return cable_layer_act(user, tool)
 
 /obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return multitool_act(user, tool)
+
+/// Called on multitool_act when we can change cable layers, override to add more conditions
+/obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
+	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
+	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	cable_layer = GLOB.cable_name_to_layer[choice]
+	balloon_alert(user, "now operating on the [choice]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -130,28 +132,85 @@
 
 	return A.powered(chan) // return power status of the area
 
-// increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = power_channel)
-	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
-	var/area/A = get_area(src) // make sure it's in an area
-	A?.use_power(amount, chan)
+/**
+ * Returns the available energy from the apc's cell and grid that can be used.
+ * Args:
+ * - consider_cell: Whether to count the energy from the APC's cell or not.
+ * Returns: The available energy the machine can access from the APC.
+ */
+/obj/machinery/proc/available_energy(consider_cell = TRUE)
+	var/area/home = get_area(src)
+
+	if(isnull(home))
+		return FALSE
+	if(!home.requires_power)
+		return INFINITY
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(isnull(local_apc))
+		return FALSE
+
+	return consider_cell ? local_apc.available_energy() : local_apc.surplus()
 
 /**
- * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
- * - Amount: How much power the APC's cell is to be costed.
+ * Draws energy from the APC. Will use excess energy from the APC's connected grid,
+ * then use energy from the APC's cell if there wasn't enough energy from the grid, unless ignore_apc is true.
+ * Args:
+ * - amount: The amount of energy to use.
+ * - channel: The power channel to use.
+ * - ignore_apc: If true, do not consider the APC's cell when demanding energy.
+ * - force: If true and if there isn't enough energy, consume the remaining energy. Returns 0 if false and there isn't enough energy.
+ * Returns: The amount of energy used.
  */
-/obj/machinery/proc/directly_use_power(amount)
-	var/area/A = get_area(src)
-	var/obj/machinery/power/apc/local_apc
-	if(!A)
+/obj/machinery/proc/use_energy(amount, channel = power_channel, ignore_apc = FALSE, force = TRUE)
+	if(amount <= 0) //just in case
 		return FALSE
-	local_apc = A.apc
-	if(!local_apc)
+	var/area/home = get_area(src)
+
+	if(isnull(home))
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
+	var/obj/machinery/power/apc/local_apc = home.apc
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
-	if(!local_apc.cell)
+
+	// Surplus from the grid.
+	var/surplus = local_apc.surplus()
+	var/grid_used = min(surplus, amount)
+	var/apc_used = 0
+	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
+		apc_used = local_apc.cell.use(amount - grid_used, force = force)
+
+	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
 		return FALSE
-	local_apc.cell.use(amount)
-	return TRUE
+
+	// Use the grid's and APC's energy.
+	amount = grid_used + apc_used
+	local_apc.add_load(grid_used JOULES)
+	home.use_energy(amount JOULES, channel)
+	return amount
+
+/**
+ * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to prioritising the grid.
+ * Args:
+ * - amount: How much energy the APC's cell is to be costed.
+ * - force: If true, consumes the remaining energy of the cell if there isn't enough energy to supply the demand.
+ * Returns: The amount of energy that got used by the cell.
+ */
+/obj/machinery/proc/directly_use_energy(amount, force = FALSE)
+	var/area/my_area = get_area(src)
+	if(isnull(my_area))
+		stack_trace("machinery is somehow not in an area, nullspace?")
+		return FALSE
+	if(!my_area.requires_power)
+		return amount
+
+	var/obj/machinery/power/apc/my_apc = my_area.apc
+	if(isnull(my_apc) || !my_apc.operating || QDELETED(my_apc.cell))
+		return FALSE
+	return my_apc.cell.use(amount, force = force)
 
 /**
  * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
@@ -161,7 +220,7 @@
  * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
  * the surplus is above zero.
  * Args:
- * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
+ * - amount, the amount of power requested from the powernet. In joules.
  * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
  */
 /obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
@@ -175,8 +234,9 @@
 		return amount //Shuttles get free power, don't ask why
 
 	var/obj/machinery/power/apc/local_apc = home.apc
-	if(!local_apc)
+	if(isnull(local_apc) || !local_apc.operating)
 		return FALSE
+
 	var/surplus = local_apc.surplus()
 	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
 		return FALSE
@@ -186,6 +246,21 @@
 		amount = surplus
 	local_apc.add_load(amount)
 	return amount
+
+/**
+ * Draws power from the apc's powernet and cell to charge a power cell.
+ * Args:
+ * - amount: The amount of energy given to the cell.
+ * - cell: The cell to charge.
+ * - grid_only: If true, only draw from the grid and ignore the APC's cell.
+ * - channel: The power channel to use.
+ * Returns: The amount of energy the cell received.
+ */
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/power_store/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
+	var/power_given = cell.give(demand)
+	return power_given
+
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
@@ -254,9 +329,9 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = W
+/obj/machinery/power/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = attacking_item
 		var/turf/T = user.loc
 		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
 			return
@@ -380,11 +455,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 	if (istype(power_source, /datum/powernet))
 		PN = power_source
-	else if (istype(power_source, /obj/item/stock_parts/cell))
+	else if (istype(power_source, /obj/item/stock_parts/power_store/cell))
 		cell = power_source
 	else if (istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
@@ -420,7 +495,7 @@
 		return FALSE
 
 	var/datum/powernet/PN = powernet_info["powernet"]
-	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
+	var/obj/item/stock_parts/power_store/cell/cell = powernet_info["cell"]
 
 	// MONKESTATION ADDITION -- This whole proc is basically polluted because long ago we didnt care for modularization
 	if(victim.wearing_shock_proof_gloves() && (PN && PN?.netexcess < 100 MW) && !always_shock)
@@ -461,11 +536,10 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy WATTS)
+		source_area.apc?.terminal?.use_energy(drained_energy)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
-		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
-	else if (istype(power_source, /obj/item/stock_parts/cell))
+		PN.delayedload += (min(drained_energy, max(PN.newavail - PN.delayedload, 0)))
+	else if (istype(power_source, /obj/item/stock_parts/power_store/cell))
 		cell.use(drained_energy)
 	return drained_energy
 
@@ -474,7 +548,7 @@
 ///////////////////////////////////////////////
 
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_1)
+/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_ALL)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)

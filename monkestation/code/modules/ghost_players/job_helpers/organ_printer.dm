@@ -49,7 +49,7 @@
 	playsound(src, 'sound/machines/ding.ogg', vol = 50, vary = TRUE)
 
 
-/obj/structure/organ_creator/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/organ_creator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/organ) || !istype(attacking_item, /obj/item/bodypart))
 		return

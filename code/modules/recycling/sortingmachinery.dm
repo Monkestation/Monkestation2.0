@@ -80,7 +80,7 @@
 		movable_loc.relay_container_resist_act(user, object)
 		return
 	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = object))
+	if(do_after(user, 5 SECONDS, target = object))
 		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
 		to_chat(user, span_notice("You successfully removed [object]'s wrapping !"))
@@ -114,7 +114,7 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(istype(item, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
@@ -254,7 +254,7 @@
 
 	unwrap_contents()
 	post_unwrap_contents(user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/dest_tagger
 	name = "destination tagger"
@@ -311,7 +311,7 @@
 	return data
 
 /** User clicks a button on the tagger */
-/obj/item/dest_tagger/ui_act(action, params)
+/obj/item/dest_tagger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

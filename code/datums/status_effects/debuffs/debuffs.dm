@@ -101,6 +101,21 @@
 	owner.paralyze_diminish = 1
 	return ..()
 
+//DAZED
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
+
+/datum/status_effect/incapacitating/dazed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/dazed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 //INCAPACITATED
 /// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
 /datum/status_effect/incapacitating/incapacitated
@@ -547,6 +562,27 @@
 	. = ..()
 	deltimer(timerid)
 
+/datum/status_effect/progenitor_curse
+	id= "progenitor_curse"
+	tick_interval = 1.5 SECONDS //how often a hand is shot
+	duration = 30 SECONDS
+	alert_type = null
+
+/datum/status_effect/progenitor_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	var/grab_dir = turn(owner.dir, rand(-180, 180)) //grab them from a random direction
+	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+	if(spawn_turf)
+		grasp(spawn_turf)
+
+/datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
+	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.fire()
 
 /datum/status_effect/gonbola_pacify
 	id = "gonbolaPacify"
@@ -952,21 +988,21 @@
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
+/datum/status_effect/rebuked/on_apply()
 	owner.next_move_modifier *= 1.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return

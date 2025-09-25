@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - code_imp: "partially reverted a change to Mentor Manager to hopefully fix it being broken. Please report any issues!"

@@ -25,7 +25,7 @@
 	apid.adjust_honeycount(10)
 	to_chat(owner, span_notice("You pollinate the [cast_on]."))
 
-	for(var/item as anything in growing.managed_seeds)
+	for(var/item in growing.managed_seeds)
 		var/obj/item/seeds/seed = growing.managed_seeds[item]
 		if(!seed)
 			continue

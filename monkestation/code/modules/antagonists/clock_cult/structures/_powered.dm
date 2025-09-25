@@ -1,16 +1,10 @@
 /obj/structure/destructible/clockwork/gear_base/powered
 	/// If the structure has its "on" switch flipped. Does not mean it's on, necessarily (needs power and anchoring, too)
 	var/enabled = FALSE
-	/// If the structure is "on" and working.
-	var/processing = FALSE
-	/// If this ran out of power during process()
-	var/insufficient_power = FALSE
 	/// How much power this structure uses passively
 	var/passive_consumption = 0
-	/// Makes sure the depowered proc is only called when it transitions from powered -> depowered, NOT every process() while already depowered
-	var/depowered = FALSE
-	/// Minimum power to work
-	var/minimum_power = 0
+	/// Do we actually have power when turned on
+	var/is_powered = FALSE
 	/// Lazylist of nearby transmission signals
 	var/list/transmission_sigils
 	/// Has an "_inactive" icon state
@@ -48,11 +42,9 @@
 		return
 
 	enabled = FALSE
-	depowered()
-
-	if(processing)
-		processing = FALSE
-		STOP_PROCESSING(SSobj, src)
+	turn_off()
+	update_icon_state()
+	visible_message("[src] powers down as it becomes unanchored from the ground.")
 
 /obj/structure/destructible/clockwork/gear_base/powered/update_icon_state()
 	. = ..()
@@ -62,124 +54,85 @@
 		icon_state = base_icon_state + unwrenched_suffix
 		return
 
-	if(has_off_icon && (depowered || !enabled))
+	if(has_off_icon && (!is_powered || !enabled))
 		icon_state = base_icon_state + "_inactive"
 		return
 
-	if(has_on_icon && !depowered)
+	if(has_on_icon && is_powered)
 		icon_state = base_icon_state + "_active"
 
-/obj/structure/destructible/clockwork/gear_base/powered/process(delta_time)
-	if(!use_power(passive_consumption))
-		depowered()
-		insufficient_power = TRUE
-		return FALSE
-
-	if(insufficient_power)
-		insufficient_power = FALSE
-		repowered()
-		return TRUE
-
-	if(!anchored)
-		turn_off()
-		update_icon_state()
-		visible_message("[src] powers down as it becomes unanchored from the ground.")
-		return FALSE
-
-	return TRUE
+/obj/structure/destructible/clockwork/gear_base/powered/process(seconds_per_tick)
+	var/last_powered_state = is_powered
+	is_powered = length(transmission_sigils) > 0
+	if(last_powered_state != is_powered)
+		if(is_powered)
+			repowered()
+		else
+			depowered()
 
 /obj/structure/destructible/clockwork/gear_base/powered/proc/try_toggle_power(mob/user)
+	if(!has_power_toggle)
+		return
+
 	if(!anchored)
 		if(user)
 			balloon_alert(user, "not fastened!")
 		return
 
-	if(!has_power_toggle)
-		return
-
-	if(!update_power() && !enabled)
-		if(user)
-			balloon_alert(user, "not enough power!")
-		return
+	if(!enabled)
+		if(!length(transmission_sigils) || !SSthe_ark.adjust_passive_power(passive_consumption, TRUE))
+			if(user)
+				balloon_alert(user, "not enough power!")
+			return
+		turn_on()
+	else
+		turn_off()
 
 	enabled = !enabled
 	if(user)
 		balloon_alert(user, "turned [enabled ? "on" : "off"]")
 
-	if(enabled)
-		turn_on()
-	else
-		turn_off()
-
 /// Turn on the structure, letting it consume power and process again
 /obj/structure/destructible/clockwork/gear_base/powered/proc/turn_on()
 	repowered()
-	processing = TRUE
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSthe_ark, src)
 
 /// Turn off the structure, ceasing its processing
 /obj/structure/destructible/clockwork/gear_base/powered/proc/turn_off()
 	depowered()
-	processing = FALSE
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSthe_ark, src)
 
-/// Checks if there's enough power to power it, calls repower() if changed from depowered to powered, vice versa
-/obj/structure/destructible/clockwork/gear_base/powered/proc/update_power()
-	if(depowered)
+/// Checks if there's a sigil to power it, calls repower() if changed from depowered to powered, vice versa
+/obj/structure/destructible/clockwork/gear_base/powered/proc/check_transmission_sigils()
+	if(!enabled)
+		return FALSE
 
-		if((GLOB.clock_power > minimum_power && LAZYLEN(transmission_sigils)) || !minimum_power)
+	if(!is_powered)
+		if(length(transmission_sigils))
 			repowered()
-
 			return TRUE
-
 		return FALSE
-
-	else
-
-		if(GLOB.clock_power <= minimum_power || !LAZYLEN(transmission_sigils))
-			depowered()
-
-			return FALSE
-
-		return TRUE
-
-/// Checks if there's equal or greater power to the amount arg, TRUE if so, FALSE otherwise
-/obj/structure/destructible/clockwork/gear_base/powered/proc/check_power(amount)
-	if(!amount)
-		return TRUE
-
-	if(!LAZYLEN(transmission_sigils))
+	else if(!length(transmission_sigils))
+		depowered()
 		return FALSE
-
-	if(depowered)
-		return FALSE
-
-	if(GLOB.clock_power < amount)
-		return FALSE
-
 	return TRUE
 
 /// Uses power if there's enough to do so
-/obj/structure/destructible/clockwork/gear_base/powered/proc/use_power(amount)
-	update_power()
-
-	if(!check_power(amount))
-		return FALSE
-
-	GLOB.clock_power -= amount
-	update_power()
-	return TRUE
+/obj/structure/destructible/clockwork/gear_base/powered/proc/use_energy(amount)
+	return check_transmission_sigils() && SSthe_ark.adjust_clock_power(-amount)
 
 /// Triggers when the structure runs out of power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/depowered()
 	SHOULD_CALL_PARENT(TRUE)
-	depowered = TRUE
+	is_powered = FALSE
+	SSthe_ark.adjust_passive_power(-passive_consumption)
 	update_icon_state()
 
 /// Triggers when the structure regains power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/repowered()
 	SHOULD_CALL_PARENT(TRUE)
-	depowered = FALSE
+	is_powered = length(transmission_sigils) > 0
+	SSthe_ark.adjust_passive_power(passive_consumption)
 	update_icon_state()
 
 /// Adds a sigil to the linked structure list
@@ -194,8 +147,7 @@
 
 	LAZYREMOVE(transmission_sigils, sigil)
 	sigil.linked_structures -= src
-
-	check_power()
+	check_transmission_sigils()
 
 /datum/component/clockwork_trap/powered_structure
 	takes_input = TRUE

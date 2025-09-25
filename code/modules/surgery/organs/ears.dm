@@ -73,7 +73,7 @@
 		return
 
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	deaf = max(deaf + (ddeaf*damage_multiplier) *0.75, 0)
 	update_hearing_loss()
 
 /obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)

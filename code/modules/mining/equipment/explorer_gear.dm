@@ -22,6 +22,12 @@
 		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/revolver/govmining,
 		)
 	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -126,6 +132,12 @@
 		/obj/item/pickaxe,
 		/obj/item/spear,
 		/obj/item/tank/internals,
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/revolver/govmining,
 		)
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/cloak_goliath
@@ -194,6 +206,12 @@
 		/obj/item/spear,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/revolver/govmining,
 		)
 	armor_type = /datum/armor/cloak_drake
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
@@ -252,6 +270,12 @@
 		/obj/item/spear,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/revolver/govmining,
 		)
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
@@ -272,10 +296,10 @@
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /datum/armor/cloak_godslayer
-	melee = 50
+	melee = 70
 	bullet = 25
 	laser = 25
-	energy = 25
+	energy = 40
 	bomb = 50
 	bio = 50
 	fire = 100

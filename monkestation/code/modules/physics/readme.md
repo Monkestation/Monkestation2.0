@@ -1,6 +1,7 @@
 ## Title: <!--Title of your addition-->
 
 <!-- uppercase, underscore_connected name of your module, that you use to mark files-->
+
 MODULE ID: PHYSICS
 
 ### Description:
@@ -11,17 +12,16 @@ This module adds a loafing mechanic.
 
 ### TG Proc/File Changes:
 
-	- code\__DEFINES\vv.dm
-	- code\_globalvars\bitfields.dm
-	- code\game\atoms.dm
-	- code\__DEFINES\subsystems.dm
+    - code\__DEFINES\vv.dm
+    - code\_globalvars\bitfields.dm
+    - code\game\atoms.dm
+    - code\__DEFINES\subsystems.dm
 
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
 
 ### Defines:
 
 <!-- If you needed to add any defines, mention the files you added those defines in -->
-
 
 ### Master file additions
 
@@ -37,6 +37,7 @@ This module adds a loafing mechanic.
 
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Orignal Coders -->
-Code from  https://github.com/Mojave-Sun/mojave-sun-13/pull/2231 coders: ma44. Ported by Dwasint
-<!-- Orignal Coders -->
 
+Code from https://github.com/Mojave-Sun/mojave-sun-13/pull/2231 coders: ma44. Ported by Dwasint
+
+<!-- Orignal Coders -->

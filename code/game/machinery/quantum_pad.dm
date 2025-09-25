@@ -53,46 +53,41 @@
 	teleport_cooldown = initial(teleport_cooldown)
 	teleport_cooldown -= (E * 100)
 
-/obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
+/obj/machinery/quantumpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(panel_open)
+		multi.set_buffer(src)
+		to_chat(user, span_notice("You save the data in [multi.name]'s buffer. It can now be saved to pads with closed panels."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(multi.buffer, /obj/machinery/quantumpad))
+		to_chat(user, span_warning("There is no quantum pad data saved in [multi.name]'s buffer!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(multi.buffer == src)
+		to_chat(user, span_warning("You cannot link a pad to itself!"))
+		return ITEM_INTERACT_BLOCKING
+	else
+		linked_pad = multi.buffer
+		to_chat(user, span_notice("You link [src] to the one in [multi.name]'s buffer."))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/quantumpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", attacking_item))
 		return
 
-	if(panel_open)
-		if(I.tool_behaviour == TOOL_MULTITOOL)
-			if(!multitool_check_buffer(user, I))
-				return
-			var/obj/item/multitool/M = I
-			M.set_buffer(src)
-			to_chat(user, span_notice("You save the data in [I]'s buffer. It can now be saved to pads with closed panels."))
-			return TRUE
-	else if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		if(istype(M.buffer, /obj/machinery/quantumpad))
-			if(M.buffer == src)
-				to_chat(user, span_warning("You cannot link a pad to itself!"))
-				return TRUE
-			else
-				linked_pad = M.buffer
-				to_chat(user, span_notice("You link [src] to the one in [I]'s buffer."))
-				return TRUE
-		else
-			to_chat(user, span_warning("There is no quantum pad data saved in [I]'s buffer!"))
-			return TRUE
-
-	else if(istype(I, /obj/item/quantum_keycard))
-		var/obj/item/quantum_keycard/K = I
+	else if(istype(attacking_item, /obj/item/quantum_keycard))
+		var/obj/item/quantum_keycard/K = attacking_item
 		if(K.qpad)
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, activating it."))
 			interact(user, K.qpad)
 		else
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 4 SECONDS, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
 				K.set_pad(src)
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()
@@ -157,7 +152,7 @@
 	last_teleport = world.time
 
 	// use a lot of power
-	use_power(active_power_usage / power_efficiency)
+	use_energy(active_power_usage / power_efficiency)
 	sparks()
 	target_pad.sparks()
 

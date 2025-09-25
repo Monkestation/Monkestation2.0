@@ -17,7 +17,7 @@
 	slot_flags = NONE
 	light_system = OVERLAY_LIGHT
 	light_color = COLOR_SOFT_RED
-//	light_range = 1 //Monkestation removal
+	light_outer_range = 1
 	light_power = 0.3
 	light_on = FALSE
 	/// Is camera streaming

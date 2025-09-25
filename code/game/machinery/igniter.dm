@@ -53,7 +53,7 @@
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -68,7 +68,7 @@
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
@@ -115,12 +115,13 @@
 		on = FALSE
 	if(machine_stat & NOPOWER)
 		on = FALSE
+	if(!use_energy(active_power_usage, force = FALSE)) // Use energy to keep the turf hot. Doesn't necessarily use the correct amount of energy though (this should be changed).
+		on = FALSE
 	if(!on)
 		update_appearance()
 		return PROCESS_KILL
 
 	location.hotspot_expose(1000, 500, 1)
-	use_power(active_power_usage) //use power to keep the turf hot
 
 /obj/machinery/igniter/update_icon_state()
 	icon_state = "[base_icon_state][on]"
@@ -197,7 +198,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -211,7 +212,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)
@@ -253,11 +254,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	if(!isturf(location) || !isopenturf(location))
 		return FALSE
 
+	if(!use_energy(active_power_usage, force = FALSE))
+		return FALSE
+
 	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
 	location.hotspot_expose(1000, 2500, 1)
-	use_power(active_power_usage)
 
 	return TRUE
 
