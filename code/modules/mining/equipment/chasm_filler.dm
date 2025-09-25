@@ -32,8 +32,6 @@
 		loc.visible_message(span_warning("[src] is not in a chasm, it has nothing to fill!"))
 		return
 	for(var/turf/open/chasm/chasm in range(range, get_turf(src)))
-		var/was_planetary = chasm.planetary_atmos
 		var/turf/open/new_turf = chasm.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
-		new_turf.planetary_atmos = was_planetary
 		playsound(new_turf, 'sound/effects/break_stone.ogg', 20, vary = TRUE) // not too loud, as a lot of these may play at once.
 	qdel(src)
