@@ -29,10 +29,10 @@
 /*
 	// Get a sample laser weapon.    ///fuck this test, this is a testmerge PR anyway. Yes, I know lasers have negative AP now
 	// The captain's laser gun here is chosen primarily because it deals more damage than normal lasers.
-	var/obj/item/gun/energy/laser/dummy_laser = allocate(/obj/item/gun/energy/laser/captain)
-	var/obj/item/ammo_casing/laser_ammo = dummy_laser.ammo_type[1]
-	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
-	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100), DAMAGE_PRECISION)
+//	var/obj/item/gun/energy/laser/dummy_laser = allocate(/obj/item/gun/energy/laser/captain)
+//	var/obj/item/ammo_casing/laser_ammo = dummy_laser.ammo_type[1]
+//	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
+//	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100), DAMAGE_PRECISION)
 */
 	// Get a sample ballistic weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
@@ -57,12 +57,12 @@
 	check_integrity(left_arm_equipment, pre_melee_arm_integrity, expected_melee_damage, "hit with a melee item")
 /*
 	// BLAST IT
-	var/pre_laser_integrity = demo_mech.get_integrity()
-	var/pre_laser_arm_integrity = left_arm_equipment.get_integrity()
-	dummy_laser.fire_gun(demo_mech, dummy, FALSE)
+//	var/pre_laser_integrity = demo_mech.get_integrity()
+//	var/pre_laser_arm_integrity = left_arm_equipment.get_integrity()
+//	dummy_laser.fire_gun(demo_mech, dummy, FALSE)
 
-	check_integrity(demo_mech, pre_laser_integrity, expected_laser_damage, "shot with a laser")
-	check_integrity(left_arm_equipment, pre_laser_arm_integrity, expected_laser_damage, "shot with a laser")
+//	check_integrity(demo_mech, pre_laser_integrity, expected_laser_damage, "shot with a laser")
+//	check_integrity(left_arm_equipment, pre_laser_arm_integrity, expected_laser_damage, "shot with a laser")
 */
 	// SHOOT IT
 	var/pre_bullet_integrity = demo_mech.get_integrity()
