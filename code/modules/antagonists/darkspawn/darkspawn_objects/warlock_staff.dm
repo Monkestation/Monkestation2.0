@@ -14,6 +14,7 @@
 	fire_sound = 'sound/weapons/emitter2.ogg'
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	slot_flags = NONE
+	flags_1 = NONE
 
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	ammo_type = /obj/item/ammo_casing/magic/darkspawn
