@@ -53,6 +53,14 @@
 	objective.owner = owner
 	objectives += objective
 
+// xenos in captivity do not count
+/datum/antagonist/xeno/should_count_for_antag_cap()
+	. = ..()
+	if(!.)
+		return
+	if(istype(get_area(owner.current), SScommunications.captivity_area))
+		return FALSE
+
 //Related code for neutered xenomorphs
 /datum/antagonist/xeno/neutered
 	name = "\improper Neutered Xenomorph"
@@ -93,16 +101,6 @@
 	objective.owner = owner
 	objectives += objective
 	..()
-
-// only counts for the antag cap if any have escaped
-/datum/antagonist/xeno/captive/should_count_for_antag_cap()
-	. = ..()
-	if(!.)
-		return
-	for(var/datum/mind/xeno as anything in captive_team?.members)
-		if(!istype(get_area(xeno.current), SScommunications.captivity_area))
-			return TRUE
-	return FALSE
 
 //Xeno Objectives
 /datum/objective/escape_captivity
