@@ -113,7 +113,7 @@
 		return
 
 	if(user.client)
-		user.log_message(msg, LOG_EMOTE)
+		user.log_message(msg ? msg : "preformed a messageless emote. ([type])", LOG_EMOTE)
 	var/dchatmsg = "<b>[user]</b> [msg ? msg : "preformed an emote."]"
 
 	var/tmp_sound = get_sound(user)
