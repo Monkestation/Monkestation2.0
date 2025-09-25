@@ -573,7 +573,7 @@
 /datum/armor/helmet_changeling
 	melee = 40
 	bullet = 55
-	laser = 50
+	laser = 20
 	energy = 30
 	bomb = 10
 	bio = 10

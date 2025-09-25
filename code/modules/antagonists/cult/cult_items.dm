@@ -290,7 +290,7 @@ Striking a noncultist, however, will tear their flesh."}
 	melee = 50
 	bullet = 30
 	laser = 50
-	energy = 300
+	energy = 30
 	bomb = 25
 	bio = 10
 	fire = 10
@@ -424,7 +424,7 @@ Striking a noncultist, however, will tear their flesh."}
 	melee = -45
 	bullet = -45
 	laser = -45
-	energy = -20
+	energy = 0
 	bomb = -45
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
@@ -437,7 +437,7 @@ Striking a noncultist, however, will tear their flesh."}
 	melee = -45
 	bullet = -45
 	laser = -45
-	energy = -20
+	energy = 0
 	bomb = -45
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)

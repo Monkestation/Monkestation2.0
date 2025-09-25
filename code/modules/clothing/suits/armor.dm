@@ -287,13 +287,13 @@
 	slowdown = 0.3
 
 /datum/armor/armor_riot
-	melee = 50
+	melee = 60
 	bullet = 10
-	laser = 10
+	laser = 20
 	energy = 20
 	fire = 80
 	acid = 80
-	wound = 0  ///You can ignore the crew mobbing you, but the wounding will build up.
+	wound = 20
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"

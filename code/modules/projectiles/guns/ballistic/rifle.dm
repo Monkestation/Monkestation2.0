@@ -329,10 +329,11 @@
 	can_bayonet = FALSE
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/amr_fire.ogg'
 	fire_sound_volume = 100 // BOOM BABY
-	recoil = 6
-	wield_recoil = 3
+	recoil = 8
+	wield_recoil = 4
 	weapon_weight = WEAPON_HEAVY
 	rack_delay = 2 SECONDS
+	fire_delay = 1 SECONDS
 	actions_types = list()
 	force = 15 // I mean if you're gonna beat someone with the thing you might as well get damage appropriate for how big the fukken thing is
 
