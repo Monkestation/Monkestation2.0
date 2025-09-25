@@ -522,32 +522,35 @@
 	else
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
 		guy_we_are_stabbing.emote("scream")
-		if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
-			playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
-			guy_we_are_stabbing.emote("scream")
-			guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
-			visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
-			to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
-			if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
-				playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
-				guy_we_are_stabbing.emote("scream")
-				guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
-				visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
-				to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
-				if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
-					success = TRUE
-				else
-					to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
-					visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
-					if(ishuman(guy_we_are_stabbing))
-						var/mob/living/carbon/human/ough = guy_we_are_stabbing
-						ough.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
-			else
-				visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
-				to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
-				if(ishuman(guy_we_are_stabbing))
-					var/mob/living/carbon/human/less_ough_but_still_ough = guy_we_are_stabbing
-					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/less_ough_but_still_ough = guy_we_are_stabbing
+				less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
+			visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/ough = guy_we_are_stabbing
+				ough.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
+			return
+		success = TRUE
+
+
 	if(success)
 		nanos.consume_nanites(200)
 		if(!(none_mod == 1))
