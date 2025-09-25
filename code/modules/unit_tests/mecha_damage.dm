@@ -36,7 +36,7 @@
 
 	// Get a sample ballistic weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
-	var/obj/item/gun/ballistic/dummy_gun = allocate(/obj/item/gun/ballistic/revolver)
+	var/obj/item/gun/ballistic/dummy_gun = allocate(/obj/item/gun/ballistic/revolver/mecha_test)
 	var/obj/item/ammo_casing/ballistic_ammo = dummy_gun.magazine.ammo_type
 	var/obj/projectile/bullet_fired = initial(ballistic_ammo.projectile_type)
 	var/expected_bullet_damage = round(dummy_gun.projectile_damage_multiplier * initial(bullet_fired.damage) * (1 - expected_bullet_armor / 100), DAMAGE_PRECISION)
