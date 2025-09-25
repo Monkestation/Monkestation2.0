@@ -68622,6 +68622,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"qgI" = (
+/obj/item/wallframe/apc,
+/turf/open/space/basic,
+/area/space)
 "qgQ" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/siding/dark_red{
@@ -141064,7 +141068,7 @@ aaa
 aaa
 qYo
 aaa
-aaa
+qgI
 qYo
 aaa
 qYo
