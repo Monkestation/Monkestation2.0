@@ -256,12 +256,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials)
 	)
 
-/obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "OreSilo")
-		ui.open()
-
 /obj/machinery/ore_silo/ui_static_data(mob/user)
 	return materials.ui_static_data()
 
@@ -324,13 +318,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 			materials.retrieve_sheets(amount, ejecting, drop_location())
 			return TRUE
-
-/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
-	. = ..()
-	if (istype(I))
-		I.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
-		return TRUE
 
 /**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log

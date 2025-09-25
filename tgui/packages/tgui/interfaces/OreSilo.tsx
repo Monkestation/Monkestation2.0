@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
-import { useState } from 'react';
+import { useLocalState } from '../backend';
 
 import { useBackend } from '../backend';
 import {
@@ -43,11 +43,11 @@ type OreSiloData = {
   logs: Log[];
 };
 
-export const OreSilo = (props: any, context: any) => {
+export const OreSilo = (props: any) => {
   const { act, data } = useBackend<OreSiloData>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
 
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useLocalState('currentTab', 0);
 
   return (
     <Window title="Ore Silo" width={380} height={600}>
