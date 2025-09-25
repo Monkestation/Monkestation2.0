@@ -38,9 +38,11 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return
 
+/*
 	for (var/atom/hostile_machine as anything in GLOB.hostile_machines)
 		if (can_see(living_mob, hostile_machine, aggro_range))
 			potential_targets += hostile_machine
+*/
 
 	if(!potential_targets.len)
 		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
