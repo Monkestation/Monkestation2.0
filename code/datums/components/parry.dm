@@ -92,8 +92,9 @@
 	var/mob/user = bullet_args[2]
 	if (!istype(user) || !parriers[user] || parried)
 		return
+
 	parriers -= user
-	attempt_parry(source, user)
+	return attempt_parry(source, user)
 
 /datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
 	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
