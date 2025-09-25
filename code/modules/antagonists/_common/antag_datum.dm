@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 /datum/antagonist/proc/should_count_for_antag_cap()
 	if(!count_against_dynamic_roll_chance || (antag_flags & (ANTAG_FAKE | FLAG_ANTAG_CAP_IGNORE)))
 		return FALSE
-	var/mob/antag_mob = antag.owner.current
+	var/mob/antag_mob = owner.current
 	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
 		return FALSE
 	// don't count admins mucking around on centcom or whatever
