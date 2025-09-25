@@ -1,5 +1,5 @@
 /// The size of the gaussian blur applied to the screen when flashed.
-#define FLASH_BLUR_AMOUNT 5
+#define FLASH_BLUR_AMOUNT 10
 /// The time it takes for the flash blur to fully "fade in" to full intensity
 #define FLASH_BLUR_FADE_IN_TIME (0.5 SECONDS)
 /// The time it takes for the flash blur to fade out to remove the blur.
