@@ -11,11 +11,13 @@
 	desc = "A .357 bullet casing."
 	caliber = CALIBER_357
 	projectile_type = /obj/projectile/bullet/a357/mecha_unit_test
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/a357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
 	projectile_type = /obj/projectile/bullet/a357/match
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/a357/nutcracker
 	name = ".357 Nutcracker bullet casing"
@@ -26,6 +28,7 @@
 	name = ".357 Heartpiercer bullet casing"
 	desc = "A .357 Heartpiercer bullet casing."
 	projectile_type = /obj/projectile/bullet/dart/a357
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/a357/heartpiercer/Initialize(mapload)
 	. = ..()
@@ -41,11 +44,13 @@
 	name = ".357 Wallstake bullet casing"
 	desc = "A .357 Wallstake bullet casing."
 	projectile_type = /obj/projectile/bullet/a357/wallstake
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/a357/wallstake/admeme
 	name = ".357 Wallstake bullet casing"
 	desc = "An unusually hefty .357 Wallstake bullet casing."
 	projectile_type = /obj/projectile/bullet/a357/wallstake/admeme
+	can_be_printed = FALSE
 
 // 7.62x38mmR (Nagant Revolver)
 
