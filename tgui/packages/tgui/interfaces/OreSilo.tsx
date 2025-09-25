@@ -89,11 +89,11 @@ export const OreSilo = (props: any) => {
             ) : null}
             {currentTab === 1 ? (
               !!logs && logs.length > 0 ? (
-                <Box pr={1} height="100%" overflowY="scroll">
+                <Section fill scrollable pr={1} height="100%">
                   {logs.map((log, index) => (
                     <LogEntry key={index} log={log} />
                   ))}
-                </Box>
+                </Section>
               ) : (
                 <NoticeBox>No log entries currently present!</NoticeBox>
               )
