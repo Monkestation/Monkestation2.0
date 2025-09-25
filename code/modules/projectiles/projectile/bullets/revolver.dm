@@ -120,6 +120,13 @@
 	wound_bonus = -30
 	armour_penetration = 30
 
+/obj/projectile/bullet/a357/mecha_unit_test
+	name = ".357 bullet"
+	damage = 60
+	wound_bonus = -30
+	armour_penetration = 0
+
+
 /obj/projectile/bullet/a357/nutcracker
 	name = ".357 Nutcracker bullet"
 	damage = 20

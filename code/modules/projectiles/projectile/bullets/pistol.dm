@@ -134,7 +134,6 @@
 	name = ".35 Auto bullet"
 	damage = 15
 	wound_bonus = -10
-	armour_penetration = -30
 	var/biotype_damage_multiplier = 1.6 ///24 damage vs mobs, just under 1-shot vs carp
 	var/biotype_we_look_for = MOB_HUMANOID
 
