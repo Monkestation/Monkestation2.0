@@ -504,70 +504,70 @@
 	. = ..()
 	if(!isliving(interacting_with))
 		return NONE
-	var/mob/living/goofygoober = interacting_with
-	if(!(goofygoober.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
-		goofygoober.balloon_alert(user, "Incompatible")
+	var/mob/living/guy_we_are_stabbing = interacting_with
+	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
 		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
 	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
-		goofygoober.balloon_alert(user, "Not enough nanites")
+		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
 		return ITEM_INTERACT_BLOCKING
-	var/none_mod = goofygoober.GetComponent(/datum/component/nanites) ? 1 : 3
-	visible_message(span_warning("[user] jabs [src] into [goofygoober], and it begins flowing into [goofygoober.p_their()] skin!"), ignored_mobs=list(user,goofygoober))
-	to_chat(goofygoober, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
+	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
+	visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
+	to_chat(guy_we_are_stabbing, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
 	var/success = FALSE
 	if(none_mod == 1)
-		if(do_after(user, 5 SECONDS, goofygoober))
+		if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
 			success = TRUE
 	else
-		playsound(goofygoober.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
-		goofygoober.emote("scream")
-		if(do_after(user, 5 SECONDS, goofygoober))
-			playsound(goofygoober.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
-			goofygoober.emote("scream")
-			goofygoober.do_splatter_effect(goofygoober.dir)
-			visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [goofygoober]'s chest!"), ignored_mobs=list(user,goofygoober))
-			to_chat(goofygoober, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
-			if(do_after(user, 5 SECONDS, goofygoober))
-				playsound(goofygoober.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1) 
-				goofygoober.emote("scream")
-				goofygoober.do_splatter_effect(goofygoober.dir)
-				visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [goofygoober]'s open chest!"), ignored_mobs=list(user,goofygoober))
-				to_chat(goofygoober, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded. 
-				if(do_after(user, 5 SECONDS, goofygoober))
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
+		guy_we_are_stabbing.emote("scream")
+		if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
+			guy_we_are_stabbing.emote("scream")
+			guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+			visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
+			if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
+				playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
+				guy_we_are_stabbing.emote("scream")
+				guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+				visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+				to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
+				if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
 					success = TRUE
 				else
-					to_chat(goofygoober, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
-					visible_message(span_warning("[goofygoober] writhes and seizes as the mass of metallic tendrils is violently ripped from [goofygoober.p_their()] chest!"), ignored_mobs=list(user,goofygoober))
-					if(ishuman(goofygoober))
-						var/mob/living/carbon/human/ough = goofygoober
+					to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
+					visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+					if(ishuman(guy_we_are_stabbing))
+						var/mob/living/carbon/human/ough = guy_we_are_stabbing
 						ough.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
 			else
-				visible_message(span_warning("[goofygoober] tenses as [src] is ripped from [goofygoober.p_their()] chest!"), ignored_mobs=list(user,goofygoober))
-				to_chat(goofygoober, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
-				if(ishuman(goofygoober))
-					var/mob/living/carbon/human/less_ough_but_still_ough = goofygoober
+				visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+				to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
+				if(ishuman(guy_we_are_stabbing))
+					var/mob/living/carbon/human/less_ough_but_still_ough = guy_we_are_stabbing
 					less_ough_but_still_ough.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
 	if(success)
 		nanos.consume_nanites(200)
 		if(!(none_mod == 1))
-			visible_message(span_warning("[goofygoober] slumps forwards, shuddering as some of [src] flows into [goofygoober.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,goofygoober))
-		to_chat(goofygoober, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
-		if(goofygoober.GetComponent(/datum/component/nanites))
-			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
+			visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
+		if(guy_we_are_stabbing.GetComponent(/datum/component/nanites))
+			var/datum/component/nanites/theirnanos = guy_we_are_stabbing.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
 		else
-			goofygoober.AddComponent(/datum/component/nanites, 150)
-			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SYNC, nanos)
-			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
-			to_chat(goofygoober, span_big(span_danger("...Why can I feel my blood? WHY CAN I FEEL M-"))) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
-			if(ishuman(goofygoober))
-				var/mob/living/carbon/human/yeowch = goofygoober
+			guy_we_are_stabbing.AddComponent(/datum/component/nanites, 150)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			to_chat(guy_we_are_stabbing, span_big(span_danger("...Why can I feel my blood? WHY CAN I FEEL M-"))) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing
 				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
-			goofygoober.emote("scream")
-			to_chat(goofygoober, span_reallybig(span_robot("Integration complete.")))
-			SEND_SOUND(goofygoober, sound('sound/machines/chime.ogg', volume = 150))
-			to_chat(goofygoober, span_robot("Integration-Shock should begin to recede in approximately FIFTEEN seconds."))
+			guy_we_are_stabbing.emote("scream")
+			to_chat(guy_we_are_stabbing, span_reallybig(span_robot("Integration complete.")))
+			SEND_SOUND(guy_we_are_stabbing, sound('sound/machines/chime.ogg', volume = 150))
+			to_chat(guy_we_are_stabbing, span_robot("Integration-Shock should begin to recede in approximately FIFTEEN seconds."))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
