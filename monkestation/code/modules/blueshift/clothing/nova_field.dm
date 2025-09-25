@@ -238,7 +238,7 @@
 
 /obj/item/clothing/head/helmet/expeditionary_corps/click_alt(mob/user)
 	if(!current_user)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	nightvision = !nightvision
 	if(nightvision)
@@ -248,7 +248,7 @@
 		to_chat(user, span_notice("You flip the NV goggles up."))
 		disable_nv()
 	update_appearance()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/expeditionary_corps/dropped(mob/user)
 	. = ..()

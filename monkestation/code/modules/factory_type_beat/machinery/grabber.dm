@@ -310,9 +310,10 @@
 
 /obj/machinery/big_manipulator/click_alt(mob/living/user)
 	if(!filter)
-		return
+		return CLICK_ACTION_BLOCKING
 	filter.forceMove(get_turf(src))
 	filter = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/big_manipulator/ui_data(mob/user)
 	var/list/data = list()
@@ -425,6 +426,7 @@
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	filtered_items = list()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/manipulator_filter/proc/try_attach(obj/machinery/big_manipulator/target)
 	if(target.filter)

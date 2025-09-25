@@ -373,15 +373,13 @@
 	return TRUE
 
 /obj/item/clothing/under/click_alt(mob/living/user)
-	if(.)
-		return
-
 	if(!can_adjust)
 		balloon_alert(user, "can't be adjusted!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!can_use(user))
-		return
+		return NONE
 	rolldown()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/under/click_alt_secondary(mob/user)
 	. = ..()

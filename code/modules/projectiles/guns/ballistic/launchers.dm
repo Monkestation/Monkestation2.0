@@ -238,15 +238,14 @@
 	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")
 
 /obj/item/gun/ballistic/shotgun/china_lake/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
 	var/new_range = tgui_input_number(user, "Please set the range", "Leaf Sight Level", 10, maximum_target_range, minimum_target_range)
-	if(!new_range || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+	if(!new_range || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
 	if(new_range != target_range)
 		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	target_range = new_range
 	to_chat(user, "Leaf sight set for [target_range] tiles.")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/china_lake/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()

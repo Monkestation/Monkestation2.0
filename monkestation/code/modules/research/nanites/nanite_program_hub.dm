@@ -61,7 +61,9 @@
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
-	return
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

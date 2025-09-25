@@ -75,8 +75,8 @@
 	update_appearance()
 
 /obj/item/pet_carrier/click_alt(mob/living/user)
-	if(open || !user.can_perform_action(src))
-		return
+	if(open)
+		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)
@@ -84,6 +84,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if((user.istate & ISTATE_HARM))

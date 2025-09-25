@@ -15,12 +15,13 @@
 
 /obj/vehicle/ridden/cargo_train/click_alt(mob/living/user)
 	if(!listed_network)
-		return
+		return CLICK_ACTION_BLOCKING
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	listed_network.train_head = null
 	listed_network = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/cargo_train/Destroy(force)
 	. = ..()

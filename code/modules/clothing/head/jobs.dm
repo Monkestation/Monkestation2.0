@@ -245,9 +245,10 @@
 
 /obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/living/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
-	if(!new_prefix)
-		return
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
 	prefix = new_prefix
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()

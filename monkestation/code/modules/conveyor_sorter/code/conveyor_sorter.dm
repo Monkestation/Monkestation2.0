@@ -57,6 +57,7 @@
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	current_sort = list()
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/decal/conveyor_sorter
 	name = "conveyor sorter"
@@ -126,6 +127,7 @@
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	sorting_list = list()
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/decal/conveyor_sorter/click_ctrl(mob/user)
 	visible_message("[src] begins to ping violently!")

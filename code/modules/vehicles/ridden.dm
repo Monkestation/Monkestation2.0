@@ -40,15 +40,16 @@
 	inserted_key = attacking_item
 
 /obj/vehicle/ridden/click_alt(mob/user)
-	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+	if(!inserted_key)
+		return CLICK_ACTION_BLOCKING
 	if(!is_occupant(user))
 		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
 	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || !in_range(M, src))

@@ -1,3 +1,5 @@
+#define CANDY_CD_TIME 2 MINUTES
+
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
@@ -9,6 +11,8 @@
 	dog_fashion = /datum/dog_fashion/head/detective
 	///Path for the flask that spawns inside their hat roundstart
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
+	/// Cooldown for retrieving precious candy corn with rmb
+	COOLDOWN_DECLARE(candy_cooldown)
 
 	var/datum/action/item_action/noir_mode/noir_action
 
@@ -26,6 +30,8 @@
 
 	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
 
+	register_context()
+
 	new flask_path(src)
 	noir_action = new(src)
 	add_item_action(noir_action)
@@ -38,16 +44,29 @@
 	. = ..()
 	. += span_notice("Alt-click to take a candy corn.")
 
-/obj/item/clothing/head/fedora/det_hat/click_alt(mob/living/user)
-	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
-	else
-		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+
+/obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Candy Time"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+
+/// Now to solve where all these keep coming from
+/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
+	if(!COOLDOWN_FINISHED(src, candy_cooldown))
+		to_chat(user, span_warning("A candy corn was just taken! You should wait a couple minutes, lest you burn through the stash."))
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
+	user.put_in_hands(sweets)
+	to_chat(user, span_notice("You slip a candy corn from \the [src]."))
+	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
+
+	return CLICK_ACTION_SUCCESS
+
+#undef CANDY_CD_TIME
 
 /obj/item/clothing/head/fedora/det_hat/minor
 	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor

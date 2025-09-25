@@ -68,9 +68,6 @@
 		qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/wheelchair/click_alt(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())

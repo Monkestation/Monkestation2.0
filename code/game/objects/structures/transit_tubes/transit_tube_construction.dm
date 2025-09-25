@@ -51,9 +51,6 @@
 		qdel(src)
 	return TRUE
 
-/obj/structure/c_transit_tube/click_alt(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 // transit tube station
 /obj/structure/c_transit_tube/station
 	name = "unattached through station"

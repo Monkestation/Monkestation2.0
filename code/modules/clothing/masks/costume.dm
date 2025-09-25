@@ -70,7 +70,7 @@
 
 /obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
 	weldingvisortoggle(user)
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/joy/manhunt
 	name = "smiley mask"

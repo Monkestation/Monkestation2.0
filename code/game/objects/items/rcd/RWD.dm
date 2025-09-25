@@ -127,7 +127,7 @@
 
 /obj/item/rwd/click_alt(mob/living/user)
 	if(industrial)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!radial_menu)
 		radial_menu = list(
 			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
@@ -137,7 +137,7 @@
 
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	switch(layer_result)
 		if("Layer 1")
 			cable_layer = CABLE_LAYER_1
@@ -146,6 +146,7 @@
 		if("Layer 3")
 			cable_layer = CABLE_LAYER_3
 	update_appearance(UPDATE_ICON_STATE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/rwd/proc/check_menu(mob/living/user)
 	if(!istype(user))

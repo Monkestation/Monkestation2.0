@@ -136,6 +136,7 @@
 		STOP_PROCESSING(SSmachines, src)
 
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/pool_pump/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

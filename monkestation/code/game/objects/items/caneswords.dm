@@ -114,15 +114,14 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/canesword/civ/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
+	if(!length(contents))
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/I = contents[1]
+	user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+	user.put_in_hands(I)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/canesword/civ/PopulateContents()
 	new /obj/item/weapon/cane_sword/civilian(src)
@@ -160,15 +159,14 @@
 	new /obj/item/weapon/cane_sword/CentCom(src)
 
 /obj/item/storage/canesword/CentCom/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
 	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_SUCCESS
+	var/obj/item/I = contents[1]
+	user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+	user.put_in_hands(I)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/canesword/syndicate
 	name = "\improper cane"
@@ -199,15 +197,14 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/canesword/syndicate/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
 	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_SUCCESS
+	var/obj/item/I = contents[1]
+	user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+	user.put_in_hands(I)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/canesword/syndicate/PopulateContents()
 	new /obj/item/weapon/cane_sword/syndicate(src)

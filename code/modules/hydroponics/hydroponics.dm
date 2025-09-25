@@ -96,6 +96,8 @@
 /obj/machinery/hydroponics/click_alt(mob/living/user)
 	self_growing = !self_growing
 	to_chat(user, span_notice("You flick a switch turning the Self Sustaining Growth Dampeners: [self_growing ? "Off" : "On"]"))
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/hydroponics/add_context(
 	atom/source,
 	list/context,

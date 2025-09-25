@@ -865,6 +865,4 @@
 	if(!armed)
 		to_chat(user, span_warning("You arm the incineration mechanism."))
 		armed = TRUE
-		return
-
-	return
+	return CLICK_ACTION_SUCCESS

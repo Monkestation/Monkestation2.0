@@ -82,7 +82,7 @@
 
 /obj/item/clothing/head/helmet/sf_sacrificial/click_alt(mob/user)
 	remove_face_shield(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Attached the passed face shield to the helmet.
 /obj/item/clothing/head/helmet/sf_sacrificial/proc/add_face_shield(mob/living/carbon/human/user, obj/shield_in_question, on_spawn)

@@ -82,10 +82,8 @@ GLOBAL_VAR(dj_booth)
 	start_broadcast()
 
 /obj/machinery/cassette/dj_station/click_alt(mob/living/user)
-	if(!isliving(user) || !user.Adjacent(src))
-		return
-	if(!inserted_tape)
-		return
+	if(!isliving(user) || !user.Adjacent(src) || !inserted_tape)
+		return CLICK_ACTION_BLOCKING
 	if(broadcasting)
 		next_song()
 

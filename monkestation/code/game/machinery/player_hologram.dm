@@ -15,7 +15,7 @@
 		unset_player()
 	var/choice = tgui_input_list(user, "Choose a ckey to watch", "[name]", GLOB.alive_player_list)
 	if(!choice)
-		return
+		return CLICK_ACTION_BLOCKING
 	current_mob = choice
 	set_ckey = current_mob.client.ckey
 
@@ -24,6 +24,7 @@
 
 	update_maptext()
 	update_visual()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/player_hologram/proc/unset_player()
 	set_ckey = null

@@ -160,12 +160,12 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/deck/click_alt(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		if(wielded)
-			shuffle_cards(user)
-		else
-			to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
-	return ..()
+	if(!wielded)
+		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		return CLICK_ACTION_BLOCKING
+
+	shuffle_cards(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(count_cards())

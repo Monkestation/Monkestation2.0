@@ -274,12 +274,11 @@
 			source.delay = 3
 
 /obj/item/extinguisher/click_alt(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	EmptyExtinguisher(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(mob/user)
 	if(loc == user && reagents.total_volume)

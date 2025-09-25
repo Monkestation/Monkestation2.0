@@ -13,18 +13,22 @@
 	possible_transfer_amounts = list()
 
 /obj/item/reagent_containers/chem_pack/click_alt(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY) && !sealed)
-		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
-			to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
-			SplashReagents(user)
-			return
+	if(sealed)
+		balloon_alert(user, "sealed!")
+		return CLICK_ACTION_BLOCKING
 
-		reagents.flags = NONE
-		reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
-		reagents.flags = reagent_flags
-		spillable = FALSE
-		sealed = TRUE
-		to_chat(user, span_notice("You seal the bag."))
+	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
+		to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
+		SplashReagents(user)
+		return CLICK_ACTION_BLOCKING
+
+	reagents.flags = NONE
+	reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
+	reagents.flags = reagent_flags
+	spillable = FALSE
+	sealed = TRUE
+	to_chat(user, span_notice("You seal the bag."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()

@@ -120,6 +120,7 @@
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)

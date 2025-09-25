@@ -52,9 +52,12 @@
 	edit_emitter(user)
 
 /obj/effect/sound_emitter/click_alt(mob/user)
-	if(check_rights_for(user.client, R_SOUND))
-		activate(user)
-		to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+	if(!check_rights_for(user.client, R_SOUND))
+		return CLICK_ACTION_BLOCKING
+
+	activate(user)
+	to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
 	var/dat = ""

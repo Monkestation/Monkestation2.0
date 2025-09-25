@@ -36,6 +36,7 @@
 
 /obj/item/perfume/click_alt(mob/user)
 	toggle_cap(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/perfume/attack_self(mob/user, modifiers)
 	toggle_cap(user)

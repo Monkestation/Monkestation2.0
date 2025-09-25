@@ -22,10 +22,8 @@
 	var/broke_approval = FALSE
 
 /obj/item/device/cassette_deck/click_alt(mob/user)
-	if(recieve || send)
-		eject_tape(user)
-		return
-	return ..()
+	eject_tape(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/device/cassette_deck/item_ctrl_click(mob/user)
 	to_chat(user,"You click a button and change the Cassette Deck to [removal ? "splicing" : "removal"] mode")

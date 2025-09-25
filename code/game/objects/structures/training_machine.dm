@@ -175,19 +175,18 @@
 	on_attached_delete()
 
 /obj/structure/training_machine/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		return
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
-		return
+		return CLICK_ACTION_SUCCESS
 	if (!attached_item)
-		return
+		return NONE
 	if (obj_flags & EMAGGED)
 		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Toggle the machine's movement
@@ -400,11 +399,10 @@
 	if (!.)
 		check_hit(hit_atom)
 
-/obj/item/training_toolbox/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return
+/obj/item/training_toolbox/click_alt(mob/user)
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()

@@ -17,13 +17,21 @@
 
 /obj/item/implantpad/examine(mob/user)
 	. = ..()
+	if(!case)
+		. += span_info("It is currently empty.")
+		return
+
 	if(Adjacent(user))
-		. += "It [case ? "contains \a [case]" : "is currently empty"]."
-		if(case)
-			. += span_info("Alt-click to remove [case].")
+		. += span_info("It contains \a [case].")
 	else
-		if(case)
-			. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
+		. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
+	. += span_info("Alt-click to remove [case].")
+
+/obj/item/implantpad/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == case)
+		case = null
+		update_appearance(UPDATE_ICON)
 
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)
@@ -33,21 +41,8 @@
 	. = ..()
 
 /obj/item/implantpad/click_alt(mob/user)
-	..()
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if(!case)
-		to_chat(user, span_warning("There's no implant to remove from [src]."))
-		return
-
-	user.put_in_hands(case)
-
-	add_fingerprint(user)
-	case.add_fingerprint(user)
-	case = null
-
-	updateSelfDialog()
-	update_appearance()
+	remove_implant(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/implantcase) && !case)
@@ -77,3 +72,16 @@
 		dat += "Please insert an implant casing!"
 	user << browse(dat, "window=implantpad")
 	onclose(user, "implantpad")
+
+///Removes the implant from the pad and puts it in the user's hands if possible.
+/obj/item/implantpad/proc/remove_implant(mob/user)
+	if(!case)
+		user.balloon_alert(user, "no case inside!")
+		return FALSE
+	add_fingerprint(user)
+	case.add_fingerprint(user)
+	user.put_in_hands(case)
+	user.balloon_alert(user, "case removed")
+	update_appearance(UPDATE_ICON)
+	updateSelfDialog()
+	return TRUE

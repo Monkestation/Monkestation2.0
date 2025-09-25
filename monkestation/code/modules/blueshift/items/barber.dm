@@ -129,13 +129,13 @@
 /obj/item/clothing/head/hair_tie/click_alt(mob/living/user)
 	if(!(user.get_slot_by_item(src) == ITEM_SLOT_HANDS))
 		balloon_alert(user, "hold in-hand!")
-		return
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(
 		span_danger("[user.name] puts [src] around [user.p_their()] fingers, beginning to flick it!"),
 		span_notice("You try to flick [src]!"),
 	)
 	flick_hair_tie(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///This proc flicks the hair tie out of the player's hand, tripping the target hit for 1 second
 /obj/item/clothing/head/hair_tie/proc/flick_hair_tie(mob/living/user)

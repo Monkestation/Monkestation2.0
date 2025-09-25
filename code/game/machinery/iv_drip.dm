@@ -153,13 +153,6 @@
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
 
-/// Toggles transfer rate between min and max rate
-/obj/machinery/iv_drip/proc/toggle_transfer_rate()
-	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		set_transfer_rate(MIN_IV_TRANSFER_RATE)
-	else
-		set_transfer_rate(MAX_IV_TRANSFER_RATE)
-
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0 && attached)
 		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
@@ -224,18 +217,15 @@
 	else
 		return ..()
 
-/// Checks whether the IV drip transfer rate can be modified with AltClick
-/obj/machinery/iv_drip/proc/can_use_alt_click(mob/user)
-	if(!can_interact(user))
-		return FALSE
-	if(istype(src, /obj/machinery/iv_drip/plumbing)) // AltClick is used for rotation there
-		return FALSE
-	return TRUE
-
 /obj/machinery/iv_drip/click_alt(mob/user)
-	if(!can_use_alt_click(user))
-		return ..()
-	toggle_transfer_rate()
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		balloon_alert(user, "flow minimized")
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	else
+		balloon_alert(user, "flow maximized")
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

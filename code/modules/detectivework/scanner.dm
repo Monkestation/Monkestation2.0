@@ -255,10 +255,10 @@
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
 	if(!LAZYLEN(log_data))
 		balloon_alert(user, "no logs!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "logs cleared")
 	log_data = list()
-	return
+	return CLICK_ACTION_SUCCESS

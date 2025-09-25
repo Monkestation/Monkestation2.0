@@ -42,6 +42,7 @@
 
 /obj/machinery/rnd/destructive_analyzer/click_alt(mob/living/user)
 	unload_item()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"

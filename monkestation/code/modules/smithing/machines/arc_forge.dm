@@ -65,8 +65,8 @@
 
 /obj/machinery/arc_forge/click_alt(mob/user)
 	if(attempt_material_forge())
-		return TRUE
-	. = ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/arc_forge/proc/attempt_material_forge()
 	if(!slot_one_item || !slot_two_item)

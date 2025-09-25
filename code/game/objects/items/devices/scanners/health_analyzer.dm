@@ -496,16 +496,15 @@
 		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/click_alt(mob/user)
-	..()
-
 	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(mode == SCANNER_NO_MODE)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	mode = !mode
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"

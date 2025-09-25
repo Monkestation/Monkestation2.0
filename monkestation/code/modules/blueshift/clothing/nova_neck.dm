@@ -103,7 +103,7 @@
 		flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	else
 		flags_inv = HIDEFACIALHAIR
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/maid_neck_cover
 	name = "maid neck cover"

@@ -49,11 +49,12 @@
 
 /obj/machinery/cart/click_alt(mob/living/user)
 	if(!linked_network)
-		return
+		return CLICK_ACTION_BLOCKING
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	linked_network.disconnect_train(src, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/cart/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()

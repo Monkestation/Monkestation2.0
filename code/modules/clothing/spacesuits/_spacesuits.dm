@@ -198,9 +198,8 @@
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/click_alt(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
 	toggle_spacesuit_cell(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/item_ctrl_click(mob/user)

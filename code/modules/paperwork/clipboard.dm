@@ -72,12 +72,15 @@
 	update_icon()
 
 /obj/item/clipboard/click_alt(mob/user)
-	..()
-	if(pen)
-		if(integrated_pen)
-			to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		else
-			remove_pen(user)
+	if(isnull(pen))
+		return CLICK_ACTION_BLOCKING
+
+	if(integrated_pen)
+		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
+		return CLICK_ACTION_BLOCKING
+
+	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clipboard/update_overlays()
 	. = ..()

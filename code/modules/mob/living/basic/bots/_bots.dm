@@ -377,12 +377,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/basic/bot/click_alt(mob/living/user)
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/basic/bot/click_alt(mob/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/bot/proc/unlock_with_id(mob/living/user)
 	if(bot_access_flags & BOT_COVER_EMAGGED)

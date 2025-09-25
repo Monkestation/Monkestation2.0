@@ -327,7 +327,7 @@
 
 /obj/vehicle/ridden/rail_cart/click_alt(mob/user)
 	attach_trailer()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/rail_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

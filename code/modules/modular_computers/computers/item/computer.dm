@@ -194,8 +194,6 @@
 /obj/item/modular_computer/click_alt(mob/living/user)
 	if(issilicon(user))
 		return NONE
-	if(!user.can_perform_action(src))
-		return NONE
 
 	if(RemoveID(user))
 		return CLICK_ACTION_SUCCESS

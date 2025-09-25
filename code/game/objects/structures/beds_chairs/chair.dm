@@ -65,9 +65,6 @@
 		return
 	. = ..()
 
-/obj/structure/chair/click_alt(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -481,8 +478,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/bronze/click_alt(mob/user)
 	turns = 0
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \
 		span_notice("Automated spinny chairs. The pinnacle of ancient Ratvarian technology."))
@@ -491,6 +486,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		user.visible_message(span_notice("[user] stops [src]'s uncontrollable spinning."), \
 		span_notice("You grab [src] and stop its wild spinning."))
 		STOP_PROCESSING(SSfastprocess, src)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/mime
 	name = "invisible chair"

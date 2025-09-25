@@ -63,14 +63,14 @@
 
 ///Enable the machine
 /obj/machinery/chem_recipe_debug/click_alt(mob/living/user)
-	. = ..()
 	if(processing)
 		say("currently processing reaction [index]: [cached_reactions[index]] of [cached_reactions.len]")
-		return
+		return CLICK_ACTION_BLOCKING
 	process_all = TRUE
 	say("Starting processing")
 	setup_reactions()
 	begin_processing()
+	return CLICK_ACTION_SUCCESS
 
 ///Resets the index, and creates the cached_reaction list from all possible reactions
 /obj/machinery/chem_recipe_debug/proc/setup_reactions()

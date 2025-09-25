@@ -148,9 +148,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/click_alt(mob/living/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(target_temperature == T20C)
 		target_temperature = max_temperature
@@ -161,7 +159,8 @@
 
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "temperature reset to [target_temperature] K")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 /// Performs heat calculation for the freezer.
 /// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity

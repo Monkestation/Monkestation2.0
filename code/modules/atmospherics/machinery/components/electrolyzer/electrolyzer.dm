@@ -190,10 +190,9 @@
 /obj/machinery/electrolyzer/click_alt(mob/living/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	toggle_power(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)

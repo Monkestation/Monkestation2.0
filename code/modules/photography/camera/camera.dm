@@ -73,9 +73,13 @@
 	return TRUE
 
 /obj/item/camera/click_alt(mob/user)
-	if(!user.can_perform_action(src))
-		return
-	adjust_zoom(user)
+	if(!adjust_zoom(user))
+		return CLICK_ACTION_BLOCKING
+	if(silent) // Don't out your silent cameras
+		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return

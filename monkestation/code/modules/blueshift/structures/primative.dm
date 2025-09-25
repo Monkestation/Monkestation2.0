@@ -264,12 +264,12 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/item/cutting_board/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing on board")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	update_appearance()
 	balloon_alert(user, "cleared board")
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///Drops all contents at the turf of the item
 /obj/item/cutting_board/proc/drop_everything_contained()
@@ -419,11 +419,11 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/structure/large_mortar/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/large_mortar/proc/drop_everything_contained()

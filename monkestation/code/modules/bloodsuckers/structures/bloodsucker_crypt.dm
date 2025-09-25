@@ -86,6 +86,8 @@
 		switch(unclaim_response)
 			if("Yes")
 				unbolt(user)
+	return CLICK_ACTION_SUCCESS
+
 /*
 /obj/structure/bloodsucker/bloodaltar
 	name = "bloody altar"
