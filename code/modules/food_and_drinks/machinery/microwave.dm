@@ -380,7 +380,7 @@
 
 	vampire_charging_enabled = !vampire_charging_enabled
 	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
-	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
 	if(HAS_SILICON_ACCESS(user))
 		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 	return CLICK_ACTION_SUCCESS

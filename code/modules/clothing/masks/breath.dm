@@ -25,12 +25,12 @@
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	if(adjustable)
-		adjust_visor(user)
+		adjustmask(user)
 
 /obj/item/clothing/mask/breath/click_alt(mob/user)
 	if(!adjustable)
 		return
-	adjust_visor(user)
+	adjustmask(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/examine(mob/user)

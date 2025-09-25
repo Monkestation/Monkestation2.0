@@ -7,7 +7,6 @@
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
 	///Path for the flask that spawns inside their hat roundstart
 	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
