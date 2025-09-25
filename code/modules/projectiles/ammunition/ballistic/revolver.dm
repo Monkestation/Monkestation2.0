@@ -1,10 +1,16 @@
-// .357 (Syndie Revolver)
+// .357 (Syndie Revolver) /obj/item/ammo_box/magazine/internal/cylinder/mech357
 
 /obj/item/ammo_casing/a357
 	name = ".357 bullet casing"
 	desc = "A .357 bullet casing."
 	caliber = CALIBER_357
 	projectile_type = /obj/projectile/bullet/a357
+
+/obj/item/ammo_casing/a357/mecha357 ///Because the mech damage test doesn't like AP
+	name = ".357 bullet casing"
+	desc = "A .357 bullet casing."
+	caliber = CALIBER_357
+	projectile_type = /obj/projectile/bullet/a357/mecha_unit_test
 
 /obj/item/ammo_casing/a357/match
 	name = ".357 match bullet casing"
