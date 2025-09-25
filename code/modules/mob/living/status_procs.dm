@@ -594,6 +594,7 @@
 
 /mob/living/proc/cure_fakedeath(source)
 	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
+	update_stat()
 	if(stat != DEAD)
 		tod = null
 
@@ -605,6 +606,7 @@
 		tod = station_time_timestamp()
 
 	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
+	update_stat()
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)

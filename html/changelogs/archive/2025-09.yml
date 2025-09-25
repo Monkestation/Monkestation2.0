@@ -817,6 +817,31 @@
   Xander3359:
   - bugfix: fixed brig phys lab coat not having directional sprites
 2025-09-25:
+  Absolucy:
+  - bugfix: fix regen coma leaving people in a weird limbo between life and death
+  - bugfix: Monster Hunters will now keep their Instant Recall and Hunter Vision abilities
+      if they ever change bodies, i.e if they're cloned or whatever.
+  - bugfix: Darkspawn thralls now properly resist having their tumors removed if they're
+      awake.
+  - bugfix: Darkspawn ability buttons should properly update and (un)grey when you
+      regenerate or use psi.
+  - balance: Darkspawn thralls will now have a proper fighting chance when they resist
+      being deconverted while awake.
+  - qol: The Darkspawn warlock staff is now non-conductive, meaning you'll no longer
+      potentially shock yourself trying to break lights with it.
+  - qol: The "Darkened Flashes" preference now disables the staticy screen overlay
+      that occurs when a Darkspawn ascends.
+  - qol: Darkspawn and their thralls are now all properly immune to Nyctophobia.
+  - code_imp: Various minor code improvements / runtime error fixes for darkspawn-related
+      code.
+  EssentialTomato:
+  - qol: (MrMelbert) Airlock pumps will unbolt their linked airlocks on losing power,
+      allowing them to be forced through
+  - qol: (MrMelbert) Airlock pumps work on L shaped airlocks, assuming [the airlocks]
+      are already linked.
+  ThePooba:
+  - bugfix: fixes advanced cameras to use camnet
+  - bugfix: beaker panel has only empty beakers and drink glasses for maximum bussing
   Xander3359:
   - bugfix: Fixes gels unhusking with less than 100 units of synthflesh
   kuricityy:
