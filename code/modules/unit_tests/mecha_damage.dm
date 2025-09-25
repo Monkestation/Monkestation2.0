@@ -32,7 +32,7 @@
 	var/obj/item/gun/energy/laser/dummy_laser = allocate(/obj/item/gun/energy/laser/captain)
 	var/obj/item/ammo_casing/laser_ammo = dummy_laser.ammo_type[1]
 	var/obj/projectile/beam/laser_fired = initial(laser_ammo.projectile_type)
-	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100) * 1.15, DAMAGE_PRECISION)
+	var/expected_laser_damage = round(dummy_laser.projectile_damage_multiplier * initial(laser_fired.damage) * (1 - expected_laser_armor / 100) * 0.69, DAMAGE_PRECISION)
 
 	// Get a sample ballistic weapon.
 	// The syndicate .357 here is chosen because it does a lot of damage.
