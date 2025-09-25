@@ -30,7 +30,7 @@
 	icon_state = "heavylaser"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	inhand_icon_state = "lasrifle"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavylaser)
 	w_class = WEIGHT_CLASS_BULKY
 	cell_type = /obj/item/stock_parts/power_store/cell/quickcharge

@@ -57,7 +57,9 @@
 					last_dust = world.time
 				sustained_moves = 0
 		if(carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated))
-			sprint_stamina_modifier *= 1.3
+			sprint_stamina_modifier = 1.3
+		else
+			sprint_stamina_modifier = 1
 		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
 			sprint_stamina_modifier *= 0.7
 		carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * sprint_stamina_modifier)

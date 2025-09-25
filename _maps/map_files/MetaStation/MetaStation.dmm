@@ -68933,6 +68933,10 @@
 	},
 /obj/item/clothing/suit/hooded/ablative,
 /obj/machinery/light_switch/directional/east,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 0;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "xJi" = (

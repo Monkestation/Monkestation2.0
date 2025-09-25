@@ -73422,10 +73422,13 @@
 "vew" = (
 /obj/structure/rack,
 /obj/item/storage/box/chemimp{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
-/obj/item/storage/box/trackimp,
+/obj/item/storage/box/trackimp{
+	pixel_x = -8;
+	pixel_y = -2
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -76336,14 +76339,19 @@
 "wkc" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs{
-	pixel_x = -12;
-	pixel_y = 4
+	pixel_x = -25;
+	pixel_y = -24
 	},
 /obj/item/storage/box/handcuffs{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = -25;
+	pixel_y = -34
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "wkd" = (

@@ -295,6 +295,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	fire_delay = 0.2 SECONDS
 	spread = 15
+	projectile_damage_multiplier = 0.7
 
 /obj/item/gun/ballistic/automatic/pistol/plasma_thrower/Initialize(mapload)
 	. = ..()
@@ -348,7 +349,7 @@
 	fire_delay = 0.8 SECONDS
 	spread = 2.5
 
-	projectile_damage_multiplier = 3 // 30 damage a shot
+	projectile_damage_multiplier = 2.5 // 25 damage a shot
 	projectile_wound_bonus = 10 // +55 of the base projectile, burn baby burn
 
 /obj/item/gun/ballistic/automatic/pistol/plasma_marksman/give_manufacturer_examine()

@@ -19868,6 +19868,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"bEj" = (
+/obj/structure/rack,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "bEk" = (
 /obj/machinery/meter,
 /obj/machinery/light/small/directional/south,
@@ -79062,7 +79074,7 @@ hiD
 ajj
 ajT
 aNZ
-afH
+bEj
 amh
 amZ
 anJ

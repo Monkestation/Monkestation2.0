@@ -39352,13 +39352,17 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "mgD" = (
-/obj/machinery/flasher/portable,
-/obj/effect/turf_decal/box,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 5
+	},
+/obj/structure/table,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -2;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
@@ -59229,10 +59233,16 @@
 /obj/item/key/security,
 /obj/item/flashlight/seclite{
 	pixel_x = 2;
-	pixel_y = 1
+	pixel_y = -1
 	},
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /obj/item/grenade/barrier{
 	pixel_x = 4
 	},

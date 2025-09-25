@@ -107200,6 +107200,8 @@
 	pixel_x = -4;
 	pixel_y = 0
 	},
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "uFT" = (

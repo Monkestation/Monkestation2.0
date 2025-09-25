@@ -34064,8 +34064,12 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "kVD" = (
@@ -51323,6 +51327,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/vehicle/ridden/secway,
+/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "qyZ" = (
