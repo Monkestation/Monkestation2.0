@@ -26,6 +26,7 @@
 		"firelock_board",
 		"generic_tank",
 		"grounding_rod",
+		"high_battery",
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
@@ -190,10 +191,12 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
+		"hyper_battery",
 		"power_turbine_console",
 		"smes",
 		"super_capacitor",
 		"super_cell",
+		"super_battery",
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",

@@ -89,7 +89,7 @@
 /datum/component/happiness_container/proc/ate_type(atom/ate)
 	if(istype(ate, /obj/item/food))
 		var/obj/item/food/food = ate
-		for(var/food_type as anything in disliked_food_types)
+		for(var/food_type in disliked_food_types)
 			if(food_type & initial(food.foodtypes))
 				adjust_happiness(parent, disliked_food_types[food_type])
 	if(ate in liked_foods)

@@ -242,7 +242,7 @@
 		remove_boulder(chosen_boulder)
 		say("Nothing to process!")
 		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
+	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	check_for_boosts() //Calls the relevant behavior for boosting the machine's efficiency, if able.
 	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/boulder/disposable_boulder = new (src)
@@ -349,7 +349,7 @@
  * @param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.
  */
 /obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
-	for(var/material as anything in boulder_mats)
+	for(var/material in boulder_mats)
 		if(is_type_in_list(material, processable_materials))
 			return TRUE
 	return FALSE

@@ -15,9 +15,20 @@
 			null,
 			/* hud_owner = */ null,
 			src,
-			"Settings",
+			"Game Settings",
 			/* offset = */ 1,
-			CALLBACK(src, PROC_REF(home_open_settings)),
+			CALLBACK(src, PROC_REF(home_open_game_settings)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ null,
+			src,
+			"Edit Character",
+			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
 		)
 	)
 
@@ -27,7 +38,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Redeem Code",
-			/* offset = */ 2,
+			/* offset = */ 3,
 			CALLBACK(src, PROC_REF(start_redeem)),
 		)
 	)
@@ -37,7 +48,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Open Lootbox",
-			/* offset = */ 3,
+			/* offset = */ 4,
 			CALLBACK(src, PROC_REF(try_open_lootbox)),
 		)
 	)
@@ -48,7 +59,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Open Map",
-			/* offset = */ 4,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_map)),
 		)
 	)
@@ -58,7 +69,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Admin Help",
-			/* offset = */ 5,
+			/* offset = */ 6,
 		)
 	)
 
@@ -68,7 +79,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Leave Body",
-			/* offset = */ 6,
+			/* offset = */ 7,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -87,8 +98,24 @@
 	if(url && client)
 		client << link(url)
 
-/datum/escape_menu/proc/home_open_settings()
-	client?.prefs.ui_interact(client?.mob)
+/datum/escape_menu/proc/home_open_game_settings()
+	var/datum/preferences/preferences = usr?.client?.prefs
+	if (!preferences)
+		return
+
+	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
+	qdel(src)
+
+/datum/escape_menu/proc/home_open_character_settings()
+	var/datum/preferences/preferences = usr?.client?.prefs
+	if (!preferences)
+		return
+
+	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
 	qdel(src)
 
 /atom/movable/screen/escape_menu/home_button

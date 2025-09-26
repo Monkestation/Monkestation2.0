@@ -60,6 +60,7 @@
 #define CLAN_VENTRUE "Ventrue Clan"
 #define CLAN_MALKAVIAN "Malkavian Clan"
 #define CLAN_TZIMISCE "Tzimisce Clan"
+#define CLAN_VASSAL "your Master"
 
 #define TREMERE_VASSAL "tremere_vassal"
 #define FAVORITE_VASSAL "favorite_vassal"
@@ -80,6 +81,8 @@
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
 /// This Power can't be used during Sol
 #define BP_CANT_USE_DURING_SOL (1<<5)
+/// This Power CAN be used while silver cuffed
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)
@@ -171,6 +174,8 @@
 #define IS_BLOODSUCKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodsucker))
 ///Whether a mob is a Vassal
 #define IS_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal))
+///Whether a mob is a Bloodsucker OR a Vassal
+#define IS_BLOODSUCKER_OR_VASSAL(mob) (IS_BLOODSUCKER(mob) || IS_VASSAL(mob))
 ///Whether a mob is a Favorite Vassal
 #define IS_FAVORITE_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal/favorite))
 ///Whether a mob is a Revenge Vassal

@@ -249,7 +249,8 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !ui.user.has_unlimited_silicon_privilege)
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 
 	switch(action)

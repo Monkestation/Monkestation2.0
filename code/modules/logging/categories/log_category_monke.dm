@@ -47,3 +47,9 @@
 /datum/log_category/storyteller
 	category = LOG_CATEGORY_STORYTELLER
 	config_flag = /datum/config_entry/flag/log_storyteller
+
+/datum/log_category/hotspots
+	category = LOG_CATEGORY_HOTSPOTS
+	config_flag = /datum/config_entry/flag/log_hotspots
+
+/datum/config_entry/flag/log_hotspots

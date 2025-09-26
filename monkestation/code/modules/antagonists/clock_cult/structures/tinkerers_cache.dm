@@ -58,7 +58,7 @@
 	if(!chosen_item.time_delay_mult)
 		amount_to_create = tgui_input_number(user, "How many would you like to create?", "Tinkerers Cache", max_value = 10, min_value = 1)
 
-	if(!use_power(chosen_item.power_use * amount_to_create))
+	if(!use_energy(chosen_item.power_use * amount_to_create))
 		to_chat(user, span_brass("You need more power to forge this item."))
 		return
 

@@ -264,11 +264,14 @@
 
 	if(iscyborg(user))
 		if(affect_cyborg)
+			if(on_stun_sound)
+				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+			if(stun_animation)
+				user.do_attack_animation(user)
+
 			user.flash_act(affect_silicon = TRUE)
 			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
-			if(on_stun_sound)
-				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
@@ -276,17 +279,19 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			human_user.force_say()
+		if(on_stun_sound)
+			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+		if(stun_animation)
+			user.do_attack_animation(user)
+
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
-		if(on_stun_sound)
-			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
-	if(stun_animation)
-		user.do_attack_animation(user)
+
 	return
 
 /obj/item/conversion_kit
@@ -411,7 +416,7 @@
 /obj/item/melee/baton/security
 	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
-	desc_controls = "Left click to stun, right click to harm."
+	desc_controls = "Left click to stun, right click to harm. Make sure not to harm with it on!"
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -432,13 +437,17 @@
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
 
+	///Does this baton knock the user down if they harmbaton with it on?
+	var/self_knockdown = TRUE
+	///How long this baton will knock the user down if they harmbaton with it on.
+	var/self_knockdown_time = 1 SECONDS
+
 	var/throw_stun_chance = 35
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
-	var/passive_cell_drain = TRUE //if the cell should passively drain charge if left on
 
 /datum/armor/baton_security
 	bomb = 50
@@ -448,23 +457,41 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/power_store/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
+/obj/item/melee/baton/security/baton_attack(mob/living/target, mob/living/user, modifiers)
+	var/parent_proc_result = ..()
+
+	//Comedic self stunning!
+	if (parent_proc_result == BATON_DO_NORMAL_ATTACK && active && self_knockdown && !iscyborg(user))
+		user.visible_message(
+			span_danger("[user] accidentally shocks themselves with the [src] and falls to the ground!"),
+			span_userdanger("You accidentally shock yourself with the [src]!")
+		)
+
+		if(on_stun_sound)
+			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+
+		if(stun_animation)
+			user.do_attack_animation(user)
+
+		user.Knockdown(self_knockdown_time)
+		user.apply_damage(stamina_damage, STAMINA)
+		additional_effects_non_cyborg(user, user) // user is the target here
+
+		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to harmbatonning with the [src] on", src)
+		return BATON_ATTACK_DONE
+	else
+		return parent_proc_result
+
+
 /obj/item/melee/baton/security/get_cell()
 	return cell
-
-/obj/item/melee/baton/security/process(seconds_per_tick, mob/living/user)
-	if(!active || !cell)
-		return PROCESS_KILL
-
-	if(!cell.use((75 - (cell.maxcharge * 0.0025)) * seconds_per_tick) || cell.charge < cell_hit_cost) // This formula causes a exponential decay at 400 seconds. 6.66 minutes of baton time. Bluespace cells give 228 seconds, or 3.75 minutes
-		visible_message(span_warning("The baton fizzles and slowly dims as the charge runs out!"))
-		src.attack_self()
 
 /obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
@@ -479,7 +506,6 @@
 	if(cell)
 		QDEL_NULL(cell)
 	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
@@ -535,8 +561,8 @@
 	return TRUE
 
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -555,7 +581,6 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
-		STOP_PROCESSING(SSobj, src)
 		return TRUE
 	return FALSE
 
@@ -564,16 +589,12 @@
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
-		if(passive_cell_drain)
-			START_PROCESSING(SSobj, src)
 	else
 		active = FALSE
 		if(!cell)
 			balloon_alert(user, "no power source!")
-			STOP_PROCESSING(SSobj, src)
 		else
 			balloon_alert(user, "out of charge!")
-			STOP_PROCESSING(SSobj, src)
 	update_appearance()
 	add_fingerprint(user)
 
@@ -586,7 +607,6 @@
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
 		active = FALSE
-		STOP_PROCESSING(SSobj, src)
 		update_appearance()
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
@@ -669,13 +689,13 @@
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	desc_controls = "Left click to stun, right click to harm."
+	desc_controls = "Left click to stun, right click to harm. Make sure not to harm with it on!"
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
@@ -767,7 +787,7 @@
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
@@ -799,7 +819,7 @@
 	slot_flags = null
 	throw_stun_chance = 50 //I think it'd be funny
 	can_upgrade = FALSE
-	passive_cell_drain = FALSE //this is a EVIL stick
+	self_knockdown = FALSE
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

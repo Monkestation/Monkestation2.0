@@ -1,0 +1,16 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - balance: "PK throwing knives no longer instantly recharge all the knife charges"
+  - balance: "PK throwing knives can detonate marks on melee hit even if you have no charges left"
+  - qol: "(Hatterhat) You can now pull singular trophies off kinetic crushers with RMB."
+  - qol: "(Hatterhat) Kinetic crushers now have screentips informing people that they can remove trophies via empty hand (RMB) or crowbar (LMB)."
+  - bugfix: "(SmArtKar) Fixed inconsistent crusher trophy droprates"
+  - refactor: "(SmArtKar) Refactored parrying to be projectile-side and not user-side."
+  - rscadd: "(SmArtKar) You can now parry crusher projectiles to give them some more range, add damage and make the mark always count as a backstab."
+  - rscadd: "(SmArtKar) Projectile parrying has been significantly improved, making parrying and boosting projectiles actually possible. Includes a small grace period as lag compensation for players with higher pings."
+  - balance: "(SmArtKar) Projectile boosting now gives a significantly bigger damage and speed increase"
+  - rscadd: "(Xander3359) Bileworm crusher trophy now gives you AOE mining"
+  - balance: "(Xander3359) The pk crusher gives mining XP when it mines rocks"
+  - balance: "(Xander3359) the pk crusher charges faster when you mine rocks based on your skill as a miner"
+  - code_imp: "(Xander3359) cleaned up some of the kinetic crusher code"

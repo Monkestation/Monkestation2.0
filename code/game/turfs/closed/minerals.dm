@@ -92,10 +92,11 @@
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
-	if(attacking_item.tool_behaviour == TOOL_MINING)
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
+	if(attacking_item.tool_behaviour != TOOL_MINING)
+		return
+	var/turf/T = user.loc
+	if (!isturf(T))
+		return
 
 	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return

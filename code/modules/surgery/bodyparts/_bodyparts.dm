@@ -595,7 +595,7 @@
 
 	var/bio_status = NONE
 
-	for (var/state as anything in GLOB.bio_state_anatomy)
+	for (var/state in GLOB.bio_state_anatomy)
 		var/flag = text2num(state)
 		if (!(biological_state & flag))
 			continue
@@ -1342,6 +1342,8 @@
 		return "flesh"
 	if (biological_state & BIO_WIRED)
 		return "wiring"
+	if (biological_state & BIO_INORGANIC)
+		return "membrane"
 
 	return "error"
 
@@ -1351,6 +1353,8 @@
 		return "bone"
 	if (biological_state & BIO_METAL)
 		return "metal"
+	if (biological_state & BIO_INORGANIC)
+		return "membrane"
 
 	return "error"
 
@@ -1376,7 +1380,7 @@
 /obj/item/bodypart/proc/check_removal_composition(mob/living/carbon/remover)
 	var/precent = return_compoostion_precent(remover)
 
-	for(var/item as anything in composition_effects)
+	for(var/item in composition_effects)
 		if(composition_effects[item] < precent)
 			continue
 		if(!ispath(item))
@@ -1394,7 +1398,7 @@
 /obj/item/bodypart/proc/check_adding_composition(mob/living/carbon/adder)
 	var/precent = return_compoostion_precent(adder)
 
-	for(var/item as anything in composition_effects)
+	for(var/item in composition_effects)
 		if(composition_effects[item] > precent)
 			continue
 		if(!ispath(item))

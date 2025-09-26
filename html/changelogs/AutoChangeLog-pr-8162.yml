@@ -1,0 +1,6 @@
+author: "Sorenon"
+delete-after: True
+changes:
+  - rscadd: "Each player can now select a voice pack. When a player talks they will make a few 'barks' using it. The number of barks depends on the length of their message."
+  - rscadd: "Players speaking in sign language will make a single snap bark unless they are whispering"
+  - qol: "Split the settings button in the escape menu into game settings and character settings"

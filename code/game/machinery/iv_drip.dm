@@ -125,9 +125,11 @@
 
 	return data
 
-/obj/machinery/iv_drip/ui_act(action, params)
-	if(..())
-		return TRUE
+/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("changeMode")
 			toggle_mode()

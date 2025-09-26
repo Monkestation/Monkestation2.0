@@ -23,10 +23,10 @@
 	var/list/special_save_loadout = SANITIZE_LIST(save_data["special_loadout_list"])
 
 	var/list/texted_special_save_loadouts = list()
-	for(var/header as anything in special_save_loadout)
+	for(var/header in special_save_loadout)
 		texted_special_save_loadouts |= header
 		texted_special_save_loadouts[header] = list()
-		for(var/num as anything in special_save_loadout[header])
+		for(var/num in special_save_loadout[header])
 			texted_special_save_loadouts[header] |= "[num]"
 
 	for(var/loadout in special_save_loadout["unusual"])
