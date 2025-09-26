@@ -80,9 +80,9 @@
 		return
 	return ..()
 
-/obj/structure/chemical_manufacturer/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_manufacturer/click_alt(mob/living/user)
 	remove_tank()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_manufacturer/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))

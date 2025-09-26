@@ -116,7 +116,7 @@
 
 /// Removes all blacklisted items from a mob and returns them to base state
 /obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)
-	for(var/obj/item in person.get_equipped_items(include_pockets = FALSE, include_accessories = FALSE))
+	for(var/obj/item in person.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		qdel(item)
 
 	var/datum/antagonist/bitrunning_glitch/antag_datum = person.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)

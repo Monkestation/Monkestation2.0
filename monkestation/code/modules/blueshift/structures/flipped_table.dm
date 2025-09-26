@@ -78,24 +78,26 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/flippedtable/CtrlShiftClick(mob/user)
+/obj/structure/flippedtable/click_ctrl_shift(mob/user)
 	if(!can_right_table(user) || DOING_INTERACTION_WITH_TARGET(user, src) || !user.CanReach(src))
-		return
+		return CLICK_ACTION_BLOCKING
 	user.balloon_alert_to_viewers("flipping table upright...")
-	if(do_after(user, max_integrity * TABLE_FLIP_TIME_MULTIPLIER))
-		var/obj/structure/table/unflipped_table = new table_type(loc)
-		unflipped_table.update_integrity(get_integrity())
-		if(flags_1 & HOLOGRAM_1) // no unflipping holographic tables into reality
-			var/area/station/holodeck/holo_area = get_area(unflipped_table)
-			if(!istype(holo_area))
-				qdel(unflipped_table)
-				return
-			holo_area.linked.add_to_spawned(unflipped_table)
-		if(custom_materials)
-			unflipped_table.set_custom_materials(custom_materials)
-		user.balloon_alert_to_viewers("table flipped upright")
-		playsound(src, 'sound/items/trayhit2.ogg', vol = 100)
-		qdel(src)
+	if(!do_after(user, max_integrity * TABLE_FLIP_TIME_MULTIPLIER))
+		return CLICK_ACTION_BLOCKING
+	var/obj/structure/table/unflipped_table = new table_type(loc)
+	unflipped_table.update_integrity(get_integrity())
+	if(flags_1 & HOLOGRAM_1) // no unflipping holographic tables into reality
+		var/area/station/holodeck/holo_area = get_area(unflipped_table)
+		if(!istype(holo_area))
+			qdel(unflipped_table)
+			return
+		holo_area.linked.add_to_spawned(unflipped_table)
+	if(custom_materials)
+		unflipped_table.set_custom_materials(custom_materials)
+	user.balloon_alert_to_viewers("table flipped upright")
+	playsound(src, 'sound/items/trayhit2.ogg', vol = 100)
+	qdel(src)
+	return CLICK_ACTION_SUCCESS
 
 /mob/proc/can_flip_table(obj/structure/table/table, full_checks = TRUE)
 	if(QDELETED(src) || QDELETED(table))
@@ -135,9 +137,9 @@
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = iscat(user) ? "Knock things off table" : "Flip table"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/table/CtrlShiftClick(mob/user)
+/obj/structure/table/click_ctrl_shift(mob/user)
 	if(!user.can_flip_table(src))
-		return
+		return CLICK_ACTION_BLOCKING
 	TIMER_COOLDOWN_START(user, REF(src), TABLE_FLIP_ANTISPAM_COOLDOWN)
 	if(iscat(user))
 		cat_knock_stuff_off_table(user)
@@ -145,6 +147,7 @@
 		user.balloon_alert_to_viewers("flipping table...")
 		if(do_after(user, round(max_integrity * TABLE_FLIP_TIME_MULTIPLIER, 0.5 SECONDS), src))
 			flip_table(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/table/proc/flip_table(mob/user)
 	var/obj/structure/flippedtable/flipped_table = new flipped_table_type(loc)

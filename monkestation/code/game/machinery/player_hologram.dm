@@ -10,13 +10,12 @@
 	var/image/visual_maptext/stored_maptext
 	var/image/player_image
 
-/obj/machinery/player_hologram/AltClick(mob/user)
-	. = ..()
+/obj/machinery/player_hologram/click_alt(mob/living/user)
 	if(current_mob)
 		unset_player()
 	var/choice = tgui_input_list(user, "Choose a ckey to watch", "[name]", GLOB.alive_player_list)
 	if(!choice)
-		return
+		return CLICK_ACTION_BLOCKING
 	current_mob = choice
 	set_ckey = current_mob.client.ckey
 
@@ -25,6 +24,7 @@
 
 	update_maptext()
 	update_visual()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/player_hologram/proc/unset_player()
 	set_ckey = null

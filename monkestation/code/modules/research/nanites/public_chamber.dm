@@ -198,9 +198,9 @@
 /obj/machinery/public_nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(!Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
+/obj/machinery/public_nanite_chamber/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!Adjacent(dropped) || !user.Adjacent(dropped) || !iscarbon(dropped))
 		return
-	if(close_machine(target, user))
-		log_combat(user, target, "inserted", null, "into [src].")
+	if(close_machine(dropped, user))
+		log_combat(user, dropped, "inserted", null, "into [src].")
 	add_fingerprint(user)

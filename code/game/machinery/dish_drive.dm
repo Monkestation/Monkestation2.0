@@ -144,9 +144,9 @@
 	balloon_alert(user, "disposal signal sent")
 	do_the_dishes(TRUE)
 
-/obj/machinery/dish_drive/AltClick(mob/living/user)
+/obj/machinery/dish_drive/click_alt(mob/living/user)
 	do_the_dishes(TRUE)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!LAZYLEN(dish_drive_contents))

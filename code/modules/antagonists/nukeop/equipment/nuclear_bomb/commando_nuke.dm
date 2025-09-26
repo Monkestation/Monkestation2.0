@@ -431,10 +431,9 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/nuke_recaller/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/nuke_recaller/click_alt(mob/living/user)
 	toggle_safety(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nuke_recaller/proc/toggle_safety(mob/living/user)
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)

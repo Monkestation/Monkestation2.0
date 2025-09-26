@@ -117,11 +117,10 @@
 	. = ..()
 	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
-/obj/structure/aquarium/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return ..()
+/obj/structure/aquarium/click_alt(mob/user)
 	panel_open = !panel_open
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

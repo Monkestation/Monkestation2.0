@@ -11,6 +11,7 @@
 	max_integrity = 100
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -190,22 +191,32 @@
 /obj/item/modular_computer/get_cell()
 	return internal_cell
 
-/obj/item/modular_computer/AltClick(mob/user)
-	. = ..()
+/obj/item/modular_computer/click_alt(mob/living/user)
 	if(issilicon(user))
-		return FALSE
-	if(!user.can_perform_action(src))
-		return FALSE
+		return NONE
 
 	if(RemoveID(user))
-		return TRUE
+		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
 		inserted_pai = null
 		update_appearance(UPDATE_ICON)
-		return TRUE
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
+
+/* MONKE EDIT: Secondary ID not implemented
+/obj/item/modular_computer/click_alt_secondary(mob/user)
+	if(issilicon(user))
+		return NONE
+
+	if(remove_secondary_id(user))
+		return CLICK_ACTION_SUCCESS
+
+	return NONE
+*/
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
@@ -296,11 +307,9 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
-	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.can_perform_action(src))
-		return attack_self(M)
-	return ..()
+/obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
+	if(!istype(over_object, /atom/movable/screen))
+		return attack_self(user)
 
 /obj/item/modular_computer/attack_ai(mob/user)
 	return attack_self(user)
@@ -432,10 +441,7 @@
 		update_appearance(UPDATE_ICON)
 	return ..()
 
-/obj/item/modular_computer/CtrlShiftClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/modular_computer/click_ctrl_shift(mob/user)
 	if(!inserted_disk)
 		return
 	user.put_in_hands(inserted_disk)

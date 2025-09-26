@@ -305,15 +305,9 @@
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/dna_console/AltClick(mob/user)
-	// Make sure the user can interact with the machine.
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-
+/obj/machinery/computer/dna_console/click_alt(mob/user)
 	eject_disk(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/dna_console/Initialize(mapload)
 	. = ..()

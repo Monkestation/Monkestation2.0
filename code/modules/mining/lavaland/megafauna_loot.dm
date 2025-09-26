@@ -710,10 +710,10 @@
  *
  */
 
-/obj/item/melee/cleaving_saw/AltClick(mob/user) //want blood born quick steps or dark souls rolls (completely cosmetic)
-	. = ..()
+/obj/item/melee/cleaving_saw/click_alt(mob/user) //want blood born quick steps or dark souls rolls (completely cosmetic)
 	roll_orientation = !roll_orientation
 	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/melee/cleaving_saw/pre_attack_secondary(atom/A, mob/living/user, params)
 	return TRUE // Let's dance.

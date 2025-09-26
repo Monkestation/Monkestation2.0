@@ -5,6 +5,7 @@
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
@@ -15,10 +16,6 @@
 			"Smile" = "smile"
 	)
 
-/obj/item/clothing/mask/joy/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Emotion"
@@ -27,7 +24,6 @@
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -72,10 +68,9 @@
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 
-/obj/item/clothing/mask/kitsune/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
 	weldingvisortoggle(user)
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/joy/manhunt
 	name = "smiley mask"

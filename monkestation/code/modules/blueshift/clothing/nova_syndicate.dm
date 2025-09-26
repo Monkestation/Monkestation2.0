@@ -333,7 +333,6 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/belt.dmi'
 	icon_state = "webbingds"
 	worn_icon_state = "webbingds"
-	uses_advanced_reskins = FALSE
 
 /obj/item/clothing/suit/armor/bulletproof/old
 	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."

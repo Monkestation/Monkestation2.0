@@ -203,7 +203,7 @@
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
 
-/obj/item/detective_scanner/AltClick(mob/living/user)
+/obj/item/detective_scanner/click_alt(mob/living/user)
 	return clear_logs()
 
 /obj/item/detective_scanner/examine(mob/user)
@@ -255,10 +255,10 @@
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
 	if(!LAZYLEN(log_data))
 		balloon_alert(user, "no logs!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "logs cleared")
 	log_data = list()
-	return
+	return CLICK_ACTION_SUCCESS

@@ -25,9 +25,9 @@
 			stored_reagents += list(reagent.type = reagent.volume)
 
 
-/obj/item/recipe_card/CtrlClick(mob/user)
-	. = ..()
+/obj/item/recipe_card/item_ctrl_click(mob/user)
 	submit_recipe(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/recipe_card/proc/submit_recipe(mob/user)
 	if(!length(stored_foods) || !length(stored_reagents))

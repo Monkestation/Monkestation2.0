@@ -3,8 +3,8 @@
 		return
 	return ..()
 
-/obj/item/clothing/neck/necklace/memento_mori/MouseDrop(atom/over_object)
-	if(prevent_accidental_suicide(over_object))
+/obj/item/clothing/neck/necklace/memento_mori/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(prevent_accidental_suicide(over_location))
 		return
 	return ..()
 

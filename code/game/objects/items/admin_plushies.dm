@@ -450,7 +450,7 @@
 	name = "Siro Yamamuchi Plush"
 	item_path = /obj/item/toy/plush/admin/siro
 	item_cost = 7500
-/obj/item/toy/plush/admin/siro/AltClick(mob/user)
+/obj/item/toy/plush/admin/siro/click_alt(mob/user)
 	if(icon_state == "siro")
 		icon_state = "siro-mask"
 	else
@@ -489,7 +489,7 @@
 	if (mask_on)
 		. += "shion-mask"
 
-/obj/item/toy/plush/admin/shion/AltClick(mob/living/user)
+/obj/item/toy/plush/admin/shion/click_alt(mob/living/user)
 	if(!Adjacent(user) || user.incapacitated())
 		return
 	mask_on = !mask_on
@@ -573,7 +573,7 @@
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
 	gender = FEMALE
 
-/obj/item/toy/plush/admin/birdion/AltClick(mob/user)
+/obj/item/toy/plush/admin/birdion/click_alt(mob/user)
 	if(icon_state == "birdion")
 		icon_state = "birdion-mask"
 	else

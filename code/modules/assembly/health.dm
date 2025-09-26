@@ -37,7 +37,7 @@
 	update_appearance()
 	return secured
 
-/obj/item/assembly/health/AltClick(mob/living/user)
+/obj/item/assembly/health/proc/toggle_target(mob/living/user)
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
@@ -115,5 +115,5 @@
 			toggle_scan()
 			return TRUE
 		if("target")
-			AltClick(ui.user)
+			toggle_target(ui.user)
 			return TRUE

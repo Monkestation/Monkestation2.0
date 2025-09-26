@@ -130,7 +130,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | INDESTRUCTIBLE
 	move_resist = MOVE_FORCE_OVERPOWERING
 
-/obj/structure/liquid_plasma_extraction_pipe/MouseDrop_T(mob/living/M, mob/living/user)
+/obj/structure/liquid_plasma_extraction_pipe/mouse_drop_receive(mob/living/M, mob/user, params)
 	. = ..()
 	if(!CanReach(user))
 		return

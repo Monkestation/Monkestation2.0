@@ -61,7 +61,7 @@
 	connected_storage = multitool.component_buffer
 	balloon_alert(user, "successfully linked storage component")
 
-/obj/item/mcobject/interactor/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/mcobject/interactor/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!isatom(over) || QDELING(over) || !ishuman(usr) || over == src)
 		return

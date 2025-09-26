@@ -32,12 +32,13 @@
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
-/obj/structure/chemical_input/AltClick(mob/user)
-	. = ..()
-	if(!linked_input)
-		linked_input = new(src.loc)
-		linked_input.linked_input = src
-		linked_input.name = component_name
+/obj/structure/chemical_input/click_alt(mob/living/user)
+	if(linked_input)
+		return CLICK_ACTION_BLOCKING
+	linked_input = new(src.loc)
+	linked_input.linked_input = src
+	linked_input.name = component_name
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_input/examine(mob/user)
 	. = ..()

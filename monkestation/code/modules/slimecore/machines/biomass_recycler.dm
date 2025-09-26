@@ -87,18 +87,18 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	if(can_recycle)
 		recycle(item, user, can_recycle)
 
-/obj/machinery/biomass_recycler/MouseDrop_T(mob/living/target, mob/living/user)
-	if(!istype(target))
+/obj/machinery/biomass_recycler/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!istype(dropped))
 		return
 
 	var/can_recycle
 	for(var/recycable_type in recyclable_types)
-		if(istype(target, recycable_type))
+		if(istype(dropped, recycable_type))
 			can_recycle = recycable_type
 			break
 
 	if(can_recycle)
-		stuff_creature_in(target, user, can_recycle)
+		stuff_creature_in(dropped, user, can_recycle)
 
 /obj/machinery/biomass_recycler/proc/stuff_creature_in(mob/living/target, mob/living/user, recycable_type)
 	if(!istype(target))

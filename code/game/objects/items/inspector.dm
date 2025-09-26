@@ -76,14 +76,15 @@
 			return
 	return ..()
 
-/obj/item/inspector/CtrlClick(mob/living/user)
+/obj/item/inspector/item_ctrl_click(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
@@ -379,14 +380,15 @@
 /obj/item/paper/fake_report/water
 	grind_results = list(/datum/reagent/water = 5)
 
-/obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/paper/fake_report/water/click_alt(mob/living/user)
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
-		make_plane(user, I, /obj/item/paperplane/syndicate)
-	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
-		var/turf/open/target = get_turf(src)
-		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
-		qdel(src)
+		make_plane(user, src, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	if(!do_after(user, 1 SECONDS, target = src, progress=TRUE))
+		return CLICK_ACTION_BLOCKING
+	var/turf/open/target = get_turf(src)
+	target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
+	to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
+	qdel(src)
+	return CLICK_ACTION_SUCCESS

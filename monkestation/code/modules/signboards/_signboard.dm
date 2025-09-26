@@ -123,7 +123,7 @@
 		investigate_log("([key_name(user)]) set text to \"[sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		return TRUE
 
-/obj/structure/signboard/alt_click_secondary(mob/user)
+/obj/structure/signboard/click_alt_secondary(mob/user)
 	. = ..()
 	if(!sign_text || !can_interact(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
