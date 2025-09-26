@@ -208,7 +208,6 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /// This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /// NOTE: These will use mentor rights don't mix them with Admin rights.
-/// Like is_mentor() but it will only check for active mentor datums with the supplied rights.
 /proc/check_mentor_rights_for(client/subject, rights_required)
 	if(subject?.mentor_datum)
 		return subject.mentor_datum.check_for_rights(rights_required)
@@ -216,7 +215,6 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /// This proc checks whether subject has ALL of the rights specified in rights_required.
 /// NOTE: These will use mentor rights don't mix them with Admin rights.
-/// Like is_mentor() but it will only check for active mentor datums with the supplied rights.
 /proc/check_exact_mentor_rights_for(client/subject, rights_required)
 	if(subject?.mentor_datum)
 		return subject.mentor_datum.check_for_exact_rights(rights_required)

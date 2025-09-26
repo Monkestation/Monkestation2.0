@@ -52,7 +52,7 @@
 /turf/closed/indestructible/singularity_act()
 	return
 
-/turf/closed/indestructible/attackby(obj/item/attacking_item, mob/user, params)
+/turf/closed/indestructible/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/poster) && Adjacent(user))
 		return place_poster(attacking_item, user)
 
@@ -398,3 +398,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_WALLS
+
+/turf/closed/indestructible/bingle
+	name = "Bingle Pit wall"
+	desc = "Its blue... Thats about all you can tell from it, cant destroy it."
+	icon = 'icons/turf/walls/bingle.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS
+

@@ -66,8 +66,10 @@
 	var/translate_binary = FALSE
 	/// If true, can say/hear on the special CentCom channel.
 	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
+	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from passive radio jamming effects.
 	var/syndie = FALSE
+	/// If true, ignores all radio jamming effects, including targeted disruptor waves.
+	var/ignores_radio_jammers = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -272,6 +274,8 @@
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
 
+	set_frequency(frequency)
+
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
 		return
@@ -302,7 +306,8 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -332,7 +337,7 @@
 	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !syndie)
+	if(is_within_radio_jammer_range(src) && !syndie && !ignores_radio_jammers)
 		return
 
 	// Determine the identity information which will be attached to the signal.
@@ -428,7 +433,8 @@
 
 /obj/item/radio/proc/on_recieve_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -606,7 +612,7 @@
 	to_chat(user, span_notice("You pop out the encryption key in the radio."))
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)

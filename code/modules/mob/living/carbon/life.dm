@@ -121,7 +121,8 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
-		breath_airborne_diseases()
+		if(!HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
+			breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 
@@ -300,9 +301,6 @@
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timeout)
-			dna.remove_mutation(HM.type)
 
 /**
  * Handles calling metabolization for dead people.

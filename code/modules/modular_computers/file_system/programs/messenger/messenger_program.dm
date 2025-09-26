@@ -8,14 +8,14 @@
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "command"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
-	header_program = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_TABLET
+	power_cell_use = NONE
+	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER
+	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
@@ -87,10 +87,11 @@
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
-	var/list/messengers_sorted = sort_by_job ? get_messengers_sorted_by_job() : get_messengers_sorted_by_name()
+	var/list/messengers_sorted = sort_by_job ? GLOB.pda_messengers_by_job : GLOB.pda_messengers_by_name
 
-	for(var/messenger_ref in messengers_sorted)
-		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+	for(var/datum/computer_file/program/messenger/messenger as anything in messengers_sorted)
+		if(!istype(messenger) || !istype(messenger.computer))
+			continue
 		if(messenger == src || messenger.invisible)
 			continue
 
@@ -725,6 +726,12 @@
 
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
+
+/datum/computer_file/program/messenger/proc/compare_name(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_identification, computer?.saved_identification)
+
+/datum/computer_file/program/messenger/proc/compare_job(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_job, computer?.saved_job)
 
 #undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN

@@ -113,7 +113,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, FALSE, "Config/Launch Supplypod", "Conf
 
 /datum/centcom_podlauncher/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/supplypods),
+		get_asset_datum(/datum/asset/spritesheet_batched/supplypods),
 	)
 
 /datum/centcom_podlauncher/ui_interact(mob/user, datum/tgui/ui)
@@ -175,7 +175,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, FALSE, "Config/Launch Supplypod", "Conf
 	data["soundVolume"] = temp_pod.soundVolume //Admin sound to play when the pod leaves
 	return data
 
-/datum/centcom_podlauncher/ui_act(action, params)
+/datum/centcom_podlauncher/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

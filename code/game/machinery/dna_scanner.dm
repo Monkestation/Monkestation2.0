@@ -14,7 +14,7 @@
 	var/precision_coeff
 	var/message_cooldown
 	var/breakout_time = 1200
-	var/obj/machinery/computer/scan_consolenew/linked_console = null
+	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	. = ..()
@@ -123,16 +123,16 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))//sent icon_state is irrelevant...
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()
@@ -172,6 +172,17 @@
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
 
+/obj/item/disk/data/proc/can_write(atom/source, mob/user)
+	if(read_only)
+		if(user)
+			source?.balloon_alert(user, "disk is read-only!")
+		return FALSE
+	if(length(mutations) >= max_mutations)
+		if(user)
+			source?.balloon_alert(user, "disk is full!")
+		return FALSE
+	return TRUE
+
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"
 	desc = "A debug item for genetics"
@@ -180,8 +191,8 @@
 /obj/item/disk/data/debug/Initialize(mapload)
 	. = ..()
 	// Grabs all instances of mutations and adds them to the disk
-	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
-		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
+		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)
@@ -190,4 +201,4 @@
 
 /obj/item/disk/data/examine(mob/user)
 	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	. += span_notice("The write-protect tab is set to [read_only ? "protected" : "unprotected"].")

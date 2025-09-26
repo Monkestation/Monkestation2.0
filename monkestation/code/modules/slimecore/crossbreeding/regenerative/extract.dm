@@ -31,7 +31,7 @@
 	qdel(src)
 
 /obj/item/slimecross/regenerative/proc/apply_effect(mob/living/target)
-	target.apply_status_effect(get_status_path())
+	target.apply_status_effect(get_status_path(), color)
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
 	return // handled by the status effect

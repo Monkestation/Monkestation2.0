@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 	. = ..()
 	tool.play_tool_sound(src, 100)
 	deconstruct()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window_sill/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	new /obj/item/stack/sheet/iron(drop_location())
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 		return TRUE
 	return existing_grille.rcd_act(user, the_rcd, passed_mode)
 
-/obj/structure/window_sill/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/window_sill/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/stack/stack = attacking_item
 	if((user.istate & ISTATE_HARM) || !isstack(stack))
 		return ..()

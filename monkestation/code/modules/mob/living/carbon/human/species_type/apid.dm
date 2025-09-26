@@ -23,11 +23,9 @@
 	id = SPECIES_APID
 
 	inherent_traits = list(
-		TRAIT_TACKLING_WINGED_ATTACKER,
-		TRAIT_ANTENNAE,
 		TRAIT_HAS_MARKINGS,
 	)
-	inert_mutation = /datum/mutation/human/wings
+	inert_mutation = /datum/mutation/wings
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	inherent_factions = list(FACTION_HIVE)
 

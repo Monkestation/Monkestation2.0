@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
@@ -126,13 +127,13 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/secure/loot/after_open(mob/living/user, force)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
+	var/loot = rand(1,101) //101 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
@@ -247,4 +248,6 @@
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)
 			new /obj/item/melee/skateboard/hoverboard(src)
+		if(101)
+			new /mob/living/carbon/human/species/monkey/wide(src)
 	spawned_loot = TRUE

@@ -1,7 +1,7 @@
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
 
 /datum/species/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	id = SPECIES_MONKEY
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
@@ -17,7 +17,6 @@
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_AUGMENTS,
-		TRAIT_GUN_NATURAL,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
 		//Non-Modular change: Gives Monkeys fur colors.
@@ -27,7 +26,6 @@
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list(FACTION_MONKEY)
-	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
@@ -61,15 +59,14 @@
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_on(human_who_gained_species, SPECIES_TRAIT)
-		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-		human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+		human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
-		C.dna.remove_mutation(/datum/mutation/human/race)
+		C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	C.update_mob_height()
 
 /datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)
@@ -195,7 +192,7 @@
 /obj/item/organ/internal/brain/primate //Ook Ook
 	name = "Primate Brain"
 	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE
@@ -280,15 +277,18 @@
 	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
 		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
-	human_who_gained_species.dna.add_mutation(/datum/mutation/human/clever)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in human_who_gained_species.dna.mutations)
-		mutation.mutadone_proof = TRUE
+	for(var/datum/mutation/mutation as anything in human_who_gained_species.dna.mutations)
 		mutation.instability = 0
+	human_who_gained_species.dna.update_instability()
 	human_who_gained_species.dna.species.name = "Monkey"
 	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
 
-/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/C)
+/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
+
+	human.dna.remove_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
+
 	if(!QDELETED(signer))
 		QDEL_NULL(signer)

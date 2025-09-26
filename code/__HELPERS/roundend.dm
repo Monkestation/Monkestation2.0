@@ -205,16 +205,28 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
+	if(human_mob.mind && (length(human_mob.mind.antag_datums) > 0))
 		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			if(!antag_datums.hardcore_random_bonus) //don't give bonuses to dumb stuff like revs or hypnos
+				continue
 			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
-				return FALSE // You don't get a prize if you picked your own objective, you can't fail those
+				continue // You don't get a prize if you picked your own objective, you can't fail those
+
+			var/greentexted = TRUE
 			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
-					return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
-	else if(considered_escaped(human_mob))
+					greentexted = FALSE
+					break
+
+			if(greentexted)
+				var/score = round(human_mob.hardcore_survival_score * 2)
+				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				return
+
+	if(considered_escaped(human_mob.mind))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		log_admin("[player_client] gained [round(human_mob.hardcore_survival_score)] hardcore random points.")
 
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
@@ -411,6 +423,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -433,7 +446,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
 		if(mode.roundend_threat_log.len)
 			parts += "[FOURSPACES]Threat edits:"
-			for(var/entry as anything in mode.roundend_threat_log)
+			for(var/entry in mode.roundend_threat_log)
 				parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
@@ -534,7 +547,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		var/mob/living/silicon/ai/aiPlayer = i
 		var/datum/mind/aiMind = aiPlayer.deployed_shell?.mind || aiPlayer.mind
 		if(aiMind)
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiMind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was [span_redtext("deactivated")]"] were:"
+			var/show_key = GLOB.roundend_hidden_ckeys[ckey(aiMind.key)]
+			parts += "<b>[aiPlayer.name]</b>[show_key ? " (Played by: <b>[aiMind.key]</b>)" : null]'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was [span_redtext("deactivated")]"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
@@ -545,13 +559,15 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-					parts += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " [span_redtext("(Deactivated)")]" : ""][borg_num ?", ":""]"
+					var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
+					parts += "<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null][robo.stat == DEAD ? " [span_redtext("(Deactivated)")]" : ""][borg_num ?", ":""]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
+			var/show_key = GLOB.roundend_hidden_ckeys[ckey(robo.mind.key)]
+			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b>[show_key ? " (Played by: <b>[robo.mind.key]</b>)" : null] [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)
@@ -656,7 +672,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/human_player = i
-		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+		if(!human_player.hardcore_survival_score || !considered_escaped(human_player.mind) || human_player.stat == DEAD) ///gotta escape nerd
 			continue
 		if(!human_player.mind)
 			continue
@@ -762,7 +778,12 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/jobtext = ""
 	if(!is_unassigned_job(ply.assigned_role))
 		jobtext = " the <b>[ply.assigned_role.title]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text
+	var/show_key = GLOB.roundend_hidden_ckeys[ckey(ply.key)]
+	if(show_key)
+		text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	else
+		text = "<b>[ply.name]</b>[jobtext] "
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " [span_redtext("died")]"

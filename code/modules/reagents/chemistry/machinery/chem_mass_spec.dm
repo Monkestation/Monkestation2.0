@@ -75,7 +75,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /*			beaker swapping/attack code			*/
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
@@ -304,7 +304,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return FALSE
 	if(!processing_reagents)
 		return TRUE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0

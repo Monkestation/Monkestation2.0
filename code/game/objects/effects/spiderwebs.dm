@@ -174,11 +174,11 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isspider(mover))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(!isnull(mover.pulledby) && isspider(mover.pulledby))
+	if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE

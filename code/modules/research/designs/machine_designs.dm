@@ -486,7 +486,7 @@
 	name = "DNA Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new DNA console."
 	id = "scan_console"
-	build_path = /obj/item/circuitboard/computer/scan_consolenew
+	build_path = /obj/item/circuitboard/computer/dna_console
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_GENETICS // Monkestation edit:
 	)
@@ -1206,3 +1206,14 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/station_map
+	name = "Station Map Board"
+	desc = "The circuit board for a station map Screen."
+	id = "station_map"
+	build_path = /obj/item/circuitboard/machine/station_map
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+

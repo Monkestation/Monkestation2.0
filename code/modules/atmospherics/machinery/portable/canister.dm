@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/shielding_powered = FALSE
 
-	var/obj/item/stock_parts/cell/internal_cell
+	var/obj/item/stock_parts/power_store/cell/internal_cell
 
 	var/cell_container_opened = FALSE
 
@@ -101,16 +101,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	fire = 80
 	acid = 50
 
-/obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
+/obj/machinery/portable_atmospherics/canister/Initialize(mapload)
 	. = ..()
 
 	if(mapload)
-		internal_cell = new /obj/item/stock_parts/cell/high(src)
+		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
-	if(existing_mixture)
-		air_contents.copy_from(existing_mixture)
-	else
-		create_gas()
+	create_gas()
 
 	if(ispath(gas_type, /datum/gas))
 		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
@@ -327,28 +324,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_timer = world.time + (timer_set SECONDS)
 	update_appearance()
 
-/obj/machinery/portable_atmospherics/canister/proto
-	name = "prototype canister"
-	greyscale_config = /datum/greyscale_config/prototype_canister
-	greyscale_colors = "#ffffff#a50021#ffffff"
-
-/obj/machinery/portable_atmospherics/canister/proto/default
-	name = "prototype canister"
-	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
-	volume = 5000
-	max_integrity = 300
-	temperature_resistance = 2000 + T0C
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
-	prototype = TRUE
-
-/obj/machinery/portable_atmospherics/canister/proto/default/oxygen
-	name = "prototype canister"
-	desc = "A prototype canister for a prototype bike, what could go wrong?"
-	gas_type = /datum/gas/oxygen
-	filled = 1
-	release_pressure = ONE_ATMOSPHERE*2
-
 /**
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
  * Used for canisters spawned in maps and by admins
@@ -443,8 +418,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(!cell_container_opened)
 			balloon_alert(user, "open the hatch first")
 			return
@@ -549,7 +524,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
 		var/power_consumed = power_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
+			use_energy(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE
 		else if(internal_cell?.use(power_consumed * 0.025))
 			protected_contents = TRUE
@@ -658,7 +633,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"cellCharge" = internal_cell?.percent()
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

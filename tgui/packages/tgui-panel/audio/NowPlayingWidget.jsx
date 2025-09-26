@@ -45,7 +45,7 @@ export const NowPlayingWidget = (props, context) => {
               <Section>
                 {URL !== 'Song Link Hidden' && (
                   <Flex.Item grow={1} color="label">
-                    Url: {URL}
+                    URL: <a href={URL}>{URL}</a>
                   </Flex.Item>
                 )}
                 <Flex.Item grow={1} color="label">

@@ -4,7 +4,6 @@
 /turf/open/misc
 	name = "coder/mapper fucked up"
 	desc = "report on github please"
-	icon_state = "BROKEN"
 
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST
@@ -22,16 +21,16 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
-/turf/open/misc/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/rods))
-		build_with_rods(W, user)
+	if(istype(attacking_item, /obj/item/stack/rods))
+		build_with_rods(attacking_item, user)
 		return TRUE
-	else if(istype(W, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(W, user)
+	else if(istype(attacking_item, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(attacking_item, user)
 		return TRUE
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)

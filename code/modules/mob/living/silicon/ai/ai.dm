@@ -117,6 +117,8 @@
 	///Command report cooldown
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
+	var/jobtitles = TRUE
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -199,7 +201,7 @@
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED, TRAIT_SILICON_EMOTES_ALLOWED), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -1218,4 +1220,12 @@
 		return ai_voicechanger.say_name
 	return
 
+/mob/living/silicon/ai/verb/jobtitles()
+	set category = "AI Commands"
+	set name = "Toggle Jobtitle Display"
+
+	if(incapacitated())
+		return
+	jobtitles = !jobtitles
+	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
 #undef CALL_BOT_COOLDOWN

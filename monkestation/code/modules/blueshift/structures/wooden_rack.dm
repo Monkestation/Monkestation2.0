@@ -15,7 +15,7 @@
 	object.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
 	object.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
 
-/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/structure/rack/wooden/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
 /obj/structure/rack/wooden/crowbar_act(mob/living/user, obj/item/tool)

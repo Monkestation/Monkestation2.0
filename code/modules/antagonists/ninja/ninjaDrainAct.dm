@@ -80,13 +80,13 @@
 	hacking_module.charge_message(src, drain_total)
 
 //CELL//
-/obj/item/stock_parts/cell/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/obj/item/stock_parts/power_store/cell/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
 	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/item/stock_parts/cell/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+/obj/item/stock_parts/power_store/cell/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/drain_total = 0
 	if(charge && !do_after(ninja, 3 SECONDS, target = src))
 		drain_total = charge
@@ -158,6 +158,7 @@
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
+	update_all_security_huds()
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
@@ -313,12 +314,16 @@
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	//Default cell = 10,000 charge, 10,000/1000 = 10 uses without charging/upgrading
+	//20 uses for a standard cell. 200 for high capacity cells.
 	if(hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN*10))
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		spark_system.start()
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
-		Knockdown(3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(ninja_knockdown)), 0.3 SECONDS)
 	return NONE
+
+/mob/living/carbon/proc/ninja_knockdown()
+	Knockdown(3 SECONDS)
+	set_jitter_if_lower(3 SECONDS)

@@ -334,6 +334,7 @@ ADMIN_VERB(give_spell, R_FUN, FALSE, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, AD
 
 	if(robeless)
 		new_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+		new_spell.bypass_cost = TRUE //breaks balance, but allows non darkspawns to use darkspawn abilities
 
 	new_spell.Grant(spell_recipient)
 
@@ -406,12 +407,14 @@ ADMIN_VERB(populate_world, R_DEBUG, FALSE, "Populate World", "Populate the world
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 ADMIN_VERB(toggle_ai_interact, R_ADMIN, FALSE, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
-	user.AI_Interact = !user.AI_Interact
-	if(user.mob && isAdminGhostAI(user.mob))
-		user.mob.has_unlimited_silicon_privilege = user.AI_Interact
+	var/doesnt_have_silicon_access = !HAS_TRAIT_FROM(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	if(doesnt_have_silicon_access)
+		ADD_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	else
+		REMOVE_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
 
-	log_admin("[key_name(user)] has [user.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(user)] has [user.AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] their AI interaction")
 
 ADMIN_VERB(debug_statpanel, R_DEBUG, FALSE, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
@@ -582,3 +585,30 @@ ADMIN_VERB(create_mob_worm, R_FUN, FALSE, "Create Mob Worm", "Attach a linked li
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+
+ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, FALSE, "Clear Legacy Asset Cache", "Clears the legacy asset cache, regenerating it immediately (may cause lag).", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/cache_assets))
+		to_chat(user, span_warning("Asset caching is disabled in the config!"))
+		return
+	var/regenerated = 0
+	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
+		if(!initial(target_spritesheet.cross_round_cachable))
+			continue
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
+		asset_datum.regenerate()
+		regenerated++
+	to_chat(user, span_notice("Regenerated [regenerated] asset\s."))
+
+ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, FALSE, "Clear Smart Asset Cache", "Clear the smart asset cache, causing it to regenerate next round.", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/smart_cache_assets))
+		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
+		return
+	var/cleared = 0
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
+		cleared++
+	to_chat(user, span_notice("Cleared [cleared] asset\s."))

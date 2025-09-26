@@ -314,6 +314,7 @@
 		harvest_counter++
 		if(istype(item_grown))
 			product_name = item_grown.seed.plantname
+	user.log_message("harvested [harvest_amount] of [product_name] (with [seed_counter] seeds)", LOG_GAME)
 	if(harvest_amount >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result
@@ -562,7 +563,7 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(O))
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
 		if(isnull(choice))
 			return

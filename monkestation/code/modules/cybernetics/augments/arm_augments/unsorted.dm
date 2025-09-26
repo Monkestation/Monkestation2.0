@@ -18,7 +18,7 @@
 	///The amount of damage dealt by the empowered attack.
 	var/punch_damage = 5
 	///Biotypes we apply an additional amount of damage too
-	var/biotype_bonus_targets = MOB_BEAST | MOB_EPIC
+	var/biotype_bonus_targets = MOB_BEAST | MOB_EPIC | MOB_MINING
 	///Extra damage dealt to our targeted mobs
 	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
@@ -84,7 +84,7 @@
 	if(!isliving(target))
 		return NONE
 	var/datum/dna/dna = source.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return NONE
 	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		return NONE

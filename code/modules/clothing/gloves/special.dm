@@ -88,7 +88,7 @@
 	strip_delay = 60
 	armor_type = /datum/armor/captain_gloves
 	resistance_flags = NONE
-	clothing_traits = list(TRAIT_FAST_CUFFING)
+	clothing_traits = list(TRAIT_FAST_CUFFING, TRAIT_CAN_SIGN_ON_COMMS)
 
 /datum/armor/captain_gloves
 	bio = 90

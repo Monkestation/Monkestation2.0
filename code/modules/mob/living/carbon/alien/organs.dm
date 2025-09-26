@@ -51,6 +51,8 @@
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
+	if(owner.on_fire)
+		return
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
@@ -104,13 +106,13 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
-	organ_owner.grant_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
+	organ_owner.grant_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	if(!QDELING(organ_owner))
-		organ_owner.remove_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
+		organ_owner.remove_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

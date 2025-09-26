@@ -20,13 +20,13 @@
 	open_machine()
 	update_appearance()
 
-/obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+/obj/machinery/hypnochair/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		update_appearance()
 		return
-	if(default_pry_open(I))
+	if(default_pry_open(attacking_item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -56,7 +56,7 @@
 
 	return data
 
-/obj/machinery/hypnochair/ui_act(action, params)
+/obj/machinery/hypnochair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -115,7 +115,7 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE

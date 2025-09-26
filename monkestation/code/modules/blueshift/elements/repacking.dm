@@ -63,12 +63,7 @@
 		new_pack.after_set()
 	else
 		new item_to_pack_into(source.drop_location())
-
-	if(istype(source, /obj))
-		var/obj/source_object = source
-		source_object.deconstruct(TRUE)
-	else
-		qdel(source)
+	qdel(source)
 
 /// Adds screen context for hovering over the repackable items with your mouse
 /datum/element/repackable/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)

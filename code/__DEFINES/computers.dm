@@ -5,10 +5,12 @@
 
 #define CATEGORY_GOLEM "Golem"
 #define CATEGORY_MINING "Mining"
-#define CATEGORY_CONSUMABLES "Consumables"
-#define CATEGORY_TOYS_DRONE "Toys & Drones"
+#define CATEGORY_SURVIVAL "Survival"
+#define CATEGORY_CRUSHER "Crushers"
 #define CATEGORY_PKA "PKAs"
+#define CATEGORY_WASTE_WEAPON "Wasteland Weapons"
 #define CATEGORY_BEPIS "Bepis Tech"
+#define CATEGORY_EXTRA "Extra"
 #define CATEGORY_BITRUNNING_FLAIR "Misc"
 #define CATEGORY_BITRUNNING_TECH "Tech"
 #define CATEGORY_BITRUNNING_COMBAT_GEAR "Combat gear" // monkeystation addition: bitrunning tech split up

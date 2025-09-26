@@ -1204,13 +1204,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "da" = (
-/obj/item/sbeacondrop/bomb{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/sbeacondrop/bomb{
-	pixel_x = -4
-	},
 /obj/structure/table/reinforced,
 /obj/item/radio/headset/syndicate/alt{
 	pixel_x = 4;
@@ -1224,11 +1217,11 @@
 	pixel_x = 32
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/multitool,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
@@ -1294,10 +1287,6 @@
 "dj" = (
 /obj/item/grenade/syndieminibomb{
 	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/grenade/syndieminibomb{
-	pixel_x = -4;
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
@@ -1532,15 +1521,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "dK" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "dL" = (

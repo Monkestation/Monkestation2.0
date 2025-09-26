@@ -133,7 +133,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(user.loc)
 
 	spare.underwear = "Nude"
-	user.dna.transfer_identity(spare, transfer_SE = TRUE)
+	user.dna.copy_dna(spare.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	var/datum/color_palette/generic_colors/palette = spare.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 	spare.real_name = spare.dna.real_name

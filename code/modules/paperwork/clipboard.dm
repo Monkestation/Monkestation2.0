@@ -3,7 +3,7 @@
  */
 /obj/item/clipboard
 	name = "clipboard"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "clipboard"
 	inhand_icon_state = "clipboard"
 	worn_icon_state = "clipboard"
@@ -148,7 +148,7 @@
 
 	return data
 
-/obj/item/clipboard/ui_act(action, params)
+/obj/item/clipboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

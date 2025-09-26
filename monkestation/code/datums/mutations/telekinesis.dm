@@ -1,13 +1,13 @@
-/datum/mutation/human/telekinesis
+/datum/mutation/telekinesis
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/telekinesis/modify()
+/datum/mutation/telekinesis/setup()
 	. = ..()
 	if(owner && GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.update_mutations_overlay()
 
-/datum/mutation/human/telekinesis/get_visual_indicator()
+/datum/mutation/telekinesis/get_visual_indicator()
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1) // Stealth
 		return FALSE
 	return visual_indicators[type][1]
@@ -25,7 +25,7 @@
 	if(!.)
 		return
 
-	var/datum/mutation/human/telekinesis/telekinesis = locate(/datum/mutation/human/telekinesis) in tk_user.dna.mutations
+	var/datum/mutation/telekinesis/telekinesis = locate(/datum/mutation/telekinesis) in tk_user.dna.mutations
 	if(!telekinesis)
 		return
 

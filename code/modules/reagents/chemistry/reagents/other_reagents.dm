@@ -265,13 +265,6 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
-	if(isoozeling(exposed_mob))
-		if(HAS_TRAIT(exposed_mob, TRAIT_SLIME_HYDROPHOBIA))
-			to_chat(exposed_mob, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
-			return
-		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
-		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
-
 	//MONKESTATION EDIT START
 	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
 		return
@@ -429,8 +422,10 @@
 	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
-	if(!data)
+	if(!islist(data))
 		data = list("misc" = 0)
+	else if(!IS_SAFE_NUM(data["misc"]))
+		data["misc"] = 0
 
 	data["misc"] += seconds_per_tick SECONDS * REM
 	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
@@ -1352,6 +1347,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
 	liquid_fire_power = 25
+	synthetic_boozepwr = 25
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1853,6 +1849,7 @@
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/oil
 	liquid_fire_power = 15
+	synthetic_boozepwr = 0
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -2142,6 +2139,8 @@
 	reagent_state = LIQUID
 	color = "#E7EA91"
 	taste_description = "acid"
+	process_flags = ORGANIC | SYNTHETIC
+	synthetic_boozepwr = 50
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2160,8 +2159,10 @@
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#AF14B7"
+	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "acid"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	synthetic_boozepwr = 90
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -2739,7 +2740,7 @@
 		return
 
 	var/metal_amount = 0
-	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	var/list/materials_to_transmute = A.get_material_composition()
 	for(var/metal_key in materials_to_transmute) //list with what they're made of
 		metal_amount += materials_to_transmute[metal_key]
 
@@ -2749,7 +2750,6 @@
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
-	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"

@@ -383,3 +383,8 @@
 	results = list(/datum/reagent/consumable/sugar = 1)
 	required_reagents = list(/datum/reagent/medicine/coagulant/seraka_extract = 1, /datum/reagent/lye = 1)
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/medicine/robopiates
+	results = list(/datum/reagent/medicine/painkiller/robopiates = 3)
+	required_reagents = list(/datum/reagent/silver = 1, /datum/reagent/dinitrogen_plasmide = 1, /datum/reagent/acetone = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_DRUG

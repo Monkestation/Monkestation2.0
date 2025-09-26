@@ -126,15 +126,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
 		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
 	else
-		// We are probably running in real CI, so just pretend it worked and move on
+#ifdef CIBUILDING
+		// We are runing in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+#else
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+#endif
+
 
 /// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
 /datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
@@ -259,6 +262,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
 		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
 		/obj/effect/ghost_arena_corner, // this is used to mark two corners of the ghost arena at centcom, and should never be created outside of the two instances mapped in there
+		// THESE WILL EAT OTHER ITEMS AND ALSO LAZYLOAD AN AREA
+		/obj/structure/bingle_hole,
+		/obj/structure/bingle_pit_overlay,
 		// monkestation end
 	)
 	//Say it with me now, type template

@@ -46,7 +46,7 @@
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
 	pin = /obj/item/firing_pin/implant/pindicate
-	
+
 /obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(select == 1)
 		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
@@ -68,6 +68,9 @@
 /obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
 	return
 
+/obj/item/gun/energy/e_gun/advtaser/cyborg/give_manufacturer_examine()
+	return
+
 /obj/item/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
@@ -82,6 +85,9 @@
 		light_overlay = "flight", \
 		overlay_x = 15, \
 		overlay_y = 10)
+
+/obj/item/gun/energy/disabler/cargo
+	pin = /obj/item/firing_pin/cargo/unremovable
 
 /obj/item/gun/energy/disabler/smg
 	name = "disabler smg"
@@ -108,6 +114,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	cyborg_cost_multiplier = 15
 
 /obj/item/gun/energy/disabler/cyborg/emp_act()
 	return

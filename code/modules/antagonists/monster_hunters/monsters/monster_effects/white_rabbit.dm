@@ -96,10 +96,11 @@
 	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new(user)
 	silverblood.StartCooldown()
 	silverblood.Grant(user)
+	hunter_antag.powers += silverblood
 
 /// Janky workaround to avoid the 512x512 sprite always occuping the user's right click menu
 /obj/effect/bnnuy/proc/update_mouse_opacity(mob/living/user)
-	if(in_view_range(user, src, TRUE) && can_see(user, src))
+	if(CAN_THEY_SEE(user, src) && can_see(user, src))
 		mouse_opacity = MOUSE_OPACITY_ICON
 	else
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT

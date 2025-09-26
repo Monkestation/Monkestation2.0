@@ -5,6 +5,7 @@
 	inhand_icon_state = "space_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	armor_type = /datum/armor/space_syndicate
+	slowdown = 0.25
 
 /datum/armor/space_syndicate
 	melee = 40
@@ -69,9 +70,9 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 		/obj/item/storage/belt/holster/energy,
 	) //monkestation edit: updated list
 	armor_type = /datum/armor/space_syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
-	slowdown = 0 //monkestation edit: syndicate have a theme of no slowdown on their gear. e.g: syndicate duffel bags
+	slowdown = 0.25 //monkestation edit: syndicate have a theme of no slowdown on their gear. e.g: syndicate duffel bags
 
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green

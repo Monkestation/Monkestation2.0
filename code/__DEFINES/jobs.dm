@@ -44,6 +44,7 @@
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
 #define JOB_BLUESHIELD "Blueshield" //Monke edit
+#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -137,6 +138,7 @@
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE 2.25 //monkestation edit: nanotrasen representative
 #define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
+#define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 2.75 // modularisation is dead but monke addition still
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5

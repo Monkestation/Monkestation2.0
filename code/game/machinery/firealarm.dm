@@ -341,6 +341,7 @@
 		return
 	. = ..()
 	add_fingerprint(user)
+	play_click_sound(SFX_BUTTON)
 	if(my_area.fire)
 		reset(user)
 		return

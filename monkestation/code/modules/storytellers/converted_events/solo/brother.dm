@@ -3,7 +3,7 @@
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
 	typepath = /datum/round_event/antagonist/solo/brother
-	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG)
+	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG, TAG_MUNDANE)
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
 	weight = 10
 	required_enemies = 1
@@ -27,6 +27,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	restricted_roles = list(
 		JOB_AI,

@@ -20,57 +20,57 @@
 	color = blood_color
 	icon_state = "[splatter_type][pick(1, 2, 3, 4, 5, 6)]"
 	. = ..()
-	var/target_pixel_x = 0
-	var/target_pixel_y = 0
+	var/target_pixel_x = pixel_x
+	var/target_pixel_y = pixel_y
 	switch(angle)
 		if(0, 360)
-			target_pixel_x = 0
-			target_pixel_y = 8
+			target_pixel_x += 0
+			target_pixel_y += 8
 		if(1 to 44)
-			target_pixel_x = round(4 * ((angle) / 45))
-			target_pixel_y = 8
+			target_pixel_x += round(4 * ((angle) / 45))
+			target_pixel_y += 8
 		if(45)
-			target_pixel_x = 8
-			target_pixel_y = 8
+			target_pixel_x += 8
+			target_pixel_y += 8
 		if(46 to 89)
-			target_pixel_x = 8
-			target_pixel_y = round(4 * ((90 - angle) / 45))
+			target_pixel_x += 8
+			target_pixel_y += round(4 * ((90 - angle) / 45))
 		if(90)
-			target_pixel_x = 8
-			target_pixel_y = 0
+			target_pixel_x += 8
+			target_pixel_y += 0
 		if(91 to 134)
-			target_pixel_x = 8
-			target_pixel_y = round(-3 * ((angle - 90) / 45))
+			target_pixel_x += 8
+			target_pixel_y += round(-3 * ((angle - 90) / 45))
 		if(135)
-			target_pixel_x = 8
-			target_pixel_y = -6
+			target_pixel_x += 8
+			target_pixel_y += -6
 		if(136 to 179)
-			target_pixel_x = round(4 * ((180 - angle) / 45))
-			target_pixel_y = -6
+			target_pixel_x += round(4 * ((180 - angle) / 45))
+			target_pixel_y += -6
 		if(180)
-			target_pixel_x = 0
-			target_pixel_y = -6
+			target_pixel_x += 0
+			target_pixel_y += -6
 		if(181 to 224)
-			target_pixel_x = round(-6 * ((angle - 180) / 45))
-			target_pixel_y = -6
+			target_pixel_x += round(-6 * ((angle - 180) / 45))
+			target_pixel_y += -6
 		if(225)
-			target_pixel_x = -6
-			target_pixel_y = -6
+			target_pixel_x += -6
+			target_pixel_y += -6
 		if(226 to 269)
-			target_pixel_x = -6
-			target_pixel_y = round(-6 * ((270 - angle) / 45))
+			target_pixel_x += -6
+			target_pixel_y += round(-6 * ((270 - angle) / 45))
 		if(270)
-			target_pixel_x = -6
-			target_pixel_y = 0
+			target_pixel_x += -6
+			target_pixel_y += 0
 		if(271 to 314)
-			target_pixel_x = -6
-			target_pixel_y = round(8 * ((angle - 270) / 45))
+			target_pixel_x += -6
+			target_pixel_y += round(8 * ((angle - 270) / 45))
 		if(315)
-			target_pixel_x = -6
-			target_pixel_y = 8
+			target_pixel_x += -6
+			target_pixel_y += 8
 		if(316 to 359)
-			target_pixel_x = round(-6 * ((360 - angle) / 45))
-			target_pixel_y = 8
+			target_pixel_x += round(-6 * ((360 - angle) / 45))
+			target_pixel_y += 8
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Destroy()
@@ -103,14 +103,14 @@
 	switch(newdir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			pixel_x = rand(-3,3)
-			pixel_y = rand(4,6)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(4,6)
 		if(SOUTH)
-			pixel_x = rand(-3,3)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(-1,1)
 		else
-			pixel_x = rand(-1,1)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-1,1)
+			pixel_y += rand(-1,1)
 	..()
 
 /obj/effect/temp_visual/dir_setting/firing_effect/energy
@@ -284,7 +284,7 @@
 	icon_state = "3"
 	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
-	duration = 10
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
@@ -293,7 +293,17 @@
 /obj/effect/temp_visual/revenant/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
-	duration = 6
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/revenant/cracks/glow
+
+/obj/effect/temp_visual/revenant/cracks/glow/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/revenant/cracks/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/temp_visual/gravpush
 	name = "gravity wave"
@@ -664,4 +674,20 @@
 	icon_state = "jet_plume"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "big_slash"
+	pixel_x = -32
+	pixel_y = -32
+	duration = 0.3 SECONDS
+	light_power = 0
+	light_on = 0
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/semicircle
+	icon_state = "big_slash_180"
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
+	icon_state = "big_slash_360"
 	duration = 0.4 SECONDS

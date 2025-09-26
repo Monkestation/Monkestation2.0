@@ -1,4 +1,4 @@
-/datum/mutation/human/spores
+/datum/mutation/spores
 	name = "Agaricale Pores" // Pores, not spores. ITS NOT SPORES!!!!!
 	desc = "An ancient mutation found in floran DNA that allows the user to emit spores."
 	locked = TRUE
@@ -32,7 +32,7 @@
 	playsound(cast_on, 'sound/effects/smoke.ogg', 50, 1, -3)
 	return TRUE
 
-/datum/mutation/human/sapblood
+/datum/mutation/sapblood
 	name = "Sap blood"
 	desc = "A mutation that causes the hosts blood to thicken, almost like sap, bleeding less and coagulating faster."
 	locked = TRUE
@@ -47,15 +47,15 @@
 	/// We reduce all bleeding by this factor whilst active
 	var/passive_bleed_modifier = 0.8
 
-/datum/mutation/human/sapblood/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/sapblood/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_COAGULATING, GENETIC_MUTATION)
 	owner.physiology?.bleed_mod *= passive_bleed_modifier
 
-/datum/mutation/human/sapblood/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/sapblood/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -65,12 +65,12 @@
 	if(GET_MUTATION_ENERGY(src) < 1)
 		owner.physiology?.bleed_mod *= 0.9
 
-/datum/mutation/human/sapblood/modify()
+/datum/mutation/sapblood/setup()
 	. = ..()
 	if(owner && GET_MUTATION_ENERGY(src) < 1) // And this is where this turns from a helpfull mutation into murder
 		owner.physiology?.bleed_mod /= 0.9
 
-/datum/mutation/human/sapblood/on_life(seconds_per_tick, times_fired)
+/datum/mutation/sapblood/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !length(owner.all_wounds))
 		return

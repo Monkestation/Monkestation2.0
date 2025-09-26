@@ -87,6 +87,10 @@
 	if(body.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = body.get_bodypart(pick(limbs_to_consume))
+	for(var/obj/item/organ/internal/organ in body.get_organs_for_zone(consumed_limb.body_zone))
+		organ.Remove(body)
+		if(!QDELETED(organ))
+			organ.forceMove(body.drop_location())
 	consumed_limb.drop_limb()
 	to_chat(body, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
@@ -120,6 +124,8 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
+	if(!do_after(H, 2 SECONDS))
+		return
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
 		if((BODY_ZONE_HEAD in limbs_to_heal) && istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
@@ -176,7 +182,7 @@
 	if(!isnull(user.legcuffed))
 		possible_limbs -= list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/retractable_limbs = list()
-	for(var/zone as anything in possible_limbs)
+	for(var/zone in possible_limbs)
 		var/obj/item/bodypart/limb = user.get_bodypart(zone)
 		if(!isnull(limb))
 			retractable_limbs[limb] = limb.appearance
@@ -185,8 +191,16 @@
 	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
 	if(isnull(selected_limb))
 		return
+	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
+		organ.Remove(user)
+		if(!QDELETED(organ))
+			organ.forceMove(user.drop_location())
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	var/brute = selected_limb.brute_dam
+	var/burn = selected_limb.burn_dam
 	selected_limb.drop_limb()
 	qdel(selected_limb)
+	chest?.receive_damage(brute, burn, forced = TRUE, wound_bonus = CANT_WOUND)
 	user.blood_volume += 20
 	playsound(user, 'sound/items/eatfood.ogg', 20, TRUE)
 

@@ -28,6 +28,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
+		list("Prosthetic Organ", "Tin Man", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Gigantism", "Dwarfism"),
@@ -48,8 +49,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia","Hyperalgesia"),
+		list("Hypoalgesia", "Hyperalgesia", "Analgesia"),
 		list("Kakologophobia", "Easily Offended"),
+		list("Paraplegic", "Hemiplegic", "Monoplegic"),
+		list("Prosthetic Limb", "Monoplegic"),
 		//MONKESTATION ADDITION END
 	)
 

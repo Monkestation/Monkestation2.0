@@ -17,4 +17,6 @@
 	anomaly_path = /obj/effect/anomaly/clown
 
 /datum/round_event/anomaly/anomaly_clown/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("There should be clowns. Where are the clowns? [impact_area.name]. Send in the clowns.", "Anomaly Alert", SSstation.announcer.get_rand_alert_sound())

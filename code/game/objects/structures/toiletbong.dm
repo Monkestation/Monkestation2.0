@@ -107,7 +107,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/toiletbong/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/emag))
+/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/card/emag))
 		return
 	. = ..()

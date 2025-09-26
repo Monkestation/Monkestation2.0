@@ -1518,8 +1518,13 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/computer/records/security/laptop/syndie,
 /obj/structure/sign/poster/official/state_laws/directional/north,
+/obj/structure/fluff{
+	name = "security laptop";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "laptop";
+	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "mI" = (

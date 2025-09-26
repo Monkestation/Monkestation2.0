@@ -104,7 +104,7 @@
 	. = ..()
 	if(visualsOnly)
 		return
-	bum.dna.add_mutation(/datum/mutation/human/stoner)
+	bum.dna.add_mutation(/datum/mutation/stoner, MUTATION_SOURCE_GHOST_ROLE)
 
 /datum/outfit/beachbum/lifeguard
 	name = "Beach Lifeguard"
@@ -280,7 +280,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"

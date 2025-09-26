@@ -31,19 +31,15 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
-		return ..()
-
-	if(can_perform_surgery(user, params))
-		return TRUE
-
-	for(var/i in shuffle(all_wounds))
-		var/datum/wound/wound = i
-		if(wound.try_treating(item, user))
-			return TRUE
-
-	return ..()
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
+	for(var/datum/wound/wound as anything in shuffle(all_wounds))
+		if(wound.try_treating(tool, user))
+			return ITEM_INTERACT_SUCCESS
+	return .
 
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()
@@ -53,6 +49,8 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
@@ -287,6 +285,8 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, I) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [I]!"))
 		return
@@ -770,7 +770,7 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
+	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -1278,7 +1278,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.get_modified_bleed_rate())
+		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
@@ -1287,7 +1287,7 @@
 		return 0
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		total_bleed_rate += part.get_modified_bleed_rate()
+		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
 
@@ -1363,10 +1363,14 @@
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE
-	. = handcuffed
+	var/old_value = handcuffed
 	handcuffed = new_value
-	if(.)
+	if(old_value)
 		if(!handcuffed)
+
+			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+				src.remove_status_effect(/datum/status_effect/silver_cuffed)
+
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
