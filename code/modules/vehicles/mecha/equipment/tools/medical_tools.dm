@@ -230,7 +230,7 @@
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
 	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
@@ -476,7 +476,7 @@
 	var/amount = seconds_per_tick * synth_speed / LAZYLEN(processed_reagents)
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
-		chassis.use_power(energy_drain)
+		chassis.use_energy(energy_drain)
 
 #undef FIRE_SYRINGE_MODE
 #undef ANALYZE_SYRINGE_MODE
@@ -517,3 +517,11 @@
 	STOP_PROCESSING(SSobj, src)
 	medigun.LoseTarget()
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
+	name = "mounted stretcher"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_mounted_stretcher"
+	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
+	inject_amount = 0
+	mech_flags = EXOSUIT_MODULE_AMBULANCE

@@ -14,10 +14,6 @@
 	item_type = /obj/item/storage/box/canopic_box/stocked
 	cost = PAYCHECK_COMMAND * 7
 
-/datum/armament_entry/company_import/kemetek/medical_tools/sarcophagusroyale
-	item_type = /obj/structure/closet/crate/coffin/sarcophagus
-	cost = PAYCHECK_COMMAND * 5
-
 /datum/armament_entry/company_import/kemetek/medical_tools/fidget
 	item_type = /obj/item/organ/internal/appendix/fidgetappendix
 	cost = PAYCHECK_COMMAND * 3

@@ -5,6 +5,15 @@
 // may be opened to change power cell
 // three different channels (lighting/equipment/environ) - may each be set to on, off, or auto
 
+///Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
+#define CHARGELEVEL 0.01
+///Charge percentage at which the lights channel stops working
+#define APC_CHANNEL_LIGHT_TRESHOLD 15
+///Charge percentage at which the equipment channel stops working
+#define APC_CHANNEL_EQUIP_TRESHOLD 30
+///Charge percentage at which the APC icon indicates discharging
+#define APC_CHANNEL_ALARM_TRESHOLD 75
+
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
@@ -17,6 +26,7 @@
 	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	processing_flags = START_PROCESSING_MANUALLY
 
 	///Range of the light emitted when on
 	var/light_on_inner_range = 0.5
@@ -26,11 +36,11 @@
 	///Mapper helper to tie an apc to another area
 	var/areastring = null
 	///Reference to our internal cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Initial cell charge %
 	var/start_charge = 90
 	///Type of cell we start with
-	var/cell_type = /obj/item/stock_parts/cell/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
@@ -45,10 +55,10 @@
 	var/operating = TRUE
 	///State of the apc charging (not charging, charging, fully charged)
 	var/charging = APC_NOT_CHARGING
+	///Previous state of charging, to detect the change
+	var/last_charging
 	///Can the APC charge?
 	var/chargemode = TRUE
-	///Number of ticks where the apc is trying to recharge
-	var/chargecount = 0
 	///Is the apc interface locked?
 	var/locked = TRUE
 	///Is the apc cover locked?
@@ -65,6 +75,8 @@
 	var/lastused_environ = 0
 	///Total amount of power used by the three channels
 	var/lastused_total = 0
+	///Total amount of power put into the battery
+	var/lastused_charge = 0
 	///State of the apc external power (no power, low power, has power)
 	var/main_status = APC_NO_POWER
 	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
@@ -72,6 +84,8 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
+	///Counter for displaying the hacked overlay to mobs within view
+	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -126,6 +140,8 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
+	///When did the apc generate last malf ai processing time.
+	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -139,6 +155,11 @@
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
+	//APCs get added to their own processing tasks for the machines subsystem.
+	if (!(datum_flags & DF_ISPROCESSING))
+		datum_flags |= DF_ISPROCESSING
+		SSmachines.processing_apcs += src
+
 	//Pixel offset its appearance based on its direction
 	dir = ndir
 	switch(dir)
@@ -321,10 +342,11 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
+		"chargingPowerDisplay" = display_power(area.energy_usage[AREA_USAGE_APC_CHARGE]),
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = HAS_SILICON_ACCESS(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
@@ -396,16 +418,17 @@
 	if(!QDELETED(remote_control_user) && user == remote_control_user)
 		. = UI_INTERACTIVE
 
-/obj/machinery/power/apc/ui_act(action, params)
+/obj/machinery/power/apc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/user = ui.user
 
-	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	if(. || !can_use(user, 1) || (locked && !HAS_SILICON_ACCESS(user) && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(user))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
-					to_chat(usr, span_warning("The APC does not respond to the command!"))
+					to_chat(user, span_warning("The APC does not respond to the command!"))
 				else
 					locked = !locked
 					update_appearance()
@@ -414,10 +437,10 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
-			toggle_breaker(usr)
+			toggle_breaker(user)
 			. = TRUE
 		if("toggle_nightshift")
-			toggle_nightshift_lights(usr)
+			toggle_nightshift_lights(user)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -440,17 +463,17 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(user))
 				overload_lighting()
 				. = TRUE
 		if("hack")
-			if(get_malf_status(usr))
-				malfhack(usr)
+			if(get_malf_status(user))
+				malfhack(user)
 		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
+			if(get_malf_status(user))
+				malfoccupy(user)
 		if("deoccupy")
-			if(get_malf_status(usr))
+			if(get_malf_status(user))
 				malfvacate()
 		if("reboot")
 			failure_timer = 0
@@ -473,7 +496,31 @@
 	if(user == remote_control_user)
 		disconnect_remote_access()
 
-/obj/machinery/power/apc/process()
+/**
+ * APC early processing. This gets processed after any other machine on the powernet does.
+ * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
+ */
+/obj/machinery/power/apc/proc/early_process()
+	if(!QDELETED(cell) && cell.charge < cell.maxcharge)
+		last_charging = charging
+		charging = APC_NOT_CHARGING
+	if(isnull(area))
+		return
+
+	var/total_static_energy_usage = 0
+	if(operating)
+		total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
+	area.clear_usage()
+
+	if(total_static_energy_usage) //Use power from static power users.
+		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
+		terminal?.add_load(grid_used)
+		if(total_static_energy_usage > grid_used && !QDELETED(cell))
+			cell.use(total_static_energy_usage - grid_used, force = TRUE)
+
+/obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
@@ -485,67 +532,44 @@
 		force_update = TRUE
 		return
 
-	//dont use any power from that channel if we shut that power channel off
-	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
-	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.power_usage[AREA_USAGE_EQUIP] + area.power_usage[AREA_USAGE_STATIC_EQUIP] : 0
-	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.power_usage[AREA_USAGE_ENVIRON] + area.power_usage[AREA_USAGE_STATIC_ENVIRON] : 0
-	area.clear_usage()
+	if((obj_flags & EMAGGED) || malfai)
+		hacked_flicker_counter = hacked_flicker_counter - 1
+		if(hacked_flicker_counter <= 0)
+			flicker_hacked_icon()
 
-	lastused_total = lastused_light + lastused_equip + lastused_environ
+	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES) > 0 && malfai.malf_picker.processing_time < MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
+		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
+		malfai.malf_picker.processing_time += 1
+
+	//dont use any power from that channel if we shut that power channel off
+	if(operating)
+		lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
+		lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
+		lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	else
+		lastused_light = 0
+		lastused_equip = 0
+		lastused_environ = 0
+
+	lastused_charge = charging == APC_CHARGING ? area.energy_usage[AREA_USAGE_APC_CHARGE] : 0
+
+	lastused_total = lastused_light + lastused_equip + lastused_environ + lastused_charge
 
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
-	var/last_ch = charging
-
 	var/excess = surplus()
 
 	if(!avail())
 		main_status = APC_NO_POWER
-	else if(excess < 0)
+	else if(excess <= 0)
 		main_status = APC_LOW_POWER
 	else
 		main_status = APC_HAS_POWER
 
-	var/cellused
-	if(cell && !shorted)
-		// draw power from cell as before to power the area
-		cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
-		cell.use(cellused)
-
-	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after use().
-		if(excess > lastused_total) // if power excess recharge the cell
-										// by the same amount just used
-			cell.give(cellused)
-			if(cell) //make sure the cell didn't expode and actually used power.
-				add_load(cellused WATTS) // add the load used to recharge the cell
-
-
-		else // no excess, and not enough per-apc
-			if((cell.charge WATTS + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + excess JOULES) //recharge with what we can
-				add_load(excess) // so draw what we can from the grid
-				charging = APC_NOT_CHARGING
-
-			else // not enough power available to run the last tick!
-				charging = APC_NOT_CHARGING
-				chargecount = 0
-				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
-				equipment = autoset(equipment, AUTOSET_FORCE_OFF)
-				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
-				environ = autoset(environ, AUTOSET_FORCE_OFF)
-
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
-
 		// set channels depending on how much charge we have left
-
-		// Allow the APC to operate as normal if the cell can charge
-		if(charging && long_term_power < 10)
-			long_term_power += 1
-		else if(long_term_power > -10)
-			long_term_power -= 2
-
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -554,7 +578,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 15 && long_term_power < 0) // <15%, turn off lighting & equipment
+		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -562,7 +586,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < 30 && long_term_power < 0) // <30%, turn off equipment
+		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -578,66 +602,56 @@
 				low_power_nightshift_lights = FALSE
 				if(!SSnightshift.nightshift_active)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
-			if(cell.percent() > 75)
+			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
-
-		// now trickle-charge the cell
-		if(chargemode && charging == APC_CHARGING && operating)
-			if(excess > 0) // check to make sure we have enough to charge
-				// Max charge is capped to % per second constant
-				var/ch = min(excess JOULES, cell.maxcharge JOULES)
-				add_load(ch WATTS) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-			else
-				charging = APC_NOT_CHARGING // stop charging
-				chargecount = 0
-
-		// show cell as fully charged if so
-		if(cell.charge >= cell.maxcharge)
-			cell.charge = cell.maxcharge
-			charging = APC_FULLY_CHARGED
-
-		if(chargemode)
-			if(!charging)
-				if(excess > cell.maxcharge*GLOB.CHARGELEVEL)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = APC_CHARGING
-
-		else // chargemode off
-			charging = APC_NOT_CHARGING
-			chargecount = 0
-
-		//clock cult stuff
-		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
-			var/power_delta = clamp(cell.charge - 7, 0, 7)
-			SSthe_ark.adjust_clock_power(power_delta / 7, TRUE)
-			cell.charge -= power_delta
-
 	else // no cell, switch everything off
-
 		charging = APC_NOT_CHARGING
-		chargecount = 0
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
 		alarm_manager.send_alarm(ALARM_POWER)
 
 	// update icon & area power if anything changed
-
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
 		force_update = FALSE
 		queue_icon_update()
 		update()
-	else if(last_ch != charging)
+	else if(charging != last_charging)
 		queue_icon_update()
+
+// charge until the battery is full or to the treshold of the provided channel
+/obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
+	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
+		return
+
+	// no overcharge past the next treshold
+	var/need_charge_for_channel
+	switch(channel)
+		if(SSMACHINES_APCS_ENVIRONMENT)
+			need_charge_for_channel = (cell.maxcharge * 0.05) - cell.charge
+		if(SSMACHINES_APCS_LIGHTS)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_LIGHT_TRESHOLD + 5) * 0.01) - cell.charge
+		if(SSMACHINES_APCS_EQUIPMENT)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_EQUIP_TRESHOLD + 5) * 0.01) - cell.charge
+		else
+			need_charge_for_channel = cell.used_charge()
+
+	var/charging_used = area ? area.energy_usage[AREA_USAGE_APC_CHARGE] : 0
+	var/remaining_charge_rate = min(cell.chargerate, cell.maxcharge * CHARGELEVEL) - charging_used
+	var/need_charge = min(need_charge_for_channel, remaining_charge_rate) * seconds_per_tick
+	//check if we can charge the battery
+	if(need_charge < 0)
+		return
+
+	charge_cell(need_charge, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
+
+	// show cell as fully charged if so
+	if(cell.charge >= cell.maxcharge)
+		cell.charge = cell.maxcharge
+		charging = APC_FULLY_CHARGED
+	else
+		charging = APC_CHARGING
 
 /obj/machinery/power/apc/proc/reset(wire)
 	switch(wire)
@@ -659,8 +673,7 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(!operating || shorted)
 		return
-	if(cell && cell.charge >= 20)
-		cell.use(20)
+	if(cell && cell.use(0.02 * STANDARD_BATTERY_CHARGE))
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
@@ -695,12 +708,12 @@
 
 ///Used for cell_5k apc helper, which installs 5k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_5k()
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	cell = new cell_type(src)
 
 /// Used for cell_10k apc helper, which installs 10k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_10k()
-	cell_type = /obj/item/stock_parts/cell/high
+	cell_type = /obj/item/stock_parts/power_store/battery/high
 	cell = new cell_type(src)
 
 /// Used for unlocked apc helper, which unlocks the apc.
@@ -723,8 +736,30 @@
 /obj/machinery/power/apc/proc/set_full_charge()
 	cell.charge = cell.maxcharge
 
+/// Returns the cell's current charge.
+/obj/machinery/power/apc/proc/charge()
+	return cell.charge
+
+/// Draws energy from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
+/obj/machinery/power/apc/proc/draw_energy(amount)
+	var/grid_used = min(terminal?.surplus(), amount)
+	terminal?.add_load(grid_used)
+	var/cell_used = 0
+	if(amount > grid_used)
+		cell_used += cell.use(amount - grid_used)
+	return grid_used + cell_used
+
+/// Draws power from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
+/obj/machinery/power/apc/proc/draw_power(amount)
+	return draw_energy(power_to_energy(amount))
+
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+
+#undef CHARGELEVEL
+#undef APC_CHANNEL_LIGHT_TRESHOLD
+#undef APC_CHANNEL_EQUIP_TRESHOLD
+#undef APC_CHANNEL_ALARM_TRESHOLD

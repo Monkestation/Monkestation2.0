@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
 		if(!card_reader_installed && length(access_choices))
-			. += span_notice("You can install a card reader for furthur access control.")
+			. += span_notice("You can install a card reader for further access control.")
 		else if(card_reader_installed)
 			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
@@ -1072,7 +1072,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(iscarbon(user))
 		add_fingerprint(user)
 	locked = !locked
-	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
 				span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 	update_appearance()
 

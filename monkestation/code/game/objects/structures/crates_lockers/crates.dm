@@ -3,6 +3,7 @@
 	desc = "It's a burial receptacle for the dearly departed. A sARcophaGUS, it usually contains a caDaVER."
 	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
 	icon_state = "sarcophagus"
+	base_icon_state = "sarcophagus"
 	resistance_flags = FIRE_PROOF
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/sandstone
@@ -18,6 +19,7 @@
 	desc = "It's a burial receptacle for lustrious figures. A reliquary."
 	icon = 'monkestation/icons/obj/sandstone_structures.dmi'
 	icon_state = "sarcophagusroyale"
+	base_icon_state = "sarcophagusroyale"
 	resistance_flags = FIRE_PROOF
 	max_integrity = 150
 	material_drop = /obj/item/stack/sheet/mineral/sandstone

@@ -289,10 +289,13 @@
 	maxHealth = 25
 	bot_type = BUTT_BOT
 	pass_flags = PASSMOB
-	has_unlimited_silicon_privilege = FALSE
 	var/cooling_down = FALSE
 	var/butt_probability = 15
 	var/listen_probability = 30
+
+/mob/living/simple_animal/bot/buttbot/Initialize(mapload)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_SILICON_ACCESS, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))

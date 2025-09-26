@@ -133,7 +133,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, FALSE, "Access Newscaster Network", "Al
 	data["wanted"] = wanted_info
 	return data
 
-/datum/newspanel/ui_act(action, params)
+/datum/newspanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
