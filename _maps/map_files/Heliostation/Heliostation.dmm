@@ -49901,6 +49901,7 @@
 /area/station/science/robotics/lab)
 "mfv" = (
 /obj/structure/table/reinforced,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mfJ" = (
