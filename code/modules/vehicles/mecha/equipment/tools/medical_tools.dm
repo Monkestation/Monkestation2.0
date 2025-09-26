@@ -517,3 +517,11 @@
 	STOP_PROCESSING(SSobj, src)
 	medigun.LoseTarget()
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
+	name = "mounted stretcher"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_mounted_stretcher"
+	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
+	inject_amount = 0
+	mech_flags = EXOSUIT_MODULE_AMBULANCE

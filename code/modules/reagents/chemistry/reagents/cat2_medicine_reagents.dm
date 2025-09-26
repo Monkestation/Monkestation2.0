@@ -481,9 +481,15 @@
 	if(show_message)
 		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
 	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
-	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
+
+	if(!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) || carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		return
+	var/synthflesh_amount = carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) // Yes, this includes the amount we've added from our gel
+	if(methods & TOUCH) //touch does not apply chems to blood, we want to combine the two volumes before attempting to unhusk
+		synthflesh_amount += reac_volume
+	if(synthflesh_amount >= SYNTHFLESH_UNHUSK_AMOUNT)
 		carbies.cure_husk(BURN)
-		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
+		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
