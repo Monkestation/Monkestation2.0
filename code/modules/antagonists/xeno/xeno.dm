@@ -48,7 +48,7 @@
 	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
 /datum/antagonist/xeno/forge_objectives()
-	if(locate(/datum/objective/advance_hive) in objectives)
+	if(locate(/datum/objective/escape_captivity) in objectives)
 		return
 	var/datum/objective/advance_hive/objective = new
 	objective.owner = owner
@@ -119,7 +119,7 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
-	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered
+	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered (lamarr)
 		mind.add_antag_datum(/datum/antagonist/xeno/neutered)
 		return
 	if(mind.has_antag_datum(/datum/antagonist/xeno)|| mind.has_antag_datum(/datum/antagonist/xeno/captive))
