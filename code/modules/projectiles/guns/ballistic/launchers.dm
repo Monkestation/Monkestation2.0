@@ -285,4 +285,23 @@
 	weapon_weight = WEAPON_HEAVY
 	pin = /obj/item/firing_pin/wastes
 
-
+/obj/item/gun/ballistic/ignifist
+	name = "\improper Ignifist 30"
+	desc = "A small one shot use anti tank rocketlauncher, extremely basic in design, it will only tickle soft targets."
+	icon_state = "ignifist"
+	inhand_icon_state = "ignifist"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/ignifist
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
+	can_suppress = FALSE
+	burst_size = 1
+	fire_delay = 0
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_HEAVY
+	bolt_type = BOLT_TYPE_NO_BOLT
+	internal_magazine = FALSE
+	cartridge_wording = "rocket"
+	empty_indicator = FALSE
+	tac_reloads = FALSE
+	gun_flags = GUN_SMOKE_PARTICLES
+	mag_display_ammo = TRUE

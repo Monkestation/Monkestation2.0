@@ -68623,7 +68623,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "qgI" = (
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/item/wallframe/apc,
 /turf/open/space/basic,
 /area/space)
 "qgQ" = (
