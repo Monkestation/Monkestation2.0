@@ -74,4 +74,4 @@
 /datum/orderable_item/survival/chasm_filler
 	item_path = /obj/item/chasm_filler
 	desc = "A capsule that can be thrown into chasms to fill them with thick dirt."
-	cost_per_order = 500
+	cost_per_order = 350
