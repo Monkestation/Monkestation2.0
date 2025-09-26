@@ -174,11 +174,11 @@
 	description = "Really dangerous mobs climb out of a scrubber."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 6
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
