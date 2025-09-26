@@ -1253,3 +1253,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(lowercase_regex.Find(input))
 		return FALSE
 	return TRUE
+
+/// Checks to see if a string starts with http:// or https://
+/proc/is_http_protocol(text)
+	var/static/regex/http_regex
+	if(isnull(http_regex))
+		http_regex = new("^https?://")
+	return findtext(text, http_regex)
