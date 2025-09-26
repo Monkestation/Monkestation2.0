@@ -294,7 +294,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
 			balloon_alert(user, "you can't attach this onto here!")
 			return ITEM_INTERACT_BLOCKING
-	if(!do_after(user, deploy_time, src))
+	if(!do_after(user, deploy_time, src, hidden = TRUE))
 		return ITEM_INTERACT_BLOCKING
 	if(planted_on)
 		return ITEM_INTERACT_BLOCKING

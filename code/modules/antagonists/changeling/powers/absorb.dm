@@ -152,7 +152,7 @@
 			speed_mult = held.suck_power
 		if(speed_mult > 1)
 			zucckynoises.start()
-		if(!do_after(owner, 15 / speed_mult SECONDS, target))
+		if(!do_after(owner, (15 / speed_mult) SECONDS, target, hidden = TRUE))
 			owner.balloon_alert(owner, "interrupted!")
 			zucckynoises.stop()
 			is_absorbing = FALSE
