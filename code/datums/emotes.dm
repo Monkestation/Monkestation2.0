@@ -113,8 +113,8 @@
 		return
 
 	if(user.client)
-		user.log_message(msg ? msg : "preformed a messageless emote. ([type])", LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg ? msg : "preformed an emote."]"
+		user.log_message(msg ? msg : "performed a messageless emote. ([type])", LOG_EMOTE)
+	var/dchatmsg = "<b>[user]</b> [msg ? msg : "performed an emote."]"
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
