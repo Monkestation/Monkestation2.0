@@ -430,7 +430,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(mob/user, atom/target)
-	if(do_after(user, 10 SECONDS, target = user) && held_sausage && held_sausage)
+	if(do_after(user, 10 SECONDS, target = user) && held_sausage)
 		if(istype(held_sausage, /obj/item/gun))
 			var/obj/item/gun/roastedgun = held_sausage
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
