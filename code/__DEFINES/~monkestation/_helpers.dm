@@ -3,6 +3,6 @@
 #define UNTIL_WHILE_EXISTS(Src, Condition) \
 	while(!(Condition)) { \
 		if(QDELETED(Src)) return; \
-		stoplag(); \
+		sleep(world.tick_lag); \
 	} \
 	if(QDELETED(Src)) return;

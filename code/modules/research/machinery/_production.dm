@@ -22,9 +22,6 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
-	/// The department this fabricator is assigned to.
-	var/department_tag = "Unassigned"
-
 	/// What color is this machine's stripe? Leave null to not have a stripe.
 	var/stripe_color = null
 
@@ -34,16 +31,15 @@
 	/// Made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update.
 	var/techweb_updating = FALSE
 
+	/// Whether or not the fabricator links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
+	var/link_on_init = TRUE
+
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
 
 	cached_designs = list()
-	materials = AddComponent(
-		/datum/component/remote_materials, \
-		"lathe", \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
+
 	AddComponent(
 		/datum/component/payment, \
 		0, \
@@ -52,7 +48,6 @@
 		TRUE, \
 	)
 
-	create_reagents(0, OPENCONTAINER)
 	if(stored_research)
 		update_designs()
 	RefreshParts()
@@ -112,8 +107,8 @@
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -126,22 +121,24 @@
 		ui.open()
 
 /obj/machinery/rnd/production/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = materials.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	var/max_multiplier
+	var/max_multiplier = INFINITY
 	var/coefficient
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-		coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
-		for(var/datum/material/material in design.materials)
-			cost[material.name] = design.materials[material] * coefficient
-			max_multiplier = min(50, round(materials.mat_container.get_material_amount(material) / (design.materials[material] * coefficient)))
-		var/icon_size = spritesheet.icon_size_id(design.id)
+		max_multiplier = INFINITY
+		coefficient = build_efficiency(design.build_path)
+		for(var/datum/material/mat in design.materials)
+			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * coefficient)
+			max_multiplier = min(max_multiplier, 50, round(materials.mat_container.get_material_amount(mat) / cost[mat.name]))
 
+		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
@@ -161,7 +158,7 @@
 /obj/machinery/rnd/production/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = materials.mat_container?.ui_data()
+	data["materials"] = materials.mat_container.ui_data()
 	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
 	data["materialMaximum"] = materials.local_size
@@ -169,7 +166,7 @@
 
 	return data
 
-/obj/machinery/rnd/production/ui_act(action, list/params)
+/obj/machinery/rnd/production/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 
 	if(.)
@@ -180,33 +177,22 @@
 	switch (action)
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
-
-			if(!materials.can_hold_material(material))
-				// I don't know who you are or what you want, but whatever it is,
-				// we don't have it.
-				return
-
-			eject_sheets(material, params["amount"])
+			var/amount = text2num(params["amount"])
+			// SAFETY: eject_sheets checks for valid mats
+			materials.eject_sheets(material, amount)
 
 		if("build")
-			user_try_print_id(params["ref"], params["amount"])
+			user_try_print_id(ui.user, params["ref"], params["amount"])
 
 /// Updates the fabricator's efficiency coefficient based on the installed parts.
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 
-	if(reagents)
-		reagents.maximum_volume = 0
-
-		for(var/obj/item/reagent_containers/cup/beaker in component_parts)
-			reagents.maximum_volume += beaker.volume
-			beaker.reagents.trans_to(src, beaker.reagents.total_volume)
-
 	if(materials)
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 
@@ -217,23 +203,13 @@
 
 	efficiency_coeff = max(total_rating, 0)
 
-/obj/machinery/rnd/production/on_deconstruction()
-	for(var/obj/item/reagent_containers/cup/G in component_parts)
-		reagents.trans_to(G, G.reagents.maximum_volume)
+/obj/machinery/rnd/production/proc/build_efficiency(path)
+	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
+		return 1
+	else
+		return efficiency_coeff
 
-	return ..()
-
-/obj/machinery/rnd/production/proc/do_print(atom/path, amount, list/matlist)
-	for(var/i in 1 to amount)
-		new path(get_turf(src))
-
-	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[initial(name)]", "[initial(path.name)]"))
-	finalize_build()
-
-/obj/machinery/rnd/production/proc/efficient_with(path)
-	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
-
-/obj/machinery/rnd/production/proc/user_try_print_id(design_id, print_quantity)
+/obj/machinery/rnd/production/proc/user_try_print_id(mob/user, design_id, print_quantity)
 	if(!design_id)
 		return FALSE
 
@@ -268,103 +244,118 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 
-	var/power = active_power_usage
-
 	print_quantity = clamp(print_quantity, 1, 50)
+	var/coefficient = build_efficiency(design.build_path)
 
+	var/list/materials_per_item = list()
 	for(var/material in design.materials)
-		power += round(design.materials[material] * print_quantity / 35)
+		materials_per_item[material] = design.materials[material] * coefficient
 
-	power = min(active_power_usage, power)
-	use_power(power)
-
-	var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
-	var/list/efficient_mats = list()
-
-	for(var/material in design.materials)
-		efficient_mats[material] = design.materials[material] * coefficient
-
-	if(!materials.mat_container.has_materials(efficient_mats, print_quantity))
-		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
+	// check if sufficient materials are available.
+	// don't pass coefficient here, as we already multiplied the design's materials by it for use with custom materials.
+	if(!materials.mat_container.has_materials(materials_per_item, multiplier = print_quantity))
+		say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
 		return FALSE
 
-	for(var/reagent in design.reagents_list)
-		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient))
-			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
-			return FALSE
+	//use power
+	var/power = active_power_usage
+	for(var/material in design.materials)
+		power += round(design.materials[material] * print_quantity / 35)
+	power = min(active_power_usage, power)
+	use_energy(power)
 
 	// Charge the lathe tax at least once per ten items.
 	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
-
 	if(!charges_tax)
 		total_cost = 0
-
-	if(isliving(usr))
-		var/mob/living/user = usr
-		var/obj/item/card/id/card = user.get_idcard(TRUE)
-
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
 		if(!card && istype(user.pulling, /obj/item/card/id))
 			card = user.pulling
-
 		if(card && card.registered_account)
 			var/datum/bank_account/our_acc = card.registered_account
 			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
 				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
+	if(total_cost)
+		if(iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if(!borg.cell)
+				return FALSE
+			borg.cell.use(SILICON_LATHE_TAX)
 
-	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
-		say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
-		return FALSE
-
-	if(iscyborg(usr))
-		var/mob/living/silicon/robot/borg = usr
-
-		if(!borg.cell)
+		else if(attempt_charge(src, user, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+			say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
 			return FALSE
 
-		borg.cell.use(SILICON_LATHE_TAX)
-
-	materials.mat_container.use_materials(efficient_mats, print_quantity)
-	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
-
-	for(var/reagent in design.reagents_list)
-		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
-
-	busy = TRUE
 	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
-
 	if(production_animation)
 		flick(production_animation, src)
 
-	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
-
-	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (30 * time_coefficient * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats), (32 * time_coefficient * print_quantity) ** 0.8)
+	var/total_time = (design.construction_time * design.lathe_time_factor * print_quantity) ** 0.8
+	var/time_per_item = total_time / print_quantity
+	start_making(design, print_quantity, user, time_per_item, materials_per_item)
 
 	return TRUE
 
+/// Begins the act of making the given design the given number of items
+/// Does not check or use materials/power/etc
+/obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
+	PROTECTED_PROC(TRUE)
+
+	busy = TRUE
+	SStgui.update_uis(src)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, build_time_per_item, build_count), build_time_per_item)
+
+/// Callback for start_making, actually makes the item
+/// Called using timers started by start_making
+/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, list/materials_per_item, time_per_item, items_remaining)
+	PROTECTED_PROC(TRUE)
+
+	if(!items_remaining) // how
+		finalize_build()
+		return
+
+	if(!is_operational)
+		say("Unable to continue production, power failure.")
+		finalize_build()
+		return
+
+	var/is_stack = ispath(design.build_path, /obj/item/stack)
+	if(!materials.mat_container.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
+		say("Unable to continue production, missing materials.")
+		finalize_build()
+		return
+	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1, action = "built", name = "[design.name]")
+
+	var/atom/movable/created
+	if(is_stack)
+		created = new design.build_path(get_turf(src), items_remaining)
+	else
+		created = new design.build_path(get_turf(src))
+		created.set_custom_materials(materials_per_item.Copy())
+
+	created.pixel_x = created.base_pixel_x + rand(-6, 6)
+	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	for(var/atom/movable/content in created)
+		content.set_custom_materials(list()) // no
+
+	if(is_stack)
+		items_remaining = 0
+	else
+		items_remaining -= 1
+
+	if(!items_remaining)
+		finalize_build()
+		return
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, time_per_item, items_remaining), time_per_item)
+
+/// Resets the busy flag
+/// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
-	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
-
-/obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
-	var/datum/component/material_container/mat_container = materials.mat_container
-
-	if(!mat_container)
-		say("No access to material storage, please contact the quartermaster.")
-		return 0
-
-	if(materials.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
-
-	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
-	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
-
-	var/list/matlist = list()
-	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
-
-	materials.silo_log(src, "ejected", -count, "sheets", matlist)
-
-	return count
+	PROTECTED_PROC(TRUE)
+	busy = FALSE
+	SStgui.update_uis(src)
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)

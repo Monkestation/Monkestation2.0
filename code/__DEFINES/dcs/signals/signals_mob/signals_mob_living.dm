@@ -5,13 +5,15 @@
 
 // Organ signals
 /// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
-#define COMSIG_ORGAN_IMPLANTED "comsig_organ_implanted"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "comsig_wag_tail"
+#define COMSIG_ORGAN_IMPLANTED "organ_implanted"
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
-#define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+#define COMSIG_ORGAN_REMOVED "organ_removed"
 /// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
+/// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+#define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
+/// Called when using the *wag emote
+#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -36,8 +38,12 @@
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 ///from base of mob/living/set_body_position()
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
-///From post-can inject check of syringe after attack (mob/user)
-#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+/// Sent to a mob being injected with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+/// Sent to a mob being withdrawn from with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
+///from base of mob/living/set_usable_legs()
+#define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
@@ -115,6 +121,8 @@
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
 ///from base of mob/living/incapacitate() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_INCAPACITATE "living_incapacitate"
+///from base of mob/living/Daze() (amount, ignore_canstun)
+#define COMSIG_LIVING_STATUS_DAZE "living_daze"
 ///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
 ///from base of mob/living/Sleeping() (amount, ignore_canstun)
@@ -222,6 +230,11 @@
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
 
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
 #define COMSIG_LIVING_BODY_TEMPERATURE_CHANGE "living_body_temperature_change"
 
 #define COMSIG_LIVING_HOMEOSTASIS "living_homeostasis"
@@ -229,3 +242,6 @@
 	#define HOMEOSTASIS_HANDLED (1<<0)
 	/// Return to not reduce hunger at all
 	#define HOMEOSTASIS_NO_HUNGER (1<<1)
+
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
+#define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"

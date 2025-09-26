@@ -62,6 +62,8 @@
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
 			controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance =BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 			break
+		if (HAS_TRAIT(treatable_target, TRAIT_NO_HEALS))
+			continue
 		if((heal_type == HEAL_ALL_DAMAGE))
 			if(treatable_target.get_total_damage() > threshold)
 				controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))

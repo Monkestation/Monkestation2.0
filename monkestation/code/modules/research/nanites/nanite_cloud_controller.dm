@@ -17,9 +17,9 @@
 	eject()
 	return ..()
 
-/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
+/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/nanite_program))
+		var/obj/item/disk/nanite_program/N = attacking_item
 		if (user.transferItemToLoc(N, src))
 			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
@@ -56,6 +56,7 @@
 
 	var/datum/nanite_cloud_backup/backup = new(src)
 	var/datum/component/nanites/cloud_copy = backup.AddComponent(/datum/component/nanites)
+	cloud_copy.cloud_id = cloud_id
 	backup.cloud_id = cloud_id
 	backup.nanites = cloud_copy
 	investigate_log("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)

@@ -9,9 +9,9 @@
 		of rubbershot shotgun shells, two boxes of buckshot, and one of each special .38 speedloaders."
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/storage/box/beanbag = 2,
-					/obj/item/storage/box/rubbershot = 2,
-					/obj/item/storage/box/lethalshot = 2,
+	contains = list(/obj/item/ammo_box/advanced/s12gauge/bean = 2,
+					/obj/item/ammo_box/advanced/s12gauge/rubber = 2,
+					/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
 					/obj/item/ammo_box/c38/trac,
 					/obj/item/ammo_box/c38/hotshot,
 					/obj/item/ammo_box/c38/iceblox,
@@ -339,3 +339,12 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/armory/antitank
+	name = "Disposable Anti-Tank Rocket Crate"
+	desc = "Contains a singular antiquated anti-tank rocket."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/ballistic/ignifist
+				)
+	crate_name = "Anti-Tank Rocket crate"
+	dangerous = TRUE

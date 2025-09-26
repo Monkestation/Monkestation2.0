@@ -86,6 +86,7 @@
 	)
 	/// Do we flash the byond window when this particular egg type is available?
 	var/flash_window = FALSE
+	dont_be_a_shit = FALSE
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
 	. = ..()

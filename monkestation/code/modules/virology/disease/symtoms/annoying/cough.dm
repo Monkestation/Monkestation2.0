@@ -19,6 +19,6 @@
 	strength = round(strength / length(victim.diseases))
 	var/i = 1
 	while (strength > 0 && i < 10) //stronger viruses create more clouds at once, max limit of 10 clouds
-		new /obj/effect/pathogen_cloud/core(get_turf(src), victim, virus_copylist(victim.diseases))
+		new /obj/effect/pathogen_cloud/core(get_turf(mob), victim, virus_copylist(victim.diseases)) // We need to call where the mob is, not where the source is as the source has no idea where the mob is
 		strength -= 30
 		i++

@@ -128,7 +128,11 @@
 		Their rituals take time, allowing us to disrupt it."
 
 	/// Resets on each new character to be added to the chair. Some effects should lower it...
+#ifdef BLOODSUCKER_TESTING
+	var/convert_progress = 1
+#else
 	var/convert_progress = 3
+#endif
 	/// Mindshielded and Antagonists willingly have to accept you as their Master.
 	var/disloyalty_confirm = FALSE
 	/// Prevents popup spam.
@@ -214,8 +218,8 @@
 	if(!buckle_mob(target))
 		return
 	user.visible_message(
-		span_notice("[user] straps [target] into the rack, immobilizing them."),
-		span_boldnotice("You secure [target] tightly in place. They won't escape you now."),
+		span_notice("[user] straps [target] into the rack, immobilizing [target.p_them()]."),
+		span_boldnotice("You secure [target] tightly in place. [target.p_They()] won't escape you now."),
 	)
 
 	playsound(loc, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
@@ -229,12 +233,12 @@
 /obj/structure/bloodsucker/vassalrack/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
-	if(IS_BLOODSUCKER(user) || IS_VASSAL(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED))
 		return ..()
 
 	if(buckled_mob == user)
 		buckled_mob.visible_message(
-			span_danger("[user] tries to release themself from the rack!"),
+			span_danger("[user] tries to release [user.p_them()]self from the rack!"),
 			span_danger("You attempt to release yourself from the rack!"),
 			span_hear("You hear a squishy wet noise.")
 		)
@@ -254,13 +258,12 @@
 /obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	. = ..()
 	if(!.)
-		return FALSE
+		return
 	visible_message(span_danger("[buckled_mob][buckled_mob.stat == DEAD ? "'s corpse" : ""] slides off of the rack."))
 	set_density(FALSE)
 	buckled_mob.Paralyze(2 SECONDS)
 	update_appearance(UPDATE_ICON)
 	reset_progress()
-	return TRUE
 
 /obj/structure/bloodsucker/vassalrack/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -289,7 +292,7 @@
 	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(buckled_carbons)
 	// Are they our Vassal?
 	if(vassaldatum?.master == bloodsuckerdatum)
-		SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_INTERACT_WITH_VASSAL, vassaldatum)
+		SEND_SIGNAL(bloodsuckerdatum, COMSIG_BLOODSUCKER_INTERACT_WITH_VASSAL, vassaldatum)
 		return
 
 	// Not our Vassal, but Alive & We're a Bloodsucker, good to torture!
@@ -373,7 +376,7 @@
 		bloodsuckerdatum.AddBloodVolume(-TORTURE_CONVERSION_COST)
 		if(bloodsuckerdatum.make_vassal(target))
 			remove_loyalties(target)
-			SEND_SIGNAL(bloodsuckerdatum, BLOODSUCKER_MADE_VASSAL, user, target)
+			SEND_SIGNAL(bloodsuckerdatum, COMSIG_BLOODSUCKER_MADE_VASSAL, user, target)
 
 /obj/structure/bloodsucker/vassalrack/proc/do_torture(mob/living/user, mob/living/carbon/target, mult = 1, tool = null)
 	// Fifteen seconds if you aren't using anything. Shorter with weapons and such.
@@ -411,7 +414,7 @@
 
 	held_item?.play_tool_sound(target)
 	target.visible_message(
-		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [user.p_their()] [selected_bodypart.name] and shaking them up!"),
+		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [user.p_their()] [selected_bodypart.name] and shaking [user.p_them()] up!"),
 		span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name], shaking you up!")
 	)
 
@@ -539,7 +542,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(anchored && (IS_VASSAL(user) || IS_BLOODSUCKER(user)))
+	if(anchored && HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED))
 		set_lit(!lit)
 
 /obj/structure/bloodsucker/candelabrum/proc/set_lit(value)
@@ -559,7 +562,7 @@
 		return PROCESS_KILL
 	for(var/mob/living/carbon/nearly_people in viewers(7, src))
 		/// We dont want Bloodsuckers or Vassals affected by this
-		if(IS_VASSAL(nearly_people) || IS_BLOODSUCKER(nearly_people) || IS_MONSTERHUNTER(nearly_people))
+		if(HAS_MIND_TRAIT(nearly_people, TRAIT_BLOODSUCKER_ALIGNED) || IS_MONSTERHUNTER(nearly_people))
 			continue
 		nearly_people.set_hallucinations_if_lower(5 SECONDS)
 		nearly_people.add_mood_event("vampcandle", /datum/mood_event/vampcandle)
@@ -589,7 +592,8 @@
 	return ..()
 
 /obj/structure/bloodsucker/bloodthrone/Destroy()
-	QDEL_NULL(armrest)
+	cut_overlay(armrest)
+	armrest = null
 	return ..()
 
 /obj/structure/bloodsucker/bloodthrone/bolt()

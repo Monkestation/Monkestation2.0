@@ -7,6 +7,7 @@
 	req_human = TRUE
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
+	var/datum/looping_sound/zucc/zucckynoises
 
 /datum/action/changeling/absorb_dna/can_sting(mob/living/carbon/owner)
 	if(!..())
@@ -131,6 +132,8 @@
 		fallen.objectives = copied_objectives
 
 /datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/carbon/human/target)
+	if(!zucckynoises)
+		zucckynoises = new(owner, FALSE)
 	for(var/absorbing_iteration in 1 to 3)
 		switch(absorbing_iteration)
 			if(1)
@@ -143,8 +146,16 @@
 				target.take_overall_damage(40)
 
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[absorbing_iteration]"))
-		if(!do_after(owner, 15 SECONDS, target))
+		var/obj/item/comically_large_straw/held = owner.get_active_held_item()
+		var/speed_mult = 1
+		if(istype(held))
+			speed_mult = held.suck_power
+		if(speed_mult > 1)
+			zucckynoises.start()
+		if(!do_after(owner, 15 / speed_mult SECONDS, target))
 			owner.balloon_alert(owner, "interrupted!")
+			zucckynoises.stop()
 			is_absorbing = FALSE
 			return FALSE
+		zucckynoises.stop()
 	return TRUE

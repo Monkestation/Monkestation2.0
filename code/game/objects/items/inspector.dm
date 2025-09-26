@@ -23,13 +23,13 @@
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	///Power used per print in cell units
-	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-	///Power used to say an error message
-	var/power_to_speak = 1
+	///Energy used per print.
+	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Energy used to say an error message.
+	var/energy_to_speak = 1 KILO JOULES
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
@@ -65,13 +65,13 @@
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
-/obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+/obj/item/inspector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
+		if(user.transferItemToLoc(attacking_item, src))
+			cell = attacking_item
 			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 			return
 	return ..()
@@ -117,8 +117,8 @@
 	if(cell.charge == 0)
 		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 		return
-	if(!cell.use(power_per_print))
-		if(cell.use(power_to_speak))
+	if(!cell.use(energy_per_print))
+		if(cell.use(energy_to_speak))
 			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
 		return
 
@@ -136,7 +136,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -196,8 +196,8 @@
 	cycle_print_time(user)
 	return TRUE
 
-/obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
+/obj/item/inspector/clown/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/kitchen/fork))
 		cycle_sound(user)
 		return
 	return ..()
@@ -244,8 +244,8 @@
  *
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
- * origami master. Printing at full power costs INSPECTOR_POWER_USAGE_HONK cell units
- * instead of INSPECTOR_POWER_USAGE_NORMAL cell units.
+ * origami master. Printing at full power costs INSPECTOR_ENERGY_USAGE_HONK cell units
+ * instead of INSPECTOR_ENERGY_USAGE_NORMAL cell units.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
@@ -264,28 +264,28 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
-		if(cell.use(power_to_speak))
+		if(cell.use(energy_to_speak))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+		energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	check_settings_legality()
 	return TRUE
 
-/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/bananium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(cell_cover_open)
 		check_settings_legality()
-	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
-		to_chat(user, span_info("\The [src] refuses to consume \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
+		to_chat(user, span_info("\The [src] refuses to consume \the [attacking_item]!"))
 		return
-	if(istype(I, /obj/item/paper))
-		to_chat(user, span_info("\The [src] consumes \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper))
+		to_chat(user, span_info("\The [src] consumes \the [attacking_item]!"))
 		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
-		qdel(I)
+		qdel(attacking_item)
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
@@ -302,7 +302,7 @@
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		return ..()
 	if(paper_charges == 0)
-		if(cell.use(power_to_speak))
+		if(cell.use(energy_to_speak))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
@@ -314,7 +314,7 @@
 	var/message
 	switch(time_mode)
 		if(INSPECTOR_TIME_MODE_HONK)
-			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+			energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
 		if(INSPECTOR_TIME_MODE_SLOW)
@@ -322,7 +322,7 @@
 			message = "LIGHTNING FAST."
 		else
 			time_mode = INSPECTOR_TIME_MODE_HONK
-			power_per_print = INSPECTOR_POWER_USAGE_HONK
+			energy_per_print = INSPECTOR_ENERGY_USAGE_HONK
 			message = "HONK!"
 	balloon_alert(user, "scanning speed set to [message]")
 
@@ -334,7 +334,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report

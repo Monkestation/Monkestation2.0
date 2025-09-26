@@ -64,15 +64,14 @@
 	force = 15
 	block_chance = 20
 	bare_wound_bonus = 30
-	armour_penetration = 35
+	armour_penetration = 85
 	COOLDOWN_DECLARE(lunge)
 
-/obj/item/mantis_blade/syndicate/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/mantis_blade/syndicate/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, lunge) || world.time < user.next_move)
 		return
 
-	if(proximity_flag || get_dist(user,target) > 3 || !isliving(target))
+	if(get_dist(user, interacting_with) > 3 || !isliving(interacting_with))
 		return
 
 	var/obj/item/some_item = user.get_inactive_held_item()
@@ -80,18 +79,17 @@
 		return
 	var/obj/item/mantis_blade/syndicate/other = some_item
 
-	for(var/i in 1 to get_dist(user,target))
-		if(!step_towards(user,target) && get_dist(user,target) >= 1)
-			return
+	for(var/i in 1 to get_dist(user, interacting_with))
+		if(!step_towards(user, interacting_with) && get_dist(user, interacting_with) >= 1)
+			break
 
 	COOLDOWN_START(src, lunge, 10 SECONDS)
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-30) // cost of a lunge
-
-	attack(target, user)
-
+		living.stamina?.adjust(-50) // cost of a lunge
+	attack(interacting_with, user)
+	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
@@ -103,7 +101,7 @@
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
 	force = 12
 	wound_bonus = 10
-	armour_penetration = 20
+	armour_penetration = 40
 	attack_speed = 10
 	var/in_stance = FALSE  //Toggle for the defensive stance.
 
@@ -118,7 +116,7 @@
 		if(!istype(l_hand, r_hand))//Checks for if your hands are the same type (which they would be if you were dual wielding the shields.)
 			to_chat(user, span_warning("You must dual wield blades to enter the stance."))
 			return
-		if(!do_after(user, 15, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
+		if(!do_after(user, 1.5 SECONDS, user, IGNORE_USER_LOC_CHANGE, extra_checks = !CALLBACK(r_hand, PROC_REF(dropped)) || !CALLBACK(l_hand, PROC_REF(dropped))))
 			to_chat(user, span_warning("You were interrupted!"))
 			return
 		user.apply_status_effect(/datum/status_effect/shield_mantis_defense)

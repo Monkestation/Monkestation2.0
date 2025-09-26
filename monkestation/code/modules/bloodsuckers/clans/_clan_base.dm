@@ -24,40 +24,52 @@
 	var/join_description = "The default, Classic Bloodsucker."
 	///Whether the clan can be joined by players. FALSE for flavortext-only clans.
 	var/joinable_clan = TRUE
+	///Whether this clan should be in the Archive of the Kindred or not.
+	var/display_in_archive = TRUE
 
 	///How we will drink blood using Feed.
 	var/blood_drink_type = BLOODSUCKER_DRINK_NORMAL
+
+	/// A list of typepaths of powers that will never be eligible for ranks.
+	var/list/banned_powers
 
 /datum/bloodsucker_clan/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
 	src.bloodsuckerdatum = owner_datum
 
 	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_ON_LIFETICK, PROC_REF(handle_clan_life))
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_RANK_UP, PROC_REF(on_spend_rank))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_RANK_UP, PROC_REF(on_spend_rank))
 
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_INTERACT_WITH_VASSAL, PROC_REF(on_interact_with_vassal))
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_MAKE_FAVORITE, PROC_REF(on_favorite_vassal))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_INTERACT_WITH_VASSAL, PROC_REF(on_interact_with_vassal))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_MAKE_FAVORITE, PROC_REF(on_favorite_vassal))
 
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_MADE_VASSAL, PROC_REF(on_vassal_made))
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_EXIT_TORPOR, PROC_REF(on_exit_torpor))
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_FINAL_DEATH, PROC_REF(on_final_death))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_MADE_VASSAL, PROC_REF(on_vassal_made))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_EXIT_TORPOR, PROC_REF(on_exit_torpor))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_final_death))
 
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_ENTERS_FRENZY, PROC_REF(on_enter_frenzy))
-	RegisterSignal(bloodsuckerdatum, BLOODSUCKER_EXITS_FRENZY, PROC_REF(on_exit_frenzy))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_ENTERS_FRENZY, PROC_REF(on_enter_frenzy))
+	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_EXITS_FRENZY, PROC_REF(on_exit_frenzy))
 
 	give_clan_objective()
+
+	for(var/banned_power in banned_powers)
+		var/datum/action/power = locate(banned_power) in bloodsuckerdatum.powers
+		if(power)
+			bloodsuckerdatum.RemovePower(power)
+
+	SEND_SIGNAL(owner_datum.owner, COMSIG_BLOODSUCKER_CLAN_CHOSEN, owner_datum, src)
 
 /datum/bloodsucker_clan/Destroy(force)
 	UnregisterSignal(bloodsuckerdatum, list(
 		COMSIG_BLOODSUCKER_ON_LIFETICK,
-		BLOODSUCKER_RANK_UP,
-		BLOODSUCKER_INTERACT_WITH_VASSAL,
-		BLOODSUCKER_MAKE_FAVORITE,
-		BLOODSUCKER_MADE_VASSAL,
-		BLOODSUCKER_EXIT_TORPOR,
-		BLOODSUCKER_FINAL_DEATH,
-		BLOODSUCKER_ENTERS_FRENZY,
-		BLOODSUCKER_EXITS_FRENZY,
+		COMSIG_BLOODSUCKER_RANK_UP,
+		COMSIG_BLOODSUCKER_INTERACT_WITH_VASSAL,
+		COMSIG_BLOODSUCKER_MAKE_FAVORITE,
+		COMSIG_BLOODSUCKER_MADE_VASSAL,
+		COMSIG_BLOODSUCKER_EXIT_TORPOR,
+		COMSIG_BLOODSUCKER_FINAL_DEATH,
+		COMSIG_BLOODSUCKER_ENTERS_FRENZY,
+		COMSIG_BLOODSUCKER_EXITS_FRENZY,
 	))
 	remove_clan_objective()
 	bloodsuckerdatum = null
@@ -82,9 +94,8 @@
 /datum/bloodsucker_clan/proc/give_clan_objective()
 	if(isnull(clan_objective))
 		return
-	clan_objective = new clan_objective()
+	clan_objective = new clan_objective(null, bloodsuckerdatum.owner)
 	clan_objective.objective_name = "Clan Objective"
-	clan_objective.owner = bloodsuckerdatum.owner
 	bloodsuckerdatum.objectives += clan_objective
 	bloodsuckerdatum.owner.announce_objectives()
 
@@ -111,7 +122,7 @@
 	return FALSE
 
 /**
- * Called during Bloodsucker's LifeTick
+ * Called during Bloodsucker's life_tick
  * args:
  * bloodsuckerdatum - the antagonist datum of the Bloodsucker running this.
  */
@@ -147,8 +158,13 @@
 	// Purchase Power Prompt
 	var/list/options = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.all_bloodsucker_powers)
-		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in bloodsuckerdatum.powers))
-			options[initial(power.name)] = power
+		if(!(power::purchase_flags & BLOODSUCKER_CAN_BUY))
+			continue
+		if(locate(power) in bloodsuckerdatum.powers)
+			continue
+		if(power in banned_powers)
+			continue
+		options[power::name] = power
 
 	if(length(options) < 1)
 		to_chat(bloodsuckerdatum.owner.current, span_notice("You grow more ancient by the night!"))
@@ -184,15 +200,13 @@
 	bloodsuckerdatum.bloodsucker_regen_rate += 0.05
 	bloodsuckerdatum.max_blood_volume += 100
 
-	if(ishuman(bloodsuckerdatum.owner.current))
-		var/mob/living/carbon/human/human_user = bloodsuckerdatum.owner.current
-		var/obj/item/bodypart/user_left_hand = human_user.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/user_right_hand = human_user.get_bodypart(BODY_ZONE_R_ARM)
-		user_left_hand.unarmed_damage_low += 0.5
-		user_right_hand.unarmed_damage_low += 0.5
+	for(var/limb_slot in bloodsuckerdatum.affected_limbs)
+		var/obj/item/bodypart/limb = bloodsuckerdatum.affected_limbs[limb_slot]
+		if(QDELETED(limb))
+			continue
 		// This affects the hitting power of Brawn.
-		user_left_hand.unarmed_damage_high += 0.5
-		user_right_hand.unarmed_damage_high += 0.5
+		limb.unarmed_damage_high += 0.5
+		limb.unarmed_damage_high += 0.5
 
 	// We're almost done - Spend your Rank now.
 	bloodsuckerdatum.bloodsucker_level++
@@ -206,7 +220,7 @@
 		bloodsuckerdatum.SelectReputation(am_fledgling = FALSE, forced = TRUE)
 
 	to_chat(bloodsuckerdatum.owner.current, span_notice("You are now a rank [bloodsuckerdatum.bloodsucker_level] Bloodsucker. \
-		Your strength, health, feed rate, regen rate, and maximum blood capacity have all increased! \n\
+		Your strength, feed rate, regen rate, and maximum blood capacity have all increased! \n\
 		* Your existing powers have all ranked up as well!"))
 	bloodsuckerdatum.owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
 	bloodsuckerdatum.update_hud()

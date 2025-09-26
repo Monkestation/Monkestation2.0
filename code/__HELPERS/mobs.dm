@@ -140,6 +140,12 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian)
 	if(!length(GLOB.avian_ears_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list)
+	if(!GLOB.oni_tail_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list)
+	if(!GLOB.oni_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_wings_list)
+	if(!GLOB.oni_horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
@@ -182,6 +188,9 @@
 		"arm_wings" = pick(GLOB.arm_wings_list),
 		"ears_avian" = pick(GLOB.avian_ears_list),
 		"tail_avian" = pick(GLOB.tails_list_avian),
+		"oni_tail" = pick(GLOB.oni_tail_list), //Monkestation Addition
+		"oni_wings" = pick(GLOB.oni_wings_list), //Monkestation Addition
+		"oni_horns" = pick(GLOB.oni_horns_list), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
@@ -323,7 +332,22 @@ GLOBAL_LIST_EMPTY(species_list)
  *
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
- * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ * 
+ * @param {mob} user - The mob performing the action.
+ * 
+ * @param {number} delay - The time in deciseconds. Use the SECONDS define for readability. `1 SECONDS` is 10 deciseconds.
+ * 
+ * @param {atom} target - The target of the action. This is where the progressbar will display.
+ * 
+ * @param {flag} timed_action_flags - Flags to control the behavior of the timed action.
+ * 
+ * @param {boolean} progress - Whether to display a progress bar / cogbar.
+ * 
+ * @param {datum/callback} extra_checks - Additional checks to perform before the action is executed.
+ * 
+ * @param {string} interaction_key - The assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ * 
+ * @param {number} max_interact_count - The maximum amount of interactions allowed.
  */
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
@@ -407,7 +431,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = FALSE
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, species_datum))
+		if(istype(H.dna?.species, species_datum))
 			. = TRUE
 
 /// Returns if the given target is a human. Like, a REAL human.
@@ -418,6 +442,14 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/mob/living/carbon/human/human_target = target
 	return human_target.dna?.species?.type == /datum/species/human
+
+/// Returns if the given target is a monkey, but NOT a simian.
+/proc/ismonkeybasic(target)
+	if (!ishuman(target))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target
+	return human_target.dna?.species?.type == /datum/species/monkey
 
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
@@ -471,8 +503,10 @@ GLOBAL_LIST_EMPTY(species_list)
 // Automatically gives the class deadsay to the whole message (message + source)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
 	message = span_deadsay("[source][span_linkify(message)]")
+#ifndef DISABLE_DEMOS
 	if(!admin_only)
 		SSdemo.write_chat_global(message)
+#endif
 
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
@@ -698,6 +732,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	for(var/mob/mob as anything in GLOB.mob_list)
 		if(mob.ckey == key)
 			return mob
+
+/// Returns a string for the specified body zone. If we have a bodypart in this zone, refers to its plaintext_zone instead.
+/mob/living/proc/parse_zone_with_bodypart(zone)
+	var/obj/item/bodypart/part = get_bodypart(zone)
+
+	return part?.plaintext_zone || parse_zone(zone)
 
 ///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
 /proc/parse_zone(zone)

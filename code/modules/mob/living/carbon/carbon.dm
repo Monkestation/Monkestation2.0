@@ -31,19 +31,15 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
-		return ..()
-
-	if(can_perform_surgery(user, params))
-		return TRUE
-
-	for(var/i in shuffle(all_wounds))
-		var/datum/wound/wound = i
-		if(wound.try_treating(item, user))
-			return TRUE
-
-	return ..()
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
+	for(var/datum/wound/wound as anything in shuffle(all_wounds))
+		if(wound.try_treating(tool, user))
+			return ITEM_INTERACT_SUCCESS
+	return .
 
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()
@@ -53,6 +49,8 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
@@ -287,6 +285,8 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, I) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [I]!"))
 		return
@@ -512,7 +512,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -527,9 +527,12 @@
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
+	. = ..()
 	if(dna)
 		dna.real_name = real_name
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	if(my_head)
+		my_head.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -767,7 +770,7 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
+	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -907,8 +910,6 @@
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
 		for(var/obj/item/organ/organ as anything in organs)
-			if(organ.organ_flags & ORGAN_SYNTHETIC)
-				continue
 			organ.apply_organ_damage(excess_healing * -1) //1 excess = 5 organ damage healed
 
 	return ..()
@@ -937,6 +938,11 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_POSTIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
 				disease.cure(FALSE)
 
 	if(heal_flags & HEAL_WOUNDS)
@@ -1164,9 +1170,7 @@
 			return
 		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
-		if(!check_rights(NONE))
-			return
-		usr.client.manipulate_organs(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
 			return
@@ -1274,7 +1278,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.get_modified_bleed_rate())
+		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
@@ -1283,7 +1287,7 @@
 		return 0
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		total_bleed_rate += part.get_modified_bleed_rate()
+		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
 
@@ -1359,10 +1363,14 @@
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE
-	. = handcuffed
+	var/old_value = handcuffed
 	handcuffed = new_value
-	if(.)
+	if(old_value)
 		if(!handcuffed)
+
+			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+				src.remove_status_effect(/datum/status_effect/silver_cuffed)
+
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)

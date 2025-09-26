@@ -130,7 +130,7 @@
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
-/obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/shards/my_dust = attacking_item
 		update_boulder_count()

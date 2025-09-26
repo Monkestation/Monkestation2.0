@@ -20,6 +20,10 @@
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
+//Maximum pressure passive devices max out at
+#define MAX_PASSIVE_OUTPUT_PRESSURE 1e12
+//Maximum temperature setting for devices
+#define MAX_TEMPERATURE_SETTING 1e12
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE 200
 /// How many percent of the contents that an overclocked volume pumps leak into the air
@@ -86,6 +90,8 @@
 #define PIPING_ALL_COLORS (1<<4)
 /// can bridge over pipenets
 #define PIPING_BRIDGE (1<<5)
+/// intended to connect with layers 2 and 4 only
+#define PIPING_DISTRO_AND_WASTE_LAYERS (1<<6)
 
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception

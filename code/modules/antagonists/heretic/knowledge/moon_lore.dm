@@ -74,7 +74,6 @@
 	desc = "Grants you Smile of the moon, a ranged spell muting, blinding, deafening and knocking down the target for a\
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/medallion,
@@ -128,7 +127,6 @@
 			if the item is used on someone with low sanity they go berserk attacking everyone \
 			, if their sanity isnt low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
 		/datum/heretic_knowledge/reroll_targets,
@@ -252,7 +250,6 @@
 		amount_of_lunatics++
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	SIGNAL_HANDLER
 
 	visible_hallucination_pulse(
@@ -267,7 +264,7 @@
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		new moon_effect(get_turf(carbon_view))
+		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
 		if(carbon_sanity < 30)

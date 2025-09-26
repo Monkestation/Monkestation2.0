@@ -18,26 +18,25 @@ import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Material } from './Fabrication/Types';
 
-type AutolatheDesign = Design & {
-  buildable: BooleanLike;
-  mult5: BooleanLike;
-  mult10: BooleanLike;
-  mult25: BooleanLike;
-  mult50: BooleanLike;
-  sheet: BooleanLike;
-};
-
 type AutolatheData = {
   materials: Material[];
   materialtotal: number;
   materialsmax: number;
-  designs: AutolatheDesign[];
+  SHEET_MATERIAL_AMOUNT: number;
+  designs: Design[];
   active: BooleanLike;
 };
 
 export const Autolathe = (props) => {
-  const { act, data } = useBackend<AutolatheData>();
-  const { materialtotal, materialsmax, materials, designs, active } = data;
+  const { data } = useBackend<AutolatheData>();
+  const {
+    materialtotal,
+    materialsmax,
+    materials,
+    designs,
+    active,
+    SHEET_MATERIAL_AMOUNT,
+  } = data;
 
   const filteredMaterials = materials.filter((material) => material.amount > 0);
 
@@ -65,7 +64,10 @@ export const Autolathe = (props) => {
                       bad: [0, materialsmax * 0.25],
                     }}
                   >
-                    {materialtotal + '/' + materialsmax + ' cm³'}
+                    {materialtotal / SHEET_MATERIAL_AMOUNT +
+                      '/' +
+                      materialsmax / SHEET_MATERIAL_AMOUNT +
+                      ' sheets'}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
@@ -87,7 +89,8 @@ export const Autolathe = (props) => {
                               color="black"
                             >
                               <div style={{ transform: 'scaleX(-1)' }}>
-                                {material.amount + ' cm³'}
+                                {material.amount / SHEET_MATERIAL_AMOUNT +
+                                  ' sheets'}
                               </div>
                             </ProgressBar>
                           </LabeledList.Item>
@@ -111,6 +114,7 @@ export const Autolathe = (props) => {
               ) => (
                 <AutolatheRecipe
                   design={design}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   availableMaterials={availableMaterials}
                 />
               )}
@@ -126,24 +130,28 @@ type PrintButtonProps = {
   design: Design;
   quantity: number;
   availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+  maxmult: number;
 };
 
 const PrintButton = (props: PrintButtonProps) => {
-  const { act, data } = useBackend<AutolatheData>();
-  const { design, quantity, availableMaterials } = props;
+  const { act } = useBackend<AutolatheData>();
+  const {
+    design,
+    quantity,
+    availableMaterials,
+    SHEET_MATERIAL_AMOUNT,
+    maxmult,
+  } = props;
 
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !availableMaterials[material] ||
-      amount * quantity > (availableMaterials[material] ?? 0),
-  );
-
+  const canPrint = maxmult >= quantity;
   return (
     <Tooltip
       content={
         <MaterialCostSequence
           design={design}
           amount={quantity}
+          SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={availableMaterials}
         />
       }
@@ -154,7 +162,9 @@ const PrintButton = (props: PrintButtonProps) => {
           !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
         color={'transparent'}
-        onClick={() => act('make', { id: design.id, multiplier: quantity })}
+        onClick={() =>
+          canPrint && act('make', { id: design.id, multiplier: quantity })
+        }
       >
         &times;{quantity}
       </div>
@@ -163,19 +173,17 @@ const PrintButton = (props: PrintButtonProps) => {
 };
 
 type AutolatheRecipeProps = {
-  design: AutolatheDesign;
+  design: Design;
   availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 const AutolatheRecipe = (props: AutolatheRecipeProps) => {
-  const { act, data } = useBackend<AutolatheData>();
-  const { design, availableMaterials } = props;
+  const { act } = useBackend<AutolatheData>();
+  const { design, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !availableMaterials[material] ||
-      amount > (availableMaterials[material] ?? 0),
-  );
+  const maxmult = design.maxmult;
+  const canPrint = maxmult > 0;
 
   return (
     <div className="FabricatorRecipe">
@@ -195,6 +203,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={availableMaterials}
           />
         }
@@ -204,7 +213,9 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('make', { id: design.id, multiplier: 1 })}
+          onClick={() =>
+            canPrint && act('make', { id: design.id, multiplier: 1 })
+          }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
@@ -217,37 +228,21 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
         </div>
       </Tooltip>
 
-      {!!design.mult5 && (
-        <PrintButton
-          design={design}
-          quantity={5}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={5}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+        availableMaterials={availableMaterials}
+        maxmult={maxmult}
+      />
 
-      {!!design.mult10 && (
-        <PrintButton
-          design={design}
-          quantity={10}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult25 && (
-        <PrintButton
-          design={design}
-          quantity={25}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult50 && (
-        <PrintButton
-          design={design}
-          quantity={50}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={10}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+        availableMaterials={availableMaterials}
+        maxmult={maxmult}
+      />
 
       <div
         className={classes([
@@ -256,9 +251,9 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
         ])}
       >
         <Button.Input
-          content={'[Max: ' + design.maxmult + ']'}
+          content={'[Max: ' + maxmult + ']'}
           color={'transparent'}
-          maxValue={design.maxmult}
+          maxValue={maxmult}
           onCommit={(_e, value: string) =>
             act('make', {
               id: design.id,

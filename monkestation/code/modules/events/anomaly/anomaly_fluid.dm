@@ -15,4 +15,6 @@
 	anomaly_path = /obj/effect/anomaly/fluid
 
 /datum/round_event/anomaly/anomaly_fluid/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("Fluidic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", SSstation.announcer.get_rand_alert_sound())

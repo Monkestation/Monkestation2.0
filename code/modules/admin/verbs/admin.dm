@@ -1,15 +1,5 @@
-// Admin Tab - Admin Verbs
-
-/client/proc/show_tip()
-	set category = "Admin"
-	set name = "Show Tip"
-	set desc = "Sends a tip (that you specify) to all players. After all \
-		you're the experienced player here."
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+ADMIN_VERB(show_tip, R_ADMIN, FALSE, "Show Tip", "Sends a tip to all players.", ADMIN_CATEGORY_MAIN)
+	var/input = input(user, "Please specify your tip that you want to send to the players.", "Tip", "") as message | null
 	if(!input)
 		return
 
@@ -22,44 +12,33 @@
 	else
 		SSticker.selected_tip = input
 
-	message_admins("[key_name_admin(usr)] sent a tip of the round.")
-	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
+	message_admins("[key_name_admin(user)] sent a tip of the round.")
+	log_admin("[key_name(user)] sent \"[input]\" as the Tip of the Round.")
+	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
-/datum/admins/proc/announce()
-	set category = "Admin"
-	set name = "Announce"
-	set desc="Announce your desires to the world"
-	if(!check_rights(0))
+ADMIN_VERB(announce, R_ADMIN, FALSE, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
+	var/message = input(user, "Global message to send:", "Admin Announce")  as message | null
+	if(!message)
 		return
+	if(!user.holder.check_for_rights(R_SERVER))
+		message = adminscrub(message,500)
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message|null
-	if(message)
-		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
-		send_formatted_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
-		log_admin("Announce: [key_name(usr)] : [message]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	send_formatted_announcement(message, "From [user.holder.fakekey ? "Administrator" : user.key]") // tg uses send_ooc_announcement
+	log_admin("Announce: [key_name(user)] : [message]")
+	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
-/datum/admins/proc/unprison(mob/M in GLOB.mob_list)
-	set category = "Admin"
-	set name = "Unprison"
-	if (is_centcom_level(M.z))
-		SSjob.SendToLateJoin(M)
-		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
-		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
-	else
-		tgui_alert(usr,"[M.name] is not prisoned.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
-	set category = "Admin"
-	set name = "Player Playtime"
-	if(!check_rights(R_ADMIN))
+ADMIN_VERB(unprison, R_ADMIN, FALSE, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner)
+	if(!is_centcom_level(prisoner.z))
+		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
+	SSjob.SendToLateJoin(prisoner)
+	message_admins("[key_name_admin(user)] has unprisoned [key_name_admin(prisoner)]")
+	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
+	BLACKBOX_LOG_ADMIN_VERB("Unprison")
 
+ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, FALSE, "Player Playtime", "View player playtime.", ADMIN_CATEGORY_MAIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
-		to_chat(usr, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
+		to_chat(user, span_warning("Tracking is disabled in the server configuration file."), confidential = TRUE)
 		return
 
 	var/list/msg = list()
@@ -67,7 +46,7 @@
 	for(var/client/client in sort_list(GLOB.clients, GLOBAL_PROC_REF(cmp_playtime_asc)))
 		msg += "<LI> [ADMIN_PP(client.mob)] [key_name_admin(client)]: <A href='byond://?_src_=holder;[HrefToken()];getplaytimewindow=[REF(client.mob)]'>" + client.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
-	src << browse(msg.Join(), "window=Player_playtime_check")
+	user << browse(msg.Join(), "window=Player_playtime_check")
 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
@@ -166,28 +145,21 @@ monkestation end */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/client/proc/cmd_admin_drop_everything(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Drop Everything"
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/confirm = tgui_alert(usr, "Make [M] drop everything?", "Message", list("Yes", "No"))
+ADMIN_VERB(drop_everything, R_ADMIN, FALSE, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/dropee)
+	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/W in M)
-		if(!M.dropItemToGround(W))
+	for(var/obj/item/W in dropee)
+		if(!dropee.dropItemToGround(W))
 			qdel(W)
-			M.regenerate_icons()
+			dropee.regenerate_icons()
 
-	// MONKESTATION EDIT START - tgui tickets
-	var/msg = "[key_name(usr)] made [key_name(M)] drop everything!"
+	var/msg = "[key_name(user)] made [key_name(dropee)] drop everything!"
 	log_admin(msg)
-	message_admins("[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!")
-	admin_ticket_log(M, msg)
-	// MONKESTATION EDIT END
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Everything") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(user)] made [ADMIN_LOOKUPFLW(dropee)] drop everything!")
+	admin_ticket_log(dropee, msg)
+	BLACKBOX_LOG_ADMIN_VERB("Drop Everything")
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
 	if(!whom)

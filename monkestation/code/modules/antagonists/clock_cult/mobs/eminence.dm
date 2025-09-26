@@ -3,7 +3,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence //yes this should be a camera mob, that will not work because cameras are deaf
 	name = "Eminence"
 	real_name = "Eminence"
-	desc = "An entity forever bound to Rat'var, acting upon his will."
+	desc = "An entity forever bound to Ratvar, acting upon his will."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT
@@ -168,7 +168,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
 
-	use_power(5)
+	use_energy(5)
 	icon_state = "[skin]1"
 
 	if(device)

@@ -8,7 +8,7 @@
 
 /datum/action/changeling/darkness_adaptation/proc/on_mutation_lost(mob/living/carbon/human/cling, mutation_type)
 	SIGNAL_HANDLER
-	if(mutation_type in typesof(/datum/mutation/human/chameleon))
+	if(mutation_type in typesof(/datum/mutation/chameleon))
 		addtimer(CALLBACK(src, PROC_REF(reset_alpha), cling), 0.1 SECONDS) // stupidity at it's finest
 
 /datum/action/changeling/darkness_adaptation/proc/reset_alpha(mob/living/carbon/human/cling)

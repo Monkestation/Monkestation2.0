@@ -665,7 +665,7 @@
 		return SHUTTLE_DHEIGHT_TOO_LARGE
 
 	if(height-dheight > stationary_dock.height-stationary_dock.dheight)
-		return SHUTTLE_HEIGHT_TOO_LARGE
+		return "[SHUTTLE_HEIGHT_TOO_LARGE] [stationary_dock.dheight] vs [dheight] + [height]"
 
 	//check the dock isn't occupied
 	var/currently_docked = stationary_dock.get_docked()

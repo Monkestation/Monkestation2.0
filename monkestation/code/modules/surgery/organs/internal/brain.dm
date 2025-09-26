@@ -1,10 +1,9 @@
 /obj/item/organ/internal/brain/clockwork
 	name = "enigmatic gearbox"
-	desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
+	desc = "An engineer would call this inconcievable wonder of gears and metal a 'black box'"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-clock"
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/robust //Set to true if the robustbits causes brain replacement. Because holy fuck is the CLANG CLANG CLANG CLANG annoying
 
 /obj/item/organ/internal/brain/clockwork/emp_act(severity)
@@ -14,6 +13,9 @@
 	. = ..()
 	if(prob(5) && !robust)
 		SEND_SOUND(owner, sound('sound/ambience/ambiruin3.ogg', volume = 25))
+
+/// A global list of dead/ejected oozeling cores.
+GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slime)
 
 /obj/item/organ/internal/brain/slime
 	name = "core"
@@ -30,6 +32,9 @@
 	var/gps_active = TRUE
 
 	var/datum/dna/stored_dna
+	/// The mind of the oozeling that became this core.
+	/// This MUST be named `mind`, in order to allow IS_[antag] macros to work on cores.
+	var/datum/mind/mind
 
 ///////
 /// Core storage
@@ -37,22 +42,28 @@
 	var/list/stored_quirks = list()
 	var/list/stored_items = list()
 	///Item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
-	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
+	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
 		//obj/item/implant
 	))
-	//Extraneous organs not of oozling origin. Usually cyber implants.
+	//Extraneous organs not of oozeling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
-		/obj/item/organ/internal/cyberimp,
-		/obj/item/organ/external/wings,
-		/obj/item/organ/external/tail,
+		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/frills,
 		/obj/item/organ/external/horns,
+		/obj/item/organ/external/plumage,
 		/obj/item/organ/external/snout,
-		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/external/wings,
+		/obj/item/organ/internal/alien,
+		/obj/item/organ/internal/cyberimp,
+		/obj/item/organ/internal/ears/cat/super,
 		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/internal/heart/cursed,
+		/obj/item/organ/internal/tongue/polyglot_voicebox,
+		/obj/item/organ/internal/vocal_cords,
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
@@ -78,6 +89,7 @@
 		/datum/quirk/drg_callout, // skillchips are in the brain anyways
 		/datum/quirk/prosthetic_limb,
 		/datum/quirk/quadruple_amputee,
+		/datum/quirk/stowaway,
 	))
 
 	var/rebuilt = TRUE
@@ -92,13 +104,17 @@
 	transform.Scale(2, 2)
 
 /obj/item/organ/internal/brain/slime/Destroy(force)
+	GLOB.dead_oozeling_cores -= src
 	QDEL_NULL(membrane_mur)
 	QDEL_NULL(stored_dna)
 	QDEL_LIST(stored_quirks)
 
+	mind = null
+
 	if(stored_items)
-		if(!isnull(src.loc))
-			drop_items_to_ground(src.drop_location(), explode = TRUE)
+		var/drop_loc = drop_location()
+		if(drop_loc)
+			drop_items_to_ground(drop_loc, explode = TRUE)
 		else
 			QDEL_LIST(stored_items)
 	return ..()
@@ -107,39 +123,49 @@
 	. = ..()
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
-		. += span_red("You could probably snuff that out.")
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
-		. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
+	else
+		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
+		if(isnull(stored_dna))
+			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
+		else
+			. += span_hypnophrase("You remember that <i>slowly</i> pouring a big beaker of ground plasma on it by hand, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
 	user.visible_message(
-		span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
-		gps_active ? span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into the core, feeling for any dense objects. Slime covers your arm."),
+		span_warning("[user] begins jamming their hand into [src]! Slime goes everywhere!"),
+		gps_active ? span_notice("You jam your hand into [src], feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into [src], feeling for any dense objects. Slime covers your arm."),
 		span_notice("You hear an obscene squelching sound.")
 	)
 	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
-		user.visible_message(span_warning("[user]'s hand slips out of the core before they can cause any harm!'"),
-		gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
-		span_notice("You hear a resounding plop.")
+		user.visible_message(
+			span_warning("[user]'s hand slips out of [src] before they can cause any harm!"),
+			gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
+			span_notice("You hear a resounding plop.")
 		)
 		return
 
-	if((gps_active))
-		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-		span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
-		span_notice("You hear a wet crunching sound."))
-		gps_active =  FALSE
+	if(gps_active)
+		user.visible_message(
+			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
+			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+			span_notice("You hear a wet crunching sound."),
+		)
+		gps_active = FALSE
 		qdel(GetComponent(/datum/component/gps/no_bsa))//Actually remove the gps signal
-
 	else
-		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-		span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
-		span_notice("You hear a wet sqlenching sounds."))
+		user.visible_message(
+			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
+			span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
+			span_notice("You hear a wet squelching sounds.")
+		)
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
-
-	drop_items_to_ground(get_turf(user))
+	drop_items_to_ground(user.drop_location())
 
 /obj/item/organ/internal/brain/slime/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -147,6 +173,7 @@
 		return
 	colorize()
 	core_ejected = FALSE
+	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
@@ -155,18 +182,32 @@
 		core_color = located.return_color(MUTANT_COLOR)
 		add_atom_colour(core_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/brain/slime/proc/on_stat_change(mob/living/victim, new_stat, turf/loc_override)
+/obj/item/organ/internal/brain/slime/proc/on_stat_change(mob/living/carbon/victim, new_stat, turf/loc_override)
 	SIGNAL_HANDLER
 
 	if(new_stat != DEAD)
 		return
 
+	mind = victim.mind || victim.last_mind
+	copy_mind_and_dna(victim)
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
 /obj/item/organ/internal/brain/slime/proc/enable_coredeath() // No longer used.
 	coredeath = TRUE
 	if(owner?.stat == DEAD)
+		copy_mind_and_dna(owner)
 		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
+
+/obj/item/organ/internal/brain/slime/proc/copy_mind_and_dna(mob/living/carbon/human/slime)
+	if(QDELETED(mind))
+		mind = brainmob?.mind || slime.mind || slime.last_mind
+
+	if(isnull(slime.dna))
+		QDEL_NULL(stored_dna)
+	else
+		if(QDELETED(stored_dna))
+			stored_dna = new
+		slime.dna.copy_dna(stored_dna)
 
 ///////
 /// CORE EJECTION PROC
@@ -175,55 +216,51 @@
 /obj/item/organ/internal/brain/slime/proc/core_ejection(mob/living/carbon/human/victim, new_stat, turf/loc_override)
 	if(core_ejected || !coredeath)
 		return
-	if(QDELETED(stored_dna))
-		stored_dna = new
 
-	isnull(victim.dna) ? (stored_dna = null) : victim.dna.copy_dna(stored_dna)
-
+	GLOB.dead_oozeling_cores |= src
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
-	var/mob/living/basic/mining/legion/legionbody = victim.loc
+	var/mob/living/basic/mining/legion/legionbody = astype(victim.loc)
 
 	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
 		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
 			continue
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		stored_quirks |= quirk
-
+	victim.drop_all_held_items()
 	process_items(victim) // Start moving items before anything else can touch them.
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
 	//Make this check more generalized later. For antags that eat people as they kill. Make sure they drop their
 	//contents after death; that is if that is how that item or antag works.
-	if(legionbody)
-		src.forceMove(legionbody)
-	else
-		if(death_turf)
-			forceMove(death_turf)
-	src.wash(CLEAN_WASH)
+	forceMove(legionbody || death_turf)
+	wash(CLEAN_WASH)
 	new death_melt_type(death_turf, victim.dir)
 
 	do_steam_effects(death_turf)
 	playsound(victim, 'sound/effects/blobattack.ogg', 80, TRUE)
 
 	if(gps_active) // adding the gps signal if they have activated the ability
-		AddComponent(/datum/component/gps/no_bsa, "[victim]'s Core")
+		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")
 
 	if(brainmob)
 		membrane_mur.Grant(brainmob)
 		var/datum/antagonist/changeling/target_ling = brainmob.mind?.has_antag_datum(/datum/antagonist/changeling)
 
+		// TODO: convert these to use a signal or some shit ~Lucy
 		if(target_ling)
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
+				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
+				addtimer(CALLBACK(target_bloodsucker, TYPE_PROC_REF(/datum/antagonist/bloodsucker, oozeling_revive), src), 180 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	if(stored_dna)
@@ -243,7 +280,7 @@
 /// Makes it so that when a slime's core has plasma poured on it, it builds a new body and moves the brain into it.
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 			user.balloon_alert(user, "too little plasma!")
 			return FALSE
@@ -252,7 +289,12 @@
 			span_notice("[user] starts to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its cytoskeleton outwards..."),
 			span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards..."),
 			span_hear("You hear bubbling.")
-			)
+		)
+		user.balloon_alert_to_viewers("pouring plasma...")
+
+		if(brainmob)
+			brainmob.notify_ghost_cloning("Someone is pouring plasma on your core!")
+			brainmob.grab_ghost()
 
 		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
@@ -266,7 +308,7 @@
 			span_notice("[user] pours the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
 			span_notice("You pour the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
 			span_hear("You hear a splat.")
-			)
+		)
 
 		item.reagents.remove_reagent(/datum/reagent/toxin/plasma, 100)
 		rebuild_body(user)
@@ -326,7 +368,7 @@
 	if(QDELETED(item))
 		return
 	if(!isnull(item.contents))
-		for(var/atom/movable/content_item in item.get_all_contents())
+		for(var/atom/movable/content_item as anything in item.get_all_contents())
 			if(is_type_in_typecache(content_item, bannedcore))
 				content_item.forceMove(victim.drop_location()) // Move item from container to victims turf if banned
 	if(is_type_in_typecache(item, bannedcore))
@@ -338,8 +380,7 @@
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
 	for(var/atom/movable/item as anything in stored_items)
 		if(explode)
-			var/mob/living/explodedcore = src.brainmob
-			explodedcore.dropItemToGround(item, violent = TRUE)
+			brainmob.dropItemToGround(item, violent = TRUE)
 		else
 			item.forceMove(turf)
 	stored_items.Cut()
@@ -348,31 +389,43 @@
 	RETURN_TYPE(/mob/living/carbon/human)
 	if(rebuilt)
 		return owner
-	set_organ_damage(-maxHealth) // heals the brain fully
+
+	GLOB.dead_oozeling_cores -= src
+	set_organ_damage(0) // heals the brain fully
+
+	if(istype(loc, /obj/effect/abstract/chasm_storage))
+		// oh fuck we're reviving in a chasm somehow, uhhhh, quick, find us the nearest non-chasm turf
+		for(var/turf/turf as anything in spiral_range_turfs(5, get_turf(src), TRUE))
+			if(!isopenturf(turf) || isgroundlessturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
+				continue
+			forceMove(turf)
+			break
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
-		gps_active = FALSE
 		qdel(GetComponent(/datum/component/gps))
 
 	//we have the plasma. we can rebuild them.
 	brainmob?.mind?.grab_ghost()
-	if(isnull(brainmob))
-		user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
-		return null
-	if(isnull(brainmob.stored_dna))
-		user?.balloon_alert(user, "This brain does not contain any dna!")
-		return null
-	if(isnull(brainmob.client))
-		user?.balloon_alert(user, "This brain does not contain a mind!")
-		return null
+	if(isnull(mind))
+		if(isnull(brainmob))
+			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+			return null
+		if(isnull(brainmob.stored_dna))
+			user?.balloon_alert(user, "This brain does not contain any dna!")
+			return null
+		if(isnull(brainmob.client))
+			user?.balloon_alert(user, "This brain does not contain a mind!")
+			return null
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
 	rebuilt = TRUE
-	brainmob.client?.prefs?.safe_transfer_prefs_to(new_body)
+
+	var/client/original_client = brainmob?.client || mind?.current?.client
+	original_client?.prefs?.safe_transfer_prefs_to(new_body)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
-	stored_dna.transfer_identity(new_body, transfer_SE = TRUE)
+	stored_dna.copy_dna(new_body.dna, COPY_DNA_SE | COPY_DNA_SPECIES)
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)
@@ -382,12 +435,12 @@
 		new_body.set_nutrition(NUTRITION_LEVEL_FED)
 	new_body.blood_volume = nugget ? (BLOOD_VOLUME_SAFE + 60) : BLOOD_VOLUME_NORMAL
 	REMOVE_TRAIT(new_body, TRAIT_NO_TRANSFORM, REF(src))
-	if(!QDELETED(brainmob))
-		if(!isnull(stored_quirks))
-			for(var/datum/quirk/quirk in stored_quirks)
-				quirk.add_to_holder(new_body, quirk_transfer = TRUE) // Return their old quirk to them.
-			stored_quirks.Cut()
-		SSquirks.AssignQuirks(new_body, brainmob.client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
+	if(!isnull(stored_quirks))
+		for(var/datum/quirk/quirk in stored_quirks)
+			quirk.add_to_holder(new_body, quirk_transfer = TRUE) // Return their old quirk to them.
+		stored_quirks.Cut()
+	if(original_client)
+		SSquirks.AssignQuirks(new_body, original_client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
 	var/obj/item/organ/internal/brain/new_body_brain = new_body.get_organ_slot(ORGAN_SLOT_BRAIN)
 	qdel(new_body_brain)
 	forceMove(new_body)
@@ -402,10 +455,10 @@
 					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
 					eyes.Remove(new_body)
 					qdel(eyes)
-			bodypart.drop_limb() // Drop limb should delete the limb for oozlings unless someone changes it.
+			bodypart.drop_limb() // Drop limb should delete the limb for oozelings unless someone changes it.
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
-		//Make oozlings revive similar to other species.
+		//Make oozelings revive similar to other species.
 		new_body.set_jitter_if_lower(200 SECONDS)
 		new_body.emote("scream")
 	else
@@ -423,6 +476,25 @@
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
+
+ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
+	if(QDELETED(core))
+		to_chat(user, span_boldannounce("Invalid Oozeling Core."), confidential = TRUE)
+		return
+	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE)
+
+	var/log_msg
+	var/msg
+	if(!isnull(new_body))
+		log_msg = "[key_name(user)] healed / revived [key_name(new_body)]"
+		msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(new_body)]!")
+	else
+		log_msg = "[key_name(user)] attempted to heal / revive [key_name(core)]. A body was not reconstructed."
+		msg = span_danger("Admin [key_name_admin(user)] attempted to heal / revive [ADMIN_LOOKUPFLW(core)]! A body was not reconstructed.")
+	log_admin(log_msg)
+	message_admins(msg)
+	admin_ticket_log(new_body, log_msg)
+	BLACKBOX_LOG_ADMIN_VERB("Heal Oozeling Core")
 
 /obj/item/organ/internal/brain/synth
 	name = "compact positronic brain"
@@ -447,10 +519,27 @@
 		if(!HAS_TRAIT(user_human, TRAIT_DEFIB_BLACKLISTED))
 			user_human.revive(FALSE)
 
+/obj/item/organ/internal/brain/synth/check_for_repair(obj/item/item, mob/user)
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/liquid_solder)) //attempt to heal the brain
+
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to restore its previous circuit paths."), span_notice("You pour the contents of [item] onto [src], causing it to restore its previous circuit paths."))
+		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/liquid_solder)
+		var/healto = max(0, damage - amount * 2)
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is liquid solder
+		set_organ_damage(healto) //heals 2 damage per unit of liquid solder, and by using "set_organ_damage", we clear the failing variable if that was up
+		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+		return TRUE
+	return FALSE
+
 /obj/item/organ/internal/brain/synth/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -459,12 +548,12 @@
 	switch(severity)
 		if(EMP_HEAVY)
 			to_chat(owner, span_warning("01001001 00100111 01101101 00100000 01100110 01110101 01100011 01101011 01100101 01100100 00101110"))
-			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Electromagnetic damage taken in central processing unit. Error Code: 401-YT"))
-			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 
-/obj/item/organ/internal/brain/synth/apply_organ_damage(damage_amount, maximumm, required_organtype)
+/obj/item/organ/internal/brain/synth/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 
 	if(owner && damage > 0 && (world.time - last_message_time) > SYNTH_BRAIN_DAMAGE_MESSAGE_INTERVAL)

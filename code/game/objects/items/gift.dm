@@ -128,14 +128,17 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/gun/magic/wand/resurrection/debug,
 			//holy fuck why was this enabled
 			/obj/item/debug,
-			/obj/item/storage/box/debugtools,
+			/obj/item/storage/box/debugbox,
 			/obj/item/gun/energy/beam_rifle/debug,
 			/obj/item/multitool/field_debug,
 			/obj/item/bounty_cube/debug_cube,
 			/obj/item/organ/internal/cyberimp/brain/nif/debug,
 			/obj/item/spellbook_charge/debug,
+			/obj/item/uplink/nuclear/debug,
+			//kills only the debug uplink from the gifts.
+			/obj/item/mod/control/pre_equipped/chrono,
 			)
-		for(var/blocked_item as anything in blocked_items)
+		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
 		//MONKESTATION EDIT END

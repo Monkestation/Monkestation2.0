@@ -146,3 +146,24 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
 	icon_state = "tallbabypukeko"
 	animal_transformation = /mob/living/basic/pet/babypukeko/tall
+
+//Mycah
+/obj/item/effect_granter/donator/eris_romch
+	name = "romch"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	animal_transformation = /mob/living/basic/pet/eris_romch
+
+//Mrsmall_theclown
+/obj/item/effect_granter/donator/theclown_clownpet
+	name = "short clown"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	animal_transformation = /mob/living/basic/pet/theclown_clownpet
+
+//adamcoal
+/obj/item/effect_granter/donator/cyber_husky
+	name = "cyber husky"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	animal_transformation = /mob/living/basic/pet/cyber_husky

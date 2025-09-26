@@ -1,23 +1,23 @@
-/datum/mutation/human/lisp
+/datum/mutation/lisp
 	name = "Lisp"
 	desc = "Maketh the thubject thpeak with a lithp regardlethth of willingnethth."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_warning("Thomething doethn't feel right.")
 	text_lose_indication = span_notice("You now feel able to pronounce consonants.")
 
-/datum/mutation/human/lisp/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/lisp/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/lisp/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/lisp/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/lisp/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/lisp/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -25,45 +25,46 @@
 		message = replacetext(message,"s","th")
 		speech_args[SPEECH_MESSAGE] = message
 
-/datum/mutation/human/uwuspeak
+/datum/mutation/uwuspeak
 	name = "Neko Speak"
 	desc = "Makes the subject speak in horrific combinations of words."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("Something feels very wrong.")
 	text_lose_indication = span_notice("You no longer feel like vomiting up your tongue.")
 
-/datum/mutation/human/uwuspeak/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/uwuspeak/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
+
 	owner.AddComponentFrom(GENETIC_MUTATION, /datum/component/fluffy_tongue)
 
-/datum/mutation/human/uwuspeak/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/uwuspeak/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 	owner.RemoveComponentSource(GENETIC_MUTATION, /datum/component/fluffy_tongue)
 
-/datum/mutation/human/loud
+/datum/mutation/loud
 	name = "Loud"
 	desc = "Forces the speaking centre of the subjects brain to yell every sentence."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("YOU FEEL LIKE YELLING!")
 	text_lose_indication = span_notice("You feel like being quiet.")
 
-/datum/mutation/human/loud/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/loud/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/loud/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/loud/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/loud/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/loud/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -73,7 +74,7 @@
 		message = replacetext(message,"!","!!")
 		speech_args[SPEECH_MESSAGE] = message
 
-/datum/mutation/human/smile
+/datum/mutation/smile
 	name = "Smile"
 	desc = "Causes the user to be in constant mania."
 	quality = MINOR_NEGATIVE
@@ -81,13 +82,13 @@
 	text_lose_indication = span_notice("Everything is terrible again.")
 	power_coeff = 1
 
-/datum/mutation/human/smile/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/smile/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/smile/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/smile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -95,12 +96,12 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		owner.clear_mood_event(GENETIC_MUTATION)
 
-/datum/mutation/human/smile/modify()
+/datum/mutation/smile/setup()
 	. = ..()
 	if(owner && GET_MUTATION_POWER(src) > 1)
 		owner.add_mood_event(GENETIC_MUTATION, /datum/mood_event/smile, GET_MUTATION_POWER(src))
 
-/datum/mutation/human/smile/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/smile/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]

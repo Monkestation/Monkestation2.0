@@ -24,15 +24,15 @@
 	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
 	return ..()
 
-/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
+/obj/item/gun/grenadelauncher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(istype(I, /obj/item/grenade/c4))
+	if(istype(attacking_item, /obj/item/grenade/c4))
 		return
-	if((isgrenade(I)))
+	if((isgrenade(attacking_item)))
 		if(grenades.len < max_grenades)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			grenades += I
+			grenades += attacking_item
 			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
 		else
 			balloon_alert(user, "it's already full!")

@@ -2,7 +2,7 @@
 #define BLOODSUCKER_PASSIVE_BLOOD_DRAIN 0.1
 
 /// Runs from COMSIG_LIVING_LIFE, handles Bloodsucker constant proccesses.
-/datum/antagonist/bloodsucker/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/bloodsucker/proc/life_tick(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(isbrain(owner?.current))
 		return
@@ -19,10 +19,15 @@
 			to_chat(owner.current, span_notice("The power of your blood begins knitting your wounds..."))
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
 	// Standard Updates
+
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
-	INVOKE_ASYNC(src, PROC_REF(HandleStarving))
-	INVOKE_ASYNC(src, PROC_REF(update_blood))
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
+
+/datum/antagonist/bloodsucker/proc/handle_blood()
+	SIGNAL_HANDLER
+	update_blood()
+	handle_starving()
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN | HANDLE_BLOOD_NO_EFFECTS
 
 /datum/antagonist/bloodsucker/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
@@ -81,7 +86,7 @@
  * ## HEALING
  */
 
-/// Constantly runs on Bloodsucker's LifeTick, and is increased by being in Torpor/Coffins
+/// Constantly runs on Bloodsucker's life_tick, and is increased by being in Torpor/Coffins
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	if(QDELETED(owner?.current))
 		return
@@ -172,8 +177,8 @@
  *	This is called on Bloodsucker's Assign, and when they end Torpor.
  */
 
-/datum/antagonist/bloodsucker/proc/heal_vampire_organs()
-	var/mob/living/carbon/bloodsuckeruser = owner.current
+/datum/antagonist/bloodsucker/proc/heal_vampire_organs(mob/living/carbon/mob_override)
+	var/mob/living/carbon/bloodsuckeruser = mob_override || owner.current
 	if(!iscarbon(bloodsuckeruser))
 		return
 
@@ -190,6 +195,7 @@
 	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
+		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 		current_eyes.color_cutoffs = list(25, 8, 5)
 		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
@@ -238,10 +244,9 @@
 	to_chat(owner.current, span_userdanger("Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor."))
 	check_begin_torpor(TRUE)
 
-/datum/antagonist/bloodsucker/proc/HandleStarving() // I am thirsty for blood!
+/datum/antagonist/bloodsucker/proc/handle_starving() // I am thirsty for blood!
 	// Nutrition - The amount of blood is how full we are.
-	if(!isoozeling(owner.current))
-		owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
+	owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
 
 	// BLOOD_VOLUME_GOOD: [336] - Pale
 //	handled in bloodsucker_integration.dm
@@ -295,10 +300,12 @@
 	// If we have no body, end here.
 	if(QDELETED(owner.current))
 		return
-	UnregisterSignal(src, list(
-		COMSIG_BLOODSUCKER_ON_LIFETICK,
+	UnregisterSignal(owner.current, list(
 		COMSIG_LIVING_LIFE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 	))
 	UnregisterSignal(SSsol, list(
 		COMSIG_SOL_RANKUP_BLOODSUCKERS,
@@ -307,6 +314,7 @@
 		COMSIG_SOL_RISE_TICK,
 		COMSIG_SOL_WARNING_GIVEN,
 	))
+	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
 	if(!iscarbon(owner.current))
@@ -319,7 +327,7 @@
 	user.remove_all_embedded_objects()
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
 
-	if(SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
+	if(SEND_SIGNAL(src, COMSIG_BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
 		return
 
 	// Elders get dusted, Fledglings get gibbed.
@@ -335,5 +343,9 @@
 		span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
 		span_hear("<span class='italics'>You hear a wet, bursting sound."))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
+	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE)
+	heal_vampire_organs(new_body)
 
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

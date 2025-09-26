@@ -248,3 +248,12 @@
 	contraband = TRUE
 	contains = list(/obj/item/weaponcrafting/giant_wrench)
 	crate_name = "unknown parts crate"
+
+/datum/supply_pack/imports/sarcophagus
+	name = "Sarcophagus"
+	desc = "It's an empty sarcophagus, for the dearly departed who \
+	demand something fancier to be forever remembered in."
+	cost = PAYCHECK_COMMAND * 5
+	contains = list()
+	crate_type = /obj/structure/closet/crate/coffin/sarcophagus
+	crate_name = "Sarcophagus"

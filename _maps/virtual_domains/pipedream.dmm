@@ -177,6 +177,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
+"fE" = (
+/turf/closed/wall,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "fK" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/cafeteria,
@@ -214,7 +217,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "gN" = (
 /obj/structure/disposalpipe/sorting{
 	dir = 8
@@ -424,7 +427,7 @@
 /area/virtual_domain/powered)
 "po" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "pI" = (
@@ -498,6 +501,9 @@
 /obj/machinery/light/small/red/dim,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
+"rB" = (
+/turf/open/floor/iron,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "rG" = (
 /obj/machinery/light/dim,
 /obj/effect/turf_decal/trimline/yellow/line,
@@ -613,7 +619,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "vA" = (
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
@@ -948,7 +954,7 @@
 /area/virtual_domain/powered)
 "Fa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
@@ -1276,6 +1282,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"Pp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "Pr" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 5
@@ -1372,7 +1382,7 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "Ry" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -1533,6 +1543,9 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"VG" = (
+/turf/closed/wall/r_wall,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "VL" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/floor/plating,
@@ -2348,9 +2361,9 @@ kU
 vU
 lB
 XL
-eg
-tr
-eY
+fE
+Pp
+VG
 JR
 JR
 JR
@@ -2399,7 +2412,7 @@ hi
 hg
 Wp
 Ru
-hi
+rB
 gs
 JR
 JR
@@ -2448,9 +2461,9 @@ kU
 hi
 cF
 cw
-eY
-tr
-eY
+VG
+Pp
+VG
 JR
 JR
 JR

@@ -1,0 +1,11 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "(Moose1002) Nanotrasen has finally recalled their faulty multitools and replaced them with working ones! The multitool's buffer now properly clears itself."
+  - qol: "(Moose1002) Moved multitool link messages to balloon alerts)"
+  - refactor: "(intercepti0n) Refactored Ore Silo Ui."
+  - qol: "(SyncIt21) added more screen tips & examines for ore silo, made UI wider, attach location name to each machine & grey out paused machines to make it more noticeable."
+  - code_imp: " (SyncIt21) auto docs proc & vars for silo log entry. Fixed return values of all tool acts"
+  - bugfix: " (SyncIt21) ore silo UI now functions correctly after removing an entry from the UI"
+  - bugfix: " (SyncIt21) no runtimes when connecting a machine to silo that was previously disconnected via the ore silo UI"
+  - bugfix: "(SyncIt21) Lathes don't hang if materials run out mid printing. Also displays message if materials are put on hold while printing"

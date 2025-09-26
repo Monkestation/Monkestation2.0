@@ -41,7 +41,8 @@
 			/mob/living/basic/pet/dog/bullterrier,
 			/mob/living/basic/lizard,
 			/mob/living/basic/ant,
-			/mob/living/simple_animal/pet/hamster
+			/mob/living/simple_animal/pet/hamster,
+			/mob/living/basic/pet/pcreacher
 		)
 
 		for(var/mob/living/basic_mob as anything in selectable_pets)
@@ -73,7 +74,6 @@
 	pod.explosionSize = list(0,0,0,0)
 	your_pet.name = name
 	your_pet.real_name = name
-	your_pet.update_name_tag() // monkestation edit: name tags
 
 	if(isbasicmob(your_pet))
 		var/mob/living/basic/pet = your_pet

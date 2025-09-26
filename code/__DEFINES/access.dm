@@ -549,7 +549,7 @@
 
 /// MONKESTATION ADDITION - Adds Charlie Station region, for the Charlie Station ID console.
 /// Name for the Charlie Station region.
-#define REGION_CHARLIE_STATION "Charlie Station"
+#define REGION_CHARLIE_STATION "Ancient Station"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all ACCESS_AWAY regional accesses.
 #define REGION_ACCESS_CHARLIE_STATION list( \
 	ACCESS_AWAY_GENERAL, \
@@ -639,3 +639,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"

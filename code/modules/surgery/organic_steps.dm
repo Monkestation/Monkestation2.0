@@ -153,6 +153,7 @@
 	implements = list(
 		TOOL_SAW = 100,
 		/obj/item/melee/arm_blade = 75,
+		/obj/item/fireaxe/energy = 75,
 		/obj/item/fireaxe = 50,
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 25,

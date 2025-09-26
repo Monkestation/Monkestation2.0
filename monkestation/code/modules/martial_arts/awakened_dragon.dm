@@ -3,9 +3,9 @@
 	id = MARTIALART_AWAKENEDDRAGON
 	help_verb = /mob/living/proc/awakened_dragon_help
 	//deflect_cooldown = 0
-	deflect_stamcost = 10
+	deflect_stamcost = 0
 	log_name = "Awakened Dragon"
-	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS, TRAIT_BATON_RESISTANCE)
+	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 	counter = TRUE
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
 	var/static/list/character_prefixes = list(
@@ -22,6 +22,9 @@
 	var/original_name
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
+	instant_grab = TRUE
+	snap_grab_state = GRAB_NECK //you can kill people a little faster
+	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
 	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
@@ -35,7 +38,7 @@
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
 	var/datum/dna/dna = carp_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return FALSE
 	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE
@@ -43,6 +46,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
+	target.physiology.stamina_mod *= 0.7
 	original_name = target.real_name
 	if(original_body == null)
 		original_body = target
@@ -54,11 +58,12 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
+	target.physiology.stamina_mod /= 0.7
 	target.fully_replace_character_name(titled_name, original_name)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
 	damage = 55
-	. = ..(attacker, defender, set_damage = FALSE)
+	. = ..(attacker, defender)
 	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender, set_damage)
@@ -72,8 +77,7 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
 	stamina_damage = -100
 	. = ..(attacker, defender, set_damage = FALSE)
-	var/def_check = defender.getarmor(defender.zone_selected, MELEE)
-	defender.apply_damage(30, attacker.get_attack_type(), defender.zone_selected, wound_bonus = 10, bare_wound_bonus = 5, blocked = def_check)
+	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /mob/living/proc/awakened_dragon_help()

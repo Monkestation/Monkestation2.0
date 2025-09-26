@@ -41,7 +41,7 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(issignaler(attacking_item))
 		var/obj/item/assembly/signaler/attached_signaler = attacking_item
 		// There's a flashlight in us. Remove it first, or it'll be lost forever!
@@ -225,6 +225,21 @@
 	acid = 80
 	wound = 15
 
+/obj/item/clothing/head/helmet/balloon
+	name = "balloon helmet"
+	desc = "A helmet made out of balloons. Its likes saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	icon_state = "helmet_balloon"
+	inhand_icon_state = "helmet_balloon"
+	armor_type = /datum/armor/balloon
+	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
+	resistance_flags = FIRE_PROOF
+	dog_fashion = null
+
+/datum/armor/balloon
+	melee = 10
+	fire = 60
+	acid = 50
+
 /obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
@@ -382,6 +397,12 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/gladiator/cheap
+	name = "gladiator helmet replica"
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
+	armor_type = /datum/armor/none
 
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"

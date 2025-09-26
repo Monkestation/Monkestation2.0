@@ -213,11 +213,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))
@@ -249,7 +249,7 @@
 	var/rendered = "[span_name("[name]")] [quoted_message]"
 	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
-	var/language = message_language || owner.language_holder.get_selected_language()
+	var/language = message_language || owner.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
@@ -502,7 +502,7 @@
 	desc = "Patient appears to be targeted by an invisible entity."
 	gain_text = ""
 	lose_text = ""
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
 	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)

@@ -115,11 +115,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/dsay, message)
 		return
 
 	// dead is the only state you can never emote
@@ -158,10 +159,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!try_speak(original_message, ignore_spam, forced, filterproof))
 		return
 
-	language = message_mods[LANGUAGE_EXTENSION]
-
-	if(!language)
-		language = get_selected_language()
+	language ||= message_mods[LANGUAGE_EXTENSION] || get_selected_language()
 
 	var/succumbed = FALSE
 
@@ -547,9 +545,3 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!message)
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
-
-/mob/living/get_language_holder(get_minds = TRUE)
-	RETURN_TYPE(/datum/language_holder)
-	if(get_minds && mind)
-		return mind.get_language_holder()
-	. = ..()

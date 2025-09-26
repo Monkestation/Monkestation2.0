@@ -453,7 +453,7 @@
 	return
 
 //when you attack the syrup bottle with a container it refills it
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(!cap_on)
 		return ..()
@@ -474,7 +474,7 @@
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
-	if(istype(attacking_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(attacking_item))
 		rename(user, attacking_item)
 
 	attacking_item.update_appearance()
@@ -527,3 +527,9 @@
 	name = "bottle of laugh syrup"
 	desc = "A pump bottle containing laugh syrup. The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
 	list_reagents = list(/datum/reagent/consumable/laughsyrup = 50)
+
+//Changeling stuff
+/obj/item/reagent_containers/cup/bottle/antipathogenic_changeling
+	name = "Changeling Immunoglobulin bottle"
+	desc = "A small bottle. Contains Changeling Immunoglobulin."
+	list_reagents = list(/datum/reagent/medicine/antipathogenic/changeling = 30)

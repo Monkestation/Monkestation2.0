@@ -16,12 +16,12 @@
 	change_icons = FALSE
 	max_fuel = 20
 
-/obj/item/weldingtool/electric/raynewelde/attack_self(mob/user)
-	if(!istype(get_area(src), /area/shipbreak))
+/obj/item/weldingtool/electric/raynewelder/attack_self(mob/user)
+	if(!istype(get_area(src), /area/space/shipbreak))
 		return
 
 /obj/item/weldingtool/electric/raynewelder/process(seconds_per_tick)
-	if(!istype(get_area(src), /area/shipbreak))
+	if(!istype(get_area(src), /area/space/shipbreak))
 		src.say("Outside of Designated Area.")
 		switched_off()
 		return

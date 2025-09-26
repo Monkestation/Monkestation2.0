@@ -36,7 +36,7 @@
 		if(!do_after(user, 4 SECONDS, target = src))
 			return FALSE
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 		var/old_name = card.name
 		QDEL_NULL(card)
@@ -50,8 +50,7 @@
 
 /datum/computer_file/program/card_mod/old
 	filename = "charliestationidwriter"
-	filedesc = "Charlie Station Access Management"
-	available_on_ntnet = FALSE //charlie station only fools
+	filedesc = "Station Access Management"
 
 	//every access i could find on charlie station ids
 	valid_access = list(
@@ -87,7 +86,7 @@
 
 /datum/computer_file/program/card_mod/old/ui_static_data(mob/user)
 	var/list/data = list()
-	data["station_name"] = "Charlie Station" //we arent ss13, don't show as such (despite the fact this isn't shown anywhere??)
+	data["station_name"] = "Station" //we arent ss13, don't show as such (despite the fact this isn't shown anywhere??)
 	data["centcom_access"] = is_centcom
 	data["minor"] = target_dept || minor ? TRUE : FALSE
 
@@ -125,7 +124,7 @@
 	trim_state = null
 
 /datum/id_trim/job/away/old/custom
-	assignment = "Charlie Station Crew"
+	assignment = "Station Crew"
 	minimal_access = list(
 		ACCESS_AWAY_GENERAL,
 		ACCESS_ROBOTICS,
@@ -147,5 +146,5 @@
 	)
 
 /obj/item/card/id/away/old/custom
-	name = "Charlie Station ID card"
-	desc = "A card used to provide ID and determine access across Charlie Station."
+	name = "Station ID card"
+	desc = "A card used to provide ID and determine access across the Station."

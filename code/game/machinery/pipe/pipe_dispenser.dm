@@ -60,7 +60,7 @@
 	data["init_directions"] = init_directions
 	return data
 
-/obj/machinery/pipedispenser/ui_act(action, params)
+/obj/machinery/pipedispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	switch(action)
@@ -149,11 +149,11 @@
 		ui = new(user, src, "PipeDispenser", name)
 		ui.open()
 
-/obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
+/obj/machinery/pipedispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, span_notice("You put [W] back into [src]."))
-		qdel(W)
+	if (istype(attacking_item, /obj/item/pipe) || istype(attacking_item, /obj/item/pipe_meter))
+		to_chat(usr, span_notice("You put [attacking_item] back into [src]."))
+		qdel(attacking_item)
 		return
 	else
 		return ..()
@@ -185,14 +185,14 @@
 
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
-	if(!usr.incapacitated())
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/user)
+	if(!user.incapacitated())
 		return
 
 	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 
-	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (get_dist(user, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
 	if (pipe.anchored)

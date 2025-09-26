@@ -30,14 +30,6 @@
 	///If set to true, we can reskin this item as much as we want.
 	var/infinite_reskin = FALSE
 
-	// Access levels, used in modules\jobs\access.dm
-	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
-	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
-	var/list/req_access
-	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
-	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
-	var/list/req_one_access
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
@@ -48,6 +40,8 @@
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
+
+	var/cover_amount = 0 ///Chance for a projectile to hit the object instead of whoever is buckled to it. Might use this for more later.
 
 	uses_integrity = TRUE
 
@@ -148,7 +142,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/mob/living/carbon/human/H = usr
 		if(!(usr in nearby))
 			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
+				if(H.dna.check_mutation(/datum/mutation/telekinesis))
 					is_in_use = TRUE
 					ui_interact(usr)
 	if (is_in_use)
@@ -230,9 +224,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/vv_do_topic(list/href_list)
 	if(!(. = ..()))
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
@@ -419,3 +413,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
 		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod

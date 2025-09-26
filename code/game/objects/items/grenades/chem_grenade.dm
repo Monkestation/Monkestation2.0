@@ -679,3 +679,20 @@
 
 	beakers += beaker_one
 	beakers += beaker_two
+
+/obj/item/grenade/chem_grenade/insta_husk
+	name = "Uncle Poobs insta-fry"
+	desc = "The label on the side reads: -Instantly fries any organic and non organic matter to crispy perfection-"
+	stage = GRENADE_READY
+
+/obj/item/grenade/chem_grenade/insta_husk/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 5, reagtemp = 4500)
+	beaker_one.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 5, reagtemp = 4500)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/ice, 5, reagtemp = 100)
+
+	beakers += beaker_one
+	beakers += beaker_two

@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_master/attackby(obj/item/item, mob/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
@@ -412,7 +412,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	while(item_count > 0)
 		if(!is_printing)
 			break
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		stoplag(printing_speed)
 		for(var/i in 1 to printing_amount_current)
 			if(!item_count)
@@ -441,7 +441,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	if (!reagent)
 		return FALSE
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	if (target == TARGET_BUFFER)
 		if(!check_reactions(reagent, beaker.reagents))

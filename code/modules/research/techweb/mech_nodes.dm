@@ -4,7 +4,6 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	design_ids = list(
-		"mech_hydraulic_clamp",
 		"mech_recharger",
 		"mecha_tracking",
 		"mechacontrol",
@@ -18,24 +17,31 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+		"mech_hydraulic_clamp",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
 	)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_tools
 	id = "mech_tools"
 	starting_node = TRUE
 	display_name = "Basic Exosuit Equipment"
 	description = "Various tools fit for basic mech units"
+	prereq_ids = list("mecha")
 	design_ids = list(
 		"mech_drill",
 		"mech_extinguisher",
 		"mech_mscanner",
 	)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/clown
 	id = "clown"
 	display_name = "Clown Technology"
 	description = "Honk?!"
-	prereq_ids = list("base")
+	prereq_ids = list("base", "mecha")
 	design_ids = list(
 		"air_horn",
 		"borg_transform_clown",
@@ -58,12 +64,13 @@
 		"borg_upgrade_cringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY) //The dread upon security when they hear this...
 
 /datum/techweb_node/odysseus
 	id = "mecha_odysseus"
 	display_name = "EXOSUIT: Odysseus"
 	description = "Odysseus exosuit designs"
-	prereq_ids = list("base")
+	prereq_ids = list("mecha")
 	design_ids = list(
 		"odysseus_chassis",
 		"odysseus_head",
@@ -76,13 +83,13 @@
 		"odysseus_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/clarke
 	id = "mecha_clarke"
 	display_name = "EXOSUIT: Clarke"
 	description = "Clarke exosuit designs"
-	prereq_ids = list("engineering")
+	prereq_ids = list("engineering", "mecha")
 	design_ids = list(
 		"clarke_chassis",
 		"clarke_head",
@@ -93,23 +100,25 @@
 		"clarke_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/adv_mecha
 	id = "adv_mecha"
 	display_name = "Advanced Exosuits"
 	description = "For when you just aren't Gundam enough."
-	prereq_ids = list("adv_robotics")
+	prereq_ids = list("adv_robotics", "mecha")
 	design_ids = list(
 		"mech_repair_droid",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/gygax
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
 	description = "Gygax exosuit designs"
-	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	prereq_ids = list("adv_mecha", "adv_mecha_armor",)
 	design_ids = list(
 		"gygax_armor",
 		"gygax_chassis",
@@ -125,6 +134,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/durand
 	id = "mech_durand"
@@ -146,6 +156,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/phazon
 	id = "mecha_phazon"
@@ -167,6 +178,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/savannah_ivanov
 	id = "mecha_savannah_ivanov"
@@ -188,16 +200,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
 	display_name = "Basic Plasma Research"
 	description = "Research into the mysterious and dangerous substance, plasma."
-	prereq_ids = list("engineering")
+	prereq_ids = list("engineering", "mech_tools")
 	design_ids = list(
 		"mech_generator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/adv_plasma
 	id = "adv_plasma"
@@ -208,29 +222,31 @@
 		"mech_plasma_cutter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
 	display_name = "Advanced Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_mecha")
+	prereq_ids = list("adv_mecha", "mech_tools")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/med_mech_tools
 	id = "med_mech_tools"
 	display_name = "Medical Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_biotech", "mecha_odysseus")
+	prereq_ids = list("adv_biotech", "mecha_odysseus", "mech_tools")
 	design_ids = list(
 		"mech_medi_beam",
 		"mech_sleeper",
 		"mech_syringe_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_armor
 	id = "adv_mecha_armor"
@@ -244,6 +260,7 @@
 	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = TECHWEB_TIER_2_POINTS,
 								/datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_1_POINTS)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_scattershot
 	id = "mecha_tools"
@@ -255,57 +272,87 @@
 		"mech_scattershot_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_carbine
 	id = "mech_carbine"
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("exotic_ammo")
+	prereq_ids = list("exotic_ammo", "mech_tools")
 	design_ids = list(
 		"mech_carbine",
 		"mech_carbine_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_flamethrower
+	id = "mech_flamethrower"
+	display_name = "Exosuit Weapon (FNX-100 \"Conflagorator\" Flamethrower)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("exotic_ammo")
+	design_ids = list(
+		"mech_flamethrower",
+		"mech_flamethrower_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_heavy
+	id = "mech_heavy"
+	display_name = "Exosuit Weapon (\"Executor\" Mech Rifle)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_heavy",
+		"mech_heavy_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_ion
 	id = "mmech_ion"
 	display_name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("electronic_weapons", "emp_adv")
+	prereq_ids = list("electronic_weapons", "emp_adv", "mech_tools")
 	design_ids = list(
 		"mech_ion",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_tesla
 	id = "mech_tesla"
 	display_name = "Exosuit Weapon (MKI Tesla Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("electronic_weapons", "adv_power")
+	prereq_ids = list("electronic_weapons", "adv_power", "mech_tools")
 	design_ids = list(
 		"mech_tesla",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_laser
 	id = "mech_laser"
 	display_name = "Exosuit Weapon (CH-PS \"Immolator\" Laser)"
 	description = "A basic piece of mech weaponry"
-	prereq_ids = list("beam_weapons")
+	prereq_ids = list("beam_weapons", "mech_tools")
 	design_ids = list(
 		"mech_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_laser_heavy
 	id = "mech_laser_heavy"
 	display_name = "Exosuit Weapon (CH-LC \"Solaris\" Laser Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("adv_beam_weapons")
+	prereq_ids = list("adv_beam_weapons", "mech_tools")
 	design_ids = list(
 		"mech_laser_heavy",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
@@ -316,59 +363,65 @@
 		"mech_disabler",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_grenade_launcher
 	id = "mech_grenade_launcher"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"mech_grenade_launcher",
 		"mech_grenade_launcher_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_missile_rack
 	id = "mech_missile_rack"
 	display_name = "Exosuit Weapon (BRM-6 Missile Rack)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"mech_missile_rack",
 		"mech_missile_rack_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/clusterbang_launcher
 	id = "clusterbang_launcher"
 	display_name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"clusterbang_launcher",
 		"clusterbang_launcher_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_teleporter
 	id = "mech_teleporter"
 	display_name = "Exosuit Module (Teleporter Module)"
 	description = "An advanced piece of mech Equipment"
-	prereq_ids = list("micro_bluespace")
+	prereq_ids = list("micro_bluespace", "mech_tools")
 	design_ids = list(
 		"mech_teleporter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_wormhole_gen
 	id = "mech_wormhole_gen"
 	display_name = "Exosuit Module (Localized Wormhole Generator)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("bluespace_travel")
+	prereq_ids = list("bluespace_travel", "mech_tools")
 	design_ids = list(
 		"mech_wormhole_gen",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_lmg
 	id = "mech_lmg"
@@ -380,14 +433,28 @@
 		"mech_lmg_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_minigun
+	id = "mech_minigun"
+	display_name = "Exosuit Weapon (\"Avtomat AC 3\" minigun)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_minigun",
+		"mech_minigun_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mech_diamond_drill
 	id = "mech_diamond_drill"
 	display_name = "Exosuit Diamond Drill"
 	description = "A diamond drill fit for a large exosuit"
-	prereq_ids = list("adv_mining")
+	prereq_ids = list("adv_mining", "mech_tools")
 	design_ids = list(
 		"mech_diamond_drill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 

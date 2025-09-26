@@ -32,4 +32,5 @@ export const RADIO_PREFIXES = {
   ':v ': 'Svc',
   ':y ': 'CCom',
   ':f ': 'Uncom',
+  ':w ': 'Dark',
 } as const;

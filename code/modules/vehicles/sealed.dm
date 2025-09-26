@@ -1,5 +1,6 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
@@ -91,16 +92,16 @@
 /obj/vehicle/sealed/proc/exit_location(M)
 	return drop_location()
 
-/obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
-	if(key_type && !is_key(inserted_key) && is_key(I))
-		if(user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You insert [I] into [src]."))
+/obj/vehicle/sealed/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(key_type && !is_key(inserted_key) && is_key(attacking_item))
+		if(user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_notice("You insert [attacking_item] into [src]."))
 			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
-			inserted_key = I
+			inserted_key = attacking_item
 			inserted_key.forceMove(src)
 		else
-			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+			to_chat(user, span_warning("[attacking_item] seems to be stuck to your hand!"))
 		return
 	return ..()
 

@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 /datum/store_manager/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/loadout_store),
+		get_asset_datum(/datum/asset/spritesheet_batched/loadout_store),
 	)
 
 /// Select [path] item to [category_slot] slot.

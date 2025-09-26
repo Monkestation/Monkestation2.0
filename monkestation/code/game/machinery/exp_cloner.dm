@@ -10,12 +10,16 @@
 	grab_ghost_when = CLONER_FRESH_CLONE // This helps with getting the objective for evil clones to display.
 	VAR_PRIVATE
 		static/list/image/cached_clone_images
+
+	auto_clone = TRUE
+
 	/// Am I producing evil clones?
 	var/datum/objective/evil_clone/evil_objective = null
 	/// Can my objective be changed?
 	var/locked = FALSE
 	/// The custom objective given by the traitor item.
 	var/custom_objective = null
+
 
 /obj/machinery/clonepod/experimental/Destroy()
 	clear_human_dummy(REF(src))
@@ -31,6 +35,9 @@
 					. += span_notice("Those cloned will have the objective: [custom_objective]") //This doesn't look the best I think.
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
+
+	if (auto_clone)
+		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
 
 /obj/machinery/clonepod/experimental/RefreshParts()
 	. = ..()
@@ -150,7 +157,7 @@
 	if(!isnull(preview))
 		return preview
 	var/mob/living/carbon/human/dummy/preview_dummy = generate_or_wait_for_human_dummy(REF(src))
-	clone_dna.transfer_identity(preview_dummy, transfer_SE = FALSE, transfer_species = TRUE)
+	clone_dna.copy_dna(preview_dummy.dna, COPY_DNA_SPECIES)
 	preview_dummy.set_cloned_appearance()
 	preview_dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	preview = getFlatIcon(preview_dummy)
@@ -245,28 +252,24 @@
 	pod.connected = null
 	LAZYREMOVE(pods, pod)
 
-/obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+/obj/machinery/computer/prototype_cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!istype(multi.buffer, /obj/machinery/clonepod/experimental))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.set_buffer(null)
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/experimental/pod = P.buffer
-			if(pod.connected)
-				pod.connected.DetachCloner(pod)
-			AttachCloner(pod)
-		else
-			P.set_buffer(src)
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
-		return
-	else
-		return ..()
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_FAILURE
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/experimental/pod = multi.buffer
+	if(pod.connected)
+		pod.connected.DetachCloner(pod)
+	AttachCloner(pod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/prototype_cloning/attack_hand(mob/user)
 	if(..())

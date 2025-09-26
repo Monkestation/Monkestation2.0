@@ -1,5 +1,5 @@
 /obj/item/organ/external/goblin_ears
-	name = "goblin ears"
+	name = "big ears"
 	desc = "They don't actually let you hear better."
 	icon_state = "goblin_ears"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'

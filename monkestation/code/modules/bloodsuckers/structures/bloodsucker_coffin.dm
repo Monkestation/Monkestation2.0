@@ -11,7 +11,7 @@
 	var/valid_lair_area = TRUE
 	if(!coffin_turf)
 		valid_lair_area = FALSE
-	else if(!is_eclipse_level(coffin_turf.z)) // if we ever get planet colonizing back, let's allow bloodsuckers to make colony lairs, 'cuz why not
+	else if(!is_eclipse_level(coffin_turf.z) && !(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
 		if(!is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
 			valid_lair_area = FALSE
 	if(!valid_lair_area)

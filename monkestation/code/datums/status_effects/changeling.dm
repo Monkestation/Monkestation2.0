@@ -49,11 +49,11 @@
 	remove_movespeed_modifier()
 	on_apply()
 
-/datum/status_effect/changeling_adrenaline/tick(seconds_per_tick, times_fired)
-	owner.AdjustAllImmobility(-1 SECOND * seconds_per_tick)
-	owner.stamina.adjust(STAMINA_MAX / 20 * seconds_per_tick)
+/datum/status_effect/changeling_adrenaline/tick(seconds_between_ticks, times_fired)
+	owner.AdjustAllImmobility(-1 SECOND * seconds_between_ticks)
+	owner.stamina.adjust(STAMINA_MAX / 20 * seconds_between_ticks)
 	owner.set_jitter_if_lower(10 SECONDS)
-	owner.adjustToxLoss(0.5 * seconds_per_tick) // 10 toxin damage total.
+	owner.adjustToxLoss(0.5 * seconds_between_ticks) // 10 toxin damage total.
 
 /datum/status_effect/changeling_adrenaline/proc/remove_movespeed_modifier()
 	deltimer(movespeed_timer)
@@ -99,16 +99,16 @@
 	duration = min(duration + initial(duration), world.time + initial(duration) * 2)
 	on_apply()
 
-/datum/status_effect/changeling_panacea/tick(seconds_per_tick, times_fired)
+/datum/status_effect/changeling_panacea/tick(seconds_between_ticks, times_fired)
 	. = ..()
-	owner.adjustToxLoss(-10 * seconds_per_tick)
-	owner.adjustCloneLoss(-20 * seconds_per_tick)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20 * seconds_per_tick)
-	owner.adjust_drunk_effect(-10 * seconds_per_tick)
-	owner.adjust_disgust(DISGUST_LEVEL_MAXEDOUT * -0.1 * seconds_per_tick)
+	owner.adjustToxLoss(-10 * seconds_between_ticks, forced = TRUE)
+	owner.adjustCloneLoss(-20 * seconds_between_ticks)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20 * seconds_between_ticks)
+	owner.adjust_drunk_effect(-10 * seconds_between_ticks)
+	owner.adjust_disgust(DISGUST_LEVEL_MAXEDOUT * -0.1 * seconds_between_ticks)
 
 	if(length(owner.reagents?.reagent_list))
-		owner.reagents.remove_all(10 * length(owner.reagents.reagent_list) * seconds_per_tick)
+		owner.reagents.remove_all(10 * length(owner.reagents.reagent_list) * seconds_between_ticks)
 
 	handle_extra_effects()
 
@@ -136,7 +136,7 @@
 	user.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 
 	if(user.has_dna())
-		user.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA), mutadone = TRUE) // DO NOT SET MUTADONE TO FALSE. It removes a lot of things we don't want to.
+		user.dna.remove_all_mutations()
 
 	var/removed_something = FALSE
 	for(var/obj/item/organ/organ as anything in bad_organ_types)
@@ -195,14 +195,14 @@
 		owner.Paralyze(6 SECONDS)
 		INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "gasp")
 
-/datum/status_effect/changeling_muscles/tick(seconds_per_tick, times_fired)
+/datum/status_effect/changeling_muscles/tick(seconds_between_ticks, times_fired)
 	accumulation += DELTA_WORLD_TIME(SSprocessing)
 
 	if(accumulation > 40 && !warning_given)
 		to_chat(owner, span_userdanger("Our legs are really starting to hurt..."))
 		warning_given = TRUE
 
-	owner.stamina?.adjust(STAMINA_MAX * -0.001 * accumulation * seconds_per_tick)
+	owner.stamina?.adjust(STAMINA_MAX * -0.001 * accumulation * seconds_between_ticks)
 
 /datum/status_effect/changeling_muscles/proc/on_stamina_stun(mob/living/carbon/user)
 	SIGNAL_HANDLER

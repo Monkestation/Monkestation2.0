@@ -105,7 +105,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
@@ -280,7 +280,7 @@
 
 	return data
 
-/obj/machinery/pdapainter/ui_act(action, params)
+/obj/machinery/pdapainter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

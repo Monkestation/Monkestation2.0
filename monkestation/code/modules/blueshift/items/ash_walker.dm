@@ -59,11 +59,14 @@
 	desc = "A little mesh that, when paired with sand, has the possibility of filtering out large seeds."
 	icon = 'monkestation/code/modules/blueshift/icons/misc_tools.dmi'
 	icon_state = "mesh"
-	var/list/static/seeds_blacklist = list(
-		/obj/item/seeds/lavaland,
+	var/static/list/seeds_blacklist = list(
+		/obj/item/seeds/lavaland, // abstract type
+		/obj/item/seeds/spliced, // not supposed to exist on its own, as its "managed" by splicers
+		/obj/item/seeds/gatfruit,
+		/obj/item/seeds/seedling/evil,
 	)
 
-/obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SEED_MESH))
 		balloon_alert(user, "already filtering seeds!")
 		return
@@ -369,34 +372,32 @@
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
 
-/obj/item/ash_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return ..()
+/obj/item/ash_staff/interact_with_atom(atom/target, mob/user, list/modifiers)
 
 	if(!user.mind.has_antag_datum(/datum/antagonist/ashwalker))
-		return ..()
+		return NONE
 
 	if(istype(target, /obj/structure/lavaland/ash_walker))
-		return
+		return NONE
 
-	if(isopenturf(target))
-		var/turf/target_turf = target
-		if(istype(target, /turf/open/misc/asteroid/basalt/lava_land_surface))
-			to_chat(user, span_warning("You begin to corrupt the land even further..."))
-			if(!do_after(user, 4 SECONDS, target = target_turf))
-				to_chat(user, span_warning("[src] had their casting cut short!"))
-				return
-
-			target_turf.ChangeTurf(/turf/open/lava/smooth/lava_land_surface)
-			to_chat(user, span_notice("[src] sparks, corrupting the area too far!"))
-			return
-
-		if(!do_after(user, 2 SECONDS, target = target_turf))
+	if(!isopenturf(target))
+		return NONE
+	var/turf/target_turf = target
+	if(istype(target, /turf/open/misc/asteroid/basalt/lava_land_surface))
+		to_chat(user, span_warning("You begin to corrupt the land even further..."))
+		if(!do_after(user, 4 SECONDS, target = target_turf))
 			to_chat(user, span_warning("[src] had their casting cut short!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
-		return
+		target_turf.ChangeTurf(/turf/open/lava/smooth/lava_land_surface)
+		to_chat(user, span_notice("[src] sparks, corrupting the area too far!"))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!do_after(user, 2 SECONDS, target = target_turf))
+		to_chat(user, span_warning("[src] had their casting cut short!"))
+		return ITEM_INTERACT_BLOCKING
+
+	target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
 
 	return ..()
 

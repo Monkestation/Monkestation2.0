@@ -55,6 +55,37 @@
 
 	return avatar
 
+/// Loads in any mob segments of the map
+/obj/machinery/quantum_server/proc/load_mob_segments()
+	if(!length(generated_domain.mob_modules))
+		return TRUE
+
+	var/current_index = 1
+	shuffle_inplace(generated_domain.mob_modules)
+
+	for(var/obj/effect/landmark/bitrunning/mob_segment/landmark in GLOB.landmarks_list)
+		if(current_index > length(generated_domain.mob_modules))
+			stack_trace("vdom: mobs segments are set to unique, but there are more landmarks than available segments")
+			return FALSE
+
+		var/path
+		if(generated_domain.modular_unique_mobs)
+			path = generated_domain.mob_modules[current_index]
+			current_index += 1
+		else
+			path = pick(generated_domain.mob_modules)
+
+		var/datum/modular_mob_segment/segment = new path()
+
+		var/list/mob_spawns = landmark.spawn_mobs(get_turf(landmark), segment)
+		if(length(mob_spawns))
+			mutation_candidate_refs += mob_spawns
+
+		qdel(landmark)
+		qdel(segment)
+
+	return TRUE
+
 /// Generates a new hololadder for the bitrunner. Effectively a respawn attempt.
 /obj/machinery/quantum_server/proc/generate_hololadder()
 	if(!length(exit_turfs))

@@ -32,6 +32,9 @@
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK "#0000007A"
 
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
 #define COLOR_RED "#FF0000"
 #define COLOR_CHRISTMAS_RED "#D6001C"
 #define COLOR_OLD_GLORY_RED "#B22234"
@@ -61,6 +64,7 @@
 #define COLOR_VERY_SOFT_YELLOW "#FAE48E"
 #define COLOR_GOLD "#FFD700"
 #define COLOR_ETHIOPIA_YELLOW "#FCDD09"
+#define COLOR_LIGHT_YELLOW "#FFFEE0"
 
 #define COLOR_OLIVE "#808000"
 #define COLOR_ASSISTANT_OLIVE "#828163"
@@ -199,6 +203,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffac4"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
@@ -255,6 +261,8 @@
 #define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
+/// Nearly red. rgb(226, 78, 118)
+#define LIGHT_COLOR_BUBBLEGUM "#e24e76"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits
 #define CIRCUIT_COLOR_GENERIC "#1A7A13"
@@ -303,6 +311,9 @@
 	#define CABLE_HEX_COLOR_WHITE COLOR_WHITE
 #define CABLE_COLOR_YELLOW "yellow"
 	#define CABLE_HEX_COLOR_YELLOW COLOR_YELLOW
+
+#define COLOR_DARKSPAWN_PSI "#7264FF"
+#define COLOR_VELVET "#21007F"
 
 #define COLOR_CARP_PURPLE "#aba2ff"
 #define COLOR_CARP_PINK "#da77a8"

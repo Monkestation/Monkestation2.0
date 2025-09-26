@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 			overlays += other_lift
 
-	//now we vore all the other lifts connected to us on our z level
+	//now we devour all the other lifts connected to us on our z level
 	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
 		if(other_lift == src || other_lift.z != z)
 			continue
@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		var/list/atom/movable/foreign_contents_in_loc = list()
 
 		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
-			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable))
+			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable) && !istype(foreign_movable, /obj/effect/landmark/tram))
 				foreign_contents_in_loc += foreign_movable
 				continue
 
@@ -705,7 +705,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 	return open_lift_radial(user)
 
-/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 

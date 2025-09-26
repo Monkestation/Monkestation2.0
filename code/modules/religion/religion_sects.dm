@@ -98,7 +98,7 @@
 		return FALSE
 	var/mob/living/carbon/human/blessed = target
 	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
-		if(!IS_ORGANIC_LIMB(bodypart))
+		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return TRUE
 
@@ -133,7 +133,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
+	desired_items = list(/obj/item/stock_parts/power_store/cell = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
@@ -184,7 +184,7 @@
 	return TRUE
 
 /datum/religion_sect/mechanical/on_sacrifice(obj/item/I, mob/living/chap)
-	var/obj/item/stock_parts/cell/the_cell = I
+	var/obj/item/stock_parts/power_store/cell/the_cell = I
 	if(!istype(the_cell)) //how...
 		return
 	if(the_cell.charge < 300)
@@ -258,7 +258,7 @@
 		return FALSE
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
-		if(!IS_ORGANIC_LIMB(robolimb))
+		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
 			return TRUE
 

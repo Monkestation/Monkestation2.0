@@ -3,35 +3,46 @@
 	desc = "A prisoner feeding device that condenses matter into an Ultra Delicious(tm) nutrition bar!"
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loafer"
+	base_icon_state = "loafer"
 	var/is_loafing = FALSE
-	var/list/loaf_blacklist = list(/obj/item/organ/internal/brain, /obj/item/bodypart/head)
+	var/static/list/loaf_blacklist
+
+/obj/structure/disposalpipe/loafer/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
+	if(isnull(loaf_blacklist))
+		loaf_blacklist = typecacheof(list(
+			/obj/item/organ/internal/brain,
+			/obj/item/bodypart/head,
+		))
+
+/obj/structure/disposalpipe/loafer/examine(mob/user)
+	. = ..()
+	if((obj_flags & EMAGGED) && (isobserver(user) || Adjacent(user)))
+		. += span_warning("A small mechanism on the side of the loafer seems to be fried.")
 
 /obj/structure/disposalpipe/loafer/transfer(obj/structure/disposalholder/holder)
 	if(is_loafing)
 		return src
 	//check if there's anything in there
-	if (holder.contents.len)
+	if (length(holder.contents))
 		//start playing sound
 		is_loafing = TRUE
-		src.icon_state = "loafer-on"
-		src.update_appearance()
-		playsound(src, 'monkestation/code/modules/loafing/sound/loafer.ogg', 100, 1, mixer_channel = CHANNEL_MACHINERY)
+		update_appearance()
+		playsound(src, 'monkestation/code/modules/loafing/sound/loafer.ogg', vol = 100, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 
 		//create new loaf
 		var/obj/item/food/prison_loaf/loaf = new /obj/item/food/prison_loaf(src)
 
 		//add all the garbage to the loaf's contents
 		for (var/atom/movable/debris in holder)
-			if(debris.resistance_flags & INDESTRUCTIBLE || (debris.type in loaf_blacklist))
-				if(holder.contents.len > 1)
+			if((debris.resistance_flags & INDESTRUCTIBLE) || HAS_TRAIT(debris, TRAIT_GODMODE) || is_type_in_typecache(debris, loaf_blacklist))
+				if(length(holder.contents) > 1)
 					continue
-				else
-					loaf = null
-					src.icon_state = "loafer"
-					is_loafing = FALSE
-					return transfer_to_dir(holder, nextdir(holder))
-			if(debris.reagents)//the object has reagents
-				debris.reagents.trans_to(loaf, 1000)
+				loaf = null
+				is_loafing = FALSE
+				update_appearance()
+				return transfer_to_dir(holder, nextdir(holder))
+			debris.reagents?.trans_to(loaf, 1000)
 			if(istype(debris, /obj/item/food/prison_loaf))//the object is a loaf, compress somehow
 				var/obj/item/food/prison_loaf/loaf_to_grind = debris
 				loaf.loaf_density += loaf_to_grind.loaf_density * 1.05
@@ -52,17 +63,19 @@
 					loaf.loaf_density += 25
 				else
 					loaf.loaf_density += 10
-				if(!isdead(victim))
+				if(victim.stat != DEAD)
 					victim.emote("scream")
 				victim.gib()
 				if(victim.mind || victim.client)
-					victim.ghostize(FALSE)
-			else if (istype(debris, /obj/item))//everything else
+					victim.ghostize(can_reenter_corpse = FALSE)
+			else if (isitem(debris))//everything else
 				var/obj/item/kitchen_sink = debris
-				var/weight = kitchen_sink.w_class
-				loaf.loaf_density += weight * 3
+				loaf.loaf_density += kitchen_sink.w_class * 3
 			holder.contents -= debris
 			qdel(debris)
+
+		if(!(obj_flags & EMAGGED))
+			loaf.loaf_density = min(loaf.loaf_density, 100000) // density can never surpass the criticality threshold if it not emagged
 
 		sleep(3 SECONDS)
 
@@ -72,8 +85,22 @@
 		loaf.forceMove(holder)
 		holder.contents += loaf
 		is_loafing = FALSE
-		src.icon_state = "loafer"
+		update_appearance()
 	return transfer_to_dir(holder, nextdir(holder))
+
+/obj/structure/disposalpipe/loafer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	if(user)
+		balloon_alert(user, "safety limits disabled")
+		user.log_message("emagged [src].", LOG_ATTACK)
+	return TRUE
+
+/obj/structure/disposalpipe/loafer/update_icon_state()
+	icon_state = "[base_icon_state][is_loafing ? "-on" : ""]"
+	return ..()
 
 /obj/structure/disposalpipe/loafer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -92,6 +119,9 @@
 	spew_forth()
 	qdel(src)
 
+/obj/structure/disposalpipe/loafer/emagged // in case an admin wants to spawn in a pre-emagged one
+	obj_flags = parent_type::obj_flags | EMAGGED
+
 /obj/structure/disposalconstruct/loafer
 	name = "loafing device"
 	desc = "A prisoner feeding device that condenses matter into an Ultra Delicious(tm) nutrition bar!"
@@ -109,6 +139,5 @@
 	layer = DISPOSAL_PIPE_LAYER
 
 /obj/effect/spawner/random/loafer/Initialize(mapload)
-	loot = list(
-		/obj/structure/disposalpipe/loafer/)
+	loot = list(/obj/structure/disposalpipe/loafer)
 	return ..()

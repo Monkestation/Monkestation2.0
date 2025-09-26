@@ -45,11 +45,3 @@
 			exposed_carbon.cause_pain(BODY_ZONE_HEAD, 16)
 			exposed_carbon.cause_pain(BODY_ZONE_CHEST, 75)
 			exposed_carbon.cause_pain(list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), 30)
-
-/datum/wound/blunt/bone/moderate/chiropractice(mob/living/carbon/human/user)
-	. = ..()
-	user.cause_pain(limb.body_zone, 25)
-
-/datum/wound/blunt/bone/moderate/malpractice(mob/living/carbon/human/user)
-	. = ..()
-	user.cause_pain(limb.body_zone, 40)

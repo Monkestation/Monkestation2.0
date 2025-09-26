@@ -7,15 +7,14 @@
 	// Blood splashed around everywhere will carry these diseases. Oh no...
 	var/list/diseases
 
-/datum/component/bloody_spreader/Initialize(blood_left, list/blood_dna, list/diseases)
+/datum/component/bloody_spreader/Initialize(blood_left = INFINITY, list/blood_dna, list/diseases)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/list/signals_to_add = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACKBY)
 	if(ismovable(parent))
 		signals_to_add += list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT)
 		if(isitem(parent))
-			//monkestation temp edit: replaced COMSIG_ITEM_ATTACK_ATOM with COMSIG_ITEM_ATTACK_OBJ
-			signals_to_add += list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+			signals_to_add += list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
 		var/atom/atom_parent = parent
 		if(atom_parent.atom_storage)
 			signals_to_add += list(COMSIG_STORAGE_STORED_ITEM)
@@ -34,6 +33,9 @@
 /datum/component/bloody_spreader/proc/spread_yucky_blood(atom/parent, atom/bloody_fool)
 	SIGNAL_HANDLER
 	bloody_fool.add_blood_DNA(blood_dna, diseases)
+	blood_left--
+	if(blood_left <= 0)
+		qdel(src)
 
 /datum/component/bloody_spreader/InheritComponent(/datum/component/new_comp, i_am_original, blood_left = 0)
 

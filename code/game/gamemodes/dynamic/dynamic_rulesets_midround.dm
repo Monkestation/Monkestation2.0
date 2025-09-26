@@ -21,6 +21,13 @@
 	/// Abstract root value
 	var/abstract_type = /datum/dynamic_ruleset/midround
 
+/datum/dynamic_ruleset/midround/forget_startup()
+	living_players = list()
+	living_antags = list()
+	dead_players = list()
+	list_observers = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
@@ -199,7 +206,7 @@
 	if (!mode.picking_specific_rule(sleeper_agent))
 		return
 
-	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+///	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living
@@ -382,8 +389,6 @@
 	flags = HIGH_IMPACT_RULESET
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
-	/// The nuke ops team datum.
-	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -409,7 +414,6 @@
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(index == 1)
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
-		nuke_team = leader_antag_datum.nuke_team
 		new_character.mind.add_antag_datum(leader_antag_datum)
 		return
 	return ..()
@@ -497,6 +501,10 @@
 	repeatable = TRUE
 	var/list/vents = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/forget_startup()
+	vents = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
 	required_candidates += prob(50)
@@ -575,6 +583,10 @@
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
 		spawn_locs += (C.loc)
@@ -613,6 +625,10 @@
 
 	var/datum/team/abductor_team/new_team
 
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/forget_startup()
+	new_team = null
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
@@ -644,6 +660,10 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
 
 	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/forget_startup()
+	spawn_locs = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
@@ -699,6 +719,10 @@
 	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
@@ -728,26 +752,6 @@
 	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
 	return revenant
-
-/// Midround Sentient Disease Ruleset (From Ghosts)
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
-	name = "Sentient Disease"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
-	antag_datum = /datum/antagonist/disease
-	antag_flag = ROLE_SENTIENT_DISEASE
-	required_candidates = 1
-	minimum_players = 25
-	weight = 4
-	cost = 8
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
-	virus.PossessByPlayer(applicant.key)
-	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
-	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
-	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
-	return virus
 
 /// Midround Space Pirates Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/pirates
@@ -869,6 +873,10 @@
 	cost = 3
 	repeatable = TRUE
 	var/list/possible_spawns = list() ///places the antag can spawn
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/forget_startup()
+	possible_spawns = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)

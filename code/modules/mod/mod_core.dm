@@ -63,7 +63,7 @@
 	return TRUE
 
 /obj/item/mod/core/infinite/subtract_charge(amount)
-	return TRUE
+	return amount
 
 /obj/item/mod/core/infinite/check_charge(amount)
 	return TRUE
@@ -77,7 +77,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 /obj/item/mod/core/standard/Destroy()
 	if(cell)
@@ -90,7 +90,7 @@
 		install_cell(cell)
 	RegisterSignal(mod, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
@@ -98,7 +98,12 @@
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	UnregisterSignal(mod, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_MOD_WEARER_SET,
+	))
 	if(mod.wearer)
 		on_wearer_unset(mod, mod.wearer)
 	return ..()
@@ -107,21 +112,21 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.give(amount)
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
 	return charge_source.use(amount, TRUE)
@@ -130,7 +135,7 @@
 	return charge_amount() >= amount
 
 /obj/item/mod/core/standard/update_charge_alert()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
 	if(!charge_source)
 		mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 		return
@@ -197,24 +202,29 @@
 	user.put_in_hands(cell_to_move)
 	mod.update_charge_alert()
 
-/obj/item/mod/core/standard/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/standard/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(!mod.open)
-			mod.balloon_alert(user, "open the cover first!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return NONE
-		if(cell)
-			mod.balloon_alert(user, "cell already installed!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return COMPONENT_NO_AFTERATTACK
-		install_cell(attacking_item)
-		mod.balloon_alert(user, "cell installed")
-		playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		mod.update_charge_alert()
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return item_interaction(user, thing)
+
+/obj/item/mod/core/standard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		return FALSE
+	if(!mod.open)
+		mod.balloon_alert(user, "open the cover first!")
+		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	if(cell)
+		mod.balloon_alert(user, "cell already installed!")
+		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	install_cell(attacking_item)
+	mod.balloon_alert(user, "cell installed")
+	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -266,8 +276,7 @@
 	var/obj/item/organ/internal/stomach/ethereal/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
-	charge_source.adjust_charge(-amount*charge_modifier)
-	return TRUE
+	return -charge_source.adjust_charge(-amount*charge_modifier)
 
 /obj/item/mod/core/ethereal/check_charge(amount)
 	return charge_amount() >= amount*charge_modifier
@@ -279,29 +288,27 @@
 		return
 	mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 
+#define PLASMA_CORE_ORE_CHARGE (1.5 * STANDARD_CELL_CHARGE)
+#define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
+
 /obj/item/mod/core/plasma
 	name = "MOD plasma core"
 	icon_state = "mod-core-plasma"
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
 		through plasma fuel, allowing for easy continued use by their mining squads."
 	/// How much charge we can store.
-	var/maxcharge = 10000
+	var/maxcharge = 10 * STANDARD_CELL_CHARGE
 	/// How much charge we are currently storing.
-	var/charge = 10000
+	var/charge = 10 * STANDARD_CELL_CHARGE
 	/// Associated list of charge sources and how much they charge, only stacks allowed.
-	var/list/charger_list = list(/obj/item/stack/ore/plasma = 1500, /obj/item/stack/sheet/mineral/plasma =SHEET_MATERIAL_AMOUNT)
+	var/list/charger_list = list(/obj/item/stack/ore/plasma = PLASMA_CORE_ORE_CHARGE, /obj/item/stack/sheet/mineral/plasma = PLASMA_CORE_SHEET_CHARGE)
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
-	return ..()
-
-/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
-	if(charge_plasma(attacking_item, user))
-		return TRUE
+	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
 	return ..()
 
 /obj/item/mod/core/plasma/charge_source()
@@ -338,12 +345,13 @@
 		else
 			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/emptycell/plasma)
 
-/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	if(charge_plasma(attacking_item, user))
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return item_interaction(user, thing)
+
+/obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return charge_plasma(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
 	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
@@ -355,3 +363,6 @@
 	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE
+
+#undef PLASMA_CORE_ORE_CHARGE
+#undef PLASMA_CORE_SHEET_CHARGE

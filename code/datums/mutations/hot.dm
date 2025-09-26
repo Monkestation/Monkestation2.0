@@ -1,4 +1,4 @@
-/datum/mutation/human/cryokinesis/pyrokinesis
+/datum/mutation/cryokinesis/pyrokinesis
 	name = "Pyrokinesis"
 	desc = "Draws positive energy from the surroundings to heat surrounding temperatures at subject's will."
 	text_gain_indication = span_notice("Your hand feels hot!")

@@ -1,5 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscdel: "Halloween and Spring jobs can no longer overflow"
-  - code_imp: "Moved Halloween jobs to a single folder"

@@ -249,7 +249,8 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !ui.user.has_unlimited_silicon_privilege)
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 
 	switch(action)
@@ -366,3 +367,14 @@
 	name = "Scrubs, MD"
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
+
+/mob/living/basic/bot/cleanbot/firing_range //An invicible cleanbot to clean the firing range of blood.
+	name = "M-O"
+	desc = "A little cleaning robot, he looks like he's taken a beating."
+	bot_mode_flags = (BOT_MODE_ON)
+	health = 24
+
+/mob/living/basic/bot/cleanbot/firing_range/Initialize(mapload)
+	. = ..()
+	//Area based godmode to clean the firing range, just incase it somehow escapes onto station. Somehow....
+	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/centcom, allow_area_subtypes = TRUE)

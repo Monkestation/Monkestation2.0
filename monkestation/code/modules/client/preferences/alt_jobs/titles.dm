@@ -30,6 +30,7 @@
 		"Off-Duty Staff",
 		"Off-Duty Crew",
 		"Test Subject",
+		"Vagabond",
 	)
 
 /datum/job/atmospheric_technician
@@ -109,6 +110,7 @@
 		"Criminally Underpaid Babysitter",
 		"Princess",
 		"Head of Command",
+		"Scapegoat",
 	)
 
 /datum/job/cargo_technician
@@ -119,6 +121,7 @@
 		"Mailman",
 		"Union Associate",
 		"Inventory Associate",
+		"Prime Delivery Associate",
 	)
 
 /datum/job/chaplain
@@ -134,6 +137,7 @@
 		"Imam",
 		"Rabbi",
 		"Monk",
+		"Mortician",
 	)
 
 /datum/job/chemist
@@ -158,6 +162,7 @@
 		"Head of Medical",
 		"Chief Physician",
 		"Head Physician",
+		"Sr. Attending Physician"
 	)
 
 /datum/job/clown
@@ -220,6 +225,7 @@
 	alt_titles = list(
 		"Geneticist",
 		"Mutation Researcher",
+		"Genesmith",
 	)
 
 /datum/job/head_of_personnel
@@ -327,6 +333,7 @@
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
 		"Ripperdoc",
+		"Cybertronic Engineer",
 	)
 
 /datum/job/science_guard //See orderly
@@ -374,6 +381,8 @@
 		"Mechanic",
 		"Apprentice Engineer",
 		"Engineering Trainee",
+		"Station Reliability Engineer",
+		"Builder",
 	)
 
 /datum/job/virologist
@@ -398,4 +407,5 @@
 		"Xenobiologist",
 		"Cytologist",
 		"Cryptozoologist",
+		"Slime Mage",
 	)

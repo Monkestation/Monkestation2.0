@@ -1,4 +1,4 @@
-/datum/mutation/human/overload
+/datum/mutation/overload
 	name = "Overload"
 	desc = "Allows a host to overload their skin to cause a bright flash."
 	locked = TRUE
@@ -9,7 +9,7 @@
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/overload/modify()
+/datum/mutation/overload/setup()
 	. = ..()
 	if(!.)
 		return

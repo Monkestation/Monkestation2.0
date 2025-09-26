@@ -15,7 +15,6 @@ SUBSYSTEM_DEF(lighting)
 	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
 	return ..()
 
-
 /datum/controller/subsystem/lighting/Initialize()
 	if(!initialized)
 		create_all_lighting_objects()

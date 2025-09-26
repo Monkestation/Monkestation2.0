@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
-	flags = SS_BACKGROUND | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 
 	wait = 0.5 SECONDS
 
@@ -8,22 +8,27 @@ SUBSYSTEM_DEF(radiation)
 	/// Do not interact with this directly, use `radiation_pulse` instead.
 	var/list/datum/radiation_pulse_information/processing = list()
 
+/datum/controller/subsystem/radiation/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, processing),
+	)
+
 /datum/controller/subsystem/radiation/fire(resumed)
-	while (processing.len)
+	while (length(processing))
 		var/datum/radiation_pulse_information/pulse_information = processing[1]
 
-		var/datum/weakref/source_ref = pulse_information.source_ref
-		var/atom/source = source_ref.resolve()
+		var/atom/source = pulse_information.source_ref?.resolve()
 		if (isnull(source))
 			processing.Cut(1, 2)
 			continue
 
 		pulse(source, pulse_information)
 
+		processing.Cut(1, 2)
+
 		if (MC_TICK_CHECK)
 			return
-
-		processing.Cut(1, 2)
 
 /datum/controller/subsystem/radiation/stat_entry(msg)
 	msg = "[msg] | Pulses: [processing.len]"

@@ -35,6 +35,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
 
+	var/atom/movable/screen/bloodling_bio_display
+
 	var/atom/movable/screen/combo/combo_display
 
 	var/atom/movable/screen/action_intent
@@ -95,10 +97,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
+	var/atom/movable/screen/hunger/hunger
 
 	var/list/atom/movable/screen/cybernetics/ammo_counter/cybernetics_ammo = list() //monkestation edit - CYBERNETICS
+
+	var/atom/movable/screen/vis_holder/vis_holder
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -144,6 +149,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 	update_sightflags(mymob, mymob.sight, NONE)
 
+	vis_holder = new(null, src)
+
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
 	var/client/client = mymob.canon_client
@@ -180,7 +187,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	for(var/group_key as anything in master_groups)
+	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.transform_lower_turfs(src, current_plane_offset)
 
@@ -205,7 +212,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
 	if(should_use_scale())
-		for(var/group_key as anything in master_groups)
+		for(var/group_key in master_groups)
 			var/datum/plane_master_group/group = master_groups[group_key]
 			group.transform_lower_turfs(src, new_offset)
 
@@ -236,14 +243,17 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
 	QDEL_LIST(infodisplay)
+	QDEL_NULL(vis_holder)
 
 	healths = null
 	stamina = null
 	healthdoll = null
 	spacesuit = null
+	hunger = null
 	cybernetics_ammo = null //monkestation edit - CYBERNETICS
 	blobpwrdisplay = null
 	alien_plasma_display = null
+	bloodling_bio_display = null
 	alien_queen_finder = null
 	combo_display = null
 
@@ -384,6 +394,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= infodisplay
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
+
+	if(vis_holder)
+		screenmob.client.screen += vis_holder
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)

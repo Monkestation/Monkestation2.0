@@ -1,12 +1,6 @@
 GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
-/client/proc/flip_ghost_spawn()
-	set category = "Admin.Fun"
-	set name = "Toggle Centcomm Spawning"
-	set desc= "Toggles whether dead players can respawn in the centcomm area"
-
-	if(!check_rights(R_FUN))
-		return
+ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles whether dead players can respawn in the centcomm area.", ADMIN_CATEGORY_FUN)
 	GLOB.disable_ghost_spawning = !GLOB.disable_ghost_spawning
 
 /mob/living/carbon/human/ghost
@@ -36,6 +30,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
 	if(linked_button)

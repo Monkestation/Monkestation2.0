@@ -53,7 +53,7 @@
 
 	var/obj/item/card/id/card = paying.get_idcard(TRUE)
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
@@ -61,7 +61,7 @@
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
@@ -86,7 +86,7 @@
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	. = ..()
@@ -216,7 +216,7 @@
 
 	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
+		if(!(D.visibility_flags & HIDDEN_SCANNER) && !(D.disease_flags & DISEASE_DORMANT))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.get_spread_string()].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 

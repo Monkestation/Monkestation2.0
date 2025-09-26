@@ -3,6 +3,7 @@
 	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/anomaly
 	track = EVENT_TRACK_MODERATE
@@ -11,7 +12,7 @@
 
 /datum/round_event_control/alien_infestation
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 
@@ -84,7 +85,7 @@
 
 /datum/round_event_control/fugitives
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/gravity_generator_blackout
@@ -135,12 +136,14 @@
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/nightmare
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/obsessed
 	weight = 0 // use storyteller variants instead
@@ -148,6 +151,7 @@
 /datum/round_event_control/operative
 	track = EVENT_TRACK_MAJOR //this is a safe guard and does not trigger normally(technically it can but not really) so no tags
 	checks_antag_cap = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/portal_storm_syndicate
 	track = EVENT_TRACK_MAJOR
@@ -198,12 +202,6 @@
 	tags = list(TAG_COMMUNAL, TAG_SPOOKY, TAG_MAGICAL)
 	dont_spawn_near_roundend = TRUE
 
-/datum/round_event_control/sentient_disease
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
-	checks_antag_cap = TRUE
-	dont_spawn_near_roundend = TRUE
-
 /datum/round_event_control/shuttle_catastrophe
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL)
@@ -230,9 +228,10 @@
 
 /datum/round_event_control/space_ninja
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/spacevine
 	track = EVENT_TRACK_MAJOR
@@ -242,7 +241,7 @@
 
 /datum/round_event_control/spider_infestation
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 
@@ -282,7 +281,8 @@
 	tags = list(TAG_COMMUNAL)
 
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation
-	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_DESTRUCTIVE, TAG_TEAM_ANTAG)
+	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_DESTRUCTIVE, TAG_TEAM_ANTAG, TAG_MUNDANE)
+	repeated_mode_adjust = TRUE
 
 /datum/round_event_control/dark_matteor
 	track = EVENT_TRACK_OBJECTIVES

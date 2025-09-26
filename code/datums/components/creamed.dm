@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed/Destroy(force)
 	var/atom/A = parent
 	A.cut_overlay(creamface)
-	qdel(creamface)
+	creamface = null
 	if(ishuman(A))
 		var/mob/living/carbon/human/human_parent = A
 		human_parent.clear_mood_event("creampie")
