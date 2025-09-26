@@ -6,13 +6,13 @@
 	icon_living = "mouse_plague"
 	icon_dead = "mouse_plague_dead"
 
-	maxHealth = 30
-	health = 30
+	maxHealth = 50
+	health = 50
 
 	melee_damage_lower = 4
 	melee_damage_upper = 7
 	chooses_bodycolor = FALSE
-	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB|PASSDOORS
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	hungry = TRUE
 
 /mob/living/basic/mouse/plague/Initialize(mapload, tame, new_body_color)
