@@ -1,0 +1,118 @@
+import { useBackend, useLocalState } from '../../backend';
+import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
+import { Window } from '../../layouts';
+import { Button, Stack } from '../../components';
+import { KeybindingsPage } from './KeybindingsPage';
+import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
+import { GamePreferencesPage } from './GamePreferencesPage';
+import { PageButton } from './PageButton';
+import { VolumeMixerPage } from '../VolumeMixer';
+
+export const PreferencesMenu = (props) => {
+  const { data } = useBackend<PreferencesMenuData>();
+
+  const [currentPage, setCurrentPage] = useLocalState(
+    'currentPage',
+    GamePreferencesSelectedPage.Keybindings,
+  );
+
+  const window = data.window;
+
+  let pageContents;
+
+  switch (currentPage) {
+    case GamePreferencesSelectedPage.Keybindings:
+      pageContents = <KeybindingsPage />;
+      break;
+    case GamePreferencesSelectedPage.Settings:
+      pageContents = <GamePreferencesPage />;
+      break;
+    case GamePreferencesSelectedPage.Character:
+      pageContents = <CharacterPreferenceWindow />;
+      break;
+    case GamePreferencesSelectedPage.Volume:
+      pageContents = <VolumeMixerPage />;
+      break;
+    default:
+    // exhaustiveCheck(currentPage);
+  }
+
+  if (false) {
+    return (
+      <Window width={800} height={800}>
+        <Window.Content>{pageContents}</Window.Content>
+      </Window>
+    );
+  }
+
+  return (
+    <Window width={1450} height={800} theme="generic">
+      <Window.Content>
+        <Stack horizontal height="100%">
+          <Stack.Item>
+            {currentPage}
+            <SettingsCatergories />
+          </Stack.Item>
+          <Stack.Divider />
+          <Stack.Item>{pageContents}</Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const SettingsCatergories = () => {
+  const [currentPage, setCurrentPage] = useLocalState(
+    'currentPage',
+    GamePreferencesSelectedPage.Keybindings,
+  );
+
+  return (
+    <Stack vertical>
+      <Stack.Item>
+        <Button>Quick Settings</Button>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={GamePreferencesSelectedPage.Character}
+          setPage={setCurrentPage}
+        >
+          Characters
+        </PageButton>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>Game Settings</Stack.Item>
+      <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={GamePreferencesSelectedPage.Settings}
+          setPage={setCurrentPage}
+        >
+          Game Settings
+        </PageButton>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={GamePreferencesSelectedPage.Keybindings}
+          setPage={setCurrentPage}
+        >
+          Key Bindings
+        </PageButton>
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={GamePreferencesSelectedPage.Volume}
+          setPage={setCurrentPage}
+        >
+          Volume Mixer
+        </PageButton>
+      </Stack.Item>
+    </Stack>
+  );
+};

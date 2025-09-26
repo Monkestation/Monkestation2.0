@@ -24,7 +24,7 @@ export const VolumeMixer = (properties) => {
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
-              <VolumeMixerReal />
+              <VolumeMixerPage />
             </Stack.Item>
           </Stack>
         </Section>
@@ -56,23 +56,24 @@ const SettingsCatergories = () => {
   );
 };
 
-const VolumeMixerReal = () => {
-  const { act, data } = useBackend<Data>();
-  const { channels } = data;
+export const VolumeMixerPage = () => {
+  return <Box>text</Box>;
+  // const { act, data } = useBackend<Data>();
+  // const { channels } = data;
 
-  return (
-    <Flex align="start" direction="row" wrap minWidth={60}>
-      {channels.map((channel) => (
-        <Flex.Item
-          key={channel.num}
-          width={25}
-          style={{ margin: '10px 10px 10px 10px' }}
-        >
-          <VolumeSlider channel={channel} />
-        </Flex.Item>
-      ))}
-    </Flex>
-  );
+  // return (
+  //   <Flex align="start" direction="row" wrap minWidth={60}>
+  //     {channels.map((channel) => (
+  //       <Flex.Item
+  //         key={channel.num}
+  //         width={25}
+  //         style={{ margin: '10px 10px 10px 10px' }}
+  //       >
+  //         <VolumeSlider channel={channel} />
+  //       </Flex.Item>
+  //     ))}
+  //   </Flex>
+  // );
 };
 
 const VolumeSlider = (props: { channel: Channel }) => {
