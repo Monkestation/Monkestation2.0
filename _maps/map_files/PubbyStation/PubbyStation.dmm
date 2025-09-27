@@ -29569,7 +29569,7 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "dnR" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
@@ -31474,7 +31474,7 @@
 "eQR" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eQZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -33790,6 +33790,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"gJq" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "gJN" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -36139,7 +36142,7 @@
 	luminosity = 2
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "iQR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -39136,7 +39139,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ltl" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -40296,6 +40299,9 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/storage)
+"mui" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "muO" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
@@ -40928,7 +40934,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "naK" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/exit)
@@ -41607,7 +41613,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nEp" = (
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
@@ -41976,6 +41982,10 @@
 /obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/library/artgallery)
+"nVS" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "nVU" = (
 /obj/item/spear,
 /turf/open/floor/plating,
@@ -43405,7 +43415,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pcg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -44485,7 +44495,7 @@
 /obj/structure/cable,
 /obj/structure/liquid_barrier,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pWK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -48596,7 +48606,7 @@
 "tfP" = (
 /obj/item/beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tfS" = (
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -48920,7 +48930,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "trf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -48990,7 +49000,7 @@
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tuL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50317,7 +50327,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uvq" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
@@ -106866,7 +106876,7 @@ mbJ
 xEI
 bbP
 aaa
-bkF
+mui
 dmT
 ltk
 nEb
@@ -106874,7 +106884,7 @@ pWm
 uvo
 tqX
 dmT
-bkF
+mui
 aaa
 aaa
 aaa
@@ -107123,15 +107133,15 @@ ezn
 bbP
 bbP
 aaa
-bkF
-bkF
-bkF
+mui
+mui
+mui
 pbR
-blX
+gJq
 naq
-bkF
-bkF
-bkF
+mui
+mui
+mui
 aht
 aed
 aht
@@ -107380,15 +107390,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-blX
-blX
-blX
-blX
-blX
-blX
-blX
-bkF
+mui
+gJq
+gJq
+gJq
+gJq
+gJq
+gJq
+gJq
+mui
 aaa
 aby
 aaa
@@ -107637,15 +107647,15 @@ aaa
 aaa
 aaa
 aaa
-xKc
-blX
-blX
+nVS
+gJq
+gJq
 iPj
 tfP
 iPj
-blX
-blX
-xKc
+gJq
+gJq
+nVS
 aaa
 aby
 aaa
@@ -107894,15 +107904,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-blX
-blX
-blX
+mui
+gJq
+gJq
+gJq
 tuy
-blX
-blX
+gJq
+gJq
 eQR
-bkF
+mui
 aaa
 aed
 aaa
@@ -108151,15 +108161,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-bkF
-bkF
-xKc
-bkF
-xKc
-bkF
-bkF
-bkF
+mui
+mui
+mui
+nVS
+mui
+nVS
+mui
+mui
+mui
 aaa
 aby
 aaa
