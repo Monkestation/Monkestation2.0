@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///The implant case currently inserted into the pad.
-	var/obj/item/implantinserted_case/inserted_case = null
+	var/obj/item/implantcase/inserted_case = null
 
 /obj/item/implantpad/update_icon_state()
 	icon_state = "implantpad-[!QDELETED(inserted_case)]"
