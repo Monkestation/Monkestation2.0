@@ -210,7 +210,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your \
-		cargo bay. Contains three bottles of holywater, bibles, chaplain robes, and burial garmets."
+		cargo bay. Contains three bottles of holywater, two bibles, two pairs of chaplain robes, and two pairs of burial garmets."
 	cost = CARGO_CRATE_VALUE * 4 // it costs so much because the Space Church needs funding to build a cathedral
 	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 3,
 					/obj/item/book/bible/booze = 2,
