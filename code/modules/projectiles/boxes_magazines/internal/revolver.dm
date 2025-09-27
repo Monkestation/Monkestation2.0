@@ -33,7 +33,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/handcannon
 	ammo_type = /obj/item/ammo_casing/c500mag
-	caliber = CALIBER_500MAGNUM
+	caliber = CALIBER_500
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev45l

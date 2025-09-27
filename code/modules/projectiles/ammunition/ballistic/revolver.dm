@@ -86,7 +86,7 @@
 
 // .500 Magnum
 
-/obj/item/ammo_casing/a600
+/obj/item/ammo_casing/a500
 	name = ".500 bullet casing"
 	desc = "A monsterous bullet casing."
 	caliber = CALIBER_500
