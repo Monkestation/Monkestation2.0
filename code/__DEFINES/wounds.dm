@@ -313,8 +313,8 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
 #define WOUND_BONE_HEAD_TIME_VARIANCE 20
-
-
+/// the modifier applied to the final chance for rolling chest disemboweling wounds
+#define WOUND_DISEMBOWEL_MODIFIER 0.1
 
 // ~mangling defines
 // With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (exterior/bone only creatures just need the second):
