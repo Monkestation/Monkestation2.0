@@ -65,8 +65,6 @@ GLOBAL_LIST_EMPTY(rcd_list)
 GLOBAL_LIST_EMPTY(intercoms_list)
 /// list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
 GLOBAL_LIST_EMPTY(apcs_list)
-/// list of implants the prisoner console can track and send inject commands too
-GLOBAL_LIST_EMPTY(tracked_chem_implants)
 /// list of all pinpointers. Used to change stuff they are pointing to all at once.
 GLOBAL_LIST_EMPTY(pinpointer_list)
 /// A list of all zombie_infection organs, for any mass "animation"

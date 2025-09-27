@@ -53262,14 +53262,15 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
+/obj/effect/turf_decal/trimline/red/corner,
 /obj/item/storage/lockbox/loyalty{
 	pixel_y = 1;
 	pixel_x = 0
 	},
-/obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
+/obj/item/storage/box/teleport_blocker,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "klB" = (

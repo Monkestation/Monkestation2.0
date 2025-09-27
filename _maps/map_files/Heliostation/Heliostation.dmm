@@ -3391,23 +3391,31 @@
 /area/station/security/prison/rec)
 "asT" = (
 /obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -5;
-	pixel_y = 5
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = -6;
+	pixel_x = 8
 	},
 /obj/item/gun/energy/disabler{
 	pixel_x = -1;
 	pixel_y = 3
 	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = -1;
+	pixel_x = 3
+	},
 /obj/item/gun/energy/disabler{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/gun/energy/disabler{
-	pixel_x = 5;
-	pixel_y = -5
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 6;
+	pixel_x = 0
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/disabler{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "asU" = (
@@ -3417,12 +3425,8 @@
 	pixel_y = 5
 	},
 /obj/item/gun/energy/laser{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser{
-	pixel_x = 1;
-	pixel_y = -1
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/item/gun/energy/laser{
 	pixel_x = 5;
@@ -73414,12 +73418,15 @@
 /area/station/command/heads_quarters/rd)
 "vew" = (
 /obj/structure/rack,
-/obj/item/storage/box/chemimp{
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/firingpins{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/storage/box/trackimp,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/firingpins{
+	pixel_y = 3;
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "veI" = (
@@ -77554,15 +77561,17 @@
 /area/station/security/checkpoint)
 "wHW" = (
 /obj/structure/table,
-/obj/item/storage/box/firingpins{
-	pixel_y = 4
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/box/trackimp{
+	pixel_x = -6;
+	pixel_y = 9
 	},
-/obj/item/storage/box/firingpins{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/item/storage/box/chemimp{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/item/storage/lockbox/loyalty,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "wId" = (

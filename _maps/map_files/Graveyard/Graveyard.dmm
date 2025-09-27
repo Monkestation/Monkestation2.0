@@ -58984,13 +58984,14 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/storage/lockbox/loyalty{
-	pixel_y = -5
-	},
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 1
 	},
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = -5
+	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/storage/box/teleport_blocker,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "wVr" = (

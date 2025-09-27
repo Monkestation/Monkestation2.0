@@ -8,7 +8,7 @@
 	crate_name = "secway crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/security/armory/combatknives
+/datum/supply_pack/security/combatknives
 	name = "Combat Knives Crate"
 	desc = "Three combat knives guaranteed to fit snugly inide any Nanotrasen standard boot. Warranty void if you stab your own ankle."
 	cost = CARGO_CRATE_VALUE * 4

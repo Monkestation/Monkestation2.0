@@ -19881,6 +19881,7 @@
 	pixel_y = 8;
 	pixel_x = -6
 	},
+/obj/item/storage/box/teleport_blocker,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eIG" = (
