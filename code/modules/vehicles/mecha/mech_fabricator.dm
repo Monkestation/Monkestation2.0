@@ -65,6 +65,7 @@
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT,
 		)
 	// list of categories that isn't going to be combat parts
 	var/static/list/non_combat_categories = list(
@@ -505,7 +506,7 @@ skip them. Returns the is_combat_design variable
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(.)

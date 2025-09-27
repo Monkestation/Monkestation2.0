@@ -51,7 +51,7 @@
 	var/auto_pickup = TRUE /// true if auto-pickup at beacon
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
-	var/obj/item/stock_parts/cell/cell /// Internal Powercell
+	var/obj/item/stock_parts/power_store/cell/cell /// Internal Powercell
 	var/cell_move_power_usage = 1///How much power we use when we move.
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
@@ -77,7 +77,7 @@
 	access_card.add_access(cargo_trim.access + cargo_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
+	cell = new /obj/item/stock_parts/power_store/cell/upgraded(src, 2000)
 
 	var/static/mulebot_count = 0
 	mulebot_count += 1
@@ -97,7 +97,7 @@
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			. += span_notice("It has \a [cell] installed.")
 			. += span_info("You can use a <b>crowbar</b> to remove it.")
@@ -127,7 +127,7 @@
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 /mob/living/simple_animal/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN && !isAI(user))
 		wires.interact(user)
 		return
 	if(wires.is_cut(WIRE_RX) && isAI(user))
@@ -147,7 +147,7 @@
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
-	if(!(bot_cover_flags & BOT_COVER_OPEN) || (user.istate & ISTATE_HARM))
+	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN) || (user.istate & ISTATE_HARM))
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
@@ -166,7 +166,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return TRUE
@@ -179,7 +179,7 @@
 			span_notice("You insert [cell] into [src]."),
 		)
 		return TRUE
-	else if(is_wire_tool(attacking_item) && bot_cover_flags & BOT_COVER_OPEN)
+	else if(is_wire_tool(attacking_item) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + attacking_item.force * 2))
@@ -195,7 +195,7 @@
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		bot_cover_flags |= BOT_COVER_EMAGGED
-	if(!(bot_cover_flags & BOT_COVER_OPEN))
+	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		bot_cover_flags ^= BOT_COVER_LOCKED
 	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
@@ -208,7 +208,7 @@
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		. += "[base_icon]-hatch"
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
@@ -247,7 +247,7 @@
 	var/list/data = list()
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
@@ -271,29 +271,30 @@
 	data["possession_enabled"] = can_be_possessed
 	return data
 
-/mob/living/simple_animal/bot/mulebot/ui_act(action, params)
+/mob/living/simple_animal/bot/mulebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
 		if("lock")
-			if(usr.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(user))
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
-			else if(bot_cover_flags & BOT_COVER_OPEN)
-				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
+			else if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
+				to_chat(user, span_warning("[name]'s maintenance panel is open!"))
 				return
 			else if(cell)
 				if(!turn_on())
-					to_chat(usr, span_warning("You can't switch on [src]!"))
+					to_chat(user, span_warning("You can't switch on [src]!"))
 					return
 			return TRUE
 		else
-			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
+			bot_control(action, user, params) // Kill this later. // Kill PDAs in general please
 			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)

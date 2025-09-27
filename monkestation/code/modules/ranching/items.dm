@@ -177,7 +177,7 @@
 			return
 		if(beaker)
 			beaker.forceMove(drop_location())
-			if(user && Adjacent(user) && !issiliconoradminghost(user))
+			if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 				user.put_in_hands(beaker)
 		beaker = attacked_reagent_container
 		return
@@ -203,7 +203,7 @@
 
 		beaker.forceMove(drop_location())
 		beaker.reagents.remove_all(1000)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 			user.put_in_hands(beaker)
 		beaker = null
 

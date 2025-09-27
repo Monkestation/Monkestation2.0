@@ -14,7 +14,7 @@
 	///The actual gun that you draw when you use it
 	var/obj/item/gun/energy/pulse/makeshift/gun
 	///batteries of the pulsepack
-	var/obj/item/stock_parts/cell/pulsepack/battery
+	var/obj/item/stock_parts/power_store/cell/pulsepack/battery
 	///whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/armed = FALSE
 	///used the gun too much?
@@ -121,7 +121,7 @@
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
-	cell_type = /obj/item/stock_parts/cell/pulsepack
+	cell_type = /obj/item/stock_parts/power_store/cell/pulsepack
 	item_flags = SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	///the backpack we are linked to
@@ -169,7 +169,7 @@
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 
-/obj/item/stock_parts/cell/pulsepack
+/obj/item/stock_parts/power_store/cell/pulsepack
 	name = "Pulse pack fusion core"
 	desc = "Exposed fusion product outside of containment field on an already sketchy ass power pack. There should be no reason you have this, and honestly you should tell an admin if you somehow got this, I'm too fucking lazy to code in an explosion if you somehow have this in your hand so good job, you broke the game. Now get back to beating the ERPers into a pulp spessman. Your server depends on you."
 	maxcharge = 500000

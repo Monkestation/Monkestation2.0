@@ -49,7 +49,7 @@ export const SimpleBot = (props) => {
               {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
             </Section>
           </Stack.Item>
-          {access && (
+          {!!access && (
             <Stack.Item grow>
               <Section fill scrollable title="Controls">
                 <ControlsDisplay />

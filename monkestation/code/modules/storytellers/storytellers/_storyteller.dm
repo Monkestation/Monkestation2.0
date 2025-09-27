@@ -205,6 +205,10 @@
 		/// Write it
 		event.calculated_weight = weight_total
 
+/// Extra storyteller-specific checks for if an event can run or not.
+/datum/storyteller/proc/can_run_event(datum/round_event_control/event)
+	return TRUE
+
 /datum/storyteller/guide
 	name = "The Guide"
 	desc = "The Guide will provide a balanced and varied experience. Consider this the default experience."
