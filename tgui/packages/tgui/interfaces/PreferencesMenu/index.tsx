@@ -12,6 +12,7 @@ import { Window } from '../../layouts';
 import { KeybindingsPage } from './KeybindingsPage';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { VolumeMixerPage } from '../VolumeMixer';
+import { exhaustiveCheck } from 'common/exhaustive';
 
 export const PreferencesMenu = (props) => {
   const { data } = useBackend<PreferencesMenuData>();
@@ -39,13 +40,19 @@ export const PreferencesMenu = (props) => {
         case GamePreferencesSelectedPage.Volume:
           pageContents = <VolumeMixerPage />;
           break;
+        case GamePreferencesSelectedPage.Character:
+          pageContents = <Box>Error</Box>;
+          break;
+        default:
+          exhaustiveCheck(currentPageLocal);
       }
-    // default:
-    //   exhaustiveCheck(window);
+      break;
+    default:
+      exhaustiveCheck(window);
   }
 
   return (
-    <Window width={1350} height={800} theme="generic">
+    <Window title="Preferences" width={1350} height={800} theme="generic">
       <Window.Content>
         <Stack horizontal height="100%">
           <Stack.Item>
@@ -81,7 +88,9 @@ const SettingsCatergories = (props: { window: WindowE }) => {
   return (
     <Stack vertical width="150px">
       <Stack.Item>
-        <Box fontSize="1.2em">Pages</Box>
+        <Box align="center" fontSize="1.5em">
+          Preferences
+        </Box>
       </Stack.Item>
       <Stack.Divider />
       <Stack.Item>
