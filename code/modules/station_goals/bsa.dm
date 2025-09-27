@@ -1,7 +1,3 @@
-
-///BSA unlocked by head ID swipes
-GLOBAL_VAR_INIT(bsa_unlock, FALSE)
-
 // Crew has to build a bluespace cannon
 // Cargo orders part for high price
 // Requires high amount of power
@@ -273,13 +269,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_keyboard = null
 	icon_screen = null
 
+	var/bsa_unlock = FALSE
+	var/rigged_to_blow = FALSE
 	var/datum/weakref/cannon_ref
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
-
-/obj/machinery/computer/bsa_control/ui_state(mob/user)
-	return GLOB.physical_state
 
 /obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -294,7 +289,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	data["ready"] = cannon ? cannon.ready : FALSE
 	data["connected"] = cannon
 	data["notice"] = notice
-	data["unlocked"] = GLOB.bsa_unlock
+	data["unlocked"] = bsa_unlock
 	if(target)
 		data["target"] = get_target_name()
 	return data
@@ -317,7 +312,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	update_appearance()
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
-	if(!GLOB.bsa_unlock)
+	if(!bsa_unlock)
 		return
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
@@ -344,7 +339,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(obj_flags & EMAGGED)
+	if(rigged_to_blow)
 		return get_turf(src)
 	else if(istype(target, /area))
 		return pick(get_area_turfs(target))
@@ -389,10 +384,44 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	QDEL_NULL(centerpiece.back_ref)
 	qdel(centerpiece)
 	return cannon
+
+/obj/machinery/computer/bsa_control/attackby(obj/item/object, mob/living/user, params)
+	var/obj/item/card/id/card = object.GetID()
+	if(card)
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
+			do_sparks(1, FALSE, src)
+			bsa_unlock = TRUE // just in case it wasn't already for some reason. keycard reader is busted.
+			return
+		if((ACCESS_COMMAND in card.access))
+			if(!bsa_unlock)
+				bsa_unlock = TRUE
+				to_chat(user, span_notice("[src] firing protocols have been unlocked."))	//I coped this function from mechfab code, probably code use rewording.
+			else
+				bsa_unlock = FALSE
+				to_chat(user, span_notice("[src] firing protocols have been locked."))
+			update_static_data(user)
+		return
+	return ..()
+
+/obj/machinery/computer/bsa_control/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(!do_after(user, 1 SECONDS, src))
+		return ITEM_INTERACT_SUCCESS
+	if(!rigged_to_blow)
+		balloon_alert(user, "rigged to explode")
+		to_chat(user, span_warning("You pulse [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
+		rigged_to_blow = TRUE
+	else
+		balloon_alert(user, "safeties restored")
+		to_chat(user, span_warning("You pulse [src] and restore the focusing crystal. It appears someone had rigged the BSA to explode..."))
+		rigged_to_blow = FALSE
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "rigged to explode")
+	bsa_unlock = TRUE
+	balloon_alert(user, "unlocked")
 	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
 	return TRUE
