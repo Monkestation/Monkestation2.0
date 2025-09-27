@@ -26,6 +26,7 @@
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	light_power = 0.9
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE

@@ -8,6 +8,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
 	///The maximum amount of water in the tray

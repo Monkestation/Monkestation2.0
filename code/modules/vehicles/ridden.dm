@@ -5,6 +5,7 @@
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE
 	COOLDOWN_DECLARE(message_cooldown)
+	interaction_flags_click = NEED_DEXTERITY
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()

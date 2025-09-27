@@ -12,6 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0

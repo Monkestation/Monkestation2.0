@@ -14,6 +14,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -379,6 +380,7 @@
  */
 /obj/item/paper/fake_report/water
 	grind_results = list(/datum/reagent/water = 5)
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/paper/fake_report/water/click_alt(mob/living/user)
 	var/datum/action/innate/origami/origami_action = locate() in user.actions

@@ -17,6 +17,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown

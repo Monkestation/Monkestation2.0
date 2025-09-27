@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_outer_range = 3
 	light_power = 0.9
 	speed = 3
+	interaction_flags_click = ALLOW_SILICON_REACH
 	///Access required to access this Bot's maintenance protocols
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.

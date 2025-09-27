@@ -1,5 +1,6 @@
 /obj/machinery/computer/prisoner
 	var/obj/item/card/id/advanced/prisoner/contained_id
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 /obj/machinery/computer/prisoner/Destroy()
 	contained_id?.forceMove(get_turf(src))

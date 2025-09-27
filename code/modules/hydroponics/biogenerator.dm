@@ -12,6 +12,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	processing_flags = START_PROCESSING_MANUALLY
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	/// Whether the biogenerator is currently processing biomass or not.
 	var/processing = FALSE
 	/// The reagent container that is currently inside of the biomass generator. Can be null.

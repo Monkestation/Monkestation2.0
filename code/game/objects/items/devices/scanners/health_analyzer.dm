@@ -24,10 +24,14 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
-	var/mode = SCANNER_VERBOSE
-	var/scanmode = SCANMODE_HEALTH
-	var/advanced = FALSE
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	custom_price = PAYCHECK_COMMAND
+	/// Verbose/condensed
+	var/mode = SCANNER_VERBOSE
+	/// HEALTH/WOUND
+	var/scanmode = SCANMODE_HEALTH
+	/// Advanced health analyzer
+	var/advanced = FALSE
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text

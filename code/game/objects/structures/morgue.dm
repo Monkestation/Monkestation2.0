@@ -22,9 +22,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	anchored = TRUE
 	max_integrity = 400
 	pass_flags_self = LETPASSTHROW | PASSSTRUCTURE
+	dir = SOUTH
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
-	dir = SOUTH
 	var/message_cooldown
 	var/breakout_time = 600
 
@@ -160,6 +160,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
+	interaction_flags_click = ALLOW_SILICON_REACH|ALLOW_RESTING
+
 	/// Whether or not this morgue beeps to alert parameds of revivable corpses.
 	var/beeper = TRUE
 	/// The minimum time between beeps.

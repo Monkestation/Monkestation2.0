@@ -167,6 +167,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
 	///an assoc list of phrase = item (like gun = revolver)

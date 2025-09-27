@@ -8,9 +8,14 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	interaction_flags_click = ALLOW_SILICON_REACH
+	/// The linked console
 	var/obj/machinery/computer/cargo/express/express_console
+	/// If linked
 	var/linked = FALSE
+	/// If this is ready to launch
 	var/ready = FALSE
+	/// If it's been launched
 	var/launched = FALSE
 
 /obj/item/supplypod_beacon/proc/update_status(consoleStatus)

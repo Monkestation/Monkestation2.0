@@ -451,6 +451,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	interaction_flags_click = NEED_HANDS|FORBID_TELEKINESIS_REACH
 	/// Whether or not poured drinks should use custom names and descriptions
 	var/using_custom_drinks = FALSE
 	/// Name custom drinks will have

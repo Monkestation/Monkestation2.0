@@ -17,6 +17,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance

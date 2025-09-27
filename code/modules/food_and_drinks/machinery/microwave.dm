@@ -27,6 +27,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/held_state = "microwave_standard"
 	/// Is its function wire cut?
 	var/wire_disabled = FALSE

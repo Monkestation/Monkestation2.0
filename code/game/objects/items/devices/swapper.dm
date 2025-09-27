@@ -8,9 +8,12 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-
-	var/cooldown = 300
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// Cooldown for usage
+	var/cooldown = 30 SECONDS
+	/// Next available time
 	var/next_use = 0
+	/// Swapper linked to this obj
 	var/obj/item/swapper/linked_swapper
 
 /obj/item/swapper/Destroy()

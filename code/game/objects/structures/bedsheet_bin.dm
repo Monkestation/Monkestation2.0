@@ -24,6 +24,7 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
