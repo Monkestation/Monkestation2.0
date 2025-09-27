@@ -208,6 +208,7 @@
 	now with real tomfoolery action!"
 	icon_state = "realfakeairlock"
 	throw_stick_rate = 0
+	w_class = WEIGHT_CLASS_NORMAL //its an absurdly large sticker.
 
 /obj/item/sticker/realfakeairlock/attempt_attach(atom/target, mob/user, px, py)
 	if(istype(target, /turf/closed/wall))
