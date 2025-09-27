@@ -92,3 +92,11 @@
 	icon_state = "m1911"
 	inhand_icon_state = "gun"
 	cell_type = /obj/item/stock_parts/power_store/cell/infinite
+
+// basically a reskin of the 1911 pulse
+/obj/item/gun/energy/pulse/pistol/magnumpulse
+	name = "\improper The budget corrector"
+	desc = "A giant revolver refitted to fire pulse rounds, if you need to make the accountants happy, use this."
+	icon_state = "pulse500"
+	inhand_icon_state = "gun"
+	cell_type = /obj/item/stock_parts/power_store/cell/infinite

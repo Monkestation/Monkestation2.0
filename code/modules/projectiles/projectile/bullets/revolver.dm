@@ -162,4 +162,12 @@
 	. = ..()
 
 
+// .500 (Admin only)
 
+/obj/projectile/bullet/a500
+	name = ".500 Magnum bullet"
+	damage = 75
+	wound_bonus = 50
+	paralyze = 5
+	dismemberment = 50
+	catastropic_dismemberment = TRUE

@@ -30,6 +30,18 @@
 //	ammo_band_icon = "+38_ammo_band" //monkestation temp removal, needs a PR
 //	ammo_band_color = null //temp
 
+/obj/item/ammo_box/a500
+	name = "speed loader (.500)"
+	desc = "Designed to quickly reload revolvers."
+	icon_state = "357"
+	ammo_type = /obj/item/ammo_casing/a500
+	max_ammo = 6
+	caliber = CALIBER_500
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	item_flags = NO_MAT_REDEMPTION
+	w_class = WEIGHT_CLASS_SMALL
+
+
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
 	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
