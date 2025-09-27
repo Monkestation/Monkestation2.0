@@ -642,3 +642,9 @@
 
 /mob/living/simple_animal/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
+
+/mob/living/simple_animal/update_cached_insulation()
+	return
+
+/mob/living/simple_animal/get_insulation(temperature)
+	return temperature_insulation

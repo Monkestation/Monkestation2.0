@@ -25,7 +25,7 @@
 	if(!panel_open)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
 

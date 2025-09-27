@@ -591,3 +591,8 @@
 	var/blood_volume = round(reagents[blood_reagent], 0.1)
 	if(blood_volume > 0)
 		bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
+
+/datum/status_effect/silver_cuffed
+	id = "silver cuffed"
+	alert_type = null
+	remove_on_fullheal = TRUE

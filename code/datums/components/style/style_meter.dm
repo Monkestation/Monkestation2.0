@@ -96,6 +96,7 @@
 	if(istype(loc, /obj/item/clothing/glasses))
 		clean_up()
 		forceMove(get_turf(src))
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), src)
 
 	return COMPONENT_CANCEL_CLICK_ALT
 
@@ -112,9 +113,7 @@
 /// Unregister signals and just generally clean up ourselves after being removed from glasses
 /obj/item/style_meter/proc/clean_up(atom/movable/old_location)
 	old_location.cut_overlay(meter_appearance)
-	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
-	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
-	UnregisterSignal(old_location, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(old_location, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_ALT))
 	UnregisterSignal(old_location, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	if(!style_meter)
 		return

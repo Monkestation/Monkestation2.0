@@ -72,7 +72,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	multi.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multi.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/launchpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
