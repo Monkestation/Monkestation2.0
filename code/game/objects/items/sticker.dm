@@ -203,7 +203,9 @@
 	icon_state = "tider"
 
 /obj/item/sticker/realfakeairlock
-	name = "airlock sticker"
+	name = "fake airlock sticker"
+	desc = "A genuine fake airlock sticker! It's too large, so you can only fit it on walls. \
+	now with real tomfoolery action!"
 	icon_state = "realfakeairlock"
 	throw_stick_rate = 0
 
@@ -230,7 +232,7 @@
 		return
 	var/obj/item/bodypart/head/donked = bumper.get_bodypart(BODY_ZONE_HEAD)
 	if(istype(donked, /obj/item/bodypart/head))
-		if(donked.brute_dam < 50)
+		if(donked.brute_dam < 50) //dont wanna kill yourself from banging your head
 			donked.receive_damage(brute = 5)
 		to_chat(bumper, span_userdanger("You bang your head on the fake airlock!"), type = MESSAGE_TYPE_WARNING)
 		bumper.visible_message(span_danger("[bumper] bangs their head on the fake airlock!"), span_userdanger("You bang your head on the fake airlock!"), span_hear("You hear a loud thud followed by something falling."))
