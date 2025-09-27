@@ -55,7 +55,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "eq" = (
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable/multilayer/connected{
+	explosion_block = 1;
+	explosive_resistance = 1;
+	max_integrity = 3000
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "eX" = (
@@ -362,7 +366,11 @@
 /area/station/engineering/supermatter/room)
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable/multilayer/connected{
+	max_integrity = 3000;
+	explosion_block = 1;
+	explosive_resistance = 1
+	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
@@ -905,6 +913,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"Mx" = (
+/obj/structure/cable/multilayer/connected{
+	explosion_block = 1;
+	explosive_resistance = 1
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "MN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner,
@@ -1576,7 +1591,7 @@ rP
 kf
 IJ
 Vk
-eq
+Mx
 Vk
 IJ
 kf
