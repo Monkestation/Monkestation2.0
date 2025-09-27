@@ -1,7 +1,7 @@
 /datum/round_event_control/processor_overload
 	name = "Processor Overload"
 	typepath = /datum/round_event/processor_overload
-	weight = 15
+	weight = 5
 	min_players = 20
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Emps the telecomm processors, scrambling radio speech. Might blow up a few."
