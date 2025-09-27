@@ -225,14 +225,22 @@
 
 /obj/item/sticker/realfakeairlock/proc/bonk(atom/source, mob/living/bumper)
 	SIGNAL_HANDLER
+
 	if(!iscarbon(bumper))
 		return
 	var/obj/item/bodypart/head/donked = bumper.get_bodypart(BODY_ZONE_HEAD)
-		if(istype(donked, /obj/item/bodypart/head)) //todo: ?
-			donked.receive_damage(brute = 10)
-			to_chat(bumper, span_danger("You bang your head on the fake airlock!"), type = MESSAGE_TYPE_WARNING)
-			playsound(bumper, 'sound/effects/bang.ogg', vary = TRUE)
-			bumper.Knockdown(0.5 SECONDS)
+	if(istype(donked, /obj/item/bodypart/head))
+		if(donked.brute_dam < 50)
+			donked.receive_damage(brute = 5)
+		to_chat(bumper, span_userdanger("You bang your head on the fake airlock!"), type = MESSAGE_TYPE_WARNING)
+		bumper.visible_message(span_danger("[bumper] bangs [bumper.p_their] head on the fake airlock!"), span_userdanger("You bang your head on the fake airlock!"), span_hear("You hear a loud thud followed by something falling."))
+		playsound(
+			source = bumper,
+			soundin = 'sound/effects/bang.ogg',
+			vol = 25,
+			vary = TRUE
+		)
+		bumper.Knockdown(1 SECONDS)
 
 
 /obj/item/sticker/syndicate
