@@ -2,7 +2,8 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 22
+
+	damage = 20
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -27,6 +28,18 @@
 	impact_type = /obj/effect/projectile/impact/laser
 	wound_bonus = -30
 	bare_wound_bonus = 40
+	armour_penetration = -30
+
+/obj/projectile/beam/laser/heavylaser
+	generic_name = "concentrated laser beam"
+	icon_state = "heavylaser"
+	damage = 23
+	pass_flags = PASSTABLE | PASSGLASS
+	projectile_piercing = PASSGRILLE
+	wound_bonus = -30
+	bare_wound_bonus = 10
+	armour_penetration = 0
+	demolition_mod = 1.3
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
@@ -290,7 +303,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "plasma_glob"
 	damage = 10
-	speed = 1.5
+	speed = 1.8
 	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
 	wound_bonus = -50 // However we do not very much against armor
 	pass_flags = PASSTABLE | PASSGRILLE // His ass does NOT pass through glass!

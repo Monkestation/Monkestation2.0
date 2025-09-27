@@ -1,3 +1,10 @@
+/obj/item/ammo_box/magazine/internal/cylinder/mech357
+	name = "\improper mecha test revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/a357/mecha357
+	caliber = CALIBER_357
+	max_ammo = 7
+
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "detective revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c38

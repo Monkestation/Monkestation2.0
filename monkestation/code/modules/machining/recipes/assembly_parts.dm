@@ -11,11 +11,12 @@
         /obj/item/machining_intermediates/handle_polymer = 1,
         /obj/item/stack/machining_intermediates/hardsteel = 4,
         /obj/item/stack/machining_intermediates/screwbolt = 8,
-        /obj/item/machining_intermediates/moltenplastic = 2,
+        /obj/item/machining_intermediates/moltenplastic = 3,
     )
     machining_skill_required = 5
 
-/datum/machining_recipe/wylom_magazine
+/*
+/datum/machining_recipe/wylom_magazine /// NO LONGER APPLICABLE!
     name = "Wylom Magazine"
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
@@ -27,6 +28,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
     )
     machining_skill_required = 5
+*/
 
 /datum/machining_recipe/mosin
 	name = "Mosin Nagant"

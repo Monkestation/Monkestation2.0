@@ -1,4 +1,4 @@
-// .357 (Syndie Revolver)
+// .357 (Syndie Revolver) /obj/item/ammo_box/magazine/internal/cylinder/mech357
 
 /obj/item/ammo_casing/a357
 	name = ".357 bullet casing"
@@ -6,10 +6,51 @@
 	caliber = CALIBER_357
 	projectile_type = /obj/projectile/bullet/a357
 
+/obj/item/ammo_casing/a357/mecha357 ///Because the mech damage test doesn't like AP
+	name = ".357 bullet casing"
+	desc = "A .357 bullet casing."
+	caliber = CALIBER_357
+	projectile_type = /obj/projectile/bullet/a357/mecha_unit_test
+	can_be_printed = FALSE
+
 /obj/item/ammo_casing/a357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
 	projectile_type = /obj/projectile/bullet/a357/match
+	can_be_printed = FALSE
+
+/obj/item/ammo_casing/a357/nutcracker
+	name = ".357 Nutcracker bullet casing"
+	desc = "A .357 Nutcracker bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/nutcracker
+
+/obj/item/ammo_casing/a357/heartpiercer
+	name = ".357 Heartpiercer bullet casing"
+	desc = "A .357 Heartpiercer bullet casing."
+	projectile_type = /obj/projectile/bullet/dart/a357
+	can_be_printed = FALSE
+
+/obj/item/ammo_casing/a357/heartpiercer/Initialize(mapload)
+	. = ..()
+	create_reagents(18, OPENCONTAINER)
+	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
+	reagents.add_reagent(/datum/reagent/toxin/cyanide, 2)
+	reagents.add_reagent(/datum/reagent/toxin/amanitin, 4)
+
+/obj/item/ammo_casing/a357/heartpiercer/attackby()
+	return
+
+/obj/item/ammo_casing/a357/wallstake
+	name = ".357 Wallstake bullet casing"
+	desc = "A .357 Wallstake bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/wallstake
+	can_be_printed = FALSE
+
+/obj/item/ammo_casing/a357/wallstake/admeme
+	name = ".357 Wallstake bullet casing"
+	desc = "An unusually hefty .357 Wallstake bullet casing."
+	projectile_type = /obj/projectile/bullet/a357/wallstake/admeme
+	can_be_printed = FALSE
 
 // 7.62x38mmR (Nagant Revolver)
 
