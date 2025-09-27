@@ -52,6 +52,8 @@
 	if(move_down_action)
 		actions += new move_down_action(src)
 
+	camnet = GLOB.cameranet //the default cameranet
+
 /obj/machinery/computer/camera_advanced/Destroy()
 	unset_machine()
 	QDEL_NULL(eyeobj)

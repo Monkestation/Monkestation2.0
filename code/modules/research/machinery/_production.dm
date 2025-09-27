@@ -324,6 +324,7 @@
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 	if(!materials.mat_container.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
+		finalize_build()
 		return
 	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1, action = "built", name = "[design.name]")
 
