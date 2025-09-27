@@ -9,11 +9,11 @@
 		/mob/oranges_ear,
 		/mob/living/carbon/human/dummy/mechcomp, // monkestation addition: should not exist outside of interaction components
 	)
-	ignored += typesof(/mob/camera/imaginary_friend)
+	ignored += typesof(/mob/eye/imaginary_friend)
 	ignored += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	ignored += typesof(/mob/living/silicon/robot/model)
-	ignored += typesof(/mob/camera/ai_eye/remote/base_construction)
-	ignored += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	ignored += typesof(/mob/eye/ai_eye/remote/base_construction)
+	ignored += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
 	for (var/mob_type in typesof(/mob) - ignored)
 		var/mob/mob_instance = allocate(mob_type)
 		if(!islist(mob_instance.faction))

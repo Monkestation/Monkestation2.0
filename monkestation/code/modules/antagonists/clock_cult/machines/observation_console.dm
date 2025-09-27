@@ -67,7 +67,7 @@
 		return
 
 	var/mob/living/cam_user = owner
-	var/mob/camera/ai_eye/remote/cam = cam_user.remote_control
+	var/mob/eye/ai_eye/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
 	if(!(SSthe_ark.marked_areas[target_area]))
