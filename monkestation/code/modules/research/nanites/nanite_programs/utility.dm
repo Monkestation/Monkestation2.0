@@ -513,7 +513,7 @@
 		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
 		return ITEM_INTERACT_BLOCKING
 	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
-	visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
+	guy_we_are_stabbing.visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
 	to_chat(guy_we_are_stabbing, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
 	var/success = FALSE
 	if(none_mod == 1)
@@ -527,10 +527,10 @@
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
 		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
-		visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
-			visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 			to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
 			if(ishuman(guy_we_are_stabbing))
 				var/mob/living/carbon/human/guy_to_deal_pain_to = guy_we_are_stabbing
@@ -539,11 +539,11 @@
 		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
 		guy_we_are_stabbing.emote("scream")
 		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
-		visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
 		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
 			to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
-			visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
 			if(ishuman(guy_we_are_stabbing))
 				var/mob/living/carbon/human/human_to_impale = guy_we_are_stabbing
 				human_to_impale.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
@@ -554,7 +554,7 @@
 	if(success)
 		nanos.consume_nanites(200)
 		if(!(none_mod == 1))
-			visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(guy_we_are_stabbing.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = guy_we_are_stabbing.GetComponent(/datum/component/nanites)
