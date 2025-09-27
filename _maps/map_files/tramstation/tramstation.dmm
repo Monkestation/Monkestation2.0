@@ -3090,6 +3090,9 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "apw" = (
@@ -6692,6 +6695,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "aYA" = (
@@ -8778,23 +8784,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics_engine)
-"bHA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/yellow/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/engineering/engine_smes)
 "bHE" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -9751,13 +9740,14 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "bXb" = (
-/obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "bXh" = (
@@ -52791,10 +52781,11 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pxi" = (
@@ -77810,6 +77801,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/machinery/power/terminal{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -110607,7 +110601,7 @@ ycg
 cvK
 csJ
 crz
-bHA
+tta
 vsI
 eMu
 qWE
