@@ -69,6 +69,10 @@
 #define CALIBER_SPEAR "throwing spear"
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
+//20mm ammo for mech
+#define CALIBER_ATR "20x160mm Neville"
+//60mm rockets for anti mech
+#define CALIBER_60MM "60mm Rocket"
 // The caliber used by the PACO
 #define CALIBER_35 ".35"
 // The caliber used by the Quarad machinegun

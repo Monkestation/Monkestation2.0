@@ -167,7 +167,7 @@
 
 	if(panel_open)
 		multi.set_buffer(src)
-		to_chat(user, span_notice("You download the data to the [multi.name]'s buffer."))
+		balloon_alert(user, "saved to multitool buffer")
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(multi.buffer, /obj/machinery/teleport/station) || multi.buffer == src)
@@ -179,7 +179,7 @@
 
 	linked_stations.Add(multi.buffer)
 	multi.set_buffer(null)
-	to_chat(user, span_notice("You upload the data from the [multi.name]'s buffer."))
+	balloon_alert(user, "data uploaded from buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/teleport/station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

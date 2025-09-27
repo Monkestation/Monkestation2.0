@@ -1314,7 +1314,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_NO_THROWING "no_throwing" */
 
 ///Trait which allows mobs to parry mining mob projectiles
-/* #define TRAIT_MINING_PARRYING "mining_parrying" */
+#define TRAIT_MINING_PARRYING "mining_parrying"
 
 /**
  *

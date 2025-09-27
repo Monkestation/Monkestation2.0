@@ -14,6 +14,10 @@
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/kinetic_gun
 	var/Skillbasedweapon = TRUE //monkestation edit that allows you to toggle off the quicker reload chance on hitting minerals
 
+/obj/projectile/kinetic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
 /obj/projectile/kinetic/Destroy()
 	kinetic_gun = null
 	return ..()
@@ -30,6 +34,13 @@
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
 		pressure_decrease_active = TRUE
+
+/obj/projectile/kinetic/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+
+	// Ensure that if the user doesn't have tracer mod we're still visible
+	icon_state = "ka_tracer"
+	update_appearance()
 
 /obj/projectile/kinetic/on_range()
 	strike_thing()
