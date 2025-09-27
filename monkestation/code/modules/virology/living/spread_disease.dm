@@ -7,9 +7,6 @@
 	var/image/pathogen
 
 /mob/living/proc/spread_airborne_diseases()
-	if((stat == DEAD) || HAS_TRAIT(src, TRAIT_NOBREATH) || check_airborne_sterility())
-		return
-
 	//spreading our own airborne viruses
 	if (diseases && diseases.len > 0)
 		var/list/airborne_viruses = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_AIRBORNE)
