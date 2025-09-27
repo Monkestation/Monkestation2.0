@@ -33,10 +33,6 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
 	cost_per_order = 200
 
-/datum/orderable_item/survival/magnetic //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
-	cost_per_order = 250
-
 /datum/orderable_item/survival/speed //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
 	cost_per_order = 550
@@ -51,6 +47,10 @@
 
 /datum/orderable_item/survival/capsule
 	item_path = /obj/item/survivalcapsule
+	cost_per_order = 400
+
+/datum/orderable_item/survival/bathroom
+	item_path = /obj/item/survivalcapsule/bathroom
 	cost_per_order = 400
 
 /datum/orderable_item/survival/medkit_basic
@@ -70,3 +70,8 @@
 	item_path = /obj/item/fishing_hook/rescue
 	desc = "A large hook for fishing people out of chasms. You will need to provide your own rod and string..."
 	cost_per_order = 500
+
+/datum/orderable_item/survival/chasm_filler
+	item_path = /obj/item/chasm_filler
+	desc = "A capsule that can be thrown into chasms to fill them with thick dirt."
+	cost_per_order = 350

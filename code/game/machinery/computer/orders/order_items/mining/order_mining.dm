@@ -110,3 +110,7 @@
 /datum/orderable_item/mining/drone_sentience
 	item_path = /obj/item/slimepotion/slime/sentience/mining
 	cost_per_order = 1000
+
+/datum/orderable_item/mining/magnetic
+	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
+	cost_per_order = 250
