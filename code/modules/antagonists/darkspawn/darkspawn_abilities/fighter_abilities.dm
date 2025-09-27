@@ -179,7 +179,7 @@
 	var/blocked = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.check_shields(src, 0, "[source]", attack_type = LEAP_ATTACK))
+		if(H.check_block(src, 0, "[source]", attack_type = LEAP_ATTACK))
 			blocked = TRUE
 
 	var/destination = get_ranged_target_turf(get_turf(target), throwingdatum.init_dir, 5)

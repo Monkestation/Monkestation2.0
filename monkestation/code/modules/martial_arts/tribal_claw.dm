@@ -14,7 +14,8 @@
 
 	smashes_tables = TRUE //:3
 
-	block_chance = 60  //you can use throw mode to block melee attacks... sometimes
+	///you can use throw mode to block melee attacks... sometimes
+	block_chance = 60
 	//originally wanted to do inverse correlation but it donbt work :pensive:
 
 /datum/armor/scales
