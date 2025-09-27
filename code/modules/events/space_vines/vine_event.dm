@@ -14,6 +14,10 @@
 		/datum/event_admin_setup/input_number/spacevine_potency,
 		/datum/event_admin_setup/input_number/spacevine_production,
 	)
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN)
+	checks_antag_cap = TRUE
+	event_group = /datum/event_group/guests
 
 /datum/round_event/spacevine
 	fakeable = FALSE

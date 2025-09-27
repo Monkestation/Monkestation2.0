@@ -9,6 +9,9 @@
 	description = "Destroys all lights in a large area."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_SPOOKY)
+	event_group = /datum/event_group/error
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1
