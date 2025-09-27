@@ -261,6 +261,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
+		if ("character")
+			current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+			update_static_data(usr)
+			return TRUE
+
 		if ("volume")
 			var/mob/user = ui.user
 			var/channel = text2num(params["channel"])

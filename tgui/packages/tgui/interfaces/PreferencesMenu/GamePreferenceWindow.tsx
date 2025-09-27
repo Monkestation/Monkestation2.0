@@ -1,4 +1,4 @@
-import { Stack } from '../../components';
+import { Button, Stack } from '../../components';
 import { KeybindingsPage } from './KeybindingsPage';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { PageButton } from './PageButton';
@@ -94,6 +94,13 @@ const SettingsCatergories = () => {
   return (
     <Stack vertical>
       <Stack.Item>
+        <Button
+          onClick={() => {
+            act('character');
+          }}
+        >
+          FUCK ME
+        </Button>
         <PageButton
           currentPage={currentPage}
           page={GamePreferencesSelectedPage.Settings}
