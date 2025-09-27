@@ -130,7 +130,7 @@
 			robit.adjust_jitter_up_to(2 MINUTE, 6 MINUTES)
 			robit.adjust_confusion(10 SECONDS)
 			if(COOLDOWN_FINISHED(src, water_yeowchy))
-				robit.Stun(4 SECONDS)
+				robit.Stun(6 SECONDS)
 				robit.Paralyze(4 SECONDS)
 				COOLDOWN_START(src, water_yeowchy, 10 SECONDS)
 	robit.force_say()
