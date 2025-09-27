@@ -111,7 +111,6 @@ export enum JoblessRole {
 export enum GamePreferencesSelectedPage {
   Settings,
   Keybindings,
-  Character,
   Volume,
 }
 
@@ -126,7 +125,6 @@ export const createSetPreference =
 export enum Window {
   Character = 0,
   Game = 1,
-  Keybindings = 2,
 }
 
 export type PreferencesMenuData = {

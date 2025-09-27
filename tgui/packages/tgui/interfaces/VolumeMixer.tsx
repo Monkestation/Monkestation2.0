@@ -57,23 +57,23 @@ const SettingsCatergories = () => {
 };
 
 export const VolumeMixerPage = () => {
-  return <Box>text</Box>;
-  // const { act, data } = useBackend<Data>();
-  // const { channels } = data;
+  // return <Box>text</Box>;
+  const { act, data } = useBackend<Data>();
+  const { channels } = data;
 
-  // return (
-  //   <Flex align="start" direction="row" wrap minWidth={60}>
-  //     {channels.map((channel) => (
-  //       <Flex.Item
-  //         key={channel.num}
-  //         width={25}
-  //         style={{ margin: '10px 10px 10px 10px' }}
-  //       >
-  //         <VolumeSlider channel={channel} />
-  //       </Flex.Item>
-  //     ))}
-  //   </Flex>
-  // );
+  return (
+    <Flex align="start" direction="row" wrap minWidth={60}>
+      {channels.map((channel) => (
+        <Flex.Item
+          key={channel.num}
+          width={25}
+          style={{ margin: '10px 10px 10px 10px' }}
+        >
+          <VolumeSlider channel={channel} />
+        </Flex.Item>
+      ))}
+    </Flex>
+  );
 };
 
 const VolumeSlider = (props: { channel: Channel }) => {

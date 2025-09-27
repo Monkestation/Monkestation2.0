@@ -173,6 +173,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
+
+		var/needs_save = FALSE
+		for(var/channel in GLOB.used_sound_channels)
+			if(isnull(channel_volume["[channel]"]))
+				channel_volume["[channel]"] = 50
+				needs_save = TRUE
+		if(needs_save)
+			save_preferences()
+
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -200,6 +209,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
+
+	var/list/channels = list()
+	for(var/channel in GLOB.used_sound_channels)
+		channels += list(list(
+			"num" = channel,
+			"name" = get_channel_name(channel),
+			"volume" = channel_volume["[channel]"]
+		))
+	data["channels"] = channels
 
 	return data
 
@@ -230,12 +248,40 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
+/datum/preferences/proc/set_channel_volume(channel, vol, mob/user)
+	user.update_media_volume(channel)
+
+	var/sound/S = sound(null, channel = channel, volume = vol)
+	S.status = SOUND_UPDATE
+	SEND_SOUND(usr, S)
+
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	switch (action)
+		if ("volume")
+			var/mob/user = ui.user
+			var/channel = text2num(params["channel"])
+			var/volume = text2num(params["volume"])
+			if(isnull(channel))
+				return FALSE
+			channel_volume["[channel]"] = volume
+			save_preferences()
+			var/static/list/instrument_channels = list(
+				CHANNEL_INSTRUMENTS,
+				CHANNEL_INSTRUMENTS_ROBOT,
+			)
+			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
+				set_channel_volume(channel, volume, user)
+
+			else if((channel in instrument_channels))
+				var/datum/song/holder_song = new
+				for(var/used_channel in holder_song.channels_playing)
+					set_channel_volume(used_channel, volume, user)
+			return TRUE
+
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -328,11 +374,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (.)
 		return
 
-	if (href_list["open_keybindings"])
-		current_window = PREFERENCE_TAB_KEYBINDINGS
-		update_static_data(usr)
-		ui_interact(usr)
-		return TRUE
+	// if (href_list["open_keybindings"])
+	// 	current_window = PREFERENCE_TAB_KEYBINDINGS
+	// 	update_static_data(usr)
+	// 	ui_interact(usr)
+	// 	return TRUE
 
 /datum/preferences/proc/acquire_lock()
 	locked = TRUE
