@@ -1,95 +1,4 @@
-/**
- * # Discord Subsystem
- *
- * This subsystem handles some integrations with discord
- *
- *
- * NOTES:
- * * There is a DB table to track ckeys and associated discord IDs. (discord_link)
- * * This system REQUIRES TGS for notifying users at end of the round
- * * The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
- * * It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
- * * The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
- *
- *
- * ## HOW NOTIFYING WORKS
- *
- * ### ROUNDSTART:
- * 1) The file is loaded and the discord IDs are extracted
- * 2) A ping is sent to the discord with the IDs of people who wished to be notified
- * 3) The file is emptied
- *
- * ### MIDROUND:
- * 1) Someone usees the notify verb, it adds their discord ID to the list.
- * 2) On fire, it will write that to the disk, as long as conditions above are correct
- *
- * ### END ROUND:
- * 1) The file is force-saved, incase it hasn't fired at end round
- *
- * This is an absolute clusterfuck, but its my clusterfuck -aa07
- */
-SUBSYSTEM_DEF(discord)
-	name = "Discord"
-	wait = 5 MINUTES
-	init_order = INIT_ORDER_DISCORD
-
-	/// People to save to notify file
-	var/list/notify_members = list()
-	/// Copy of previous list, so the SS doesnt have to fire if no new members have been added
-	var/list/notify_members_cache = list()
-	/// People to notify on roundstart
-	var/list/people_to_notify = list()
-
-	/// People who have tried to verify this round already
-	var/list/reverify_cache
-
-	/// Common words list, used to generate one time tokens
-	var/list/common_words
-
-	/// The file where notification status is saved
-	var/notify_file = file("data/notify.json")
-
-	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
-	var/enabled = FALSE
-
-/datum/controller/subsystem/discord/Initialize()
-	common_words = world.file2list("strings/1000_most_common.txt")
-	reverify_cache = list()
-	// Check for if we are using TGS, otherwise return and disables firing
-	if(world.TgsAvailable())
-		enabled = TRUE // Allows other procs to use this (Account linking, etc)
-	else
-		can_fire = FALSE // We dont want excess firing
-		return SS_INIT_NO_NEED
-
-	try
-		people_to_notify = json_decode(file2text(notify_file))
-	catch
-		pass() // The list can just stay as its default (blank). Pass() exists because it needs a catch
-	var/notifymsg = jointext(people_to_notify, ", ")
-	if(notifymsg)
-		notifymsg += ", a new round is starting!"
-		send2chat(new /datum/tgs_message_content(trim(notifymsg)), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
-	fdel(notify_file) // Deletes the file
-	return SS_INIT_SUCCESS
-
-/datum/controller/subsystem/discord/fire()
-	if(!enabled)
-		return // Dont do shit if its disabled
-	if(notify_members == notify_members_cache)
-		return // Dont re-write the file
-	// If we are all clear
-	write_notify_file()
-
-/datum/controller/subsystem/discord/Shutdown()
-	write_notify_file() // Guaranteed force-write on server close
-
-/datum/controller/subsystem/discord/proc/write_notify_file()
-	if(!enabled) // Dont do shit if its disabled
-		return
-	fdel(notify_file) // Deletes the file first to make sure it writes properly
-	WRITE_FILE(notify_file, json_encode(notify_members)) // Writes the file
-	notify_members_cache = notify_members // Updates the cache list
+// Procs transferred from the previous Discord subsystem
 
 /**
  * Given a ckey, look up the discord user id attached to the user, if any
@@ -99,7 +8,7 @@ SUBSYSTEM_DEF(discord)
  * Arguments:
  * * lookup_ckey A string representing the ckey to search on
  */
-/datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
+/datum/controller/subsystem/plexora/proc/lookup_id(lookup_ckey)
 	var/datum/discord_link_record/link = find_discord_link_by_ckey(lookup_ckey, only_valid = TRUE)
 	if(link)
 		return link.discord_id
@@ -112,12 +21,12 @@ SUBSYSTEM_DEF(discord)
  * Arguments:
  * * lookup_id The discord id as a string
  */
-/datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
+/datum/controller/subsystem/plexora/proc/lookup_ckey(lookup_id)
 	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id, only_valid = TRUE)
 	if(link)
 		return link.ckey
 
-/datum/controller/subsystem/discord/proc/get_or_generate_one_time_token_for_ckey(ckey)
+/datum/controller/subsystem/plexora/proc/get_or_generate_one_time_token_for_ckey(ckey)
 	// Is there an existing valid one time token
 	var/datum/discord_link_record/link = find_discord_link_by_ckey(ckey)
 	if(link)
@@ -140,16 +49,16 @@ SUBSYSTEM_DEF(discord)
  * ```
  *
  * Notes:
- * * The token is guaranteed to unique during it's validity period
- * * The validity period is currently set at 4 hours
- * * a token may not be unique outside it's validity window (to reduce conflicts)
+ * * The token is guaranteed to be unique during it's validity period
+ * * ~~The validity period is currently set at 4 hours~~
+ * * ~~a token may not be unique outside it's validity window (to reduce conflicts)~~
  *
  * Arguments:
  * * ckey_for a string representing the ckey this token is for
  *
  * Returns a string representing the one time token
  */
-/datum/controller/subsystem/discord/proc/generate_one_time_token(ckey_for)
+/datum/controller/subsystem/plexora/proc/generate_one_time_token(ckey_for)
 
 	var/not_unique = TRUE
 	var/one_time_token = ""
@@ -186,7 +95,7 @@ SUBSYSTEM_DEF(discord)
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_token(one_time_token)
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_token(one_time_token)
 	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
@@ -214,7 +123,7 @@ SUBSYSTEM_DEF(discord)
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, only_valid = FALSE)
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_ckey(ckey, only_valid = FALSE)
 	var/validsql = ""
 	if(only_valid)
 		validsql = "AND valid = 1"
@@ -248,7 +157,7 @@ SUBSYSTEM_DEF(discord)
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, only_valid = FALSE)
+/datum/controller/subsystem/plexora/proc/find_discord_link_by_discord_id(discord_id, only_valid = FALSE)
 	var/validsql = ""
 	if(only_valid)
 		validsql = "AND valid = 1"
@@ -280,10 +189,9 @@ SUBSYSTEM_DEF(discord)
  *
  * Returns a text string with the discord id or null
  */
-/datum/controller/subsystem/discord/proc/get_discord_id_from_mention(mention)
+/datum/controller/subsystem/plexora/proc/get_discord_id_from_mention(mention)
 	var/static/regex/discord_mention_extraction_regex = regex(@"<@([0-9]+)>")
 	discord_mention_extraction_regex.Find(mention)
 	if (length(discord_mention_extraction_regex.group) == 1)
 		return discord_mention_extraction_regex.group[1]
 	return null
-
