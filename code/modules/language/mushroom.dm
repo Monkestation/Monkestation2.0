@@ -11,5 +11,5 @@
 	default_priority = 80
 	syllables = list("poof", "pff", "pFfF", "piff", "puff", "pooof", "pfffff", "piffpiff", "puffpuff", "poofpoof", "pifpafpofpuf")
 	mutual_understanding = list(
-		/datum/language/sylvan = 25,
+		/datum/language/sylvan = 40,
 	)
