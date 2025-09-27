@@ -832,7 +832,7 @@
 
 /obj/item/food/smothe
 	name = "s'mothe"
-	desc = "A campfire classic. Guaranteed to ruin your diet."
+	desc = "A campfire classic. Great alternative to a fire extinguisher when the engine is on fire."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "smothe"
 	food_reagents = list(

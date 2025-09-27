@@ -430,29 +430,32 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(mob/user, atom/target)
-	if(do_after(user, 10 SECONDS, target = user) && held_sausage)
-		if(istype(held_sausage, /obj/item/gun))
-			var/obj/item/gun/roastedgun = held_sausage
-			if(HAS_TRAIT(user, TRAIT_PACIFISM))
-				playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
-				to_chat(user, span_warning("You feel like [roastedgun] on [src] might accidentally hurt someone and put it away."))
-				return
-			if(roastedgun.can_shoot())
-				to_chat(user, span_warning("\The [roastedgun] suddenly fires off a shot."))
-				INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
-		if(istype(held_sausage, /obj/item/food))
-			held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
-			held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
-		to_chat(user, span_notice("You finish roasting [held_sausage]."))
-		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
-		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
-		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
-		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
-		update_appearance()
-	else
+	if(DOING_INTERACTION(user, "roasting_doafter"))
+		return
+	if(!do_after(user, 10 SECONDS, target = user, interaction_key = "roasting_doafter") || !held_sausage)
 		QDEL_NULL(beam)
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		to_chat(user, span_notice("You put [src] away."))
+		return
+
+	if(istype(held_sausage, /obj/item/gun))
+		var/obj/item/gun/roastedgun = held_sausage
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+			to_chat(user, span_warning("You feel like \the [roastedgun] on [src] might accidentally hurt someone and put it away."))
+			return
+		if(roastedgun.can_shoot())
+			to_chat(user, span_warning("\The [roastedgun] suddenly fires off a shot."))
+			INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
+	if(IS_EDIBLE(held_sausage))
+		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
+		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
+	to_chat(user, span_notice("You finish roasting [held_sausage]."))
+	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
+	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
+	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+	update_appearance()
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
