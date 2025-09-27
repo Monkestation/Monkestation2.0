@@ -103,6 +103,11 @@
 	add_fingerprint(user)
 	if(is_reagent_container(attacking_item) && attacking_item.is_open_container())
 		var/obj/item/reagent_containers/RC = attacking_item
+		// Restricts salt from being added to the smoke machine because lag machine
+		for(var/datum/reagent/R in RC.reagents.reagent_list)
+			if(istype(R, /datum/reagent/consumable/salt))
+				to_chat(user, span_warning("Salt is too grainy to go in the smoke machine!"))
+				return
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
