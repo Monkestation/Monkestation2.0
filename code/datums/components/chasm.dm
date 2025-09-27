@@ -121,8 +121,8 @@
 				return CHASM_REGISTER_SIGNALS
 		if(ishuman(dropped_thing))
 			var/mob/living/carbon/human/victim = dropped_thing
-			if(istype(victim.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/jaunter = victim.belt
+			var/obj/item/wormhole_jaunter/jaunter = locate() in list(victim.belt) + victim.get_pockets()
+			if(jaunter)
 				var/turf/chasm = get_turf(victim)
 				var/fall_into_chasm = jaunter.chasm_react(victim)
 				if(!fall_into_chasm)
