@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "Fix Beepsky having no restrictions on the controls lock"
+  - bugfix: "Fix bots in general not having their controls lock restrictions"

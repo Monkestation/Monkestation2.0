@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Polyglots and silicons now actually can't fully understand/speak Ashtongue (only partially understand), as intended."

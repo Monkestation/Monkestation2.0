@@ -858,8 +858,13 @@
       right clicking the console with the disk.
   - qol: In addition, ctrl-clicking a DNA console with a disk will download mutations
       from the console to the disk.
+  - bugfix: Ethereal nosferatu bloodsuckers will no longer eternally have low mood.
+  - bugfix: Polyglots and silicons now actually can't fully understand/speak Ashtongue
+      (only partially understand), as intended.
   Dr. Wendell Tully from hit Honey, I Shrunk The Kids ripoff game franchise Grounded:
   - bugfix: dysplasia syndrome unfucked
+  JohnFulpWillard:
+  - bugfix: Removed stray '0' from Bot UIs
   JupiterJaeden:
   - rscadd: Adds silver cuffs. Crafted with a bar of silver and normal handcuffs.
       When used on a bloodsucker or bloodsucker vassal, prevents them from using any
@@ -877,13 +882,67 @@
   - bugfix: Ports fix for cooking. Soup recipes (boiling on a burner using soup pots)
       now spawn proportionate cooked food to ingredients used. Also no longer causes
       excess unused ingredients to disappear.
+  - balance: rebalanced pineapple fried rice recipe to only require 1x boiled rice
+      instead of 5x.
+  MissClassyPineapple:
+  - rscadd: Added Swedish Quirk (meatballs or furniture not included)
   Shoddd:
   - balance: oozelings now have a 2 second do after to regen limbs
   - balance: oozelings absorbing limbs now transfers damage to torso
   - bugfix: oozelings no longer error when delimbed
+  Sorenon:
+  - rscadd: Each player can now select a voice pack. When a player talks they will
+      make a few 'barks' using it. The number of barks depends on the length of their
+      message.
+  - rscadd: Players speaking in sign language will make a single snap bark unless
+      they are whispering
+  - qol: Split the settings button in the escape menu into game settings and character
+      settings
+  That one guy who really hates it when people misspell the names of deities:
+  - spellcheck: Spellchecks Nar'Sie a bit.
+  TheColorCyan:
+  - balance: PK throwing knives no longer instantly recharge all the knife charges
+  - balance: PK throwing knives can detonate marks on melee hit even if you have no
+      charges left
+  - qol: (Hatterhat) You can now pull singular trophies off kinetic crushers with
+      RMB.
+  - qol: (Hatterhat) Kinetic crushers now have screentips informing people that they
+      can remove trophies via empty hand (RMB) or crowbar (LMB).
+  - bugfix: (SmArtKar) Fixed inconsistent crusher trophy droprates
+  - refactor: (SmArtKar) Refactored parrying to be projectile-side and not user-side.
+  - rscadd: (SmArtKar) You can now parry crusher projectiles to give them some more
+      range, add damage and make the mark always count as a backstab.
+  - rscadd: (SmArtKar) Projectile parrying has been significantly improved, making
+      parrying and boosting projectiles actually possible. Includes a small grace
+      period as lag compensation for players with higher pings.
+  - balance: (SmArtKar) Projectile boosting now gives a significantly bigger damage
+      and speed increase
+  - rscadd: (Xander3359) Bileworm crusher trophy now gives you AOE mining
+  - balance: (Xander3359) The pk crusher gives mining XP when it mines rocks
+  - balance: (Xander3359) the pk crusher charges faster when you mine rocks based
+      on your skill as a miner
+  - code_imp: (Xander3359) cleaned up some of the kinetic crusher code
+  - bugfix: (Moose1002) Nanotrasen has finally recalled their faulty multitools and
+      replaced them with working ones! The multitool's buffer now properly clears
+      itself.
+  - qol: (Moose1002) Moved multitool link messages to balloon alerts)
+  - refactor: (intercepti0n) Refactored Ore Silo Ui.
+  - qol: (SyncIt21) added more screen tips & examines for ore silo, made UI wider,
+      attach location name to each machine & grey out paused machines to make it more
+      noticeable.
+  - code_imp: ' (SyncIt21) auto docs proc & vars for silo log entry. Fixed return
+      values of all tool acts'
+  - bugfix: ' (SyncIt21) ore silo UI now functions correctly after removing an entry
+      from the UI'
+  - bugfix: ' (SyncIt21) no runtimes when connecting a machine to silo that was previously
+      disconnected via the ore silo UI'
+  - bugfix: (SyncIt21) Lathes don't hang if materials run out mid printing. Also displays
+      message if materials are put on hold while printing
   Tractor-Maam:
   - code_imp: partially reverted a change to Mentor Manager to hopefully fix it being
       broken. Please report any issues!
+  Uristthedorf:
+  - rscadd: You can now print security cybernetics in mechfab.
   notghosti:
   - map: Deletes SPACE Apc from deltatstation
   - code_imp: ' Cult hallucinations now only proc in a 15 tile radius, not 40.'
@@ -894,3 +953,14 @@
       wave.
   - bugfix: Abductor Paralyze mode is no longer effected by diminishing returns and
       instead resets the timer to 60 seconds.
+  - rscadd: Advanced health analyzers can now detect borers in hosts, assuming they
+      don't know how to hide themselfs.
+  - rscadd: Increased energy improves ability to squeeze through doors and escape
+      cages.
+  - rscadd: Increased energy gives bonus movespeed while not hiding under tables/items
+  - balance: Stealth mode for borers cooldown decreased to 60 seconds, from 120 seconds
+  - balance: Borer maturation rate shifted from willing hosts to their other objectives
+      slightly.
+  - bugfix: Self reproduction with borers now properly deals damage to the borer.
+  throwawayuseless:
+  - spellcheck: Nar'Sien -> Nar'Sian

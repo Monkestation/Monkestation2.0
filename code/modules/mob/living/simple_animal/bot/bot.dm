@@ -26,14 +26,13 @@
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	light_power = 0.9
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
 
-	///Access required to access this Bot's maintenance protocols
-	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The type of bot it is, for radio control.
