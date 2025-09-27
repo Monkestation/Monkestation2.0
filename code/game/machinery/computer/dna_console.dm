@@ -184,12 +184,12 @@
 	else
 		return ..()
 
-/obj/machinery/computer/dna_console/CtrlClick(mob/user)
-	if(can_interact(user))
-		var/obj/item/disk/data/disk = user.get_active_held_item()
-		if(istype(disk))
-			download_disk(user, disk)
-	return ..()
+/obj/machinery/computer/dna_console/click_ctrl(mob/user)
+	var/obj/item/disk/data/disk = user.get_active_held_item()
+	if(!istype(disk))
+		return CLICK_ACTION_BLOCKING
+	download_disk(user, disk)
+	return CLICK_ACTION_SUCCESS
 
 /// Store chromosomes in the console if there's room
 /obj/machinery/computer/dna_console/proc/store_chromosome(mob/living/user, obj/item/chromosome/chromosome)

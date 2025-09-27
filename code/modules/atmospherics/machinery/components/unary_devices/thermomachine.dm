@@ -1,12 +1,14 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
+	name = "Temperature control unit"
+	desc = "Heats or cools gas in connected pipes."
+
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
 	plane = GAME_PLANE
 
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	density = TRUE
 	max_integrity = 300

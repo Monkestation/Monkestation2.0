@@ -5,6 +5,7 @@
 	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
 

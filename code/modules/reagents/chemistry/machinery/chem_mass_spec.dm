@@ -9,6 +9,7 @@ By selecting a range in the mass spectrograph certain reagents will be transferr
 This will not clean any inverted reagents. Inverted reagents will still be correctly detected and displayed on the scanner, however.
 \nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corresponding beaker."}
 	density = TRUE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"

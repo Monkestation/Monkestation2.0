@@ -9,6 +9,7 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
+	interaction_flags_click = ALLOW_SILICON_REACH
 	/// List of dishes the drive can hold
 	var/list/collectable_items = list(/obj/item/trash/waffles, // NOVA EDIT CHANGE - non-static list
 		/obj/item/trash/waffles,
