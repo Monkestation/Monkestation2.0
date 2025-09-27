@@ -32,7 +32,7 @@
 	max_ammo = 5
 
 /obj/item/ammo_box/magazine/internal/cylinder/handcannon
-	ammo_type = /obj/item/ammo_casing/c500mag
+	ammo_type = /obj/item/ammo_casing/a500
 	caliber = CALIBER_500
 	max_ammo = 6
 
