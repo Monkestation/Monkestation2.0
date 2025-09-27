@@ -109,6 +109,7 @@ export enum JoblessRole {
 }
 
 export enum GamePreferencesSelectedPage {
+  Character,
   Settings,
   Keybindings,
   Volume,
@@ -122,7 +123,7 @@ export const createSetPreference =
     });
   };
 
-export enum Window {
+export enum WindowE {
   Character = 0,
   Game = 1,
 }
@@ -184,7 +185,7 @@ export type PreferencesMenuData = {
   selected_unusuals: string[];
   total_coins: number;
   loadout_tabs: LoadoutData[];
-  window: Window;
+  window: WindowE;
   owned_items: string[];
 };
 

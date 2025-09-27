@@ -261,8 +261,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
-		if ("character")
+		if ("open_character")
+			if (current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES)
+				return FALSE
 			current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+			update_static_data(usr)
+			return TRUE
+
+		if ("open_game")
+			if (current_window == PREFERENCE_TAB_GAME_PREFERENCES)
+				return FALSE
+			current_window = PREFERENCE_TAB_GAME_PREFERENCES
 			update_static_data(usr)
 			return TRUE
 
