@@ -97,7 +97,7 @@
 			stored_products -= AM
 			AM.forceMove(drop_location())
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
@@ -129,7 +129,7 @@
 
 	return data
 
-/obj/machinery/plumbing/pill_press/ui_act(action, params)
+/obj/machinery/plumbing/pill_press/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

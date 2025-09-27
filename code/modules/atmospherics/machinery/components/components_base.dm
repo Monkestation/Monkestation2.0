@@ -68,6 +68,8 @@
 
 	if(!showpipe)
 		return ..()
+	if(pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		return ..()
 
 	var/connected = 0 //Direction bitset
 

@@ -56,7 +56,7 @@
 
 	return data
 
-/obj/machinery/hypnochair/ui_act(action, params)
+/obj/machinery/hypnochair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -115,7 +115,7 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE

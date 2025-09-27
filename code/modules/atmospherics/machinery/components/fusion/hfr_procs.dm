@@ -330,7 +330,7 @@
 	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
-	var/obj/item/stock_parts/cell/cell = apc.cell
+	var/obj/item/stock_parts/power_store/cell/cell = apc.cell
 	if (!cell)
 		return 0
 	return cell.percent()
@@ -415,7 +415,7 @@
 		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
 				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/misc/notice3.ogg')
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
-	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+	radio.talk_into(src, speaking, common_channel)
 
 	notify_ghosts(
 		"The [src] has begun melting down!",

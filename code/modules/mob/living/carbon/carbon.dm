@@ -285,6 +285,8 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, I) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [I]!"))
 		return
@@ -1361,10 +1363,14 @@
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE
-	. = handcuffed
+	var/old_value = handcuffed
 	handcuffed = new_value
-	if(.)
+	if(old_value)
 		if(!handcuffed)
+
+			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+				src.remove_status_effect(/datum/status_effect/silver_cuffed)
+
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)

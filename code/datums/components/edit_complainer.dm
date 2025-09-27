@@ -12,7 +12,7 @@
 		"Who knows when the stresses will finally shatter the form?",
 		"Even now a light shines through the cracks.",
 		"CentCom once more twists knowledge beyond its authority.",
-		"There is an uncertain air in the mansus.",
+		"There is an uncertain air in The Mansus.",
 		)
 	say_lines = text || default_lines
 

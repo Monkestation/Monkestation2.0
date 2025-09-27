@@ -172,6 +172,17 @@
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
 
+/obj/item/disk/data/proc/can_write(atom/source, mob/user)
+	if(read_only)
+		if(user)
+			source?.balloon_alert(user, "disk is read-only!")
+		return FALSE
+	if(length(mutations) >= max_mutations)
+		if(user)
+			source?.balloon_alert(user, "disk is full!")
+		return FALSE
+	return TRUE
+
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"
 	desc = "A debug item for genetics"
@@ -190,4 +201,4 @@
 
 /obj/item/disk/data/examine(mob/user)
 	. = ..()
-	. += "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	. += span_notice("The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
