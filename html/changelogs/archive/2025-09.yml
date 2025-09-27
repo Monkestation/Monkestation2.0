@@ -863,6 +863,8 @@
       (only partially understand), as intended.
   Dr. Wendell Tully from hit Honey, I Shrunk The Kids ripoff game franchise Grounded:
   - bugfix: dysplasia syndrome unfucked
+  JohnFulpWillard:
+  - bugfix: Removed stray '0' from Bot UIs
   JupiterJaeden:
   - rscadd: Adds silver cuffs. Crafted with a bar of silver and normal handcuffs.
       When used on a bloodsucker or bloodsucker vassal, prevents them from using any
@@ -882,6 +884,8 @@
       excess unused ingredients to disappear.
   - balance: rebalanced pineapple fried rice recipe to only require 1x boiled rice
       instead of 5x.
+  MissClassyPineapple:
+  - rscadd: Added Swedish Quirk (meatballs or furniture not included)
   Shoddd:
   - balance: oozelings now have a 2 second do after to regen limbs
   - balance: oozelings absorbing limbs now transfers damage to torso
@@ -958,3 +962,5 @@
   - balance: Borer maturation rate shifted from willing hosts to their other objectives
       slightly.
   - bugfix: Self reproduction with borers now properly deals damage to the borer.
+  throwawayuseless:
+  - spellcheck: Nar'Sien -> Nar'Sian

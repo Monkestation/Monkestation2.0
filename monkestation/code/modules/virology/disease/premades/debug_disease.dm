@@ -38,7 +38,11 @@
 	cached_data |= "[/datum/disease/acute/premade/disease_debug]"
 	src.data = cached_data
 
-/obj/item/storage/box/disease_debug/PopulateContents()
+/obj/item/storage/box/debugbox/tools
+	name = "box of a debug disease"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/debugbox/disease/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug(src)
 	new /obj/item/reagent_containers/syringe(src)
