@@ -1,10 +1,11 @@
 import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { Box, Button, Section, Stack } from '../../components';
-import { FlexProps } from '../../components/Flex';
+import { Flex, FlexProps } from '../../components/Flex';
 
 type TabbedMenuProps = {
   categoryEntries: [string, InfernoNode][];
   contentProps?: FlexProps;
+  extra?: InfernoNode;
 };
 
 export class TabbedMenu extends Component<TabbedMenuProps> {
@@ -20,11 +21,23 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
   }
 
   render() {
+    const pageContents = (
+      <Stack vertical maxWidth="900px">
+        {this.props.categoryEntries.map(([category, children]) => {
+          return (
+            <Stack.Item key={category} innerRef={this.getCategoryRef(category)}>
+              <Section fill title={category}>
+                {children}
+              </Section>
+            </Stack.Item>
+          );
+        })}
+      </Stack>
+    );
+
     return (
-      // <Stack horizontal fill>
       <Stack horizontal height="100%">
         <Stack.Item>
-          {/* <Stack vertical fill px={5} width="150px"> */}
           <Stack vertical width="150px">
             <Stack.Item>
               <Box align="center" fontSize="1.5em">
@@ -61,13 +74,19 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
                 </Stack.Item>
               );
             })}
+            {this.props.extra !== null ? (
+              <>
+                <Stack.Divider />
+                <Stack.Item>{this.props.extra}</Stack.Item>
+              </>
+            ) : (
+              <Flex />
+            )}
           </Stack>
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item
-          grow
           innerRef={this.sectionRef}
-          position="relative"
           overflowY="scroll"
           {...{
             ...this.props.contentProps,
@@ -76,20 +95,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
             className: undefined,
           }}
         >
-          <Stack vertical fill px={2}>
-            {this.props.categoryEntries.map(([category, children]) => {
-              return (
-                <Stack.Item
-                  key={category}
-                  innerRef={this.getCategoryRef(category)}
-                >
-                  <Section fill title={category}>
-                    {children}
-                  </Section>
-                </Stack.Item>
-              );
-            })}
-          </Stack>
+          {pageContents}
         </Stack.Item>
       </Stack>
     );

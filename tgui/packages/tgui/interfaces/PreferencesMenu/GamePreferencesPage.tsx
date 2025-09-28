@@ -58,7 +58,7 @@ export const GamePreferencesPage = (props) => {
     }
 
     const child = (
-      <Flex align="center" key={featureId} pb={2}>
+      <Flex align="center" key={featureId} pb={2} className="candystripe">
         {name}
 
         <Flex.Item grow={1} basis={0}>

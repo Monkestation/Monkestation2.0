@@ -50,14 +50,14 @@ export const PreferencesMenu = () => {
   }
 
   return (
-    <Window title="Preferences" width={1350} height={800} theme="generic">
+    <Window title="Preferences" width={1400} height={800} theme="generic">
       <Window.Content>
         <Stack horizontal height="100%">
           <Stack.Item>
             <SettingsCatergories window={window} />
           </Stack.Item>
           <Stack.Divider />
-          <Stack.Item>{pageContents}</Stack.Item>
+          <Stack.Item grow>{pageContents}</Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
