@@ -17,13 +17,17 @@
 	if(!category || QDELETED(src))
 		return
 
+	var/datum/weakref/master_ref
+	if(isdatum(new_master))
+		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(new_master && new_master != thealert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
+			var/datum/current_master = thealert.master_ref.resolve()
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
 			clear_alert(category)
 			return .()
@@ -54,12 +58,13 @@
 		master_appearance.dir = SOUTH
 		master_appearance.pixel_x = new_master.base_pixel_x
 		master_appearance.pixel_y = new_master.base_pixel_y
-		master_appearance.pixel_z = 0 /* new_master.base_pixel_z */
+		master_appearance.pixel_z = new_master.base_pixel_z
 		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		thealert.master = new_master
+		thealert.master_ref = master_ref
 	else
-		thealert.set_severity(severity)
+		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
+		thealert.severity = severity
 
 	alerts[category] = thealert
 	if(HAS_CONNECTED_PLAYER(src) && hud_used)
@@ -1187,15 +1192,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, boxed_message(jointext(examine(usr), "\n")))
 		return FALSE
-	if(master && click_master)
-		return usr.client.Click(master, location, control, params)
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master && click_master)
+		return usr.client.Click(our_master, location, control, params)
 
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
-	master = null
+	master_ref = null
 	owner = null
 	screen_loc = ""
 

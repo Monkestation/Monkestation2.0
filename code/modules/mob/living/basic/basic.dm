@@ -342,6 +342,12 @@
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
 
+/mob/living/basic/update_cached_insulation()
+	return
+
+/mob/living/basic/get_insulation(temperature)
+	return temperature_insulation
+
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()
 	return

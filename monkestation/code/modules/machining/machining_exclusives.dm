@@ -73,22 +73,11 @@
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
-/obj/item/pulsepack/MouseDrop(atom/over_object)
-	. = ..()
-	if(armed)
+/obj/item/pulsepack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(armed || !iscarbon(user) || !over_location || user.incapacitated() || !istype(over_location, /atom/movable/screen/inventory/hand))
 		return
-	if(iscarbon(usr))
-		var/mob/user = usr
-
-		if(!over_object)
-			return
-
-		if(!user.incapacitated())
-
-			if(istype(over_object, /atom/movable/screen/inventory/hand))
-				var/atom/movable/screen/inventory/hand/user_hand = over_object
-				user.putItemFromInventoryInHandIfPossible(src, user_hand.held_index)
-
+	var/atom/movable/screen/inventory/hand/user_hand = over_location
+	user.putItemFromInventoryInHandIfPossible(src, user_hand.held_index)
 
 /obj/item/pulsepack/update_icon_state()
 	icon_state = armed ? "notholsteredp" : "holsteredp"
