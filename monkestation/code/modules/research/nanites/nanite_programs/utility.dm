@@ -576,4 +576,4 @@
 
 /obj/item/nanite_injection_tentacle/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, "nanite_injector_tentacle")
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
