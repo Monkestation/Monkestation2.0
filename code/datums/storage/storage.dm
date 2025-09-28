@@ -166,7 +166,7 @@
 	arrived.item_flags |= IN_STORAGE
 	refresh_views()
 	arrived.on_enter_storage(src)
-	// monke edit //RegisterSignal(arrived, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+	RegisterSignal(arrived, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	SEND_SIGNAL(arrived, COMSIG_ITEM_STORED, src)
 	parent.update_appearance()
 
@@ -454,6 +454,31 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
 	return TRUE
+
+/// Since items inside storages ignore transparency for QOL reasons, we're tracking when things are dropped onto them instead of our UI elements
+/datum/storage/proc/mousedrop_receive(atom/dropped_onto, atom/movable/target, mob/user, params)
+	SIGNAL_HANDLER
+
+	if (src != user.active_storage)
+		return
+
+	if (!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
+		return
+
+	if (target.loc != real_location) // what even
+		return
+
+	if(numerical_stacking)
+		return
+
+	var/drop_index = real_location.contents.Find(dropped_onto)
+	real_location.contents -= target
+	// Use an empty list if we're dropping onto the last item
+	var/list/to_move = real_location.contents.len >= drop_index ? real_location.contents.Copy(drop_index) : list()
+	real_location.contents -= to_move
+	real_location.contents += target
+	real_location.contents += to_move
+	refresh_views()
 
 /**
  * Attempts to insert an item into the storage
@@ -779,13 +804,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
-/datum/storage/proc/dump_content_at(atom/dest_object, mob/user)
+/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user)
 	if(locked)
+		user.balloon_alert(user, "closed!")
 		return
 	if(!user.CanReach(parent) || !user.CanReach(dest_object))
 		return
 
-	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, real_location, user) & STORAGE_DUMP_HANDLED)
+	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, src, user) & STORAGE_DUMP_HANDLED)
 		return
 
 	// Storage to storage transfer is instant
@@ -796,15 +822,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
-			if(to_dump.loc != real_location)
-				continue
 			dest_object.atom_storage.attempt_insert(to_dump, user)
 		parent.update_appearance()
 		SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_POST_TRANSFER, dest_object, user)
-		return
-
-	var/atom/dump_loc = dest_object.get_dumping_location()
-	if(isnull(dump_loc))
 		return
 
 	// Storage to loc transfer requires a do_after
@@ -973,7 +993,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		show_contents(to_show)
 		return FALSE
 
-	if(!isliving(to_show) || !to_show.can_perform_action(parent))
+	if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
 		return FALSE
 
 	if(locked)
