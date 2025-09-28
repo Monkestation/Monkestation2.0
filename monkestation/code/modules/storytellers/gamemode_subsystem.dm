@@ -264,6 +264,10 @@ SUBSYSTEM_DEF(gamemode)
 				if(already_counted[antag_team])
 					continue
 				already_counted[antag_team] = TRUE
+		if(antag.antag_flags & FLAG_ANTAG_CAP_SINGLE)
+			if(already_counted[antag.type])
+				continue
+			already_counted[antag.type] = TRUE
 		already_counted[antag.owner] = TRUE
 		.++
 
