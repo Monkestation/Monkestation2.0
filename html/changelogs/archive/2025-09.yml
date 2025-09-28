@@ -968,16 +968,26 @@
   Absolucy:
   - bugfix: Fix godslayer armor resurrection not working if you have crit immunity
       (i.e lux pens, inexorable gene, memento mori)
+  - bugfix: Fixed everyone having melee marth's grab range.
   SyncIt21:
   - bugfix: alt click runtime no more when using style meter
   - code_imp: improved alt & ctrl click code
   - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
       on GitHub
   - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  TheColorCyan:
+  - refactor: (MrMelbert) Refactored another large chuck of attack code, primarily
+      involving melee item attacks and non-human mob attacks. Report if you see anything
+      weird
+  - bugfix: '(MrMelbert) Blocked thrown batons are now properly... blocked /:cl:'
   Xander3359:
   - bugfix: Fix Beepsky having no restrictions on the controls lock
   - bugfix: Fix bots in general not having their controls lock restrictions
   - bugfix: fixed multi-cell charger charging too slow
+  - bugfix: Fix storage click-dragging
+  - bugfix: Fixed dumping out a storage into disposals
+  - rscadd: Adds a clipboard to the NT Rep locker
+  - bugfix: Fixed being unable to open bags in crit or resting
   notghosti:
   - balance: Airborne diseases won't spread if you are a corpse, have no need to breathe,
       or are wearing appropriate protection.

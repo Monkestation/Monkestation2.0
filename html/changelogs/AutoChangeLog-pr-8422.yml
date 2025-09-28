@@ -1,5 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - refactor: "(MrMelbert) Refactored another large chuck of attack code, primarily involving melee item attacks and non-human mob attacks. Report if you see anything weird"
-  - bugfix: "(MrMelbert) Blocked thrown batons are now properly... blocked /:cl:"
