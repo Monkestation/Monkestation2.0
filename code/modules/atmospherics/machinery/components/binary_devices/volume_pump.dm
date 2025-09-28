@@ -1,14 +1,11 @@
-// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+// Volume Pump - refactored with helper procs and sealed structure checks
 //
-// node1, air1, network1 correspond to input
-// node2, air2, network2 correspond to output
-//
-// Thus, the two variables affect pump operation are set in New():
-//   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
-//   air2.volume
-//     Higher quantities of this cause more air to be perfected later
-//     but overall network volume is also increased as this increases...
+// Every cycle, the pump moves air_in → air_out at a fixed transfer rate.
+// Overclocking removes pressure limits, but leaks gas into environment
+// unless the pump is fully enclosed in a sealed structure.
+
+#define VOLUME_PUMP_MIN_INPUT_PRESSURE 0.01   // below this, pump won’t pull gas
+#define VOLUME_PUMP_MAX_OUTPUT_PRESSURE 9000  // above this, pump won’t push unless overclocked
 
 /obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map-3"
@@ -19,11 +16,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 	vent_movement = NONE
-	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
-	///Check if the component has been overclocked
 	var/overclocked = FALSE
-	///flashing light overlay which appears on multitooled vol pumps
 	var/mutable_appearance/overclock_overlay
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
@@ -61,44 +55,106 @@
 	else
 		cut_overlay(overclock_overlay)
 
+// ---------------------------
+// Main pump loop (refactored)
+// ---------------------------
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
-	if(!on || !is_operational)
+	// Skip if pump is off, broken, or pressure limits prevent transfer
+	if(!can_process())
 		return
+
+	// Pull gas from input side
+	var/datum/gas_mixture/removed = do_transfer()
+	if(!removed)
+		return
+
+	// If overclocked, bleed gas unless structure is sealed
+	if(overclocked)
+		handle_overclock_leak(removed)
+
+	// Merge remaining gas into output side
+	airs[2].merge(removed)
+	update_parents()
+
+// ---------------------------
+// Helper: check if pump can run
+// ---------------------------
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/can_process()
+	if(!on || !is_operational)
+		return FALSE
 
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-// Pump mechanism just won't do anything if the pressure is too high/too low unless you overclock it.
-
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
-		return
+	// Don’t run if input too low, or output too high (unless overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_MIN_INPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE) && !overclocked))
+		return FALSE
 
-///Monkestation edit begin
-/*  Volume pumps can now pump infinitely while overclocked -
-	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
-		return
-*/
-///Monkestation edit end
+	return TRUE
+
+// ---------------------------
+// Helper: handle gas transfer
+// ---------------------------
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/do_transfer()
+	var/datum/gas_mixture/air1 = airs[1]
+	if(!air1 || air1.volume <= 0)
+		return null
 
 	var/transfer_ratio = transfer_rate / air1.volume
-
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-	if(!removed.total_moles())
+	if(!removed || !removed.total_moles())
+		return null
+
+	return removed
+
+// ---------------------------
+// Helper: handle overclock leaks
+// ---------------------------
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(var/datum/gas_mixture/removed)
+	var/turf/open/T = loc
+	if(!istype(T))
 		return
 
-	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
-		var/turf/open/T = loc
-		if(istype(T))
-			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
-			T.assume_air(leaked)
+	// Cancel leak if enclosed by solid structure (walls, closed airlocks/firelocks)
+	if(is_solid_structure(T))
+		return
 
-	air2.merge(removed)
+	// Otherwise, bleed a fraction of gas into turf
+	var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+	if(leaked && leaked.total_moles() > 0)
+		T.assume_air(leaked)
 
-	update_parents()
+// ---------------------------
+// Helper: solid structure check
+// ---------------------------
+/proc/is_solid_structure(turf/T)
+	// Any closed turf (walls, reinforced, mineral, indestructible, windows)
+	if(istype(T, /turf/closed))
+		return TRUE
+
+	// Airlocks → count as solid only when closed
+	for(var/obj/machinery/door/airlock/A in T)
+		if(A.density)
+			return TRUE
+		else
+			return FALSE
+
+	// Firelocks → also solid only when closed
+	for(var/obj/machinery/door/firedoor/F in T)
+		if(F.density)
+			return TRUE
+		else
+			return FALSE
+
+	// Catch-all: dense turf (rare mapper cases)
+	if(T.density)
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
@@ -106,6 +162,7 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
+// UI + interaction code (unchanged, but left in full for context)
 /obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
@@ -166,8 +223,7 @@
 		update_icon()
 	return TRUE
 
-// mapping
-
+// Mapping variants
 /obj/machinery/atmospherics/components/binary/volume_pump/layer2
 	piping_layer = 2
 	icon_state = "volpump_map-2"
@@ -188,36 +244,25 @@
 	piping_layer = 4
 	icon_state = "volpump_map-4"
 
+// Circuit component definition (unchanged except formatting for clarity)
 /obj/item/circuit_component/atmos_volume_pump
 	display_name = "Atmospheric Volume Pump"
 	desc = "The interface for communicating with a volume pump."
 
-	///Set the transfer rate of the pump
 	var/datum/port/input/transfer_rate
-	///Activate the pump
 	var/datum/port/input/on
-	///Deactivate the pump
 	var/datum/port/input/off
-	///Signals the circuit to retrieve the pump's current pressure and temperature
 	var/datum/port/input/request_data
 
-	///Pressure of the input port
 	var/datum/port/output/input_pressure
-	///Pressure of the output port
 	var/datum/port/output/output_pressure
-	///Temperature of the input port
 	var/datum/port/output/input_temperature
-	///Temperature of the output port
 	var/datum/port/output/output_temperature
 
-	///Whether the pump is currently active
 	var/datum/port/output/is_active
-	///Send a signal when the pump is turned on
 	var/datum/port/output/turned_on
-	///Send a signal when the pump is turned off
 	var/datum/port/output/turned_off
 
-	///The component parent object
 	var/obj/machinery/atmospherics/components/binary/volume_pump/connected_pump
 
 /obj/item/circuit_component/atmos_volume_pump/populate_ports()
