@@ -1,11 +1,11 @@
-// Volume Pump - refactored with helper procs and sealed structure checks
-//
-// Every cycle, the pump moves air_in → air_out at a fixed transfer rate.
-// Overclocking removes pressure limits, but leaks gas into environment
-// unless the pump is fully enclosed in a sealed structure.
+/// Volume Pump - refactored with helper procs and sealed structure checks
+///
+/// Every cycle, the pump moves air_in → air_out at a fixed transfer rate.
+/// Overclocking removes pressure limits, but leaks gas into environment
+/// unless the pump is fully enclosed in a sealed structure.
 
-#define VOLUME_PUMP_MIN_INPUT_PRESSURE 0.01   // below this, pump won’t pull gas
-#define VOLUME_PUMP_MAX_OUTPUT_PRESSURE 9000  // above this, pump won’t push unless overclocked
+#define VOLUME_PUMP_MIN_INPUT_PRESSURE 0.01   /// below this, pump won’t pull gas
+#define VOLUME_PUMP_MAX_OUTPUT_PRESSURE 9000  /// above this, pump won’t push unless overclocked
 
 /obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map-3"
@@ -66,9 +66,9 @@
 		return
 	do_transfer()
 
-// -------------------------------
-// Helper procs
-// -------------------------------
+/// -------------------------------
+/// Helper procs
+/// -------------------------------
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/can_process()
 	if(!on || !is_operational)
@@ -110,7 +110,7 @@
 		var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
 		T.assume_air(leaked)
 
-// -------------------------------
+/// -------------------------------
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
@@ -178,7 +178,7 @@
 		update_icon()
 	return TRUE
 
-// mapping
+/// mapping
 
 /obj/machinery/atmospherics/components/binary/volume_pump/layer2
 	piping_layer = 2
@@ -200,9 +200,9 @@
 	piping_layer = 4
 	icon_state = "volpump_map-4"
 
-// -------------------------------
-// Circuit Component
-// -------------------------------
+/// -------------------------------
+/// Circuit Component
+/// -------------------------------
 
 /obj/item/circuit_component/atmos_volume_pump
 	display_name = "Atmospheric Volume Pump"
