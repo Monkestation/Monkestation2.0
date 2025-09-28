@@ -563,7 +563,7 @@
 			guy_we_are_stabbing.AddComponent(/datum/component/nanites, 150)
 			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
 			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
-			to_chat(guy_we_are_stabbing, span_big(span_danger("...Why can I feel my blood? WHY CAN I FEEL M-"))) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
+			to_chat(guy_we_are_stabbing, span_userdanger("...Why can I feel my blood? WHY CAN I FEEL M-")) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
 			if(ishuman(guy_we_are_stabbing))
 				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing
 				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
