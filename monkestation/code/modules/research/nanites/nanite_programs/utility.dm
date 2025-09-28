@@ -553,7 +553,7 @@
 
 	if(success)
 		nanos.consume_nanites(200)
-		if(!(none_mod == 1))
+		if(none_mod != 1)
 			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
 		to_chat(guy_we_are_stabbing, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
 		if(guy_we_are_stabbing.GetComponent(/datum/component/nanites))
