@@ -25,10 +25,10 @@
 
 	chicken_scan(user, scanned_chicken)
 
-/obj/item/chicken_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/chicken_scanner/click_alt(mob/living/user)
 	scan_mode = !scan_mode
 	to_chat(user, "<span class='info'>Switched to Stat Mode</span>")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/basic/chicken/scanned_chicken)
 	if(scan_mode)
@@ -182,10 +182,9 @@
 		beaker = attacked_reagent_container
 		return
 
-/obj/machinery/feed_machine/AltClick(mob/user)
-	. = ..()
+/obj/machinery/feed_machine/click_alt(mob/living/user)
 	if(length(held_foods) == 0)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/obj/item/chicken_feed/produced_feed = new(src.loc)
 	produced_feed.placements_left *= food_inserted
 
@@ -210,6 +209,7 @@
 	first_food = null
 	held_foods = list()
 	food_inserted = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_feed
 	name = "chicken feed"

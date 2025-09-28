@@ -17,6 +17,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
@@ -88,9 +89,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
+	. = ITEM_INTERACT_SUCCESS
 	if(status)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src)
 	var/turf/T = get_turf(src)
 	if(weldtool)
@@ -112,7 +113,7 @@
 		to_chat(user, span_notice("[igniter] is now [status ? "secured" : "unsecured"]!"))
 		update_appearance()
 		return TRUE
-
+// XANTODO: Check on flamethrowers and figure out wtf is supposed to be going on
 /obj/item/flamethrower/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isigniter(attacking_item))
 		var/obj/item/assembly/igniter/I = attacking_item
@@ -165,32 +166,32 @@
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
-/obj/item/flamethrower/AltClick(mob/user)
-	if(beaker && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/item/flamethrower/click_alt(mob/user)
+	if(isnull(ptank) && isnull(beaker))
+		return NONE
+
+	if(beaker)
 		user.put_in_hands(beaker)
 		beaker = null
-		to_chat(user, "<span class='notice'>You remove [beaker] from [src]!</span>")
+		to_chat(user, span_notice("You remove [beaker] from [src]!"))
 		update_icon()
-	else if(ptank && isliving(user) && user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return CLICK_ACTION_SUCCESS
+	if(ptank)
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
 		update_appearance()
+		return CLICK_ACTION_SUCCESS
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
+	if(!beaker && !ptank)
+		. += span_notice("A beaker or a plasma tank could be attached.")
+		return
 	if(beaker)
-		. += "<span class='notice'>\The [src] has \a [beaker] attached. Alt-click to remove it.</span>"
-		if(ptank)
-			. += "<span class='notice'>\The [src] has \a [ptank] attached.</span>"
-		else
-			. += "A plasma tank could be attached."
-	else
-		. += "<span class='notice'>A beaker could be attached.</span>"
-		if(ptank)
-			. += span_notice("\The [src] has \a [ptank] attached. Alt-click to remove it.")
-		else
-			. += "A plasma tank could be attached."
+		. += span_notice("\The [src] has \a [beaker] attached. Alt-click to remove it.")
+	if(ptank)
+		. += span_notice("\The [src] has \a [ptank] attached. Alt-click to remove it.")
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)

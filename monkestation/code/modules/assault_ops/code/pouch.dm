@@ -20,8 +20,7 @@
 	icon_state = "ammopouch"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_price = PAYCHECK_CREW * 4
-	// this is just to have post_reskin called later
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Ammo Pouch" = list(
 			RESKIN_ICON_STATE = "ammopouch"
