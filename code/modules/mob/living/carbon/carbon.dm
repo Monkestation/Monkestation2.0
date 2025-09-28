@@ -41,12 +41,6 @@
 			return ITEM_INTERACT_SUCCESS
 	return .
 
-/mob/living/carbon/CtrlShiftClick(mob/user)
-	..()
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.give(src)
-
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
@@ -82,119 +76,6 @@
 			)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 		log_combat(src, victim, "crashed into")
-
-//Throwing stuff
-/mob/living/carbon/proc/toggle_throw_mode()
-	if(stat)
-		return
-	if(throw_mode)
-		throw_mode_off(THROW_MODE_TOGGLE)
-	else
-		throw_mode_on(THROW_MODE_TOGGLE)
-
-
-/mob/living/carbon/proc/throw_mode_off(method)
-	if(throw_mode > method) //A toggle doesnt affect a hold
-		return
-	throw_mode = THROW_MODE_DISABLED
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_off"
-
-
-/mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
-	throw_mode = mode
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_on"
-
-/mob/proc/throw_item(atom/target)
-	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return TRUE
-
-/mob/living/carbon/throw_item(atom/target)
-	. = ..()
-	throw_mode_off(THROW_MODE_TOGGLE)
-	if(!target || !isturf(loc))
-		return FALSE
-	if(istype(target, /atom/movable/screen))
-		return FALSE
-	var/atom/movable/thrown_thing
-	var/obj/item/held_item = get_active_held_item()
-	var/verb_text = pick("throw", "toss", "hurl", "chuck", "fling")
-	if(prob(0.5))
-		verb_text = "yeet"
-	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-	if(!held_item)
-		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
-			if(!throwable_mob.buckled)
-				thrown_thing = throwable_mob
-				if(grab_state >= GRAB_NECK)
-					neckgrab_throw = TRUE
-				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
-					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return FALSE
-	else
-		thrown_thing = held_item.on_thrown(src, target)
-	if(!thrown_thing)
-		return FALSE
-	if(isliving(thrown_thing))
-		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-		var/turf/end_T = get_turf(target)
-		if(start_T && end_T)
-			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-	//MONKESTATION EDIT START
-	var/feeble = HAS_TRAIT(src, TRAIT_FEEBLE)
-	var/leg_aid = HAS_TRAIT(src, TRAIT_NO_LEG_AID)
-	if (feeble && !leg_aid && prob(buckled ? 45 : 15))
-		return fumble_throw_item(target, thrown_thing)
-	//MONKESTATION EDIT START
-	var/power_throw = 0
-	if(HAS_TRAIT(src, TRAIT_HULK))
-		power_throw++
-//	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
-	if(HAS_TRAIT(src, TRAIT_DWARF) && !HAS_TRAIT(src, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
-		power_throw--
-	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-		power_throw++
-	if(neckgrab_throw)
-		power_throw++
-	//MONKESTATION EDIT START
-	if (feeble)
-		power_throw = 0
-	//MONKESTATION EDIT END
-	if(isitem(thrown_thing))
-		var/obj/item/thrown_item = thrown_thing
-		if(thrown_item.throw_verb)
-			verb_text = thrown_item.throw_verb
-	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
-					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
-	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-	newtonian_move(get_dir(target, src))
-	//MONKESTATION EDIT START
-	var/total_throw_range = thrown_thing.throw_range + extra_throw_range
-	if (feeble)
-		total_throw_range = ceil(total_throw_range / (buckled ? 3 : 2))
-	// thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force) - MONKESTATION EDIT ORIGINAL
-	thrown_thing.safe_throw_at(target, total_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
-	if (!feeble || body_position == LYING_DOWN || buckled)
-		return
-	var/bulky = FALSE
-	var/obj/item/I = thrown_thing
-	if (istype(I))
-		if (I.w_class > WEIGHT_CLASS_NORMAL || (thrown_thing.throwforce && !leg_aid))
-			bulky = I.w_class > WEIGHT_CLASS_NORMAL
-		else
-			return
-	if (!bulky && prob(50))
-		return
-	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
-		span_danger("You lose your balance."))
-	Knockdown(2 SECONDS)
-
-	//MONKESTATION EDIT END
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE

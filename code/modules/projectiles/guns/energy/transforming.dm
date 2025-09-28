@@ -102,9 +102,9 @@
 	QDEL_NULL(tracked_soulcatcher)
 	return ..()
 
-/obj/item/gun/energy/modular_laser_rifle/AltClick(mob/user)
+/obj/item/gun/energy/modular_laser_rifle/click_alt(mob/user)
 	tracked_soulcatcher?.ui_interact(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Handles filling out all of the lists regarding weapon modes and radials around that
 /obj/item/gun/energy/modular_laser_rifle/proc/create_weapon_mode_stuff()
