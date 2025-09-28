@@ -665,6 +665,30 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	else
 		. = ..()
 
+/obj/item/stack/sheet/cardboard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (interacting_with != user)
+		return ITEM_INTERACT_BLOCKING
+	if(!is_species(interacting_with, /datum/species/golem/cardboard))
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/carbon/human/human = user
+	var/datum/species/golem/cardboard/golem = human.dna.species
+	if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork
+		return ITEM_INTERACT_BLOCKING
+	if(amount < 10)
+		to_chat(human, span_warning("You do not have enough cardboard!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(human, span_notice("You attempt to create a new cardboard brother."))
+	if(do_after(human, 3 SECONDS, target = human))
+		if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork
+			return ITEM_INTERACT_BLOCKING
+		if(!use(10))
+			to_chat(human, span_warning("You do not have enough cardboard!"))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(human, span_notice("You create a new cardboard golem shell."))
+		golem.create_brother(human, human.loc)
+		return ITEM_INTERACT_SUCCESS
+
 /*
  * Bronze
  */
