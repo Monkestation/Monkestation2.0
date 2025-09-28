@@ -3450,11 +3450,9 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "aWS" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft)
 "aWY" = (
@@ -7520,8 +7518,8 @@
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/security/office)
 "clM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft)
 "clP" = (
