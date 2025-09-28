@@ -405,7 +405,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if (href_list["open_keybindings"])
-		open_window(PREFERENCE_PAGE_KEY_BINDINGS)
+		open_window(PREFERENCE_PAGE_KEYBINDINGS)
 		return TRUE
 
 /datum/preferences/proc/acquire_lock()

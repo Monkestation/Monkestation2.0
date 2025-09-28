@@ -114,7 +114,7 @@ export const PreferencesMenu = () => {
   );
 
   return (
-    <Window title="Preferences" width={1400} height={800} theme="generic">
+    <Window title="Preferences" width={1450} height={800} theme="generic">
       <Window.Content>
         <Stack horizontal height="100%">
           <Stack.Item>{settingsCatergories}</Stack.Item>
