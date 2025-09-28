@@ -12610,6 +12610,7 @@
 /area/station/service/kitchen/coldroom)
 "cRa" = (
 /obj/machinery/lathe/drillpress,
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "cRc" = (
