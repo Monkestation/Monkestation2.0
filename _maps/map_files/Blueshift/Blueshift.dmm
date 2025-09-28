@@ -532,6 +532,11 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/supply)
+"afS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "afX" = (
 /obj/structure/bed{
 	dir = 1
@@ -26241,6 +26246,10 @@
 	dir = 8
 	},
 /area/station/security/medical)
+"eYo" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/construction)
 "eYp" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -29715,7 +29724,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "fIT" = (
 /obj/structure/decorative/shelf,
 /obj/item/computer_disk/maintenance/theme{
@@ -32179,7 +32188,7 @@
 "gjj" = (
 /obj/machinery/lathe/furnace,
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "gjk" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating,
@@ -32422,7 +32431,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "glz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -34422,7 +34431,7 @@
 "gEc" = (
 /obj/effect/spawner/random/trash/box,
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "gEe" = (
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/loading_area/red{
@@ -46499,7 +46508,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/lathe/tablesaw,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "iZi" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
@@ -48792,7 +48801,7 @@
 /obj/machinery/lathe/tailor,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "jvZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -53960,7 +53969,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "krG" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -58359,6 +58368,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/wood,
 /area/station/service/bar/atrium)
+"lkR" = (
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "lkS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -61543,7 +61556,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/lathe,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "lRo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
@@ -69301,8 +69314,9 @@
 /area/station/science/genetics)
 "nuL" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/port/aft)
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/construction)
 "nuR" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating,
@@ -75126,7 +75140,7 @@
 	name = "Construction Area"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "oAu" = (
 /obj/structure/chair/sofa/middle/brown,
 /obj/structure/window/spawner/directional/north,
@@ -97965,7 +97979,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "sVD" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -100271,7 +100285,7 @@
 /obj/structure/light_construct/directional/west,
 /obj/machinery/lathe/drophammer,
 /turf/open/floor/plating,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "trE" = (
 /obj/structure/cable,
 /obj/machinery/light_switch/directional/west,
@@ -100428,7 +100442,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/lathe/drillpress,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "tue" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
@@ -103910,7 +103924,7 @@
 "ubC" = (
 /obj/machinery/lathe/workstation,
 /turf/open/floor/iron,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "ubD" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/trunk/multiz,
@@ -122854,7 +122868,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/south,
 /turf/closed/wall,
-/area/station/maintenance/port/aft)
+/area/station/hallway/secondary/construction)
 "xEr" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/telescience,
@@ -147868,13 +147882,13 @@ uDf
 adi
 uDf
 sVC
-eqS
-eqS
-eqS
-eqS
-eqS
 uDf
-eqS
+uDf
+uDf
+uDf
+uDf
+uDf
+uDf
 pRk
 pRk
 wyC
@@ -148125,13 +148139,13 @@ uDf
 wvC
 pYk
 tyB
-eqS
+uDf
 trC
-dlp
+pOJ
 gjj
 lRl
 krv
-eqS
+uDf
 uHU
 aPS
 buC
@@ -148383,11 +148397,11 @@ vTy
 fWT
 fWT
 oAk
-vPM
-kZg
-kZg
+gwf
+fWT
+afS
 glt
-dlp
+pOJ
 fIR
 vTs
 buC
@@ -148639,13 +148653,13 @@ uDf
 lGD
 gwf
 pOJ
-eqS
+uDf
 tud
 iZd
 jvX
 ubC
 gEc
-eqS
+uDf
 wAN
 fhe
 enl
@@ -148896,13 +148910,13 @@ uDf
 uDf
 gwf
 pOJ
-eqS
-eqS
-eqS
+uDf
+eYo
+eYo
 nuL
 xEi
-eqS
-eqS
+uDf
+uDf
 jYH
 eqS
 nhQ
@@ -149672,7 +149686,7 @@ npR
 fWT
 tyB
 gwf
-uDf
+eYo
 pLD
 kTo
 exp
@@ -149925,11 +149939,11 @@ uDf
 cMm
 gwf
 gwf
-pOJ
+lkR
 tnY
 gwf
 gwf
-uDf
+eYo
 pLD
 kTo
 duq

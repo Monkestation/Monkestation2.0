@@ -2894,8 +2894,8 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/security/armory)
 "aoT" = (
-/obj/machinery/space_heater/improvised_chem_heater,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/machinery/space_heater/improvised_chem_heater,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "aoV" = (
@@ -3522,6 +3522,11 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"atx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/aft/lesser)
 "atH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -12795,9 +12800,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "bkB" = (
-/obj/machinery/lathe/drillpress,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/lathe/drophammer{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
@@ -33639,7 +33646,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "fTf" = (
-/obj/machinery/lathe/tailor,
+/obj/machinery/lathe/tailor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -51222,7 +51231,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/greater)
 "mFh" = (
-/obj/machinery/lathe/workstation,
+/obj/machinery/lathe/workstation{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -66313,7 +66324,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "svn" = (
-/obj/machinery/lathe/furnace,
+/obj/machinery/lathe/furnace{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -66459,6 +66472,7 @@
 "sxT" = (
 /obj/structure/sink/kitchen/directional/south,
 /obj/machinery/light/dim/directional/east,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "syh" = (
@@ -73687,7 +73701,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vkB" = (
-/obj/machinery/lathe/tablesaw,
+/obj/machinery/lathe/tablesaw{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -111106,7 +111122,7 @@ kHY
 xwN
 gDM
 gDM
-gDM
+atx
 bkB
 eet
 aak

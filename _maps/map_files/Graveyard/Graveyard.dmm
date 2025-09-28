@@ -6559,6 +6559,15 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
+"cxO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/clothing/head/utility/welding,
+/obj/item/weldingtool/empty,
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "cxQ" = (
 /obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
@@ -6567,6 +6576,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "cyc" = (
@@ -37078,6 +37088,7 @@
 "onO" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "onT" = (
@@ -37140,10 +37151,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/graveyard/bunker/engineering)
-"ooJ" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
-/turf/open/floor/plating,
-/area/station/maintenance/port/central)
 "ooP" = (
 /turf/open/misc/dirt/jungle,
 /area/graveyard/surface)
@@ -49487,6 +49494,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"tml" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "tmr" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -52246,8 +52257,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "uoH" = (
-/obj/machinery/lathe/tailor,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -55071,6 +55081,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/graveyard/surface/structures/church)
+"vuD" = (
+/obj/machinery/lathe/tailor,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "vuK" = (
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
@@ -57603,10 +57620,6 @@
 /obj/machinery/door/airlock/security,
 /turf/open/floor/iron,
 /area/graveyard/bunker/science)
-"wsB" = (
-/obj/effect/spawner/random/structure/crate,
-/turf/open/floor/plating,
-/area/station/maintenance/port/central)
 "wsG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -62355,6 +62368,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"yhh" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "yhi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
@@ -148097,9 +148118,9 @@ nDR
 nDR
 nDR
 nDR
-exl
-qYO
-ooJ
+kpw
+lFo
+kpw
 kpw
 nHp
 wfO
@@ -148354,9 +148375,9 @@ lNv
 vAC
 bvr
 nDR
-wsB
-exl
-bPT
+cQg
+lAv
+vuD
 kpw
 kkh
 qLH
@@ -148611,9 +148632,9 @@ tVw
 bzx
 hPm
 nDR
-kpw
-lFo
-kpw
+yhh
+sgw
+tml
 kpw
 kpw
 qLH
@@ -148868,8 +148889,8 @@ nDR
 sJJ
 nDR
 nDR
-cQg
-lAv
+cxO
+sgw
 uoH
 hCL
 kpw

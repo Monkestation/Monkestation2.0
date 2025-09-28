@@ -52,5 +52,3 @@
 	l_pocket =/obj/item/scissors
 
 	box = /obj/item/storage/box/survival
-
-

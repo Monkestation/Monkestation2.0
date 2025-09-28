@@ -841,6 +841,13 @@
 	dir = 8
 	},
 /area/station/science/xenobiology)
+"auY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron,
+/area/station/engineering/break_room)
 "avk" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet,
@@ -3461,6 +3468,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/lathe/tablesaw{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "bNQ" = (
@@ -5797,6 +5807,7 @@
 /area/station/maintenance/fore/greater)
 "cVw" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "cVy" = (
@@ -6865,6 +6876,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/ai_monitored/command/nuke_storage)
+"duG" = (
+/obj/machinery/lathe/drillpress,
+/turf/open/floor/iron,
+/area/station/engineering/break_room)
 "duH" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/wood{
@@ -9301,6 +9316,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/lathe/drophammer{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eFj" = (
@@ -11408,7 +11426,9 @@
 "fDI" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/structure/closet/secure_closet/engineering_welding,
+/obj/machinery/lathe/workstation{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "fDK" = (
@@ -12959,6 +12979,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"gph" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/engineering/break_room)
 "gpm" = (
 /turf/open/openspace,
 /area/station/security/prison)
@@ -21708,7 +21732,7 @@
 /area/station/engineering/atmos/hfr_room)
 "krI" = (
 /obj/structure/cable,
-/obj/machinery/holopad,
+/obj/machinery/lathe,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "krY" = (
@@ -32561,6 +32585,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/lathe/tailor{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "pEY" = (
@@ -47130,6 +47157,9 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/lathe/furnace{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wwM" = (
@@ -67962,7 +67992,7 @@ rKx
 rLh
 tqM
 rYP
-rYP
+auY
 rYP
 rYP
 mIv
@@ -68478,7 +68508,7 @@ xRa
 qwa
 dJO
 qEi
-qwa
+duG
 xLZ
 kHf
 tdf
@@ -68734,7 +68764,7 @@ rLh
 pJX
 baQ
 qwa
-qwa
+gph
 cVw
 pAa
 rLh

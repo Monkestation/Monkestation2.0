@@ -1841,14 +1841,14 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "aGe" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Machining Room"
-	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Machining Room"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -32655,6 +32655,7 @@
 "lnJ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "lnM" = (
@@ -64483,6 +64484,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "whc" = (

@@ -25094,7 +25094,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/lathe/drophammer,
+/obj/machinery/lathe/drophammer{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "fTY" = (
@@ -47671,6 +47673,7 @@
 "leN" = (
 /obj/structure/sign/poster/official/moth_hardhat/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/lathe/drillpress,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "leP" = (
@@ -60216,6 +60219,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ogn" = (
@@ -92695,6 +92699,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"vVd" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "vVe" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -128914,7 +128923,7 @@ vKY
 mgk
 cui
 keU
-vvH
+vVd
 fjw
 wBm
 rRD

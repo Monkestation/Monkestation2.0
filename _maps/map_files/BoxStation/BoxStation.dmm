@@ -25460,6 +25460,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "iiC" = (
@@ -53719,6 +53720,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"rpR" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron,
+/area/station/engineering/storage)
 "rpT" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
@@ -98077,7 +98086,7 @@ pcF
 iuo
 cHh
 pGE
-tRf
+rpR
 xPv
 cHh
 oZS

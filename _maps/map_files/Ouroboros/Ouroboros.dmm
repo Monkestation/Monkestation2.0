@@ -2835,9 +2835,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/three,
-/obj/effect/spawner/random/entertainment/wallet_storage,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
@@ -11403,16 +11400,12 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/frame/machine{
-	anchored = 1
-	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/east{
 	c_tag = "Vacant Commissary - Store"
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/item/stack/cable_coil/five,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "duZ" = (
@@ -15616,7 +15609,7 @@
 /obj/machinery/door/poddoor/shutters/window{
 	dir = 1;
 	id = "commissary";
-	name = "Vacant Commissary Shutters"
+	name = "Machining Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
@@ -20750,11 +20743,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/frame/machine{
-	anchored = 1
-	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/stack/cable_coil/five,
+/obj/machinery/lathe/workstation{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "ghO" = (
@@ -24979,6 +24971,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/east,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -31021,15 +31014,13 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/checkpoint/supply)
 "jgA" = (
-/obj/structure/table,
-/obj/effect/spawner/random/entertainment/money_medium,
-/obj/effect/spawner/random/entertainment/coin,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/start/machinist,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "jgJ" = (
@@ -55645,22 +55636,13 @@
 	},
 /area/station/common/wrestling/arena)
 "qpz" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/spawner/random/contraband/narcotics{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/effect/spawner/random/contraband/narcotics{
-	pixel_x = 3
-	},
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = 8
+/obj/machinery/lathe/drillpress{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
@@ -59725,7 +59707,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "rFa" = (
@@ -65675,6 +65656,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/lathe,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "tqq" = (
@@ -65974,9 +65956,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/two,
-/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/machinery/lathe/furnace{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "tvE" = (
@@ -70747,7 +70729,7 @@
 /obj/machinery/door/poddoor/shutters/window{
 	dir = 1;
 	id = "commissary";
-	name = "Vacant Commissary Shutters"
+	name = "Machining Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
@@ -71756,14 +71738,15 @@
 /turf/open/floor/iron/checker,
 /area/station/maintenance/abandon_diner)
 "vgH" = (
-/obj/structure/rack/shelf,
-/obj/effect/spawner/random/decoration/carpet,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/directional/south,
+/obj/machinery/lathe/tailor{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "vgK" = (
@@ -75475,15 +75458,15 @@
 /turf/open/floor/carpet/black,
 /area/station/cargo/quartermaster)
 "wip" = (
-/obj/machinery/door/airlock/hatch{
-	id_tag = "vacant_space";
-	name = "Vacant Commissary"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Foyer"
+	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
 "wir" = (
@@ -75563,15 +75546,8 @@
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/secondary/exit)
 "wjH" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/processor{
-	pixel_y = 5
-	},
-/obj/item/circuitboard/machine/microwave{
-	pixel_y = -5
-	},
-/obj/item/circuitboard/machine/griddle{
-	pixel_x = -2
+/obj/machinery/lathe/tablesaw{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)

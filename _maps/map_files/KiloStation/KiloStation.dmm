@@ -1025,8 +1025,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "alL" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "alO" = (
 /obj/machinery/duct,
@@ -6905,15 +6904,12 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "cgu" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency{
-	pixel_y = 4
-	},
-/obj/item/wrench,
 /obj/machinery/light_switch/directional/east,
-/obj/machinery/light/small/broken/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/lathe/furnace{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "cgJ" = (
 /obj/machinery/ai_slipper{
@@ -13009,6 +13005,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"ecq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/aft)
 "ecE" = (
 /turf/closed/wall/rust,
 /area/station/service/chapel/storage)
@@ -16759,13 +16760,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/cryo)
 "fmU" = (
-/obj/machinery/door/airlock/grunge{
-	id_tag = "abandonedcommissarydoor";
-	name = "Abandoned Structure"
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/machinery/door/airlock/engineering{
+	name = "Machining Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/structure/barricade/wooden/crude,
-/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "fmV" = (
@@ -17584,23 +17582,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/east{
-	id = "commissaryshutter";
-	name = "Abandoned Commissary Shutter Toggle";
-	pixel_x = 26;
-	pixel_y = 7
-	},
-/obj/machinery/button/door/directional/east{
-	id = "abandonedcommissarydoor";
-	name = "Abandoned Commissary Door Lock";
-	normaldoorcontrol = 1;
-	pixel_x = 26;
-	pixel_y = -2;
-	specialfunctions = 4
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/effect/landmark/start/machinist,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "fAD" = (
 /obj/structure/rack,
@@ -18587,21 +18570,12 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library/abandoned)
 "fOR" = (
-/obj/structure/table,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/item/clipboard{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/toy/figure/assistant{
-	pixel_x = 8;
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/lathe/workstation,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "fOX" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -23759,17 +23733,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "hvb" = (
-/obj/structure/closet/secure_closet/personal{
-	name = "Commissary Locker"
-	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/light/small/broken/directional/west,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/lathe/tailor{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "hvy" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -35854,6 +35826,12 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
+"lat" = (
+/obj/machinery/lathe/drophammer{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/aft)
 "laL" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4;
@@ -42526,10 +42504,31 @@
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
 	id = "commissaryshutter";
-	name = "Abandoned Structure"
+	name = "Machining Shutters"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/barricade/wooden/crude,
+/obj/machinery/button/door/directional/east{
+	id = "abandonedcommissarydoor";
+	name = "Abandoned Commissary Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = 26;
+	pixel_y = -2;
+	specialfunctions = 4
+	},
+/obj/machinery/button/door/directional/east{
+	id = "commissaryshutter";
+	name = "Abandoned Commissary Shutter Toggle";
+	pixel_x = 26;
+	pixel_y = 7
+	},
+/obj/item/clipboard{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/assistant{
+	pixel_x = 8;
+	pixel_y = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "nho" = (
@@ -53383,17 +53382,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "qJh" = (
-/obj/structure/table,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/newscaster/directional/south,
-/obj/item/stack/package_wrap,
-/obj/item/storage/secure/briefcase{
-	pixel_y = 4
-	},
-/obj/item/hand_labeler,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/lathe/tablesaw,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "qJi" = (
 /obj/effect/turf_decal/tile/brown{
@@ -64922,6 +64914,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/port)
+"urd" = (
+/obj/machinery/lathe/drillpress{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/aft)
 "urg" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "gravity";
@@ -65558,9 +65556,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "uCQ" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -67177,11 +67174,10 @@
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
 	id = "commissaryshutter";
-	name = "Abandoned Structure"
+	name = "Machining Shutters"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "veZ" = (
@@ -67524,15 +67520,8 @@
 /turf/closed/wall,
 /area/space/nearstation)
 "vkG" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/grunge{
-	id_tag = "abandonedcommissarydoor";
-	name = "Abandoned Structure"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/abandoned,
-/turf/open/floor/iron/dark,
+/turf/closed/wall,
 /area/station/maintenance/starboard/aft)
 "vkJ" = (
 /obj/machinery/power/terminal{
@@ -69874,6 +69863,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
+"vRA" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard/aft)
 "vRK" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
@@ -72012,13 +72005,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "wxr" = (
-/obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/lathe{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "wxv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
@@ -113073,7 +113064,7 @@ iNi
 ohQ
 cuV
 hvb
-sUY
+lat
 qJh
 cuV
 hyJ
@@ -113330,7 +113321,7 @@ qgz
 ppj
 veX
 uCP
-sUY
+ecq
 wxr
 cuV
 cGm
@@ -113587,7 +113578,7 @@ jNt
 hBr
 nhl
 fAA
-sUY
+vRA
 alL
 fmU
 sUY
@@ -113844,7 +113835,7 @@ cnv
 uwg
 fuB
 fOR
-sUY
+urd
 cgu
 cuV
 oQk
