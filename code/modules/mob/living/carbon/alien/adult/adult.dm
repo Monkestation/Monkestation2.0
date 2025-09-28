@@ -70,12 +70,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
-/mob/living/carbon/alien/adult/proc/grab(mob/living/carbon/human/target)
-	if(target.check_block(src, 0, "[target]'s grab"))
-		return FALSE
-	target.grabbedby(src)
-	return TRUE
-
 /mob/living/carbon/alien/adult/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
