@@ -5,7 +5,7 @@
 	. = ..()
 	register_context()
 
-/obj/item/clothing/neck/alt_click_secondary(mob/user)
+/obj/item/clothing/neck/click_alt_secondary(mob/user)
 	. = ..()
 	if(.)
 		return

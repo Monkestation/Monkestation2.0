@@ -121,12 +121,17 @@
 	SIGNAL_HANDLER
 	return update_icon(updates)
 
-/obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(cpu)
-		cpu.AltClick(user)
+/obj/machinery/modular_computer/click_alt(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/modular_computer/click_alt_secondary(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt_secondary(user)
+	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
