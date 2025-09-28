@@ -16,8 +16,12 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 	vent_movement = NONE
+
+	/// Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
+	/// Check if the component has been overclocked
 	var/overclocked = FALSE
+	/// flashing light overlay which appears on multitooled vol pumps
 	var/mutable_appearance/overclock_overlay
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
@@ -55,106 +59,56 @@
 	else
 		cut_overlay(overclock_overlay)
 
-// ---------------------------
-// Main pump loop (refactored)
-// ---------------------------
 /obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
-	// Skip if pump is off, broken, or pressure limits prevent transfer
 	if(!can_process())
 		return
+	do_transfer()
 
-	// Pull gas from input side
-	var/datum/gas_mixture/removed = do_transfer()
-	if(!removed)
-		return
+// -------------------------------
+// Helper procs
+// -------------------------------
 
-	// If overclocked, bleed gas unless structure is sealed
-	if(overclocked)
-		handle_overclock_leak(removed)
-
-	// Merge remaining gas into output side
-	airs[2].merge(removed)
-	update_parents()
-
-// ---------------------------
-// Helper: check if pump can run
-// ---------------------------
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/can_process()
 	if(!on || !is_operational)
 		return FALSE
-
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
+	if(!air1 || !air2)
+		return FALSE
 
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	// Don’t run if input too low, or output too high (unless overclocked)
-	if((input_starting_pressure < VOLUME_PUMP_MIN_INPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE) && !overclocked))
+	if((input_starting_pressure < VOLUME_PUMP_MIN_INPUT_PRESSURE) || (output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE && !overclocked))
 		return FALSE
 
 	return TRUE
 
-// ---------------------------
-// Helper: handle gas transfer
-// ---------------------------
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/do_transfer()
 	var/datum/gas_mixture/air1 = airs[1]
-	if(!air1 || air1.volume <= 0)
-		return null
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/transfer_ratio = transfer_rate / air1.volume
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-	if(!removed || !removed.total_moles())
-		return null
-
-	return removed
-
-// ---------------------------
-// Helper: handle overclock leaks
-// ---------------------------
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(var/datum/gas_mixture/removed)
-	var/turf/open/T = loc
-	if(!istype(T))
+	if(!removed.total_moles())
 		return
 
-	// Cancel leak if enclosed by solid structure (walls, closed airlocks/firelocks)
-	if(is_solid_structure(T))
-		return
+	if(overclocked)
+		handle_overclock_leak(removed)
 
-	// Otherwise, bleed a fraction of gas into turf
-	var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
-	if(leaked && leaked.total_moles() > 0)
+	air2.merge(removed)
+	update_parents()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(datum/gas_mixture/removed)
+	var/turf/T = loc
+	if(istype(T, /turf/closed))
+		return // sealed, no leak
+	if(istype(T, /turf/open))
+		var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
 		T.assume_air(leaked)
 
-// ---------------------------
-// Helper: solid structure check
-// ---------------------------
-/proc/is_solid_structure(turf/T)
-	// Any closed turf (walls, reinforced, mineral, indestructible, windows)
-	if(istype(T, /turf/closed))
-		return TRUE
-
-	// Airlocks → count as solid only when closed
-	for(var/obj/machinery/door/airlock/A in T)
-		if(A.density)
-			return TRUE
-		else
-			return FALSE
-
-	// Firelocks → also solid only when closed
-	for(var/obj/machinery/door/firedoor/F in T)
-		if(F.density)
-			return TRUE
-		else
-			return FALSE
-
-	// Catch-all: dense turf (rare mapper cases)
-	if(T.density)
-		return TRUE
-
-	return FALSE
+// -------------------------------
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
@@ -162,7 +116,6 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-// UI + interaction code (unchanged, but left in full for context)
 /obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
@@ -223,7 +176,8 @@
 		update_icon()
 	return TRUE
 
-// Mapping variants
+// mapping
+
 /obj/machinery/atmospherics/components/binary/volume_pump/layer2
 	piping_layer = 2
 	icon_state = "volpump_map-2"
@@ -244,25 +198,40 @@
 	piping_layer = 4
 	icon_state = "volpump_map-4"
 
-// Circuit component definition (unchanged except formatting for clarity)
+// -------------------------------
+// Circuit Component
+// -------------------------------
+
 /obj/item/circuit_component/atmos_volume_pump
 	display_name = "Atmospheric Volume Pump"
 	desc = "The interface for communicating with a volume pump."
 
+	/// Set the transfer rate of the pump
 	var/datum/port/input/transfer_rate
+	/// Activate the pump
 	var/datum/port/input/on
+	/// Deactivate the pump
 	var/datum/port/input/off
+	/// Signals the circuit to retrieve the pump's current pressure and temperature
 	var/datum/port/input/request_data
 
+	/// Pressure of the input port
 	var/datum/port/output/input_pressure
+	/// Pressure of the output port
 	var/datum/port/output/output_pressure
+	/// Temperature of the input port
 	var/datum/port/output/input_temperature
+	/// Temperature of the output port
 	var/datum/port/output/output_temperature
 
+	/// Whether the pump is currently active
 	var/datum/port/output/is_active
+	/// Send a signal when the pump is turned on
 	var/datum/port/output/turned_on
+	/// Send a signal when the pump is turned off
 	var/datum/port/output/turned_off
 
+	/// The component parent object
 	var/obj/machinery/atmospherics/components/binary/volume_pump/connected_pump
 
 /obj/item/circuit_component/atmos_volume_pump/populate_ports()
