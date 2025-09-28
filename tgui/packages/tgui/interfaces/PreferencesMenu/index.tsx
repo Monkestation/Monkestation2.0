@@ -10,17 +10,28 @@ import { PageButton } from './PageButton';
 import { Window } from '../../layouts';
 import { KeybindingsPage } from './KeybindingsPage';
 import { GamePreferencesPage } from './GamePreferencesPage';
-import { VolumeMixerPage } from '../VolumeMixer';
+import { VolumeMixerPage } from './VolumeMixerPage';
 import { exhaustiveCheck } from 'common/exhaustive';
 
 export const PreferencesMenu = () => {
-  const { data } = useBackend<PreferencesMenuData>();
+  const { act, data } = useBackend<PreferencesMenuData>();
   const [currentPageLocal, setCurrentPage] = useLocalState(
     'currentPageGamePrefs',
     data.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
 
+  let currentPage = currentPageLocal;
+  let setGamePage = setCurrentPage;
+
   const window = data.window;
+  if (window === WindowE.Character) {
+    currentPage = GamePreferencesSelectedPage.Character;
+
+    setGamePage = (page: GamePreferencesSelectedPage) => {
+      setCurrentPage(page);
+      act('open_game');
+    };
+  }
 
   let pageContents;
   switch (window) {
@@ -49,47 +60,8 @@ export const PreferencesMenu = () => {
       exhaustiveCheck(window);
   }
 
-  return (
-    <Window title="Preferences" width={1400} height={800} theme="generic">
-      <Window.Content>
-        <Stack horizontal height="100%">
-          <Stack.Item>
-            <SettingsCatergories window={window} />
-          </Stack.Item>
-          <Stack.Divider />
-          <Stack.Item grow>{pageContents}</Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
-  );
-};
-
-const SettingsCatergories = (props: { window: WindowE }) => {
-  const { window } = props;
-  const { act, data } = useBackend<PreferencesMenuData>();
-  const [currentPageLocal, setCurrentPage] = useLocalState(
-    'currentPageGamePrefs',
-    GamePreferencesSelectedPage.Settings,
-  );
-
-  let currentPage = currentPageLocal;
-  let setGamePage = setCurrentPage;
-  if (window === WindowE.Character) {
-    currentPage = GamePreferencesSelectedPage.Character;
-
-    setGamePage = (page: GamePreferencesSelectedPage) => {
-      setCurrentPage(page);
-      act('open_game');
-    };
-  }
-
-  return (
-    <Stack vertical width="150px">
-      <Stack.Item>
-        <Box align="center" fontSize="1.5em">
-          Hehe Monke
-        </Box>
-      </Stack.Item>
+  const settingsCatergories = (
+    <Stack vertical width="150px" mt="30px">
       <Stack.Divider />
       <Stack.Item>
         <PageButton
@@ -139,5 +111,17 @@ const SettingsCatergories = (props: { window: WindowE }) => {
       </Stack.Item>
       <Stack.Divider />
     </Stack>
+  );
+
+  return (
+    <Window title="Preferences" width={1400} height={800} theme="generic">
+      <Window.Content>
+        <Stack horizontal height="100%">
+          <Stack.Item>{settingsCatergories}</Stack.Item>
+          <Stack.Divider />
+          <Stack.Item grow>{pageContents}</Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
   );
 };

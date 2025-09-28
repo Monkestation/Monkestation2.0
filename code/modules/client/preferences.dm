@@ -53,8 +53,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/job_preferences = list()
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
-	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	var/starting_page = PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER
+	var/current_window = PREFERENCE_WINDOW_CHARACTERS
+	var/starting_page = PREFERENCE_PAGE_CHARACTERS
 
 	var/unlock_content = 0
 
@@ -211,22 +211,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
 
-	var/list/channels = list()
-	for(var/channel in GLOB.used_sound_channels)
-		channels += list(list(
-			"num" = channel,
-			"name" = get_channel_name(channel),
-			"volume" = channel_volume["[channel]"]
-		))
-	data["channels"] = channels
+	if (current_window == PREFERENCE_WINDOW_CHARACTERS)
+		var/list/channels = list()
+		for(var/channel in GLOB.used_sound_channels)
+			channels += list(list(
+				"num" = channel,
+				"name" = get_channel_name(channel),
+				"volume" = channel_volume["[channel]"]
+			))
+		data["channels"] = channels
 
 	return data
 
 /datum/preferences/proc/open_window(starting_page)
-	if (starting_page == PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER)
-		src.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	if (starting_page == PREFERENCE_PAGE_CHARACTERS)
+		src.current_window = PREFERENCE_WINDOW_CHARACTERS
 	else
-		src.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+		src.current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
 		src.starting_page = starting_page
 	update_static_data(usr)
 	ui_interact(usr)
@@ -273,16 +274,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	switch (action)
 		if ("open_character")
-			if (current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES)
+			if (locked || current_window == PREFERENCE_WINDOW_CHARACTERS)
 				return FALSE
-			current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_CHARACTERS
 			update_static_data(usr)
 			return TRUE
 
 		if ("open_game")
-			if (current_window == PREFERENCE_TAB_GAME_PREFERENCES)
+			if (locked || current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
 				return FALSE
-			current_window = PREFERENCE_TAB_GAME_PREFERENCES
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
 			update_static_data(usr)
 			return TRUE
 
@@ -400,7 +405,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if (href_list["open_keybindings"])
-		open_window(PREFERENCE_TAB_GAME_PREFERENCES_KEY_BINDINGS)
+		open_window(PREFERENCE_PAGE_KEY_BINDINGS)
 		return TRUE
 
 /datum/preferences/proc/acquire_lock()

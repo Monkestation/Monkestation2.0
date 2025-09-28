@@ -6480,7 +6480,6 @@
 #include "monkestation\code\game\alternate_appearance.dm"
 #include "monkestation\code\game\atom.dm"
 #include "monkestation\code\game\say.dm"
-#include "monkestation\code\game\sound.dm"
 #include "monkestation\code\game\world.dm"
 #include "monkestation\code\game\area\areas.dm"
 #include "monkestation\code\game\area\areas\mining.dm"

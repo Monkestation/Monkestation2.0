@@ -128,6 +128,12 @@ export enum WindowE {
   Game = 1,
 }
 
+export type Channel = {
+  num: number;
+  name: string;
+  volume: number;
+};
+
 export type PreferencesMenuData = {
   character_preview_view: string;
   character_profiles: (string | null)[];
@@ -188,6 +194,8 @@ export type PreferencesMenuData = {
   window: WindowE;
   startingPage: GamePreferencesSelectedPage;
   owned_items: string[];
+
+  channels: Channel[];
 };
 
 type LoadoutData = {

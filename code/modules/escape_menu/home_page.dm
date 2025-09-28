@@ -99,10 +99,10 @@
 		client << link(url)
 
 /datum/escape_menu/proc/home_open_game_settings()
-	usr?.client?.prefs?.open_window(PREFERENCE_TAB_GAME_PREFERENCES_SETTINGS)
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
 
 /datum/escape_menu/proc/home_open_character_settings()
-	usr?.client?.prefs?.open_window(PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER)
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

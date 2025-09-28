@@ -136,7 +136,7 @@
 	if(!.)
 		return
 
-	hud.mymob.canon_client.prefs.open_window(PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
 	SIGNAL_HANDLER
@@ -374,7 +374,6 @@
 /atom/movable/screen/lobby/button/settings/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// We need IconForge and the assets to be ready before allowing the menu to open
-
 	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
 		set_button_status(TRUE)
 	else
@@ -387,7 +386,7 @@
 	if(!.)
 		return
 
-	hud.mymob.canon_client.prefs.open_window(PREFERENCE_TAB_GAME_PREFERENCES_SETTINGS)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_SETTINGS)
 
 /atom/movable/screen/lobby/button/settings/proc/enable_settings()
 	SIGNAL_HANDLER
@@ -397,19 +396,33 @@
 
 /atom/movable/screen/lobby/button/volume
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "volume"
+	icon_state = "volume_disabled"
 	base_icon_state = "volume"
 	screen_loc = "TOP:-126,CENTER:-34"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/volume/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
 
 /atom/movable/screen/lobby/button/volume/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	if(!preferences.pref_mixer)
-		preferences.pref_mixer = new
-	preferences.pref_mixer.open_ui(hud.mymob)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_PREFERENCES_VOLUME)
+
+/atom/movable/screen/lobby/button/volume/proc/enable_volume()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/changelog.dmi'

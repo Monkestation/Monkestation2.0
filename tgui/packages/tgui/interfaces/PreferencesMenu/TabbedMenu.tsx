@@ -1,5 +1,5 @@
 import { Component, createRef, InfernoNode, RefObject } from 'inferno';
-import { Box, Button, Section, Stack } from '../../components';
+import { Button, Section, Stack } from '../../components';
 import { Flex, FlexProps } from '../../components/Flex';
 
 type TabbedMenuProps = {
@@ -22,7 +22,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
 
   render() {
     const pageContents = (
-      <Stack vertical maxWidth="900px">
+      <Stack vertical>
         {this.props.categoryEntries.map(([category, children]) => {
           return (
             <Stack.Item key={category} innerRef={this.getCategoryRef(category)}>
@@ -38,12 +38,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
     return (
       <Stack horizontal height="100%">
         <Stack.Item>
-          <Stack vertical width="150px">
-            <Stack.Item>
-              <Box align="center" fontSize="1.5em">
-                Hehe Monke
-              </Box>
-            </Stack.Item>
+          <Stack vertical width="150px" mt="30px">
             <Stack.Divider />
             {this.props.categoryEntries.map(([category]) => {
               return (
