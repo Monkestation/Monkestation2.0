@@ -6,8 +6,8 @@
 	base_icon_state = "vendozer"
 	SET_BASE_PIXEL(-24, 0)
 	step_energy_drain = 5 // .5x drain because fucking mega cells ruining everything
-	movedelay = 5 // slowish.
-	max_integrity = 900 // shes fat, very fucking fat
+	movedelay = 4.75 // slowish.
+	max_integrity = 1100 // shes fat, very fucking fat
 	armor_type = /datum/armor/vendozer
 	max_temperature = 25000
 	force = 60 // dont get hit
