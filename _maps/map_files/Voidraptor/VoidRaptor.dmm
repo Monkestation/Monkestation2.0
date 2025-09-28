@@ -34495,6 +34495,7 @@
 	},
 /obj/item/pen,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "jEV" = (

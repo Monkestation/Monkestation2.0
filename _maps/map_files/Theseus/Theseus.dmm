@@ -31339,6 +31339,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/disposalpipe/segment,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "jkT" = (
