@@ -1328,7 +1328,7 @@
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(stat == DEAD || stat != CONSCIOUS)
+	if(stat == DEAD)
 		to_chat(src, span_warning("You are in no physical condition to do this!"))
 		return FALSE
 
