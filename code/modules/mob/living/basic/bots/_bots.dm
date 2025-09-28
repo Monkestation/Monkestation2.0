@@ -37,8 +37,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_outer_range = 3
 	light_power = 0.9
 	speed = 3
-	///Access required to access this Bot's maintenance protocols
-	var/maints_access_required = list(ACCESS_ROBOTICS)
+	interaction_flags_click = ALLOW_SILICON_REACH
+	req_one_access = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.
@@ -269,27 +269,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/basic/bot/check_access(mob/living/user, obj/item/card/id)
-	if(HAS_SILICON_ACCESS(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-	if(!length(maints_access_required)) // No requirements to access it.
-		return TRUE
-	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
-		return TRUE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-
-	return FALSE
-
 /mob/living/basic/bot/bee_friendly()
 	return TRUE
 
@@ -377,13 +356,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/basic/bot/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/basic/bot/click_alt(mob/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/bot/proc/unlock_with_id(mob/living/user)
 	if(bot_access_flags & BOT_COVER_EMAGGED)

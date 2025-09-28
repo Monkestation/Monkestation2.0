@@ -44,14 +44,15 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///set safety bypass
-/obj/item/tram_remote/CtrlClick(mob/user)
+/obj/item/tram_remote/item_ctrl_click(mob/user)
 	switch(mode)
-		if(TRAMCTRL_SAFE)
-			mode = TRAMCTRL_FAST
 		if(TRAMCTRL_FAST)
 			mode = TRAMCTRL_SAFE
+		if(TRAMCTRL_SAFE)
+			mode = ~TRAMCTRL_FAST
 	update_appearance()
 	balloon_alert(user, "mode: [mode ? "fast" : "safe"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/tram_remote/examine(mob/user)
 	. = ..()

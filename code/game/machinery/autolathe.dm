@@ -7,6 +7,7 @@
 	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	var/hacked = FALSE
 	var/disabled = FALSE
@@ -374,15 +375,17 @@
 
 	return ..()
 
-/obj/machinery/autolathe/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if((!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/autolathe/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
+		return
+	if(busy)
+		balloon_alert(user, "printing started!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()
@@ -406,11 +409,15 @@
 		else
 			. += span_notice("<b>Drag towards a direction</b> (while next to it) to change drop direction.")
 
-/obj/machinery/autolathe/AltClick(mob/user)
-	. = ..()
-	if(drop_direction)
-		balloon_alert(user, "drop direction reset")
-		drop_direction = 0
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
+	if(busy)
+		balloon_alert(user, "busy printing!")
+		return CLICK_ACTION_SUCCESS
+	balloon_alert(user, "drop direction reset")
+	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/proc/reset(wire)
 	switch(wire)
