@@ -1654,29 +1654,35 @@
  * This exists to act as a hook for behaviour
  */
 /atom/movable/proc/setGrabState(newstate)
-	if(newstate == grab_state)
-		return
-	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
-	. = grab_state
-	grab_state = newstate
-	switch(grab_state) // Current state.
-		if(GRAB_PASSIVE)
-			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
-			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
-				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-			if(ismob(src))
-				var/mob/grabbed = src
-				if(grabbed.stat == SOFT_CRIT || grabbed.stat == HARD_CRIT)
-					pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
+    if(newstate == grab_state)
+        return
 
-		if(GRAB_AGGRESSIVE)
-			if(. >= GRAB_NECK) // Grab got downgraded.
-				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-			else // Grab got upgraded from a passive one.
-				pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
-		if(GRAB_NECK, GRAB_KILL)
-			if(. <= GRAB_AGGRESSIVE)
-				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+    // 🚨 Prevent grab upgrades if grabber is not adjacent
+    if(pulledby && get_dist(src, pulledby) > 1)
+        return FALSE
+
+    SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+    . = grab_state
+    grab_state = newstate
+    switch(grab_state)
+        if(GRAB_PASSIVE)
+            pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
+            if(. >= GRAB_NECK)
+                REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+            if(ismob(src))
+                var/mob/grabbed = src
+                if(grabbed.stat == SOFT_CRIT || grabbed.stat == HARD_CRIT)
+                    pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
+
+        if(GRAB_AGGRESSIVE)
+            if(. >= GRAB_NECK)
+                REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+            else
+                pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
+
+        if(GRAB_NECK, GRAB_KILL)
+            if(. <= GRAB_AGGRESSIVE)
+                ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
 /**
  * Adds the deadchat_plays component to this atom with simple movement commands.
