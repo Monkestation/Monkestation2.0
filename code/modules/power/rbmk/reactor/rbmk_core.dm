@@ -1,20 +1,20 @@
 /*************************************************************
- * RBMK Reactor Core (explicit atmos ports: inlet/outlet)
- * - Reactor is a normal /obj/machinery
- * - Spawns unary atmos components on left (inlet) & right (outlet)
- * - Coolant data sampled from those components' airs[1]
+ * RBMK Reactor Core (logic core = center of 3x3 footprint)
+ * - Reactor anchored on center turf
+ * - Spawns child shell tiles for 3x3 body
+ * - Coolant inlet/outlet placed flush left/right of center
  *************************************************************/
 
 /obj/machinery/rbmk/reactor
 	name = "RBMK Reactor Core"
 	desc = "A massive nuclear reactor core. Insert rods at your own risk."
 	icon = 'icons/obj/machines/rbmk.dmi'
-	icon_state = "reactor_center"
+	icon_state = "reactor_off"
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_ICON
 
-	// Coolant IO (explicit child components)
+	// Coolant IO
 	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
 	var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet = null
 
@@ -34,7 +34,7 @@
 	var/max_temp = 20000
 	var/running = FALSE
 
-	// Control rods (0 = fully out, 100 = fully inserted)
+	// Control rods
 	var/control_rod_depth = 0
 
 	// Flux / Instability / Integrity
@@ -66,6 +66,8 @@
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
 
+	
+
 	// Seed temperature from turf air if available
 	var/turf/T = get_turf(src)
 	if (istype(T))
@@ -76,7 +78,7 @@
 
 	START_PROCESSING(SSmachines, src)
 
-	// Spawn child tiles in 3x3 footprint
+	// Spawn child tiles around the center
 	for (var/dx in -1 to 1)
 		for (var/dy in -1 to 1)
 			if(dx == 0 && dy == 0)
@@ -87,27 +89,8 @@
 				C.parent = src
 				children += C
 
-	// ---- Spawn atmos ports relative to center (left/right) ----
-	var/turf/inlet_tile = locate(x-1, y, z)   // west of center
-	var/turf/outlet_tile = locate(x+1, y, z)  // east of center
-
-	if(inlet_tile)
-		inlet = new /obj/machinery/atmospherics/components/unary/rbmk/inlet(inlet_tile)
-		inlet.parent_reactor = src
-		inlet.dir = WEST                    // this matches your working mapping
-		inlet.initialize_directions = inlet.dir
-		inlet.pixel_x = 32                  // nudge toward the core
-		inlet.connect_nodes()
-		inlet.update_parents()
-
-	if(outlet_tile)
-		outlet = new /obj/machinery/atmospherics/components/unary/rbmk/outlet(outlet_tile)
-		outlet.parent_reactor = src
-		outlet.dir = EAST
-		outlet.initialize_directions = outlet.dir
-		outlet.pixel_x = -32
-		outlet.connect_nodes()
-		outlet.update_parents()
+	// Place coolant ports flush left/right of center
+	relink_ports()
 
 /obj/machinery/rbmk/reactor/Destroy()
 	STOP_PROCESSING(SSmachines, src)
@@ -117,50 +100,41 @@
 	if (outlet) qdel(outlet)
 	return ..()
 
-/obj/machinery/rbmk/reactor/process(delta_time)
-	if (!running) return
+/obj/machinery/rbmk/reactor/proc/relink_ports()
+	var/turf/center = get_turf(src)
+	if(!center) return
 
-	var/rod_effect = (100 - control_rod_depth) / 100.0
-	temperature = clamp(temperature + (rod_effect * 10) - (control_rod_depth * 0.05), 0, max_temp)
+	if(inlet)  qdel(inlet)
+	if(outlet) qdel(outlet)
 
-	radiation = clamp(temperature * 0.01 + flux * 2, 0, 500)
-	instability = clamp(instability + rod_effect * 0.5 + (flux * 0.1), 0, 100)
-	flux = clamp(flux + rod_effect * 2 - (moderator_level * 0.05), 0, 100)
+	// Inlet: one tile west of center
+	var/turf/inlet_tile = get_step(center, WEST)
+	if(inlet_tile)
+		inlet = new /obj/machinery/atmospherics/components/unary/rbmk/inlet(inlet_tile)
+		inlet.parent_reactor = src
+		inlet.dir = WEST   // face outward
 
-	if (temperature > 3000 || instability > 80)
-		reactor_integrity = max(reactor_integrity - 1, 0)
-
-	pressure = clamp(pressure + (temperature / 1000) - (control_rod_depth * 0.05), 0, 100)
-	moderator_level = clamp(moderator_level - rod_effect * 0.2 + (control_rod_depth * 0.05), 0, 100)
-
-	pressure_history += pressure
-	if (length(pressure_history) > 50) pressure_history.Cut(1, 2)
-
-	moderator_history += moderator_level
-	if (length(moderator_history) > 50) moderator_history.Cut(1, 2)
-
-	handle_coolant(delta_time)
-	sample_coolant()
-
-	update_linked_consoles()
+	// Outlet: one tile east of center
+	var/turf/outlet_tile = get_step(center, EAST)
+	if(outlet_tile)
+		outlet = new /obj/machinery/atmospherics/components/unary/rbmk/outlet(outlet_tile)
+		outlet.parent_reactor = src
+		outlet.dir = EAST   // face outward
 
 /*************************************************************
  * Valve/Flow control (UI helpers)
  *************************************************************/
 
-/// Toggle inlet valve
 /obj/machinery/rbmk/reactor/proc/toggle_inlet()
 	inlet_open = !inlet_open
 	update_linked_consoles()
 	return inlet_open
 
-/// Toggle outlet valve
 /obj/machinery/rbmk/reactor/proc/toggle_outlet()
 	outlet_open = !outlet_open
 	update_linked_consoles()
 	return outlet_open
 
-/// Set flow rate (supports 0–2.0 or percent-like input)
 /obj/machinery/rbmk/reactor/proc/set_flow_rate(val)
 	var/num = val
 	if (num > 2.0)
@@ -179,22 +153,22 @@
 	)
 
 /*************************************************************
- * Atmos integration (reads child component airs[1])
+ * Atmos integration
  *************************************************************/
 
-/// Inlet mix from the left unary component
+/// Inlet mix
 /obj/machinery/rbmk/reactor/proc/get_inlet_mix()
 	if(inlet && inlet.airs && inlet.airs.len && inlet.airs[1])
 		return inlet.airs[1]
 	return null
 
-/// Outlet mix from the right unary component
+/// Outlet mix
 /obj/machinery/rbmk/reactor/proc/get_outlet_mix()
 	if(outlet && outlet.airs && outlet.airs.len && outlet.airs[1])
 		return outlet.airs[1]
 	return null
 
-/// Prefer inlet, otherwise outlet
+/// Prefer inlet, else outlet
 /obj/machinery/rbmk/reactor/proc/get_coolant_mix()
 	var/datum/gas_mixture/mix = get_inlet_mix()
 	if(!mix) mix = get_outlet_mix()
@@ -239,7 +213,6 @@
 			series2 += 0
 			if(length(series2) > 50) series2.Cut(1, 2)
 
-/// Snapshot for UI
 /obj/machinery/rbmk/reactor/proc/get_coolant_snapshot()
 	var/datum/gas_mixture/mix = get_coolant_mix()
 	if(!mix)
@@ -259,7 +232,6 @@
 		"composition" = comp
 	)
 
-/// History for graphs UI
 /obj/machinery/rbmk/reactor/proc/get_coolant_history_for_ui()
 	var/list/gases = list()
 	for (var/gas_path in coolant_gas_hist)
@@ -301,7 +273,6 @@
  * UI fanout
  *************************************************************/
 
-/// Ping any linked consoles so their tgui refreshes
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
 	for (var/obj/machinery/computer/rbmk_console/C in world)
 		if (C.linked_reactor == src)
@@ -309,15 +280,15 @@
 			SStgui.update_uis(C)
 
 /*************************************************************
- * Reactor Child Tiles (interaction relays)
+ * Reactor Child Tiles
  *************************************************************/
 
-/// Relay tiles around the 3×3 that forward interaction to the center
+/// Children are invisible placeholders (no duplicate icon)
 /obj/structure/rbmk/reactor_child
 	name = "RBMK Reactor Core"
 	desc = "Part of a massive nuclear reactor core."
 	icon = 'icons/obj/machines/rbmk.dmi'
-	icon_state = "reactor_center"
+	icon_state = ""  // blank so only the main sprite draws
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -334,10 +305,10 @@
 	return ..()
 
 /*************************************************************
- * Atmos I/O Components for RBMK ports
+ * Atmos I/O Components
  *************************************************************/
 
-/// Common base so these components expose airs[1] and auto-connect
+/// Common base
 /obj/machinery/atmospherics/components/unary/rbmk/base
 	parent_type = /obj/machinery/atmospherics/components/unary
 	anchored = TRUE
@@ -368,4 +339,3 @@
 	parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
 	name = "RBMK Coolant Outlet"
 	dir = EAST
- 

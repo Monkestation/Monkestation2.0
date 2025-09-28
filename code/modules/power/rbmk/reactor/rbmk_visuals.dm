@@ -49,6 +49,8 @@
 		animate(src, color = list(1,0.9,0.9, 0,0,0), time = 5, loop = -1)
 	else if (instability > 200)
 		animate(src, color = list(1,0.6,0.6, 0,0,0), time = 2, loop = -1)
+	else
+		animate(src, color = null, time = 5) // reset if stable
 
 
 /obj/machinery/rbmk/reactor/proc/add_integrity_overlay()
