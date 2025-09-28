@@ -16,7 +16,6 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	voice_type = pick(voice_type2sound) //monkestation edit
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
 
@@ -546,7 +545,7 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if((flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby))
+	if(!(flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby))
 		return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
@@ -1325,9 +1324,13 @@
 /mob/living/can_hold_items(obj/item/I)
 	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
-/mob/living/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
+
+	if(stat == DEAD)
+		to_chat(src, span_warning("You are in no physical condition to do this!"))
+		return FALSE
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
@@ -1338,18 +1341,22 @@
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			to_chat(src, span_warning("You can't do that right now!"))
+			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src))
-		if(issilicon(src) && !ispAI(src))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && !Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
+		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
@@ -1820,7 +1827,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
 	var/mob/living/U = user
 	if(isliving(dropping))
 		var/mob/living/M = dropping

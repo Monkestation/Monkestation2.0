@@ -10,15 +10,12 @@
 	if(activated)
 		return
 	to_chat(mob, "<span class = 'warning'>You feel small...</span>")
-	mob.transform.Scale(0.5, 0.5)
-	mob.update_transform()
+	mob.update_transform(0.5/RESIZE_DEFAULT_SIZE)
 	mob.pass_flags |= PASSTABLE
-
 	activated = 1
 
 /datum/symptom/mommi_shrink/deactivate(mob/living/mob)
 	to_chat(mob, "<span class = 'warning'>You feel like an adult again.</span>")
-	mob.transform.Scale(2, 2)
-	mob.update_transform()
+	mob.update_transform(2/RESIZE_DEFAULT_SIZE)
 	mob.pass_flags &= ~PASSTABLE
 	activated = 0

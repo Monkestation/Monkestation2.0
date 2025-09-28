@@ -806,3 +806,181 @@
   - map: Kilostation has standard eva suits in storage.
   - rscdel: Removed latejoin antag preferences from being chosen, as they confused
       people into thinking latejoin antags existed here.
+2025-09-24:
+  Absolucy:
+  - admin: Harvesting plants is now logged.
+  JupiterJaeden:
+  - balance: Removes autoprocessing from normal genetics machinery. Still available
+      on the traitor cloning pod, if upgraded.
+  Loiosh42:
+  - bugfix: Riot shotgun wallstuns are once again removed as intended
+  Xander3359:
+  - bugfix: fixed brig phys lab coat not having directional sprites
+2025-09-25:
+  Absolucy:
+  - bugfix: fix regen coma leaving people in a weird limbo between life and death
+  - bugfix: Monster Hunters will now keep their Instant Recall and Hunter Vision abilities
+      if they ever change bodies, i.e if they're cloned or whatever.
+  - bugfix: Darkspawn thralls now properly resist having their tumors removed if they're
+      awake.
+  - bugfix: Darkspawn ability buttons should properly update and (un)grey when you
+      regenerate or use psi.
+  - balance: Darkspawn thralls will now have a proper fighting chance when they resist
+      being deconverted while awake.
+  - qol: The Darkspawn warlock staff is now non-conductive, meaning you'll no longer
+      potentially shock yourself trying to break lights with it.
+  - qol: The "Darkened Flashes" preference now disables the staticy screen overlay
+      that occurs when a Darkspawn ascends.
+  - qol: Darkspawn and their thralls are now all properly immune to Nyctophobia.
+  - code_imp: Various minor code improvements / runtime error fixes for darkspawn-related
+      code.
+  EssentialTomato:
+  - qol: (MrMelbert) Airlock pumps will unbolt their linked airlocks on losing power,
+      allowing them to be forced through
+  - qol: (MrMelbert) Airlock pumps work on L shaped airlocks, assuming [the airlocks]
+      are already linked.
+  ThePooba:
+  - bugfix: fixes advanced cameras to use camnet
+  - bugfix: beaker panel has only empty beakers and drink glasses for maximum bussing
+  Xander3359:
+  - bugfix: Fixes gels unhusking with less than 100 units of synthflesh
+  kuricityy:
+  - balance: xenomorphs no longer regen while on fire
+2025-09-26:
+  Absolucy:
+  - rscdel: Polyglots, Bilinguals, IPCs, and silicons no longer know Ashtongue by
+      default.
+  - rscdel: Ashwalkers no longer fully know Draconic, only Ashtongue.
+  - rscdel: Normal lizardpeople no longer fully know Ashtongue.
+  - rscadd: Understanding Draconic now grants partial understanding of Ashtongue,
+      and vice versa.
+  - qol: You can now upload everything from a DNA disk to a DNA console at once, by
+      right clicking the console with the disk.
+  - qol: In addition, ctrl-clicking a DNA console with a disk will download mutations
+      from the console to the disk.
+  - bugfix: Ethereal nosferatu bloodsuckers will no longer eternally have low mood.
+  - bugfix: Polyglots and silicons now actually can't fully understand/speak Ashtongue
+      (only partially understand), as intended.
+  Dr. Wendell Tully from hit Honey, I Shrunk The Kids ripoff game franchise Grounded:
+  - bugfix: dysplasia syndrome unfucked
+  JohnFulpWillard:
+  - bugfix: Removed stray '0' from Bot UIs
+  JupiterJaeden:
+  - rscadd: Adds silver cuffs. Crafted with a bar of silver and normal handcuffs.
+      When used on a bloodsucker or bloodsucker vassal, prevents them from using any
+      powers (except masquerade, veil of many faces, or level 5 or higher brawn).
+      However, they are one-use and can be broken out of faster than normal cuffs.
+  Killermankey:
+  - rscadd: mecha flamethrower
+  - rscadd: mecha 20mm rifle
+  - rscadd: mecha .22lr minigun
+  - rscadd: admin only mecha 20mm rotary cannon
+  - rscadd: admin only mecha mini nuke launcher
+  - balance: gives the pimpin ride a 35% chance to protect rider from bullets
+  - rscadd: disposable AT rocket for sec, orderable too!
+  Lawlolawl:
+  - bugfix: Ports fix for cooking. Soup recipes (boiling on a burner using soup pots)
+      now spawn proportionate cooked food to ingredients used. Also no longer causes
+      excess unused ingredients to disappear.
+  - balance: rebalanced pineapple fried rice recipe to only require 1x boiled rice
+      instead of 5x.
+  MissClassyPineapple:
+  - rscadd: Added Swedish Quirk (meatballs or furniture not included)
+  Shoddd:
+  - balance: oozelings now have a 2 second do after to regen limbs
+  - balance: oozelings absorbing limbs now transfers damage to torso
+  - bugfix: oozelings no longer error when delimbed
+  Sorenon:
+  - rscadd: Each player can now select a voice pack. When a player talks they will
+      make a few 'barks' using it. The number of barks depends on the length of their
+      message.
+  - rscadd: Players speaking in sign language will make a single snap bark unless
+      they are whispering
+  - qol: Split the settings button in the escape menu into game settings and character
+      settings
+  That one guy who really hates it when people misspell the names of deities:
+  - spellcheck: Spellchecks Nar'Sie a bit.
+  TheColorCyan:
+  - balance: PK throwing knives no longer instantly recharge all the knife charges
+  - balance: PK throwing knives can detonate marks on melee hit even if you have no
+      charges left
+  - qol: (Hatterhat) You can now pull singular trophies off kinetic crushers with
+      RMB.
+  - qol: (Hatterhat) Kinetic crushers now have screentips informing people that they
+      can remove trophies via empty hand (RMB) or crowbar (LMB).
+  - bugfix: (SmArtKar) Fixed inconsistent crusher trophy droprates
+  - refactor: (SmArtKar) Refactored parrying to be projectile-side and not user-side.
+  - rscadd: (SmArtKar) You can now parry crusher projectiles to give them some more
+      range, add damage and make the mark always count as a backstab.
+  - rscadd: (SmArtKar) Projectile parrying has been significantly improved, making
+      parrying and boosting projectiles actually possible. Includes a small grace
+      period as lag compensation for players with higher pings.
+  - balance: (SmArtKar) Projectile boosting now gives a significantly bigger damage
+      and speed increase
+  - rscadd: (Xander3359) Bileworm crusher trophy now gives you AOE mining
+  - balance: (Xander3359) The pk crusher gives mining XP when it mines rocks
+  - balance: (Xander3359) the pk crusher charges faster when you mine rocks based
+      on your skill as a miner
+  - code_imp: (Xander3359) cleaned up some of the kinetic crusher code
+  - bugfix: (Moose1002) Nanotrasen has finally recalled their faulty multitools and
+      replaced them with working ones! The multitool's buffer now properly clears
+      itself.
+  - qol: (Moose1002) Moved multitool link messages to balloon alerts)
+  - refactor: (intercepti0n) Refactored Ore Silo Ui.
+  - qol: (SyncIt21) added more screen tips & examines for ore silo, made UI wider,
+      attach location name to each machine & grey out paused machines to make it more
+      noticeable.
+  - code_imp: ' (SyncIt21) auto docs proc & vars for silo log entry. Fixed return
+      values of all tool acts'
+  - bugfix: ' (SyncIt21) ore silo UI now functions correctly after removing an entry
+      from the UI'
+  - bugfix: ' (SyncIt21) no runtimes when connecting a machine to silo that was previously
+      disconnected via the ore silo UI'
+  - bugfix: (SyncIt21) Lathes don't hang if materials run out mid printing. Also displays
+      message if materials are put on hold while printing
+  Tractor-Maam:
+  - code_imp: partially reverted a change to Mentor Manager to hopefully fix it being
+      broken. Please report any issues!
+  Uristthedorf:
+  - rscadd: You can now print security cybernetics in mechfab.
+  notghosti:
+  - map: Deletes SPACE Apc from deltatstation
+  - code_imp: ' Cult hallucinations now only proc in a 15 tile radius, not 40.'
+  - rscadd: Abductor Baton sleep mode applies 14 seconds of softspoken, this does
+      not prevent radios.
+  - balance: Abductor Silencers no longer turn off listening on radios, but now will
+      jam all headsets/radios microphones and disable body cameras akin to a disruptor
+      wave.
+  - bugfix: Abductor Paralyze mode is no longer effected by diminishing returns and
+      instead resets the timer to 60 seconds.
+  - rscadd: Advanced health analyzers can now detect borers in hosts, assuming they
+      don't know how to hide themselfs.
+  - rscadd: Increased energy improves ability to squeeze through doors and escape
+      cages.
+  - rscadd: Increased energy gives bonus movespeed while not hiding under tables/items
+  - balance: Stealth mode for borers cooldown decreased to 60 seconds, from 120 seconds
+  - balance: Borer maturation rate shifted from willing hosts to their other objectives
+      slightly.
+  - bugfix: Self reproduction with borers now properly deals damage to the borer.
+  throwawayuseless:
+  - spellcheck: Nar'Sien -> Nar'Sian
+2025-09-28:
+  Absolucy:
+  - bugfix: Fix godslayer armor resurrection not working if you have crit immunity
+      (i.e lux pens, inexorable gene, memento mori)
+  SyncIt21:
+  - bugfix: alt click runtime no more when using style meter
+  - code_imp: improved alt & ctrl click code
+  - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
+      on GitHub
+  - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  Xander3359:
+  - bugfix: Fix Beepsky having no restrictions on the controls lock
+  - bugfix: Fix bots in general not having their controls lock restrictions
+  - bugfix: fixed multi-cell charger charging too slow
+  notghosti:
+  - balance: Airborne diseases won't spread if you are a corpse, have no need to breathe,
+      or are wearing appropriate protection.
+  - bugfix: Debug disease kits are now properly subtyped.
+  - bugfix: Airbrone diseases no longer proc twice, and will properly respect TRAIT_VIRUS_RESISTANCE
+      and satiety.

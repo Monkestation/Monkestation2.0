@@ -343,7 +343,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(istype(target_chest))
 		process_and_store_item(target_chest.cavity_item, victim)
 
-	for(var/obj/item/item as anything in victim.get_equipped_items(include_pockets = TRUE)) // Store rest of equipment
+	for(var/obj/item/item as anything in victim.get_equipped_items(INCLUDE_POCKETS)) // Store rest of equipment
 		if(QDELETED(item))
 			continue
 		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
