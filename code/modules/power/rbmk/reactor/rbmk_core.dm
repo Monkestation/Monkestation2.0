@@ -10,9 +10,15 @@
 	desc = "A massive nuclear reactor core. Insert rods at your own risk."
 	icon = 'icons/obj/machines/rbmk.dmi'
 	icon_state = "reactor_off"
+	bound_width = 96
+	bound_height = 96
+	pixel_x = -32   // shift left one tile
+	pixel_y = -32   // shift down one tile
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_ICON
+	plane = GAME_PLANE
+	layer = OBJ_LAYER
 
 	// Coolant IO
 	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
@@ -57,6 +63,13 @@
 	var/flow_min = 0.0
 	var/flow_max = 2.0
 
+	/// NEW: inlet and outlet control
+	var/inlet_rate = 1.0                   // liters/sec scale
+	var/inlet_rate_min = 0.1
+	var/inlet_rate_max = 10.0
+	var/outlet_target_pressure = 101.3     // regulator target kPa
+	var/outlet_pressure_max = 10000
+
 	// ---- Coolant telemetry histories (last 50 samples) ----
 	var/list/coolant_pressure_history = list()
 	var/list/coolant_temperature_history = list()
@@ -66,7 +79,8 @@
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
 
-	
+	// Move reactor object to the center tile of its 3×3 footprint
+	loc = locate(x+1, y+1, z)
 
 	// Seed temperature from turf air if available
 	var/turf/T = get_turf(src)
@@ -121,6 +135,34 @@
 		outlet.parent_reactor = src
 		outlet.dir = EAST   // face outward
 
+/obj/machinery/rbmk/reactor/process(delta_time)
+	if (!running)
+		return
+
+	var/rod_effect = (100 - control_rod_depth) / 100.0
+	temperature = clamp(temperature + (rod_effect * 10) - (control_rod_depth * 0.05), 0, max_temp)
+
+	radiation = clamp(temperature * 0.01 + flux * 2, 0, 500)
+	instability = clamp(instability + rod_effect * 0.5 + (flux * 0.1), 0, 100)
+	flux = clamp(flux + rod_effect * 2 - (moderator_level * 0.05), 0, 100)
+
+	if (temperature > 3000 || instability > 80)
+		reactor_integrity = max(reactor_integrity - 1, 0)
+
+	pressure = clamp(pressure + (temperature / 1000) - (control_rod_depth * 0.05), 0, 100)
+	moderator_level = clamp(moderator_level - rod_effect * 0.2 + (control_rod_depth * 0.05), 0, 100)
+
+	pressure_history += pressure
+	if (length(pressure_history) > 50) pressure_history.Cut(1, 2)
+
+	moderator_history += moderator_level
+	if (length(moderator_history) > 50) moderator_history.Cut(1, 2)
+
+	handle_coolant(delta_time)
+	sample_coolant()
+
+	update_linked_consoles()
+
 /*************************************************************
  * Valve/Flow control (UI helpers)
  *************************************************************/
@@ -135,22 +177,45 @@
 	update_linked_consoles()
 	return outlet_open
 
-/obj/machinery/rbmk/reactor/proc/set_flow_rate(val)
-	var/num = val
-	if (num > 2.0)
-		num = num / 100.0 * flow_max
-	flow_rate = clamp(num, flow_min, flow_max)
+/obj/machinery/rbmk/reactor/proc/set_inlet_rate(val)
+	inlet_rate = clamp(val, inlet_rate_min, inlet_rate_max)
 	update_linked_consoles()
-	return flow_rate
+	return inlet_rate
+
+/obj/machinery/rbmk/reactor/proc/set_outlet_pressure(val)
+	outlet_target_pressure = clamp(val, 0, outlet_pressure_max)
+	update_linked_consoles()
+	return outlet_target_pressure
+
+/obj/machinery/rbmk/reactor/proc/set_flow_rate(val)
+	// compatibility shim
+	return set_inlet_rate(val)
 
 /obj/machinery/rbmk/reactor/proc/get_flow_state()
 	return list(
 		"inlet_open" = inlet_open,
 		"outlet_open" = outlet_open,
-		"flow_rate" = flow_rate,
-		"flow_min" = flow_min,
-		"flow_max" = flow_max
+		"flow_rate" = inlet_rate,
+		"flow_min" = inlet_rate_min,
+		"flow_max" = inlet_rate_max,
+		"outlet_target_pressure" = outlet_target_pressure
 	)
+
+/*************************************************************
+ * Pressure getters for console UI
+ *************************************************************/
+
+/obj/machinery/rbmk/reactor/proc/get_inlet_pressure()
+	var/datum/gas_mixture/in_mix = get_inlet_mix()
+	if(in_mix)
+		return in_mix.return_pressure()
+	return 0
+
+/obj/machinery/rbmk/reactor/proc/get_outlet_pressure()
+	var/datum/gas_mixture/out_mix = get_outlet_mix()
+	if(out_mix)
+		return out_mix.return_pressure()
+	return 0
 
 /*************************************************************
  * Atmos integration
@@ -256,7 +321,7 @@
 	if(in_mix.total_moles() > 0)
 		var/delta_T = temperature - in_mix.temperature
 		if(abs(delta_T) > 0.5)
-			var/transfer = min(abs(delta_T) * 0.05, 200) * max(seconds_per_tick, 1) * flow_rate
+			var/transfer = min(abs(delta_T) * 0.05, 200) * max(seconds_per_tick, 1) * inlet_rate
 			if(delta_T > 0)
 				temperature = max(0, temperature - transfer)
 				in_mix.temperature += transfer
@@ -265,9 +330,15 @@
 				in_mix.temperature = max(0, in_mix.temperature - transfer)
 
 		var/base_ratio = 0.10
-		var/datum/gas_mixture/moved = in_mix.remove_ratio(base_ratio * flow_rate)
+		var/datum/gas_mixture/moved = in_mix.remove_ratio(base_ratio * inlet_rate)
 		if(moved && moved.total_moles() > 0)
 			out_mix.merge(moved)
+
+		// regulator: vent if outlet pressure > target
+		if(out_mix.return_pressure() > outlet_target_pressure)
+			var/release_ratio = clamp((out_mix.return_pressure() - outlet_target_pressure) / 100, 0, 1)
+			var/datum/gas_mixture/released = out_mix.remove_ratio(release_ratio)
+			if(released) qdel(released)
 
 /*************************************************************
  * UI fanout
