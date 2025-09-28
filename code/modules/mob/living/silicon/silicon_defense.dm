@@ -79,13 +79,13 @@
 
 /mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
 	. = ..()
-	if(.)
-		return TRUE
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
 	if(damage_type == BRUTE && attack_type == UNARMED_ATTACK && attack_flag == MELEE && damage <= 10)
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		return TRUE
-	return FALSE
+		return SUCCESSFUL_BLOCK
+	return FAILED_BLOCK
 
 /mob/living/silicon/proc/try_punch_borg(mob/living/carbon/human/attacker)
 	if(HAS_TRAIT(attacker, TRAIT_FEEBLE))
