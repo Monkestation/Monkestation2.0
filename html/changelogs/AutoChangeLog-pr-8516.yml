@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix godslayer armor resurrection not working if you have crit immunity (i.e lux pens, inexorable gene, memento mori)"

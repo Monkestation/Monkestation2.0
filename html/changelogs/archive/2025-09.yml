@@ -964,3 +964,23 @@
   - bugfix: Self reproduction with borers now properly deals damage to the borer.
   throwawayuseless:
   - spellcheck: Nar'Sien -> Nar'Sian
+2025-09-28:
+  Absolucy:
+  - bugfix: Fix godslayer armor resurrection not working if you have crit immunity
+      (i.e lux pens, inexorable gene, memento mori)
+  SyncIt21:
+  - bugfix: alt click runtime no more when using style meter
+  - code_imp: improved alt & ctrl click code
+  - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
+      on GitHub
+  - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  Xander3359:
+  - bugfix: Fix Beepsky having no restrictions on the controls lock
+  - bugfix: Fix bots in general not having their controls lock restrictions
+  - bugfix: fixed multi-cell charger charging too slow
+  notghosti:
+  - balance: Airborne diseases won't spread if you are a corpse, have no need to breathe,
+      or are wearing appropriate protection.
+  - bugfix: Debug disease kits are now properly subtyped.
+  - bugfix: Airbrone diseases no longer proc twice, and will properly respect TRAIT_VIRUS_RESISTANCE
+      and satiety.
