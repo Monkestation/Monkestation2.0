@@ -54,6 +54,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	var/starting_page = PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER
 
 	var/unlock_content = 0
 
@@ -221,6 +222,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return data
 
+/datum/preferences/proc/open_window(starting_page)
+	if (starting_page == PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER)
+		src.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	else
+		src.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+		src.starting_page = starting_page
+	update_static_data(usr)
+	ui_interact(usr)
+
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
 
@@ -229,6 +239,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window
+	data["starting_page"] = starting_page
 
 	data["content_unlocked"] = unlock_content
 
@@ -388,11 +399,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (.)
 		return
 
-	// if (href_list["open_keybindings"])
-	// 	current_window = PREFERENCE_TAB_KEYBINDINGS
-	// 	update_static_data(usr)
-	// 	ui_interact(usr)
-	// 	return TRUE
+	if (href_list["open_keybindings"])
+		open_window(PREFERENCE_TAB_GAME_PREFERENCES_KEY_BINDINGS)
+		return TRUE
 
 /datum/preferences/proc/acquire_lock()
 	locked = TRUE

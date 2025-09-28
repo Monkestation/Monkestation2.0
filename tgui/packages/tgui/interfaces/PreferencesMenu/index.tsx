@@ -5,7 +5,6 @@ import {
   WindowE,
 } from './data';
 import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
-import { GamePreferenceWindow } from './GamePreferenceWindow';
 import { Box, Button, Stack } from '../../components';
 import { PageButton } from './PageButton';
 import { Window } from '../../layouts';
@@ -14,11 +13,11 @@ import { GamePreferencesPage } from './GamePreferencesPage';
 import { VolumeMixerPage } from '../VolumeMixer';
 import { exhaustiveCheck } from 'common/exhaustive';
 
-export const PreferencesMenu = (props) => {
+export const PreferencesMenu = () => {
   const { data } = useBackend<PreferencesMenuData>();
   const [currentPageLocal, setCurrentPage] = useLocalState(
     'currentPageGamePrefs',
-    GamePreferencesSelectedPage.Settings,
+    data.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
 
   const window = data.window;
@@ -29,7 +28,6 @@ export const PreferencesMenu = (props) => {
       pageContents = <CharacterPreferenceWindow />;
       break;
     case WindowE.Game:
-      pageContents = <GamePreferenceWindow />;
       switch (currentPageLocal) {
         case GamePreferencesSelectedPage.Keybindings:
           pageContents = <KeybindingsPage />;
@@ -89,21 +87,26 @@ const SettingsCatergories = (props: { window: WindowE }) => {
     <Stack vertical width="150px">
       <Stack.Item>
         <Box align="center" fontSize="1.5em">
-          Preferences
+          Hehe Monke
         </Box>
       </Stack.Item>
       <Stack.Divider />
       <Stack.Item>
-        <Button
-          align="center"
-          fontSize="1.2em"
-          fluid
-          selected={currentPage === GamePreferencesSelectedPage.Character}
-          onClick={() => {
+        <PageButton
+          currentPage={currentPage}
+          page={GamePreferencesSelectedPage.Character}
+          setPage={(_) => {
             act('open_character');
           }}
         >
           Characters
+        </PageButton>
+        <Button
+          onClick={() => {
+            act('open_store');
+          }}
+        >
+          Store
         </Button>
       </Stack.Item>
       <Stack.Divider />

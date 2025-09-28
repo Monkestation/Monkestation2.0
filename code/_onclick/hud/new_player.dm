@@ -136,10 +136,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_TAB_GAME_PREFERENCES_CHARACTER)
 
 /atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
 	SIGNAL_HANDLER
@@ -390,10 +387,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_TAB_GAME_PREFERENCES_SETTINGS)
 
 /atom/movable/screen/lobby/button/settings/proc/enable_settings()
 	SIGNAL_HANDLER
