@@ -25,6 +25,7 @@ import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
+import './styles/themes/soviet.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
 import './styles/themes/admintickets.scss';
