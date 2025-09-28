@@ -13,12 +13,12 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
-	hardware_flag = PROGRAM_TABLET
+	hardware_flag = PROGRAM_PDA
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
@@ -27,6 +27,8 @@
 	looping_sound = FALSE
 
 	action_slots = ALL
+
+	internal_cell = /obj/item/stock_parts/power_store/cell/high // MONKE EDIT: Upgraded cell
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -68,7 +70,7 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
@@ -143,7 +145,7 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!is_type_in_list(attacking_item, contained_item))
@@ -160,19 +162,9 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
-
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()

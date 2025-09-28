@@ -158,11 +158,6 @@
 		if (is_species(human_victim, /datum/species/golem/sand))
 			. = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
-
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
 	desc = "A shimmering forcefield protecting the colossus."
@@ -190,6 +185,10 @@
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
+
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
@@ -271,8 +270,8 @@
 		return
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
-/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature())
+/obj/machinery/anomalous_crystal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
@@ -574,6 +573,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

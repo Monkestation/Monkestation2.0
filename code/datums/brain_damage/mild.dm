@@ -192,42 +192,40 @@
 	gain_text = span_warning("You lose your grasp on complex words.")
 	lose_text = span_notice("You feel your vocabulary returning to normal again.")
 
-	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
-
 /datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
-		var/list/message_split = splittext(message, " ")
+		var/list/message_split = splittext_char(message, " ")
 		var/list/new_message = list()
 
 		for(var/word in message_split)
 			var/suffix = ""
 			var/suffix_foundon = 0
 			for(var/potential_suffix in list("." , "," , ";" , "!" , ":" , "?"))
-				suffix_foundon = findtext(word, potential_suffix, -length(potential_suffix))
+				suffix_foundon = findtext_char(word, potential_suffix, -length(potential_suffix))
 				if(suffix_foundon)
 					suffix = potential_suffix
 					break
 
 			if(suffix_foundon)
-				word = copytext(word, 1, suffix_foundon)
+				word = copytext_char(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(lowertext(word) in common_words)
+			if(GLOB.most_common_words[LOWER_TEXT(word)])
 				new_message += word + suffix
 			else
-				if(prob(30) && message_split.len > 2)
+				if(prob(30) && length(message_split) > 2)
 					new_message += pick("uh","erm")
 					break
 				else
 					var/list/charlist = text2charlist(word)
-					charlist.len = round(charlist.len * 0.5, 1)
+					charlist.len = round(length(charlist) * 0.5, 1)
 					shuffle_inplace(charlist)
 					new_message += jointext(charlist, "") + suffix
 
 		message = jointext(new_message, " ")
 
-	speech_args[SPEECH_MESSAGE] = trim(message)
+	speech_args[SPEECH_MESSAGE] = trimtext(message)
 
 /datum/brain_trauma/mild/mind_echo
 	name = "Mind Echo"
@@ -242,13 +240,13 @@
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
 
-	if(hear_dejavu.len >= 5)
+	if(length(hear_dejavu) >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
 			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
 			hearing_args[HEARING_RAW_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_RAW_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
 			return
-	if(hear_dejavu.len >= 15)
+	if(length(hear_dejavu) >= 15)
 		if(prob(50))
 			popleft(hear_dejavu) //Remove the oldest
 			hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
@@ -256,12 +254,12 @@
 		hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
 
 /datum/brain_trauma/mild/mind_echo/handle_speech(datum/source, list/speech_args)
-	if(speak_dejavu.len >= 5)
+	if(length(speak_dejavu) >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(speak_dejavu)
 			speech_args[SPEECH_MESSAGE] = deja_vu
 			return
-	if(speak_dejavu.len >= 15)
+	if(length(speak_dejavu) >= 15)
 		if(prob(50))
 			popleft(speak_dejavu) //Remove the oldest
 			speak_dejavu += speech_args[SPEECH_MESSAGE]
@@ -334,3 +332,18 @@
 		color = "orange",
 	)
 	//MONKESTATION ADDITION END
+
+/datum/brain_trauma/mild/advert_force_speak
+	name = "Advertisement Echolalia"
+	desc = "Patient has an unsuppressible impulse to repeat consumeristic slogans."
+	scan_desc = "advertisement echolalia"
+	gain_text = span_warning("You feel the need to mimic advertisements.")
+	lose_text = span_notice("You no longer feel the need to mimic advertisements.")
+
+/datum/brain_trauma/mild/advert_force_speak/on_gain()
+	src.owner.AddComponentFrom(REF(src), /datum/component/advert_force_speak, rand(1 MINUTE))
+	return ..()
+
+/datum/brain_trauma/mild/advert_force_speak/on_lose(silent)
+	src.owner.RemoveComponentSource(REF(src), /datum/component/advert_force_speak)
+	return ..()

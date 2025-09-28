@@ -7,6 +7,7 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -51,14 +52,6 @@
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
-
-/obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
-	. = ..()
-	handcuff_time = modify_fantasy_variable("handcuff_time", handcuff_time, -bonus * 2, minimum = 0.3 SECONDS)
-
-/obj/item/restraints/handcuffs/remove_fantasy_bonuses(bonus)
-	handcuff_time = reset_fantasy_variable("handcuff_time", handcuff_time)
-	return ..()
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -135,6 +128,34 @@
 		qdel(src)
 	return
 
+/obj/item/restraints/handcuffs/silver
+	name = "silver handcuffs"
+	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, but some say they can contain certain creatures of the night..."
+	breakouttime = 45 SECONDS
+
+	trashtype = /obj/item/restraints/handcuffs/silver/used
+
+	color = list(
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1,
+		0.4,0.4,0.4
+	)
+
+/obj/item/restraints/handcuffs/silver/used
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
+	user.visible_message(span_danger("The [name] shatter into a hundred pieces!"))
+
+	return ..()
+
+/obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
+	. = ..()
+
+	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
+		target.apply_status_effect(/datum/status_effect/silver_cuffed)
+
 /**
  * # Alien handcuffs
  *
@@ -153,6 +174,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -172,6 +194,7 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
@@ -291,31 +314,31 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
+/obj/item/restraints/handcuffs/cable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //Slapcrafting
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = attacking_item
 		if (R.use(1))
 			var/obj/item/wirerod/W = new /obj/item/wirerod
 			remove_item_from_storage(user)
 			user.put_in_hands(W)
-			to_chat(user, span_notice("You wrap [src] around the top of [I]."))
+			to_chat(user, span_notice("You wrap [src] around the top of [attacking_item]."))
 			qdel(src)
 		else
 			to_chat(user, span_warning("You need one rod to make a wired rod!"))
 			return
-	else if(istype(I, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = I
+	else if(istype(attacking_item, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = attacking_item
 		if(M.get_amount() < 6)
 			to_chat(user, span_warning("You need at least six iron sheets to make good enough weights!"))
 			return
-		to_chat(user, span_notice("You begin to apply [I] to [src]..."))
-		if(do_after(user, 35, target = src))
+		to_chat(user, span_notice("You begin to apply [attacking_item] to [src]..."))
+		if(do_after(user, 3.5 SECONDS, target = src))
 			if(M.get_amount() < 6 || !M)
 				return
 			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
-			to_chat(user, span_notice("You make some weights out of [I] and tie them to [src]."))
+			to_chat(user, span_notice("You make some weights out of [attacking_item] and tie them to [src]."))
 			remove_item_from_storage(user)
 			qdel(src)
 	else
@@ -364,6 +387,31 @@
 /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	desc = "A pair of broken fake zipties."
 	icon_state = "cuff_used"
+
+/**
+ * Handcuffs used for the security holobarrier projector
+ * the handcuffs themselfes should be un-obtainable, /used version is applied on our actual target
+ * as strong zipties, take 50% longer to handcuff someone with
+ */
+
+/obj/item/restraints/handcuffs/holographic
+	name = "holographic energy field"
+	desc = "A weirdly solid holographic field... how did you get this? this item gives you the permission to scream at coders."
+	icon_state = "handcuffAlien"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	breakouttime = 45 SECONDS
+	trashtype = /obj/item/restraints/handcuffs/holographic/used
+	flags_1 = NONE
+
+/obj/item/restraints/handcuffs/holographic/used
+	desc = "A holographic projection of handcuffs, suprisingly hard to break out of"
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/holographic/used/dropped(mob/user)
+	user.visible_message(span_danger("[user]'s [name] dissapears!"), \
+							span_userdanger("[user]'s [name] dissapears!"))
+	. = ..()
 
 /**
  * # Generic leg cuffs
@@ -491,7 +539,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 15 SECONDS)
 
 /**
  * Handles energy snares disappearing

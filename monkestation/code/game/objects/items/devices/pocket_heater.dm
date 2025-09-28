@@ -6,7 +6,7 @@
 
 /obj/item/pocket_heater/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	capacitor = new /obj/item/stock_parts/capacitor(src)
 
 /obj/item/pocket_heater
@@ -16,7 +16,7 @@
 	icon_state = "heater_off"
 	w_class = WEIGHT_CLASS_SMALL
 
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/obj/item/stock_parts/capacitor/capacitor
 
 	var/on = FALSE
@@ -55,8 +55,8 @@
 	else
 		. += span_warning("It lacks a capacitor.")
 
-/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "already has a cell!")
 		else

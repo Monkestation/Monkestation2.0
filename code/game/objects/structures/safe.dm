@@ -60,7 +60,7 @@ FLOOR SAFES
 	icon_state = "[initial(icon_state)][open ? "-open" : null]"
 	return ..()
 
-/obj/structure/safe/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(open)
 		. = TRUE //no afterattack
 		if(attacking_item.w_class + space <= maxspace)
@@ -123,7 +123,7 @@ FLOOR SAFES
 
 	return data
 
-/obj/structure/safe/ui_act(action, params)
+/obj/structure/safe/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

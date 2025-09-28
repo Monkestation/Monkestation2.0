@@ -47,7 +47,7 @@
 	var/turf/deploy_location //Where our deployed_object gets put
 	var/new_direction //What direction do we want our deployed object in
 	if(user)
-		if(!ishuman(user))
+		if(!user.can_perform_action(source, NEED_DEXTERITY))
 			return
 
 		deploy_location = get_step(user, user.dir) //Gets spawn location for thing_to_be_deployed if there is a user

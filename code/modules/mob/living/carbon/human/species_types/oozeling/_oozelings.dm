@@ -29,7 +29,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = /datum/blood_type/slime
 	inert_mutation = /datum/mutation/acid_touch
-	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	inherent_factions = list(FACTION_SLIME) //an oozeling wont be eaten by their brethren
@@ -208,7 +207,10 @@
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	slime.blood_volume = max(slime.blood_volume - (30 * water_multiplier), 0)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
-		to_chat(slime, span_danger("The water causes you to melt away!"))
+		slime.visible_message(
+			span_warning("[slime]'s form melts away from the water!"),
+			span_danger("The water causes you to melt away!"),
+		)
 		slime.balloon_alert(slime, "water melts you!")
 		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return NONE
@@ -271,6 +273,12 @@
 			SPECIES_PERK_ICON = "burn",
 			SPECIES_PERK_NAME = "Incombustible",
 			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Fire Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,

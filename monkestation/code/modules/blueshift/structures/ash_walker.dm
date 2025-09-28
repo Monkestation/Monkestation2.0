@@ -70,7 +70,7 @@
 
 	return ..()
 
-/obj/structure/wormfarm/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/wormfarm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//we want to check for worms first because they are a type of food as well...
 	if(istype(attacking_item, /obj/item/food/bait/worm))
 		if(current_worm >= max_worm)
@@ -151,7 +151,7 @@
 	/// whether it has a curse attached to it
 	var/cursed = FALSE
 
-/obj/structure/spawner/lavaland/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/spawner/lavaland/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/cursed_dagger))
 		playsound(get_turf(src), 'sound/magic/demon_attack1.ogg', 50, TRUE)
 		cursed = !cursed
@@ -245,15 +245,16 @@
 /obj/item/stack/rail_track/fifty
 	amount = 50
 
-/obj/item/stack/rail_track/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!isopenturf(target) || !proximity_flag)
-		return ..()
-	var/turf/target_turf = get_turf(target)
-	var/obj/structure/railroad/check_rail = locate() in target_turf
+/obj/item/stack/rail_track/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/obj/structure/railroad/check_rail = locate() in interacting_with
 	if(check_rail || !use(1))
-		return ..()
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
-	new /obj/structure/railroad(get_turf(target))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You place [src] on [interacting_with]."))
+	new /obj/structure/railroad(interacting_with)
+	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
 	name = "railroad track"
@@ -286,7 +287,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/rail_track(get_turf(src))
 	qdel(src)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/rail_cart
 	name = "rail cart"
@@ -324,15 +325,15 @@
 	if(has_buckled_mobs())
 		. += railoverlay
 
-/obj/vehicle/ridden/rail_cart/AltClick(mob/user)
+/obj/vehicle/ridden/rail_cart/click_alt(mob/user)
 	attach_trailer()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/rail_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	atom_storage?.show_contents(user)
 
-/obj/vehicle/ridden/rail_cart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/vehicle/ridden/rail_cart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/use_item = attacking_item
 		if(has_sand || !use_item.use(10))
@@ -409,7 +410,7 @@
 	if(!find_farm)
 		. += span_notice("<br>Use five sand to allow planting!")
 
-/obj/structure/plant_tank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/plant_tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food) || istype(attacking_item, /obj/item/stack/worm_fertilizer))
 		var/obj/item/stack/stack_item = attacking_item
 		if(isstack(stack_item))
@@ -485,22 +486,20 @@
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "[anchored ? "un" : ""]bolting")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	anchored = !anchored
 	balloon_alert(user, "[anchored ? "" : "un"]bolted")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	deconstruct()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/deconstruct(disassembled)
 	var/target_turf = get_turf(src)
@@ -910,7 +909,7 @@
 	update_appearance()
 	return ..()
 
-/obj/structure/simple_farm/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/simple_farm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//if its a shovel or knife, dismantle
 	if(attacking_item.tool_behaviour == TOOL_SHOVEL || attacking_item.tool_behaviour == TOOL_KNIFE)
 		var/turf/src_turf = get_turf(src)
@@ -1197,7 +1196,7 @@
 	. += span_notice("<br>There are currently [has_ants ? "" : "no "]ants in the farm.")
 	. += span_notice("To add ants, feed the farm some food.")
 
-/obj/structure/antfarm/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/antfarm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food))
 		qdel(attacking_item)
 		balloon_alert(user, "food has been placed")

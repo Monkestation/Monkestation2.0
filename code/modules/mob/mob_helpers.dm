@@ -209,7 +209,7 @@
 // moved out of admins.dm because things other than admin procs were calling this.
 /**
  * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
- * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
+ * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with ANTAG_FAKE won't pass.
 */
 /proc/is_special_character(mob/M, allow_fake_antags = FALSE)
 	if(!SSticker.HasRoundStarted())
@@ -231,7 +231,7 @@
 	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
 	var/faker = FALSE
 	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+		if((antag_datum.antag_flags & ANTAG_FAKE))
 			faker = TRUE
 		else
 			return TRUE
@@ -239,6 +239,23 @@
 	// If 'faker' was assigned TRUE in the above loop and the argument 'allow_fake_antags' is set to TRUE, this passes.
 	// Else, return FALSE.
 	return (faker && allow_fake_antags)
+
+/**
+ * Checks if this mob is an antag
+ * By default excludes antags like Valentines, which are "fake antags"
+ */
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
+			return TRUE
+
+	return FALSE
+
+/mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
+	return FALSE
+
+/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
+	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
 
 /**
  * Fancy notifications for ghosts
@@ -330,12 +347,14 @@
 		return
 	return TRUE
 
-///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
+///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
+		return FALSE
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
+		return FALSE
 	return TRUE
 
 /**
@@ -413,7 +432,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)

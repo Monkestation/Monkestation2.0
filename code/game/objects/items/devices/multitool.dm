@@ -41,10 +41,11 @@
 	. = ..()
 	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
 
-/obj/item/multitool/attack_self(mob/user, list/modifiers)
-	. = ..()
+/obj/item/multitool/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !isitem(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
-	if(. || !apc_scanner)
+/obj/item/multitool/attack_self(mob/user, list/modifiers)
+	if(!apc_scanner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))
@@ -52,8 +53,8 @@
 
 	COOLDOWN_START(src, next_apc_scan, 2 SECONDS)
 
-	var/area/local_area = get_area(src)
-	var/obj/machinery/power/apc/power_controller = local_area.apc
+	var/area/local_area = get_area(user)
+	var/obj/machinery/power/apc/power_controller = local_area?.apc
 	if(!power_controller)
 		user.balloon_alert(user, "couldn't find apc!")
 		return
@@ -96,14 +97,25 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
+/**
+ * Sets the multitool internal object buffer
+ *
+ * Arguments:
+ * * buffer - the new object to assign to the multitool's buffer
+ */
 /obj/item/multitool/proc/set_buffer(datum/buffer)
 	if(src.buffer)
 		UnregisterSignal(src.buffer, COMSIG_QDELETING)
-	if(QDELETED(buffer))
-		return
 	src.buffer = buffer
-	RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+	if(!QDELETED(buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
 
+/**
+ * Called when the buffer's stored object is deleted
+ *
+ * This proc does not clear the buffer of the multitool, it is here to
+ * handle the deletion of the object the buffer references
+ */
 /obj/item/multitool/proc/on_buffer_del(datum/source)
 	SIGNAL_HANDLER
 	buffer = null

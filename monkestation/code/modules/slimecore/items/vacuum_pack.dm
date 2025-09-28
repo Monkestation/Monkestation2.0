@@ -80,9 +80,9 @@
 	return ..()
 
 /obj/item/vacuum_pack/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
 	modified = !modified
 	to_chat(user, span_notice("You turn the safety switch on [src] [modified ? "off" : "on"]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/vacuum_pack/process(seconds_per_tick)
 	if(!(VACUUM_PACK_UPGRADE_HEALING in upgrades))
@@ -102,33 +102,27 @@
 		return
 	. += span_info("It has [linked.stored_matter] unit\s of biomass.")
 
-/obj/item/vacuum_pack/attackby(obj/item/item, mob/living/user, params)
-	if(item == nozzle)
+/obj/item/vacuum_pack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool == nozzle)
 		remove_nozzle()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(user.istate & ISTATE_HARM)
-		return ..()
+	if(!istype(tool, /obj/item/disk/vacuum_upgrade))
+		return NONE
+	var/obj/item/disk/vacuum_upgrade/upgrade = tool
+	if(illegal)
+		to_chat(user, span_warning("[src] has no slot to insert [upgrade] into!"))
+		return ITEM_INTERACT_BLOCKING
+	if(upgrade.upgrade_type in upgrades)
+		to_chat(user, span_warning("[src] already has a [upgrade.upgrade_type] upgrade!"))
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/disk/vacuum_upgrade))
-		var/obj/item/disk/vacuum_upgrade/upgrade = item
-
-		if(illegal)
-			to_chat(user, span_warning("[src] has no slot to insert [upgrade] into!"))
-			return
-
-		if(upgrade.upgrade_type in upgrades)
-			to_chat(user, span_warning("[src] already has a [upgrade.upgrade_type] upgrade!"))
-			return
-
-		upgrades += upgrade.upgrade_type
-		upgrade.on_upgrade(src)
-		to_chat(user, span_notice("You install a [upgrade.upgrade_type] upgrade into [src]."))
-		playsound(user, 'sound/machines/click.ogg', 30, TRUE)
-		qdel(upgrade)
-		return
-
-	return ..()
+	upgrades += upgrade.upgrade_type
+	upgrade.on_upgrade(src)
+	to_chat(user, span_notice("You install a [upgrade.upgrade_type] upgrade into [src]."))
+	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
+	qdel(upgrade)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/vacuum_pack/ui_action_click(mob/user)
 	toggle_nozzle(user)
@@ -175,10 +169,10 @@
 	else
 		return ..()
 
-/obj/item/vacuum_pack/MouseDrop(obj/over_object)
+/obj/item/vacuum_pack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/wearer = loc
-	if(istype(wearer) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/hand = over_object
+	if(istype(wearer) && istype(over, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/hand = over
 		wearer.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 	return ..()
 
@@ -299,11 +293,12 @@
 
 	return spawn_type
 
-/obj/item/vacuum_nozzle/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/vacuum_nozzle/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
-	if(pack.modified && pack.ghost_busting && target != pack.ghost_busting && COOLDOWN_FINISHED(pack, busting_throw_cooldown))
-		pack.ghost_busting.throw_at(get_turf(target), get_dist(pack.ghost_busting, target), 3, user)
+/obj/item/vacuum_nozzle/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(pack.modified && pack.ghost_busting && interacting_with != pack.ghost_busting && COOLDOWN_FINISHED(pack, busting_throw_cooldown))
+		pack.ghost_busting.throw_at(get_turf(interacting_with), get_dist(pack.ghost_busting, interacting_with), 3, user)
 		COOLDOWN_START(pack, busting_throw_cooldown, 3 SECONDS)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -337,81 +332,84 @@
 	if(isturf(user.loc))
 		ADD_TRAIT(spawned, VACPACK_THROW, "vacpack")
 		spawned.pass_flags |= PASSMOB
-		spawned.throw_at(target, min(get_dist(user, target), (pack.illegal ? 5 : 11)), 1, user, gentle = TRUE) //Gentle so eggs have 50% instead of 12.5% to spawn a chick
+		spawned.throw_at(interacting_with, min(get_dist(user, interacting_with), (pack.illegal ? 5 : 11)), 1, user, gentle = TRUE) //Gentle so eggs have 50% instead of 12.5% to spawn a chick
 
 	user.visible_message(span_warning("[user] shoots [spawned] out their [src]!"), span_notice("You fabricate and shoot [spawned] out of your [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, click_parameters)
-	. = ..()
-	if(istype(target, /obj/machinery/biomass_recycler) && target.Adjacent(user))
-		if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
-			to_chat(user, span_warning("[pack] does not posess a required upgrade!"))
-			return
-		pack.linked = target
-		to_chat(user, span_notice("You link [pack] to [target]."))
-		return
+/obj/item/vacuum_nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(do_suck(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	do_suck(target, user)
+/obj/item/vacuum_nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/biomass_recycler))
+		return ranged_interact_with_atom(interacting_with, user, modifiers)
+	if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
+		to_chat(user, span_warning("[pack] does not posess a required upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	pack.linked = interacting_with
+	to_chat(user, span_notice("You link [pack] to [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/vacuum_nozzle/proc/do_suck(atom/movable/target, mob/user)
 	if(pack.ghost_busting)
-		return
+		return FALSE
 
 	if(pack.modified && !pack.ghost_busting && isrevenant(target) && get_dist(user, target) < 4)
 		start_busting(target, user)
-		return
+		return TRUE
 
 	if(!isliving(target))
 		spew_contents(target, user)
-		return
+		return TRUE
 	var/mob/living/living_target = target
 
 	if(isslime(living_target))
 		if(get_dist(user, living_target) > pack.range)
 			to_chat(user, span_warning("[living_target] is too far away!"))
-			return
+			return FALSE
 		if(!(living_target in view(user, pack.range)))
 			to_chat(user, span_warning("You can't reach [living_target]!"))
-			return
+			return FALSE
 		if(living_target.anchored || living_target.move_resist > MOVE_FORCE_STRONG)
 			to_chat(user, span_warning("You can't manage to suck [living_target] in!"))
-			return
+			return FALSE
 		if(HAS_TRAIT(living_target, TRAIT_SLIME_RABID) && !pack.illegal && !(VACUUM_PACK_UPGRADE_PACIFY in pack.upgrades))
 			to_chat(user, span_warning("[living_target] is wiggling far too much for you to suck it in!"))
-			return
+			return FALSE
 		if(LAZYLEN(pack.stored) >= pack.capacity)
 			to_chat(user, span_warning("[pack] is already filled to the brim!"))
-			return
+			return FALSE
 		if(!do_after(user, pack.speed, living_target, timed_action_flags = IGNORE_TARGET_LOC_CHANGE|IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(suck_checks), living_target, user)))
-			return
+			return FALSE
 		if(LAZYLEN(pack.stored) >= pack.capacity) // This is checked again after the do_after because otherwise you can bypass the cap by clicking fast enough
-			return
+			return FALSE
 		if(SEND_SIGNAL(living_target, COMSIG_LIVING_VACUUM_PRESUCK, src, user) & COMPONENT_LIVING_VACUUM_CANCEL_SUCK)
-			return
+			return FALSE
 		suck_victim(living_target, user)
-		return
+		return TRUE
 
 	if(pack.linked && (living_target.type in pack.linked.recyclable_types))
 		if(get_dist(user, living_target) > pack.range)
 			to_chat(user, span_warning("[living_target] is too far away!"))
-			return
+			return FALSE
 		if(!(living_target in view(user, pack.range)))
 			to_chat(user, span_warning("You can't reach [living_target]!"))
-			return
+			return FALSE
 		if(living_target.anchored || living_target.move_resist > MOVE_FORCE_STRONG)
 			to_chat(user, span_warning("You can't manage to suck [living_target] in!"))
-			return
+			return FALSE
 		if(ismonkey(living_target)) // Snowflake that blocks recycling healthy monkeys
 			var/mob/living/carbon/human/species/monkey/target_monkey = living_target
 			if(target_monkey.stat == CONSCIOUS)
 				to_chat(user, span_warning("[target_monkey] is struggling far too much for you to suck it in!"))
-				return
+				return FALSE
 
 		living_target.buckled?.unbuckle_mob(living_target, force = TRUE)
 		living_target.unbuckle_all_mobs(force = TRUE)
 		if(!do_after(user, pack.speed, living_target, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-			return
+			return FALSE
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		var/matrix/animation_matrix = matrix()
 		animation_matrix.Scale(0.5)
@@ -421,9 +419,9 @@
 		user.visible_message(span_warning("[user] sucks [living_target] into their [pack]!"), span_notice("You successfully suck [living_target] into your [src] and recycle it."))
 		qdel(living_target)
 		playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
-		pack.linked.use_power(500)
+		pack.linked.use_energy(500)
 		pack.linked.stored_matter += pack.linked.cube_production * pack.linked.recyclable_types[living_target.type]
-		return
+		return TRUE
 
 /// Shoots out whatever is stored inside the vacuum
 /obj/item/vacuum_nozzle/proc/spew_contents(atom/movable/target, mob/user)
@@ -608,7 +606,7 @@
 		do_suck(chosen, user)
 
 /obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
-	return user.get_active_held_item() == src && !user.incapacitated() && in_view_range(user, target_turf, require_same_z = TRUE)
+	return user.get_active_held_item() == src && !user.incapacitated() && CAN_THEY_SEE(user, target_turf)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

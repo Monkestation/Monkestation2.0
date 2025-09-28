@@ -422,8 +422,10 @@
 	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
-	if(!data)
+	if(!islist(data))
 		data = list("misc" = 0)
+	else if(!IS_SAFE_NUM(data["misc"]))
+		data["misc"] = 0
 
 	data["misc"] += seconds_per_tick SECONDS * REM
 	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)

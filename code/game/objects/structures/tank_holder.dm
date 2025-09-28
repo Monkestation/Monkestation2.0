@@ -42,16 +42,16 @@
 		. += "It is empty."
 	. += span_notice("It is held together by some <b>screws</b>.")
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/tank_holder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((user.istate & ISTATE_HARM))
 		return ..()
-	if(W.tool_behaviour == TOOL_WRENCH)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
-		if(W.use_tool(src, user, 20, volume=50))
+		if(attacking_item.use_tool(src, user, 20, volume=50))
 			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
 			set_anchored(!anchored)
-	else if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
-		to_chat(user, span_warning("[W] does not fit in [src]."))
+	else if(!SEND_SIGNAL(attacking_item, COMSIG_CONTAINER_TRY_ATTACH, src, user))
+		to_chat(user, span_warning("[attacking_item] does not fit in [src]."))
 	return
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)

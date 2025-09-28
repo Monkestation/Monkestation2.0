@@ -38,8 +38,12 @@
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 ///from base of mob/living/set_body_position()
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
-///From post-can inject check of syringe after attack (mob/user)
-#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+/// Sent to a mob being injected with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+/// Sent to a mob being withdrawn from with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
+///from base of mob/living/set_usable_legs()
+#define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
@@ -117,6 +121,8 @@
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
 ///from base of mob/living/incapacitate() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_INCAPACITATE "living_incapacitate"
+///from base of mob/living/Daze() (amount, ignore_canstun)
+#define COMSIG_LIVING_STATUS_DAZE "living_daze"
 ///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
 ///from base of mob/living/Sleeping() (amount, ignore_canstun)
@@ -195,11 +201,6 @@
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
 
-/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
-#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
-	/// Return to allow the parry to happen
-	#define ALLOW_PARRY (1<<0)
-
 /// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
 #define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
 	/// Return to prevent the projectile from executing any code in on_parry()
@@ -217,12 +218,26 @@
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
+	#define SUCCESSFUL_BLOCK (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
 
 #define COMSIG_LIVING_BODY_TEMPERATURE_CHANGE "living_body_temperature_change"
 
@@ -231,3 +246,6 @@
 	#define HOMEOSTASIS_HANDLED (1<<0)
 	/// Return to not reduce hunger at all
 	#define HOMEOSTASIS_NO_HUNGER (1<<1)
+
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
+#define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"

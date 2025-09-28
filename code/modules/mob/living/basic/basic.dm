@@ -333,7 +333,7 @@
 
 /mob/living/basic/update_held_items()
 	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_REDUCED)
 		return
 	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/held in held_items)
@@ -341,6 +341,12 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+/mob/living/basic/update_cached_insulation()
+	return
+
+/mob/living/basic/get_insulation(temperature)
+	return temperature_insulation
 
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()

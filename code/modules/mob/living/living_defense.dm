@@ -1,5 +1,5 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, armour_ignorance = null, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
 	var/our_armor = getarmor(def_zone, attack_flag)
 
 	if(our_armor <= 0)
@@ -11,7 +11,7 @@
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		our_armor = armour_penetration == 100 ? 0 : 100 * max(our_armor - armour_penetration, 0) / (100 - armour_penetration)
+		our_armor = clamp(round((our_armor * ((100 - armour_penetration) * 0.01)), 1) - armour_ignorance, min(our_armor, 0), 100) //Armor penetration is now a percent reduction - I.E. 20 AP = armor is 20% *less* effective
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
@@ -242,6 +242,21 @@
 	. = ..()
 	adjust_fire_stacks(3)
 	ignite_mob()
+
+/**
+ * Called when a mob is grabbing another mob.
+ */
+/mob/living/proc/grab(mob/living/target)
+	if(!istype(target))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
+		return FALSE
+	if(ishuman(target)) // MONKE EDIT: only humans can block it seems like
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.check_block()) // MONKE EDIT: No args for block check // src, 0, "[src]'s grab", UNARMED_ATTACK
+			return FALSE
+	target.grabbedby(src)
+	return TRUE
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))

@@ -174,7 +174,7 @@
 	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		bomb_assemble(attacking_item, user)
@@ -211,7 +211,7 @@
 	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
-/obj/item/tank/ui_act(action, params)
+/obj/item/tank/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -38,8 +38,9 @@
 
 	if (user == source)
 		return
-
 	if (over != user)
+		return
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
 	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
@@ -61,6 +62,7 @@
 		LAZYSET(strip_menus, source, strip_menu)
 
 	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item
@@ -348,8 +350,7 @@
 
 		LAZYINITLIST(result)
 
-		result["icon"] = ref(item.icon)
-		result["icon_state"] = item.icon_state
+		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
 		result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_action(owner, user)
 

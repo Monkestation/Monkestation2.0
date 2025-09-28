@@ -53,23 +53,21 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/plumbing/ooze_sucker/LateInitialize()
+/obj/machinery/plumbing/ooze_sucker/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/plumbing/ooze_sucker/Destroy()
-	GLOB.ooze_suckers -= src
-	return ..()
-
-/obj/machinery/plumbing/ooze_sucker/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
-	for(var/obj/machinery/slime_pen_controller/main in GLOB.machines)
+	for(var/obj/machinery/slime_pen_controller/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 		if(main.mapping_id != mapping_id)
 			continue
 		linked_controller = main
 		main.linked_sucker = src
 		return
+
+/obj/machinery/plumbing/ooze_sucker/Destroy()
+	GLOB.ooze_suckers -= src
+	return ..()
 
 /obj/machinery/plumbing/ooze_sucker/examine(mob/user)
 	. = ..()
@@ -175,7 +173,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	var/turf/local_turf = get_turf(src)
 	var/list/turf/affected_turfs = list()
 
-	for(var/turf/candidate in local_turf.get_atmos_adjacent_turfs(alldir = TRUE) + local_turf)
+	for(var/turf/candidate as anything in RANGE_TURFS(1, local_turf))
 		// don't bother considering turfs that don't even have slime ooze
 		if(!candidate.liquids?.liquid_group?.total_reagent_volume)
 			continue
@@ -230,7 +228,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
-/obj/machinery/plumbing/ooze_sucker/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_sucker/click_ctrl(mob/user)
 	if(!can_interact(user) || !length(upgrade_disks))
 		return ..()
 
@@ -263,13 +261,10 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/sucker_upgrade
 	name = "ooze sucker upgrade disk"

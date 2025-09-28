@@ -47,18 +47,12 @@
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
-/obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	sweep(user, A, towards_player = FALSE)
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/pushbroom/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	sweep(user, interacting_with, towards_player = FALSE)
+	return NONE // I guess
 
-/obj/item/pushbroom/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-	sweep(user, target, towards_player = TRUE)
+/obj/item/pushbroom/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	sweep(user, interacting_with, towards_player = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**

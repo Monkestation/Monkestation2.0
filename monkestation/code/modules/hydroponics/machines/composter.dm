@@ -46,6 +46,12 @@
 			compost(to_compost)
 		to_chat(user, span_info("You empty \the [bag] into \the [src]."))
 
+/obj/machinery/composters/attack_robot(mob/user)
+	. = ..()
+	if(user.Adjacent(src))
+		attack_hand(user)
+	return TRUE
+
 /obj/machinery/composters/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -159,25 +165,27 @@
 	balloon_alert(user, "safeties overriden")
 	return TRUE
 
-/obj/item/seeds/MouseDrop(atom/over, atom/src_location, over_location, src_control, over_control, params)
+/obj/item/seeds/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !istype(src_location))
+	if(!Adjacent(usr, over) || !isatom(src_location))
 		return
+	var/atom/seed_loc = src_location
 	// ensure the stuff we're mouse dropping is ALSO adjacent
 	var/obj/machinery/composters/dropped = over
 	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(src_location.contents)
+		dropped.compost(seed_loc.contents)
 
-/obj/item/food/MouseDrop(atom/over, atom/src_location, over_location, src_control, over_control, params)
+/obj/item/food/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !istype(src_location))
+	if(!Adjacent(usr, over) || !isatom(src_location))
 		return
+	var/atom/food_loc = src_location
 	// ensure the stuff we're mouse dropping is ALSO adjacent
 	var/obj/machinery/composters/dropped = over
 	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(src_location.contents)
+		dropped.compost(food_loc.contents)
 
 /obj/item/stack/biocube
 	name = "biocube"

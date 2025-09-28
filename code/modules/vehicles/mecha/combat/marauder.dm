@@ -42,7 +42,7 @@
 
 // better parts since TC
 /obj/vehicle/sealed/mecha/marauder/populate_parts()
-	cell = new /obj/item/stock_parts/cell/super(src)
+	cell = new /obj/item/stock_parts/power_store/cell/super(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
 	manipulator = new /obj/item/stock_parts/manipulator/pico(src)
@@ -58,7 +58,7 @@
 	)
 
 /obj/vehicle/sealed/mecha/marauder/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	manipulator = new /obj/item/stock_parts/manipulator/femto(src)
@@ -73,7 +73,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_SMOKE) && chassis.smoke_charges>0)
 		chassis.smoke_system.start()
 		chassis.smoke_charges--
 		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_SMOKE, chassis.smoke_cooldown)
@@ -118,7 +118,7 @@
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rotary,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
@@ -163,7 +163,7 @@
 	max_ammo()
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	manipulator = new /obj/item/stock_parts/manipulator/femto(src)

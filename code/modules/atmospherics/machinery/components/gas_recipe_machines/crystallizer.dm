@@ -53,13 +53,13 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", attacking_item))
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, attacking_item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -115,7 +115,7 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(panel_open)
@@ -327,7 +327,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
