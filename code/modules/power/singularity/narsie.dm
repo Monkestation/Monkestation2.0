@@ -135,7 +135,7 @@
 	else
 		qdel(created_drone)
 		return
-	created_drone.mind.add_antag_datum(/datum/antagonist/cultist)
+	created_drone.mind.add_antag_datum(/datum/antagonist/cult)
 //monkestation edit end
 
 /obj/narsie/process()
