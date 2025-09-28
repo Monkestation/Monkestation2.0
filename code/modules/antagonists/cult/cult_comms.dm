@@ -46,7 +46,7 @@
 	var/my_message
 	if(!message)
 		return
-	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
+	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common, forced = "cult invocation")
 	user.whisper(html_decode(message), filterproof = TRUE)
 	var/title = "Acolyte"
 	var/span = "cult italic"
@@ -220,7 +220,7 @@
 		if(!LAZYLEN(destinations))
 			to_chat(owner, span_warning("You need more space to summon your cult!"))
 			return
-		if(do_after(owner, 30, target = owner))
+		if(do_after(owner, 3 SECONDS, target = owner))
 			for(var/datum/mind/B in antag.cult_team.members)
 				if(B.current && B.current.stat != DEAD)
 					var/turf/mobloc = get_turf(B.current)

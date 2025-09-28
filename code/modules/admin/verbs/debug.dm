@@ -134,9 +134,9 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Gran
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/pda))
-				var/obj/item/modular_computer/pda/PDA = worn
-				PDA.InsertID(id, H)
+			if(istype(worn, /obj/item/modular_computer))
+				var/obj/item/modular_computer/worn_computer = worn
+				worn_computer.InsertID(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn

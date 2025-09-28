@@ -3,7 +3,7 @@
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	mob_size = MOB_SIZE_LARGE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
 	bodytemp_cold_damage_limit = -1

@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
@@ -59,10 +60,9 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+/obj/structure/closet/crate/secure/loot/click_alt(mob/living/user)
+	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -126,7 +126,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/secure/loot/after_open(mob/living/user, force)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)

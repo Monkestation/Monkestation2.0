@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(species?.inert_mutation)
 		if(islist(species.inert_mutation))
 			var/list/inert_mutations = species.inert_mutation
-			for(var/mutation as anything in inert_mutations)
+			for(var/mutation in inert_mutations)
 				mutations_temp += GET_INITIALIZED_MUTATION(mutation)
 		else
 			mutations_temp += GET_INITIALIZED_MUTATION(species.inert_mutation)
@@ -540,13 +540,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			old_species.on_species_loss(src, new_race, pref_load)
 
 		dna.species.on_species_gain(src, old_species, pref_load)
-		if(ishuman(src))
-			qdel(language_holder)
-			var/species_holder = initial(mrace.species_language_holder)
-			language_holder = new species_holder(src)
-		update_atom_languages()
 		update_bodypart_speed_modifier()
-		log_mob_tag("SPECIES: [key_name(src)] \[[mrace]\]")
+		log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()

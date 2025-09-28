@@ -46,7 +46,7 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/get_power_desc_extended()
 	. = ..()
 	if(level_current >= DOMINATE_VASSALIZE_LEVEL)
-		. += "If your target is in critical condition or dead, they will instead be turned into a temporary Vassal. This will cost [TEMP_VASSALIZE_COST] blood. Pre-existing dead ghouls will simply be revived."
+		. += "If your target is in critical condition or dead, they will instead be turned into a temporary Vassal. This will cost [TEMP_VASSALIZE_COST] blood. Pre-existing dead ghouls will simply be revived. This also works on Oozeling cores."
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/get_power_explanation_extended()
 	. = list()
@@ -60,10 +60,20 @@
 	. += "If you use this on a currently dead normal Vassal, they will will not suddenly cease to live as if a temporary Vassal."
 	. += "They will have complete loyalty to you, until their death in [DisplayTimeText(get_vassal_duration())] upon use."
 	. += "Vassalizing or reviving a vassal will make this ability go on cooldown for [DisplayTimeText(get_vassalize_cooldown())]."
+	. += "This also works on Oozeling cores."
+
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckValidTarget(atom/target_atom)
+	// oozeling cores have special snowflake checks
+	if(!is_oozeling_core(target_atom))
+		return ..()
+	var/obj/item/organ/internal/brain/slime/oozeling_core = target_atom
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL && oozeling_core.mind)
+		return TRUE
+	return FALSE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckCanTarget(atom/target_atom)
 	var/mob/living/selected_target = target_atom
-	if(level_current >= DOMINATE_VASSALIZE_LEVEL || selected_target.stat >= SOFT_CRIT)
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL || (!is_oozeling_core(selected_target) && selected_target.stat >= SOFT_CRIT))
 		if(selected_target?.mind && owner.Adjacent(selected_target))
 			return TRUE
 	. = ..()
@@ -98,7 +108,7 @@
 	var/mob/living/target_mob = target
 	var/mob/living/user = owner
 	user.face_atom(target)
-	if(target_mob.stat != CONSCIOUS && level_current >= DOMINATE_VASSALIZE_LEVEL)
+	if((is_oozeling_core(target) || target_mob.stat != CONSCIOUS) && level_current >= DOMINATE_VASSALIZE_LEVEL)
 		if(user.Adjacent(target))
 			attempt_ghoulize(target, user)
 			return TRUE
@@ -125,34 +135,46 @@
 		return FALSE
 	if(!victim_has_blood(target))
 		return FALSE
+	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
+		owner.balloon_alert(owner, "their body refuses to react...")
+		return FALSE
 	if(vassal?.master == bloodsuckerdatum_power)
-		if(target.stat != DEAD)
-			owner.balloon_alert(owner, "not dead!")
-			return FALSE
-		power_activated_sucessfully(get_vassalize_cooldown())
+		if(is_oozeling_core(target))
+			var/obj/item/organ/internal/brain/slime/oozeling_core = target
+			target = oozeling_core.rebuild_body(nugget = FALSE)
+			if(QDELETED(target))
+				owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
+				return FALSE
+		else
+			if(target.stat != DEAD)
+				owner.balloon_alert(owner, "not dead!")
+				return FALSE
+			target.mind?.grab_ghost()
+			target.revive(ADMIN_HEAL_ALL)
+		power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 		to_chat(user, span_warning("We revive [target]!"))
 		owner.balloon_alert(owner, "successfully revived!")
-		target.mind?.grab_ghost()
+		log_combat(owner, target, "tremere revived", addition = "Revived their vassal using dominate")
+		return FALSE
+	var/datum/antagonist/vassal/vassal_datum = bloodsuckerdatum_power.make_vassal(target, TREMERE_VASSAL) //don't turn them into a favorite please
+	if(!vassal_datum)
+		owner.balloon_alert(owner, "not a valid target for vassalizing!")
+		return FALSE
+	if(is_oozeling_core(target))
+		var/obj/item/organ/internal/brain/slime/oozeling_core = target
+		target = oozeling_core.rebuild_body(nugget = FALSE)
+		if(QDELETED(target))
+			owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
+			return FALSE
+	else
+		// no escaping at this point
+		target.mind?.grab_ghost(TRUE)
 		target.revive(ADMIN_HEAL_ALL)
-		pay_cost(TEMP_VASSALIZE_COST - bloodcost)
-		log_combat(owner, target, "tremere revived", addition="Revived their vassal using dominate")
-		return FALSE
-	if(!bloodsuckerdatum_power.make_vassal(target))
-		owner.balloon_alert(owner, "not a valid target for vassalizing!.")
-		return FALSE
-
-	/*if(IS_MONSTERHUNTER(target))
-		to_chat(target, span_notice("Their body refuses to react..."))
-		return*/
-	power_activated_sucessfully(get_vassalize_cooldown())
+	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
+	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))
-	// no escaping at this point
-	target.mind?.grab_ghost(TRUE)
-	target.revive(ADMIN_HEAL_ALL)
-	var/datum/antagonist/vassal/vassal_datum = target.mind.has_antag_datum(/datum/antagonist/vassal)
-	vassal_datum.special_type = TREMERE_VASSAL //don't turn them into a favorite please
 	var/living_time = get_vassal_duration()
-	log_combat(owner, target, "tremere mindslaved", addition="Revived and converted [target] into a temporary tremere vassal for [DisplayTimeText(living_time)].")
+	log_combat(owner, target, "tremere mindslaved", addition = "Revived and converted [target] into a temporary tremere vassal for [DisplayTimeText(living_time)].")
 	if(level_current <= DOMINATE_NON_MUTE_VASSALIZE_LEVEL)
 		target.add_traits(list(TRAIT_MUTE, TRAIT_DEAF), DOMINATE_TRAIT)
 	user.balloon_alert(target, "only [DisplayTimeText(living_time)] left to live!")
@@ -163,10 +185,12 @@
 	vassals[vassal_datum] = timer_id
 	RegisterSignals(target, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	RegisterSignal(target.mind, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antag_datum_removal))
-	pay_cost(TEMP_VASSALIZE_COST - bloodcost)
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/victim_has_blood(mob/living/target)
+	// oozeling cores don't have blood volume anyways
+	if(is_oozeling_core(target))
+		return TRUE
 	// you can always revive non-temporary vassal
 	if(IS_VASSAL(target))
 		return TRUE

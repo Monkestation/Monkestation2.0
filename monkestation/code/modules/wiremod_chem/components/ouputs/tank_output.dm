@@ -31,20 +31,20 @@
 	if(linked_output)
 		. += span_notice("Is connected to an output device.")
 
-/obj/structure/chemical_tank/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_tank/click_alt(mob/living/user)
 	if(!linked_output)
 		linked_output = new(src.loc)
 		linked_output.chemical_tank = src
 		linked_output.name = component_name
 		linked_output.display_name = component_name
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_tank/proc/after_reagent_add()
 	return
 
 /obj/structure/chemical_tank/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		to_chat(user, span_notice("You finish plunging the [name]."))
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
