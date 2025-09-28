@@ -4,7 +4,7 @@
 		and make custom orders."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
-	total_positions = 3
+	total_positions = 2
 	spawn_positions = 2
 	supervisors = SUPERVISOR_CE
 	exp_requirements = 30

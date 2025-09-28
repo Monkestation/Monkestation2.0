@@ -19,7 +19,7 @@ const BASEICONS = {
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
   'CentCom Official': 'medal',
-  Machinist: 'gears',
+  Machinist: 'gear',
   'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
