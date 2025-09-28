@@ -67519,10 +67519,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall,
 /area/space/nearstation)
-"vkG" = (
-/obj/effect/mapping_helpers/airlock/abandoned,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "vkJ" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -112807,10 +112803,10 @@ lkW
 kPO
 bax
 bax
-vkG
 bax
-fuB
-cuV
+bax
+kPO
+bax
 cuV
 kYU
 cuV
