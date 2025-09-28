@@ -121,6 +121,10 @@
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
+//monkestation edit start
+	if(is_banned_from(user.ckey, list(ROLE_CULTIST)))
+		return
+//monkestation edit end
 	make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 /obj/narsie/process()
