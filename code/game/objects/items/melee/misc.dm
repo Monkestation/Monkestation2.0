@@ -448,6 +448,20 @@
 			to_chat(user, span_warning("\The [roastedgun] suddenly fires off a shot."))
 			INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
 	if(IS_EDIBLE(held_sausage))
+		var/datum/component/grillable/grill_comp = held_sausage.GetComponent(/datum/component/grillable)
+		if(grill_comp && grill_comp.positive_result == TRUE)
+			grill_comp.current_cook_time += 10 SECONDS
+			if(grill_comp.current_cook_time >= grill_comp.required_cook_time)
+				var/atom/grilled_result
+				grilled_result = new grill_comp.cook_result(held_sausage.loc)
+				if(held_sausage.custom_materials)
+					grilled_result.set_custom_materials(held_sausage.custom_materials)
+				if(IS_EDIBLE(grilled_result))
+					BLACKBOX_LOG_FOOD_MADE(grilled_result)
+				if(user.mind)
+					ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+				qdel(held_sausage)
+				held_sausage = grilled_result
 		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
 		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
 	to_chat(user, span_notice("You finish roasting [held_sausage]."))
