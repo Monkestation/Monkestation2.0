@@ -9476,6 +9476,7 @@
 	},
 /obj/machinery/holopad/secure,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "aWS" = (
@@ -17345,10 +17346,12 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "bDX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable/layer3,
+/turf/open/floor/iron/dark/textured,
+/area/station/solars/starboard/aft)
 "bEj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -17622,6 +17625,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/station/solars/starboard/aft)
 "bGn" = (
@@ -20412,7 +20416,6 @@
 /area/station/maintenance/department/cargo)
 "cer" = (
 /obj/machinery/status_display/ai/directional/south,
-/obj/structure/cable/layer3,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -20421,6 +20424,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "ces" = (
@@ -20507,6 +20511,7 @@
 "cfu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -35830,6 +35835,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/box,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/solars/starboard/aft)
 "gOZ" = (
@@ -37762,7 +37768,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/solars/starboard/aft)
 "hyG" = (
@@ -40465,6 +40470,7 @@
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "iyY" = (
@@ -41691,6 +41697,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -43323,6 +43330,7 @@
 /area/station/science/research)
 "jAG" = (
 /obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "jAW" = (
@@ -43886,6 +43894,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "jMc" = (
@@ -44211,7 +44220,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/machinery/door/firedoor,
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "jTv" = (
@@ -45813,10 +45821,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "kxE" = (
-/obj/structure/cable/layer3,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
+/turf/closed/wall/r_wall,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "kxL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -50712,6 +50719,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mvo" = (
@@ -51200,6 +51208,7 @@
 	name = "AI Solar Control"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/solars/starboard/aft)
 "mED" = (
@@ -58815,6 +58824,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "puX" = (
@@ -61734,6 +61744,7 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qCC" = (
@@ -64014,7 +64025,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -66244,6 +66255,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "stY" = (
@@ -67017,6 +67029,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "sGL" = (
@@ -68274,13 +68287,13 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "tet" = (
 /obj/structure/cable/layer3,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -125508,7 +125521,7 @@ bIi
 aaa
 jrL
 nXz
-xsZ
+bDX
 bGm
 gOU
 jrL
@@ -127048,8 +127061,8 @@ tDf
 vHw
 tet
 jTo
-kxE
-kxE
+lKG
+lKG
 uXL
 vzx
 lKG
@@ -127304,7 +127317,7 @@ ukF
 jNm
 iyQ
 wVU
-bIi
+kxE
 qCx
 jAG
 aWL
@@ -127562,7 +127575,7 @@ ugH
 mve
 cfu
 stW
-bDX
+lLx
 lLx
 cqW
 lLx
