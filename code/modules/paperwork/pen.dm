@@ -57,16 +57,15 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /// Proc that child classes can override to have custom transforms, like edaggers or pendrivers
+//monkestation edit: I added w_class_on. comments in add component break compiling.
 /obj/item/pen/proc/create_transform_component()
 	AddComponent( \
 		/datum/component/transforming, \
 		sharpness_on = NONE, \
 		inhand_icon_change = FALSE, \
-		//monkestation edit
 		w_class_on = WEIGHT_CLASS_TINY, \
-		//monkestation end
 	)
-
+//monkestation end
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *

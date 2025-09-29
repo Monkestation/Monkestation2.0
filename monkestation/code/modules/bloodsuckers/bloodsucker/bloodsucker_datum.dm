@@ -50,7 +50,9 @@
 	var/handling_death = FALSE
 	/// If this bloodsucker has suffered final death.
 	var/final_death = FALSE
-
+	//monkestation edit - have we claimed a coffin this game?
+	var/claimed_coffin = FALSE
+	//monkestation end
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
 
@@ -126,6 +128,9 @@
 		TRAIT_STABLEHEART,
 		TRAIT_STABLELIVER,
 		TRAIT_TOXIMMUNE,
+		//monkestation edit
+		TRAIT_RADIMMUNE,
+		//monkestation end
 		TRAIT_VIRUSIMMUNE,
 		// they eject zombie tumors and xeno larvae during eepy time anyways
 		TRAIT_NO_ZOMBIFY, // they're already undead lol

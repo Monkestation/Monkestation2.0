@@ -36,8 +36,9 @@
 	var/mesmerize_layer = ABOVE_ALL_MOB_LAYER
 	var/mesmerize_plane = ABOVE_HUD_PLANE
 	/// at this protection mesmerize will fail
-	var/max_eye_protection = 2
-
+	//monkestation edit
+	var/max_eye_protection = 1
+	//monkestation end
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
 
@@ -120,7 +121,9 @@
 		return FALSE
 
 	var/eye_protection = current_target.get_eye_protection()
-	if(eye_protection > max_eye_protection)
+	//monkestation edit
+	if(eye_protection >= max_eye_protection)
+	//monkestation end
 		owner.balloon_alert(owner, "[current_target] has too much eye protection to mesmerize.")
 		return FALSE
 
