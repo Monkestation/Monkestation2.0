@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Nanotrasen Representative and Central Command"
+	supervisors = "the Nanotrasen GUARDIAN and Central Command"
 	minimal_player_age = 30
 	exp_requirements = 7200
 	exp_required_type = EXP_TYPE_CREW
@@ -45,6 +45,19 @@
 	rpg_title = "Guard"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
+/datum/job/blueshield/employment_contract_contents(employee_name)
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as GUARDIAN), \
+	and Central Command (hereafter referred to as private military organizaztion).\
+	<BR>WITNESSETH:<BR>WHEREAS, GUARDIAN is a natural born human or humanoid, possessing skills upon which private military organizaztion needs, \
+	who seeks employment in private military organizaztion.<BR>WHEREAS, private military organizaztion agrees to sporadically provide payment to GUARDIAN, \
+	in exchange for their experience in personal protection.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for payments, GUARDIAN agrees to work for private military organizaztion, \
+	<BR> and, guard the Heads of Staff of any Nanotrasen area they are stationed in,\
+	for the remainder of his or her current and future lives.<BR>Further, GUARDIAN agrees to transfer ownership of his or her soul to the loyalty department of private military organizaztion.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
