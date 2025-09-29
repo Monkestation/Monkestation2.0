@@ -156,6 +156,9 @@
 		/obj/item/clothing/mask/cigarette)
 		)
 
+/datum/storage/pockets/pocketprotector/tatortot
+	max_slots = 14
+
 /datum/storage/pockets/helmet
 	max_slots = 2
 	quickdraw = TRUE

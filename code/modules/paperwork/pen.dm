@@ -4,6 +4,7 @@
  * Sleepy Pens
  * Parapens
  * Edaggers
+ * other silly pen devices
  */
 
 
@@ -224,6 +225,7 @@
 	degrees = deg
 	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
+	handle_rotation(user, deg)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
@@ -286,6 +288,8 @@
 		use_bold = FALSE,
 	)
 
+/obj/item/pen/proc/handle_rotation(mob/user, degrees_rotated)
+	return
 /*
  * Sleepypens
  */
@@ -308,6 +312,10 @@
 	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
 	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
+/obj/item/pen/sleepy/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info("This pen contains a 45 unit reagent storage that injects anyone stabbed. It's refillable and comes preloaded with a voice-muting and sedating mix.")
 /*
  * (Alan) Edaggers
  */
@@ -392,6 +400,11 @@
 	SIGNAL_HANDLER
 	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
 
+/obj/item/pen/edagger/examine(mob/user)
+	. = ..()
+	if(IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info("This pen hides a hard-light generator that can project a small but extremely sharp blade when activated.")
+	return .
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
@@ -428,6 +441,15 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/mineral_turf = target_turf
 		mineral_turf.gets_drilled(firer, TRUE)
+
+/obj/item/pen/survival/deluxe
+	toolspeed = 2
+	force = 8
+
+/obj/item/pen/survival/deluxe/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info("This upgraded version of a standard survival pen boasts far-increased digging ability and serves as a passable improvised dagger besides.")
 
 /obj/item/pen/destroyer
 	name = "Fine Tipped Pen"
@@ -478,6 +500,179 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_out" : null]"
 	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.
+
+
+/obj/item/pen/red/explosive
+	var/tator_lookie = "This pen will cause a small but powerful explosion when the head is rotated. Fuse is 1 second per 10 degrees of rotation."
+
+/obj/item/pen/red/explosive/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info(tator_lookie)
+
+/obj/item/pen/red/explosive/handle_rotation(mob/user, degrees_rotated)
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		to_chat(user, span_warning("...thus arming the internal mechanism."))
+	addtimer(CALLBACK(src, PROC_REF(detonate)), degrees_rotated * 0.1 SECONDS)
+
+/obj/item/pen/red/explosive/proc/detonate()
+	explosion(src, 1, 2, 3, 0) //no flames because this is TACTICAL by which i mean it's very concentrated and meant to maximize damage to target and minimize collateral damage
+	qdel(src)
+
+/obj/item/pen/red/explosive/empen
+	tator_lookie = "This pen will cause a powerful EM pulse in a radius of 5 tiles when the head is rotated. Fuse is 1 second per 10 degrees of rotation."
+
+/obj/item/pen/red/explosive/empen/detonate()
+	empulse(get_turf(src), 5, 5)
+
+/obj/item/pen/red/explosive/empen
+	tator_lookie = "This pen will release a cloud of choking smoke when the head is rotated. Fuse is 1 second per 10 degrees of rotation."
+
+/obj/item/pen/red/explosive/empen/detonate()
+	empulse(get_turf(src), 5, 5)
+
+/obj/item/pen/blue/taser
+	var/charged = TRUE
+
+/obj/item/pen/blue/taser/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info("This pen contains a high-voltage capacitor and miniaturized zero-point power plant. Stabbing a target with it will allow you to briefly incapacitate them. It will have to recharge afterwards.")
+		if(charged)
+			. += span_info("The internal capacitor is charged.")
+		else
+			. += span_info("The internal capacitor is recharging.")
+	return .
+
+/obj/item/pen/blue/taser/attack(mob/living/M, mob/user, params)
+	. = ..()
+	if(charged)
+		M.electrocute_act(300, src, flags = SHOCK_NOGLOVES | SHOCK_ILLUSION) // it does stamina damage
+		charged = FALSE
+		addtimer(CALLBACK(src, PROC_REF(recharge)), 60 SECONDS)
+
+/obj/item/pen/blue/taser/proc/recharge()
+	charged = TRUE
+
+/obj/item/pen/fountain/cigsynth
+	var/charged = TRUE
+	heat = 1500
+	var/tator_lookie = "This pen is equipped with an inbuilt lung-damage free healing cigarette synthesizer and lighter, for the classiest of operatives."
+
+/obj/item/pen/fountain/cigsynth/deluxe
+	heat = 2000
+	force = 31 //mightier than the sword. it's a good pen.
+	throwforce = 60
+	throw_speed = 5
+	embedding = list(embed_chance = 100, remove_pain_mult = 60)
+	icon_state = "pen-fountain-g"
+	desc = "This sterling piece of stationery sits before you. Its spear-point nib shines sharp as a sunbeam, slashing silent soliloquies into your visual cortex. This is no normal pen. <b>You are unworthy of it.</b>"
+	sharpness = SHARP_EDGED | SHARP_POINTY
+	wound_bonus = 30
+	resistance_flags = FIRE_PROOF | UNACIDABLE | LAVA_PROOF
+	item_flags = NO_BLOOD_ON_ITEM | NO_MAT_REDEMPTION
+	tool_behaviour = TOOL_MINING
+	toolspeed = 0.8
+	colour = COLOR_SYNDIE_RED
+	tator_lookie = "This pen, the S-2 Fountain Gold, is one of Syndicate high-command's extremely expensive premium in-house models. It can write in zero-gravity, has an integrated high-temperature lighter, synthesizes lung-damage free healing cigarettes, has a nigh-monomolecular edge, is weighted so as to be usable as a throwing weapon, is chemically, thermally, and physically resistant, has an inbuilt chameleon circuit to disguise it as a normal pen on cursory inspection, can be used as a pickaxe, and writes damn good besides. Alt-Click to disguise it."
+	var/disguised = FALSE
+//it's a REALLY good pen.
+
+/obj/pen/fountain/cigsynth/deluxe/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/eyestab, 25) //this doesnt do 25 eye damage this means it does 25 damage on an eyestab instead of 31 on a normal hit
+
+/obj/item/pen/fountain/cigsynth/deluxe/AltClick(mob/user)
+	. = ..()
+	if(IS_NUKE_OP(user) || IS_TRAITOR(user))
+		if(disguised)
+			name = initial(name)
+			desc = initial(desc)
+			force = initial(force)
+			throwforce = initial(throwforce)
+			throw_speed = initial(throwspeed)
+			icon_state = initial(icon_state)
+			resistance_flags = initial(resistance_flags)
+			tool_behavior = initial(tool_behavior)
+			color = initial(color)
+			disguised = FALSE
+		else
+			name = /obj/item/pen::name
+			desc = /obj/item/pen::desc
+			force = /obj/item/pen::force
+			throwforce = /obj/item/pen::throwforce
+			throw_speed = /obj/item/pen::throw_speed
+			icon_state = /obj/item/pen::icon_state
+			color = /obj/item/pen::color
+			tool_behavior = null
+			resistance_flags = FIRE_PROOF | UNACIDABLE | LAVA_PROOF | HIDE_RESISTANCE
+			disguised = TRUE
+
+/obj/item/pen/fountain/cigsynth/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info(tator_lookie)
+		if(charged)
+			. += span_info("The cigarette synthesizer is charged.")
+		else
+			. += span_info("The cigarette synthesizer is recharging.")
+	return .
+
+/obj/item/pen/fountain/cigsynth/proc/recharge()
+	charged = TRUE
+
+/obj/item/pen/fountain/cigsynth/attack_self(mob/living/carbon/user)
+	if(charged)
+		var/ciggie = new /obj/item/clothing/mask/cigarette/syndicate/synthesized(src)
+		user.put_in_hands(ciggie)
+		charged = FALSE
+		addtimer(CALLBACK(src, PROC_REF(recharge)), 30 SECONDS)
+
+/obj/item/pen/fourcolor/biosampler
+
+/obj/item/pen/fourcolor/biosampler/examine(mob/user)
+	. = ..()
+	if (IS_NUKE_OP(user) || IS_TRAITOR(user))
+		. += span_info("This pen can be used to discretely sample biomarkers from targets. Change the color for mode selection functionality.")
+
+/obj/item/pen/fourcolor/biosampler/attack(mob/living/M, mob/user, params)
+	. = ..()
+	var/did_it_work = TRUE
+	if(!iscarbon(M))
+		did_it_work = FALSE
+	switch(color)
+		if("#000000")
+			var/mob/living/carbon/ourguy = M
+			var/datum/dna/ourdna = ourguy?.dna
+			if(ourdna)
+				to_chat(user, span_notice("Unique Enzymes: [ourdna.unique_enzymes], Unique Identity: [ourdna.unique_identity]."))
+			else
+				did_it_work = FALSE
+	if(!did_it_work)
+		to_chat(user, span_warning("Could not sample biomarkers."))
+
+
+/obj/item/pen/monkecannon
+	var/ammunition = 7
+	charged = TRUE
+
+/obj/item/pen/monkecannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!charged || ammunition < 1)
+		return
+	ammunition -= 1
+	var/mob/living/carbon/human/species/monkey/angry/cannonball = new(src.loc)
+	ADD_TRAIT(cannonball, TRAIT_EMOTEMUTE, type)
+	cannonball.death_sound = ""
+	cannonball.death()
+	REMOVE_TRAIT(cannonball, TRAIT_EMOTEMUTE, type)
+	cannonball.death_sound = initial(cannonball.death_sound)
+	cannonball.throw_at(interacting_with, 10, 7, user, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 15 SECONDS)
+
+/obj/item/pen/monkecannon/proc/recharge()
+	charged = TRUE
+
 
 //The Security holopen
 /obj/item/pen/red/security
@@ -545,3 +740,4 @@
 	desc = "It's a fancy banana pen, set to [chosen_color]."
 	balloon_alert(user, "clicked")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+>>>>>>> 9b2a7293915dd290aedfba68394272fd58ac479f

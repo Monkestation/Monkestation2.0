@@ -108,3 +108,10 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/pens
+	name = "Pocket Operator"
+	desc = "A bluespace-enhanced tactical pocket protector \
+	equipped with a variety of tactical pens, for the operator with style (or a lack therof)."
+	item = /obj/item/clothing/accessory/pocketoperator
+	cost = 16

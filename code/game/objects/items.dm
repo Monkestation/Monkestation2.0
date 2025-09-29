@@ -456,16 +456,16 @@
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
 
-	if(resistance_flags & INDESTRUCTIBLE)
+	if((resistance_flags & INDESTRUCTIBLE) && !(resistance_flags & HIDE_RESISTANCE))
 		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		if(resistance_flags & LAVA_PROOF)
+		if((resistance_flags & LAVA_PROOF) && !(resistance_flags & HIDE_RESISTANCE))
 			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
-		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		if((resistance_flags & (ACID_PROOF | UNACIDABLE)) && !(resistance_flags & HIDE_RESISTANCE))
 			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
-		if(resistance_flags & FREEZE_PROOF)
+		if((resistance_flags & FREEZE_PROOF) && !(resistance_flags & HIDE_RESISTANCE))
 			. += "[src] is made of cold-resistant materials."
-		if(resistance_flags & FIRE_PROOF)
+		if((resistance_flags & FIRE_PROOF) && !(resistance_flags & HIDE_RESISTANCE))
 			. += "[src] is made of fire-retardant materials."
 		return
 
