@@ -75,34 +75,19 @@
 	linked_network.connect_train(over, usr)
 
 /obj/machinery/cart/mouse_drop_receive(mob/living/dropped, mob/user, params)
-	if(!Adjacent(dropped))
-		return
-
-/obj/vehicle/ridden/cargo_train/mouse_drop_receive(mob/living/dropped, mob/user, params)
-	if(!Adjacent(dropped))
-		return
-
-// XANTODO, make them each receivers instead of this holy fuck obj/ level proc
-/obj/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	. = ..()
-
-	if(istype(over, /obj/machinery/cart))
-		var/obj/machinery/cart/dropped_cart = over
-		if(!dropped_cart.admeme)
-			if(!Adjacent(over) || !usr.Adjacent(over))
-				return
-			if(src.type in dropped_cart.attaching_blacklist)
-				return
-			for(var/obj in dropped_cart.blacklist_types)
-				if(src.type in typesof(obj))
-					return
-		if(dropped_cart.attached_object)
+	if(!admeme)
+		if(type in attaching_blacklist)
 			return
-		visible_message("[usr] attempts to attach the [name] to the [over.name]")
+		for(var/obj in blacklist_types)
+			if(type in typesof(obj))
+				return
+	if(attached_object)
+		return
+	visible_message("[user] attempts to attach the [name] to the [dropped.name]")
 
-		if(!do_after(usr, 3 SECONDS, over))
-			return
-		dropped_cart.attached_object = src
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	attached_object = dropped
 
-		cant_grab = TRUE
-		src.forceMove(get_turf(dropped_cart))
+	cant_grab = TRUE
+	forceMove(get_turf(dropped))

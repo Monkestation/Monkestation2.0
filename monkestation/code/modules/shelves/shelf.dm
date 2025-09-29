@@ -140,20 +140,15 @@
 		transfer_fingerprints_to(newparts)
 	return ..()
 
-/obj/structure/closet/crate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	if(!isliving(user))
-		return // Ghosts busted.
-	var/mob/living/living_user = user
-	if(!isturf(living_user.loc) || living_user.incapacitated() || living_user.body_position == LYING_DOWN)
-		return // If the user is in a weird state, don't bother trying.
-	if(get_dist(over, src) != 1 || get_dist(over, living_user) != 1)
-		return // Check whether the crate is exactly 1 tile from the shelf and the user.
-	if(istype(over, /turf/open) && istype(loc, /obj/structure/cargo_shelf) && living_user.Adjacent(over))
-		var/obj/structure/cargo_shelf/shelf = loc
-		return shelf.unload(src, living_user, over) // If we're being dropped onto a turf, and we're inside of a crate shelf, unload.
-	if(istype(over, /obj/structure/cargo_shelf) && isturf(loc) && living_user.Adjacent(src))
-		var/obj/structure/cargo_shelf/shelf = over
-		return shelf.load(src, living_user) // If we're being dropped onto a crate shelf, and we're in a turf, load.
+/obj/structure/cargo_shelf/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!length(shelf_contents) || !istype(over, /turf/open))
+		return
+	unload(shelf_contents[1], user, over)
+
+/obj/structure/cargo_shelf/mouse_drop_receive(atom/movable/dropped, mob/living/user, params)
+	if(!istype(dropped, /obj/structure/closet/crate))
+		return
+	load(dropped, user)
 
 /obj/item/rack_parts/cargo_shelf
 	name = "Cargo shelf parts"
