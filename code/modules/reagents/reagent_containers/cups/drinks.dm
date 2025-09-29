@@ -463,8 +463,8 @@
 	. = ..()
 	register_context()
 	if(prob(10))
-		name = "\improper NanoTrasen 20th Anniversary Shaker"
-		desc += " It has an emblazoned NanoTrasen logo on it."
+		name = "\improper Nanotrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
 
 /obj/item/reagent_containers/cup/glass/shaker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
