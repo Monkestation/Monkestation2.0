@@ -151,7 +151,7 @@
 			return TRUE
 		if("log_in")
 			var/mob/living/usr_mob = usr
-			if(usr_mob.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(usr_mob))
 				user_name = "System Administrator"
 			else if(check_access(inserted_id))
 				user_name = "[inserted_id?.registered_name] ([inserted_id?.assignment])"
@@ -220,9 +220,9 @@
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 	to_chat(user, span_notice("You bypass the console's security protocols."))
 
-/obj/machinery/computer/telecomms/traffic/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !iscarbon(user))
-		return
+/obj/machinery/computer/telecomms/traffic/click_alt(mob/user)
+	if(!iscarbon(user))
+		return CLICK_ACTION_BLOCKING
 
 	var/mob/living/carbon/carbon_user = user
 	if(inserted_id)
@@ -230,3 +230,4 @@
 		inserted_id.forceMove(drop_location())
 		carbon_user.put_in_hands(inserted_id)
 		inserted_id = null
+	return CLICK_ACTION_SUCCESS

@@ -25,7 +25,10 @@
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
 	/// Cooldown for bloodsuckers going into Frenzy.
 	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
-
+	//monkestation edit
+	//Timer to track how long the bloodsucker has been in torpor
+	COOLDOWN_DECLARE(bloodsucker_torpor_max_time)
+	//monkestation end
 	///Used for assigning your name
 	var/bloodsucker_name
 	///Used for assigning your title
@@ -591,3 +594,8 @@
 	var/blood_volume = round(reagents[blood_reagent], 0.1)
 	if(blood_volume > 0)
 		bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
+
+/datum/status_effect/silver_cuffed
+	id = "silver cuffed"
+	alert_type = null
+	remove_on_fullheal = TRUE

@@ -141,7 +141,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
-	requests_by_id[request.id] = request
+	requests_by_id["[request.id]"] = request
 
 /datum/request_manager/ui_interact(mob/user, datum/tgui/ui = null)
 	ui = SStgui.try_update_ui(user, src, ui)

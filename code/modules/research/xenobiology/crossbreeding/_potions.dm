@@ -132,6 +132,7 @@ Slimecrossing Potions
 	clothing.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	//clothing.cold_protection = clothing.body_parts_covered
 	clothing.clothing_flags |= STOPSPRESSUREDAMAGE
+	user.update_cached_insulation()
 	uses--
 	if(uses <= 0)
 		qdel(src)

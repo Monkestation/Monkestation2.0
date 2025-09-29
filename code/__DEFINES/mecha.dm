@@ -64,4 +64,6 @@
 #define MECHA_AMMO_ISG "IED grenades"
 #define MECHA_AMMO_LIGHTTANK "40mm shell"
 #define MECHA_AMMO_LIGHTTANKMG "12.7x70mm malone"
+#define MECHA_AMMO_ATR "20x160mm"
+#define MECHA_AMMO_FLAME "Flames"
 //monke edit end

@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
 	// All but npcs sublists and ghost category contain only mobs with minds
 	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
-	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
+	var/num_survivors = 0 //Count of non-brain non-eye mobs with mind that are alive
 	var/num_escapees = 0 //Above and on centcom z
 	var/num_human_escapees = 0 //Above but humans only
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			mob_data["ckey"] = M.mind.key
 			if(M.onCentCom())
 				list_of_mobs_on_shuttle += M
-			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
+			if(M.stat != DEAD && !isbrain(M) && !iseyemob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
 					num_escapees++

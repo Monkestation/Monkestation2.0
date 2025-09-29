@@ -473,7 +473,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
@@ -5961,6 +5961,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 9
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "bQt" = (
@@ -6064,7 +6065,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
@@ -11265,7 +11266,7 @@
 /area/station/maintenance/starboard/aft)
 "dtr" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/recharger{
 	pixel_y = 11;
 	pixel_x = -7
@@ -19274,14 +19275,12 @@
 /turf/open/floor/carpet/red,
 /area/station/security/checkpoint/engineering)
 "fKG" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/machinery/flasher/directional/north{
 	id = "AI";
 	pixel_x = -22
 	},
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "fKL" = (
@@ -20328,6 +20327,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Public Mining Bay"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "gbK" = (
@@ -21536,7 +21536,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "guA" = (
@@ -23986,7 +23986,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "heB" = (
@@ -24550,7 +24549,7 @@
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -25806,11 +25805,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "hGB" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "hGK" = (
@@ -31466,6 +31463,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "job" = (
@@ -33437,8 +33435,8 @@
 "jQR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
@@ -37512,7 +37510,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "kXw" = (
@@ -37752,22 +37749,22 @@
 /obj/machinery/cell_charger{
 	pixel_y = 11
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -2;
 	pixel_x = -7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 11
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -2;
 	pixel_x = 7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -2;
 	pixel_x = -7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -2;
 	pixel_x = 7
 	},
@@ -38051,10 +38048,10 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = -4
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -4;
 	pixel_y = -6
 	},
@@ -40806,7 +40803,7 @@
 /obj/structure/chemical_manufacturer,
 /obj/item/multitool,
 /obj/item/integrated_circuit/chemical,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -42420,7 +42417,7 @@
 	dir = 6
 	},
 /obj/item/rcl/pre_loaded,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -43983,7 +43980,7 @@
 	},
 /obj/machinery/cell_charger,
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44216,7 +44213,7 @@
 	pixel_y = 9;
 	pixel_x = 4
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 8;
 	pixel_x = 4
 	},
@@ -46520,7 +46517,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -48748,7 +48745,7 @@
 	pixel_y = 1
 	},
 /obj/item/computer_disk/atmos,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/computer_disk/engineering{
 	pixel_x = 5
 	},
@@ -49786,10 +49783,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "oyU" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/full,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "oyX" = (
@@ -52043,7 +52038,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "pja" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/potato{
+/obj/item/stock_parts/power_store/cell/potato{
 	pixel_y = 7
 	},
 /obj/machinery/cell_charger{
@@ -52111,10 +52106,7 @@
 	dir = 1
 	},
 /obj/structure/closet/emcloset/wall/directional/north,
-/obj/item/mod/module/thermal_regulator,
-/obj/item/mod/module/paper_dispenser,
-/obj/item/mod/module/megaphone,
-/obj/machinery/suit_storage_unit/captain,
+/obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "pkM" = (
@@ -53671,7 +53663,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -54538,7 +54530,7 @@
 	amount = 20
 	},
 /obj/item/gps/engineering,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
 /obj/item/stack/sheet/iron/fifty,
@@ -64149,7 +64141,7 @@
 	dir = 1
 	},
 /obj/machinery/power/smes{
-	capacity = 9e+006;
+	total_capacity = 9e+006;
 	charge = 10000
 	},
 /obj/structure/cable,
@@ -71051,7 +71043,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/computer_disk{
 	pixel_x = -8;
 	pixel_y = -3
@@ -71298,15 +71290,15 @@
 /area/station/engineering/lobby)
 "uHj" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -3;
 	pixel_y = 16
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 3;
 	pixel_y = 16
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 15
 	},
 /obj/item/assembly/flash/handheld{
@@ -74967,11 +74959,11 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "vJp" = (
@@ -77965,8 +77957,8 @@
 "wHF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 15
 	},
 /obj/item/toy/figure/scientist{
@@ -79215,6 +79207,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"wVG" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/station/cargo/miningoffice)
 "wVR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -79600,7 +79603,7 @@
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/bot,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "xcn" = (
@@ -81685,8 +81688,8 @@
 	dir = 10
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 13
 	},
 /obj/structure/table,
@@ -128371,7 +128374,7 @@ ijT
 eTj
 yeT
 ujQ
-iOY
+wVG
 nib
 nhC
 nhC

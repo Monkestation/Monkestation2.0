@@ -32,9 +32,9 @@
 	if(creator_ckey)
 		logger.Log(LOG_CATEGORY_ATTACK, "[creator_ckey] injected [AM] with [inject_amount] units using a remote injector.")
 
-/obj/structure/chemical_tank/injector/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_tank/injector/click_alt(mob/living/user)
 	var/inject_choice = tgui_input_number(user, "How much to inject someone with?", "[name]", inject_amount, max_inject, 1)
 	if(inject_choice)
 		inject_amount = inject_choice
 	creator_ckey = user.client?.ckey
+	return CLICK_ACTION_SUCCESS

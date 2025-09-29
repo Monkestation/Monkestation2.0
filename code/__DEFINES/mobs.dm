@@ -303,15 +303,16 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+// The standard charge all other Ethereal charge defines are scaled against.
+#define STANDARD_ETHEREAL_CHARGE (1 * STANDARD_CELL_CHARGE)
+// Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
-
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_ETHEREAL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_ETHEREAL_CHARGE)
 
 //Monkestation Addition: Ethereal Blood Charge
 #define ETHEREAL_BLOOD_CHARGE_NONE 0
@@ -891,6 +892,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
+/// If this is accessible to creatures with ventcrawl capabilities
+#define NEED_VENTCRAWL (1<<8)
+/// Skips adjacency checks
+#define BYPASS_ADJACENCY (1<<9)
+/// Skips reccursive loc checks
+#define NOT_INSIDE_TARGET (1<<10)
+/// Checks for base adjacency, but silences the error
+#define SILENT_ADJACENCY (1<<11)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

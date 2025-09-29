@@ -126,12 +126,21 @@ DEFINE_BITFIELD(status_flags, list(
 //slowdown when crawling
 #define CRAWLING_ADD_SLOWDOWN 4
 
-//Attack types for checking shields/hit reactions
+//Attack types for checking block reactions
+/// Attack was made with a melee weapon
 #define MELEE_ATTACK 1
+/// Attack is a punch or kick.
+/// Mob attacks are not classified as unarmed (currently).
 #define UNARMED_ATTACK 2
+/// A projectile is hitting us.
 #define PROJECTILE_ATTACK 3
+/// A thrown item is hitting us.
 #define THROWN_PROJECTILE_ATTACK 4
+/// We're being tackled or leaped at.
 #define LEAP_ATTACK 5
+
+/// Used in check block to get what mob is attacking the blocker.
+#define GET_ASSAILANT(weapon) (get(weapon, /mob/living))
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH "punch"
@@ -361,6 +370,11 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define DEATHMATCH_NOT_PLAYING 0
 #define DEATHMATCH_PRE_PLAYING 1
 #define DEATHMATCH_PLAYING 2
+
+/// The amount of energy needed to increase the burn force by 1 damage during electrocution.
+#define JOULES_PER_DAMAGE (25 KILO JOULES)
+/// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.
+#define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
 
 // Attack chain attack_modifier modifiers
 /// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]

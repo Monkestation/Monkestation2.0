@@ -388,6 +388,8 @@ SUBSYSTEM_DEF(ticker)
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
 
+	SStitle.update_init_text()
+
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
@@ -720,7 +722,7 @@ SUBSYSTEM_DEF(ticker)
 		if(STATION_NUKED)
 			// There was a blob on board, guess it was nuked to stop it
 			if(length(GLOB.overminds))
-				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
 					if(overmind.max_count < overmind.announcement_size)
 						continue
 

@@ -27,6 +27,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/held_state = "microwave_standard"
 	/// Is its function wire cut?
 	var/wire_disabled = FALSE
@@ -45,9 +46,9 @@
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
 	/// The cell we charge with
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// The cell we're charging
-	var/obj/item/stock_parts/cell/vampire_cell
+	var/obj/item/stock_parts/power_store/cell/vampire_cell
 	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
 	/// Charge contents of microwave instead of cook
@@ -291,7 +292,7 @@
 			return ITEM_INTERACT_BLOCKING
 		return NONE
 
-	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+	if(istype(item, /obj/item/stock_parts/power_store/cell) && cell_powered)
 		var/swapped = FALSE
 		if(!isnull(cell))
 			cell.forceMove(drop_location())
@@ -373,6 +374,17 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		cook(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/microwave/click_alt(mob/user, list/modifiers)
+	if(!vampire_charging_capable)
+		return NONE
+
+	vampire_charging_enabled = !vampire_charging_enabled
+	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
+	playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
+	if(HAS_SILICON_ACCESS(user))
+		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
@@ -535,7 +547,7 @@
 				pre_success(cooker)
 		return
 	time--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(loop), type, time, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()
