@@ -807,11 +807,13 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
+/obj/item/storm_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) && (user.istate & ISTATE_HARM))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
 /obj/item/storm_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return thunder_blast(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-/obj/item/storm_staff/afterattack(atom/target, mob/user, click_parameters)
-	thunder_blast(target, user)
 
 /obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)
 	if(!thunder_charges)
