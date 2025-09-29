@@ -50,7 +50,7 @@
 	user = null
 	user_client = null
 	cog = null
-	QDEL_NULL(blank)
+	blank = null
 
 	return ..()
 
