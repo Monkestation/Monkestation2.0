@@ -10,7 +10,7 @@
 /datum/status_effect/water_affected/proc/calculate_water_slow()
 	//Factor in swimming skill here?
 	var/turf/owner_turf = get_turf(owner)
-	if(QDELETED(owner_turf) || QDELETED(owner_turf.liquids) || owner_turf.liquids.liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE)
+	if(!owner_turf || QDELETED(owner_turf.liquids) || QDELETED(owner_turf.liquid_group) || owner_turf.liquids.liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE)
 		return FALSE
 	var/slowdown_amount = owner_turf.liquids.liquid_group.group_overlay_state * 0.5
 	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/liquids, multiplicative_slowdown = slowdown_amount)
