@@ -183,6 +183,11 @@
 	if(!length(managed_seeds))
 		return
 
+	var/atom/movable/movable_parent = parent
+	if(isobj(movable_parent) && !movable_parent.anchored)
+		to_chat(user, span_warning("\The [movable_parent] must be anchored in order to harvest from it!"))
+		return
+
 	for(var/item in managed_seeds)
 		var/obj/item/seeds/seed = managed_seeds[item]
 		if(!seed)
