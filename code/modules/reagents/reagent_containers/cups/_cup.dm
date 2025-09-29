@@ -212,8 +212,10 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
-	target.update_appearance()
-	return ITEM_INTERACT_SUCCESS
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = attacking_item.get_temperature()
