@@ -118,8 +118,9 @@ SUBSYSTEM_DEF(title)
 /// Updates the displayed initialization text according to all initialization information, unless the round has started,
 /// at which point you don't need anymore information anymore.
 /datum/controller/subsystem/title/proc/update_init_text()
-	if(SSticker.HasRoundStarted() && maptext_holder)
-		maptext_holder.maptext = null
+	if(SSticker.HasRoundStarted())
+		if(maptext_holder)
+			maptext_holder.maptext = null
 		return
 
 	if(!maptext_holder)
