@@ -134,7 +134,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
 	requests_by_id.len++
-	requests_by_id["[request.id]"] = request
+	requests_by_id[request.id] = request
 
 /datum/request_manager/mentor/request_for_client(client/C, type, message, additional_info)
 	var/datum/request/request = new(C, type, message, additional_info)

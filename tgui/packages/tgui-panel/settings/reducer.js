@@ -31,6 +31,7 @@ const initialState = {
   highlightText: '',
   highlightColor: '#ffdd44',
   coloredNames: true,
+  scrollTrackingTolerance: 24,
   // END compatibility state vars
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {

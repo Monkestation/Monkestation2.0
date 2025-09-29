@@ -81,39 +81,43 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProcessingConsole")
+		ui.open()
+
+/obj/machinery/mineral/processing_unit_console/ui_static_data(mob/user)
+	return processing_machine.ui_static_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
+	return processing_machine.ui_data()
+
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(!processing_machine)
+	if(.)
 		return
 
-	var/dat = processing_machine.get_machine_data()
+	switch(action)
+		if("setMaterial")
+			var/datum/material/new_material = locate(params["value"])
+			if(!istype(new_material))
+				return
 
-	var/datum/browser/popup = new(user, "processing", "Smelting Console", 300, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-	add_fingerprint(usr)
-
-	if(href_list["material"])
-		var/datum/material/new_material = locate(href_list["material"])
-		if(istype(new_material))
 			processing_machine.selected_material = new_material
 			processing_machine.selected_alloy = null
+			return TRUE
 
-	if(href_list["alloy"])
-		processing_machine.selected_material = null
-		processing_machine.selected_alloy = href_list["alloy"]
+		if("setAlloy")
+			processing_machine.selected_material = null
+			processing_machine.selected_alloy = params["value"]
+			return TRUE
 
-	if(href_list["set_on"])
-		processing_machine.on = (href_list["set_on"] == "on")
-		processing_machine.begin_processing()
-
-	updateUsrDialog()
-	return
+		if("toggle")
+			processing_machine.on = !processing_machine.on
+			if(processing_machine.on)
+				processing_machine.begin_processing()
+			return TRUE
 
 /obj/machinery/mineral/processing_unit_console/Destroy()
 	processing_machine = null
@@ -142,21 +146,10 @@
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	var/list/allowed_materials = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-	)
+
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		allowed_materials, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		allowed_items = /obj/item/stack \

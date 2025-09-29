@@ -75,6 +75,10 @@
 	item_type = /obj/item/reagent_containers/pill/robotic_patch/synth_repair
 	cost = PAYCHECK_CREW
 
+/datum/armament_entry/company_import/deforest/first_aid/robo_pen
+	item_type = /obj/item/reagent_containers/hypospray/medipen/synthcare
+	cost = PAYCHECK_CREW * 2
+
 /datum/armament_entry/company_import/deforest/first_aid/subdermal_splint
 	item_type = /obj/item/stack/medical/wound_recovery
 	cost = PAYCHECK_COMMAND * 2

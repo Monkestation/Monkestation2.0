@@ -44,14 +44,15 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///set safety bypass
-/obj/item/tram_remote/CtrlClick(mob/user)
+/obj/item/tram_remote/item_ctrl_click(mob/user)
 	switch(mode)
-		if(TRAMCTRL_SAFE)
-			mode = TRAMCTRL_FAST
 		if(TRAMCTRL_FAST)
 			mode = TRAMCTRL_SAFE
+		if(TRAMCTRL_SAFE)
+			mode = ~TRAMCTRL_FAST
 	update_appearance()
 	balloon_alert(user, "mode: [mode ? "fast" : "safe"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/tram_remote/examine(mob/user)
 	. = ..()
@@ -128,8 +129,8 @@
 		balloon_alert(user, "tram dispatched")
 		return TRUE
 
-/obj/item/tram_remote/afterattack(atom/target, mob/user)
-	link_tram(user, target)
+/obj/item/tram_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	link_tram(user, interacting_with)
 
 /obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
 	var/obj/machinery/button/tram/smacked_device = target

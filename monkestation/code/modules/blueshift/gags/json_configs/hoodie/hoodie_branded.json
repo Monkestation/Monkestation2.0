@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -17,7 +17,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -30,13 +30,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim_alt_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hoodie_NRTI_t": [
@@ -44,13 +44,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim_alt_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hoodie_MU": [
@@ -58,7 +58,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -71,7 +71,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -84,7 +84,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -97,7 +97,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -110,7 +110,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -123,7 +123,7 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_obj",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
