@@ -36,9 +36,7 @@
 	var/mesmerize_layer = ABOVE_ALL_MOB_LAYER
 	var/mesmerize_plane = ABOVE_HUD_PLANE
 	/// at this protection mesmerize will fail
-	//monkestation edit
-	var/max_eye_protection = 1
-	//monkestation end
+	var/max_eye_protection = 2
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
 
@@ -55,6 +53,7 @@
 	. += "You cannot wear anything covering your face, and both parties must be facing eachother."
 	. += "Obviously, both parties need to not be blind."
 	. += "If your target is already mesmerized or a bloodsucker, the Power will fail."
+	. += "Flash protection will slow down mesmerize, but welding protection will completely stop it."
 	. += "Once mesmerized, the target will be unable to move for [DisplayTimeText(get_power_time())] and muted for [DisplayTimeText(get_mute_time())], scaling with level."
 	. += "At level [MESMERIZE_GLASSES_LEVEL], you will be able to use the power through items covering your face."
 	. += "At level [MESMERIZE_FACING_LEVEL], you will be able to mesmerize regardless of your target's direction."
@@ -121,9 +120,8 @@
 		return FALSE
 
 	var/eye_protection = current_target.get_eye_protection()
-	//monkestation edit
-	if(eye_protection >= max_eye_protection)
-	//monkestation end
+
+	if(eye_protection > max_eye_protection)
 		owner.balloon_alert(owner, "[current_target] has too much eye protection to mesmerize.")
 		return FALSE
 
