@@ -97,7 +97,7 @@
     data["pressure"]  = linked_reactor.pressure_history
     data["moderator"] = linked_reactor.moderator_history
 
-    // Rod slot info
+    // --- Rod slots ---
     var/list/rods_list = list()
     for (var/i = 1, i <= linked_reactor.max_normal_slots, i++)
         var/obj/item/rbmk/fuel_rod/R = (i <= length(linked_reactor.normal_slots)) ? linked_reactor.normal_slots[i] : null
@@ -120,21 +120,25 @@
     data["rods"] = rods_list
 
     // --- Coolant state ---
-    data["inlet_open"]   = linked_reactor.inlet_open
-    data["outlet_open"]  = linked_reactor.outlet_open
+    data["inlet_open"]  = linked_reactor.inlet_open
+    data["outlet_open"] = linked_reactor.outlet_open
 
-    // Inlet flow control
-    data["inlet_rate"]     = linked_reactor.inlet_rate
+    // Inlet live state
+    if (linked_reactor.inlet)
+        data["inlet_rate"] = linked_reactor.inlet.volume_rate
+    else
+        data["inlet_rate"] = linked_reactor.inlet_rate
     data["inlet_min"]      = linked_reactor.inlet_rate_min
     data["inlet_max"]      = linked_reactor.inlet_rate_max
-    var/in_press = linked_reactor.get_inlet_pressure()
-    data["inlet_pressure"] = round(max(in_press, 0), 0.1)  // >=0, round 0.1
+    data["inlet_pressure"] = round(max(linked_reactor.get_inlet_pressure(), 0), 0.1)
 
-    // Outlet pressure control
-    data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
-    data["outlet_pressure_max"]    = linked_reactor.outlet_pressure_max
-    var/out_press = linked_reactor.get_outlet_pressure()
-    data["outlet_pressure"]        = round(max(out_press, 0), 0.1)  // >=0, round 0.1
+    // Outlet live state
+    if (linked_reactor.outlet)
+        data["outlet_target_pressure"] = linked_reactor.outlet.internal_pressure_bound
+    else
+        data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
+    data["outlet_pressure_max"] = linked_reactor.outlet_pressure_max
+    data["outlet_pressure"]     = round(max(linked_reactor.get_outlet_pressure(), 0), 0.1)
 
     return data
 
@@ -203,11 +207,15 @@
         // ---- NEW: Coolant controls ----
         if ("set_inlet_rate")
             var/rate = text2num(params["rate"])
+            if (linked_reactor.inlet)
+                linked_reactor.inlet.volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
             linked_reactor.set_inlet_rate(rate)
             return TRUE
 
         if ("set_outlet_pressure")
             var/press = text2num(params["pressure"])
+            if (linked_reactor.outlet)
+                linked_reactor.outlet.internal_pressure_bound = clamp(press, 0, ATMOS_PUMP_MAX_PRESSURE)
             linked_reactor.set_outlet_pressure(press)
             return TRUE
 

@@ -33,6 +33,16 @@
 		// Above 100% instability, structural damage accelerates
 		damage += (instability - 100) / 50
 
+	// --- Pressure stress ---
+	if(pressure > 17000) // warning zone
+		damage += (pressure - 17000) / 2000
+
+	if(pressure > 20000) // critical pressure zone
+		damage += (pressure - 20000) / 500
+
+	if(pressure > 23000) // extreme pressure zone
+		damage += (pressure - 23000) / 100
+
 	// --- Apply damage ---
 	if(damage > 0)
 		reactor_integrity = max(reactor_integrity - damage, 0)
@@ -41,4 +51,4 @@
 			trigger_meltdown("⚠ Reactor breached from combined overload!")
 
 	// --- Repairable flag ---
-	repairable = (temperature < (max_temp * 0.7) && flux < 80)
+	repairable = (temperature < (max_temp * 0.7) && flux < 80 && pressure < 17000)
