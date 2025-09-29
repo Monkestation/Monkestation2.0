@@ -226,7 +226,7 @@
 		return
 
 	pollinated = TRUE
-	var/set_time =  rand(600, 900)
+	var/set_time =  rand(1 MINUTES, 1.5 MINUTES)
 	for(var/_item, seed_item in managed_seeds)
 		var/obj/item/seeds/seed = seed_item
 		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_POLLINATE, parent, set_time)
