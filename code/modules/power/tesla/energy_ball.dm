@@ -237,6 +237,7 @@
 		/obj/structure/lattice = FALSE,
 		/obj/structure/grille = FALSE,
 		/obj/structure/frame/machine = FALSE,
+		/obj/structure/cable = FALSE,
 	))
 
 	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.
