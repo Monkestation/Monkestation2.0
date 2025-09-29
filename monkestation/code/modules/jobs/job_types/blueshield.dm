@@ -31,6 +31,7 @@
 		/datum/job_department/central_command,
 		/datum/job_department/command,
 		)
+	department_for_prefs = /datum/job_department/central_command
 
 	family_heirlooms = list(/obj/item/bedsheet/captain, /obj/item/clothing/head/beret/blueshield)
 

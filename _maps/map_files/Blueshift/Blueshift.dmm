@@ -2665,7 +2665,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aBz" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/item/storage/secure/safe/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "aBB" = (
@@ -60836,6 +60836,7 @@
 	dir = 1
 	},
 /obj/machinery/photocopier,
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "lKw" = (
@@ -85372,9 +85373,6 @@
 /area/station/security/prison)
 "qzx" = (
 /obj/machinery/modular_computer/preset/command,
-/obj/structure/plaque/static_plaque/golden{
-	pixel_y = 32
-	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Command - Blueshield's Office";
 	name = "command camera"
@@ -86477,9 +86475,9 @@
 	id = "Repdoor";
 	name = "Door Lock";
 	normaldoorcontrol = 1;
-	pixel_x = 4;
-	pixel_y = -36;
-	req_access = list("cent_general");
+	pixel_x = 6;
+	pixel_y = -37;
+	req_access = list("nt_rep");
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -117418,10 +117416,11 @@
 /area/space/nearstation)
 "wAB" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/modular_computer/laptop/preset/civilian{
-	pixel_y = 7
-	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/item/fish_feed,
+/obj/item/fish_feed{
+	pixel_y = 9
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "wAC" = (
@@ -118392,13 +118391,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/plaque/static_plaque/golden/captain{
-	pixel_y = -32
-	},
-/obj/machinery/modular_computer/preset/command{
-	dir = 1;
-	pixel_y = -3
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - Representative's Office";
 	name = "command camera"
@@ -118406,6 +118398,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/modular_computer/preset/id/centcom/representative{
+	dir = 1
+	},
+/obj/structure/sign/flag/nanotrasen/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "wKi" = (
@@ -215387,7 +215383,7 @@ jrA
 ide
 ide
 ide
-oTn
+aBz
 bhf
 rre
 ide
@@ -217702,7 +217698,7 @@ rMP
 rpU
 bdu
 oTn
-aBz
+oTn
 ide
 faA
 wbO

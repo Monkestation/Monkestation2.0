@@ -32,6 +32,7 @@
 		/datum/job_department/central_command,
 		/datum/job_department/command,
 		)
+	department_for_prefs = /datum/job_department/central_command
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/lighter, /obj/item/reagent_containers/cup/glass/flask)
 
@@ -53,10 +54,23 @@
 		"Nanotrasen Representative",
 		"Corporate Liaison",
 		"Nanotrasen Fax Operater",
-		"Nanotrasen Official",
 		"Nanotrasen Informant",
+		"Retired Captain",
 	)
 	job_tone = "incoming message"
+
+/datum/job/nanotrasen_representative/employment_contract_contents(employee_name)
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as SLAVE), \
+	and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).\
+	<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, \
+	who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, \
+	in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, \
+	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"
 
 /datum/outfit/job/nanotrasen_representative
 	name = "Nanotrasen Representative"
@@ -69,7 +83,7 @@
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/folder/blue = 1,
+		/obj/item/clipboard = 1,
 	)
 	belt = /obj/item/gun/energy/laser/plasmacore
 	shoes = /obj/item/clothing/shoes/laceup
@@ -90,5 +104,3 @@
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
 	)
-
-

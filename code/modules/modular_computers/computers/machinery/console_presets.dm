@@ -61,6 +61,15 @@
 	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.find_file_by_name("plexagonidwriter")
 	card_mod_centcom.is_centcom = TRUE
 
+/obj/machinery/modular_computer/preset/id/centcom/representative
+	name = "nanotrasen representative console"
+	desc = "A stationary computer. This one comes preloaded with command programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/secureye,
+	)
+
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/preset/civilian
 	name = "civilian console"
