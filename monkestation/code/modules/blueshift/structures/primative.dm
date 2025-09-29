@@ -261,15 +261,15 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/item/cutting_board/AltClick(mob/user)
+/obj/item/cutting_board/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing on board")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	update_appearance()
 	balloon_alert(user, "cleared board")
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///Drops all contents at the turf of the item
 /obj/item/cutting_board/proc/drop_everything_contained()
@@ -416,14 +416,14 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/structure/large_mortar/AltClick(mob/user)
+/obj/structure/large_mortar/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/large_mortar/proc/drop_everything_contained()
@@ -618,18 +618,19 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	transfer_fingerprints_to(stone)
 	return ..()
 
-/obj/structure/millstone/AltClick(mob/user)
+/obj/structure/millstone/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside!")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
-/obj/structure/millstone/CtrlShiftClick(mob/user)
+/obj/structure/millstone/click_ctrl_shift(mob/user)
 	set_anchored(!anchored)
 	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/millstone/proc/drop_everything_contained()
@@ -736,7 +737,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 #define RESKIN_LINEN "Linen"
 
 /obj/item/storage/bag/plants
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Original" = list(
 			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',
@@ -773,7 +774,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /// A helper for the primitive variant, for mappers.
 /obj/item/storage/bag/plants/primitive
 	current_skin = RESKIN_LINEN // Just so it displays properly when in suit storage
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 	icon = 'monkestation/code/modules/blueshift/icons/plant_bag.dmi'
 	icon_state = "plantbag_primitive"
@@ -792,7 +793,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	bag.make_primitive()
 
 /obj/item/storage/bag/plants/portaseeder
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 
 #undef RESKIN_LINEN
@@ -2192,28 +2193,28 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	playsound(src, 'sound/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
 
 //this will allow click dragging certain items
-/obj/structure/reagent_forge/MouseDrop_T(obj/attacking_item, mob/living/user)
+/obj/structure/reagent_forge/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(user))
 		return
 
-	if(!isobj(attacking_item))
+	if(!isobj(dropped))
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
-		refuel(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
+		refuel(dropped, user)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
-		refuel(attacking_item, user, TRUE)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
+		refuel(dropped, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
-		refuel(attacking_item, user, TRUE)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
+		refuel(dropped, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/ore))
-		smelt_ore(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/ore))
+		smelt_ore(dropped, user)
 		return
 
 /obj/structure/reagent_forge/attackby(attacking_item, user, modifiers, attack_modifiers)

@@ -124,6 +124,8 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
+	if(!do_after(H, 2 SECONDS))
+		return
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
 		if((BODY_ZONE_HEAD in limbs_to_heal) && istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
@@ -193,8 +195,12 @@
 		organ.Remove(user)
 		if(!QDELETED(organ))
 			organ.forceMove(user.drop_location())
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	var/brute = selected_limb.brute_dam
+	var/burn = selected_limb.burn_dam
 	selected_limb.drop_limb()
 	qdel(selected_limb)
+	chest?.receive_damage(brute, burn, forced = TRUE, wound_bonus = CANT_WOUND)
 	user.blood_volume += 20
 	playsound(user, 'sound/items/eatfood.ogg', 20, TRUE)
 

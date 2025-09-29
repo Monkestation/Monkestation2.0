@@ -8,6 +8,7 @@
 	base_icon_state = "smoke"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	processing_flags = NONE
 
 	var/efficiency = 20
