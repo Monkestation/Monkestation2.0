@@ -458,12 +458,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
-			if(istype(bodypart, /obj/item/bodypart/head))
-				// Living mobs eyes are stored in the body so remove the organs properly for their effect to work.
-				if(new_body.has_quirk(/datum/quirk/cybernetics_quirk/bright_eyes)) // Either they have their eyes in their core or they are destroyed dont spawn another.
-					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
-					eyes.Remove(new_body)
-					qdel(eyes)
 			bodypart.drop_limb() // Drop limb should delete the limb for oozelings unless someone changes it.
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
