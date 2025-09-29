@@ -68,6 +68,7 @@
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/nt_rep_comments,
 	)
 
 // ===== CIVILIAN CONSOLE =====
