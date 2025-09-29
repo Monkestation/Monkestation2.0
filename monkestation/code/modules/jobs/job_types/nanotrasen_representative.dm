@@ -21,8 +21,8 @@
 	outfit = /datum/outfit/job/nanotrasen_representative
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
 
-	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_CMD
+	paycheck = PAYCHECK_NANOTRASEN
+	paycheck_department = ACCOUNT_CC
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
@@ -59,6 +59,14 @@
 	)
 	job_tone = "incoming message"
 
+/datum/job/nanotrasen_representative/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+
+	//we set ourselves as "dead" to CC, then alive as long as 1 of us survives.
+	SSticker.nanotrasen_rep_status = NT_REP_STATUS_DIED
+	var/datum/callback/roundend_callback = CALLBACK(src, PROC_REF(check_living), spawned.mind)
+	SSticker.OnRoundend(roundend_callback)
+
 /datum/job/nanotrasen_representative/employment_contract_contents(employee_name)
 	return "<center>Conditions of Employment</center>\
 	<BR><BR><BR><BR>\
@@ -71,6 +79,13 @@
 	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
 	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
 	<BR>Signed,<BR><i>[employee_name]</i>"
+
+///Checks if our mind survived somehow, since we can change bodies we should not keep track of that instead.
+///If so, (yes only 1 NT rep exists currently but this is for future proofing), set it as an NT rep surviving,
+///which won't cause score to tank.
+/datum/job/nanotrasen_representative/proc/check_living(datum/mind/rep_mind)
+	if(rep_mind?.current?.stat < DEAD)
+		SSticker.nanotrasen_rep_status = NT_REP_STATUS_SURVIVED
 
 /datum/outfit/job/nanotrasen_representative
 	name = "Nanotrasen Representative"

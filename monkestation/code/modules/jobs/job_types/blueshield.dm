@@ -20,8 +20,8 @@
 	outfit = /datum/outfit/job/blueshield
 	plasmaman_outfit = /datum/outfit/plasmaman/blueshield
 
-	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_CMD
+	paycheck = PAYCHECK_NANOTRASEN
+	paycheck_department = ACCOUNT_CC
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
