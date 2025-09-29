@@ -4656,9 +4656,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/suit_storage_unit/blueshield,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "bzN" = (
@@ -24655,6 +24655,11 @@
 "hOL" = (
 /obj/structure/table,
 /obj/item/storage/bag/construction,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos)
 "hOM" = (
@@ -31648,6 +31653,14 @@
 /area/station/security/execution/transfer)
 "keX" = (
 /obj/structure/table/reinforced/rglass,
+/obj/machinery/light/directional/north,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_y = 1
+	},
 /obj/item/clothing/glasses/meson/engine{
 	pixel_x = 8;
 	pixel_y = 10
@@ -31656,7 +31669,6 @@
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/storage_shared)
 "keZ" = (
@@ -64072,6 +64084,14 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 9;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
 "uih" = (
@@ -66658,7 +66678,8 @@
 /area/station/maintenance/port/central)
 "uWO" = (
 /obj/machinery/conveyor/inverted{
-	dir = 9
+	dir = 9;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -67804,7 +67825,8 @@
 "vom" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/conveyor/inverted{
-	dir = 10
+	dir = 10;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
