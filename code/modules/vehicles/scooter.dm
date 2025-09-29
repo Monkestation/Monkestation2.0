@@ -96,6 +96,9 @@
 	rider.stamina.adjust(-instability* 6 * tony_hawk)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.stamina.loss >= 100 || grinding || iscarbon(bumped_thing))
+		var/mob/living/carbon/carbon_rider = rider
+		if (istype(carbon_rider))
+			carbon_rider.impact_fart()
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
@@ -117,6 +120,7 @@
 			if(grinding)
 				grinding_mulitipler = 2
 			victim.Knockdown(4 * grinding_mulitipler SECONDS)
+			victim.impact_fart()
 	else
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
