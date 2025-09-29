@@ -30,7 +30,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set to maximum recommended target temperature"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -38,13 +38,15 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
-	if(can_interact(user))
-		target_temperature = max_recommended_temperature
-		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "target temperature set to [target_temperature] K")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_alt(mob/user)
+	if(target_temperature == max_temperature)
+		return CLICK_ACTION_BLOCKING
+
+	target_temperature = max_temperature
+	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "target temperature set to [target_temperature] K")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/examine(mob/user)
@@ -107,7 +109,7 @@
 	data["max_temperature"] = round(max_temperature)
 	return data
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/temperature_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

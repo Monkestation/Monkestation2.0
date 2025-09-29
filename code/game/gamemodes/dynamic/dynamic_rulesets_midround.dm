@@ -206,7 +206,7 @@
 	if (!mode.picking_specific_rule(sleeper_agent))
 		return
 
-	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+///	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living

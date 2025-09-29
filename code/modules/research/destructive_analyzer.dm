@@ -40,9 +40,9 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_loading)), 1 SECONDS)
 	return TRUE
 
-/obj/machinery/rnd/destructive_analyzer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/rnd/destructive_analyzer/click_alt(mob/living/user)
 	unload_item()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
@@ -134,7 +134,7 @@
 	flick("[base_icon_state]_process", src)
 	busy = TRUE
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), 2.4 SECONDS)
-	use_power(DESTRUCTIVE_ANALYZER_POWER_USAGE)
+	use_energy(DESTRUCTIVE_ANALYZER_POWER_USAGE)
 	var/list/all_contents = loaded_item.get_all_contents()
 	for(var/innerthing in all_contents)
 		destroy_item_individual(innerthing, gain_research_points)
