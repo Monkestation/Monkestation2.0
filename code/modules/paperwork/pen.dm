@@ -62,6 +62,9 @@
 		/datum/component/transforming, \
 		sharpness_on = NONE, \
 		inhand_icon_change = FALSE, \
+		//monkestation edit
+		w_class_on = WEIGHT_CLASS_TINY, \
+		//monkestation end
 	)
 
 /*
@@ -212,8 +215,9 @@
 //		return
 //	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
 //	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
-
-/obj/item/pen/attack_self(mob/user, modifiers)
+//monkestation edit
+/obj/item/pen/click_ctrl(mob/user, modifiers)
+//monkestation end (it's just the ctrl click)
 	. = ..()
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
