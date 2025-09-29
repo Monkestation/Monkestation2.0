@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "fixed tackles and bodythrows ignoring successful blocks"

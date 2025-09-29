@@ -46,6 +46,11 @@
 	if (!check_teleport_valid(owner, bloodsuckerdatum_power.coffin, TELEPORT_CHANNEL_MAGIC))
 		owner.balloon_alert(owner, "something holds you back!")
 		return FALSE
+	
+	if((bloodsuckerdatum_power.bloodsucker_blood_volume-get_blood_cost()) <= bloodsuckerdatum_power.frenzy_threshold)
+		owner.balloon_alert(owner, "using this would send you into a frenzy!")
+		return FALSE
+	
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/gohome/ActivatePower(trigger_flags)

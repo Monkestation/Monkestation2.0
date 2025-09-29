@@ -968,19 +968,62 @@
   Absolucy:
   - bugfix: Fix godslayer armor resurrection not working if you have crit immunity
       (i.e lux pens, inexorable gene, memento mori)
+  - bugfix: Fixed everyone having melee marth's grab range.
   SyncIt21:
   - bugfix: alt click runtime no more when using style meter
   - code_imp: improved alt & ctrl click code
   - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
       on GitHub
   - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  TheColorCyan:
+  - refactor: (MrMelbert) Refactored another large chuck of attack code, primarily
+      involving melee item attacks and non-human mob attacks. Report if you see anything
+      weird
+  - bugfix: '(MrMelbert) Blocked thrown batons are now properly... blocked /:cl:'
   Xander3359:
   - bugfix: Fix Beepsky having no restrictions on the controls lock
   - bugfix: Fix bots in general not having their controls lock restrictions
   - bugfix: fixed multi-cell charger charging too slow
+  - bugfix: Fix storage click-dragging
+  - bugfix: Fixed dumping out a storage into disposals
+  - rscadd: Adds a clipboard to the NT Rep locker
+  - bugfix: Fixed being unable to open bags in crit or resting
   notghosti:
   - balance: Airborne diseases won't spread if you are a corpse, have no need to breathe,
       or are wearing appropriate protection.
   - bugfix: Debug disease kits are now properly subtyped.
   - bugfix: Airbrone diseases no longer proc twice, and will properly respect TRAIT_VIRUS_RESISTANCE
       and satiety.
+2025-09-29:
+  Absolucy:
+  - rscadd: Burning items now emit smoke/pollution.
+  - qol: Bonfire smoke emission now compensates for lag.
+  - bugfix: (mc-oofert) brings back the AI detector HUD that was silently removed
+      by a PR 3 years ago, use inhand to toggle hud or use RMB to see static temporarily.
+  - bugfix: (GoldenAlpharex) Fixes a rare issue that could lead to players entering
+      an infinite disconnection loop from having a null view.
+  Absolucy, LemonInTheDark:
+  - bugfix: Moving diagonally will no longer lead to stutter stepping (it's tickbound)
+  EssentialTomato:
+  - balance: (Ghommie) As a continued effort to promote art and culture among the
+      crew, the "Marlowe Treeby's Art Galaxy" application has been made available
+      for download on all computer devices, with no access restrictions. Printing
+      can still only be done on a stationary console. The curator's PDA has it preinstalled
+      now.
+  JohnFulpWillard:
+  - image: Half the splash screen isn't covered in initialization text post-roundstart.
+  - spellcheck: Fixed incorrect spellings of Nanotrasen.
+  JupiterJaeden:
+  - bugfix: Fixes being unable to open storage items with right click when holding
+      a gun or cup
+  Xander3359:
+  - bugfix: Fixed not being able to click on, or use things while in crit
+  - bugfix: Fix not being able to unload cargo shelfs
+  notghosti:
+  - rscadd: Sylvan and Mushroom now have a 40% understanding of eachother
+  notghosti, A special thanks to hostileburner.:
+  - bugfix: Band-Aid fix for tesla destroying its own cables and multilayer hubs
+  the frogster of nutkicking pr fame:
+  - rscadd: 'New badass section item for syndie uplinks: combat boots that let you
+      groin kick people much more potently. 8 TC. They are otherwise just normal combat
+      boots.'

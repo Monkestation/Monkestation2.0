@@ -545,11 +545,11 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if(!(flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby))
-		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		return TRUE
+	if(!(flags & IGNORE_CRIT))
+		if((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby)
+			return TRUE
+		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+			return TRUE
 
 	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return TRUE
@@ -1348,10 +1348,11 @@
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!(action_bitflags & BYPASS_ADJACENCY) && !Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
@@ -1359,9 +1360,9 @@
 					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
-			var/datum/dna/mob_DNA = has_dna()
-			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
-				to_chat(src, span_warning("You are too far away!"))
+			if(!has_dna()?.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
