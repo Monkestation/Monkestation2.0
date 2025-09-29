@@ -32,12 +32,11 @@
 	to_chat(user, span_notice("You turn [src] [turned_on ? "off" : "on"]."))
 	toggle_working()
 
-/obj/structure/liquid_pump/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/liquid_pump/click_alt(mob/living/user)
 	to_chat(user, span_notice("You flick [src]'s spewing mode [spewing_mode ? "off" : "on"]."))
 	spewing_mode = !spewing_mode
 	update_icon()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/liquid_pump/examine(mob/user)
 	. = ..()

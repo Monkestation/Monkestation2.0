@@ -30,7 +30,7 @@
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
-	var/mob/camera/blob/BC = new_blob.become_overmind()
+	var/mob/eye/blob/BC = new_blob.become_overmind()
 	spawned_mobs += BC
 	message_admins("[ADMIN_LOOKUPFLW(BC)] has been made into a blob overmind by an event.")
 	BC.log_message("was spawned as a blob overmind by an event.", LOG_GAME)

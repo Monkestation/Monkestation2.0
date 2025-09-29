@@ -291,15 +291,15 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	ignore += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	ignore += typesof(/mob/camera/imaginary_friend)
+	ignore += typesof(/mob/eye/imaginary_friend)
 	//No pod to gondola
 	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	ignore += typesof(/mob/eye/ai_eye/remote/base_construction)
 	//See above
-	ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	ignore += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above

@@ -9,8 +9,8 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 1000
 
-/datum/orderable_item/survival/luxury_pen/oozling //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling
+/datum/orderable_item/survival/luxury_pen/oozeling //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN

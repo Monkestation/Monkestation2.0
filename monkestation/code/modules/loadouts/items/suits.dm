@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/ratvar
 
 /datum/loadout_item/suit/winter_coat/narsie
-	name = "Narsie Winter Coat"
+	name = "Nar'Sie Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
 
 /datum/loadout_item/suit/saints

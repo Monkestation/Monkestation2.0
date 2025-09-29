@@ -517,6 +517,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	modifies_speech = FALSE
 	liked_foodtypes = VEGETABLES
 	disliked_foodtypes = FRUIT | CLOTH
+	languages_native = list(/datum/language/calcic)
 
 /obj/item/organ/internal/tongue/bone/plasmaman/get_scream_sound()
 	return pick(
@@ -580,6 +581,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	toxic_foodtypes = NONE //no food is particularly toxic to etherealsz
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
+	languages_native = list(/datum/language/voltaic)
 
 /obj/item/organ/internal/tongue/ethereal/get_scream_sound()
 	return pick(
@@ -591,7 +593,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/ethereal/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
 
-
 // Ethereal tongues can speak all default + voltaic
 /obj/item/organ/internal/tongue/ethereal/get_possible_languages()
 	return ..() + /datum/language/voltaic
@@ -602,6 +603,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
+	languages_native = list(/datum/language/nekomimetic)
 
 /obj/item/organ/internal/tongue/bananium
 	name = "bananium tongue"
@@ -619,6 +621,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = MEAT | BUGS | TOXIC
 	disliked_foodtypes = GROSS
 	toxic_foodtypes = NONE
+	languages_native = list(/datum/language/slime)
 
 /obj/item/organ/internal/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
 	// a silver slime created this? what a delicacy!
@@ -632,6 +635,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "chimpers"
 	liked_foodtypes = MEAT | FRUIT | BUGS
 	disliked_foodtypes = CLOTH
+	languages_native = list(/datum/language/monkey)
 
 /obj/item/organ/internal/tongue/monkey/get_scream_sound()
 	return SFX_SCREECH
@@ -661,6 +665,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = VEGETABLES | DAIRY | CLOTH
 	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
 	toxic_foodtypes = MEAT | RAW | SEAFOOD
+	languages_native = list(/datum/language/moffic)
 
 /obj/item/organ/internal/tongue/moth/get_scream_sound()
 	return 'sound/voice/moth/scream_moth.ogg'
@@ -683,6 +688,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
 	say_mod = "poofs"
+	languages_native = list(/datum/language/mushroom)
 
 /obj/item/organ/internal/tongue/pod
 	name = "pod tongue"
@@ -690,6 +696,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
+	languages_native = list(/datum/language/sylvan)
 
 /obj/item/organ/internal/tongue/floran
 	name = "floran tongue"
@@ -698,6 +705,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	modifies_speech = TRUE
 	liked_foodtypes =  GORE | MEAT | DAIRY | SEAFOOD | BUGS
 	disliked_foodtypes = VEGETABLES
+	languages_native = list(/datum/language/sylvan)
 
 	/// How long is our hissssssss?
 	var/draw_length = 3

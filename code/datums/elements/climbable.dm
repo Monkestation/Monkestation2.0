@@ -94,6 +94,8 @@
 				user.Immobilize(adjusted_climb_stun)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
+		if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
+			user.adjust_bodytemperature((user.bodytemp_heat_damage_limit - user.standard_body_temperature) * 0.4)
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
@@ -137,6 +139,8 @@
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
+
+	. = COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	if(user != dropped_atom || !isliving(dropped_atom))
 		return
 	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence

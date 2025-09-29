@@ -134,7 +134,7 @@
 
 	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
-	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
+	var/obj/item/stock_parts/power_store/cell/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
@@ -164,7 +164,7 @@
 	if(!is_authorized(attacker))
 		return
 
-	if(istype(item, /obj/item/stock_parts/cell))
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
 
@@ -291,7 +291,7 @@
 		if(attached_circuit)
 			remove_circuit()
 		return
-	location.use_power(power_to_use, AREA_USAGE_EQUIP)
+	location.apc?.terminal?.use_energy(power_to_use, channel = AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
 	COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
 	return COMPONENT_OVERRIDE_POWER_USAGE
@@ -326,6 +326,10 @@
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
 	attached_circuit.set_shell(parent_atom)
+
+	// call after set_shell() sets on to true
+	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		attached_circuit.set_on(parent_atom.anchored)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.

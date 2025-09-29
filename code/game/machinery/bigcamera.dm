@@ -89,9 +89,9 @@
 	playsound(source = src, soundin = 'sound/machines/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
 	balloon_alert_to_viewers("offline")
 
-/obj/machinery/big_broadcast_camera/AltClick(mob/user)
+/obj/machinery/big_broadcast_camera/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 	active_microphone = !active_microphone
 
 	/// Text popup for letting the user know that the microphone has changed state
@@ -100,6 +100,7 @@
 	///If the radio exists as an object, set its state accordingly
 	if(active)
 		set_microphone_state()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/big_broadcast_camera/proc/set_microphone_state()
 	internal_radio.set_broadcasting(active_microphone)

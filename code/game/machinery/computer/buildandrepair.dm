@@ -165,9 +165,6 @@
 	if((user.istate & ISTATE_HARM))
 		return ..()
 
-/obj/structure/frame/computer/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state == 4)

@@ -18,28 +18,6 @@
 #define TOOL_HAMMER "hammer"
 #define TOOL_BLOWROD "blowrod"
 
-// Prefix values.
-#define QUECTO * 1e-30
-#define RONTO * 1e-27
-#define YOCTO * 1e-24
-#define ZEPTO * 1e-21
-#define ATTO * 1e-18
-#define FEMPTO * 1e-15
-#define PICO * 1e-12
-#define NANO * 1e-9
-#define MICRO * 1e-6
-#define MILLI * 1e-3
-#define KILO * 1e3
-#define MEGA * 1e6
-#define GIGA * 1e9
-#define TERA * 1e12
-#define PETA * 1e15
-#define EXA * 1e18
-#define ZETTA * 1e21
-#define YOTTA * 1e24
-#define RONNA * 1e27
-#define QUETTA * 1e30
-
 /// Category for clothing in the organics printer
 #define RND_CATEGORY_AKHTER_CLOTHING "Clothing"
 /// Category for equipment like belts and bags in the organics printer
@@ -100,10 +78,6 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 #define ACCOUNT_CMD_NAME "Command Budget"
 
 #define PLAYTIME_GREEN 6000 // 100 hours
-
-/// Macro to turn a number of laser shots into an energy cost, based on the above define
-/// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
-#define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
 
 /// Trait source for xeno innate abilities
 #define TRAIT_XENO_INNATE "xeno_innate"

@@ -53,6 +53,7 @@ Difficulty: Hard
 	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	mob_biotypes = MOB_ROBOTIC|MOB_EPIC|MOB_MINING
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
