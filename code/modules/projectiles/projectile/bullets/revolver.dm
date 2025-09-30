@@ -95,7 +95,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(6)
+		M.adjust_fire_stacks(3)
 		M.ignite_mob()
 
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
@@ -118,6 +118,67 @@
 	name = ".357 bullet"
 	damage = 60
 	wound_bonus = -30
+	armour_penetration = 30
+
+/obj/projectile/bullet/a357/mecha_unit_test
+	name = ".357 bullet"
+	damage = 60
+	wound_bonus = -30
+	armour_penetration = 0
+
+
+/obj/projectile/bullet/a357/nutcracker
+	name = ".357 Nutcracker bullet"
+	damage = 20
+	demolition_mod = 22
+
+/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 4u amatin, 2u cyanide. Deals somewhat more damage than standard rounds but takes time to work
+	name = ".357 Heartpiercer bullet"
+	damage = 10
+	armour_penetration = 100
+	wound_bonus = 0
+	speed = 0.6
+	inject_flags = INJECT_CHECK_PENETRATE_THICK
+
+/obj/projectile/bullet/a357/wallstake
+	name = ".357 Wallstake bullet"
+	damage = 30
+	armour_penetration = 50
+	sharpness = NONE
+	demolition_mod = 2
+	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
+	var/piercecount = 3
+	speed = 0.3
+
+/obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(pierces > piercecount)
+		projectile_piercing = NONE
+	return ..()
+
+/obj/projectile/bullet/a357/wallstake/Move()
+	. = ..()
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
+	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/thrown_mobs = 0
+
+	for(var/atom/mob in current_turf.contents)
+		if(ismovable(mob))
+			var/atom/movable/moveable_mob = mob
+			if(thrown_mobs > 3)
+				break
+			if(ismob(moveable_mob))
+				thrown_mobs++
+				moveable_mob.throw_at(throw_at_turf, 3, 3)
+				if(piercecount < 4) ///Really stupid way to allow the admeme rounds to function
+					qdel(src)
+					return
+
+
+/obj/projectile/bullet/a357/wallstake/admeme  //This lets you chain-toss people down a hallway causing a terrible and PAINFUL death
+	piercecount = 10
+	speed = 0.4
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

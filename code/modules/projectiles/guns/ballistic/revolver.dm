@@ -144,6 +144,12 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/mecha_test
+	name = "\improper Syndicate Revolver"
+	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
+	icon_state = "revolversyndie"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/mech357
+
 /obj/item/gun/ballistic/revolver/syndicate/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
 	//There's already a cowboy sprite in there!
@@ -321,9 +327,14 @@
 	suppressor_x_offset = 3
 	w_class = WEIGHT_CLASS_SMALL
 	can_suppress = TRUE
+	fire_delay = 0.6 SECONDS
+	projectile_wound_bonus = 15
+	projectile_damage_multiplier = 1.35
 
 /obj/item/gun/ballistic/revolver/sol/evil
 	pin = /obj/item/firing_pin/implant/pindicate
+	fire_delay = 0.3 SECONDS
+
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
@@ -358,7 +369,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
 	suppressor_x_offset = 5
 	can_suppress = TRUE
-	fire_delay = 1 SECONDS
+	fire_delay = 0.8 SECONDS
 	recoil = 3
 	wield_recoil = 1
 
@@ -390,11 +401,11 @@
 	icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
-	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
-	fire_delay = 0.6 SECONDS
+	//In comparasion to the orginal's fire_delay = 0.8 second, recoil = 3, wield_recoil = 1
+	fire_delay = 0.5 SECONDS
 	recoil = 2
 	wield_recoil = 0.8
-	projectile_damage_multiplier = 1.3
+	projectile_damage_multiplier = 1
 
 /obj/item/gun/ballistic/revolver/takbok/blueshield/give_manufacturer_examine()
 	RemoveElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)

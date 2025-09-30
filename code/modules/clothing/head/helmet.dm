@@ -23,7 +23,7 @@
 
 /datum/armor/head_helmet
 	melee = 35
-	bullet = 30
+	bullet = 40
 	laser = 30
 	energy = 40
 	bomb = 25
