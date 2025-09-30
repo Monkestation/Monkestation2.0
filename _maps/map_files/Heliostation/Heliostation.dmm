@@ -20237,9 +20237,9 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/command)
 "ccd" = (
-/obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/filingcabinet/medical,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "ccf" = (
@@ -50207,6 +50207,7 @@
 /area/station/engineering/supermatter/room)
 "mev" = (
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "mew" = (
@@ -67654,6 +67655,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "sJn" = (

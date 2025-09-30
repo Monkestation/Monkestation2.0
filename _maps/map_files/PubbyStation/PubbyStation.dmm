@@ -28121,7 +28121,6 @@
 /area/station/service/chapel/storage)
 "cvH" = (
 /obj/machinery/vending/boozeomat/all_access,
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/kitchen/small,
 /area/station/command/heads_quarters/nt_rep)
 "cvI" = (
@@ -30884,6 +30883,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/reinforced,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/kitchen/small,
 /area/station/command/heads_quarters/nt_rep)
 "eqD" = (
@@ -38668,6 +38668,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "lem" = (
@@ -55060,7 +55061,6 @@
 /obj/item/bedsheet/centcom/double{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xOm" = (

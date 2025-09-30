@@ -24901,10 +24901,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "hGh" = (
+/obj/machinery/requests_console/directional/north,
 /obj/machinery/modular_computer/preset/representative{
 	dir = 8
 	},
-/obj/machinery/requests_console/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "hGp" = (
@@ -37152,6 +37152,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "lsa" = (
@@ -44451,6 +44452,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "nEZ" = (
