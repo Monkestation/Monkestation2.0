@@ -48,8 +48,6 @@
 	var/handling_death = FALSE
 	/// If this bloodsucker has suffered final death.
 	var/final_death = FALSE
-	// have we claimed a coffin this game?
-	var/claimed_coffin = FALSE
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
 
