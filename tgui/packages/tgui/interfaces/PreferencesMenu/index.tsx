@@ -17,7 +17,7 @@ export const PreferencesMenu = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentPageLocal, setCurrentPage] = useLocalState(
     'currentPageGamePrefs',
-    data.startingPage ?? GamePreferencesSelectedPage.Settings,
+    data.starting_page ?? GamePreferencesSelectedPage.Settings,
   );
 
   let currentPage = currentPageLocal;

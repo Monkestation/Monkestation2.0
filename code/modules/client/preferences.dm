@@ -211,7 +211,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
 
-	if (current_window == PREFERENCE_WINDOW_CHARACTERS)
+	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
 		var/list/channels = list()
 		for(var/channel in GLOB.used_sound_channels)
 			channels += list(list(

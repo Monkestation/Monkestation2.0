@@ -192,7 +192,7 @@ export type PreferencesMenuData = {
   total_coins: number;
   loadout_tabs: LoadoutData[];
   window: WindowE;
-  startingPage: GamePreferencesSelectedPage;
+  starting_page: GamePreferencesSelectedPage;
   owned_items: string[];
 
   channels: Channel[];
