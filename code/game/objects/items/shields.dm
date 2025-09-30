@@ -38,10 +38,9 @@
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
+	//More likely to block thrown items, tackles, and body throws
+	if(attack_type == THROWN_PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
 		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type)
