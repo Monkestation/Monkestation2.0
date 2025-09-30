@@ -29,7 +29,6 @@
     update_icon()
 
 /obj/machinery/computer/rbmk_console/proc/spawn_children()
-    // Console is 3x1, parent on westmost tile
     var/turf/T1 = get_step(src, EAST)
     var/turf/T2 = get_step(T1, EAST)
 
@@ -81,6 +80,7 @@
         data["status"] = "No reactor linked"
         return data
 
+    // --- Core state ---
     data["control_rods"]   = linked_reactor.control_rod_depth
     data["temperature"]    = linked_reactor.temperature || 0
     data["instability"]    = linked_reactor.instability || 0
@@ -89,12 +89,13 @@
     data["integrity"]      = linked_reactor.reactor_integrity || 0
     data["max_integrity"]  = linked_reactor.max_reactor_integrity || 100
 
-    if (!linked_reactor.pressure_history)
-        linked_reactor.pressure_history = list()
+    // --- Histories ---
+    if (!linked_reactor.coolant_pressure_history)
+        linked_reactor.coolant_pressure_history = list()
     if (!linked_reactor.moderator_history)
         linked_reactor.moderator_history = list()
 
-    data["pressure"]  = linked_reactor.pressure_history
+    data["pressure"]  = linked_reactor.coolant_pressure_history
     data["moderator"] = linked_reactor.moderator_history
 
     // --- Rod slots ---
@@ -122,23 +123,29 @@
     // --- Coolant state ---
     data["inlet_open"]  = linked_reactor.inlet_open
     data["outlet_open"] = linked_reactor.outlet_open
+    data["inlet_rate"]       = linked_reactor.inlet_rate
+    data["inlet_min"]        = linked_reactor.inlet_rate_min
+    data["inlet_max"]        = linked_reactor.inlet_rate_max
+    data["inlet_pressure"]   = round(max(linked_reactor.get_inlet_pressure(), 0), 0.1)
+    data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
+    data["outlet_pressure_max"]    = linked_reactor.outlet_pressure_max
+    data["outlet_pressure"]        = round(max(linked_reactor.get_outlet_pressure(), 0), 0.1)
 
-    // Inlet live state
-    if (linked_reactor.inlet)
-        data["inlet_rate"] = linked_reactor.inlet.volume_rate
-    else
-        data["inlet_rate"] = linked_reactor.inlet_rate
-    data["inlet_min"]      = linked_reactor.inlet_rate_min
-    data["inlet_max"]      = linked_reactor.inlet_rate_max
-    data["inlet_pressure"] = round(max(linked_reactor.get_inlet_pressure(), 0), 0.1)
-
-    // Outlet live state
-    if (linked_reactor.outlet)
-        data["outlet_target_pressure"] = linked_reactor.outlet.internal_pressure_bound
-    else
-        data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
-    data["outlet_pressure_max"] = linked_reactor.outlet_pressure_max
-    data["outlet_pressure"]     = round(max(linked_reactor.get_outlet_pressure(), 0), 0.1)
+    // --- NEW: Gas composition for RBMKGraphs ---
+    var/list/gas_comp = list()
+    if (linked_reactor.coolant_internal)
+        var/datum/gas_mixture/mix = linked_reactor.coolant_internal
+        var/total = mix.total_moles()
+        if (total > 0)
+            for (var/gas_path in mix.gases)
+                var/moles = mix.gases[gas_path][MOLES]
+                var/percent = (moles / total) * 100
+                gas_comp[gas_path] = list(
+                    "percent" = percent,
+                    "heat_modifier" = mix.gases[gas_path]["heat_modifier"] || 0,
+                    "heat_resistance" = mix.gases[gas_path]["heat_resistance"] || 0
+                )
+    data["gas_composition"] = gas_comp
 
     return data
 
@@ -204,19 +211,17 @@
             auto_link()
             return TRUE
 
-        // ---- NEW: Coolant controls ----
+        // ---- Coolant controls ----
         if ("set_inlet_rate")
-            var/rate = text2num(params["rate"])
-            if (linked_reactor.inlet)
-                linked_reactor.inlet.volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
+            var/rate = clamp(text2num(params["rate"]), linked_reactor.inlet_rate_min, linked_reactor.inlet_rate_max)
             linked_reactor.set_inlet_rate(rate)
+            linked_reactor.update_linked_consoles()
             return TRUE
 
         if ("set_outlet_pressure")
-            var/press = text2num(params["pressure"])
-            if (linked_reactor.outlet)
-                linked_reactor.outlet.internal_pressure_bound = clamp(press, 0, ATMOS_PUMP_MAX_PRESSURE)
+            var/press = clamp(text2num(params["pressure"]), 0, linked_reactor.outlet_pressure_max)
             linked_reactor.set_outlet_pressure(press)
+            linked_reactor.update_linked_consoles()
             return TRUE
 
         if ("toggle_inlet")
@@ -230,7 +235,7 @@
     return FALSE
 
 /*************************************************************
- * CHILD TILE OBJECT (overlay only)
+ * CHILD TILE OBJECT
  *************************************************************/
 
 /obj/structure/rbmk_console_child

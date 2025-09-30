@@ -24,10 +24,6 @@
 		// High neutron flux snowballs hard
 		damage += (flux - 300) / 300
 
-	// --- Radiation stress ---
-	if(radiation > 50)
-		damage += (radiation - 50) / 500
-
 	// --- Instability-driven stress ---
 	if(instability > 100)
 		// Above 100% instability, structural damage accelerates

@@ -3,8 +3,10 @@
  * - Reactor anchored on center turf
  * - Spawns child shell tiles for 3x3 body
  * - Coolant inlet/outlet placed flush left/right of center
+ * - Internal coolant reservoir added (14,000 L)
  *************************************************************/
 
+/// RBMK Reactor
 /obj/machinery/rbmk/reactor
     name = "RBMK Reactor Core"
     desc = "A massive nuclear reactor core. Insert rods at your own risk."
@@ -12,8 +14,8 @@
     icon_state = "reactor_off"
     bound_width = 96
     bound_height = 96
-    pixel_x = -32   // shift left one tile
-    pixel_y = -32   // shift down one tile
+    pixel_x = -32
+    pixel_y = -32
     anchored = TRUE
     density = FALSE
     mouse_opacity = MOUSE_OPACITY_ICON
@@ -43,34 +45,38 @@
     // Control rods
     var/control_rod_depth = 0
 
-    // Flux / Instability / Integrity
+    // Flux / Instability (integrity handled in rbmk_integrity.dm)
     var/flux = 0
     var/instability = 0
+
+    // Moderator tracking
+    var/moderator_level = 0
+    var/list/moderator_history = list()
+
+	// Integrity variables
     var/max_reactor_integrity = 100
     var/reactor_integrity = 100
     var/repairable = FALSE
 
-    // Pressure / Gas Moderation
-    var/pressure = 0
-    var/moderator_level = 0
-    var/list/pressure_history = list()
-    var/list/moderator_history = list()
-
     // ---- Coolant valve/flow control ----
     var/inlet_open = TRUE
     var/outlet_open = TRUE
-    var/flow_rate = 1.0
-    var/flow_min = 0.0
-    var/flow_max = 2.0
 
-    /// NEW: inlet and outlet control
-    var/inlet_rate = 1.0                   // liters/sec scale
+    var/inlet_rate = 1.0                   // liters/sec
     var/inlet_rate_min = 0.1
-    var/inlet_rate_max = 2000.0            // raised per your request
-    var/outlet_target_pressure = 101.3     // regulator target kPa
-    var/outlet_pressure_max = 10000
+    var/inlet_rate_max = 2000.0
 
-    // ---- Coolant telemetry histories (last 50 samples) ----
+    var/outlet_target_pressure = 101.3     // regulator target kPa
+    var/outlet_pressure_max = 25000        // hard ceiling
+
+    // ---- Internal coolant tank ----
+    var/datum/gas_mixture/coolant_internal
+    var/coolant_volume_max = 14000  // liters cap
+
+    // ---- Pressure Quick Reference ----
+    var/pressure = 0
+
+    // ---- Coolant telemetry histories ----
     var/list/coolant_pressure_history = list()
     var/list/coolant_temperature_history = list()
     var/list/coolant_total_moles_history = list()
@@ -86,6 +92,10 @@
         temperature = env ? env.temperature : T0C + 20
     else
         temperature = T0C + 20
+
+    // Create empty internal coolant tank
+    coolant_internal = new
+    coolant_internal.volume = coolant_volume_max
 
     START_PROCESSING(SSmachines, src)
 
@@ -109,6 +119,7 @@
         qdel(C)
     if (inlet)  qdel(inlet)
     if (outlet) qdel(outlet)
+    QDEL_NULL(coolant_internal)
     return ..()
 
 /obj/machinery/rbmk/reactor/proc/relink_ports()
@@ -141,25 +152,21 @@
     instability = clamp(instability + rod_effect * 0.5 + (flux * 0.1), 0, 100)
     flux = clamp(flux + rod_effect * 2 - (moderator_level * 0.05), 0, 100)
 
-    if (temperature > 3000 || instability > 80)
-        reactor_integrity = max(reactor_integrity - 1, 0)
-
-    pressure = clamp(pressure + (temperature / 1000) - (control_rod_depth * 0.05), 0, 100)
     moderator_level = clamp(moderator_level - rod_effect * 0.2 + (control_rod_depth * 0.05), 0, 100)
-
-    pressure_history += pressure
-    if (length(pressure_history) > 50) pressure_history.Cut(1, 2)
-
     moderator_history += moderator_level
     if (length(moderator_history) > 50) moderator_history.Cut(1, 2)
 
     handle_coolant(delta_time)
     sample_coolant()
 
+    // ✅ Use live coolant pressure for reactor telemetry
+    if(coolant_internal)
+        pressure = coolant_internal.return_pressure()
+
     update_linked_consoles()
 
 /*************************************************************
- * Valve/Flow control (UI helpers)
+ * Valve/Flow control
  *************************************************************/
 
 /// Toggle valves
@@ -189,18 +196,15 @@
     update_linked_consoles()
     return outlet_target_pressure
 
-/obj/machinery/rbmk/reactor/proc/set_flow_rate(val)
-    return set_inlet_rate(val)
-
-/// State snapshot
 /obj/machinery/rbmk/reactor/proc/get_flow_state()
     return list(
         "inlet_open" = inlet_open,
         "outlet_open" = outlet_open,
-        "flow_rate" = inlet_rate,
-        "flow_min" = inlet_rate_min,
-        "flow_max" = inlet_rate_max,
-        "outlet_target_pressure" = outlet_target_pressure
+        "inlet_rate" = inlet_rate,
+        "inlet_min" = inlet_rate_min,
+        "inlet_max" = inlet_rate_max,
+        "outlet_target_pressure" = outlet_target_pressure,
+        "outlet_pressure_max" = outlet_pressure_max
     )
 
 /*************************************************************
@@ -234,15 +238,13 @@
         return outlet.airs[1]
     return null
 
-/// Prefer inlet, else outlet
+/// Prefer internal coolant
 /obj/machinery/rbmk/reactor/proc/get_coolant_mix()
-    var/datum/gas_mixture/mix = get_inlet_mix()
-    if(!mix) mix = get_outlet_mix()
-    return mix
+    return coolant_internal
 
-/// Sample coolant for UI history
+/// Sample coolant
 /obj/machinery/rbmk/reactor/proc/sample_coolant()
-    var/datum/gas_mixture/mix = get_coolant_mix()
+    var/datum/gas_mixture/mix = coolant_internal
     if(!mix) return
 
     var/press = mix.return_pressure()
@@ -280,69 +282,34 @@
             series2 += 0
             if(length(series2) > 50) series2.Cut(1, 2)
 
-/// Snapshot for UI
-/obj/machinery/rbmk/reactor/proc/get_coolant_snapshot()
-    var/datum/gas_mixture/mix = get_coolant_mix()
-    if(!mix)
-        return list("pressure" = 0, "temperature" = 0, "total_moles" = 0, "composition" = list())
-
-    var/total = mix.total_moles()
-    var/list/comp = list()
-    if(total > 0)
-        for (var/gas_path in mix.gases)
-            var/moles = mix.gases[gas_path][MOLES]
-            comp["[gas_path]"] = clamp((moles / total) * 100, 0, 100)
-
-    return list(
-        "pressure" = mix.return_pressure(),
-        "temperature" = mix.temperature,
-        "total_moles" = total,
-        "composition" = comp
-    )
-
-/// History bundle for graphs
-/obj/machinery/rbmk/reactor/proc/get_coolant_history_for_ui()
-    var/list/gases = list()
-    for (var/gas_path in coolant_gas_hist)
-        var/list/series = coolant_gas_hist[gas_path]
-        gases += list(list("id" = "[gas_path]", "values" = series.Copy()))
-
-    return list(
-        "pressure" = coolant_pressure_history.Copy(),
-        "temperature" = coolant_temperature_history.Copy(),
-        "total_moles" = coolant_total_moles_history.Copy(),
-        "gases" = gases
-    )
-
 /// Handle coolant exchange
 /obj/machinery/rbmk/reactor/proc/handle_coolant(seconds_per_tick)
-    if(!inlet_open || !outlet_open) return
-    if(!inlet || !outlet) return
+    if(!coolant_internal) return
 
-    var/datum/gas_mixture/in_mix  = get_inlet_mix()
-    var/datum/gas_mixture/out_mix = get_outlet_mix()
-    if(!in_mix || !out_mix) return
+    // --- Inlet -> internal
+    if(inlet_open && inlet)
+        var/datum/gas_mixture/in_mix = get_inlet_mix()
+        if(in_mix && in_mix.total_moles() > 0)
+            if(coolant_internal.total_moles() < coolant_internal.volume)
+                var/amt = clamp(inlet_rate / 100, 0, 1)
+                var/datum/gas_mixture/moved_in = in_mix.remove_ratio(amt)
+                if(moved_in && moved_in.total_moles() > 0)
+                    coolant_internal.merge(moved_in)
 
-    if(in_mix.total_moles() > 0)
-        var/delta_T = temperature - in_mix.temperature
-        if(abs(delta_T) > 0.5)
-            var/transfer = min(abs(delta_T) * 0.05, 200) * max(seconds_per_tick, 1) * inlet_rate
-            if(delta_T > 0)
-                temperature = max(0, temperature - transfer)
-                in_mix.temperature += transfer
-            else
-                temperature += transfer
-                in_mix.temperature = max(0, in_mix.temperature - transfer)
+    // --- Internal -> outlet
+    if(outlet_open && outlet && coolant_internal.total_moles() > 0)
+        // baseline flow proportional to inlet rate
+        var/flow_ratio = clamp(inlet_rate / inlet_rate_max, 0, 1)
+        var/datum/gas_mixture/moved_out = coolant_internal.remove_ratio(flow_ratio * 0.05)
+        if(moved_out && moved_out.total_moles() > 0)
+            outlet.airs[1].merge(moved_out)
 
-        var/base_ratio = 0.10
-        var/datum/gas_mixture/moved = in_mix.remove_ratio(base_ratio * inlet_rate)
-        if(moved && moved.total_moles() > 0)
-            out_mix.merge(moved)
-
-        if(out_mix.return_pressure() > outlet_target_pressure)
-            var/release_ratio = clamp((out_mix.return_pressure() - outlet_target_pressure) / 100, 0, 1)
-            var/datum/gas_mixture/released = out_mix.remove_ratio(release_ratio)
-            if(released) qdel(released)
+        // regulator release if pressure too high
+        if(coolant_internal.return_pressure() > outlet_target_pressure)
+            var/release_ratio = clamp((coolant_internal.return_pressure() - outlet_target_pressure) / 100, 0, 1)
+            var/datum/gas_mixture/released = coolant_internal.remove_ratio(release_ratio)
+            if(released && released.total_moles() > 0)
+                outlet.airs[1].merge(released)
 
 /*************************************************************
  * UI fanout
@@ -399,7 +366,6 @@
     piping_layer = 3
     var/obj/machinery/rbmk/reactor/parent_reactor = null
 
-    // NEW vars so rbmk_core.dm can use them
     var/volume_rate = 1.0
     var/internal_pressure_bound = 101.3
 

@@ -1,15 +1,20 @@
 import { useBackend } from 'tgui/backend';
 import { Section, Flex, Table, ProgressBar } from 'tgui/components';
 
+// Define the shape of a gas info entry
+interface GasInfo {
+  percent: number;
+  heat_modifier?: number;
+  heat_resistance?: number;
+}
+
 export const RBMKGraphs = () => {
   const { data } = useBackend<any>();
 
-  // Expect:
-  // data.gas_composition = { oxygen: { percent, heat_modifier, heat_resistance }, ... }
+  // Expect: data.gas_composition = { oxygen: { percent, heat_modifier, heat_resistance }, ... }
+  const gases: Record<string, GasInfo> = data?.gas_composition || {};
 
-  const gases = data?.gas_composition || {};
-
-  // SM color scheme
+  // SM-style color scheme
   const gasColors: Record<string, string> = {
     oxygen: 'blue',
     plasma: 'purple',
@@ -21,10 +26,10 @@ export const RBMKGraphs = () => {
     nitrogen_oxide: 'red',
   };
 
-  // Only keep gases that exist and > 0%
-  const activeGases = Object.entries(gases).filter(
-    ([, info]: any) => info?.percent > 0,
-  );
+  // Only keep gases that exist and > 0%, sorted largest first
+  const activeGases = (Object.entries(gases) as [string, GasInfo][])
+    .filter(([, info]) => info?.percent > 0)
+    .sort((a, b) => b[1].percent - a[1].percent);
 
   return (
     <Flex direction="column" gap={1}>
@@ -35,7 +40,7 @@ export const RBMKGraphs = () => {
             value={100}
             maxValue={100}
             ranges={Object.fromEntries(
-              activeGases.map(([gas, info]: any) => [
+              activeGases.map(([gas, info]) => [
                 gasColors[gas] || 'white',
                 [0, info.percent],
               ]),
@@ -44,7 +49,7 @@ export const RBMKGraphs = () => {
             {activeGases.length > 0
               ? activeGases
                   .map(
-                    ([gas, info]: any) => `${gas}: ${info.percent.toFixed(1)}%`,
+                    ([gas, info]) => `${gas}: ${info.percent.toFixed(1)}%`,
                   )
                   .join(' | ')
               : 'No coolant gases detected'}
@@ -62,7 +67,7 @@ export const RBMKGraphs = () => {
               <Table.Cell textAlign="right">Heat Mod</Table.Cell>
               <Table.Cell textAlign="right">Heat Resist</Table.Cell>
             </Table.Row>
-            {activeGases.map(([gas, info]: any) => (
+            {activeGases.map(([gas, info]) => (
               <Table.Row key={gas}>
                 <Table.Cell color={gasColors[gas] || 'white'}>{gas}</Table.Cell>
                 <Table.Cell textAlign="right">
