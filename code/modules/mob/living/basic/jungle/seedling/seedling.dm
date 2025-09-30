@@ -113,12 +113,12 @@
 				seed.GetComponent(/datum/component/growth_information)
 
 		if(info.plant_state == HYDROTRAY_PLANT_DEAD)
-			balloon_alert_to_viewers(src, "dead plant removed")
+			balloon_alert_to_viewers("dead plant removed")
 			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, seed_item)
 			return
 
 		if(growing.weed_level > 0)
-			balloon_alert_to_viewers(src, "weeds uprooted")
+			balloon_alert_to_viewers("weeds uprooted")
 			SEND_SIGNAL(hydro, COMSIG_PLANT_ADJUST_WEED, -10)
 			return
 
