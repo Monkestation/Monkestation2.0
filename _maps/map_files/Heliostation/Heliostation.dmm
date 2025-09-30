@@ -27257,7 +27257,8 @@
 /area/station/science/lab)
 "dmo" = (
 /obj/machinery/door/airlock/command{
-	id_tag = "nt_rep_office_door"
+	id_tag = "nt_rep_office_door";
+	name = "CentCom Office"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
@@ -32456,7 +32457,7 @@
 /area/lavaland/surface)
 "ftu" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Centcom Office"
+	name = "Centcom Dormitories"
 	},
 /obj/structure/curtain/cloth/fancy/mechanical{
 	icon_state = "bounty-open";
@@ -36036,7 +36037,8 @@
 /area/space/nearstation)
 "gPV" = (
 /obj/machinery/door/airlock/command/glass{
-	id_tag = "nt_rep_office_door"
+	id_tag = "nt_rep_office_door";
+	name = "CentCom Office Lobby"
 	},
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 1
@@ -81435,7 +81437,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/security/upper)
 "xYB" = (
-/obj/machinery/door/airlock/command,
+/obj/machinery/door/airlock/command{
+	name = "CentCom Office"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/captain)
