@@ -79,7 +79,7 @@
 	if(!use(1))
 		return
 
-	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating

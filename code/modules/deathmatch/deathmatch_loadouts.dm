@@ -166,7 +166,7 @@
 
 	backpack_contents = list(
 		/obj/item/grenade/smokebomb = 2,
-		/obj/item/ammo_box/strilka310 = 2,
+		/obj/item/ammo_box/a762 = 2,
 	)
 
 /datum/outfit/deathmatch_loadout/battler/druid

@@ -1064,6 +1064,9 @@
   Killermankey:
   - rscadd: Added handcannon
   - rscadd: Added pulse revolver
+  Lawlolawl:
+  - bugfix: Fixed Craig and he is able to water plants again. Also you can give him
+      different watering cans (using the "give" hotkey, check settings).
   TheColorCyan:
   - bugfix: fixed tackles and bodythrows ignoring successful blocks
   - bugfix: roundstart cell stun batons no longer only use 1% of its cell charge per
@@ -1075,6 +1078,8 @@
   - bugfix: to fix mushroom soup, virus food now reacts at 600K.
   Uristthedorf:
   - bugfix: Facehuggers now properly detach after facehugging
+  - bugfix: Upgrading ripley no longer deletes manipulator.
+  - bugfix: Soldier deathmatch loadout now has correct ammo
   Xander3359:
   - bugfix: Fixed the Hyeseong modular laser rifle having 1/5 the amount of shots
       it was supposed to have.
@@ -1099,5 +1104,9 @@
   - map: Heliostation AI sat Solars will now no longer depower if not set up.
   - map: Heliostation AI sat Solars will now actually link to the Solars computer
   - code_imp: Event override code
+  - code_imp: Fixed deprived darkspawn calling upon the wrong role type. This changes
+      nothing about how they work functionally however due to being set to 0.
   timothymtorres, RandomDudeOnTheRim:
   - bugfix: Glass Tiles Are Now Removable
+  wonderinghost:
+  - bugfix: Tiles dont delete plating after replacing tiles
