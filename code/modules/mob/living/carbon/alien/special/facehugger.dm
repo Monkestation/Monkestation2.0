@@ -192,9 +192,9 @@
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
-/obj/item/clothing/mask/facehugger/proc/detach(mob/living/M)
+/obj/item/clothing/mask/facehugger/proc/detach(mob/living/victim)
 	attached = 0
-	M.dropItemToGround(src)
+	victim.dropItemToGround(src)
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
