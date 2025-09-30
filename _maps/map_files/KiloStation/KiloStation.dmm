@@ -6106,17 +6106,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
-"bWI" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "bWP" = (
 /obj/structure/table,
 /obj/item/clothing/shoes/sneakers/orange{
@@ -42367,6 +42356,17 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"neA" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "neH" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
@@ -50557,19 +50557,6 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/grimey,
 /area/station/service/chapel/office)
-"pNM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/mob/living/basic/bot/cleanbot/medbay{
-	req_one_access = list(22);
-	name = "Deacon Scrubsy"
-	},
-/turf/open/floor/iron/smooth_large,
-/area/station/maintenance/department/chapel/monastery)
 "pNY" = (
 /obj/machinery/computer/security/mining{
 	dir = 8
@@ -74676,6 +74663,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/theater)
+"xnG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/mob/living/basic/bot/cleanbot/medbay{
+	req_one_access = list(22);
+	name = "Deacon Scrubsy"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/station/maintenance/department/chapel/monastery)
 "xnI" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/firecloset,
@@ -88818,7 +88818,7 @@ aeu
 hmh
 heh
 oru
-pNM
+xnG
 dJi
 qhZ
 vmZ
@@ -103540,7 +103540,7 @@ lbO
 lbO
 lbO
 dcf
-bWI
+neA
 lbO
 fWu
 eVO

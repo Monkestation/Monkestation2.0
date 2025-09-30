@@ -5956,14 +5956,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
-"bQj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/siding/blue{
-	dir = 9
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/cryo)
 "bQt" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -15700,6 +15692,15 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/plating,
 /area/station/science/robotics/mechbay)
+"eGU" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/cryo)
 "eHa" = (
 /obj/structure/easel,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -17516,6 +17517,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"fjc" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/green,
+/area/station/service/library/upper)
 "fjp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
@@ -19332,14 +19341,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"fLw" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet/green,
-/area/station/service/library/upper)
 "fLx" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -7
@@ -23979,15 +23980,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/science/lower)
-"heq" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/cryo)
 "heB" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -31432,6 +31424,15 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"jni" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/cryo)
 "jns" = (
 /turf/closed/wall/r_wall,
 /area/station/service/library/upper)
@@ -31455,17 +31456,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen,
 /area/station/maintenance/starboard/upper)
-"jnS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/blue{
-	dir = 5
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/cryo)
 "job" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
@@ -37503,15 +37493,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
-"kXr" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/cryo)
 "kXw" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -41424,6 +41405,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
+"maS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/cryo)
 "maX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -46330,6 +46319,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"nyl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/cryo)
 "nyr" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -89420,7 +89420,7 @@ iEZ
 rtj
 iRD
 xme
-fLw
+fjc
 saq
 byd
 pXO
@@ -113733,8 +113733,8 @@ bEw
 upz
 cbE
 ase
-bQj
-kXr
+maS
+jni
 lhP
 tpZ
 sRq
@@ -114247,8 +114247,8 @@ tjT
 iOH
 iIS
 dOb
-jnS
-heq
+nyl
+eGU
 lhP
 hBI
 qlf
