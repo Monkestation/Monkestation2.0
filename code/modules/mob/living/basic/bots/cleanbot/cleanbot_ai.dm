@@ -70,7 +70,7 @@
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
 	action_cooldown = 3 SECONDS
-	/// Whether to also consider anything with TRAIT_TRASH_ITEM (monkestation addition)
+	/// Whether to also consider anything with TRAIT_TRASH_ITEM
 	var/check_trash_trait = FALSE
 	/// Minimum distance to the target before path returns. Corresponds to the "mintargetdist" arg of get_path_to.
 	var/min_target_distance = null
