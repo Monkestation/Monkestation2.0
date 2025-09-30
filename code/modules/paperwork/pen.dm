@@ -212,7 +212,6 @@
 //		return
 //	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
 //	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
-//monkestation edit
 /obj/item/pen/item_ctrl_click(mob/living/carbon/user)
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
