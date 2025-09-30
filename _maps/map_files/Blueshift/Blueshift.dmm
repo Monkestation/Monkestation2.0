@@ -124832,9 +124832,10 @@
 /obj/structure/safe{
 	name = "gilded safe"
 	},
-/obj/item/wheelchair/gold,
 /obj/item/instrument/violin/golden,
 /obj/item/food/grown/apple/gold,
+/obj/item/fish/goldfish,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/security/prison_upper)
 "xZc" = (
