@@ -52715,6 +52715,7 @@
 	},
 /obj/machinery/newscaster/directional/west,
 /obj/effect/landmark/start/nanotrasen_representative,
+/obj/item/storage/secure/safe/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "qfh" = (
