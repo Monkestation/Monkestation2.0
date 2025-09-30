@@ -34,6 +34,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
@@ -170,6 +172,7 @@
 		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
 		/datum/event_admin_setup/input_number/disease_outbreak_advanced
 	)
+	track = EVENT_TRACK_MAJOR
 
 /**
  * Admin virus customization

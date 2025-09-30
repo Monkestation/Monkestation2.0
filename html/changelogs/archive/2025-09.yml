@@ -1066,6 +1066,13 @@
   - rscadd: Added pulse revolver
   TheColorCyan:
   - bugfix: fixed tackles and bodythrows ignoring successful blocks
+  - bugfix: roundstart cell stun batons no longer only use 1% of its cell charge per
+      hit and use 10%, like intended
+  - bugfix: you can no longer bypass advanced shotgun ammo boxes reload delay by cancelling
+      the action
+  Tractor-Maam:
+  - bugfix: mushroom soup is now able to be made again
+  - bugfix: to fix mushroom soup, virus food now reacts at 600K.
   Uristthedorf:
   - bugfix: Facehuggers now properly detach after facehugging
   Xander3359:
@@ -1091,3 +1098,6 @@
   - map: Heliostation AI Core will now be connected to power
   - map: Heliostation AI sat Solars will now no longer depower if not set up.
   - map: Heliostation AI sat Solars will now actually link to the Solars computer
+  - code_imp: Event override code
+  timothymtorres, RandomDudeOnTheRim:
+  - bugfix: Glass Tiles Are Now Removable

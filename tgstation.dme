@@ -8681,7 +8681,6 @@
 #include "monkestation\code\modules\storytellers\scheduled_events.dm"
 #include "monkestation\code\modules\storytellers\antag_rep\helper_procs.dm"
 #include "monkestation\code\modules\storytellers\converted_events\_base_event.dm"
-#include "monkestation\code\modules\storytellers\converted_events\event_overrides.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\blob_infection.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodcult.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodling.dm"
