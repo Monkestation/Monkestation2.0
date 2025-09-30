@@ -1027,3 +1027,77 @@
   - rscadd: 'New badass section item for syndie uplinks: combat boots that let you
       groin kick people much more potently. 8 TC. They are otherwise just normal combat
       boots.'
+2025-09-30:
+  Absolucy:
+  - bugfix: Raised the priority of the projectile processing subsystem.
+  - bugfix: Fire extinguishers no longer become LESS effective on oozelings the more
+      they melt.
+  Addust:
+  - bugfix: theseus no longer has two magnate suits
+  Bastian0930:
+  - bugfix: Ghosts no longer keep cqc (or other martial arts) when they leave a duel.
+      No free lessons!
+  - bugfix: Clock cult and blood cult players with respective bans can no longer spawn
+      their teams cogscarabs/artificers. If you do the crime, do the time!
+  - bugfix: '...actually, it looks like nobody who was dead could possess blood cult
+      artificers spawned from Narsie. This was fixed. Narsie has been given a stern
+      talking to about discriminatory hiring regarding ghosts.'
+  - bugfix: You can no longer teleport to your coffin as a bloodsucker when you would
+      go into a frenzy over it, after the bloodsucker attack last week that injured
+      5.
+  - bugfix: Bloodsuckers automatically exit torpor after 120 second as a failsafe.
+      No funny quip here - let us know if that's too much or too little!
+  GPeckman, SirNightKnight:
+  - bugfix: fixed drying racks not being able to dry things.
+  - bugfix: fixed cluwne brain traumas being randomly obtainable.
+  - bugfix: fixed altar buckling.
+  - bugfix: fixed item reskins not working.
+  JohnFulpWillard:
+  - admin: Outfit manager now works more than once if you close the UI.
+  - bugfix: Station alert consoles & Cyborg/AI alarm systems now shows all station
+      Z levels rather than the one it was created on.
+  - bugfix: Cyborg/AIs won't get alerted of alarms going off in Centcom/Thunderdome
+      areas.
+  - rscdel: Removed golden wheelchairs from being accessible outside of hardcore random
+      benefits.
+  - spellcheck: Removed references of a now-removed slime processor board and machine.
+  Killermankey:
+  - rscadd: Added handcannon
+  - rscadd: Added pulse revolver
+  TheColorCyan:
+  - bugfix: fixed tackles and bodythrows ignoring successful blocks
+  - bugfix: roundstart cell stun batons no longer only use 1% of its cell charge per
+      hit and use 10%, like intended
+  - bugfix: you can no longer bypass advanced shotgun ammo boxes reload delay by cancelling
+      the action
+  Tractor-Maam:
+  - bugfix: mushroom soup is now able to be made again
+  - bugfix: to fix mushroom soup, virus food now reacts at 600K.
+  Uristthedorf:
+  - bugfix: Facehuggers now properly detach after facehugging
+  Xander3359:
+  - bugfix: Fixed the Hyeseong modular laser rifle having 1/5 the amount of shots
+      it was supposed to have.
+  - bugfix: Fixed Voltaic combat cyberheart not giving shock immunity
+  - bugfix: Fixed being unable to purchase regular-priced uplink items if you bought
+      the discounted variant of it.
+  - bugfix: Fixed uplinks bricking if they try to generate more discounts than there
+      are available categories
+  flleeppyy:
+  - bugfix: '''Notify Restart'' verb now actually works. You just need to be verified
+      via the ''Link Discord Account'' verb'
+  - rscdel: Deleted the Discord subsystem and merged it into SSplexora
+  - qol: Discord Verification  ('Link Discord Account') window looks much nicer.
+  - config: added discord_url config string, and some other unrelevant Plexora options
+      that might be used in the future
+  memecraft22:
+  - rscadd: Added bongs
+  notghosti:
+  - balance: Teslas cannot destroy SMES or mechcomp teleporters
+  - map: Construction Access now properly accesses Helio station engineering.
+  - map: Heliostation AI Core will now be connected to power
+  - map: Heliostation AI sat Solars will now no longer depower if not set up.
+  - map: Heliostation AI sat Solars will now actually link to the Solars computer
+  - code_imp: Event override code
+  timothymtorres, RandomDudeOnTheRim:
+  - bugfix: Glass Tiles Are Now Removable
