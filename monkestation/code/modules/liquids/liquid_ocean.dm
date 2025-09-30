@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
 	SSliquids.active_ocean_turfs -= src
 	SSliquids.ocean_turfs -= src
-	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
+	for(var/turf/open/floor/plating/ocean/listed_ocean in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
 
 /turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
