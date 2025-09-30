@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - spellcheck: "Removed references of a now-removed slime processor board and machine."

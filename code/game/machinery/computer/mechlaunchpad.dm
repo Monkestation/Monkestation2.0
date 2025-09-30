@@ -199,7 +199,7 @@
 			data["mechonly"] = current_pad.mech_only
 	return data
 
-/obj/machinery/computer/mechpad/ui_act(action, params)
+/obj/machinery/computer/mechpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

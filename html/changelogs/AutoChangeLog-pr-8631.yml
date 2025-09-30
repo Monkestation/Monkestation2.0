@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscdel: "Removed golden wheelchairs from being accessible outside of hardcore random benefits."

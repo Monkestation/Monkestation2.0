@@ -148,7 +148,7 @@
 		return PROCESS_KILL
 
 /obj/machinery/bouldertech/refinery/proc/refine_dust(obj/item/processing/refined_dust/dust)
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
+	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	var/list/processable_ores = list()
 	for(var/datum/material/possible_mat as anything in dust.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))

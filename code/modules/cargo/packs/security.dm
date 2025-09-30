@@ -339,3 +339,12 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/armory/antitank
+	name = "Disposable Anti-Tank Rocket Crate"
+	desc = "Contains a singular antiquated anti-tank rocket."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/ballistic/ignifist
+				)
+	crate_name = "Anti-Tank Rocket crate"
+	dangerous = TRUE

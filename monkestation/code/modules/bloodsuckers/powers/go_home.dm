@@ -42,6 +42,11 @@
 	if(!istype(bloodsuckerdatum_power) || QDELETED(bloodsuckerdatum_power.coffin))
 		owner.balloon_alert(owner, "coffin was destroyed!")
 		return FALSE
+	//monkestation edit
+	if((bloodsuckerdatum_power.bloodsucker_blood_volume-get_blood_cost()) <= bloodsuckerdatum_power.frenzy_threshold)
+		owner.balloon_alert(owner, "using this would send you into a frenzy!")
+		return FALSE
+	//monkestation end
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/gohome/ActivatePower(trigger_flags)
@@ -89,7 +94,7 @@
 		for(var/mob/living/watchers in viewers(world.view, get_turf(owner)) - owner)
 			if(QDELETED(watchers.client) || watchers.client?.is_afk() || watchers.stat != CONSCIOUS)
 				continue
-			if(watchers.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(watchers))
 				continue
 			if(watchers.is_blind())
 				continue

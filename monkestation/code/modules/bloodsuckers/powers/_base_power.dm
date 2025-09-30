@@ -179,6 +179,10 @@
 	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
+	// Silver cuffed?
+	if(!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
+		user.balloon_alert(user, "The silver cuffs on your wrists prevent you from using your powers!")
+		return FALSE
 	var/bloodcost = get_blood_cost()
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	// Constant Cost (out of blood)
@@ -272,6 +276,8 @@
 	if(QDELETED(user))
 		return FALSE
 	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
+		return FALSE
+	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	if(constant_bloodcost <= 0)
