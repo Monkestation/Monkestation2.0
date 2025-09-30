@@ -1,0 +1,8 @@
+author: "Bastian0930"
+delete-after: True
+changes:
+  - bugfix: "Ghosts no longer keep cqc (or other martial arts) when they leave a duel. No free lessons!"
+  - bugfix: "Clock cult and blood cult players with respective bans can no longer spawn their teams cogscarabs/artificers. If you do the crime, do the time!"
+  - bugfix: "...actually, it looks like nobody who was dead could possess blood cult artificers spawned from Narsie. This was fixed. Narsie has been given a stern talking to about discriminatory hiring regarding ghosts."
+  - bugfix: "You can no longer teleport to your coffin as a bloodsucker when you would go into a frenzy over it, after the bloodsucker attack last week that injured 5."
+  - bugfix: "Bloodsuckers automatically exit torpor after 120 second as a failsafe. No funny quip here - let us know if that's too much or too little!"

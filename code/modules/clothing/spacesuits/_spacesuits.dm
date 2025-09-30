@@ -12,6 +12,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
+	interaction_flags_click = NEED_DEXTERITY
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -58,12 +59,18 @@
 	equip_delay_other = 80
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	clothing_traits = list(LIQUID_PROTECTION, TRAIT_SNOWSTORM_IMMUNE)
-	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
-	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high /// If this is a path, this gets created as an object in Initialize.
-	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
-	var/thermal_on = FALSE /// Status of the thermal regulator
-	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	/// The default temperature setting
+	var/temperature_setting = BODYTEMP_NORMAL
+	/// If this is a path, this gets created as an object in Initialize.
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
+	/// Status of the cell cover on the suit
+	var/cell_cover_open = FALSE
+	/// Status of the thermal regulator
+	var/thermal_on = FALSE
+	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	var/show_hud = TRUE
 
 /datum/armor/suit_space
 	bio = 100
@@ -197,18 +204,16 @@
 		return
 
 /// Open the cell cover when ALT+Click on the suit
-/obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/clothing/suit/space/click_alt(mob/living/user)
 	toggle_spacesuit_cell(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
-/obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		if(cell_cover_open && cell)
-			remove_cell(user)
-			return
-	return ..()
+/obj/item/clothing/suit/space/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
+	if(cell_cover_open && cell)
+		remove_cell(user)
+		return CLICK_ACTION_SUCCESS
 
 // Remove the cell when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)
@@ -239,6 +244,7 @@
 		return
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	toggler.update_cached_insulation()
 	if(toggler)
 		to_chat(toggler, span_notice("You turn [thermal_on ? "on" : "off"] [src]'s thermal regulator."))
 

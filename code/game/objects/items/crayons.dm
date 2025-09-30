@@ -28,6 +28,7 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	/// Icon state to use when capped
 	var/icon_capped
@@ -276,13 +277,6 @@
 	if(!ui)
 		ui = new(user, src, "Crayon", name)
 		ui.open()
-
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	is_capped = !is_capped
-	balloon_alert(user, is_capped ? "capped" : "cap removed")
-	update_appearance()
 
 /obj/item/toy/crayon/proc/staticDrawables()
 	. = list()
@@ -730,6 +724,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
@@ -757,10 +752,22 @@
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
+	register_context()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
 		set_painting_tool_color(pick("#DA0000", "#FF9300", "#FFF200", "#A8E61D", "#00B7EF", "#DA00FF"))
 	refill()
+
+/obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
+		return .
+
+	if(has_cap)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
@@ -912,7 +919,7 @@
 	balloon_alert(user, "can't match those colours!")
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+/obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)
 		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped

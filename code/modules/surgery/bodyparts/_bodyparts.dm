@@ -1342,6 +1342,8 @@
 		return "flesh"
 	if (biological_state & BIO_WIRED)
 		return "wiring"
+	if (biological_state & BIO_INORGANIC)
+		return "membrane"
 
 	return "error"
 
@@ -1351,6 +1353,8 @@
 		return "bone"
 	if (biological_state & BIO_METAL)
 		return "metal"
+	if (biological_state & BIO_INORGANIC)
+		return "membrane"
 
 	return "error"
 

@@ -144,24 +144,25 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/obj/item/clothing/suit/hooded/cloak/goliath/AltClick(mob/user)
-	. = ..()
-	if(iscarbon(user))
-		var/mob/living/carbon/char = user
-		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))
-			to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
-			return
-		if(!user.is_holding(src))
-			to_chat(user, span_warning("You must be holding [src] in order to adjust it!"))
-			return
-		if(slot_flags & ITEM_SLOT_OCLOTHING)
-			slot_flags = ITEM_SLOT_NECK
-			set_armor(/datum/armor/none)
-			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
-		else
-			slot_flags = initial(slot_flags)
-			set_armor(initial(armor_type))
-			user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
+/obj/item/clothing/suit/hooded/cloak/goliath/click_alt(mob/living/user)
+	if(!iscarbon(user))
+		return NONE
+	var/mob/living/carbon/char = user
+	if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))
+		to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
+		return CLICK_ACTION_BLOCKING
+	if(!user.is_holding(src))
+		to_chat(user, span_warning("You must be holding [src] in order to adjust it!"))
+		return CLICK_ACTION_BLOCKING
+	if(slot_flags & ITEM_SLOT_OCLOTHING)
+		slot_flags = ITEM_SLOT_NECK
+		set_armor(/datum/armor/none)
+		user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
+	else
+		slot_flags = initial(slot_flags)
+		set_armor(initial(armor_type))
+		user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
+	return CLICK_ACTION_SUCCESS
 
 /datum/armor/cloak_goliath
 	melee = 35
@@ -334,23 +335,36 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)
 	. = ..()
 	if(loc == user && !COOLDOWN_FINISHED(src, effect_cooldown))
-		. += "You feel like the revival effect will be able to occur again in [COOLDOWN_TIMELEFT(src, effect_cooldown) / 10] seconds."
+		. += span_notice("You feel like the revival effect will be able to occur again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, effect_cooldown))]")
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING)
-		RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(resurrect))
-		return
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
+		RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
+	else
+		UnregisterSignal(user, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_HEALTH_UPDATE))
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/dropped(mob/user)
-	..()
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_HEALTH_UPDATE))
 
-/obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
+/obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_stat_change(mob/living/carbon/user, new_stat)
 	SIGNAL_HANDLER
-	if(new_stat > CONSCIOUS && new_stat < DEAD && COOLDOWN_FINISHED(src, effect_cooldown))
-		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time) //This needs to happen first, otherwise there's an infinite loop
-		user.heal_ordered_damage(heal_amount, damage_heal_order)
-		user.visible_message(span_notice("[user] suddenly revives, as their armor swirls with demonic energy!"), span_notice("You suddenly feel invigorated!"))
-		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
+	if(ISINRANGE_EX(new_stat, CONSCIOUS, DEAD))
+		resurrection_butterfly(user)
+
+/obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_health_update(mob/living/carbon/user)
+	SIGNAL_HANDLER
+	if(user.stat != DEAD && user.health <= user.hardcrit_threshold) // so it still works if they don't have normal crit
+		resurrection_butterfly(user)
+
+/obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrection_butterfly(mob/living/carbon/user)
+	SIGNAL_HANDLER
+	if(!COOLDOWN_FINISHED(src, effect_cooldown))
+		return
+	COOLDOWN_START(src, effect_cooldown, effect_cooldown_time) //This needs to happen first, otherwise there's an infinite loop
+	user.heal_ordered_damage(heal_amount, damage_heal_order)
+	user.visible_message(span_notice("[user] suddenly revives, as [user.p_their()] armor swirls with demonic energy!"), span_notice("You suddenly feel invigorated!"))
+	user.log_message("was resurrected by godslayer armor", LOG_ATTACK)
+	playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)

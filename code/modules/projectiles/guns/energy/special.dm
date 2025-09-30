@@ -249,6 +249,13 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
+/obj/item/gun/energy/wormhole_projector/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// overrides from /obj/item/gun as both ranged interacts result in firing the gun
+	// identical to primary ranged attack
+	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
 /obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).

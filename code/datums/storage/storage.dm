@@ -166,7 +166,7 @@
 	arrived.item_flags |= IN_STORAGE
 	refresh_views()
 	arrived.on_enter_storage(src)
-	// monke edit //RegisterSignal(arrived, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+	RegisterSignal(arrived, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	SEND_SIGNAL(arrived, COMSIG_ITEM_STORED, src)
 	parent.update_appearance()
 
@@ -455,6 +455,31 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	parent.update_appearance()
 	return TRUE
 
+/// Since items inside storages ignore transparency for QOL reasons, we're tracking when things are dropped onto them instead of our UI elements
+/datum/storage/proc/mousedrop_receive(atom/dropped_onto, atom/movable/target, mob/user, params)
+	SIGNAL_HANDLER
+
+	if (src != user.active_storage)
+		return
+
+	if (!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
+		return
+
+	if (target.loc != real_location) // what even
+		return
+
+	if(numerical_stacking)
+		return
+
+	var/drop_index = real_location.contents.Find(dropped_onto)
+	real_location.contents -= target
+	// Use an empty list if we're dropping onto the last item
+	var/list/to_move = real_location.contents.len >= drop_index ? real_location.contents.Copy(drop_index) : list()
+	real_location.contents -= to_move
+	real_location.contents += target
+	real_location.contents += to_move
+	refresh_views()
+
 /**
  * Attempts to insert an item into the storage
  *
@@ -737,24 +762,41 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
 		return
 
-	parent.add_fingerprint(user)
-
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
-
-		if(parent.loc != user)
+		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return
 
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
+		parent.add_fingerprint(user)
+		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	else if(ismob(over_object))
-		if(over_object != user)
+	if(ismob(over_object))
+		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return
 
+		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
+		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	else if(!istype(over_object, /atom/movable/screen))
-		INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, user)
+	if(istype(over_object, /atom/movable/screen))
+		return
+
+	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
+		return
+
+	parent.add_fingerprint(user)
+
+	var/atom/dump_loc = over_object.get_dumping_location()
+	if(isnull(dump_loc))
+		return
+
+	/// Don't dump *onto* objects in the same storage as ourselves
+	if (over_object.loc == parent.loc && !isnull(parent.loc.atom_storage) && isnull(over_object.atom_storage))
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, dump_loc, user)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /**
  * Dumps all of our contents at a specific location.
@@ -762,13 +804,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
-/datum/storage/proc/dump_content_at(atom/dest_object, mob/user)
+/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user)
 	if(locked)
+		user.balloon_alert(user, "closed!")
 		return
 	if(!user.CanReach(parent) || !user.CanReach(dest_object))
 		return
 
-	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, real_location, user) & STORAGE_DUMP_HANDLED)
+	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, src, user) & STORAGE_DUMP_HANDLED)
 		return
 
 	// Storage to storage transfer is instant
@@ -779,15 +822,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
-			if(to_dump.loc != real_location)
-				continue
 			dest_object.atom_storage.attempt_insert(to_dump, user)
 		parent.update_appearance()
 		SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_POST_TRANSFER, dest_object, user)
-		return
-
-	var/atom/dump_loc = dest_object.get_dumping_location()
-	if(isnull(dump_loc))
 		return
 
 	// Storage to loc transfer requires a do_after
@@ -801,24 +838,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
 	SIGNAL_HANDLER
 
-	if(!parent)
-		return
-
 	if(!istype(dropping))
 		return
 	if(dropping != user.get_active_held_item())
 		return
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
+		return
 	if(dropping.atom_storage) // If it has storage it should be trying to dump, not insert.
 		return
-
 	if(!iscarbon(user) && !isdrone(user))
-		return
-	var/mob/living/user_living = user
-	if(user_living.incapacitated())
 		return
 
 	attempt_insert(dropping, user)
-	return //COMPONENT_CANCEL_MOUSEDROPPED_ONTO
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.
@@ -961,11 +993,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		show_contents(to_show)
 		return FALSE
 
-	if(!to_show.CanReach(parent))
-		parent.balloon_alert(to_show, "can't reach!")
-		return FALSE
-
-	if(!isliving(to_show) || to_show.incapacitated(IGNORE_CRIT))
+	if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
 		return FALSE
 
 	if(locked)
