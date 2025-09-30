@@ -25,10 +25,8 @@
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
 	/// Cooldown for bloodsuckers going into Frenzy.
 	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
-	//monkestation edit
 	//Timer to track how long the bloodsucker has been in torpor
 	COOLDOWN_DECLARE(bloodsucker_torpor_max_time)
-	//monkestation end
 	///Used for assigning your name
 	var/bloodsucker_name
 	///Used for assigning your title
@@ -50,9 +48,8 @@
 	var/handling_death = FALSE
 	/// If this bloodsucker has suffered final death.
 	var/final_death = FALSE
-	//monkestation edit - have we claimed a coffin this game?
+	// have we claimed a coffin this game?
 	var/claimed_coffin = FALSE
-	//monkestation end
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
 
