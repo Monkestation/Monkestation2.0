@@ -1,0 +1,7 @@
+author: "GPeckman, SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed drying racks not being able to dry things."
+  - bugfix: "fixed cluwne brain traumas being randomly obtainable."
+  - bugfix: "fixed altar buckling."
+  - bugfix: "fixed item reskins not working."
