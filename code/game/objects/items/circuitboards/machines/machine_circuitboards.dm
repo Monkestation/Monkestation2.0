@@ -1247,14 +1247,9 @@
 	build_path = /obj/machinery/processor
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1)
+		/datum/stock_part/manipulator = 1,
+	)
 	needs_anchored = FALSE
-
-/obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
-	name = "Food Processor"
-	build_path = /obj/machinery/processor
-	to_chat(user, span_notice("Defaulting name protocols."))
-	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service"
