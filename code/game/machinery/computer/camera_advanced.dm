@@ -228,7 +228,7 @@
 		update_ai_detect_hud()
 
 		if(use_static)
-			var/datum/cameranet/origin_camnet = astype(origin)?.camnet || GLOB.cameranet
+			var/datum/cameranet/origin_camnet = astype(origin, /obj/machinery/computer/camera_advanced)?.camnet || GLOB.cameranet
 			origin_camnet.visibility(src, GetViewerClient(), null, use_static)
 
 		if(visible_icon)
