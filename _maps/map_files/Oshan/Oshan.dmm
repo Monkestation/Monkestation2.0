@@ -16548,7 +16548,8 @@
 /area/station/science/ordnance/burnchamber)
 "fhw" = (
 /obj/machinery/mineral/stacking_machine{
-	input_dir = 2
+	input_dir = 8;
+	output_dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
