@@ -224,11 +224,16 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/tremere_power/check_completion()
+	var/found = FALSE //done like this because we want to check all powers, not just return on the first found
 	for(var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_powers in bloodsucker_datum?.powers)
 		if(tremere_powers.level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
-			return TRUE
-	return FALSE
-
+			found = TRUE
+	//the next line is JUST for the dominate power, which is an offshoot of a nontremere power
+	var/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/domin = locate(/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate) in bloodsucker_datum?.powers
+	if(domin)
+		if(domin.level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
+			found = TRUE
+	return found
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// Convert a crewmate - Ventrue Clan objective

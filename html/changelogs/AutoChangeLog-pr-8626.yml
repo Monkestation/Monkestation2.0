@@ -1,0 +1,6 @@
+author: "Bastian0930"
+delete-after: True
+changes:
+  - bugfix: "Bug-suckers have had an insane amount of bugs squashed. I mean, seriously, these guys had a tracker dedicated to how buggy they were."
+  - bugfix: "Changing the pen angle is now on control click, instead of being on Z (conflicted with clicking the pen)"
+  - bugfix: "Clicking a pen no longer makes it large, and instead keeps it tiny."
