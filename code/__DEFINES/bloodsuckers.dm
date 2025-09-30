@@ -33,7 +33,7 @@
 #define VASSALIZATION_ALLOWED 0
 ///If someone has to accept vassalization
 #define VASSALIZATION_DISLOYAL 1
-///If someone is not allowed under any circimstances to become a Vassal
+///If someone is not allowed under any circumstances to become a Vassal
 #define VASSALIZATION_BANNED 2
 
 /**
@@ -42,12 +42,15 @@
  */
 ///Spam prevention for healing messages.
 #define BLOODSUCKER_SPAM_HEALING (15 SECONDS)
-///Span prevention for Sol Masquerade messages.
+///Spam prevention for Sol Masquerade messages.
 #define BLOODSUCKER_SPAM_MASQUERADE (60 SECONDS)
 
-///Span prevention for Sol messages.
+///Spam prevention for Sol messages.
 #define BLOODSUCKER_SPAM_SOL (30 SECONDS)
-
+//monkestation edit
+//Torpor softlock prevention - define it high as it is a failsafe
+#define BLOODSUCKER_TORPOR_MAX_TIME (120 SECONDS)
+//monkestation end
 /**
  * Clan defines
  */

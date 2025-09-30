@@ -1010,11 +1010,15 @@
       for download on all computer devices, with no access restrictions. Printing
       can still only be done on a stationary console. The curator's PDA has it preinstalled
       now.
+  JohnFulpWillard:
+  - image: Half the splash screen isn't covered in initialization text post-roundstart.
+  - spellcheck: Fixed incorrect spellings of Nanotrasen.
   JupiterJaeden:
   - bugfix: Fixes being unable to open storage items with right click when holding
       a gun or cup
   Xander3359:
   - bugfix: Fixed not being able to click on, or use things while in crit
+  - bugfix: Fix not being able to unload cargo shelfs
   notghosti:
   - rscadd: Sylvan and Mushroom now have a 40% understanding of eachother
   notghosti, A special thanks to hostileburner.:
