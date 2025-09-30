@@ -132,7 +132,7 @@
 		"slides out of a fold in spacetime")
 
 	to_chat(user, span_notice("You try to align with the bluespace stream..."))
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, 2 SECONDS, target = src, hidden = TRUE))
 		return
 
 	var/turf/source_turf = get_turf(src)
