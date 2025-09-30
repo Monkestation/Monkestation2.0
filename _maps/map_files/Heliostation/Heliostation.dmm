@@ -67058,7 +67058,7 @@
 /turf/open/floor/iron,
 /area/mine/maintenance/public)
 "szT" = (
-/obj/machinery/modular_computer/preset/id/centcom/representative,
+/obj/machinery/modular_computer/preset/representative,
 /obj/machinery/button/door/directional/west{
 	id = "nt_rep_desk_shutters";
 	name = "Desk Shutters Control";

@@ -54689,7 +54689,7 @@
 "rEd" = (
 /obj/machinery/light/directional/east,
 /obj/structure/sign/flag/nanotrasen/directional/east,
-/obj/machinery/modular_computer/preset/id/centcom/representative{
+/obj/machinery/modular_computer/preset/representative{
 	dir = 8
 	},
 /turf/open/floor/wood/parquet,

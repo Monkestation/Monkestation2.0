@@ -96996,7 +96996,7 @@
 /area/station/maintenance/port/fore)
 "wTn" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/modular_computer/preset/id/centcom/representative{
+/obj/machinery/modular_computer/preset/representative{
 	dir = 4
 	},
 /obj/structure/sign/flag/nanotrasen/directional/west,

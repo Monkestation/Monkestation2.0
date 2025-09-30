@@ -73369,7 +73369,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "ERT dock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oiF" = (
@@ -118398,7 +118398,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/modular_computer/preset/id/centcom/representative{
+/obj/machinery/modular_computer/preset/representative{
 	dir = 1
 	},
 /obj/structure/sign/flag/nanotrasen/directional/south,
