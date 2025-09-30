@@ -57,15 +57,13 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /// Proc that child classes can override to have custom transforms, like edaggers or pendrivers
-//monkestation edit: I added w_class_on. comments in add component break compiling.
 /obj/item/pen/proc/create_transform_component()
 	AddComponent( \
 		/datum/component/transforming, \
 		sharpness_on = NONE, \
 		inhand_icon_change = FALSE, \
-		w_class_on = WEIGHT_CLASS_TINY, \
+		w_class_on = w_class, \
 	)
-//monkestation end
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -215,9 +213,7 @@
 //	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
 //	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
 //monkestation edit
-/obj/item/pen/click_ctrl(mob/user, modifiers)
-//monkestation end (it's just the ctrl click)
-	. = ..()
+/obj/item/pen/item_ctrl_click(mob/living/carbon/user)
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return CLICK_ACTION_BLOCKING
