@@ -19621,12 +19621,11 @@
 /area/station/maintenance/department/medical)
 "bWq" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
 	name = "Desk Shutters";
 	id = "nt_rep_privacy_shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/nt_rep)
 "bWt" = (
@@ -19885,9 +19884,6 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "bYT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
@@ -26823,10 +26819,12 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/button/door/directional/north{
-	id = "blueshieldoffice";
-	name = "privacy blinds";
-	req_one_access = list("nt_rep", "blueshield")
+/obj/machinery/button/curtain{
+	id = "prisonlibrarycurtain4";
+	pixel_x = 6;
+	pixel_y = 24;
+	req_one_access = list("nt_rep", "blueshield");
+	name = "privacy blinds"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
@@ -27258,7 +27256,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "dmo" = (
-/obj/machinery/door/airlock/command,
+/obj/machinery/door/airlock/command{
+	id_tag = "nt_rep_office_door"
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	name = "Desk Shutters";
@@ -28156,6 +28156,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"dCC" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/ai_monitored/command/storage/eva)
 "dCV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -29598,7 +29604,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
 "elM" = (
@@ -40713,7 +40718,6 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "iyV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/command/storage/eva)
 "iyY" = (
@@ -43477,9 +43481,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "jyZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
@@ -49003,6 +49004,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"lHx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Desk Shutters";
+	id = "nt_rep_privacy_shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/nt_rep)
 "lHL" = (
 /obj/machinery/telecomms/message_server/preset,
 /obj/effect/turf_decal/stripes/box,
@@ -53360,6 +53370,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/railing,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/command/storage/eva)
 "nno" = (
@@ -62489,12 +62500,12 @@
 /area/station/engineering/atmos)
 "qIG" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/railing,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - EVA Storage";
 	network = list("ss13","command")
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
 "qII" = (
@@ -67780,6 +67791,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "sLV" = (
@@ -70388,7 +70402,8 @@
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "tHU" = (
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/command/storage/eva)
 "tHW" = (
@@ -71677,6 +71692,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"ujJ" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/ai_monitored/command/storage/eva)
 "ujM" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance"
@@ -120460,7 +120480,7 @@ wYA
 psH
 cOl
 eTY
-bWq
+lHx
 hbS
 oMQ
 dic
@@ -128938,9 +128958,9 @@ azW
 azW
 azW
 azW
-tOs
-gAL
 liY
+gAL
+tOs
 aQK
 aQK
 aQK
@@ -129192,12 +129212,12 @@ aaa
 aaa
 aaa
 apj
-xYO
+ujJ
 jKQ
 dPX
 iyV
 pKa
-tHU
+ghu
 sMm
 abQ
 gED
@@ -129453,7 +129473,7 @@ hUi
 pCX
 fwF
 dUf
-ghu
+tHU
 elA
 fwF
 dUf
@@ -130477,7 +130497,7 @@ aaa
 aaa
 aaa
 apj
-hUi
+dCC
 lMB
 tlM
 rLX
