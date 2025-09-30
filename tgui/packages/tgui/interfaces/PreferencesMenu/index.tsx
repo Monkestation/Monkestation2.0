@@ -1,8 +1,8 @@
 import { useBackend, useLocalState } from '../../backend';
 import {
-  GamePreferencesSelectedPage,
+  PreferencesSelectedPage,
   PreferencesMenuData,
-  WindowE,
+  PreferencesCurrentWindow,
 } from './data';
 import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
 import { Box, Button, Stack } from '../../components';
@@ -17,17 +17,17 @@ export const PreferencesMenu = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentPageLocal, setCurrentPage] = useLocalState(
     'currentPageGamePrefs',
-    data.starting_page ?? GamePreferencesSelectedPage.Settings,
+    data.starting_page ?? PreferencesSelectedPage.Settings,
   );
 
   let currentPage = currentPageLocal;
   let setGamePage = setCurrentPage;
 
   const window = data.window;
-  if (window === WindowE.Character) {
-    currentPage = GamePreferencesSelectedPage.Character;
+  if (window === PreferencesCurrentWindow.Character) {
+    currentPage = PreferencesSelectedPage.Character;
 
-    setGamePage = (page: GamePreferencesSelectedPage) => {
+    setGamePage = (page: PreferencesSelectedPage) => {
       setCurrentPage(page);
       act('open_game');
     };
@@ -35,21 +35,21 @@ export const PreferencesMenu = () => {
 
   let pageContents;
   switch (window) {
-    case WindowE.Character:
+    case PreferencesCurrentWindow.Character:
       pageContents = <CharacterPreferenceWindow />;
       break;
-    case WindowE.Game:
+    case PreferencesCurrentWindow.Game:
       switch (currentPageLocal) {
-        case GamePreferencesSelectedPage.Keybindings:
+        case PreferencesSelectedPage.Keybindings:
           pageContents = <KeybindingsPage />;
           break;
-        case GamePreferencesSelectedPage.Settings:
+        case PreferencesSelectedPage.Settings:
           pageContents = <GamePreferencesPage />;
           break;
-        case GamePreferencesSelectedPage.Volume:
+        case PreferencesSelectedPage.Volume:
           pageContents = <VolumeMixerPage />;
           break;
-        case GamePreferencesSelectedPage.Character:
+        case PreferencesSelectedPage.Character:
           pageContents = <Box>Error</Box>;
           break;
         default:
@@ -66,7 +66,7 @@ export const PreferencesMenu = () => {
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
-          page={GamePreferencesSelectedPage.Character}
+          page={PreferencesSelectedPage.Character}
           setPage={(_) => {
             act('open_character');
           }}
@@ -85,7 +85,7 @@ export const PreferencesMenu = () => {
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
-          page={GamePreferencesSelectedPage.Settings}
+          page={PreferencesSelectedPage.Settings}
           setPage={setGamePage}
         >
           Settings
@@ -94,7 +94,7 @@ export const PreferencesMenu = () => {
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
-          page={GamePreferencesSelectedPage.Keybindings}
+          page={PreferencesSelectedPage.Keybindings}
           setPage={setGamePage}
         >
           Keybindings
@@ -103,7 +103,7 @@ export const PreferencesMenu = () => {
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
-          page={GamePreferencesSelectedPage.Volume}
+          page={PreferencesSelectedPage.Volume}
           setPage={setGamePage}
         >
           Volume Mixer
