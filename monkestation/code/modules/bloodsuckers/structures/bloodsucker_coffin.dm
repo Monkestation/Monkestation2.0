@@ -236,10 +236,8 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			//monkestation edit
 			if(bloodsuckerdatum.bloodsucker_level_unspent < 1 && bloodsuckerdatum.claimed_coffin == FALSE)
 				bloodsuckerdatum.claimed_coffin = TRUE
-			//monkestation edit
 				bloodsuckerdatum.blood_level_gain()
 			bloodsuckerdatum.SpendRank()
 		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
