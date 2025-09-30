@@ -125,9 +125,7 @@
 		TRAIT_STABLEHEART,
 		TRAIT_STABLELIVER,
 		TRAIT_TOXIMMUNE,
-		//monkestation edit
 		TRAIT_RADIMMUNE,
-		//monkestation end
 		TRAIT_VIRUSIMMUNE,
 		// they eject zombie tumors and xeno larvae during eepy time anyways
 		TRAIT_NO_ZOMBIFY, // they're already undead lol
