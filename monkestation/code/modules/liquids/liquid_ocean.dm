@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			else
 				open_turfs.Add(direction)
 
-	if(open_turfs.len)
+	if(length(open_turfs))
 		SSliquids.active_ocean_turfs |= src
 	SSliquids.unvalidated_oceans -= src
 
