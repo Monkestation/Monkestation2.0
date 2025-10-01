@@ -412,7 +412,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	// Additionally we add in a random title,
 	// mainly so people can ahelp borers quicker and admins dont have to look through the logs of the 5 borers that were inside you
 	name = "[pick(borer_first_names)]: [pick(borer_second_names)]"
-	real_name = "([real_name]) ([generation]-[rand(100,999)])"
+	real_name = "([name]) ([generation]-[rand(100,999)])"
 	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
 		name = "larger [name]"
 
