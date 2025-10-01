@@ -1,6 +1,6 @@
 /*
 Reproductive extracts:
-	When fed three monkey cubes, produces between
+	When fed three biomass cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
 
@@ -10,7 +10,7 @@ Reproductive extracts:
 	desc = "It pulses with a strange hunger."
 	icon_state = "reproductive"
 	effect = "reproductive"
-	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
+	effect_desc = "When fed biomass cubes it produces more extracts. Bio bag compatible as well."
 	item_flags = NO_QUICK_GATHER
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
