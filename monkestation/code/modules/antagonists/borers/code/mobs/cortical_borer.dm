@@ -415,6 +415,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	real_name = "([name]) ([generation]-[rand(100,999)])"
 	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
 		name = "larger [name]"
+		real_name = "larger [real_name]"
 
 	if(generation == 0) //The first ever borer gets a special name
 		name = "The hivequeen [initial(name)]"
