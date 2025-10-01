@@ -3,29 +3,27 @@
 
 /obj/machinery/rbmk/reactor/proc/update_instability()
 	// --- Base normalized factors ---
-	var/flux_factor = flux / 100                // baseline safe flux
-	var/temp_factor = temperature / max_temp    // normalized temperature
-	var/rad_factor  = radiation / 50            // radiation normalized
+	var/flux_factor = flux / RBMK_SAFE_FLUX
+	var/temp_factor = temperature / max_temp
+	var/rad_factor  = radiation / RBMK_SAFE_RADIATION
 
 	// --- Weighted instability ---
 	// Flux has the strongest effect, temp second, radiation third
-	instability = (flux_factor * 0.5 + temp_factor * 0.35 + rad_factor * 0.15) * 100
+	instability = (flux_factor * RBMK_FLUX_WEIGHT + temp_factor * RBMK_TEMP_WEIGHT + rad_factor * RBMK_RAD_WEIGHT) * 100
 
 	// --- Synergy danger spike ---
-	if (flux > 100 && temperature > (max_temp * 0.7))
-		instability *= 1.5   // flux/temp runaway combo
+	if (flux > RBMK_SYNERGY_FLUX_THRESHOLD && temperature > (max_temp * RBMK_SYNERGY_TEMP_RATIO))
+		instability *= RBMK_SYNERGY_MULT
 
 	// Radiation hazard kicker
-	if (radiation > 50)
-		instability += 10
+	if (radiation > RBMK_RADIATION_KICKER_THRESHOLD)
+		instability += RBMK_RADIATION_KICKER_BONUS
 
 	// --- Influence from rod multipliers ---
-	// Plasma and Supermatter rods push multipliers into flux_mult/thermal_mult
 	var/multiplier = 1
 	for (var/obj/item/rbmk/fuel_rod/R in normal_slots + special_slots)
 		if (!R || !R.active)
 			continue
-		// Check if rod contributed multipliers
 		var/contrib = R.process_rod()
 		if ("flux_mult" in contrib)
 			multiplier *= contrib["flux_mult"]
@@ -36,6 +34,6 @@
 	instability *= multiplier
 
 	// --- Clamp to sane range ---
-	instability = clamp(instability, 0, 500)   // expanded upper bound for chaos rods
+	instability = clamp(instability, 0, RBMK_INSTABILITY_MAX)
 
 	return instability

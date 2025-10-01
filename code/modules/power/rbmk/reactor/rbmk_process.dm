@@ -1,20 +1,25 @@
-// rbmk_process.dm
+/// rbmk_process.dm
 // Handles per-tick reactor operations
 
 /obj/machinery/rbmk/reactor/process(delta_time)
     // --- Repairable if cool enough ---
-    repairable = (temperature < (max_temp * 0.7))
+    repairable = (temperature < (RBMK_MAX_TEMP * RBMK_REPAIRABLE_TEMP_RATIO))
 
     // --- If not running, idle cooling ---
     if(!running)
-        // bleed heat to ambient + coolant loop if any
-        if(temperature > 293)
-            temperature = max(293, temperature - 5)
-            handle_coolant(delta_time)
+        if(temperature > RBMK_AMBIENT_TEMP)
+            temperature = max(RBMK_AMBIENT_TEMP, temperature - RBMK_IDLE_COOL_RATE)
+
+            // Sample coolant even when idle
+            rbmk_sample_coolant(src)
+            if(coolant_internal)
+                pressure = coolant_internal.return_pressure()
+
             update_reactor_icon()
         else
             icon_state = "reactor_off"
             set_light(0)
+
         update_linked_consoles()
         return
 
@@ -50,15 +55,17 @@
     // --- Apply control rod scaling ---
     var/rod_effect = (100 - control_rod_depth) / 100
     flux           = round((flux * flux_mult) * rod_effect)
-    thermal_output = round(((temperature * 0.1) * thermal_mult) * rod_effect)
+    thermal_output = round(((temperature * RBMK_HEAT_SCALING) * thermal_mult) * rod_effect)
     radiation      = round(radiation * rod_effect)
 
     // --- Coolant loop integration ---
-    handle_coolant(delta_time)
+    rbmk_sample_coolant(src)
+    if(coolant_internal)
+        pressure = coolant_internal.return_pressure()
 
     // --- Natural decay ---
-    flux = max(0, flux - 1)
-    radiation = max(0, radiation - 0.5)
+    flux = max(0, flux - RBMK_FLUX_DECAY)
+    radiation = max(0, radiation - RBMK_RADIATION_DECAY)
 
     // --- Instability ---
     update_instability()
@@ -69,8 +76,8 @@
     // --- Running state logic ---
     if(!has_active_rods)
         running = FALSE
-    else if(control_rod_depth < 100)
-        running = TRUE   // restart allowed after SCRAM if rods raised
+    else if(control_rod_depth < RBMK_CONTROL_ROD_MAX)
+        running = TRUE
 
     // --- Visuals & consoles ---
     update_reactor_icon()

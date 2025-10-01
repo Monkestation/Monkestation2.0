@@ -8,36 +8,36 @@
 	var/damage = 0
 
 	// --- Temperature stress ---
-	if(temperature > 1500)
+	if(temperature > RBMK_TEMP_STRESS_THRESHOLD)
 		// Damage scales faster the hotter it gets
-		damage += (temperature - 1500) / 2000   // was /4000
+		damage += (temperature - RBMK_TEMP_STRESS_THRESHOLD) / RBMK_TEMP_STRESS_DIVISOR
 
-	if(temperature > (max_temp * 0.9))
+	if(temperature > (max_temp * RBMK_TEMP_NEAR_MAX_RATIO))
 		// Near max temp = exponential stress
-		damage += (temperature - (max_temp * 0.9)) / 200
+		damage += (temperature - (max_temp * RBMK_TEMP_NEAR_MAX_RATIO)) / RBMK_TEMP_NEAR_MAX_DIVISOR
 
 	// --- Flux stress ---
-	if(flux > 100)
-		damage += (flux - 100) / 1000   // was /1500
+	if(flux > RBMK_FLUX_STRESS_THRESHOLD)
+		damage += (flux - RBMK_FLUX_STRESS_THRESHOLD) / RBMK_FLUX_STRESS_DIVISOR
 
-	if(flux > 300)
+	if(flux > RBMK_FLUX_HIGH_THRESHOLD)
 		// High neutron flux snowballs hard
-		damage += (flux - 300) / 300
+		damage += (flux - RBMK_FLUX_HIGH_THRESHOLD) / RBMK_FLUX_HIGH_DIVISOR
 
 	// --- Instability-driven stress ---
-	if(instability > 100)
+	if(instability > RBMK_INSTABILITY_THRESHOLD)
 		// Above 100% instability, structural damage accelerates
-		damage += (instability - 100) / 50
+		damage += (instability - RBMK_INSTABILITY_THRESHOLD) / RBMK_INSTABILITY_DIVISOR
 
 	// --- Pressure stress ---
-	if(pressure > 17000) // warning zone
-		damage += (pressure - 17000) / 2000
+	if(pressure > RBMK_PRESSURE_WARNING)
+		damage += (pressure - RBMK_PRESSURE_WARNING) / RBMK_PRESSURE_WARNING_DIVISOR
 
-	if(pressure > 20000) // critical pressure zone
-		damage += (pressure - 20000) / 500
+	if(pressure > RBMK_PRESSURE_CRITICAL)
+		damage += (pressure - RBMK_PRESSURE_CRITICAL) / RBMK_PRESSURE_CRITICAL_DIVISOR
 
-	if(pressure > 23000) // extreme pressure zone
-		damage += (pressure - 23000) / 100
+	if(pressure > RBMK_PRESSURE_EXTREME)
+		damage += (pressure - RBMK_PRESSURE_EXTREME) / RBMK_PRESSURE_EXTREME_DIVISOR
 
 	// --- Apply damage ---
 	if(damage > 0)
@@ -47,4 +47,6 @@
 			trigger_meltdown("⚠ Reactor breached from combined overload!")
 
 	// --- Repairable flag ---
-	repairable = (temperature < (max_temp * 0.7) && flux < 80 && pressure < 17000)
+	repairable = (temperature < (max_temp * RBMK_REPAIRABLE_TEMP_RATIO) \
+				&& flux < RBMK_REPAIRABLE_FLUX_LIMIT \
+				&& pressure < RBMK_REPAIRABLE_PRESSURE_LIMIT)

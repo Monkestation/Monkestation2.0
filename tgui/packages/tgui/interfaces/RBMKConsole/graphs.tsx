@@ -31,29 +31,34 @@ export const RBMKGraphs = () => {
     .filter(([, info]) => info?.percent > 0)
     .sort((a, b) => b[1].percent - a[1].percent);
 
+  // Build segments for ProgressBar
+  const segments = activeGases.map(([gas, info]) => ({
+    value: info.percent,
+    color: gasColors[gas] || 'white',
+  }));
+
+  const formatName = (name: string) =>
+    name.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
   return (
     <Flex direction="column" gap={1}>
       {/* Stacked composition bar */}
       <Flex.Item>
         <Section title="Coolant Gas Composition">
-          <ProgressBar
-            value={100}
-            maxValue={100}
-            ranges={Object.fromEntries(
-              activeGases.map(([gas, info]) => [
-                gasColors[gas] || 'white',
-                [0, info.percent],
-              ]),
-            )}
-          >
-            {activeGases.length > 0
-              ? activeGases
-                  .map(
-                    ([gas, info]) => `${gas}: ${info.percent.toFixed(1)}%`,
-                  )
-                  .join(' | ')
-              : 'No coolant gases detected'}
-          </ProgressBar>
+          {activeGases.length > 0 ? (
+            <ProgressBar value={100} maxValue={100} segments={segments}>
+              {activeGases
+                .map(
+                  ([gas, info]) =>
+                    `${formatName(gas)}: ${info.percent.toFixed(1)}%`,
+                )
+                .join(' | ')}
+            </ProgressBar>
+          ) : (
+            <ProgressBar value={0} maxValue={100}>
+              No coolant gases detected
+            </ProgressBar>
+          )}
         </Section>
       </Flex.Item>
 
@@ -69,15 +74,17 @@ export const RBMKGraphs = () => {
             </Table.Row>
             {activeGases.map(([gas, info]) => (
               <Table.Row key={gas}>
-                <Table.Cell color={gasColors[gas] || 'white'}>{gas}</Table.Cell>
+                <Table.Cell color={gasColors[gas] || 'white'}>
+                  {formatName(gas)}
+                </Table.Cell>
                 <Table.Cell textAlign="right">
                   {info.percent.toFixed(1)}%
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  {info.heat_modifier?.toFixed(2) ?? '0'}
+                  {info.heat_modifier?.toFixed(2) ?? '0.00'}
                 </Table.Cell>
                 <Table.Cell textAlign="right">
-                  {info.heat_resistance?.toFixed(2) ?? '0'}
+                  {info.heat_resistance?.toFixed(2) ?? '0.00'}
                 </Table.Cell>
               </Table.Row>
             ))}

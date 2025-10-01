@@ -11,23 +11,28 @@ export const RBMKRods = () => {
     slot_index: number;
   }> = data.rods || [];
 
-  const normal = rods.filter((r) => r.slot_kind === 'normal');
-  const special = rods.filter((r) => r.slot_kind === 'special');
+  const maxNormal = Number(data?.max_normal_slots ?? 0);
+  const maxSpecial = Number(data?.max_special_slots ?? 0);
+
+  const normalInstalled = rods.filter((r) => r.slot_kind === 'normal' && r.type !== 'Empty').length;
+  const specialInstalled = rods.filter((r) => r.slot_kind === 'special' && r.type !== 'Empty').length;
 
   return (
     <>
+      {/* Bank overview */}
       <Section title="Rod Banks">
         <LabeledList>
           <LabeledList.Item label="Normal Bank">
-            {normal.length}/{data.max_normal_slots ?? normal.length}
+            {normalInstalled}/{maxNormal}
           </LabeledList.Item>
           <LabeledList.Item label="Special Bank">
-            {special.length}/{data.max_special_slots ?? special.length}
+            {specialInstalled}/{maxSpecial}
           </LabeledList.Item>
         </LabeledList>
       </Section>
 
-      <Section title="Installed Rods" scrollable>
+      {/* Rod details */}
+      <Section title="Installed Rods" scrollable fill style={{ maxHeight: '300px' }}>
         <Table>
           <Table.Row header>
             <Table.Cell collapsing>Bank</Table.Cell>
@@ -39,8 +44,10 @@ export const RBMKRods = () => {
           </Table.Row>
 
           {rods.map((r) => {
-            const status =
-              r.type === 'Empty' ? '-' : r.depleted ? 'Depleted' : 'Active';
+            let status = 'Empty';
+            if (r.type !== 'Empty') {
+              status = r.depleted ? 'Depleted' : 'Active';
+            }
 
             return (
               <Table.Row key={`${r.slot_kind}-${r.slot_index}`}>
@@ -48,9 +55,9 @@ export const RBMKRods = () => {
                 <Table.Cell>{r.slot_index}</Table.Cell>
                 <Table.Cell>{r.type || 'Empty'}</Table.Cell>
                 <Table.Cell>
-                  {r.color ? (
+                  {r.type !== 'Empty' ? (
                     <Box inline bold color={r.color}>
-                      ● {r.color}
+                      ●
                     </Box>
                   ) : (
                     '-'

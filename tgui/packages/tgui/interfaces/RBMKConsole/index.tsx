@@ -15,7 +15,7 @@ export const RBMKConsole = () => {
   );
 
   return (
-    <Window theme="soviet" width={820} height={560} resizable>
+    <Window theme="soviet" width={832} height={576} resizable>
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item grow>
@@ -45,13 +45,14 @@ export const RBMKConsole = () => {
                 Graphs
               </Tabs.Tab>
               <Flex.Item grow />
-              <Flex.Item>
+              <Tabs.Tab>
                 <Button
                   icon="sync"
                   content="Rescan"
+                  disabled={data?.status !== 'No reactor linked' ? false : true}
                   onClick={() => act('rescan')}
                 />
-              </Flex.Item>
+              </Tabs.Tab>
             </Tabs>
 
             {tab === 'overview' && <RBMKOverview />}

@@ -1,3 +1,6 @@
+// rbmk_console.dm
+// RBMK Reactor Console for monitoring & control
+
 /obj/machinery/computer/rbmk_console
     name = "RBMK Reactor Console"
     desc = "A console used to monitor and control an RBMK nuclear reactor."
@@ -21,6 +24,11 @@
     children.Cut()
     return ..()
 
+/************************************************************
+ * Linking & Icon State
+ ************************************************************/
+
+/// Try to automatically link to nearest reactor
 /obj/machinery/computer/rbmk_console/proc/auto_link()
     linked_reactor = null
     for (var/obj/machinery/rbmk/reactor/R in range(7, src))
@@ -28,6 +36,7 @@
         break
     update_icon()
 
+/// Spawn child console tiles (east expansion)
 /obj/machinery/computer/rbmk_console/proc/spawn_children()
     var/turf/T1 = get_step(src, EAST)
     var/turf/T2 = get_step(T1, EAST)
@@ -51,13 +60,18 @@
     var/integrity = linked_reactor.reactor_integrity
     var/max_integrity = linked_reactor.max_reactor_integrity
 
-    if (integrity >= (max_integrity * 0.66))
+    if (integrity >= (max_integrity * (RBMK_DAMAGE_OVERLAY_2 / 100.0)))
         icon_state = "reactorcontrol-1"
-    else if (integrity >= (max_integrity * 0.33))
+    else if (integrity >= (max_integrity * (RBMK_DAMAGE_OVERLAY_3 / 100.0)))
         icon_state = "reactorcontrol-2"
     else
         icon_state = "reactorcontrol-3"
 
+/************************************************************
+ * UI Plumbing
+ ************************************************************/
+
+/// Allow normal TGUI state handling
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
     return GLOB.physical_state
 
@@ -74,6 +88,11 @@
         ui.open()
     return ui
 
+/************************************************************
+ * UI Data Export
+ ************************************************************/
+
+/// Gather console → UI data payload
 /obj/machinery/computer/rbmk_console/ui_data(mob/user)
     var/list/data = list()
     if (!linked_reactor)
@@ -87,7 +106,7 @@
     data["radiation"]      = linked_reactor.radiation || 0
     data["flux"]           = linked_reactor.flux || 0
     data["integrity"]      = linked_reactor.reactor_integrity || 0
-    data["max_integrity"]  = linked_reactor.max_reactor_integrity || 100
+    data["max_integrity"]  = linked_reactor.max_reactor_integrity || RBMK_MAX_INTEGRITY
 
     // --- Histories ---
     if (!linked_reactor.coolant_pressure_history)
@@ -123,15 +142,15 @@
     // --- Coolant state ---
     data["inlet_open"]  = linked_reactor.inlet_open
     data["outlet_open"] = linked_reactor.outlet_open
-    data["inlet_rate"]       = linked_reactor.inlet_rate
-    data["inlet_min"]        = linked_reactor.inlet_rate_min
-    data["inlet_max"]        = linked_reactor.inlet_rate_max
-    data["inlet_pressure"]   = round(max(linked_reactor.get_inlet_pressure(), 0), 0.1)
+    data["inlet_rate"]  = linked_reactor.inlet_rate
+    data["inlet_min"]   = RBMK_INLET_RATE_MIN
+    data["inlet_max"]   = RBMK_INLET_RATE_MAX
+    data["inlet_pressure"] = round(max(linked_reactor.get_inlet_pressure(), 0), 0.1)
     data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
-    data["outlet_pressure_max"]    = linked_reactor.outlet_pressure_max
+    data["outlet_pressure_max"]    = RBMK_OUTLET_PRESSURE_MAX
     data["outlet_pressure"]        = round(max(linked_reactor.get_outlet_pressure(), 0), 0.1)
 
-    // --- NEW: Gas composition for RBMKGraphs ---
+    // --- Gas composition ---
     var/list/gas_comp = list()
     if (linked_reactor.coolant_internal)
         var/datum/gas_mixture/mix = linked_reactor.coolant_internal
@@ -142,13 +161,18 @@
                 var/percent = (moles / total) * 100
                 gas_comp[gas_path] = list(
                     "percent" = percent,
-                    "heat_modifier" = mix.gases[gas_path]["heat_modifier"] || 0,
-                    "heat_resistance" = mix.gases[gas_path]["heat_resistance"] || 0
+                    "heat_modifier" = (mix.gases[gas_path]["heat_modifier"] || 0),
+                    "heat_resistance" = (mix.gases[gas_path]["heat_resistance"] || 0)
                 )
     data["gas_composition"] = gas_comp
 
     return data
 
+/************************************************************
+ * UI Actions
+ ************************************************************/
+
+/// Handle UI button actions
 /obj/machinery/computer/rbmk_console/ui_act(action, params)
     . = ..()
     if (.) return .
@@ -160,7 +184,7 @@
 
     switch(action)
         if ("scram")
-            linked_reactor.control_rod_depth = 100
+            linked_reactor.control_rod_depth = RBMK_CONTROL_ROD_MAX
             linked_reactor.running = FALSE
             visible_message(span_danger("All control rods fully inserted!"))
             linked_reactor.update_linked_consoles()
@@ -168,22 +192,22 @@
 
         if ("rod_up")
             linked_reactor.control_rod_depth = max(linked_reactor.control_rod_depth - 5, 0)
-            if (linked_reactor.control_rod_depth < 100)
+            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
                 linked_reactor.running = TRUE
             linked_reactor.update_linked_consoles()
             return TRUE
 
         if ("rod_down")
-            linked_reactor.control_rod_depth = min(linked_reactor.control_rod_depth + 5, 100)
-            if (linked_reactor.control_rod_depth < 100)
+            linked_reactor.control_rod_depth = min(linked_reactor.control_rod_depth + 5, RBMK_CONTROL_ROD_MAX)
+            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
                 linked_reactor.running = TRUE
             linked_reactor.update_linked_consoles()
             return TRUE
 
         if ("set_rods")
-            var/depth = clamp(text2num(params["depth"]), 0, 100)
+            var/depth = clamp(text2num(params["depth"]), 0, RBMK_CONTROL_ROD_MAX)
             linked_reactor.control_rod_depth = depth
-            if (linked_reactor.control_rod_depth < 100)
+            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
                 linked_reactor.running = TRUE
             linked_reactor.update_linked_consoles()
             return TRUE
@@ -211,15 +235,15 @@
             auto_link()
             return TRUE
 
-        // ---- Coolant controls ----
+        // Coolant controls
         if ("set_inlet_rate")
-            var/rate = clamp(text2num(params["rate"]), linked_reactor.inlet_rate_min, linked_reactor.inlet_rate_max)
+            var/rate = clamp(text2num(params["rate"]), RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
             linked_reactor.set_inlet_rate(rate)
             linked_reactor.update_linked_consoles()
             return TRUE
 
         if ("set_outlet_pressure")
-            var/press = clamp(text2num(params["pressure"]), 0, linked_reactor.outlet_pressure_max)
+            var/press = clamp(text2num(params["pressure"]), 0, RBMK_OUTLET_PRESSURE_MAX)
             linked_reactor.set_outlet_pressure(press)
             linked_reactor.update_linked_consoles()
             return TRUE
@@ -234,10 +258,11 @@
 
     return FALSE
 
-/*************************************************************
- * CHILD TILE OBJECT
- *************************************************************/
+/************************************************************
+ * Child Tiles
+ ************************************************************/
 
+/// Decorative/functional side panel objects
 /obj/structure/rbmk_console_child
     name = "RBMK Reactor Console"
     desc = "Part of a large RBMK reactor control panel."
