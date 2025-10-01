@@ -25,8 +25,7 @@
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE
-	UnregisterSignal(target, COMSIG_MOVABLE_TELEPORTING)
-	UnregisterSignal(target, COMSIG_MOB_PRE_JAUNT)
+	UnregisterSignal(target, list(COMSIG_MOVABLE_TELEPORTING, COMSIG_MOB_PRE_JAUNT))
 	return TRUE
 
 /// Signal for COMSIG_MOVABLE_TELEPORTED that blocks teleports and stuns the would-be-teleportee.
