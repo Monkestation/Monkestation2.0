@@ -102,13 +102,12 @@
 	air2.merge(removed)
 	update_parents()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(datum/gas_mixture/removed)
-    var/turf/target_turf = loc
-    if(isclosedturf(target_turf))
-        return // sealed, no leak
-    if(isopenturf(target_turf))
-        var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
-        target_turf.assume_air(leaked)
+	var/turf/target_turf = loc
+	if(isclosedturf(target_turf))
+		return // sealed, no leak
+	if(isopenturf(target_turf))
+		var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+		target_turf.assume_air(leaked)
 
 /// -------------------------------
 
