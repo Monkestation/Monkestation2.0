@@ -57818,6 +57818,7 @@
 	},
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /obj/effect/landmark/start/nanotrasen_representative,
+/obj/machinery/camera/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "rJO" = (
