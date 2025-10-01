@@ -411,13 +411,14 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	// So their gen and a random. ex 1-288 is first gen named 288, 4-483 is fourth gen named 483
 	// Additionally we add in a random title,
 	// mainly so people can ahelp borers quicker and admins dont have to look through the logs of the 5 borers that were inside you
-	name = "[initial(name)] ([pick(borer_first_names)]: [pick(borer_second_names)]) ([generation]-[rand(100,999)])"
-
+	name = "[pick(borer_first_names)]: [pick(borer_second_names)]"
+	real_name = "([real_name]) ([generation]-[rand(100,999)])"
 	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
 		name = "larger [name]"
 
 	if(generation == 0) //The first ever borer gets a special name
 		name = "The hivequeen [initial(name)]"
+		real_name = name
 
 // if things can go wrong, they will. So this proc is an emergency measure meant to resolve them
 /mob/living/basic/cortical_borer/proc/resolve_misc_issues()
@@ -510,11 +511,11 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		message = copytext(message, 2)
 		message = capitalize(message)
 		if (neutered) 	// Nuetered sound offtune.
-			text = span_red("<b>Cortical Hivemind: [src] croons, \"[message]\"</b>")
+			text = span_red("<b>Cortical Hivemind: [real_name] croons, \"[message]\"</b>")
 		else if (generation == 0) 	//Hivequeens demand attention.
-			text = span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>")
+			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
 		else
-			text = span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>")
+			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
 
 		for (var/borer in GLOB.cortical_borers)
 			to_chat(borer, text, type = MESSAGE_TYPE_RADIO)
@@ -530,11 +531,11 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	message = capitalize(message)
 
 	if (neutered)
-		text = span_red("Cortical Link: [src] croons, \"[message]\"")
+		text = span_red("Cortical Link: [real_name] croons, \"[message]\"")
 	else if (human_host.is_willing_host(human_host))
-		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")
+		text = span_purplelarge("Cortical Link: [real_name] choruses, \"[message]\"")
 	else
-		text = span_purple("Cortical Link: [src] sings, \"[message]\"")
+		text = span_purple("Cortical Link: [real_name] sings, \"[message]\"")
 
 	to_chat(human_host, text)
 	to_chat(src, text)

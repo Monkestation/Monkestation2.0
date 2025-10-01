@@ -34,7 +34,7 @@
 /datum/borer_evolution/diveworm/dissection
 	name = "Dissect Corspe"
 	desc = "Gain the ability to probes a corspe's brain to further oneself."
-	gain_text = "After applying extreme radiation exposure to a sample of the eggs, the worm's host never produced any more eggs. However, the sanitation team noted these same worms festering around a dead host that was to be removed."
+	gain_text = "After applying extreme radiation exposure to a sample of the eggs, the bed of worm's host never produced any more eggs. However, the sanitation team noted these same worms festering around a dead host that was to be removed."
 	tier = -1
 	added_action = /datum/action/cooldown/borer/dissection
 	neutered_only = TRUE
