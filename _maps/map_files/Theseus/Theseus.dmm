@@ -7254,7 +7254,6 @@
 	pixel_x = 6;
 	pixel_y = 30
 	},
-/obj/effect/mob_spawn/ghost_role/drone/bar,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "cit" = (
@@ -13991,12 +13990,8 @@
 	},
 /area/station/security/prison/workout)
 "eeO" = (
-/obj/machinery/door/window/right/directional/west,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen/small,
+/obj/machinery/photocopier,
+/turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "eeU" = (
 /obj/machinery/duct,
@@ -24711,13 +24706,14 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "hoZ" = (
-/obj/machinery/door/window/left/directional/west,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/kitchen/small,
+/obj/structure/filingcabinet/employment{
+	pixel_x = -6
+	},
+/obj/structure/filingcabinet/medical{
+	pixel_x = 6
+	},
+/turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "hpd" = (
 /obj/item/kirbyplants/random,
@@ -44616,9 +44612,6 @@
 	},
 /obj/structure/cable,
 /obj/item/radio/intercom/command/directional/north,
-/obj/item/clothing/mask/cigarette/pipe{
-	pixel_x = -5
-	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "mWY" = (
@@ -63811,15 +63804,15 @@
 	},
 /obj/item/kirbyplants/organic/plant17{
 	pixel_y = 23;
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = 7;
-	pixel_y = 10
+	pixel_x = 6
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/phone{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "sCC" = (
@@ -74232,6 +74225,7 @@
 	name = "Representative's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "vxI" = (
@@ -78783,10 +78777,10 @@
 "wRn" = (
 /obj/item/storage/secure/safe/directional/north,
 /obj/structure/cable,
-/obj/machinery/modular_computer/preset/command{
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/modular_computer/preset/representative{
 	dir = 4
 	},
-/obj/structure/window/spawner/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "wRq" = (

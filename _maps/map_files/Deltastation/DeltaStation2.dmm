@@ -583,11 +583,9 @@
 /area/station/security/office)
 "age" = (
 /obj/structure/window/spawner/directional/west,
-/obj/structure/table/wood/fancy/green,
-/obj/machinery/fax{
-	fax_name = "Consultant's Office";
-	name = "Consultant's Fax Machine";
-	pixel_y = 3
+/obj/structure/aquarium/prefilled,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -9653,7 +9651,13 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ciO" = (
-/obj/effect/mob_spawn/ghost_role/drone/bar,
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	desc = "Remarkably soft, with plush cozy cushions, premium memory-foam and covered in stain-resistant fabric. Made by Kat-Kea???!";
+	name = "Premium Cozy Chair";
+	dir = 8
+	},
+/obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "cjh" = (
@@ -13044,8 +13048,20 @@
 "cZk" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Bridge - Starboard";
+	c_tag = "Bridge - Consultant's Office";
 	name = "command camera"
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/paper_bin/carbon,
+/obj/item/stamp{
+	pixel_x = -6
+	},
+/obj/item/stamp/denied{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/pen/fountain{
+	pixel_y = 10
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -20279,7 +20295,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "eNu" = (
-/obj/machinery/vending/boozeomat,
+/obj/structure/table/wood/fancy/green,
+/obj/machinery/fax{
+	fax_name = "Consultant's Office";
+	name = "Consultant's Fax Machine";
+	pixel_y = 3
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "eNy" = (
@@ -25928,19 +25949,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "gdl" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_y = 21;
-	pixel_x = 7
-	},
-/obj/item/phone{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/champagne,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "gdr" = (
@@ -27280,7 +27291,7 @@
 /area/station/medical/pathology)
 "gti" = (
 /obj/structure/dresser,
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "gtj" = (
@@ -27673,8 +27684,8 @@
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
 "gxr" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "gxA" = (
@@ -36349,7 +36360,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "iyT" = (
-/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "iyX" = (
@@ -41912,17 +41922,12 @@
 "jNO" = (
 /obj/structure/table/wood/fancy/green,
 /obj/structure/window/spawner/directional/west,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey{
-	pixel_x = 6;
-	pixel_y = 13
+/obj/item/fish_feed,
+/obj/item/fish_feed{
+	pixel_y = 9
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/flashlight/lamp/green{
-	pixel_x = -5;
-	pixel_y = 8
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -44469,11 +44474,9 @@
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "kqH" = (
-/obj/machinery/modular_computer/preset/command{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
+/obj/structure/filingcabinet/employment,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "kqM" = (
@@ -46664,9 +46667,14 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "kTs" = (
-/obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/radio/intercom/directional/north,
+/obj/item/lighter{
+	pixel_x = 10;
+	pixel_y = 7
 	},
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_x = -5;
@@ -46674,10 +46682,6 @@
 	},
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/lighter{
-	pixel_x = 10;
 	pixel_y = 7
 	},
 /turf/open/floor/wood/parquet,
@@ -49201,16 +49205,18 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
 "lyz" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 4;
-	pixel_x = -4
+/obj/structure/table/wood/fancy/green,
+/obj/item/phone{
+	pixel_x = -5;
+	pixel_y = 6
 	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/champagne,
 /obj/item/reagent_containers/cup/rag{
 	pixel_y = 21;
 	pixel_x = 7
 	},
-/obj/machinery/newscaster/directional/south,
+/obj/structure/sign/calendar/directional/south,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "lyC" = (
@@ -50054,18 +50060,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "lIa" = (
-/obj/structure/chair/comfy/brown{
-	color = "#c45c57";
-	desc = "Remarkably soft, with plush cozy cushions, premium memory-foam and covered in stain-resistant fabric. Made by Kat-Kea???!";
-	dir = 8;
-	name = "Premium Cozy Chair"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/structure/filingcabinet/security,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "lIl" = (
@@ -59949,6 +59949,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 9
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "ocR" = (
@@ -66020,6 +66021,13 @@
 /area/station/service/abandoned_gambling_den)
 "pCc" = (
 /obj/machinery/requests_console/auto_name/directional/north,
+/obj/structure/table/wood/fancy/green,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/folder/blue,
+/obj/item/folder/blue,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "pCf" = (
@@ -68889,23 +68897,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qkn" = (
-/obj/structure/table/wood,
-/obj/item/folder/blue{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/folder/blue,
-/obj/item/paper_bin/carbon,
-/obj/item/stamp/denied{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/stamp{
-	pixel_x = -6
-	},
-/obj/item/pen/fountain{
-	pixel_y = 10
-	},
 /obj/structure/cable,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
@@ -79716,7 +79707,9 @@
 "sOr" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "Bridge - Blueshield's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "sOs" = (
@@ -88744,6 +88737,7 @@
 /obj/effect/landmark/navigate_destination,
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "uXg" = (
@@ -90112,6 +90106,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "voW" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "voZ" = (
@@ -97000,16 +96997,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "wTn" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 4;
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = 9;
-	pixel_y = 9
-	},
 /obj/machinery/light/directional/west,
+/obj/machinery/modular_computer/preset/representative{
+	dir = 4
+	},
+/obj/structure/sign/flag/nanotrasen/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "wTu" = (
@@ -98358,8 +98350,9 @@
 /obj/structure/bed/double,
 /obj/item/bedsheet/centcom/double,
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/directional/east,
 /obj/machinery/camera/autoname/directional/east,
+/obj/effect/landmark/start/nanotrasen_representative,
+/obj/structure/mirror/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xkU" = (
@@ -100630,6 +100623,7 @@
 "xMu" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/item/storage/secure/safe/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xMy" = (

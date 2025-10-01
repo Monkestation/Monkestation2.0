@@ -30410,7 +30410,6 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/aft/upper)
 "iCg" = (
-/obj/structure/table/wood,
 /obj/item/stamp/denied{
 	pixel_x = -7;
 	pixel_y = 9
@@ -30429,6 +30428,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/wood/fancy/green,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "iCx" = (
@@ -30660,6 +30660,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/nt_rep)
 "iGy" = (
@@ -46807,7 +46808,7 @@
 /area/station/commons/dorms)
 "mYF" = (
 /obj/machinery/camera/directional/south{
-	c_tag = "Command - Blueshield's Gear Room";
+	c_tag = "Bridge - Blueshield's Gear Room";
 	name = "command camera"
 	},
 /obj/item/radio/intercom/directional/south,
@@ -47295,7 +47296,7 @@
 /obj/item/clothing/mask/cigarette/pipe{
 	pixel_x = -5
 	},
-/obj/structure/table/wood,
+/obj/structure/table/wood/fancy/green,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "ngt" = (
@@ -56503,8 +56504,8 @@
 	},
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "pIl" = (
@@ -58538,10 +58539,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/machinery/modular_computer/preset/command{
+/obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer/preset/representative{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "qhT" = (
@@ -78223,7 +78224,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/camera/directional/north{
-	c_tag = "Command - Blueshield's Office";
+	c_tag = "Bridge - Blueshield's Office";
 	name = "command camera"
 	},
 /obj/structure/table/wood,
