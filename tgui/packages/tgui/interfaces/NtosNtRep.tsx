@@ -1,11 +1,21 @@
+import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
-import { Stack, Divider, Section, Button, TextArea, Box } from '../components';
+import {
+  Dimmer,
+  Stack,
+  Divider,
+  Section,
+  Button,
+  TextArea,
+  Box,
+} from '../components';
 
 type Data = {
   rating: number;
   comment: string;
   max_length: number;
+  is_centcom: BooleanLike;
 };
 
 export const NtosNtRep = (props) => {
@@ -19,7 +29,7 @@ export const NtosNtRep = (props) => {
 };
 export const NtosNtRepContent = (props) => {
   const { act, data } = useBackend<Data>();
-  const { rating, comment, max_length } = data;
+  const { rating, comment, max_length, is_centcom } = data;
 
   const RatingFeedback = (value) => {
     switch (rating) {
@@ -55,7 +65,20 @@ export const NtosNtRepContent = (props) => {
   };
   return (
     <Stack vertical fill>
-      <Section title="Rating" fluid>
+      {!is_centcom && (
+        <Dimmer>
+          <Box
+            color="red"
+            fontFamily={'Bahnschrift'}
+            fontSize={3}
+            textAlign="center"
+            my={1}
+          >
+            Non-Centcom ID detected.
+          </Box>
+        </Dimmer>
+      )}
+      <Section title="Rating">
         <Box fontSize={1.1}>
           How much would you recommend this station to a Central Command member?
         </Box>
@@ -93,6 +116,8 @@ export const NtosNtRepContent = (props) => {
           <Stack.Item mb={1} grow>
             <TextArea
               height="300%"
+              resize="vertical"
+              scrollbar
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}

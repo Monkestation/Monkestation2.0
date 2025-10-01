@@ -15,6 +15,7 @@
 	var/list/data = list()
 	data["rating"] = SSticker.nanotrasen_rep_score
 	data["comment"] = SSticker.nanotrasen_rep_comments
+	data["is_centcom"] = istype(computer?.computer_id_slot, /obj/item/card/id/advanced/centcom)
 	return data
 
 /datum/computer_file/program/nt_rep_comments/ui_static_data(mob/user)
@@ -27,6 +28,8 @@
 	if(.)
 		return
 
+	if(!istype(computer?.computer_id_slot, /obj/item/card/id/advanced/centcom))
+		return
 	switch(action)
 		if("change_rating")
 			var/new_rating = params["new_rating"]
