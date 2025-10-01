@@ -615,7 +615,7 @@
 			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/cryo_cell/click_alt(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/click_alt(mob/user)
 	//Required so players don't close the cryo on themselves without a doctor's help
 	if(get_turf(user) == get_turf(src))
 		return CLICK_ACTION_BLOCKING
@@ -627,7 +627,7 @@
 	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
 	if(!iscarbon(target))
 		return
 
@@ -641,7 +641,7 @@
 	if (do_after(user, 2.5 SECONDS, target=target))
 		close_machine(target)
 
-/obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
