@@ -212,6 +212,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		stored_language_holder = new slime_language_holder.type
 		stored_language_holder.copy_languages(slime_language_holder)
 
+	var/datum/atom_voice/slime_voice = slime.get_voice()
+	if(slime_voice)
+		if(!voice)
+			voice = new
+		slime_voice.copy_from(slime_voice)
+
 ///////
 /// CORE EJECTION PROC
 /// Makes it so that when a slime dies, their core ejects and their body is qdel'd.
@@ -431,6 +437,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(stored_language_holder)
 		new_body.get_language_holder()?.copy_languages(stored_language_holder)
 		QDEL_NULL(stored_language_holder)
+	if(voice)
+		if(!new_body.voice)
+			new_body.voice = new
+		new_body.voice.copy_from(voice)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
