@@ -53,6 +53,8 @@
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		if(QDELING(src))
+			return
 		if(isnull(parent))
 			stack_trace("Attempted to assign [type] to null! args: [json_encode(arguments)]")
 		else
