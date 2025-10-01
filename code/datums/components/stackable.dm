@@ -1,4 +1,5 @@
 ///A component that allows an item to with stackable(pretty much just a simlfied version of the behavior from /obj/item/stack)
+///Notably does NOT currently support being a material
 /datum/component/stackable
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
 	var/singular_name
@@ -32,18 +33,23 @@
 	full_w_class = _full_w_class
 	novariants = _novariants
 	if(starting_amount != null && isnum(starting_amount))
+		message_admins("1 [REF(src)] [parent.type]")
 		amount = starting_amount
 	while(amount > max_amount)
+		message_admins("2 [amount]")
 		amount -= max_amount
-		var/obj/item/created_item = new parent.type(typed_parent.loc)
+		var/obj/item/created_item = new merge_type(typed_parent.loc)
 		var/datum/component/stackable/new_stackable = created_item.GetComponent(/datum/component/stackable)
 		if(new_stackable)
+			message_admins("3 [REF(src)] [max_amount] [new_stackable.amount]")
 			new_stackable.add(max_amount - new_stackable.amount)
 		else
+			message_admins("4 [REF(src)]")
 			created_item.AddComponent(/datum/component/stackable, _singular_name, max_amount, max_amount, merge_type, full_w_class, novariants, FALSE)
 
 	update_parent()
 	if(merge)
+		message_admins("5 [REF(src)]")
 		merge_with_loc()
 
 /datum/component/stackable/RegisterWithParent()
@@ -56,6 +62,11 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+
+/datum/component/stackable/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_ON_GRIND, COMSIG_ATOM_UPDATE_ICON_STATE, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_USED, COMSIG_ATOM_HITBY,
+									COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_ATOM_ATTACKBY))
+	update_parent()
 
 ///Call update_weight() and update_appearance() on our parent
 /datum/component/stackable/proc/update_parent()
@@ -71,22 +82,28 @@
 
 /datum/component/stackable/proc/find_other_stack(alist/already_found)
 	var/obj/item/typed_parent = parent
+	message_admins("6 [REF(src)]")
 	if(QDELETED(parent) || isnull(typed_parent.loc))
 		return
 
 	for(var/obj/item/item_stack in typed_parent.loc)
+		message_admins("7 [REF(src)]")
 		if(item_stack == parent || QDELING(item_stack) || !(item_stack.flags_1 & INITIALIZED_1) || !istype(item_stack, merge_type))
+			message_admins("8 [REF(src)]")
 			continue
 
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])
+			message_admins("9 [REF(src)]")
 			continue
 
 		var/datum/component/stackable/stack_component = item_stack.GetComponent(/datum/component/stackable)
-		if(stack_component.amount >= stack_component.max_amount)
+		if(!stack_component || stack_component.amount >= stack_component.max_amount)
+			message_admins("10 [REF(src)]")
 			continue
 
 		if(can_merge(item_stack, checked_type = TRUE))
+			message_admins("11 [REF(src)]")
 			already_found[stack_ref] = TRUE
 			return item_stack
 
@@ -120,13 +137,17 @@
 	SIGNAL_HANDLER
 	var/obj/item/typed_parent = parent
 	if(novariants)
+		message_admins("13 [REF(src)]")
 		return
 	if(amount <= (max_amount * (1/3)))
+		message_admins("14 [REF(src)] [amount]")
 		typed_parent.icon_state = initial(typed_parent.icon_state)
-		return
-	if (amount <= (max_amount * (2/3)))
+		return //loop through as alist to handle this?
+	if(amount <= (max_amount * (2/3)))
+		message_admins("15 [REF(src)] [amount]")
 		typed_parent.icon_state = "[initial(typed_parent.icon_state)]_2"
 		return
+	message_admins("16 [REF(src)] [amount]")
 	typed_parent.icon_state = "[initial(typed_parent.icon_state)]_3"
 
 /datum/component/stackable/proc/on_examine(obj/item/examined, mob/user, list/examine_text)
@@ -187,8 +208,7 @@
 /**
  * Returns TRUE if the item stack is the equivalent of a 0 amount item.
  *
- * Also deletes the item if delete_if_zero is TRUE and the stack does not have
- * is_cyborg set to true.
+ * Also deletes the item if delete_if_zero is TRUE
  */
 /datum/component/stackable/proc/is_zero_amount(delete_if_zero = TRUE)
 	if(amount < 1)
@@ -203,6 +223,7 @@
  * - _amount: The number of units to add to this stack.
  */
 /datum/component/stackable/proc/add(_amount)
+	message_admins("12 [REF(src)] [_amount]")
 	amount += _amount
 	update_parent()
 
@@ -234,7 +255,7 @@
  *
  * As a result, this proc can leave behind a 0 amount stack.
  */
-/datum/component/stackable/proc/merge_without_del(obj/item/target_stack, limit, datum/component/stackable/target_component = target_stack.GetComponent())
+/datum/component/stackable/proc/merge_without_del(obj/item/target_stack, limit, datum/component/stackable/target_component = target_stack.GetComponent(/datum/component/stackable))
 	// Cover edge cases where multiple stacks are being merged together and haven't been deleted properly.
 	// Also cover edge case where a stack is being merged into itself, which is supposedly possible.
 	if(QDELETED(target_stack))
@@ -251,7 +272,7 @@
 	ASYNC //non ideal way of handling this
 		if(target_stack.pulledby)
 			target_stack.pulledby.start_pulling(target_stack)
-	target_component.copy_evidences(src)
+	target_component.copy_evidences(parent)
 	on_use(transfer, transfer = TRUE, check = FALSE)
 	target_component.add(transfer)
 	return transfer
@@ -262,7 +283,7 @@
  * This proc deletes src if the remaining amount after the transfer is 0.
  */
 /datum/component/stackable/proc/merge(obj/item/target_stack, limit, datum/component/stackable/passed_component)
-	. = merge_without_del(target_stack, limit, passed_component)
+	. = passed_component ? merge_without_del(target_stack, limit, passed_component) : merge_without_del(target_stack, limit)
 	is_zero_amount(delete_if_zero = TRUE)
 
 /datum/component/stackable/proc/on_hitby(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -312,7 +333,7 @@
 		component.amount = split_amount
 		component.update_parent()
 
-	component.copy_evidences(src)
+	component.copy_evidences(parent)
 	if(user)
 		ASYNC //pain
 			if(!user.put_in_hands(new_stack, merge_stacks = FALSE))
@@ -337,3 +358,36 @@
 	typed_parent.add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	typed_parent.fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
+
+/obj/item/test_stack
+	name = "test rod"
+	desc = "Some rods. Can be used for building or something."
+	icon = 'icons/obj/stack_objects.dmi'
+	gender = PLURAL
+	icon_state = "rods"
+	inhand_icon_state = "rods"
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 9
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 7
+	demolition_mod = 1.25
+	attack_verb_continuous = list("hits", "bludgeons", "whacks")
+	attack_verb_simple = list("hit", "bludgeon", "whack")
+	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	embedding = list(embed_chance = 50)
+	var/amount = 1
+
+/obj/item/test_stack/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/stackable, name, amount, 50, /obj/item/test_stack, w_class, FALSE)
+
+/obj/item/test_stack/ten
+	amount = 10
+
+/obj/item/test_stack/fifty
+	amount = 50
+
+/obj/item/test_stack/one_fifty
+	amount = 150

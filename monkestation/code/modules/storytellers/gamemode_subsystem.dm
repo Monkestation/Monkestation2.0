@@ -458,15 +458,10 @@ SUBSYSTEM_DEF(gamemode)
 	eng_crew = 0
 	med_crew = 0
 	sec_crew = 0
-	for(var/mob/player_mob as anything in GLOB.player_list)
-		if(!player_mob.client)
+	for(var/mob/player_mob as anything in GLOB.alive_player_list)
+		if(player_mob.client.is_afk() || !ishuman(player_mob))
 			continue
-		if(player_mob.stat) //If they're alive
-			continue
-		if(player_mob.client.is_afk()) //If afk
-			continue
-		if(!ishuman(player_mob))
-			continue
+
 		active_players++
 		if(player_mob.mind?.assigned_role)
 			var/datum/job/player_role = player_mob.mind.assigned_role
