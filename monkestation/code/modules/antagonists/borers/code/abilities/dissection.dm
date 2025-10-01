@@ -2,7 +2,6 @@
 	name = "Dissect Corspe"
 	button_icon_state = "mendwound"
 	cooldown_time = 1 MINUTE
-	button_icon_state = "willing"
 	chemical_cost = 100
 	requires_host = TRUE
 	sugar_restricted = TRUE
