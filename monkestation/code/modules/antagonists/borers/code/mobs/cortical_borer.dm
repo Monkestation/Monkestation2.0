@@ -504,12 +504,10 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// Contains the fancy version of our message
 	var/text
-
 	//this is so they can talk in hivemind
 	if(split_message[1] == ";")
 		message = copytext(message, 2)
-		var/hivemind
-
+		message = capitalize(message)
 		if(generation == 0) //Hivequeens demand attention.
 			text = span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>")
 		else if(neutered) // Nuetered sound offtune.
@@ -522,15 +520,17 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 		for (var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
-
-   		to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
+			to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
 
 		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
-	//this is when they speak normally
+	// This is when they speak normally
+	message = capitalize(message)
+
 	if(human_host.is_willing_host(human_host))
-		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"") // Only make it loud to the hosts and the worm to not flood anyone elses chat
+		// Only make it loud to the hosts and the worm to not flood anyone elses chat
+		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")
 	else if (neutered)
 		text = span_red("Cortical Link: [src] croons, \"[message]\"")
 	else
@@ -540,14 +540,17 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	to_chat(src, text)
 	human_host.balloon_alert(human_host, "you hear a voice")
 	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
+
 	if(neutered)
 		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, span_red("[link] Cortical Hivemind: [src] croons to [human_host], \"[message]\""))
-	else	// We don't use the previous text in part to prevent deadchat spam from hivequeens yapping in loudtext
+	else
 		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
+
+
 
 //borers should not be able to pull anything
 /mob/living/basic/cortical_borer/start_pulling(atom/movable/AM, state, force, supress_message)
