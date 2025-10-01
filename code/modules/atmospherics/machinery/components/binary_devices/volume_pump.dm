@@ -125,11 +125,12 @@
 		context[SCREENTIP_CONTEXT_LMB] = "[overclocked ? "En" : "Dis"]able pressure limits"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AtmosPump", name)
-		ui.open()
+/obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui/ui)
+	var/datum/tgui/ui/ui_instance = SStgui.try_update_ui(user, src, ui)
+	if(!ui_instance)
+		ui_instance = new /datum/tgui/ui(user, src, "AtmosPump", name)
+		ui_instance.open()
+	return ui_instance
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_data()
 	var/data = list()
@@ -302,3 +303,16 @@
 	output_pressure.set_output(air_output.return_pressure())
 	input_temperature.set_output(air_input.return_temperature())
 	output_temperature.set_output(air_output.return_temperature())
+
+/// -------------------------------
+/// Overclock Leak Helper
+/// -------------------------------
+
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(datum/gas_mixture/removed)
+	var/turf/target_turf = loc
+	if(!istype(target_turf))
+		return
+
+	if(isopenturf(target_turf))
+		var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+		target_turf.assume_air(leaked)
