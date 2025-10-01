@@ -54,7 +54,7 @@
 	owner.balloon_alert(owner, "krx'lna tyhx graha...")
 	to_chat(owner, span_velvet("You begin to channel your psionic powers through [target]'s mind."))
 	playsound(owner, 'sound/magic/darkspawn/devour_will_victim.ogg', 50)
-	if(!do_after(owner, 2 SECONDS, target))
+	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
 	if(!IS_THRALL(target))
@@ -78,7 +78,7 @@
 		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 			to_chat(owner, span_warning("[target] has foreign machinery that resists our thralling, we shall attempt to destroy it."))
 			target.visible_message(span_warning("[target] seems to resist an unseen force!"))
-			if(!do_after(owner, 20 SECONDS, target))
+			if(!do_after(owner, 20 SECONDS, target, hidden = TRUE))
 				to_chat(target, span_userdanger("It cannot be permitted to succeed."))
 				return FALSE
 			for(var/obj/item/implant/mindshield/L in target)
@@ -86,7 +86,7 @@
 
 	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_gasp.ogg', 25)
 
-	if(!do_after(owner, 2 SECONDS, target))
+	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
 	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg', 100)
