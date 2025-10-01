@@ -70,17 +70,6 @@
 	SEND_SIGNAL(src, COMSIG_CELL_CHANGE_POWER) // MONKE EDIT: Signal being sent
 	return power_used
 
-/obj/item/stock_parts/power_store/cell/examine(mob/user)
-	. = ..()
-	if(rigged)
-		. += span_danger("This power cell seems to be faulty!")
-	// MONKESTATION EDIT ADDITION
-	else if(microfusion_readout)
-		. += "The charge meter reads [charge]/[maxcharge] MF."
-	// MONKESTATION EDIT END
-	else
-		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
-
 /obj/item/stock_parts/power_store/cell/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
