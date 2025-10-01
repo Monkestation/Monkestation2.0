@@ -7698,7 +7698,6 @@
 #include "monkestation\code\modules\events\fake_virus.dm"
 #include "monkestation\code\modules\events\gravity_generator_blackout.dm"
 #include "monkestation\code\modules\events\portal_storm.dm"
-#include "monkestation\code\modules\events\radiation_storm.dm"
 #include "monkestation\code\modules\events\scrubber_clog.dm"
 #include "monkestation\code\modules\events\scrubber_overflow.dm"
 #include "monkestation\code\modules\events\summon_wizard_event.dm"
