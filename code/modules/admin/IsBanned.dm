@@ -96,6 +96,61 @@
 				message_admins(msg)
 				return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
+	//Discord verification checking. This won't be used under normal circumstances, but was ported just in case
+	if (!real_bans_only && !.)
+		if (SSplexora.enabled && CONFIG_GET(flag/require_discord_verification))
+			var/required_roleid = CONFIG_GET(string/plexora_verification_required_roleid)
+			var/list/plexora_poll_result = SSplexora.poll_ckey_for_verification(ckey, required_roleid)
+			var/datum/discord_details/discord_details = new /datum/discord_details(
+				plexora_poll_result["discord_id"],
+				plexora_poll_result["discord_username"],
+				plexora_poll_result["discord_displayname"],
+				plexora_poll_result["polling_response"],
+			)
+			var/has_requiredrole = plexora_poll_result["has_requiredrole"]
+			if (has_requiredrole)
+				discord_details.has_requiredrole = has_requiredrole
+
+			var/log
+			switch(plexora_poll_result["polling_response"])
+				if (PLEXORA_DOWN)
+					log = "Denied entry: Plexora is down. Failed verification for [ckey]"
+					message_admins("[log] - Ping @flleeppyy on the Discord if issue persists.")
+					log_access(log)
+					return list("reason"="internalerror", "desc"="\nInternal server error - Plexora is down. Please try again in a few moments. If issue issue persists, ping @flleeppyy on the Discord.")
+				if (PLEXORA_CKEYPOLL_FAILED)
+					stack_trace("Ckey polling failed for [ckey]. [json_encode(plexora_poll_result)]")
+					log = "Denied entry: Ckey polling failed for [key_name_admin(ckey)]. Check runtimes"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="internalerror", "desc"="\nInternal server error - Plexora failed to poll your ckey. Please try again in a few moments. If issue issue persists, ping @flleeppyy on the Discord.")
+				if (PLEXORA_CKEYPOLL_NOTLINKED, PLEXORA_CKEYPOLL_RECORDNOTVALID)
+					var/one_time_token = SSplexora.get_or_generate_one_time_token_for_ckey(ckey)
+					log_access("Denied entry: [ckey] does not have a valid link record.")
+					return list("reason"="linking", "desc"="\nYour Discord account is not linked to BYOND, this is required to join.\nYour verification code is: [one_time_token] - Use this in conjunction with the /verifydiscord command in the Discord server to link your account, then try again.")
+				if (PLEXORA_CKEYPOLL_LINKED_ABSENT, PLEXORA_CKEYPOLL_LINKED_DELETED)
+					log = "Denied entry: [ckey]'s linked Discord account is either deleted, or not present in the Discord. ([plexora_poll_result["discord_id"]] - [plexora_poll_result["discord_username"]])"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="linkingabsent", "desc"="\nYour current linked Discord account is not present in the Discord server! Please rejoin before you can play.\nIf your previous Discord account has been deleted, or lost, please open a ticket in the Discord.",)
+				if (PLEXORA_CKEYPOLL_LINKED_BANNED)
+					log = "Denied entry: [ckey] is banned from the Discord. ([plexora_poll_result["discord_id"]] - [plexora_poll_result["discord_username"]])"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="linkingbanned", "desc"="\nYou are banned from the server.")
+				if (PLEXORA_CKEYPOLL_LINKED_ALLOWEDWHITELIST)
+					log_access("Allowed entry: [ckey] is in allowed_ckeys.txt")
+
+			if (!has_requiredrole)
+				log = "Denied entry: [ckey] has a valid Discord link record, but lacks the required role ([plexora_poll_result["requiredrole_name"]] - [required_roleid])"
+				log_access(log)
+				message_admins(log)
+				return list("reason"="linkingrolerror", "desc"="\nYour Discord is properly linked, but you lack the required role ([plexora_poll_result["requiredrole_name"]] - [required_roleid]). Please make a ticket in the Discord.")
+
+			log_access("Allowed entry: [ckey] has a valid link record [has_requiredrole ? "(and has the required role)" : ""] - ID: [plexora_poll_result["discord_id"]] Username: [plexora_poll_result["discord_username"]]")
+		else if (CONFIG_GET(flag/require_discord_verification))
+			return list("reason"="internalerror", "desc"="\nInternal server error - Discord Verification is required but Plexora is not enabled! This is a config issue, please alert the sysadmins.")
+
 	if(CONFIG_GET(flag/sql_enabled))
 		if(!SSdbcore.Connect())
 			var/msg = "Ban database connection failure. Key [ckey] not checked"

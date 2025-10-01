@@ -1,0 +1,7 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "you can scoop up animals again"
+  - bugfix: "sabre sheath alt-click now works properly"
+  - bugfix: "fixed xenos being unable to eat people"
+  - bugfix: "fixed perfume bottles not working"
