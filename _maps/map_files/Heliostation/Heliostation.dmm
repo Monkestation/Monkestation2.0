@@ -36043,6 +36043,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)
 "gQe" = (

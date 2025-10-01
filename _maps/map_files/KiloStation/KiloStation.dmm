@@ -2087,6 +2087,14 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
+"aFm" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/cigarette,
+/obj/machinery/computer/security/telescreen/interrogation{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "aFn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -3296,6 +3304,10 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/pathology)
+"bav" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/green,
+/area/station/command/heads_quarters/nt_rep)
 "bax" = (
 /turf/closed/wall,
 /area/station/commons/storage/primary)
@@ -12127,11 +12139,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/starboard)
-"dLS" = (
-/obj/item/kirbyplants/random,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "dMf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -29556,6 +29563,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/nt_rep)
 "iYx" = (
@@ -46170,10 +46178,13 @@
 /turf/closed/wall/rust,
 /area/station/commons/toilet/restrooms)
 "osA" = (
-/obj/structure/table,
-/obj/effect/spawner/random/entertainment/cigarette,
-/obj/machinery/computer/security/telescreen/interrogation{
-	pixel_y = 32
+/obj/item/radio/intercom/directional/north{
+	frequency = 1423;
+	name = "Interrogation Intercom"
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -58674,6 +58685,11 @@
 	},
 /turf/open/floor/carpet/green,
 /area/station/service/lawoffice)
+"soh" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "soB" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -62752,17 +62768,6 @@
 /obj/machinery/computer/cloning,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
-"tFA" = (
-/obj/item/radio/intercom/directional/north{
-	frequency = 1423;
-	name = "Interrogation Intercom"
-	},
-/obj/structure/chair/comfy/brown{
-	color = "#596479";
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/security/brig)
 "tFH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67810,10 +67815,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
-"vmx" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/carpet/green,
-/area/station/command/heads_quarters/nt_rep)
 "vmO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -99337,7 +99338,7 @@ nYX
 nYX
 nYX
 nYX
-dLS
+soh
 jzu
 aOH
 hAP
@@ -99591,10 +99592,10 @@ oOg
 akB
 nYX
 rcJ
-vmx
+bav
 vxv
 nYX
-osA
+aFm
 iTM
 vtf
 sGU
@@ -99851,7 +99852,7 @@ qOq
 iXM
 tqq
 nYX
-tFA
+osA
 wjS
 vtf
 rPR

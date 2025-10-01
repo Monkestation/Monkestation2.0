@@ -31,8 +31,8 @@ Bridge Assistant
 	family_heirlooms = list(/obj/item/banner/command/mundane, /obj/item/pen/fountain, /obj/item/stamp/granted, /obj/item/reagent_containers/cup/glass/mug/nanotrasen, /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser)
 
 	mail_goodies = list(
-		/obj/item/storage/fancy/cigarettes = 20,
-		/obj/item/pen/fountain = 15,
+		/obj/item/storage/fancy/cigarettes = 1,
+		/obj/item/pen/fountain = 1,
 		/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser = 1, //HOLY SHIT
 	)
 	rpg_title = "Supreme Lout"
