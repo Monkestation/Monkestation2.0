@@ -1,7 +1,14 @@
 import { useBackend } from 'tgui/backend';
-import { Section, Flex, Table, ProgressBar } from 'tgui/components';
+import {
+  Section,
+  Flex,
+  Table,
+  ProgressBar,
+  Box,
+} from 'tgui/components';
+import { Chart } from 'tgui/components';
 
-// Define the shape of a gas info entry
+// Shape of one gas info entry
 interface GasInfo {
   percent: number;
   heat_modifier?: number;
@@ -11,27 +18,30 @@ interface GasInfo {
 export const RBMKGraphs = () => {
   const { data } = useBackend<any>();
 
-  // Expect: data.gas_composition = { oxygen: { percent, heat_modifier, heat_resistance }, ... }
+  // Expect:
+  // data.gas_composition = { oxygen: { percent, heat_modifier, heat_resistance }, ... }
+  // data.gas_history = { oxygen: [21, 22, 20, ...], plasma: [0, 0, 1, ...], ... }
   const gases: Record<string, GasInfo> = data?.gas_composition || {};
+  const gasHistory: Record<string, number[]> = data?.gas_history || {};
 
   // SM-style color scheme
   const gasColors: Record<string, string> = {
-    oxygen: 'blue',
-    plasma: 'purple',
-    carbon_dioxide: 'gray',
-    nitrogen: 'brown',
-    tritium: 'green',
-    hydrogen: 'cyan',
-    bz: 'orange',
-    nitrogen_oxide: 'red',
+    oxygen: '#33f',
+    plasma: '#f3f',
+    carbon_dioxide: '#888',
+    nitrogen: '#a52a2a',
+    tritium: '#0f0',
+    hydrogen: '#0ff',
+    bz: '#ffa500',
+    nitrogen_oxide: '#f00',
   };
 
-  // Only keep gases that exist and > 0%, sorted largest first
+  // Only keep gases > 0%, sort largest first
   const activeGases = (Object.entries(gases) as [string, GasInfo][])
     .filter(([, info]) => info?.percent > 0)
     .sort((a, b) => b[1].percent - a[1].percent);
 
-  // Build segments for ProgressBar
+  // Build stacked bar segments
   const segments = activeGases.map(([gas, info]) => ({
     value: info.percent,
     color: gasColors[gas] || 'white',
@@ -89,6 +99,29 @@ export const RBMKGraphs = () => {
               </Table.Row>
             ))}
           </Table>
+        </Section>
+      </Flex.Item>
+
+      {/* History graphs */}
+      <Flex.Item>
+        <Section title="Gas Composition History" fill scrollable>
+          {Object.entries(gasHistory).map(([gas, values]) => {
+            if (!values || values.length === 0) return null;
+            const points = values.map((v, i) => [i, v]);
+            return (
+              <Box key={gas} mb={2}>
+                <Box color="label" mb={0.5}>
+                  {formatName(gas)}
+                </Box>
+                <Chart.Line
+                  data={points}
+                  strokeColor={gasColors[gas] || '#fff'}
+                  strokeWidth={2}
+                  height="100px"
+                />
+              </Box>
+            );
+          })}
         </Section>
       </Flex.Item>
     </Flex>
