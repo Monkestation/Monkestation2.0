@@ -32,6 +32,12 @@
 				cortical_owner.do_evolution(evolution)
 		if(skip_for_neutered)
 			return
+	else
+		for(var/datum/borer_evolution/evolution as anything in unlocked_evolutions)
+			if(evolution::neutered_only)
+				cortical_owner.do_evolution(evolution)
+		if(neutered_only)
+			return
 	if(mutually_exclusive)
 		cortical_owner.genome_locked = TRUE
 	if(gain_text)
