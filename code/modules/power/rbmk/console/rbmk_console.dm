@@ -166,6 +166,12 @@
                 )
     data["gas_composition"] = gas_comp
 
+    // --- Gas history (for graphs) ---
+    if (linked_reactor.coolant_gas_hist)
+        data["gas_history"] = linked_reactor.coolant_gas_hist.Copy()
+    else
+        data["gas_history"] = list()
+
     return data
 
 /************************************************************

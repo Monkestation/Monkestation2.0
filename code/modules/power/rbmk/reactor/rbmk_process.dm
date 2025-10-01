@@ -15,6 +15,19 @@
             if(coolant_internal)
                 pressure = coolant_internal.return_pressure()
 
+                // Record gas history snapshot
+                var/datum/gas_mixture/mix = coolant_internal
+                var/total = mix.total_moles()
+                if(total > 0)
+                    var/list/snapshot = list()
+                    for(var/gas_path in mix.gases)
+                        var/moles = mix.gases[gas_path][MOLES]
+                        var/percent = (moles / total) * 100
+                        snapshot[gas_path] = percent
+                    coolant_gas_hist += list(snapshot)
+                    if(length(coolant_gas_hist) > 50)
+                        coolant_gas_hist.Cut(1, 2)
+
             update_reactor_icon()
         else
             icon_state = "reactor_off"
@@ -62,6 +75,19 @@
     rbmk_sample_coolant(src)
     if(coolant_internal)
         pressure = coolant_internal.return_pressure()
+
+        // Record gas history snapshot
+        var/datum/gas_mixture/mix = coolant_internal
+        var/total = mix.total_moles()
+        if(total > 0)
+            var/list/snapshot = list()
+            for(var/gas_path in mix.gases)
+                var/moles = mix.gases[gas_path][MOLES]
+                var/percent = (moles / total) * 100
+                snapshot[gas_path] = percent
+            coolant_gas_hist += list(snapshot)
+            if(length(coolant_gas_hist) > 50)
+                coolant_gas_hist.Cut(1, 2)
 
     // --- Natural decay ---
     flux = max(0, flux - RBMK_FLUX_DECAY)
