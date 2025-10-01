@@ -202,6 +202,8 @@
             var/datum/gas_mixture/moved = in_mix.remove_ratio(amt)
             if(moved && moved.total_moles() > 0)
                 parent_reactor.coolant_internal.merge(moved)
+                update_parents()
+                SSair.add_to_active(src)
 
 /*************************************************************
  * Outlet Component
@@ -221,3 +223,5 @@
             var/datum/gas_mixture/released = parent_reactor.coolant_internal.remove_ratio(excess_ratio)
             if(released && released.total_moles() > 0)
                 airs[1].merge(released)
+                update_parents()
+                SSair.add_to_active(src)
