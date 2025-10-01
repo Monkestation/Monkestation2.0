@@ -94,9 +94,8 @@
 	return TRUE
 
 /obj/item/implant/tracking/get_management_console_data()
-	var/list/info_shown = ..()
-	info_shown["Location"] = get_area_name(imp_in, format_text = TRUE) || "Unknown"
-	return info_shown
+	. = ..()
+	.["Location"] = get_area_name(imp_in, format_text = TRUE) || "Unknown"
 
 /obj/item/implant/tracking/get_management_console_buttons()
 	var/list/buttons = ..()
