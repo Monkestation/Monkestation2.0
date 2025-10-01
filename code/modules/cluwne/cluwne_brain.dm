@@ -19,7 +19,7 @@
 
 /obj/item/organ/internal/brain/cluwne/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	cure_trauma_type(/datum/brain_trauma/special/banana_tumor, TRAUMA_RESILIENCE_ABSOLUTE)
+	cure_trauma_type(/datum/brain_trauma/special/banana_tumor, TRAUMA_RESILIENCE_ABSOLUTE, TRAUMA_SPECIAL_CURE_PROOF)
 	QDEL_NULL(misfortune)
 
 //---------------------------------
