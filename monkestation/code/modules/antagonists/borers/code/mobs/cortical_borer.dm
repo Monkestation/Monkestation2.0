@@ -566,21 +566,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	maturity_age += DELTA_WORLD_TIME(SSmobs)
 
-	/**
-	 * In the beginning you start out with the following generation:
-	 * Evolution point per 60 seconds
-	 * Chemical point per 30 seconds
-	 */
-
-	//20:40, 15:30, 10:20, 5:10
-	var/maturity_threshold = 30
-	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
-		maturity_threshold -= 5
-	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
-		maturity_threshold -= 12.5
-	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
-		maturity_threshold -= 5
-
+	var/maturity_threshold = calculate_maturation_discounts()
 	if(!chem_point_gained && maturity_age >= maturity_threshold)
 		if(chemical_evolution < limited_borer) //you can only have a default of 10 at a time
 			chemical_evolution++
@@ -605,5 +591,22 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	max_chemical_storage = initial(max_chemical_storage) + (level * chem_storage_per_level)
 	chemical_regen = initial(chemical_regen) + (level * chem_regen_per_level)
 	health = clamp(old_health, 1, maxHealth)
+
+/mob/living/basic/cortical_borer/proc/calculate_maturation_discounts()
+	/**
+	 * In the beginning you start out with the following generation:
+	 * Evolution point per 60 seconds
+	 * Chemical point per 30 seconds
+	 */
+
+	//20:40, 15:30, 10:20, 5:10
+	var/maturity_threshold = 30
+	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
+		maturity_threshold -= 5
+	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
+		maturity_threshold -= 12.5
+	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
+		maturity_threshold -= 5
+	return maturity_threshold
 
 #undef BODYTEMP_DIVISOR

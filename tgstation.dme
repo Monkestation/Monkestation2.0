@@ -6736,6 +6736,7 @@
 #include "monkestation\code\modules\antagonists\borers\code\status_effects.dm"
 #include "monkestation\code\modules\antagonists\borers\code\abilities\_ability.dm"
 #include "monkestation\code\modules\antagonists\borers\code\abilities\chemical_injector.dm"
+#include "monkestation\code\modules\antagonists\borers\code\abilities\dissection.dm"
 #include "monkestation\code\modules\antagonists\borers\code\abilities\enter_host.dm"
 #include "monkestation\code\modules\antagonists\borers\code\abilities\evolution_tree.dm"
 #include "monkestation\code\modules\antagonists\borers\code\abilities\force_speech.dm"

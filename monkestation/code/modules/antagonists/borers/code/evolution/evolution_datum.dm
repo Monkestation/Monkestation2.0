@@ -20,6 +20,8 @@
 	var/added_action = FALSE
 	/// If TRUE, then neutered borers will "bypass" this evolution, silently unlocking it when available and hiding it from the UI.
 	var/skip_for_neutered = FALSE
+	/// If TRUE, then neutered borers will "bypass" this evolution, silently unlocking it when available and hiding it from the UI.
+	var/neutered_only = FALSE
 
 /// What happens when a borer gets this evolution
 /datum/borer_evolution/proc/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
