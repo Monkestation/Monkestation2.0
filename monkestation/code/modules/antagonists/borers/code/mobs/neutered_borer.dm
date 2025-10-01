@@ -26,4 +26,4 @@
 		. += ""
 	. += "GROWTH OBJECTIVES:"
 	. += "1) Dissecting [objective_dissection] bodies: [dissections]/[objective_dissection]"
-	. += "2) You have learnt [objective_blood_chems] chemicals from the blood: [blood_chems_learned]/[objective_blood_chems]"
+	. += "2) Learning [objective_blood_chems] chemicals from the blood: [blood_chems_learned]/[objective_blood_chems]"

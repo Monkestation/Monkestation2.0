@@ -504,14 +504,15 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// Contains the fancy version of our message
 	var/text
+
 	//this is so they can talk in hivemind
 	if(split_message[1] == ";")
 		message = copytext(message, 2)
 		message = capitalize(message)
-		if(generation == 0) //Hivequeens demand attention.
-			text = span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>")
-		else if(neutered) // Nuetered sound offtune.
+		if (neutered) 	// Nuetered sound offtune.
 			text = span_red("<b>Cortical Hivemind: [src] croons, \"[message]\"</b>")
+		else if (generation == 0) 	//Hivequeens demand attention.
+			text = span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>")
 		else
 			text = span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>")
 
@@ -528,11 +529,10 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	// This is when they speak normally
 	message = capitalize(message)
 
-	if(human_host.is_willing_host(human_host))
-		// Only make it loud to the hosts and the worm to not flood anyone elses chat
-		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")
-	else if (neutered)
+	if (neutered)
 		text = span_red("Cortical Link: [src] croons, \"[message]\"")
+	else if (human_host.is_willing_host(human_host))
+		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")
 	else
 		text = span_purple("Cortical Link: [src] sings, \"[message]\"")
 
