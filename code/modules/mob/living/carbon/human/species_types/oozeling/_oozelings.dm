@@ -99,10 +99,15 @@
 
 /datum/species/oozeling/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	. = ..()
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE))
+	if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 		return
-	if(slime.blood_volume <= 0) // stop, stop they're already dead!
-		return
+	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
+		spec_slime_hunger(slime, seconds_per_tick)
+	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+		spec_slime_wetness(slime, seconds_per_tick)
+
+/// Handles slimes losing blood from having wet stacks.
+/datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
 	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects // locate should be slightly faster in theory, as this has no subtypes hopefully, so we don't need to check ids
 	if(!wetness)
 		return
@@ -117,12 +122,19 @@
 		slime.blood_volume = max(slime.blood_volume - (1 * seconds_per_tick), 0)
 		slime.balloon_alert(slime, "you're dripping wet!")
 
-//////
-/// DEATH OF BODY SECTION
-///	Handles gibbing
-
-/datum/species/oozeling/spec_death(gibbed, mob/living/carbon/human/H)
-	. = ..()
+/// Handles slimes losing blood from starving.
+/datum/species/oozeling/proc/spec_slime_hunger(mob/living/carbon/human/slime, seconds_per_tick)
+	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
+		slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
+		if(SPT_PROB(2.5, seconds_per_tick))
+			to_chat(slime, span_danger("You're starving! Get some food!"))
+			slime.balloon_alert(slime, "you're starving!")
+	else
+		if(SPT_PROB(17.5, seconds_per_tick))
+			slime.blood_volume = max(slime.blood_volume - seconds_per_tick, 0)
+		if(SPT_PROB(5, seconds_per_tick))
+			to_chat(slime, span_warning("You're feeling pretty hungry..."))
+			slime.balloon_alert(slime, "you're pretty hungry...")
 
 ///////
 /// CHEMICAL HANDLING
