@@ -90,7 +90,10 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/mutable_appearance/MA = new /mutable_appearance(holder)
 	MA.icon_state = "virus_infected"
 	MA.layer = BELOW_MOB_LAYER
-	MA.color = COLOR_PURPLE_GRAY
+	if(borer.neutered)
+		MA.color = COLOR_RED_GRAY
+	else
+		MA.color = COLOR_PURPLE_GRAY
 	MA.alpha = 200
 	holder.appearance = MA
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_BORER]
@@ -499,36 +502,52 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	message = sanitize(message)
 	var/list/split_message = splittext(message, "")
 
+	/// Contains the fancy version of our message
+	var/text
+
 	//this is so they can talk in hivemind
 	if(split_message[1] == ";")
 		message = copytext(message, 2)
+		var/hivemind
+
 		if(generation == 0) //Hivequeens demand attention.
-			for(var/borer in GLOB.cortical_borers)
-				to_chat(borer, span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
-			for(var/mob/dead_mob in GLOB.dead_mob_list)
-				var/link = FOLLOW_LINK(dead_mob, src)
-				to_chat(dead_mob, span_purplelarge("[link] <b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"),  type =MESSAGE_TYPE_RADIO,)
+			text = span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>")
+		else if(neutered) // Nuetered sound offtune.
+			text = span_red("<b>Cortical Hivemind: [src] croons, \"[message]\"</b>")
 		else
-			for(var/borer in GLOB.cortical_borers)
-				to_chat(borer, span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
-			for(var/mob/dead_mob in GLOB.dead_mob_list)
-				var/link = FOLLOW_LINK(dead_mob, src)
-				to_chat(dead_mob, span_purple("[link] <b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
+			text = span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>")
+
+		for (var/borer in GLOB.cortical_borers)
+			to_chat(borer, text, type = MESSAGE_TYPE_RADIO)
+
+		for (var/mob/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, src)
+
+   		to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
+
 		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
 	//this is when they speak normally
 	if(human_host.is_willing_host(human_host))
-		to_chat(human_host, span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")) // Only make it loud to the hosts and the worm to not flood anyone elses chat
-		to_chat(src, span_purplelarge("Cortical Link: [src] choruses, \"[message]\""))
+		text = span_purplelarge("Cortical Link: [src] choruses, \"[message]\"") // Only make it loud to the hosts and the worm to not flood anyone elses chat
+	else if (neutered)
+		text = span_red("Cortical Link: [src] croons, \"[message]\"")
 	else
-		to_chat(human_host, span_purple("Cortical Link: [src] sings, \"[message]\""))
-		to_chat(src, span_purple("Cortical Link: [src] sings, \"[message]\""))
+		text = span_purple("Cortical Link: [src] sings, \"[message]\"")
+
+	to_chat(human_host, text)
+	to_chat(src, text)
 	human_host.balloon_alert(human_host, "you hear a voice")
 	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
-	for(var/mob/dead_mob in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(dead_mob, src)
-		to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
+	if(neutered)
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, src)
+			to_chat(dead_mob, span_red("[link] Cortical Hivemind: [src] croons to [human_host], \"[message]\""))
+	else	// We don't use the previous text in part to prevent deadchat spam from hivequeens yapping in loudtext
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, src)
+			to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
 
 //borers should not be able to pull anything
 /mob/living/basic/cortical_borer/start_pulling(atom/movable/AM, state, force, supress_message)

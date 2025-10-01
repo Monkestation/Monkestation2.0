@@ -7,6 +7,13 @@
 	neutered = TRUE
 	skip_status_tab = TRUE
 	generation = 1
+	/// How many blood chemicals they need to reach for max maturation.
+	var/objective_blood_chems = 10
+	/// How many dissections they need to reach for max maturation
+	var/objective_dissection = 3
+	/// How many dissections have they preformed?
+	var/dissections = 0
+
 
 /mob/living/basic/cortical_borer/neutered/get_status_tab_items()
 	. = ..()
@@ -16,3 +23,7 @@
 	. += ""
 	if(host_sugar())
 		. += "Sugar detected! Unable to generate resources!"
+		. += ""
+	. += "GROWTH OBJECTIVES:"
+	. += "1) Dissecting [objective_dissection] bodies: [dissections]/[objective_dissection]"
+	. += "2) You have learnt [objective_blood_chems] chemicals from the blood: [blood_chems_learned]/[objective_blood_chems]"
