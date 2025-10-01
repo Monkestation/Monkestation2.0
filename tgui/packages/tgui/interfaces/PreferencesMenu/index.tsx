@@ -5,7 +5,7 @@ import {
   PreferencesCurrentWindow,
 } from './data';
 import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
-import { Box, Button, Stack } from '../../components';
+import { Box, Button, Section, Stack } from '../../components';
 import { PageButton } from './PageButton';
 import { Window } from '../../layouts';
 import { KeybindingsPage } from './KeybindingsPage';
@@ -61,8 +61,7 @@ export const PreferencesMenu = () => {
   }
 
   const settingsCatergories = (
-    <Stack vertical width="150px" mt="30px">
-      <Stack.Divider />
+    <Stack vertical width="115px">
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
@@ -114,10 +113,14 @@ export const PreferencesMenu = () => {
   );
 
   return (
-    <Window title="Preferences" width={1450} height={800} theme="generic">
+    <Window title="Preferences" width={1415} height={800} theme="generic">
       <Window.Content>
         <Stack horizontal height="100%">
-          <Stack.Item>{settingsCatergories}</Stack.Item>
+          <Stack.Item>
+            <Section height="100%" title="Preferences">
+              {settingsCatergories}
+            </Section>
+          </Stack.Item>
           <Stack.Divider />
           <Stack.Item grow>{pageContents}</Stack.Item>
         </Stack>

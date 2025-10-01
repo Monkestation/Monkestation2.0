@@ -6,6 +6,7 @@ type TabbedMenuProps = {
   categoryEntries: [string, InfernoNode][];
   contentProps?: FlexProps;
   extra?: InfernoNode;
+  name: string;
 };
 
 export class TabbedMenu extends Component<TabbedMenuProps> {
@@ -38,46 +39,47 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
     return (
       <Stack horizontal height="100%">
         <Stack.Item>
-          <Stack vertical width="150px" mt="30px">
-            <Stack.Divider />
-            {this.props.categoryEntries.map(([category]) => {
-              return (
-                <Stack.Item key={category} grow basis="content">
-                  <Button
-                    align="center"
-                    fontSize="1.2em"
-                    fluid
-                    onClick={() => {
-                      const offsetTop =
-                        this.categoryRefs[category].current?.offsetTop;
+          <Section height="100%" title={this.props.name}>
+            <Stack vertical width="150px">
+              {this.props.categoryEntries.map(([category]) => {
+                return (
+                  <Stack.Item key={category} grow basis="content">
+                    <Button
+                      align="center"
+                      fontSize="1.2em"
+                      fluid
+                      onClick={() => {
+                        const offsetTop =
+                          this.categoryRefs[category].current?.offsetTop;
 
-                      if (offsetTop === undefined) {
-                        return;
-                      }
+                        if (offsetTop === undefined) {
+                          return;
+                        }
 
-                      const currentSection = this.sectionRef.current;
+                        const currentSection = this.sectionRef.current;
 
-                      if (!currentSection) {
-                        return;
-                      }
+                        if (!currentSection) {
+                          return;
+                        }
 
-                      currentSection.scrollTop = offsetTop;
-                    }}
-                  >
-                    {category}
-                  </Button>
-                </Stack.Item>
-              );
-            })}
-            {this.props.extra !== null ? (
-              <>
-                <Stack.Divider />
-                <Stack.Item>{this.props.extra}</Stack.Item>
-              </>
-            ) : (
-              <Flex />
-            )}
-          </Stack>
+                        currentSection.scrollTop = offsetTop;
+                      }}
+                    >
+                      {category}
+                    </Button>
+                  </Stack.Item>
+                );
+              })}
+              {this.props.extra !== null ? (
+                <>
+                  <Stack.Divider />
+                  <Stack.Item>{this.props.extra}</Stack.Item>
+                </>
+              ) : (
+                <Flex />
+              )}
+            </Stack>
+          </Section>
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item

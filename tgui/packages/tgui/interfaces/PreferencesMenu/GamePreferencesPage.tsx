@@ -99,6 +99,7 @@ export const GamePreferencesPage = (props) => {
 
   return (
     <TabbedMenu
+      name="Settings"
       categoryEntries={gamePreferenceEntries}
       contentProps={{
         fontSize: 1.5,

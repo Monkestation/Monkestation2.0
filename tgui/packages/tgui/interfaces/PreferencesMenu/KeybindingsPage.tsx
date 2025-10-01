@@ -403,6 +403,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
         />
 
         <TabbedMenu
+          name="Keybindings"
           extra={
             <Button.Confirm
               content="Reset all keybindings"
