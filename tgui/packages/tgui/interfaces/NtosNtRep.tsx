@@ -20,7 +20,7 @@ type Data = {
 
 export const NtosNtRep = (props) => {
   return (
-    <NtosWindow width={400} height={400}>
+    <NtosWindow width={400} height={425}>
       <NtosWindow.Content>
         <NtosNtRepContent />
       </NtosWindow.Content>
@@ -112,12 +112,11 @@ export const NtosNtRepContent = (props) => {
       </Section>
 
       <Section title="Review" fill>
-        <Stack direction="column" align="stretch">
+        <Stack direction="column" align="stretch" fill>
           <Stack.Item mb={1} grow>
             <TextArea
-              height="300%"
-              resize="vertical"
               scrollbar
+              height="100%"
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}

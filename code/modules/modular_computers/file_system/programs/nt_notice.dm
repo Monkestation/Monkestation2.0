@@ -20,7 +20,7 @@
 
 /datum/computer_file/program/nt_rep_comments/ui_static_data(mob/user)
 	var/list/data = list()
-	data["max_length"] = MAX_MESSAGE_LEN
+	data["max_length"] = MAX_BROADCAST_LEN
 	return data
 
 /datum/computer_file/program/nt_rep_comments/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -40,7 +40,7 @@
 			var/review = params["new_review"]
 			if(!istext(review))
 				return FALSE
-			return update_comment(trim(html_decode(review), MAX_MESSAGE_LEN))
+			return update_comment(trim(html_decode(review), MAX_BROADCAST_LEN))
 
 ///Updates the roundend NT rep final score to what we've inputed, if the round is in progress.
 /datum/computer_file/program/nt_rep_comments/proc/update_rating(new_rating)
