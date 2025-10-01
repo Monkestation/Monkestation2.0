@@ -118,6 +118,8 @@ class KeybindingButton extends Component<{
   currentHotkey?: string;
   onClick?: () => void;
   typingHotkey?: string;
+  boundKeys: Record<string, string[]>;
+  keybindingName: string;
 }> {
   shouldComponentUpdate(nextProps) {
     return (
@@ -127,19 +129,36 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { currentHotkey, onClick, typingHotkey } = this.props;
+    const { currentHotkey, onClick, typingHotkey, boundKeys, keybindingName } =
+      this.props;
 
-    const child = (
+    let warningMessage: undefined | string;
+    if (currentHotkey && boundKeys[currentHotkey].length > 1) {
+      warningMessage =
+        'Already bound to: ' +
+        boundKeys[currentHotkey].filter((a) => a !== keybindingName).toString();
+    }
+
+    let child = (
       <Button
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
         onClick={onClick}
         selected={typingHotkey !== undefined}
+        color={warningMessage ? 'red' : null}
       >
-        {typingHotkey || currentHotkey || 'Unbound'}
+        {typingHotkey || currentHotkey || <br />}
       </Button>
     );
+
+    if (warningMessage) {
+      child = (
+        <Tooltip content={warningMessage} position="bottom">
+          {child}
+        </Tooltip>
+      );
+    }
 
     if (typingHotkey && onClick) {
       return (
@@ -395,6 +414,20 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     moveToBottom(keybindingEntries, 'EMOTE');
     moveToBottom(keybindingEntries, 'ADMIN');
 
+    let boundKeys: Record<string, string[]> = {};
+
+    Object.values(keybindings).forEach((keybindingCat) => {
+      Object.entries(keybindingCat).forEach(([keybindingId, keybinding]) => {
+        this.state.selectedKeybindings![keybindingId].forEach((key) => {
+          if (boundKeys[key]) {
+            boundKeys[key].push(keybinding.name);
+          } else {
+            boundKeys[key] = [keybinding.name];
+          }
+        });
+      });
+    });
+
     return (
       <>
         <KeyListener
@@ -420,7 +453,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                       this.state.selectedKeybindings![keybindingId] || [];
 
                     const name = (
-                      <Stack.Item basis="25%">
+                      <Stack.Item basis="25%" maxWidth="230px">
                         <KeybindingName keybinding={keybinding} />
                       </Stack.Item>
                     );
@@ -431,8 +464,15 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                           {name}
 
                           {range(0, 3).map((key) => (
-                            <Stack.Item key={key} grow basis="10%">
+                            <Stack.Item
+                              key={key}
+                              grow
+                              basis="10%"
+                              maxWidth="75px"
+                            >
                               <KeybindingButton
+                                boundKeys={boundKeys}
+                                keybindingName={keybinding.name}
                                 currentHotkey={keys[key]}
                                 typingHotkey={this.getTypingHotkey(
                                   keybindingId,

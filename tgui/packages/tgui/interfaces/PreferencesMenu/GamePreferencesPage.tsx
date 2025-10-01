@@ -44,7 +44,7 @@ export const GamePreferencesPage = (props) => {
     }
 
     let name: InfernoNode = (
-      <Flex.Item grow={1} pr={2} basis={0} ml={2}>
+      <Flex.Item maxWidth="400px" grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
       </Flex.Item>
     );

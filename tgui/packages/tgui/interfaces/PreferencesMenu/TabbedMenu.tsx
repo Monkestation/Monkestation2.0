@@ -83,6 +83,7 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item
+          grow
           innerRef={this.sectionRef}
           overflowY="scroll"
           {...{
