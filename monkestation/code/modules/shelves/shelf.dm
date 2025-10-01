@@ -79,22 +79,24 @@
 	if(!next_free) // If we don't find an empty slot, return early.
 		balloon_alert(user, "shelf full!")
 		return FALSE
-	if(do_after(user, use_delay, target = crate))
+	if(!do_after(user, use_delay, target = crate))
+		return FALSE
+	if(shelf_contents[next_free] != null) // If something was added during our do_after, check again if there's another slot
+		next_free = shelf_contents.Find(null)
 		if(shelf_contents[next_free] != null)
-			return FALSE // Something has been added to the shelf while we were waiting, abort!
-		if(crate.opened) // If the crate is open, try to close it.
-			if(!crate.close())
-				return FALSE // If we fail to close it, don't load it into the shelf.
-		shelf_contents[next_free] = crate // Insert a reference to the crate into the free slot.
-		crate.forceMove(src) // Insert the crate into the shelf.
-		crate.pixel_y = DEFAULT_SHELF_VERTICAL_OFFSET * (next_free - 1) // Adjust the vertical offset of the crate to look like it's on the shelf.
-		if(next_free >= 3) // If we're at or above three, we'll be on the way to going off the tile we're on. This allows mobs to be below the crate when this happens.
-			crate.layer = ABOVE_MOB_LAYER + 0.02 * (next_free - 1)
-		else
-			crate.layer = BELOW_OBJ_LAYER + 0.02 * (next_free - 1) // Adjust the layer of the crate to look like it's in the shelf.
-		handle_visuals()
-		return TRUE
-	return FALSE // If the do_after() is interrupted, return FALSE!
+			return FALSE // No empty slot was found
+	if(crate.opened) // If the crate is open, try to close it.
+		if(!crate.close())
+			return FALSE // If we fail to close it, don't load it into the shelf.
+	shelf_contents[next_free] = crate // Insert a reference to the crate into the free slot.
+	crate.forceMove(src) // Insert the crate into the shelf.
+	crate.pixel_y = DEFAULT_SHELF_VERTICAL_OFFSET * (next_free - 1) // Adjust the vertical offset of the crate to look like it's on the shelf.
+	if(next_free >= 3) // If we're at or above three, we'll be on the way to going off the tile we're on. This allows mobs to be below the crate when this happens.
+		crate.layer = ABOVE_MOB_LAYER + 0.02 * (next_free - 1)
+	else
+		crate.layer = BELOW_OBJ_LAYER + 0.02 * (next_free - 1) // Adjust the layer of the crate to look like it's in the shelf.
+	handle_visuals()
+	return TRUE
 
 /obj/structure/cargo_shelf/proc/unload(obj/structure/closet/crate/crate, mob/user, turf/unload_turf)
 	if(!unload_turf)
@@ -138,6 +140,24 @@
 		density = FALSE
 		var/obj/item/rack_parts/cargo_shelf/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
+	return ..()
+
+/obj/structure/cargo_shelf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/structure/closet/crate))
+		return
+	RegisterSignal(arrived, COMSIG_MOUSEDROP_ONTO, PROC_REF(crate_unload))
+
+/// Signal registered to the crate so we can unload it from the shelf by click dragging it, rather than being forced to click drag the shelf
+/obj/structure/cargo_shelf/proc/crate_unload(atom/source, atom/over, mob/user)
+	SIGNAL_HANDLER
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !istype(over, /turf/open))
+		return
+	INVOKE_ASYNC(src, PROC_REF(unload), source, user, over)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
+
+/obj/structure/cargo_shelf/Exited(atom/movable/gone, direction)
+	UnregisterSignal(gone, COMSIG_MOUSEDROP_ONTO)
 	return ..()
 
 /obj/structure/cargo_shelf/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
