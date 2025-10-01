@@ -2259,10 +2259,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
-"axg" = (
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/nt_rep)
 "axi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2578,10 +2574,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"aAw" = (
-/obj/machinery/chem_dispenser/drinks,
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/nt_rep)
 "aAC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4580,10 +4572,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/command/gateway)
-"aUI" = (
-/obj/machinery/vending/boozeomat,
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/nt_rep)
 "aUL" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
@@ -13746,16 +13734,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
-"cEl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/obj/effect/mob_spawn/ghost_role/drone/bar,
-/turf/open/floor/wood/parquet,
-/area/station/command/heads_quarters/nt_rep)
 "cEm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26104,11 +26082,6 @@
 /area/station/common/wrestling/concessions)
 "eWG" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/directional/south,
-/obj/machinery/camera/directional/south{
-	c_tag = "Command - Blueshield's Gear Room";
-	name = "command camera"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -26116,6 +26089,7 @@
 /obj/machinery/recharger{
 	pixel_y = -3
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "eWJ" = (
@@ -32751,7 +32725,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
 "goe" = (
-/obj/structure/chair/office,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32759,6 +32732,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/machinery/holopad/secure,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "goi" = (
@@ -49810,6 +49784,10 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Blueshield's Gear Room";
+	name = "command camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "jGa" = (
@@ -66249,9 +66227,9 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = 7;
-	pixel_y = 10
+/obj/machinery/camera/autoname/directional/north{
+	name = "command camera";
+	c_tag = "Consultant's Kitchen"
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -81622,8 +81600,8 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
 	},
-/obj/machinery/holopad/secure,
 /obj/machinery/duct,
+/obj/structure/chair/office,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "pMZ" = (
@@ -85374,7 +85352,7 @@
 "qzx" = (
 /obj/machinery/modular_computer/preset/command,
 /obj/machinery/camera/directional/north{
-	c_tag = "Command - Blueshield's Office";
+	c_tag = "Blueshield's Office";
 	name = "command camera"
 	},
 /obj/machinery/light/directional/north,
@@ -87471,8 +87449,10 @@
 /obj/structure/sign/plaques/kiddie/perfect_man{
 	pixel_y = -32
 	},
-/obj/machinery/light/directional/south,
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	c_tag = "Consultant's Hallway";
+	name = "command camera"
+	},
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
@@ -118392,7 +118372,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/south{
-	c_tag = "Command - Representative's Office";
+	c_tag = "Consultant's Office";
 	name = "command camera"
 	},
 /obj/structure/disposalpipe/segment{
@@ -216151,7 +216131,7 @@ oVW
 gFg
 xso
 huN
-aAw
+ide
 jop
 iGt
 yaI
@@ -216408,10 +216388,10 @@ jvo
 jvo
 lQD
 huN
-aUI
+ide
 mNM
 ePv
-cEl
+uBu
 lvS
 gSB
 iVh
@@ -216665,7 +216645,7 @@ vsv
 jvo
 xQS
 huN
-axg
+ide
 eJQ
 wZG
 uBu

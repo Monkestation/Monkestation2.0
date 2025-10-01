@@ -13048,7 +13048,7 @@
 "cZk" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Bridge - Starboard";
+	c_tag = "Bridge - Consultant's Office";
 	name = "command camera"
 	},
 /obj/structure/table/wood/fancy/green,
@@ -79707,7 +79707,9 @@
 "sOr" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "Bridge - Blueshield's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "sOs" = (

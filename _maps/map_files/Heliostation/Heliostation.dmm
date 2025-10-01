@@ -27260,11 +27260,6 @@
 	id_tag = "nt_rep_office_door";
 	name = "CentCom Office"
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	name = "Desk Shutters";
-	id = "nt_rep_desk_shutters"
-	},
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
@@ -42074,6 +42069,10 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/grandfatherclock,
+/obj/machinery/camera/directional/west{
+	c_tag = "Command - Consultant Lobby";
+	name = "command camera"
+	},
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)
 "iXV" = (
@@ -42649,6 +42648,10 @@
 /area/station/engineering/main)
 "jiq" = (
 /obj/effect/turf_decal/trimline/neutral/line,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Blueshield's Office";
+	name = "command camera"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "jiy" = (
@@ -68568,6 +68571,10 @@
 /obj/item/flashlight/lamp/green{
 	pixel_x = 0;
 	pixel_y = 9
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Consultant's Office";
+	name = "command camera"
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)

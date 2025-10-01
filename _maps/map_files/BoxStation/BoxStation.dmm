@@ -678,7 +678,7 @@
 "alv" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/camera/directional/north{
-	c_tag = "Command - Nanotrasen Representative's Office, Lobby";
+	c_tag = "Command - Consultant's Lobby";
 	name = "command camera"
 	},
 /turf/open/floor/wood/tile,
@@ -33180,7 +33180,7 @@
 "kGT" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/south{
-	c_tag = "Command - Nanotrasen Representative's Office, Kitchen";
+	c_tag = "Command - Consultant's Kitchen";
 	name = "command camera"
 	},
 /obj/machinery/vending/boozeomat,
@@ -35937,7 +35937,7 @@
 /area/station/science/breakroom)
 "lyv" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Command - Nanotrasen Representative's Office, Desk";
+	c_tag = "Command - Consultant's Desk";
 	name = "command camera"
 	},
 /obj/structure/sign/calendar/directional/east,
@@ -39456,7 +39456,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/south{
-	c_tag = "Command - Nanotrasen Representative's Office, Hallway";
+	c_tag = "Command - Consultant's Hallway";
 	name = "command camera"
 	},
 /turf/open/floor/iron/dark,

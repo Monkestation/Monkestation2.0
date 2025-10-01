@@ -19799,6 +19799,9 @@
 /area/station/engineering/atmospherics_engine)
 "hdk" = (
 /obj/structure/closet/secure_closet/blueshield,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Blueshield's Office"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "hdo" = (
@@ -20727,6 +20730,9 @@
 "hrH" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east{
+	c_tag = "Consultant's Office"
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "hsp" = (
@@ -38100,7 +38106,6 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/camera/autoname/directional/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
