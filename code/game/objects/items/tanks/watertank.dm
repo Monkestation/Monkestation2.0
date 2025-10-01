@@ -15,6 +15,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	var/obj/item/noz
 	var/volume = 500
@@ -90,12 +91,11 @@
 	else
 		return ..()
 
-/obj/item/watertank/MouseDrop(obj/over_object)
+/obj/item/watertank/mouse_drop_dragged(atom/over_object)
 	var/mob/M = loc
 	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-	return ..()
 
 /obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == noz)
@@ -293,13 +293,16 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
 	var/Adj = user.Adjacent(interacting_with)
 	if(nozzle_mode == RESIN_LAUNCHER)
-		if(Adj)
-			return ITEM_INTERACT_BLOCKING //Safety check so you don't blast yourself trying to refill your tank
+		if(Adj && (user.istate & ISTATE_HARM))
+			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
 			balloon_alert(user, "not enough water!")
@@ -319,7 +322,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(interacting_with))
+		if(!isturf(interacting_with))
+			return NONE
+		if(!Adj)
 			balloon_alert(user, "too far!")
 			return ITEM_INTERACT_BLOCKING
 		for(var/thing in interacting_with)

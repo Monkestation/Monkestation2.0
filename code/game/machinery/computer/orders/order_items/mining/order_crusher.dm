@@ -22,7 +22,7 @@
 	cost_per_order = 1250
 
 /datum/orderable_item/crusher/crusher/knife
-	item_path = /obj/item/gun/magic/crusherknives
+	item_path = /obj/item/kinetic_crusher/knives
 	cost_per_order = 1250
 
 /datum/orderable_item/crusher/crusher/sickle

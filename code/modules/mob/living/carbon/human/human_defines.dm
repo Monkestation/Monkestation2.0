@@ -5,13 +5,14 @@
 	icon = 'icons/mob/species/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,GLAND_HUD,FAN_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,PERMIT_HUD,SENSOR_HUD,CREW_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,GLAND_HUD,FAN_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,PERMIT_HUD,SENSOR_HUD,CREW_HUD,BORER_HUD)
 	hud_type = /datum/hud/human
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	can_be_shoved_into = TRUE
+	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 
 	bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
@@ -100,3 +101,5 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
+	///if we should greyscale limbs or set a preset color to them
+	var/greyscale_limbs = FALSE

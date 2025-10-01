@@ -23,6 +23,8 @@
 #define CHANNEL_SQUEAK 1004
 #define CHANNEL_MOB_EMOTES 1003
 #define CHANNEL_SILICON_EMOTES 1002
+#define CHANNEL_ELEVATOR 1001
+#define CHANNEL_VOICES 1000
 // monkestation end
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
@@ -78,7 +80,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1002 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 1001 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -192,7 +194,10 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_ICARUS,
 ))
 
-/// List of all of our sound keys.
+/* List of all of our sound keys.
+	used with /datum/sound_effect as the key
+	see code\game\sound_keys.dm
+*/
 #define SFX_BODYFALL "bodyfall"
 #define SFX_BULLET_MISS "bullet_miss"
 #define SFX_CAN_OPEN "can_open"
@@ -224,3 +229,15 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_BUTTON_CLICK "button_click"
+#define SFX_BUTTON_FAIL	"button_fail"
+#define SFX_LIGHTSWITCH	 "lightswitch"
+#define SFX_MEOW "meow"
+#define SFX_KEYSTROKE "keystroke"
+#define SFX_KEYBOARD "keyboard"
+#define SFX_BUTTON "button"
+#define SFX_SWITCH "switch"
+#define SFX_PORTAL_ENTER "portal_enter"
+#define SFX_PORTAL_CLOSE "portal_closed"
+#define SFX_PORTAL_CREATED "portal_created"
+#define SFX_SCREECH "screech"

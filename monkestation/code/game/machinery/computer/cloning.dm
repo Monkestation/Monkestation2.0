@@ -14,6 +14,7 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
 	req_access = list(ACCESS_GENETICS) //for modifying records
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -58,13 +59,13 @@
 	if(pods)
 		for(var/P in pods)
 			var/obj/machinery/clonepod/pod = P
-			if(pod.is_operational && pod.efficiency > 5)
+			if(pod.is_operational && pod.efficiency > 5 && pod.auto_clone)
 				return TRUE
 
-/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null, cloning = FALSE)
+/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
 	if(pods)
 		for(var/obj/machinery/clonepod/pod as anything in pods)
-			if(cloning & !pod.auto_clone)
+			if(!pod.auto_clone)
 				continue
 			if(pod.occupant && pod.clonemind == mind)
 				return pod
@@ -82,7 +83,7 @@
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/record in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"], TRUE)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"])
 
 		if(QDELETED(pod) || !pod.auto_clone || !QDELETED(pod.occupant))
 			return
@@ -183,8 +184,6 @@
 			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
 		else
 			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
-	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 	switch(menu)

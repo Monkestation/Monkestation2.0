@@ -9,7 +9,7 @@ Slimecrossing Mobs
 	name = "Slime Transformation"
 	desc = "Transform from a human to a slime, or back again!"
 	button_icon_state = "transformslime"
-	cooldown_time = 0 SECONDS
+	cooldown_time = 10 SECONDS
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE

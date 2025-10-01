@@ -13,3 +13,5 @@
 	new /obj/item/storage/bag/garment/nanotrasen_representative(src)
 	new /obj/item/circuitboard/machine/fax(src)
 	new /obj/item/storage/photo_album/nt_rep(src)
+	new /obj/item/storage/briefcase/sponsorship(src)
+	new /obj/item/clipboard(src)

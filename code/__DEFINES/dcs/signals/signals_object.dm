@@ -9,6 +9,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
@@ -117,6 +119,12 @@
 ///From open: (forced)
 #define COMSIG_CLOSET_POST_OPEN "closet_post_open"
 
+///From close
+#define COMSIG_CLOSET_PRE_CLOSE "closet_pre_close"
+	#define BLOCK_CLOSE (1<<1)
+///From close
+#define COMSIG_CLOSET_POST_CLOSE "closet_post_close"
+
 ///a deliver_first element closet was successfully delivered
 #define COMSIG_CLOSET_DELIVERED "crate_delivered"
 
@@ -172,11 +180,16 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
+///from /obj/projectile/pixel_move(): ()
+#define COMSIG_PROJECTILE_PIXEL_STEP "projectile_pixel_step"
+///sent to self during the process_hit proc of projectiles
+#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
 ///from the base of /obj/projectile/Range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
-
+///from the base of /obj/projectile/process(): ()
+#define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 

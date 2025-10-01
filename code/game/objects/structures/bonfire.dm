@@ -93,7 +93,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
@@ -168,7 +168,8 @@
 		return
 	var/turf/open/my_turf = get_turf(src)
 	if(istype(my_turf) && !my_turf.planetary_atmos) //Pollute, but only when we're not on planetary atmos
-		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_PASSIVE_EMITTER_CAP)
+		var/delta_time = DELTA_WORLD_TIME(SSobj)
+		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15 * delta_time, /datum/pollutant/carbon_air_pollution = 5 * delta_time), POLLUTION_PASSIVE_EMITTER_CAP)
 	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()

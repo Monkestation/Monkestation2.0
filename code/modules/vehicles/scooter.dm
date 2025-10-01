@@ -161,9 +161,8 @@
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)
@@ -303,6 +302,9 @@
 ///Sets the shoes that the vehicle is associated with, called when the shoes are initialized
 /obj/vehicle/ridden/scooter/skateboard/wheelys/proc/link_shoes(newshoes)
 	shoes = newshoes
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/cheap
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 	name = "roller skates"

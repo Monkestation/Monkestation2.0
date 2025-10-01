@@ -43,8 +43,6 @@
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
@@ -333,7 +331,7 @@
 
 /mob/living/basic/update_held_items()
 	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_REDUCED)
 		return
 	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/held in held_items)
@@ -341,6 +339,12 @@
 		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
+
+/mob/living/basic/update_cached_insulation()
+	return
+
+/mob/living/basic/get_insulation(temperature)
+	return temperature_insulation
 
 //MONKESTATION EDIT START
 /mob/living/basic/proc/get_scream_sound()

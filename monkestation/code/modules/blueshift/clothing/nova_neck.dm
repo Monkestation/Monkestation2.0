@@ -5,6 +5,10 @@
 	icon_state = "eldritch_tie"
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
 
+/obj/item/clothing/neck/tie/disco/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/soulcatcher/attachable_soulcatcher)
+
 /obj/item/clothing/neck/mantle
 	name = "mantle"
 	desc = "A decorative drape over the shoulders. This one has a simple, dry color."
@@ -60,7 +64,7 @@
 
 /obj/item/clothing/neck/mantle/hosmantle/blue
 	icon_state = "hosmantle_blue"
-	
+
 /obj/item/clothing/neck/mantle/capmantle
 	name = "\proper the captain's mantle"
 	desc = "A formal mantle to drape around the shoulders. Others stand on the shoulders of giants. You're the giant they stand on."
@@ -94,12 +98,12 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon, toggle_noun = "scarf")
 
-/obj/item/clothing/neck/face_scarf/AltClick(mob/user) //Make sure that toggling actually hides the snout so that it doesn't clip
+/obj/item/clothing/neck/face_scarf/click_alt(mob/user) //Make sure that toggling actually hides the snout so that it doesn't clip
 	if(icon_state != "face_scarf_t")
 		flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	else
 		flags_inv = HIDEFACIALHAIR
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/maid_neck_cover
 	name = "maid neck cover"

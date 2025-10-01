@@ -19,6 +19,8 @@
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
+	///Variable to store a cyborg's model type incase someone uses a transform module on a cyborg with no client.
+	var/pending_model = null
 
 	radio = /obj/item/radio/borg
 
@@ -41,7 +43,7 @@
 	///Used for deconstruction to remember what the borg was constructed out of.
 	var/obj/item/robot_suit/robot_suit = null
 	///If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
 
 	///If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
@@ -55,6 +57,8 @@
 	var/lamp_doom = FALSE
 	///Lamp brightness. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
+	////Power consumption of the light per lamp_intensity.
+	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
 	var/mutable_appearance/eye_lights
 
@@ -105,7 +109,7 @@
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ROBOTICS)
 
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
@@ -202,7 +206,7 @@
 		Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 		<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_model = /obj/item/robot_model/syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/model/syndicate/Initialize(mapload)
@@ -248,3 +252,7 @@
 /mob/living/silicon/robot/model/syndicate/kiltborg
 	set_model = /obj/item/robot_model/syndicate/kiltborg
 	icon_state = "peace"
+
+/mob/living/silicon/robot/model/centcom
+	set_model = /obj/item/robot_model/centcom
+	icon_state = "centcomborg"

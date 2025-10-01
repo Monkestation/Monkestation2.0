@@ -1,6 +1,25 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../base';
+import {
+  CheckboxInput,
+  FeatureChoiced,
+  FeatureToggle,
+  FeatureDropdownInput,
+  FeatureIconnedDropdownInput,
+} from '../base';
 
 export const language: FeatureChoiced = {
   name: 'Language',
+  component: FeatureIconnedDropdownInput,
+};
+
+export const language_speakable: FeatureToggle = {
+  name: 'Language Speakable',
+  description: `If unchecked, you'll only be able to understand the language,
+    but not speak it.`,
+  component: CheckboxInput,
+};
+
+export const language_skill: FeatureChoiced = {
+  name: 'Language Skill',
+  description: 'The percentage of the language you can understand.',
   component: FeatureDropdownInput,
 };

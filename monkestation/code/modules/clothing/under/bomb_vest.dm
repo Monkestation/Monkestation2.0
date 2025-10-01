@@ -21,7 +21,7 @@
 	if(boombox)
 		boombox.Move()
 
-/obj/item/clothing/bomb_vest/MouseDrop(atom/over_object)
+/obj/item/clothing/bomb_vest/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/M = usr
 
 	if(M.contents.Find(src))

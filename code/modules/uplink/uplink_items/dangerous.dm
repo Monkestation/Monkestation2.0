@@ -24,6 +24,13 @@
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/dangerous/whispering_jester_45
+	name = "Whispering-Jester .45 ACP Handgun"
+	desc = "A .45 handgun that is designed by Rayne Corp. The handgun has a built in suppressor. It's magazines contain 18 rounds."
+	item = /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
+	cost = 11
+	surplus = 50
+
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -63,11 +70,10 @@
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			energy projectiles it blocks, but requires two hands to wield. It also struggles to protect you from tackles."
+			all energy projectiles, but requires two hands to wield. It also struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
-
-	cost = 13
+	cost = 16
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)

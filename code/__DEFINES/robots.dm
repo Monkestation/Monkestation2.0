@@ -27,10 +27,14 @@
 ///Malfunctioning AI hijacking mecha
 #define AI_MECH_HACK 3
 
-/** Cyborg defines */
+// Cyborg defines
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
+/// How many watts per lamp power is consumed while the lamp is on.
+#define BORG_LAMP_POWER_CONSUMPTION (5 WATTS)
+/// The minimum power consumption of a cyborg.
+#define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
@@ -93,7 +97,7 @@
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
-#define BOT_COVER_OPEN (1<<0)
+#define BOT_COVER_MAINTS_OPEN (1<<0)
 ///The Bot's cover is locked, and cannot be opened without unlocking it.
 #define BOT_COVER_LOCKED (1<<1)
 ///The Bot is emagged.
@@ -109,10 +113,18 @@
 ///is our control panel currently open
 #define BOT_CONTROL_PANEL_OPEN (1<<1)
 
-///bitfield for our access flags
+///bitfield, used by basic bots, for our access flags
 DEFINE_BITFIELD(bot_access_flags, list(
-	"MAINTS_OPEN" = BOT_MAINTS_PANEL_OPEN,
-	"CONTROL_OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
+
+///bitfield, used by simple bots, for our access flags
+DEFINE_BITFIELD(bot_cover_flags, list(
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
 	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
 	"COVER_HACKED" = BOT_COVER_HACKED,
 ))

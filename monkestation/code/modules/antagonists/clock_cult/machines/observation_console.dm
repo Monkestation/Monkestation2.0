@@ -1,6 +1,6 @@
 /obj/machinery/computer/camera_advanced/ratvar
 	name = "Ratvarian Observation Console"
-	desc = "Used by the servants of Rat'var to conduct operations on Nanotrasen property."
+	desc = "Used by the servants of Ratvar to conduct operations on Nanotrasen property."
 	icon_screen = "ratvar1"
 	icon_keyboard = "ratvar_key1"
 	icon_state = "ratvarcomputer"
@@ -67,7 +67,7 @@
 		return
 
 	var/mob/living/cam_user = owner
-	var/mob/camera/ai_eye/remote/cam = cam_user.remote_control
+	var/mob/eye/ai_eye/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
 	if(!(SSthe_ark.marked_areas[target_area]))

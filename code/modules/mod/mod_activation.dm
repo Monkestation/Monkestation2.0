@@ -227,6 +227,7 @@
 		// Close internal air tank if MOD helmet is unsealed and was the only breathing apparatus.
 		if (!seal && wearer?.invalid_internals())
 			wearer.cutoff_internals()
+	wearer.update_cached_insulation()
 
 /// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(on)

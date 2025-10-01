@@ -60,6 +60,7 @@
 #define ROLE_JUNIOR_LONE_OPERATIVE "Junior Lone Operative"
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
+#define ROLE_WILLING_HOST "Willing Host"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -197,7 +198,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_DARKSPAWN_SCOUT = 0,
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_ADMEME = 0,
-	ROLE_DARKSPAWN_DEPRIVED = 0,
+	ROLE_DARKSPAWN_CLASSLESS = 0,
 //monkestation edit end
 
 	// Latejoin

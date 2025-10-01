@@ -74,8 +74,13 @@
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
 
-	var/pb_knockback = 0
-	var/pbk_gentle = FALSE
+	var/pb_knockback = 0 //tiles of knockback
+	var/pbk_gentle = FALSE //whether getting knocked into a wall/mob will stun
+
+	///a multiplier of the duration the recoil takes to go back to normal view, this is (recoil*recoil_backtime_multiplier)+1
+	var/recoil_backtime_multiplier = 2
+	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
+	var/recoil_deviation = 22.5
 
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
@@ -222,6 +227,25 @@
 		addtimer(VARSET_CALLBACK(gun_smoke.particles, count, 0), 5)
 		addtimer(VARSET_CALLBACK(gun_smoke.particles, drift, 0), 3)
 		QDEL_IN(gun_smoke, 0.6 SECONDS)
+	if(HAS_TRAIT(user, TRAIT_FEEBLE) && recoil && !tk_firing(user))
+		feeble_quirk_recoil(user, get_dir(user, pbtarget), TRUE)
+
+///Makes a recoil-like animation on the mob camera.
+/proc/recoil_camera(mob/M, duration, backtime_duration, strength, angle)
+	if(!M || !M.client)
+		return
+	if(HAS_TRAIT(M, TRAIT_NO_RECOIL))
+		return
+	var/client/sufferer = M.client
+	strength *= world.icon_size
+	var/oldx = sufferer.pixel_x
+	var/oldy = sufferer.pixel_y
+
+	//get pixels to move the camera in an angle
+	var/mpx = sin(angle) * strength
+	var/mpy = cos(angle) * strength
+	animate(sufferer, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
@@ -289,16 +313,18 @@
 	return NONE
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(ismob(interacting_with))
+		if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return FALSE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if((user.istate & ISTATE_HARM) && isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
 	if(!isliving(interacting_with))
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return ..()
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
@@ -634,7 +660,7 @@
 
 	semicd = TRUE
 
-	if(!bypass_timer && (!do_after(user, 120, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
+	if(!bypass_timer && (!do_after(user, 12 SECONDS, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
 				user.visible_message(span_notice("[user] decided not to shoot."))
@@ -665,6 +691,10 @@
 
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
+	return
+
+/// Adds the gun manufacturer examine component to the gun on subtypes, does nothing by default
+/obj/item/gun/proc/give_manufacturer_examine()
 	return
 
 #undef FIRING_PIN_REMOVAL_DELAY
