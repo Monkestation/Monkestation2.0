@@ -159,7 +159,11 @@
             for (var/gas_path in mix.gases)
                 var/moles = mix.gases[gas_path][MOLES]
                 var/percent = (moles / total) * 100
-                gas_comp[gas_path] = list(
+                var/gas_name = "[gas_path]"
+                if (ispath(gas_path))
+                    var/datum/gas/temp_gas = new gas_path()
+                    gas_name = temp_gas.name
+                gas_comp[gas_name] = list(
                     "percent" = percent,
                     "heat_modifier" = (mix.gases[gas_path]["heat_modifier"] || 0),
                     "heat_resistance" = (mix.gases[gas_path]["heat_resistance"] || 0)

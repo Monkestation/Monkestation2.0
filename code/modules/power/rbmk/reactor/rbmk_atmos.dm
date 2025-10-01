@@ -179,16 +179,16 @@
     initialize_directions = dir
     connect_nodes()
     update_parents()
-    SSair.start_processing_machine(src)
+    return INITIALIZE_HINT_NORMAL
 
 /obj/machinery/atmospherics/components/unary/rbmk/base/Destroy()
-    SSair.stop_processing_machine(src)
     return ..()
 
 /*************************************************************
  * Inlet Component
  *************************************************************/
 
+/// Inlet pulls gas into reactor coolant_internal
 /obj/machinery/atmospherics/components/unary/rbmk/inlet
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Inlet"
@@ -196,7 +196,7 @@
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
     if(parent_reactor && parent_reactor.inlet_open)
-        var/amt = clamp(parent_reactor.inlet_rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+        var/amt = clamp(parent_reactor.inlet_rate / 1000, 0, 1) // turn L/s into ratio
         var/datum/gas_mixture/in_mix = airs[1]
         if(in_mix && in_mix.total_moles() > 0)
             var/datum/gas_mixture/moved = in_mix.remove_ratio(amt)
@@ -207,6 +207,7 @@
  * Outlet Component
  *************************************************************/
 
+/// Outlet pushes excess coolant gas out if pressure exceeds target
 /obj/machinery/atmospherics/components/unary/rbmk/outlet
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Outlet"
