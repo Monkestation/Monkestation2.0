@@ -211,6 +211,9 @@
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
 
+/datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	add_team_hud(new_body)
+
 /datum/antagonist/bloodsucker/proc/get_status_tab_items(datum/source, list/items)
 	SIGNAL_HANDLER
 	items += "Blood Drank: [total_blood_drank]"
