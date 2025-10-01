@@ -7,9 +7,6 @@ ADMIN_VERB(outfit_manager, R_DEBUG, FALSE, "Outfit Manager", "View and edit outf
 /datum/outfit_manager/ui_state(mob/user)
 	return ADMIN_STATE(R_DEBUG)
 
-/datum/outfit_manager/ui_close(mob/user)
-	qdel(src)
-
 /datum/outfit_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
