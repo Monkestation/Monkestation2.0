@@ -212,6 +212,7 @@
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
+	/* monkestation edit: remove doorjack objective
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return NONE
@@ -220,6 +221,7 @@
 			ninja.balloon_alert(ninja, "all doors hacked")
 		if(objective && objective.doors_required <= hacking_module.door_hack_counter)
 			objective.completed = TRUE
+	monkestation end */
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //WIRE//
@@ -431,7 +433,7 @@
 	emag_act(ninja)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
+/* MONKE EDIT: Remove tram hack
 //TRAM CONTROLS//
 /obj/machinery/computer/tram_controls/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
@@ -457,7 +459,7 @@
 			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
+*/
 //WINDOOR//
 /obj/machinery/door/window/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED) && hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
