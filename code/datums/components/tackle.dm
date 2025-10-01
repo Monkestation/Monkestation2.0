@@ -166,6 +166,11 @@
 	tackling = FALSE
 	tackle.gentle = TRUE
 
+	if(T.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
+		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
+		to_chat(T, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
+
 	switch(roll)
 		if(-INFINITY to -5)
 			user.visible_message(span_danger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!"), span_userdanger("You botch your [tackle_word] and slam your head into [target], knocking yourself silly!"), ignored_mobs = target)

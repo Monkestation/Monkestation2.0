@@ -2,6 +2,7 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	/// better parts result in a higher efficiency (and lower value).
@@ -324,6 +325,7 @@
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 	if(!materials.mat_container.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
+		finalize_build()
 		return
 	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1, action = "built", name = "[design.name]")
 

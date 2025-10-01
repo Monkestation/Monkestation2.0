@@ -105,7 +105,7 @@
 
 		for(var/atom/movable/AM as anything in turf)
 			CHECK_TICK
-			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || iseminence(AM) || ismob(AM))
+			if(isdead(AM) || iseyemob(AM) || iseffect(AM) || iseminence(AM) || ismob(AM))
 				continue
 			qdel(AM)
 		turf.ScrapeAway(3)

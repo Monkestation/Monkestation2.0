@@ -30,6 +30,13 @@
 	. = ..()
 	register_context()
 
+/obj/item/clothing/accessory/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /**
  * Can we be attached to the passed clothing article?
  */
@@ -59,7 +66,7 @@
 	. = ..()
 
 	var/obj/item/clothing/under/attached_to = loc
-	
+
 	if(!istype(attached_to))
 		return
 

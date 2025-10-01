@@ -220,9 +220,9 @@
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 	to_chat(user, span_notice("You bypass the console's security protocols."))
 
-/obj/machinery/computer/telecomms/traffic/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !iscarbon(user))
-		return
+/obj/machinery/computer/telecomms/traffic/click_alt(mob/user)
+	if(!iscarbon(user))
+		return CLICK_ACTION_BLOCKING
 
 	var/mob/living/carbon/carbon_user = user
 	if(inserted_id)
@@ -230,3 +230,4 @@
 		inserted_id.forceMove(drop_location())
 		carbon_user.put_in_hands(inserted_id)
 		inserted_id = null
+	return CLICK_ACTION_SUCCESS
