@@ -11,6 +11,7 @@ Reproductive extracts:
 	icon_state = "reproductive"
 	effect = "reproductive"
 	effect_desc = "When fed monkey cubes it produces more extracts. Bio bag compatible as well."
+	item_flags = NO_QUICK_GATHER
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
 	var/feedAmount = 3
@@ -32,9 +33,11 @@ Reproductive extracts:
 		for(var/obj/item/stack/biomass/target_cube in target_item.contents)
 			cubes_inserted = TRUE
 			if(insert_cubes(user, target_cube))
-				return
+				break
 		if(!cubes_inserted)
 			to_chat(user, span_warning("There are no biomass cubes in the bio bag!"))
+		else
+			target_item.atom_storage.refresh_views()
 		return
 
 	else if(istype(target_item, /obj/item/stack/biomass))

@@ -708,7 +708,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_preattack(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(thing) || !allow_quick_gather || thing.atom_storage)
+	if(!istype(thing) || !allow_quick_gather || thing.atom_storage || (thing.item_flags & NO_QUICK_GATHER))
 		return
 
 	if(collection_mode == COLLECT_ONE)
