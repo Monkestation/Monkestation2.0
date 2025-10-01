@@ -11,7 +11,6 @@ Reproductive extracts:
 	icon_state = "reproductive"
 	effect = "reproductive"
 	effect_desc = "When fed biomass cubes it produces more extracts. Bio bag compatible as well."
-	item_flags = NO_QUICK_GATHER
 	var/extract_type = /obj/item/slime_extract/
 	var/cooldown = 3 SECONDS
 	var/feedAmount = 3
@@ -22,11 +21,11 @@ Reproductive extracts:
 	. = ..()
 	. += span_danger("It appears to have eaten [current_nutrition] Biomass Cube[p_s()]")
 
-/obj/item/slimecross/reproductive/attackby(obj/item/target_item, mob/user)
+/obj/item/slimecross/reproductive/item_interaction(mob/living/user, obj/item/target_item, list/modifiers)
 
 	if((last_produce + cooldown) > world.time)
 		to_chat(user, span_warning("[src] is still digesting!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(istype(target_item, /obj/item/storage/bag/xeno))
 		var/cubes_inserted = FALSE
@@ -36,12 +35,16 @@ Reproductive extracts:
 				break
 		if(!cubes_inserted)
 			to_chat(user, span_warning("There are no biomass cubes in the bio bag!"))
+			return ITEM_INTERACT_BLOCKING
 		else
 			target_item.atom_storage.refresh_views()
-		return
+			return ITEM_INTERACT_SUCCESS
 
 	else if(istype(target_item, /obj/item/stack/biomass))
 		insert_cubes(user, target_item)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/slimecross/reproductive/proc/insert_cubes(user, obj/item/stack/biomass/target_cube)
 	var/inserted_cubes = min(feedAmount - current_nutrition, target_cube.get_amount())
