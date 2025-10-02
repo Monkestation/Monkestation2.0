@@ -82,7 +82,7 @@
 		carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), wound_severity, wound_source = "bloodsilver blade shatter")
 	else
 		user.take_overall_damage(brute = 50)
-	user.Paralyze(5 SECONDS)
+	user.Paralyze(5 SECONDS, ignore_canstun = TRUE, ignores_diminish = TRUE)
 
 // Path of Rust's blade
 /obj/item/melee/sickly_blade/rust
