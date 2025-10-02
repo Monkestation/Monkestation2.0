@@ -89,7 +89,7 @@
 	target.adjust_silence(10 SECONDS)
 
 	eating = TRUE
-	if(!do_after(caster, doafterTime, target))
+	if(!do_after(caster, doafterTime, target, hidden = TRUE))
 		to_chat(caster, span_danger("Being interrupted causes a backlash of psionic power."))
 		caster.Immobilize(5 SECONDS)
 		caster.Knockdown(10 SECONDS)
@@ -263,7 +263,7 @@
 		casting = TRUE
 		owner.balloon_alert(owner, "xkla'thra...")
 		playsound(get_turf(owner), 'sound/magic/darkspawn/devour_will_begin.ogg', 50, TRUE)
-		if(!do_after(owner, cast_time, cast_on))
+		if(!do_after(owner, cast_time, cast_on, hidden = TRUE))
 			casting = FALSE
 			return . | SPELL_CANCEL_CAST
 		casting = FALSE

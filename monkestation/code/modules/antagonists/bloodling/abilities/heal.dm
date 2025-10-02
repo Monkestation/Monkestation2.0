@@ -30,7 +30,7 @@
 	..()
 
 	var/mob/living/carbon/carbon_mob = target
-	if(!do_after(owner, 2 SECONDS))
+	if(!do_after(owner, 2 SECONDS, hidden = TRUE))
 		return FALSE
 
 	// A bit of everything healing not much but helpful

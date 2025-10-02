@@ -3970,9 +3970,6 @@
 "ayL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/blue{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "ayM" = (
@@ -10205,7 +10202,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/blue/corner,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "cdf" = (
@@ -17865,11 +17861,10 @@
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "exJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/ladder,
-/turf/open/floor/carpet/green,
-/area/station/command/heads_quarters/nt_rep)
+/obj/structure/table/wood,
+/obj/item/ai_module/toy_ai,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "exN" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/dirt,
@@ -23899,11 +23894,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "gwq" = (
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Nuclear Storage";
-	network = list("ss13","secure")
-	},
 /obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/machinery/camera/directional/north{
+	c_tag = "Command - Consultant's Bedroom"
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "gwy" = (
@@ -28800,6 +28794,9 @@
 	},
 /obj/item/clothing/suit/armor/riot,
 /obj/effect/turf_decal/delivery/blue,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Blueshield's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "iaA" = (
@@ -30870,19 +30867,11 @@
 /area/station/science/ordnance/testlab)
 "iGM" = (
 /obj/structure/table/wood,
-/obj/item/bodypart/chest/robot{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/bodypart/head/robot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/item/pai_card{
 	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
 	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "iGV" = (
 /obj/machinery/door/airlock/corporate{
@@ -32942,7 +32931,6 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "jms" = (
-/obj/structure/ladder,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/station/command/heads_quarters/blueshield)
 "jmx" = (
@@ -36289,14 +36277,8 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "knD" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/blue{
-	dir = 4
-	},
+/obj/structure/table/wood,
+/obj/item/disk/holodisk,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "knO" = (
@@ -39136,7 +39118,6 @@
 /obj/machinery/vending/coffee,
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/blue,
 /turf/open/floor/wood/parquet,
 /area/station/command/meeting_room)
 "ldD" = (
@@ -43844,7 +43825,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mDY" = (
-/turf/open/floor/carpet/executive,
+/obj/structure/table/wood,
+/obj/item/disk/tech_disk,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "mEb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -45586,10 +45569,8 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "nhN" = (
-/obj/machinery/modular_computer/preset/command{
-	pixel_y = -3
-	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/modular_computer/preset/representative,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "nhP" = (
@@ -57217,7 +57198,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "qLG" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "qLJ" = (
@@ -62163,7 +62144,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/camera/motion/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Consultant's Office"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "sql" = (
@@ -70901,7 +70884,9 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "uVo" = (
-/turf/open/floor/carpet,
+/obj/structure/table/wood,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "uVx" = (
 /obj/structure/rack,
@@ -73919,8 +73904,16 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "vMZ" = (
-/obj/structure/ladder,
-/turf/open/floor/glass/reinforced,
+/obj/structure/table/wood,
+/obj/item/bodypart/chest/robot{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/bodypart/head/robot{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "vNe" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -98732,7 +98725,7 @@ mgS
 ieQ
 lRi
 nlh
-exJ
+cym
 svE
 lQM
 lQM
@@ -164267,7 +164260,7 @@ qyZ
 qyZ
 qyZ
 qyZ
-uVo
+iGM
 vMZ
 uVo
 dVd
@@ -164524,9 +164517,9 @@ hiq
 pWW
 oho
 wlK
-uVo
-iGM
-uVo
+joF
+joF
+joF
 wiN
 qyZ
 xEv
@@ -166323,7 +166316,7 @@ dIZ
 xVp
 uWz
 cda
-knD
+pRB
 ayL
 ayL
 dVd
@@ -166580,9 +166573,9 @@ cFH
 xcH
 oho
 ldz
-mDY
-mDY
-mDY
+joF
+joF
+joF
 ltM
 qyZ
 xLi
@@ -166837,8 +166830,8 @@ qyZ
 qyZ
 qyZ
 qyZ
-mDY
-vMZ
+knD
+exJ
 mDY
 dVd
 qyZ

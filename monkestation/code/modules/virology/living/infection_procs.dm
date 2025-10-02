@@ -64,18 +64,6 @@
 			for(var/datum/disease/acute/V as anything in C.diseases)
 				if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
 					infect_disease(V, notes="(Airborne, from [C])")
-		/*
-		for(var/obj/effect/rune/R in T)
-			if(istype(R.virus2,/list) && R.virus2.len > 0)
-				for(var/datum/disease/acute/V as anything in R.diseases)
-					if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
-						infect_disease(V, notes="(Airborne, from [R])")
-		*/
-
-		spawn (1)
-			//we don't want the rest of the mobs to start breathing clouds before they've settled down
-			//otherwise it can produce exponential amounts of lag if many mobs are in an enclosed space
-			spread_airborne_diseases()
 
 /mob/living/proc/breath_airborne_diseases_from_clouds()
 	var/sanity = 0

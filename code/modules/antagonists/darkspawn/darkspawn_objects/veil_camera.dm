@@ -41,7 +41,7 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 /datum/action/innate/camera_jump/darkspawn/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
 	var/list/L = list()
