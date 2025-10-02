@@ -10,7 +10,7 @@
     anchored = TRUE
 
     var/obj/machinery/rbmk/reactor/linked_reactor = null
-    var/list/children = list()   // east-side child overlays
+    var/list/children = list()   // expansion tiles
 
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
     . = ..()
@@ -36,7 +36,7 @@
         break
     update_icon()
 
-/// Spawn child console tiles (east expansion)
+/// Spawn child console tiles (make it 3×1 footprint)
 /obj/machinery/computer/rbmk_console/proc/spawn_children()
     var/turf/T1 = get_step(src, EAST)
     var/turf/T2 = get_step(T1, EAST)
@@ -278,18 +278,22 @@
     desc = "Part of a large RBMK reactor control panel."
     icon = 'icons/obj/reactor_controller.dmi'
     icon_state = "reactorcontrol-side"
-    density = TRUE
     anchored = TRUE
+    density = TRUE
+    invisibility = 101   // hides from right-click menus
+    mouse_opacity = MOUSE_OPACITY_ICON
     var/obj/machinery/computer/rbmk_console/parent_console = null
 
 /obj/structure/rbmk_console_child/ui_interact(mob/user, datum/tgui/ui)
-    if (parent_console)
-        return parent_console.ui_interact(user, ui)
+    if (parent_console) return parent_console.ui_interact(user, ui)
     return ..()
 
 /obj/structure/rbmk_console_child/attack_hand(mob/user)
-    if (parent_console)
-        return parent_console.attack_hand(user)
+    if (parent_console) return parent_console.attack_hand(user)
+    return ..()
+
+/obj/structure/rbmk_console_child/attackby(obj/item/I, mob/user, params)
+    if (parent_console) return parent_console.attackby(I, user, params)
     return ..()
 
 /obj/structure/rbmk_console_child/Destroy()

@@ -179,6 +179,7 @@
     initialize_directions = dir
     connect_nodes()
     update_parents()
+    SSair.add_to_active(src)
     return INITIALIZE_HINT_NORMAL
 
 /obj/machinery/atmospherics/components/unary/rbmk/base/Destroy()
@@ -193,6 +194,7 @@
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Inlet"
     dir = WEST
+    layer = OBJ_LAYER - 0.01   // make sure items render above port
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
     if(parent_reactor && parent_reactor.inlet_open)
@@ -214,14 +216,26 @@
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Outlet"
     dir = EAST
+    layer = OBJ_LAYER - 0.01   // make sure items render above port
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
     if(parent_reactor && parent_reactor.outlet_open && parent_reactor.coolant_internal.total_moles() > 0)
         var/current_pressure = parent_reactor.coolant_internal.return_pressure()
         if(current_pressure > parent_reactor.outlet_target_pressure)
-            var/excess_ratio = clamp((current_pressure - parent_reactor.outlet_target_pressure) / max(parent_reactor.outlet_target_pressure, 1), 0, 1)
+            var/excess_ratio = clamp(
+                (current_pressure - parent_reactor.outlet_target_pressure) / max(parent_reactor.outlet_target_pressure, 1),
+                0,
+                1
+            )
             var/datum/gas_mixture/released = parent_reactor.coolant_internal.remove_ratio(excess_ratio)
             if(released && released.total_moles() > 0)
-                airs[1].merge(released)
-                update_parents()
-                SSair.add_to_active(src)
+                // ✅ Push to pipe net if connected
+                if(parents && length(parents) && airs[1])
+                    airs[1].merge(released)
+                    update_parents()
+                    SSair.add_to_active(src)
+                else
+                    // ✅ Leak into turf if not connected
+                    var/turf/T = get_turf(src)
+                    if(T)
+                        T.assume_air(released)

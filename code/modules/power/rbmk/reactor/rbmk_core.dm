@@ -18,7 +18,7 @@
     density = FALSE
     mouse_opacity = MOUSE_OPACITY_ICON
     plane = GAME_PLANE
-    layer = OBJ_LAYER
+    layer = OBJ_LAYER - 0.01   // keep reactor below mobs/items so they show above
 
     // Ports (spawned by atmos)
     var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
@@ -160,10 +160,8 @@
         moderator_history.Cut(1, 2)
 
     // --- Atmos handling ---
-    // Ports now handle gas transfer directly; we only sample
     rbmk_sample_coolant(src)
 
-    // Sync pressure var for console/integrity
     if(coolant_internal)
         pressure = coolant_internal.return_pressure()
 
@@ -174,6 +172,30 @@
         if (C.linked_reactor == src)
             C.update_icon()
             SStgui.update_uis(C)
+
+/*************************************************************
+ * Rod Insertion
+ *************************************************************/
+
+/obj/machinery/rbmk/reactor/attackby(obj/item/I, mob/user, params)
+    if(istype(I, /obj/item/rbmk/fuel_rod))
+        return try_insert_rod(I, user)
+    return ..()
+
+/obj/machinery/rbmk/reactor/proc/try_insert_rod(obj/item/rbmk/fuel_rod/R, mob/user)
+    if(!R) return FALSE
+
+    for(var/i = 1, i <= max_normal_slots, i++)
+        if(!(i in normal_slots) || !normal_slots[i])
+            normal_slots[i] = R
+            R.loc = src
+            R.active = TRUE
+            to_chat(user, span_notice("You insert [R] into the reactor."))
+            update_linked_consoles()
+            return TRUE
+
+    to_chat(user, span_warning("There are no free rod slots available in the reactor!"))
+    return FALSE
 
 /*************************************************************
  * Reactor Child Tiles
@@ -188,10 +210,14 @@
     anchored = TRUE
     density = FALSE
     mouse_opacity = MOUSE_OPACITY_ICON
+    plane = GAME_PLANE
+    layer = OBJ_LAYER - 0.01   // keep children below mobs/items as well
     var/obj/machinery/rbmk/reactor/parent
 
 /obj/structure/rbmk/reactor_child/attackby(obj/item/I, mob/user, params)
     if(parent)
+        if(istype(I, /obj/item/rbmk/fuel_rod))
+            return parent.try_insert_rod(I, user)
         return parent.attackby(I, user, params)
     return ..()
 
