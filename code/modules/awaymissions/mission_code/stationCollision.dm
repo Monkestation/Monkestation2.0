@@ -26,7 +26,7 @@
 	. = ..()
 	var/obj/item/book/bible/holy_bible = new /obj/item/book/bible/booze(loc)
 	holy_bible.name = "The Holy book of the Geometer"
-	holy_bible.deity_name = "Narsie"
+	holy_bible.deity_name = "Nar'Sie"
 	holy_bible.icon_state = "melted"
 	holy_bible.inhand_icon_state = "melted"
 	holy_bible.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'

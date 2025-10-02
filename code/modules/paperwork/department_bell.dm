@@ -51,9 +51,9 @@
 /obj/structure/desk_bell/departmental/check_clapper(mob/living/user)
 	return
 
-/obj/structure/desk_bell/departmental/MouseDrop(obj/over_object, src_location, over_location)
-	if(istype(over_object, /obj/vehicle/ridden/wheelchair))
-		usr.balloon_alert(usr, "cannot use a department bell!")
+/obj/structure/desk_bell/departmental/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(istype(over, /obj/vehicle/ridden/wheelchair))
+		balloon_alert(usr, "cannot use a department bell!")
 		return // makes absolutely certain this cant be used for a wheelchair bell
 	return ..()
 

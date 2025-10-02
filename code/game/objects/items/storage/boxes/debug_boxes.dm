@@ -168,6 +168,7 @@
 
 /obj/item/storage/box/debugbox/guns/miscenergy/PopulateContents() // Misc energy guns
 	var/list/remaining_guns = typesof(/obj/item/gun/energy) - typesof(/obj/item/gun/energy/recharge) - typesof(/obj/item/gun/energy/laser) - typesof(/obj/item/gun/energy/e_gun)
+	remaining_guns =- /obj/item/gun/energy/pulse/prize // Remove prize pulse rifle so debug outfit doesnt notify ghosts
 	for(var/obj/item/gun as anything in remaining_guns)
 		new gun(src)
 

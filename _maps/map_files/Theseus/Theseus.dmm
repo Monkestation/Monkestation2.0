@@ -5961,6 +5961,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 9
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "bQt" = (
@@ -7089,6 +7090,9 @@
 "cfL" = (
 /obj/machinery/modular_computer/preset/id,
 /obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "cfM" = (
@@ -7253,7 +7257,6 @@
 	pixel_x = 6;
 	pixel_y = 30
 	},
-/obj/effect/mob_spawn/ghost_role/drone/bar,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "cit" = (
@@ -10432,7 +10435,9 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "dfb" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("minisat")
+	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -13990,12 +13995,8 @@
 	},
 /area/station/security/prison/workout)
 "eeO" = (
-/obj/machinery/door/window/right/directional/west,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen/small,
+/obj/machinery/photocopier,
+/turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "eeU" = (
 /obj/machinery/duct,
@@ -15555,6 +15556,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eDx" = (
+/obj/machinery/computer/security/telescreen/rd,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/rd)
 "eDy" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
@@ -23985,7 +23990,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "heB" = (
@@ -24711,13 +24715,14 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "hoZ" = (
-/obj/machinery/door/window/left/directional/west,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/kitchen/small,
+/obj/structure/filingcabinet/employment{
+	pixel_x = -6
+	},
+/obj/structure/filingcabinet/medical{
+	pixel_x = 6
+	},
+/turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "hpd" = (
 /obj/item/kirbyplants/random,
@@ -31463,6 +31468,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 5
 	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "job" = (
@@ -37509,7 +37515,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "kXw" = (
@@ -44616,9 +44621,6 @@
 	},
 /obj/structure/cable,
 /obj/item/radio/intercom/command/directional/north,
-/obj/item/clothing/mask/cigarette/pipe{
-	pixel_x = -5
-	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "mWY" = (
@@ -52106,10 +52108,7 @@
 	dir = 1
 	},
 /obj/structure/closet/emcloset/wall/directional/north,
-/obj/item/mod/module/thermal_regulator,
-/obj/item/mod/module/paper_dispenser,
-/obj/item/mod/module/megaphone,
-/obj/machinery/suit_storage_unit/captain,
+/obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "pkM" = (
@@ -63374,7 +63373,9 @@
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/autoname/directional/east{
+	network = list("minisat")
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sxA" = (
@@ -63814,15 +63815,15 @@
 	},
 /obj/item/kirbyplants/organic/plant17{
 	pixel_y = 23;
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = 7;
-	pixel_y = 10
+	pixel_x = 6
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/phone{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "sCC" = (
@@ -68919,7 +68920,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "tYq" = (
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("minisat")
+	},
 /obj/effect/turf_decal/siding/white/corner,
 /obj/effect/turf_decal/trimline/dark_green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69454,6 +69457,8 @@
 	pixel_x = 4
 	},
 /obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark/side,
 /area/station/science/robotics/lab)
 "uhf" = (
@@ -72660,6 +72665,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
 "vav" = (
@@ -74235,6 +74241,7 @@
 	name = "Representative's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "vxI" = (
@@ -78786,10 +78793,10 @@
 "wRn" = (
 /obj/item/storage/secure/safe/directional/north,
 /obj/structure/cable,
-/obj/machinery/modular_computer/preset/command{
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/modular_computer/preset/representative{
 	dir = 4
 	},
-/obj/structure/window/spawner/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "wRq" = (
@@ -80406,7 +80413,9 @@
 /area/station/maintenance/starboard/upper)
 "xoA" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/directional/east{
+	network = list("minisat")
+	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -107787,7 +107796,7 @@ rzL
 rzL
 rzL
 lXw
-bGY
+eDx
 rxK
 xOP
 hxo

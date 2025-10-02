@@ -188,18 +188,20 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME
-	infinite_reskin = TRUE
+	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
 	. = ..()
 	unique_reskin = GLOB.pride_pin_reskins
 
-/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
-	. = ..()
-	post_reskin(M)
+/obj/item/clothing/accessory/pride/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
 
-/obj/item/clothing/accessory/pride/post_reskin(mob/our_mob)
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
+/obj/item/clothing/accessory/pride/post_reskin()
 	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
 			name = "[lowertext(pride_name)] pin"
