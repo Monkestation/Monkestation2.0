@@ -1,8 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Added a new PDA app unique to the NT Representative, this allows them to rate & comment on the state of the station and have it show up on the roundend report."
-  - qol: "NT Rep and Blueshield now have colors in the Occupations menu, and have their own Mail color now, too."
-  - qol: "The grandfather clock now respects direction and distance at all times."
-  - balance: "NT Rep now has Service radio."
-  - map: "Remapped much of the NT Rep's presence on maps, especially Helio/IceBox/Kilo. Notably removed most of their kitchens and made them more public."

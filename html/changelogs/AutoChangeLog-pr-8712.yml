@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - qol: "Allows cell chargers to charge megacells"
-  - bugfix: "Fix cells showing the \"charge meter\" on examine twice"
