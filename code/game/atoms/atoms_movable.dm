@@ -118,6 +118,9 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
+	/// The weight for A* pathfinding added to turfs this atom is on.
+	var/astar_weight
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -866,6 +869,12 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
+
+	if(astar_weight)
+		if(old_turf)
+			old_turf.astar_weight -= astar_weight
+		if(new_turf)
+			new_turf.astar_weight += astar_weight
 
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
