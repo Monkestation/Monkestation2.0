@@ -7090,6 +7090,9 @@
 "cfL" = (
 /obj/machinery/modular_computer/preset/id,
 /obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "cfM" = (
@@ -10432,7 +10435,9 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "dfb" = (
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/south{
+	network = list("minisat")
+	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -15551,6 +15556,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eDx" = (
+/obj/machinery/computer/security/telescreen/rd,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/rd)
 "eDy" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
@@ -63364,7 +63373,9 @@
 /obj/machinery/porta_turret/ai,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/camera/autoname/directional/east,
+/obj/machinery/camera/autoname/directional/east{
+	network = list("minisat")
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sxA" = (
@@ -68909,7 +68920,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "tYq" = (
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("minisat")
+	},
 /obj/effect/turf_decal/siding/white/corner,
 /obj/effect/turf_decal/trimline/dark_green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69444,6 +69457,8 @@
 	pixel_x = 4
 	},
 /obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark/side,
 /area/station/science/robotics/lab)
 "uhf" = (
@@ -72650,6 +72665,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
 "vav" = (
@@ -80397,7 +80413,9 @@
 /area/station/maintenance/starboard/upper)
 "xoA" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/directional/east{
+	network = list("minisat")
+	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -107778,7 +107796,7 @@ rzL
 rzL
 rzL
 lXw
-bGY
+eDx
 rxK
 xOP
 hxo
