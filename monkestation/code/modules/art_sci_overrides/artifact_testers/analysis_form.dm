@@ -185,7 +185,7 @@
 	if(chosen_fault)
 		to_analyze.holder.name += " ![chosen_fault]! "
 	if(chosen_effects)
-		for(var/effect as anything in chosen_effects)
+		for(var/effect in chosen_effects)
 			to_analyze.holder.name += " ([effect]) "
 	to_analyze.analysis = src
 	to_analyze.process_stimuli(STIMULUS_DATA,TRUE)

@@ -28,15 +28,16 @@
 	if(locked)
 		. += span_notice("Alt-click to unlock.")
 
-/obj/item/nanite_remote/AltClick(mob/user)
+/obj/item/nanite_remote/click_alt(mob/user)
 	if(!user.can_perform_action(src))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(allowed(user))
 		locked = !locked
 		user.balloon_alert(user, (locked ? "locked" : "unlocked"))
 		update_appearance(UPDATE_ICON)
 	else
 		user.balloon_alert(user, "access denied!")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nanite_remote/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

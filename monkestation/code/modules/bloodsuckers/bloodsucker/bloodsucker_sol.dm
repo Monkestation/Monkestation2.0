@@ -21,7 +21,8 @@
 ///Ranks the Bloodsucker up, called by Sol.
 /datum/antagonist/bloodsucker/proc/sol_rank_up(atom/source)
 	SIGNAL_HANDLER
-	if(bloodsucker_level < 3)
+	if(sol_levels_remaining > 0)
+		sol_levels_remaining--
 		INVOKE_ASYNC(src, PROC_REF(RankUp))
 	else
 		to_chat(owner.current, span_announce("You have already got as powerful as you can through surviving Sol."))
@@ -127,7 +128,10 @@
 	else
 		if(total_brute <= 10)
 			torpor_end()
-
+	//monkestation edit
+	if(COOLDOWN_FINISHED(src, bloodsucker_torpor_max_time))
+		torpor_end() // YOUR TAKING TOO LONG
+	//monkestation end
 /datum/antagonist/bloodsucker/proc/is_in_torpor()
 	if(QDELETED(owner.current))
 		return FALSE
@@ -143,6 +147,10 @@
 	// Without this, you'll just keep dying while you recover.
 	current.add_traits(torpor_traits, TORPOR_TRAIT)
 	current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	//monkestation edit
+	// Failsafe to prevent players taking too long in torpor
+	COOLDOWN_START(src, bloodsucker_torpor_max_time, BLOODSUCKER_TORPOR_MAX_TIME)
+	//monkestation end
 	// Disable ALL Powers
 	DisableAllPowers()
 
@@ -150,6 +158,10 @@
 	var/mob/living/current = owner.current
 	if(QDELETED(current))
 		return
+	//monkestation edit
+	if(!COOLDOWN_FINISHED(src, bloodsucker_torpor_max_time))
+		COOLDOWN_RESET(src, bloodsucker_torpor_max_time)
+	//monkestation end
 	current.remove_status_effect(/datum/status_effect/bloodsucker_sol)
 	current.grab_ghost()
 	to_chat(current, span_warning("You have recovered from Torpor."))

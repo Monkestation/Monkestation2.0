@@ -170,7 +170,7 @@
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -246,14 +246,14 @@
 	else if(istype(attacking_item, /obj/item/electronics/airlock))
 		to_chat(user, span_notice("You start installing the electronics into [src]..."))
 		attacking_item.play_tool_sound(src)
-		if(do_after(user, 30, target = src) && user.transferItemToLoc(attacking_item,src))
+		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item,src))
 			electronics = attacking_item
 			to_chat(user, span_notice("You install the airlock electronics."))
 
 	else if(istype(attacking_item, /obj/item/stock_parts/card_reader))
 		var/obj/item/stock_parts/card_reader/C = attacking_item
 		to_chat(user, span_notice("You start adding [C] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			var/obj/structure/displaycase/forsale/sale = new(src.loc)
 			if(electronics)
 				electronics.forceMove(sale)
@@ -271,7 +271,7 @@
 			to_chat(user, span_warning("You need ten glass sheets to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [G] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			G.use(10)
 			var/obj/structure/displaycase/noalert/display = new(src.loc)
 			if(electronics)
@@ -387,7 +387,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -501,7 +501,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -603,7 +603,7 @@
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
@@ -655,3 +655,16 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+
+///Takes the first unanchored item on the floor with us and puts it in the display case, so every custom case doesn't need a subtype.
+/obj/structure/displaycase/mapping/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	for(var/obj/item/item_over_us in loc.contents)
+		if(item_over_us.anchored)
+			continue
+		showpiece = item_over_us
+		item_over_us.forceMove(src)
+		update_appearance()
+		return

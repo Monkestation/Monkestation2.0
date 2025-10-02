@@ -116,9 +116,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	linked.linked = src
 	var/area/my_area = get_area(src)
 	if(my_area)
-		linked.power_usage = my_area.power_usage
+		linked.energy_usage = my_area.energy_usage
 	else
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -149,10 +149,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
+	data["can_toggle_safety"] = HAS_SILICON_ACCESS(user)
 	return data
 
-/obj/machinery/computer/holodeck/ui_act(action, params)
+/obj/machinery/computer/holodeck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -446,7 +446,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	reset_to_default()
 	if(linked)
 		linked.linked = null
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)

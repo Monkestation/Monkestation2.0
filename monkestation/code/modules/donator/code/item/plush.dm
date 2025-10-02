@@ -129,7 +129,7 @@
 
 /obj/item/toy/plush/bluedragon66
 	name = "sees plushie"
-	desc = "A plushie meant to resemble one of Nanotransen's Tizirian employees. If you put your ear up to it, you swear you could hear a cacophony of terrified rats screaming for their lives. Smells like space cleaner."
+	desc = "A plushie meant to resemble one of Nanotrasen's Tizirian employees. If you put your ear up to it, you swear you could hear a cacophony of terrified rats screaming for their lives. Smells like space cleaner."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "bluedragon66"
 

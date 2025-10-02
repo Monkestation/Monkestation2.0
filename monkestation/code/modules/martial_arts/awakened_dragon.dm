@@ -77,7 +77,6 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
 	stamina_damage = -100
 	. = ..(attacker, defender, set_damage = FALSE)
-	var/def_check = defender.getarmor(defender.zone_selected, MELEE)
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 

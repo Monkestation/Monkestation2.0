@@ -48,7 +48,7 @@
 
 /datum/emote/help
 	key = "help"
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -80,8 +80,8 @@
 	key = "flip"
 	key_third_person = "flips"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -94,7 +94,7 @@
 			var/mob/living/carbon/hat_loser = user
 			if(hat_loser.head)
 				var/obj/item/clothing/head/worn_headwear = hat_loser.head
-				if(worn_headwear.contents.len)
+				if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 					worn_headwear.throw_hats(rand(2,3), get_turf(hat_loser), hat_loser)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
@@ -123,8 +123,8 @@
 	key = "spin"
 	key_third_person = "spins"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
@@ -136,7 +136,7 @@
 				var/mob/living/carbon/hat_loser = user
 				if(hat_loser.head)
 					var/obj/item/clothing/head/worn_headwear = hat_loser.head
-					if(worn_headwear.contents.len)
+					if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 						worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)

@@ -109,7 +109,7 @@
 		var/mutable_appearance/I = mutable_appearance(icon,"analyser_light",src)
 		I.plane = ABOVE_LIGHTING_PLANE
 		add_overlay(I)
-	use_power(1000)
+	use_energy(1000)
 	set_light(2,2)
 	playsound(src, 'sound/machines/chime.ogg', 50)
 
@@ -227,16 +227,14 @@
 		processing = FALSE
 		scanner = null
 
-
-/obj/machinery/disease2/diseaseanalyser/AltClick()
-	if((!usr.Adjacent(src) || usr.incapacitated()))
-		return ..()
-
-	if(dish && !scanner)
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		dish.forceMove(loc)
-		dish = null
-		update_appearance()
+/obj/machinery/disease2/diseaseanalyser/click_alt(mob/user)
+	if(!dish && scanner)
+		return CLICK_ACTION_BLOCKING
+	playsound(loc, 'sound/machines/click.ogg', 50, 1)
+	dish.forceMove(loc)
+	dish = null
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/disease2/diseaseanalyser/fullupgrade
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade

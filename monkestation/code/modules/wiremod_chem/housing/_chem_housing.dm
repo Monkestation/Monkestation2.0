@@ -34,7 +34,7 @@
 		if(usedpower)
 			var/amount = max(usedpower, 0) // make sure we don't use negative power
 			var/area/A = get_area(src) // make sure it's in an area
-			A?.use_power(amount, AREA_USAGE_EQUIP)
+			A?.use_energy(amount, AREA_USAGE_EQUIP)
 		recharge_counter = 0
 		return
 	recharge_counter += seconds_per_tick
@@ -80,13 +80,13 @@
 		return
 	return ..()
 
-/obj/structure/chemical_manufacturer/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_manufacturer/click_alt(mob/living/user)
 	remove_tank()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_manufacturer/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		to_chat(user, span_notice("You finish plunging the [name]."))
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
