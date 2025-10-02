@@ -194,11 +194,11 @@
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Inlet"
     dir = WEST
-    layer = OBJ_LAYER - 0.01   // make sure items render above port
+    layer = OBJ_LAYER - 0.01
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
     if(parent_reactor && parent_reactor.inlet_open)
-        var/amt = clamp(parent_reactor.inlet_rate / 1000, 0, 1) // turn L/s into ratio
+        var/amt = clamp(parent_reactor.inlet_rate / 1000, 0, 1)
         var/datum/gas_mixture/in_mix = airs[1]
         if(in_mix && in_mix.total_moles() > 0)
             var/datum/gas_mixture/moved = in_mix.remove_ratio(amt)
@@ -216,7 +216,7 @@
     parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
     name = "RBMK Coolant Outlet"
     dir = EAST
-    layer = OBJ_LAYER - 0.01   // make sure items render above port
+    layer = OBJ_LAYER - 0.01
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
     if(parent_reactor && parent_reactor.outlet_open && parent_reactor.coolant_internal.total_moles() > 0)
