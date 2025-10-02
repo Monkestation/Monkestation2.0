@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Flex, Icon, Section, Slider } from '../../components';
 import { Channel, PreferencesMenuData } from './data';
@@ -11,11 +10,7 @@ export const VolumeMixerPage = () => {
     <Section title="Volume Mixers" height="100%" overflow="auto">
       <Flex align="start" direction="row" wrap>
         {channels.map((channel) => (
-          <Flex.Item
-            key={channel.num}
-            width={25}
-            style={{ margin: '10px 10px 10px 10px' }}
-          >
+          <Flex.Item key={channel.num} width={30} style={{ margin: '5px' }}>
             <VolumeSlider channel={channel} />
           </Flex.Item>
         ))}
@@ -29,27 +24,20 @@ const VolumeSlider = (props: { channel: Channel }) => {
   const { channel } = props;
 
   return (
-    <Fragment>
-      <Box fontSize="1.25rem" color="label" mt={'0.5rem'}>
+    <Box
+      backgroundColor="rgba(0, 0, 0, 0.25)"
+      style={{
+        padding: '5px 10px',
+      }}
+    >
+      <Box fontSize="1.25rem" mt={'0.5rem'}>
         {channel.name}
       </Box>
       <Box mt="0.5rem">
         <Flex>
-          <Flex.Item>
-            <Button width="24px" color="transparent">
-              <Icon
-                name="volume-off"
-                size={1.5}
-                mt="0.1rem"
-                onClick={() =>
-                  act('volume', { channel: channel.num, volume: 1 })
-                }
-              />
-            </Button>
-          </Flex.Item>
-          <Flex.Item grow="1" mx="1rem">
+          <Flex.Item grow="1">
             <Slider
-              minValue={1}
+              minValue={0}
               maxValue={100}
               stepPixelSize={3.13}
               value={channel.volume}
@@ -62,11 +50,46 @@ const VolumeSlider = (props: { channel: Channel }) => {
             />
           </Flex.Item>
           <Flex.Item>
-            <Button width="24px" color="transparent">
+            <Button
+              width="30px"
+              color="transparent"
+              tooltip="Mute"
+              tooltipPosition="bottom"
+              ml="5px"
+            >
+              <Icon
+                name="volume-xmark"
+                size={1.8}
+                onClick={() =>
+                  act('volume', { channel: channel.num, volume: 0 })
+                }
+              />
+            </Button>
+            <Button
+              width="30px"
+              color="transparent"
+              tooltip="Reset"
+              tooltipPosition="bottom"
+              ml="3px"
+            >
+              <Icon
+                name="arrow-rotate-right"
+                size={1.8}
+                onClick={() =>
+                  act('volume', { channel: channel.num, volume: 50 })
+                }
+              />
+            </Button>
+            <Button
+              width="30px"
+              color="transparent"
+              tooltip="Max"
+              tooltipPosition="bottom"
+              ml="3px"
+            >
               <Icon
                 name="volume-up"
-                size={1.5}
-                mt="0.1rem"
+                size={1.8}
                 onClick={() =>
                   act('volume', {
                     channel: channel.num,
@@ -78,6 +101,6 @@ const VolumeSlider = (props: { channel: Channel }) => {
           </Flex.Item>
         </Flex>
       </Box>
-    </Fragment>
+    </Box>
   );
 };
