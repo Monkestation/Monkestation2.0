@@ -66,6 +66,7 @@
 			return FALSE
 
 		carbon_mob.ghostize(FALSE)
+		carbon_mob.mind_initialize()
 		carbon_mob.PossessByPlayer(chosen_one.key)
 
 	if(carbon_mob.stat == DEAD)
