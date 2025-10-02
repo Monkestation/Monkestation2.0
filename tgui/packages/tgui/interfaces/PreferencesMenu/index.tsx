@@ -34,6 +34,7 @@ export const PreferencesMenu = () => {
   }
 
   let pageContents;
+  let window_width = 1415;
   switch (window) {
     case PreferencesCurrentWindow.Character:
       pageContents = <CharacterPreferenceWindow />;
@@ -41,12 +42,15 @@ export const PreferencesMenu = () => {
     case PreferencesCurrentWindow.Game:
       switch (currentPageLocal) {
         case PreferencesSelectedPage.Keybindings:
+          window_width = 970;
           pageContents = <KeybindingsPage />;
           break;
         case PreferencesSelectedPage.Settings:
+          window_width = 1250;
           pageContents = <GamePreferencesPage />;
           break;
         case PreferencesSelectedPage.Volume:
+          window_width = 1290;
           pageContents = <VolumeMixerPage />;
           break;
         case PreferencesSelectedPage.Character:
@@ -113,7 +117,12 @@ export const PreferencesMenu = () => {
   );
 
   return (
-    <Window title="Preferences" width={1415} height={800} theme="generic">
+    <Window
+      title="Preferences"
+      width={window_width}
+      height={800}
+      theme="generic"
+    >
       <Window.Content>
         <Stack horizontal height="100%">
           <Stack.Item>

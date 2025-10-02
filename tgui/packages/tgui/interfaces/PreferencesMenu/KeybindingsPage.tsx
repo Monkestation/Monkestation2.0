@@ -453,7 +453,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                       this.state.selectedKeybindings![keybindingId] || [];
 
                     const name = (
-                      <Stack.Item basis="25%" maxWidth="230px">
+                      <Stack.Item basis="40%" maxWidth="230px">
                         <KeybindingName keybinding={keybinding} />
                       </Stack.Item>
                     );
