@@ -448,7 +448,7 @@
 			INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
 	if(IS_EDIBLE(held_sausage))
 		var/datum/component/grillable/grill_comp = held_sausage.GetComponent(/datum/component/grillable)
-		if(grill_comp && grill_comp.positive_result == TRUE)
+		if(grill_comp?.positive_result)
 			grill_comp.current_cook_time += 10 SECONDS
 			if(grill_comp.current_cook_time >= grill_comp.required_cook_time)
 				var/atom/grilled_result = new grill_comp.cook_result(held_sausage.loc)
