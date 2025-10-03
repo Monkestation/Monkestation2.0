@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fixes bileworm spewlet not mining in a 3x3"
-  - bugfix: "Fixes crusher not having a faster cooldown based on mining skill"
