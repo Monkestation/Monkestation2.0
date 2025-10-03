@@ -77,9 +77,9 @@
 			carried++
 	carried = max(carried, 1)
 	deltimer(recharge_timerid)
-	var/recharge_time = set_recharge_time * carried
-	if(recharge_time > 0)
-		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
+	var/actual_recharge_time = set_recharge_time * carried
+	if(actual_recharge_time > 0)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), actual_recharge_time, TIMER_STOPPABLE)
 	else
 		recharge_timerid = null
 		reload()
