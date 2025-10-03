@@ -6962,7 +6962,8 @@
 	dir = 6
 	},
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4"
+	mapping_id = "4";
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -16880,7 +16881,8 @@
 	dir = 5
 	},
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
+	mapping_id = "6";
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -25771,7 +25773,8 @@
 /area/station/service/hydroponics)
 "mpa" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1"
+	mapping_id = "1";
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/piss_yellow/line{
 	dir = 6
@@ -39607,7 +39610,8 @@
 /area/space/nearstation)
 "sSQ" = (
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1"
+	mapping_id = "1";
+	dir = 4
 	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 6
