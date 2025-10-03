@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			else if(!(directional_turf in atmos_adjacent_turfs))
 				var/obj/machinery/door/found_door = locate(/obj/machinery/door) in directional_turf
 				if(found_door)
-					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, TYPE_PROC_REF(/turf/open/floor/plating/ocean, door_opened))
+					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, PROC_REF(door_opened))
 				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 				continue
 			else
