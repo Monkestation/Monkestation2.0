@@ -505,7 +505,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 	var/mob/living/guy_we_are_stabbing = interacting_with
-	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(L))
+	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
 		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
 		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
