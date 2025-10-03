@@ -86708,10 +86708,6 @@
 	dir = 6
 	},
 /area/station/science/research)
-"qNm" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/closed/wall/r_wall,
-/area/station/science/circuits)
 "qNr" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/hop/double,
@@ -89135,6 +89131,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
 /obj/machinery/nanite_program_hub,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "rkF" = (
@@ -215157,7 +215154,7 @@ acy
 eeR
 hZj
 mdZ
-qNm
+hpn
 rkC
 dIc
 wVD
