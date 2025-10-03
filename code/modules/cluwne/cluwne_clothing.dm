@@ -94,7 +94,7 @@
 	desc = "The insides seem awfully wet with grease and smells of something foul. Which maniac would wear this?!"
 	name = "cluwne shoes"
 	icon_state = "cluwne"
-
+	slowdown = SHOES_SLOWDOWN+1
 	has_storage = FALSE
 	sound_dampener = FALSE
 

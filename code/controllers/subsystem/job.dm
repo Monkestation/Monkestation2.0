@@ -928,10 +928,11 @@ SUBSYSTEM_DEF(job)
 	return joining_mob
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
+	var/mob/created_joining_mob = ..()
 	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
-	if(buckle && isliving(joining_mob))
-		buckle_mob(joining_mob, FALSE, FALSE)
+	if(buckle && isliving(created_joining_mob))
+		buckle_mob(created_joining_mob, FALSE, FALSE)
+	return created_joining_mob
 
 
 /atom/proc/JoinLaunchTowards(mob/joining_mob, obj/effect/oshan_launch_point/player/launched_point)
