@@ -451,8 +451,7 @@
 		if(grill_comp && grill_comp.positive_result == TRUE)
 			grill_comp.current_cook_time += 10 SECONDS
 			if(grill_comp.current_cook_time >= grill_comp.required_cook_time)
-				var/atom/grilled_result
-				grilled_result = new grill_comp.cook_result(held_sausage.loc)
+				var/atom/grilled_result = new grill_comp.cook_result(held_sausage.loc)
 				if(held_sausage.custom_materials)
 					grilled_result.set_custom_materials(held_sausage.custom_materials)
 				if(IS_EDIBLE(grilled_result))
