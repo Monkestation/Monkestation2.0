@@ -120,31 +120,31 @@ Actual Adjacent procs :
 			if(!(cur.bf & dir_to_check)) // we can't proceed in this direction
 				continue
 			// get the turf we end up at if we move in dir_to_check; this may have special handling for multiz moves
-			var/T = get_step(cur.source, dir_to_check)
+			var/turf_to_check = get_step(cur.source, dir_to_check)
 			// when leaving a turf with stairs on it, we can change Z, so take that into account
 			// this handles both upwards and downwards moves depending on the dir
 /*
 			var/obj/structure/stairs/source_stairs = locate(/obj/structure/stairs) in cur.source
 			if(source_stairs)
-				T = source_stairs.get_transit_destination(dir_to_check)
+				turf_to_check = source_stairs.get_transit_destination(dir_to_check)
 */
-			if(T != exclude)
-				var/datum/path_node/CN = openc[T]  //current checking turf
+			if(turf_to_check != exclude)
+				var/datum/path_node/CN = openc[turf_to_check]  //current checking turf
 				var/reverse = REVERSE_DIR(dir_to_check)
-				var/newg = cur.g + call(cur.source,dist)(T, requester) // add the travel distance between these two tiles to the distance so far
+				var/newg = cur.g + call(cur.source, dist)(turf_to_check, requester) // add the travel distance between these two tiles to the distance so far
 				if(CN)
 				//is already in open list, check if it's a better way from the current turf
 					CN.bf &= ALL_DIRS^reverse //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
 					if((newg < CN.g))
-						if(call(cur.source,adjacent)(requester, T, can_pass_info))
-							CN.setp(cur,newg,CN.h,cur.nt+1)
+						if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
+							CN.setp(cur, newg, CN.h, cur.nt + 1)
 							open.resort(CN)//reorder the changed element in the list
 				else
 				//is not already in open list, so add it
-					if(call(cur.source,adjacent)(requester, T, can_pass_info))
-						CN = new(T,cur,newg,call(T,dist)(end, requester),cur.nt+1, ALL_DIRS^reverse)
+					if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
+						CN = new(turf_to_check, cur, newg, call(turf_to_check, dist)(end, requester), cur.nt + 1, ALL_DIRS^reverse)
 						open.insert(CN)
-						openc[T] = CN
+						openc[turf_to_check] = CN
 
 		cur.bf = 0 // Mark as processed
 		CHECK_TICK
