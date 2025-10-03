@@ -107,7 +107,8 @@
 /// Leak helper
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/handle_overclock_leak(datum/gas_mixture/removed)
 	var/turf/current_turf = loc
-	if(!isclosedturf(current_turf) && isopenturf(current_turf))
+	if(isopenturf(current_turf))
+
 		var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
 		current_turf.assume_air(leaked)
 
