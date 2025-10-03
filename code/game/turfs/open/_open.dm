@@ -451,6 +451,19 @@
 	if(slowdown)
 		. += slowdown * 10
 
+	var/liquid_state = liquids?.liquid_group?.group_overlay_state
+	if(liquid_state)
+		if(liquid_state == LIQUID_STATE_FULLTILE)
+			. += 50
+		else if(liquid_state == LIQUID_STATE_SHOULDERS)
+			. += 40
+		else if(liquid_state == LIQUID_STATE_WAIST)
+			. += 30
+		else if(liquid_state == LIQUID_STATE_ANKLES)
+			. += 15
+		else if(liquid_state == LIQUID_STATE_PUDDLE)
+			. += 5
+
 	// i don't like these, but they can be improved later ~Lucy
 	// add cost from climbable obstacles
 	for(var/obj/structure/some_object in src)
