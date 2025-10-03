@@ -1,0 +1,5 @@
+author: "EatsTheGrapes"
+delete-after: True
+changes:
+  - bugfix: "Overclocked volume pumps no longer leak through walls or sealed structures."
+  - refactor: "Cleaned up volume pump code by splitting into helper procs and replacing magic numbers with defines."
