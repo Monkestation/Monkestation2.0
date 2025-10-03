@@ -5,6 +5,10 @@ SUBSYSTEM_DEF(astar)
 	var/datum/flowcache/mobs
 	var/datum/flowcache/circuits
 
+/datum/controller/subsystem/astar/Recover()
+	mobs = SSastar.mobs
+	circuits = SSastar.circuits
+
 /datum/controller/subsystem/astar/Initialize()
 	mobs = new(10)
 	circuits = new(3)
