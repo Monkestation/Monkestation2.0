@@ -3,6 +3,17 @@
 #define PLEXORA_SHUTDOWN_HARDEST 2
 #define PLEXORA_SHUTDOWN_KILLDD 3
 
+#define PLEXORA_DOWN -1
+#define PLEXORA_CKEYPOLL_FAILED 0
+#define PLEXORA_CKEYPOLL_NOTLINKED 1
+#define PLEXORA_CKEYPOLL_RECORDNOTVALID 2
+#define PLEXORA_CKEYPOLL_LINKED 3
+#define PLEXORA_CKEYPOLL_LINKED_ABSENT 4
+#define PLEXORA_CKEYPOLL_LINKED_BANNED 5
+#define PLEXORA_CKEYPOLL_LINKED_DELETED 6
+// Not actively returned by Plexora itself, just used for ckey polling
+#define PLEXORA_CKEYPOLL_LINKED_ALLOWEDWHITELIST 7
+
 // Client doesn't exist or isn't connected
 #define PLEXORA_ERROR_CLIENTNOTEXIST "plx_clientnotexist"
 // Client has no mob (what)
@@ -19,3 +30,6 @@
 #define PLEXORA_ERROR_NOTWITCHKEY "plx_twitchkeynotconfigured"
 // Topic call passed invalid smite
 #define PLEXORA_ERROR_INVALIDSMITE "plx_invalidsmite"
+
+#define PLEXORA_NOTIFYSIGNUP_ENROLL "enroll"
+#define PLEXORA_NOTIFYSIGNUP_UNENROLL "unenroll"

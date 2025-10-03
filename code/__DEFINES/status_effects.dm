@@ -44,8 +44,8 @@
 #define IGNORE_STASIS (1<<1)
 /// If the incapacitated status effect will ignore a mob being agressively grabbed
 #define IGNORE_GRAB (1<<2)
-/// If the incapacited status effect will ignore a mob in cirt
-#define IGNORE_CRIT (1<<3)
+/// If the incapacited status effect will ignore a mob in softcrit
+#define IGNORE_SOFTCRIT (1<<3)
 
 /// Maxamounts of fire stacks a mob can get
 #define MAX_FIRE_STACKS 20

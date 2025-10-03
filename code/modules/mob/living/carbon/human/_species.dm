@@ -1272,13 +1272,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			var/ough = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 4.8 : 1
+			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
+			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
-					if(iter_clothing.clothing_flags & THICKMATERIAL || iter_clothing.get_armor_rating(MELEE) >= 15)
-						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
-							return TRUE
-				target.sharp_pain(BODY_ZONE_CHEST, 25, BRUTE, 30 SECONDS)
+					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
+							if(iter_clothing.body_parts_covered & BODY_ZONE_PRECISE_GROIN)
+								return TRUE
+				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
 				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
 				target.emote("scream", message="screams for dear life!")

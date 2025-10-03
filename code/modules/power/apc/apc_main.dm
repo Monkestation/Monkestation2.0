@@ -606,6 +606,11 @@
 			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
+		//clock cult stuff
+		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
+			var/power_delta = clamp(cell.charge - 7, 0, 7)
+			SSthe_ark.adjust_clock_power(power_delta / 7, TRUE)
+
 	else // no cell, switch everything off
 		charging = APC_NOT_CHARGING
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
