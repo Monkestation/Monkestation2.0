@@ -791,7 +791,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Returns an additional distance factor based on slowdown and other factors.
 /turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
-	return astar_weight
+	. = astar_weight
+	var/area/current_area = loc
+	if(current_area?.astar_weight)
+		. += current_area.astar_weight
 
 // Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
 /turf/proc/heuristic_cardinal(turf/T, mob/traverser)

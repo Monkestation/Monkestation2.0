@@ -56,18 +56,18 @@ Actual Adjacent procs :
 /proc/heap_path_weight_compare_astar(datum/path_node/a, datum/path_node/b)
 	return b.f - a.f
 
-/proc/get_astar_path_to(requester, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), id = null, turf/exclude = null, simulated_only = TRUE, check_z_levels = TRUE)
+/proc/get_astar_path_to(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
 	var/l = SSastar.mobs.getfree(requester)
 	while (!l)
 		stoplag(3)
 		l = SSastar.mobs.getfree(requester)
-	var/list/path = astar(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only, check_z_levels)
+	var/list/path = astar(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, access, exclude, simulated_only, check_z_levels)
 	SSastar.mobs.found(l)
 	if (!path)
 		path = list()
 	return path
 
-/proc/astar(requester, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), id = null, turf/exclude = null, simulated_only = TRUE, check_z_levels = TRUE)
+/proc/astar(requester, _end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
 	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(requester)
 	if (!start || !end)
@@ -80,6 +80,7 @@ Actual Adjacent procs :
 	if(maxnodes)
 		maxnodedepth = maxnodes
 
+	var/datum/can_pass_info/can_pass_info = new(requester, access)
 	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(heap_path_weight_compare_astar))
 	var/list/openc = new()
 	var/list/path = null
@@ -135,12 +136,12 @@ Actual Adjacent procs :
 				//is already in open list, check if it's a better way from the current turf
 					CN.bf &= ALL_DIRS^reverse //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
 					if((newg < CN.g))
-						if(call(cur.source,adjacent)(requester, T, id))
+						if(call(cur.source,adjacent)(requester, T, can_pass_info))
 							CN.setp(cur,newg,CN.h,cur.nt+1)
 							open.resort(CN)//reorder the changed element in the list
 				else
 				//is not already in open list, so add it
-					if(call(cur.source,adjacent)(requester, T, id))
+					if(call(cur.source,adjacent)(requester, T, can_pass_info))
 						CN = new(T,cur,newg,call(T,dist)(end, requester),cur.nt+1, ALL_DIRS^reverse)
 						open.insert(CN)
 						openc[T] = CN
@@ -155,14 +156,14 @@ Actual Adjacent procs :
 	openc = null
 	return path
 
-/turf/proc/reachable_turf_test(requester, turf/T, ID, simulated_only = TRUE, check_z_levels = TRUE)
-	if(!T || T.density)
+/turf/proc/reachable_turf_test(requester, turf/target, datum/can_pass_info/pass_info, simulated_only = TRUE, check_z_levels = TRUE)
+	if(!target || target.density)
 		return FALSE
-	if(!T.can_cross_safely(requester)) // dangerous turf! lava or openspace (or others in the future)
+	if(!target.can_cross_safely(requester)) // dangerous turf! lava or openspace (or others in the future)
 		return FALSE
-	var/z_distance = abs(T.z - z)
+	var/z_distance = abs(target.z - z)
 	if(!z_distance) // standard check for same-z pathing
-		return !LinkBlockedWithAccess(T, requester, ID)
+		return !LinkBlockedWithAccess(target, pass_info)
 	if(z_distance != 1) // no single movement lets you move more than one z-level at a time (currently; update if this changes)
 		return FALSE
 /*

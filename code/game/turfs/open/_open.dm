@@ -450,3 +450,14 @@
 	. = ..()
 	if(slowdown)
 		. += slowdown * 10
+
+	// i don't like these, but they can be improved later ~Lucy
+	// add cost from climbable obstacles
+	for(var/obj/structure/some_object in src)
+		if(some_object.density && HAS_TRAIT(some_object, TRAIT_CLIMBABLE))
+			. += 1 // extra tile penalty
+			break
+	// door will have to be opened
+	var/obj/machinery/door/door = locate() in src
+	if(door?.density && !door.locked)
+		. += 2 // try to avoid closed doors where possible
