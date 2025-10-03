@@ -68,10 +68,18 @@
   Absolucy:
   - bugfix: You can now drag and drop plants into a composter on the other side of
       the room again.
+  - qol: Construction bags can now hold meteor sat capsules.
   EatsTheGrapes:
   - bugfix: Overclocked volume pumps no longer leak through walls or sealed structures.
   - refactor: Cleaned up volume pump code by splitting into helper procs and replacing
       magic numbers with defines.
+  SirNightKnight:
+  - bugfix: fixes cargorilla interactions with crates not working properly.
+  - bugfix: fixed cluwne brain traumas not being removed when the curse is lifted.
+  - balance: honkerblasts don't tie your laces anymore.
   SyncIt21, Xander3359:
   - bugfix: Fix being able to charge guns with an inducer
   - bugfix: Fix being able to charge space suits with an inducer
+  TheColorCyan:
+  - bugfix: fixed clock cult not gaining power from integration cogs and softlocking
+      the cult
