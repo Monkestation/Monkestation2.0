@@ -129,22 +129,22 @@ Actual Adjacent procs :
 				turf_to_check = source_stairs.get_transit_destination(dir_to_check)
 */
 			if(turf_to_check != exclude)
-				var/datum/path_node/CN = openc[turf_to_check]  //current checking turf
+				var/datum/path_node/checked_node = openc[turf_to_check]  //current checking turf
 				var/reverse = REVERSE_DIR(dir_to_check)
 				var/newg = cur.g + call(cur.source, dist)(turf_to_check, requester) // add the travel distance between these two tiles to the distance so far
-				if(CN)
+				if(checked_node)
 				//is already in open list, check if it's a better way from the current turf
-					CN.bf &= ALL_DIRS^reverse //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-					if((newg < CN.g))
+					checked_node.bf &= ALL_DIRS^reverse //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+					if((newg < checked_node.g))
 						if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
-							CN.setp(cur, newg, CN.h, cur.nt + 1)
-							open.resort(CN)//reorder the changed element in the list
+							checked_node.setp(cur, newg, checked_node.h, cur.nt + 1)
+							open.resort(checked_node)//reorder the changed element in the list
 				else
 				//is not already in open list, so add it
 					if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
-						CN = new(turf_to_check, cur, newg, call(turf_to_check, dist)(end, requester), cur.nt + 1, ALL_DIRS^reverse)
-						open.insert(CN)
-						openc[turf_to_check] = CN
+						checked_node = new(turf_to_check, cur, newg, call(turf_to_check, dist)(end, requester), cur.nt + 1, ALL_DIRS^reverse)
+						open.insert(checked_node)
+						openc[turf_to_check] = checked_node
 
 		cur.bf = 0 // Mark as processed
 		CHECK_TICK
