@@ -12258,6 +12258,10 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
+"dHc" = (
+/obj/machinery/computer/security/telescreen/rd,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/rd)
 "dHg" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "AI Chamber - Starboard";
@@ -15556,10 +15560,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"eDx" = (
-/obj/machinery/computer/security/telescreen/rd,
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/rd)
 "eDy" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
@@ -16161,7 +16161,7 @@
 /area/station/engineering/supermatter/room)
 "eQv" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -17855,7 +17855,7 @@
 "fou" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -19636,7 +19636,7 @@
 /area/station/science/ordnance/office)
 "fQN" = (
 /obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "fQX" = (
@@ -24544,7 +24544,7 @@
 "hmJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "hmQ" = (
@@ -32227,7 +32227,7 @@
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "jzb" = (
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -33557,7 +33557,8 @@
 "jSN" = (
 /obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -6;
-	pixel_y = 26
+	pixel_y = 26;
+	range = 6
 	},
 /obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/plating,
@@ -35485,7 +35486,7 @@
 	},
 /obj/machinery/conveyor/inverted{
 	dir = 10;
-	id = "cargosort"
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -36134,7 +36135,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "kFk" = (
@@ -40370,7 +40371,7 @@
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "lIN" = (
@@ -51668,7 +51669,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/emcloset/anchored,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "pdN" = (
@@ -53518,7 +53519,7 @@
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot,
 /obj/item/clothing/suit/hazardvest,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
@@ -57986,7 +57987,7 @@
 	dir = 5
 	},
 /obj/machinery/conveyor{
-	id = "cargosort";
+	id = "garbage";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -59534,7 +59535,7 @@
 /area/station/science/robotics/lab)
 "rri" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -61066,7 +61067,7 @@
 /area/station/hallway/secondary/command)
 "rLd" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "rLh" = (
@@ -69464,7 +69465,7 @@
 "uhf" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
@@ -71647,7 +71648,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "uLZ" = (
@@ -73134,7 +73135,7 @@
 "vha" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/landmark/start/hangover,
+/obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vhb" = (
@@ -78149,7 +78150,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 5;
-	id = "cargosort"
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -107796,7 +107797,7 @@ rzL
 rzL
 rzL
 lXw
-eDx
+dHc
 rxK
 xOP
 hxo
@@ -130377,7 +130378,7 @@ xxD
 apS
 een
 kvL
-inJ
+eKu
 gUT
 giG
 cSh
@@ -130634,7 +130635,7 @@ tPe
 jCf
 jCf
 tRS
-eKu
+inJ
 pDm
 pYE
 lWv
