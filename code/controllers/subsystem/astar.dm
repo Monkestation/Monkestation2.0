@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(astar)
-	name = "Pathfinder"
+	name = "A* Pathfinder"
 	init_order = INIT_ORDER_PATH
 	flags = SS_NO_FIRE
 	var/datum/flowcache/mobs
