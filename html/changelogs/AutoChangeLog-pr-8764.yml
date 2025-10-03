@@ -1,5 +1,0 @@
-author: "SyncIt21, Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fix being able to charge guns with an inducer"
-  - bugfix: "Fix being able to charge space suits with an inducer"

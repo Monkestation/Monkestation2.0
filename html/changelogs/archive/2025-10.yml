@@ -64,3 +64,7 @@
       able to transfer nanites to those without an existing nanite colony! Technically.
       Nanotrasen takes no responsibility for any discomfort, disgust, or unimaginable
       agony that may result from the use of this feature on a living creature.'
+2025-10-03:
+  SyncIt21, Xander3359:
+  - bugfix: Fix being able to charge guns with an inducer
+  - bugfix: Fix being able to charge space suits with an inducer
