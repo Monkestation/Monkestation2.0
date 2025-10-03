@@ -56,7 +56,7 @@ Actual Adjacent procs :
 /proc/heap_path_weight_compare_astar(datum/path_node/a, datum/path_node/b)
 	return b.f - a.f
 
-/proc/get_astar_path_to(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
+/proc/get_astar_path_to(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
 	var/l = SSastar.mobs.getfree(requester)
 	while (!l)
 		stoplag(3)
@@ -67,7 +67,7 @@ Actual Adjacent procs :
 		path = list()
 	return path
 
-/proc/astar(requester, _end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
+/proc/astar(requester, _end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
 	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(requester)
 	if (!start || !end)
