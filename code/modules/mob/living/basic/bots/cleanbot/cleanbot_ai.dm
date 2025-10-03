@@ -87,7 +87,7 @@
 		// monkestation end
 		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
-		var/list/path = get_astar_path_to(controller.pawn, found_item, maxnodes = BOT_CLEAN_PATH_LIMIT, mintargetdist = min_target_distance, access = controller.get_access())
+		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, mintargetdist = min_target_distance, access = controller.get_access())
 		if(!length(path))
 			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(found_item), TRUE)
 			continue

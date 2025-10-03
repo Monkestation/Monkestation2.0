@@ -248,7 +248,11 @@
 			path = list()
 			return
 		if(!length(path))
-			path = get_astar_path_to(src, target, maxnodes = 30, access = access_card.GetAccess(), simulated_only = FALSE)
+			if(!isturf(target))
+				var/turf/TL = get_turf(target)
+				path = get_path_to(src, TL, max_distance=30, access=access_card.GetAccess(), simulated_only = FALSE)
+			else
+				path = get_path_to(src, target, max_distance=30, access=access_card.GetAccess(), simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
