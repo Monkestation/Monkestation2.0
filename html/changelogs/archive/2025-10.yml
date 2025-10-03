@@ -1,0 +1,13 @@
+2025-10-01:
+  Bastian0930:
+  - bugfix: Bug-suckers have had an insane amount of bugs squashed. I mean, seriously,
+      these guys had a tracker dedicated to how buggy they were.
+  - bugfix: Changing the pen angle is now on control click, instead of being on Z
+      (conflicted with clicking the pen)
+  - bugfix: Clicking a pen no longer makes it large, and instead keeps it tiny.
+  Xander3359:
+  - bugfix: Fixed being unable to click drag a crate off a cargo shelf if you didn't
+      drag the shelf rather than the crate
+  jlsnow301, infraredbaron, StrangeWeirdKitten, Xander3359:
+  - rscadd: Added a new UI element over players that are interacting, building, etc.
+  - code_imp: do_after() can now hold custom cog icons. Add some today!

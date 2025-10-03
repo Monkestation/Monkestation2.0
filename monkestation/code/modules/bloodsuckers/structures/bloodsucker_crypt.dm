@@ -75,8 +75,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/bloodsucker/AltClick(mob/user)
-	. = ..()
+/obj/structure/bloodsucker/click_alt(mob/living/user)
 	if(user == owner && user.Adjacent(src))
 		balloon_alert(user, "unbolt [src]?")
 		var/static/list/unclaim_options = list(
@@ -87,6 +86,8 @@
 		switch(unclaim_response)
 			if("Yes")
 				unbolt(user)
+	return CLICK_ACTION_SUCCESS
+
 /*
 /obj/structure/bloodsucker/bloodaltar
 	name = "bloody altar"
@@ -175,16 +176,18 @@
 	set_density(TRUE)
 	set_anchored(FALSE)
 
-/obj/structure/bloodsucker/vassalrack/MouseDrop_T(atom/movable/movable_atom, mob/user)
+/obj/structure/bloodsucker/vassalrack/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
-	var/mob/living/living_target = movable_atom
 	if(!anchored && IS_BLOODSUCKER(user))
 		to_chat(user, span_danger("Until this rack is secured in place, it cannot serve its purpose."))
 		to_chat(user, span_announce("* Bloodsucker Tip: Examine the Persuasion Rack to understand how it functions!"))
 		return
 	// Default checks
-	if(!isliving(movable_atom) || !living_target.Adjacent(src) || living_target == user || !isliving(user) || has_buckled_mobs() || user.incapacitated() || living_target.buckled)
+	if(!isliving(dropped))
+		return
+	var/mob/living/living_target = dropped
+	if(!living_target.Adjacent(src) || living_target == user || !isliving(user) || has_buckled_mobs() || user.incapacitated() || living_target.buckled)
 		return
 	// Don't buckle Silicon to it please.
 	if(issilicon(living_target))

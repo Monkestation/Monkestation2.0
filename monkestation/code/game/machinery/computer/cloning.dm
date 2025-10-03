@@ -14,6 +14,7 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
 	req_access = list(ACCESS_GENETICS) //for modifying records
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"

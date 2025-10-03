@@ -169,6 +169,7 @@
 	semi_auto = TRUE
 	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_accepted_magazine_type
 	/// If TRUE, we're drawing from the alternate_magazine
@@ -211,10 +212,9 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	rack()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -323,7 +323,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+/obj/item/gun/ballistic/shotgun/bulldog/click_alt_secondary(mob/user)
 	if(secondary_magazine)
 		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
 		secondary_magazine = null
@@ -388,10 +388,11 @@
 	pb_knockback = 3 // it's a super shotgun!
 	pbk_gentle = FALSE
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
+/obj/item/gun/ballistic/shotgun/doublebarrel/click_alt(mob/living/user)
+	if(!unique_reskin || current_skin)
+		return CLICK_ACTION_BLOCKING
+	reskin_obj(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()

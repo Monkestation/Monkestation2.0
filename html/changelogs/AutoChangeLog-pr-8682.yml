@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "Fixed ninja drain not working properly"
+  - rscadd: "Ninja can now hack more things with his gloves via right click (including bots, vendors, cameras, windoors, etc.)"

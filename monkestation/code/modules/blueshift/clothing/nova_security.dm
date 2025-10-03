@@ -36,8 +36,6 @@
 	desc = "An asymmetrical, unisex uniform with the legs replaced by a utility skirt."
 	worn_icon_state = "security_skirt"
 	icon_state = "security_skirt"
-	uses_advanced_reskins = FALSE
-	unique_reskin = null
 	alt_covers_chest = FALSE
 
 /obj/item/clothing/under/rank/security/peacekeeper/trousers
@@ -50,7 +48,7 @@
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "workpants_blue",
@@ -66,7 +64,7 @@
 	name = "security shorts"
 	desc = "Some Peacekeeper-blue combat shorts. Definitely should pair it with a vest for safety."
 	icon_state = "workshorts_blue"
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant, Short" = list(
 			RESKIN_ICON_STATE = "workshorts_blue",
@@ -102,16 +100,16 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "plain_skirt_blue",
 			RESKIN_WORN_ICON_STATE = "plain_skirt_blue"
-	    ),
+		),
 		"Black Variant" = list(
 			RESKIN_ICON_STATE = "plain_skirt_black",
 			RESKIN_WORN_ICON_STATE = "plain_skirt_black"
-	    ),
+		),
 	)
 
 /obj/item/clothing/under/rank/security/peacekeeper/miniskirt
@@ -122,16 +120,16 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "miniskirt_blue",
 			RESKIN_WORN_ICON_STATE = "miniskirt_blue"
-	    ),
+		),
 		"Black Variant" = list(
 			RESKIN_ICON_STATE = "miniskirt_black",
 			RESKIN_WORN_ICON_STATE = "miniskirt_black"
-	    ),
+		),
 	)
 
 /*

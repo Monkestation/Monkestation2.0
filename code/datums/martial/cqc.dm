@@ -8,18 +8,18 @@
 	name = "CQC"
 	id = MARTIALART_CQC
 	help_verb = /mob/living/proc/CQC_help
-	block_chance = 75
 	smashes_tables = TRUE
 	display_combos = TRUE
 	var/old_grab_state = null
 	var/mob/restraining_mob
+	/// Probability of successfully blocking attacks while on throw mode
+	block_chance = 75
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
 	RegisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	UnregisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY)
 	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells

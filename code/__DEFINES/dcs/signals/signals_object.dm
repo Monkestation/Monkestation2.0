@@ -9,6 +9,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
