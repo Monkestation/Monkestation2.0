@@ -299,7 +299,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch that would lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_after(resident, 5 SECONDS, src))
+		if(!do_after(resident, 5 SECONDS, src, hidden = TRUE))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))

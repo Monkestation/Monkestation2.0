@@ -1,0 +1,77 @@
+2025-10-01:
+  Bastian0930:
+  - bugfix: Bug-suckers have had an insane amount of bugs squashed. I mean, seriously,
+      these guys had a tracker dedicated to how buggy they were.
+  - bugfix: Changing the pen angle is now on control click, instead of being on Z
+      (conflicted with clicking the pen)
+  - bugfix: Clicking a pen no longer makes it large, and instead keeps it tiny.
+  Lawlolawl:
+  - qol: Added names to machining circuit board types so you can differentiate between
+      them when inspecting them.
+  Xander3359:
+  - bugfix: Fixed being unable to click drag a crate off a cargo shelf if you didn't
+      drag the shelf rather than the crate
+  - qol: Adds context to microwave, explaining some of the interactions that are possible
+  - bugfix: Fixed ninja drain not working properly
+  - rscadd: Ninja can now hack more things with his gloves via right click (including
+      bots, vendors, cameras, windoors, etc.)
+  - bugfix: Fix not being able to alt or ctrl click a cryogenics cell
+  jlsnow301, infraredbaron, StrangeWeirdKitten, Xander3359:
+  - rscadd: Added a new UI element over players that are interacting, building, etc.
+  - code_imp: do_after() can now hold custom cog icons. Add some today!
+2025-10-02:
+  EssentialTomato:
+  - qol: Reproductive slime extracts now eat biomass instead of monkey cubes.
+  IndieanaJones:
+  - bugfix: Clown cars steal access again.
+  JohnFulpWillard:
+  - rscadd: Added a new PDA app unique to the NT Representative, this allows them
+      to rate & comment on the state of the station and have it show up on the roundend
+      report.
+  - qol: NT Rep and Blueshield now have colors in the Occupations menu, and have their
+      own Mail color now, too.
+  - qol: The grandfather clock now respects direction and distance at all times.
+  - balance: NT Rep now has Service radio.
+  - map: Remapped much of the NT Rep's presence on maps, especially Helio/IceBox/Kilo.
+      Notably removed most of their kitchens and made them more public.
+  - bugfix: Latejoining and afterparty station event now properly give you the spawn
+      effects of buckling in/being drunk/being in a closet.
+  Lawlolawl:
+  - bugfix: Fixed TK teleporting surgical tray by stopping TK use in hand.
+  TheColorCyan:
+  - bugfix: you can scoop up animals again
+  - bugfix: sabre sheath alt-click now works properly
+  - bugfix: fixed xenos being unable to eat people
+  - bugfix: fixed perfume bottles not working
+  Xander3359:
+  - qol: Allows cell chargers to charge megacells
+  - bugfix: Fix cells showing the "charge meter" on examine twice
+  - bugfix: Fix being actionable in hardcrit/unconscious
+  - bugfix: Space suit now uses the correct amount of power for thermal regulation
+  - bugfix: Debug outfit no longer notifies all ghosts when it spawns
+  - balance: Megacells are weight class 2, which now fits in construction bags
+  - bugfix: Fixes bileworm spewlet not mining in a 3x3
+  - bugfix: Fixes crusher not having a faster cooldown based on mining skill
+  notghosti:
+  - map: Added several improvements to RD's office on thesues, including a fixed announcement
+      console, authentication keyswipe, RD's monitor console, and fixing several ai
+      sat camera network flags
+  oh no oh god oh shit who gave the neurodivergent frog a github account:
+  - rscadd: 'Gravito-Kinetic Field Conduction: a nanite program that lets you alter
+      gravity to your whims. (Assuming your whims are 1G and 2G.)'
+  - rscadd: 'Nanomechanical Injection System: a nanite program that lets you smoosh
+      nanites into peoples skin really hard to transfer some to them. Technically
+      able to transfer nanites to those without an existing nanite colony! Technically.
+      Nanotrasen takes no responsibility for any discomfort, disgust, or unimaginable
+      agony that may result from the use of this feature on a living creature.'
+2025-10-03:
+  Absolucy:
+  - bugfix: You can now drag and drop plants into a composter on the other side of
+      the room again.
+  EatsTheGrapes:
+  - bugfix: Overclocked volume pumps no longer leak through walls or sealed structures.
+  - refactor: Cleaned up volume pump code by splitting into helper procs and replacing
+      magic numbers with defines.
+  SyncIt21, Xander3359:
+  - bugfix: Fix being able to charge guns with an inducer
+  - bugfix: Fix being able to charge space suits with an inducer
