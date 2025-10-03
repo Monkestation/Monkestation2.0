@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	astar_weight = 500
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 

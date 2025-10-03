@@ -14,6 +14,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	astar_weight = 75
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE

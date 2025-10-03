@@ -445,3 +445,8 @@
 		if(istype(get_step(src, direction), /turf/open/floor))
 			return TRUE
 	return FALSE
+
+/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+	. = ..()
+	if(slowdown)
+		. += slowdown * 10

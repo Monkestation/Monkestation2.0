@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/inherent_explosive_resistance = -1
 
 	/// The weight of the turf for A* pathfinding.
-	var/astar_weight = 1
+	var/astar_weight = 50
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -788,3 +788,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
+
+/// Returns an additional distance factor based on slowdown and other factors.
+/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
+	return astar_weight
+
+// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
+/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
+	var/travel_dir = get_dir(src, T)
+	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
+
+/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
+/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
+	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner
