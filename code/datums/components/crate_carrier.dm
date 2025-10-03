@@ -47,10 +47,7 @@
 /datum/component/crate_carrier/proc/on_unarm_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if((!(source.istate & ISTATE_SECONDARY)))
-		return
-
-	if(!(source.istate & ISTATE_HARM))
+	if(!(source.istate & (ISTATE_SECONDARY | ISTATE_HARM)))
 		return
 
 	if(is_type_in_typecache(target, carriable_cache))
