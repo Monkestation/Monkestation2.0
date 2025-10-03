@@ -301,6 +301,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
 	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
 	desc_by_access["[ACCESS_TCOMMS]"] = "Telecommunications"
+	desc_by_access["[ACCESS_TCOMMS_ADMIN]"] = "Telecommunications Admin"
 	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
 	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
 	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"

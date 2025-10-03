@@ -77,7 +77,7 @@
 	)
 	armor_type = /datum/armor/hardsuit/juggernaut
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/juggernaut
-	cell = /obj/item/stock_parts/cell/super
+	cell = /obj/item/stock_parts/power_store/cell/super
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 5
 	light_power = 1

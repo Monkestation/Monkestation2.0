@@ -29,7 +29,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = /datum/blood_type/slime
 	inert_mutation = /datum/mutation/acid_touch
-	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	inherent_factions = list(FACTION_SLIME) //an oozeling wont be eaten by their brethren
@@ -147,22 +146,6 @@
 		if(worn.clothing_flags & THICKMATERIAL)
 			protection_flags |= worn.body_parts_covered
 
-	var/missing_limbs = FULL_BODY & ~(CHEST|GROIN)
-	for(var/obj/item/bodypart/limb in slime.bodyparts)
-		var/bodypart_flags = limb.body_part
-		// stupid thing needed because arms/legs don't include the hand/foot flags.
-		if(bodypart_flags & ARM_LEFT)
-			bodypart_flags |= HAND_LEFT
-		if(bodypart_flags & ARM_RIGHT)
-			bodypart_flags |= HAND_RIGHT
-		if(bodypart_flags & LEG_LEFT)
-			bodypart_flags |= FOOT_LEFT
-		if(bodypart_flags & LEG_RIGHT)
-			bodypart_flags |= FOOT_RIGHT
-		missing_limbs &= ~bodypart_flags
-
-	protection_flags |= missing_limbs
-
 	if(protection_flags)
 		if(protection_flags & HEAD)
 			. -= WATER_PROTECTION_HEAD
@@ -274,6 +257,12 @@
 			SPECIES_PERK_ICON = "burn",
 			SPECIES_PERK_NAME = "Incombustible",
 			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Fire Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,

@@ -158,7 +158,7 @@
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
-	e_cost = 500
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -193,7 +193,7 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticrailgun"
 	base_icon_state = "kineticrailgun"
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	pin = /obj/item/firing_pin/wastes
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)

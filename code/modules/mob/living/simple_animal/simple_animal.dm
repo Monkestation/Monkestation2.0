@@ -51,8 +51,6 @@
 	///Harm-intent verb in present simple tense.
 	var/response_harm_simple = "hit"
 	var/harm_intent_damage = 3
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
 	///How much stamina the mob recovers per second
@@ -642,3 +640,9 @@
 
 /mob/living/simple_animal/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
+
+/mob/living/simple_animal/update_cached_insulation()
+	return
+
+/mob/living/simple_animal/get_insulation(temperature)
+	return temperature_insulation

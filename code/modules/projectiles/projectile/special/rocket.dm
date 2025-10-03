@@ -72,6 +72,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
+/// 122mm artillery shell - this should be admin spawn only, so its fucking yuge.
+/obj/projectile/bullet/rocket/artilleryshell
+	name = "\improper 122mm artillery shell"
+	desc = "static warfare in spess."
+	icon_state = "LIGHTTANKSHELL"
+	damage = 80
+	armour_penetration = 100
+	dismemberment = 100
+	anti_armour_damage = 350
+
+/obj/projectile/bullet/rocket/artilleryshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 8, flame_range = 15, flash_range = 11, adminlog = TRUE)
+
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
@@ -141,3 +154,17 @@ among other potential differences. This granularity is helpful for things like t
 	damage_walls = TRUE
 /obj/projectile/bullet/rocket/mininuke/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 20, heavy_impact_range = 30, light_impact_range = 35, flame_range = 38, flash_range = 25, adminlog = TRUE)
+
+
+/// Ignifist rocket launcher - AT only, nearly non effective on crew.
+/obj/projectile/bullet/rocket/ignifis
+	name = "\improper Ignifist rocket"
+	desc = "anti mechanized warfare in spess."
+	icon_state = "atrocket"
+	damage = 25
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 125
+
+/obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)

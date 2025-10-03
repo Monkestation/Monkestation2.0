@@ -82,6 +82,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
+	flags_1 = PREVENT_CLICK_UNDER_1
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	showpipe = FALSE
 
@@ -450,7 +452,7 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -467,17 +469,17 @@
 	else
 		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(dropped) || !iscarbon(dropped) || !ISADVANCEDTOOLUSER(user))
 		return
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(dropped))
+		var/mob/living/L = dropped
 		if(L.incapacitated())
-			close_machine(target)
+			close_machine(dropped)
 	else
-		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
-		if (do_after(user, 2.5 SECONDS, target=target))
-			close_machine(target)
+		user.visible_message(span_notice("[user] starts shoving [dropped] inside [src]."), span_notice("You start shoving [dropped] inside [src]."))
+		if (do_after(user, 2.5 SECONDS, target = dropped))
+			close_machine(dropped)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
 
@@ -607,23 +609,37 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_interact(mob/user)
 	return ..() && user.loc != src
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/click_ctrl(mob/user)
 	if(can_interact(user) && !state_open)
 		if(set_on(!on))
 			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-	return ..()
+/obj/machinery/atmospherics/components/unary/cryo_cell/click_alt(mob/user)
+	//Required so players don't close the cryo on themselves without a doctor's help
+	if(get_turf(user) == get_turf(src))
+		return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
-	return // we don't see the pipe network while inside cryo.
+	if(state_open )
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
+	if(!iscarbon(target))
+		return
+
+	if(isliving(target))
+		var/mob/living/living_mob = target
+		if(living_mob.incapacitated())
+			close_machine(target)
+		return
+
+	user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
+	if (do_after(user, 2.5 SECONDS, target=target))
+		close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

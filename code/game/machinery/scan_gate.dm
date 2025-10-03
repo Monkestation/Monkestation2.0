@@ -201,7 +201,7 @@
 			assembly?.activate()
 		set_scanline("scanning", 10)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
@@ -233,7 +233,7 @@
 	data["target_nutrition"] = detect_nutrition
 	return data
 
-/obj/machinery/scanner_gate/ui_act(action, params)
+/obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

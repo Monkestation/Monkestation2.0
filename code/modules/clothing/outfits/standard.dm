@@ -187,7 +187,7 @@
 	l_hand = /obj/item/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	for(var/obj/item/I in H.held_items)
 		I.add_mob_blood(H)
@@ -436,7 +436,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/debug/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -468,7 +468,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/admin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

@@ -53,15 +53,9 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/plumbing/ooze_sucker/LateInitialize()
+/obj/machinery/plumbing/ooze_sucker/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/plumbing/ooze_sucker/Destroy()
-	GLOB.ooze_suckers -= src
-	return ..()
-
-/obj/machinery/plumbing/ooze_sucker/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
 	for(var/obj/machinery/slime_pen_controller/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
@@ -70,6 +64,10 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 		linked_controller = main
 		main.linked_sucker = src
 		return
+
+/obj/machinery/plumbing/ooze_sucker/Destroy()
+	GLOB.ooze_suckers -= src
+	return ..()
 
 /obj/machinery/plumbing/ooze_sucker/examine(mob/user)
 	. = ..()
@@ -230,7 +228,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
-/obj/machinery/plumbing/ooze_sucker/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_sucker/click_ctrl(mob/user)
 	if(!can_interact(user) || !length(upgrade_disks))
 		return ..()
 

@@ -90,9 +90,6 @@ GLOBAL_DATUM_INIT(blueshield_crewmonitor, /datum/crewmonitor/blueshield, new)
 
 			if (sensor_mode >= SENSOR_COORDS)
 				entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
-
-			entry["can_track"] = tracked_living_mob.can_track()
-
 		else
 			continue
 

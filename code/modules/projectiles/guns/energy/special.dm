@@ -71,7 +71,7 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = /obj/item/stock_parts/cell/potato
+	cell_type = /obj/item/stock_parts/power_store/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 	automatic_charge_overlays = FALSE
@@ -175,7 +175,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+	return (..() && (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld)))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks, interaction_key)
 
@@ -249,6 +249,13 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
+/obj/item/gun/energy/wormhole_projector/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// overrides from /obj/item/gun as both ranged interacts result in firing the gun
+	// identical to primary ranged attack
+	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
 /obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
@@ -315,7 +322,7 @@
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6_cyborg"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	cell_type = /obj/item/stock_parts/cell/secborg
+	cell_type = /obj/item/stock_parts/power_store/cell/secborg
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
@@ -334,7 +341,7 @@
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot, /obj/item/ammo_casing/energy/temp/cryo)
-	cell_type = /obj/item/stock_parts/cell/high
+	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/temperature/give_manufacturer_examine()

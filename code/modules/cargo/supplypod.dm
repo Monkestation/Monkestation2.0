@@ -271,7 +271,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -442,7 +442,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)
@@ -502,16 +502,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)

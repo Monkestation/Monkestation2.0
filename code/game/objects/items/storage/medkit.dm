@@ -35,6 +35,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
@@ -128,8 +129,8 @@
 /obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	atom_storage.max_slots = 12
-	atom_storage.max_total_storage = 24
+	atom_storage.max_slots = 13
+	atom_storage.max_total_storage = 26
 	atom_storage.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -145,6 +146,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
@@ -157,6 +159,7 @@
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/breath/medical,
 		/obj/item/surgical_drapes, //for true paramedics
+		/obj/item/surgical_processor,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
@@ -313,6 +316,11 @@
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
 
+/obj/item/storage/medkit/advanced/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
+
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
 		return
@@ -369,8 +377,8 @@
 	if(empty)
 		return
 	var/static/list/items_inside = list(
-		/obj/item/stack/medical/suture/medicated = 2,
-		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/stack/heal_pack/brute_pack = 2,
+		/obj/item/stack/heal_pack/burn_pack = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/healthanalyzer/advanced = 1,

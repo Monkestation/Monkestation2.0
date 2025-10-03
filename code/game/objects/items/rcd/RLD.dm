@@ -8,7 +8,7 @@
 // operation costs
 #define LIGHT_TUBE_COST 10
 #define FLOOR_LIGHT_COST 15
-#define GLOW_STICK_COST 5
+#define GLOW_STICK_COST 20
 #define DECONSTRUCT_COST 10
 
 //operation delays
@@ -34,7 +34,7 @@
 	var/mode = LIGHT_MODE
 	var/wallcost = 10
 	var/floorcost = 15
-	var/launchcost = 5
+	var/launchcost = 20
 	var/deconcost = 10
 
 	var/condelay = 10
@@ -187,6 +187,23 @@
 				return ITEM_INTERACT_SUCCESS
 
 		if(GLOW_MODE)
+	//resource sanity checks before & after delay
+			var/cost = iswallturf(interacting_with) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
+
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
+			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
+			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+			playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+			if(!do_after(user, BUILD_DELAY, target = interacting_with))
+				qdel(beam)
+				return ITEM_INTERACT_BLOCKING
+			if(!checkResource(cost, user))
+				return ITEM_INTERACT_BLOCKING
+			if(!useResource(GLOW_STICK_COST, user))
+				return ITEM_INTERACT_BLOCKING
+			activate()
+
 			if(!useResource(GLOW_STICK_COST, user))
 				return ITEM_INTERACT_BLOCKING
 			activate()

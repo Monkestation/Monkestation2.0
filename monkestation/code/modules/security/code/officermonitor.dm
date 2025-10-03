@@ -76,8 +76,6 @@ GLOBAL_DATUM_INIT(security_crewmonitor, /datum/crewmonitor/security, new)
 				)
 			if (sensor_mode >= SENSOR_COORDS)
 				entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
-
-			entry["can_track"] = tracked_living_mob.can_track()
 		else
 			continue
 		results[++results.len] = entry

@@ -153,11 +153,11 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/windup_time = 10 SECONDS
 	var/melt_range = 3
 	var/charge_per_use = 200
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 /obj/item/firelance/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell(src)
+	cell = new /obj/item/stock_parts/power_store/cell(src)
 	AddComponent(/datum/component/two_handed)
 
 /obj/item/firelance/attack(mob/living/M, mob/living/user, params)

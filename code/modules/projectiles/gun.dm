@@ -324,7 +324,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
 	if(!isliving(interacting_with))
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return ..()
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
@@ -660,7 +660,7 @@
 
 	semicd = TRUE
 
-	if(!bypass_timer && (!do_after(user, 120, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
+	if(!bypass_timer && (!do_after(user, 12 SECONDS, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
 				user.visible_message(span_notice("[user] decided not to shoot."))

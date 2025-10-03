@@ -1,13 +1,6 @@
+// Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
 	item_flags = NEEDS_PERMIT
-
-/obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
-		target.visible_message(span_danger("[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
-					span_userdanger("You block the attack!"))
-		user.Stun(40)
-		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -400,6 +393,7 @@
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
 		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
+		finish_roasting(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -414,7 +408,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
+	if(do_after(user, 10 SECONDS, target = user) && held_sausage)
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)

@@ -83,6 +83,7 @@
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
 	track.Grant(owner.current)
+	powers += track
 	return ..()
 
 /datum/antagonist/monsterhunter/on_removal()
@@ -193,6 +194,7 @@
 	var/datum/action/cooldown/spell/summonitem/recall = new
 	recall.mark_item(weapon)
 	recall.Grant(user)
+	powers += recall
 
 	podspawn(list(
 		"target" = get_turf(user),

@@ -161,6 +161,13 @@
 	if(alt_icons)
 		AddElement(/datum/element/update_icon_updates_onmob)
 
+/obj/item/gun/ballistic/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle Bracing"
@@ -474,18 +481,19 @@
 	//	w_class -= I.w_class
 	return ..()
 
-/obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
+/obj/item/gun/ballistic/click_alt(mob/user)
+	if(unique_reskin && !current_skin)
 		reskin_obj(user)
-		return
-	if(loc == user)
-		if(suppressed && can_unsuppress)
-			var/obj/item/suppressor/S = suppressed
-			if(!user.is_holding(src))
-				return ..()
-			balloon_alert(user, "[S.name] removed")
-			user.put_in_hands(S)
-			clear_suppressor()
+		return CLICK_ACTION_SUCCESS
+	if(!suppressed || !can_unsuppress)
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/suppressor/S = suppressed
+	if(!user.is_holding(src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "[S.name] removed")
+	user.put_in_hands(S)
+	clear_suppressor()
+	return CLICK_ACTION_SUCCESS
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()
@@ -654,7 +662,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		if(sawn_off)
 			return
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
@@ -684,7 +692,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to cleaning [src]."), span_notice("You begin to clean the internals of [src]."))
 
-	if(do_after(user, 100, target = src))
+	if(do_after(user, 10 SECONDS, target = src))
 		var/original_misfire_value = initial(misfire_probability)
 		if(misfire_probability > original_misfire_value)
 			misfire_probability = original_misfire_value

@@ -682,6 +682,8 @@
 	pixel_x = -32
 	pixel_y = -32
 	duration = 0.3 SECONDS
+	light_power = 0
+	light_on = 0
 
 /obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/semicircle
 	icon_state = "big_slash_180"

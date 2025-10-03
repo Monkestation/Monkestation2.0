@@ -75,13 +75,11 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 /datum/antagonist/darkspawn/on_removal()
 	STOP_PROCESSING(SSprocessing, src)
 	owner.special_role = null
-	if(team)
-		team.remove_member(owner)
-	owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
-	owner.current.hud_used.psi_counter.maptext = ""
+	team?.remove_member(owner)
+	if(owner.current?.hud_used?.psi_counter)
+		owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
+		owner.current.hud_used.psi_counter.maptext = ""
 	QDEL_NULL(picked_class)
-	UnregisterSignal(owner, COMSIG_MIND_CHECK_ANTAG_RESOURCE)
-	UnregisterSignal(owner, COMSIG_MIND_SPEND_ANTAG_RESOURCE)
 	return ..()
 
 /datum/antagonist/darkspawn/apply_innate_effects(mob/living/mob_override)
@@ -93,7 +91,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		return
 	handle_clown_mutation(current_mob, mob_override ? null : "Our powers allow us to overcome our clownish nature, allowing us to wield weapons with impunity.")
 	add_team_hud(current_mob)
-	current_mob.grant_language(/datum/language/darkspawn)
+	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 
 	//psi stuff
 	if(current_mob?.hud_used?.psi_counter)
@@ -106,8 +104,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(current_mob)
 		current_mob.AddComponent(/datum/component/internal_cam, list(ROLE_DARKSPAWN))
 		var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-		if(cam)
-			cam.change_cameranet(GLOB.thrallnet)
+		cam?.change_cameranet(GLOB.thrallnet)
 
 	//divulge
 	if(darkspawn_state == DARKSPAWN_MUNDANE)
@@ -117,16 +114,16 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			action.Grant(current_mob)
 		addtimer(CALLBACK(src, PROC_REF(begin_force_divulge)), 25 MINUTES) //this won't trigger if they've divulged when the proc runs
 
-/datum/antagonist/darkspawn/remove_innate_effects()
-	owner.current.remove_language(/datum/language/darkspawn)
-	owner.current.faction -= FACTION_DARKSPAWN
-	if(owner.current)
-		qdel(owner.current.GetComponent(/datum/component/internal_cam))
-
-	for(var/datum/action/cooldown/spell/spells in owner.current.actions) //remove divulge if they haven't yet
-		if(istype(spells, /datum/action/cooldown/spell/divulge))
-			spells.Remove(owner.current)
-			qdel(spells)
+/datum/antagonist/darkspawn/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	if(current_mob)
+		current_mob.remove_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
+		current_mob.faction -= FACTION_DARKSPAWN
+		qdel(current_mob.GetComponent(/datum/component/internal_cam))
+		for(var/datum/action/cooldown/spell/divulge/divulge in current_mob.actions) //remove divulge if they haven't yet
+			divulge.Remove(current_mob)
+			qdel(divulge)
+		UnregisterSignal(current_mob, list(COMSIG_MIND_CHECK_ANTAG_RESOURCE, COMSIG_MIND_SPEND_ANTAG_RESOURCE))
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
@@ -348,6 +345,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		COOLDOWN_START(src, psi_cooldown, psi_regen_delay)
 	psi = round(psi - amount, 0.1)
 	update_psi_hud()
+	owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
@@ -359,6 +357,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	update_psi_hud()
 	if(psi >= psi_cap || !COOLDOWN_FINISHED(src, psi_cooldown))
 		psi_regenerating = FALSE
+		owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 		return
 	var/delay = (1/psi_per_second) SECONDS
 	addtimer(CALLBACK(src, PROC_REF(regenerate_psi)), delay, TIMER_UNIQUE) //tick it up very quickly
@@ -378,7 +377,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		owner.current.clear_alert("psiblock")
 
 /datum/antagonist/darkspawn/proc/update_psi_hud()
-	if(!owner.current || !owner.current.hud_used)
+	if(!owner.current?.hud_used)
 		return
 	var/atom/movable/screen/counter = owner.current.hud_used.psi_counter
 	counter.maptext = ANTAG_MAPTEXT(psi, COLOR_DARKSPAWN_PSI)
