@@ -68336,6 +68336,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_large,
 /area/station/security/checkpoint/supply)
 "sTj" = (
