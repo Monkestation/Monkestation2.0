@@ -324,7 +324,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
 	if(!isliving(interacting_with))
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return ..()
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)

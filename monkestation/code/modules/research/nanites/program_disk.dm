@@ -131,3 +131,9 @@
 
 /obj/item/disk/nanite_program/stun
 	program_type = /datum/nanite_program/stun
+
+/obj/item/disk/nanite_program/gravity
+	program_type = /datum/nanite_program/gravity
+
+/obj/item/disk/nanite_program/nanite_injector
+	program_type = /datum/nanite_program/nanite_injector

@@ -100,7 +100,7 @@
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
 	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
-	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
+	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE, hidden = TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
 		return

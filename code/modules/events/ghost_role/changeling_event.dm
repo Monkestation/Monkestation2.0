@@ -14,6 +14,10 @@
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A meteor containing a changeling is summoned and thrown at the exterior of the station."
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/changeling
 	minimum_required = 1

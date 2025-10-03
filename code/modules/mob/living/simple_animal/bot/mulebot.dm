@@ -371,7 +371,7 @@
 	if(!isliving(user))
 		return
 
-	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
+	if(!istype(AM) || isdead(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
@@ -801,7 +801,7 @@
 	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
-	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
+	if(!istype(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
 		return
 
 	load(AM)

@@ -613,7 +613,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/escapepodbay)
@@ -1147,7 +1147,7 @@
 	dir = 4
 	},
 /obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/escapepodbay)
@@ -1235,7 +1235,7 @@
 	dir = 4
 	},
 /obj/structure/closet/firecloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/escapepodbay)
@@ -3970,9 +3970,6 @@
 "ayL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/blue{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "ayM" = (
@@ -7840,7 +7837,7 @@
 /area/station/science/ordnance)
 "btC" = (
 /obj/structure/closet/wardrobe/green,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -9073,7 +9070,7 @@
 /area/station/hallway/secondary/exit)
 "bLR" = (
 /obj/structure/closet/lasertag/red,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/machinery/light/blacklight/directional/east,
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/turf_decal/tile/red/full,
@@ -9125,7 +9122,7 @@
 	dir = 6
 	},
 /obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "bNa" = (
@@ -10205,7 +10202,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/blue/corner,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "cdf" = (
@@ -17110,7 +17106,7 @@
 /area/station/commons/dorms)
 "els" = (
 /obj/structure/closet/lasertag/blue,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/machinery/light/blacklight/directional/east,
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/turf_decal/tile/blue/full,
@@ -17559,7 +17555,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 5
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/tram/right)
@@ -17864,11 +17860,10 @@
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "exJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/ladder,
-/turf/open/floor/carpet/green,
-/area/station/command/heads_quarters/nt_rep)
+/obj/structure/table/wood,
+/obj/item/ai_module/toy_ai,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "exN" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/dirt,
@@ -23898,11 +23893,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "gwq" = (
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Nuclear Storage";
-	network = list("ss13","secure")
-	},
 /obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/machinery/camera/directional/north{
+	c_tag = "Command - Consultant's Bedroom"
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "gwy" = (
@@ -27281,7 +27275,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
@@ -28799,6 +28793,9 @@
 	},
 /obj/item/clothing/suit/armor/riot,
 /obj/effect/turf_decal/delivery/blue,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Blueshield's Office"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "iaA" = (
@@ -30869,19 +30866,11 @@
 /area/station/science/ordnance/testlab)
 "iGM" = (
 /obj/structure/table/wood,
-/obj/item/bodypart/chest/robot{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/bodypart/head/robot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/item/pai_card{
 	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
 	name = "\improper Nanotrasen-brand personal AI device exhibit"
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "iGV" = (
 /obj/machinery/door/airlock/corporate{
@@ -32941,7 +32930,6 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "jms" = (
-/obj/structure/ladder,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/station/command/heads_quarters/blueshield)
 "jmx" = (
@@ -36288,14 +36276,8 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "knD" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/blue{
-	dir = 4
-	},
+/obj/structure/table/wood,
+/obj/item/disk/holodisk,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "knO" = (
@@ -39135,7 +39117,6 @@
 /obj/machinery/vending/coffee,
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/blue,
 /turf/open/floor/wood/parquet,
 /area/station/command/meeting_room)
 "ldD" = (
@@ -43497,7 +43478,7 @@
 	dir = 10
 	},
 /obj/structure/closet/firecloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "myc" = (
@@ -43843,7 +43824,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mDY" = (
-/turf/open/floor/carpet/executive,
+/obj/structure/table/wood,
+/obj/item/disk/tech_disk,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "mEb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -44355,7 +44338,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "mMk" = (
@@ -45585,10 +45568,8 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "nhN" = (
-/obj/machinery/modular_computer/preset/command{
-	pixel_y = -3
-	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/modular_computer/preset/representative,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "nhP" = (
@@ -46934,7 +46915,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "nBA" = (
@@ -57216,7 +57197,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "qLG" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "qLJ" = (
@@ -62161,7 +62142,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/camera/motion/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Command - Consultant's Office"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "sql" = (
@@ -62616,7 +62599,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/tram/right)
@@ -70899,7 +70882,9 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "uVo" = (
-/turf/open/floor/carpet,
+/obj/structure/table/wood,
+/obj/item/assembly/flash/handheld,
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "uVx" = (
 /obj/structure/rack,
@@ -71515,7 +71500,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
@@ -73914,8 +73899,16 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "vMZ" = (
-/obj/structure/ladder,
-/turf/open/floor/glass/reinforced,
+/obj/structure/table/wood,
+/obj/item/bodypart/chest/robot{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/bodypart/head/robot{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
 /area/station/command/meeting_room)
 "vNe" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -76789,7 +76782,7 @@
 	dir = 6
 	},
 /obj/structure/closet/toolcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/machinery/camera/directional/east{
 	c_tag = "Civilian - Aux Tool Storage"
 	},
@@ -98727,7 +98720,7 @@ mgS
 ieQ
 lRi
 nlh
-exJ
+cym
 svE
 lQM
 lQM
@@ -164262,7 +164255,7 @@ qyZ
 qyZ
 qyZ
 qyZ
-uVo
+iGM
 vMZ
 uVo
 dVd
@@ -164519,9 +164512,9 @@ hiq
 pWW
 oho
 wlK
-uVo
-iGM
-uVo
+joF
+joF
+joF
 wiN
 qyZ
 xEv
@@ -166318,7 +166311,7 @@ dIZ
 xVp
 uWz
 cda
-knD
+pRB
 ayL
 ayL
 dVd
@@ -166575,9 +166568,9 @@ cFH
 xcH
 oho
 ldz
-mDY
-mDY
-mDY
+joF
+joF
+joF
 ltM
 qyZ
 xLi
@@ -166832,8 +166825,8 @@ qyZ
 qyZ
 qyZ
 qyZ
-mDY
-vMZ
+knD
+exJ
 mDY
 dVd
 qyZ

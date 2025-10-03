@@ -837,18 +837,15 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
+	atom_storage.set_holdable(list(/obj/item/melee/sabre))
+	atom_storage.click_alt_open = FALSE
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/belt/sheath/click_alt(mob/user)
+/obj/item/storage/belt/sabre/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "it's empty!")
 		return CLICK_ACTION_BLOCKING
