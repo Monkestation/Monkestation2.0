@@ -88,3 +88,10 @@
 	id = "word_filter_nanites"
 	category = list(NANITES_CATEGORY_SUPPRESSION)
 	program_type = /datum/nanite_program/conversation_filter
+
+/datum/design/nanites/gravity
+	name = "Gravito-Kinetic Field Conduction"
+	desc = "The nanites channel an artifical gravitational field through the host."
+	id = "gravity_nanites"
+	category = list(NANITES_CATEGORY_SUPPRESSION)
+	program_type = /datum/nanite_program/gravity

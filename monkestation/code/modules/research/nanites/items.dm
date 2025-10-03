@@ -147,3 +147,9 @@
 
 /obj/item/disk/nanite_program/mind_control
 	program = /datum/nanite_program/comm/mind_control
+
+/obj/item/disk/nanite_program/gravity
+	program_type = /datum/nanite_program/gravity
+
+/obj/item/disk/nanite_program/nanite_injector
+	program_type = /datum/nanite_program/nanite_injector

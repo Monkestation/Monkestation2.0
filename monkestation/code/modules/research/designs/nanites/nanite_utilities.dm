@@ -98,3 +98,11 @@
 	id = "mitosis_nanites"
 	category = list(NANITE_CATEGORY_UTILITIES)
 	program_type = /datum/nanite_program/mitosis
+
+/datum/design/nanites/nanite_injector
+	name = "Nanomechanical Injection System"
+	desc = "While active, draws a large amount of the host's nanites into a nanite-based injection device, \
+		allowing them to transfer those nanites to others."
+	id = "injector_nanites"
+	category = list(NANITE_CATEGORY_UTILITIES)
+	program_type = /datum/nanite_program/nanite_injector

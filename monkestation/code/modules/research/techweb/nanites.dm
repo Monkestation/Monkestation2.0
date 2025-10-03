@@ -136,6 +136,8 @@
 		"defib_nanites",
 		"regenerative_plus_nanites",
 		"oxygen_rush_nanites",
+		"injector_nanites",
+		"gravity_nanites",
 		"brainheal_plus_nanites",
 		"purging_plus_nanites",
 		"adrenaline_nanites",
