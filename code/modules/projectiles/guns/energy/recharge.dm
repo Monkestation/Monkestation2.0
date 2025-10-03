@@ -77,7 +77,12 @@
 			carried++
 	carried = max(carried, 1)
 	deltimer(recharge_timerid)
-	recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
+	var/recharge_time = set_recharge_time * carried
+	if(recharge_time > 0)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
+	else
+		recharge_timerid = null
+		reload()
 
 /obj/item/gun/energy/recharge/emp_act(severity)
 	return
