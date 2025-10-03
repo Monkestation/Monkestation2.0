@@ -66,8 +66,6 @@
 			return FALSE
 
 		carbon_mob.ghostize(FALSE)
-		if(!carbon_mob.mind)
-			carbon_mob.mind_initialize()
 		carbon_mob.PossessByPlayer(chosen_one.key)
 
 	if(carbon_mob.stat == DEAD)
@@ -75,6 +73,9 @@
 		carbon_mob.revive(ADMIN_HEAL_ALL)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
+	if(!thrall)
+		carbon_mob.balloon_alert(owner, "failed to infect [carbon_mob]")
+		return FALSE
 	thrall.set_master(owner)
 	carbon_mob.mind.enslave_mind_to_creator(owner)
 
