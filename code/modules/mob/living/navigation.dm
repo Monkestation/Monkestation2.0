@@ -72,7 +72,7 @@
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access())
+	var/list/path = get_astar_path_to(src, navigate_target, /* maxnodes = MAX_NAVIGATE_RANGE, */ mintargetdist = 5, access = get_access())
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
