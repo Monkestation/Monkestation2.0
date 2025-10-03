@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed cluwne brain traumas not being removed when the curse is lifted."
+  - balance: "honkerblasts don't tie your laces anymore."
