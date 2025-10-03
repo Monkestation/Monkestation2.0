@@ -647,7 +647,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
 	//Easier then building the list ourselves. I'm sorry.
 	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
-	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
+	set_path(get_astar_path_to(src, waypoint, maxnodes = 200, access = all_access.GetAccess()))
 	calling_ai = user //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -863,18 +863,26 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, max_distance=120, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL))
+	set_path(get_astar_path_to(src, patrol_target, maxnodes = 120, access = access_card.GetAccess(), exclude = avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
-	var/datum/callback/path_complete = CALLBACK(src, PROC_REF(on_summon_path_finish))
-	SSpathfinder.pathfind(src, summon_target, max_distance=150, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL, on_finish=list(path_complete))
+	//var/datum/callback/path_complete = CALLBACK(src, PROC_REF(on_summon_path_finish))
+	//SSpathfinder.pathfind(src, summon_target, max_distance=150, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL, on_finish=list(path_complete))
+	var/list/path = get_astar_path_to(src, summon_target, maxnodes = 150, access = access_card.GetAccess(), exclude = avoid)
+	if(length(path))
+		set_path(path)
+	else
+		speak("Summon command failed, destination unreachable.",radio_channel)
+		bot_reset()
 
+/*
 /mob/living/simple_animal/bot/proc/on_summon_path_finish(list/path)
 	set_path(path)
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
 		speak("Summon command failed, destination unreachable.",radio_channel)
 		bot_reset()
+*/
 
 /mob/living/simple_animal/bot/proc/summon_step()
 

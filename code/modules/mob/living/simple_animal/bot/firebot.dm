@@ -231,7 +231,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
+		path = get_astar_path_to(src, target_fire, maxnodes = 30, mintargetdist = 1, access = access_card.GetAccess())
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
