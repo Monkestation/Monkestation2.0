@@ -429,9 +429,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(mob/user, atom/target)
-	if(DOING_INTERACTION(user, "roasting_doafter"))
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_ROASTING_STICK))
 		return
-	if(!do_after(user, 10 SECONDS, target = user, interaction_key = "roasting_doafter") || !held_sausage)
+	if(!do_after(user, 10 SECONDS, target = user, interaction_key = DOAFTER_SOURCE_ROASTING_STICK) || !held_sausage)
 		QDEL_NULL(beam)
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		to_chat(user, span_notice("You put [src] away."))
