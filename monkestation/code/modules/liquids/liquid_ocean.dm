@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /turf/open/floor/plating
 	///do we still call parent but dont want other stuff?
 	var/overwrites_attack_by = FALSE
+
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -81,6 +82,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	resistance_flags = INDESTRUCTIBLE
 
 	overwrites_attack_by = TRUE
+
+	astar_weight = 50
 
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
