@@ -7165,8 +7165,8 @@
 /area/station/maintenance/solars/port/fore)
 "btM" = (
 /obj/machinery/asteroid_magnet{
-	center_x = 63;
-	center_y = 113;
+	center_x = 58;
+	center_y = 117;
 	area_size = 3
 	},
 /obj/machinery/light/floor/has_bulb,
