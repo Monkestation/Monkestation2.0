@@ -27914,6 +27914,10 @@
 /obj/item/food/grown/poppy/lily{
 	pixel_x = -2
 	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Produce Access";
+	req_access = list("hydroponics")
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "iCO" = (
@@ -30963,7 +30967,7 @@
 /obj/machinery/biogenerator,
 /obj/machinery/door/window/left/directional/south{
 	name = "Biogenerator Access";
-	req_access = list("hydroponics")
+	req_access = list("service")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
@@ -67892,6 +67896,10 @@
 	pixel_y = 5;
 	pixel_x = -9
 	},
+/obj/machinery/door/window/left/directional/south{
+	req_access = list("hydroponics");
+	name = "Biogenerator Access"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "uTX" = (
@@ -77074,7 +77082,7 @@
 /obj/machinery/smartfridge,
 /obj/machinery/door/window/right/directional/south{
 	name = "Produce Access";
-	req_access = list("hydroponics")
+	req_access = list("service")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
