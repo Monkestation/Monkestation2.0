@@ -113,6 +113,20 @@ export const PreferencesMenu = () => {
         </PageButton>
       </Stack.Item>
       <Stack.Divider />
+      {window === PreferencesCurrentWindow.Character ? (
+        <Stack.Item>
+          <Button
+            wrap
+            onClick={() => {
+              act('try_fix_preview');
+            }}
+          >
+            Try Fix Preview
+          </Button>
+        </Stack.Item>
+      ) : (
+        ''
+      )}
     </Stack>
   );
 

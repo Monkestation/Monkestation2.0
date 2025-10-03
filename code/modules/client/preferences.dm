@@ -99,6 +99,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/locked = FALSE
 	/// Timer ID of the "unlock timer"
 	var/unlock_timer_id
+	/// UI is waiting to open
+	var/sleeping = FALSE
 
 /datum/preferences/Destroy(force)
 	acquire_lock()
@@ -223,14 +225,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return data
 
-/datum/preferences/proc/open_window(starting_page)
+/datum/preferences/proc/open_window(starting_page, user=usr, sleep_time=0)
 	if (starting_page == PREFERENCE_PAGE_CHARACTERS)
 		src.current_window = PREFERENCE_WINDOW_CHARACTERS
 	else
 		src.current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
 		src.starting_page = starting_page
-	update_static_data(usr)
-	ui_interact(usr)
+	if (sleeping)
+		return
+	if (unlock_timer_id)
+		sleep_time += timeleft(unlock_timer_id)
+	if (sleep_time)
+		sleeping = TRUE
+		sleep(sleep_time)
+		sleeping = FALSE
+	update_static_data(user)
+	ui_interact(user)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
@@ -273,6 +283,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
+		if ("try_fix_preview")
+			ui.close()
+			INVOKE_ASYNC(src, PROC_REF(open_window), PREFERENCE_PAGE_CHARACTERS, usr, 0.1 SECONDS)
+			return FALSE
+
 		if ("open_character")
 			if (locked || current_window == PREFERENCE_WINDOW_CHARACTERS)
 				return FALSE
