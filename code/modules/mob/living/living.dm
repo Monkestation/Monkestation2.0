@@ -545,22 +545,21 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if(!(flags & IGNORE_SOFTCRIT))
-		if(stat >= SOFT_CRIT)
-			return TRUE
-		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-			return TRUE
+    if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+        return TRUE
+    if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+        return TRUE
+    if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+        return TRUE
 
-	if(stat > SOFT_CRIT) // Means we are no longer conscious
-		return TRUE
+    if(flags & IGNORE_SOFTCRIT)
+        if((stat <= SOFT_CRIT) && !(HAS_TRAIT_NOT_FROM(src, TRAIT_INCAPACITATED, STAT_TRAIT)))
+            return FALSE
 
-	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
-		return TRUE
-	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
-		return TRUE
-	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
-		return TRUE
-	return FALSE
+    if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+        return TRUE
+
+    return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
@@ -2172,6 +2171,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
