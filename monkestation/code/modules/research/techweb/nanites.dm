@@ -18,6 +18,7 @@
 		"access_nanites",
 		"repairing_nanites",
 		"sensor_nanite_volume",
+		"monitoring_nanites",
 		"repeater_nanites",
 		"relay_repeater_nanites",
 		"red_diag_nanites",

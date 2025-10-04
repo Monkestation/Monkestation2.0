@@ -29,6 +29,21 @@
 		SEND_SIGNAL(people_in_range, COMSIG_NANITE_SET_CLOUD, cloud.get_value())
 	COOLDOWN_START(src, pulse_cooldown, 7.5 SECONDS)
 
+/datum/nanite_program/monitoring
+	name = "Monitoring"
+	desc = "The nanites monitor the host's vitals and location if they are a human, sending them to the suit sensor network."
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/monitoring/enable_passive_effect()
+	. = ..()
+	if(ishuman(host_mob))
+		GLOB.nanite_sensors_list |= host_mob
+
+/datum/nanite_program/monitoring/disable_passive_effect()
+	. = ..()
+	if(host_mob in GLOB.nanite_sensors_list)
+		GLOB.nanite_sensors_list -= host_mob
+
 /datum/nanite_program/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."

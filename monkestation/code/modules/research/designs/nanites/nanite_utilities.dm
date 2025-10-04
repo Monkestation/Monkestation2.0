@@ -12,6 +12,13 @@
 	category = list(NANITE_CATEGORY_UTILITIES)
 	program_type = /datum/nanite_program/viral
 
+/datum/design/nanites/monitoring
+	name = "Monitoring"
+	desc = "The nanites monitor the host's vitals and location if they are a human, sending them to the suit sensor network."
+	id = "monitoring_nanites"
+	category = list(NANITE_CATEGORY_UTILITIES)
+	program_type = /datum/nanite_program/monitoring
+
 /datum/design/nanites/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
