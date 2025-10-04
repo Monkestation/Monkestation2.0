@@ -54,6 +54,9 @@
 		qdel(screen_object)
 
 /datum/screen_object_holder/proc/clear()
+	lowest_point = 0
+	amount_scrolled = 0
+
 	client?.screen -= screen_objects
 	client?.screen -= protected_screen_objects
 
