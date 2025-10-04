@@ -45,7 +45,7 @@
 	var/datum/techweb/linked_techweb
 
 /datum/component/nanites/Initialize(
-	datum/techweb/linked_techweb,
+	datum/techweb/linked_techweb = SSresearch.science_tech,
 	nanite_volume = NANITE_DEFAULT_STARTING_VOLUME,
 	cloud_id = 0,
 )

@@ -15,6 +15,8 @@
 
 	///Unique to the Public nanite chamber, this is the Cloud ID that the occupant will get after the injection animation.
 	var/cloud_id = 1
+	///The techweb that hosts the nanites we're injecting into people.
+	var/datum/techweb/linked_techweb
 
 	///The icon file used post-initialize, the default icon is used solely so it shows up in the R&D console.
 	///This is because this icon, which we actually use in game, is not 32x32.
@@ -30,6 +32,15 @@
 
 /obj/machinery/public_nanite_chamber/Initialize(mapload)
 	occupant_typecache = GLOB.typecache_living
+	return ..()
+
+/obj/machinery/public_nanite_chamber/post_machine_initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		linked_techweb = SSresearch.science_tech
+
+/obj/machinery/public_nanite_chamber/Destroy()
+	linked_techweb = null
 	return ..()
 
 /obj/machinery/public_nanite_chamber/RefreshParts()
@@ -123,6 +134,11 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
+/obj/machinery/public_nanite_chamber/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb = tool.buffer
+	return TRUE
+
 /obj/machinery/public_nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
@@ -191,7 +207,7 @@
 	if(!occupant)
 		return
 	occupant.investigate_log("was injected with nanites with cloud ID [cloud_id] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
-	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
+	occupant.AddComponent(/datum/component/nanites, linked_techweb, 75, cloud_id)
 
 ///Called when entering a public nanite chamber with already existing nanites, this updates your Cloud ID to what the chamber's is.
 /obj/machinery/public_nanite_chamber/proc/change_cloud()

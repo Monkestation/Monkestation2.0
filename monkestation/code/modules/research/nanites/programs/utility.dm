@@ -1,7 +1,8 @@
 //Programs that interact with other programs or nanites directly, or have other special purposes.
 /datum/nanite_program/viral
 	name = "Viral Replica"
-	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters, also overriding or disabling their cloud sync."
+	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters, \
+		also overriding or disabling their cloud sync."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
 
@@ -231,8 +232,7 @@
 	var/mob/living/carbon/human/infectee = pick(target_hosts)
 	if(!(infectee.wear_suit) || prob(100 - infectee.wear_suit.get_armor_rating(BIO)))
 		//this will potentially take over existing nanites!
-		infectee.AddComponent(/datum/component/nanites, null, 10)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.AddComponent(/datum/component/nanites, nanites.linked_techweb, 10, nanites.cloud_id)
 		infectee.investigate_log("was infected by spreading nanites with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
@@ -256,8 +256,7 @@
 	var/mob/living/carbon/human/infectee = pick(target_hosts)
 	if(!(infectee.wear_suit) || prob(100 - infectee.wear_suit.get_armor_rating(BIO)))
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
-		infectee.AddComponent(/datum/component/nanites, null, 5)
-		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.AddComponent(/datum/component/nanites, nanites.linked_techweb, 5, nanites.cloud_id)
 		infectee.investigate_log("was infected by a nanite cluster with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, span_warning("You feel a tiny prick."))
 
@@ -513,9 +512,7 @@
 			var/datum/component/nanites/theirnanos = guy_we_are_stabbing.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
 		else
-			guy_we_are_stabbing.AddComponent(/datum/component/nanites, 150)
-			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
-			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			guy_we_are_stabbing.AddComponent(/datum/component/nanites, nanos.linked_techweb, 150, nanos.cloud_id)
 			to_chat(guy_we_are_stabbing, span_userdanger("...Why can I feel my blood? WHY CAN I FEEL M-")) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
 			if(ishuman(guy_we_are_stabbing))
 				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing

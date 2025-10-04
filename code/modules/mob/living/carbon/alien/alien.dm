@@ -115,8 +115,7 @@ Des: Removes all infected images from the alien.
 		mind.transfer_to(new_xeno)
 	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
 	if(nanites)
-		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
-		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
+		new_xeno.AddComponent(/datum/component/nanites, null, nanites.nanite_volume, nanites.cloud_id)
 	if(is_holding_items())
 		for(var/hand_index = 1 to length(held_items))
 			var/obj/item/item_in_hand = held_items[hand_index]
