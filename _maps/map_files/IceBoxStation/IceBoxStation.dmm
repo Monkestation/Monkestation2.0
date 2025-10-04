@@ -12386,9 +12386,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dGi" = (
-/obj/structure/filingcabinet,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/structure/filingcabinet/medical,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/nt_rep)
 "dGw" = (
@@ -14795,7 +14795,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/noticeboard/directional/north,
+/obj/structure/noticeboard/directional/north{
+	dir = 2
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "euq" = (
@@ -55714,6 +55716,9 @@
 	dir = 9
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/picture_frame/showroom/four{
+	pixel_y = 32
+	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "raL" = (
@@ -61813,12 +61818,12 @@
 	req_one_access = list("nt_rep");
 	name = "NT Representative Door Bolt Control";
 	id = "nt_rep_office_door";
-	pixel_x = -6
+	pixel_x = 6
 	},
 /obj/machinery/button/door/directional/north{
 	id = "nt_rep_privacy_shutters";
 	name = "NT Representative Privacy Shutters";
-	pixel_x = 6;
+	pixel_x = -6;
 	req_one_access = list("nt_rep")
 	},
 /turf/open/floor/carpet/green,

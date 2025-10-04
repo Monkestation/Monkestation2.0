@@ -7,21 +7,15 @@
 	tgui_id = "NtosNtRep"
 	program_icon = "percent"
 
-	run_access = list(ACCESS_NT_REPRESENTATVE)
-	download_access = list(ACCESS_NT_REPRESENTATVE)
+	run_access = list(ACCESS_CENT_GENERAL)
+	download_access = list(ACCESS_CENT_GENERAL)
 	can_run_on_flags = PROGRAM_ALL
 	program_flags = PROGRAM_RUNS_WITHOUT_POWER
 
 /datum/computer_file/program/nt_rep_comments/ui_data(mob/user)
 	var/list/data = list()
-	if(istype(computer?.computer_id_slot, /obj/item/card/id/advanced/centcom))
-		data["rating"] = SSticker.nanotrasen_rep_score
-		data["comment"] = SSticker.nanotrasen_rep_comments
-		data["is_centcom"] = TRUE
-	else
-		data["rating"] = null
-		data["comment"] = null
-		data["is_centcom"] = FALSE
+	data["rating"] = SSticker.nanotrasen_rep_score
+	data["comment"] = SSticker.nanotrasen_rep_comments
 	return data
 
 /datum/computer_file/program/nt_rep_comments/ui_static_data(mob/user)

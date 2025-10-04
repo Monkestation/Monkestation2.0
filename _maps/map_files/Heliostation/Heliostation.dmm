@@ -19623,15 +19623,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical)
-"bWq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "Desk Shutters";
-	id = "nt_rep_privacy_shutters"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/nt_rep)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -31816,6 +31807,9 @@
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
 /obj/machinery/light_switch/directional/south,
+/obj/structure/sign/picture_frame/showroom/four{
+	pixel_x = 32
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "feA" = (
@@ -49017,11 +49011,11 @@
 /area/station/ai_monitored/turret_protected/ai)
 "lHx" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "Desk Shutters";
+	name = "Privacy Shutters";
 	id = "nt_rep_privacy_shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/nt_rep)
 "lHL" = (
@@ -63010,7 +63004,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "qSS" = (
-/obj/structure/noticeboard/directional/west,
+/obj/structure/noticeboard/directional/west{
+	dir = 4
+	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -120753,7 +120749,7 @@ azR
 rJV
 khh
 cfp
-bWq
+lHx
 rjD
 nYj
 mev
@@ -121010,7 +121006,7 @@ jyQ
 psH
 cOl
 eTY
-bWq
+lHx
 ccd
 vrK
 jYK

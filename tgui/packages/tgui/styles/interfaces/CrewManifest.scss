@@ -3,6 +3,8 @@
 $department_map: (
   'Cargo': colors.$brown,
   'Command': colors.$yellow,
+  //only the first word matters, apparently. This is also COLOR_CENTCOM_GREEN
+  'Central': #86ff82,
   'Security': colors.$red,
   'Engineering': colors.$orange,
   'Medical': colors.$teal,
