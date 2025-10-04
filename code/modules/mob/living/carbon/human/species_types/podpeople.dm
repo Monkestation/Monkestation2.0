@@ -5,7 +5,6 @@
 	id = SPECIES_PODPERSON
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_LEAFED,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",

@@ -142,7 +142,6 @@
 /// Has an item been enchanted by a clock cult Stargazer?
 #define TRAIT_STARGAZED				"stargazed"
 
-#define TRAIT_LEAFED "leafs"
 #define TRAIT_FEATHERED "feathers"
 #define TRAIT_NON_IMPORTANT_SHOE_BLOCK "shoe_block"
 /// Skip a breath once in every x breaths (where x is ticks between breaths)

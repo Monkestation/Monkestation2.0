@@ -44,6 +44,5 @@
 	savefile_key = "pod_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_inherent_trait = TRAIT_LEAFED
 	default_null = TRUE
 	allows_nulls = TRUE
