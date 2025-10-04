@@ -10,7 +10,7 @@
 
 /obj/item/ammo_casing/energy/laser/hellfire/blueshield
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(13, 1000)
+	e_cost = LASER_SHOTS(13, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
 /obj/item/ammo_casing/energy/lasergun
