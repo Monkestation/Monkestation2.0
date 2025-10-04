@@ -384,3 +384,13 @@
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+
+///The default state, no NT Representative ever spawned in.
+#define NT_REP_STATUS_DOESNT_EXIST 0
+///The state we enter once an NT Rep spawns in, we only check roundend for survival.
+#define NT_REP_STATUS_DIED 1
+///The state we enter on roundend if at least one NT Rep survived.
+#define NT_REP_STATUS_SURVIVED 2
+
+///The max amount of stars/score the NT rep can give
+#define MAX_NT_REP_SCORE 5
