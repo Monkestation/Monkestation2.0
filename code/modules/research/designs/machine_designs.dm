@@ -573,8 +573,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
 /datum/design/board/processor
-	name = "Food/Slime Processor Board"
-	desc = "The circuit board for a processing unit. Screwdriver the circuit to switch between food (default) or slime processing."
+	name = "Food Processor Board"
+	desc = "The circuit board for a food processing unit."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list(

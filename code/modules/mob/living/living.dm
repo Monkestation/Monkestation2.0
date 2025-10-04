@@ -545,11 +545,14 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if(!(flags & IGNORE_CRIT))
-		if((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby)
+	if(!(flags & IGNORE_SOFTCRIT))
+		if(stat >= SOFT_CRIT)
 			return TRUE
 		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 			return TRUE
+
+	if(stat > SOFT_CRIT) // Means we are no longer conscious
+		return TRUE
 
 	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return TRUE

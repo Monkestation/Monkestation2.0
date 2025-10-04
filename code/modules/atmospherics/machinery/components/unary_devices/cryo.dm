@@ -452,7 +452,7 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -615,7 +615,7 @@
 			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
-/obj/machinery/cryo_cell/click_alt(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/click_alt(mob/user)
 	//Required so players don't close the cryo on themselves without a doctor's help
 	if(get_turf(user) == get_turf(src))
 		return CLICK_ACTION_BLOCKING
@@ -627,7 +627,7 @@
 	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
+/obj/machinery/atmospherics/components/unary/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
 	if(!iscarbon(target))
 		return
 
@@ -641,7 +641,7 @@
 	if (do_after(user, 2.5 SECONDS, target=target))
 		close_machine(target)
 
-/obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()

@@ -236,7 +236,8 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
+			if(bloodsuckerdatum.bloodsucker_level_unspent < 1 && bloodsuckerdatum.claimed_coffin == FALSE)
+				bloodsuckerdatum.claimed_coffin = TRUE
 				bloodsuckerdatum.blood_level_gain()
 			bloodsuckerdatum.SpendRank()
 		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
@@ -298,7 +299,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch that would lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_after(resident, 5 SECONDS, src))
+		if(!do_after(resident, 5 SECONDS, src, hidden = TRUE))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))
