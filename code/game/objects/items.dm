@@ -248,6 +248,8 @@
 	var/unique_reskin_changes_base_icon_state = FALSE
 	/// If reskins change inhands as well
 	var/unique_reskin_changes_inhand = FALSE
+	/// Does this use the advanced reskinning setup?
+	var/uses_advanced_reskins = FALSE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)

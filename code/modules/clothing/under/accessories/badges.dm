@@ -191,8 +191,8 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	item_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
 	unique_reskin = GLOB.pride_pin_reskins
+	. = ..()
 
 /obj/item/clothing/accessory/pride/setup_reskinning()
 	if(!check_setup_reskinning())
