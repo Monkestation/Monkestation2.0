@@ -30,7 +30,7 @@
 	range = 7
 
 /obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
-	maxcharge = 100
+	maxcharge = STANDARD_CELL_CHARGE
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
