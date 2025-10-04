@@ -548,8 +548,8 @@
 	if(!(flags & IGNORE_SOFTCRIT))
 		if(stat >= SOFT_CRIT)
 			return TRUE
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		return TRUE
+		if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+			return TRUE
 
 	if(stat > SOFT_CRIT) // Means we are no longer conscious
 		return TRUE
@@ -1332,7 +1332,7 @@
 		CRASH("Missing target arg for can_perform_action")
 
 	if(stat == DEAD)
-		to_chat(src, span_warning("You are not conscious enough for this action!"))
+		to_chat(src, span_warning("You are not conscious enough for this action! [stat]"))
 		return FALSE
 
 	if(incapacitated(action_bitflags))
