@@ -545,21 +545,21 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-    if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
-        return TRUE
-    if(!(flags & IGNORE_GRAB) && pulledby?.grab_state >= GRAB_AGGRESSIVE)
-        return TRUE
-    if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
-        return TRUE
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby?.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+		return TRUE
 
-    if(flags & IGNORE_SOFTCRIT)
-        if((stat <= SOFT_CRIT) && !(HAS_TRAIT_NOT_FROM(src, TRAIT_INCAPACITATED, STAT_TRAIT)))
-            return FALSE
+	if(flags & IGNORE_SOFTCRIT)
+		if((stat <= SOFT_CRIT) && !(HAS_TRAIT_NOT_FROM(src, TRAIT_INCAPACITATED, STAT_TRAIT)))
+			return FALSE
 
-    if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-        return TRUE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return TRUE
 
-    return FALSE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
