@@ -306,7 +306,7 @@ const BasicChemistry = () => {
               </span>
               <br />
               <br />
-              <span>Libital</span>
+              <span className={'color-red'}> Libital</span>
               <br />
               <span>
                 Quickly restores our hosts
@@ -314,8 +314,12 @@ const BasicChemistry = () => {
                 of causing slight liver damage.
               </span>
               <br />
+              <span>Overdose: None</span>
               <br />
-              <span>Lenturi</span>
+              <span>Metabolism Rate: 0.05u/s</span>
+              <br />
+              <br />
+              <span className={'color-yellow'}>Lenturi</span>
               <br />
               <span>
                 Quickly restores our hosts
@@ -324,16 +328,24 @@ const BasicChemistry = () => {
                 long as its in their system
               </span>
               <br />
+              <span>Overdose: None</span>
               <br />
-              <span>Seiver</span>
+              <span>Metabolism Rate: 0.05u/s</span>
+              <br />
+              <br />
+              <span className={'color-green'}>Seiver</span>
               <br />
               <span>
-                Heals<span className={'color-green'}> Toxin </span>damage at the
+                Heals <span className={'color-green'}>Toxin</span> damage at the
                 slight cost of heart damage
               </span>
               <br />
+              <span>Overdose: None</span>
               <br />
-              <span>Convermol</span>
+              <span>Metabolism Rate: 0.05u/s</span>
+              <br />
+              <br />
+              <span className={'color-blue'}>Convermol</span>
               <br />
               <span>
                 Quickly restores our hosts
@@ -343,8 +355,10 @@ const BasicChemistry = () => {
               <br />
               <span>Overdose: 35 units</span>
               <br />
+              <span>Metabolism Rate: 0.05u/s</span>
               <br />
-              <span>Unknown Methamphetamine Isomer</span>
+              <br />
+              <span className={'color-purple'}>Unknown Methamphetamine Isomer</span>
               <br />
               <span>
                 A specially advanced version of what our hosts call
@@ -354,8 +368,10 @@ const BasicChemistry = () => {
               <br />
               <span>Overdose: 40 units</span>
               <br />
+              <span>Metabolism Rate: 0.075u/s</span>
               <br />
-              <span>Spaceacillin</span>
+              <br />
+              <span className={'color-purple'}>Spaceacillin</span>
               <br />
               <span>
                 Helps our hosts immune system, making it quickly gain resistance
@@ -367,8 +383,12 @@ const BasicChemistry = () => {
                 fully cure our host
               </span>
               <br />
+              <span>Overdose: None</span>
               <br />
-              <span>multiver</span>
+              <span>Metabolism Rate: 0.01u/s</span>
+              <br />
+              <br />
+              <span className={'color-green'}>Multiver</span>
               <br />
               <span>
                 Purges toxins and medicines inside of our host while healing
@@ -382,6 +402,10 @@ const BasicChemistry = () => {
               </span>
               <br />
               <span>At 2 unique medicines it no longer purges medicines</span>
+              <br />
+              <span>Overdose: None</span>
+              <br />
+              <span>Metabolism Rate: 0.05u/s</span>
             </Stack.Item>
           </Stack>
         </Section>
