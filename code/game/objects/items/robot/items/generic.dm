@@ -13,7 +13,7 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
 /// Cost to use the stun arm
-#define CYBORG_STUN_CHARGE_COST (10 * STANDARD_CELL_CHARGE)
+#define CYBORG_STUN_CHARGE_COST (STANDARD_CELL_CHARGE * 0.1)
 
 /obj/item/borg/stun
 	name = "electrically-charged arm"
