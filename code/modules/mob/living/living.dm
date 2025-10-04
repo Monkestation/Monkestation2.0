@@ -547,7 +547,7 @@
 /mob/living/incapacitated(flags)
     if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
         return TRUE
-    if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+    if(!(flags & IGNORE_GRAB) && pulledby?.grab_state >= GRAB_AGGRESSIVE)
         return TRUE
     if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
         return TRUE
