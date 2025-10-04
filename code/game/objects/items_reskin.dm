@@ -5,7 +5,7 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return NONE
 
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
+	if(!(item_flags  & INFINITE_RESKIN) && current_skin)
 		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(reskin_obj), user)
@@ -126,7 +126,7 @@
 /obj/item/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
+	if(!(item_flags  & INFINITE_RESKIN) && current_skin)
 		return FALSE
 	if(!istype(user))
 		return FALSE
