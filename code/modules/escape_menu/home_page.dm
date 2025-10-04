@@ -6,7 +6,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Resume",
-			/* offset = */ list(-136, 30),
+			/* offset = */ list(-116, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_resume)),
 		)
@@ -18,7 +18,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Settings",
-			/* offset = */ list(-171, 30),
+			/* offset = */ list(-151, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
@@ -30,7 +30,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Open Lootbox",
-			/* offset = */ list(-206, 28),
+			/* offset = */ list(-186, 28),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(try_open_lootbox)),
 		)
@@ -41,8 +41,20 @@
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
+			/* button_text = */ "Redeem Code",
+			/* offset = */ list(-221, 28),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(start_redeem)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/text/clickable(
+			null,
+			/* hud_owner = */ null,
+			/* escape_menu = */ src,
 			/* button_text = */ "Players",
-			/* offset = */ list(-241, 30),
+			/* offset = */ list(-256, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_player_list)),
 		)
@@ -54,7 +66,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Admin Help",
-			/* offset = */ list(-276, 30),
+			/* offset = */ list(-291, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_admin_page)),
 		)
@@ -66,7 +78,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Leave Body",
-			/* offset = */ list(-311, 30),
+			/* offset = */ list(-326, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_leave_body)),
 		)
@@ -188,15 +200,10 @@
 /datum/escape_menu/proc/try_open_lootbox()
 	client?.try_open_or_buy_lootbox()
 
-/datum/escape_menu/proc/home_open_character_settings()
-	client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	client?.prefs.update_static_data(client?.mob)
-	client?.prefs.ui_interact(client?.mob)
-	qdel(src)
+/datum/escape_menu/proc/start_redeem()
+	client?.redeem_code()
 
 /datum/escape_menu/proc/home_open_game_settings()
-	client?.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	client?.prefs.update_static_data(client?.mob)
 	client?.prefs.ui_interact(client?.mob)
 	qdel(src)
-
