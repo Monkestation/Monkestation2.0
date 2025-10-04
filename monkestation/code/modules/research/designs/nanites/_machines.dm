@@ -26,6 +26,14 @@
 	category = list(RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/nanite_chamber
+	name = "Machine Design (Public Nanite Chamber Board)"
+	desc = "The circuit board for a Public Nanite Chamber."
+	id = "public_nanite_chamber"
+	build_path = /obj/item/circuitboard/machine/public_nanite_chamber
+	category = list(RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/nanite_programmer
 	name = "Machine Design (Nanite Programmer Board)"
 	desc = "The circuit board for a Nanite Programmer."

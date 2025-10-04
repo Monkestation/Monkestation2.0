@@ -9,6 +9,7 @@
 		"nanite_comm_remote",
 		"nanite_scanner",
 		"nanite_chamber",
+		"public_nanite_chamber",
 		"nanite_chamber_control",
 		"nanite_programmer",
 		"nanite_program_hub",

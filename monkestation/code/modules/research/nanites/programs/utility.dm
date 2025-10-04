@@ -223,7 +223,7 @@
 	for(var/mob/living/carbon/human/nearby_humans in oview(5, host_mob))
 		if(!prob(25))
 			continue
-		if(!(nearby_humans.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES))
 			continue
 		target_hosts += nearby_humans
 	if(!target_hosts.len)
@@ -247,7 +247,7 @@
 	var/list/mob/living/carbon/human/target_hosts = list()
 	for(var/mob/living/carbon/human/nearby_humans in oview(1, host_mob))
 		var/datum/component/nanites/nanites = nearby_humans.GetComponent(/datum/component/nanites)
-		if(!(nearby_humans.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || nanites || !nearby_humans.Adjacent(host_mob))
+		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES) || nanites || !nearby_humans.Adjacent(host_mob))
 			continue
 		target_hosts += nearby_humans
 	if(!target_hosts.len)
@@ -458,7 +458,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 	var/mob/living/guy_we_are_stabbing = interacting_with
-	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(!(guy_we_are_stabbing.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES))
 		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
 		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)

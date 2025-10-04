@@ -70,3 +70,9 @@
 #define TECHWEB_NODE_NANITE_HAZARD "nanite_hazard"
 #define TECHWEB_NODE_NANITE_REPLICATION "nanite_replication_protocols"
 #define TECHWEB_NODE_NANITE_STORAGE "nanite_storage_protocols"
+
+///How long it takes to break out of a nanite chamber (including public)
+#define NANITE_CHAMBER_BREAKOUT_TIME (2 MINUTES)
+
+///The biotypes that are compatible to get nanites.
+#define NANITE_COMPATIBLE_BIOTYPES (MOB_ORGANIC|MOB_UNDEAD)

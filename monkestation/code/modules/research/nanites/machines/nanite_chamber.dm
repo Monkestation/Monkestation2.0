@@ -1,5 +1,3 @@
-#define NANITE_CHAMBER_BREAKOUT_TIME (2 MINUTES)
-
 /obj/machinery/nanite_chamber
 	name = "nanite chamber"
 	desc = "A device that can scan, reprogram, and inject nanites."
@@ -11,14 +9,16 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 50
-	active_power_usage = 300
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 3
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 
 	///The icon file used post-initialize, the default icon is used solely so it shows up in the R&D console.
+	///This is because this icon, which we actually use in game, is not 32x32.
 	var/chamber_icon = 'monkestation/icons/obj/machines/nanites/nanite_chamber.dmi'
 	///The nanite chamber control machine we're synced to.
 	var/obj/machinery/computer/nanite_chamber_control/linked_console
-	///The level of the scanning module installed in the nanite chamber.
+	///The level of the scanning module installed in the nanite chamber, which affects how good the linked console can scan your nanites.
 	var/scan_level
 	///Boolean on whether we're currently locked, preventing the machine from being opened/closed.
 	var/locked = FALSE
@@ -140,9 +140,10 @@
 	if(!busy && !locked)
 		. += "green"
 		return .
-	. += "red"
 	if(locked)
 		. += "bolted"
+		return .
+	. += "red"
 
 /obj/machinery/nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
