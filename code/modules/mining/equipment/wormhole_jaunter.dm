@@ -86,7 +86,7 @@
 
 /obj/item/wormhole_jaunter/equipped(mob/user, slot, initial)
 	. = ..()
-	if (slot & ITEM_SLOT_BELT)
+	if (slot & (ITEM_SLOT_BELT | ITEM_SLOT_LPOCKET | ITEM_SLOT_RPOCKET))
 		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED, PROC_REF(chasm_react))
 
 /obj/item/wormhole_jaunter/dropped(mob/user, silent)
