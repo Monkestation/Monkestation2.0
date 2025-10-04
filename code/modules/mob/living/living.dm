@@ -1332,7 +1332,7 @@
 		CRASH("Missing target arg for can_perform_action")
 
 	if(stat == DEAD)
-		to_chat(src, span_warning("You are not conscious enough for this action! [stat]"))
+		to_chat(src, span_warning("You are not conscious enough for this action!"))
 		return FALSE
 
 	if(incapacitated(action_bitflags))
