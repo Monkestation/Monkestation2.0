@@ -1,0 +1,4 @@
+author: "Infernal-0"
+delete-after: True
+changes:
+  - bugfix: "corrects the blueshield and marine armour worn sprite"

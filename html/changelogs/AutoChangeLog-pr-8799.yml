@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Power in several areas have been fixed, and the station should start to lose power by 9 minutes in, and start to depower by ~15 minutes."

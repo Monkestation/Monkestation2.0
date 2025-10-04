@@ -1,0 +1,11 @@
+author: "JupiterJaeden, Rhials, MrMelbert"
+delete-after: True
+changes:
+  - rscadd: "Adds the bluespace grounder implant, an implant that prevents the implantee from teleporting or jaunting by most means. When teleported, the implantee will be hardstunned for a few seconds instead. Purchasable from cargo, and all armories start with a box of them."
+  - rscadd: "Like tracker implants, chemical implants & bluespace grounder implants may now be harmlessly self-destructed at the Prisoner Management Console."
+  - balance: "The exile implant now prevents implantees from operating lavaland shuttle controls."
+  - code_imp: "The HUD slots for chem/tracking implants have been converted to display any implant with the IMPLANT_TYPE_SECURITY flag and an associated sprite."
+  - image: "Exile implants and bluespace grounders now have their own new sechud icons, green and dark blue respectively."
+  - spellcheck: "Modifies various implant pad readouts, removing false information and rewriting some sections."
+  - map: "Standardizes heliostation armory, adding pacos and removing a couple extra guns."
+  - balance: "Changes combat knives crates to general secoff level access instead of armory level access."

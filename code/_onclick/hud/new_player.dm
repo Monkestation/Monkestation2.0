@@ -351,7 +351,13 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("https://discord.monkestation.com")
+	var/discordurl = CONFIG_GET(string/discordurl)
+	if (!discordurl)
+		to_chat(hud.mymob, span_warning("The server does not have a Discord link configured!"))
+		return
+
+	to_chat(hud.mymob, span_notice("Opening <a href='[discordurl]'>[discordurl]</a> in your browser... If it doesn't work, try copying and pasting it into your browser."))
+	hud.mymob.client << link(discordurl)
 
 /atom/movable/screen/lobby/button/twitch
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

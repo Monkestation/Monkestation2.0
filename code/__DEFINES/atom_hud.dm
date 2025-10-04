@@ -9,14 +9,14 @@
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
-/// wanted, released, parroled, security status
+/// wanted, released, paroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// mindshield implant
 #define IMPLOYAL_HUD "5"
-/// chemical implant
-#define IMPCHEM_HUD "6"
-/// tracking implant
-#define IMPTRACK_HUD "7"
+/// first security implant
+#define IMPSEC_FIRST_HUD "6"
+/// second security implant
+#define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
 /// Silicon health bar

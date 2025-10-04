@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Made various adjustments to how the storyteller determines the antag amount."
+  - bugfix: "Fixed the xenomorph \"escape captivity\" objective always failing."
