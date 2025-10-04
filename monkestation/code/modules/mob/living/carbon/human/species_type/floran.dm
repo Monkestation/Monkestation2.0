@@ -9,6 +9,7 @@
 		TRAIT_NO_JUMPSUIT,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_SPLEENLESS_METABOLISM,
+		TRAIT_LEAFED,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
