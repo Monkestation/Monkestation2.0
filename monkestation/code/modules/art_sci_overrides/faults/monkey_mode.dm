@@ -54,7 +54,7 @@
 	. = 0
 	for(var/mob/living/monke as anything in spawned_monkeys)
 		if(QDELETED(monke))
-			return
+			continue
 		if(monke.stat == DEAD) // dead monkeys only count half
 			. += 0.5
 		else
