@@ -47420,7 +47420,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "kZC" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "kZH" = (

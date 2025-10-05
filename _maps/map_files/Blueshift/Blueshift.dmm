@@ -3404,7 +3404,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "aHV" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron,
 /area/station/medical/cryo)
 "aHY" = (

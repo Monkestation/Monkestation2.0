@@ -39198,7 +39198,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "lxv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/treatment_center)
 "lxN" = (

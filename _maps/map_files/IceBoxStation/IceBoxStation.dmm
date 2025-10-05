@@ -33775,7 +33775,7 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "krx" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -59564,7 +59564,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "slK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

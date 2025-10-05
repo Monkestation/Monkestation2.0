@@ -48515,7 +48515,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "sUV" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
@@ -55497,7 +55497,7 @@
 /turf/open/floor/iron/dark,
 /area/graveyard/bunker/command)
 "vCI" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
