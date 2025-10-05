@@ -62,7 +62,7 @@
 				/* hud_owner = */ null,
 				/* escape_menu = */ src,
 				/* button_text = */ "No Admins Online!",
-				/* offset = */ list(-10, 0),
+				/* offset = */ list(-10, -30),
 			)
 		)
 
