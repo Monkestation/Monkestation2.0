@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	base_icon_state = "slime_panel"
 	icon_state = "slime_panel"
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	var/obj/machinery/plumbing/ooze_sucker/linked_sucker
 	var/datum/corral_data/linked_data

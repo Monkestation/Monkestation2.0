@@ -2461,17 +2461,20 @@
 "aPW" = (
 /obj/structure/table,
 /obj/item/storage/box/chemimp{
-	pixel_x = 6
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/item/storage/box/trackimp{
-	pixel_x = -3
+	pixel_x = -5;
+	pixel_y = 6
 	},
-/obj/item/storage/lockbox/loyalty,
 /obj/machinery/light_switch/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "aQe" = (

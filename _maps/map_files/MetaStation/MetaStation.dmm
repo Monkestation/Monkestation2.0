@@ -42854,11 +42854,18 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/storage/box/trackimp,
-/obj/item/storage/lockbox/loyalty,
+/obj/item/storage/box/trackimp{
+	pixel_x = -8;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/item/storage/box/teleport_blocker{
+	pixel_x = 0;
+	pixel_y = -2
+	},
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oJD" = (
@@ -52048,11 +52055,6 @@
 /area/station/command/bridge)
 "rRf" = (
 /obj/structure/rack,
-/obj/item/grenade/barrier{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/grenade/barrier,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
@@ -52063,14 +52065,6 @@
 	pixel_y = 3
 	},
 /obj/item/gun/ballistic/shotgun/riot,
-/obj/item/grenade/barrier{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "rRB" = (
@@ -65280,19 +65274,23 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/rack,
-/obj/item/storage/box/chemimp{
-	pixel_x = 0;
-	pixel_y = 8
-	},
-/obj/item/storage/box/trackimp{
-	pixel_x = -6;
-	pixel_y = -3
-	},
 /obj/item/storage/box/handcuffs{
-	pixel_y = -4;
-	pixel_x = 8
+	pixel_y = 7;
+	pixel_x = -7
 	},
-/obj/item/storage/lockbox/loyalty,
+/obj/item/grenade/barrier{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/grenade/barrier{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/grenade/barrier,
+/obj/item/grenade/barrier{
+	pixel_x = -3;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wzH" = (

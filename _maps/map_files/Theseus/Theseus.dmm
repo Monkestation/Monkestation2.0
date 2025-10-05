@@ -80713,21 +80713,24 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xsi" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/lockbox/loyalty{
-	pixel_y = 17
-	},
 /obj/item/storage/box/chemimp{
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 9
 	},
 /obj/item/storage/box/trackimp{
-	pixel_y = 6
+	pixel_y = 9;
+	pixel_x = -7
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/end{
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = 1;
+	pixel_x = 0
+	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "xsl" = (

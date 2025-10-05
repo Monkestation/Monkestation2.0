@@ -12,7 +12,7 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	icon = 'monkestation/code/modules/microfusion/icons/microfusion_cells.dmi'
 	icon_state = "microfusion"
 	w_class = WEIGHT_CLASS_NORMAL
-	maxcharge = 1200 //12 shots
+	maxcharge = STANDARD_CELL_CHARGE * 0.012 //12 shots
 	chargerate = 0 //MF cells should be unable to recharge if they are not currently inside of an MCR
 	microfusion_readout = TRUE
 	empty = TRUE //MF cells should start empty
@@ -169,7 +169,7 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	name = "makeshift microfusion cell"
 	desc = "An... Apparatus, comprised of an everyday aluminum can with several civilian-grade batteries tightly packed together and plugged in. This vaguely resembles a microfusion cell, if you tilt your head to a precise fifty degree angle. While the effects on enemy combatants may be dubious, it will certainly do incredible damage to the gun's warranty. What the hell were you thinking when you came up with this?"
 	icon_state = "microfusion_makeshift"
-	maxcharge = 600
+	maxcharge = STANDARD_CELL_CHARGE * 0.06
 	max_attachments = 0
 
 /obj/item/stock_parts/power_store/cell/microfusion/makeshift/use(amount, force)
@@ -181,26 +181,26 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 	name = "enhanced microfusion cell"
 	desc = "A second generation microfusion cell, weighing about the same as the standard-issue cell and having the same space for attachments; however, it has a higher capacity."
 	icon_state = "microfusion_enhanced"
-	maxcharge = 1500
+	maxcharge = STANDARD_CELL_CHARGE * 0.15
 
 /obj/item/stock_parts/power_store/cell/microfusion/advanced
 	name = "advanced microfusion cell"
 	desc = "A third generation microfusion cell, boasting a much higher shot count. Additionally, these come with support for up to three modifications to the cell itself."
 	icon_state = "microfusion_advanced"
-	maxcharge = 1700
+	maxcharge = STANDARD_CELL_CHARGE * 0.17
 	max_attachments = 3
 
 /obj/item/stock_parts/power_store/cell/microfusion/bluespace
 	name = "bluespace microfusion cell"
 	desc = "A fourth generation microfusion cell, employing bluespace technology to store power in a medium that's bigger on the inside. This has capacity for four modifications to the cell."
 	icon_state = "microfusion_bluespace"
-	maxcharge = 2000
+	maxcharge = STANDARD_CELL_CHARGE * 0.2
 	max_attachments = 4
 
 /obj/item/stock_parts/power_store/cell/microfusion/nanocarbon
 	name = "nanocarbon fusion cell"
 	desc = "This cell combines both top-of-the-line nanotech and advanced microfusion power to brute force the most common issue of Nanotrasen Asset Protection operatives, ammunition, through sheer volume. Intended for use with Nanotrasen-brand capacitor arrays only. Warranty void if dropped in toilet."
 	icon_state = "microfusion_nanocarbon"
-	maxcharge = 30000
+	maxcharge = STANDARD_CELL_CHARGE * 3
 	max_attachments = 420
 

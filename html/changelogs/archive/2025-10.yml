@@ -68,10 +68,69 @@
   Absolucy:
   - bugfix: You can now drag and drop plants into a composter on the other side of
       the room again.
+  - qol: Construction bags can now hold meteor sat capsules.
   EatsTheGrapes:
   - bugfix: Overclocked volume pumps no longer leak through walls or sealed structures.
   - refactor: Cleaned up volume pump code by splitting into helper procs and replacing
       magic numbers with defines.
+  SirNightKnight:
+  - bugfix: fixes cargorilla interactions with crates not working properly.
+  - bugfix: fixed cluwne brain traumas not being removed when the curse is lifted.
+  - balance: honkerblasts don't tie your laces anymore.
   SyncIt21, Xander3359:
   - bugfix: Fix being able to charge guns with an inducer
   - bugfix: Fix being able to charge space suits with an inducer
+  TheColorCyan:
+  - bugfix: fixed clock cult not gaining power from integration cogs and softlocking
+      the cult
+2025-10-04:
+  Absolucy:
+  - rscadd: You can now yell "SHIT YOURSELF, NOW" with voice of god to make people
+      superfart.
+  - balance: Made various adjustments to how the storyteller determines the antag
+      amount.
+  - bugfix: Fixed the xenomorph "escape captivity" objective always failing.
+  - balance: Wormhole jaunters now protect from chasms while in your pocket.
+  Infernal-0:
+  - bugfix: corrects the blueshield and marine armour worn sprite
+  JohnFulpWillard:
+  - bugfix: Power in several areas have been fixed, and the station should start to
+      lose power by 9 minutes in, and start to depower by ~15 minutes.
+  JupiterJaeden:
+  - balance: The frequency of chest disembowelment wounds has been substantially reduced.
+  JupiterJaeden, Rhials, MrMelbert:
+  - rscadd: Adds the bluespace grounder implant, an implant that prevents the implantee
+      from teleporting or jaunting by most means. When teleported, the implantee will
+      be hardstunned for a few seconds instead. Purchasable from cargo, and all armories
+      start with a box of them.
+  - rscadd: Like tracker implants, chemical implants & bluespace grounder implants
+      may now be harmlessly self-destructed at the Prisoner Management Console.
+  - balance: The exile implant now prevents implantees from operating lavaland shuttle
+      controls.
+  - code_imp: The HUD slots for chem/tracking implants have been converted to display
+      any implant with the IMPLANT_TYPE_SECURITY flag and an associated sprite.
+  - image: Exile implants and bluespace grounders now have their own new sechud icons,
+      green and dark blue respectively.
+  - spellcheck: Modifies various implant pad readouts, removing false information
+      and rewriting some sections.
+  - map: Standardizes heliostation armory, adding pacos and removing a couple extra
+      guns.
+  - balance: Changes combat knives crates to general secoff level access instead of
+      armory level access.
+  notghosti:
+  - balance: Mommi Shrink will only make you a 1/4th of your original size.
+2025-10-05:
+  SirNightKnight:
+  - bugfix: fixed item reskinning not working again.
+  ThePooba:
+  - bugfix: darkspawn can no longer reach like 90% damage reduction
+  - bugfix: removed double defined crew species paychecks
+  - bugfix: coffins now have proper sprites
+  - bugfix: darkspawn ui now updates properly and doesnt freak the fuck out if you
+      run out of willpower
+  - bugfix: darkspawn crawling shadow now causes you to take damage equal to a percent
+      of its missing health on destruction as brute.
+  Tractor-Maam:
+  - bugfix: remote injectors, patchers, and factories now print their components again.
+  notghosti:
+  - bugfix: Blueshield modified hellfire will once again only have 13 shots. How 'lucky'
