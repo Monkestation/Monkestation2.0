@@ -56,6 +56,8 @@
 	var/list/actions_given = list()
 	/// Cooldown for balloon alerts when being melted from water exposure.
 	COOLDOWN_DECLARE(water_alert_cooldown)
+	/// Cooldown for balloon alerts when being melted from starvation.
+	COOLDOWN_DECLARE(starvation_alert_cooldown)
 	/// Cooldown for balloon alerts when being melted from being dripping wet.
 	COOLDOWN_DECLARE(wet_alert_cooldown)
 
@@ -126,15 +128,17 @@
 /datum/species/oozeling/proc/spec_slime_hunger(mob/living/carbon/human/slime, seconds_per_tick)
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
 		slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
-		if(SPT_PROB(2.5, seconds_per_tick))
+		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
 			to_chat(slime, span_danger("You're starving! Get some food!"))
 			slime.balloon_alert(slime, "you're starving!")
+			COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
 	else
 		if(SPT_PROB(17.5, seconds_per_tick))
 			slime.blood_volume = max(slime.blood_volume - seconds_per_tick, 0)
-		if(SPT_PROB(5, seconds_per_tick))
-			to_chat(slime, span_warning("You're feeling pretty hungry..."))
-			slime.balloon_alert(slime, "you're pretty hungry...")
+			if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
+				to_chat(slime, span_warning("You're feeling pretty hungry..."))
+				slime.balloon_alert(slime, "you're pretty hungry...")
+				COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
 
 ///////
 /// CHEMICAL HANDLING
