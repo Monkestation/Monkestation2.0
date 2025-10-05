@@ -223,7 +223,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING
 	start_hidden = TRUE
 	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
@@ -421,7 +421,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"
@@ -452,7 +452,7 @@
 	plane = HUD_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/above_hud
 	name = "Above HUD"
@@ -460,7 +460,7 @@
 	plane = ABOVE_HUD_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "Splashscreen"
@@ -468,7 +468,7 @@
 	plane = SPLASHSCREEN_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/escape_menu
 	name = "Escape Menu"
@@ -476,7 +476,7 @@
 	plane = ESCAPE_MENU_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/escape_menu/show_to(mob/mymob)
 	. = ..()
@@ -535,7 +535,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = WEATHER_RENDER_TARGET
 	render_relay_planes = list() //Used as alpha filter for weather_effect fullscreen
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	critical = PLANE_CRITICAL_DISPLAY
 
 
@@ -554,7 +554,7 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_planes = list(RENDER_PLANE_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	critical = PLANE_CRITICAL_DISPLAY
 	var/z_type = "Default"
 
