@@ -1,5 +1,5 @@
 /// The size of the gaussian blur applied to the screen when flashed.
-#define FLASH_BLUR_AMOUNT 10
+#define FLASH_BLUR_AMOUNT 50
 /// The time it takes for the flash blur to fully "fade in" to full intensity
 #define FLASH_BLUR_FADE_IN_TIME (0.5 SECONDS)
 /// The time it takes for the flash blur to fade out to remove the blur.
@@ -62,7 +62,7 @@
 	if(!owner.hud_used || QDELETED(src))
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	game_plane_master_controller.add_filter("flash_blur", 10, gauss_blur_filter(size =FLASH_BLUR_AMOUNT))
+	game_plane_master_controller.add_filter("flash_blur", 10, gauss_blur_filter(size = FLASH_BLUR_AMOUNT))
 
 /datum/status_effect/flash_blur/proc/remove_owner_timer()
 	if(!owner.flash_timer)
