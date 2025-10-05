@@ -120,8 +120,21 @@
   notghosti:
   - balance: Mommi Shrink will only make you a 1/4th of your original size.
 2025-10-05:
+  Absolucy:
+  - balance: Oozelings will now begin to lose blood if they're starving, as intended.
+  - bugfix: You can no longer use spray paint or soap to undo window polarization.
   SirNightKnight:
   - bugfix: fixed item reskinning not working again.
+  - bugfix: fixed impressa coffeemakers not making coffee.
+  - bugfix: standardized coffee cups in coffeemakers and pass flags. (you can put
+      regular coffeemakers on tables)
+  - bugfix: crayons are edible again.
+  - bugfix: fixed interacting while incapacitated.
+  - balance: you can now officially open storage and use items in soft crit
+  - qol: washing machines don't delete dyes anymore.
+  TheColorCyan:
+  - bugfix: fixed xenos being unable to properly interact with airlocks
+  - bugfix: fixed stacking machine on labor camp not accepting sheets
   ThePooba:
   - bugfix: darkspawn can no longer reach like 90% damage reduction
   - bugfix: removed double defined crew species paychecks
