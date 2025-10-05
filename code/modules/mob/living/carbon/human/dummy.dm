@@ -163,7 +163,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	palette.mutant_color = COLOR_VIBRANT_LIME
 	palette.mutant_color_secondary = COLOR_VIBRANT_LIME
 	palette.ethereal_color = COLOR_WHITE
-	pallete.pod_color= COLOR_VERY_DARK_LIME_GREEN
+	pallete.pod_color = COLOR_VERY_DARK_LIME_GREEN
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
