@@ -29,6 +29,7 @@
 		// Engineering
 		/datum/job/atmospheric_technician,
 		/datum/job/station_engineer,
+		/datum/job/machinist,
 		// Medical
 		/datum/job/chemist,
 		/datum/job/doctor,
