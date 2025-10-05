@@ -74,7 +74,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi' // Just some temporary sprites because I don't have any unique one yet
 	icon_state = "mecha_clamp"
 	/// How much power does it draw per operation?
-	var/charge_cost = 20
+	var/charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	/// How many items can it hold at once in its internal storage?
 	var/storage_capacity = 5
 	/// Does it require the items it takes in to be wrapped in paper wrap? Can have unforeseen consequences, change to FALSE at your own risks.
@@ -445,7 +445,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(10))
+		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
 			to_chat(user, span_warning("Not enough power."))
 			return FALSE
 		shoot(target, user, click_params)

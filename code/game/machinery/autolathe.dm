@@ -3,8 +3,8 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
-	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	///Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	active_power_usage = 0.025 * STANDARD_CELL_RATE
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS

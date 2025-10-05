@@ -86859,12 +86859,12 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = -11
+	},
 /obj/item/clothing/mask/gas/sechailer{
 	pixel_x = -3;
 	pixel_y = 3
-	},
-/obj/item/storage/lockbox/loyalty{
-	pixel_y = -11
 	},
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
@@ -86881,6 +86881,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/item/storage/box/teleport_blocker,
 /obj/item/storage/box/teargas{
 	pixel_x = 6;
 	pixel_y = -6

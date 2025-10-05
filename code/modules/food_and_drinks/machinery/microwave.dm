@@ -14,6 +14,9 @@
 /// The max amount of dirtiness a microwave can be
 #define MAX_MICROWAVE_DIRTINESS 100
 
+/// For the wireless version, and display fluff
+#define TIER_1_CELL_CHARGE_RATE (0.25 * STANDARD_CELL_CHARGE)
+
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
@@ -141,6 +144,13 @@
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
+	if(vampire_charging_capable)
+		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave™ allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the charge mode.")
+		. += span_info("Because nothing says 'future' like charging your PDA while overcooking your leftovers. Nanotrasen Wave™ - Multitasking, redefined.")
+
+	if(cell_powered)
+		. += span_notice("This model is wireless, powered by portable cells. [isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell."]")
+
 	if(!operating)
 		. += span_notice("Right-click [src] to turn it on.")
 
@@ -172,7 +182,10 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
 		"[span_notice("- Capacity: <b>[max_n_of_items]</b> items.")]\n"+\
-		span_notice("- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.")
+		span_notice("- Power: <b>[efficiency * TIER_1_CELL_CHARGE_RATE]W</b>.")
+
+		if(cell_powered)
+			. += span_notice("- Charge: <b>[isnull(cell) ? "INSERT CELL" : "[round(cell.percent())]%"]</b>.")
 
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 
@@ -490,6 +503,11 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		balloon_alert(cooker, "no power draw!")
+		return
+
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
@@ -521,9 +539,13 @@
 	start(cooker)
 
 /obj/machinery/microwave/proc/wzhzhzh()
+	if(cell_powered && !isnull(cell))
+		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			return
+
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
-
 	set_light(1.5)
 	soundloop.start()
 	update_appearance()
@@ -704,3 +726,4 @@
 #undef REALLY_BROKEN
 
 #undef MAX_MICROWAVE_DIRTINESS
+#undef TIER_1_CELL_CHARGE_RATE

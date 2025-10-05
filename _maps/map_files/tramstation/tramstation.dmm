@@ -70592,13 +70592,16 @@
 "uPZ" = (
 /obj/structure/table,
 /obj/item/storage/box/chemimp{
-	pixel_x = 6
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /obj/item/storage/box/trackimp{
-	pixel_x = -3
+	pixel_x = -7;
+	pixel_y = 7
 	},
-/obj/item/storage/lockbox/loyalty,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "uQf" = (
