@@ -1,5 +1,5 @@
 /datum/quirk/psychic_blank
-	name = "Chriopteran Antipsyonic Tutelidge"
+	name = "Chriopteran Antipsionic Tutelidge"
 	desc = "Your enemies won't bother with mind reading. You can block it with a technique you learned in Space Tibet."
 	icon = FA_ICON_BRAIN
 	value = 4
