@@ -5,7 +5,7 @@
 	///Color of Monkey and Simian's fur, defaulted to Monkey-Brown.
 	var/fur_color = COLOR_MONKEY_BROWN
 	var/ethereal_color
-	var/pod_color = COLOR_VERY_DARK_LIME_GREEN
+	var/pod_color
 
 /datum/color_palette/generic_colors/apply_prefs(datum/preferences/incoming)
 	hair_color = incoming.read_preference(/datum/preference/color/hair_color)
