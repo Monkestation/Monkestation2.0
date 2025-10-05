@@ -118,17 +118,18 @@
 		return
 
 	if(wetness.stacks > DAMAGE_WATER_STACKS)
-		slime.blood_volume = max(slime.blood_volume - (2 * seconds_per_tick), 0)
+		remove_blood_volume(2 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
-		slime.blood_volume = max(slime.blood_volume - (1 * seconds_per_tick), 0)
+		remove_blood_volume(seconds_per_tick)
 		slime.balloon_alert(slime, "you're dripping wet!")
 
 /// Handles slimes losing blood from starving.
 /datum/species/oozeling/proc/spec_slime_hunger(mob/living/carbon/human/slime, seconds_per_tick)
+	// don't bother with using remove_blood_volume as this doesn't proc for bloodsuckers anyways
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
 		slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
 		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
@@ -142,6 +143,16 @@
 				to_chat(slime, span_warning("You're feeling pretty hungry..."))
 				slime.balloon_alert(slime, "you're pretty hungry...")
 				COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
+
+/// Stupid workaround proc so that bloodsucker oozelings also have their blood volume removed
+/datum/species/oozeling/proc/remove_blood_volume(mob/living/carbon/human/slime, amount)
+	if(!IS_FINITE(amount))
+		CRASH("Tried to remove non-finite amount of blood from an oozeling")
+	var/datum/antagonist/bloodsucker/slimesucker = IS_BLOODSUCKER(slime)
+	if(slimesucker)
+		slimesucker.AddBloodVolume(-amount)
+	else
+		slime.blood_volume = max(slime.blood_volume - amount, 0)
 
 ///////
 /// CHEMICAL HANDLING
@@ -208,7 +219,7 @@
 	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
-	slime.blood_volume = max(slime.blood_volume - (30 * water_multiplier), 0)
+	remove_blood_volume(30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
@@ -252,7 +263,7 @@
 		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		slime.blood_volume = max(slime.blood_volume - (3 * seconds_per_tick), 0)
+		remove_blood_volume(3 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
