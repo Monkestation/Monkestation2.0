@@ -1382,4 +1382,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
+/// cant psy em cause they psy resistant
+#define TRAIT_PSYCHIC_BLANK "psychic_blank"
 // END TRAIT DEFINES

@@ -1775,6 +1775,7 @@
 #include "code\datums\quirks\positive_quirks\jolly.dm"
 #include "code\datums\quirks\positive_quirks\light_step.dm"
 #include "code\datums\quirks\positive_quirks\mime_fan.dm"
+#include "code\datums\quirks\positive_quirks\mind_reading_proof.dm"
 #include "code\datums\quirks\positive_quirks\musician.dm"
 #include "code\datums\quirks\positive_quirks\poster_boy.dm"
 #include "code\datums\quirks\positive_quirks\pro_skater.dm"
