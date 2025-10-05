@@ -530,7 +530,7 @@
 	check_empty(user)
 	return
 
-/obj/item/toy/crayon/attack(mob/target, mob/user)
+/obj/item/toy/crayon/attack(mob/target, mob/living/user)
 	if(!edible || (target != user) || !iscarbon(user))
 		return ..()
 	var/covered = ""
