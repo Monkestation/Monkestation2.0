@@ -158,7 +158,7 @@
 	pixel_y = 5
 	},
 /obj/item/storage/toolbox/syndicate,
-/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/power_store/cell/infinite,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aT" = (
@@ -2000,7 +2000,7 @@
 /area/station/bitrunning/den)
 "sH" = (
 /obj/structure/table,
-/obj/item/storage/box/debugtools,
+/obj/item/storage/box/debugbox/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "sU" = (
@@ -2438,9 +2438,9 @@
 "Ov" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/bluespace,
-/obj/item/stock_parts/cell/bluespace,
-/obj/item/stock_parts/cell/bluespace,
+/obj/item/stock_parts/power_store/cell/bluespace,
+/obj/item/stock_parts/power_store/cell/bluespace,
+/obj/item/stock_parts/power_store/cell/bluespace,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "OU" = (

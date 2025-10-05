@@ -101,14 +101,14 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/cell in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/cell in owner.get_all_contents())
 		if(cell.used_charge())
 			batteries += cell
 
 	if(!length(batteries))
 		return
 
-	var/obj/item/stock_parts/cell/cell = pick(batteries)
+	var/obj/item/stock_parts/power_store/cell/cell = pick(batteries)
 	cell.give(cell.maxcharge * 0.1)
 
 ///Does a few things to try to help you live whatever you may be going through
@@ -172,6 +172,7 @@
 /obj/item/organ/internal/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
+	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive

@@ -100,7 +100,7 @@
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
 	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
-	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
+	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE, hidden = TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
 		return
@@ -142,7 +142,7 @@
 /datum/action/cooldown/bloodsucker/feed/proc/check_for_masquerade_infraction(mob/living/viewer, recursed = FALSE)
 	if(QDELETED(viewer) || !viewer.ckey || QDELETED(viewer.client) || viewer.client?.is_afk())
 		return FALSE
-	if(viewer.has_unlimited_silicon_privilege)
+	if(HAS_SILICON_ACCESS(viewer))
 		return FALSE
 	if(viewer.stat >= DEAD)
 		return FALSE

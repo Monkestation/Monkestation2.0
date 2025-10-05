@@ -24,7 +24,6 @@
 	inhand_icon_state = "hyeseong_kill"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/saibasan/guns_worn.dmi'
 	worn_icon_state = "hyeseong_kill"
-	cell_type = /obj/item/stock_parts/cell/hyeseong_internal_cell
 	modifystate = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/cybersun_big_kill)
 	can_select = FALSE
@@ -102,9 +101,9 @@
 	QDEL_NULL(tracked_soulcatcher)
 	return ..()
 
-/obj/item/gun/energy/modular_laser_rifle/AltClick(mob/user)
+/obj/item/gun/energy/modular_laser_rifle/click_alt(mob/user)
 	tracked_soulcatcher?.ui_interact(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Handles filling out all of the lists regarding weapon modes and radials around that
 /obj/item/gun/energy/modular_laser_rifle/proc/create_weapon_mode_stuff()
@@ -230,12 +229,6 @@
 	speak_up("[personality_mode ? "pickup" : "putdown"]", ignores_personality_toggle = TRUE)
 	return ..()
 
-// Power cell for the big rifle
-/obj/item/stock_parts/cell/hyeseong_internal_cell
-	name = "\improper Hyeseong modular laser rifle internal cell"
-	desc = "These are usually supposed to be inside of the gun, you know."
-	maxcharge = 1000 * 2
-
 /datum/action/item_action/toggle_personality
 	name = "Toggle Weapon Personality"
 	desc = "Toggles the weapon's personality core. Studies find that turning them off makes them quite sad, however."
@@ -254,7 +247,6 @@
 	worn_icon_state = "hoshi_kill"
 	base_icon_state = "hoshi"
 	charge_sections = 3
-	cell_type = /obj/item/stock_parts/cell
 	ammo_type = list(/obj/item/ammo_casing/energy/cybersun_small_hellfire)
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	SET_BASE_PIXEL(0, 0)
@@ -290,7 +282,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_kill
 	projectile_type = /obj/projectile/beam/cybersun_laser
-	e_cost = 200
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	select_name = "Kill"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/laser.ogg'
 
@@ -306,7 +298,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_sniper
 	projectile_type = /obj/projectile/beam/cybersun_laser/marksman
-	e_cost = 300
+	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE)
 	select_name = "Marksman"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/vaporize.ogg'
 
@@ -323,7 +315,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_disabler
 	projectile_type = /obj/projectile/beam/cybersun_laser/disable
-	e_cost = 75
+	e_cost = LASER_SHOTS(26, STANDARD_CELL_CHARGE)
 	select_name = "Disable"
 	harmful = FALSE
 
@@ -338,7 +330,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_launcher
 	projectile_type = /obj/projectile/beam/cybersun_laser/granata
-	e_cost = 400
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	select_name = "Launcher"
 
 /obj/projectile/beam/cybersun_laser/granata
@@ -390,7 +382,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_big_shotgun
 	projectile_type = /obj/projectile/beam/cybersun_laser/granata_shrapnel/shotgun_pellet
-	e_cost = 100
+	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	pellets = 5
 	variance = 30
 	select_name = "Shotgun"
@@ -408,7 +400,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_hellfire
 	projectile_type = /obj/projectile/beam/cybersun_laser/hellfire
-	e_cost = 100
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "Incinerate"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/laser_firing/incinerate.ogg'
 
@@ -424,7 +416,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_disabler
 	projectile_type = /obj/projectile/beam/cybersun_laser/disable_bounce
-	e_cost = 100
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "Disable"
 	harmful = FALSE
 
@@ -504,7 +496,7 @@
 
 /obj/item/ammo_casing/energy/cybersun_small_shotgun
 	projectile_type = /obj/projectile/beam/cybersun_laser/granata_shrapnel/shotgun_pellet
-	e_cost = 100
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	pellets = 3
 	variance = 15
 	select_name = "Shotgun"
@@ -548,7 +540,7 @@
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
 	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v8 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
-	cell_type = /obj/item/stock_parts/cell/lawbringer
+	cell_type = /obj/item/stock_parts/power_store/cell/lawbringer
 	icon = 'monkestation/code/modules/security/icons/lawbringer.dmi'
 	icon_state = "lawbringer"
 	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
@@ -769,7 +761,7 @@
 		calmlevel = roll(5)
 		anger = max(anger - calmlevel, 0)
 	anger = anger+5
-	var/obj/item/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell/cell = get_cell()
 	if(anger > 20)
 		if(prob(anger-20))
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, -2)
@@ -860,7 +852,7 @@
 	human_user.electrocute_act(10, "lawbringer deterrant") //mister electric kill this man
 
 /////PROJECTILES AND AMMO/////
-/obj/item/stock_parts/cell/lawbringer
+/obj/item/stock_parts/power_store/cell/lawbringer
 	name = "Lawbringer power cell"
 	maxcharge = 3000
 

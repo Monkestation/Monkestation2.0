@@ -98,6 +98,7 @@
 	log_game("DYNAMIC: [key_name(selected_mobs)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	return TRUE
 
+/*
 //////////////////////////////////////////////
 //                                          //
 //          LATEJOIN BLOODSUCKER            //
@@ -136,3 +137,4 @@
 		message_admins("[ADMIN_LOOKUPFLW(candidate_mind)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 		log_game("DYNAMIC: [key_name(candidate_mind)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	return TRUE
+*/

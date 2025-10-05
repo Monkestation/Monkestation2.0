@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
-/datum/antagonist/ui_act(action, params)
+/datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -498,6 +498,18 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 		return null
 
 	return finish_preview_icon(render_preview_outfit(preview_outfit))
+
+/// Returns TRUE if this antag should count against the antag cap, FALSE otherwise.
+/datum/antagonist/proc/should_count_for_antag_cap()
+	if(!count_against_dynamic_roll_chance || (antag_flags & (ANTAG_FAKE | FLAG_ANTAG_CAP_IGNORE)))
+		return FALSE
+	var/mob/antag_mob = owner.current
+	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
+		return FALSE
+	// don't count admins mucking around on centcom or whatever
+	if(istype(get_area(antag_mob), /area/centcom))
+		return FALSE
+	return TRUE
 
 /datum/antagonist/proc/edit_memory(mob/user)
 	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)

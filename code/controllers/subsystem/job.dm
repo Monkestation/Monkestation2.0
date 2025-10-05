@@ -920,13 +920,19 @@ SUBSYSTEM_DEF(job)
 
 /atom/proc/JoinPlayerHere(mob/joining_mob, buckle)
 	// By default, just place the mob on the same turf as the marker or whatever.
-	joining_mob.forceMove(get_turf(src))
+	// Set joining_mob as the new mob so subtypes can use it as a proper mob.
+	if(ispath(joining_mob))
+		joining_mob = new joining_mob(get_turf(src))
+	else
+		joining_mob.forceMove(get_turf(src))
+	return joining_mob
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
+	var/mob/created_joining_mob = ..()
 	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
-	if(buckle && isliving(joining_mob))
-		buckle_mob(joining_mob, FALSE, FALSE)
+	if(buckle && isliving(created_joining_mob))
+		buckle_mob(created_joining_mob, FALSE, FALSE)
+	return created_joining_mob
 
 
 /atom/proc/JoinLaunchTowards(mob/joining_mob, obj/effect/oshan_launch_point/player/launched_point)

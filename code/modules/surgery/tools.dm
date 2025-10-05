@@ -602,7 +602,7 @@
 	data["whitelist"] = chem_names
 	return data
 
-/obj/item/blood_filter/ui_act(action, params)
+/obj/item/blood_filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -219,9 +219,22 @@
 /datum/job/proc/special_config_check()
 	return FALSE
 
-/mob/living/proc/on_job_equipping(datum/job/equipping)
+/mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	return
 
+/mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
+	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	var/obj/item/hat_to_use = null
+
+	// We want the last hat in the list to match the behaviour of humanoid loadouts
+	for (var/datum/loadout_item/head/item in loadout_datums)
+		if (ispath(item.item_path, /obj/item))
+			var/obj/item/hat = new item.item_path()
+			if (hat.slot_flags & ITEM_SLOT_HEAD)
+				hat_to_use = hat
+
+	if (hat_to_use)
+		place_on_head(hat_to_use)
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
@@ -569,8 +582,7 @@
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob)
 	else
-		spawn_instance = new spawn_type(player_client.mob.loc)
-		spawn_point.JoinPlayerHere(spawn_instance, TRUE)
+		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -690,3 +702,19 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+///Returns a string that will be used for the contents of an employment contract.
+/datum/job/proc/employment_contract_contents(employee_name)
+	SHOULD_CALL_PARENT(FALSE)
+
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as SLAVE), \
+	and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).\
+	<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, \
+	who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, \
+	in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, \
+	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"

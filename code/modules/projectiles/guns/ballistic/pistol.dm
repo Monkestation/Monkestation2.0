@@ -473,21 +473,24 @@
 		overlay_x = 15, \
 		overlay_y = 13)
 
-/obj/item/gun/ballistic/automatic/pistol/paco/AltClick(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
-	if(has_stripe && TIMER_COOLDOWN_FINISHED(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
-		TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
-		playsound(src, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
-		balloon_alert_to_viewers("[user] starts picking at the Paco's stripe!")
-		if(do_after(user, 6 SECONDS))
-			has_stripe = FALSE
-			obj_flags = UNIQUE_RENAME
-			desc += " You figure there's ample room to engrave something nice on it, but know that it'd offer no tactical advantage whatsoever."
-			playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
-			playsound(src, rack_sound, 50, TRUE) //Increases satisfaction
-			balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
-			update_icon_state()
-			update_appearance() //So you don't have to rack the slide to update the sprite
-			update_inhand_icon(user) //So you don't have to switch the gun inhand to update the inhand sprite
+/obj/item/gun/ballistic/automatic/pistol/paco/click_alt(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
+	if(!has_stripe || !TIMER_COOLDOWN_FINISHED(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
+		return CLICK_ACTION_BLOCKING
+	TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
+	playsound(src, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
+	balloon_alert_to_viewers("[user] starts picking at the Paco's stripe!")
+	if(!do_after(user, 6 SECONDS))
+		return CLICK_ACTION_BLOCKING
+	has_stripe = FALSE
+	obj_flags = UNIQUE_RENAME
+	desc += " You figure there's ample room to engrave something nice on it, but know that it'd offer no tactical advantage whatsoever."
+	playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
+	playsound(src, rack_sound, 50, TRUE) //Increases satisfaction
+	balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
+	update_icon_state()
+	update_appearance() //So you don't have to rack the slide to update the sprite
+	update_inhand_icon(user) //So you don't have to switch the gun inhand to update the inhand sprite
+	return CLICK_ACTION_SUCCESS
 
 //Busted blueshield pistol
 /obj/item/gun/ballistic/automatic/pistol/tech_9

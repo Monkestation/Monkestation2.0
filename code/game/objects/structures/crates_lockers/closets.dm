@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
 		if(!card_reader_installed && length(access_choices))
-			. += span_notice("You can install a card reader for furthur access control.")
+			. += span_notice("You can install a card reader for further access control.")
 		else if(card_reader_installed)
 			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
-		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
+		if(!isliving(AM)) //let's not put ghosts or eye mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
@@ -866,12 +866,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
+/obj/structure/closet/mouse_drop_receive(atom/movable/O, mob/living/user, params)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
-		return
-	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
-		return
-	if(!Adjacent(user) || !user.Adjacent(O))
 		return
 	if(user == O) //try to climb onto it
 		return ..()
@@ -906,7 +902,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
-	return 1
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
@@ -1072,7 +1067,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(iscarbon(user))
 		add_fingerprint(user)
 	locked = !locked
-	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"][src]."),
+	user.visible_message(span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
 				span_notice("You [locked ? "locked" : "unlocked"] [src]."))
 	update_appearance()
 

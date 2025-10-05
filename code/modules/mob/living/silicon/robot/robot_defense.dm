@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
 		return
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, span_warning("Close the cover first!"))
 		else if(cell)
@@ -180,8 +180,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		modularInterface.inserted_disk = floppy
 		return
 
-	if(attacking_item.force && attacking_item.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
