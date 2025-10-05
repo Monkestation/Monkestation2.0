@@ -118,13 +118,13 @@
 		return
 
 	if(wetness.stacks > DAMAGE_WATER_STACKS)
-		remove_blood_volume(2 * seconds_per_tick)
+		remove_blood_volume(slime, 2 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
-		remove_blood_volume(seconds_per_tick)
+		remove_blood_volume(slime, seconds_per_tick)
 		slime.balloon_alert(slime, "you're dripping wet!")
 
 /// Handles slimes losing blood from starving.
@@ -219,7 +219,7 @@
 	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
-	remove_blood_volume(30 * water_multiplier)
+	remove_blood_volume(slime, 30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
@@ -263,7 +263,7 @@
 		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		remove_blood_volume(3 * seconds_per_tick)
+		remove_blood_volume(slime, 3 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
