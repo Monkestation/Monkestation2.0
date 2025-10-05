@@ -20,7 +20,7 @@
 	return ..()
 
 /datum/artifact_fault/monkey_mode/on_trigger()
-	if(LAZYLEN(spawned_monkeys) >= MAX_MONKEYS)
+	if(LAZYLEN(spawned_monkeys) >= MAX_FAULT_MONKEYS)
 		return
 	var/monkeys_to_spawn = rand(1, 4)
 	var/center_turf = get_turf(our_artifact.parent)
@@ -31,7 +31,7 @@
 		if(boi.is_blocked_turf(source_atom = our_artifact.parent))
 			continue
 		valid_turfs += boi
-	for(var/i in 1 to min(monkeys_to_spawn, length(valid_turfs), MAX_MONKEYS - LAZYLEN(spawned_monkeys)))
+	for(var/i in 1 to min(monkeys_to_spawn, length(valid_turfs), MAX_FAULT_MONKEYS - LAZYLEN(spawned_monkeys)))
 		var/turf/spawnon = pick_n_take(valid_turfs)
 		switch(rand(1, 100))
 			if(1 to 75)
