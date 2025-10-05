@@ -1,0 +1,7 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "crayons are edible again."
+  - bugfix: "fixed interacting while incapacitated."
+  - balance: "you can now officially open storage and use items in soft crit"
+  - qol: "washing machines don't delete dyes anymore."

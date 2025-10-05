@@ -759,7 +759,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 			C.deconstruct() // remove adversary cable
 	auto_propagate_cut_cable(src) // update the powernets
 
-/obj/structure/cable/multilayer/CtrlClick(mob/living/user)
+/obj/structure/cable/multilayer/click_ctrl(mob/living/user)
 	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, PROC_REF(Reload)), 10, TIMER_UNIQUE) //spam protect
 

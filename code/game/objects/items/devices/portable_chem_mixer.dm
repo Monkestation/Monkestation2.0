@@ -9,12 +9,15 @@
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
+	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 
-	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
-	var/amount = 30 ///The amount of reagent that is to be dispensed currently
-
-	var/list/dispensable_reagents = list() ///List in which all currently dispensable reagents go
-
+	///Creating an empty slot for a beaker that can be added to dispense into
+	var/obj/item/reagent_containers/beaker
+	///The amount of reagent that is to be dispensed currently
+	var/amount = 30
+	///List in which all currently dispensable reagents go
+	var/list/dispensable_reagents = list()
 	///If the UI has the pH meter shown
 	var/show_ph = TRUE
 
@@ -120,23 +123,13 @@
 	return ..()
 
 
-/obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock first to use alt eject!")
 		return CLICK_ACTION_BLOCKING
 	replace_beaker(user)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/user)
-	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
-		replace_beaker(user)
-		SStgui.close_uis(src)
-	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
-
-	to_chat(user, span_notice("You [atom_storage.locked ? "close" : "open"] the chemical storage of \the [src]."))
-	playsound(src, 'sound/items/screwdriver2.ogg', 50)
-	return
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -182,11 +175,10 @@
 	return
 MONKESTATION REMOVAL END */
 
-/obj/item/storage/portable_chem_mixer/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -278,4 +270,28 @@ MONKESTATION REMOVAL END */
 			. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			. = TRUE
+			update_appearance()
+			return TRUE
+
+/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
+	if(ismob(loc))
+		var/mob/M = loc
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
+			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+
+/obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
+	if(!atom_storage.locked)
+		balloon_alert(user, "lock first to use alt eject!")
+		return CLICK_ACTION_BLOCKING
+
+	replace_beaker(user)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/storage/portable_chem_mixer/item_ctrl_click(mob/user)
+	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
+		replace_beaker(user)
+		SStgui.close_uis(src)
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
+	return CLICK_ACTION_SUCCESS

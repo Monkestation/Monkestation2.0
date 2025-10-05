@@ -54,7 +54,7 @@
 		owner.balloon_alert(carbon_mob, "[owner] attempts to infest you!")
 		is_infesting = TRUE
 		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
-		if(!do_after(owner, infest_time))
+		if(!do_after(owner, infest_time, hidden = TRUE))
 			is_infesting = FALSE
 			REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 			return FALSE
@@ -66,7 +66,7 @@
 	else
 		is_infesting = TRUE
 		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
-		if(!do_after(owner, infest_time))
+		if(!do_after(owner, infest_time, hidden = TRUE))
 			is_infesting = FALSE
 			REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 			return FALSE

@@ -30,8 +30,7 @@
 
 	circuit = /obj/item/circuitboard/machine/centrifuge
 
-	idle_power_usage = 100
-	active_power_usage = 300
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.3
 
 	var/base_efficiency = 1
 	var/upgrade_efficiency = 0.3 // the higher, the better will upgrade affect efficiency

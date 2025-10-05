@@ -55,6 +55,7 @@
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
+	base_icon_state = "coffincoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -77,6 +78,7 @@
 	name = "secure coffin"
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
+	base_icon_state = "securecoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -99,6 +101,7 @@
 	name = "meat coffin"
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
+	base_icon_state = "meatcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
@@ -121,6 +124,7 @@
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
+	base_icon_state = "metalcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
@@ -236,7 +240,8 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
+			if(bloodsuckerdatum.bloodsucker_level_unspent < 1 && bloodsuckerdatum.claimed_coffin == FALSE)
+				bloodsuckerdatum.claimed_coffin = TRUE
 				bloodsuckerdatum.blood_level_gain()
 			bloodsuckerdatum.SpendRank()
 		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
@@ -270,11 +275,10 @@
 	return ..()
 
 /// Distance Check (Inside Of)
-/obj/structure/closet/crate/coffin/AltClick(mob/user)
-	. = ..()
+/obj/structure/closet/crate/coffin/click_alt(mob/living/user)
 	if(user in src)
 		LockMe(user, !locked)
-		return
+		return CLICK_ACTION_SUCCESS
 
 	if(user == resident && user.Adjacent(src))
 		balloon_alert(user, "unclaim coffin?")
@@ -286,6 +290,7 @@
 		switch(unclaim_response)
 			if("Yes")
 				unclaim_coffin(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/proc/LockMe(mob/user, inLocked = TRUE)
 	if(user == resident)
@@ -298,7 +303,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch that would lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_after(resident, 5 SECONDS, src))
+		if(!do_after(resident, 5 SECONDS, src, hidden = TRUE))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))

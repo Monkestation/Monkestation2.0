@@ -18,6 +18,7 @@
 		/obj/item/stack/sheet,
 		/obj/item/rcd_ammo,
 		/obj/item/stack/rods,
+		/obj/item/meteor_shield_capsule,
 	))
 
 ///Rebar quiver bag

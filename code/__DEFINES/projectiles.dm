@@ -28,6 +28,8 @@
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles and the desert eagle.
 #define CALIBER_50 ".50"
+/// The caliber used by the giant admin only revolver
+#define CALIBER_500 ".500"
 /// The caliber used by the gyrojet pistol.
 #define CALIBER_75 ".75"
 /// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
@@ -69,6 +71,10 @@
 #define CALIBER_SPEAR "throwing spear"
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
+//20mm ammo for mech
+#define CALIBER_ATR "20x160mm Neville"
+//60mm rockets for anti mech
+#define CALIBER_60MM "60mm Rocket"
 // The caliber used by the PACO
 #define CALIBER_35 ".35"
 // The caliber used by the Quarad machinegun

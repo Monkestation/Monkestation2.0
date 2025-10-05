@@ -332,24 +332,30 @@ GLOBAL_LIST_EMPTY(species_list)
  *
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
- * 
+ *
  * @param {mob} user - The mob performing the action.
- * 
+ *
  * @param {number} delay - The time in deciseconds. Use the SECONDS define for readability. `1 SECONDS` is 10 deciseconds.
- * 
+ *
  * @param {atom} target - The target of the action. This is where the progressbar will display.
- * 
+ *
  * @param {flag} timed_action_flags - Flags to control the behavior of the timed action.
- * 
+ *
  * @param {boolean} progress - Whether to display a progress bar / cogbar.
- * 
+ *
  * @param {datum/callback} extra_checks - Additional checks to perform before the action is executed.
- * 
+ *
  * @param {string} interaction_key - The assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
- * 
+ *
  * @param {number} max_interact_count - The maximum amount of interactions allowed.
+ *
+ * @param {boolean} hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
+ *
+ * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
+ *
+ * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog")
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -376,8 +382,13 @@ GLOBAL_LIST_EMPTY(species_list)
 		delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
+	var/datum/cogbar/cog
+
 	if(progress)
 		progbar = new(user, delay, target || user)
+
+		if(!hidden && delay >= 1 SECONDS)
+			cog = new(user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -410,6 +421,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(!QDELETED(progbar))
 		progbar.end_progress()
+
+	cog?.remove()
 
 	if(interaction_key)
 		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
@@ -692,7 +705,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
-	for(var/mob/camera/mob_to_sort in sortmob)
+	for(var/mob/eye/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/silicon/pai/mob_to_sort in sortmob)
 		moblist += mob_to_sort

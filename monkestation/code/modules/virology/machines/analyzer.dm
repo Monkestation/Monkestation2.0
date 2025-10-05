@@ -11,8 +11,7 @@
 
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser
 
-	idle_power_usage = 100
-	active_power_usage = 100//1000 extra power once per analysis
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1 //1000 extra power once per analysis
 
 	var/process_time = 5
 	var/minimum_growth = 100
@@ -227,16 +226,14 @@
 		processing = FALSE
 		scanner = null
 
-
-/obj/machinery/disease2/diseaseanalyser/AltClick()
-	if((!usr.Adjacent(src) || usr.incapacitated()))
-		return ..()
-
-	if(dish && !scanner)
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		dish.forceMove(loc)
-		dish = null
-		update_appearance()
+/obj/machinery/disease2/diseaseanalyser/click_alt(mob/user)
+	if(!dish && scanner)
+		return CLICK_ACTION_BLOCKING
+	playsound(loc, 'sound/machines/click.ogg', 50, 1)
+	dish.forceMove(loc)
+	dish = null
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/disease2/diseaseanalyser/fullupgrade
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade

@@ -30,9 +30,9 @@
 	///Light luminosity when turned on
 	var/light_strength = 2
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 500
+	var/base_active_power_usage = 50 WATTS
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
-	var/base_idle_power_usage = 100
+	var/base_idle_power_usage = 10 WATTS
 
 	///CPU that handles most logic while this type only handles power and other specific things.
 	var/obj/item/modular_computer/processor/cpu
@@ -121,12 +121,17 @@
 	SIGNAL_HANDLER
 	return update_icon(updates)
 
-/obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(cpu)
-		cpu.AltClick(user)
+/obj/machinery/modular_computer/click_alt(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/modular_computer/click_alt_secondary(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt_secondary(user)
+	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.

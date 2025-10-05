@@ -569,6 +569,10 @@
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 	var/silent_blown = FALSE
 
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer && !silent_blown)
 		name = "[name] blown by [firer]"

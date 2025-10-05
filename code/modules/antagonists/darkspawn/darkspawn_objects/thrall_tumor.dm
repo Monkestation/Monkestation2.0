@@ -61,36 +61,37 @@
 		return
 	return ..()
 
-/obj/item/organ/internal/shadowtumor/thrall/proc/resist(mob/living/carbon/M)
+/obj/item/organ/internal/shadowtumor/thrall/proc/resist(mob/living/carbon/angery)
 	if(QDELETED(src))
 		return FALSE
-	if(!(M.stat == CONSCIOUS))//Thralls cannot be deconverted while awake
+	if(angery.stat != CONSCIOUS)//Thralls cannot be deconverted while awake
 		return FALSE
-	if(!IS_THRALL(M))//non thralls don't resist
+	if(!IS_THRALL(angery))//non thralls don't resist
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, resist_cooldown))//adds a cooldown to the resist so a thrall ipc or preternis can't weaponize it
 		return FALSE
 	COOLDOWN_START(src, resist_cooldown, cooldown_length)
 
-	playsound(M,'sound/effects/tendril_destroyed.ogg', 80, 1)
-	to_chat(M, span_progenitor("<b><i>NOT LIKE THIS!</i></b>"))
-	M.visible_message(span_danger("[M] suddenly slams upward and knocks everyone back!"))
-	M.set_resting(FALSE, instant = TRUE)
-	M.SetAllImmobility(0, TRUE)
-	for(var/mob/living/user in range(2, get_turf(src)))
-		if(!istype(user))
+	playsound(angery, 'sound/effects/tendril_destroyed.ogg', vol = 80, vary = TRUE)
+	angery.visible_message(
+		span_userdanger("[angery] suddenly slams upward, violently knocking everyone back!"),
+		span_progenitor(span_bolditalic("NOT LIKE THIS!")),
+		span_hear("You hear a massive, violent thump!"),
+	)
+	angery.uncuff()
+	angery.buckled?.unbuckle_mob(angery)
+	angery.stamina?.revitalize(forced = TRUE)
+	angery.SetAllImmobility(0)
+	angery.set_resting(FALSE, instant = TRUE)
+	for(var/mob/living/victim in range(2, get_turf(src)) - angery)
+		if(IS_TEAM_DARKSPAWN(victim))
 			continue
-		if(IS_TEAM_DARKSPAWN(user))
-			continue
-		var/turf/target = get_ranged_target_turf(user, get_dir(M, user))
-		user.throw_at(target, 2, 2, M)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.Knockdown(4 SECONDS)
-			C.adjustBruteLoss(20)
-		if(issilicon(user))
-			var/mob/living/silicon/S = user
-			S.Knockdown(8 SECONDS)
-			S.adjustBruteLoss(20)
-			playsound(S, 'sound/effects/bang.ogg', 50, 1)
+		var/turf/target = get_ranged_target_turf(victim, get_dir(angery, victim))
+		victim.throw_at(target, 2, 2, angery)
+		victim.take_overall_damage(brute = 20)
+		victim.Knockdown(4 SECONDS)
+		victim.set_confusion_if_lower(15 SECONDS)
+		if(issilicon(victim))
+			playsound(victim, 'sound/effects/bang.ogg', vol = 50, vary = TRUE)
+		log_combat(angery, victim, "knocked back", null, "while resisting having their darkspawn thrall tumor removed")
 	return TRUE
