@@ -66,15 +66,18 @@
 	QDEL_LIST(actions_given)
 	return ..()
 
-/datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
+/datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species, pref_load)
 	. = ..()
 	RegisterSignal(slime, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
 	for(var/action_type in default_actions + extra_actions)
 		var/datum/action/action = new action_type(src)
 		action.Grant(slime)
 		actions_given += action
+	// oozelings will always start at least fed, so they don't have to immediately eat to avoid melting
+	if(pref_load && slime.nutrition < NUTRITION_LEVEL_FED)
+		slime.set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
-/datum/species/oozeling/on_species_loss(mob/living/carbon/former_slime)
+/datum/species/oozeling/on_species_loss(mob/living/carbon/human/former_slime, datum/species/new_species, pref_load)
 	UnregisterSignal(former_slime, COMSIG_ATOM_EXPOSE_REAGENTS)
 	QDEL_LIST(actions_given)
 	. = ..()
