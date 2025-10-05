@@ -1409,6 +1409,7 @@
 #include "code\datums\components\style\style.dm"
 #include "code\datums\components\style\style_meter.dm"
 #include "code\datums\components\trader\trader.dm"
+#include "code\datums\debug\path_debug.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anaphylaxis.dm"

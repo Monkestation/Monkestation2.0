@@ -257,7 +257,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	destination_z = dest_z
 
 /turf/open/space/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK) || (locate(/obj/structure/lattice) in src)
 
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'

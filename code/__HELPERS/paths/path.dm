@@ -311,6 +311,8 @@
 	/// Pass information for the object we are pulling, if any
 	var/datum/can_pass_info/pulling_info = null
 
+	var/multiz_checks = FALSE
+
 	/// Cameras have a lot of BS can_z_move overrides
 	/// Let's avoid this
 	var/camera_type
@@ -320,13 +322,14 @@
 	/// Require a movable
 	var/datum/weakref/caller_ref = null
 
-/datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0)
+/datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0, multiz_checks = FALSE)
 	// No infiniloops
 	if(call_depth > 10)
 		return
 	if(access)
 		src.access = access.Copy()
 	src.no_id = no_id
+	src.multiz_checks = multiz_checks
 
 	if(isnull(construct_from))
 		return

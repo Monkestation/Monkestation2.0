@@ -34,12 +34,14 @@
 
 		destination_list[destination_name] = destination
 
+/*
 	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
 	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	if(can_go_down)
 		destination_list["Nearest Way Down"] = DOWN
 	if(can_go_up)
 		destination_list["Nearest Way Up"] = UP
+*/
 
 	if(!length(destination_list))
 		balloon_alert(src, "no navigation signals!")
@@ -51,6 +53,7 @@
 	if(isnull(navigate_target) || incapacitated())
 		return
 
+/*
 	var/finding_zchange = FALSE
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
 	if(navigate_target == UP || navigate_target == DOWN || (isatom(navigate_target) && navigate_target.z != z))
@@ -67,12 +70,13 @@
 
 		navigate_target = new_target
 		finding_zchange = TRUE
+*/
 
 	if(!isatom(navigate_target))
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 5, access = get_access())
+	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access())
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -101,8 +105,10 @@
 		animate(path_image, 0.5 SECONDS, alpha = 150)
 	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
+/*
 	if(finding_zchange)
 		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
+*/
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()

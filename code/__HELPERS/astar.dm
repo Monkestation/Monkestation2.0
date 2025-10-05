@@ -80,7 +80,7 @@ Actual Adjacent procs :
 	if(maxnodes)
 		maxnodedepth = maxnodes
 
-	var/datum/can_pass_info/can_pass_info = new(requester, access)
+	var/datum/can_pass_info/can_pass_info = new(requester, access, multiz_checks = TRUE)
 	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(heap_path_weight_compare_astar))
 	var/list/openc = new()
 	var/list/path = null
@@ -120,9 +120,20 @@ Actual Adjacent procs :
 			if(!(cur.bf & dir_to_check)) // we can't proceed in this direction
 				continue
 			// get the turf we end up at if we move in dir_to_check; this may have special handling for multiz moves
-			var/turf_to_check = get_step(cur.source, dir_to_check)
+			var/turf/turf_to_check = get_step(cur.source, dir_to_check)
 			// when leaving a turf with stairs on it, we can change Z, so take that into account
 			// this handles both upwards and downwards moves depending on the dir
+
+			if(isopenspaceturf(cur.source))
+				var/turf/turf_below = GET_TURF_BELOW(cur.source)
+				if(turf_below)
+					turf_to_check = turf_below
+			else
+				var/obj/structure/stairs/stairs = locate() in cur.source
+				if(stairs?.isTerminator() && stairs.dir == dir_to_check)
+					var/turf/stairs_destination = get_step_multiz(cur.source, dir_to_check | UP)
+					if(stairs_destination)
+						turf_to_check = stairs_destination
 /*
 			var/obj/structure/stairs/source_stairs = locate(/obj/structure/stairs) in cur.source
 			if(source_stairs)
@@ -166,15 +177,17 @@ Actual Adjacent procs :
 		return !LinkBlockedWithAccess(target, pass_info)
 	if(z_distance != 1) // no single movement lets you move more than one z-level at a time (currently; update if this changes)
 		return FALSE
-/*
-	var/obj/structure/stairs/source_stairs = locate(/obj/structure/stairs) in src
-	if(T.z < z) // going down
-		if(source_stairs?.get_target_loc(REVERSE_DIR(source_stairs.dir)) == T)
+	if(target.z > z) // going up stairs
+		var/obj/structure/stairs/stairs = locate() in src
+		if(stairs?.isTerminator() && target == get_step_multiz(src, stairs.dir | UP))
 			return TRUE
-	else // heading DOWN stairs was handled earlier, so now handle going UP stairs
-		if(source_stairs?.get_target_loc(source_stairs.dir) == T)
+	else if(isopenspaceturf(src)) // going down stairs
+		var/turf/turf_below = GET_TURF_BELOW(src)
+		if(!turf_below || target != turf_below)
+			return FALSE
+		var/obj/structure/stairs/stairs_below = locate() in turf_below
+		if(stairs_below?.isTerminator())
 			return TRUE
-*/
 	return FALSE
 
 /proc/get_dist_3d(atom/source, atom/target)
