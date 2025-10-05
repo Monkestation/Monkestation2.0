@@ -27,7 +27,7 @@
     // Children for 3x3 footprint
     var/list/children = list()
 
-    // Fuel rod slots (store references to rods, not items on turf)
+    // Fuel rod slots (stored internally)
     var/list/normal_slots = list()
     var/list/special_slots = list()
     var/max_normal_slots = 12
@@ -80,8 +80,8 @@
 /// Initialize
 /obj/machinery/rbmk/reactor/Initialize(mapload)
     . = ..()
-    loc = locate(x+1, y+1, z)
 
+    // No relocation (stay on turf center)
     var/turf/T = get_turf(src)
     if (istype(T))
         var/datum/gas_mixture/env = T.return_air()
@@ -92,7 +92,7 @@
     rbmk_init_coolant(src)
     START_PROCESSING(SSmachines, src)
 
-    // Spawn child tiles
+    // Spawn child tiles (3x3 visual fillers)
     for (var/dx in -1 to 1)
         for (var/dy in -1 to 1)
             if(dx == 0 && dy == 0)
@@ -124,35 +124,30 @@
 
     var/rod_effect = (100 - control_rod_depth) / 100.0
 
-    // Temperature
     temperature = clamp(
         temperature + (rod_effect * RBMK_TEMP_GAIN_PER_TICK) - (control_rod_depth * RBMK_TEMP_LOSS_PER_DEPTH),
         0,
         RBMK_MAX_TEMP
     )
 
-    // Radiation
     radiation = clamp(
         (temperature * RBMK_RADIATION_TEMP_MULT) + (flux * RBMK_RADIATION_FLUX_MULT),
         0,
         RBMK_MAX_RADIATION
     )
 
-    // Instability
     instability = clamp(
         instability + (rod_effect * RBMK_INSTABILITY_GAIN) + (flux * RBMK_INSTABILITY_FLUX_MULT),
         0,
         RBMK_MAX_INSTABILITY
     )
 
-    // Flux
     flux = clamp(
         flux + (rod_effect * RBMK_FLUX_GAIN) - (moderator_level * RBMK_FLUX_MODERATOR_MULT),
         0,
         RBMK_MAX_FLUX
     )
 
-    // Moderator
     moderator_level = clamp(
         moderator_level - (rod_effect * RBMK_MODERATOR_DECAY) + (control_rod_depth * RBMK_MODERATOR_RECOVERY),
         0,
@@ -163,7 +158,6 @@
     if (length(moderator_history) > 50)
         moderator_history.Cut(1, 2)
 
-    // Atmos sampling
     rbmk_sample_coolant(src)
     if(coolant_internal)
         pressure = coolant_internal.return_pressure()
@@ -174,10 +168,17 @@
  * Rod Handling
  *************************************************************/
 
-/// Handle item interaction
-/obj/machinery/rbmk/reactor/attackby(obj/item/I, mob/user, params)
-    if(istype(I, /obj/item/rbmk/fuel_rod))
-        return try_insert_rod(I, user)
+/// Disable taking any melee damage
+/obj/machinery/rbmk/reactor/attack_generic(mob/user, damage, ...)
+    return FALSE
+
+/// Handle left-click rod insertion only
+/obj/machinery/rbmk/reactor/Click(location, control, params)
+    if(!usr) return
+    if(findtext(control, "left")) // only left-click
+        var/obj/item/I = usr.get_active_held_item()
+        if(istype(I, /obj/item/rbmk/fuel_rod))
+            return try_insert_rod(I, usr)
     return ..()
 
 /// Insert rod
@@ -186,10 +187,14 @@
 
     for(var/i = 1, i <= max_normal_slots, i++)
         if(!(i in normal_slots) || !normal_slots[i])
-            normal_slots[i] = R
-            R.loc = null // stored internally, not on turf
-            R.active = TRUE
-            to_chat(user, span_notice("You insert [R] into the reactor."))
+            normal_slots[i] = list(
+                "type" = R.type,
+                "fuel_amount" = R.fuel_amount,
+                "active" = TRUE
+            )
+            qdel(R)
+            flick("reactor_insert", src)
+            to_chat(user, span_notice("You insert a fuel rod into the reactor."))
             update_linked_consoles()
             return TRUE
 
@@ -199,12 +204,14 @@
 /// Eject rod
 /obj/machinery/rbmk/reactor/proc/eject_rod(kind, index, mob/user)
     if(kind == "normal" && index <= max_normal_slots)
-        var/obj/item/rbmk/fuel_rod/R = normal_slots[index]
-        if(R)
+        var/list/rod_data = normal_slots[index]
+        if(rod_data)
             normal_slots[index] = null
-            var/obj/item/rbmk/fuel_rod/newR = new R.type(get_turf(src))
-            newR.fuel_amount = R.fuel_amount
-            newR.active = R.active
+            var/typepath = rod_data["type"]
+            var/obj/item/rbmk/fuel_rod/newR = new typepath(get_turf(src))
+            newR.fuel_amount = rod_data["fuel_amount"]
+            newR.active = rod_data["active"]
+            flick("reactor_eject", src)
             to_chat(user, span_notice("You eject [newR] from the reactor."))
             update_linked_consoles()
             return TRUE
@@ -225,27 +232,40 @@
  * Reactor Child Tiles
  *************************************************************/
 
-/// Children
+/// 3×3 fillers forwarding clicks + anims
 /obj/structure/rbmk/reactor_child
     name = "RBMK Reactor Core"
     desc = "Part of a massive nuclear reactor core."
     icon = 'icons/obj/machines/rbmk.dmi'
     icon_state = ""
     anchored = TRUE
-    density = FALSE
+    density = TRUE
     mouse_opacity = MOUSE_OPACITY_ICON
     plane = GAME_PLANE
     layer = OBJ_LAYER - 0.01
     var/obj/machinery/rbmk/reactor/parent
 
+/obj/structure/rbmk/reactor_child/Click(location, control, params)
+    if(parent)
+        if(findtext(control, "left"))
+            flick("reactor_hit", src)
+            return parent.Click(location, control, params)
+    return ..()
+
+/obj/structure/rbmk/reactor_child/attack_generic(mob/user, damage, ...)
+    return FALSE
+
 /obj/structure/rbmk/reactor_child/attackby(obj/item/I, mob/user, params)
     if(parent)
-        if(istype(I, /obj/item/rbmk/fuel_rod))
-            return parent.try_insert_rod(I, user)
         return parent.attackby(I, user, params)
     return ..()
 
 /obj/structure/rbmk/reactor_child/attack_hand(mob/user)
     if(parent)
         return parent.attack_hand(user)
+    return ..()
+
+/obj/structure/rbmk/reactor_child/CanPass(atom/movable/mover, turf/target)
+    if(ismob(mover))
+        return TRUE
     return ..()
