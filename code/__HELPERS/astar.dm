@@ -80,7 +80,7 @@ Actual Adjacent procs :
 	if(maxnodes)
 		maxnodedepth = maxnodes
 
-	var/datum/can_pass_info/can_pass_info = new(requester, access, multiz_checks = TRUE)
+	var/datum/can_pass_info/can_pass_info = new(requester, access, multiz_checks = check_z_levels)
 	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(heap_path_weight_compare_astar))
 	var/list/openc = new()
 	var/list/path = null
