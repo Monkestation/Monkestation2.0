@@ -216,7 +216,7 @@ PROC_REF(update_in_shade))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
 	var/bloodsucker_level = bloodsucker.bloodsucker_level
-	if(protected == TRUE)
+	if(protected = TRUE)
 
 	// TAKES 2/5th DAMAGE IF HIDING IN A LOCKER, SET ON FIRE VERY REDUCED
 		if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
