@@ -594,10 +594,31 @@
 	duration = 60 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
 	show_duration = TRUE
+	var/list/install_traits = list(
+		TRAIT_ANALGESIA,
+		TRAIT_FEARLESS,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_ABATES_SHOCK,
+		TRAIT_NO_SHOCK_BUILDUP,
+		TRAIT_NODISMEMBER,
+		TRAIT_NO_PAIN_EFFECTS,
 
 /datum/status_effect/dragon_install/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(fenrir))
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
+	if(left_arm)
+		left_arm.unarmed_damage_low += 20
+		left_arm.unarmed_damage_high += 20
+	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
+	if(right_arm)
+		right_arm.unarmed_damage_low += 20
+		right_arm.unarmed_damage_high += 20
 
 /datum/status_effect/dragon_install/on_remove()
 	owner.RemoveElement(/datum/element/perma_fire_overlay)
@@ -620,10 +641,15 @@
 			break
 	if(!HasElement(owner, /datum/element/perma_fire_overlay))
 		owner.AddElement(/datum/element/perma_fire_overlay)
-	owner.adjustBruteLoss(-7.5, FALSE)
-	owner.adjustFireLoss(-7.5, FALSE)
+	owner.adjustBruteLoss(-10, FALSE)
+	owner.adjustFireLoss(-10, FALSE)
 	owner.adjustOxyLoss(-10, FALSE)
 	owner.adjustToxLoss(-5)
+
+/datum/status_effect/dragon_install/on_remove()
+	owner.balloon_alert(owner, "power fading")
+	sleep(10 SECONDS)
+	owner.paralyze(10 SECONDS)
 
 /datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
 	if(!isliving(target))
@@ -632,7 +658,7 @@
 		var/mob/living/carbon/carbon_owner = owner
 		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
 			return
-	var/mob/living/ky_kiske = target
+	var/mob/living/ky_kiske = target //gilltea geer tm 
 	ky_kiske.firestacks += 10
 	ky_kiske.ignite_mob()
 	var/turf/target_turf = get_turf_in_angle(get_angle(owner, ky_kiske), get_turf(owner), 10)
@@ -641,5 +667,5 @@
 
 /atom/movable/screen/alert/status_effect/dragon_install
 	name = "Dragon Install"
-	desc = "Your sprit throbs with power! You will regenerate most damage and heal most wounds. You're liable to crash when it's over, though."
+	desc = "Your soul throbs with power! You will regenerate most damage and heal most wounds, and your attacks will be greatly boosted. You're liable to crash when it's over, though."
 	icon_state = "fleshmend"
