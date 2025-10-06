@@ -591,22 +591,28 @@
 
 /datum/status_effect/dragon_install
 	id = "dragoninstall"
-	duration = 60 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
-	show_duration = TRUE
+	tick_interval = 0.25 SECONDS
 	var/list/install_traits = list(
 		TRAIT_ANALGESIA,
 		TRAIT_FEARLESS,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOCRITOVERLAY
 		TRAIT_ABATES_SHOCK,
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NODISMEMBER,
 		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SLEEP,
+		TRAIT_STUN_IMMUNE,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_NUTCRACKER, //for shits n giggles
+		)
 
 /datum/status_effect/dragon_install/on_apply()
 	. = ..()
+	owner.add_traits(install_traits, DRAGON_INSTALL_TRAIT)
 	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(fenrir))
 	if(!iscarbon(owner))
 		return
@@ -619,37 +625,63 @@
 	if(right_arm)
 		right_arm.unarmed_damage_low += 20
 		right_arm.unarmed_damage_high += 20
+	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
+	if(left_leg)
+		left_leg.unarmed_damage_low += 20
+		left_leg.unarmed_damage_high += 20
+	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
+	if(right_leg)
+		right_leg.unarmed_damage_low += 20
+		right_leg.unarmed_damage_high += 20
 
 /datum/status_effect/dragon_install/on_remove()
+	owner.remove_traits(install_traits, DRAGON_INSTALL_TRAIT)
 	owner.RemoveElement(/datum/element/perma_fire_overlay)
 	UnregisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	owner.paralyze(5 SECONDS) //so you cant micro it
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
+	if(left_arm)
+		left_arm.unarmed_damage_low -= 20
+		left_arm.unarmed_damage_high -= 20
+	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
+	if(right_arm)
+		right_arm.unarmed_damage_low -= 20
+		right_arm.unarmed_damage_high -= 20
+	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
+	if(left_leg)
+		left_leg.unarmed_damage_low -= 20
+		left_leg.unarmed_damage_high -= 20
+	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
+	if(right_leg)
+		right_leg.unarmed_damage_low -= 20
+		right_leg.unarmed_damage_high -= 20
 
 /datum/status_effect/dragon_install/tick()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
-			carbon_owner.reagents.remove_reagent(/datum/reagent/holywater, 1)
-			to_chat(carbon_owner, span_warning("Anti-magical holy water is neutralizing your Dragon Install!"))
-			if(HasElement(carbon_owner, /datum/element/perma_fire_overlay))
-				carbon_owner.RemoveElement(/datum/element/perma_fire_overlay)
-			return
-		carbon_owner.stamina.adjust(30)
-		QDEL_LAZYLIST(carbon_owner.all_scars)
-		for(var/datum/wound/yeowch as anything in carbon_owner.all_wounds)
-			to_chat(carbon_owner, span_notice("The power of your gear cells is mending your wounds!"))
-			yeowch.remove_wound()
-			break
-	if(!HasElement(owner, /datum/element/perma_fire_overlay))
-		owner.AddElement(/datum/element/perma_fire_overlay)
-	owner.adjustBruteLoss(-10, FALSE)
-	owner.adjustFireLoss(-10, FALSE)
-	owner.adjustOxyLoss(-10, FALSE)
-	owner.adjustToxLoss(-5)
-
-/datum/status_effect/dragon_install/on_remove()
-	owner.balloon_alert(owner, "power fading")
-	sleep(10 SECONDS)
-	owner.paralyze(10 SECONDS)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
+		carbon_owner.reagents.remove_reagent(/datum/reagent/holywater, 1)
+		to_chat(carbon_owner, span_warning("Anti-magical holy water is neutralizing your Dragon Install!"))
+		if(HasElement(carbon_owner, /datum/element/perma_fire_overlay))
+			carbon_owner.RemoveElement(/datum/element/perma_fire_overlay)
+		return
+	carbon_owner.stamina.adjust(30)
+	QDEL_LAZYLIST(carbon_owner.all_scars)
+	for(var/datum/wound/yeowch as anything in carbon_owner.all_wounds)
+		to_chat(carbon_owner, span_notice("The power of your gear cells is mending your wounds!"))
+		yeowch.remove_wound()
+		break
+	if(!HasElement(carbon_owner, /datum/element/perma_fire_overlay))
+		carbon_owner.AddElement(/datum/element/perma_fire_overlay)
+	carbon_owner.adjustBruteLoss(-2.5, FALSE)
+	carbon_owner.adjustFireLoss(-2.5, FALSE)
+	carbon_owner.adjustOxyLoss(-2.5, FALSE)
+	carbon_owner.adjustToxLoss(-2.5, FALSE)
+	carbon_owner.adjustCloneLoss(0.25) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
 
 /datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
 	if(!isliving(target))
