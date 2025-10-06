@@ -264,8 +264,8 @@ PROC_REF(update_in_shade))
 	SIGNAL_HANDLER
 	var/in_shade = HAS_TRAIT(owner, TRAIT_SHADED) || isstructure(owner.loc)
 	if(protected != in_shade)
-	protected = in_shade
-	linked_alert?.update_appearance(UPDATE_ICON_STATE)
+		protected = in_shade
+		linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /datum/status_effect/bloodsucker_sol/proc/on_owner_moved()
 	SIGNAL_HANDLER
