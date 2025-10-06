@@ -86,7 +86,6 @@
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
-		/mob/living/simple_animal/soulscythe,
 
 		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/bot/buttbot,

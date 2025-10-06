@@ -5,7 +5,7 @@
 		if(isAI(vspeaker.source))
 			playsound_local(
 				get_turf(src),
-				'goon/sounds/radio_ai.ogg',
+				'goon/sounds/misc/talk/radio_ai.ogg',
 				vol = 170,
 				vary = TRUE,
 				pressure_affected = FALSE,

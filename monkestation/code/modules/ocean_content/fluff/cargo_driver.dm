@@ -7,7 +7,7 @@
 /obj/machinery/mass_driver/cargo_driver/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
@@ -22,7 +22,7 @@
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			O.throw_at(target, get_dist(src, target) + 4, power)
 			if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 				addtimer(CALLBACK(O, TYPE_PROC_REF(/atom/movable, attempt_map_sell)), 4 SECONDS / power)
@@ -48,7 +48,7 @@
 	export_categories |= EXPORT_CONTRABAND
 
 	for(var/atom/movable/AM in contents_self)
-		if(iscameramob(AM))
+		if(iseyemob(AM))
 			continue
 		if(AM.anchored)
 			continue

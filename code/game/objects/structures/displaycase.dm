@@ -387,7 +387,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -501,7 +501,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -655,3 +655,16 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+
+///Takes the first unanchored item on the floor with us and puts it in the display case, so every custom case doesn't need a subtype.
+/obj/structure/displaycase/mapping/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	for(var/obj/item/item_over_us in loc.contents)
+		if(item_over_us.anchored)
+			continue
+		showpiece = item_over_us
+		item_over_us.forceMove(src)
+		update_appearance()
+		return

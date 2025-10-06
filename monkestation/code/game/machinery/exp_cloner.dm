@@ -10,12 +10,16 @@
 	grab_ghost_when = CLONER_FRESH_CLONE // This helps with getting the objective for evil clones to display.
 	VAR_PRIVATE
 		static/list/image/cached_clone_images
+
+	auto_clone = TRUE
+
 	/// Am I producing evil clones?
 	var/datum/objective/evil_clone/evil_objective = null
 	/// Can my objective be changed?
 	var/locked = FALSE
 	/// The custom objective given by the traitor item.
 	var/custom_objective = null
+
 
 /obj/machinery/clonepod/experimental/Destroy()
 	clear_human_dummy(REF(src))
@@ -31,6 +35,9 @@
 					. += span_notice("Those cloned will have the objective: [custom_objective]") //This doesn't look the best I think.
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
+
+	if (auto_clone)
+		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
 
 /obj/machinery/clonepod/experimental/RefreshParts()
 	. = ..()

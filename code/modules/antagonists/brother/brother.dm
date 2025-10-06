@@ -150,7 +150,7 @@
 			continue
 		if(brother != owner)
 			target.balloon_alert(target, "you hear a voice")
-			target.playsound_local(get_turf(target), 'goon/sounds/radio_ai.ogg', vol = 25, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+			target.playsound_local(get_turf(target), 'goon/sounds/misc/talk/radio_ai.ogg', vol = 25, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 		to_chat(target, formatted_msg, type = MESSAGE_TYPE_RADIO, avoid_highlighting = (brother == owner))
 	for(var/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, owner.current)

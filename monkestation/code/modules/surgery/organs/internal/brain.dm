@@ -35,6 +35,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	/// The mind of the oozeling that became this core.
 	/// This MUST be named `mind`, in order to allow IS_[antag] macros to work on cores.
 	var/datum/mind/mind
+	/// The original language holder of the oozeling who died.
+	var/datum/language_holder/stored_language_holder
 
 ///////
 /// Core storage
@@ -42,26 +44,28 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/list/stored_quirks = list()
 	var/list/stored_items = list()
 	///Item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
-	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear,))
+	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
 		//obj/item/implant
 	))
 	//Extraneous organs not of oozeling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
-		/obj/item/organ/internal/cyberimp,
-		/obj/item/organ/external/wings,
-		/obj/item/organ/external/tail,
+		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/frills,
 		/obj/item/organ/external/horns,
-		/obj/item/organ/external/snout,
-		/obj/item/organ/external/antennae,
-		/obj/item/organ/external/spines,
-		/obj/item/organ/internal/eyes/robotic/glow,
 		/obj/item/organ/external/plumage,
+		/obj/item/organ/external/snout,
+		/obj/item/organ/external/spines,
+		/obj/item/organ/external/tail,
+		/obj/item/organ/external/wings,
+		/obj/item/organ/internal/alien,
+		/obj/item/organ/internal/cyberimp,
 		/obj/item/organ/internal/ears/cat/super,
+		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/internal/heart/cursed,
 		/obj/item/organ/internal/tongue/polyglot_voicebox,
-		/obj/item/organ/internal/alien/hivenode,
+		/obj/item/organ/internal/vocal_cords,
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
@@ -88,6 +92,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/prosthetic_limb,
 		/datum/quirk/quadruple_amputee,
 		/datum/quirk/stowaway,
+		/datum/quirk/cybernetics_quirk,
 	))
 
 	var/rebuilt = TRUE
@@ -106,6 +111,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	QDEL_NULL(membrane_mur)
 	QDEL_NULL(stored_dna)
 	QDEL_LIST(stored_quirks)
+	QDEL_NULL(stored_language_holder)
 
 	mind = null
 
@@ -121,43 +127,49 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	. = ..()
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
-		. += span_red("You could probably snuff that out.")
+		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
+	else
+		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
 	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
-			. += span_hypnophrase("You remember that pouring a big beaker of ground plasma on it, if it's non-embodied, would make it regrow one.")
+			. += span_hypnophrase("You remember that <i>slowly</i> pouring a big beaker of ground plasma on it by hand, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
 	user.visible_message(
-		span_warning("[user] begins jamming their hand into a slime core! Slime goes everywhere!"),
-		gps_active ? span_notice("You jam your hand into the core, feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into the core, feeling for any dense objects. Slime covers your arm."),
+		span_warning("[user] begins jamming their hand into [src]! Slime goes everywhere!"),
+		gps_active ? span_notice("You jam your hand into [src], feeling for the densest point! Slime covers your arm.") : span_notice("You jam your hand into [src], feeling for any dense objects. Slime covers your arm."),
 		span_notice("You hear an obscene squelching sound.")
 	)
 	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(
-			span_warning("[user]'s hand slips out of the core before they can cause any harm!"),
+			span_warning("[user]'s hand slips out of [src] before they can cause any harm!"),
 			gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
 			span_notice("You hear a resounding plop.")
 		)
 		return
 
-	if((gps_active))
-		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-		span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
-		span_notice("You hear a wet crunching sound."))
-		gps_active =  FALSE
+	if(gps_active)
+		user.visible_message(
+			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
+			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+			span_notice("You hear a wet crunching sound."),
+		)
+		gps_active = FALSE
 		qdel(GetComponent(/datum/component/gps/no_bsa))//Actually remove the gps signal
-
 	else
-		user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing."),
-		span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
-		span_notice("You hear a wet sqlenching sounds."))
+		user.visible_message(
+			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
+			span_notice("You find several dense objects, forcing them out of the core, items start to spill."),
+			span_notice("You hear a wet squelching sounds.")
+		)
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
-
-	drop_items_to_ground(get_turf(user))
+	drop_items_to_ground(user.drop_location())
 
 /obj/item/organ/internal/brain/slime/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -184,12 +196,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	copy_mind_and_dna(victim)
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
-/obj/item/organ/internal/brain/slime/proc/enable_coredeath() // No longer used.
-	coredeath = TRUE
-	if(owner?.stat == DEAD)
-		copy_mind_and_dna(owner)
-		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
-
 /obj/item/organ/internal/brain/slime/proc/copy_mind_and_dna(mob/living/carbon/human/slime)
 	if(QDELETED(mind))
 		mind = brainmob?.mind || slime.mind || slime.last_mind
@@ -200,6 +206,17 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(QDELETED(stored_dna))
 			stored_dna = new
 		slime.dna.copy_dna(stored_dna)
+
+	var/datum/language_holder/slime_language_holder = slime.get_language_holder()
+	if(slime_language_holder)
+		stored_language_holder = new slime_language_holder.type
+		stored_language_holder.copy_languages(slime_language_holder)
+
+	var/datum/atom_voice/slime_voice = slime.get_voice()
+	if(slime_voice)
+		if(!voice)
+			voice = new
+		slime_voice.copy_from(slime_voice)
 
 ///////
 /// CORE EJECTION PROC
@@ -227,10 +244,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		Remove(victim)
 	//Make this check more generalized later. For antags that eat people as they kill. Make sure they drop their
 	//contents after death; that is if that is how that item or antag works.
-	if(legionbody)
-		forceMove(legionbody)
-	else if(death_turf)
-		forceMove(death_turf)
+	forceMove(legionbody || death_turf)
 	wash(CLEAN_WASH)
 	new death_melt_type(death_turf, victim.dir)
 
@@ -238,9 +252,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	playsound(victim, 'sound/effects/blobattack.ogg', 80, TRUE)
 
 	if(gps_active) // adding the gps signal if they have activated the ability
-		AddComponent(/datum/component/gps/no_bsa, "[victim]'s Core")
+		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")
 
 	if(brainmob)
+		if(stored_language_holder)
+			brainmob.get_language_holder()?.copy_languages(stored_language_holder)
+
 		membrane_mur.Grant(brainmob)
 		var/datum/antagonist/changeling/target_ling = brainmob.mind?.has_antag_datum(/datum/antagonist/changeling)
 
@@ -285,6 +302,11 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards..."),
 			span_hear("You hear bubbling.")
 		)
+		user.balloon_alert_to_viewers("pouring plasma...")
+
+		if(brainmob)
+			brainmob.notify_ghost_cloning("Someone is pouring plasma on your core!")
+			brainmob.grab_ghost()
 
 		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
@@ -333,7 +355,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(istype(target_chest))
 		process_and_store_item(target_chest.cavity_item, victim)
 
-	for(var/obj/item/item as anything in victim.get_equipped_items(include_pockets = TRUE)) // Store rest of equipment
+	for(var/obj/item/item as anything in victim.get_equipped_items(INCLUDE_POCKETS)) // Store rest of equipment
 		if(QDELETED(item))
 			continue
 		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
@@ -392,7 +414,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			break
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
-		gps_active = FALSE
 		qdel(GetComponent(/datum/component/gps))
 
 	//we have the plasma. we can rebuild them.
@@ -413,6 +434,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	var/client/original_client = brainmob?.client || mind?.current?.client
 	original_client?.prefs?.safe_transfer_prefs_to(new_body)
+	if(stored_language_holder)
+		new_body.get_language_holder()?.copy_languages(stored_language_holder)
+		QDEL_NULL(stored_language_holder)
+	if(voice)
+		if(!new_body.voice)
+			new_body.voice = new
+		new_body.voice.copy_from(voice)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
@@ -440,12 +468,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
-			if(istype(bodypart, /obj/item/bodypart/head))
-				// Living mobs eyes are stored in the body so remove the organs properly for their effect to work.
-				if(new_body.has_quirk(/datum/quirk/cybernetics_quirk/bright_eyes)) // Either they have their eyes in their core or they are destroyed dont spawn another.
-					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
-					eyes.Remove(new_body)
-					qdel(eyes)
 			bodypart.drop_limb() // Drop limb should delete the limb for oozelings unless someone changes it.
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))

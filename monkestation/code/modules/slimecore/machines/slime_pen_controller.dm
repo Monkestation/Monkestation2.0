@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	base_icon_state = "slime_panel"
 	icon_state = "slime_panel"
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	var/obj/machinery/plumbing/ooze_sucker/linked_sucker
 	var/datum/corral_data/linked_data
@@ -27,8 +29,17 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/slime_pen_controller/LateInitialize()
-	locate_machinery()
+/obj/machinery/slime_pen_controller/post_machine_initialize()
+	. = ..()
+
+	if(!mapping_id)
+		return
+	for(var/obj/machinery/plumbing/ooze_sucker/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/plumbing/ooze_sucker))
+		if(main.mapping_id != mapping_id)
+			continue
+		linked_sucker = main
+		main.linked_controller = src
+		return
 
 /obj/machinery/slime_pen_controller/Destroy()
 	GLOB.slime_pen_controllers -= src
@@ -160,16 +171,6 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	SSresearch.xenobio_points -= new_upgrade.cost
 	new_upgrade.on_add(linked_data)
 	linked_data.corral_upgrades |= new_upgrade
-
-/obj/machinery/slime_pen_controller/locate_machinery(multitool_connection)
-	if(!mapping_id)
-		return
-	for(var/obj/machinery/plumbing/ooze_sucker/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/plumbing/ooze_sucker))
-		if(main.mapping_id != mapping_id)
-			continue
-		linked_sucker = main
-		main.linked_controller = src
-		return
 
 /obj/machinery/slime_pen_controller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

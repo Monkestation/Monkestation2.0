@@ -35,6 +35,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -861,10 +862,8 @@
 
 	fire_act(100)
 
-/obj/item/paper/selfdestruct/AltClick(mob/living/user, obj/item/used_item)
+/obj/item/paper/selfdestruct/click_alt(mob/living/user, obj/item/used_item)
 	if(!armed)
 		to_chat(user, span_warning("You arm the incineration mechanism."))
 		armed = TRUE
-		return
-
-	return
+	return CLICK_ACTION_SUCCESS

@@ -1,0 +1,4 @@
+author: "ilikesaying"
+delete-after: True
+changes:
+  - bugfix: "Fixed PACMANs saying they produce half of what they actually produce on examine"
