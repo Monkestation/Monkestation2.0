@@ -7,8 +7,8 @@
 	icon_state = "active_input"
 	anchored = FALSE
 	density = FALSE
-	idle_power_usage = 10
-	active_power_usage = 1000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	buffer = 300
 	category="Distribution"
 	reagent_flags = NO_REACT

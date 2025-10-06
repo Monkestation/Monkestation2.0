@@ -239,3 +239,50 @@
 		return soundin
 	var/datum/sound_effect/sfx = SSsounds.sfx_datum_by_key[soundin]
 	return sfx?.return_sfx() || soundin
+
+/proc/get_channel_name(channel)
+	switch(channel)
+		if(CHANNEL_MASTER_VOLUME)
+			return "Master Volume"
+		if(CHANNEL_LOBBYMUSIC)
+			return "Lobby Music"
+		if(CHANNEL_ADMIN)
+			return "Admin MIDIs"
+		if(CHANNEL_VOX)
+			return "Announcements / AI Noise"
+		if(CHANNEL_JUKEBOX)
+			return "Dance Machines"
+		if(CHANNEL_HEARTBEAT)
+			return "Heartbeat"
+		if(CHANNEL_BUZZ)
+			return "White Noise"
+		if(CHANNEL_CHARGED_SPELL)
+			return "Charged Spells"
+		if(CHANNEL_TRAITOR)
+			return "Traitor Sounds"
+		if(CHANNEL_AMBIENCE)
+			return "Ambience"
+		if(CHANNEL_SOUND_EFFECTS)
+			return "Sound Effects"
+		if(CHANNEL_SOUND_FOOTSTEPS)
+			return "Footsteps"
+		if(CHANNEL_WEATHER)
+			return "Weather"
+		if(CHANNEL_MACHINERY)
+			return "Machinery"
+		if(CHANNEL_INSTRUMENTS)
+			return "Player Instruments"
+		if(CHANNEL_INSTRUMENTS_ROBOT)
+			return "Robot Instruments" //you caused this DONGLE
+		if(CHANNEL_MOB_SOUNDS)
+			return "Mob Sounds"
+		if(CHANNEL_PRUDE)
+			return "Prude Sounds"
+		if(CHANNEL_SQUEAK)
+			return "Squeaks / Plushies"
+		if(CHANNEL_MOB_EMOTES)
+			return "Mob Emotes"
+		if(CHANNEL_SILICON_EMOTES)
+			return "Silicon Emotes"
+		if(CHANNEL_VOICES)
+			return "Voices"

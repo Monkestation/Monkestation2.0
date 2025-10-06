@@ -7,8 +7,8 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OFFLINE|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_WIRES_IF_OPEN
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/slime_market_pad
 	var/obj/machinery/computer/slime_market/console
 

@@ -35,7 +35,7 @@ DEFINE_BITFIELD(sign_features, list(
 	verb_say = "beeps"
 	verb_ask = "bloops"
 	verb_exclaim = "blares"
-	idle_power_usage = 450
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
 	max_integrity = 150
 	integrity_failure = 0.75
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 4)

@@ -197,18 +197,15 @@
 		. = FALSE // this ain't a vampire?!
 		CRASH("[type] applied to non-bloodsucker ([owner]) somehow")
 
-	update_in_shade()
-
 	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
-	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_SHADED), SIGNAL_REMOVETRAIT(TRAIT_SHADED)), PROC_REF(update_in_shade))
 
 	ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsol, COMSIG_SOL_END)
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, SIGNAL_ADDTRAIT(TRAIT_SHADED), SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED))
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
@@ -225,10 +222,10 @@
 		if(owner.fire_stacks <= 0)
 			owner.fire_stacks = 0
 		if(bloodsucker_level > 0)
-			owner.adjust_fire_stacks(0.2 + bloodsucker_level / 10)
+			owner.adjust_fire_stacks(0.25 + bloodsucker_level / 10)
 			owner.ignite_mob()
-	// they'll take around 45 damage total during Sol at rank 1, to 150 damage total at rank 8 (not counting any damage from being set on fire)
-	owner.take_overall_damage(burn = (0.5 + (bloodsucker_level / 4)) * seconds_between_ticks)
+	// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
+	owner.take_overall_damage(burn = (0.75 + (bloodsucker_level / 4)) * seconds_between_ticks)
 	owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
 
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
@@ -240,24 +237,11 @@
 	SIGNAL_HANDLER
 	if(istype(owner.loc, /obj/structure/closet/crate/coffin))
 		qdel(src)
-	else
-		update_in_shade()
-
-/datum/status_effect/bloodsucker_sol/proc/update_in_shade()
-	SIGNAL_HANDLER
-	var/in_shade = HAS_TRAIT(owner, TRAIT_SHADED) || isstructure(owner.loc)
-	if(protected != in_shade)
-		protected = in_shade
-		linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	name = "Solar Flares"
-	desc = "Solar flares bombard the station!\nSleep in a coffin, hide in a locker, or shade yourself with an umbrella to avoid the effects of the solar flare!"
+	desc = "Solar flares bombard the station!\nSleep in a coffin, or cling for dear life in a locker to avoid the effects of the solar flare!"
 	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
 	base_icon_state = "sol_alert"
 	icon_state = "sol_alert"
 
-/atom/movable/screen/alert/status_effect/bloodsucker_sol/update_icon_state()
-	. = ..()
-	var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
-	icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"

@@ -38,7 +38,7 @@
 			qdel(staff.GetComponent(/datum/component/light_eater))
 
 /datum/action/cooldown/spell/toggle/dark_staff/process()
-	active = owner.is_holding_item_of_type(/obj/item/gun/magic/darkspawn)
+	active = !!owner?.is_holding_item_of_type(/obj/item/gun/magic/darkspawn)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/dark_staff/can_cast_spell(feedback)
