@@ -588,3 +588,58 @@
 	desc = "Your actions are twice as fast, and the delay between them is halved."
 	icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	icon_state = "time_dilation"
+
+/datum/status_effect/dragon_install
+	id = "dragoninstall"
+	duration = 60 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
+	show_duration = TRUE
+
+/datum/status_effect/dragon_install/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(fenrir))
+
+/datum/status_effect/dragon_install/on_remove()
+	owner.RemoveElement(/datum/element/perma_fire_overlay)
+	UnregisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+
+/datum/status_effect/dragon_install/tick()
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
+			carbon_owner.reagents.remove_reagent(/datum/reagent/holywater, 1)
+			to_chat(carbon_owner, span_warning("Anti-magical holy water is neutralizing your Dragon Install!"))
+			if(HasElement(carbon_owner, /datum/element/perma_fire_overlay))
+				carbon_owner.RemoveElement(/datum/element/perma_fire_overlay)
+			return
+		carbon_owner.stamina.adjust(30)
+		QDEL_LAZYLIST(carbon_owner.all_scars)
+		for(var/datum/wound/yeowch as anything in carbon_owner.all_wounds)
+			to_chat(carbon_owner, span_notice("The power of your gear cells is mending your wounds!"))
+			yeowch.remove_wound()
+			break
+	if(!HasElement(owner, /datum/element/perma_fire_overlay))
+		owner.AddElement(/datum/element/perma_fire_overlay)
+	owner.adjustBruteLoss(-7.5, FALSE)
+	owner.adjustFireLoss(-7.5, FALSE)
+	owner.adjustOxyLoss(-10, FALSE)
+	owner.adjustToxLoss(-5)
+
+/datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
+	if(!isliving(target))
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
+			return
+	var/mob/living/ky_kiske = target
+	ky_kiske.firestacks += 10
+	ky_kiske.ignite_mob()
+	var/turf/target_turf = get_turf_in_angle(get_angle(owner, ky_kiske), get_turf(owner), 10)
+	ky_kiske.throw_at(target_turf, range = 2, speed = 4, thrower = owner, spin = TRUE)
+
+
+/atom/movable/screen/alert/status_effect/dragon_install
+	name = "Dragon Install"
+	desc = "Your sprit throbs with power! You will regenerate most damage and heal most wounds. You're liable to crash when it's over, though."
+	icon_state = "fleshmend"

@@ -6,6 +6,8 @@ BATTERER
 
 RADIOACTIVE MICROLASER
 
+GEAR CELL INJECTOR (from guilty gear)
+
 */
 
 /*
@@ -719,3 +721,13 @@ effective or pretty fucking useless.
 	light_outer_range = 2
 	light_power = 1
 	light_color = COLOR_SOFT_RED
+
+/obj/item/gear_cell_injector
+
+/obj/item/gear_cell_injector/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!iscarbon(user))
+		return FALSE
+	var/mob/living/carbon/gear_to_be = user
+	gear_to_be.action
+
