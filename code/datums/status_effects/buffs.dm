@@ -592,6 +592,7 @@
 /datum/status_effect/dragon_install
 	id = "dragoninstall"
 	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.25 SECONDS
 	var/list/install_traits = list(
 		TRAIT_ANALGESIA,
