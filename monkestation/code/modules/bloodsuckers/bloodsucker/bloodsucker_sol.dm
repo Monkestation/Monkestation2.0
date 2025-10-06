@@ -197,15 +197,21 @@
 		. = FALSE // this ain't a vampire?!
 		CRASH("[type] applied to non-bloodsucker ([owner]) somehow")
 
+	update_in_shade()
+
+
 	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_SHADED), SIGNAL_REMOVETRAIT(TRAIT_SHADED)),
+PROC_REF(update_in_shade))
 
 	ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsol, COMSIG_SOL_END)
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, SIGNAL_ADDTRAIT(TRAIT_SHADED),
+	 SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
@@ -232,6 +238,15 @@
 	SIGNAL_HANDLER
 	if(!QDELING(src))
 		qdel(src)
+	else
+		update_in_shade()
+
+/datum/status_effect/bloodsucker_sol/proc/update_in_shade()
+	SIGNAL_HANDLER
+	var/in_shade = HAS_TRAIT(owner, TRAIT_SHADED) || isstructure(owner.loc)
+	if(protected != in_shade)
+	protected = in_shade
+	linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /datum/status_effect/bloodsucker_sol/proc/on_owner_moved()
 	SIGNAL_HANDLER
@@ -245,3 +260,7 @@
 	base_icon_state = "sol_alert"
 	icon_state = "sol_alert"
 
+/atom/movable/screen/alert/status_effect/bloodsucker_sol/update_icon_state()
+. = ..()
+var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
+icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"
