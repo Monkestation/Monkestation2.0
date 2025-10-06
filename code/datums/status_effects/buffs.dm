@@ -608,6 +608,8 @@
 		TRAIT_STUN_IMMUNE,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_NUTCRACKER, //for shits n giggles
+		TRAIT_RESIST_HEAT,
+		TRAIT_NOFIRE,
 		)
 
 /datum/status_effect/dragon_install/on_apply()
@@ -619,20 +621,20 @@
 	var/mob/living/carbon/carbon_owner = owner
 	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
 	if(left_arm)
-		left_arm.unarmed_damage_low += 20
-		left_arm.unarmed_damage_high += 20
+		left_arm.unarmed_damage_low += 30
+		left_arm.unarmed_damage_high += 30
 	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
 	if(right_arm)
-		right_arm.unarmed_damage_low += 20
-		right_arm.unarmed_damage_high += 20
+		right_arm.unarmed_damage_low += 30
+		right_arm.unarmed_damage_high += 30
 	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
 	if(left_leg)
-		left_leg.unarmed_damage_low += 20
-		left_leg.unarmed_damage_high += 20
+		left_leg.unarmed_damage_low += 30
+		left_leg.unarmed_damage_high += 30
 	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
 	if(right_leg)
-		right_leg.unarmed_damage_low += 20
-		right_leg.unarmed_damage_high += 20
+		right_leg.unarmed_damage_low += 30
+		right_leg.unarmed_damage_high += 30
 
 /datum/status_effect/dragon_install/on_remove()
 	owner.remove_traits(install_traits, DRAGON_INSTALL_TRAIT)
@@ -644,16 +646,16 @@
 	var/mob/living/carbon/carbon_owner = owner
 	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
 	if(left_arm)
-		left_arm.unarmed_damage_low -= 20
-		left_arm.unarmed_damage_high -= 20
+		left_arm.unarmed_damage_low -= 30
+		left_arm.unarmed_damage_high -= 30
 	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
 	if(right_arm)
-		right_arm.unarmed_damage_low -= 20
-		right_arm.unarmed_damage_high -= 20
+		right_arm.unarmed_damage_low -= 30
+		right_arm.unarmed_damage_high -= 30
 	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
 	if(left_leg)
-		left_leg.unarmed_damage_low -= 20
-		left_leg.unarmed_damage_high -= 20
+		left_leg.unarmed_damage_low -= 30
+		left_leg.unarmed_damage_high -= 30
 	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
 	if(right_leg)
 		right_leg.unarmed_damage_low -= 20
@@ -681,9 +683,10 @@
 	carbon_owner.adjustFireLoss(-2.5, FALSE)
 	carbon_owner.adjustOxyLoss(-2.5, FALSE)
 	carbon_owner.adjustToxLoss(-2.5, FALSE)
-	carbon_owner.adjustCloneLoss(0.25) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
+	carbon_owner.adjustCloneLoss(0.125) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
 
 /datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
 	if(iscarbon(owner))
@@ -699,5 +702,5 @@
 
 /atom/movable/screen/alert/status_effect/dragon_install
 	name = "Dragon Install"
-	desc = "Your soul throbs with power! You will regenerate most damage and heal most wounds, and your attacks will be greatly boosted. You're liable to crash when it's over, though."
+	desc = "Your soul throbs with power! You will regenerate most damage and heal most wounds, and your unarmed attacks will be greatly boosted. This process is dangerous and will cause cellular damage to you."
 	icon_state = "fleshmend"
