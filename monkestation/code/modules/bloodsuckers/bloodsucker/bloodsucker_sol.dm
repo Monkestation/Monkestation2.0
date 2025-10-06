@@ -215,24 +215,43 @@ PROC_REF(update_in_shade))
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
+var/bloodsucker_level = bloodsucker.bloodsucker_level
 	if(protected)
-		return
-	var/bloodsucker_level = bloodsucker.bloodsucker_level
-	if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
-		if(bloodsucker_level > 0)
-			to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
-		else
-			to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
-		COOLDOWN_START(bloodsucker, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
-	if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
-		if(owner.fire_stacks <= 0)
-			owner.fire_stacks = 0
-		if(bloodsucker_level > 0)
-			owner.adjust_fire_stacks(0.25 + bloodsucker_level / 10)
-			owner.ignite_mob()
-	// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
-	owner.take_overall_damage(burn = (0.75 + (bloodsucker_level / 4)) * seconds_between_ticks)
-	owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
+
+	// TAKES 2/5th DAMAGE IF HIDING IN A LOCKER, SET ON FIRE VERY REDUCED
+		if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
+			if(bloodsucker_level > 0)
+				to_chat(owner, span_userdanger("The UV rays creep through the locker slits, seriously burning you!"))
+			else
+				to_chat(owner, span_userdanger("The slits of light coming through the locker starts to burn you!"))
+			COOLDOWN_START(bloodsucker, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
+		if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
+			if(owner.fire_stacks <= 0)
+				owner.fire_stacks = 0
+			if(bloodsucker_level > 0)
+				owner.adjust_fire_stacks(*(0.25 + bloodsucker_level / 10)*0.1)
+				owner.ignite_mob()
+		// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
+		owner.take_overall_damage(burn = ((0.75 + (bloodsucker_level / 4)*0.4)) * seconds_between_ticks)
+		owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
+	else
+
+	// TAKING FULL DAMAGE, SHOULD'VE HID BOZO
+		if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
+			if(bloodsucker_level > 0)
+				to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
+			else
+				to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
+			COOLDOWN_START(bloodsucker, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
+		if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
+			if(owner.fire_stacks <= 0)
+				owner.fire_stacks = 0
+			if(bloodsucker_level > 0)
+				owner.adjust_fire_stacks(0.25 + bloodsucker_level / 10)
+				owner.ignite_mob()
+		// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
+		owner.take_overall_damage(burn = (0.75 + (bloodsucker_level / 4)) * seconds_between_ticks)
+		owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
 
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
 	SIGNAL_HANDLER
