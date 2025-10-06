@@ -748,13 +748,16 @@ effective or pretty fucking useless.
 	name = "Dragon Install"
 
 /datum/action/innate/dragon_install/Activate()
-	owner.balloon_alert("activating")
-	owner.visible_message(span_warning("[owner] "))
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.balloon_alert("activating")
+	carbon_owner.visible_message(span_warning("[carbon_owner] "))
 	if(!do_after(2 SECONDS))
 		return
-	owner.apply_status_effect(/datum/status_effect/dragon_install)
+	carbon_owner.apply_status_effect(/datum/status_effect/dragon_install)
 	for(var/i in 0 to 3) //shamelessly stolen from ash heretic
-		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, owner.loc))
+		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, get_turf(carbon_owner.loc)))
 			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
 			flame_tile.alpha = 125
 			nearby_turf.hotspot_expose(750, 50, 1)
@@ -764,4 +767,7 @@ effective or pretty fucking useless.
 		stoplag(0.2 SECONDS)
 
 /datum/action/innate/dragon_install/Deactivate()
-	owner.remove_status_effect(/datum/status_effect/dragon_install)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.remove_status_effect(/datum/status_effect/dragon_install)
