@@ -23041,7 +23041,7 @@
 /area/station/medical/chemistry)
 "hjC" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -24982,13 +24982,12 @@
 	},
 /obj/structure/table,
 /obj/machinery/light/directional/south,
-/obj/item/storage/box/firingpins,
-/obj/item/storage/box/firingpins,
-/obj/item/storage/lockbox/loyalty,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 10
 	},
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
@@ -45179,6 +45178,14 @@
 "nZB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
+/obj/item/storage/box/firingpins{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/storage/box/firingpins{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /obj/item/melee/baton/security/loaded{
 	pixel_x = 5;
 	pixel_y = -4
@@ -70003,7 +70010,7 @@
 /area/station/security/checkpoint/supply)
 "vRs" = (
 /obj/machinery/status_display/evac/directional/west,
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,

@@ -75,7 +75,7 @@
 	to_chat(caster, span_velvet("You begin siphoning [target]'s will..."))
 
 	//doing a second drain directly after the first makes this significantly faster
-	var doafterTime = 6 SECONDS
+	var/doafterTime = 6 SECONDS
 	if (target.has_status_effect(/datum/status_effect/broken_will))
 		doafterTime = 3 SECONDS
 		playsound(target, 'sound/magic/darkspawn/devour_will.ogg', 65, FALSE)

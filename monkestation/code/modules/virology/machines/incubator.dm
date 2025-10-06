@@ -17,8 +17,7 @@
 	light_outer_range = 2
 	light_power = 1
 
-	idle_power_usage = 100
-	active_power_usage = 200
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
 	// Contains instances of /datum/dish_incubator_dish.
 	var/list/dish_data = list(null, null, null)

@@ -96,6 +96,10 @@
 	if(same_z_layer)
 		return
 	update_z_overlays(GET_TURF_PLANE_OFFSET(new_turf), TRUE)
+	// horrible hacky "fix" for mesons weirdness on multi-z maps, forgive me for this ~Absolucy
+	if(client && (sight & SEE_TURFS) && length(SSmapping.multiz_levels))
+		set_sight(NONE)
+		update_sight()
 
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)

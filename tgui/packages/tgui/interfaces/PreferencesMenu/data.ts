@@ -108,9 +108,11 @@ export enum JoblessRole {
   ReturnToLobby = 3,
 }
 
-export enum GamePreferencesSelectedPage {
-  Settings,
-  Keybindings,
+export enum PreferencesSelectedPage {
+  Character = -1,
+  Settings = 0,
+  Keybindings = 1,
+  Volume = 2,
 }
 
 export const createSetPreference =
@@ -121,11 +123,16 @@ export const createSetPreference =
     });
   };
 
-export enum Window {
+export enum PreferencesCurrentWindow {
   Character = 0,
   Game = 1,
-  Keybindings = 2,
 }
+
+export type Channel = {
+  num: number;
+  name: string;
+  volume: number;
+};
 
 export type PreferencesMenuData = {
   character_preview_view: string;
@@ -184,8 +191,11 @@ export type PreferencesMenuData = {
   selected_unusuals: string[];
   total_coins: number;
   loadout_tabs: LoadoutData[];
-  window: Window;
+  window: PreferencesCurrentWindow;
+  starting_page: PreferencesSelectedPage;
   owned_items: string[];
+
+  channels: Channel[];
 };
 
 type LoadoutData = {

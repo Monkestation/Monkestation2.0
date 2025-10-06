@@ -8006,6 +8006,10 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
+/obj/item/storage/box/handcuffs{
+	pixel_x = 9;
+	pixel_y = -1
+	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "ctf" = (
@@ -39194,7 +39198,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "lxv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/treatment_center)
 "lxN" = (
@@ -69149,9 +69153,6 @@
 /area/station/medical/storage)
 "utS" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/lockbox/loyalty{
-	pixel_y = 16
-	},
 /obj/item/storage/box/trackimp{
 	pixel_x = 8;
 	pixel_y = 6
@@ -69162,11 +69163,13 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
-/obj/item/storage/box/handcuffs{
-	pixel_x = -8
-	},
 /obj/machinery/digital_clock/directional/west,
 /obj/effect/turf_decal/stripes/corner,
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = -2;
+	pixel_x = 0
+	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "utW" = (

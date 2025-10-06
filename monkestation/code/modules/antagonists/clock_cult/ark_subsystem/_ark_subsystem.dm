@@ -25,9 +25,9 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	///How many clockwork airlocks have been created on reebe, used for limiting airlock spam
 	var/reebe_clockwork_airlock_count = 0
 	///How much power does the cult have stored
-	var/clock_power = 250
+	var/clock_power = STANDARD_CELL_CHARGE * 0.25
 	///What is the maximum amount of power the cult can have stored
-	var/max_clock_power = 250
+	var/max_clock_power = STANDARD_CELL_CHARGE * 0.25
 	///How much passive power does the cult have access to, this gets used for things like turning on structures
 	var/passive_power = 15
 	///The list of areas that has been marked by the cult, formatted as a filled with 1s for anti duplication

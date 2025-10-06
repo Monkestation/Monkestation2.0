@@ -2461,17 +2461,20 @@
 "aPW" = (
 /obj/structure/table,
 /obj/item/storage/box/chemimp{
-	pixel_x = 6
+	pixel_x = 7;
+	pixel_y = 6
 	},
 /obj/item/storage/box/trackimp{
-	pixel_x = -3
+	pixel_x = -5;
+	pixel_y = 6
 	},
-/obj/item/storage/lockbox/loyalty,
 /obj/machinery/light_switch/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/teleport_blocker,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "aQe" = (
@@ -9389,9 +9392,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/reagent_dispensers/fueltank/large,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "cLo" = (
@@ -27648,6 +27650,7 @@
 	pixel_x = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "izJ" = (
@@ -27913,6 +27916,10 @@
 	},
 /obj/item/food/grown/poppy/lily{
 	pixel_x = -2
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Produce Access";
+	req_access = list("hydroponics")
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -30388,6 +30395,7 @@
 /area/station/maintenance/starboard/lesser)
 "jrj" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "jrk" = (
@@ -30963,7 +30971,7 @@
 /obj/machinery/biogenerator,
 /obj/machinery/door/window/left/directional/south{
 	name = "Biogenerator Access";
-	req_access = list("hydroponics")
+	req_access = list("service")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
@@ -33772,7 +33780,7 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "krx" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -47030,6 +47038,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"orD" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "orE" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/beaker/large{
@@ -52729,6 +52741,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"qfl" = (
+/obj/machinery/power/emitter,
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "qfs" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/cable,
@@ -55239,6 +55256,16 @@
 "qTs" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/mess)
+"qTE" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/station/engineering/engine_smes)
 "qTI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59561,7 +59588,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "slK" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -59862,7 +59889,6 @@
 	id = "Secure Storage";
 	name = "Secure Storage"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "sqL" = (
@@ -63175,13 +63201,6 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"tvF" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/smooth_half{
-	dir = 1
-	},
-/area/station/engineering/engine_smes)
 "tvJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67891,6 +67910,10 @@
 /obj/item/storage/box/beakers{
 	pixel_y = 5;
 	pixel_x = -9
+	},
+/obj/machinery/door/window/left/directional/south{
+	req_access = list("hydroponics");
+	name = "Biogenerator Access"
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -77074,7 +77097,7 @@
 /obj/machinery/smartfridge,
 /obj/machinery/door/window/right/directional/south{
 	name = "Produce Access";
-	req_access = list("hydroponics")
+	req_access = list("service")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
@@ -236070,9 +236093,9 @@ mNY
 oXX
 mNY
 jrj
-hpd
-hpd
-wkw
+orD
+orD
+qfl
 wkw
 wkw
 yaL
@@ -236329,7 +236352,7 @@ mNY
 xMC
 sqv
 sqv
-yaL
+xMC
 yaL
 yaL
 yaL
@@ -236584,8 +236607,8 @@ mNY
 kCn
 mNY
 cKR
+qTE
 sVa
-tvF
 izF
 gTK
 oPo

@@ -1,0 +1,4 @@
+author: "LassiH"
+delete-after: True
+changes:
+  - bugfix: "darkspawn resistance sigil descriptions now show correct %"

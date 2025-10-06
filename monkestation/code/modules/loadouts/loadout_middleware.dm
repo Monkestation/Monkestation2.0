@@ -12,6 +12,8 @@
 	)
 
 /datum/preference_middleware/loadout/get_ui_static_data()
+	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
+		return list()
 	// [name] is the name of the tab that contains all the corresponding contents.
 	// [title] is the name at the top of the list of corresponding contents.
 	// [contents] is a formatted list of all the possible items for that slot.

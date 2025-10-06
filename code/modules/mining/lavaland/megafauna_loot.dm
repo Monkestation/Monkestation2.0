@@ -527,7 +527,7 @@
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+	if(!isturf(interacting_with) && (user.istate & ISTATE_HARM))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 

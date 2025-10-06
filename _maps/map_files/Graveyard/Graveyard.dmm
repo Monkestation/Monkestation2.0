@@ -927,6 +927,9 @@
 "atz" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/orange/fourcorners,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "atA" = (
@@ -30433,13 +30436,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /turf/open/floor/plating,
 /area/station/ai_monitored/aisat/exterior)
-"lQi" = (
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/engineering/engine_smes)
 "lQu" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31684,11 +31680,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "mlA" = (
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "mlI" = (
 /obj/machinery/duct,
@@ -35074,8 +35068,9 @@
 /area/station/science/server)
 "nyB" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/turf/open/floor/iron,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "nyI" = (
 /obj/effect/spawner/random/vending/colavend,
@@ -45631,14 +45626,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"rLF" = (
-/obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/item/stock_parts/power_store/cell,
-/turf/open/floor/iron,
-/area/station/engineering/engine_smes)
 "rLJ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -48515,7 +48502,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "sUV" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
@@ -55497,7 +55484,7 @@
 /turf/open/floor/iron/dark,
 /area/graveyard/bunker/command)
 "vCI" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
@@ -58984,13 +58971,14 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/storage/lockbox/loyalty{
-	pixel_y = -5
-	},
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 1
 	},
+/obj/item/storage/lockbox/loyalty{
+	pixel_y = -5
+	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/storage/box/teleport_blocker,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "wVr" = (
@@ -153981,8 +153969,8 @@ kFp
 kbJ
 jhw
 mlA
-mlA
-lQi
+dhR
+oRS
 srU
 gqE
 iGu
@@ -154237,7 +154225,7 @@ npP
 npR
 vkN
 jhw
-rLF
+mlA
 nyB
 oRS
 bpE
