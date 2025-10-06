@@ -110,6 +110,8 @@
 		spec_slime_hunger(slime, seconds_per_tick)
 	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		spec_slime_wetness(slime, seconds_per_tick)
+		if(isoceanturf(slime.loc))
+			water_exposure(slime, check_clothes = TRUE, quiet_if_protected = TRUE)
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
@@ -210,23 +212,9 @@
 		return NONE
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
-	if(methods & ~(INGEST|INJECT))
-		// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
-		water_multiplier = water_damage_multiplier(slime)
-		if(water_multiplier <= 0)
-			to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
-			return COMPONENT_NO_EXPOSE_REAGENTS
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+	var/check_clothes = methods & ~(INGEST|INJECT)
+	if(!water_exposure(slime, check_clothes))
 		return COMPONENT_NO_EXPOSE_REAGENTS
-	remove_blood_volume(slime, 30 * water_multiplier)
-	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
-		slime.visible_message(
-			span_warning("[slime]'s form melts away from the water!"),
-			span_danger("The water causes you to melt away!"),
-		)
-		slime.balloon_alert(slime, "water melts you!")
-		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return NONE
 
 /datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -271,6 +259,30 @@
 		return TRUE
 
 	return ..()
+
+/datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
+	var/water_multiplier = 1
+	// thick clothing won't protect you if you just drink or inject tho
+	if(check_clothes)
+		// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
+		water_multiplier = water_damage_multiplier(slime)
+		if(water_multiplier <= 0)
+			if(!quiet_if_protected)
+				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
+			return FALSE
+	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+		if(!quiet_if_protected)
+			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+		return FALSE
+	remove_blood_volume(slime, 30 * water_multiplier)
+	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
+		slime.visible_message(
+			span_warning("[slime]'s form melts away from the water!"),
+			span_danger("The water causes you to melt away!"),
+		)
+		slime.balloon_alert(slime, "water melts you!")
+		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
+	return TRUE
 
 /datum/species/oozeling/create_pref_unique_perks()
 	var/list/to_add = list()
