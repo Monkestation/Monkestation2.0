@@ -723,6 +723,8 @@ effective or pretty fucking useless.
 	light_color = COLOR_SOFT_RED
 
 /obj/item/gear_cell_injector
+	name = "\improper Gear Cell Injector"
+	desc = "Use to gain UNLIMITED POWWAAH and/or UNLIMITED MALIGNANT CAANCEERS. Probably safe."
 
 /obj/item/gear_cell_injector/attack_self(mob/user, modifiers)
 	. = ..()
@@ -730,4 +732,25 @@ effective or pretty fucking useless.
 		return FALSE
 	var/mob/living/carbon/gear_to_be = user
 	gear_to_be.action
+
+/datum/action/innate/dragon_install
+	name = "Dragon Install"
+
+/datum/action/innate/dragon_install/Activate()
+	owner.balloon_alert("activating")
+	if(!do_after(2 SECONDS))
+		return
+	owner.apply_status_effect(/datum/status_effect/dragon_install)
+	for(var/i in 0 to 3) //shamelessly stolen from ash heretic
+		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, owner.loc))
+			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+			flame_tile.alpha = 125
+			nearby_turf.hotspot_expose(750, 50, 1)
+			for(var/mob/living/fried_living in nearby_turf.contents - owner)
+				fried_living.apply_damage(10, BURN)
+
+		stoplag(0.2 SECONDS)
+
+/datum/action/innate/dragon_install/Deactivate()
+	owner.remove_status_effect(/datum/status_effect/dragon_install)
 
