@@ -211,7 +211,7 @@
 	w_class = WEIGHT_CLASS_NORMAL //its an absurdly large sticker.
 
 /obj/item/sticker/realfakeairlock/attempt_attach(atom/target, mob/user, px, py)
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		px = 0 //because even the closest you can get to perfect is slightly imperfect.
 		py = 0 //also its so fuckin massive that you can really fuck w/ surrounding vision
 		. = ..()
@@ -235,7 +235,7 @@
 	if(istype(donked, /obj/item/bodypart/head))
 		if(donked.brute_dam < 50) //dont wanna kill yourself from banging your head
 			donked.receive_damage(brute = 5)
-		bumper.visible_message(span_danger("[bumper] bangs their head on the fake airlock!"), span_userdanger("You bang your head on the fake airlock!"), span_hear("You hear a loud thud followed by something falling."))
+		bumper.visible_message(span_danger("[bumper] bangs [bumper.p_their()] head on the fake airlock!"), span_userdanger("You bang your head on the fake airlock!"), span_hear("You hear a loud thud followed by something falling."))
 		playsound(
 			source = bumper,
 			soundin = 'sound/effects/bang.ogg',
