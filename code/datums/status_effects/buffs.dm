@@ -685,7 +685,7 @@
 	carbon_owner.adjustFireLoss(-2.5, FALSE)
 	carbon_owner.adjustOxyLoss(-2.5, FALSE)
 	carbon_owner.adjustToxLoss(-2.5, FALSE)
-	carbon_owner.adjustCloneLoss(0.125) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
+	carbon_owner.adjustCloneLoss(0.25) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
 
 /datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
