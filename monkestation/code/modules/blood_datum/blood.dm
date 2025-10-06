@@ -252,7 +252,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	if(!new_splat)
 		return
 	blood.can_dry = FALSE
-	RegisterSignals(blood, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACKBY_SECONDARY), PROC_REF(on_cleaned))
+	RegisterSignals(blood, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACKBY_SECONDARY), PROC_REF(on_cleaned), override = TRUE)
 
 /datum/blood_type/crew/ethereal/proc/on_cleaned(obj/effect/decal/cleanable/source, mob/living/user, obj/item/tool, ...)
 	SIGNAL_HANDLER

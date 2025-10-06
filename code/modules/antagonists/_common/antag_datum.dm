@@ -203,6 +203,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(count_against_dynamic_roll_chance && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
+///Called by the transfer_to() mind proc after the the player (key and client) is transfered.
+/datum/antagonist/proc/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	return
+
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
 	return

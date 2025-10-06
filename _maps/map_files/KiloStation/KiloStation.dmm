@@ -23041,7 +23041,7 @@
 /area/station/medical/chemistry)
 "hjC" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -70010,7 +70010,7 @@
 /area/station/security/checkpoint/supply)
 "vRs" = (
 /obj/machinery/status_display/evac/directional/west,
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,

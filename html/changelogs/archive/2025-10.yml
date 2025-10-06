@@ -120,8 +120,21 @@
   notghosti:
   - balance: Mommi Shrink will only make you a 1/4th of your original size.
 2025-10-05:
+  Absolucy:
+  - balance: Oozelings will now begin to lose blood if they're starving, as intended.
+  - bugfix: You can no longer use spray paint or soap to undo window polarization.
   SirNightKnight:
   - bugfix: fixed item reskinning not working again.
+  - bugfix: fixed impressa coffeemakers not making coffee.
+  - bugfix: standardized coffee cups in coffeemakers and pass flags. (you can put
+      regular coffeemakers on tables)
+  - bugfix: crayons are edible again.
+  - bugfix: fixed interacting while incapacitated.
+  - balance: you can now officially open storage and use items in soft crit
+  - qol: washing machines don't delete dyes anymore.
+  TheColorCyan:
+  - bugfix: fixed xenos being unable to properly interact with airlocks
+  - bugfix: fixed stacking machine on labor camp not accepting sheets
   ThePooba:
   - bugfix: darkspawn can no longer reach like 90% damage reduction
   - bugfix: removed double defined crew species paychecks
@@ -134,3 +147,80 @@
   - bugfix: remote injectors, patchers, and factories now print their components again.
   notghosti:
   - bugfix: Blueshield modified hellfire will once again only have 13 shots. How 'lucky'
+2025-10-06:
+  Absolucy:
+  - rscdel: You can no longer harvest plants from unanchored hydroponics trays.
+  - rscadd: Adds "chasm filler capsules", which can be bought by miners, and thrown
+      into a chasm to fill it with thick dirt. The dirt has some slowdown when walked
+      over, tho.
+  - qol: Moved the Magnetization Injector from the "Survival" section of the mining
+      points vendor to the "Mining" section.
+  - rscadd: (Jacquerel) Budget cuts can sometimes effect the station's supply of Emergency
+      Bluespace Shelters.
+  - rscadd: (Melbert) Shaft Miner's Bluespace Survival Capsules will now throw people
+      away from it when it deploys. Be sure to heed the warning to "Stand back".
+  - bugfix: (Shadow-Quill) RCD Construction effects will no longer fall into chasms.
+  - bugfix: (SmArtKar) Fixed chasm jaunters not working while you're buckled to a
+      mob or an object
+  - code_imp: (SmArtKar) Updated chasm jaunters to use signals instead of being hardcoded
+      in chasm code.
+  - map: All maps (except Theseus because I couldn't figure out how to fit them in)
+      have at least 5 main SMESes in engineering now.
+  - map: All maps have at least one oxygen canister in engineering now.
+  - map: Added a jetpack crate to engineering secure storage on Box Station.
+  - map: The main SMES rooms should now all be mapped in as part of the "Engineering
+      SMES" area now.
+  - bugfix: Fixed some random bugs I guess?
+  - bugfix: Fixed oozelings losing learnt languages (i.e from book of babel) when
+      revived.
+  - bugfix: Fixed oozelings duplicating cybernetics from quirks (i.e breathing tubes)
+      when revived.
+  - bugfix: Fixed not being able to whack people/things with the lava staff while
+      in combat mode.
+  - bugfix: Fixed flat armor penetration (armor ignorance) not working.
+  - bugfix: (Melbert) Fix being unable to resist out of ice cubes.
+  - qol: The DNA Vault will no longer roll "useless" mutations, i.e oozelings won't
+      roll fire immunity or plasmocile,
+  - qol: Artifacts can no longer spawn enough monkeys to grind the server to a halt.
+      Don't worry, they can still spawn enough monkeys to be a health hazard to any
+      nearby crew!
+  - bugfix: You can now actually shoot bingle pits.
+  - qol: Removed most restrictions on areas that can be used as a Bloodsucker lair.
+      Outdoor areas and shuttles are notable exceptions.
+  - balance: Oozeling bloodsuckers now lose blood from water, just like normal oozelings.
+  - bugfix: Oozelings are now properly melted by ocean water.
+  Killermankey:
+  - balance: Heroic Laser Musket fires 1x45dmg instead of 3x25dmg
+  - rscdel: Umbrella SPF 10,000
+  - balance: increased Sols solar output
+  - balance: being cooked alive by sol is now a massive moodlet debuff, instead of
+      only a minor one.
+  Sorenon:
+  - qol: unified all of the preferences windows into one
+  - qol: added a warning to the keybindings menu when multiple actions are bound to
+      the same key
+  - qol: added a reset button to the volume mixer
+  - bugfix: allowed the volume mixer to mute channels instead of just making them
+      really quiet
+  TheColorCyan:
+  - refactor: (carlarctg) refactored mirrors
+  - bugfix: (carlarctg) Fixed Pride Mirror teleporting you into the space on the first
+      use. Now it waits until you officially cancel and say 'I am Done' so you can
+      customize yourself to your liking.
+  - bugfix: (SmArtKar) Fixed pride mirrors not dumping you into space after use
+  Xander3359:
+  - bugfix: Fixed a case of abandoned crate having nothing in it
+  leaKsi:
+  - bugfix: (mogeoko) Atmospherics components will now move air into connected pipeline
+      on deconstruction if possible. Otherwise, air will be released to the outside
+      from open nodes.
+  - bugfix: (mogeoko) Unsafe pressure release on atmos components will now work the
+      same way it does in the normal pipes if there is an empty node with air.
+  - bugfix: (mogeoko) Atmospherics machinery will now share air from nodes after being
+      rotated and reconnected to pipenet.
+  - bugfix: (JohnFulpWillard) Cryo cells no longer appear on when off.
+  notghosti:
+  - rscadd: Floran podhair is now a unique selection option from skin tone
+  - rscadd: Floran leaves are no longer colour inverted
+  - qol: Applying a ID trim will give Maintenace access. Meaning you greyshirts can
+      get jobs easier now!

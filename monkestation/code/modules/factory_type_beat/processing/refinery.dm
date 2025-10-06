@@ -126,6 +126,7 @@
 		if(istype(potential_boulder, /obj/item/processing/refined_dust))
 			boulders_concurrent-- //We count dust.
 			refine_dust(potential_boulder)
+			continue
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(boulder.durability < 0)

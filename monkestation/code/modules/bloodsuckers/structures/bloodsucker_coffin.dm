@@ -1,21 +1,31 @@
 /datum/antagonist/bloodsucker/proc/claim_coffin(obj/structure/closet/crate/claimed, area/current_area)
+	var/static/list/banned_areas_typecache
+	if(!banned_areas_typecache)
+		banned_areas_typecache = typecacheof(list(
+			/area/icemoon,
+			/area/lavaland,
+			/area/ocean,
+			/area/shuttle,
+			/area/space,
+		))
+
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner.current)
-			to_chat(owner, "This is your [src].")
+			to_chat(owner, span_notice("This is your [src]."))
 		else
-			to_chat(owner, "This [src] has already been claimed by another.")
+			to_chat(owner, span_warning("This [src] has already been claimed by another."))
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
 	// this if check is split up bc it's annoying to read and mentally parse when it's combined into one big if statement
 	var/valid_lair_area = TRUE
 	if(!coffin_turf)
 		valid_lair_area = FALSE
-	else if(!is_eclipse_level(coffin_turf.z) && !(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
-		if(!is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
+	else if(!(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
+		if(is_centcom_level(coffin_turf.z) || is_type_in_typecache(current_area, banned_areas_typecache) || (istype(current_area, /area/ruin) && current_area.outdoors))
 			valid_lair_area = FALSE
 	if(!valid_lair_area)
-		claimed.balloon_alert(owner.current, "not part of station!")
+		claimed.balloon_alert(owner.current, "ineligible area!")
 		return
 	// This is my Lair
 	coffin = claimed
@@ -240,8 +250,7 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			if(bloodsuckerdatum.bloodsucker_level_unspent < 1 && bloodsuckerdatum.claimed_coffin == FALSE)
-				bloodsuckerdatum.claimed_coffin = TRUE
+			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
 				bloodsuckerdatum.blood_level_gain()
 			bloodsuckerdatum.SpendRank()
 		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.

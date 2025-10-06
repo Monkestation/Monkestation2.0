@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed impressa coffeemakers not making coffee."
-  - bugfix: "standardized coffee cups in coffeemakers and pass flags. (you can put regular coffeemakers on tables)"

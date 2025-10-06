@@ -865,6 +865,10 @@
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return
 
+			if(HAS_TRAIT(target, TRAIT_WINDOW_POLARIZED))
+				balloon_alert(user, "can't paint polarized window!")
+				return FALSE
+
 			if(istype(target, /obj/item/pipe))
 				if(GLOB.pipe_color_name.Find(paint_color))
 					var/obj/item/pipe/target_pipe = target
