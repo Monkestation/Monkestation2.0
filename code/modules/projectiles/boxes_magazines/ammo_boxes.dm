@@ -30,9 +30,21 @@
 //	ammo_band_icon = "+38_ammo_band" //monkestation temp removal, needs a PR
 //	ammo_band_color = null //temp
 
+/obj/item/ammo_box/a500
+	name = "speed loader (.500)"
+	desc = "Designed to quickly reload revolvers."
+	icon_state = "357"
+	ammo_type = /obj/item/ammo_casing/a500
+	max_ammo = 6
+	caliber = CALIBER_500
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	item_flags = NO_MAT_REDEMPTION
+	w_class = WEIGHT_CLASS_SMALL
+
+
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a short-lived tracking implant within the target's body."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 
 /obj/item/ammo_box/c38/match
@@ -452,8 +464,8 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
 		old_ammo_count = length(stored_ammo)
-		if(do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
-			return FALSE
+		if(!do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/ammo_box/advanced/s12gauge/afterattack(atom/target, mob/user, proximity_flag, click_parameters) //why did i do this, i guess it's funny?
 	. = ..()

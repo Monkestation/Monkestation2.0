@@ -1,0 +1,6 @@
+author: "Killermankey"
+delete-after: True
+changes:
+  - rscdel: "Umbrella SPF 10,000"
+  - balance: "increased Sols solar output"
+  - balance: "being cooked alive by sol is now a massive moodlet debuff, instead of only a minor one."

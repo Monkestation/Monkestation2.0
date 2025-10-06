@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Station alert consoles & Cyborg/AI alarm systems now shows all station Z levels rather than the one it was created on."
-  - bugfix: "Cyborg/AIs won't get alerted of alarms going off in Centcom/Thunderdome areas."

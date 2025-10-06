@@ -131,7 +131,7 @@
 		owner.balloon_alert(owner, "attempting to revive.")
 	else
 		owner.balloon_alert(owner, "attempting to vassalize.")
-	if(!do_after(user, vassal_creation_time, target, NONE, TRUE))
+	if(!do_after(user, vassal_creation_time, target, NONE, TRUE, hidden = TRUE))
 		return FALSE
 	if(!victim_has_blood(target))
 		return FALSE

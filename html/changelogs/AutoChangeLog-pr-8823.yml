@@ -1,0 +1,7 @@
+author: "leaKsi"
+delete-after: True
+changes:
+  - bugfix: "(mogeoko) Atmospherics components will now move air into connected pipeline on deconstruction if possible. Otherwise, air will be released to the outside from open nodes."
+  - bugfix: "(mogeoko) Unsafe pressure release on atmos components will now work the same way it does in the normal pipes if there is an empty node with air."
+  - bugfix: "(mogeoko) Atmospherics machinery will now share air from nodes after being rotated and reconnected to pipenet."
+  - bugfix: "(JohnFulpWillard) Cryo cells no longer appear on when off."

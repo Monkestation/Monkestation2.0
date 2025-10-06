@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Floran podhair is now a unique selection option from skin tone"
+  - rscadd: "Floran leaves are no longer colour inverted"

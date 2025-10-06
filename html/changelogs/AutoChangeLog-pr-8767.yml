@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "The DNA Vault will no longer roll \"useless\" mutations, i.e oozelings won't roll fire immunity or plasmocile,"

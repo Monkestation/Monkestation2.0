@@ -1,0 +1,9 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some random bugs I guess?"
+  - bugfix: "Fixed oozelings losing learnt languages (i.e from book of babel) when revived."
+  - bugfix: "Fixed oozelings duplicating cybernetics from quirks (i.e breathing tubes) when revived."
+  - bugfix: "Fixed not being able to whack people/things with the lava staff while in combat mode."
+  - bugfix: "Fixed flat armor penetration (armor ignorance) not working."
+  - bugfix: "(Melbert) Fix being unable to resist out of ice cubes."

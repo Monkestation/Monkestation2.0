@@ -1,0 +1,6 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - refactor: "(carlarctg) refactored mirrors"
+  - bugfix: "(carlarctg) Fixed Pride Mirror teleporting you into the space on the first use. Now it waits until you officially cancel and say 'I am Done' so you can customize yourself to your liking."
+  - bugfix: "(SmArtKar) Fixed pride mirrors not dumping you into space after use"

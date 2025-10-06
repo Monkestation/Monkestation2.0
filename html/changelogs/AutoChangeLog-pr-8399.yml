@@ -1,0 +1,4 @@
+author: "Killermankey"
+delete-after: True
+changes:
+  - balance: "Heroic Laser Musket fires 1x45dmg instead of 3x25dmg"

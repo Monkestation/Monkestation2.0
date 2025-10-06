@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Oozeling bloodsuckers now lose blood from water, just like normal oozelings."
+  - bugfix: "Oozelings are now properly melted by ocean water."

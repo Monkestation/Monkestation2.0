@@ -6,6 +6,7 @@
 	show_name_in_check_antagonists = TRUE
 	count_against_dynamic_roll_chance = FALSE
 	show_to_ghosts = TRUE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
 	/// The antagonist's master, used for objective
 	var/mob/living/monky_master
 
