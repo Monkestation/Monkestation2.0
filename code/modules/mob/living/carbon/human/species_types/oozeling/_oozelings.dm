@@ -110,8 +110,6 @@
 		spec_slime_hunger(slime, seconds_per_tick)
 	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		spec_slime_wetness(slime, seconds_per_tick)
-		if(isoceanturf(slime.loc))
-			water_exposure(slime, check_clothes = TRUE, quiet_if_protected = TRUE)
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)

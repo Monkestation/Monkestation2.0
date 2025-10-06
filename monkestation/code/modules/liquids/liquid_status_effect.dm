@@ -40,12 +40,22 @@
 	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 
+/datum/status_effect/ocean_affected/on_apply()
+	if(!isoceanturf(get_turf(owner)))
+		return FALSE
+	return TRUE
+
 /datum/status_effect/ocean_affected/tick()
 	var/turf/ocean_turf = get_turf(owner)
-	if(!istype(ocean_turf, /turf/open/floor/plating/ocean))
+	if(!isoceanturf(ocean_turf))
 		qdel(src)
+		return
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/arrived = owner
-		if(is_species(owner, /datum/species/ipc) && !(arrived.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE))
-			arrived.adjustFireLoss(5)
+		if(isipc(arrived))
+			if(!(arrived.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE))
+				arrived.take_overall_damage(burn = 5)
+		else if(isoozeling(arrived) && !HAS_TRAIT(arrived, TRAIT_SLIME_HYDROPHOBIA))
+			var/datum/species/oozeling/oozeling = arrived.dna.species
+			oozeling.water_exposure(arrived, check_clothes = TRUE, quiet_if_protected = TRUE)
