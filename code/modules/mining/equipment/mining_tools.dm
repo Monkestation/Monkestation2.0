@@ -26,6 +26,27 @@
 	user.visible_message(span_suicide("[user] couldn't do it!"))
 	return SHAME
 
+/obj/item/pickaxe/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!iscarbon(interacting_with))
+		return NONE
+	var/mob/living/carbon/stone = interacting_with
+	if(!stone.has_status_effect(/datum/status_effect/stoned))
+		return NONE
+	user.visible_message(span_warning("[user] begins mining [stone] for meat!"), span_notice("You begin mining [stone]."), ignored_mobs=list(stone, user))
+	to_chat(stone, span_userdanger("[user] begins mining you for meat!"))
+	if(!do_after(user, 5 SECONDS * toolspeed, stone))
+		return ITEM_INTERACT_BLOCKING
+	if(stone.type_of_meat)
+		var/atom/meat = new stone.type_of_meat (drop_location())
+		meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, stone) = SHEET_MATERIAL_AMOUNT * 4))
+		stone.adjustBruteLoss(20)
+		user.visible_message(span_warning("[user] mines [stone] for meat!"), span_notice("You mine [stone]."), ignored_mobs=list(stone, user))
+		to_chat(stone, span_userdanger("[user] mines you for meat! OWWW..."))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+
 /obj/item/pickaxe/rusted
 	name = "rusty pickaxe"
 	desc = "A pickaxe that's been left to rust."
