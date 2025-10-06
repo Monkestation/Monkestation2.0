@@ -215,7 +215,7 @@ PROC_REF(update_in_shade))
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
-var/bloodsucker_level = bloodsucker.bloodsucker_level
+	var/bloodsucker_level = bloodsucker.bloodsucker_level
 	if(protected)
 
 	// TAKES 2/5th DAMAGE IF HIDING IN A LOCKER, SET ON FIRE VERY REDUCED
