@@ -600,23 +600,23 @@
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_NOCRITOVERLAY
+		TRAIT_NOCRITOVERLAY,
 		TRAIT_ABATES_SHOCK,
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NODISMEMBER,
 		TRAIT_NO_PAIN_EFFECTS,
-		TRAIT_NO_SLEEP,
-		TRAIT_STUN_IMMUNE,
+		TRAIT_NOSLEEP,
+		TRAIT_STUNIMMUNE,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_NUTCRACKER, //for shits n giggles
-		TRAIT_RESIST_HEAT,
+		TRAIT_RESISTHEAT,
 		TRAIT_NOFIRE,
 		TRAIT_UNNATURAL_RED_GLOWY_EYES,
 		)
 
 /datum/status_effect/dragon_install/on_apply()
 	. = ..()
-	owner.add_traits(install_traits, DRAGON_INSTALL_TRAIT)
+	owner.add_traits(install_traits, "dragon_install")
 	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(fenrir))
 	if(!iscarbon(owner))
 		return
@@ -639,13 +639,13 @@
 		right_leg.unarmed_damage_high += 30
 
 /datum/status_effect/dragon_install/on_remove()
-	owner.remove_traits(install_traits, DRAGON_INSTALL_TRAIT)
+	owner.remove_traits(install_traits, "dragon_install")
 	owner.RemoveElement(/datum/element/perma_fire_overlay)
 	UnregisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
-	owner.paralyze(5 SECONDS) //so you cant micro it
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.paralyze(5 SECONDS) // no spammies.
 	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
 	if(left_arm)
 		left_arm.unarmed_damage_low -= 30
@@ -668,10 +668,11 @@
 		return
 	var/mob/living/carbon/carbon_owner = owner
 	if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
-		carbon_owner.reagents.remove_reagent(/datum/reagent/holywater, 1)
+		carbon_owner.reagents.remove_reagent(/datum/reagent/water/holywater 1)
 		to_chat(carbon_owner, span_warning("Anti-magical holy water is neutralizing your Dragon Install!"))
 		if(HasElement(carbon_owner, /datum/element/perma_fire_overlay))
 			carbon_owner.RemoveElement(/datum/element/perma_fire_overlay)
+		carbon_owner.remove_traits(install_traits, "dragon_install")
 		return
 	carbon_owner.stamina.adjust(30)
 	QDEL_LAZYLIST(carbon_owner.all_scars)
@@ -681,6 +682,7 @@
 		break
 	if(!HasElement(carbon_owner, /datum/element/perma_fire_overlay))
 		carbon_owner.AddElement(/datum/element/perma_fire_overlay)
+	carbon_owner.add_traits(install_traits, "dragon_install")
 	carbon_owner.adjustBruteLoss(-2.5, FALSE)
 	carbon_owner.adjustFireLoss(-2.5, FALSE)
 	carbon_owner.adjustOxyLoss(-2.5, FALSE)
@@ -695,9 +697,11 @@
 		var/mob/living/carbon/carbon_owner = owner
 		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
 			return
-	var/mob/living/ky_kiske = target //gilltea geer tm 
-	ky_kiske.firestacks += 10
-	ky_kiske.ignite_mob()
+	var/mob/living/carbon/ky_kiske = target //gilltea geer tm
+	if(iscarbon(ky_kiske))
+		var/mob/living/carbon/carb_kiske = ky_kiske
+		carb_kiske.firestacks += 10
+		carb_kiske.ignite_mob()
 	var/turf/target_turf = get_turf_in_angle(get_angle(owner, ky_kiske), get_turf(owner), 10)
 	ky_kiske.throw_at(target_turf, range = 2, speed = 4, thrower = owner, spin = TRUE)
 
