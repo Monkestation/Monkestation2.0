@@ -744,7 +744,7 @@ effective or pretty fucking useless.
 
 //see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that does clone damage over time and stuns when its out
 
-/datum/action/innate/dragon_install //hopefully its not quite as useless as it is in the source material
+/datum/action/innate/dragon_install //dragon install into losing is sol's best true combo
 	name = "Dragon Install"
 
 /datum/action/innate/dragon_install/Activate()
