@@ -731,7 +731,11 @@ effective or pretty fucking useless.
 	if(!iscarbon(user))
 		return FALSE
 	var/mob/living/carbon/gear_to_be = user
-	gear_to_be.action
+	var/datum/action/innate/dragon_install/magic
+	magic = new(gear_to_be)
+	magic.Grant(gear_to_be)
+
+//see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that does clone damage over time and stuns when its out
 
 /datum/action/innate/dragon_install
 	name = "Dragon Install"
@@ -753,4 +757,3 @@ effective or pretty fucking useless.
 
 /datum/action/innate/dragon_install/Deactivate()
 	owner.remove_status_effect(/datum/status_effect/dragon_install)
-
