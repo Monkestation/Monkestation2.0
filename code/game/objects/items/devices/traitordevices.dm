@@ -725,6 +725,12 @@ effective or pretty fucking useless.
 /obj/item/gear_cell_injector
 	name = "\improper Gear Cell Injector"
 	desc = "Use to gain UNLIMITED POWWAAH and/or UNLIMITED MALIGNANT CAANCEERS. Probably safe."
+	icon = 'icons/obj/medical/syringe.dmi'
+	icon_state = "dnainjector"
+	inhand_icon_state = "dnainjector"
+	worn_icon_state = "pen"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
 /obj/item/gear_cell_injector/attack_self(mob/user, modifiers)
 	. = ..()
@@ -734,14 +740,16 @@ effective or pretty fucking useless.
 	var/datum/action/innate/dragon_install/magic
 	magic = new(gear_to_be)
 	magic.Grant(gear_to_be)
+	qdel(src)
 
 //see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that does clone damage over time and stuns when its out
 
-/datum/action/innate/dragon_install
+/datum/action/innate/dragon_install //hopefully its not quite as useless as it is in the source material
 	name = "Dragon Install"
 
 /datum/action/innate/dragon_install/Activate()
 	owner.balloon_alert("activating")
+	owner.visible_message(span_warning("[owner] "))
 	if(!do_after(2 SECONDS))
 		return
 	owner.apply_status_effect(/datum/status_effect/dragon_install)
