@@ -24,7 +24,7 @@
 
 /datum/reagent/medicine/leporazine/on_mob_metabolize(mob/living/carbon/user)
 	. = ..()
-	user.add_homeostasis_level(type, user.standard_body_temperature, 10 KELVIN)
+	user.add_homeostasis_level(type, user.standard_body_temperature, 100 KELVIN) // I hate temp rework
 
 /datum/reagent/medicine/leporazine/on_mob_end_metabolize(mob/living/carbon/user)
 	. = ..()
