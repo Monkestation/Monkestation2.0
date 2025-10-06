@@ -280,6 +280,6 @@ PROC_REF(update_in_shade))
 	icon_state = "sol_alert"
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol/update_icon_state()
-. = ..()
-var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
-icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"
+	. = ..()
+	var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
+	icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"
