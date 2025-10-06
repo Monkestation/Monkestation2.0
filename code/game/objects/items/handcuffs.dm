@@ -128,6 +128,34 @@
 		qdel(src)
 	return
 
+/obj/item/restraints/handcuffs/silver
+	name = "silver handcuffs"
+	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, but some say they can contain certain creatures of the night..."
+	breakouttime = 45 SECONDS
+
+	trashtype = /obj/item/restraints/handcuffs/silver/used
+
+	color = list(
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1,
+		0.4,0.4,0.4
+	)
+
+/obj/item/restraints/handcuffs/silver/used
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
+	user.visible_message(span_danger("The [name] shatter into a hundred pieces!"))
+
+	return ..()
+
+/obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
+	. = ..()
+
+	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
+		target.apply_status_effect(/datum/status_effect/silver_cuffed)
+
 /**
  * # Alien handcuffs
  *

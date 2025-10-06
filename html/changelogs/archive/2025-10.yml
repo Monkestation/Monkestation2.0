@@ -1,0 +1,226 @@
+2025-10-01:
+  Bastian0930:
+  - bugfix: Bug-suckers have had an insane amount of bugs squashed. I mean, seriously,
+      these guys had a tracker dedicated to how buggy they were.
+  - bugfix: Changing the pen angle is now on control click, instead of being on Z
+      (conflicted with clicking the pen)
+  - bugfix: Clicking a pen no longer makes it large, and instead keeps it tiny.
+  Lawlolawl:
+  - qol: Added names to machining circuit board types so you can differentiate between
+      them when inspecting them.
+  Xander3359:
+  - bugfix: Fixed being unable to click drag a crate off a cargo shelf if you didn't
+      drag the shelf rather than the crate
+  - qol: Adds context to microwave, explaining some of the interactions that are possible
+  - bugfix: Fixed ninja drain not working properly
+  - rscadd: Ninja can now hack more things with his gloves via right click (including
+      bots, vendors, cameras, windoors, etc.)
+  - bugfix: Fix not being able to alt or ctrl click a cryogenics cell
+  jlsnow301, infraredbaron, StrangeWeirdKitten, Xander3359:
+  - rscadd: Added a new UI element over players that are interacting, building, etc.
+  - code_imp: do_after() can now hold custom cog icons. Add some today!
+2025-10-02:
+  EssentialTomato:
+  - qol: Reproductive slime extracts now eat biomass instead of monkey cubes.
+  IndieanaJones:
+  - bugfix: Clown cars steal access again.
+  JohnFulpWillard:
+  - rscadd: Added a new PDA app unique to the NT Representative, this allows them
+      to rate & comment on the state of the station and have it show up on the roundend
+      report.
+  - qol: NT Rep and Blueshield now have colors in the Occupations menu, and have their
+      own Mail color now, too.
+  - qol: The grandfather clock now respects direction and distance at all times.
+  - balance: NT Rep now has Service radio.
+  - map: Remapped much of the NT Rep's presence on maps, especially Helio/IceBox/Kilo.
+      Notably removed most of their kitchens and made them more public.
+  - bugfix: Latejoining and afterparty station event now properly give you the spawn
+      effects of buckling in/being drunk/being in a closet.
+  Lawlolawl:
+  - bugfix: Fixed TK teleporting surgical tray by stopping TK use in hand.
+  TheColorCyan:
+  - bugfix: you can scoop up animals again
+  - bugfix: sabre sheath alt-click now works properly
+  - bugfix: fixed xenos being unable to eat people
+  - bugfix: fixed perfume bottles not working
+  Xander3359:
+  - qol: Allows cell chargers to charge megacells
+  - bugfix: Fix cells showing the "charge meter" on examine twice
+  - bugfix: Fix being actionable in hardcrit/unconscious
+  - bugfix: Space suit now uses the correct amount of power for thermal regulation
+  - bugfix: Debug outfit no longer notifies all ghosts when it spawns
+  - balance: Megacells are weight class 2, which now fits in construction bags
+  - bugfix: Fixes bileworm spewlet not mining in a 3x3
+  - bugfix: Fixes crusher not having a faster cooldown based on mining skill
+  notghosti:
+  - map: Added several improvements to RD's office on thesues, including a fixed announcement
+      console, authentication keyswipe, RD's monitor console, and fixing several ai
+      sat camera network flags
+  oh no oh god oh shit who gave the neurodivergent frog a github account:
+  - rscadd: 'Gravito-Kinetic Field Conduction: a nanite program that lets you alter
+      gravity to your whims. (Assuming your whims are 1G and 2G.)'
+  - rscadd: 'Nanomechanical Injection System: a nanite program that lets you smoosh
+      nanites into peoples skin really hard to transfer some to them. Technically
+      able to transfer nanites to those without an existing nanite colony! Technically.
+      Nanotrasen takes no responsibility for any discomfort, disgust, or unimaginable
+      agony that may result from the use of this feature on a living creature.'
+2025-10-03:
+  Absolucy:
+  - bugfix: You can now drag and drop plants into a composter on the other side of
+      the room again.
+  - qol: Construction bags can now hold meteor sat capsules.
+  EatsTheGrapes:
+  - bugfix: Overclocked volume pumps no longer leak through walls or sealed structures.
+  - refactor: Cleaned up volume pump code by splitting into helper procs and replacing
+      magic numbers with defines.
+  SirNightKnight:
+  - bugfix: fixes cargorilla interactions with crates not working properly.
+  - bugfix: fixed cluwne brain traumas not being removed when the curse is lifted.
+  - balance: honkerblasts don't tie your laces anymore.
+  SyncIt21, Xander3359:
+  - bugfix: Fix being able to charge guns with an inducer
+  - bugfix: Fix being able to charge space suits with an inducer
+  TheColorCyan:
+  - bugfix: fixed clock cult not gaining power from integration cogs and softlocking
+      the cult
+2025-10-04:
+  Absolucy:
+  - rscadd: You can now yell "SHIT YOURSELF, NOW" with voice of god to make people
+      superfart.
+  - balance: Made various adjustments to how the storyteller determines the antag
+      amount.
+  - bugfix: Fixed the xenomorph "escape captivity" objective always failing.
+  - balance: Wormhole jaunters now protect from chasms while in your pocket.
+  Infernal-0:
+  - bugfix: corrects the blueshield and marine armour worn sprite
+  JohnFulpWillard:
+  - bugfix: Power in several areas have been fixed, and the station should start to
+      lose power by 9 minutes in, and start to depower by ~15 minutes.
+  JupiterJaeden:
+  - balance: The frequency of chest disembowelment wounds has been substantially reduced.
+  JupiterJaeden, Rhials, MrMelbert:
+  - rscadd: Adds the bluespace grounder implant, an implant that prevents the implantee
+      from teleporting or jaunting by most means. When teleported, the implantee will
+      be hardstunned for a few seconds instead. Purchasable from cargo, and all armories
+      start with a box of them.
+  - rscadd: Like tracker implants, chemical implants & bluespace grounder implants
+      may now be harmlessly self-destructed at the Prisoner Management Console.
+  - balance: The exile implant now prevents implantees from operating lavaland shuttle
+      controls.
+  - code_imp: The HUD slots for chem/tracking implants have been converted to display
+      any implant with the IMPLANT_TYPE_SECURITY flag and an associated sprite.
+  - image: Exile implants and bluespace grounders now have their own new sechud icons,
+      green and dark blue respectively.
+  - spellcheck: Modifies various implant pad readouts, removing false information
+      and rewriting some sections.
+  - map: Standardizes heliostation armory, adding pacos and removing a couple extra
+      guns.
+  - balance: Changes combat knives crates to general secoff level access instead of
+      armory level access.
+  notghosti:
+  - balance: Mommi Shrink will only make you a 1/4th of your original size.
+2025-10-05:
+  Absolucy:
+  - balance: Oozelings will now begin to lose blood if they're starving, as intended.
+  - bugfix: You can no longer use spray paint or soap to undo window polarization.
+  SirNightKnight:
+  - bugfix: fixed item reskinning not working again.
+  - bugfix: fixed impressa coffeemakers not making coffee.
+  - bugfix: standardized coffee cups in coffeemakers and pass flags. (you can put
+      regular coffeemakers on tables)
+  - bugfix: crayons are edible again.
+  - bugfix: fixed interacting while incapacitated.
+  - balance: you can now officially open storage and use items in soft crit
+  - qol: washing machines don't delete dyes anymore.
+  TheColorCyan:
+  - bugfix: fixed xenos being unable to properly interact with airlocks
+  - bugfix: fixed stacking machine on labor camp not accepting sheets
+  ThePooba:
+  - bugfix: darkspawn can no longer reach like 90% damage reduction
+  - bugfix: removed double defined crew species paychecks
+  - bugfix: coffins now have proper sprites
+  - bugfix: darkspawn ui now updates properly and doesnt freak the fuck out if you
+      run out of willpower
+  - bugfix: darkspawn crawling shadow now causes you to take damage equal to a percent
+      of its missing health on destruction as brute.
+  Tractor-Maam:
+  - bugfix: remote injectors, patchers, and factories now print their components again.
+  notghosti:
+  - bugfix: Blueshield modified hellfire will once again only have 13 shots. How 'lucky'
+2025-10-06:
+  Absolucy:
+  - rscdel: You can no longer harvest plants from unanchored hydroponics trays.
+  - rscadd: Adds "chasm filler capsules", which can be bought by miners, and thrown
+      into a chasm to fill it with thick dirt. The dirt has some slowdown when walked
+      over, tho.
+  - qol: Moved the Magnetization Injector from the "Survival" section of the mining
+      points vendor to the "Mining" section.
+  - rscadd: (Jacquerel) Budget cuts can sometimes effect the station's supply of Emergency
+      Bluespace Shelters.
+  - rscadd: (Melbert) Shaft Miner's Bluespace Survival Capsules will now throw people
+      away from it when it deploys. Be sure to heed the warning to "Stand back".
+  - bugfix: (Shadow-Quill) RCD Construction effects will no longer fall into chasms.
+  - bugfix: (SmArtKar) Fixed chasm jaunters not working while you're buckled to a
+      mob or an object
+  - code_imp: (SmArtKar) Updated chasm jaunters to use signals instead of being hardcoded
+      in chasm code.
+  - map: All maps (except Theseus because I couldn't figure out how to fit them in)
+      have at least 5 main SMESes in engineering now.
+  - map: All maps have at least one oxygen canister in engineering now.
+  - map: Added a jetpack crate to engineering secure storage on Box Station.
+  - map: The main SMES rooms should now all be mapped in as part of the "Engineering
+      SMES" area now.
+  - bugfix: Fixed some random bugs I guess?
+  - bugfix: Fixed oozelings losing learnt languages (i.e from book of babel) when
+      revived.
+  - bugfix: Fixed oozelings duplicating cybernetics from quirks (i.e breathing tubes)
+      when revived.
+  - bugfix: Fixed not being able to whack people/things with the lava staff while
+      in combat mode.
+  - bugfix: Fixed flat armor penetration (armor ignorance) not working.
+  - bugfix: (Melbert) Fix being unable to resist out of ice cubes.
+  - qol: The DNA Vault will no longer roll "useless" mutations, i.e oozelings won't
+      roll fire immunity or plasmocile,
+  - qol: Artifacts can no longer spawn enough monkeys to grind the server to a halt.
+      Don't worry, they can still spawn enough monkeys to be a health hazard to any
+      nearby crew!
+  - bugfix: You can now actually shoot bingle pits.
+  - qol: Removed most restrictions on areas that can be used as a Bloodsucker lair.
+      Outdoor areas and shuttles are notable exceptions.
+  - balance: Oozeling bloodsuckers now lose blood from water, just like normal oozelings.
+  - bugfix: Oozelings are now properly melted by ocean water.
+  Killermankey:
+  - balance: Heroic Laser Musket fires 1x45dmg instead of 3x25dmg
+  - rscdel: Umbrella SPF 10,000
+  - balance: increased Sols solar output
+  - balance: being cooked alive by sol is now a massive moodlet debuff, instead of
+      only a minor one.
+  Sorenon:
+  - qol: unified all of the preferences windows into one
+  - qol: added a warning to the keybindings menu when multiple actions are bound to
+      the same key
+  - qol: added a reset button to the volume mixer
+  - bugfix: allowed the volume mixer to mute channels instead of just making them
+      really quiet
+  TheColorCyan:
+  - refactor: (carlarctg) refactored mirrors
+  - bugfix: (carlarctg) Fixed Pride Mirror teleporting you into the space on the first
+      use. Now it waits until you officially cancel and say 'I am Done' so you can
+      customize yourself to your liking.
+  - bugfix: (SmArtKar) Fixed pride mirrors not dumping you into space after use
+  Xander3359:
+  - bugfix: Fixed a case of abandoned crate having nothing in it
+  leaKsi:
+  - bugfix: (mogeoko) Atmospherics components will now move air into connected pipeline
+      on deconstruction if possible. Otherwise, air will be released to the outside
+      from open nodes.
+  - bugfix: (mogeoko) Unsafe pressure release on atmos components will now work the
+      same way it does in the normal pipes if there is an empty node with air.
+  - bugfix: (mogeoko) Atmospherics machinery will now share air from nodes after being
+      rotated and reconnected to pipenet.
+  - bugfix: (JohnFulpWillard) Cryo cells no longer appear on when off.
+  notghosti:
+  - rscadd: Floran podhair is now a unique selection option from skin tone
+  - rscadd: Floran leaves are no longer colour inverted
+  - qol: Applying a ID trim will give Maintenace access. Meaning you greyshirts can
+      get jobs easier now!

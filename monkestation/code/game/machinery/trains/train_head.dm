@@ -13,15 +13,15 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 
-/obj/vehicle/ridden/cargo_train/AltClick(mob/user)
-	. = ..()
+/obj/vehicle/ridden/cargo_train/click_alt(mob/living/user)
 	if(!listed_network)
-		return
+		return CLICK_ACTION_BLOCKING
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	listed_network.train_head = null
 	listed_network = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/cargo_train/Destroy(force)
 	. = ..()
@@ -37,7 +37,7 @@
 	if(listed_network)
 		listed_network.relay_move(old_loc)
 
-/obj/vehicle/ridden/cargo_train/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/vehicle/ridden/cargo_train/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!Adjacent(over) || !usr.Adjacent(over))
 		return

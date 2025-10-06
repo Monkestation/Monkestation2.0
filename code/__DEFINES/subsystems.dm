@@ -238,6 +238,7 @@
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_PROJECTILES 85
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
 #define FIRE_PRIORITY_MOBS 100
@@ -316,6 +317,16 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Machines subsystem subtasks.
+#define SSMACHINES_MACHINES_EARLY 1
+#define SSMACHINES_APCS_EARLY 2
+#define SSMACHINES_APCS_ENVIRONMENT 3
+#define SSMACHINES_APCS_LIGHTS 4
+#define SSMACHINES_APCS_EQUIPMENT 5
+#define SSMACHINES_APCS_LATE 6
+#define SSMACHINES_MACHINES 7
+#define SSMACHINES_MACHINES_LATE 8
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
@@ -373,3 +384,13 @@
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+
+///The default state, no NT Representative ever spawned in.
+#define NT_REP_STATUS_DOESNT_EXIST 0
+///The state we enter once an NT Rep spawns in, we only check roundend for survival.
+#define NT_REP_STATUS_DIED 1
+///The state we enter on roundend if at least one NT Rep survived.
+#define NT_REP_STATUS_SURVIVED 2
+
+///The max amount of stars/score the NT rep can give
+#define MAX_NT_REP_SCORE 5

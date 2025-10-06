@@ -1,0 +1,2 @@
+# Allow ckeys to bypass discord verification if enabled.
+# One ckey per line. Entries are ckey normalized so you can enter keys

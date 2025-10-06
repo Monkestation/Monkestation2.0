@@ -1324,11 +1324,11 @@
 /area/shuttle/ert/bridge)
 "QX" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/hyper{
+/obj/item/stock_parts/power_store/cell/hyper{
 	pixel_x = 10;
 	pixel_y = 11
 	},
-/obj/item/stock_parts/cell/hyper{
+/obj/item/stock_parts/power_store/cell/hyper{
 	pixel_x = 10;
 	pixel_y = 7
 	},
@@ -1373,7 +1373,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/ert/bridge)
 "Tv" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,

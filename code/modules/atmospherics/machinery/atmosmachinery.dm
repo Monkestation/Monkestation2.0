@@ -21,6 +21,7 @@
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT
 	armor_type = /datum/armor/machinery_atmospherics
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
@@ -304,7 +305,10 @@
 		return FALSE
 
 	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
-	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
+	if(target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		if(ISODD(given_layer))
+			return FALSE
+	else if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
 	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
@@ -396,6 +400,9 @@
 			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
 			if(!gas_mix.total_moles())
 				empty_mixes++
+			if(!nodes[gas_mix_number] || (istype(nodes[gas_mix_number], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(gas_mix_number)))
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
 	if(!int_air.total_moles())
@@ -581,12 +588,6 @@
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
-		L.handle_ventcrawl(src)
-		return
-	return ..()
-
 /**
  * Getter of a list of pipenets
  *
@@ -622,6 +623,13 @@
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+/// Return TRUE if there is device connected to portables_connector
+/obj/machinery/atmospherics/proc/portable_device_connected(node)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = nodes[node]
+	if(portable_devices_connector.connected_device)
+		return TRUE
+	return FALSE
 
 #undef PIPE_VISIBLE_LEVEL
 #undef PIPE_HIDDEN_LEVEL

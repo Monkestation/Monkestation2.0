@@ -115,9 +115,9 @@
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if((get_area(M) in areas) && M.stat != DEAD)
-			if(!iscameramob(M))
+			if(!iseyemob(M))
 				return TRUE
-			var/mob/camera/C = M
+			var/mob/eye/C = M
 			if(C.move_on_shuttle)
 				return TRUE
 	return FALSE

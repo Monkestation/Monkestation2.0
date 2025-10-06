@@ -12,6 +12,8 @@
 #define PAYCHECK_LOWER 25
 ///Paygrade for all regular crew not belonging to PAYGRADE_LOWER or PAYGRADE_COMMAND.
 #define PAYCHECK_CREW 50
+///Paygrade for NT Officials, not heads of staff but still high rankings.
+#define PAYCHECK_NANOTRASEN 75
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
 

@@ -61,7 +61,7 @@
 		if(!taser_machine.is_operational)
 			return FALSE
 		// We can't measure the output of this but if we use too much power the area will depower -> depower the machine -> stop taze next tick
-		taser_machine.use_power(60 * seconds_between_ticks)
+		taser_machine.use_energy(60 * seconds_between_ticks)
 		return TRUE
 
 	if(istype(taser, /obj/item/mecha_parts/mecha_equipment))
@@ -71,7 +71,7 @@
 			|| taser_equipment.get_integrity() <= 1 \
 			|| taser_equipment.chassis.is_currently_ejecting \
 			|| taser_equipment.chassis.equipment_disabled \
-			|| !taser_equipment.chassis.use_power(60 * seconds_between_ticks))
+			|| !taser_equipment.chassis.use_energy(60 * seconds_between_ticks))
 			return FALSE
 		return TRUE
 
