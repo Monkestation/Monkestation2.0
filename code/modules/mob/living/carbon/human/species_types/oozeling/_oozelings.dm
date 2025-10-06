@@ -208,7 +208,6 @@
 		return NONE
 	if(HAS_TRAIT(slime, TRAIT_GODMODE)) // we're [title card]
 		return NONE
-	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	var/check_clothes = methods & ~(INGEST|INJECT)
 	if(!water_exposure(slime, check_clothes))
