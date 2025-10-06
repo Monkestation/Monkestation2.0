@@ -88,22 +88,15 @@
 	open = active
 	if(user)
 		balloon_alert(user, active ? "opened" : "closed")
-	if(active)
-		ADD_TRAIT(user, TRAIT_SHADED, REF(src))
-	else
-		REMOVE_TRAIT(user, TRAIT_SHADED, REF(src))
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/umbrella/pickup(mob/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
-	if(open)
-		ADD_TRAIT(user, TRAIT_SHADED, REF(src))
 
 /obj/item/umbrella/dropped(mob/user, silent)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SHADED, REF(src))
 	UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/umbrella/proc/on_dir_change(mob/living/carbon/owner, olddir, newdir)
