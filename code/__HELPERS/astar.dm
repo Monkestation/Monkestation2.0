@@ -22,39 +22,36 @@ Actual Adjacent procs :
 
 
 */
+#define ATURF 1
+#define TOTAL_COST_F 2
+#define DIST_FROM_START_G 3
+#define HEURISTIC_H 4
+#define PREV_NODE 5
+#define NODE_TURN 6
+#define BLOCKED_FROM 7  // Available directions to explore FROM this node
+
+#define ASTAR_NODE(turf, dist_from_start, heuristic, prev_node, node_turn, blocked_from) \
+	list(turf, (dist_from_start + heuristic * (1 + PF_TIEBREAKER)), dist_from_start, heuristic, prev_node, node_turn, blocked_from)
+
+#define ASTAR_UPDATE_NODE(node, new_prev, new_g, new_h, new_nt) \
+	node[PREV_NODE] = new_prev; \
+	node[DIST_FROM_START_G] = new_g; \
+	node[HEURISTIC_H] = new_h; \
+	node[TOTAL_COST_F] = new_g + new_h * (1 + PF_TIEBREAKER); \
+	node[NODE_TURN] = new_nt
+
+#define ASTAR_CLOSE_ENOUGH_TO_END(end, checking_turf, mintargetdist) \
+	(checking_turf == end || (mintargetdist && (get_dist_3d(checking_turf, end) <= mintargetdist)))
+
 #define PF_TIEBREAKER 0.005
 #define MASK_ODD 85
 #define MASK_EVEN 170
 
-/datum/path_node
-	var/turf/source
-	var/datum/path_node/prev_node
-	var/f
-	var/g
-	var/h
-	var/nt
-	var/bf
+/proc/path_weight_compare_astar(list/a, list/b)
+	return a[TOTAL_COST_F] - b[TOTAL_COST_F]
 
-/datum/path_node/New(s,p,pg,ph,pnt,_bf)
-	source = s
-	setp(p, pg, ph, pnt)
-	bf = _bf
-
-/datum/path_node/proc/setp(p,pg,ph,pnt)
-	prev_node = p
-	g = pg
-	h = ph
-	calc_f()
-	nt = pnt
-
-/datum/path_node/proc/calc_f()
-	f = g + h * (1 + PF_TIEBREAKER)
-
-/proc/path_weight_compare_astar(datum/path_node/a, datum/path_node/b)
-	return a.f - b.f
-
-/proc/heap_path_weight_compare_astar(datum/path_node/a, datum/path_node/b)
-	return b.f - a.f
+/proc/heap_path_weight_compare_astar(list/a, list/b)
+	return b[TOTAL_COST_F] - a[TOTAL_COST_F]
 
 /proc/get_astar_path_to(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
 	var/l = SSastar.mobs.getfree(requester)
@@ -82,89 +79,97 @@ Actual Adjacent procs :
 
 	var/datum/can_pass_info/can_pass_info = new(requester, access, multiz_checks = check_z_levels)
 	var/datum/heap/open = new /datum/heap(GLOBAL_PROC_REF(heap_path_weight_compare_astar))
-	var/list/openc = new()
+	var/list/openc = new()  // turf -> node mapping for nodes in open list
+	var/list/closed = new()  // turf -> bitmask of blocked directions
 	var/list/path = null
-
 	var/const/ALL_DIRS = NORTH|SOUTH|EAST|WEST
-	var/datum/path_node/cur = new /datum/path_node(start, null, 0, start.distance_3d(end), 0, ALL_DIRS, 1)
+
+	// Create initial node using macro
+	var/list/cur = ASTAR_NODE(start, 0, start.distance_3d(end), null, 0, ALL_DIRS)
 	open.insert(cur)
 	openc[start] = cur
 
 	while (requester && !open.is_empty() && !path)
 		cur = open.pop()
+		var/turf/cur_turf = cur[ATURF]
+		openc -= cur_turf
+		closed[cur_turf] = ALL_DIRS
 
 		// Destination check - must be exact match or valid closeenough on same Z-level
-		var/is_destination = (cur.source == end)
-
+		var/is_destination = (cur_turf == end)
 		// Only consider "close enough" if on the same Z-level
 		var/closeenough = FALSE
-		if (!check_z_levels || cur.source.z == end.z)
+		if (!check_z_levels || cur_turf.z == end.z)
 			if (mintargetdist)
-				closeenough = cur.source.distance_3d(end) <= mintargetdist
+				closeenough = cur_turf.distance_3d(end) <= mintargetdist
 			else
-				closeenough = cur.source.distance_3d(end) < 1
+				closeenough = cur_turf.distance_3d(end) < 1
 
 		if (is_destination || closeenough)
-			path = list(cur.source)
-			while (cur.prev_node)
-				cur = cur.prev_node
-				path.Add(cur.source)
+			path = list(cur_turf)
+			var/list/prev = cur[PREV_NODE]
+			while (prev)
+				path.Add(prev[ATURF])
+				prev = prev[PREV_NODE]
 			break
 
-		if(maxnodedepth && (cur.nt > maxnodedepth)) //if too many steps, don't process that path
-			cur.bf = 0
+		if(maxnodedepth && (cur[NODE_TURN] > maxnodedepth))  // if too many steps, don't process that path
 			CHECK_TICK
 			continue
 
 		for(var/dir_to_check in GLOB.cardinals)
-			if(!(cur.bf & dir_to_check)) // we can't proceed in this direction
+			if(!(cur[BLOCKED_FROM] & dir_to_check))  // we can't proceed in this direction
 				continue
+
 			// get the turf we end up at if we move in dir_to_check; this may have special handling for multiz moves
-			var/turf/turf_to_check = get_step(cur.source, dir_to_check)
-			// when leaving a turf with stairs on it, we can change Z, so take that into account
-			// this handles both upwards and downwards moves depending on the dir
+			var/turf/T = get_step(cur_turf, dir_to_check)
 
-			if(isopenspaceturf(cur.source))
-				var/turf/turf_below = GET_TURF_BELOW(cur.source)
+			if(isopenspaceturf(cur_turf))
+				var/turf/turf_below = GET_TURF_BELOW(cur_turf)
 				if(turf_below)
-					turf_to_check = turf_below
+					T = turf_below
 			else
-				var/obj/structure/stairs/stairs = locate() in cur.source
+				var/obj/structure/stairs/stairs = locate() in cur_turf
 				if(stairs?.isTerminator() && stairs.dir == dir_to_check)
-					var/turf/stairs_destination = get_step_multiz(cur.source, dir_to_check | UP)
+					var/turf/stairs_destination = get_step_multiz(cur_turf, dir_to_check | UP)
 					if(stairs_destination)
-						turf_to_check = stairs_destination
-/*
-			var/obj/structure/stairs/source_stairs = locate(/obj/structure/stairs) in cur.source
-			if(source_stairs)
-				turf_to_check = source_stairs.get_transit_destination(dir_to_check)
-*/
-			if(turf_to_check != exclude)
-				var/datum/path_node/checked_node = openc[turf_to_check]  //current checking turf
-				var/reverse = REVERSE_DIR(dir_to_check)
-				var/newg = cur.g + call(cur.source, dist)(turf_to_check, requester) // add the travel distance between these two tiles to the distance so far
-				if(checked_node)
-				//is already in open list, check if it's a better way from the current turf
-					checked_node.bf &= ALL_DIRS^reverse //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-					if((newg < checked_node.g))
-						if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
-							checked_node.setp(cur, newg, checked_node.h, cur.nt + 1)
-							open.resort(checked_node)//reorder the changed element in the list
-				else
-				//is not already in open list, so add it
-					if(call(cur.source, adjacent)(requester, turf_to_check, can_pass_info))
-						checked_node = new(turf_to_check, cur, newg, call(turf_to_check, dist)(end, requester), cur.nt + 1, ALL_DIRS^reverse)
-						open.insert(checked_node)
-						openc[turf_to_check] = checked_node
+						T = stairs_destination
 
-		cur.bf = 0 // Mark as processed
+			if(!T || T == exclude)
+				continue
+
+			var/reverse = REVERSE_DIR(dir_to_check)
+
+			if(closed[T] & reverse)
+				continue
+
+			// check if not valid
+			if(!call(cur_turf, adjacent)(requester, T, can_pass_info))
+				closed[T] |= reverse
+				continue
+
+			var/list/CN = openc[T]  // current checking node
+			var/newg = cur[DIST_FROM_START_G] + call(cur_turf, dist)(T, requester)  // add the travel distance between these two tiles to the distance so far
+
+			if(CN)
+				// is already in open list, check if it's a better way from the current turf
+				if(newg < CN[DIST_FROM_START_G])
+					ASTAR_UPDATE_NODE(CN, cur, newg, CN[HEURISTIC_H], cur[NODE_TURN] + 1)
+					open.resort(CN)  // reorder the changed element in the list
+			else
+				// is not already in open list, so add it
+				CN = ASTAR_NODE(T, newg, call(T, dist)(end, requester), cur, cur[NODE_TURN] + 1, ALL_DIRS^reverse)
+				open.insert(CN)
+				openc[T] = CN
+
 		CHECK_TICK
 
 	if (path)
-		for (var/i = 1 to round(0.5 * length(path)))
-			path.Swap(i, length(path) - i + 1)
+		for (var/i = 1 to round(0.5 * path.len))
+			path.Swap(i, path.len - i + 1)
 
 	openc = null
+	closed = null
 	return path
 
 /turf/proc/reachable_turf_test(requester, turf/target, datum/can_pass_info/pass_info, simulated_only = TRUE, check_z_levels = TRUE)
@@ -203,22 +208,14 @@ Actual Adjacent procs :
 	var/dz = abs(z - T.z) * 5 // Weight z-level differences higher
 	return (dx + dy + dz)
 
-/*
-/turf/proc/LinkBlockedWithAccess(turf/T, requester, ID)
-	var/adir = get_dir(src, T)
-	var/rdir = ((adir & MASK_ODD)<<1)|((adir & MASK_EVEN)>>1)
-	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, rdir, requester))
-			return TRUE
-	for(var/obj/O in src)
-		if(!O.CanAStarPass(ID, adir, requester))
-			return TRUE
 
-	for(var/mob/living/M in T)
-		if(!M.CanPass(requester, src))
-			return TRUE
-	for(var/obj/structure/M in T)
-		if(!M.CanPass(requester, src))
-			return TRUE
-	return FALSE
-*/
+#undef ATURF
+#undef TOTAL_COST_F
+#undef DIST_FROM_START_G
+#undef HEURISTIC_H
+#undef PREV_NODE
+#undef NODE_TURN
+#undef BLOCKED_FROM
+#undef ASTAR_NODE
+#undef ASTAR_UPDATE_NODE
+#undef ASTAR_CLOSE_ENOUGH_TO_END
