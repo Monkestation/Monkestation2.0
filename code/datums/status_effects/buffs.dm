@@ -611,6 +611,7 @@
 		TRAIT_NUTCRACKER, //for shits n giggles
 		TRAIT_RESIST_HEAT,
 		TRAIT_NOFIRE,
+		TRAIT_UNNATURAL_RED_GLOWY_EYES,
 		)
 
 /datum/status_effect/dragon_install/on_apply()
