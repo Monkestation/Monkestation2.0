@@ -1,5 +1,5 @@
 /datum/movespeed_modifier/shadow_step
-    multiplicative_slowdown = -0.7
+	multiplicative_slowdown = -0.7
 
 /datum/component/shadow_step
 	var/speedboost = 0.7
