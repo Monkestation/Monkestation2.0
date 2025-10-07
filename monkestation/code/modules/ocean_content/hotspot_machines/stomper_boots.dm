@@ -33,6 +33,9 @@
 	user.visible_message(span_notice("[user] stomps down on \the [user_turf] with \the [src]!"))
 	SShotspots.stomp(user_turf)
 	addtimer(CALLBACK(src, PROC_REF(finish_stomp)), stomp_cooldown)
+	// animate them jumping
+	animate(user, pixel_z = user.pixel_z + 4, time = 0.1 SECONDS)
+	animate(pixel_z = user.pixel_z - 4, time = 0.1 SECONDS)
 
 /obj/item/clothing/shoes/stomper/proc/finish_stomp()
 	stomping = FALSE
