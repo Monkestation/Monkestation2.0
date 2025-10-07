@@ -258,7 +258,6 @@
 	if(head)
 		dropItemToGround(head)
 
-	var/area = get_area(src)
 	alert_drones(span_danger("DRONE NETWORK: [name] is not responding. Last distress signal sent from [get_area_name(src)]."))
 
 
