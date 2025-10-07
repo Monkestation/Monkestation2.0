@@ -224,3 +224,72 @@
   - rscadd: Floran leaves are no longer colour inverted
   - qol: Applying a ID trim will give Maintenace access. Meaning you greyshirts can
       get jobs easier now!
+2025-10-07:
+  00-Steven:
+  - bugfix: Plexagon Access Management actually updates the shown template list &
+      modifiable access slots correctly on authentication, avoiding needing to refresh/reopen
+      the tgui manually.
+  Absolucy:
+  - qol: Made the energy net's hitbox less shit, so you don't accidentally kill the
+      person inside the net instead of destroying the net.
+  - balance: The Staff of Storms is now normal sized, instead of bulky.
+  - rscadd: Hotspot Stomping Kits and Hotspot Vent Kits can be ordered from cargo
+      once more.
+  - balance: Bloodsuckers can hide in lockers/crates during Sol, heavily reducing
+      the amount of burn damage they take. I still think Sol is stupid, someone please
+      remove it.
+  Absolucy, SmArtKar:
+  - refactor: Refactored filters to utilize binary insertion instead of timSort. The
+      server should run somewhat faster now, hopefully.
+  - rscadd: A lot of lavaland mobs now have minor glowy bits, making them easier to
+      spot in the dark. Same applies to their attacks!
+  - bugfix: Legion brood (skulls) no longer float inside of rocks, or get damaged
+      by atmos.
+  - image: Legion broods now have an animation and multiple random variants.
+  - image: Brimdemons now play an animation while firing their beam.
+  EssentialTomato:
+  - bugfix: Meteor satellites and vital scanner pads no longer vanish on repacking.
+  - rscadd: Roasting stick can now roast most foods. plushies and ...guns?
+  - rscadd: You can now roast stuff on a propulsion engine.
+  - balance: Roasting stuff adds a bit of nutriment and char.
+  - qol: Roasting grillable foods long enough will actually grill them.
+  - bugfix: Slightly fixed taking stuff off a roasting stick.
+  - bugfix: You can roast stuff on a tesla without hugging it.
+  - rscadd: Added a mothic s'more.
+  JupiterJaeden:
+  - bugfix: You can wield guns with the keybind again.
+  LassiH:
+  - bugfix: darkspawn resistance sigil descriptions now show correct %
+  - bugfix: shadow caster projectiles now eat lights
+  - bugfix: shadow caster projectiles now embed
+  - bugfix: shadow step sigils not giving speed boost
+  SirNightKnight, SyncIt21:
+  - bugfix: fixed mechs not acting if their power usage was 0
+  - bugfix: fixed mech drills not having an adjacent check when drilling.
+  Tractor-Maam:
+  - rscadd: Added real, genuine fake airlocks! available as stickers in cargo orders.
+      Don't run into it!
+  - rscadd: Added a new emote, !, which manually triggers the MGS alert that appears
+      when someone exits a cardboard box.
+  - code_imp: Emotes can now support having no message.
+  Vect0r2:
+  - rscadd: Adds "Inspector" to alt job titles for detective
+  Xander3359:
+  - balance: Pyroxadone now heals 4x as much burn as it used to
+  flleeppyy:
+  - rscdel: Remove stickybans
+  ilikesaying:
+  - bugfix: Fixed PACMANs saying they produce half of what they actually produce on
+      examine
+  notghosti:
+  - rscadd: Plague rats can bump into doors to crawl through them.
+  - rscdel: Plague rats no longer get door passthrough
+  - balance: Plague rats now have 50 hp, from 30
+  - rscadd: Drones can emote with silicon emotes. Beep agressivley at those who annoy
+      you.
+  - rscadd: Drone death messages now tells other drones where they died, not just
+      that they died.
+  - qol: Drone Radios now has a sound effect, chat colour, and is organized into radio
+      chat.
+  oh no froggy did another one:
+  - balance: IPCs (and medibots etc. ig) can use nanites
