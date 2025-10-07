@@ -15,8 +15,9 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	appearance_flags = APPEARANCE_UI
-	/// A reference to the object in the slot. Grabs or items, generally.
-	var/obj/master = null
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
+	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
+	var/datum/weakref/master_ref = null
 	/// A reference to the owner HUD, if any.
 	// MONKESTATION EDIT START: There are a couple uses of this variable in
 	// `code\datums\interactions\interaction_mode.dm` that I'm unsure how to remove - so this can't
@@ -56,7 +57,7 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
-	master = null
+	master_ref = null
 	hud = null
 	return ..()
 
@@ -65,6 +66,10 @@
 		SEND_SIGNAL(src, COMSIG_SCREEN_ELEMENT_CLICK, location, control, params, usr)
 	if(default_click)
 		return ..()
+
+///Screen elements are always on top of the players screen and don't move so yes they are adjacent
+/atom/movable/screen/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
+	return TRUE
 
 /atom/movable/screen/examine(mob/user)
 	return list()
@@ -164,9 +169,7 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/language_menu/Click()
-	var/mob/M = usr
-	var/datum/language_holder/H = M.get_language_holder()
-	H.open_language_menu(usr)
+	usr.get_language_holder().open_language_menu(usr)
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -185,7 +188,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(IGNORE_STASIS))
+	if(usr.incapacitated(IGNORE_STASIS|IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -243,6 +246,7 @@
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
 	var/held_index = 0
+	interaction_flags_atom = NONE //so dragging objects into hands icon don't skip adjacency & other checks
 
 /atom/movable/screen/inventory/hand/update_overlays()
 	. = ..()
@@ -274,7 +278,7 @@
 		return TRUE
 	if(world.time <= user.next_move)
 		return TRUE
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -295,10 +299,12 @@
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/close/Click()
-	var/datum/storage/storage = master
+	var/datum/storage/storage = master_ref?.resolve()
+	if(!storage)
+		return
 	storage.hide_contents(usr)
 	return TRUE
 
@@ -480,16 +486,16 @@
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/storage/Click(location, control, params)
-	var/datum/storage/storage_master = master
+	var/datum/storage/storage_master = master_ref?.resolve()
 	if(!istype(storage_master))
 		return FALSE
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated())
+	if(usr.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -734,6 +740,7 @@
 	var/mob/living/carbon/human/owner = hud?.mymob
 	if(isnull(owner))
 		return
+
 	if(owner.stat == DEAD)
 		for(var/limb in limbs)
 			limbs[limb].icon_state = "[limb]DEAD"
@@ -741,6 +748,7 @@
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
+	var/not_fake_healthy = !owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
 		var/icon_key = 0
 		var/part_zone = body_part.body_zone
@@ -748,11 +756,9 @@
 		var/list/overridable_key = list(icon_key)
 		if(body_part.bodypart_disabled)
 			icon_key = 7
-		else if(owner.stat == DEAD)
-			icon_key = "DEAD"
 		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
 			icon_key = overridable_key[1] // thanks i hate it
-		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+		else if(not_fake_healthy)
 			var/damage = body_part.get_damage() / body_part.max_damage
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
@@ -1073,3 +1079,34 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	name = "stamina"
 	icon_state = "stamina0"
 	screen_loc = ui_stamina
+
+#define FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(value) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FFDDDD'>[round(value,1)]</font></div>")
+
+/**
+ * Blood Level HUD
+ *
+ * Automatically registers to the mob's life and updates its maptext depending on the
+ * mob's blood. Used for mobs that
+ * 1- Should always know how much blood they have
+ * 2- Have their blood level changing every life tick (which is why we don't manually call updates).
+ */
+/atom/movable/screen/blood_level
+	name = "Blood Level"
+	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	icon_state = "blood_display"
+	screen_loc = ui_blooddisplay
+
+/atom/movable/screen/blood_level/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(isnull(hud_owner))
+		return INITIALIZE_HINT_QDEL
+	RegisterSignal(hud_owner.mymob, COMSIG_LIVING_LIFE, PROC_REF(on_mob_life))
+
+/atom/movable/screen/blood_level/proc/on_mob_life(mob/living/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
+	if(!isliving(source))
+		return
+	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
+
+#undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT

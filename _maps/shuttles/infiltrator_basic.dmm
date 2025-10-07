@@ -492,11 +492,11 @@
 /area/shuttle/syndicate/medical)
 "ce" = (
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/yellow{
@@ -540,7 +540,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cs" = (
-/obj/machinery/recharge_station,
+/obj/machinery/recharge_station/fullupgrade,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
 "cu" = (
@@ -763,6 +763,7 @@
 	pixel_y = 9
 	},
 /obj/item/healthanalyzer,
+/obj/machinery/defibrillator_mount/charging/loaded/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "st" = (

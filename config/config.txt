@@ -28,6 +28,9 @@ $include map_vote.txt
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
+## Discord URL: Shown in a few places such as the lobby screen and Verify Discord Account menu.
+DISCORDURL https://discord.gg/notarealserverblahblah
+
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
@@ -135,6 +138,9 @@ VOTE_PERIOD 600
 
 ## disable abandon mob
 NORESPAWN
+
+## Combat indicator, comment out to disable it
+COMBAT_INDICATOR
 
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere

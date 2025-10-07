@@ -4,7 +4,6 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	design_ids = list(
-		"mech_hydraulic_clamp",
 		"mech_recharger",
 		"mecha_tracking",
 		"mechacontrol",
@@ -18,6 +17,10 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+		"mech_hydraulic_clamp",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
 	)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
@@ -228,7 +231,6 @@
 	prereq_ids = list("adv_mecha", "mech_tools")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -280,6 +282,30 @@
 	design_ids = list(
 		"mech_carbine",
 		"mech_carbine_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_flamethrower
+	id = "mech_flamethrower"
+	display_name = "Exosuit Weapon (FNX-100 \"Conflagorator\" Flamethrower)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("exotic_ammo")
+	design_ids = list(
+		"mech_flamethrower",
+		"mech_flamethrower_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_heavy
+	id = "mech_heavy"
+	display_name = "Exosuit Weapon (\"Executor\" Mech Rifle)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_heavy",
+		"mech_heavy_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
@@ -405,6 +431,18 @@
 	design_ids = list(
 		"mech_lmg",
 		"mech_lmg_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
+/datum/techweb_node/mech_minigun
+	id = "mech_minigun"
+	display_name = "Exosuit Weapon (\"Avtomat AC 3\" minigun)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_minigun",
+		"mech_minigun_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)

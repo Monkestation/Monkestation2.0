@@ -49,7 +49,7 @@
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	var/obj/item/reagent_containers/syringe/I = attacking_item
-	var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
+	var/list/data = list("blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
 	if(diseases)
 		data["viruses"] |= diseases
 	data["immunity"] = immune_system.GetImmunity()
@@ -57,10 +57,14 @@
 
 /mob/living/basic/mouse/Life(seconds_per_tick, times_fired)
 	. = ..()
+	// mice diseases are not very important, so let's just. ensure this yields.
+	if(TICK_CHECK)
+		return
 	handle_virus_updates(seconds_per_tick, times_fired)
-
 	breath_airborne_diseases()
-
-	for (var/mob/living/basic/mouse/M in range(1,src))
-		if(Adjacent(M))
-			share_contact_diseases(M)//Mice automatically share contact diseases among themselves
+	for(var/mob/living/basic/mouse/mouse in range(1, src))
+		if(TICK_CHECK)
+			break
+		share_contact_diseases(mouse)//Mice automatically share contact diseases among themselves
+		if(!(stat == DEAD))
+			spread_airborne_diseases()

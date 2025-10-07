@@ -8,25 +8,23 @@
 	var/obj/machinery/corral_corner/host
 	var/list/corral_corners = list()
 
-/obj/item/corral_linker/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(target == host)
-		if(host.submit_corners(corral_corners))
-			qdel(src)
-		return AFTERATTACK_PROCESSED_ITEM
+/obj/item/corral_linker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with == host && host.submit_corners(corral_corners))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
 	if(length(corral_corners) == 4)
 		say("Buffer full!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(target, /obj/machinery/corral_corner))
-		if(target in corral_corners)
-			corral_corners -= target
+	if(istype(interacting_with, /obj/machinery/corral_corner))
+		if(interacting_with in corral_corners)
+			corral_corners -= interacting_with
 			say("Removed corner from buffer!")
-			return
-		corral_corners += target
-		say("Added corner to buffer!")
-		return
+		else
+			corral_corners += interacting_with
+			say("Added corner to buffer!")
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/corral_corner
 	name = "corral fencepost"
@@ -35,32 +33,28 @@
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	icon_state = "corral_corner"
 	circuit = /obj/item/circuitboard/machine/corral_corner
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	density = TRUE
 	var/max_range = 9
 	var/datum/corral_data/connected_data
 	var/mapping_id
 
-/obj/machinery/corral_corner/Initialize(mapload)
+/obj/machinery/corral_corner/post_machine_initialize()
 	. = ..()
-	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/corral_corner/LateInitialize()
-	. = ..()
-	locate_machinery()
-
-/obj/machinery/corral_corner/locate_machinery(multitool_connection)
 	if(!mapping_id || connected_data)
 		return
 	var/list/found_corners = list()
-	for(var/obj/machinery/corral_corner/main in GLOB.machines)
+	for(var/obj/machinery/corral_corner/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/corral_corner))
 		if(main.mapping_id != mapping_id)
 			continue
 		found_corners += main
 	submit_corners(found_corners)
 
 	if(connected_data)
-		for(var/obj/machinery/slime_pen_controller/controller in GLOB.machines)
+		for(var/obj/machinery/slime_pen_controller/controller as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 			if(controller.mapping_id == mapping_id)
 				controller.linked_data = connected_data
 
@@ -70,13 +64,10 @@
 		return
 	start_linking_procedure()
 
-/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/corral_corner/proc/start_linking_procedure()
 	var/obj/item/corral_linker/new_linker = new(loc)

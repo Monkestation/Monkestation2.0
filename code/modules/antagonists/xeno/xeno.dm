@@ -22,6 +22,7 @@
 	antagpanel_category = ANTAG_GROUP_XENOS
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
+	antag_flags = FLAG_ANTAG_CAP_TEAM
 	var/datum/team/xeno/xeno_team
 
 /datum/antagonist/xeno/on_gain()
@@ -52,6 +53,27 @@
 	objective.owner = owner
 	objectives += objective
 
+// xenos in captivity do not count
+/datum/antagonist/xeno/should_count_for_antag_cap()
+	. = ..()
+	if(!. || !SScommunications.captivity_area)
+		return
+	if(istype(get_area(owner.current), SScommunications.captivity_area))
+		return FALSE
+
+//Related code for neutered xenomorphs
+/datum/antagonist/xeno/neutered
+	name = "\improper Neutered Xenomorph"
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
+
+/datum/antagonist/xeno/neutered/forge_objectives()
+	var/datum/objective/survive/objective = new
+	objective.owner = owner
+	objectives += objective
+
+/datum/objective/survive/New()
+
+
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
 	///Our associated antagonist team for captive xenomorphs
@@ -66,7 +88,6 @@
 			return
 		captive_team = new
 		captive_team.progenitor = owner
-		antag_flags |= FLAG_ANTAG_CAP_IGNORE // monkestation edit: first captive xeno does not count against cap
 	else
 		if(!istype(new_team))
 			CRASH("Wrong xeno team type provided to create_team")
@@ -88,7 +109,7 @@
 	explanation_text = "Escape from captivity."
 
 /datum/objective/escape_captivity/check_completion()
-	if(!istype(get_area(owner), SScommunications.captivity_area))
+	if(!istype(get_area(owner.current), SScommunications.captivity_area))
 		return TRUE
 
 /datum/objective/advance_hive
@@ -155,6 +176,9 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
+	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered
+		mind.add_antag_datum(/datum/antagonist/xeno/neutered)
+		return
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
 		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)

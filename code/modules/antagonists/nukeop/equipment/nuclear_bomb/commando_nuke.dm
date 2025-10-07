@@ -55,7 +55,6 @@
 		/area/station/engineering/atmospherics_engine,
 		/area/station/solars))
 	pick_decrypt_areas()
-	START_PROCESSING(SSobj, src)
 
 /obj/machinery/nuclearbomb/commando/process(seconds_per_tick)
 	. = ..()
@@ -365,6 +364,7 @@
 
 /obj/machinery/nuclearbomb/commando/arm_nuke(mob/armer)
 	var/turf/our_turf = get_turf(src)
+	START_PROCESSING(SSobj, src)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	armer.log_message("armed \the [src].", LOG_GAME)
 	armer.add_mob_memory(/datum/memory/bomb_planted/nuke, antagonist = src)
@@ -431,10 +431,9 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/nuke_recaller/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/nuke_recaller/click_alt(mob/living/user)
 	toggle_safety(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nuke_recaller/proc/toggle_safety(mob/living/user)
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)

@@ -219,7 +219,7 @@
 		/datum/reagent/water = 11,
 	)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
-	foodtypes = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
+	foodtypes = FRUIT | PINEAPPLE
 
 /obj/item/food/snowcones/mime
 	name = "mime snowcone"

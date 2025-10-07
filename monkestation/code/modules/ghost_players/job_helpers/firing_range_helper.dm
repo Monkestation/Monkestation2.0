@@ -65,13 +65,13 @@
 	items_to_spawn["Energy"] = subtypesof(/obj/item/gun/energy)
 	items_to_spawn["Magic"] = subtypesof(/obj/item/gun/magic)
 	items_to_spawn["Microfusion"] = subtypesof(/obj/item/gun/microfusion) + subtypesof(/obj/item/microfusion_cell_attachment) \
-									+ subtypesof(/obj/item/microfusion_gun_attachment) + typesof(/obj/item/stock_parts/cell/microfusion) + typesof(/obj/item/microfusion_phase_emitter)
+									+ subtypesof(/obj/item/microfusion_gun_attachment) + typesof(/obj/item/stock_parts/power_store/cell/microfusion) + typesof(/obj/item/microfusion_phase_emitter)
 	items_to_spawn["Ammo"] = subtypesof(/obj/item/ammo_box)
 	items_to_spawn["Other"] = list(
 		/obj/item/gun/chem,
 		/obj/item/gun/grenadelauncher,
 		/obj/structure/training_machine,
-		/mob/living/carbon/human) + typesof(/obj/item/gun/syringe, /obj/item/target)
+		/mob/living/carbon/human/ghost) + typesof(/obj/item/gun/syringe, /obj/item/target)
 	. = ..()
 
 //blocks passage if you have a gun

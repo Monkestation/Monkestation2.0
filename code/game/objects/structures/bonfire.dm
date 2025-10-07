@@ -37,6 +37,14 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+//fire isn't one light source, it's several constantly appearing and disappearing... or something
+/obj/structure/bonfire/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(burning)
+		visible_message("The roaring fire of \the [src] refuses to fade.")
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -85,7 +93,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
@@ -160,7 +168,8 @@
 		return
 	var/turf/open/my_turf = get_turf(src)
 	if(istype(my_turf) && !my_turf.planetary_atmos) //Pollute, but only when we're not on planetary atmos
-		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_PASSIVE_EMITTER_CAP)
+		var/delta_time = DELTA_WORLD_TIME(SSobj)
+		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15 * delta_time, /datum/pollutant/carbon_air_pollution = 5 * delta_time), POLLUTION_PASSIVE_EMITTER_CAP)
 	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()
@@ -170,7 +179,7 @@
 	icon_state = "bonfire"
 	burning = FALSE
 	set_light(0)
-	QDEL_NULL(particles)
+	particles = null
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)

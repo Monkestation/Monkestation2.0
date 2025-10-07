@@ -15,9 +15,20 @@
 			null,
 			/* hud_owner = */ null,
 			src,
-			"Settings",
+			"Game Settings",
 			/* offset = */ 1,
-			CALLBACK(src, PROC_REF(home_open_settings)),
+			CALLBACK(src, PROC_REF(home_open_game_settings)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ null,
+			src,
+			"Edit Character",
+			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
 		)
 	)
 
@@ -27,7 +38,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Redeem Code",
-			/* offset = */ 2,
+			/* offset = */ 3,
 			CALLBACK(src, PROC_REF(start_redeem)),
 		)
 	)
@@ -37,7 +48,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Open Lootbox",
-			/* offset = */ 3,
+			/* offset = */ 4,
 			CALLBACK(src, PROC_REF(try_open_lootbox)),
 		)
 	)
@@ -48,7 +59,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Open Map",
-			/* offset = */ 4,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_map)),
 		)
 	)
@@ -58,7 +69,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Admin Help",
-			/* offset = */ 5,
+			/* offset = */ 6,
 		)
 	)
 
@@ -68,7 +79,7 @@
 			/* hud_owner = */ null,
 			src,
 			"Leave Body",
-			/* offset = */ 6,
+			/* offset = */ 7,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -83,14 +94,15 @@
 	client?.try_open_or_buy_lootbox()
 
 /datum/escape_menu/proc/open_map()
-	var/map_name = replacetext_char(trimtext(SSmapping.current_map.map_name), " ", "")
-	var/url = replacetext_char(CONFIG_GET(string/webmap_url), "$map", map_name)
-	if(client)
+	var/url = SSmapping.current_map.mapping_url
+	if(url && client)
 		client << link(url)
 
-/datum/escape_menu/proc/home_open_settings()
-	client?.prefs.ui_interact(client?.mob)
-	qdel(src)
+/datum/escape_menu/proc/home_open_game_settings()
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
+
+/datum/escape_menu/proc/home_open_character_settings()
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

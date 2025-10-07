@@ -1,5 +1,5 @@
 /datum/antagonist/clock_cultist
-	name = "\improper Servant of Rat'var"
+	name = "\improper Servant of Ratvar"
 	antagpanel_category = "Clock Cultist"
 	preview_outfit = /datum/outfit/clock/preview
 	job_rank = ROLE_CLOCK_CULTIST
@@ -7,7 +7,9 @@
 	suicide_cry = ",r For Ratvar!!!"
 	ui_name = "AntagInfoClock"
 	show_to_ghosts = TRUE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 	antag_hud_name = "clockwork"
+	stinger_sound = 'sound/magic/clockwork/scripture_tier_up.ogg'
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new
 	/// Ref to the cultist's slab recall ability
@@ -19,7 +21,7 @@
 	///ref to our turf_healing component, used for deletion when deconverted
 	var/datum/component/turf_healing/owner_turf_healing
 	///used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list
-	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENG'INE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
+	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENGINE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
 																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
 
 														"seizure" = list("Your failure shall not delay my freedom.", "The blind will see only darkness.",
@@ -27,18 +29,19 @@
 
 /datum/antagonist/clock_cultist/Destroy()
 	QDEL_NULL(communicate)
+	QDEL_NULL(recall)
 	return ..()
 
 /datum/antagonist/clock_cultist/on_gain()
 	var/mob/living/current = owner.current
-	current.playsound_local(get_turf(owner.current), 'sound/magic/clockwork/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	objectives |= clock_team.objectives
 	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
-	current.log_message("has been converted to the cult of Rat'var!", LOG_ATTACK, color="#960000")
+	current.log_message("has been converted to the cult of Ratvar!", LOG_ATTACK, color="#960000")
 	if(issilicon(current))
 		handle_silicon_conversion(current)
 	. = ..() //have to call down here so objectives display correctly
+	ADD_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 
 /datum/antagonist/clock_cultist/greet()
 	. = ..()
@@ -69,7 +72,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	current.faction |= FACTION_CLOCK
-	current.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
+	current.grant_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
 	current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
 	if(!iseminence(current))
 		add_team_hud(current)
@@ -77,17 +80,16 @@
 		if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
 			recall.Grant(current)
 
-		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 4), \
-												  healing_turfs = GLOB.clock_turf_types)
+		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = (iscarbon(current) ? 4 : 1)), healing_turfs = GLOB.clock_turf_types)
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
-		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+		handle_clown_mutation(current, mob_override ? null : "The light of Ratvar allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		add_forbearance(current)
 
 /datum/antagonist/clock_cultist/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	current.faction -= FACTION_CLOCK
-	current.remove_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
+	current.remove_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
 	current.clear_alert("clockinfo")
 	current.remove_filter("forbearance")
 	if(!iseminence(current))
@@ -97,6 +99,11 @@
 		QDEL_NULL(owner_turf_healing)
 		handle_clown_mutation(current, removing = FALSE)
 
+/datum/antagonist/clock_cultist/ui_data(mob/user)
+	var/list/data = list()
+	data["marked_areas"] = english_list(SSthe_ark.marked_areas)
+	return data
+
 /datum/antagonist/clock_cultist/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
@@ -105,9 +112,10 @@
 /datum/antagonist/clock_cultist/on_removal()
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), \
-									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
-	owner.current.log_message("has renounced the cult of Rat'var!", LOG_ATTACK, color="#960000")
+									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Ratvar."))
+	owner.current.log_message("has renounced the cult of Ratvar!", LOG_ATTACK, color="#960000")
 	handle_equipment_removal()
+	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
 	return ..()
 
 /datum/antagonist/clock_cultist/get_preview_icon()
@@ -116,13 +124,13 @@
 
 /datum/antagonist/clock_cultist/on_mindshield(mob/implanter)
 	if(!silent)
-		to_chat(owner.current, span_warning("You feel something pushing away the light of Rat'var, but you resist it!"))
+		to_chat(owner.current, span_warning("You feel something pushing away the light of Ratvar, but you resist it!"))
 	return
 
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Rat'var.")
-	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Rat'var.")
+	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Ratvar.")
+	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Ratvar.")
 
 /datum/antagonist/clock_cultist/admin_remove(mob/user)
 	silent = TRUE
@@ -201,57 +209,6 @@
 	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
 		apply_to.add_filter("forbearance", 3, list("type" = "outline", "color" = "#FAE48E", "size" = 2, "alpha" = 100))
 
-/datum/antagonist/clock_cultist/eminence
-	name = "Eminence"
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
-	give_slab = FALSE
-	antag_moodlet = null
-	communicate = null
-	recall = null
-	///The list of our actions
-	var/list/action_list = list(
-		/datum/action/innate/clockcult/space_fold,
-		/datum/action/cooldown/eminence/purge_reagents,
-		/datum/action/cooldown/eminence/linked_abscond,
-		/datum/action/innate/clockcult/teleport_to_servant,
-		/datum/action/innate/clockcult/teleport_to_station,
-		/datum/action/innate/clockcult/eminence_abscond,
-		/datum/action/innate/clockcult/show_warpable_areas,
-		/datum/action/innate/clockcult/add_warp_area,
-	)
-
-/datum/antagonist/clock_cultist/eminence/Destroy()
-	QDEL_LIST(action_list)
-	return ..()
-
-/datum/antagonist/clock_cultist/eminence/greet()
-	to_chat(owner.current, boxed_message("[span_bigbrass("You are the Eminence, a being bound to Rat'var. By his light you are able to influence nearby space and time.")] <br/>\
-								[span_brass("As the Eminence you have access to various abilities, they are as follows. <br/>\
-								You may click on various machines to interface with them or a servant to mark them. <br/>\
-								Purge Reagents: Remove all reagents from the bloodstream of a marked servant, this is useful for a servant who is being deconverted by holy water. <br/>\
-								Linked Abscond: Return a marked servant and anything they are pulling to reebe, this has a lengthy cooldown and they must remain still for 7 seconds. <br/>\
-								Space Fold: Fold local spacetime to ensure certain \"events\" are inflicted upon the station, while doing this will cost cogs, \
-								these cogs are not taken from the cult itself. The cooldown is based on the cog cost of the event. <br/>\
-								You can also teleport yourself to any other servant, useful for servants who need to be absconded like those which are dead or being deconverted.")]"))
-
-/datum/antagonist/clock_cultist/eminence/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	var/mob/living/current = owner.current
-	add_team_hud(current, /datum/antagonist/clock_cultist)
-	for(var/datum/action/our_action as anything in action_list)
-		if(ispath(our_action))
-			our_action = new our_action()
-		our_action.Grant(current)
-
-/datum/antagonist/clock_cultist/eminence/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	for(var/datum/action/removed_action in action_list)
-		removed_action.Remove(owner.current)
-
-/datum/antagonist/clock_cultist/eminence/on_removal() //this should never happen without an admin being involved, something has gone wrong
-	to_chat(owner.current, span_userdanger("You lost your eminence antagonist status! This should not happen and you should ahelp(f1) unless you are already talking to an admin."))
-	return ..()
-
 /datum/outfit/clock/preview
 	name = "Clock Cultist (Preview only)"
 
@@ -260,10 +217,9 @@
 	head = /obj/item/clothing/head/helmet/clockwork
 	l_hand = /obj/item/clockwork/weapon/brass_sword
 
-
 //these can just solo invoke things that normally take multiple servants
 /datum/antagonist/clock_cultist/solo
-	name = "Servant of Rat'var (Solo)"
+	name = "Servant of Ratvar (Solo)"
 
 //putting this here to avoid extra edits to the main file
 /datum/antagonist/cult

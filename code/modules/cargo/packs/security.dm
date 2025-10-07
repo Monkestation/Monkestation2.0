@@ -255,6 +255,13 @@
 	contains = list(/obj/item/storage/box/exileimp)
 	crate_name = "exile implant crate"
 
+/datum/supply_pack/security/armory/teleport_blocker_imp
+	name = "Bluespace Grounding Implants Crate"
+	desc = "Contains four Bluespace Grounding implants."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/storage/box/teleport_blocker)
+	crate_name = "bluespace grounding implant crate"
+
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
 	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, \
@@ -339,3 +346,12 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/armory/antitank
+	name = "Disposable Anti-Tank Rocket Crate"
+	desc = "Contains a singular antiquated anti-tank rocket."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/ballistic/ignifist
+				)
+	crate_name = "Anti-Tank Rocket crate"
+	dangerous = TRUE

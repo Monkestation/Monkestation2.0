@@ -72,32 +72,36 @@
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
-/obj/item/camera/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
-	adjust_zoom(user)
+/obj/item/camera/click_alt(mob/user)
+	if(!adjust_zoom(user))
+		return CLICK_ACTION_BLOCKING
+	if(silent) // Don't out your silent cameras
+		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/camera/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/camera_film))
+/obj/item/camera/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/camera_film))
 		if(pictures_left)
 			to_chat(user, span_notice("[src] still has some film in it!"))
 			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
-		to_chat(user, span_notice("You insert [I] into [src]."))
-		qdel(I)
+		to_chat(user, span_notice("You insert [attacking_item] into [src]."))
+		qdel(attacking_item)
 		pictures_left = pictures_max
 		return
-	if(istype(I, /obj/item/disk/holodisk))
+	if(istype(attacking_item, /obj/item/disk/holodisk))
 		if (!disk)
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, span_warning("[I] is stuck to your hand!"))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 				return TRUE
-			to_chat(user, span_notice("You slide [I] into the back of [src]."))
-			disk = I
+			to_chat(user, span_notice("You slide [attacking_item] into the back of [src]."))
+			disk = attacking_item
 		else
 			to_chat(user, span_warning("There's already a disk inside [src]."))
 		return TRUE //no afterattack
@@ -108,7 +112,7 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
+/obj/item/camera/proc/can_target(atom/target, mob/user)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
@@ -126,24 +130,37 @@
 			return FALSE
 	return TRUE
 
-/obj/item/camera/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (disk)
-		if(ismob(target))
+		if(!ismob(interacting_with))
+			to_chat(user, span_warning("Invalid holodisk target."))
+			return ITEM_INTERACT_BLOCKING
+		if(ismob(interacting_with))
 			if (disk.record)
 				QDEL_NULL(disk.record)
 
 			disk.record = new
-			var/mob/M = target
+			var/mob/M = interacting_with
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
 		else
 			to_chat(user, span_warning("Invalid holodisk target."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(target, user, flag))
-		return
+	if(!can_target(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	if(!photo_taken(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera/proc/photo_taken(atom/target, mob/user)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
@@ -151,7 +168,7 @@
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
-
+	return TRUE
 
 /obj/item/camera/proc/cooldown()
 	UNTIL(!blending)

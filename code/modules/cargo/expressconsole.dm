@@ -33,18 +33,18 @@
 		beacon.unlink_console()
 	return ..()
 
-/obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID() && allowed(user))
+/obj/machinery/computer/cargo/express/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.GetID() && allowed(user))
 		locked = !locked
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the interface."))
 		return
-	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
+	else if(istype(attacking_item, /obj/item/disk/cargo/bluespace_pod))
 		podType = /obj/structure/closet/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
 		to_chat(user, span_notice("You insert the disk into [src], allowing for advanced supply delivery vehicles."))
-		qdel(W)
+		qdel(attacking_item)
 		return TRUE
-	else if(istype(W, /obj/item/supplypod_beacon))
-		var/obj/item/supplypod_beacon/sb = W
+	else if(istype(attacking_item, /obj/item/supplypod_beacon))
+		var/obj/item/supplypod_beacon/sb = attacking_item
 		if (sb.express_console != src)
 			sb.link_console(src, user)
 			return TRUE
@@ -95,7 +95,7 @@
 	if(D)
 		data["points"] = D.account_balance
 	data["locked"] = locked//swipe an ID to unlock
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
@@ -128,6 +128,7 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE
@@ -143,13 +144,13 @@
 				if(D.adjust_money(-BEACON_COST))
 					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
+					C.link_console(src, user)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 					beacon.name = "Supply Pod Beacon #[printed_beacons]"
 
 
 		if("add")//Generate Supply Order first
-			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EXPRESSPOD_CONSOLE))
+			if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EXPRESSPOD_CONSOLE))
 				say("Railgun recalibrating. Stand by.")
 				return
 			var/id = params["id"]
@@ -159,13 +160,13 @@
 				CRASH("Unknown supply pack id given by express order console ui. ID: [params["id"]]")
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
-			var/ckey = usr.ckey
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
+			var/ckey = user.ckey
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
 				name = H.get_authentification_name()
 				rank = H.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
-				name = usr.real_name
+			else if(HAS_SILICON_ACCESS(user))
+				name = user.real_name
 				rank = "Silicon"
 			var/reason = ""
 			var/list/empty_turfs

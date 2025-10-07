@@ -32,14 +32,17 @@
 	var/mob/living/current_mob = mob_override || owner.current
 	current_mob.clear_mood_event("vampcandle")
 	add_team_hud(current_mob)
-	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 	setup_monitor(current_mob)
 
 /datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	QDEL_NULL(monitor)
-	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
+	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+
+/datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	add_team_hud(new_body)
 
 /datum/antagonist/vassal/proc/setup_monitor(mob/target)
 	QDEL_NULL(monitor)
@@ -76,8 +79,9 @@
 
 /// This is called when the antagonist is successfully mindshielded.
 /datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	target.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
 	owner.remove_antag_datum(/datum/antagonist/vassal)
-	owner.current.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
 	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/vassal/proc/on_examine(datum/source, mob/examiner, examine_text)
@@ -87,6 +91,7 @@
 		examine_text += vassal_examine
 
 /datum/antagonist/vassal/on_gain()
+	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	/// Enslave them to their Master
@@ -106,11 +111,12 @@
 	vassal_objective.owner = owner
 	objectives += vassal_objective
 	/// Give Vampire Language & Hud
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
+	owner.current.get_language_holder().omnitongue = TRUE
 	owner.current.grant_language(/datum/language/vampiric)
 	return ..()
 
 /datum/antagonist/vassal/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
 	if(!QDELETED(master))

@@ -38,7 +38,7 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT)
 
 /obj/machinery/shipbreaker/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -61,7 +61,7 @@
 		var/recycle_reward = morselstack.amount * morselstack.point_value
 		reclaimed += recycle_reward
 		playsound(src, item_recycle_sound, (50 + morselstack.amount), TRUE, morselstack.amount)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		var/datum/bank_account/dept_budget = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		var/payee_key = morselstack.fingerprintslast
 
@@ -70,12 +70,12 @@
 			var/mob/living/carbon/human/payee_mob = get_mob_by_key(payee_key)
 			if(payee_mob.account_id != null)
 				var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[payee_mob.account_id]"]
-				account.adjust_money(recycle_reward*0.2, "Shipbreaker Scrap Processed. Payout:[recycle_reward*0.2]")
+				account.adjust_money(recycle_reward*0.5, "Shipbreaker Scrap Processed. Payout:[recycle_reward*0.5]")
 		if(morsel?.custom_materials)
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/material_amount = materials.get_item_material_amount(morselstack, BREAKDOWN_FLAGS_RECYCLER)
+			var/material_amount = materials.get_item_material_amount(morselstack)
 			if(material_amount)
-				materials.insert_item(morselstack, material_amount, multiplier = 1, breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+				materials.insert_item(morselstack, material_amount, multiplier = 1)
 				materials.retrieve_all()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 	qdel(morsel)
@@ -94,15 +94,15 @@
 /obj/machinery/shipbreaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/shipbreaker/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
+/obj/machinery/shipbreaker/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", attacking_item))
 		return
 
-	if(default_pry_open(I, close_after_pry = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()

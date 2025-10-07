@@ -76,7 +76,7 @@
 	head.flash2 = new(head)
 	chest = new(src)
 	chest.wired = TRUE
-	chest.cell = new /obj/item/stock_parts/cell/high(chest)
+	chest.cell = new /obj/item/stock_parts/power_store/cell/high(chest)
 	update_appearance()
 
 /obj/item/robot_suit/update_overlays()
@@ -100,16 +100,16 @@
 		return TRUE
 	return FALSE
 
-/obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
-	. = ..()
-	var/turf/T = get_turf(src)
-	if(l_leg || r_leg || chest || l_arm || r_arm || head)
-		if(I.use_tool(src, user, 5, volume=50))
-			drop_all_parts(T)
-			to_chat(user, span_notice("You disassemble the cyborg shell."))
-	else
+/obj/item/robot_suit/wrench_act(mob/living/user, obj/item/tool) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+	if(!l_leg && !r_leg && !chest && !l_arm && !r_arm && !head)
 		to_chat(user, span_warning("There is nothing to remove from the endoskeleton!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 5, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	drop_all_parts(get_turf(src))
+	user.balloon_alert(user, "disassembled!")
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /// Drops all included parts to the passed location
 /// This will also dissassemble the parts being dropped into components as well
@@ -136,20 +136,16 @@
 		return FALSE
 	return TRUE
 
-/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
-	. = ..()
-	if(.)
-		return TRUE
-
+/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/tool) //Swaps the power cell if you're holding a new one in your other hand.
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
 		to_chat(user, span_warning("[src] has no attached torso!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	var/obj/item/stock_parts/power_store/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
 	var/swap_failed = FALSE
 	if(!temp_cell) //if we're not holding a cell
 		swap_failed = TRUE
-	else if(!user.transferItemToLoc(temp_cell, chest))
+	if(!user.transferItemToLoc(temp_cell, chest))
 		swap_failed = TRUE
 		to_chat(user, span_warning("[temp_cell] is stuck to your hand, you can't put it in [src]!"))
 
@@ -162,243 +158,266 @@
 			chest.cell = null
 		else
 			to_chat(user, span_warning("The power cell slot in [src]'s torso is empty!"))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"]."))
 	chest.cell = temp_cell
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/robot_suit/multitool_act(mob/living/user, obj/item/tool)
+	if(!check_completion())
+		to_chat(user, span_warning("The endoskeleton must be assembled before debugging can begin!"))
+		return ITEM_INTERACT_BLOCKING
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 //ADD
-/obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = W
-		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-			if (M.use(1))
-				var/obj/item/bot_assembly/ed209/B = new
-				B.forceMove(drop_location())
-				to_chat(user, span_notice("You arm the robot frame."))
-				var/holding_this = user.get_inactive_held_item() == src
-				qdel(src)
-				if (holding_this)
-					user.put_in_inactive_hand(B)
-			else
-				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
-				return
-	else if(istype(W, /obj/item/bodypart/leg/left/robot))
+/obj/item/robot_suit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/metal_sheet = tool
+		if(l_arm || r_arm || l_leg || r_leg || chest || head)
+			return ITEM_INTERACT_BLOCKING
+		if(!metal_sheet.use(1))
+			to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/bot_assembly/ed209/B = new
+		B.forceMove(drop_location())
+		to_chat(user, span_notice("You arm the robot frame."))
+		var/holding_this = user.get_inactive_held_item() == src
+		qdel(src)
+		if(holding_this)
+			user.put_in_inactive_hand(B)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		l_leg = W
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		tool.icon_state = initial(tool.icon_state)
+		tool.cut_overlays()
+		l_leg = tool
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(W, /obj/item/bodypart/leg/right/robot))
-		if(src.r_leg)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		r_leg = W
+	if(istype(tool, /obj/item/bodypart/leg/right/robot))
+		if(r_leg)
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		tool.icon_state = initial(tool.icon_state)
+		tool.cut_overlays()
+		r_leg = tool
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(W, /obj/item/bodypart/arm/left/robot))
+	if(istype(tool, /obj/item/bodypart/arm/left/robot))
 		if(l_arm)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		l_arm = W
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		tool.icon_state = initial(tool.icon_state)
+		tool.cut_overlays()
+		l_arm = tool
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(W, /obj/item/bodypart/arm/right/robot))
+	if(istype(tool, /obj/item/bodypart/arm/right/robot))
 		if(r_arm)
-			return
-		if(!user.transferItemToLoc(W, src))
-			return
-		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
-		W.cut_overlays()
-		r_arm = W
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		tool.icon_state = initial(tool.icon_state)//in case it is a dismembered robotic limb
+		tool.cut_overlays()
+		r_arm = tool
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(W, /obj/item/bodypart/chest/robot))
-		var/obj/item/bodypart/chest/robot/CH = W
+	if(istype(tool, /obj/item/bodypart/chest/robot))
 		if(chest)
-			return
-		if(CH.wired && CH.cell)
-			if(!user.transferItemToLoc(CH, src))
-				return
-			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
-			CH.cut_overlays()
-			chest = CH
-			update_appearance()
-		else if(!CH.wired)
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/bodypart/chest/robot/inserting_chest = tool
+		if(!inserting_chest.wired)
 			to_chat(user, span_warning("You need to attach wires to it first!"))
-		else
+			return ITEM_INTERACT_BLOCKING
+		if(!inserting_chest.cell)
 			to_chat(user, span_warning("You need to attach a cell to it first!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(inserting_chest, src))
+			return ITEM_INTERACT_BLOCKING
+		inserting_chest.icon_state = initial(inserting_chest.icon_state) //in case it is a dismembered robotic limb
+		inserting_chest.cut_overlays()
+		chest = inserting_chest
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(W, /obj/item/bodypart/head/robot))
-		var/obj/item/bodypart/head/robot/HD = W
-		if(locate(/obj/item/organ/internal) in HD)
-			to_chat(user, span_warning("There are organs inside [HD]!"))
-			return
+	if(istype(tool, /obj/item/bodypart/head/robot))
+		var/obj/item/bodypart/head/robot/inserting_head = tool
+		if(locate(/obj/item/organ) in inserting_head)
+			to_chat(user, span_warning("There are organs inside [inserting_head]!"))
+			return ITEM_INTERACT_BLOCKING
 		if(head)
-			return
-		if(HD.flash2 && HD.flash1)
-			if(!user.transferItemToLoc(HD, src))
-				return
-			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
-			HD.cut_overlays()
-			head = HD
-			update_appearance()
-		else
+			user.balloon_alert(user, "limb already present!")
+			return ITEM_INTERACT_BLOCKING
+		if(!inserting_head.flash2 || !inserting_head.flash1)
 			to_chat(user, span_warning("You need to attach a flash to it first!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(inserting_head, src))
+			return ITEM_INTERACT_BLOCKING
+		inserting_head.icon_state = initial(inserting_head.icon_state)//in case it is a dismembered robotic limb
+		inserting_head.cut_overlays()
+		head = inserting_head
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if (W.tool_behaviour == TOOL_MULTITOOL)
-		if(check_completion())
-			ui_interact(user)
+	if(istype(tool, /obj/item/mmi))
+		var/obj/item/mmi/inserting_mmi = tool
+		if(!check_completion())
+			to_chat(user, span_warning("The MMI must go in after everything else!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!isturf(loc))
+			to_chat(user, span_warning("You can't put [inserting_mmi] in, the frame has to be standing on the ground to be perfectly precise!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!inserting_mmi.brain_check(user))
+			return ITEM_INTERACT_BLOCKING
+
+		var/mob/living/brain/brainmob = inserting_mmi.brainmob
+		if(is_banned_from(brainmob.ckey, JOB_CYBORG) || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(inserting_mmi) || !Adjacent(user) || HAS_MIND_TRAIT(brainmob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
+			if(!QDELETED(inserting_mmi))
+				to_chat(user, span_warning("This [inserting_mmi.name] does not seem to fit!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+
+		var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
+		if(!new_borg)
+			return ITEM_INTERACT_BLOCKING
+		if(inserting_mmi.laws && inserting_mmi.laws.id != DEFAULT_AI_LAWID)
+			aisync = FALSE
+			lawsync = FALSE
+			new_borg.laws = inserting_mmi.laws
+			inserting_mmi.laws.associate(new_borg)
+
+		new_borg.SetInvisibility(INVISIBILITY_NONE)
+		//Transfer debug settings to new mob
+		new_borg.custom_name = created_name
+		new_borg.locked = panel_locked
+		if(!aisync)
+			lawsync = FALSE
+			new_borg.set_connected_ai(null)
 		else
-			to_chat(user, span_warning("The endoskeleton must be assembled before debugging can begin!"))
-
-	else if(istype(W, /obj/item/mmi))
-		var/obj/item/mmi/M = W
-		if(check_completion())
-			if(!chest.cell)
-				to_chat(user, span_warning("The endoskeleton still needs a power cell!"))
-				return
-			if(!isturf(loc))
-				to_chat(user, span_warning("You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!"))
-				return
-			if(!M.brain_check(user))
-				return
-
-			var/mob/living/brain/brainmob = M.brainmob
-			if(is_banned_from(brainmob.ckey, JOB_CYBORG) || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(M) || !Adjacent(user) || HAS_MIND_TRAIT(brainmob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
-				if(!QDELETED(M))
-					to_chat(user, span_warning("This [M.name] does not seem to fit!"))
-				return
-			if(!user.temporarilyRemoveItemFromInventory(W))
-				return
-
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
-			if(!O)
-				return
-			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
-				aisync = FALSE
-				lawsync = FALSE
-				O.laws = M.laws
-				M.laws.associate(O)
-
-			O.invisibility = 0
-			//Transfer debug settings to new mob
-			O.custom_name = created_name
-			O.locked = panel_locked
-			if(!aisync)
-				lawsync = FALSE
-				O.set_connected_ai(null)
-			else
-				O.notify_ai(AI_NOTIFICATION_NEW_BORG)
-				if(forced_ai)
-					O.set_connected_ai(forced_ai)
-			if(!lawsync)
-				O.lawupdate = FALSE
-				if(M.laws.id == DEFAULT_AI_LAWID)
-					O.make_laws()
-					O.log_current_laws()
-
-			var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
-			if(be_clockwork && old_servant_datum) //monkestation edit
-				old_servant_datum.silent = TRUE //monkestation edit
-			brainmob.mind?.remove_antags_for_borging()
-			O.job = JOB_CYBORG
-
-			O.cell = chest.cell
-			chest.cell.forceMove(O)
-
-			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			QDEL_NULL(O.mmi)  //we delete the mmi created by robot/New()
-			O.mmi = W //and give the real mmi to the borg.
-			O.updatename(brainmob.client)
-			// This canonizes that MMI'd cyborgs have memories of their previous life
-			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
-			brainmob.mind.transfer_to(O)
-			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
-
-			if(O.mind && O.mind.special_role)
-				to_chat(O, span_userdanger("You have been robotized!"))
-				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
-
-			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
-			forceMove(O)
-			O.robot_suit = src
-
-			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
-			M.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
-
-			if(!locomotion)
-				O.set_lockcharge(TRUE)
-				to_chat(O, span_warning("Error: Servo motors unresponsive."))
+			new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)
+			if(forced_ai)
+				new_borg.set_connected_ai(forced_ai)
+		if(!lawsync)
+			new_borg.lawupdate = FALSE
+			if(inserting_mmi.laws.id == DEFAULT_AI_LAWID)
+				new_borg.make_laws()
+				new_borg.log_current_laws()
 
 //monkestation edit start
-			if(be_clockwork && O.mind)
-				var/datum/antagonist/clock_cultist/new_servant_datum = new
-				if(old_servant_datum)
-					new_servant_datum.silent = TRUE
-				O.mind.add_antag_datum(new_servant_datum)
-				new_servant_datum.silent = FALSE
+		var/datum/antagonist/clock_cultist/old_servant_datum = brainmob.mind?.has_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
+		if(be_clockwork && old_servant_datum) //monkestation edit
+			old_servant_datum.silent = TRUE //monkestation edit
 //monkestation edit end
 
-		else
-			to_chat(user, span_warning("The MMI must go in after everything else!"))
+		brainmob.mind?.remove_antags_for_borging()
+		new_borg.job = JOB_CYBORG
 
-	else if(istype(W, /obj/item/borg/upgrade/ai))
-		var/obj/item/borg/upgrade/ai/M = W
-		if(check_completion())
-			if(!isturf(loc))
-				to_chat(user, span_warning("You cannot install [M], the frame has to be standing on the ground to be perfectly precise!"))
-				return
-			if(!user.temporarilyRemoveItemFromInventory(M))
-				to_chat(user, span_warning("[M] is stuck to your hand!"))
-				return
-			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+		new_borg.cell = chest.cell
+		chest.cell.forceMove(new_borg)
 
-			if(!aisync)
-				lawsync = FALSE
-				O.set_connected_ai(null)
-			else
-				if(forced_ai)
-					O.set_connected_ai(forced_ai)
-				O.notify_ai(AI_NOTIFICATION_AI_SHELL)
-			if(!lawsync)
-				O.lawupdate = FALSE
-				O.make_laws()
-				O.log_current_laws()
+		tool.forceMove(new_borg)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+		QDEL_NULL(new_borg.mmi)  //we delete the mmi created by robot/New()
+		new_borg.mmi = tool //and give the real mmi to the borg.
+		new_borg.updatename(brainmob.client)
+		// This canonizes that MMI'd cyborgs have memories of their previous life
+		brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
+		brainmob.mind.transfer_to(new_borg)
+		playsound(new_borg.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
-			O.cell = chest.cell
-			chest.cell.forceMove(O)
+		if(brainmob.is_antag())
+			to_chat(new_borg, span_userdanger("You have been robotized!"))
+			to_chat(new_borg, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 
-			O.locked = panel_locked
-			O.job = JOB_CYBORG
-			forceMove(O)
-			O.robot_suit = src
-			if(!locomotion)
-				O.set_lockcharge(TRUE)
+		SSblackbox.record_feedback("amount", "cyborg_birth", 1)
+		forceMove(new_borg)
+		new_borg.robot_suit = src
 
-	else if(istype(W, /obj/item/pen))
-		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
+		user.log_message("put the MMI/posibrain of [key_name(inserting_mmi.brainmob)] into a cyborg shell", LOG_GAME)
+		inserting_mmi.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
+
+		if(!locomotion)
+			new_borg.set_lockcharge(TRUE)
+			to_chat(new_borg, span_warning("Error: Servo motors unresponsive."))
+
 //monkestation edit start
-	else if(istype(W, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))
+		if(be_clockwork && new_borg.mind)
+			var/datum/antagonist/clock_cultist/new_servant_datum = new
+			if(old_servant_datum)
+				new_servant_datum.silent = TRUE
+			new_borg.mind.add_antag_datum(new_servant_datum)
+			new_servant_datum.silent = FALSE
+//monkestation edit end
+
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/borg/upgrade/ai))
+		var/obj/item/borg/upgrade/ai/M = tool
+		if(!check_completion())
+			to_chat(user, span_warning("The module must go in after everything else!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!isturf(loc))
+			to_chat(user, span_warning("You cannot install [M], the frame has to be standing on the ground to be perfectly precise!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.temporarilyRemoveItemFromInventory(M))
+			to_chat(user, span_warning("[M] is stuck to your hand!"))
+			return ITEM_INTERACT_BLOCKING
+		qdel(M)
+		var/mob/living/silicon/robot/new_shell = new /mob/living/silicon/robot/shell(get_turf(src))
+
+		if(!aisync)
+			lawsync = FALSE
+			new_shell.set_connected_ai(null)
+		else
+			if(forced_ai)
+				new_shell.set_connected_ai(forced_ai)
+			new_shell.notify_ai(AI_NOTIFICATION_AI_SHELL)
+		if(!lawsync)
+			new_shell.lawupdate = FALSE
+			new_shell.make_laws()
+			new_shell.log_current_laws()
+
+		new_shell.cell = chest.cell
+		chest.cell.forceMove(new_shell)
+
+		new_shell.locked = panel_locked
+		new_shell.job = JOB_CYBORG
+		forceMove(new_shell)
+		new_shell.robot_suit = src
+		if(!locomotion)
+			new_shell.set_lockcharge(TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	if(IS_WRITING_UTENSIL(tool))
+		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+//monkestation edit start
+	if(istype(tool, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))
 		to_chat(user, span_brass("You adjust the internals of \the [src] to that of clockwork."))
 		be_clockwork = TRUE
 		lawsync = FALSE
 		aisync = FALSE
+		return ITEM_INTERACT_SUCCESS
 //monkestation edit end
-	else
-		return ..()
+
+	return NONE // Assuming none of the checks pass
 
 /obj/item/robot_suit/ui_status(mob/user)
 	if(isobserver(user))
@@ -428,7 +447,7 @@
 	data["lawsync"] = lawsync
 	return data
 
-/obj/item/robot_suit/ui_act(action, list/params)
+/obj/item/robot_suit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

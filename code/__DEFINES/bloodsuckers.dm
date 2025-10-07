@@ -1,5 +1,5 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
-//#define BLOODSUCKER_TESTING
+// #define BLOODSUCKER_TESTING
 
 #ifdef BLOODSUCKER_TESTING
 #ifdef CIBUILDING
@@ -20,7 +20,7 @@
 #define TORTURE_CONVERSION_COST 50
 /// Once blood is this low, will enter Frenzy
 #define FRENZY_THRESHOLD_ENTER 25
-/// Once blood is this high, will exit Frenzyshak
+/// Once blood is this high, will exit Frenzy
 #define FRENZY_THRESHOLD_EXIT 250
 
 /// Minimum blood required for bloodsucker oozelings to auto-revive
@@ -33,7 +33,7 @@
 #define VASSALIZATION_ALLOWED 0
 ///If someone has to accept vassalization
 #define VASSALIZATION_DISLOYAL 1
-///If someone is not allowed under any circimstances to become a Vassal
+///If someone is not allowed under any circumstances to become a Vassal
 #define VASSALIZATION_BANNED 2
 
 /**
@@ -42,12 +42,15 @@
  */
 ///Spam prevention for healing messages.
 #define BLOODSUCKER_SPAM_HEALING (15 SECONDS)
-///Span prevention for Sol Masquerade messages.
+///Spam prevention for Sol Masquerade messages.
 #define BLOODSUCKER_SPAM_MASQUERADE (60 SECONDS)
 
-///Span prevention for Sol messages.
+///Spam prevention for Sol messages.
 #define BLOODSUCKER_SPAM_SOL (30 SECONDS)
-
+//monkestation edit
+//Torpor softlock prevention - define it high as it is a failsafe
+#define BLOODSUCKER_TORPOR_MAX_TIME (120 SECONDS)
+//monkestation end
 /**
  * Clan defines
  */
@@ -60,6 +63,7 @@
 #define CLAN_VENTRUE "Ventrue Clan"
 #define CLAN_MALKAVIAN "Malkavian Clan"
 #define CLAN_TZIMISCE "Tzimisce Clan"
+#define CLAN_VASSAL "your Master"
 
 #define TREMERE_VASSAL "tremere_vassal"
 #define FAVORITE_VASSAL "favorite_vassal"
@@ -80,6 +84,8 @@
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
 /// This Power can't be used during Sol
 #define BP_CANT_USE_DURING_SOL (1<<5)
+/// This Power CAN be used while silver cuffed
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)
@@ -143,6 +149,7 @@
 #define DANGER_LEVEL_SOL_ROSE 4
 #define DANGER_LEVEL_SOL_ENDED 5
 
+
 /**
  * Clan defines
  *
@@ -170,6 +177,8 @@
 #define IS_BLOODSUCKER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodsucker))
 ///Whether a mob is a Vassal
 #define IS_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal))
+///Whether a mob is a Bloodsucker OR a Vassal
+#define IS_BLOODSUCKER_OR_VASSAL(mob) (IS_BLOODSUCKER(mob) || IS_VASSAL(mob))
 ///Whether a mob is a Favorite Vassal
 #define IS_FAVORITE_VASSAL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/vassal/favorite))
 ///Whether a mob is a Revenge Vassal
@@ -177,3 +186,6 @@
 
 //Used in bloodsucker_life.dm
 #define MARTIALART_FRENZYGRAB "frenzy grabbing"
+
+/// The level needed to complete the Tremere objective.
+#define TREMERE_OBJECTIVE_POWER_LEVEL 5

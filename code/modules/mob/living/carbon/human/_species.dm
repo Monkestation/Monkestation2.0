@@ -57,8 +57,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/skinned_type
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
-	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
-	var/datum/language_holder/species_language_holder = /datum/language_holder
+	/// What languages this species can understand and say.
+	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
+	/// Should never be null.
+	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
 	/**
 	  * Visible CURRENT bodyparts that are unique to a species.
 	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
@@ -566,6 +568,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	C.maxHealth = C.maxHealth * maxhealthmod
 
+	// All languages associated with this language holder are added with source [LANGUAGE_SPECIES]
+	// rather than source [LANGUAGE_ATOM], so we can track what to remove if our species changes again
+	var/datum/language_holder/gaining_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/language in gaining_holder.understood_languages)
+		C.grant_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.spoken_languages)
+		C.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.blocked_languages)
+		C.add_blocked_language(language, LANGUAGE_SPECIES)
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 	properly_gained = TRUE
@@ -617,6 +629,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.physiology?.heat_mod /= heatmod
 
 	C.maxHealth = C.maxHealth / maxhealthmod
+
+		// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
+	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/language in losing_holder.understood_languages)
+		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.spoken_languages)
+		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.blocked_languages)
+		C.remove_blocked_language(language, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1024,15 +1045,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a suit before you can attach this [I.name]!"))
 				return FALSE
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(H, span_warning("You somehow have a suit with no defined allowed items for suit storage, stop that."))
-				return FALSE
+			var/any_suit_storage = (is_type_in_typecache(I, GLOB.any_suit_storage) || I.w_class == WEIGHT_CLASS_TINY)
+			if(any_suit_storage)
+				return TRUE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
 				return FALSE
-			if( istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)
@@ -1176,11 +1196,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	user.do_cpr(target)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s grab!"), \
-						span_userdanger("You block [user]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your grab at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	target.grabbedby(user)
@@ -1190,11 +1205,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
-						span_userdanger("You block [user]'s attack!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your attack at [target] was blocked!"))
 		return FALSE
 	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
@@ -1216,8 +1226,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		user.do_attack_animation(target, atk_effect)
 
 		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+		var/zone = target.get_random_valid_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(zone)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
@@ -1262,7 +1272,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			var/ough = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 4.8 : 1
+			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
+			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
+				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
+					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
+							if(iter_clothing.body_parts_covered & BODY_ZONE_PRECISE_GROIN)
+								return TRUE
+				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
+				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
+				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
+				target.emote("scream", message="screams for dear life!")
+				playsound(get_turf(target), 'sound/effects/glassbr1.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
@@ -1283,11 +1306,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[user]'s shove is blocked by [target]!"), \
-						span_danger("You block [user]'s shove!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your shove at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		user.animate_interact(target, INTERACT_DISARM) //monkestation edit
 		return TRUE
@@ -1314,7 +1332,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	if(owner.mind)
 		attacker_style = owner.mind.martial_art
-	if((owner != target) && (owner.istate & ISTATE_HARM) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+	if((owner != target) && target.check_block(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
@@ -1345,117 +1363,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(.)
 			owner.animate_interact(target, INTERACT_HELP)
 	//monkestation edit end
-
-/datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
-	// Allows you to put in item-specific reactions based on species
-	if(user != human)
-		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
-			return FALSE
-	if(human.check_block())
-		human.visible_message(span_warning("[human] blocks [weapon]!"), \
-						span_userdanger("You block [weapon]!"))
-		return FALSE
-
-	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
-	var/hit_area = affecting.plaintext_zone
-	var/armor_block = min(human.run_armor_check(
-		def_zone = affecting,
-		attack_flag = MELEE,
-		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
-		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
-		armour_penetration = weapon.armour_penetration,
-		weak_against_armour = weapon.weak_against_armour,
-	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
-
-	var/modified_wound_bonus = weapon.wound_bonus
-	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((weapon.item_flags & SURGICAL_TOOL) && !(user.istate & ISTATE_HARM) && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		modified_wound_bonus = CANT_WOUND
-
-	human.send_item_attack_message(weapon, user, hit_area, affecting)
-	human.apply_damage(
-		damage = weapon.force,
-		damagetype = weapon.damtype,
-		def_zone = affecting,
-		blocked = armor_block,
-		wound_bonus = modified_wound_bonus,
-		bare_wound_bonus = weapon.bare_wound_bonus,
-		sharpness = weapon.get_sharpness(),
-		attack_direction = get_dir(user, human),
-		attacking_item = weapon,
-	)
-
-
-
-	if(!weapon.force)
-		return FALSE //item force is zero
-	var/bloody = FALSE
-	if(weapon.damtype != BRUTE)
-		return TRUE
-	if(!(prob(25 + (weapon.force * 2))))
-		return TRUE
-
-	if(affecting.can_bleed())
-		weapon.add_mob_blood(human) //Make the weapon bloody, not the person.
-		if(prob(weapon.force * 2)) //blood spatter!
-			bloody = TRUE
-			var/turf/location = human.loc
-			if(istype(location))
-				human.add_splatter_floor(location)
-			if(get_dist(user, human) <= 1) //people with TK won't get smeared with blood
-				user.add_mob_blood(human)
-
-	switch(hit_area)
-		if(BODY_ZONE_HEAD)
-			if(!weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
-					if(human.stat == CONSCIOUS)
-						human.visible_message(span_danger("[human] is knocked senseless!"), \
-										span_userdanger("You're knocked senseless!"))
-						human.set_confusion_if_lower(20 SECONDS)
-						human.adjust_eye_blur(20 SECONDS)
-					if(prob(10))
-						human.gain_trauma(/datum/brain_trauma/mild/concussion)
-				else
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, weapon.force * 0.2)
-
-				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
-					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
-					if(rev)
-						rev.remove_revolutionary(FALSE, user)
-
-			if(bloody) //Apply blood
-				if(human.wear_mask)
-					human.wear_mask.add_mob_blood(human)
-					human.update_worn_mask()
-				if(human.head)
-					human.head.add_mob_blood(human)
-					human.update_worn_head()
-				if(human.glasses && prob(33))
-					human.glasses.add_mob_blood(human)
-					human.update_worn_glasses()
-
-		if(BODY_ZONE_CHEST)
-			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.visible_message(span_danger("[human] is knocked down!"), \
-								span_userdanger("You're knocked down!"))
-					human.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
-
-			if(bloody)
-				if(human.wear_suit)
-					human.wear_suit.add_mob_blood(human)
-					human.update_worn_oversuit()
-				if(human.w_uniform)
-					human.w_uniform.add_mob_blood(human)
-					human.update_worn_undersuit()
-
-	/// Triggers force say events
-	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
-		human.force_say(user)
-
-	return TRUE
 
 ////////////
 //  Stun  //
@@ -1872,21 +1779,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list containing perks, or an empty list.
  */
 /datum/species/proc/create_pref_language_perk()
-	var/list/to_add = list()
 
 	// Grab galactic common as a path, for comparisons
 	var/datum/language/common_language = /datum/language/common
 
 	// Now let's find all the languages they can speak that aren't common
 	var/list/bonus_languages = list()
-	var/datum/language_holder/temp_holder = new species_language_holder()
-	for(var/datum/language/language_type as anything in temp_holder.spoken_languages)
+	var/datum/language_holder/basic_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/datum/language/language_type as anything in basic_holder.spoken_languages)
 		if(ispath(language_type, common_language))
 			continue
 		bonus_languages += initial(language_type.name)
 
-	// If we have any languages we can speak: create a perk for them all
-	if(length(bonus_languages))
+	if(!length(bonus_languages))
+		return // You're boring
+
+	var/list/to_add = list()
+	if(common_language in basic_holder.spoken_languages)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "comment",
@@ -1894,7 +1803,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] gain the ability to speak [english_list(bonus_languages)].",
 		))
 
-	qdel(temp_holder)
+	else
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "comment",
+			SPECIES_PERK_NAME = "Foreign Speaker",
+			SPECIES_PERK_DESC = "[plural_form] may not speak [initial(common_language.name)], but they can speak [english_list(bonus_languages)].",
+		))
 
 	return to_add
 

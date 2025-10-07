@@ -31,30 +31,23 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
-		return ..()
-
-	if(can_perform_surgery(user, params))
-		return TRUE
-
-	for(var/i in shuffle(all_wounds))
-		var/datum/wound/wound = i
-		if(wound.try_treating(item, user))
-			return TRUE
-
-	return ..()
-
-/mob/living/carbon/CtrlShiftClick(mob/user)
-	..()
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.give(src)
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
+	for(var/datum/wound/wound as anything in shuffle(all_wounds))
+		if(wound.try_treating(tool, user))
+			return ITEM_INTERACT_SUCCESS
+	return .
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
 	var/hurt = TRUE
 	var/extra_speed = 0
+	var/oof_noise = FALSE //We smacked something with denisty, so play a noise
 	if(throwingdatum.thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
@@ -69,134 +62,38 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		oof_noise = TRUE
+
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
+		var/blocked = FALSE
 		if(victim.movement_type & FLYING)
 			return
-		if(hurt)
-			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		if(!hurt)
+			return
+
+		if(. == SUCCESSFUL_BLOCK || victim.check_block(src, 0, "[name]", LEAP_ATTACK))
+			blocked = TRUE
+
+		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		Paralyze(2 SECONDS)
+		oof_noise = TRUE
+
+		if(blocked)
+			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
+				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
+			log_combat(src, victim, "crashed into and was blocked by")
+			return
+		else
 			victim.Paralyze(2 SECONDS)
-			Paralyze(2 SECONDS)
+			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			visible_message(
 				span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),
-				span_userdanger("You[extra_speed ? " violently" : ""] crash into [hit_atom][extra_speed ? " extra hard" : ""]!"),
-			)
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+				span_userdanger("You[extra_speed ? " violently" : ""] crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
 		log_combat(src, victim, "crashed into")
 
-//Throwing stuff
-/mob/living/carbon/proc/toggle_throw_mode()
-	if(stat)
-		return
-	if(throw_mode)
-		throw_mode_off(THROW_MODE_TOGGLE)
-	else
-		throw_mode_on(THROW_MODE_TOGGLE)
-
-
-/mob/living/carbon/proc/throw_mode_off(method)
-	if(throw_mode > method) //A toggle doesnt affect a hold
-		return
-	throw_mode = THROW_MODE_DISABLED
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_off"
-
-
-/mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
-	throw_mode = mode
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_on"
-
-/mob/proc/throw_item(atom/target)
-	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return TRUE
-
-/mob/living/carbon/throw_item(atom/target)
-	. = ..()
-	throw_mode_off(THROW_MODE_TOGGLE)
-	if(!target || !isturf(loc))
-		return FALSE
-	if(istype(target, /atom/movable/screen))
-		return FALSE
-	var/atom/movable/thrown_thing
-	var/obj/item/held_item = get_active_held_item()
-	var/verb_text = pick("throw", "toss", "hurl", "chuck", "fling")
-	if(prob(0.5))
-		verb_text = "yeet"
-	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-	if(!held_item)
-		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
-			if(!throwable_mob.buckled)
-				thrown_thing = throwable_mob
-				if(grab_state >= GRAB_NECK)
-					neckgrab_throw = TRUE
-				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
-					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return FALSE
-	else
-		thrown_thing = held_item.on_thrown(src, target)
-	if(!thrown_thing)
-		return FALSE
-	if(isliving(thrown_thing))
-		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-		var/turf/end_T = get_turf(target)
-		if(start_T && end_T)
-			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-	//MONKESTATION EDIT START
-	var/feeble = HAS_TRAIT(src, TRAIT_FEEBLE)
-	var/leg_aid = HAS_TRAIT(src, TRAIT_NO_LEG_AID)
-	if (feeble && !leg_aid && prob(buckled ? 45 : 15))
-		return fumble_throw_item(target, thrown_thing)
-	//MONKESTATION EDIT START
-	var/power_throw = 0
-	if(HAS_TRAIT(src, TRAIT_HULK))
-		power_throw++
-//	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
-	if(HAS_TRAIT(src, TRAIT_DWARF) && !HAS_TRAIT(src, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
-		power_throw--
-	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-		power_throw++
-	if(neckgrab_throw)
-		power_throw++
-	//MONKESTATION EDIT START
-	if (feeble)
-		power_throw = 0
-	//MONKESTATION EDIT END
-	if(isitem(thrown_thing))
-		var/obj/item/thrown_item = thrown_thing
-		if(thrown_item.throw_verb)
-			verb_text = thrown_item.throw_verb
-	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
-					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
-	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-	newtonian_move(get_dir(target, src))
-	//MONKESTATION EDIT START
-	var/total_throw_range = thrown_thing.throw_range + extra_throw_range
-	if (feeble)
-		total_throw_range = ceil(total_throw_range / (buckled ? 3 : 2))
-	// thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force) - MONKESTATION EDIT ORIGINAL
-	thrown_thing.safe_throw_at(target, total_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
-	if (!feeble || body_position == LYING_DOWN || buckled)
-		return
-	var/bulky = FALSE
-	var/obj/item/I = thrown_thing
-	if (istype(I))
-		if (I.w_class > WEIGHT_CLASS_NORMAL || (thrown_thing.throwforce && !leg_aid))
-			bulky = I.w_class > WEIGHT_CLASS_NORMAL
-		else
-			return
-	if (!bulky && prob(50))
-		return
-	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
-		span_danger("You lose your balance."))
-	Knockdown(2 SECONDS)
-
-	//MONKESTATION EDIT END
+	if(oof_noise)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -244,25 +141,34 @@
 			return TRUE
 	return FALSE
 
+
 /mob/living/carbon/resist_buckle()
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		var/buckle_cd = 60 SECONDS
-		if(handcuffed)
-			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-			buckle_cd = O.breakouttime
-		visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), \
-					span_notice("You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)"))
-		if(do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			if(!buckled)
-				return
-			buckled.user_unbuckle_mob(src,src)
-		else
-			if(src && buckled)
-				to_chat(src, span_warning("You fail to unbuckle yourself!"))
-	else
-		buckled.user_unbuckle_mob(src,src)
+	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
+		buckled.user_unbuckle_mob(src, src)
+		return
+
+	changeNext_move(CLICK_CD_BREAKOUT)
+	last_special = world.time + CLICK_CD_BREAKOUT
+	var/buckle_cd = 1 MINUTES
+
+	if(handcuffed)
+		var/obj/item/restraints/cuffs = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+		buckle_cd = cuffs.breakouttime
+
+	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), 
+				span_notice("You attempt to unbuckle yourself... \
+				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
+
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(buckled)
+			to_chat(src, span_warning("You fail to unbuckle yourself!"))
+		return
+	
+	if(QDELETED(src) || isnull(buckled))
+		return
+
+	buckled.user_unbuckle_mob(src, src)
+
 
 /mob/living/carbon/resist_fire()
 	return !!apply_status_effect(/datum/status_effect/stop_drop_roll)
@@ -286,32 +192,40 @@
 		cuff_resist(I)
 
 
-/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
-	if(I.item_flags & BEING_REMOVED)
-		to_chat(src, span_warning("You're already attempting to remove [I]!"))
+/**
+ * Helper to break the cuffs from hands
+ * @param {obj/item} cuffs - The cuffs to break
+ * @param {number} breakouttime - The time it takes to break the cuffs. Use SECONDS/MINUTES defines
+ * @param {number} cuff_break - Speed multiplier, 0 is default, see _DEFINES\combat.dm
+ */
+/mob/living/carbon/proc/cuff_resist(obj/item/cuffs, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, cuffs) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
+	if(cuffs.item_flags & BEING_REMOVED)
+		to_chat(src, span_warning("You're already attempting to remove [cuffs]!"))
 		return
-	I.item_flags |= BEING_REMOVED
-	breakouttime = I.breakouttime
+	cuffs.item_flags |= BEING_REMOVED
+	breakouttime = cuffs.breakouttime
 	if(!cuff_break)
-		visible_message(span_warning("[src] attempts to remove [I]!"))
-		to_chat(src, span_notice("You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			. = clear_cuffs(I, cuff_break)
+		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
+		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+			. = clear_cuffs(cuffs, cuff_break)
 		else
-			to_chat(src, span_warning("You fail to remove [I]!"))
+			to_chat(src, span_warning("You fail to remove [cuffs]!"))
 
 	else if(cuff_break == FAST_CUFFBREAK)
-		breakouttime = 50
-		visible_message(span_warning("[src] is trying to break [I]!"))
-		to_chat(src, span_notice("You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)"))
+		breakouttime = 5 SECONDS
+		visible_message(span_warning("[src] is trying to break [cuffs]!"))
+		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
 		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			. = clear_cuffs(I, cuff_break)
+			. = clear_cuffs(cuffs, cuff_break)
 		else
-			to_chat(src, span_warning("You fail to break [I]!"))
+			to_chat(src, span_warning("You fail to break [cuffs]!"))
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
-		. = clear_cuffs(I, cuff_break)
-	I.item_flags &= ~BEING_REMOVED
+		. = clear_cuffs(cuffs, cuff_break)
+	cuffs.item_flags &= ~BEING_REMOVED
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -1363,10 +1277,14 @@
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE
-	. = handcuffed
+	var/old_value = handcuffed
 	handcuffed = new_value
-	if(.)
+	if(old_value)
 		if(!handcuffed)
+
+			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+				src.remove_status_effect(/datum/status_effect/silver_cuffed)
+
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)

@@ -29,12 +29,13 @@
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
-	var/mob/camera/blob/overmind
+	var/mob/eye/blob/overmind
 
 
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
+	laser = 50
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -142,7 +143,7 @@
 	O.setDir(dir)
 	var/area/my_area = get_area(src)
 	if(controller)
-		var/mob/camera/blob/BO = controller
+		var/mob/eye/blob/BO = controller
 		O.color = BO.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
 			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
@@ -239,8 +240,8 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
+/obj/structure/blob/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
@@ -415,7 +416,7 @@
 			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
 				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
 
-/obj/structure/blob/special/proc/pulse_area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+/obj/structure/blob/special/proc/pulse_area(mob/eye/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	if(QDELETED(pulsing_overmind))
 		pulsing_overmind = overmind
 	Be_Pulsed()

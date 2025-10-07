@@ -13,6 +13,7 @@
 #define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -42,6 +43,8 @@
 #define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
+/// If an item has had its /datum/element/weapon_description initialized or not.
+#define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -107,3 +110,9 @@
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)
 #define SHARP_POINTY (1<<1)
+
+/// Flags for specifically what kind of items to get in get_equipped_items
+#define INCLUDE_POCKETS (1<<0)
+#define INCLUDE_ACCESSORIES (1<<1)
+#define INCLUDE_HELD (1<<2)
+

@@ -52,11 +52,10 @@
 	wound = 0
 //Monkestation edit end
 
-
-/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
-	..()
-	if(carbon_mob != user)
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(dropping != user || !iscarbon(dropping))
 		return
+	var/mob/living/carbon/carbon_mob = dropping
 	if(carbon_mob.is_leaning == TRUE)
 		return
 	if(carbon_mob.pulledby)
@@ -282,7 +281,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, params) //monkestation edit
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //monkestation edit
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -298,7 +297,7 @@
 	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
 		return
 
-	return ..() || (attacking_item.attack_atom(src, user))
+	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
 	if(!(user.istate & ISTATE_HARM)) //monkestation edit

@@ -23,9 +23,6 @@
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
 
-/obj/item/assembly/infra/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	listeningTo = null
@@ -197,7 +194,7 @@
 	data["visible"] = visible
 	return data
 
-/obj/item/assembly/infra/ui_act(action, params)
+/obj/item/assembly/infra/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

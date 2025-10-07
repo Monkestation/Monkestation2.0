@@ -81,11 +81,9 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
-/obj/item/reagent_containers/hypospray/combat/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/reagent_containers/hypospray/combat/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity_flag)
-		return
-	if(!target.reagents)
+	if(!interacting_with.reagents)
 		return
 
 	. |= SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -97,20 +95,20 @@
 		to_chat(user, span_notice("[src] is full."))
 		return
 
-	if(isliving(target)) // Combat hypo can only draw chems
+	if(isliving(interacting_with)) // Combat hypo can only draw chems
 		return
 
-	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty!"))
+	if(!interacting_with.reagents.total_volume)
+		to_chat(user, span_warning("[interacting_with] is empty!"))
 		return
 
-	if(!target.is_drawable(user))
-		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+	if(!interacting_with.is_drawable(user))
+		to_chat(user, span_warning("You cannot directly remove reagents from [interacting_with]!"))
 		return
 
-	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+	var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
 	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
-	target.update_appearance()
+	interacting_with.update_appearance()
 
 /obj/item/reagent_containers/hypospray/combat/empty
 	list_reagents = null
@@ -385,6 +383,14 @@
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/mutadone = 15)
 
+/obj/item/reagent_containers/hypospray/medipen/penthrite
+	name = "penthrite autoinjector"
+	desc = "Experimental heart medication."
+	icon_state = "atropen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "atropen"
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/temperature //not a survival subtype, because a low pressure seal on a medipen as harmless as this is pointless
 	name = "Temperature Stabilization Injector"
 	desc = "A three use medipen with the only purpose being to stabilize body temperature. Handy if you plan to be lit on fire or fight a watcher."
@@ -421,9 +427,9 @@
 	volume = 20
 	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 20)
 
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling //oozling safe version of the luxury pen!
-	name = "luxury oozling medipen"
-	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZLING LIFE </b>"
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
+	name = "luxury oozeling medipen"
+	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozeling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZELING LIFE </b>"
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
@@ -433,7 +439,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/synthcare
 	name = "Small Synthetic Care Pen"
-	desc = "A single use applicator made to care for synthetic parts on the go anywhere, be it a single prosthetic or an IPC. Contains chemicals that are safe but otherwise worthless for organics. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS CAN PROVE HAZARDOUS TO SYNTHETICS. DOES NOT WORK ON CYBORGS. UNDER NO CIRCUMSTANCES IS THIS TO BE MIXED WITH ADVANCED NANITE SLURRY (FOUND IN THE ADVANCED SYNTHETIC CARE PEN)</b>"
+	desc = "A single use applicator made to care for synthetic parts, be it a single prosthetic or an IPC. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS CAN PROVE HAZARDOUS TO SYNTHETICS. DOES NOT WORK ON CYBORGS. DO NOT MIX WITH ADVANCED NANITE SLURRY.</b>"
 	icon_state = "syndipen"
 	base_icon_state = "syndipen"
 	amount_per_transfer_from_this = 9
@@ -546,3 +552,12 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 10, /datum/reagent/iron = 20, /datum/reagent/medicine/salglu_solution = 60)
 	stripe_style = "blood"
 	inhand_icon_state = "stimpen"
+
+/obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	name = "positronic neural dampener autoinjector"
+	desc = "An autoinjector that can be used to dampen the stimulus response capabilties and pain senses of robots and positronics. One dose for analgesia, two for anesthesia. May cause slight decrease in motor function after injection."
+	icon_state = "invispen"
+	base_icon_state = "invispen"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	list_reagents = list(/datum/reagent/medicine/painkiller/robopiates = 7.5, /datum/reagent/dinitrogen_plasmide = 2.5)

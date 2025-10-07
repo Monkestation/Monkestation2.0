@@ -170,7 +170,7 @@
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -234,26 +234,26 @@
 	var/obj/item/electronics/airlock/electronics
 
 
-/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
+/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
 		to_chat(user, span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
+		attacking_item.play_tool_sound(src)
+		if(attacking_item.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
-	else if(istype(I, /obj/item/electronics/airlock))
+	else if(istype(attacking_item, /obj/item/electronics/airlock))
 		to_chat(user, span_notice("You start installing the electronics into [src]..."))
-		I.play_tool_sound(src)
-		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
-			electronics = I
+		attacking_item.play_tool_sound(src)
+		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item,src))
+			electronics = attacking_item
 			to_chat(user, span_notice("You install the airlock electronics."))
 
-	else if(istype(I, /obj/item/stock_parts/card_reader))
-		var/obj/item/stock_parts/card_reader/C = I
+	else if(istype(attacking_item, /obj/item/stock_parts/card_reader))
+		var/obj/item/stock_parts/card_reader/C = attacking_item
 		to_chat(user, span_notice("You start adding [C] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			var/obj/structure/displaycase/forsale/sale = new(src.loc)
 			if(electronics)
 				electronics.forceMove(sale)
@@ -265,13 +265,13 @@
 			qdel(src)
 			qdel(C)
 
-	else if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
+	else if(istype(attacking_item, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = attacking_item
 		if(G.get_amount() < 10)
 			to_chat(user, span_warning("You need ten glass sheets to do this!"))
 			return
 		to_chat(user, span_notice("You start adding [G] to [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			G.use(10)
 			var/obj/structure/displaycase/noalert/display = new(src.loc)
 			if(electronics)
@@ -333,8 +333,8 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/key/displaycase))
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
 	return ..()
@@ -387,7 +387,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -501,7 +501,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -584,17 +584,17 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
-	if(isidcard(I))
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isidcard(attacking_item))
 		//Card Registration
-		var/obj/item/card/id/potential_acc = I
+		var/obj/item/card/id/potential_acc = attacking_item
 		if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 		if(payments_acc == potential_acc.registered_account)
 			toggle_lock()
 			return
-	if(istype(I, /obj/item/modular_computer))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
 	return ..()
@@ -603,7 +603,7 @@
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
@@ -655,3 +655,16 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+
+///Takes the first unanchored item on the floor with us and puts it in the display case, so every custom case doesn't need a subtype.
+/obj/structure/displaycase/mapping/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	for(var/obj/item/item_over_us in loc.contents)
+		if(item_over_us.anchored)
+			continue
+		showpiece = item_over_us
+		item_over_us.forceMove(src)
+		update_appearance()
+		return

@@ -404,13 +404,11 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
 /obj/structure/sign/poster/contraband/missing_gloves/directional/north,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "gT" = (
@@ -464,9 +462,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ib" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ic" = (
@@ -519,10 +515,8 @@
 /area/ruin/space)
 "iT" = (
 /obj/machinery/light/dim/directional/north,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
 "iY" = (
@@ -1488,7 +1482,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "zd" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)

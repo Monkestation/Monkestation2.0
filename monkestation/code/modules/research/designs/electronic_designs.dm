@@ -3,7 +3,7 @@
 	desc = "Allows for the construction of a nanite remote."
 	id = "nanite_remote"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/nanite_remote
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -15,7 +15,7 @@
 	desc = "Allows for the construction of a nanite communication remote."
 	id = "nanite_comm_remote"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/nanite_remote/comm
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -27,7 +27,7 @@
 	desc = "Allows for the construction of a nanite scanner."
 	id = "nanite_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/nanite_scanner
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -39,7 +39,7 @@
 	desc = "Stores nanite programs."
 	id = "nanite_disk"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/nanite_program
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
@@ -52,7 +52,7 @@
 	id = "pocket_heater"
 	build_path = /obj/item/pocket_heater
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/gold = 500)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MISC,

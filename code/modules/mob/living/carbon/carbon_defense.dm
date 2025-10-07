@@ -85,45 +85,13 @@
 			return TRUE
 	return ..()
 
-
-/mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	var/obj/item/bodypart/affecting
-	if(user == src)
-		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
-	else
-		var/zone_hit_chance = 80
-		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
-			zone_hit_chance += 10
-		affecting = get_bodypart(get_random_valid_zone(user.zone_selected, zone_hit_chance))
-	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
-		affecting = bodyparts[1]
-	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.plaintext_zone, affecting)
-	if(I.force)
-		var/attack_direction = get_dir(user, src)
-		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction, attacking_item = I)
-		if(I.damtype == BRUTE && affecting.can_bleed())
-			if(prob(33))
-				I.add_mob_blood(src)
-				blood_particles(amount = rand(1, 1 + round(I.force/15, 1)), angle = (user == src ? rand(0, 360): get_angle(user, src)))
-				if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
-					user.add_mob_blood(src)
-				if(affecting.body_zone == BODY_ZONE_HEAD)
-					if(wear_mask)
-						wear_mask.add_mob_blood(src)
-						update_worn_mask()
-					if(wear_neck)
-						wear_neck.add_mob_blood(src)
-						update_worn_neck()
-					if(head)
-						head.add_mob_blood(src)
-						update_worn_head()
-
-		return TRUE //successful attack
-
-/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
+/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
 	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
 		return
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
+	if(isnull(hit_bodypart)) // ??
+		return ..()
+
 	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
 	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
 
@@ -250,7 +218,18 @@
 			try_contact_infect(D, note="Monkey Bite Infected")
 		return TRUE
 
-/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
+/**
+ * Really weird proc that attempts to dismebmer the passed zone if it is at max damage
+ * Unless the attacker is an NPC, in which case it disregards the zone and picks a random one
+ *
+ * Cannot dismember heads
+ *
+ * Returns a falsy value (null) on success, and a truthy value (the hit zone) on failure
+ */
+/mob/living/proc/dismembering_strike(mob/living/attacker, dam_zone)
+	return dam_zone
+
+/mob/living/carbon/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)
 		return dam_zone
 	var/obj/item/bodypart/affecting
@@ -258,18 +237,17 @@
 		affecting = get_bodypart(get_random_valid_zone(dam_zone))
 	else
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
-		for(var/B in things_to_ruin)
-			var/obj/item/bodypart/bodypart = B
+		for(var/obj/item/bodypart/bodypart as anything in things_to_ruin)
 			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 				continue
 			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
 				affecting = bodypart
+
 	if(affecting)
 		dam_zone = affecting.body_zone
-		if(affecting.get_damage() >= affecting.max_damage)
-			affecting.dismember()
+		if(affecting.get_damage() >= affecting.max_damage && affecting.dismember())
 			return null
-		return affecting.body_zone
+
 	return dam_zone
 
 /**
@@ -430,7 +408,32 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+			return
+		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))
+			to_chat(helper, span_warning("You are already extinguishing someone!"))
+			return
+		visible_message(
+			span_notice("[helper] begins to closely hug [src], beginning to smother the fire consuming [p_their()] body!"),
+			span_boldnotice("[helper] holds you closely in a tight hug, beginning to smother the fire consuming your body!"),
+		)
+		while(on_fire && fire_stacks > 0)
+			if(!do_after(helper, 1 SECONDS, src, IGNORE_HELD_ITEM, interaction_key = DOAFTER_SOURCE_EXTINGUISHING_HUG))
+				visible_message(span_notice("[src] wriggles out of [helper]'s close hug!"), span_notice("You wriggle out of [src]'s close hug."))
+				return
+			visible_message(
+				span_notice("[helper] closely hugs [src], smothering the flames consuming [p_their()] body!"),
+				span_boldnotice("[helper] closely hugs you, smothering the flames consuming your body!"),
+				span_italics("You hear a fire sizzle out."),
+			)
+			var/stacks_to_extinguish = 2
+			if(pulledby == helper)
+				if(helper.grab_state > GRAB_PASSIVE)
+					stacks_to_extinguish = 5
+				else
+					stacks_to_extinguish = 3
+			adjust_fire_stacks(-stacks_to_extinguish)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)

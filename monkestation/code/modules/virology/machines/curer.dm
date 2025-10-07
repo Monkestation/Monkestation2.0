@@ -6,28 +6,27 @@
 
 	var/obj/item/reagent_containers/cup/tube/container = null
 
-/obj/machinery/computer/curer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/cup/tube))
-		var/mob/living/carbon/C = user
-		if(!container)
-			if(C.forceMove(I, src))
-				container = I
-	if(istype(I,/obj/item/weapon/virusdish))
+/obj/machinery/computer/curer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/reagent_containers/cup/tube))
+		if(!container && tool.forceMove(src))
+			container = tool
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(isvirusdish(tool))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
-			return
-		var/obj/item/reagent_containers/cup/tube/product = new(src.loc)
-
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/reagent_containers/cup/tube/product = new(loc)
 		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=0)
-		data["viruses"] |= I:viruses
+		data["viruses"] |= tool:viruses
 		product.reagents.add_reagent(/datum/reagent/blood, 30,data)
-
 		virusing = 1
 		spawn(1200) virusing = 0
+		return ITEM_INTERACT_SUCCESS
 
-		return
 	src.attack_hand(user)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/curer/attack_hand(mob/user)
 	if(..())
@@ -62,7 +61,7 @@
 
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	use_power(500)
+	use_energy(500)
 
 	if(curing)
 		curing -= 1

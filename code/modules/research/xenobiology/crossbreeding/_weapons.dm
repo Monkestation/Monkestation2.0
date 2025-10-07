@@ -27,8 +27,8 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && isliving(O))
+/obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, params)
+	if(isliving(target))
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
@@ -51,7 +51,6 @@ Slimecrossing Weapons
 			hitsound = 'sound/items/geiger/ext1.ogg'
 			attack_verb_continuous = string_list(list("irradiates", "mutates", "maligns"))
 			attack_verb_simple = string_list(list("irradiate", "mutate", "malign"))
-	return ..()
 
 //Adamantine shield - Chilling Adamantine
 /obj/item/shield/adamantineshield
@@ -113,9 +112,13 @@ Slimecrossing Weapons
 		return FALSE
 	charge_timer = 0
 	var/mob/living/M = loc
-	if(istype(M) && M.blood_volume >= 20)
-		charges++
-		M.blood_volume -= 20
+	if(istype(M) && HAS_TRAIT(M, TRAIT_NOBLOOD) && M.stat == CONSCIOUS)
+		charges ++
+		M.apply_damage(5, BRUTE)
+	else
+		if(istype(M) && M.blood_volume >= 20)
+			charges++
+			M.blood_volume -= 20
 	if(charges == 1)
 		recharge_newshot()
 	return TRUE

@@ -9,3 +9,5 @@
 #define DOAFTER_SOURCE_CHARGE_GUNCRANK "doafter_charge_guncrank"
 #define DOAFTER_SOURCE_SEED_MESH "doafter_seed_mesh"
 /* #define DOAFTER_SOURCE_ATM "doafter_atm" */
+#define DOAFTER_SOURCE_EXTINGUISHING_HUG "doafter_extinguishing_hug"
+#define DOAFTER_SOURCE_LAVA_STAFF "doafter_lava_staff"

@@ -23,10 +23,10 @@
 		else
 			context[SCREENTIP_CONTEXT_ALT_LMB] = "Disconnect oxygen pump"
 
-/obj/machinery/bouldertech/flatpack/purification_chamber/AltClick(mob/user)
+/obj/machinery/bouldertech/flatpack/purification_chamber/click_alt(mob/living/user)
 	. = ..()
 	if(panel_open)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(oxygen_input)
 		disconnect(FALSE)
 
@@ -39,19 +39,20 @@
 
 	var/side = text2dir(tgui_input_list(user, "Choose a side to try and deploy the pump on", "[name]", options))
 	if(!side)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!(locate(/obj/machinery/atmospherics/components/unary/portables_connector) in get_step(src, side)))
 		balloon_alert_to_viewers("anchored connector port required")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	oxygen_input = new(get_step(src, side))
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = \
 	locate(/obj/machinery/atmospherics/components/unary/portables_connector) in oxygen_input.loc
 	if(!oxygen_input.connect(possible_port))
 		QDEL_NULL(oxygen_input)
-		return
+		return CLICK_ACTION_BLOCKING
 	RegisterSignal(oxygen_input, COMSIG_QDELETING, PROC_REF(disconnect))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/can_process_resource(obj/item/res, return_typecache = FALSE)
 	var/static/list/processable_resources

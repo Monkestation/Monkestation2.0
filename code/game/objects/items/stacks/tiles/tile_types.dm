@@ -26,8 +26,6 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
-	/// Allows us to replace the plating we are attacking if our baseturfs are the same.
-	var/replace_plating = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -78,32 +76,16 @@
 	if(!istype(target_plating))
 		return
 
-	if(!replace_plating)
-		if(!use(1))
-			return
-		target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
-		target_plating.setDir(turf_dir)
-		playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return target_plating // Most executions should end here.
-
-	// If we and the target tile share the same initial baseturf and they consent, replace em.
-	if(!target_plating.allow_replacement || initial(target_plating.baseturfs) != initial(placed_turf_path.baseturfs))
-		to_chat(user, span_notice("You cannot place this tile here directly!"))
-		return
-	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!istype(target_plating))
-		return
 	if(!use(1))
 		return
 
-	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
-/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		target.attackby(src, user, click_parameters)
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, click_parameters)
+	target.attackby(src, user, click_parameters)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -125,6 +107,13 @@
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
+
+/obj/item/stack/tile/fairygrass/dark
+	name = "dark fairygrass tile"
+	singular_name = "dark fairygrass floor tile"
+	desc = "A patch of odd, light consuming grass."
+	turf_type = /turf/open/floor/grass/fairy/dark
+	color = "#410096"
 
 //Wood
 /obj/item/stack/tile/wood
@@ -1308,7 +1297,6 @@
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
 
 /obj/item/stack/tile/glass/sixty
 	amount = 60
@@ -1322,7 +1310,6 @@
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60

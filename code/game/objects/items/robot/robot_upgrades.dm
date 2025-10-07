@@ -295,7 +295,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/powercost = 10
+	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -355,7 +355,7 @@
 			deactivate_sr()
 			return
 
-		if(cyborg.cell.charge < powercost * 2)
+		if(cyborg.cell.charge < energy_cost * 2)
 			to_chat(cyborg, span_alert("Self-repair module deactivated. Please recharge."))
 			deactivate_sr()
 			return
@@ -363,19 +363,19 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				powercost = 30
+				energy_cost = 0.03 * STANDARD_CELL_CHARGE
 			else
 				repair_amount = -1
-				powercost = 10
+				energy_cost = 0.01 * STANDARD_CELL_CHARGE
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
-			cyborg.cell.use(powercost)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		else
 			cyborg.cell.use(5)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
@@ -660,7 +660,7 @@
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(. && new_model)
-		R.model.transform_to(new_model)
+		R.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
@@ -782,3 +782,9 @@
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()
+
+/obj/item/borg/upgrade/transform/centcom
+	name = "borg model picker (CentCom)"
+	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
+	icon_state = "cyborg_upgrade3"
+	new_model = /obj/item/robot_model/centcom

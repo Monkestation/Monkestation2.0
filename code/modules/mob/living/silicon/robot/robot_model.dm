@@ -204,9 +204,8 @@
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -to_stock, "units", list(storage_datum.mat_type))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
@@ -231,6 +230,8 @@
 	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
+		if(!cyborg.client)
+			cyborg.pending_model = new_config_type
 		qdel(new_model)
 		return
 	cyborg.model = new_model
@@ -865,9 +866,10 @@
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 //MONKESTATION ADDITION - lets service borgs craft
-/obj/item/robot_model/service/rebuild_modules()
-	..()
+/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
+
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -877,8 +879,8 @@
 
 /obj/item/robot_model/service/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
-	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
 	return ..()
@@ -1001,6 +1003,93 @@
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
+//CENTCOM BORG!!!!
+/obj/item/robot_model/centcom
+	name = "CentCom"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/clipboard/cyborg,
+		/obj/item/pen,
+		/obj/item/pen/fountain,
+		/obj/item/stamp/centcom,
+		/obj/item/stamp/granted,
+		/obj/item/stamp/denied,
+		/obj/item/stamp/void,
+		/obj/item/knife/kitchen/silicon,
+		/obj/item/borg/apparatus/cooking,
+		/obj/item/reagent_containers/cup/beaker/large,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/soap/deluxe/centcom/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/hand_labeler/borg,
+		/obj/item/rsf/deluxe/cyborg,
+		/obj/item/instrument/piano_synth/robot,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
+		/obj/item/borg/apparatus/beaker/service,
+	)
+	radio_channels = list(RADIO_CHANNEL_CENTCOM)
+	cyborg_base_icon = "centcomborg"
+	model_select_icon = "service"
+	special_light_key = "centcomborg"
+	hat_offset = 3
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "centcomborg"),
+		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_centcom", SKIN_LIGHT_KEY = NONE, SKIN_TRAITS = list(TRAIT_CAT)),
+	)
+
+/obj/item/robot_model/centcom/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
+	if(enzyme)
+		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+	var/obj/item/soap/deluxe/centcom/cyborg/soap = locate(/obj/item/soap/deluxe/centcom/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
+
+/obj/item/robot_model/centcom/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
+	var/mob/living/silicon/robot/cyborg = loc
+
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+	qdel(cyborg.radio.keyslot)
+	cyborg.radio.keyslot = new /obj/item/encryptionkey/headset_cent()
+	cyborg.radio.recalculateChannels()
+
+	//remove all laws
+	if(!cyborg.shell)
+		cyborg.set_connected_ai(null)
+		cyborg.clear_inherent_laws()
+		cyborg.clear_zeroth_law()
+		cyborg.clear_supplied_laws()
+		cyborg.clear_ion_laws()
+		cyborg.clear_hacked_laws()
+	cyborg.emagged = TRUE
+	cyborg.centcom = TRUE
+
+/obj/item/robot_model/centcom/Destroy()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
+
+		qdel(cyborg.radio.keyslot)
+		cyborg.radio.recalculateChannels()
+
+		cyborg.emagged = FALSE
+		cyborg.centcom = FALSE
+	return ..()
 
 // ------------------------------------------ Storages
 /datum/robot_energy_storage

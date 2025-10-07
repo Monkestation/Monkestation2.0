@@ -96,7 +96,7 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -329,11 +329,13 @@
 		return
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
-	if(!isnull(vent_timer))
+	if(!isnull(vent_timer) || QDELETED(src))
 		return
 	vent_timer = "starting" // Early variable setting to prevent multiple calls with tgui-stacking open windows.
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
+	if(QDELETED(src))
+		return
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
 	sleep(2 SECONDS) // Let the drone actually show up.
@@ -341,6 +343,8 @@
 	add_shared_particles(/particles/smoke/ash)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
+		if(QDELETED(src))
+			return
 		for(var/turf/closed/mineral/rock in oview(i))
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)

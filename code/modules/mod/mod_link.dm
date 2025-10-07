@@ -109,29 +109,34 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	)
 
 /obj/item/mod/control/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
 	if(!get_charge())
@@ -177,7 +182,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
 	/// The installed power cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// The MODlink datum we operate.
 	var/datum/mod_link/mod_link
 	/// Initial frequency of the MODlink.
@@ -234,11 +239,11 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
 		return
-	cell.use(min(20 * seconds_per_tick, cell.charge))
+	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
 /obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
 	. = ..()
-	if(cell || !istype(attacked_by, /obj/item/stock_parts/cell))
+	if(cell || !istype(attacked_by, /obj/item/stock_parts/power_store/cell))
 		return
 	if(!user.transferItemToLoc(attacked_by, src))
 		return
@@ -262,29 +267,34 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/neck/link_scryer/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -354,7 +364,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 
 /obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/clothing/neck/link_scryer/loaded/charlie
 	starting_frequency = MODLINK_FREQ_CHARLIE

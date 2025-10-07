@@ -20,12 +20,12 @@
 	AddComponent(/datum/component/plant_tray_overlay, icon, "hydrotray_gaia", "hydrotray_water_", "hydrotray_pests", "hydrotray_harvest", "hydrotray_nutriment", "hydrotray_health", 0, 0)
 	. = ..()
 
-/obj/machinery/growing/tray/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/growing/tray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 
 	return ..()
@@ -36,7 +36,7 @@
 /obj/machinery/growing/tray/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/growing/soil
 	name = "soil"
