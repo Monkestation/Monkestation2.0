@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/melee/cleaving_saw,
 	/obj/item/climbing_hook,
 	/obj/item/flashlight,
-	/obj/item/grapple_gun,
+	///obj/item/grapple_gun, // MONKE EDIT: Don't have
 	/obj/item/tank/internals,
 	/obj/item/gun/energy/recharge/kinetic_accelerator,
 	/obj/item/kinetic_crusher,
@@ -284,6 +284,14 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	// Monke edit: Allow more things
+	/obj/item/tank/jetpack,
+	/obj/item/gun/ballistic/shotgun/autoshotgun,
+	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+	/obj/item/gun/ballistic/automatic/proto/pksmg,
+	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+	/obj/item/gun/ballistic/revolver/govmining,
 ))
 
 /// String for items placed into the left pocket.
