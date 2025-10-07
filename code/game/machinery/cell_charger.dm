@@ -6,7 +6,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
-	var/obj/item/stock_parts/power_store/cell/charging = null
+	var/obj/item/stock_parts/power_store/charging = null
 	var/charge_rate = 0.25 * STANDARD_CELL_RATE
 
 /obj/machinery/cell_charger/update_overlays()
@@ -42,7 +42,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell) && !panel_open)
+	if(istype(attacking_item, /obj/item/stock_parts/power_store) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))
 			return
@@ -140,7 +140,11 @@
 	if(!charging || charging.percent() >= 100 || !anchored || !is_operational)
 		return
 
-	var/main_draw = charge_rate * seconds_per_tick
+	var/battery = 1 // If we are charging a megacell, we up the charge rate
+	if(istype(charging, /obj/item/stock_parts/power_store/battery))
+		battery = 100
+
+	var/main_draw = charge_rate * battery * seconds_per_tick
 	if(!main_draw)
 		return
 

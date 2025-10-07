@@ -205,6 +205,10 @@
 		. += span_danger("This [name] seems to be faulty!")
 	else if(!isnull(charge_light_type))
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
+	// MONKESTATION EDIT ADDITION
+	else if(microfusion_readout)
+		. += "The charge meter reads [charge]/[maxcharge] MF."
+	// MONKESTATION EDIT END
 
 /obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER

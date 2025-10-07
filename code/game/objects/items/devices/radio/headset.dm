@@ -389,14 +389,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 //monkestation addition start:
 /obj/item/radio/headset/headset_cent/representative
-	name = "\improper Representative headset"
+	name = "\improper nanotrasen representative headset"
 	desc = "A headset used by the lower ranking members of Central Command."
 	keyslot = /obj/item/encryptionkey/headset_com
 	keyslot2 = null
 
 /obj/item/radio/headset/headset_cent/representative/Initialize(mapload)
 	. = ..()
-	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew(src)
+	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew/service(src)
 	src.recalculateChannels()
 //monkestation addition end
 

@@ -51,7 +51,7 @@
 	willpower_cost = 2
 	menu_tab = STORE_PASSIVE
 	shadow_flags = ALL_DARKSPAWN_CLASSES
-	infinite = TRUE
+	purchases_left = 10
 
 /datum/psi_web/psi_cap/on_gain()
 	darkspawn.psi_cap += 100
@@ -61,19 +61,19 @@
 
 /datum/psi_web/stamina_res
 	name = "Vigor Sigils"
-	desc = "Unlocking this sigil reduces stamina damage taken by 50%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces stamina damage taken by 40%, stacks diminishingly."
 	lore_description = "The Kalak sigils, representing eternity, are etched onto the legs."
 	icon_state = "vigor"
 	willpower_cost = 2
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_SCOUT | DARKSPAWN_FIGHTER
-	infinite = TRUE
+	purchases_left = 3
 
 /datum/psi_web/stamina_res/on_gain()
-	darkspawn.stam_mod *= 0.5
+	darkspawn.stam_mod *= 0.6
 
 /datum/psi_web/stamina_res/on_loss()
-	darkspawn.stam_mod /= 0.5
+	darkspawn.stam_mod /= 0.6
 
 //Increases healing in darkness.
 /datum/psi_web/dark_healing
@@ -84,7 +84,7 @@
 	willpower_cost = 2
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER | DARKSPAWN_SCOUT
-	infinite = TRUE
+	purchases_left = 3
 
 /datum/psi_web/dark_healing/on_gain()
 	darkspawn.dark_healing *= 1.25
@@ -160,51 +160,51 @@
 //Halves lightburn damage.
 /datum/psi_web/light_resistance
 	name = "Shadowskin Sigil"
-	desc = "Unlocking this sigil reduces light damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces light damage taken by 25%, stacks diminishingly."
 	lore_description = "The Xlynsh sigil, representing refraction, is etched onto the abdomen."
 	icon_state = "shadow_skin"
 	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
-	infinite = TRUE
+	purchases_left = 3
 
 /datum/psi_web/light_resistance/on_gain()
-	darkspawn.light_burning *= 0.6
+	darkspawn.light_burning *= 0.75
 
 /datum/psi_web/light_resistance/on_loss()
-	darkspawn.light_burning /= 0.6
+	darkspawn.light_burning /= 0.75
 
 /datum/psi_web/brute_res
 	name = "Callous Sigil"
-	desc = "Unlocking this sigil reduces brute damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces brute damage taken by 25%, stacks diminishingly."
 	lore_description = "The Hh'sha sigil, representing perserverance, is etched onto the abdomen."
 	icon_state = "callous"
 	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
-	infinite = TRUE
+	purchases_left = 3
 
 /datum/psi_web/brute_res/on_gain()
-	darkspawn.brute_mod *= 0.6
+	darkspawn.brute_mod *= 0.75
 
 /datum/psi_web/brute_res/on_loss()
-	darkspawn.brute_mod /= 0.6
+	darkspawn.brute_mod /= 0.75
 
 /datum/psi_web/burn_res
 	name = "Stifle Sigil"
-	desc = "Unlocking this sigil reduces burn damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces burn damage taken by 25%, stacks diminishingly."
 	lore_description = "The Khophg sigil, representing suffocation, is etched onto the abdomen."
 	icon_state = "stifle"
 	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_FIGHTER
-	infinite = TRUE
+	purchases_left = 3
 
 /datum/psi_web/burn_res/on_gain()
-	darkspawn.burn_mod *= 0.6
+	darkspawn.burn_mod *= 0.75
 
 /datum/psi_web/burn_res/on_loss()
-	darkspawn.burn_mod /= 0.6
+	darkspawn.burn_mod /= 0.75
 
 /datum/psi_web/undying
 	name = "Undying Sigils"
@@ -251,6 +251,7 @@
 	willpower_cost = 2
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_WARLOCK
+	purchases_left = 1
 
 /datum/psi_web/psi_regen_delay/on_gain()
 	darkspawn.psi_regen_delay -= 5 SECONDS
@@ -267,7 +268,7 @@
 	willpower_cost = 1
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_WARLOCK
-	infinite = TRUE
+	purchases_left = 10
 
 /datum/psi_web/psi_regen_speed/on_gain()
 	darkspawn.psi_per_second *= 2
@@ -284,6 +285,7 @@
 	willpower_cost = 3
 	menu_tab = STORE_PASSIVE
 	shadow_flags = DARKSPAWN_WARLOCK
+	purchases_left = 2
 
 /datum/psi_web/more_thralls/on_gain()
 	var/datum/team/darkspawn/team = darkspawn.get_team()

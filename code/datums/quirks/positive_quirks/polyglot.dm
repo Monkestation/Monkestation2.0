@@ -8,7 +8,12 @@
 	medical_record_text = "Patient speaks multiple languages."
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
-/datum/quirk/polyglot/add_unique(client/client_source)
+/datum/quirk/polyglot/add(client/client_source)
 	for(var/language in GLOB.roundstart_languages)
 		quirk_holder.grant_language(language, source = LANGUAGE_QUIRK)
 
+/datum/quirk/polyglot/remove()
+	if(QDELING(quirk_holder))
+		return
+	quirk_holder.remove_all_languages(source = LANGUAGE_QUIRK)
+	quirk_holder.remove_all_partial_languages(source = LANGUAGE_QUIRK)

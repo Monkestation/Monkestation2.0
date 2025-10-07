@@ -11,6 +11,7 @@
 	silent = TRUE
 	ui_name = "AntagInfoShade"
 	count_against_dynamic_roll_chance = FALSE
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
 	/// Name of this shade's master.
 	var/master_name = "nobody?"
 

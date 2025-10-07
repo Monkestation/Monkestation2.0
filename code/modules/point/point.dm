@@ -40,10 +40,7 @@
 	pointed_atom_appearance.pixel_x = 0
 	pointed_atom_appearance.pixel_y = 0
 	thought_bubble.overlays += pointed_atom_appearance
-
-	var/hover_outline_index = pointed_atom.get_filter_index(HOVER_OUTLINE_FILTER)
-	if (!isnull(hover_outline_index))
-		pointed_atom_appearance.filters.Cut(hover_outline_index, hover_outline_index + 1)
+	pointed_atom_appearance.remove_filter(HOVER_OUTLINE_FILTER)
 
 	thought_bubble.pixel_x = 16
 	thought_bubble.pixel_y = 32
