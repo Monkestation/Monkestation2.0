@@ -140,8 +140,9 @@ SUBSYSTEM_DEF(hotspots)
 			listed_hotspot.can_drift = FALSE
 
 		///we handle movement and recentering here
-		listed_hotspot.drift_direction = angle2dir(arctan(hotspot_center.x - stomped.x, hotspot_center.y - stomped.y))
+		listed_hotspot.drift_direction = angle2dir(get_angle(stomped, hotspot_center))
 		listed_hotspot.move_center(get_step(hotspot_center, listed_hotspot.drift_direction))
+		testing("hotspot at [AREACOORD(hotspot_center)] drifting: angle = [get_angle(stomped, hotspot_center)], dir = [dir2text(angle2dir(get_angle(stomped, hotspot_center)))]")
 
 ///this proc returns the heat value from the given turf
 /datum/controller/subsystem/hotspots/proc/return_heat(turf/source)

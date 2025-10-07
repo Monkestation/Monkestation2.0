@@ -84,6 +84,11 @@
 	implants = list(/obj/item/implant/mindshield)
 	pda_slot = ITEM_SLOT_LPOCKET
 
+/datum/outfit/job/ce/New()
+	. = ..()
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		backpack_contents += /obj/item/clothing/shoes/stomper
+
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"
 

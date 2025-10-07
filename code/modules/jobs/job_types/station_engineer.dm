@@ -64,6 +64,11 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
+/datum/outfit/job/engineer/New()
+	. = ..()
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		backpack_contents += /obj/item/clothing/shoes/stomper
+
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"
 
