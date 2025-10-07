@@ -1,4 +1,0 @@
-author: "LassiH"
-delete-after: True
-changes:
-  - bugfix: "shadow step sigils not giving speed boost"
