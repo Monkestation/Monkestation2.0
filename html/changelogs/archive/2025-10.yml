@@ -224,3 +224,40 @@
   - rscadd: Floran leaves are no longer colour inverted
   - qol: Applying a ID trim will give Maintenace access. Meaning you greyshirts can
       get jobs easier now!
+2025-10-07:
+  00-Steven:
+  - bugfix: Plexagon Access Management actually updates the shown template list &
+      modifiable access slots correctly on authentication, avoiding needing to refresh/reopen
+      the tgui manually.
+  Absolucy:
+  - qol: Made the energy net's hitbox less shit, so you don't accidentally kill the
+      person inside the net instead of destroying the net.
+  - balance: The Staff of Storms is now normal sized, instead of bulky.
+  Absolucy, SmArtKar:
+  - refactor: Refactored filters to utilize binary insertion instead of timSort. The
+      server should run somewhat faster now, hopefully.
+  EssentialTomato:
+  - bugfix: Meteor satellites and vital scanner pads no longer vanish on repacking.
+  JupiterJaeden:
+  - bugfix: You can wield guns with the keybind again.
+  LassiH:
+  - bugfix: darkspawn resistance sigil descriptions now show correct %
+  SirNightKnight, SyncIt21:
+  - bugfix: fixed mechs not acting if their power usage was 0
+  - bugfix: fixed mech drills not having an adjacent check when drilling.
+  Tractor-Maam:
+  - rscadd: Added real, genuine fake airlocks! available as stickers in cargo orders.
+      Don't run into it!
+  Xander3359:
+  - balance: Pyroxadone now heals 4x as much burn as it used to
+  flleeppyy:
+  - rscdel: Remove stickybans
+  ilikesaying:
+  - bugfix: Fixed PACMANs saying they produce half of what they actually produce on
+      examine
+  notghosti:
+  - rscadd: Plague rats can bump into doors to crawl through them.
+  - rscdel: Plague rats no longer get door passthrough
+  - balance: Plague rats now have 50 hp, from 30
+  oh no froggy did another one:
+  - balance: IPCs (and medibots etc. ig) can use nanites
