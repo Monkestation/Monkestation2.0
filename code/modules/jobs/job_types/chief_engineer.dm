@@ -87,7 +87,8 @@
 /datum/outfit/job/ce/New()
 	. = ..()
 	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
-		backpack_contents += /obj/item/clothing/shoes/stomper
+		shoes = /obj/item/clothing/shoes/stomper
+		backpack_contents += /obj/item/sea_map
 
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"
