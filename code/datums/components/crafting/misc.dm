@@ -52,3 +52,27 @@
 	reqs = list(/obj/item/stack/sheet/plastic = 10)
 	tool_behaviors = list(TOOL_WELDER)
 	category = CAT_MISC
+
+/datum/crafting_recipe/demon_heart_bubblegum
+	name = "Demon Heart"
+	result = /obj/item/organ/internal/heart/demon
+	time = 1 MINUTES
+	reqs = list(
+		/obj/item/mayhem = 1,
+		/obj/item/organ/internal/heart/cursed = 1,
+		/obj/item/stack/sheet/sinew = 25,
+	)
+	machinery = list(/obj/machinery/anomalous_crystal = CRAFTING_MACHINERY_USE)
+	category = CAT_MISC
+
+/datum/crafting_recipe/demon_heart_wendigo
+	name = "Demon Heart"
+	result = /obj/item/organ/internal/heart/demon
+	time = 1 MINUTES
+	reqs = list(
+		/obj/item/wendigo_blood = 1,
+		/obj/item/organ/internal/heart/cursed = 1,
+		/obj/item/stack/sheet/sinew = 25,
+	)
+	machinery = list(/obj/machinery/anomalous_crystal = CRAFTING_MACHINERY_USE)
+	category = CAT_MISC
