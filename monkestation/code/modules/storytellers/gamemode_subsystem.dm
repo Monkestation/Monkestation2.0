@@ -1030,8 +1030,8 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 		else
 			event_lookup = event_pools[statistics_track_page]
 	var/list/assoc_spawn_weight = list()
+	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 	for(var/datum/round_event_control/event as anything in event_lookup)
-		var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 		if(event.roundstart != roundstart_event_view)
 			continue
 		if(event.can_spawn_event(players_amt))
