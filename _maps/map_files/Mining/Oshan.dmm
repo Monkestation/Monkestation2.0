@@ -175,6 +175,15 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"nH" = (
+/obj/effect/turf_decal/trimline/red/filled/arrow_cw{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "on" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer4,
 /turf/open/floor/plating,
@@ -263,6 +272,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/vodka{
 	pixel_y = 19
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
 "tZ" = (
@@ -377,6 +387,7 @@
 "xJ" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/herringbone,
 /area/mine/production)
 "ya" = (
@@ -793,6 +804,11 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
+"Qb" = (
+/obj/structure/cable,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/maintenance/service)
 "QL" = (
 /obj/effect/turf_decal/trimline/red/filled/arrow_ccw,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19909,7 +19925,7 @@ hY
 Bh
 tL
 IF
-IF
+Qb
 Bh
 zo
 ML
@@ -19919,7 +19935,7 @@ uT
 qu
 qu
 uT
-pW
+nH
 QL
 uT
 qu
