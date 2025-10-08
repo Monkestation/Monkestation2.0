@@ -33761,13 +33761,33 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "kLN" = (
-/obj/structure/tank_holder/extinguisher/advanced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/item/rwd/industrial,
+/obj/structure/rack,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
+/obj/item/stack/cable_coil/industrial,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/main)
 "kLQ" = (
