@@ -104,7 +104,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#00ff00',
+              'background-color': '#008800',
             }}
           />
           You Are Here
@@ -167,17 +167,17 @@ const YouAreHere = (_props) => {
     return;
   }
 
-  const RADIUS = 2;
+  const RADIUS = 1;
 
   return (
     <Box>
       <div
         style={{
-          bottom: `${x * 2 + 60}px`,
-          left: `${y * 2}px`,
+          bottom: `${y * 2 + 60}px`,
+          left: `${x * 2}px`,
           width: `${RADIUS * 4 + 2}px`,
           height: `${RADIUS * 4 + 2}px`,
-          background: 'rgb(0, 255, 0)',
+          background: 'rgb(0, 136, 0)',
           'margin-left': `-${RADIUS * 2}px`,
           'margin-bottom': `-${RADIUS * 2}px`,
           position: 'absolute',
