@@ -60,6 +60,19 @@
 		return list()
 	return return_val
 
+/proc/get_astar_path_to(atom/movable/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE)
+	var/list/hand_around = list()
+	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
+	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
+	if(!SSpathfinder.astar_pathfind(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, access, exclude, simulated_only, check_z_levels, await))
+		return list()
+
+	UNTIL(length(hand_around))
+	var/list/return_val = hand_around[1]
+	if(!islist(return_val) || (QDELETED(requester) || QDELETED(end))) // It's trash, just hand back empty to make it easy
+		return list()
+	return return_val
+
 /proc/get_sssp(atom/movable/requester, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude)
 	var/list/hand_around = list()
 	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
@@ -110,8 +123,8 @@
  */
 /datum/pathfind/proc/start()
 	if(!start)
-		stack_trace("Invalid pathfinding start")
-		return FALSE
+		. = FALSE
+		CRASH("Invalid pathfinding start")
 	return TRUE
 
 /**
