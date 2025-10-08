@@ -21,12 +21,16 @@
 ///Ranks the Bloodsucker up, called by Sol.
 /datum/antagonist/bloodsucker/proc/sol_rank_up(atom/source)
 	SIGNAL_HANDLER
+
 	if(sol_levels_remaining > 0)
 		sol_levels_remaining--
 		INVOKE_ASYNC(src, PROC_REF(RankUp))
+	/*
 	else
 		to_chat(owner.current, span_announce("You have already got as powerful as you can through surviving Sol."))
+	*/
 
+/*
 ///Called when Sol is near starting.
 /datum/antagonist/bloodsucker/proc/sol_near_start(atom/source)
 	SIGNAL_HANDLER
@@ -39,10 +43,14 @@
 	check_end_torpor()
 	for(var/datum/action/cooldown/bloodsucker/gohome/power in powers)
 		RemovePower(power)
+*/
 
+/*
 /// Cycle through all vamp antags and check if they're inside a closet.
 /datum/antagonist/bloodsucker/proc/handle_sol()
 	SIGNAL_HANDLER
+	return
+
 	if(!owner?.current)
 		return
 
@@ -57,7 +65,8 @@
 	if(!is_in_torpor())
 		check_begin_torpor(TRUE)
 		owner.current.add_mood_event("vampsleep", /datum/mood_event/coffinsleep)
-
+	*/
+/*
 /datum/antagonist/bloodsucker/proc/give_warning(atom/source, danger_level, vampire_warning_message, vassal_warning_message)
 	SIGNAL_HANDLER
 	if(!owner || !owner.current)
@@ -75,7 +84,7 @@
 			owner.current.playsound_local(null, 'sound/ambience/ambimystery.ogg', vol = 75, vary = TRUE)
 		if(DANGER_LEVEL_SOL_ENDED)
 			owner.current.playsound_local(null, 'sound/misc/ghosty_wind.ogg', vol = 90, vary = TRUE)
-
+*/
 /**
  * # Torpor
  *
@@ -107,7 +116,7 @@
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
 	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if(!SSsol.sunlight_active && (total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache)) && !is_in_torpor())
+	if(/* !SSsol.sunlight_active && */ (total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache)) && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
@@ -119,8 +128,10 @@
 	var/total_damage = total_brute + total_burn
 	if(total_burn >= 199)
 		return FALSE
+	/*
 	if(SSsol.sunlight_active)
 		return FALSE
+	*/
 	// You are in a Coffin, so instead we'll check TOTAL damage, here.
 	if(istype(user.loc, /obj/structure/closet/crate/coffin))
 		if(total_damage <= 10)
@@ -162,7 +173,7 @@
 	if(!COOLDOWN_FINISHED(src, bloodsucker_torpor_max_time))
 		COOLDOWN_RESET(src, bloodsucker_torpor_max_time)
 	//monkestation end
-	current.remove_status_effect(/datum/status_effect/bloodsucker_sol)
+	//current.remove_status_effect(/datum/status_effect/bloodsucker_sol)
 	current.grab_ghost()
 	to_chat(current, span_warning("You have recovered from Torpor."))
 	current.remove_traits(torpor_traits, TORPOR_TRAIT)
@@ -172,7 +183,7 @@
 	current.pain_controller?.remove_all_pain()
 	current.update_stat()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)
-
+/*
 /datum/status_effect/bloodsucker_sol
 	id = "bloodsucker_sol"
 	tick_interval = 2 SECONDS
@@ -244,4 +255,4 @@
 	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
 	base_icon_state = "sol_alert"
 	icon_state = "sol_alert"
-
+*/

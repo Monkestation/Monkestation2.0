@@ -1,16 +1,16 @@
 ///How long Sol will last until it's night again.
-#define TIME_BLOODSUCKER_DAY 60
+//#define TIME_BLOODSUCKER_DAY 60
 ///Base time nighttime should be in for, until Sol rises.
 #define TIME_BLOODSUCKER_NIGHT 600
 ///Time left to send an alert to Bloodsuckers about an incoming Sol.
-#define TIME_BLOODSUCKER_DAY_WARN 90
+//#define TIME_BLOODSUCKER_DAY_WARN 90
 ///Time left to send an urgent alert to Bloodsuckers about an incoming Sol.
-#define TIME_BLOODSUCKER_DAY_FINAL_WARN 30
+//#define TIME_BLOODSUCKER_DAY_FINAL_WARN 30
 ///Time left to alert that Sol is rising.
-#define TIME_BLOODSUCKER_BURN_INTERVAL 5
+//#define TIME_BLOODSUCKER_BURN_INTERVAL 5
 
 ///How much time Sol can be 'off' by, keeping the time inconsistent.
-#define TIME_BLOODSUCKER_SOL_DELAY 90
+//#define TIME_BLOODSUCKER_SOL_DELAY 90
 
 SUBSYSTEM_DEF(sol)
 	name = "Sol"
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(sol)
 	flags = SS_NO_INIT | SS_BACKGROUND | SS_TICKER | SS_KEEP_TIMING
 
 	///If the Sun is currently out our not.
-	var/sunlight_active = FALSE
+	//var/sunlight_active = FALSE
 	///The time between the next cycle, randomized every night.
 	var/time_til_cycle = TIME_BLOODSUCKER_NIGHT
 	///If Bloodsucker levels for the night has been given out yet.
@@ -27,12 +27,23 @@ SUBSYSTEM_DEF(sol)
 
 /datum/controller/subsystem/sol/Recover()
 	can_fire = SSsol.can_fire
-	sunlight_active = SSsol.sunlight_active
+	//sunlight_active = SSsol.sunlight_active
 	time_til_cycle = SSsol.time_til_cycle
 	issued_XP = SSsol.issued_XP
 
 /datum/controller/subsystem/sol/fire(resumed = FALSE)
 	time_til_cycle--
+
+	if (time_til_cycle > 0 && time_til_cycle <= 15)
+		if (!issued_XP)
+			issued_XP = TRUE
+			SEND_SIGNAL(src, COMSIG_SOL_RANKUP_BLOODSUCKERS)
+
+	if (time_til_cycle < 1)
+		issued_XP = FALSE
+		time_til_cycle = TIME_BLOODSUCKER_NIGHT
+
+/*
 	if(sunlight_active)
 		if(time_til_cycle > 0)
 			SEND_SIGNAL(src, COMSIG_SOL_RISE_TICK)
@@ -52,7 +63,9 @@ SUBSYSTEM_DEF(sol)
 				vassal_warning_message = span_announce("The solar flare has ended, and the daylight danger has passed... for now."),
 			)
 		return
+*/
 
+/*
 	switch(time_til_cycle)
 		if(TIME_BLOODSUCKER_DAY_WARN)
 			SEND_SIGNAL(src, COMSIG_SOL_NEAR_START)
@@ -82,14 +95,21 @@ SUBSYSTEM_DEF(sol)
 				vampire_warning_message = span_userdanger("Solar flares bombard the station with deadly UV light! Stay in cover for the next [DisplayTimeText(TIME_BLOODSUCKER_DAY * 10)] or risk Final Death!"),
 				vassal_warning_message = span_userdanger("Solar flares bombard the station with UV light!"),
 			)
+*/
 
+/*
 /datum/controller/subsystem/sol/proc/warn_daylight(danger_level, vampire_warning_message, vassal_warning_message)
-	SEND_SIGNAL(src, COMSIG_SOL_WARNING_GIVEN, danger_level, vampire_warning_message, vassal_warning_message)
+	SEND_SIGNAL(src, COMSIG_SOL_WARNING_GIVEN, danger_level, vampire_warning_message, vassal_warning_message
+*/
 
+/*
 #undef TIME_BLOODSUCKER_SOL_DELAY
 
 #undef TIME_BLOODSUCKER_DAY
+*/
 #undef TIME_BLOODSUCKER_NIGHT
+/*
 #undef TIME_BLOODSUCKER_DAY_WARN
 #undef TIME_BLOODSUCKER_DAY_FINAL_WARN
 #undef TIME_BLOODSUCKER_BURN_INTERVAL
+*/

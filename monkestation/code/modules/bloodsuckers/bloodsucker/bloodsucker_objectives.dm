@@ -85,14 +85,14 @@
 /// Space_Station_13_areas.dm  <--- all the areas
 
 //////////////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/objective/bloodsucker/survive
 	name = "bloodsuckersurvive"
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
 
 /datum/objective/bloodsucker/survive/check_completion()
 	return ..() || (!QDELETED(owner.current) && !bloodsucker_datum?.final_death)
-
+*/
 // WIN CONDITIONS?
 // Handled by parent
 

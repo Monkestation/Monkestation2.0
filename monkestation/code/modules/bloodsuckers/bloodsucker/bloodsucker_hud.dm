@@ -23,6 +23,7 @@
 	icon_state = "rank"
 	screen_loc = UI_VAMPRANK_DISPLAY
 
+/*
 /atom/movable/screen/bloodsucker/sunlight_counter
 	name = "Solar Flare Timer"
 	icon_state = "sunlight"
@@ -60,6 +61,7 @@
 		valuecolor, \
 		(SSsol.time_til_cycle >= 60) ? "[round(SSsol.time_til_cycle / 60, 1)] m" : "[round(SSsol.time_til_cycle, 1)] s" \
 	)
+*/
 
 /// Update Blood Counter + Rank Counter
 /datum/antagonist/bloodsucker/proc/update_hud()
@@ -78,7 +80,7 @@
 			vamprank_display.icon_state = initial(vamprank_display.icon_state)
 		vamprank_display.maptext = FORMAT_BLOODSUCKER_HUD_TEXT(valuecolor, bloodsucker_level)
 
-	update_sunlight_hud()
+	//update_sunlight_hud()
 
 /// 1 tile down
 #undef UI_BLOOD_DISPLAY

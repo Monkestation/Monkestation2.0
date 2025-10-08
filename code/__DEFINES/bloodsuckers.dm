@@ -102,8 +102,10 @@
 #define BP_AM_SINGLEUSE (1<<1)
 /// This Power has a Static cooldown
 #define BP_AM_STATIC_COOLDOWN (1<<2)
+/// This Power has a custom cooldown scaling (do not use automatic cooldown reduction per level)
+#define BP_AM_CUSTOM_COOLDOWN (1<<3)
 /// This Power doesn't cost bloot to run while unconscious
-#define BP_AM_COSTLESS_UNCONSCIOUS (1<<3)
+#define BP_AM_COSTLESS_UNCONSCIOUS (1<<4)
 
 /**
  * Bloodsucker Signals

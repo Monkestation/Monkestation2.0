@@ -94,7 +94,7 @@
 	// Don't heal if I'm staked or on Masquerade (+ not in a Coffin). Masqueraded Bloodsuckers in a Coffin however, will heal.
 	if(owner.current.am_staked())
 		return FALSE
-	if(!in_torpor && (HAS_TRAIT(owner.current, TRAIT_MASQUERADE) || owner.current.has_status_effect(/datum/status_effect/bloodsucker_sol)))
+	if(!in_torpor && (HAS_TRAIT(owner.current, TRAIT_MASQUERADE) /*|| owner.current.has_status_effect(/datum/status_effect/bloodsucker_sol) */))
 		return FALSE
 	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
@@ -307,6 +307,8 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 	))
+	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
+	/*
 	UnregisterSignal(SSsol, list(
 		COMSIG_SOL_RANKUP_BLOODSUCKERS,
 		COMSIG_SOL_NEAR_START,
@@ -314,6 +316,7 @@
 		COMSIG_SOL_RISE_TICK,
 		COMSIG_SOL_WARNING_GIVEN,
 	))
+	*/
 	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)

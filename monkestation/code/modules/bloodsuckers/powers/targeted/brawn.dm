@@ -22,7 +22,7 @@
 /datum/action/cooldown/bloodsucker/targeted/brawn/upgrade_power()
 	. = ..()
 
-	if (level_current == 5)
+	if (level_current >= 5)
 		check_flags |= BP_ALLOW_WHILE_SILVER_CUFFED
 
 /datum/action/cooldown/bloodsucker/targeted/brawn/ActivatePower(trigger_flags)
@@ -159,7 +159,7 @@
 		playsound(get_turf(user), 'sound/effects/grillehit.ogg', 80, TRUE, -1)
 	// Target Type: Door
 	else if(istype(target_atom, /obj/machinery/door))
-		if(!check_level(3, "tear open doors"))
+		if(!check_level(4, "tear open doors"))
 			return
 		var/obj/machinery/door/target_airlock = target_atom
 		playsound(get_turf(user), 'sound/machines/airlock_alien_prying.ogg', 40, TRUE, -1)

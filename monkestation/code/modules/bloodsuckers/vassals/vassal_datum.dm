@@ -121,7 +121,7 @@
 	//Free them from their Master
 	if(!QDELETED(master))
 		if(special_type && master.special_vassals[special_type])
-			master.special_vassals[special_type] -= src
+			master.special_vassals.Remove(special_type)
 		master.vassals -= src
 		owner.enslaved_to = null
 	if(owner.current)

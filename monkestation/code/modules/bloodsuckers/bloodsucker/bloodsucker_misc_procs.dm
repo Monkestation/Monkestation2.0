@@ -64,6 +64,7 @@
 	if(!owner?.current || IS_FAVORITE_VASSAL(owner.current))
 		return
 	bloodsucker_level_unspent++
+	owner.current.balloon_alert(owner.current, "You have grown more ancient!")
 	if(!my_clan)
 		to_chat(owner.current, span_notice("You have gained a rank. Join a Clan to spend it."))
 		return
@@ -116,7 +117,7 @@
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)
 
-// Blood level gain is used to give Bloodsuckers more levels if they are being agressive and drinking from real, sentient people.
+// Blood level gain is used to give Bloodsuckers more levels if they are being aggressive and drinking from real, sentient people.
 // The maximum blood that counts towards this
 /datum/antagonist/bloodsucker/proc/blood_level_gain()
 	var/level_cost = get_level_cost()
@@ -136,7 +137,7 @@
 	blood_level_gain_amount += 1 // Increments the variable that makes future levels more expensive
 
 /datum/antagonist/bloodsucker/proc/get_level_cost()
-	var/level_cost = (0.3 + (0.05 * blood_level_gain_amount))
+	var/level_cost = (0.25 + (0.05 * blood_level_gain_amount))
 	level_cost = min(level_cost, BLOOD_LEVEL_GAIN_MAX)
 	level_cost = max_blood_volume * level_cost
 	return level_cost

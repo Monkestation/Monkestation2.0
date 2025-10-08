@@ -106,6 +106,7 @@
 		recloak_timer = null
 	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	animate(owner, alpha = 255, time = 2 SECONDS)
+	owner.RemoveElement(/datum/element/relay_attackers)
 	owner.RemoveElement(/datum/element/digitalcamo)
 	revealed = FALSE
 

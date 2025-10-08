@@ -33,7 +33,7 @@
 	/// If the Power is currently active, differs from action cooldown because of how powers are handled.
 	var/active = FALSE
 	///Can increase to yield new abilities - Each Power ranks up each Rank
-	var/level_current = 0
+	var/level_current = 1
 	///The cost to ACTIVATE this Power
 	var/bloodcost = 0
 	///The cost to MAINTAIN this Power - Only used for Constant Cost Powers
@@ -74,8 +74,10 @@
 		. = constant ? constant_bloodcost : bloodcost
 	else
 		. = cost_override
+	/*
 	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
 		. *= sol_multiplier
+	*/
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -191,9 +193,11 @@
 		if(!can_upkeep)
 			to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 			return FALSE
+	/*
 	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
 		to_chat(user, span_warning("You can't use [src] during Sol!"))
 		return FALSE
+	*/
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
@@ -201,7 +205,7 @@
 	// Calculate Cooldown (by power's level)
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
 		cooldown_time = initial(cooldown_time)
-	else
+	else if (!(power_flags & BP_AM_CUSTOM_COOLDOWN))
 		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
 	. = ..()
@@ -275,8 +279,10 @@
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(QDELETED(user))
 		return FALSE
+	/*
 	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
 		return FALSE
+	*/
 	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
@@ -310,10 +316,10 @@
 /datum/action/cooldown/bloodsucker/proc/get_power_explanation()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
-	if(level_current != 0)
-		. += "LEVEL: [level_current] [name]:"
-	else
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 		. += "(Inherent Power) [name]:"
+	else
+		. += "LEVEL: [level_current] [name]:"
 
 	. += get_power_explanation_extended()
 
@@ -323,10 +329,10 @@
 /datum/action/cooldown/bloodsucker/proc/get_power_desc()
 	SHOULD_CALL_PARENT(TRUE)
 	var/new_desc = ""
-	if(level_current != 0)
-		new_desc += "<br><b>LEVEL:</b> [level_current]"
-	else
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 		new_desc += "<br><b>(Inherent Power)</b>"
+	else
+		new_desc += "<br><b>LEVEL:</b> [level_current]"
 	if(bloodcost > 0)
 		new_desc += "<br><br><b>COST:</b> [bloodcost] Blood"
 	if(constant_bloodcost > 0)
