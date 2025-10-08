@@ -528,3 +528,16 @@
 /datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)
 //End
+
+/datum/emote/living/alert
+	key = "!"
+	name = "Alert"
+	cooldown = 5 SECONDS
+	audio_cooldown = 10 SECONDS //no free *chime
+	emote_type = EMOTE_VISIBLE
+	sound = 'sound/machines/chime.ogg'
+	empty_message_intentional = TRUE
+
+/datum/emote/living/alert/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	user.do_alert_animation()
