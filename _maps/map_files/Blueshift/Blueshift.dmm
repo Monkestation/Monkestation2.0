@@ -7167,7 +7167,7 @@
 /obj/machinery/asteroid_magnet{
 	center_x = 58;
 	center_y = 117;
-	area_size = 3
+	area_size = 7
 	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
