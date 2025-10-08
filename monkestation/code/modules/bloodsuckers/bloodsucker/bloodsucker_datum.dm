@@ -19,8 +19,6 @@
 	var/datum/bloodsucker_clan/my_clan
 
 	// TIMERS //
-	///Timer between alerts for Burn messages
-	COOLDOWN_DECLARE(bloodsucker_spam_sol_burn)
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
 	/// Cooldown for bloodsuckers going into Frenzy.
@@ -224,11 +222,6 @@
 
 	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
-
-	/*
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter(null, bloodsucker_hud)
-	bloodsucker_hud.infodisplay += sunlight_display
-	*/
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
 	UnregisterSignal(owner.current, COMSIG_MOB_HUD_CREATED)

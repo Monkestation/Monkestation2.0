@@ -1,7 +1,7 @@
 
 /**
- * Given to Bloodsuckers near Sol if they have a Coffin claimed.
- * Teleports them to their Coffin after a delay.
+ * Given to Bloodsuckers if they have a Coffin claimed.
+ * Teleports them to their Coffin on use.
  * Makes them drop everything if someone witnesses the act.
  */
 /datum/action/cooldown/bloodsucker/gohome

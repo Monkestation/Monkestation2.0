@@ -44,13 +44,9 @@
 #define BLOODSUCKER_SPAM_HEALING (15 SECONDS)
 ///Spam prevention for Sol Masquerade messages.
 #define BLOODSUCKER_SPAM_MASQUERADE (60 SECONDS)
-
-///Spam prevention for Sol messages.
-#define BLOODSUCKER_SPAM_SOL (30 SECONDS)
-//monkestation edit
 //Torpor softlock prevention - define it high as it is a failsafe
 #define BLOODSUCKER_TORPOR_MAX_TIME (120 SECONDS)
-//monkestation end
+
 /**
  * Clan defines
  */
@@ -135,11 +131,7 @@
  * Sol signals & Defines
  */
 #define COMSIG_SOL_RANKUP_BLOODSUCKERS "sol_rankup_bloodsuckers"
-#define COMSIG_SOL_RISE_TICK "sol_rise_tick"
-#define COMSIG_SOL_NEAR_START "sol_near_start"
-#define COMSIG_SOL_END "sol_end"
-///Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
-#define COMSIG_SOL_WARNING_GIVEN "sol_warning_given"
+
 ///Called on a Bloodsucker's Lifetick.
 #define COMSIG_BLOODSUCKER_ON_LIFETICK "bloodsucker_on_lifetick"
 

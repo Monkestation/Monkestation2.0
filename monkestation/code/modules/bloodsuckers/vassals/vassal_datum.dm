@@ -93,7 +93,6 @@
 /datum/antagonist/vassal/on_gain()
 	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	/// Enslave them to their Master
 	if(!master || !istype(master, master))
 		return
@@ -117,7 +116,6 @@
 
 /datum/antagonist/vassal/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
-	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
 	if(!QDELETED(master))
 		if(special_type && master.special_vassals[special_type])
