@@ -110,6 +110,9 @@
 	if(QDELETED(requester))
 		return FALSE
 
+	var/dist = src.dist
+	var/adjacent = src.adjacent
+	var/maxnodedepth = src.maxnodedepth
 	var/list/open = src.open
 	var/list/openc = src.openc
 	var/list/closed = src.closed
@@ -118,7 +121,8 @@
 	var/check_z_levels = src.check_z_levels
 	while (requester && length(open) && !path)
 		// Pop from end (highest priority in reverse sorted list)
-		cur = open[length(open)]
+		src.cur = open[length(open)]
+		var/list/cur = src.cur
 		open.len--
 
 		var/turf/cur_turf = cur[ATURF]
