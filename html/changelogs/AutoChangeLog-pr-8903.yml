@@ -1,0 +1,4 @@
+author: "LassiH"
+delete-after: True
+changes:
+  - bugfix: "darkspawn invigorate thrall and elucidate applying speed boost wrong"
