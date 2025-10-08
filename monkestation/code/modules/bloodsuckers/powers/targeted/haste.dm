@@ -4,10 +4,10 @@
  */
 
 /datum/action/cooldown/bloodsucker/targeted/haste
-	name = "Dash Attack"
+	name = "Sweeping Dash"
 	desc = "Dash somewhere with supernatural speed. Those nearby will be knocked to the ground."
 	button_icon_state = "power_speed"
-	power_explanation = "Dash Attack:\n\
+	power_explanation = "Sweeping Dash:\n\
 		Click anywhere within 2 tiles to immediately dash towards that location.\n\
 		The Power will not work if you are lying down, in no gravity, or are aggressively grabbed.\n\
 		Anyone in your way during your Dash will be knocked down.\n\

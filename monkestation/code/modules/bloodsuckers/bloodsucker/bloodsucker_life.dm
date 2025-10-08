@@ -188,7 +188,7 @@
 
 	for(var/obj/item/organ/organ as anything in bloodsuckeruser.organs)
 		organ.set_organ_damage(0)
-	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC) // i think vampires ARE magic, so, yeah
+	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE

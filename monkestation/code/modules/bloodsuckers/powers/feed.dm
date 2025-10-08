@@ -55,6 +55,10 @@
 		return FALSE
 	if(!user.Adjacent(target))
 		return FALSE
+	if(user.pulling != target)
+		if (!target.pulledby)
+			silent_feed = TRUE //If we let them go, don't rip our fangs out of their throat. Otherwise if someone else grabbed them, we let it rip out.
+		return FALSE
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
@@ -97,7 +101,7 @@
 		feed_timer = 2 SECONDS
 		started_frenzied = TRUE
 
-	owner.balloon_alert(owner, "feeding off [feed_target]...")
+	owner.balloon_alert_to_viewers("feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
 	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE, hidden = TRUE))
@@ -109,6 +113,7 @@
 			feed_target.Unconscious((5 + level_current) SECONDS)
 		if(!feed_target.density)
 			feed_target.Move(owner.loc)
+		owner.balloon_alert_to_viewers("sinks their fangs into [feed_target]'s neck!")
 		owner.visible_message(
 			span_warning("[owner] closes [owner.p_their()] mouth around [feed_target]'s neck!"),
 			span_warning("You sink your fangs into [feed_target]'s neck."))

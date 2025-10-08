@@ -199,6 +199,10 @@
 		spend_rank(source, target, cost_rank, blood_cost)
 
 /datum/bloodsucker_clan/proc/finalize_spend_rank(datum/antagonist/bloodsucker/source, cost_rank = TRUE, blood_cost)
+	for(var/datum/action/cooldown/bloodsucker/power as anything in source.powers)
+		if(power.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
+			power.upgrade_power()
+
 	bloodsuckerdatum.bloodsucker_regen_rate += 0.05
 	bloodsuckerdatum.max_blood_volume += 100
 
