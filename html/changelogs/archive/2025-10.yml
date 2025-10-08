@@ -294,10 +294,22 @@
   oh no froggy did another one:
   - balance: IPCs (and medibots etc. ig) can use nanites
 2025-10-08:
+  LassiH:
+  - bugfix: darkspawn invigorate thrall and elucidate applying speed boost wrong
   Singul0:
   - qol: Added screentips context for trash piles
   - bugfix: Fixes being unable to hide in trash piles
   - bugfix: Medbots and Cleanbots can now be configured properly
+  ThePooba:
+  - bugfix: fixes speed_boost status effect not working.
+  - rscadd: maintenance loot for fall/halloween
+  - rscadd: spooky gift from maint loots, trick or treat :)
+  - bugfix: trash piles can now be hid in again, also slow when walked over.
+  - bugfix: belts now have a blank null sprite for wearable so you dont get a purple
+      missing texture for having a pen on your belt
+  - rscadd: 'skeleton potion
+
+      add:cursed rune'
   necromanceranne:
   - balance: The various mining related suits now have consistent suit storage. Try
       putting a knife into your explorer suit's suit storage today!

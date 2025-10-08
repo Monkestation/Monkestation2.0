@@ -745,3 +745,4 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 	fire_brightness = 2
+	power_consumption_rate = 10
