@@ -1373,7 +1373,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/ert/bridge)
 "Tv" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,

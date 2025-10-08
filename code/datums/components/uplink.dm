@@ -234,8 +234,8 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
 			stock_list -= item
 		var/atom/actual_item = item.item
 		extra_purchasable += list(list(

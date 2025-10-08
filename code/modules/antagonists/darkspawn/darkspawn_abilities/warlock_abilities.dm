@@ -38,7 +38,7 @@
 			qdel(staff.GetComponent(/datum/component/light_eater))
 
 /datum/action/cooldown/spell/toggle/dark_staff/process()
-	active = owner.is_holding_item_of_type(/obj/item/gun/magic/darkspawn)
+	active = !!owner?.is_holding_item_of_type(/obj/item/gun/magic/darkspawn)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/dark_staff/can_cast_spell(feedback)
@@ -168,7 +168,7 @@
 	target.visible_message(span_warning("The [target] flickers and begins to grow dark."))
 
 	to_chat(caster, span_velvet("You dim the APC's screen and carefully begin siphoning its power into the void."))
-	if(!do_after(caster, 5 SECONDS, target))
+	if(!do_after(caster, 5 SECONDS, target, hidden = TRUE))
 		//Whoops!  The APC's light turns back on
 		to_chat(caster, span_velvet("Your concentration breaks and the APC suddenly repowers!"))
 		target.set_light(2)

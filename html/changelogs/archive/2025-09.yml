@@ -968,19 +968,145 @@
   Absolucy:
   - bugfix: Fix godslayer armor resurrection not working if you have crit immunity
       (i.e lux pens, inexorable gene, memento mori)
+  - bugfix: Fixed everyone having melee marth's grab range.
   SyncIt21:
   - bugfix: alt click runtime no more when using style meter
   - code_imp: improved alt & ctrl click code
   - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
       on GitHub
   - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  TheColorCyan:
+  - refactor: (MrMelbert) Refactored another large chuck of attack code, primarily
+      involving melee item attacks and non-human mob attacks. Report if you see anything
+      weird
+  - bugfix: '(MrMelbert) Blocked thrown batons are now properly... blocked /:cl:'
   Xander3359:
   - bugfix: Fix Beepsky having no restrictions on the controls lock
   - bugfix: Fix bots in general not having their controls lock restrictions
   - bugfix: fixed multi-cell charger charging too slow
+  - bugfix: Fix storage click-dragging
+  - bugfix: Fixed dumping out a storage into disposals
+  - rscadd: Adds a clipboard to the NT Rep locker
+  - bugfix: Fixed being unable to open bags in crit or resting
   notghosti:
   - balance: Airborne diseases won't spread if you are a corpse, have no need to breathe,
       or are wearing appropriate protection.
   - bugfix: Debug disease kits are now properly subtyped.
   - bugfix: Airbrone diseases no longer proc twice, and will properly respect TRAIT_VIRUS_RESISTANCE
       and satiety.
+2025-09-29:
+  Absolucy:
+  - rscadd: Burning items now emit smoke/pollution.
+  - qol: Bonfire smoke emission now compensates for lag.
+  - bugfix: (mc-oofert) brings back the AI detector HUD that was silently removed
+      by a PR 3 years ago, use inhand to toggle hud or use RMB to see static temporarily.
+  - bugfix: (GoldenAlpharex) Fixes a rare issue that could lead to players entering
+      an infinite disconnection loop from having a null view.
+  Absolucy, LemonInTheDark:
+  - bugfix: Moving diagonally will no longer lead to stutter stepping (it's tickbound)
+  EssentialTomato:
+  - balance: (Ghommie) As a continued effort to promote art and culture among the
+      crew, the "Marlowe Treeby's Art Galaxy" application has been made available
+      for download on all computer devices, with no access restrictions. Printing
+      can still only be done on a stationary console. The curator's PDA has it preinstalled
+      now.
+  JohnFulpWillard:
+  - image: Half the splash screen isn't covered in initialization text post-roundstart.
+  - spellcheck: Fixed incorrect spellings of Nanotrasen.
+  JupiterJaeden:
+  - bugfix: Fixes being unable to open storage items with right click when holding
+      a gun or cup
+  Xander3359:
+  - bugfix: Fixed not being able to click on, or use things while in crit
+  - bugfix: Fix not being able to unload cargo shelfs
+  notghosti:
+  - rscadd: Sylvan and Mushroom now have a 40% understanding of eachother
+  notghosti, A special thanks to hostileburner.:
+  - bugfix: Band-Aid fix for tesla destroying its own cables and multilayer hubs
+  the frogster of nutkicking pr fame:
+  - rscadd: 'New badass section item for syndie uplinks: combat boots that let you
+      groin kick people much more potently. 8 TC. They are otherwise just normal combat
+      boots.'
+2025-09-30:
+  Absolucy:
+  - bugfix: Raised the priority of the projectile processing subsystem.
+  - bugfix: Fire extinguishers no longer become LESS effective on oozelings the more
+      they melt.
+  Addust:
+  - bugfix: theseus no longer has two magnate suits
+  Bastian0930:
+  - bugfix: Ghosts no longer keep cqc (or other martial arts) when they leave a duel.
+      No free lessons!
+  - bugfix: Clock cult and blood cult players with respective bans can no longer spawn
+      their teams cogscarabs/artificers. If you do the crime, do the time!
+  - bugfix: '...actually, it looks like nobody who was dead could possess blood cult
+      artificers spawned from Narsie. This was fixed. Narsie has been given a stern
+      talking to about discriminatory hiring regarding ghosts.'
+  - bugfix: You can no longer teleport to your coffin as a bloodsucker when you would
+      go into a frenzy over it, after the bloodsucker attack last week that injured
+      5.
+  - bugfix: Bloodsuckers automatically exit torpor after 120 second as a failsafe.
+      No funny quip here - let us know if that's too much or too little!
+  GPeckman, SirNightKnight:
+  - bugfix: fixed drying racks not being able to dry things.
+  - bugfix: fixed cluwne brain traumas being randomly obtainable.
+  - bugfix: fixed altar buckling.
+  - bugfix: fixed item reskins not working.
+  JohnFulpWillard:
+  - admin: Outfit manager now works more than once if you close the UI.
+  - bugfix: Station alert consoles & Cyborg/AI alarm systems now shows all station
+      Z levels rather than the one it was created on.
+  - bugfix: Cyborg/AIs won't get alerted of alarms going off in Centcom/Thunderdome
+      areas.
+  - rscdel: Removed golden wheelchairs from being accessible outside of hardcore random
+      benefits.
+  - spellcheck: Removed references of a now-removed slime processor board and machine.
+  Killermankey:
+  - rscadd: Added handcannon
+  - rscadd: Added pulse revolver
+  Lawlolawl:
+  - bugfix: Fixed Craig and he is able to water plants again. Also you can give him
+      different watering cans (using the "give" hotkey, check settings).
+  TheColorCyan:
+  - bugfix: fixed tackles and bodythrows ignoring successful blocks
+  - bugfix: roundstart cell stun batons no longer only use 1% of its cell charge per
+      hit and use 10%, like intended
+  - bugfix: you can no longer bypass advanced shotgun ammo boxes reload delay by cancelling
+      the action
+  Tractor-Maam:
+  - bugfix: mushroom soup is now able to be made again
+  - bugfix: to fix mushroom soup, virus food now reacts at 600K.
+  Uristthedorf:
+  - bugfix: Facehuggers now properly detach after facehugging
+  - bugfix: Upgrading ripley no longer deletes manipulator.
+  - bugfix: Soldier deathmatch loadout now has correct ammo
+  Xander3359:
+  - bugfix: Fixed the Hyeseong modular laser rifle having 1/5 the amount of shots
+      it was supposed to have.
+  - bugfix: Fixed Voltaic combat cyberheart not giving shock immunity
+  - bugfix: Fixed being unable to purchase regular-priced uplink items if you bought
+      the discounted variant of it.
+  - bugfix: Fixed uplinks bricking if they try to generate more discounts than there
+      are available categories
+  flleeppyy:
+  - bugfix: '''Notify Restart'' verb now actually works. You just need to be verified
+      via the ''Link Discord Account'' verb'
+  - rscdel: Deleted the Discord subsystem and merged it into SSplexora
+  - qol: Discord Verification  ('Link Discord Account') window looks much nicer.
+  - config: added discord_url config string, and some other unrelevant Plexora options
+      that might be used in the future
+  memecraft22:
+  - rscadd: Added bongs
+  notghosti:
+  - balance: Teslas cannot destroy SMES or mechcomp teleporters
+  - map: Construction Access now properly accesses Helio station engineering.
+  - map: Heliostation AI Core will now be connected to power
+  - map: Heliostation AI sat Solars will now no longer depower if not set up.
+  - map: Heliostation AI sat Solars will now actually link to the Solars computer
+  - code_imp: Event override code
+  - code_imp: Fixed deprived darkspawn calling upon the wrong role type. This changes
+      nothing about how they work functionally however due to being set to 0.
+  timothymtorres, RandomDudeOnTheRim:
+  - bugfix: Glass Tiles Are Now Removable
+  wonderinghost:
+  - bugfix: Tiles dont delete plating after replacing tiles

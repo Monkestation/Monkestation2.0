@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /obj/machinery/door/Bumped(atom/movable/AM)
 	if(iscorticalborer(AM) && density)
 		var/mob/living/basic/cortical_borer/borer = AM
-		if(!do_after(borer, ((borer.upgrade_flags & BORER_ENERGIC) ? 2.5 SECONDS : 5 SECONDS), src))
+		if(!do_after(borer, ((borer.upgrade_flags & BORER_ENERGIC) ? 2.5 SECONDS : 5 SECONDS), src, hidden = TRUE))
 			return ..()
 		borer.forceMove(drop_location())
 		to_chat(borer, span_notice("You squeeze through [src]."))

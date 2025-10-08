@@ -309,7 +309,7 @@
 	.["verb"] = "Take"
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/smartfridge/drying_rack/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
@@ -317,6 +317,8 @@
 	var/mob/living_mob = ui.user
 
 	switch(action)
+		if("Dry")
+			toggle_drying(FALSE)
 		if("Release")
 			var/amount = text2num(params["amount"])
 			if(isnull(amount) || !isnum(amount))

@@ -55,22 +55,8 @@
 		cracked = FALSE
 		update_appearance()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(.)
-		set_init_directions()
-		var/obj/machinery/atmospherics/node = nodes[1]
-		if(node)
-			node.disconnect(src)
-			nodes[1] = null
-			if(parents[1])
-				nullify_pipenet(parents[1])
-		atmos_init()
-		node = nodes[1]
-		if(node)
-			node.atmos_init()
-			node.add_member(src)
-		SSair.add_to_rebuild_queue(src)
+/obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
@@ -201,6 +187,7 @@
 			ui.open()
 	else
 		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
+		ui?.close()
 
 /obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
 	var/list/gasid_list = list()

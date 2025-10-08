@@ -89,6 +89,7 @@
 		var/pill_choice = show_radial_menu(user, src, pill_styles)
 		if(pill_choice)
 			pill_style = pill_choice
+	..()
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_tank/factory/attack_hand(mob/living/user, list/modifiers)

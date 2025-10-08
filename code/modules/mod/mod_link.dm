@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
 		return
-	cell.use(min(20 * seconds_per_tick, cell.charge))
+	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
 /obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
 	. = ..()
