@@ -122,17 +122,17 @@
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		if(!anchored)
 			end_processing()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/assembler/proc/empty_machine()
@@ -282,7 +282,7 @@
 		new_craft.forceMove(drop_location())
 	crafting_inventory -= parts
 	QDEL_LIST(parts)
-	use_power(active_power_usage * amt)
+	use_energy(active_power_usage * amt)
 	RefreshParts()
 	crafting = FALSE
 

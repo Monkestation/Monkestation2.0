@@ -19,12 +19,12 @@
 		else
 			QDEL_NULL(rotation)
 
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/bouldertech/flatpack/deconstruct(disassembled)
 	if(disassembled && !isnull(machine))
-		var/obj/item/flatpacked_machine/flatmachine = new machine(src.loc)
+		new machine(src.loc)
 
 	return ..() /// Must be called last or machine won't spawn before src is qdel.
 

@@ -44,7 +44,7 @@
 /obj/machinery/bouldertech/refinery/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
 		update_appearance(UPDATE_ICON_STATE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/bouldertech/refinery/can_process_resource(obj/item/res, return_typecache = FALSE)

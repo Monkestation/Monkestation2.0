@@ -84,21 +84,21 @@
 	return ..()
 
 /obj/machinery/brm/wrench_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_SIGNAL_BLOCKING
+	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_ICON_STATE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/brm/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_SIGNAL_BLOCKING
+	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
 		update_appearance(UPDATE_ICON_STATE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/brm/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_SIGNAL_BLOCKING
+	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 ///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)

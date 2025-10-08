@@ -50,6 +50,7 @@
 /mob/living/basic/node_drone/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate/enemies)
+	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
@@ -164,7 +165,7 @@
 			deltimer(unbuckled_timer)
 			unbuckled_timer = null
 		else if(isnull(unbuckled_timer))
-			unbuckled_timer = addtimer(CALLBACK(src, PROC_REF(pre_escape)), 8 SECONDS, TIMER_STOPPABLE)
+			unbuckled_timer = addtimer(CALLBACK(src, PROC_REF(pre_escape)), 12 SECONDS, TIMER_STOPPABLE)
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.

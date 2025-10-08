@@ -49,7 +49,7 @@
 			dust.custom_materials[material] = quantity * refining_efficiency
 			chosen_boulder.custom_materials -= material
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		if(!length(dust.custom_materials))
 			qdel(dust)
 		else
@@ -88,7 +88,7 @@
 				else
 					dust.set_colors()
 					src.remove_resource(dust)
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			if(!length(exotic.custom_materials))
 				qdel(exotic)
 				return TRUE

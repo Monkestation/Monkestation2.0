@@ -113,19 +113,19 @@
 		else
 			end_processing()
 		update_appearance(UPDATE_ICON_STATE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
 	if(src.type == /obj/machinery/bouldertech)
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
 			update_appearance(UPDATE_ICON_STATE)
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
@@ -222,7 +222,7 @@
 	PROTECTED_PROC(TRUE)
 	return return_typecache ? list() : FALSE
 
-/obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(panel_open)
 		return ..()
 
@@ -324,7 +324,7 @@
 			points_held = points_held + new_points_held // put point total here into machine
 			qdel(disposable_boulder)
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats)
 		//break the boulder down if we have processed all its materials
@@ -377,7 +377,7 @@
 				points_held = points_held + new_points_held // put point total here into machine
 				qdel(disposable_boulder)
 
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			//puts back materials that couldn't be processed
 			exotic.set_custom_materials(rejected_mats)
 			exotic.set_colors() // Set new dust color
