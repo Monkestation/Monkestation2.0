@@ -18,7 +18,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	purchase_flags = NONE
 	bloodcost = 100
-	cooldown_time = 30 SECONDS
+	cooldown_time = 300 SECONDS
 
 	///The types of mobs that will drop post-teleportation.
 	var/static/list/spawning_mobs = list(
@@ -52,13 +52,15 @@
 /datum/action/cooldown/bloodsucker/gohome/ActivatePower(trigger_flags)
 	. = ..()
 
-	teleport_to_coffin(owner)
-	flicker_lights(4, 60)
+	var/turf/old_turf = get_turf(owner)
 
-/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume)
-	for(var/obj/machinery/light/nearby_lights in view(flicker_range, get_turf(owner)))
+	teleport_to_coffin(owner)
+	flicker_lights(4, 60, old_turf)
+
+/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume, turf/source_turf)
+	for(var/obj/machinery/light/nearby_lights in view(flicker_range, source_turf))
 		nearby_lights.flicker(5)
-	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
+	playsound(source_turf, 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
 /datum/action/cooldown/bloodsucker/gohome/proc/teleport_to_coffin(mob/living/carbon/user)
 	var/drop_item = FALSE
