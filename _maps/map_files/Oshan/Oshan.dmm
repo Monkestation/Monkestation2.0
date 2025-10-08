@@ -575,8 +575,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "ajy" = (
-/obj/structure/chair/sofa/bench/left,
 /obj/machinery/digital_clock/directional/north,
+/obj/machinery/power/stomper,
+/obj/machinery/power/stomper,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "ajz" = (
@@ -5101,7 +5103,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "bFD" = (
-/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/orange/filled/line{
@@ -5113,6 +5114,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "bFK" = (
@@ -9070,8 +9072,18 @@
 /turf/open/floor/plating,
 /area/station/service/chapel)
 "cUt" = (
-/obj/machinery/vending/mechcomp,
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
+/obj/item/dousing_rod,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "cUJ" = (
@@ -9484,6 +9496,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 8
 	},
+/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -10379,6 +10392,11 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/lobby)
+"dnz" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/iron/dark/textured_edge,
+/area/station/engineering/main)
 "dnC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10818,9 +10836,10 @@
 /turf/open/floor/carpet/green,
 /area/station/maintenance/starboard/upper)
 "dva" = (
-/obj/structure/chair/sofa/bench/right,
-/obj/effect/landmark/start/station_engineer,
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/power/stomper,
+/obj/machinery/power/stomper,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "dvb" = (
@@ -15815,7 +15834,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "eXH" = (
@@ -35534,7 +35553,18 @@
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
 "lkB" = (
-/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "lkJ" = (
@@ -44824,7 +44854,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/cryo)
 "ojr" = (
@@ -45396,7 +45426,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/command/nuke_storage)
 "orS" = (
-/obj/structure/closet/secure_closet/engineering_welding,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -45404,6 +45433,17 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/south,
+/obj/structure/rack,
+/obj/item/trench_ladder_kit,
+/obj/item/trench_ladder_kit,
+/obj/item/trench_ladder_kit,
+/obj/item/trench_ladder_kit,
+/obj/item/trench_ladder_kit,
+/obj/item/mining_charge,
+/obj/item/mining_charge,
+/obj/item/mining_charge,
+/obj/item/mining_charge,
+/obj/item/mining_charge,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/main)
 "orY" = (
@@ -57422,9 +57462,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lab)
 "sdR" = (
-/obj/structure/chair/sofa/bench/left,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/directional/north,
+/obj/machinery/power/stomper,
+/obj/machinery/power/stomper,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "sed" = (
@@ -59092,8 +59134,9 @@
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/captain/private)
 "sFI" = (
-/obj/structure/chair/sofa/bench/right,
-/obj/effect/landmark/start/station_engineer,
+/obj/machinery/power/stomper,
+/obj/machinery/power/stomper,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "sFK" = (
@@ -66835,7 +66878,6 @@
 	},
 /area/station/security/checkpoint/science/research)
 "uYV" = (
-/obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
@@ -66845,6 +66887,17 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/item/vent_package,
+/obj/structure/rack,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/main)
 "uYW" = (
@@ -120064,7 +120117,7 @@ jcB
 ufW
 nrF
 sFI
-izX
+dnz
 fXL
 fXL
 buQ
