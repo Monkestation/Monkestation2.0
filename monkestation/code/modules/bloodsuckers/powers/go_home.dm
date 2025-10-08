@@ -18,7 +18,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	purchase_flags = NONE
 	bloodcost = 100
-	cooldown_time = 300 SECONDS
+	cooldown_time = 5 MINUTES
 
 	///The types of mobs that will drop post-teleportation.
 	var/static/list/spawning_mobs = list(
