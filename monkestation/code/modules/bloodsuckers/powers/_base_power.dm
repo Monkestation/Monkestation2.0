@@ -38,8 +38,6 @@
 	var/bloodcost = 0
 	///The cost to MAINTAIN this Power - Only used for Constant Cost Powers
 	var/constant_bloodcost = 0
-	/// A multiplier for the bloodcost during sol.
-	var/sol_multiplier
 
 	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
 	var/stupid_looping_timer_id
@@ -57,27 +55,12 @@
 	bloodsuckerdatum_power = null
 	return ..()
 
-/datum/action/cooldown/bloodsucker/proc/on_sol_warning(datum/source, danger_level, vampire_warning_message, vassal_warning_message)
-	SIGNAL_HANDLER
-	if(danger_level != DANGER_LEVEL_SOL_ROSE || !active)
-		return
-	if(check_flags & BP_CANT_USE_DURING_SOL)
-		if(can_deactivate())
-			to_chat(owner, span_userdanger("Sol prevents you from using [name]!"), type = MESSAGE_TYPE_WARNING)
-			DeactivatePower()
-	else if(sol_multiplier)
-		to_chat(owner, span_userdanger("Sol burdens your body, [name] now costs more blood to upkeep!"), type = MESSAGE_TYPE_WARNING)
-
-/// Gets the current cost of the ability, accounting for `sol_multiplier` during Sol.
+/// Gets the current cost of the ability.
 /datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE, cost_override = null)
 	if(isnull(cost_override))
 		. = constant ? constant_bloodcost : bloodcost
 	else
 		. = cost_override
-	/*
-	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
-		. *= sol_multiplier
-	*/
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -193,11 +176,6 @@
 		if(!can_upkeep)
 			to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 			return FALSE
-	/*
-	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
-		to_chat(user, span_warning("You can't use [src] during Sol!"))
-		return FALSE
-	*/
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
@@ -279,10 +257,6 @@
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(QDELETED(user))
 		return FALSE
-	/*
-	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
-		return FALSE
-	*/
 	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
