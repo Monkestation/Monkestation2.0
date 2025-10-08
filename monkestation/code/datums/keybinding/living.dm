@@ -115,4 +115,4 @@
 	var/mob/mob = user.mob
 	var/obj/item/item = mob?.get_active_held_item()
 	if(item?.GetComponent(/datum/component/two_handed)) // does our active item have a two_handed component? if so let's ctrl click it!
-		item.click_ctrl(mob)
+		mob.base_click_ctrl(item)
