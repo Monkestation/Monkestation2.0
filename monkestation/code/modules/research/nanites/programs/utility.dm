@@ -239,7 +239,7 @@
 	for(var/mob/living/carbon/human/nearby_humans in oview(5, host_mob))
 		if(!prob(25))
 			continue
-		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES) || issilicon(L))
+		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES) || issilicon(nearby_humans))
 			continue
 		target_hosts += nearby_humans
 	if(!target_hosts.len)
@@ -262,7 +262,7 @@
 	var/list/mob/living/carbon/human/target_hosts = list()
 	for(var/mob/living/carbon/human/nearby_humans in oview(1, host_mob))
 		var/datum/component/nanites/nanites = nearby_humans.GetComponent(/datum/component/nanites)
-		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES) || nanites || !nearby_humans.Adjacent(host_mob) || issilicon(L))
+		if(!(nearby_humans.mob_biotypes & NANITE_COMPATIBLE_BIOTYPES) || nanites || !nearby_humans.Adjacent(host_mob) || issilicon(nearby_humans))
 			continue
 		target_hosts += nearby_humans
 	if(!target_hosts.len)
