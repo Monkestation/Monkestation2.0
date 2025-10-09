@@ -83,12 +83,6 @@
 		"brokecomp",
 	)
 
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Rummage", \
-		rmb_text = "Hide", \
-	)
-
 /obj/structure/trash_pile/attack_hand(mob/living/user)
 	if(user in contents)
 		eject_mob(user)
@@ -142,12 +136,10 @@
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
 
-/obj/structure/trash_pile/attack_hand_secondary(mob/mob_user, list/modifiers)
-	. = ..()
-	if(!iscarbon(mob_user))
+/obj/structure/trash_pile/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(user != dropped || !iscarbon(dropped))
 		return ..()
-	var/mob/living/carbon/user = mob_user
-	if(DOING_INTERACTION(user, DOAFTER_SOURCE_TRASH_PILE) || !(user.mobility_flags & MOBILITY_MOVE))
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_TRASH_PILE) || !(dropped.mobility_flags & MOBILITY_MOVE))
 		return
 
 	user.visible_message(
