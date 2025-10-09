@@ -10,8 +10,8 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	//Twenty percent chance of ashing things inside.
-	ash_chance = 20
+	//One quarter chance of ashing things inside.
+	ash_chance = 25
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
