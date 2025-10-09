@@ -514,7 +514,11 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/obj/machinery/computer/shuttle/mining{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "CN" = (
 /turf/open/genturf/orange,
@@ -780,6 +784,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
+/area/mine/production)
+"ND" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle/mining/common,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "NZ" = (
 /obj/effect/turf_decal/trimline/red/filled/arrow_ccw,
@@ -19670,7 +19683,7 @@ Bh
 HG
 Bh
 Bh
-KE
+ND
 ML
 tZ
 Hh
