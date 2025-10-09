@@ -3,6 +3,8 @@
 	"map_name": "Oshan",
 	"map_path": "map_files/Oshan",
 	"map_file": "Oshan.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
 	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_nova",
