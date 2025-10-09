@@ -8,8 +8,8 @@
 	anchored = TRUE
 	density = TRUE
 
-	idle_power_usage = 10
-	active_power_usage = 2000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/electroplater
 

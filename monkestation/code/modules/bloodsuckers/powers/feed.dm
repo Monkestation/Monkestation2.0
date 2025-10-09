@@ -76,7 +76,7 @@
 	blood_taken = 0
 	notified_overfeeding = initial(notified_overfeeding)
 	REMOVE_TRAITS_IN(user, FEED_TRAIT)
-	if(soundloop.loop_started)
+	if(soundloop?.loop_started)
 		soundloop.stop()
 	return ..()
 

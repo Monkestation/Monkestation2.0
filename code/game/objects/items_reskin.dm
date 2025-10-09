@@ -5,7 +5,7 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return NONE
 
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
+	if(!(item_flags  & INFINITE_RESKIN) && current_skin)
 		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(reskin_obj), user)
@@ -48,6 +48,38 @@
  * * user The mob choosing a reskin option
  */
 /obj/item/proc/reskin_obj(mob/user)
+	if(!LAZYLEN(unique_reskin))
+		return
+
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sort_list(items)
+
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
+	if(!pick)
+		return
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+
+	if (unique_reskin_changes_base_icon_state)
+		base_icon_state = icon_state
+
+	if (unique_reskin_changes_inhand)
+		inhand_icon_state = icon_state
+
+	update_appearance()
+
+	to_chat(user, "[src] is now skinned as '[pick].'")
+	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
+
+/obj/item/reskin_obj(mob/user)
+	if(!uses_advanced_reskins)
+		return ..()
+
 	if(!LAZYLEN(unique_reskin))
 		return
 
@@ -126,7 +158,7 @@
 /obj/item/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
+	if(!(item_flags  & INFINITE_RESKIN) && current_skin)
 		return FALSE
 	if(!istype(user))
 		return FALSE

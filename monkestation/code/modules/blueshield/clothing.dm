@@ -78,7 +78,7 @@
 	desc = "A tight-fitting kevlar-lined vest with a blue badge on the chest of it."
 	icon_state = "blueshieldarmor"
 	body_parts_covered = CHEST
-	item_flags = INFINITE_RESKIN
+	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Slim" = list(
 			RESKIN_ICON = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/armor.dmi',

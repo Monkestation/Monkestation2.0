@@ -37,4 +37,5 @@
 	if(inject_choice)
 		inject_amount = inject_choice
 	creator_ckey = user.client?.ckey
+	..()
 	return CLICK_ACTION_SUCCESS

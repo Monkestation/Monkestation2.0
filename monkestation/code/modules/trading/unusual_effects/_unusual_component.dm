@@ -79,7 +79,8 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	examine_list += span_notice(" Unboxed on: [round_id]")
 	examine_list += span_notice(" Unusual Type: [unusual_description]")
 	examine_list += span_notice(" Series Number: [unusual_number]")
-	examine_list += span_notice(span_italics("Right-click on it in order to [spewer.paused ? "enable" : "disable"] its effects."))
+	if(spewer)
+		examine_list += span_notice(span_italics("Right-click on it in order to [spewer.paused ? "enable" : "disable"] its effects."))
 
 /datum/component/unusual_handler/proc/on_attack_self_secondary(datum/source, mob/user)
 	SIGNAL_HANDLER

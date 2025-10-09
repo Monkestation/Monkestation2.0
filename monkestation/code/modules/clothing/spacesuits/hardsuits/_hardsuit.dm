@@ -1,6 +1,6 @@
 /// How much damage you take from an emp when wearing a hardsuit
 #define HARDSUIT_EMP_BURN 2 // a very orange number
-#define THERMAL_REGULATOR_COST 6 // this runs out fast if 18
+#define THERMAL_REGULATOR_COST (0.006 * STANDARD_CELL_CHARGE) // this runs out fast if 18 like spacesuits
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"

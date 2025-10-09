@@ -204,6 +204,4 @@
 	client?.redeem_code()
 
 /datum/escape_menu/proc/home_open_game_settings()
-	client?.prefs.update_static_data(client?.mob)
-	client?.prefs.ui_interact(client?.mob)
-	qdel(src)
+	client?.prefs?.open_window(user = client?.mob)

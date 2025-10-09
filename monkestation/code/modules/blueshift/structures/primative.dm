@@ -737,7 +737,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 #define RESKIN_LINEN "Linen"
 
 /obj/item/storage/bag/plants
-	item_flags = INFINITE_RESKIN
+	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Original" = list(
 			RESKIN_ICON = 'icons/obj/hydroponics/equipment.dmi',

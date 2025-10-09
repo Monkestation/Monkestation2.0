@@ -132,8 +132,8 @@
 	icon_state = "feed_producer"
 
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	max_integrity = 300
 
 	circuit = /obj/item/circuitboard/machine/feed_machine
@@ -290,8 +290,8 @@
 	name = "Incubator"
 	desc = "For most eggs this can force them to hatch, that is unless a fresh mutation."
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	max_integrity = 300
 	circuit = /obj/item/circuitboard/machine/egg_incubator
