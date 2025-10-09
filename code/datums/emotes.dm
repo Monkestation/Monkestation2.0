@@ -68,6 +68,8 @@
 	var/extra_range = 0
 	/// The volume to play an audible emote at.
 	var/volume = 50
+	/// Lets emote proceed without early returning in the event the message is empty.
+	var/empty_message_intentional
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -107,12 +109,12 @@
 
 	msg = replace_pronoun(user, msg)
 
-	if(!msg)
+	if(!msg && !empty_message_intentional)
 		return
 
 	if(user.client)
-		user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg]"
+		user.log_message(msg ? msg : "performed a messageless emote. ([type])", LOG_EMOTE)
+	var/dchatmsg = "<b>[user]</b> [msg ? msg : "performed an emote."]"
 
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
@@ -135,14 +137,15 @@
 				continue
 			if((ghost.client?.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
-		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
-		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
-	if(emote_type & EMOTE_IMPORTANT)
-		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
-				to_chat(viewer, msg)
+	if(msg)
+		if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
+			user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
+		else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
+			user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
+		if(emote_type & EMOTE_IMPORTANT)
+			for(var/mob/living/viewer in viewers())
+				if(viewer.is_blind() && !viewer.can_hear())
+					to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
 	// SSblackbox.record_feedback("tally", "emote_used", 1, name)

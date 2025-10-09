@@ -64,3 +64,323 @@
       able to transfer nanites to those without an existing nanite colony! Technically.
       Nanotrasen takes no responsibility for any discomfort, disgust, or unimaginable
       agony that may result from the use of this feature on a living creature.'
+2025-10-03:
+  Absolucy:
+  - bugfix: You can now drag and drop plants into a composter on the other side of
+      the room again.
+  - qol: Construction bags can now hold meteor sat capsules.
+  EatsTheGrapes:
+  - bugfix: Overclocked volume pumps no longer leak through walls or sealed structures.
+  - refactor: Cleaned up volume pump code by splitting into helper procs and replacing
+      magic numbers with defines.
+  SirNightKnight:
+  - bugfix: fixes cargorilla interactions with crates not working properly.
+  - bugfix: fixed cluwne brain traumas not being removed when the curse is lifted.
+  - balance: honkerblasts don't tie your laces anymore.
+  SyncIt21, Xander3359:
+  - bugfix: Fix being able to charge guns with an inducer
+  - bugfix: Fix being able to charge space suits with an inducer
+  TheColorCyan:
+  - bugfix: fixed clock cult not gaining power from integration cogs and softlocking
+      the cult
+2025-10-04:
+  Absolucy:
+  - rscadd: You can now yell "SHIT YOURSELF, NOW" with voice of god to make people
+      superfart.
+  - balance: Made various adjustments to how the storyteller determines the antag
+      amount.
+  - bugfix: Fixed the xenomorph "escape captivity" objective always failing.
+  - balance: Wormhole jaunters now protect from chasms while in your pocket.
+  Infernal-0:
+  - bugfix: corrects the blueshield and marine armour worn sprite
+  JohnFulpWillard:
+  - bugfix: Power in several areas have been fixed, and the station should start to
+      lose power by 9 minutes in, and start to depower by ~15 minutes.
+  JupiterJaeden:
+  - balance: The frequency of chest disembowelment wounds has been substantially reduced.
+  JupiterJaeden, Rhials, MrMelbert:
+  - rscadd: Adds the bluespace grounder implant, an implant that prevents the implantee
+      from teleporting or jaunting by most means. When teleported, the implantee will
+      be hardstunned for a few seconds instead. Purchasable from cargo, and all armories
+      start with a box of them.
+  - rscadd: Like tracker implants, chemical implants & bluespace grounder implants
+      may now be harmlessly self-destructed at the Prisoner Management Console.
+  - balance: The exile implant now prevents implantees from operating lavaland shuttle
+      controls.
+  - code_imp: The HUD slots for chem/tracking implants have been converted to display
+      any implant with the IMPLANT_TYPE_SECURITY flag and an associated sprite.
+  - image: Exile implants and bluespace grounders now have their own new sechud icons,
+      green and dark blue respectively.
+  - spellcheck: Modifies various implant pad readouts, removing false information
+      and rewriting some sections.
+  - map: Standardizes heliostation armory, adding pacos and removing a couple extra
+      guns.
+  - balance: Changes combat knives crates to general secoff level access instead of
+      armory level access.
+  notghosti:
+  - balance: Mommi Shrink will only make you a 1/4th of your original size.
+2025-10-05:
+  Absolucy:
+  - balance: Oozelings will now begin to lose blood if they're starving, as intended.
+  - bugfix: You can no longer use spray paint or soap to undo window polarization.
+  SirNightKnight:
+  - bugfix: fixed item reskinning not working again.
+  - bugfix: fixed impressa coffeemakers not making coffee.
+  - bugfix: standardized coffee cups in coffeemakers and pass flags. (you can put
+      regular coffeemakers on tables)
+  - bugfix: crayons are edible again.
+  - bugfix: fixed interacting while incapacitated.
+  - balance: you can now officially open storage and use items in soft crit
+  - qol: washing machines don't delete dyes anymore.
+  TheColorCyan:
+  - bugfix: fixed xenos being unable to properly interact with airlocks
+  - bugfix: fixed stacking machine on labor camp not accepting sheets
+  ThePooba:
+  - bugfix: darkspawn can no longer reach like 90% damage reduction
+  - bugfix: removed double defined crew species paychecks
+  - bugfix: coffins now have proper sprites
+  - bugfix: darkspawn ui now updates properly and doesnt freak the fuck out if you
+      run out of willpower
+  - bugfix: darkspawn crawling shadow now causes you to take damage equal to a percent
+      of its missing health on destruction as brute.
+  Tractor-Maam:
+  - bugfix: remote injectors, patchers, and factories now print their components again.
+  notghosti:
+  - bugfix: Blueshield modified hellfire will once again only have 13 shots. How 'lucky'
+2025-10-06:
+  Absolucy:
+  - rscdel: You can no longer harvest plants from unanchored hydroponics trays.
+  - rscadd: Adds "chasm filler capsules", which can be bought by miners, and thrown
+      into a chasm to fill it with thick dirt. The dirt has some slowdown when walked
+      over, tho.
+  - qol: Moved the Magnetization Injector from the "Survival" section of the mining
+      points vendor to the "Mining" section.
+  - rscadd: (Jacquerel) Budget cuts can sometimes effect the station's supply of Emergency
+      Bluespace Shelters.
+  - rscadd: (Melbert) Shaft Miner's Bluespace Survival Capsules will now throw people
+      away from it when it deploys. Be sure to heed the warning to "Stand back".
+  - bugfix: (Shadow-Quill) RCD Construction effects will no longer fall into chasms.
+  - bugfix: (SmArtKar) Fixed chasm jaunters not working while you're buckled to a
+      mob or an object
+  - code_imp: (SmArtKar) Updated chasm jaunters to use signals instead of being hardcoded
+      in chasm code.
+  - map: All maps (except Theseus because I couldn't figure out how to fit them in)
+      have at least 5 main SMESes in engineering now.
+  - map: All maps have at least one oxygen canister in engineering now.
+  - map: Added a jetpack crate to engineering secure storage on Box Station.
+  - map: The main SMES rooms should now all be mapped in as part of the "Engineering
+      SMES" area now.
+  - bugfix: Fixed some random bugs I guess?
+  - bugfix: Fixed oozelings losing learnt languages (i.e from book of babel) when
+      revived.
+  - bugfix: Fixed oozelings duplicating cybernetics from quirks (i.e breathing tubes)
+      when revived.
+  - bugfix: Fixed not being able to whack people/things with the lava staff while
+      in combat mode.
+  - bugfix: Fixed flat armor penetration (armor ignorance) not working.
+  - bugfix: (Melbert) Fix being unable to resist out of ice cubes.
+  - qol: The DNA Vault will no longer roll "useless" mutations, i.e oozelings won't
+      roll fire immunity or plasmocile,
+  - qol: Artifacts can no longer spawn enough monkeys to grind the server to a halt.
+      Don't worry, they can still spawn enough monkeys to be a health hazard to any
+      nearby crew!
+  - bugfix: You can now actually shoot bingle pits.
+  - qol: Removed most restrictions on areas that can be used as a Bloodsucker lair.
+      Outdoor areas and shuttles are notable exceptions.
+  - balance: Oozeling bloodsuckers now lose blood from water, just like normal oozelings.
+  - bugfix: Oozelings are now properly melted by ocean water.
+  Killermankey:
+  - balance: Heroic Laser Musket fires 1x45dmg instead of 3x25dmg
+  - rscdel: Umbrella SPF 10,000
+  - balance: increased Sols solar output
+  - balance: being cooked alive by sol is now a massive moodlet debuff, instead of
+      only a minor one.
+  Sorenon:
+  - qol: unified all of the preferences windows into one
+  - qol: added a warning to the keybindings menu when multiple actions are bound to
+      the same key
+  - qol: added a reset button to the volume mixer
+  - bugfix: allowed the volume mixer to mute channels instead of just making them
+      really quiet
+  TheColorCyan:
+  - refactor: (carlarctg) refactored mirrors
+  - bugfix: (carlarctg) Fixed Pride Mirror teleporting you into the space on the first
+      use. Now it waits until you officially cancel and say 'I am Done' so you can
+      customize yourself to your liking.
+  - bugfix: (SmArtKar) Fixed pride mirrors not dumping you into space after use
+  Xander3359:
+  - bugfix: Fixed a case of abandoned crate having nothing in it
+  leaKsi:
+  - bugfix: (mogeoko) Atmospherics components will now move air into connected pipeline
+      on deconstruction if possible. Otherwise, air will be released to the outside
+      from open nodes.
+  - bugfix: (mogeoko) Unsafe pressure release on atmos components will now work the
+      same way it does in the normal pipes if there is an empty node with air.
+  - bugfix: (mogeoko) Atmospherics machinery will now share air from nodes after being
+      rotated and reconnected to pipenet.
+  - bugfix: (JohnFulpWillard) Cryo cells no longer appear on when off.
+  notghosti:
+  - rscadd: Floran podhair is now a unique selection option from skin tone
+  - rscadd: Floran leaves are no longer colour inverted
+  - qol: Applying a ID trim will give Maintenace access. Meaning you greyshirts can
+      get jobs easier now!
+2025-10-07:
+  00-Steven:
+  - bugfix: Plexagon Access Management actually updates the shown template list &
+      modifiable access slots correctly on authentication, avoiding needing to refresh/reopen
+      the tgui manually.
+  Absolucy:
+  - qol: Made the energy net's hitbox less shit, so you don't accidentally kill the
+      person inside the net instead of destroying the net.
+  - balance: The Staff of Storms is now normal sized, instead of bulky.
+  - rscadd: Hotspot Stomping Kits and Hotspot Vent Kits can be ordered from cargo
+      once more.
+  - balance: Bloodsuckers can hide in lockers/crates during Sol, heavily reducing
+      the amount of burn damage they take. I still think Sol is stupid, someone please
+      remove it.
+  Absolucy, SmArtKar:
+  - refactor: Refactored filters to utilize binary insertion instead of timSort. The
+      server should run somewhat faster now, hopefully.
+  - rscadd: A lot of lavaland mobs now have minor glowy bits, making them easier to
+      spot in the dark. Same applies to their attacks!
+  - bugfix: Legion brood (skulls) no longer float inside of rocks, or get damaged
+      by atmos.
+  - image: Legion broods now have an animation and multiple random variants.
+  - image: Brimdemons now play an animation while firing their beam.
+  EssentialTomato:
+  - bugfix: Meteor satellites and vital scanner pads no longer vanish on repacking.
+  - rscadd: Roasting stick can now roast most foods. plushies and ...guns?
+  - rscadd: You can now roast stuff on a propulsion engine.
+  - balance: Roasting stuff adds a bit of nutriment and char.
+  - qol: Roasting grillable foods long enough will actually grill them.
+  - bugfix: Slightly fixed taking stuff off a roasting stick.
+  - bugfix: You can roast stuff on a tesla without hugging it.
+  - rscadd: Added a mothic s'more.
+  JupiterJaeden:
+  - bugfix: You can wield guns with the keybind again.
+  LassiH:
+  - bugfix: darkspawn resistance sigil descriptions now show correct %
+  - bugfix: shadow caster projectiles now eat lights
+  - bugfix: shadow caster projectiles now embed
+  - bugfix: shadow step sigils not giving speed boost
+  SirNightKnight, SyncIt21:
+  - bugfix: fixed mechs not acting if their power usage was 0
+  - bugfix: fixed mech drills not having an adjacent check when drilling.
+  Tractor-Maam:
+  - rscadd: Added real, genuine fake airlocks! available as stickers in cargo orders.
+      Don't run into it!
+  - rscadd: Added a new emote, !, which manually triggers the MGS alert that appears
+      when someone exits a cardboard box.
+  - code_imp: Emotes can now support having no message.
+  Vect0r2:
+  - rscadd: Adds "Inspector" to alt job titles for detective
+  Xander3359:
+  - balance: Pyroxadone now heals 4x as much burn as it used to
+  flleeppyy:
+  - rscdel: Remove stickybans
+  ilikesaying:
+  - bugfix: Fixed PACMANs saying they produce half of what they actually produce on
+      examine
+  notghosti:
+  - rscadd: Plague rats can bump into doors to crawl through them.
+  - rscdel: Plague rats no longer get door passthrough
+  - balance: Plague rats now have 50 hp, from 30
+  - rscadd: Drones can emote with silicon emotes. Beep agressivley at those who annoy
+      you.
+  - rscadd: Drone death messages now tells other drones where they died, not just
+      that they died.
+  - qol: Drone Radios now has a sound effect, chat colour, and is organized into radio
+      chat.
+  oh no froggy did another one:
+  - balance: IPCs (and medibots etc. ig) can use nanites
+2025-10-08:
+  LassiH:
+  - bugfix: darkspawn invigorate thrall and elucidate applying speed boost wrong
+  Singul0:
+  - qol: Added screentips context for trash piles
+  - bugfix: Fixes being unable to hide in trash piles
+  - bugfix: Medbots and Cleanbots can now be configured properly
+  ThePooba:
+  - bugfix: fixes speed_boost status effect not working.
+  - rscadd: maintenance loot for fall/halloween
+  - rscadd: spooky gift from maint loots, trick or treat :)
+  - bugfix: trash piles can now be hid in again, also slow when walked over.
+  - bugfix: belts now have a blank null sprite for wearable so you dont get a purple
+      missing texture for having a pen on your belt
+  - rscadd: 'skeleton potion
+
+      add:cursed rune'
+  necromanceranne:
+  - balance: The various mining related suits now have consistent suit storage. Try
+      putting a knife into your explorer suit's suit storage today!
+  - balance: Bone armor work similarly to explorer suits, with similar armor values
+      and options to upgrade their parts. However, they use bone talismans instead
+      of goliath hides to upgrade. Magic? Just believing really strongly that the
+      drake is hitting you slightly less hard because of the talismans? You be the
+      judge.
+  - balance: Goliath cloaks come fully upgraded. However...
+  - balance: The recipes for bone armor and goliath cloaks are slightly different.
+      Particularly goliath cloaks, which need a lot more dead goliaths to make. Sorry.
+  - balance: Mining MODsuits achieve at maximum ash accretion the same amount of melee
+      armor as an upgraded explorer suit.
+  - balance: These various suits also consistently have wound armor.
+  - bugfix: Berserker armor properly hides underclothing and hair.
+  - balance: Berserker armor pieces can absorb drake armor to gain their enhanced
+      protection. Become the warrior of Khorne you've always wanted to be.
+  - balance: Berserker rage now halves brute damage rather than just adding Melee
+      Armor to you and your squishy body.
+  - qol: Berserker and H.E.C.K. helmets can be used for internals.
+  - rscadd: Drake armor is made use drake remains to construct. (This is a net neutral
+      to the previous recipe)
+2025-10-09:
+  Absolucy:
+  - map: Added a navigation landmark for cryo storage to Blueshift.
+  - bugfix: Multi-cell charging racks now use power from the grid like normal cell
+      chargers do, instead of rapidly draining the APC.
+  - bugfix: Fixed slime cores not properly saving/restoring voices.
+  LassiH:
+  - balance: every darkspawn class can now get lightblind sigils
+  Sorenon:
+  - bugfix: fixed the antag selection preference page not having a scroll bar
+  SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
+  - refactor: lathes have been refactored, report if anything breaks
+  - code_imp: APCs can now calculate time-to-charge
+  - qol: Overloaded lathes will now tell you the wait time until they're ready to
+      print again
+  - bugfix: items that contain recursive contents inside them (like foam dart boxes
+      from autolathes) now have their custom materials set to match with its design
+      cost rather than being nullified, meaning they are now recyclable.
+  - code_imp: all custom materials are now integer values. Improved code for how materials
+      are used in techfab & auto lathe for printing
+  - qol: adds screentips & examines for screwdriver & crowbar acts & alt click.
+  - qol: techfabs can now use the mouse drop functionality to set drop target.
+  - qol: lathe printing animation plays on loop while printing rather than flicking
+      once for more visual feedback
+  - bugfix: lathe sheet insertion animations are now linked & work again for all material
+      types inserted via remote silo/local storage
+  - bugfix: printing custom materials items from autolathe works again.
+  - bugfix: printing multiple items from lathes will actually print that correct quantity
+      of items requested.
+  - bugfix: printing items the 2nd time around from lathes won't cause the UI to reload
+      each time.
+  - code_imp: autodoc for some vars & procs, merges procs.
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  - bugfix: items that get printed in stacks now actually get printed in stacks (cable
+      coils)
+  - bugfix: inserting a material sheet into an lathes should show the correct animation
+      color
+  flleeppyy:
+  - rscadd: Statpanel now shows if players can see you as a ghost.
+  - rscadd: As a ghost, examining a mob will show you if you're visible to them or
+      not
+  notghosti:
+  - map: Blueshift spawns correct sized asteroids
+  - map: Pubbystation now spawns asteroids at the magnet instead of telecomms, and
+      supports bigger asteroids
+  - map: Ice box gulag is now hooked to power
+  - map: Ice box security will have a flowing distro
+  - map: Ice box security - dorms Maintenace no longer has a walled off external airlock
+  - map: Ice box arrivals and dorms are slightly less hallway heavy for it's distro
+  - map: Heliostation primary R&D airlock has science access akin to the surrounding
+      doors.

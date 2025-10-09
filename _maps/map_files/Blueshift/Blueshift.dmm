@@ -3404,7 +3404,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "aHV" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron,
 /area/station/medical/cryo)
 "aHY" = (
@@ -7165,9 +7165,9 @@
 /area/station/maintenance/solars/port/fore)
 "btM" = (
 /obj/machinery/asteroid_magnet{
-	center_x = 63;
-	center_y = 113;
-	area_size = 3
+	center_x = 58;
+	center_y = 117;
+	area_size = 7
 	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
@@ -34084,14 +34084,6 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/engine,
 /area/station/science/explab)
-"gBb" = (
-/obj/machinery/power/smes/engineering,
-/obj/structure/cable,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/engine_smes)
 "gBd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34313,9 +34305,7 @@
 "gDp" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/stairs/old{
-	dir = 8
-	},
+/turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "gDq" = (
 /obj/effect/spawner/structure/window,
@@ -52132,7 +52122,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/cult_chapel_maint)
 "kbo" = (
-/turf/open/space/openspace,
+/turf/open/space/basic,
 /area/station/cargo/mining/asteroid_magnet)
 "kbs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53240,14 +53230,15 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
+/obj/effect/turf_decal/trimline/red/corner,
 /obj/item/storage/lockbox/loyalty{
 	pixel_y = 1;
 	pixel_x = 0
 	},
-/obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
+/obj/item/storage/box/teleport_blocker,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "klB" = (
@@ -64738,6 +64729,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron,
 /area/station/common/cryopods)
 "mzp" = (
@@ -69758,12 +69750,23 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/storage/box/disks_nanite{
+	pixel_x = 1;
+	pixel_y = 16
+	},
+/obj/item/storage/box/disks_nanite{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/storage/box/disks_nanite{
+	pixel_x = -7;
+	pixel_y = 7
+	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 0;
 	pixel_y = 21
 	},
 /obj/structure/railing/wood,
-/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/wood/large,
 /area/station/science/circuits)
 "nzB" = (
@@ -83783,6 +83786,7 @@
 "qkH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "qkR" = (
@@ -86697,9 +86701,10 @@
 	},
 /area/station/science/research)
 "qNm" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/closed/wall/r_wall,
-/area/station/science/circuits)
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/jade,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qNr" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/hop/double,
@@ -89122,6 +89127,8 @@
 "rkC" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/nanite_program_hub,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "rkF" = (
@@ -102892,9 +102899,6 @@
 "tQJ" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "tQM" = (
@@ -155834,7 +155838,7 @@ oxs
 oxs
 lzd
 gDp
-gBb
+tQJ
 tQJ
 tQJ
 bFX
@@ -204597,23 +204601,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+qNm
+nrT
+nrT
+nrT
+nrT
+nrT
+nrT
+qNm
+nrT
+qNm
+nrT
+nrT
+nrT
+nrT
+nrT
+nrT
+qNm
 ulx
 ulx
 ulx
@@ -204854,23 +204858,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -205111,23 +205115,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -205368,23 +205372,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -205625,23 +205629,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -205882,23 +205886,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -206139,23 +206143,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -206396,23 +206400,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+qNm
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+qNm
 ulx
 ulx
 ulx
@@ -206653,23 +206657,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+nrT
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -206910,23 +206914,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
-gcg
-gcg
-gcg
-gcg
-gcg
-gcg
-gcg
-gcg
+qNm
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+qNm
 ulx
 ulx
 ulx
@@ -207167,15 +207171,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -207183,7 +207179,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -207424,15 +207428,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -207440,7 +207436,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -207681,15 +207685,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -207697,7 +207693,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -207938,15 +207942,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -207954,7 +207950,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -208195,15 +208199,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -208211,7 +208207,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -208452,15 +208456,7 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
+nrT
 kbo
 kbo
 kbo
@@ -208468,7 +208464,15 @@ kbo
 kbo
 kbo
 kbo
-gcg
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+kbo
+nrT
 ulx
 ulx
 ulx
@@ -208709,23 +208713,23 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-gcg
-kbo
-kbo
-kbo
-kbo
-kbo
-kbo
-kbo
-pRh
+qNm
+nrT
+nrT
+nrT
+nrT
+nrT
+nrT
+qNm
+nrT
+qNm
+nrT
+nrT
+nrT
+nrT
+nrT
+nrT
+qNm
 krj
 nvJ
 krj
@@ -215144,7 +215148,7 @@ acy
 eeR
 hZj
 mdZ
-qNm
+hpn
 rkC
 dIc
 wVD

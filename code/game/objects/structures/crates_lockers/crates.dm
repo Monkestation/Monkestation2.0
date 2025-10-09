@@ -309,6 +309,7 @@
 	name = "budgeted meteor satellites"
 	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
 	icon_state = "engi_secure_crate"
+	base_icon_state = "engi_secure_crate"
 	secure = TRUE
 	locked = TRUE
 

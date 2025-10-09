@@ -27,7 +27,7 @@
 	src.hunger_restore = hunger_restore
 	src.stops_at_crit = stops_at_crit
 	src.check_and_replace = callback
-	if(!latch_target(loc_check = checks_loc))
+	if(!latch_target(TRUE, checks_loc))
 		return COMPONENT_INCOMPATIBLE
 	START_PROCESSING(SSobj, src)
 
@@ -52,20 +52,16 @@
 	SEND_SIGNAL(basic_mob, COMSIG_MOBSTACKER_DESTROY)
 	basic_mob.unbuckle_all_mobs()
 	if((living_target.stat >= SOFT_CRIT) && stops_at_crit && living_target.client)
-		if(init)
-			return FALSE
-		else
+		if(!init)
 			qdel(src)
-			return FALSE
+		return FALSE
 	if(bio_protected)
 		var/living_target_armor = living_target.run_armor_check(attack_flag = BIO, silent = TRUE)
 		if(living_target_armor >= 100)
 			to_chat(basic_mob, span_notice("You failed to latch onto [living_target]."))
-			if(init)
-				return FALSE
-			else
+			if(!init)
 				qdel(src)
-				return FALSE
+			return FALSE
 	target.unbuckle_all_mobs(force = TRUE)
 	if(target.buckle_mob(basic_mob, TRUE, loc_check))
 		basic_mob.layer = target.layer + 0.1
@@ -75,10 +71,9 @@
 		return TRUE
 	else
 		to_chat(basic_mob, span_notice("You failed to latch onto [target]."))
-		if(init)
-			return FALSE
-		else
+		if(!init)
 			qdel(src)
+	return FALSE
 
 /datum/component/latch_feeding/proc/unlatch_target(living = TRUE, silent = FALSE)
 	var/mob/basic_mob = parent
@@ -96,8 +91,7 @@
 
 	REMOVE_TRAIT(target, TRAIT_LATCH_FEEDERED, "latch_feeding")
 	basic_mob.layer = initial(basic_mob.layer)
-	if(basic_mob.buckled)
-		basic_mob.buckled.unbuckle_mob(basic_mob, force=TRUE)
+	basic_mob.buckled?.unbuckle_mob(basic_mob, force = TRUE)
 
 /datum/component/latch_feeding/proc/check_buckled(mob/living/source, atom/movable/new_buckled)
 	if(QDELETED(new_buckled) && !unlatching)

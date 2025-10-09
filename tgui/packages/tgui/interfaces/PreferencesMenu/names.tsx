@@ -57,7 +57,7 @@ export const MultiNameInput = (props: {
           <Modal
             style={{
               margin: '0 auto',
-              width: '40%',
+              width: '100%',
             }}
           >
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
@@ -104,7 +104,7 @@ export const MultiNameInput = (props: {
                                   event.stopPropagation();
                                 }}
                               >
-                                <FitText maxFontSize={12} maxWidth={130}>
+                                <FitText maxFontSize={12} maxWidth={90}>
                                   {props.names[key]}
                                 </FitText>
                               </Button>
