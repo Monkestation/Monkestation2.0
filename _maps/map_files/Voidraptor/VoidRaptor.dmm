@@ -2784,7 +2784,7 @@
 	name = "Cryopods"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/landmark/navigate_destination,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron/white/textured_large,
 /area/station/common/cryopods)
 "aNT" = (
