@@ -54,8 +54,6 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	. = ..()
-
 	if(QDELETED(target))
 		return FALSE
 	if(!user.Adjacent(target))
@@ -64,6 +62,7 @@
 		if (!target.pulledby)
 			passive_feed = TRUE //If we let them go, don't rip our fangs out of their throat. Otherwise if someone else grabbed them, we let it rip out.
 		return FALSE
+	return ..()
 
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
 	var/mob/living/user = owner
