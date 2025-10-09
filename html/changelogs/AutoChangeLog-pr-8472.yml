@@ -1,7 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Cloning now copies your underwear."
-  - bugfix: "Cloning is more accurate, rejoice lizards."
-  - bugfix: "Mutations now work in clones even if the original body is destroyed."
-  - balance: "more accurate cloning also means copying mutations."

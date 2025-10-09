@@ -338,8 +338,17 @@
   - bugfix: Multi-cell charging racks now use power from the grid like normal cell
       chargers do, instead of rapidly draining the APC.
   - bugfix: Fixed slime cores not properly saving/restoring voices.
+  - bugfix: Fixed the cursed katana's combo attacks not working.
+  CannibalHunter:
+  - rscadd: '[Donator] Bullke''s Invincible Outfit'
   LassiH:
   - balance: every darkspawn class can now get lightblind sigils
+  LettuceGuardian:
+  - qol: Bunches up the specialty armour plates+helmets into their respective crates,
+      prices adjusted accordingly.
+  - balance: Ash chance is more reasonable, lowered to 20%.
+  Singul0:
+  - bugfix: Suppressors actually works now
   Sorenon:
   - bugfix: fixed the antag selection preference page not having a scroll bar
   SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
@@ -370,6 +379,11 @@
       coils)
   - bugfix: inserting a material sheet into an lathes should show the correct animation
       color
+  Uristthedorf:
+  - rscadd: Cloning now copies your underwear.
+  - bugfix: Cloning is more accurate, rejoice lizards.
+  - bugfix: Mutations now work in clones even if the original body is destroyed.
+  - balance: more accurate cloning also means copying mutations.
   flleeppyy:
   - rscadd: Statpanel now shows if players can see you as a ghost.
   - rscadd: As a ghost, examining a mob will show you if you're visible to them or
