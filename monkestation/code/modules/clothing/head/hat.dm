@@ -4,7 +4,7 @@
 	icon_state = "jester2"
 	greyscale_config = /datum/greyscale_config/jester2
 	greyscale_config_worn = /datum/greyscale_config/jester2_worn
-	greyscale_colors = "#555555#555555"
+	greyscale_colors = "#FDEA1B#FF0000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/wizard/magician
