@@ -123,8 +123,8 @@
 /datum/uplink_item/stealthy_weapons/gear_cell_injector
 	name = "Gear Cell Injector"
 	desc = "This experimental genetic infusion will allow you to activate and deactivate a powerful transformation \
-			which will allow you to regenerate wounds and enhance your unarmed attacks. \
-			This transformation will cause dangerous cellular decay over time, and you are liable to crash when it ends. \
+			which will allow you to regenerate injuries, resist a variety of dangerous conditions, and enhance your unarmed attacks. \
+			You are liable to crash when it ends. \
 			While the infusion is stealthy, the transformation itself certainly isn't. Take care."
 	cost = 20
 	item = /obj/item/gear_cell_injector

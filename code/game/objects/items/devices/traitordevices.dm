@@ -737,17 +737,19 @@ effective or pretty fucking useless.
 	if(!iscarbon(user))
 		return FALSE
 	var/mob/living/carbon/gear_to_be = user
-	var/datum/action/innate/dragon_install/magic
+	var/datum/action/cooldown/dragon_install/magic
 	magic = new(gear_to_be)
 	magic.Grant(gear_to_be)
 	qdel(src)
 
-//see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that does clone damage over time and stuns when its out
+//see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that stuns when its out
 
-/datum/action/innate/dragon_install //dragon install into losing is sol's best true combo
+/datum/action/cooldown/dragon_install //dragon install into losing is sol's best true combo
 	name = "Dragon Install"
+	cooldown_time = 3 MINUTES
 
-/datum/action/innate/dragon_install/Activate()
+/datum/action/cooldown/dragon_install/Trigger(trigger_flags, atom/target)
+	. = ..()
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
@@ -756,7 +758,7 @@ effective or pretty fucking useless.
 	if(!do_after(carbon_owner, 2 SECONDS))
 		return
 	carbon_owner.apply_status_effect(/datum/status_effect/dragon_install)
-	active = TRUE
+	StartCooldown()
 	for(var/i in 0 to 2) //shamelessly stolen from ash heretic
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, get_turf(carbon_owner.loc)))
 			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
@@ -767,9 +769,3 @@ effective or pretty fucking useless.
 
 		stoplag(0.2 SECONDS)
 
-/datum/action/innate/dragon_install/Deactivate()
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.remove_status_effect(/datum/status_effect/dragon_install)
-	active = FALSE

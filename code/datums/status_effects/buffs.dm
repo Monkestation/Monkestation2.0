@@ -593,7 +593,7 @@
 	id = "dragoninstall"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
-	duration = STATUS_EFFECT_PERMANENT
+	duration = 1 MINUTE
 	tick_interval = 0.25 SECONDS
 	processing_speed = STATUS_EFFECT_PRIORITY
 	var/list/install_traits = list(
@@ -670,7 +670,6 @@
 	carbon_owner.adjustFireLoss(-10 * seconds_between_ticks, FALSE)
 	carbon_owner.adjustOxyLoss(-10 * seconds_between_ticks, FALSE)
 	carbon_owner.adjustToxLoss(-10 * seconds_between_ticks, FALSE)
-	carbon_owner.adjustCloneLoss(1 * seconds_between_ticks) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
 
 /datum/status_effect/dragon_install/proc/fenrir(mob/puncher, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
