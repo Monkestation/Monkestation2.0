@@ -337,6 +337,7 @@
   - map: Added a navigation landmark for cryo storage to Blueshift.
   - bugfix: Multi-cell charging racks now use power from the grid like normal cell
       chargers do, instead of rapidly draining the APC.
+  - bugfix: Fixed slime cores not properly saving/restoring voices.
   LassiH:
   - balance: every darkspawn class can now get lightblind sigils
   Sorenon:
