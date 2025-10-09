@@ -7167,7 +7167,7 @@
 /obj/machinery/asteroid_magnet{
 	center_x = 58;
 	center_y = 117;
-	area_size = 3
+	area_size = 7
 	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
@@ -64729,6 +64729,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron,
 /area/station/common/cryopods)
 "mzp" = (

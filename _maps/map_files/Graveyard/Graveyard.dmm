@@ -60867,7 +60867,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Cryogenic Crew Storage"
 	},
-/obj/effect/landmark/navigate_destination/cryo,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron/freezer,
 /area/station/hallway/primary/central)
 "xEO" = (
