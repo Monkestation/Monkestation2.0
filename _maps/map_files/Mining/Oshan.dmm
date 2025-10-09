@@ -89,6 +89,13 @@
 	dir = 4
 	},
 /area/mine/maintenance/service)
+"fs" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "fG" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/airalarm/directional/north,
@@ -153,6 +160,13 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
+"nr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "nu" = (
 /obj/structure/tank_holder/extinguisher,
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
@@ -220,11 +234,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "pW" = (
-/obj/effect/turf_decal/trimline/red/filled/arrow_cw{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "qg" = (
@@ -349,6 +363,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
+/area/mine/production)
+"wo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "wE" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
@@ -534,6 +553,15 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
+"DN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "DT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -816,6 +844,15 @@
 /obj/structure/sign/warning/radiation/directional/east,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/textured,
+/area/mine/production)
+"Pz" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "Qb" = (
 /obj/structure/cable,
@@ -20970,7 +21007,7 @@ BJ
 BJ
 xJ
 pW
-QL
+wo
 uT
 qu
 qu
@@ -21226,8 +21263,8 @@ mH
 ac
 BJ
 ph
-EH
-NZ
+Pz
+fs
 uT
 qu
 qu
@@ -21483,8 +21520,8 @@ mH
 rb
 BJ
 nu
-uH
-wO
+DN
+nr
 uT
 qu
 qu
