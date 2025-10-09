@@ -1337,3 +1337,13 @@
 	name = "jester2"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jester2_worn.json'
+
+/datum/greyscale_config/jester
+	name = "jester"
+	icon_file = 'icons/obj/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester.json'
+
+/datum/greyscale_config/jester_worn
+	name = "jester"
+	icon_file = 'icons/mob/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_worn.json'
