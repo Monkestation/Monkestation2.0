@@ -337,12 +337,6 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	item_path = /obj/item/clothing/head/costume/nursehat
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_GENETICIST, JOB_CHEMIST, JOB_VIROLOGIST)
 
-/datum/loadout_item/head/jester2
-	name = "Alternate Jester Hat"
-	item_path = /obj/item/clothing/head/costume/jester2
-	restricted_roles = list(JOB_CLOWN)
-	requires_purchase = FALSE
-
 /*
 *	JOB BERETS
 */
@@ -696,6 +690,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/jester
 	name = "Jester hat"
 	item_path = /obj/item/clothing/head/costume/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/jester2
+	name = "Alternate Jester Hat"
+	item_path = /obj/item/clothing/head/costume/jester2
 	restricted_roles = list(JOB_CLOWN)
 	requires_purchase = FALSE
 
