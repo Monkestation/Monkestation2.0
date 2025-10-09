@@ -47,6 +47,9 @@
 				combined_flags |= BYPASS_ADJACENCY
 			else
 				combined_flags |= SILENT_ADJACENCY
+			if(user && istype(over, /mob)) // Hopefully temporary fix for piggyback rides.
+				if(user.pulledby == over && user.pulledby?.grab_state >= GRAB_AGGRESSIVE)
+					combined_flags |= IGNORE_GRAB
 			if(!user.can_perform_action(src, combined_flags))
 				return // is the mob not able to drag the object with both sides conditions applied
 
