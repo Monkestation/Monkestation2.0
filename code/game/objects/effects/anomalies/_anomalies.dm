@@ -74,8 +74,10 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
+#ifndef UNIT_TESTS // These might move away during a CI run and cause a flaky mapping nearstation errors
 	if(!immobile && SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
+#endif
 
 /// Move in a direction
 /obj/effect/anomaly/proc/move_anomaly()
@@ -105,11 +107,6 @@
 
 	qdel(src)
 
-/obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_ANALYZER && anomaly_core && scan_anomaly(user, weapon)) // monke edit: refactor into scan_anomaly
-		return TRUE
-	return ..()
-
 /obj/effect/anomaly/Move(atom/newloc, direct, glide_size_override, update_dir)
 	if(contained)
 		if(impact_area != get_area(newloc))
@@ -119,6 +116,13 @@
 			return FALSE
 	return ..()
 
+/obj/effect/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(!isnull(anomaly_core))
+		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(anomaly_core.frequency)], code [anomaly_core.code]."))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
+	return ITEM_INTERACT_BLOCKING
+
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
 	immortal = TRUE
@@ -127,10 +131,3 @@
 		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = 0
-
-/obj/effect/anomaly/proc/scan_anomaly(mob/user, obj/item/scanner)
-	if(!aSignal)
-		return FALSE
-	playsound(get_turf(user), 'sound/machines/ping.ogg', vol = 30, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
-	to_chat(user, span_boldnotice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
-	return TRUE

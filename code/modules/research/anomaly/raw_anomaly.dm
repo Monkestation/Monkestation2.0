@@ -99,5 +99,5 @@
 /obj/item/inert_anomaly
 	name = "inert anomaly core"
 	desc = "A chunk of fused exotic materials. Useless to you, but some other lab might purchase it."
-	icon = 'icons/obj/devices/new_assemblies.dmi'
+	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "rawcore_inert"

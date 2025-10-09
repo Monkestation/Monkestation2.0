@@ -81,6 +81,7 @@
 
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
+
 /obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "circle_wave"
@@ -107,7 +108,6 @@
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
-//void heretic
 /obj/effect/temp_visual/circle_wave/void_conduit
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
