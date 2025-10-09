@@ -66,8 +66,8 @@
 		var/turf/newloc = locate(movable.x + x_distance, movable.y + y_distance, beacon_turf.z) || pick(available_turfs) // calculate the new place, or pick a random one as fallback
 		do_teleport(movable, newloc, no_effects = TRUE)
 
-		if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-			var/mob/give_sparkles = A
+		if(ismob(movable) && !(movable in flashers)) // don't flash if we're already doing an effect
+			var/mob/give_sparkles = movable
 			if(give_sparkles.client)
 				blue_effect(give_sparkles)
 
