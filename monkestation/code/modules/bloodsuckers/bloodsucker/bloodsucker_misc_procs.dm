@@ -143,7 +143,7 @@
 	return level_cost
 
 /// Animates the power icon above the vampire's head. Returns a reference to the icon to remove it later.
-/atom/proc/do_power_icon_animation(power_icon)
+/atom/movable/proc/do_power_icon_animation(power_icon)
 	var/mutable_appearance/alert = mutable_appearance('monkestation/icons/bloodsuckers/actions_bloodsucker.dmi', power_icon)
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
 
@@ -154,8 +154,7 @@
 	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	visual.alpha = 0
 
-	var/atom/movable/self_as_movable = src
-	self_as_movable.vis_contents += visual
+	src.vis_contents += visual
 
 	animate(visual, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
 
@@ -164,7 +163,7 @@
 	return visual
 
 /// Removes the power icon above the vampire's head.
-/atom/proc/remove_power_icon_animation(atom/movable/flick_visual/visual)
+/atom/movable/proc/remove_power_icon_animation(atom/movable/flick_visual/visual)
 	LAZYREMOVE(update_on_z, visual)
 
 	qdel(visual)

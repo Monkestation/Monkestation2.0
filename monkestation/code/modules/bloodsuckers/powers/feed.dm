@@ -31,7 +31,7 @@
 	/// Whether we were in frenzy or not when we started feeding.
 	var/started_frenzied = FALSE
 	///Are we feeding with passive grab or not?
-	var/silent_feed = TRUE
+	var/passive_feed = TRUE
 	///Have we notified you already that you are at maximum blood?
 	var/notified_overfeeding = FALSE
 	var/datum/looping_sound/zucc/soundloop
@@ -54,15 +54,16 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	if(QDELETED(user) || QDELETED(target))
+	. = ..()
+
+	if(QDELETED(target))
 		return FALSE
 	if(!user.Adjacent(target))
 		return FALSE
 	if(user.pulling != target)
 		if (!target.pulledby)
-			silent_feed = TRUE //If we let them go, don't rip our fangs out of their throat. Otherwise if someone else grabbed them, we let it rip out.
+			passive_feed = TRUE //If we let them go, don't rip our fangs out of their throat. Otherwise if someone else grabbed them, we let it rip out.
 		return FALSE
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
 	var/mob/living/user = owner
@@ -123,7 +124,7 @@
 		owner.visible_message(
 			span_warning("[owner] closes [owner.p_their()] mouth around [feed_target]'s neck!"),
 			span_warning("You sink your fangs into [feed_target]'s neck."))
-		silent_feed = FALSE //no more mr nice guy
+		passive_feed = FALSE //no more mr nice guy
 	else
 		var/dead_message = feed_target.stat != DEAD ? " <i>[feed_target.p_They()] look[feed_target.p_s()] dazed, and will not remember this.</i>" : ""
 		owner.visible_message(
@@ -184,7 +185,7 @@
 		DeactivatePower()
 		return PROCESS_KILL
 	if(!ContinueActive(user, feed_target))
-		if(!silent_feed)
+		if(!passive_feed)
 			user.visible_message(
 				span_warning("[user] is ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"),
 				span_warning("Your teeth are ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"))

@@ -55,12 +55,12 @@
 	bloodsuckerdatum_power = null
 	return ..()
 
-/// Gets the current cost of the ability.
-/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE, cost_override = null)
-	if(isnull(cost_override))
-		. = constant ? constant_bloodcost : bloodcost
+/// Gets the activation cost of the ability. If constant is TRUE, returns the upkeep cost instead.
+/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE)
+	if (constant)
+		return constant_bloodcost
 	else
-		. = cost_override
+		return bloodcost
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -197,8 +197,16 @@
 	return active
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
+	var/bloodcost
+
+	if (cost_override)
+		bloodcost = cost_override
+	else
+		bloodcost = get_blood_cost()
+
+	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
+
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = get_blood_cost(cost_override = cost_override)
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
@@ -216,8 +224,6 @@
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
 
-	var/bloodcost = get_blood_cost()
-	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons()
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()
@@ -255,10 +261,13 @@
 
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(QDELETED(user))
 		return FALSE
 	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
+
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	if(constant_bloodcost <= 0)
 		return TRUE
