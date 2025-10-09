@@ -15,7 +15,6 @@
 	bloodcost = 30
 	cooldown_time = 30 SECONDS
 	constant_bloodcost = 0.2
-	//sol_multiplier = 3
 
 	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 	/// Base traits granted by fortitude.
