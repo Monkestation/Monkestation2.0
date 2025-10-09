@@ -187,6 +187,11 @@
 		var/mob/B = AM
 		if((isdrone(B) || iscyborg(B)) && B.stat)
 			return
+		if(istype(B, /mob/living/basic/mouse/plague))
+			if(!do_after(B, 3 SECONDS, src))
+				B.forceMove(drop_location())
+				to_chat(B, span_notice("You squeeze through [src]."))
+				return
 		if(isliving(AM))
 			var/mob/living/M = AM
 			//Can bump-open maybe 3 airlocks per second. This is to prevent weird mass door openings

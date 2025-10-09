@@ -11,8 +11,7 @@
 
 	circuit = /obj/item/circuitboard/machine/diseaseanalyser
 
-	idle_power_usage = 100
-	active_power_usage = 100//1000 extra power once per analysis
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1 //1000 extra power once per analysis
 
 	var/process_time = 5
 	var/minimum_growth = 100

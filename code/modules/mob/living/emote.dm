@@ -127,7 +127,7 @@
 
 
 /datum/emote/living/deathgasp/get_sound(mob/living/user)
-	if(iscarbon(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		// Alternative deathgasps.
 		if(LAZYLEN(human_user.alternative_deathgasps))

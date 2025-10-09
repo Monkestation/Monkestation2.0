@@ -188,6 +188,7 @@ const ALTTITLES = {
   'Private Investigator': BASEICONS['Detective'],
   'Forensic Scientist': BASEICONS['Detective'],
   'Paranormal Investigator': BASEICONS['Detective'],
+  'Inspector': BASEICONS['Detective'],
   // Geneticist - dna
   'Mutation Researcher': BASEICONS['Geneticist'],
   // Head of Personnel - dog

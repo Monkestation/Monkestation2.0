@@ -12,11 +12,12 @@
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
+/// Cost to use the stun arm
+#define CYBORG_STUN_CHARGE_COST (STANDARD_CELL_CHARGE * 0.1)
+
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
-	/// Cost to use the stun arm
-	var/charge_cost = 1000
 	COOLDOWN_DECLARE(non_charge_cooldown)
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
@@ -27,7 +28,7 @@
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(charge_cost))
+		if(!robot_user.cell.use(CYBORG_STUN_CHARGE_COST))
 			return
 
 	user.do_attack_animation(attacked_mob)

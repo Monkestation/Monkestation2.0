@@ -48,8 +48,6 @@
 	var/handling_death = FALSE
 	/// If this bloodsucker has suffered final death.
 	var/final_death = FALSE
-	// have we claimed a coffin this game?
-	var/claimed_coffin = FALSE
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
 
@@ -212,6 +210,9 @@
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
+
+/datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	add_team_hud(new_body)
 
 /datum/antagonist/bloodsucker/proc/get_status_tab_items(datum/source, list/items)
 	SIGNAL_HANDLER
