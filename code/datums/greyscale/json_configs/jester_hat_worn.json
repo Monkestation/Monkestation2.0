@@ -16,7 +16,7 @@
             "type": "icon_state",
             "icon_state": "bellsjester_hat",
             "blend_mode": "overlay",
-			"color_ids": [2]
+			"color_ids": [3]
         }
 
     ]
