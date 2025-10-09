@@ -751,12 +751,13 @@ effective or pretty fucking useless.
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.balloon_alert("activating")
-	carbon_owner.visible_message(span_warning("[carbon_owner] "))
-	if(!do_after(2 SECONDS))
+	carbon_owner.balloon_alert(carbon_owner, "activating")
+	carbon_owner.visible_message(span_warning("[carbon_owner] assumes a fighting stance, [carbon_owner.p_their()] eyes glowing red!"))
+	if(!do_after(carbon_owner, 2 SECONDS))
 		return
 	carbon_owner.apply_status_effect(/datum/status_effect/dragon_install)
-	for(var/i in 0 to 3) //shamelessly stolen from ash heretic
+	active = TRUE
+	for(var/i in 0 to 2) //shamelessly stolen from ash heretic
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, get_turf(carbon_owner.loc)))
 			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
 			flame_tile.alpha = 125
@@ -771,3 +772,4 @@ effective or pretty fucking useless.
 		return
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.remove_status_effect(/datum/status_effect/dragon_install)
+	active = FALSE

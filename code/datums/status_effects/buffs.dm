@@ -591,9 +591,11 @@
 
 /datum/status_effect/dragon_install
 	id = "dragoninstall"
+	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/dragon_install
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.25 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	var/list/install_traits = list(
 		TRAIT_ANALGESIA,
 		TRAIT_FEARLESS,
@@ -605,7 +607,7 @@
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NODISMEMBER,
 		TRAIT_NO_PAIN_EFFECTS,
-		TRAIT_NOSLEEP,
+		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_NUTCRACKER, //for shits n giggles
@@ -613,30 +615,17 @@
 		TRAIT_NOFIRE,
 		TRAIT_UNNATURAL_RED_GLOWY_EYES,
 		)
+	var/limbs_buffed = FALSE
 
 /datum/status_effect/dragon_install/on_apply()
 	. = ..()
+	if(!iscarbon(owner))
+		qdel(src)
 	owner.add_traits(install_traits, "dragon_install")
 	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(fenrir))
-	if(!iscarbon(owner))
-		return
 	var/mob/living/carbon/carbon_owner = owner
-	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
-	if(left_arm)
-		left_arm.unarmed_damage_low += 30
-		left_arm.unarmed_damage_high += 30
-	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
-	if(right_arm)
-		right_arm.unarmed_damage_low += 30
-		right_arm.unarmed_damage_high += 30
-	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
-	if(left_leg)
-		left_leg.unarmed_damage_low += 30
-		left_leg.unarmed_damage_high += 30
-	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
-	if(right_leg)
-		right_leg.unarmed_damage_low += 30
-		right_leg.unarmed_damage_high += 30
+	modify_limbs(carbon_owner, 25)
+	limbs_buffed = TRUE
 
 /datum/status_effect/dragon_install/on_remove()
 	owner.remove_traits(install_traits, "dragon_install")
@@ -645,36 +634,30 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.paralyze(5 SECONDS) // no spammies.
-	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
-	if(left_arm)
-		left_arm.unarmed_damage_low -= 30
-		left_arm.unarmed_damage_high -= 30
-	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
-	if(right_arm)
-		right_arm.unarmed_damage_low -= 30
-		right_arm.unarmed_damage_high -= 30
-	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
-	if(left_leg)
-		left_leg.unarmed_damage_low -= 30
-		left_leg.unarmed_damage_high -= 30
-	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
-	if(right_leg)
-		right_leg.unarmed_damage_low -= 20
-		right_leg.unarmed_damage_high -= 20
+	carbon_owner.Paralyze(5 SECONDS) // no spammies.
+	carbon_owner.visible_message("[carbon_owner] collapses, [carbon_owner.p_their()] power receeding")
+	if(limbs_buffed)
+		modify_limbs(carbon_owner, -25)
+		limbs_buffed = FALSE
 
-/datum/status_effect/dragon_install/tick()
+/datum/status_effect/dragon_install/tick(seconds_between_ticks, times_fired)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
 	if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
-		carbon_owner.reagents.remove_reagent(/datum/reagent/water/holywater 1)
+		carbon_owner.reagents.remove_reagent(/datum/reagent/water/holywater, 1)
 		to_chat(carbon_owner, span_warning("Anti-magical holy water is neutralizing your Dragon Install!"))
 		if(HasElement(carbon_owner, /datum/element/perma_fire_overlay))
 			carbon_owner.RemoveElement(/datum/element/perma_fire_overlay)
 		carbon_owner.remove_traits(install_traits, "dragon_install")
+		if(limbs_buffed)
+			modify_limbs(carbon_owner, -25)
+			limbs_buffed = FALSE
 		return
-	carbon_owner.stamina.adjust(30)
+	if(!limbs_buffed)
+		modify_limbs(carbon_owner, 25)
+		limbs_buffed = TRUE
+	carbon_owner.stamina.adjust(120 * seconds_between_ticks)
 	QDEL_LAZYLIST(carbon_owner.all_scars)
 	for(var/datum/wound/yeowch as anything in carbon_owner.all_wounds)
 		to_chat(carbon_owner, span_notice("The power of your gear cells is mending your wounds!"))
@@ -683,13 +666,13 @@
 	if(!HasElement(carbon_owner, /datum/element/perma_fire_overlay))
 		carbon_owner.AddElement(/datum/element/perma_fire_overlay)
 	carbon_owner.add_traits(install_traits, "dragon_install")
-	carbon_owner.adjustBruteLoss(-2.5, FALSE)
-	carbon_owner.adjustFireLoss(-2.5, FALSE)
-	carbon_owner.adjustOxyLoss(-2.5, FALSE)
-	carbon_owner.adjustToxLoss(-2.5, FALSE)
-	carbon_owner.adjustCloneLoss(0.25) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
+	carbon_owner.adjustBruteLoss(-10 * seconds_between_ticks, FALSE)
+	carbon_owner.adjustFireLoss(-10 * seconds_between_ticks, FALSE)
+	carbon_owner.adjustOxyLoss(-10 * seconds_between_ticks, FALSE)
+	carbon_owner.adjustToxLoss(-10 * seconds_between_ticks, FALSE)
+	carbon_owner.adjustCloneLoss(1 * seconds_between_ticks) //gotta be a downside somehow. plus this means if you overuse it you're stuck in it unless you wanna drop out of it and instantly fall into crit. Tension building, i think. Like vali overuse on TGMC.
 
-/datum/status_effect/dragon_install/proc/fenrir(atom/target, proximity, modifiers)
+/datum/status_effect/dragon_install/proc/fenrir(mob/puncher, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
@@ -698,13 +681,28 @@
 		if(carbon_owner.has_reagent(/datum/reagent/water/holywater, 1))
 			return
 	var/mob/living/carbon/ky_kiske = target //gilltea geer tm
-	if(iscarbon(ky_kiske))
-		var/mob/living/carbon/carb_kiske = ky_kiske
-		carb_kiske.firestacks += 10
-		carb_kiske.ignite_mob()
+	ky_kiske.fire_stacks = max(ky_kiske.fire_stacks + 10, MAX_FIRE_STACKS)
+	ky_kiske.ignite_mob()
 	var/turf/target_turf = get_turf_in_angle(get_angle(owner, ky_kiske), get_turf(owner), 10)
 	ky_kiske.throw_at(target_turf, range = 2, speed = 4, thrower = owner, spin = TRUE)
 
+/datum/status_effect/dragon_install/proc/modify_limbs(var/mob/living/carbon/carbon_owner, var/damage_change)
+	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
+	if(left_arm)
+		left_arm.unarmed_damage_low += damage_change
+		left_arm.unarmed_damage_high += damage_change
+	var/obj/item/bodypart/arm/right/right_arm = carbon_owner.get_bodypart(BODY_ZONE_R_ARM)
+	if(right_arm)
+		right_arm.unarmed_damage_low += damage_change
+		right_arm.unarmed_damage_high += damage_change
+	var/obj/item/bodypart/leg/left/left_leg = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
+	if(left_leg)
+		left_leg.unarmed_damage_low += damage_change
+		left_leg.unarmed_damage_high += damage_change
+	var/obj/item/bodypart/leg/right/right_leg = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
+	if(right_leg)
+		right_leg.unarmed_damage_low += damage_change
+		right_leg.unarmed_damage_high += damage_change
 
 /atom/movable/screen/alert/status_effect/dragon_install
 	name = "Dragon Install"
