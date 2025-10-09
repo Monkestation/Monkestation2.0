@@ -463,7 +463,11 @@
 	documentation = "Debug CPU visualization/control maptext (and related junk)."
 	plane = CPU_DEBUG_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+#ifdef BLOCKS_PLANE_OFFSETTING // testmerge compatibility
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+#else
 	allows_offsetting = FALSE
+#endif
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
 
