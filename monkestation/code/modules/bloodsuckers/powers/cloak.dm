@@ -13,7 +13,6 @@
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 5
 	constant_bloodcost = 0.2
-	//sol_multiplier = 2.5
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/cloak/ActivatePower(trigger_flags)
