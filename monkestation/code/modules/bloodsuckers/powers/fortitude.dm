@@ -39,6 +39,8 @@
 	var/old_brute_mod = 1
 	///The user's stamina mod before fortitude was enabled
 	var/old_stamina_mod = 1
+	///Reference to the visual icon of the fortitude power.
+	var/atom/movable/flick_visual/icon_ref
 
 /datum/action/cooldown/bloodsucker/fortitude/upgrade_power()
 	. = ..()
@@ -55,13 +57,14 @@
 	// Traits & Effects
 	owner.add_traits(base_traits, FORTITUDE_TRAIT)
 
+	//Everyone around us can tell we are using fortitude.
+	icon_ref = owner.do_power_icon_animation("power_fortitude")
+
 	if(level_current >= 4)
 		owner.add_traits(upgraded_traits, FORTITUDE_TRAIT)
 		owner.visible_message(span_warning("[owner]'s skin turns extremely hard! Stuns will be completely ineffective!"))
-		owner.balloon_alert_to_viewers("skin turns extremely hard!", "your skin turns extremely hard!")
 	else
 		owner.visible_message(span_warning("[owner]'s skin hardens!"))
-		owner.balloon_alert_to_viewers("skin hardens!", "your skin hardens!")
 
 	var/mob/living/carbon/human/bloodsucker_user = owner
 	if(HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
@@ -113,6 +116,7 @@
 	seconds_remaining = power_duration
 
 	owner.visible_message(span_warning("[owner]'s skin softens & returns to normal."))
-	owner.balloon_alert_to_viewers("skin softens", "your skin softens.")
+	owner.remove_power_icon_animation(icon_ref)
+	icon_ref = null
 
 	return ..()
