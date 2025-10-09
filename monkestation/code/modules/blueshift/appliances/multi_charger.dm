@@ -5,8 +5,8 @@
 	icon_state = "cchargermulti"
 	base_icon_state = "cchargermulti"
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 60
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.6
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger_multi
 	pass_flags = PASSTABLE
@@ -91,7 +91,7 @@
 		return ..()
 
 /obj/machinery/cell_charger_multi/process(seconds_per_tick)
-	if(!charging_batteries.len || !anchored || (machine_stat & (BROKEN|NOPOWER)))
+	if(!length(charging_batteries) || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
 
 	// create a charging queue, we only want cells that require charging to use the power budget
@@ -110,9 +110,11 @@
 	if(!charge_current)
 		return
 
+	var/charge_given = 0
 	for(var/obj/item/stock_parts/power_store/cell/charging_cell in charging_queue)
-		use_energy(charge_current * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
-		charge_cell(charge_current, charging_cell, grid_only = TRUE)
+		charge_given += charge_cell(charge_current, charging_cell, grid_only = TRUE)
+	if(charge_given)
+		use_energy((charge_given + active_power_usage) * 0.01) //use a small bit for the charger itself, but power usage scales up with the part tier
 
 	LAZYNULL(charging_queue)
 	update_appearance()

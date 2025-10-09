@@ -340,7 +340,7 @@
 
 /datum/action/cooldown/spell/pointed/thrallbuff/speed/empower(mob/living/carbon/target)
 	to_chat(target, span_velvet("You feel fast."))
-	target.apply_status_effect(/datum/status_effect/speed_boost, speed_strength, buff_duration, type)
+	target.apply_status_effect(/datum/status_effect/speed_boost, buff_duration, speed_strength, type)
 
 //////////////////////////////////////////////////////////////////////////
 //----------------Single target global ally giga buff-------------------//
@@ -385,7 +385,7 @@
 	target.revive(TRUE)
 	target.SetAllImmobility(0, TRUE)
 	target.resting = FALSE
-	target.apply_status_effect(/datum/status_effect/speed_boost, -0.5, 15 SECONDS, type)
+	target.apply_status_effect(/datum/status_effect/speed_boost, 15 SECONDS, -0.5, type)
 	target.visible_message(span_danger("Streaks of velvet light crack out of [target]'s skin."), span_velvet("Power roars through you like a raging storm, pushing you to your absolute limits."))
 	var/obj/item/cuffs = target.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 	var/obj/item/legcuffs = target.get_item_by_slot(ITEM_SLOT_LEGCUFFED)

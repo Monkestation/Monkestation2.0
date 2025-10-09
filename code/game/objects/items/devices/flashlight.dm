@@ -624,6 +624,8 @@
 
 /obj/item/flashlight/flare/candle/process(seconds_per_tick)
 	. = ..()
+	if(QDELETED(src))
+		return
 
 	if(scented_type)
 		var/turf/my_turf = get_turf(src)

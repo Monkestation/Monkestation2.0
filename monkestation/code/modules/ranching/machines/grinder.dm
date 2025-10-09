@@ -3,8 +3,8 @@
 	desc = "This is how chicken nuggets are made boys and girls."
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	///placeholder
 	icon = 'icons/obj/kitchen.dmi'
