@@ -750,7 +750,7 @@ effective or pretty fucking useless.
 
 /datum/action/cooldown/dragon_install/Trigger(trigger_flags, atom/target)
 	. = ..()
-	if(!iscarbon(owner))
+	if(!iscarbon(owner) || (next_use_time > world.time))
 		return
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.balloon_alert(carbon_owner, "activating")

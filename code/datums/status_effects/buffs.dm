@@ -683,7 +683,7 @@
 	ky_kiske.fire_stacks = max(ky_kiske.fire_stacks + 10, MAX_FIRE_STACKS)
 	ky_kiske.ignite_mob()
 	var/turf/target_turf = get_turf_in_angle(get_angle(owner, ky_kiske), get_turf(owner), 10)
-	ky_kiske.throw_at(target_turf, range = 2, speed = 4, thrower = owner, spin = TRUE)
+	ky_kiske.throw_at(target_turf, range = 2, speed = 2, thrower = owner, spin = TRUE)
 
 /datum/status_effect/dragon_install/proc/modify_limbs(var/mob/living/carbon/carbon_owner, var/damage_change)
 	var/obj/item/bodypart/arm/left/left_arm = carbon_owner.get_bodypart(BODY_ZONE_L_ARM)
