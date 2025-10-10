@@ -130,4 +130,4 @@
 	if(!has_core)
 		QDEL_NULL(anomaly_core)
 	if (anchor)
-		move_chance = 0
+		move_chance = FALSE

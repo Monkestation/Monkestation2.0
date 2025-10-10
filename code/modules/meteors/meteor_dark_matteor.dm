@@ -18,8 +18,6 @@
 	/// in case we miss, we can go back to the previous security level
 	var/previous_security_level
 
-/atom/movable/warp_effect // MONKE EDIT: Add the effect here
-
 /obj/effect/meteor/dark_matteor/Initialize(mapload, turf/target)
 	. = ..()
 	var/current_sec_level = SSsecurity_level.get_current_level_as_number()
