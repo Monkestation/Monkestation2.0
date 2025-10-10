@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 		immediate_calculate_adjacent_turfs()
 	for(var/direction in GLOB.cardinals)
 		var/turf/directional_turf = get_step(src, direction)
-		if(istype(directional_turf, /turf/open/floor/plating/ocean))
+		if(isoceanturf(directional_turf))
 			ocean_turfs |= directional_turf
 		else
 			if(isclosedturf(directional_turf))
@@ -206,25 +206,23 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /turf/open/floor/plating/ocean/proc/door_opened(datum/source)
 	SIGNAL_HANDLER
 
-	var/obj/machinery/door/found_door = source
-	var/turf/turf = get_turf(found_door)
-
-	if(turf.can_atmos_pass())
-		turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
+	var/turf/door_turf = get_turf(source)
+	if(door_turf && TURFS_CAN_SHARE(src, door_turf))
+		door_turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
 
 /turf/open/floor/plating/ocean/proc/process_turf()
 	for(var/direction in open_turfs)
 		var/turf/directional_turf = get_step(src, direction)
-		if(isspaceturf(directional_turf) || istype(directional_turf, /turf/open/floor/plating/ocean))
+		if(isspaceturf(directional_turf) || isoceanturf(directional_turf))
 			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction), TRUE)
 			open_turfs -= direction
-			if(!open_turfs.len)
+			if(!length(open_turfs))
 				SSliquids.active_ocean_turfs -= src
 			return
 		else if(!(directional_turf in atmos_adjacent_turfs))
 			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 			open_turfs -= direction
-			if(!open_turfs.len)
+			if(!length(open_turfs))
 				SSliquids.active_ocean_turfs -= src
 			return
 
@@ -235,12 +233,12 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	open_turfs = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/directional_turf = get_step(src, direction)
-		if(istype(directional_turf, /turf/open/floor/plating/ocean))
+		if(isoceanturf(directional_turf) && !QDELING(directional_turf))
 			ocean_turfs |= directional_turf
 		else
 			open_turfs.Add(direction)
 
-	if(open_turfs.len)
+	if(length(open_turfs))
 		SSliquids.active_ocean_turfs |= src
 	else if(src in SSliquids.active_ocean_turfs)
 		SSliquids.active_ocean_turfs -= src
