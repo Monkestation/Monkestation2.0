@@ -35,7 +35,7 @@
 	if(GLOB.ratvar_risen)
 		return "<b>RATVAR HAS RISEN.<b>"
 
-	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power)]</b>.<br>"
+	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power, FALSE)]</b>.<br>"
 	new_desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"
 	new_desc += "Passive power access - <b>[SSthe_ark.passive_power]</b>.<br>"
 	if(!GLOB.main_clock_cult)

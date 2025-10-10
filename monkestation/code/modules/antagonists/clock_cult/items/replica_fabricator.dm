@@ -1,4 +1,4 @@
-#define BRASS_POWER_COST 5
+#define BRASS_POWER_COST STANDARD_CELL_CHARGE * 0.005
 #define REGULAR_POWER_COST (BRASS_POWER_COST / 2)
 
 /obj/item/clockwork/replica_fabricator
