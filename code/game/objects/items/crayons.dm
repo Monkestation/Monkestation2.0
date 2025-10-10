@@ -528,6 +528,24 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
+	return
+
+/obj/item/toy/crayon/attack(mob/target, mob/living/user)
+	if(!edible || (target != user) || !iscarbon(user))
+		return ..()
+	var/covered = ""
+	if(user.is_mouth_covered(ITEM_SLOT_HEAD))
+		covered = "headgear"
+	else if(user.is_mouth_covered(ITEM_SLOT_MASK))
+		covered = "mask"
+	if(covered)
+		balloon_alert(user, "remove your [covered]!")
+		return
+	to_chat(user, span_notice("You take a bite of the [name]. Delicious!"))
+	var/eaten = use_charges(user, 5, FALSE)
+	if(check_empty(user)) //Prevents division by zero
+		return
+	reagents.trans_to(user, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))
@@ -846,6 +864,10 @@
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return
+
+			if(HAS_TRAIT(target, TRAIT_WINDOW_POLARIZED))
+				balloon_alert(user, "can't paint polarized window!")
+				return FALSE
 
 			if(istype(target, /obj/item/pipe))
 				if(GLOB.pipe_color_name.Find(paint_color))

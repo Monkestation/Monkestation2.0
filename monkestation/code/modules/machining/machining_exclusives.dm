@@ -160,9 +160,12 @@
 
 /obj/item/stock_parts/power_store/cell/pulsepack
 	name = "Pulse pack fusion core"
-	desc = "Exposed fusion product outside of containment field on an already sketchy ass power pack. There should be no reason you have this, and honestly you should tell an admin if you somehow got this, I'm too fucking lazy to code in an explosion if you somehow have this in your hand so good job, you broke the game. Now get back to beating the ERPers into a pulp spessman. Your server depends on you."
-	maxcharge = 500000
-	chargerate = 50000
+	desc = "Exposed fusion product outside of containment field on an already sketchy ass power pack. \
+		There should be no reason you have this, and honestly you should tell an admin if you somehow got this, \
+		I'm too fucking lazy to code in an explosion if you somehow have this in your hand so good job, you broke the game. \
+		Now get back to beating the ERPers into a pulp spessman. Your server depends on you."
+	maxcharge = STANDARD_CELL_CHARGE * 500
+	chargerate = STANDARD_CELL_RATE * 5
 
 //mecha armor plates
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part
