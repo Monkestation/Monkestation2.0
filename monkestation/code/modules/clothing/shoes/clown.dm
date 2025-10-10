@@ -17,6 +17,7 @@
 	greyscale_config_worn = /datum/greyscale_config/green_jester_shoes_worn
 	greyscale_colors = "#E10000#01C204#E0D35C"
 	squeak_sound = list('monkestation/sound/effects/jingle.ogg'=1) //jingle jingle jingle jingle
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	name = "clown jester shoes"
