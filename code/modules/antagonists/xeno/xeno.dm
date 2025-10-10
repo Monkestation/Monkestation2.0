@@ -56,11 +56,13 @@
 	objectives += objective
 
 // xenos in captivity do not count
+//SScommunications might not be loaded if captive xenos didn't spawn naturally (2% chance) and instead were placed in the cell by a player
+//Any xenomorphs in the captivity area count as captive xenomorphs for research generation, and shouldn't count towards the antag cap
 /datum/antagonist/xeno/should_count_for_antag_cap()
 	. = ..()
-	if(!. || !SScommunications.captivity_area)
+	if(!.)
 		return
-	if(istype(get_area(owner.current), SScommunications.captivity_area))
+	if(istype(get_area(owner.current), /area/station/science/xenobiology/cell))
 		return FALSE
 
 //Related code for neutered xenomorphs
