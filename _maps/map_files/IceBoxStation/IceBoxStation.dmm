@@ -3798,7 +3798,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "biK" = (
 /obj/structure/sign/poster/official/do_not_question/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -6120,7 +6120,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bOY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
@@ -7525,7 +7525,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ckN" = (
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/south,
@@ -15056,6 +15056,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison/work)
+"exR" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "exY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
@@ -15893,7 +15896,7 @@
 "eLb" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eLl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -16145,7 +16148,7 @@
 "eOS" = (
 /obj/structure/table,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ePi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -33704,6 +33707,9 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
+"kog" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "koB" = (
 /obj/effect/landmark/start/hangover,
 /obj/machinery/light/directional/north,
@@ -34225,6 +34231,10 @@
 	dir = 4
 	},
 /area/station/service/chapel)
+"kwa" = (
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "kwd" = (
 /obj/structure/rack,
 /obj/item/gun/energy/disabler{
@@ -39063,7 +39073,7 @@
 /obj/structure/table,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lVu" = (
 /obj/machinery/power/emitter/welded{
 	dir = 8
@@ -54609,7 +54619,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qGg" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -65944,7 +65954,7 @@
 "ujp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ujq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -67424,7 +67434,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uHV" = (
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 1
@@ -68160,7 +68170,7 @@
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uUT" = (
 /turf/closed/wall,
 /area/mine/mechbay)
@@ -69108,7 +69118,7 @@
 "viR" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vjh" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp)
@@ -77718,7 +77728,7 @@
 "xNa" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xNn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -187245,11 +187255,11 @@ alM
 oxO
 ffe
 lVs
-abe
-abe
+kog
+kog
 biI
-abe
-abe
+kog
+kog
 eOS
 eGN
 wva
@@ -187502,11 +187512,11 @@ alM
 oxO
 ffe
 qGe
-abe
+kog
 cku
 uUn
 xNa
-abe
+kog
 eOS
 vIk
 abe
@@ -187759,11 +187769,11 @@ alM
 oxO
 ffe
 viR
-abe
-abe
+kog
+kog
 bOT
-abe
-abe
+kog
+kog
 eLb
 tkP
 abe
@@ -188015,13 +188025,13 @@ iDt
 alM
 nsp
 ffe
-qLY
-ctF
+exR
+kwa
 uHS
 ujp
-abe
-ctF
-qLY
+kog
+kwa
+exR
 qLY
 wva
 abe

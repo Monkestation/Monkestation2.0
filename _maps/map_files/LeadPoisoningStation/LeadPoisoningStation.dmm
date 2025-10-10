@@ -4669,7 +4669,7 @@
 	invisibility = 101
 	},
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "cvt" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
@@ -11685,7 +11685,7 @@
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fLa" = (
 /obj/machinery/disposal/delivery_chute{
 	name = "Critically Wounded Dropoff Point"
@@ -11696,7 +11696,7 @@
 "fLl" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fLu" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -12227,7 +12227,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fWz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13298,7 +13298,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gxA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14522,7 +14522,7 @@
 /area/station/commons/lounge)
 "hcY" = (
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hdj" = (
 /mob/living/basic/carp/mega,
 /turf/open/floor/plating,
@@ -20639,7 +20639,7 @@
 "jSL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jSN" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -21891,7 +21891,7 @@
 "kxO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kxT" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -25268,7 +25268,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mdh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -30059,7 +30059,7 @@
 /obj/structure/cable,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "opH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30299,7 +30299,7 @@
 	invisibility = 101
 	},
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "owq" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -31120,7 +31120,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "oTk" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -36741,7 +36741,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rEx" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/closet_empty/crate,
@@ -45685,7 +45685,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vPU" = (
 /obj/machinery/light/directional/east,
 /obj/structure/sign/directions/cryo/directional/east{
@@ -47889,6 +47889,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/maintenance/fore/lesser)
+"wSl" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "wSt" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -48146,7 +48149,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "wZi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69504,14 +69507,14 @@ sjg
 mWZ
 sjg
 sjg
-sjg
+wSl
 opC
 gxw
 rEe
 vPP
 ovR
 opC
-sjg
+wSl
 cvx
 dyZ
 sbq
@@ -69761,14 +69764,14 @@ uxP
 ula
 uxP
 vrM
-sjg
-sjg
-sjg
+wSl
+wSl
+wSl
 hcY
 kxO
 cuZ
-sjg
-sjg
+wSl
+wSl
 wAS
 dyZ
 ftF
@@ -70018,14 +70021,14 @@ vWW
 sIb
 lGG
 pFO
-sjg
+wSl
 hcY
 mdd
 jSL
 kxO
 fWs
 hcY
-sjg
+wSl
 aQP
 shb
 sbq
@@ -70275,14 +70278,14 @@ pbL
 mct
 pbL
 snF
-sjg
+wSl
 oSS
 jSL
 fLl
 wZc
 hcY
 hcY
-sjg
+wSl
 sbq
 sbq
 sbq
@@ -70532,14 +70535,14 @@ sjg
 mWZ
 sjg
 sjg
-sjg
+wSl
 hcY
 hcY
 fKW
 hcY
 hcY
 hcY
-sjg
+wSl
 dyZ
 dyZ
 sbq
@@ -70789,14 +70792,14 @@ tWc
 xID
 hrd
 mph
-sjg
-sjg
+wSl
+wSl
 hcY
 hcY
 hcY
-sjg
-sjg
-sjg
+wSl
+wSl
+wSl
 sqs
 cPS
 sbq
@@ -71047,11 +71050,11 @@ ycm
 tto
 pJu
 gfR
-sjg
-sjg
-sjg
-sjg
-sjg
+wSl
+wSl
+wSl
+wSl
+wSl
 eOM
 dju
 dju
