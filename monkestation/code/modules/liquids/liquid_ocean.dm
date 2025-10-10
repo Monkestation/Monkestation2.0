@@ -101,6 +101,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	/// do we build a catwalk or plating with rods
 	var/catwalk = FALSE
+	/// List of weakrefs to doors we're tracking.
+	var/list/registered_doors
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
@@ -121,42 +123,50 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 
 /turf/open/floor/plating/ocean/Destroy()
-	. = ..()
-	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
 	SSliquids.active_ocean_turfs -= src
 	SSliquids.ocean_turfs -= src
-	for(var/turf/open/floor/plating/ocean/listed_ocean in ocean_turfs)
-		listed_ocean.rebuild_adjacent()
+	for(var/datum/weakref/door_weakref as anything in registered_doors)
+		var/obj/machinery/door/door = door_weakref?.resolve()
+		if(door)
+			UnregisterSignal(door, COMSIG_ATOM_DOOR_OPEN)
+	LAZYNULL(registered_doors)
+	for(var/turf/adjacent_turf as anything in RANGE_TURFS(1, src) - src)
+		UnregisterSignal(adjacent_turf, list(COMSIG_TURF_UPDATE_AIR, COMSIG_TURF_DESTROY))
+		if(isoceanturf(adjacent_turf))
+			var/turf/open/floor/plating/ocean/adjacent_ocean = adjacent_turf
+			adjacent_ocean.rebuild_adjacent()
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
+	return ..()
 
 /turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		if (R.get_amount() < 2)
+		var/obj/item/stack/rods/rods = C
+		if (rods.get_amount() < 2)
 			to_chat(user, span_warning("You need two rods to make a [catwalk ? "catwalk" : "plating"]!"))
 			return
+		to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
+		if(!do_after(user, 3 SECONDS, target = src))
+			return
+		if(!rods.use(2))
+			return
+		if(catwalk)
+			to_chat(user, span_notice("You build a catwalk over \the [src]."))
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			new /obj/structure/lattice/catwalk(src)
 		else
-			to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
-			if(do_after(user, 3 SECONDS, target = src))
-				if (R.get_amount() >= 2 && !catwalk)
-					PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-					R.use(2)
-					to_chat(user, span_notice("You reinforce the [src]."))
-				else if(R.get_amount() >= 2 && catwalk)
-					new /obj/structure/lattice/catwalk(src)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-					R.use(2)
-					to_chat(user, span_notice("You build a catwalk over the [src]."))
+			to_chat(user, span_notice("You reinforce \the [src]."))
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
-	if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
+	else if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			qdel(C)
 			new /obj/structure/trench_ladder(src)
 
-	if(istype(C, /obj/item/mining_charge) && !catwalk)
+	else if(istype(C, /obj/item/mining_charge) && !catwalk)
 		to_chat(user, span_notice("You begin laying down a breaching charge..."))
 		if(do_after(user, 1.5 SECONDS, target = src))
 			var/obj/item/mining_charge/boom = C
@@ -194,6 +204,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 				var/obj/machinery/door/found_door = locate(/obj/machinery/door) in directional_turf
 				if(found_door)
 					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, PROC_REF(door_opened))
+					LAZYADD(registered_doors, WEAKREF(found_door))
 				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 				continue
 			else
