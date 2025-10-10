@@ -1109,7 +1109,7 @@
 
 /datum/id_trim/job/shaft_miner/refresh_trim_access()
 	. = ..()
-	if(SSmapping.is_planetary())
+	if(. && SSmapping.is_planetary())
 		access |= list(ACCESS_EXTERNAL_AIRLOCKS)
 
 /// ID card obtained from the mining Disney dollar points vending machine.
