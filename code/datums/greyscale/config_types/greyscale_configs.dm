@@ -1355,5 +1355,5 @@
 
 /datum/greyscale_config/green_jester_shoes_worn
 	name = "green_jester_shoes"
-	icon_file = 'monkestation/icons/obj/clothing/feet.dmi'
+	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'
