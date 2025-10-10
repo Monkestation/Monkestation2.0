@@ -2,6 +2,15 @@
 "ac" = (
 /turf/open/floor/circuit,
 /area/mine/maintenance/service/comms)
+"bn" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "bq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/plating,
@@ -20,6 +29,15 @@
 "cQ" = (
 /obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
+"du" = (
+/obj/structure/fans/tiny/forcefield{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "en" = (
@@ -640,7 +658,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/structure/fans/tiny/forcefield{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
@@ -989,6 +1007,16 @@
 /obj/structure/marker_beacon/yellow,
 /turf/open/floor/plating/ocean/plating_real,
 /area/ocean/dark)
+"XV" = (
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/structure/fans/tiny/forcefield{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external/glass{
+	name = "Mining External Airlock"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/mine/production)
 "Yf" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
@@ -20756,7 +20784,7 @@ uT
 qu
 qD
 uT
-Fm
+XV
 Fm
 uT
 qD
@@ -21777,8 +21805,8 @@ ac
 ac
 BJ
 uT
-Gr
-Gr
+du
+bn
 uT
 qu
 qu
