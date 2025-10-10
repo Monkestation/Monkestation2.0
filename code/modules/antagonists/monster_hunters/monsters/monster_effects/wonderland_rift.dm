@@ -98,6 +98,7 @@
 	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new(user)
 	silverblood.StartCooldown()
 	silverblood.Grant(user)
+	hunter_antag.powers += silverblood
 
 /datum/atom_hud/alternate_appearance/basic/bnnuy_rift
 	add_ghost_version = TRUE

@@ -6,6 +6,7 @@
 	cooldown_time = 2 MINUTES
 	item_type = /obj/item/ammo_casing/silver
 	spell_requirements = NONE
+	antimagic_flags = NONE
 	delete_old = FALSE
 
 /datum/action/cooldown/spell/blood_silver/conjure_item/cast(mob/living/carbon/cast_on)
