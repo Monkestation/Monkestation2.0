@@ -295,7 +295,7 @@
 	/// Minimum time between repairs in seconds
 	var/repair_cooldown = 4
 	var/on = FALSE
-	var/powercost = 10
+	var/energy_cost = 0.01 * STANDARD_CELL_CHARGE
 	var/datum/action/toggle_action
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R, user = usr)
@@ -355,7 +355,7 @@
 			deactivate_sr()
 			return
 
-		if(cyborg.cell.charge < powercost * 2)
+		if(cyborg.cell.charge < energy_cost * 2)
 			to_chat(cyborg, span_alert("Self-repair module deactivated. Please recharge."))
 			deactivate_sr()
 			return
@@ -363,14 +363,14 @@
 		if(cyborg.health < cyborg.maxHealth)
 			if(cyborg.health < 0)
 				repair_amount = -2.5
-				powercost = 30
+				energy_cost = 0.03 * STANDARD_CELL_CHARGE
 			else
 				repair_amount = -1
-				powercost = 10
+				energy_cost = 0.01 * STANDARD_CELL_CHARGE
 			cyborg.adjustBruteLoss(repair_amount)
 			cyborg.adjustFireLoss(repair_amount)
 			cyborg.updatehealth()
-			cyborg.cell.use(powercost)
+			cyborg.cell.use(0.005 * STANDARD_CELL_CHARGE)
 		else
 			cyborg.cell.use(5)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds

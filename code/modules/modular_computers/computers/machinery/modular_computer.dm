@@ -30,9 +30,9 @@
 	///Light luminosity when turned on
 	var/light_strength = 2
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 500
+	var/base_active_power_usage = 50 WATTS
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
-	var/base_idle_power_usage = 100
+	var/base_idle_power_usage = 10 WATTS
 
 	///CPU that handles most logic while this type only handles power and other specific things.
 	var/obj/item/modular_computer/processor/cpu
