@@ -50,10 +50,13 @@
 	if(!istype(weapon, /obj/item/melee/trick_weapon))
 		to_chat(user, span_warning("You must use your hunter weapon in order to tear open the wonderland rift!"))
 		return
+	ADD_TRAIT(user, TRAIT_PUSHIMMUNE, REF(src)) // gonna have to try a bit harder than that to interrupt them
 	balloon_alert(user, "opening rift!")
 	user.visible_message(span_danger("[user] stabs \the [weapon] into the ground, beginning to slice through something unseen!"))
 	if(!do_after(user, 10 SECONDS, src))
+		REMOVE_TRAIT(user, TRAIT_PUSHIMMUNE, REF(src))
 		return
+	REMOVE_TRAIT(user, TRAIT_PUSHIMMUNE, REF(src))
 	user.visible_message(span_danger("[user] plunges \the [weapon] deep into the ground, tearing it open!"), span_notice("You plunge \the [weapon] deep into the ground, slicing open the rift to the wonderland!"))
 	open_rift(user)
 	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT)
