@@ -18,11 +18,12 @@
 	pull_icon.screen_loc = ui_above_movement
 	hotkeybuttons += pull_icon
 
-	using = new/atom/movable/screen/language_menu(null, src)
+	using = new /atom/movable/screen/language_menu(null, src)
 	using.screen_loc = ui_alien_larva_language_menu
 	static_inventory += using
 
 	using = new /atom/movable/screen/navigate(null, src)
+	using.icon = ui_style
 	using.screen_loc = ui_alien_larva_navigate_menu
 	static_inventory += using
 
