@@ -19,11 +19,11 @@
 	hotkeybuttons += pull_icon
 
 	using = new/atom/movable/screen/language_menu(null, src)
-	using.screen_loc = ui_alien_language_menu
+	using.screen_loc = ui_alien_larva_language_menu
 	static_inventory += using
 
 	using = new /atom/movable/screen/navigate(null, src)
-	using.screen_loc = ui_alien_navigate_menu
+	using.screen_loc = ui_alien_larva_navigate_menu
 	static_inventory += using
 
 	zone_select = new /atom/movable/screen/zone_sel/alien(null, src)

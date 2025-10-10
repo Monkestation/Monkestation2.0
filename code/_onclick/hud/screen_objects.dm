@@ -129,8 +129,9 @@
 /atom/movable/screen/navigate
 	name = "navigate"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "navigate"
-	screen_loc = ui_navigate_menu
+	icon_state = "act_nav"
+	base_icon_state = "act_nav"
+	screen_loc = ui_above_movement
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/navigate/Click()
@@ -138,6 +139,13 @@
 		return TRUE
 	var/mob/living/navigator = usr
 	navigator.navigate()
+
+/atom/movable/screen/navigate/update_icon_state()
+	if(length(hud?.mymob?.client?.navigation_images))
+		icon_state = "[base_icon_state]_on"
+	else
+		icon_state = base_icon_state
+	return ..()
 
 /atom/movable/screen/craft
 	name = "crafting menu"
@@ -416,10 +424,8 @@
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
-		if(MOVE_INTENT_RUN)
+		if(MOVE_INTENT_RUN, MOVE_INTENT_SPRINT)
 			icon_state = "running"
-		if(MOVE_INTENT_SPRINT)
-			icon_state = "sprinting"
 	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
@@ -1108,5 +1114,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(!isliving(source))
 		return
 	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
+
+
 
 #undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT
