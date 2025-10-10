@@ -343,3 +343,44 @@ SUBSYSTEM_DEF(research)
 	if(captive_team)
 		return 1 + captive_team.captive_xenos
 	return 1
+
+/**
+ * Goes through all techwebs and goes through their servers to find ones on a valid z-level
+ * Returns the full list of all techweb servers.
+ */
+/datum/controller/subsystem/research/proc/get_available_servers(turf/location)
+	var/list/local_servers = list()
+	if(!location)
+		return local_servers
+	for (var/datum/techweb/individual_techweb as anything in techwebs)
+		var/list/servers = find_valid_servers(location, individual_techweb)
+		if(length(servers))
+			local_servers += servers
+	return local_servers
+
+/**
+ * Goes through an individual techweb's servers and finds one on a valid z-level
+ * Returns a list of existing ones, or an empty list otherwise.
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/controller/subsystem/research/proc/find_valid_servers(turf/location, datum/techweb/checking_web)
+	var/list/valid_servers = list()
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), location))
+			continue
+		valid_servers += server
+	return valid_servers
+
+/// Returns true if you can make an anomaly core of the provided type
+/datum/controller/subsystem/research/proc/is_core_available(core_type)
+	if (!ispath(core_type, /obj/item/assembly/signaler/anomaly))
+		return FALSE // The fuck are you checking this random object for?
+	var/already_made = created_anomaly_types[core_type] || 0
+	var/hard_limit = anomaly_hard_limit_by_type[core_type]
+	return already_made < hard_limit
+
+/// Increase our tracked number of cores of this type
+/datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
+	var/existing = created_anomaly_types[core_type] || 0
+	created_anomaly_types[core_type] = existing + 1
