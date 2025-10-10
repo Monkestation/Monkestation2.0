@@ -11,7 +11,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MAJOR_VERSION 5
+#define DB_MAJOR_VERSION 6
 
 /**
  * DB minor schema version
@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 28 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 0 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -183,7 +183,6 @@
 #define INIT_ORDER_ICON_SMOOTHING -7
 #define INIT_ORDER_OVERLAY -8
 #define INIT_ORDER_XKEYSCORE -10
-#define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_STARLIGHT -21
 #define INIT_ORDER_OUTDOOR_EFFECTS -22
@@ -214,6 +213,7 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_POLLUTION 18
+#define FIRE_PRIORITY_LIQUID_TURFS 19
 #define FIRE_PRIORITY_WET_FLOORS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20

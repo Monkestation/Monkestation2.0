@@ -830,6 +830,19 @@
 	tastes = list("vanilla" = 1, "clouds" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
 
+/obj/item/food/smothe
+	name = "s'mothe"
+	desc = "A campfire classic. Great alternative to a fire extinguisher when the engine is on fire."
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "smothe"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 14,
+		/datum/reagent/consumable/sugar = 7,
+		/datum/reagent/consumable/coco = 2,
+	)
+	tastes = list("childhood memories" = 1, "clouds" = 1, "chocolate" = 1)
+	foodtypes = VEGETABLES | SUGAR | GRAIN
+
 //misc food
 /obj/item/food/bubblegum/wake_up
 	name = "wake-up gum"

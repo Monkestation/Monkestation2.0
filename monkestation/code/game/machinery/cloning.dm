@@ -136,12 +136,12 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
+/obj/machinery/clonepod/proc/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
 		return NONE
-	if(!isnull(mrace) && (mrace::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
+	if(!isnull(dna.species) && (dna.species::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
 		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
@@ -165,12 +165,22 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, null, clonename, blood_type, mrace, features)
+	dna.copy_dna(H.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	for(var/datum/mutation/mutation in mutations)
+		var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
+		if(!length(valid_sources))
+			continue
+		H.dna.add_mutation(mutation, valid_sources)
+
+	H.domutcheck()
+	H.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+
+	H.underwear = underwear // Clones all have the same underwear, to make them more identical.
+	H.undershirt = undershirt
+	H.socks = socks
 
 	if(!HAS_TRAIT(H, TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
-		if(efficiency > 2)
-			var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-			H.dna.remove_mutation_group(unclean_mutations)
 		if(efficiency > 5 && prob(20))
 			H.easy_random_mutate(POSITIVE)
 		if(efficiency < 3 && prob(50))

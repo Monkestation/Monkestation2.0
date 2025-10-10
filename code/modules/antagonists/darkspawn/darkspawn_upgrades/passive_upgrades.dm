@@ -139,9 +139,6 @@
 /datum/psi_web/fast_cooldown/on_loss()
 	REMOVE_TRAIT(shadowhuman, TRAIT_FAST_COOLDOWNS, type)
 
-////////////////////////////////////////////////////////////////////////////////////
-//--------------------------Fighter Passive Upgrades------------------------------//
-////////////////////////////////////////////////////////////////////////////////////
 /datum/psi_web/sunglasses
 	name = "Lightblind Sigil"
 	desc = "Protects you from strong flashes of light."
@@ -149,13 +146,17 @@
 	icon_state = "light_blind"
 	willpower_cost = 1
 	menu_tab = STORE_PASSIVE
-	shadow_flags = DARKSPAWN_FIGHTER
+	shadow_flags = ALL_DARKSPAWN_CLASSES
 
 /datum/psi_web/sunglasses/on_gain()
 	ADD_TRAIT(shadowhuman, TRAIT_NOFLASH, type)
 
 /datum/psi_web/sunglasses/on_loss()
 	REMOVE_TRAIT(shadowhuman, TRAIT_NOFLASH, type)
+
+////////////////////////////////////////////////////////////////////////////////////
+//--------------------------Fighter Passive Upgrades------------------------------//
+////////////////////////////////////////////////////////////////////////////////////
 
 //Halves lightburn damage.
 /datum/psi_web/light_resistance

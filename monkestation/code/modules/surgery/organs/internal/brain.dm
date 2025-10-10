@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(slime_voice)
 		if(!voice)
 			voice = new
-		slime_voice.copy_from(slime_voice)
+		voice.copy_from(slime_voice)
 
 ///////
 /// CORE EJECTION PROC
