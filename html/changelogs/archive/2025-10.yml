@@ -338,8 +338,17 @@
   - bugfix: Multi-cell charging racks now use power from the grid like normal cell
       chargers do, instead of rapidly draining the APC.
   - bugfix: Fixed slime cores not properly saving/restoring voices.
+  - bugfix: Fixed the cursed katana's combo attacks not working.
+  CannibalHunter:
+  - rscadd: '[Donator] Bullke''s Invincible Outfit'
   LassiH:
   - balance: every darkspawn class can now get lightblind sigils
+  LettuceGuardian:
+  - qol: Bunches up the specialty armour plates+helmets into their respective crates,
+      prices adjusted accordingly.
+  - balance: Ash chance is more reasonable, lowered to 20%.
+  Singul0:
+  - bugfix: Suppressors actually works now
   Sorenon:
   - bugfix: fixed the antag selection preference page not having a scroll bar
   SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
@@ -370,6 +379,11 @@
       coils)
   - bugfix: inserting a material sheet into an lathes should show the correct animation
       color
+  Uristthedorf:
+  - rscadd: Cloning now copies your underwear.
+  - bugfix: Cloning is more accurate, rejoice lizards.
+  - bugfix: Mutations now work in clones even if the original body is destroyed.
+  - balance: more accurate cloning also means copying mutations.
   flleeppyy:
   - rscadd: Statpanel now shows if players can see you as a ghost.
   - rscadd: As a ghost, examining a mob will show you if you're visible to them or
@@ -384,3 +398,52 @@
   - map: Ice box arrivals and dorms are slightly less hallway heavy for it's distro
   - map: Heliostation primary R&D airlock has science access akin to the surrounding
       doors.
+2025-10-10:
+  Absolucy:
+  - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
+      it prints out a whole stack of cables.
+  - qol: You can now search for specific signal names in the GPS's UI.
+  Coll6:
+  - bugfix: Mortar an pestle, piggyback riding, and the processor console.
+  MrMelbert:
+  - code_imp: Adds a unit test for chair buckling
+  TheColorCyan:
+  - qol: (ghost) Gives Health sensor assemblies a UI so its easier to use.
+  - bugfix: fixes clock cult abilities using too little power
+  - bugfix: fixes clock cult regenerating and getting too little power from integration
+      cogs
+  - bugfix: clock sense no longer displays only half of the available power
+  - bugfix: fixes drying racks spitting out matter bins on deconstruction
+  - bugfix: fixes unusuals being unable to be disabled
+  ThePooba:
+  - bugfix: interacting with shallow puddles now does stuff (walking without shoes
+      and slipping into it)
+  - rscadd: you can now craft the raised and lowered tiles for liquids
+  - bugfix: coffin invisibility
+  - bugfix: tempgun hot and cold mode not having an effect
+  - bugfix: the cryo and pyro pistols now work as intended and do damage
+  Xander3359:
+  - bugfix: Fixed mech chargers not giving enough charge to charge a mech
+  - bugfix: (Melbert) Dragging defibs and modsuits off your back works again
+  - bugfix: (SyncIt21) actions buttons can be dragged anywhere again
+  - balance: (necromanceranne) Gravity anomalies can be properly clicked. Rather than
+      chain stunning you, the anomaly will knock you down. You can avoid the negatives
+      of gravity anomalies by wearing magboots. (Yes, it did not really protect you
+      until now)
+  - balance: (necromanceranne) Flux anomalies detonate in a much smaller explosion,
+      but release a wide EMP as well.
+  - balance: (necromanceranne) Long range gas analyzers can now scan anomalies.
+  - spellcheck: (lelandkemble) whispering now spelled correctly
+  - balance: (Ghommie) airlocks affected by dimensional anomalies retain their access,
+      as well as access-adjacent attributes such as emergency access and unrestricted
+      sides.
+  - bugfix: (Ghommie) Bluespace anomalies should no longer teleport 'un-teleportable'
+      mobs like anchored AIs or megafauna.
+  - bugfix: (Jacquerel) Neutralising an anomaly cannot produce more anomaly cores
+      than are supposed to exist in a single round
+  - code_imp: (SyncIt21) removes a redundant var from anomaly effects
+  - bugfix: (SyncIt21) Fixes runtimes for some anomaly effects
+  flleeppyy:
+  - sound: tank dispensers now have noises.
+  - code_imp: changed the pull request templating to include testing, and pre-merge
+      checklist

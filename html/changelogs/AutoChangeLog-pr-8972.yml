@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Holy water processes in synthetic mobs, meaning they can now be deconverted"

@@ -1,0 +1,8 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Chicken scanners are now printable, and unlocked same time plant scanners are."
+  - code_imp: "Chicken scanners node now have correct sorting flags"
+  - map: "Extended the decal of caution across the chicken room"
+  - map: "Icebox chicken room has chicken scanners"
+  - map: "Icebox botany/chicken room distro been cleaned to use less piping."
