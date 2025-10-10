@@ -1026,3 +1026,10 @@
 	item_path =/obj/item/clothing/shoes/invicible_invisible
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+// MrBagHead
+/datum/loadout_item/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	item_path = /obj/item/clothing/mask/mrbaghead
+	donator_only = TRUE
+	requires_purchase = FALSE
