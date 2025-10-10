@@ -137,9 +137,9 @@
 	blood_level_gain_amount += 1 // Increments the variable that makes future levels more expensive
 
 /datum/antagonist/bloodsucker/proc/get_level_cost()
-	var/level_cost = (0.25 + (0.05 * blood_level_gain_amount))
+	var/level_cost = (0.3 + (0.05 * blood_level_gain_amount))
 	level_cost = min(level_cost, BLOOD_LEVEL_GAIN_MAX)
-	level_cost = max_blood_volume * level_cost
+	level_cost = ((BLOODSUCKER_MAX_BLOOD_DEFAULT * 1.5) + (blood_level_gain_amount * BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP)) * level_cost
 	return level_cost
 
 /// Animates the power icon above the vampire's head. Returns a reference to the icon to remove it later.

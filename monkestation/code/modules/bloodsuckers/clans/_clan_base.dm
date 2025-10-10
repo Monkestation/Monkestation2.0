@@ -199,20 +199,21 @@
 		spend_rank(source, target, cost_rank, blood_cost)
 
 /datum/bloodsucker_clan/proc/finalize_spend_rank(datum/antagonist/bloodsucker/source, cost_rank = TRUE, blood_cost)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/datum/action/cooldown/bloodsucker/power as anything in source.powers)
 		if(power.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			power.upgrade_power()
 
-	bloodsuckerdatum.bloodsucker_regen_rate += 0.05
-	bloodsuckerdatum.max_blood_volume += 100
+	bloodsuckerdatum.bloodsucker_regen_rate += BLOODSUCKER_REGEN_INCREASE_ON_RANKUP
+	bloodsuckerdatum.max_blood_volume += BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP
 
 	for(var/limb_slot in bloodsuckerdatum.affected_limbs)
 		var/obj/item/bodypart/limb = bloodsuckerdatum.affected_limbs[limb_slot]
 		if(QDELETED(limb))
 			continue
-		// This affects the hitting power of Brawn.
-		limb.unarmed_damage_high += 0.5
-		limb.unarmed_damage_high += 0.5
+		// This affects the hitting power of regular unarmed attacks and Brawn.
+		limb.unarmed_damage_high += BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP
 
 	// We're almost done - Spend your Rank now.
 	bloodsuckerdatum.bloodsucker_level++

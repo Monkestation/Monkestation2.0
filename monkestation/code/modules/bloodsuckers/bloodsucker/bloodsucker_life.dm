@@ -38,9 +38,14 @@
 /**
  * ## BLOOD STUFF
  */
+
+///Adds value to the bloodsucker's current blood volume, making sure not to exceed the maximum. Triggers overfeed healing if exceeding.
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
-	bloodsucker_blood_volume = clamp(bloodsucker_blood_volume + value, 0, max_blood_volume * 2)
-	blood_over_cap = max(bloodsucker_blood_volume - max_blood_volume, 0) // Gets how much blood we have over the cap.
+	bloodsucker_blood_volume += value
+	if (bloodsucker_blood_volume > max_blood_volume)
+		var/extra_blood = max_blood_volume - bloodsucker_blood_volume
+		bloodsucker_blood_volume = max_blood_volume
+		OverfeedHealing(extra_blood)
 
 /datum/antagonist/bloodsucker/proc/AddHumanityLost(value)
 	if(humanity_lost >= 500)
@@ -67,9 +72,8 @@
 	if(!ishuman(target)) // Penalty for Non-Human Blood
 		blood_taken /= 2
 	//if (!iscarbon(target)) // Penalty for Animals (they're junk food)
-	// Apply to Volume
+	// Apply to Volume and do overfeed healing if we are over the cap.
 	AddBloodVolume(blood_taken)
-	OverfeedHealing(blood_taken)
 	// Reagents (NOT Blood!)
 	if(target.reagents?.total_volume)
 		target.reagents.trans_to(owner.current, INGEST, 1) // Run transfer of 1 unit of reagent from them to me.
@@ -109,8 +113,6 @@
 	var/bruteheal = min(user.getBruteLoss_nonProsthetic(), actual_regen) // BRUTE: Always Heal
 	var/fireheal = 0 // BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 	// Checks if you're in a coffin here, additionally checks for Torpor right below it.
-	if (blood_over_cap > 0)
-		costMult += round(blood_over_cap / 1000, 0.1) // effectively 1 (normal) + 0.1 for every 100 blood you are over cap
 	if(in_torpor)
 		if(in_coffin)
 			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, bloodsucker_spam_healing)))
@@ -138,16 +140,16 @@
 // Manages healing if we are exceeding blood cap
 /datum/antagonist/bloodsucker/proc/OverfeedHealing(drunk_blood)
 	var/mob/living/carbon/user = owner.current
-	if(blood_over_cap > 0) //Checks if you are over your blood cap
-		var/overbruteheal = user.getBruteLoss_nonProsthetic()
-		var/overfireheal = user.getFireLoss_nonProsthetic()
-		var/heal_amount = drunk_blood / 3
-		if(overbruteheal > 0 && heal_amount > 0)
-			user.adjustBruteLoss(-heal_amount, forced=TRUE) // Heal BRUTE / BURN in random portions throughout the body; prioritising BRUTE.
-			heal_amount = (heal_amount - overbruteheal) // Removes the amount of BRUTE we've healed from the heal amount
-		else if(overfireheal > 0 && heal_amount > 0)
-			heal_amount /= 1.5 // Burn should be more difficult to heal
-			user.adjustFireLoss(-heal_amount, forced=TRUE)
+
+	var/overbruteheal = user.getBruteLoss_nonProsthetic()
+	var/overfireheal = user.getFireLoss_nonProsthetic()
+	var/heal_amount = drunk_blood / 3
+	if(overbruteheal > 0 && heal_amount > 0)
+		user.adjustBruteLoss(-heal_amount, forced=TRUE) // Heal BRUTE / BURN in random portions throughout the body; prioritising BRUTE.
+		heal_amount = (heal_amount - overbruteheal) // Removes the amount of BRUTE we've healed from the heal amount
+	else if(overfireheal > 0 && heal_amount > 0)
+		heal_amount /= 1.5 // Burn should be more difficult to heal
+		user.adjustFireLoss(-heal_amount, forced=TRUE)
 
 /datum/antagonist/bloodsucker/proc/check_limbs(costMult = 1)
 	var/limb_regen_cost = 50 * -costMult
@@ -272,11 +274,8 @@
 		additional_regen = 0.3
 	else if(bloodsucker_blood_volume < BS_BLOOD_VOLUME_MAX_REGEN)
 		additional_regen = 0.4
-	else if(bloodsucker_blood_volume < max_blood_volume)
+	else if(bloodsucker_blood_volume <= max_blood_volume)
 		additional_regen = 0.5
-	else if(bloodsucker_blood_volume > max_blood_volume)
-		additional_regen = 1 + round((blood_over_cap / 1000) * 2, 0.1)
-		AddBloodVolume(-1 - blood_over_cap / 100)
 
 /// Makes your blood_volume look like your bloodsucker blood, unless you're Masquerading.
 /datum/antagonist/bloodsucker/proc/update_blood()

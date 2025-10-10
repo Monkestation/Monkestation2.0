@@ -1,3 +1,8 @@
+#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
+#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.04
+#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 1
+
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -14,7 +19,7 @@
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
-	var/max_blood_volume = 600
+	var/max_blood_volume = BLOODSUCKER_MAX_BLOOD_DEFAULT
 
 	var/datum/bloodsucker_clan/my_clan
 
@@ -58,7 +63,6 @@
 	var/bloodsucker_level_unspent = 1
 	var/sol_levels_remaining = 6
 	var/additional_regen
-	var/blood_over_cap = 0
 	var/bloodsucker_regen_rate = 0.3
 
 	// Used for Bloodsucker Objectives

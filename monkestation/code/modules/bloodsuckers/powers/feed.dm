@@ -1,5 +1,7 @@
 #define FEED_NOTICE_RANGE 5
-#define FEED_DEFAULT_TIMER (10 SECONDS)
+
+///The default timer for feed at power level 1 (i.e. bloodsucker rank 0, before they have spent their first free level)
+#define FEED_DEFAULT_TIMER (4 SECONDS)
 
 /datum/action/cooldown/bloodsucker/feed
 	name = "Feed"
@@ -101,10 +103,13 @@
 		DeactivatePower()
 		feed_target.death()
 		return
-	var/feed_timer = clamp(round(FEED_DEFAULT_TIMER / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIMER)
+
+	var/feed_timer
 	if(bloodsuckerdatum_power.frenzied)
 		feed_timer = 2 SECONDS
 		started_frenzied = TRUE
+	else
+		feed_timer = clamp(floor((FEED_DEFAULT_TIMER + 0.5 SECONDS) - (0.5 SECONDS * level_current)), 2 SECONDS, FEED_DEFAULT_TIMER)
 
 	//Everyone around us can tell we are using feed.
 	playsound(owner.loc, 'sound/machines/chime.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
