@@ -420,6 +420,9 @@
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")
 
+	if((isobserver(user) || isrevenant(user)) && user.invisibility <= see_invisible)
+		. += span_revennotice("[t_He] can see you!<br>")
+
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))
 		. += trait_exam

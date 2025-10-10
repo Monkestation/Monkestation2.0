@@ -2439,6 +2439,9 @@
 /obj/item/pickaxe,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard)
+"aKG" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "aKI" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -6177,7 +6180,7 @@
 "bXa" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bXb" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
@@ -13344,7 +13347,7 @@
 "egE" = (
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "egO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -16684,6 +16687,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fkW" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "flj" = (
 /obj/structure/table/glass,
 /obj/item/storage/belt/medical{
@@ -20263,7 +20269,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gpL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
@@ -30238,7 +30244,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jhS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -32028,7 +32034,7 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jNn" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/rust,
@@ -44075,7 +44081,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nHv" = (
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/closed/wall/r_wall,
@@ -47500,7 +47506,7 @@
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "oQv" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	pixel_y = 9
@@ -51558,7 +51564,7 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qdT" = (
 /obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -56576,7 +56582,7 @@
 "rFr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rFt" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/medical)
@@ -57235,7 +57241,7 @@
 "rRz" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rRC" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/bot,
@@ -60252,7 +60258,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "sOq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -62833,7 +62839,7 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tGz" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -66553,7 +66559,7 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/door/firedoor,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uQS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
@@ -67225,7 +67231,7 @@
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vcL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
@@ -68408,7 +68414,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vuM" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
@@ -73340,7 +73346,7 @@
 "wRn" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "wRr" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -76443,7 +76449,7 @@
 "xRZ" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xSp" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/bot_white,
@@ -76509,7 +76515,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /obj/structure/liquid_barrier,
 /turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xTw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -77358,6 +77364,9 @@
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/r_wall,
 /area/station/security/office)
+"yfT" = (
+/turf/closed/wall/r_wall/rust,
+/area/station/science/xenobiology/cell)
 "yga" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured_large,
@@ -114430,11 +114439,11 @@ aeU
 aeU
 aeu
 aeu
-vJc
-vJc
-vJc
-vJc
-vJc
+fkW
+fkW
+fkW
+fkW
+fkW
 vJc
 ixb
 xHA
@@ -114687,11 +114696,11 @@ aeU
 aeu
 aeu
 aeu
-vJc
+fkW
 gpI
-qmW
+aKG
 vuI
-wuc
+yfT
 gZB
 pva
 bwn
@@ -114944,11 +114953,11 @@ aeU
 aeu
 aeu
 aeu
-wuc
+yfT
 egE
 oQl
-qmW
-vJc
+aKG
+fkW
 lev
 hPl
 pCg
@@ -115201,10 +115210,10 @@ aeU
 aUz
 aeu
 aeu
-vJc
-qmW
+fkW
+aKG
 bXa
-qmW
+aKG
 qdR
 lev
 pzO
@@ -115458,7 +115467,7 @@ aeU
 aeU
 aeu
 aeu
-wuc
+yfT
 vct
 rRz
 rFr
@@ -115715,10 +115724,10 @@ aaa
 aeU
 aeu
 aeu
-vJc
-qmW
+fkW
+aKG
 jNb
-qmW
+aKG
 uQF
 lev
 giI
@@ -115972,11 +115981,11 @@ aaa
 aeU
 aeu
 aeu
-vJc
+fkW
 nHi
 oQl
-qmW
-vJc
+aKG
+fkW
 lev
 hEg
 gbZ
@@ -116229,11 +116238,11 @@ aaa
 aeU
 aeu
 aeu
-vJc
+fkW
 jhN
 xRZ
 wRn
-vJc
+fkW
 aZN
 fPt
 rAD
@@ -116486,11 +116495,11 @@ aaa
 aeU
 aeU
 aeu
-vJc
-vJc
-wuc
-wuc
-vJc
+fkW
+fkW
+yfT
+yfT
+fkW
 vJc
 nOw
 xHA

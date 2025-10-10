@@ -18,12 +18,16 @@ import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Material } from './Fabrication/Types';
 
+type AutolatheDesign = Design & {
+  customMaterials: BooleanLike;
+};
+
 type AutolatheData = {
   materials: Material[];
   materialtotal: number;
   materialsmax: number;
   SHEET_MATERIAL_AMOUNT: number;
-  designs: Design[];
+  designs: AutolatheDesign[];
   active: BooleanLike;
 };
 
@@ -173,7 +177,7 @@ const PrintButton = (props: PrintButtonProps) => {
 };
 
 type AutolatheRecipeProps = {
-  design: Design;
+  design: AutolatheDesign;
   availableMaterials: MaterialMap;
   SHEET_MATERIAL_AMOUNT: number;
 };
@@ -182,7 +186,38 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
   const { act } = useBackend<AutolatheData>();
   const { design, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
-  const maxmult = design.maxmult;
+  let maxmult = 0;
+  if (design.customMaterials) {
+    const smallest_mat =
+      Object.entries(availableMaterials).reduce(
+        (accumulator: number, [material, amount]) => {
+          return Math.min(accumulator, amount);
+        },
+        Infinity,
+      ) || 0;
+
+    if (smallest_mat > 0) {
+      maxmult = Object.entries(design.cost).reduce(
+        (accumulator: number, [material, required]) => {
+          return Math.min(accumulator, smallest_mat / required);
+        },
+        Infinity,
+      );
+    } else {
+      maxmult = 0;
+    }
+  } else {
+    maxmult = Object.entries(design.cost).reduce(
+      (accumulator: number, [material, required]) => {
+        return Math.min(
+          accumulator,
+          (availableMaterials[material] || 0) / required,
+        );
+      },
+      Infinity,
+    );
+  }
+  maxmult = Math.min(Math.floor(maxmult), 50);
   const canPrint = maxmult > 0;
 
   return (
@@ -251,7 +286,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
         ])}
       >
         <Button.Input
-          content={'[Max: ' + maxmult + ']'}
+          content={`[Max: ${maxmult}]`}
           color={'transparent'}
           maxValue={maxmult}
           onCommit={(_e, value: string) =>

@@ -293,3 +293,112 @@
       chat.
   oh no froggy did another one:
   - balance: IPCs (and medibots etc. ig) can use nanites
+2025-10-08:
+  LassiH:
+  - bugfix: darkspawn invigorate thrall and elucidate applying speed boost wrong
+  Singul0:
+  - qol: Added screentips context for trash piles
+  - bugfix: Fixes being unable to hide in trash piles
+  - bugfix: Medbots and Cleanbots can now be configured properly
+  ThePooba:
+  - bugfix: fixes speed_boost status effect not working.
+  - rscadd: maintenance loot for fall/halloween
+  - rscadd: spooky gift from maint loots, trick or treat :)
+  - bugfix: trash piles can now be hid in again, also slow when walked over.
+  - bugfix: belts now have a blank null sprite for wearable so you dont get a purple
+      missing texture for having a pen on your belt
+  - rscadd: 'skeleton potion
+
+      add:cursed rune'
+  necromanceranne:
+  - balance: The various mining related suits now have consistent suit storage. Try
+      putting a knife into your explorer suit's suit storage today!
+  - balance: Bone armor work similarly to explorer suits, with similar armor values
+      and options to upgrade their parts. However, they use bone talismans instead
+      of goliath hides to upgrade. Magic? Just believing really strongly that the
+      drake is hitting you slightly less hard because of the talismans? You be the
+      judge.
+  - balance: Goliath cloaks come fully upgraded. However...
+  - balance: The recipes for bone armor and goliath cloaks are slightly different.
+      Particularly goliath cloaks, which need a lot more dead goliaths to make. Sorry.
+  - balance: Mining MODsuits achieve at maximum ash accretion the same amount of melee
+      armor as an upgraded explorer suit.
+  - balance: These various suits also consistently have wound armor.
+  - bugfix: Berserker armor properly hides underclothing and hair.
+  - balance: Berserker armor pieces can absorb drake armor to gain their enhanced
+      protection. Become the warrior of Khorne you've always wanted to be.
+  - balance: Berserker rage now halves brute damage rather than just adding Melee
+      Armor to you and your squishy body.
+  - qol: Berserker and H.E.C.K. helmets can be used for internals.
+  - rscadd: Drake armor is made use drake remains to construct. (This is a net neutral
+      to the previous recipe)
+2025-10-09:
+  Absolucy:
+  - map: Added a navigation landmark for cryo storage to Blueshift.
+  - bugfix: Multi-cell charging racks now use power from the grid like normal cell
+      chargers do, instead of rapidly draining the APC.
+  - bugfix: Fixed slime cores not properly saving/restoring voices.
+  - bugfix: Fixed the cursed katana's combo attacks not working.
+  CannibalHunter:
+  - rscadd: '[Donator] Bullke''s Invincible Outfit'
+  LassiH:
+  - balance: every darkspawn class can now get lightblind sigils
+  LettuceGuardian:
+  - qol: Bunches up the specialty armour plates+helmets into their respective crates,
+      prices adjusted accordingly.
+  - balance: Ash chance is more reasonable, lowered to 20%.
+  Singul0:
+  - bugfix: Suppressors actually works now
+  Sorenon:
+  - bugfix: fixed the antag selection preference page not having a scroll bar
+  SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
+  - refactor: lathes have been refactored, report if anything breaks
+  - code_imp: APCs can now calculate time-to-charge
+  - qol: Overloaded lathes will now tell you the wait time until they're ready to
+      print again
+  - bugfix: items that contain recursive contents inside them (like foam dart boxes
+      from autolathes) now have their custom materials set to match with its design
+      cost rather than being nullified, meaning they are now recyclable.
+  - code_imp: all custom materials are now integer values. Improved code for how materials
+      are used in techfab & auto lathe for printing
+  - qol: adds screentips & examines for screwdriver & crowbar acts & alt click.
+  - qol: techfabs can now use the mouse drop functionality to set drop target.
+  - qol: lathe printing animation plays on loop while printing rather than flicking
+      once for more visual feedback
+  - bugfix: lathe sheet insertion animations are now linked & work again for all material
+      types inserted via remote silo/local storage
+  - bugfix: printing custom materials items from autolathe works again.
+  - bugfix: printing multiple items from lathes will actually print that correct quantity
+      of items requested.
+  - bugfix: printing items the 2nd time around from lathes won't cause the UI to reload
+      each time.
+  - code_imp: autodoc for some vars & procs, merges procs.
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  - bugfix: items that get printed in stacks now actually get printed in stacks (cable
+      coils)
+  - bugfix: inserting a material sheet into an lathes should show the correct animation
+      color
+  Uristthedorf:
+  - rscadd: Cloning now copies your underwear.
+  - bugfix: Cloning is more accurate, rejoice lizards.
+  - bugfix: Mutations now work in clones even if the original body is destroyed.
+  - balance: more accurate cloning also means copying mutations.
+  flleeppyy:
+  - rscadd: Statpanel now shows if players can see you as a ghost.
+  - rscadd: As a ghost, examining a mob will show you if you're visible to them or
+      not
+  notghosti:
+  - map: Blueshift spawns correct sized asteroids
+  - map: Pubbystation now spawns asteroids at the magnet instead of telecomms, and
+      supports bigger asteroids
+  - map: Ice box gulag is now hooked to power
+  - map: Ice box security will have a flowing distro
+  - map: Ice box security - dorms Maintenace no longer has a walled off external airlock
+  - map: Ice box arrivals and dorms are slightly less hallway heavy for it's distro
+  - map: Heliostation primary R&D airlock has science access akin to the surrounding
+      doors.
+2025-10-10:
+  Absolucy:
+  - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
+      it prints out a whole stack of cables.

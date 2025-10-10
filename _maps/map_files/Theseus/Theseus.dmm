@@ -11018,7 +11018,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "dpl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11774,7 +11774,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "dyI" = (
 /obj/structure/sign/warning/no_smoking/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -12247,7 +12247,7 @@
 "dGR" = (
 /obj/structure/sign/warning/electric_shock/directional/west,
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "dGT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -17799,7 +17799,7 @@
 "fmX" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "fnk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -21051,7 +21051,7 @@
 "gmZ" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "gne" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -35324,7 +35324,7 @@
 	req_access = list("research")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "ksP" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/north,
@@ -37334,7 +37334,7 @@
 "kUz" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "kUN" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -40158,7 +40158,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "lGT" = (
 /obj/machinery/door/window/left/directional/south{
 	dir = 4;
@@ -47752,7 +47752,7 @@
 "nUq" = (
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "nUv" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
@@ -48970,7 +48970,7 @@
 /obj/effect/decal/remains/xeno,
 /obj/item/toy/toy_xeno,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "oms" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -54280,7 +54280,7 @@
 	name = "Secure Pen Shutters"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "pUt" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/cable,
@@ -58763,7 +58763,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "rgr" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/carpet,
@@ -60004,7 +60004,7 @@
 /area/station/medical/storage)
 "rxj" = (
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "rxo" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 8
@@ -61528,7 +61528,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "rTr" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -69012,6 +69012,9 @@
 /obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
+"tYZ" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "tZc" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Holodeck - Fore";
@@ -81335,7 +81338,7 @@
 "xAL" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
 /turf/open/floor/engine,
-/area/station/science/xenobiology/hallway)
+/area/station/science/xenobiology/cell)
 "xAT" = (
 /obj/structure/window/spawner/directional/east{
 	pixel_x = 2
@@ -102945,14 +102948,14 @@ xKG
 meA
 vXg
 svq
-bjo
-bjo
-bjo
-bjo
-bjo
-bjo
-bjo
-bjo
+tYZ
+tYZ
+tYZ
+tYZ
+tYZ
+tYZ
+tYZ
+tYZ
 rej
 wji
 nhC
@@ -103202,13 +103205,13 @@ nLD
 chL
 vER
 qNb
-bjo
+tYZ
 rxj
 fmX
 rxj
 fmX
 xAL
-bjo
+tYZ
 lXw
 kfq
 uiF
@@ -103459,13 +103462,13 @@ uhl
 bjo
 bjo
 bjo
-bjo
+tYZ
 nUq
 rxj
 rxj
 rxj
 rxj
-bjo
+tYZ
 eei
 yiH
 pHU
@@ -103716,13 +103719,13 @@ aoD
 bjo
 knH
 kQo
-bjo
+tYZ
 rSS
 rxj
 omq
 rxj
 rxj
-bjo
+tYZ
 biW
 otR
 wKV
@@ -103973,13 +103976,13 @@ akZ
 bjo
 pab
 jll
-bjo
+tYZ
 kUz
 rxj
 gmZ
 rxj
 kUz
-bjo
+tYZ
 kCE
 yiH
 gCN
@@ -104230,13 +104233,13 @@ qnv
 bjo
 bjo
 urX
-bjo
-bjo
+tYZ
+tYZ
 rgn
 rxj
 lGJ
-bjo
-bjo
+tYZ
+tYZ
 ukQ
 yiH
 iZm
@@ -104487,13 +104490,13 @@ uhl
 bjo
 nKg
 jJC
-bjo
+tYZ
 dGR
 dyC
 pUm
 dpd
 dGR
-bjo
+tYZ
 jcU
 yiH
 owd
