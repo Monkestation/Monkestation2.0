@@ -1347,3 +1347,13 @@
 	name = "jester"
 	icon_file = 'icons/mob/clothing/under/civilian.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jester_worn.json'
+
+/datum/greyscale_config/green_jester_shoes
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes.json'
+
+/datum/greyscale_config/green_jester_shoes_worn
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/obj/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'
