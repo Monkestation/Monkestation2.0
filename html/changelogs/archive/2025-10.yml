@@ -405,8 +405,16 @@
   - qol: You can now search for specific signal names in the GPS's UI.
   Coll6:
   - bugfix: Mortar an pestle, piggyback riding, and the processor console.
+  MrMelbert:
+  - code_imp: Adds a unit test for chair buckling
   TheColorCyan:
   - qol: (ghost) Gives Health sensor assemblies a UI so its easier to use.
+  - bugfix: fixes clock cult abilities using too little power
+  - bugfix: fixes clock cult regenerating and getting too little power from integration
+      cogs
+  - bugfix: clock sense no longer displays only half of the available power
+  - bugfix: fixes drying racks spitting out matter bins on deconstruction
+  - bugfix: fixes unusuals being unable to be disabled
   ThePooba:
   - bugfix: interacting with shallow puddles now does stuff (walking without shoes
       and slipping into it)

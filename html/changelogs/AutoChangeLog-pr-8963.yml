@@ -1,4 +1,0 @@
-author: "MrMelbert"
-delete-after: True
-changes:
-  - code_imp: "Adds a unit test for chair buckling"
