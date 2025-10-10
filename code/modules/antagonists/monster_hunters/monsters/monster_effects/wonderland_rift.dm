@@ -64,9 +64,9 @@
 
 /obj/effect/bnnuy/attack_hand(mob/living/user, list/modifiers)
 	if(user?.mind != hunter_antag.owner)
-		return SECONDARY_ATTACK_CALL_NORMAL
+		return FALSE
 	to_chat(user, span_warning("You must use your hunter weapon in order to tear open the wonderland rift!"))
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 /obj/effect/bnnuy/proc/verify_user_can_see(mob/user)
 	return (user?.mind == hunter_antag.owner)
