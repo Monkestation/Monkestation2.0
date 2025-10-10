@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "(Melbert) Dragging defibs and modsuits off your back works again"
-  - bugfix: "(SyncIt21) actions buttons can be dragged anywhere again"

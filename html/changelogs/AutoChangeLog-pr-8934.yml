@@ -1,8 +1,0 @@
-author: "ThePooba"
-delete-after: True
-changes:
-  - bugfix: "interacting with shallow puddles now does stuff (walking without shoes and slipping into it)"
-  - rscadd: "you can now craft the raised and lowered tiles for liquids"
-  - bugfix: "coffin invisibility"
-  - bugfix: "tempgun hot and cold mode not having an effect"
-  - bugfix: "the cryo and pyro pistols now work as intended and do damage"

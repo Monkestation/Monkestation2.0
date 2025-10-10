@@ -1,4 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - code_imp: "changed the pull request templating to include testing, and pre-merge checklist"
