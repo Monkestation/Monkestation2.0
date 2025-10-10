@@ -129,10 +129,10 @@ SUBSYSTEM_DEF(admin_verbs)
 		message_admins("PERMISSION ELEVATION: [key_name_admin(admin)] attempted to dynamically invoke admin verb '[verb_type]'.")
 		return
 
-	var/verb_permissions = initial(verb_type.permissions)
+	/*var/verb_permissions = initial(verb_type.permissions)
 	if(!check_rights_for(admin, verb_permissions))
 		to_chat(admin, span_red("Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(verb_permissions," ")]."), confidential = TRUE)
-		return
+		return*/
 
 	if(ismob(admin))
 		var/mob/mob = admin
