@@ -1,4 +1,0 @@
-author: "Sorenon"
-delete-after: True
-changes:
-  - bugfix: "fixed the antag selection preference page not having a scroll bar"

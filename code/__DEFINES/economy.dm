@@ -17,11 +17,6 @@
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
 
-//How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
-#define LATHE_TAX 0
-//How much POWER a borg's cell is taxed if they print something from a departmental lathe.
-#define SILICON_LATHE_TAX 2000
-
 #define STATION_TARGET_BUFFER 25
 
 ///The coefficient for the amount of dosh that's collected everytime some is earned or received.
