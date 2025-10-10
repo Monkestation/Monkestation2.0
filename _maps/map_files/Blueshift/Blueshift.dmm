@@ -7167,7 +7167,7 @@
 /obj/machinery/asteroid_magnet{
 	center_x = 58;
 	center_y = 117;
-	area_size = 3
+	area_size = 7
 	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/small,
@@ -26682,7 +26682,7 @@
 "fcE" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fcK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32806,7 +32806,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "goT" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -39798,7 +39798,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hJf" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -43628,7 +43628,7 @@
 "ivy" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ivB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/north,
@@ -48704,7 +48704,7 @@
 	network = list("ss13","xeno","rd")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jvD" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/delivery,
@@ -62058,7 +62058,7 @@
 /obj/item/beacon,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lXp" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
@@ -62178,7 +62178,7 @@
 "lYu" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lYx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -64729,6 +64729,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron,
 /area/station/common/cryopods)
 "mzp" = (
@@ -64760,7 +64761,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mzC" = (
 /obj/machinery/power/shieldwallgen/anchored{
 	shield_range = 14
@@ -82782,7 +82783,7 @@
 "qaH" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qaJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/east,
@@ -92940,7 +92941,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rXO" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -114902,6 +114903,9 @@
 	},
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
+"wdF" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "wdI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -123161,7 +123165,7 @@
 /area/station/cargo/miningoffice)
 "xHP" = (
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xHQ" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/signaler{
@@ -123958,6 +123962,9 @@
 /obj/machinery/door/firedoor/border_only,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
+"xPw" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "xPx" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/disposalpipe/segment{
@@ -219822,12 +219829,12 @@ vOt
 fDT
 fDT
 fDT
-fDT
-fDT
-fDT
-fDT
-fDT
-fDT
+xPw
+xPw
+xPw
+xPw
+xPw
+xPw
 iVF
 iVF
 gLc
@@ -220079,12 +220086,12 @@ bDn
 xoO
 qgS
 fDT
-euU
-euU
+wdF
+wdF
 jvA
-euU
-euU
-fDT
+wdF
+wdF
+xPw
 gLc
 gLc
 gLc
@@ -220340,8 +220347,8 @@ goS
 xHP
 xHP
 xHP
-euU
-fDT
+wdF
+xPw
 gLc
 gLc
 gLc
@@ -220598,7 +220605,7 @@ qaH
 lXo
 xHP
 fcE
-fDT
+xPw
 gLc
 gLc
 gLc
@@ -220854,8 +220861,8 @@ rXM
 xHP
 xHP
 xHP
-euU
-fDT
+wdF
+xPw
 gLc
 gLc
 gLc
@@ -221108,11 +221115,11 @@ xoO
 icO
 fDT
 hJb
-euU
-euU
-euU
+wdF
+wdF
+wdF
 ivy
-fDT
+xPw
 gLc
 gLc
 gLc
@@ -221364,12 +221371,12 @@ boj
 fUs
 fDT
 fDT
-fDT
+xPw
 lYu
-fDT
-fDT
-fDT
-fDT
+xPw
+xPw
+xPw
+xPw
 gLc
 gLc
 jaI

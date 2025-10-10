@@ -1118,7 +1118,7 @@
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "asM" = (
 /obj/machinery/computer/prisoner/management{
 	dir = 4
@@ -2982,7 +2982,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "aWB" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/item/clothing/head/costume/festive,
@@ -5351,7 +5351,7 @@
 /obj/item/multitool,
 /obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bPy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5847,7 +5847,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "cbr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8485,6 +8485,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
+"ddh" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "ddl" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
@@ -10276,7 +10279,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "dLq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18117,7 +18120,7 @@
 "gyK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gyQ" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance)
@@ -19086,6 +19089,10 @@
 /obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"gSd" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "gSn" = (
 /obj/item/wrench,
 /turf/open/floor/iron,
@@ -19844,7 +19851,7 @@
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hdF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/suit_storage_unit/medical,
@@ -28486,7 +28493,7 @@
 	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jQM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -29161,7 +29168,7 @@
 	},
 /obj/item/electropack,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kcF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -38599,7 +38606,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nne" = (
 /obj/structure/sign/plaques/kiddie/perfect_drone{
 	pixel_y = 32
@@ -39864,7 +39871,7 @@
 "nJr" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nJu" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -56211,6 +56218,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"tmt" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "tmz" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
@@ -57782,7 +57793,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tRm" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -68692,6 +68703,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"xFr" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "xFs" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;
@@ -69575,7 +69589,7 @@
 	},
 /obj/structure/liquid_barrier,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xWm" = (
 /obj/structure/rack,
 /obj/item/restraints/handcuffs{
@@ -119990,17 +120004,17 @@ hbK
 hbK
 mgS
 hbK
-jlU
-mtu
-mtu
-mtu
-mtu
+xFr
+ddh
+ddh
+ddh
+ddh
 gyK
-mtu
-mtu
-mtu
-mtu
-jlU
+ddh
+ddh
+ddh
+ddh
+xFr
 hbK
 mTg
 hbK
@@ -120247,17 +120261,17 @@ hbK
 tmU
 fGy
 wyo
-jlU
+xFr
 dLm
-mtu
-mtu
-mtu
+ddh
+ddh
+ddh
 gyK
-mtu
-mtu
-mtu
-mtu
-jlU
+ddh
+ddh
+ddh
+ddh
+xFr
 qgn
 mCV
 wyo
@@ -120504,17 +120518,17 @@ hbK
 pWT
 rDf
 uLa
-jlU
-eSr
-mtu
-mtu
-mtu
+xFr
+gSd
+ddh
+ddh
+ddh
 jQz
-mtu
-mtu
+ddh
+ddh
 nJr
-ljF
-jlU
+tmt
+xFr
 lUS
 pHt
 rDf
@@ -120761,17 +120775,17 @@ bPB
 hbK
 wrc
 wrc
-jlU
-mtu
-mtu
-mtu
-mtu
-mtu
-mtu
-mtu
-mtu
-mtu
-jlU
+xFr
+ddh
+ddh
+ddh
+ddh
+ddh
+ddh
+ddh
+ddh
+ddh
+xFr
 wrc
 wrc
 hbK
@@ -121018,17 +121032,17 @@ aaa
 aaa
 aaa
 lMJ
-jlU
-jlU
+xFr
+xFr
 bPu
-mtu
-mtu
+ddh
+ddh
 asL
-mtu
-mtu
+ddh
+ddh
 kcu
-jlU
-jlU
+xFr
+xFr
 lMJ
 aaa
 aaa
@@ -121276,15 +121290,15 @@ rrt
 lMJ
 lMJ
 lMJ
-jlU
-jlU
-jlU
-jlU
-jlU
-jlU
-jlU
-jlU
-jlU
+xFr
+xFr
+xFr
+xFr
+xFr
+xFr
+xFr
+xFr
+xFr
 lMJ
 aaa
 aaa
