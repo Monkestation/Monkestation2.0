@@ -6708,7 +6708,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "bpg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -10089,7 +10089,7 @@
 "bVQ" = (
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "bVU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -21921,7 +21921,7 @@
 "eiW" = (
 /obj/structure/railing,
 /turf/closed/wall,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "eiY" = (
 /obj/structure/fence/door,
 /obj/machinery/door/firedoor/border_only{
@@ -25884,7 +25884,7 @@
 /area/station/hallway/primary/central/aft)
 "eUy" = (
 /turf/closed/wall/rust,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "eUG" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
@@ -30222,7 +30222,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "fNZ" = (
 /obj/structure/filingcabinet,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
@@ -30772,7 +30772,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "fTL" = (
 /obj/structure/cable,
 /obj/structure/railing{
@@ -31621,7 +31621,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/bounty/start_closed,
 /turf/open/floor/plating,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "gcg" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/openspace,
@@ -41369,7 +41369,7 @@
 "hXD" = (
 /obj/structure/anvil,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "hXG" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -47448,7 +47448,7 @@
 /obj/structure/railing,
 /obj/effect/spawner/random/trash/graffiti,
 /turf/closed/wall/rust,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "jjf" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/east{
@@ -52168,7 +52168,7 @@
 "kaX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "kba" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57270,7 +57270,7 @@
 "lat" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/closed/wall/rust,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "laB" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -57360,7 +57360,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "lbm" = (
 /turf/open/openspace,
 /area/station/service/barber)
@@ -58378,7 +58378,7 @@
 "lkw" = (
 /obj/machinery/electroplater,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "lky" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -59665,7 +59665,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "lxT" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72161,7 +72161,7 @@
 "nWJ" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "nWK" = (
 /mob/living/basic/garden_gnome,
 /obj/structure/flora/bush/ferny/style_2,
@@ -74174,7 +74174,7 @@
 	},
 /obj/structure/curtain/bounty/start_closed,
 /turf/open/floor/iron/dark/herringbone,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "opJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/side{
@@ -76621,7 +76621,7 @@
 "oNB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "oNC" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/gambling,
@@ -76943,7 +76943,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing,
 /turf/closed/wall,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "oQQ" = (
 /obj/machinery/dish_drive/bullet,
 /obj/effect/turf_decal/delivery,
@@ -77122,7 +77122,7 @@
 	},
 /obj/structure/railing,
 /turf/closed/wall,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "oSX" = (
 /turf/open/floor/iron/dark,
 /area/station/security/corrections_officer)
@@ -82903,7 +82903,7 @@
 "qaC" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "qaH" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/green,
@@ -89735,7 +89735,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "rpz" = (
 /obj/structure/flora/tree/jungle/small,
 /obj/effect/turf_decal/weather/sand,
@@ -91823,6 +91823,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"rIW" = (
+/turf/closed/wall/r_wall,
+/area/station/cargo/warehouse)
 "rJc" = (
 /obj/machinery/camera/directional/north{
 	c_tag = " Prison - Middle";
@@ -94830,7 +94833,7 @@
 "spX" = (
 /obj/structure/machine/assembly_bench,
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "sqa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -97036,7 +97039,7 @@
 	},
 /obj/machinery/arc_forge,
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "sKD" = (
 /obj/structure/table,
 /obj/item/lighter,
@@ -100251,7 +100254,7 @@
 "tpp" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/closed/wall,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "tpx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -108953,7 +108956,7 @@
 /area/station/maintenance/department/security/lower)
 "uWp" = (
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "uWv" = (
 /turf/open/floor/iron/dark/side{
 	dir = 10
@@ -109363,6 +109366,9 @@
 "uZP" = (
 /turf/closed/wall,
 /area/station/maintenance/chicken)
+"uZQ" = (
+/turf/closed/wall,
+/area/station/cargo/warehouse)
 "uZR" = (
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
@@ -109683,7 +109689,7 @@
 	name = "Forge"
 	},
 /turf/open/floor/iron/smooth,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "vev" = (
 /obj/structure/bed/dogbed/ian,
 /mob/living/basic/pet/dog/corgi/ian,
@@ -117714,7 +117720,7 @@
 	},
 /obj/structure/railing,
 /turf/closed/wall/rust,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "wCa" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/south,
@@ -117894,7 +117900,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/structure/curtain/bounty/start_closed,
 /turf/open/floor/iron/dark/herringbone,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "wDh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -119541,7 +119547,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/cargo/warehouse/upper)
+/area/station/cargo/warehouse)
 "wTW" = (
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
@@ -169358,7 +169364,7 @@ qaC
 tpp
 eUy
 vet
-eFn
+uZQ
 lat
 bFm
 iKI
@@ -170382,7 +170388,7 @@ tjN
 tjN
 tjN
 xgx
-eql
+rIW
 wTV
 bpd
 oNB
@@ -170639,7 +170645,7 @@ pxb
 pxb
 pxb
 pxb
-eql
+rIW
 nWJ
 uWp
 oNB
@@ -170896,12 +170902,12 @@ pxb
 pxb
 pxb
 pxb
-eql
-eql
+rIW
+rIW
 gce
 gce
-eql
-eql
+rIW
+rIW
 ezw
 ezw
 ezw
