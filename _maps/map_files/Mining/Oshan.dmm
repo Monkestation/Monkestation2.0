@@ -27,8 +27,8 @@
 	},
 /area/mine/maintenance/service)
 "cQ" = (
-/obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "du" = (
@@ -289,6 +289,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
+"tw" = (
+/obj/machinery/suit_storage_unit,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "tL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -312,15 +317,15 @@
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "ul" = (
-/obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/east,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "uF" = (
-/obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "uH" = (
@@ -671,9 +676,10 @@
 /turf/open/floor/iron/white/textured,
 /area/mine/production)
 "FS" = (
-/obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron,
+/obj/machinery/suit_storage_unit,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "Gh" = (
 /obj/machinery/porta_turret/aux_base,
@@ -20005,7 +20011,7 @@ tL
 IF
 Qb
 Bh
-zo
+tw
 ML
 Lf
 FS
@@ -20262,10 +20268,10 @@ mX
 Ih
 yi
 Bh
-zo
+tw
 ML
 Lf
-zo
+tw
 MI
 qu
 qu

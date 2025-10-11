@@ -4915,9 +4915,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/item/storage/pill_bottle/mannitol{
-	pixel_x = 8;
-	pixel_y = 10
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_y = 10;
+	pixel_x = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
@@ -22410,6 +22410,10 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/reagentgrinder{
+	pixel_y = 6;
+	pixel_x = -2
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/security/prison/mess)
 "hdC" = (
@@ -32467,7 +32471,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/nestbox,
+/obj/machinery/egg_incubator,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "kqT" = (
@@ -115372,7 +115376,7 @@ pJh
 dYf
 oBr
 oBr
-btk
+oBr
 oBr
 btk
 cGU
