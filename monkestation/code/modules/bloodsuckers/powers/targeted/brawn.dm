@@ -66,7 +66,7 @@
 	if(!used && (istype(cuffs) || istype(legcuffs)))
 		if (check_level(2, "break restraints"))
 			user.visible_message(
-				span_warning("[user] discards their restraints like it's nothing!"),
+				span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
 				span_warning("We break through our restraints!"),
 			)
 			user.clear_cuffs(cuffs, TRUE)
@@ -78,7 +78,7 @@
 		if (check_level(2, "break restraints"))
 			var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 			user.visible_message(
-				span_warning("[user] rips straight through the [user.p_their()] [straightjacket]!"),
+				span_warning("[user] rips straight through [user.p_their()] [straightjacket]!"),
 				span_warning("We tear through our [straightjacket]!"),
 			)
 			user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
@@ -186,9 +186,8 @@
 		return FALSE
 	// Target Type: Living
 	if(isliving(target_atom))
-		var mob/living/user = owner
-		if (HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to harm other living beings!"))
+		if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+			to_chat(owner, span_warning("You don't want to harm other living beings!"))
 			return FALSE
 		return TRUE
 	// Target Type: Door
