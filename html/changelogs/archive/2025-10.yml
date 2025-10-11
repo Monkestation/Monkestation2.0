@@ -294,10 +294,22 @@
   oh no froggy did another one:
   - balance: IPCs (and medibots etc. ig) can use nanites
 2025-10-08:
+  LassiH:
+  - bugfix: darkspawn invigorate thrall and elucidate applying speed boost wrong
   Singul0:
   - qol: Added screentips context for trash piles
   - bugfix: Fixes being unable to hide in trash piles
   - bugfix: Medbots and Cleanbots can now be configured properly
+  ThePooba:
+  - bugfix: fixes speed_boost status effect not working.
+  - rscadd: maintenance loot for fall/halloween
+  - rscadd: spooky gift from maint loots, trick or treat :)
+  - bugfix: trash piles can now be hid in again, also slow when walked over.
+  - bugfix: belts now have a blank null sprite for wearable so you dont get a purple
+      missing texture for having a pen on your belt
+  - rscadd: 'skeleton potion
+
+      add:cursed rune'
   necromanceranne:
   - balance: The various mining related suits now have consistent suit storage. Try
       putting a knife into your explorer suit's suit storage today!
@@ -320,3 +332,142 @@
   - qol: Berserker and H.E.C.K. helmets can be used for internals.
   - rscadd: Drake armor is made use drake remains to construct. (This is a net neutral
       to the previous recipe)
+2025-10-09:
+  Absolucy:
+  - map: Added a navigation landmark for cryo storage to Blueshift.
+  - bugfix: Multi-cell charging racks now use power from the grid like normal cell
+      chargers do, instead of rapidly draining the APC.
+  - bugfix: Fixed slime cores not properly saving/restoring voices.
+  - bugfix: Fixed the cursed katana's combo attacks not working.
+  CannibalHunter:
+  - rscadd: '[Donator] Bullke''s Invincible Outfit'
+  LassiH:
+  - balance: every darkspawn class can now get lightblind sigils
+  LettuceGuardian:
+  - qol: Bunches up the specialty armour plates+helmets into their respective crates,
+      prices adjusted accordingly.
+  - balance: Ash chance is more reasonable, lowered to 20%.
+  Singul0:
+  - bugfix: Suppressors actually works now
+  Sorenon:
+  - bugfix: fixed the antag selection preference page not having a scroll bar
+  SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
+  - refactor: lathes have been refactored, report if anything breaks
+  - code_imp: APCs can now calculate time-to-charge
+  - qol: Overloaded lathes will now tell you the wait time until they're ready to
+      print again
+  - bugfix: items that contain recursive contents inside them (like foam dart boxes
+      from autolathes) now have their custom materials set to match with its design
+      cost rather than being nullified, meaning they are now recyclable.
+  - code_imp: all custom materials are now integer values. Improved code for how materials
+      are used in techfab & auto lathe for printing
+  - qol: adds screentips & examines for screwdriver & crowbar acts & alt click.
+  - qol: techfabs can now use the mouse drop functionality to set drop target.
+  - qol: lathe printing animation plays on loop while printing rather than flicking
+      once for more visual feedback
+  - bugfix: lathe sheet insertion animations are now linked & work again for all material
+      types inserted via remote silo/local storage
+  - bugfix: printing custom materials items from autolathe works again.
+  - bugfix: printing multiple items from lathes will actually print that correct quantity
+      of items requested.
+  - bugfix: printing items the 2nd time around from lathes won't cause the UI to reload
+      each time.
+  - code_imp: autodoc for some vars & procs, merges procs.
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  - bugfix: items that get printed in stacks now actually get printed in stacks (cable
+      coils)
+  - bugfix: inserting a material sheet into an lathes should show the correct animation
+      color
+  Uristthedorf:
+  - rscadd: Cloning now copies your underwear.
+  - bugfix: Cloning is more accurate, rejoice lizards.
+  - bugfix: Mutations now work in clones even if the original body is destroyed.
+  - balance: more accurate cloning also means copying mutations.
+  flleeppyy:
+  - rscadd: Statpanel now shows if players can see you as a ghost.
+  - rscadd: As a ghost, examining a mob will show you if you're visible to them or
+      not
+  notghosti:
+  - map: Blueshift spawns correct sized asteroids
+  - map: Pubbystation now spawns asteroids at the magnet instead of telecomms, and
+      supports bigger asteroids
+  - map: Ice box gulag is now hooked to power
+  - map: Ice box security will have a flowing distro
+  - map: Ice box security - dorms Maintenace no longer has a walled off external airlock
+  - map: Ice box arrivals and dorms are slightly less hallway heavy for it's distro
+  - map: Heliostation primary R&D airlock has science access akin to the surrounding
+      doors.
+2025-10-10:
+  Absolucy:
+  - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
+      it prints out a whole stack of cables.
+  - qol: You can now search for specific signal names in the GPS's UI.
+  - qol: Portable liquid pumps now take 0.5 seconds to (un)wrench, instead of 2 seconds.
+  - qol: Portable liquid pumps now suck up reagents from adjacent tiles, in addition
+      to the tile its currently on.
+  - code_imp: Improved portable liquid pump code slightly.
+  Coll6:
+  - bugfix: Mortar an pestle, piggyback riding, and the processor console.
+  MrMelbert:
+  - code_imp: Adds a unit test for chair buckling
+  TheColorCyan:
+  - qol: (ghost) Gives Health sensor assemblies a UI so its easier to use.
+  - bugfix: fixes clock cult abilities using too little power
+  - bugfix: fixes clock cult regenerating and getting too little power from integration
+      cogs
+  - bugfix: clock sense no longer displays only half of the available power
+  - bugfix: fixes drying racks spitting out matter bins on deconstruction
+  - bugfix: fixes unusuals being unable to be disabled
+  ThePooba:
+  - bugfix: interacting with shallow puddles now does stuff (walking without shoes
+      and slipping into it)
+  - rscadd: you can now craft the raised and lowered tiles for liquids
+  - bugfix: coffin invisibility
+  - bugfix: tempgun hot and cold mode not having an effect
+  - bugfix: the cryo and pyro pistols now work as intended and do damage
+  Xander3359:
+  - bugfix: Fixed mech chargers not giving enough charge to charge a mech
+  - bugfix: (Melbert) Dragging defibs and modsuits off your back works again
+  - bugfix: (SyncIt21) actions buttons can be dragged anywhere again
+  - balance: (necromanceranne) Gravity anomalies can be properly clicked. Rather than
+      chain stunning you, the anomaly will knock you down. You can avoid the negatives
+      of gravity anomalies by wearing magboots. (Yes, it did not really protect you
+      until now)
+  - balance: (necromanceranne) Flux anomalies detonate in a much smaller explosion,
+      but release a wide EMP as well.
+  - balance: (necromanceranne) Long range gas analyzers can now scan anomalies.
+  - spellcheck: (lelandkemble) whispering now spelled correctly
+  - balance: (Ghommie) airlocks affected by dimensional anomalies retain their access,
+      as well as access-adjacent attributes such as emergency access and unrestricted
+      sides.
+  - bugfix: (Ghommie) Bluespace anomalies should no longer teleport 'un-teleportable'
+      mobs like anchored AIs or megafauna.
+  - bugfix: (Jacquerel) Neutralising an anomaly cannot produce more anomaly cores
+      than are supposed to exist in a single round
+  - code_imp: (SyncIt21) removes a redundant var from anomaly effects
+  - bugfix: (SyncIt21) Fixes runtimes for some anomaly effects
+  flleeppyy:
+  - sound: tank dispensers now have noises.
+  - code_imp: changed the pull request templating to include testing, and pre-merge
+      checklist
+  notghosti:
+  - bugfix: Holy water processes in synthetic mobs, meaning they can now be deconverted
+  - rscadd: Chicken scanners are now printable, and unlocked same time plant scanners
+      are.
+  - code_imp: Chicken scanners node now have correct sorting flags
+  - map: Extended the decal of caution across the chicken room
+  - map: Icebox chicken room has chicken scanners
+  - map: Icebox botany/chicken room distro been cleaned to use less piping.
+2025-10-11:
+  Absolucy:
+  - bugfix: Actually fixed ashwalkers speaking Draconic instead of Ashtongue.
+  CannibalHunter:
+  - rscadd: Donator item, Mr Bag Head's Paper Sack!
+  Lawlolawl:
+  - bugfix: Fixed medal box showing incorrect sprites.
+  - bugfix: Fixed toggling open/closed lid of medal box. You can now toggle the lid
+      of the medal box by using it in hand (after unlocking it with ID). Note that
+      you can only access its item storage when the lid is open.
+  SirNightKnight:
+  - bugfix: fixed modsuit control unequipment not working

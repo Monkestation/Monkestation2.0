@@ -887,3 +887,43 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
 	icon_state = "pastelflowers-pink"
+
+/obj/item/clothing/under/costume/invicible_invisible
+	name = "Invicible's Super Suit"
+	desc = "If he's invincible, why can I see him?"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_uniform"
+	can_adjust = FALSE
+	inhand_icon_state = null
+
+/obj/item/clothing/mask/invicible_invisible
+	name = "Invicible's Mask"
+	desc = "When you look closely at it, it kinda looks like a big yellow ballon with 3 holes in it."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE|HIDEEYES
+
+/obj/item/clothing/gloves/fingerless/invicible_invisible
+	name = "Invicible's Gloves"
+	desc = "A pair of gloves that Invicible uses to reduce the impact of punches upon his hands while making the reciver take more force. This pair doesn't do this though."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_gloves"
+
+/obj/item/clothing/shoes/invicible_invisible
+	name = "Invicible's Boots"
+	desc = "Some thick pair of boots, you're not sure what they're made of but they look pretty cool."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_boots"
+
+/obj/item/clothing/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	desc = "A brown paper sack painted with a red face. You also notice the signature 'MrBagHead' inside the bag."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mrbagheadsack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

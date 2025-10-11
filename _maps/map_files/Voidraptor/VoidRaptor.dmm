@@ -129,7 +129,7 @@
 "abP" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "abQ" = (
 /turf/closed/wall,
 /area/station/medical/medbay/central)
@@ -1679,7 +1679,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "axD" = (
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "axN" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Pharmacy Maintenance"
@@ -2784,7 +2784,7 @@
 	name = "Cryopods"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/landmark/navigate_destination,
+/obj/effect/landmark/navigate_destination/common/cryogenics,
 /turf/open/floor/iron/white/textured_large,
 /area/station/common/cryopods)
 "aNT" = (
@@ -19918,6 +19918,9 @@
 /obj/structure/flora/bush/flowers_yw,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fJW" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "fKb" = (
 /turf/open/floor/iron/textured,
 /area/station/command/cc_dock)
@@ -25029,7 +25032,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hdT" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/pathology)
@@ -27371,7 +27374,7 @@
 	network = list("ss13","xeno","rd")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hNy" = (
 /obj/structure/railing{
 	dir = 8
@@ -35350,7 +35353,7 @@
 "jRP" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jSl" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/brown/filled/mid_joiner,
@@ -39071,7 +39074,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kSY" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -47680,7 +47683,7 @@
 "nlj" = (
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nll" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -63747,7 +63750,7 @@
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rHN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -105397,11 +105400,11 @@ woJ
 woJ
 bjI
 kVR
-uiw
-uiw
+fJW
+fJW
 hNw
-uiw
-uiw
+fJW
+fJW
 oMs
 dtW
 uBw
@@ -105654,7 +105657,7 @@ oMA
 odG
 uWl
 kVR
-uiw
+fJW
 axD
 rHL
 axD
@@ -105915,7 +105918,7 @@ jRP
 abP
 axD
 nlj
-uiw
+fJW
 fyu
 xGd
 sYn
@@ -106168,10 +106171,10 @@ djc
 tgX
 sOy
 kVR
-uiw
-uiw
-uiw
-uiw
+fJW
+fJW
+fJW
+fJW
 kSV
 vgr
 gUA
