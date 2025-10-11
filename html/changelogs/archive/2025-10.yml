@@ -459,3 +459,15 @@
   - map: Extended the decal of caution across the chicken room
   - map: Icebox chicken room has chicken scanners
   - map: Icebox botany/chicken room distro been cleaned to use less piping.
+2025-10-11:
+  Absolucy:
+  - bugfix: Actually fixed ashwalkers speaking Draconic instead of Ashtongue.
+  CannibalHunter:
+  - rscadd: Donator item, Mr Bag Head's Paper Sack!
+  Lawlolawl:
+  - bugfix: Fixed medal box showing incorrect sprites.
+  - bugfix: Fixed toggling open/closed lid of medal box. You can now toggle the lid
+      of the medal box by using it in hand (after unlocking it with ID). Note that
+      you can only access its item storage when the lid is open.
+  SirNightKnight:
+  - bugfix: fixed modsuit control unequipment not working
