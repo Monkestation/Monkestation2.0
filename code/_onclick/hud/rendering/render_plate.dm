@@ -78,7 +78,18 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	remove_filter("displacer")
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
@@ -369,6 +380,8 @@
 	// That's what this is for
 	if(show_to)
 		show_to.screen += relay
+	if(offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST && home.our_hud)
+		offset_relay(relay, home.our_hud.current_plane_offset)
 	return relay
 
 /// Breaks a connection between this plane master, and the passed in place
@@ -391,3 +404,40 @@
 			return relay
 
 	return null
+
+/**
+ * Offsets our relays in place using the given parameter by adjusting their plane and
+ * layer values, avoiding changing the layer for relays with custom-set layers.
+ *
+ * Used in [proc/build_planes_offset] to make the relays for non-offsetting planes
+ * match the highest rendering plane that matches the target, to avoid them rendering
+ * on the highest level above things that should be visible.
+ *
+ * Parameters:
+ * - new_offset: the offset we will adjust our relays to
+ */
+/atom/movable/screen/plane_master/proc/offset_relays_in_place(new_offset)
+	for(var/atom/movable/render_plane_relay/rpr in relays)
+		offset_relay(rpr, new_offset)
+
+/**
+ * Offsets a given render relay using the given parameter by adjusting its plane and
+ * layer values, avoiding changing the layer if it has a custom-set layer.
+ *
+ * Parameters:
+ * - rpr: the render plane relay we will offset
+ * - new_offset: the offset we will adjust it by
+ */
+/atom/movable/screen/plane_master/proc/offset_relay(atom/movable/render_plane_relay/rpr, new_offset)
+	var/base_relay_plane = PLANE_TO_TRUE(rpr.plane)
+	var/old_offset = PLANE_TO_OFFSET(rpr.plane)
+	rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
+
+	var/old_offset_plane = real_plane - (PLANE_RANGE * old_offset)
+	var/old_layer = (old_offset_plane + abs(LOWEST_EVER_PLANE * 30))
+	if(rpr.layer != old_layer) // Avoid overriding custom-set layers
+		return
+
+	var/offset_plane = real_plane - (PLANE_RANGE * new_offset)
+	var/new_layer = (offset_plane + abs(LOWEST_EVER_PLANE * 30))
+	rpr.layer = new_layer

@@ -148,8 +148,26 @@
 	blend_mode = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
+	// We start out hidden as we do not need to render when there's no distortion on our level
+	start_hidden = TRUE
 
-///Contains just the floor
+/atom/movable/screen/plane_master/gravpulse/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	RegisterSignal(GLOB, SIGNAL_ADDTRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_enabled))
+	RegisterSignal(GLOB, SIGNAL_REMOVETRAIT(TRAIT_DISTORTION_IN_USE(offset)), PROC_REF(distortion_disabled))
+	if(HAS_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset)))
+		distortion_enabled()
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_enabled(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/gravpulse/proc/distortion_disabled(datum/source)
+	SIGNAL_HANDLER
+	hide_plane()
+
+/// Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
@@ -205,7 +223,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING
 	start_hidden = TRUE
 	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
@@ -403,7 +421,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"
@@ -417,7 +435,9 @@
 		return
 	remove_filter("AO")
 	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
-		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
+		// We use outlines instead of drop shadow due to how extremely expensive it is, and there's no reason to use it for runechat
+		// which already has high drop shadow transparency at just 32 alpha, so outline does the job good enough
+		add_filter("AO", 1, outline_filter(size = 3, color = "#04080F20", flags = OUTLINE_SQUARE))
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "Balloon chat"
@@ -432,7 +452,7 @@
 	plane = HUD_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/above_hud
 	name = "Above HUD"
@@ -440,7 +460,7 @@
 	plane = ABOVE_HUD_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "Splashscreen"
@@ -448,7 +468,7 @@
 	plane = SPLASHSCREEN_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 
 /atom/movable/screen/plane_master/escape_menu
 	name = "Escape Menu"
@@ -456,7 +476,31 @@
 	plane = ESCAPE_MENU_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+
+/atom/movable/screen/plane_master/escape_menu/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/hud/our_hud = home.our_hud
+	if(!our_hud)
+		return
+
+	RegisterSignal(our_hud, SIGNAL_ADDTRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_opened), override = TRUE)
+	RegisterSignal(our_hud, SIGNAL_REMOVETRAIT(TRAIT_ESCAPE_MENU_OPEN), PROC_REF(escape_closed), override = TRUE)
+	if(!HAS_TRAIT(our_hud, TRAIT_ESCAPE_MENU_OPEN))
+		escape_closed()
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_opened(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	unhide_plane(our_mob)
+
+/atom/movable/screen/plane_master/escape_menu/proc/escape_closed(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home?.our_hud?.mymob
+	hide_plane(our_mob)
 
 /atom/movable/screen/plane_master/weather
 	name = "Weather"
@@ -491,7 +535,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = WEATHER_RENDER_TARGET
 	render_relay_planes = list() //Used as alpha filter for weather_effect fullscreen
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	critical = PLANE_CRITICAL_DISPLAY
 
 
@@ -510,7 +554,7 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_planes = list(RENDER_PLANE_GAME)
-	allows_offsetting = FALSE
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
 	critical = PLANE_CRITICAL_DISPLAY
 	var/z_type = "Default"
 

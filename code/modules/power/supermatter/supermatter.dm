@@ -998,7 +998,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
 
 // Warp Effect //
-
 /atom/movable/warp_effect
 	plane = GRAVITY_PULSE_PLANE
 	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
@@ -1006,7 +1005,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "light"
 	pixel_x = -176
 	pixel_y = -176
-/* // Pending whatever plane stuff has happened in https://github.com/tgstation/tgstation/pull/92357 and https://github.com/tgstation/tgstation/pull/91696
+
 /atom/movable/warp_effect/Initialize(mapload)
 	. = ..()
 	var/turf/new_turf = get_turf(src)
@@ -1044,7 +1043,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(new_turf)
 		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
 		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
-*/
+
 #undef BIKE
 #undef COIL
 #undef ROD
