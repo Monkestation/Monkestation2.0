@@ -404,7 +404,7 @@
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
 			continue
-		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
+		if(check_tools(user, recipe, surroundings) && check_contents(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
 	data["craftability"] = craftability
