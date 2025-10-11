@@ -15,7 +15,6 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 

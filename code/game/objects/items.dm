@@ -248,6 +248,8 @@
 	var/unique_reskin_changes_base_icon_state = FALSE
 	/// If reskins change inhands as well
 	var/unique_reskin_changes_inhand = FALSE
+	/// Does this use the advanced reskinning setup?
+	var/uses_advanced_reskins = FALSE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -306,7 +308,7 @@
 	if(!unique_reskin)
 		return
 
-	if(current_skin && !(obj_flags & INFINITE_RESKIN))
+	if(current_skin && !(item_flags  & INFINITE_RESKIN))
 		return
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
@@ -640,7 +642,7 @@
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user && outside_storage)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!can_mob_unequip(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	. = FALSE
@@ -652,7 +654,9 @@
 		user.dropItemToGround(src)
 		return TRUE
 
-/obj/item/proc/allow_attack_hand_drop(mob/user)
+/// Called when a mob is manually attempting to unequip the item
+/// Returning FALSE will prevent the unequip from happening
+/obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
 
 /obj/item/attack_paw(mob/user, list/modifiers)

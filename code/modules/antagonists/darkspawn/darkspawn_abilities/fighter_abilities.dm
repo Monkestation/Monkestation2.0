@@ -41,7 +41,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/process()
-	active = owner.is_holding_item_of_type(/obj/item/umbral_tendrils)
+	active = !!owner?.is_holding_item_of_type(/obj/item/umbral_tendrils)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/Enable()

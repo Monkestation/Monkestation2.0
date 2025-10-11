@@ -8,7 +8,7 @@
 	icon_state = "defibrillator_mount"
 	density = FALSE
 	use_power = NO_POWER_USE
-	active_power_usage = 40 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 40
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_COMMAND, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE

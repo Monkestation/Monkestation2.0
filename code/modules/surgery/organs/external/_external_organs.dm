@@ -376,6 +376,10 @@
 	var/color_swapped_layer = EXTERNAL_FRONT
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255
+	color_source = ORGAN_COLOR_OVERRIDE
+	palette = /datum/color_palette/generic_colors
+	palette_key = "pod_color"
+
 
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list

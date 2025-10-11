@@ -99,24 +99,10 @@
 		client << link(url)
 
 /datum/escape_menu/proc/home_open_game_settings()
-	var/datum/preferences/preferences = usr?.client?.prefs
-	if (!preferences)
-		return
-
-	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
-	qdel(src)
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
 
 /datum/escape_menu/proc/home_open_character_settings()
-	var/datum/preferences/preferences = usr?.client?.prefs
-	if (!preferences)
-		return
-
-	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
-	qdel(src)
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	anchored_tabletop_offset = 4
+	pass_flags = PASSTABLE
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -206,8 +207,8 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
 
-	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee_cup) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
-		var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = attack_item
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee/new_cup = attack_item
 		if(new_cup.reagents.total_volume > 0)
 			balloon_alert(user, "the cup must be empty!")
 			return
@@ -365,7 +366,7 @@
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
 		balloon_alert(user, "no cups left!")
 		return
-	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
+	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
 	update_appearance(UPDATE_OVERLAYS)
@@ -513,7 +514,6 @@
 	initial_cartridge = null //no cartridge, just coffee beans
 	brew_time = 15 SECONDS //industrial grade, its faster than the regular one
 	density = TRUE
-	pass_flags = PASSTABLE
 	/// Current amount of coffee beans stored
 	var/coffee_amount = 0
 	/// List of coffee bean objects are stored
@@ -751,6 +751,9 @@
 	coffeepot.reagents.add_reagent_list(reagent_delta)
 
 	qdel(reference_bean)
+
+	// brew some coffee
+	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
 
 	// remove the coffee beans from the machine
 	coffee.Cut(1,2)

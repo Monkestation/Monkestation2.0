@@ -13,6 +13,7 @@
 #define APC_CHANNEL_EQUIP_TRESHOLD 30
 ///Charge percentage at which the APC icon indicates discharging
 #define APC_CHANNEL_ALARM_TRESHOLD 75
+#define ROUNDSTART_APC_CHARGE 95
 
 /obj/machinery/power/apc
 	name = "area power controller"
@@ -39,7 +40,7 @@
 	///Reference to our internal cell
 	var/obj/item/stock_parts/power_store/cell
 	///Initial cell charge %
-	var/start_charge = 90
+	var/start_charge = ROUNDSTART_APC_CHARGE
 	///Type of cell we start with
 	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
@@ -606,6 +607,11 @@
 			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
 
+		//clock cult stuff
+		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
+			var/power_delta = clamp(cell.charge - 70, 0, 700)
+			SSthe_ark.adjust_clock_power(power_delta / 70, TRUE)
+
 	else // no cell, switch everything off
 		charging = APC_NOT_CHARGING
 		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
@@ -760,7 +766,17 @@
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
 
+/// Returns the amount of time it will take the APC at its current trickle charge rate to reach a charge level. If the APC is functionally not charging, returns null.
+/obj/machinery/power/apc/proc/time_to_charge(joules)
+	var/required_joules = joules - charge()
+	var/trickle_charge_power = energy_to_power(area.energy_usage[AREA_USAGE_APC_CHARGE])
+	if(trickle_charge_power >= 1 KILO WATTS) // require at least a bit of charging
+		return round(energy_to_power(required_joules / trickle_charge_power) * SSmachines.wait + SSmachines.wait, SSmachines.wait)
+
+	return null
+
 #undef CHARGELEVEL
 #undef APC_CHANNEL_LIGHT_TRESHOLD
 #undef APC_CHANNEL_EQUIP_TRESHOLD
 #undef APC_CHANNEL_ALARM_TRESHOLD
+#undef ROUNDSTART_APC_CHARGE

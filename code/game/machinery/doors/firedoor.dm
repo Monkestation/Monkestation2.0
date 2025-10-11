@@ -895,7 +895,7 @@
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))
 				var/obj/item/electroadaptive_pseudocircuit/raspberrypi = attacking_object
-				if(!raspberrypi.adapt_circuit(user, DEFAULT_STEP_TIME * 0.5))
+				if(!raspberrypi.adapt_circuit(user, DEFAULT_STEP_TIME * 0.0005 * STANDARD_CELL_CHARGE))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt a firelock circuit and slot it into the assembly."))
