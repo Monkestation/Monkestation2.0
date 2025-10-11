@@ -1,7 +1,7 @@
 #define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
 #define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.04
-#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 1
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
+#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
 
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
@@ -552,7 +552,7 @@
 	affected_limbs[new_limb.body_zone] = new_limb
 	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 
-	var/extra_damage = 1 + (bloodsucker_level / 2)
+	var/extra_damage = 1 + (bloodsucker_level * BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
 	new_limb.unarmed_damage_low += extra_damage
 	new_limb.unarmed_damage_high += extra_damage
 
@@ -560,7 +560,7 @@
 	SIGNAL_HANDLER
 	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
 		return
-	var/extra_damage = 1 + (bloodsucker_level / 2)
+	var/extra_damage = 1 + (bloodsucker_level / BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
 
 	affected_limbs[lost_limb.body_zone] = null
 	UnregisterSignal(lost_limb, COMSIG_QDELETING)

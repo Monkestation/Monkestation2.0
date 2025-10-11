@@ -213,6 +213,7 @@
 		if(QDELETED(limb))
 			continue
 		// This affects the hitting power of regular unarmed attacks and Brawn.
+		limb.unarmed_damage_low += BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP
 		limb.unarmed_damage_high += BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP
 
 	// We're almost done - Spend your Rank now.
