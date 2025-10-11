@@ -104,6 +104,8 @@
 	if(finding_zchange)
 		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
+	var/atom/movable/screen/navigate/navigate_hud = locate() in hud_used?.static_inventory
+	navigate_hud?.update_icon_state()
 
 /mob/living/proc/shine_navigation()
 	for(var/i in 1 to length(client.navigation_images))
@@ -119,6 +121,8 @@
 		client.images -= navigation_path
 	client.navigation_images.Cut()
 	UnregisterSignal(src, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_Z_CHANGED))
+	var/atom/movable/screen/navigate/navigate_hud = locate() in hud_used?.static_inventory
+	navigate_hud?.update_icon_state()
 
 /**
  * Finds nearest ladder or staircase either up or down.
