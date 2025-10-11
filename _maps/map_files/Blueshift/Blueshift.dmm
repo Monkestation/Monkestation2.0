@@ -1157,7 +1157,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "ama" = (
-/obj/machinery/computer/nanite_cloud_controller,
+/obj/structure/table,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "amb" = (
@@ -83786,7 +83787,6 @@
 "qkH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "qkR" = (
@@ -89127,8 +89127,8 @@
 "rkC" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/machinery/nanite_program_hub,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "rkF" = (

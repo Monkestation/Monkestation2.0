@@ -12925,14 +12925,7 @@
 "dOK" = (
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -5;
-	pixel_y = 5
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 0;
 	pixel_y = 18
@@ -24621,10 +24614,6 @@
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
 /area/station/service/chapel)
-"hzg" = (
-/obj/machinery/nanite_programmer,
-/turf/open/floor/iron,
-/area/station/science/explab)
 "hzz" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -37251,7 +37240,6 @@
 /area/station/medical/medbay/aft)
 "lqL" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "lqU" = (
@@ -257428,7 +257416,7 @@ cSw
 pwK
 yeC
 lqL
-hzg
+yeC
 nBN
 xPI
 jZY
