@@ -403,6 +403,10 @@
   - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
       it prints out a whole stack of cables.
   - qol: You can now search for specific signal names in the GPS's UI.
+  - qol: Portable liquid pumps now take 0.5 seconds to (un)wrench, instead of 2 seconds.
+  - qol: Portable liquid pumps now suck up reagents from adjacent tiles, in addition
+      to the tile its currently on.
+  - code_imp: Improved portable liquid pump code slightly.
   Coll6:
   - bugfix: Mortar an pestle, piggyback riding, and the processor console.
   MrMelbert:
@@ -447,3 +451,11 @@
   - sound: tank dispensers now have noises.
   - code_imp: changed the pull request templating to include testing, and pre-merge
       checklist
+  notghosti:
+  - bugfix: Holy water processes in synthetic mobs, meaning they can now be deconverted
+  - rscadd: Chicken scanners are now printable, and unlocked same time plant scanners
+      are.
+  - code_imp: Chicken scanners node now have correct sorting flags
+  - map: Extended the decal of caution across the chicken room
+  - map: Icebox chicken room has chicken scanners
+  - map: Icebox botany/chicken room distro been cleaned to use less piping.
