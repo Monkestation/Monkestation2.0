@@ -8,9 +8,7 @@
 	var/old_stat = stat
 	. = ..()
 	if(old_stat == DEAD)
-		var/policy
-
-		policy = get_policy(revival_policy)
+		var/policy = get_policy(revival_policy)
 
 		if(policy)
 			to_chat(src, policy, avoid_highlighting = TRUE)
