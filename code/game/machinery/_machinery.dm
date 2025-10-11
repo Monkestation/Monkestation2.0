@@ -172,6 +172,9 @@
 	/// sound played on succesful interface use by a carbon lifeform
 	var/clicksound
 
+	///extra reward for special shipbreaking components
+	var/extra_reward = list()
+
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10
@@ -859,8 +862,13 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
+	var/area/space/shipbreak/A = get_area(src)
+	if(extra_reward)
+		if(istype(A))
+			for(var/extra in extra_reward)
+				new extra(loc)
+
 	for(var/part in component_parts)
-		var/area/space/shipbreak/A = get_area(src)
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
 			var/obj/item/item = new datum_part.physical_object_type(loc)

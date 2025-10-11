@@ -24,6 +24,7 @@
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
+	extra_reward += /obj/item/stack/scrap/electronics
 	if(isturf(loc))
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
