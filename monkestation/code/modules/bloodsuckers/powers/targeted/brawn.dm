@@ -78,7 +78,7 @@
 		if (check_level(2, "break restraints"))
 			var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 			user.visible_message(
-				span_warning("[user] rips straight through the [user.p_their()] [straightjacket]!"),
+				span_warning("[user] rips straight through [user.p_their()] [straightjacket]!"),
 				span_warning("We tear through our [straightjacket]!"),
 			)
 			user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
