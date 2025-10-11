@@ -220,7 +220,7 @@
 
 // EXPLANATION
 /datum/objective/bloodsucker/tremere_power/update_explanation_text()
-	explanation_text = "Upgrade a Blood Magic power to the maximum level, remember that Vassalizing gives more Ranks!"
+	explanation_text = "Upgrade a Blood Magic power to at least level [TREMERE_OBJECTIVE_POWER_LEVEL], remember that Vassalizing gives more Ranks!"
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/tremere_power/check_completion()
