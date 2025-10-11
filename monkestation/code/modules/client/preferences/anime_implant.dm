@@ -190,3 +190,41 @@
 		if(item == "Anime")
 			return TRUE
 	return FALSE
+
+/datum/preference/choiced/anime_halo
+	category = PREFERENCE_CATEGORY_CLOTHING
+	savefile_identifier = PREFERENCE_CHARACTER
+	main_feature_name = "Anime Halo"
+	savefile_key = "feature_anime_halo"
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/anime_halo/init_possible_values()
+	return assoc_to_keys_features(GLOB.anime_halo_list)
+
+/datum/preference/choiced/anime_halo/icon_for(value)
+
+	var/datum/sprite_accessory/accessory = GLOB.anime_halo_list[value]
+
+	if(accessory.icon_state == null || accessory.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+
+	var/icon/final_icon = icon(accessory.icon, "[accessory.icon_state]_preview")
+
+	return final_icon
+
+/datum/preference/choiced/anime_halo/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["anime_halo"] = value
+
+/datum/preference/choiced/anime_halo/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/datum/preference_middleware/quirks/located = locate(/datum/preference_middleware/quirks) in preferences.middleware
+	if(!located)
+		return FALSE
+	var/list/quirks = located.get_selected_quirks()
+	for(var/item in quirks)
+		if(item == "Anime")
+			return TRUE
+	return FALSE
