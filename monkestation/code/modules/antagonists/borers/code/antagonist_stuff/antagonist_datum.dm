@@ -63,7 +63,7 @@
 /datum/antagonist/cortical_borer/hivemind
 	name = "Hivemind Cortical Borer"
 	roundend_category = "cortical borers"
-	borer_mob_type = /mob/living/basic/cortical_borer
+	borer_mob_type = /mob/living/basic/cortical_borer/empowered
 
 	/// The team of borers
 	var/datum/team/cortical_borers/borers
