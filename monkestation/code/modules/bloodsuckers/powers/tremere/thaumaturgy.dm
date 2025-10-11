@@ -8,7 +8,7 @@
  *	Level 5 - Bloodbeam spell that breaks open lockers/doors + double damage & steals blood - Gives them a Blood shield until they use Bloodbeam
  */
 
-#define BLOOD_SHIELD_BLOCK_CHANCE 75
+#define BLOOD_SHIELD_BLOCK_CHANCE 50
 #define BLOOD_SHIELD_BLOOD_COST 15
 #define THAUMATURGY_BLOOD_COST_PER_CHARGE 5
 #define THAUMATURGY_COOLDOWN_PER_CHARGE 5 SECONDS
