@@ -14,7 +14,7 @@
 #define OBFUSCATION_ANYWHERE_LEVEL 6
 
 #define OBFUSCATION_HIDDEN_ALPHA 22
-#define OBFUSCATION_REVEALED_ALPHA 100
+#define OBFUSCATION_REVEALED_ALPHA 255
 #define OBFUSCATION_RECLOAK_TIME (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation

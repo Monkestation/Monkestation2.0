@@ -2,10 +2,10 @@
  *	# Thaumaturgy
  *
  *	Level 1 - One shot bloodbeam spell
- *	Level 2 - Bloodbeam spell - Gives them a Blood shield until they use Bloodbeam
- *	Level 3 - Bloodbeam spell that breaks open lockers/doors - Gives them a Blood shield until they use Bloodbeam
- *	Level 4 - Bloodbeam spell that breaks open lockers/doors + double damage to victims - Gives them a Blood shield until they use Bloodbeam
- *	Level 5 - Bloodbeam spell that breaks open lockers/doors + double damage & steals blood - Gives them a Blood shield until they use Bloodbeam
+ *	Level 3 - Bloodbeam spell - Gives them a Blood shield until they use Bloodbeam
+ *	Level 4 - Bloodbeam spell that breaks open lockers/doors - Gives them a Blood shield until they use Bloodbeam
+ *	Level 5 - Bloodbeam spell that breaks open lockers/doors + double damage to victims - Gives them a Blood shield until they use Bloodbeam
+ *	Level 6 - Bloodbeam spell that breaks open lockers/doors + double damage & steals blood - Gives them a Blood shield until they use Bloodbeam
  */
 
 #define BLOOD_SHIELD_BLOCK_CHANCE 50
@@ -13,10 +13,10 @@
 #define THAUMATURGY_BLOOD_COST_PER_CHARGE 5
 #define THAUMATURGY_COOLDOWN_PER_CHARGE 5 SECONDS
 
-#define THAUMATURGY_SHIELD_LEVEL 2
-#define THAUMATURGY_DOOR_BREAK_LEVEL 3
-#define THAUMATURGY_EXTRA_DAMAGE_LEVEL 4
-#define THAUMATURGY_BLOOD_STEAL_LEVEL 5
+#define THAUMATURGY_SHIELD_LEVEL 3
+#define THAUMATURGY_DOOR_BREAK_LEVEL 4
+#define THAUMATURGY_EXTRA_DAMAGE_LEVEL 5
+#define THAUMATURGY_BLOOD_STEAL_LEVEL 6
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy
 	name = "Thaumaturgy"
