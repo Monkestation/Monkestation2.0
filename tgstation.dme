@@ -1730,6 +1730,7 @@
 #include "code\datums\quirks\negative_quirks\food_allergy.dm"
 #include "code\datums\quirks\negative_quirks\frail.dm"
 #include "code\datums\quirks\negative_quirks\glass_jaw.dm"
+#include "code\datums\quirks\negative_quirks\hard_of_hearing.dm"
 #include "code\datums\quirks\negative_quirks\heavy_sleeper.dm"
 #include "code\datums\quirks\negative_quirks\hemiplegic.dm"
 #include "code\datums\quirks\negative_quirks\hypersensitive.dm"
