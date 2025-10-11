@@ -11,7 +11,7 @@
 
 /datum/bloodsucker_clan/tremere/New(mob/living/carbon/user)
 	. = ..()
-	bloodsuckerdatum.remove_nondefault_powers(return_levels = TRUE)
+	bloodsuckerdatum.remove_nondefault_powers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.all_bloodsucker_powers)
 		if((initial(power.purchase_flags) & TREMERE_CAN_BUY) && initial(power.level_current) == 1)
 			bloodsuckerdatum.BuyPower(new power)

@@ -79,13 +79,11 @@
 /datum/antagonist/bloodsucker/proc/RankDown()
 	bloodsucker_level_unspent--
 
-/datum/antagonist/bloodsucker/proc/remove_nondefault_powers(return_levels = FALSE)
+/datum/antagonist/bloodsucker/proc/remove_nondefault_powers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
 		if(power.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			continue
 		RemovePower(power)
-		if(return_levels)
-			bloodsucker_level_unspent++
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
