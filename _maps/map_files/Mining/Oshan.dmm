@@ -282,6 +282,12 @@
 "rb" = (
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
+"rX" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron,
+/area/mine/production)
 "se" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -867,6 +873,11 @@
 "Ox" = (
 /obj/structure/sign/warning/radiation/directional/east,
 /obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/mine/production)
+"Po" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "Pz" = (
@@ -18734,7 +18745,7 @@ uT
 nC
 Lf
 xk
-Lf
+Po
 Lf
 eQ
 MI
@@ -18983,7 +18994,7 @@ KL
 ML
 GM
 GM
-zo
+rX
 Lf
 ML
 ML
