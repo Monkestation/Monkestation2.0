@@ -133,13 +133,11 @@
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
 		if(SCANGATE_NANITES)
-			if(SEND_SIGNAL(M, COMSIG_HAS_NANITES))
-				if(nanite_cloud)
-					var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
-					if(nanites && nanites.cloud_id == nanite_cloud)
-						beep = TRUE
-				else
-					beep = TRUE
+			var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
+			if(nanites && nanites.cloud_id == nanite_cloud)
+				beep = TRUE
+			else
+				beep = TRUE
 		if(SCANGATE_DISEASE)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M

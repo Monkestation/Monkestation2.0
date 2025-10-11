@@ -1,5 +1,5 @@
 /* codeblocked until functional. Not converted to datum/disease/acute yet
-/datum/symptom/nano_boost
+/datum/symptom/nanite_boost
 	name = "Nano-symbiosis"
 	desc = "The virus reacts to nanites in the host's bloodstream by enhancing their replication cycle."
 	stealth = 0
@@ -10,32 +10,33 @@
 	severity = 0
 	symptom_delay_min = 1
 	symptom_delay_max = 1
-	var/reverse_boost = FALSE
 	threshold_descs = list(
 		"Transmission 5" = "Increases the virus' growth rate while nanites are present.",
-		"Stage Speed 7" = "Increases the replication boost."
+		"Stage Speed 7" = "Increases the replication boost.",
 	)
+	///Whether nanites will also help boost the disease.
+	var/reverse_boost = FALSE
 
-/datum/symptom/nano_boost/Start(datum/disease/advance/A)
+/datum/symptom/nanite_boost/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalTransmittable() >= 5) //reverse boost
+	if(A.properties["transmittable"] >= 5) //reverse boost
 		reverse_boost = TRUE
-	if(A.totalStageSpeed() >= 7) //more nanites
+	if(A.properties["stage_rate"] >= 7) //more nanites
 		power = 2
 
-/datum/symptom/nano_boost/Activate(datum/disease/advance/A)
+/datum/symptom/nanite_boost/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	SEND_SIGNAL(M, COMSIG_NANITE_ADJUST_VOLUME, 0.5 * power)
-	if(reverse_boost && SEND_SIGNAL(M, COMSIG_HAS_NANITES))
+	if(reverse_boost && M.GetComponent(/datum/component/nanites))
 		if(prob(A.stage_prob))
 			A.stage = min(A.stage + 1,A.max_stages)
 
-/datum/symptom/nano_destroy
+/datum/symptom/nanite_destroy
 	name = "Silicolysis"
 	desc = "The virus reacts to nanites in the host's bloodstream by attacking and consuming them."
 	stealth = 0
@@ -46,28 +47,30 @@
 	severity = 0
 	symptom_delay_min = 1
 	symptom_delay_max = 1
-	var/reverse_boost = FALSE
 	threshold_descs = list(
 		"Stage Speed 5" = "Increases the virus' growth rate while nanites are present.",
-		"Resistance 7" = "Severely increases the rate at which the nanites are destroyed."
+		"Resistance 7" = "Severely increases the rate at which the nanites are destroyed.",
 	)
+	///Whether nanites will also help boost the disease.
+	var/reverse_boost = FALSE
 
-/datum/symptom/nano_destroy/Start(datum/disease/advance/A)
+/datum/symptom/nanite_destroy/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	if(A.totalStageSpeed() >= 5) //reverse boost
+	if(A.properties["stage_rate"] >= 5) //reverse boost
 		reverse_boost = TRUE
-	if(A.totalResistance() >= 7) //more nanites
+	if(A.properties["resistance"] >= 7) //less nanites
 		power = 3
 
-/datum/symptom/nano_destroy/Activate(datum/disease/advance/A)
+/datum/symptom/nanite_destroy/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	SEND_SIGNAL(M, COMSIG_NANITE_ADJUST_VOLUME, -0.4 * power)
-	if(reverse_boost && SEND_SIGNAL(M, COMSIG_HAS_NANITES))
+	if(reverse_boost && M.GetComponent(/datum/component/nanites))
 		if(prob(A.stage_prob))
 			A.stage = min(A.stage + 1,A.max_stages)
+
 */
