@@ -66,7 +66,7 @@
 	if(!used && (istype(cuffs) || istype(legcuffs)))
 		if (check_level(2, "break restraints"))
 			user.visible_message(
-				span_warning("[user] discards their restraints like it's nothing!"),
+				span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
 				span_warning("We break through our restraints!"),
 			)
 			user.clear_cuffs(cuffs, TRUE)
