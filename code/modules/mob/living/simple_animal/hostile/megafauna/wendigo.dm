@@ -66,6 +66,8 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	var/can_move = TRUE
 	/// Time before the wendigo can scream again
 	var/scream_cooldown_time = 10 SECONDS
+	/// Should it create the portal? Special cases use this like ore_vents.
+	var/make_portal = TRUE //MONKESTATION EDIT
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 
@@ -274,11 +276,16 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	if(!true_spawn)
 		return ..()
 
+	if(make_portal) //MONKESTATION EDIT
+		create_portal()
+
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/create_portal()
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
 	exit.set_light(l_outer_range = 20, l_power = 1, l_color = COLOR_SOFT_RED)
-	return ..()
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
