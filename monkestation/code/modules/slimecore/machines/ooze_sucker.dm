@@ -257,8 +257,11 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	toggle_state()
-	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	if(anchored)
+		toggle_state()
+		balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	else
+		balloon_alert(user, "unanchored!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)

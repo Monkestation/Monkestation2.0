@@ -7,7 +7,7 @@
 		if(!length(changes))
 			changes = list("unknown" = list("Changes are not documented. Ask the author ([testmerge.author]) to add a changelog to their PR!"))
 		var/list/testmerge_data = list(
-			"title" = "[testmerge.title]",
+			"title" = trimtext("[testmerge.title]"),
 			"number" = testmerge.number,
 			"author" = testmerge.author,
 			"link" = testmerge.url,
@@ -20,6 +20,10 @@
 	var/static/regex/entry_pattern = new(@"(\w+): (.+)")
 	var/static/regex/end_pattern = new(@"^/(:cl:|🆑)")
 	var/static/regex/newline_pattern = new(@"(\r\n|\r|\n)")
+
+	// no changes, this is just using the default template
+	if(findtext_char(body, "add: Added new mechanics or gameplay changes"))
+		return
 
 	var/started = FALSE
 	var/list/lines = splittext_char(trimtext(body), newline_pattern)

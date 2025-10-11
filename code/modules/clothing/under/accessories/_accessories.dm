@@ -125,10 +125,10 @@
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+	if(detach_from.atom_storage?.real_location == src)
 		// Ensure void items do not stick around
-		atom_storage.close_all()
-		detach_from.atom_storage.close_all()
+		atom_storage?.close_all()
+		detach_from.atom_storage?.close_all()
 		// And clean up the storage we made
 		QDEL_NULL(detach_from.atom_storage)
 
