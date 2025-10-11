@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(pollution_emitters)
 	name = "Pollution Emitters"
 	priority = FIRE_PRIORITY_OBJ
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_HIBERNATE
 	wait = 10 SECONDS
 
 /datum/element/pollution_emitter
@@ -35,4 +35,4 @@ PROCESSING_SUBSYSTEM_DEF(pollution_emitters)
 		return PROCESS_KILL
 	for(var/atom/affected_atom as anything in affected)
 		var/turf/my_turf = get_turf(affected_atom)
-		my_turf.pollute_turf(pollutant_type, pollutant_amount)
+		my_turf?.pollute_turf(pollutant_type, pollutant_amount)

@@ -11,8 +11,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/slime
 	density = FALSE
 
-	maximum_survivable_temperature = 2000
-
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
 	faction = list(FACTION_SLIME)
@@ -20,11 +18,16 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 15
 
+	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, STAMINA = 1, OXY = 1) //Healed by fire
+	unsuitable_cold_damage = 15
+	unsuitable_heat_damage = 0
+	bodytemp_heat_damage_limit = INFINITY
+	habitable_atmos = null
+
 	//emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"
 	initial_language_holder = /datum/language_holder/slime
-
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -38,8 +41,8 @@
 
 	can_be_held = TRUE
 
-	minimum_survivable_temperature = 100
-	maximum_survivable_temperature = 600
+	bodytemp_cold_damage_limit = 100
+	bodytemp_heat_damage_limit = 600
 
 	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
@@ -142,12 +145,10 @@
 		recompile_ai_tree()
 
 /mob/living/basic/slime/death(gibbed)
-	. = ..()
-	if(buckled)
-		buckled?.unbuckle_all_mobs()
+	buckled?.unbuckle_mob(src, force = TRUE)
+	return ..()
 
 /mob/living/basic/slime/Destroy()
-	. = ..()
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		remove_trait(trait)
 	UnregisterSignal(src, list(
@@ -162,6 +163,7 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
+	return ..()
 
 /mob/living/basic/slime/mob_try_pickup(mob/living/user, instant)
 	if(!SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_FRIEND))
@@ -188,10 +190,10 @@
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
-		unbuckle_all_mobs()
+		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
-		AddComponent(/datum/component/latch_feeding, target, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
+	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
 		return
 	. = ..()
 
@@ -233,6 +235,7 @@
 
 	if(slime_flags & CLEANER_SLIME)
 		ai_controller.clear_blackboard_key(BB_CLEAN_TARGET)
+		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/manage_unreachable_list)
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
@@ -345,7 +348,6 @@
 		else
 			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		real_name = name
-	update_name_tag()
 	return ..()
 
 /mob/living/basic/slime/proc/start_split()
@@ -361,7 +363,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, -200)
 
 	slime_flags &= ~SPLITTING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
@@ -370,7 +372,14 @@
 		data.copy_progress(new_slime)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		new_slime.add_trait(trait.type)
+	SEND_SIGNAL(src, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, new_slime)
 	new_slime.recompile_ai_tree()
+	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
+	if(nanites)
+		//copying over nanite programs/cloud sync with 50% saturation in host and spare
+		nanites.nanite_volume *= 0.5
+		new_slime.AddComponent(/datum/component/nanites, nanites.nanite_volume)
+		SEND_SIGNAL(new_slime, COMSIG_NANITE_SYNC, nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))
@@ -413,7 +422,7 @@
 	change_color(mutating_into)
 
 	slime_flags &= ~MUTATING_SLIME
-	ai_controller.set_ai_status(AI_STATUS_ON)
+	ai_controller.reset_ai_status()
 
 
 /mob/living/basic/slime/proc/pick_mutation(random = FALSE)
@@ -469,15 +478,13 @@
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))
 		var/turf/open/my_our_turf = loc
-		if(my_our_turf.pollution)
-			my_our_turf.pollution.touch_act(src)
+		my_our_turf.pollution?.touch_act(src)
 	. = ..()
 
 /mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	if(!client)
-		if(buckled)
-			unbuckle_mob(buckled, TRUE)
+	adjustBruteLoss(rand(15, 20))
+	if(QDELETED(client))
+		buckled?.unbuckle_mob(src, force = TRUE)
 	return
 
 /mob/living/basic/slime/proc/latch_callback(mob/living/target)
@@ -510,6 +517,6 @@
 /mob/living/basic/slime/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
-		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom))
-			AddComponent(/datum/component/latch_feeding, hit_atom, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
+		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom) && !QDELING(hit_atom))
+			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))

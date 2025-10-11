@@ -5,7 +5,7 @@
 /datum/action/cooldown/mob_cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED|AB_CHECK_OPEN_TURF // monkestation edit: add AB_CHECK_OPEN_TURF
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
@@ -105,7 +105,7 @@
 	if (LAZYLEN(SSmobs.cheeserats) >= rat_cap)
 		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 		return
-	new /mob/living/basic/mouse(owner.loc)
+	new /mob/living/basic/mouse/ratking(owner.loc)
 	owner.visible_message(span_warning("[owner] commands a rat to their side!"))
 
 /// Makes a passed mob into our minion

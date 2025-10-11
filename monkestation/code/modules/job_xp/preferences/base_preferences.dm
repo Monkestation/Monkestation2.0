@@ -67,7 +67,7 @@
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
+	for(var/job in jobs)
 		if(!length(SSjob.all_occupations))
 			SSjob.SetupOccupations()
 		empty_list += job
@@ -81,7 +81,7 @@
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
+	for(var/job in jobs)
 		if(job in update_list)
 			if(!update_list[job])
 				update_list[job] = 0
@@ -110,7 +110,7 @@
 /datum/preferences/proc/level_up_reward(job)
 	if(!job || !job_level_list[job])
 		return
-	adjust_metacoins(parent.ckey, 25*job_level_list[job], "You have leveled up!", TRUE, TRUE, FALSE)
+	adjust_metacoins(parent_ckey, 25 * job_level_list[job], "You have leveled up!")
 
 /datum/preferences/proc/return_xp_for_nextlevel()
 	var/list/jobs_with_xp = list()

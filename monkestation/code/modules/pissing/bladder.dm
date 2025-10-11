@@ -9,7 +9,7 @@
 	name = "bladder"
 	desc = "This is where the pee is stored"
 
-	icon = 'monkestation/icons/obj/organs.dmi'
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "bladder"
 
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -50,7 +50,7 @@
 	stored_piss = min(stored_piss + amount, max_piss_storage)
 
 	if(COOLDOWN_FINISHED(src, piss_notification) && stored_piss == max_piss_storage)
-		to_chat(owner, span_warning("Your bladder if feeling full."))
+		to_chat(owner, span_warning("Your bladder is feeling full."))
 		COOLDOWN_START(src, piss_notification, 5 MINUTES)
 
 
@@ -132,7 +132,7 @@
 
 /obj/item/organ/internal/bladder/proc/attempt_piss_into(obj/item/reagent_containers/piss_holder)
 	var/space_left = piss_holder.volume - piss_holder.reagents.total_volume
-	if(!space_left)
+	if(!space_left && stored_piss < per_piss_usage)
 		return FALSE
 	piss_holder.reagents.add_reagent(pissin_reagent, piss_amount, reagtemp = piss_temperature)
 	return TRUE

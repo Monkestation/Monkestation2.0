@@ -86,7 +86,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -106,7 +106,7 @@
 	tether.firer = mod.wearer
 	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/projectile/tether
 	name = "tether"
@@ -124,7 +124,7 @@
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
 		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
-	..()
+	return ..()
 
 /obj/projectile/tether/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -165,10 +165,10 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
-	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
-	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
-	.["threatlevel"] = perceived_threat_level
+	.["is_user_irradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["background_radiation_level"] = perceived_threat_level
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER
@@ -187,7 +187,7 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
@@ -202,7 +202,7 @@
 	if(!.)
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister

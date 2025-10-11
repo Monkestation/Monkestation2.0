@@ -57,11 +57,6 @@
 "eg" = (
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
-"ej" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "eH" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -320,7 +315,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/toy/plush/space_lizard_plushie{
+/obj/item/toy/plush/lizard_plushie/space/green{
 	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Chief Weh Officer"
 	},
@@ -360,7 +355,8 @@
 "AZ" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/camera/emp_proof/directional/north{
-	c_tag = "Singularity Engine #1"
+	c_tag = "Singularity Engine #1";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
@@ -436,11 +432,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"Fy" = (
-/obj/structure/grille/broken,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "FN" = (
 /obj/structure/particle_accelerator/end_cap{
 	dir = 4
@@ -602,7 +593,8 @@
 /area/station/engineering/supermatter/room)
 "Rw" = (
 /obj/machinery/camera/emp_proof/directional/west{
-	c_tag = "Singularity Engine #4"
+	c_tag = "Singularity Engine #4";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,
 /area/station/engineering/supermatter/room)
@@ -631,7 +623,8 @@
 /area/station/engineering/supermatter/room)
 "UU" = (
 /obj/machinery/camera/emp_proof/directional/east{
-	c_tag = "Singularity Engine #3"
+	c_tag = "Singularity Engine #3";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -646,7 +639,8 @@
 /area/station/engineering/supermatter/room)
 "Vn" = (
 /obj/machinery/camera/emp_proof/directional/north{
-	c_tag = "Singularity Engine #2"
+	c_tag = "Singularity Engine #2";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -1104,7 +1098,7 @@ je
 je
 je
 je
-An
+bM
 An
 Ki
 nM
@@ -1118,7 +1112,7 @@ Bc
 An
 An
 nM
-An
+bM
 je
 je
 je
@@ -1131,7 +1125,7 @@ je
 je
 je
 je
-Bc
+bM
 An
 ol
 An
@@ -1172,7 +1166,7 @@ nM
 An
 An
 KS
-ej
+bM
 je
 je
 je
@@ -1185,7 +1179,7 @@ je
 je
 je
 je
-An
+bM
 hW
 ol
 ol
@@ -1199,7 +1193,7 @@ Yq
 EM
 EM
 An
-Fy
+bM
 je
 je
 je
@@ -1212,7 +1206,7 @@ je
 je
 je
 je
-An
+bM
 hW
 EM
 An
@@ -1226,7 +1220,7 @@ xy
 An
 EM
 nM
-nM
+bM
 je
 je
 je
@@ -1239,7 +1233,7 @@ je
 je
 je
 je
-Bc
+bM
 hW
 EM
 wm
@@ -1253,7 +1247,7 @@ ML
 wm
 EM
 nM
-ej
+bM
 je
 je
 je
@@ -1280,7 +1274,7 @@ wm
 An
 EM
 An
-An
+bM
 je
 je
 je
@@ -1307,7 +1301,7 @@ wm
 dT
 EM
 An
-nM
+bM
 je
 je
 je
@@ -1320,7 +1314,7 @@ je
 je
 je
 je
-Bc
+bM
 hW
 EM
 NU
@@ -1334,7 +1328,7 @@ bp
 NU
 EM
 nM
-ej
+bM
 je
 je
 je
@@ -1388,7 +1382,7 @@ wm
 An
 An
 An
-nM
+bM
 je
 je
 je
@@ -1401,7 +1395,7 @@ je
 je
 je
 je
-Bc
+bM
 hW
 hW
 GG
@@ -1415,7 +1409,7 @@ ML
 EP
 An
 nM
-ej
+bM
 je
 je
 je
@@ -1428,7 +1422,7 @@ je
 je
 je
 je
-An
+bM
 hW
 An
 An
@@ -1442,7 +1436,7 @@ wm
 hW
 An
 nM
-nM
+bM
 je
 je
 je
@@ -1469,7 +1463,7 @@ hW
 hW
 An
 An
-Fy
+bM
 je
 je
 je
@@ -1483,20 +1477,20 @@ je
 je
 je
 bM
-An
 bM
-An
-Bc
-Bc
-Bc
-Bc
-Bc
-Bc
-Bc
-An
 bM
-KS
-KS
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
 je
 je
 je

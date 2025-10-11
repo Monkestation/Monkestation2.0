@@ -13,7 +13,7 @@
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
@@ -26,6 +26,7 @@
 	pressure_resistance = 0
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR //monkestation addition
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
@@ -34,6 +35,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -55,6 +57,9 @@
 
 	/// Default raw text to fill this paper with on init.
 	var/default_raw_text
+
+	/// Checks to see if the paper can be folded
+	var/can_be_folded = TRUE
 
 	/// The number of input fields
 	var/input_field_count = 0
@@ -262,7 +267,7 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
 	stamp_overlay.pixel_x = rand(-2, 2)
 	stamp_overlay.pixel_y = rand(-3, 2)
 	add_overlay(stamp_overlay)
@@ -359,25 +364,31 @@
 		return TRUE
 	return ..()
 
-/obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
-	var/ignition_message = I.ignition_effect(src, user)
+/obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
+	//can't be put on fire!
+	if((resistance_flags & FIRE_PROOF) || !(resistance_flags & FLAMMABLE))
+		return FALSE
+	//already on fire!
+	if(resistance_flags & ON_FIRE)
+		return FALSE
+	var/ignition_message = attacking_item.ignition_effect(src, user)
 	if(!ignition_message)
-		return
-	. = TRUE
+		return FALSE
 	if(!bypass_clumsy && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10) && Adjacent(user))
 		user.visible_message(span_warning("[user] accidentally ignites [user.p_them()]self!"), \
 							span_userdanger("You miss [src] and accidentally light yourself on fire!"))
-		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
-			user.dropItemToGround(I)
-		user.adjust_fire_stacks(1)
+		if(user.is_holding(attacking_item)) //checking if they're holding it in case TK is involved
+			user.dropItemToGround(attacking_item)
+		user.adjust_fire_stacks(attacking_item)
 		user.ignite_mob()
-		return
+		return TRUE
 
 	if(user.is_holding(src)) //no TK shit here.
 		user.dropItemToGround(src)
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
-	fire_act(I.get_temperature())
+	fire_act(attacking_item.get_temperature())
+	return TRUE
 
 /obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
@@ -440,7 +451,7 @@
 	)
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
-	return TOOL_ACT_SIGNAL_BLOCKING // Stop the UI from opening.
+	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still
@@ -802,3 +813,63 @@
 
 /obj/item/paper/crumpled/muddy
 	icon_state = "scrap_mud"
+
+/obj/item/paper/selfdestruct
+	name = "Self-Incinerating Note"
+	desc = "A note that will incinerate itself after being read."
+	can_be_folded = FALSE
+	var/has_been_read = FALSE
+	var/armed = FALSE
+
+/obj/item/paper/selfdestruct/examine(mob/user)
+	. = ..()
+
+	if(!has_been_read)
+		return
+
+	. += span_warning("This feels warm to the touch.")
+
+
+/obj/item/paper/selfdestruct/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	if(ui && armed && !has_been_read)
+		playsound(user, 'sound/machines/click.ogg', 25)
+		to_chat(user, span_warning("You hear a faint click as you open the note. It feels strangely warm."))
+
+		has_been_read = TRUE
+
+		addtimer(CALLBACK(src, PROC_REF(combust_now)), 20 SECONDS, TIMER_UNIQUE)
+	return
+
+/obj/item/paper/selfdestruct/proc/combust_now(mob/user_who_initiated)
+	if(!src || QDELETED(src))
+		return
+
+	SStgui.close_uis(src)
+
+	var/mob/living/holder = null
+	if(ismob(loc))
+		holder = loc
+
+	if(holder)
+		to_chat(holder, span_warning("[src] suddenly bursts into flames in your hands!"))
+	else if(get_turf(src))
+		var/atom/turf_location = get_turf(src)
+		turf_location.visible_message(span_warning("[src] suddenly bursts into flames on the ground!"))
+	else if(loc)
+		loc.visible_message(span_warning("[src] suddenly bursts into flames!"))
+
+	fire_act(100)
+
+/obj/item/paper/selfdestruct/click_alt(mob/living/user, obj/item/used_item)
+	if(!armed)
+		to_chat(user, span_warning("You arm the incineration mechanism."))
+		armed = TRUE
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/paper/selfdestruct/job_application
+	name = "Job application form"
+	desc = "You cant bear to look at it..."
+	icon_state = "paper_words"
+	armed = TRUE

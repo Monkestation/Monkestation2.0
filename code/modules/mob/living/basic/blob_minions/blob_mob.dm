@@ -11,8 +11,8 @@
 	bubble_icon = "blob"
 	speak_emote = null
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = INFINITY
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = INFINITY
 	lighting_cutoff_red = 20
 	lighting_cutoff_green = 40
 	lighting_cutoff_blue = 30
@@ -24,7 +24,7 @@
 	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)))
 
 /// Called when our blob overmind changes their variant, update some of our mob properties
-/mob/living/basic/blob_minion/proc/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_minion/proc/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	return
 
 /// Associates this mob with a specific blob factory node

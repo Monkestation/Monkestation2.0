@@ -18,7 +18,7 @@
 	///our refractiveness
 	var/refractiveness = 0
 	///list of material traits to work with
-	var/list/material_traits = list()
+	var/list/datum/material_trait/material_traits = list()
 
 /obj/item/stack/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -26,3 +26,4 @@
 		return
 	create_stats_from_material(material_type, FALSE, TRUE)
 	material_stats.material_bitflags |= MATERIAL_STACK
+	material_stats.update_should_process()

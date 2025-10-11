@@ -1,4 +1,4 @@
-/obj/projectile/magic
+/obj/projectile/magic  ////These should really be cleaned up someday
 	name = "bolt"
 	icon_state = "energy"
 	damage = 0 // MOST magic projectiles pass the "not a hostile projectile" test, despite many having negative effects
@@ -22,7 +22,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -52,7 +52,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -81,7 +81,7 @@
 	if(target.GetComponent(/datum/component/plant_growing)) // even plants can block antimagic
 		var/datum/component/plant_growing/growing = target.GetComponent(/datum/component/plant_growing)
 
-		for(var/item as anything in growing.managed_seeds)
+		for(var/item in growing.managed_seeds)
 			var/obj/item/seeds/seed = growing.managed_seeds[item]
 			if(!seed)
 				continue
@@ -201,15 +201,9 @@
 		else
 			var/obj/O = src
 			if(isgun(O))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
+				new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
-
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
-		if(owner)
-			C.ChangeOwner(owner)
+				new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /obj/projectile/magic/spellblade
 	name = "blade energy"
@@ -278,6 +272,7 @@
 	breakout_time = 600
 	icon_welded = null
 	icon_state = "cursed"
+	paint_jobs = null
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -286,13 +281,12 @@
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
 
+/obj/structure/closet/decay/after_open(mob/living/user, force)
+	. = ..()
+	unmagify()
+
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
-		unmagify()
-
-/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
-	. = ..()
-	if(.)
 		unmagify()
 
 ///Give it the lesser magic icon and tell it to delete itself
@@ -383,6 +377,10 @@
 /obj/projectile/magic/wipe/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
+		if(istype(get_area(target), /area/deathmatch))
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25) // Roughly 8 hits to kill
+			target.visible_message(span_warning("[target] grips [target.p_their()] head in pain!"))
+			return BULLET_ACT_HIT
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
 			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))
 				target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
@@ -409,8 +407,8 @@
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = chosen_one.key
-		trauma.friend.key = oldkey
+		target.PossessByPlayer(chosen_one.key)
+		trauma.friend.PossessByPlayer(oldkey)
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE
@@ -544,6 +542,86 @@
 		explosion_cause = src,
 	)
 
+/obj/projectile/magic/fire_ball
+	name = "fire ball"
+	icon = 'monkestation/icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "fire_ball"
+	damage = 20
+	damage_type = BURN
+	hitsound = null
+	projectile_piercing = PASSMOB
+
+	ricochets_max = 4
+	ricochet_chance = 100
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 1
+	ricochet_incidence_leeway = 0
+	ricochet_shoots_firer = FALSE
+	///A weakref to our "true" firer because ricochet changes firer
+	var/datum/weakref/true_firer
+
+/obj/projectile/magic/fire_ball/fire(angle, atom/direct_target)
+	. = ..()
+	if(firer)
+		true_firer = WEAKREF(firer)
+
+/obj/projectile/magic/fire_ball/prehit_pierce(atom/target)
+	. = ..()
+	if(. != PROJECTILE_DELETE_WITHOUT_HITTING || !ismob(target))
+		return
+	true_firer = WEAKREF(target)
+	handle_bounce(target)
+	visible_message(span_warning("[src] bounces off the aura around [target]!"))
+	return PROJECTILE_PIERCE_PHASE
+
+/obj/projectile/magic/fire_ball/Impact(atom/A)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/items/dodgeball.ogg', 200, channel = CHANNEL_SOUND_EFFECTS) //this is a very quiet sound
+
+/obj/projectile/magic/fire_ball/on_hit(mob/living/target, blocked, pierce_hit)
+	if(target == true_firer?.resolve()) //we do this here instead of on_hit_target due to us having specific logic here with handle_bounce()
+		handle_bounce(target)
+		return BULLET_ACT_BLOCK
+
+	. = ..()
+	if(. != BULLET_ACT_HIT || !istype(target) )
+		return
+
+	if(pierces >= ricochets_max)
+		projectile_piercing = NONE
+	target.adjust_fire_stacks(2)
+	target.ignite_mob()
+	target.Knockdown(3 SECONDS)
+	target.Paralyze(0.5 SECONDS)
+	handle_bounce(target)
+
+/obj/projectile/magic/fire_ball/check_ricochet_flag(atom/A)
+	return !ismob(A) //we handle mobs ourselves but besides that can ALWAYS ricochet
+
+/obj/projectile/magic/fire_ball/check_ricochet(atom/A)
+	return TRUE //this handles the prob checks which is always 100, so lets just skip the step to save resources
+
+///Find a tile within 1 range() of a valid mob in our view, if we cant find any then return FALSE
+/obj/projectile/magic/fire_ball/proc/get_new_target()
+	var/list/possible_targets = list()
+	var/mob/resolved_true_firer = true_firer?.resolve()
+	for(var/mob/living/possible_target in view())
+		if(possible_target == resolved_true_firer || impacted[possible_target])
+			continue
+		possible_targets += possible_target
+
+	if(!length(possible_targets))
+		return FALSE
+	return pick(RANGE_TURFS(1, get_turf(pick(possible_targets))))
+
+/obj/projectile/magic/fire_ball/proc/handle_bounce(atom/target)
+	var/new_target = get_new_target()
+	if(new_target)
+		set_angle_centered(get_angle(target, new_target))
+	else
+		reflect(target)
+
 /obj/projectile/magic/aoe/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
@@ -611,3 +689,31 @@
 	damage_type = BURN
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/projectile/magic/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = -1
+
+/obj/projectile/magic/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/magic/shrink/is_hostile_projectile()
+	return TRUE
+
+/obj/projectile/magic/shrink/wand
+	shrink_time = 90 SECONDS
+
+/obj/projectile/magic/shrink/wand/on_hit(atom/target, blocked = 0, pierce_hit)
+	shrink_time = rand(60 SECONDS, 90 SECONDS)
+	return ..()

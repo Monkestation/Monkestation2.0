@@ -52,6 +52,7 @@ em						{font-style: normal;	font-weight: bold;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
+.enteradio				{color: #00ff99;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
 .greenteamradio			{color: #00ff00;}
@@ -95,6 +96,7 @@ h1.alert, h2.alert		{color: #000000;}
 .grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
 .boldnicegreen			{color: #14a833;	font-weight: bold;}
+.velvet					{color: #21007F;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}
@@ -103,6 +105,7 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant				{color: #660099;	font-weight: bold;	font-style: italic;}
 .hierophant_warning		{color: #660099;	font-style: italic;}
 .purple					{color: #5e2d79;}
+.purplelarge			{color: #5e2d79;	font-weight: bold;	font-size: 3;}
 .holoparasite			{color: #35333a;}
 .bounty					{color: #ab6613;	font-style: italic;}
 
@@ -112,8 +115,6 @@ h1.alert, h2.alert		{color: #000000;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
-
-.sentientdisease		{color: #446600;}
 
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 
@@ -237,5 +238,6 @@ h1.alert, h2.alert		{color: #000000;}
 .orange 				{color: #b8761a;}
 .yellow					{color: #c7b72c;}
 .cyan					{color: #0ea1e6;}
+.uncommonradio			{color: #78a1b1;}
 // MONKESTATION ADDITION END
 </style>"}

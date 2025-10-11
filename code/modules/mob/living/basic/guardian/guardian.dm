@@ -14,6 +14,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	sentience_type = SENTIENCE_HUMANOID
 	hud_type = /datum/hud/guardian
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE) // Monkestation addition
 	faction = list()
 	speed = 0
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
@@ -196,7 +197,7 @@
 
 	return TRUE
 
-/mob/living/basic/guardian/gib()
+/mob/living/basic/guardian/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	death(TRUE)
 
 /mob/living/basic/guardian/dust(just_ash, drop_items, force)

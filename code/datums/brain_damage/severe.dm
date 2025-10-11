@@ -28,14 +28,14 @@
 	lose_text = span_notice("You suddenly remember how languages work.")
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
-	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
-		owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-		owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+		owner.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_APHASIA)
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	..()
 
@@ -113,11 +113,42 @@
 	for(var/X in paralysis_traits)
 		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
+/datum/brain_trauma/severe/paralysis/crushed
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
+
+/datum/brain_trauma/severe/paralysis/crushed/New(specific_type)
+	if(specific_type)
+		paralysis_type = specific_type
+	if(!paralysis_type)
+		paralysis_type = pick("full","left","right","arms","legs")
+	switch(paralysis_type)
+		if("full")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		if("left")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_L_LEG)
+		if("right")
+			paralysis_traits = list(TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG)
+		if("arms")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM)
+		if("legs")
+			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
+		// this is not the best way to do this, but uh
 
 /datum/brain_trauma/severe/paralysis/paraplegic
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/left
+	paralysis_type = "left"
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/right
+	paralysis_type = "right"
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
@@ -151,7 +182,7 @@
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
-	gain_text = ""
+	gain_text = "You no longer feel safe being alone." //monkestation edit
 	lose_text = span_notice("You feel like you could be safe on your own.")
 	var/stress = 0
 
@@ -281,7 +312,7 @@
 	scan_desc = "oneiric feedback loop"
 	gain_text = span_warning("You feel odd, like you just forgot something important.")
 	lose_text = span_notice("You feel like a weight was lifted from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	var/trigger_phrase = "Nanotrasen"
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
@@ -332,7 +363,7 @@
 	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
 	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
 	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// Our cooldown declare for causing hallucinations
 	COOLDOWN_DECLARE(weeping_hallucinations)
 
@@ -356,7 +387,7 @@
 	scan_desc = "H_(82882)G3E:__))9R"
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
 	lose_text = span_notice("You no longer feel the hunger for flesh...")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
 
@@ -385,7 +416,7 @@
 	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
 	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
 	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 0.5
 
@@ -411,7 +442,7 @@
 	scan_desc = "C_)L(#_I_##M;B"
 	gain_text = span_warning("The rusted climb shall finish at the peak")
 	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)
@@ -422,3 +453,80 @@
 	if(SPT_PROB(50, seconds_per_tick))
 		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
 		tile.rust_heretic_act()
+
+/datum/brain_trauma/severe/kleptomaniac
+	name = "Kleptomania"
+	desc = "Patient is prone to stealing things."
+	scan_desc = "kleptomania"
+	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
+	lose_text = span_notice("You no longer feel the urge to take things.")
+	/// Cooldown between allowing steal attempts
+	COOLDOWN_DECLARE(steal_cd)
+
+/datum/brain_trauma/severe/kleptomaniac/on_gain()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+
+/datum/brain_trauma/severe/kleptomaniac/on_lose()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/brain_trauma/severe/kleptomaniac/proc/damage_taken(datum/source, damage_amount, damage_type, ...)
+	SIGNAL_HANDLER
+	// While you're fighting someone (or dying horribly) your mind has more important things to focus on than pocketing stuff
+	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
+		COOLDOWN_START(src, steal_cd, 12 SECONDS)
+
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+	if(owner.usable_hands <= 0)
+		return
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+	if(!COOLDOWN_FINISHED(src, steal_cd))
+		return
+	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+		return
+
+//MONKESTATION EDIT START - Adds pickpocketing to Kleptomaniac, like with our original implementation.
+	if(prob(src.pickpocket_chance_percent))
+		src.steal_from_someone()
+	else
+		src.steal_from_ground()
+
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)
+
+// Use the rest of the original function as the stealing-from-ground code
+/datum/brain_trauma/severe/kleptomaniac/proc/steal_from_ground()
+//MONKESTATION EDIT END
+	// If our main hand is full, that means our offhand is empty, so try stealing with that
+	var/steal_to_offhand = !!owner.get_active_held_item()
+	var/curr_index = owner.active_hand_index
+	var/pre_dir = owner.dir
+	if(steal_to_offhand)
+		owner.swap_hand(owner.get_inactive_hand_index())
+
+	var/list/stealables = list()
+	for(var/obj/item/potential_stealable in oview(1, owner))
+		if(potential_stealable.w_class >= WEIGHT_CLASS_BULKY)
+			continue
+		if(potential_stealable.anchored || !(potential_stealable.interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))
+			continue
+		stealables += potential_stealable
+
+	for(var/obj/item/stealable as anything in shuffle(stealables))
+		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+			continue
+		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
+		owner.log_message("attempted to pick up [stealable] (kleptomania)", LOG_ATTACK, color = "orange") //MONKESTATION EDIT - Indicates which stealable was attempted to be picked up.
+		owner.ClickOn(stealable)
+		// No feedback message. Intentional, you may not even realize you picked up something
+		break
+
+	if(steal_to_offhand)
+		owner.swap_hand(curr_index)
+	owner.setDir(pre_dir)
+	/* //MONKESTATION REMOVAL - Moved from here to the edited `on_life` function
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)
+	*/

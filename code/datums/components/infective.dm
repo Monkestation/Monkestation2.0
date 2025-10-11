@@ -82,17 +82,16 @@
 
 	try_infect(target, hit_zone)
 
-/datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
+/datum/component/infective/proc/try_infect_attack_zone(obj/item/source, mob/living/carbon/target, mob/living/user, hit_zone)
 	SIGNAL_HANDLER
 
-	try_infect(user, BODY_ZONE_L_ARM)
 	try_infect(target, hit_zone)
 
-/datum/component/infective/proc/try_infect_attack(datum/source, mob/living/target, mob/living/user)
+/datum/component/infective/proc/try_infect_attack(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
-		try_infect(target)
-	try_infect(user, BODY_ZONE_L_ARM)
+	if(source.loc == user)
+		var/obj/item/bodypart/hand = user.get_active_hand()
+		try_infect(user, hand.body_zone)
 
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
 	SIGNAL_HANDLER
@@ -130,5 +129,5 @@
 		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
-			for(var/datum/disease/advanced/V as anything in contact)
+			for(var/datum/disease/acute/V as anything in contact)
 				living.try_contact_infect(V, note="(Skin Contact - (Infective Component), coming from [src.parent])")

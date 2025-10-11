@@ -5,11 +5,11 @@
 	cooldown_time = 5 SECONDS
 	COOLDOWN_DECLARE(next_process)
 
-/datum/symptom_varient/routine/Destroy(force, ...)
+/datum/symptom_varient/routine/Destroy(force)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
-/datum/symptom_varient/routine/set_disease_parent(datum/disease/attached)
+/datum/symptom_varient/routine/set_disease_parent(datum/source, datum/disease/attached)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

@@ -111,8 +111,7 @@
 		span_notice("You tie up your hair!"),
 	)
 	actual_hairstyle = user.hairstyle
-	user.hairstyle = picked_hairstyle
-	user.update_body_parts()
+	user.set_hairstyle(picked_hairstyle, update = TRUE)
 
 /obj/item/clothing/head/hair_tie/dropped(mob/living/carbon/human/user)
 	. = ..()
@@ -124,20 +123,19 @@
 		span_notice("[user.name] takes [src] out of [user.p_their()] hair."),
 		span_notice("You let down your hair!"),
 	)
-	user.hairstyle = actual_hairstyle
-	user.update_body_parts()
+	user.set_hairstyle(actual_hairstyle, update = TRUE)
 	actual_hairstyle = null
 
-/obj/item/clothing/head/hair_tie/AltClick(mob/living/user)
+/obj/item/clothing/head/hair_tie/click_alt(mob/living/user)
 	if(!(user.get_slot_by_item(src) == ITEM_SLOT_HANDS))
 		balloon_alert(user, "hold in-hand!")
-		return
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(
 		span_danger("[user.name] puts [src] around [user.p_their()] fingers, beginning to flick it!"),
 		span_notice("You try to flick [src]!"),
 	)
 	flick_hair_tie(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///This proc flicks the hair tie out of the player's hand, tripping the target hit for 1 second
 /obj/item/clothing/head/hair_tie/proc/flick_hair_tie(mob/living/user)
@@ -242,8 +240,7 @@
 		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
 
 		if(do_after(user, haircut_duration, target_human))
-			target_human.hairstyle = hair_id
-			target_human.update_body_parts()
+			target_human.set_hairstyle(hair_id, update = TRUE)
 			user.visible_message(span_notice("[user] successfully cuts [target_human]'s hair!"), span_notice("You successfully cut [target_human]'s hair!"))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
@@ -263,8 +260,7 @@
 		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
 
 		if(do_after(user, facial_haircut_duration, target_human))
-			target_human.facial_hairstyle = facial_hair_id
-			target_human.update_body_parts()
+			target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
 			user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 
@@ -287,7 +283,7 @@
 /obj/machinery/vending/barbervend
 	name = "Fab-O-Vend"
 	desc = "It would seem it vends dyes, and other stuff to make you pretty."
-	icon = 'monkestation/code/modules/blueshift/icons/vendor.dmi'
+	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
@@ -311,6 +307,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
+		/obj/item/secateurs = 1, //monkestation edit: plant
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
@@ -407,13 +404,6 @@
 	visible_message(span_notice("[user] starts to masterfully paint [target_human]!"))
 
 	if(do_after(user, 20 SECONDS, target_human))
-		switch(selected_mutant_color)
-			if("One")
-				target_human.dna.features["mcolor"] = selected_color
-			if("Two")
-				target_human.dna.features["mcolor1"] = selected_color
-			if("Three")
-				target_human.dna.features["mcolor2"] = selected_color
 
 		target_human.regenerate_icons()
 		item_use_power(power_use_amount, user)
@@ -581,11 +571,9 @@
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/target_human, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		target_human.hairstyle = "Shaved"
-		target_human.update_body_parts()
+		target_human.set_facial_hairstyle("Shaved", update = TRUE)
 	else
-		target_human.hairstyle = "Bald"
-		target_human.update_body_parts()
+		target_human.set_hairstyle("Bald", update = TRUE)
 
 	playsound(loc, 'sound/items/unsheath.ogg', 20, TRUE)
 

@@ -3,6 +3,7 @@
 	starting_node = TRUE
 	display_name = "Basic Microfusion Technology"
 	description = "Basic microfusion technology allowing for basic microfusion designs."
+	prereq_ids = list("base")
 	design_ids = list(
 		"basic_microfusion_cell",
 	)
@@ -25,7 +26,7 @@
 		"microfusion_gun_attachment_nt_camo",
 		"microfusion_gun_attachment_heatsink",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 //Advanced microfusion
 /datum/techweb_node/advanced_microfusion
@@ -51,7 +52,7 @@
 		"microfusion_gun_attachment_rail",
 		"microfusion_gun_attachment_scope",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 
 // Bluespace microfusion
@@ -63,14 +64,14 @@
 		"advanced_microfusion",
 		"bluespace_power",
 		"beam_weapons",
-		"explosive_weapons",
+		"chemical_weapons",
 	)
 	design_ids = list(
 		"bluespace_microfusion_cell",
 		"microfusion_gun_attachment_repeater",
 		"bluespace_microfusion_phase_emitter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 // Quantum microfusion
 /datum/techweb_node/quantum_microfusion
@@ -84,7 +85,7 @@
 	design_ids = list(
 		"microfusion_gun_attachment_xray",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_6_POINTS)
 
 // Warcrime microfusion
 /datum/techweb_node/illegal_microfusion
@@ -102,7 +103,7 @@
 		"microfusion_gun_attachment_syndi_camo",
 		"microfusion_gun_attachment_suppressor",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 // clown microfusion. | This exists to not make this non modular
 /datum/techweb_node/clown_microfusion
@@ -117,4 +118,4 @@
 		"microfusion_gun_attachment_honk",
 		"microfusion_gun_attachment_honk_camo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500) //Its normally supposed to be in clown tech so
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4) //Its normally supposed to be in clown tech so

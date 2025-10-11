@@ -18,28 +18,6 @@
 #define TOOL_HAMMER "hammer"
 #define TOOL_BLOWROD "blowrod"
 
-// Prefix values.
-#define QUECTO * 1e-30
-#define RONTO * 1e-27
-#define YOCTO * 1e-24
-#define ZEPTO * 1e-21
-#define ATTO * 1e-18
-#define FEMPTO * 1e-15
-#define PICO * 1e-12
-#define NANO * 1e-9
-#define MICRO * 1e-6
-#define MILLI * 1e-3
-#define KILO * 1e3
-#define MEGA * 1e6
-#define GIGA * 1e9
-#define TERA * 1e12
-#define PETA * 1e15
-#define EXA * 1e18
-#define ZETTA * 1e21
-#define YOTTA * 1e24
-#define RONNA * 1e27
-#define QUETTA * 1e30
-
 /// Category for clothing in the organics printer
 #define RND_CATEGORY_AKHTER_CLOTHING "Clothing"
 /// Category for equipment like belts and bags in the organics printer
@@ -83,27 +61,9 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 	/obj/item/analyzer,
 ))
 
-/// Trait given to objects with the wallmounted component
-#define TRAIT_WALLMOUNTED "wallmounted"
-
 /// BYOND's string procs don't support being used on datum references (as in it doesn't look for a name for stringification)
 /// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
 #define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
-
-// Converts cable layer to its human readable name
-GLOBAL_LIST_INIT(cable_layer_to_name, list(
-	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
-	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
-	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
-))
-
-// Converts cable color name to its layer
-GLOBAL_LIST_INIT(cable_name_to_layer, list(
-	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
-	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
-	CABLE_LAYER_3_NAME = CABLE_LAYER_3
-))
-
 
 // Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
 #define HANDCUFFS_TYPE_WEAK 0
@@ -117,11 +77,10 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 #define ACCOUNT_CMD "CMD"
 #define ACCOUNT_CMD_NAME "Command Budget"
 
-#define PLAYTIME_GREEN 6000 // 100 hours
+#define ACCOUNT_CC "CC"
+#define ACCOUNT_CC_NAME "Central Command Budget"
 
-/// Macro to turn a number of laser shots into an energy cost, based on the above define
-/// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
-#define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
+#define PLAYTIME_GREEN 6000 // 100 hours
 
 /// Trait source for xeno innate abilities
 #define TRAIT_XENO_INNATE "xeno_innate"
@@ -236,6 +195,8 @@ See the examinemore module for information.
 #define CARGO_COMPANY_SOL_DEFENSE (1<<7)
 #define CARGO_COMPANY_MICROSTAR (1<<8)
 #define CARGO_COMPANY_VITEZSTVI_AMMO (1<<9)
+#define CARGO_COMPANY_RAYNE (1<<10)
+#define CARGO_COMPANY_KEMETEK (1<<11)
 
 // Company names, because the armament category and company name need to be the exact same, so use defines like this
 #define NAKAMURA_ENGINEERING_MODSUITS_NAME "Nakamura Engineering MOD Divison"
@@ -248,6 +209,8 @@ See the examinemore module for information.
 #define SOL_DEFENSE_DEFENSE_NAME "Sol Defense Imports"
 #define MICROSTAR_ENERGY_NAME "MicroStar Energy Weapon Coalition"
 #define VITEZSTVI_AMMO_NAME "Vitezstvi Ammo & Weapon Accessories"
+#define RAYNE_CORP_NAME "Rayne Corporation"
+#define KEMETEK_NAME "Kemetek Aerospace"
 
 #define COMPANY_INTEREST_GAIN_BIG 10
 #define COMPANY_INTEREST_GAIN_AVERAGE 5
@@ -273,20 +236,8 @@ See the examinemore module for information.
 #define BOOT_UNSEAL_MESSAGE "relax their grip on your legs"
 #define BOOT_SEAL_MESSAGE "seal around your feet"
 
-/// Colors for pride week
-#define COLOR_PRIDE_RED "#FF6666"
-#define COLOR_PRIDE_ORANGE "#FC9F3C"
-#define COLOR_PRIDE_YELLOW "#EAFF51"
-#define COLOR_PRIDE_GREEN "#41FC66"
-#define COLOR_PRIDE_BLUE "#42FFF2"
-#define COLOR_PRIDE_PURPLE "#5D5DFC"
-
 /// Trait that changes the ending effects of twitch leaving your system
 #define TRAIT_TWITCH_ADAPTED "twitch_adapted"
-
-// Have to put it here so I can use it in the global list of wound series
-/// See muscle.dm and robotic_blunt.dm
-#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
 
 //defines for antag opt in objective checking
 //objectives check for all players with a value equal or greater than the 'threat' level of an objective then pick from that list
@@ -332,4 +283,4 @@ GLOBAL_LIST_INIT(antag_opt_in_colors, list(
 #define OPT_IN_DEFAULT_LEVEL OPT_IN_YES_KILL
 
 /// If the player has any non-ghost role antags enabled, they are forced to use a minimum of this.
-#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_TEMP
+#define OPT_IN_ANTAG_ENABLED_LEVEL OPT_IN_YES_KILL

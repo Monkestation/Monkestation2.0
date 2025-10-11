@@ -20,6 +20,13 @@
 		act = copytext(act, 1, custom_param)
 
 	act = lowertext(act)
+
+	//MONKESTATION EDIT START
+	// not a fan of this but I don't think there's a less hacky way to do it without changing how emotes work
+	if (HAS_TRAIT(src, TRAIT_FEEBLE) && !intentional && (act in list("scream", "screech", "screams", "screeches")))
+		act = pick("whimper", "cry")
+	//MONKESTATION EDIT END
+
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
@@ -41,7 +48,7 @@
 
 /datum/emote/help
 	key = "help"
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -67,14 +74,14 @@
 	message += keys.Join(", ")
 	message += "."
 	message = message.Join("")
-	to_chat(user, examine_block(message))
+	to_chat(user, boxed_message(message))
 
 /datum/emote/flip
 	key = "flip"
 	key_third_person = "flips"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -87,7 +94,7 @@
 			var/mob/living/carbon/hat_loser = user
 			if(hat_loser.head)
 				var/obj/item/clothing/head/worn_headwear = hat_loser.head
-				if(worn_headwear.contents.len)
+				if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 					worn_headwear.throw_hats(rand(2,3), get_turf(hat_loser), hat_loser)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
@@ -116,8 +123,8 @@
 	key = "spin"
 	key_third_person = "spins"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
@@ -129,7 +136,7 @@
 				var/mob/living/carbon/hat_loser = user
 				if(hat_loser.head)
 					var/obj/item/clothing/head/worn_headwear = hat_loser.head
-					if(worn_headwear.contents.len)
+					if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 						worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)

@@ -9,6 +9,7 @@
 #define	ANTIGEN_COMMON	"common"
 #define	ANTIGEN_RARE	"rare"
 #define	ANTIGEN_ALIEN	"alien"
+#define ANTIGEN_UNIQUE	"unique"
 
 //blood antigens
 #define	ANTIGEN_O	"O"
@@ -27,6 +28,8 @@
 #define	ANTIGEN_X	"X"
 #define	ANTIGEN_Y	"Y"
 #define	ANTIGEN_Z	"Z"
+//Unique antigens
+#define ANTIGEN_IG "Ig" //For TB
 
 
 #define DISEASE_BUMP "bump"
@@ -47,6 +50,9 @@
 #define DISEASE_TRAUMA "trauma"
 #define DISEASE_DECLONING "decloning"
 #define DISEASE_ANXIETY "anxiety"
+#define DISEASE_SHOCK "shock"
+#define DISEASE_FUNGUS "fungal_spores"
+#define DISEASE_DEBUG "debug"
 
 #define DISEASE_DORMANT (1 << 3)
 #define DISEASE_COPYSTAGE (1<<4)

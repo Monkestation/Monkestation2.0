@@ -60,7 +60,6 @@
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/gold = SHEET_MATERIAL_AMOUNT*2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*2)
-	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
@@ -109,22 +108,22 @@
 	//The "iscarbon" is to prevent telekinetic grabs using the rod.
 	//If we don't do this, we create a memory leak if someone uses telekinetic grab on the rod and binds it.
 	//For consistency (and the safety - we want to prevent this at all costs), we do this on each step.
-	if(do_after(itemUser, 40, target = itemUser) && iscarbon(src.loc))
+	if(do_after(itemUser, 4 SECONDS, target = itemUser) && iscarbon(src.loc))
 		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 20, target = itemUser) && iscarbon(src.loc))
+	if(do_after(itemUser, 2 SECONDS, target = itemUser) && iscarbon(src.loc))
 		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 30, target = itemUser) && iscarbon(src.loc))
+	if(do_after(itemUser, 3 SECONDS, target = itemUser) && iscarbon(src.loc))
 		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
-	if(do_after(itemUser, 30, target = itemUser) && iscarbon(src.loc))
+	if(do_after(itemUser, 3 SECONDS, target = itemUser) && iscarbon(src.loc))
 		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
@@ -151,9 +150,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
-/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return (slot & ITEM_SLOT_NECK)
-
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
 	if(active_owner)
@@ -167,7 +163,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
-	if(do_after(user, 40, target = user))
+	if(do_after(user, 4 SECONDS, target = user))
 		to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
 		user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
 		RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
@@ -235,6 +231,7 @@
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	var/obj/effect/wisp/wisp
 
 /obj/item/wisp_lantern/attack_self(mob/user)
@@ -322,7 +319,7 @@
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
-	if(!linked || (current_area.area_flags & NOTELEPORT))
+	if(!linked || ((SSticker.current_state < GAME_STATE_FINISHED) && (current_area.area_flags & NOTELEPORT))) // monkestation edit: allow jaunts to work after roundend
 		to_chat(user, span_warning("[src] fizzles uselessly."))
 		return
 	if(teleporting)
@@ -423,8 +420,7 @@
 	if(!user)
 		return
 
-	user.status_flags &= ~GODMODE
-	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
+	user.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), REF(src))
 	user.forceMove(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
@@ -435,8 +431,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
-	user.status_flags |= GODMODE
+	user.add_traits(list(TRAIT_NO_TRANSFORM, TRAIT_GODMODE), REF(src))
 
 	user_ref = WEAKREF(user)
 
@@ -506,9 +501,10 @@
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
 	cure_curse_of_babel(user) // removes tower of babel if we have it
-	user.grant_all_languages(source=LANGUAGE_BABEL)
+	user.grant_all_languages(source = LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
-	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
+	if(user.mind)
+		ADD_TRAIT(user.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -543,7 +539,7 @@
 	if(!ishuman(exposed_mob) || exposed_mob.stat == DEAD)
 		return
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	if(!HAS_TRAIT(exposed_human, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5 || !exposed_human.dna)
+	if(reac_volume < 5 || !exposed_human.dna)
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
@@ -560,7 +556,8 @@
 	exposed_human.emote("scream")
 
 /datum/reagent/flightpotion/proc/get_wing_choice(mob/living/carbon/human/needs_wings)
-	var/list/wing_types = needs_wings.dna.species.wing_types.Copy()
+	var/obj/item/bodypart/chest/chest = needs_wings.get_bodypart(BODY_ZONE_CHEST)
+	var/list/wing_types = chest.wing_types.Copy()
 	if(wing_types.len == 1 || !needs_wings.client)
 		return wing_types[1]
 	var/list/radial_wings = list()
@@ -587,6 +584,14 @@
 	desc = "A celestial ladder that violates the laws of physics."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder00"
+	/// List of z-traits that will be ignored by the ladder.
+	var/static/list/banned_ztraits = list(
+		ZTRAIT_AWAY,
+		ZTRAIT_CENTCOM,
+		ZTRAIT_ECLIPSE,
+		ZTRAIT_REEBE,
+		ZTRAIT_RESERVED,
+	)
 
 /obj/item/jacobs_ladder/attack_self(mob/user)
 	var/turf/T = get_turf(src)
@@ -595,7 +600,7 @@
 	to_chat(user, span_notice("You unfold the ladder. It extends much farther than you were expecting."))
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_reserved_level(i) || is_away_level(i))
+		if(SSmapping.level_has_any_trait(i, banned_ztraits))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -615,9 +620,9 @@
 	toolspeed = 0.1
 	strip_delay = 40
 	equip_delay_other = 20
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
 	armor_type = /datum/armor/gloves_gauntlets
@@ -658,30 +663,23 @@
 
 /obj/item/clothing/suit/hooded/berserker
 	name = "berserker armor"
-	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
+	desc = "This hulking armor seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
+		The self-sealing stem bolts that allowed this suit to be spaceworthy have long since corroded. However, the entity \
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor_type = /datum/armor/hooded_berserker
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	resistance_flags = FIRE_PROOF
-	clothing_flags = THICKMATERIAL
-	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-		/obj/item/pickaxe,
-		/obj/item/spear,
-		/obj/item/organ/internal/monster_core,
-		/obj/item/knife,
-		/obj/item/kinetic_crusher,
-		/obj/item/resonator,
-		/obj/item/melee/cleaving_saw,
-	)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 
 /datum/armor/hooded_berserker
 	melee = 30
@@ -689,33 +687,46 @@
 	laser = 10
 	energy = 20
 	bomb = 50
+	bio = 60
 	fire = 100
 	acid = 100
+	wound = 10
+
+/datum/armor/drake_empowerment
+	melee = 35
+	laser = 30
+	energy = 20
+	bomb = 20
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	allowed = GLOB.mining_suit_allowed
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
 #define DAMAGE_TO_CHARGE_SCALE 0.75
 #define CHARGE_DRAINED_PER_SECOND 5
-#define BERSERK_MELEE_ARMOR_ADDED 50
 #define BERSERK_ATTACK_SPEED_MODIFIER 0.25
 
 /obj/item/clothing/head/hooded/berserker
 	name = "berserker helmet"
-	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	desc = "This burdensome helmet seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
+		The self-sealing stem bolts that allowed this helmet to be spaceworthy have long since corroded. However, the entity \
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	armor_type = /datum/armor/hooded_berserker
 	actions_types = list(/datum/action/item_action/berserk_mode)
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = SNUG_FIT|THICKMATERIAL
 	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
@@ -725,6 +736,7 @@
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
@@ -756,12 +768,12 @@
 	if(berserk_active)
 		return TRUE
 
-/// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
+/// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = BERSERK_MELEE_ARMOR_ADDED))
+	user.physiology.brute_mod *= 0.5
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -779,7 +791,7 @@
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = -BERSERK_MELEE_ARMOR_ADDED))
+	user.physiology.brute_mod *= 2
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -790,8 +802,17 @@
 #undef PROJECTILE_HIT_MULTIPLIER
 #undef DAMAGE_TO_CHARGE_SCALE
 #undef CHARGE_DRAINED_PER_SECOND
-#undef BERSERK_MELEE_ARMOR_ADDED
 #undef BERSERK_ATTACK_SPEED_MODIFIER
+
+/obj/item/drake_remains
+	name = "drake remains"
+	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	icon_state = "dragon"
+
+/obj/item/drake_remains/Initialize(mapload)
+	. = ..()
+	particles = new /particles/bonfire()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -799,11 +820,12 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	custom_materials = null
-	var/datum/action/cooldown/scan/scan_ability
+	var/datum/action/cooldown/spell/pointed/scan/scan_ability
 
 /obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
@@ -834,49 +856,58 @@
 	victim.emote("scream")
 	victim.flash_act()
 
-/datum/action/cooldown/scan
+/datum/action/cooldown/spell/pointed/scan
 	name = "Scan"
-	desc = "Scan an enemy, to get their location and stagger them, increasing their time between attacks."
+	desc = "Scan an enemy, to get their location and rebuke them, increasing their time between attacks."
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "scan"
+	school = SCHOOL_HOLY
+	cooldown_time = 35 SECONDS
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE_MIND //Even god cannot penetrate the tin foil hat
 
-	click_to_activate = TRUE
-	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
-	return ..() && isliving(owner)
-
-/datum/action/cooldown/scan/Activate(atom/scanned)
-	StartCooldown(15 SECONDS)
-
-	if(owner.stat != CONSCIOUS)
+/datum/action/cooldown/spell/pointed/scan/is_valid_target(atom/cast_on)
+	if(!isliving(cast_on))
+		owner.balloon_alert(owner, "not a valid target!")
 		return FALSE
-	if(!isliving(scanned) || scanned == owner)
-		owner.balloon_alert(owner, "invalid scanned!")
+	var/mob/living/living_cast_on = cast_on
+	if(living_cast_on.stat == DEAD)
+		owner.balloon_alert(owner, "target is dead!")
 		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/scan/cast(mob/living/cast_on)
+	. = ..()
+
+	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(owner, span_warning("As we apply our dissecting vision, we are abruptly cut short. \
+			They have some kind of enigmatic mental defense. It seems we've been foiled."))
+		return
+
+	if(cast_on == owner)
+		to_chat(owner, span_warning("The last time a god stared too closely into their own reflection, they became transfixed for all of time. Do not let us become like them."))
+		return
 
 	var/mob/living/living_owner = owner
-	var/mob/living/living_scanned = scanned
-	living_scanned.apply_status_effect(/datum/status_effect/stagger)
+	var/mob/living/living_scanned = cast_on
+	living_scanned.apply_status_effect(/datum/status_effect/rebuked)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	living_scanned.set_jitter_if_lower(100 SECONDS)
-	to_chat(living_scanned, span_warning("You've been staggered!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
+	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
-	StartCooldown()
-	return TRUE
-
-/datum/action/cooldown/scan/proc/send_cooldown_end_message()
+/datum/action/cooldown/spell/pointed/scan/proc/send_cooldown_end_message()
 	owner?.balloon_alert(owner, "scan recharged")
 
 /datum/status_effect/agent_pinpointer/scan
@@ -900,9 +931,7 @@
 	desc = "An eerie metal shard surrounded by dark energies."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
-	status = ORGAN_ORGANIC
-	encode_info = AUGMENT_NO_REQ
-	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_FROZEN | ORGAN_UNREMOVABLE
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
@@ -1105,7 +1134,7 @@
 	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
 		span_notice("You shatter [src] over [target]!"))
 	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
-	target.apply_damage(damage = ishostile(target) ? 75 : 35, wound_bonus = 20)
+	target.apply_damage(damage = ismining(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 	shattered = TRUE

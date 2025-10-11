@@ -29,14 +29,33 @@
 
 	required_access = needed_access
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	if(!istype(parent, /obj/item/armament_points_card))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_hand))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(on_attack_hand))
+		var/atom/atom_target = parent
+		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+		RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(context))
+		inserted_card = parent
 
 /datum/component/armament/Destroy(force)
-	if(inserted_card)
+	if(!QDELETED(inserted_card))
 		inserted_card.forceMove(parent_atom.drop_location())
-		inserted_card = null
+	inserted_card = null
 	return ..()
+
+/datum/component/armament/proc/context(datum/source,
+	list/context,
+	obj/item/held_item,
+	mob/user,
+)
+	PRIVATE_PROC(TRUE)
+	SIGNAL_HANDLER
+	context[SCREENTIP_CONTEXT_RMB] = "Open Armament Store"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/component/armament/proc/on_attackby(atom/target, obj/item, mob/user)
 	SIGNAL_HANDLER
@@ -85,16 +104,17 @@
 		data["card_name"] = inserted_card.name
 
 	data["armaments_list"] = list()
-	for(var/armament_category as anything in SSarmaments.entries)
+	for(var/armament_category in SSarmaments.entries)
 		var/list/armament_subcategories = list()
-		for(var/subcategory as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
+		for(var/subcategory in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
 			var/list/subcategory_items = list()
 			for(var/datum/armament_entry/armament_entry as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY][subcategory])
 				if(products && !(armament_entry.type in products))
 					continue
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.cached_base64,
+					"icon" = armament_entry.item_type::icon,
+					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
 					"cost" = armament_entry.cost,
 					"buyable_ammo" = armament_entry.magazine ? TRUE : FALSE,
@@ -141,6 +161,8 @@
 			buy_ammo(usr, check, params["quantity"])
 			SStgui.update_uis(src)
 		if("eject_card")
+			if(istype(parent, /obj/item/armament_points_card))
+				return
 			eject_card(usr)
 			SStgui.update_uis(src)
 
@@ -348,11 +370,11 @@
 	data["self_paid"] = !!self_paid
 	data["armaments_list"] = list()
 
-	for(var/armament_category as anything in SSarmaments.entries)
+	for(var/armament_category in SSarmaments.entries)
 
 		var/list/armament_subcategories = list()
 
-		for(var/subcategory as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
+		for(var/subcategory in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
 			var/list/subcategory_items = list()
 			for(var/datum/armament_entry/armament_entry as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY][subcategory])
 				if(products && !(armament_entry.type in products))
@@ -369,9 +391,10 @@
 
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.cached_base64,
+					"icon" = armament_entry.item_type::icon,
+					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
-					"cost" = armament_entry.cost,
+					"cost" = cost_calculate(armament_entry.cost),
 					"buyable_ammo" = armament_entry.magazine ? TRUE : FALSE,
 					"magazine_cost" = armament_entry.magazine_cost,
 					"purchased" = purchased_items[armament_entry] ? purchased_items[armament_entry] : 0,
@@ -448,10 +471,6 @@
 				to_chat(user, span_warning("No ID card detected."))
 				return
 
-			if(istype(id_card, /obj/item/card/id/departmental_budget))
-				to_chat(user, span_warning("[id_card] cannot be used to make purchases."))
-				return
-
 			var/datum/bank_account/account = id_card.registered_account
 
 			if(!istype(account))
@@ -471,7 +490,8 @@
 	if(!ishuman(user) && !issilicon(user))
 		return
 
-	if(!buyer.has_money(armament_entry.cost))
+	var/actual_cost = cost_calculate(armament_entry.cost)
+	if(!buyer.has_money(actual_cost))
 		to_chat(user, span_warning("Not enough money!"))
 		return
 
@@ -480,7 +500,7 @@
 	if(issilicon(user))
 		name = user.real_name
 	else
-		the_person.get_authentification_name()
+		name = the_person.get_authentification_name()
 
 	var/reason = ""
 
@@ -503,7 +523,7 @@
 
 	var/datum/supply_pack/armament/created_pack = new
 	created_pack.name = initial(armament_entry.item_type.name)
-	created_pack.cost = cost_calculate(armament_entry.cost) //Paid for seperately
+	created_pack.cost = actual_cost //Paid for seperately
 	created_pack.contains = list(armament_entry.item_type)
 
 	var/rank

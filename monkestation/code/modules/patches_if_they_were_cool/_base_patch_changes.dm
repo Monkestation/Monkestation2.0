@@ -10,23 +10,18 @@
 	///The overlay we apply to things we stick to
 	var/mutable_appearance/patch_overlay
 
-/obj/item/reagent_containers/pill/patch/afterattack(atom/target, mob/living/user, prox, params)
-	. = ..()
-	if(!prox)
-		return
+/obj/item/reagent_containers/pill/patch/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!isliving(target))
-		return
+		return ..()
 
-	if(!do_after(user, CHEM_INTERACT_DELAY(0.1 SECONDS, user), target))
-		return
+	if(target != user && !do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
+		return ITEM_INTERACT_BLOCKING
 
-	var/list/parameters = params2list(params)
-	if(!LAZYACCESS(parameters, ICON_X) || !LAZYACCESS(parameters, ICON_Y))
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
 	var/divided_size = world.icon_size / 2
-	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
-	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
-	. |= AFTERATTACK_PROCESSED_ITEM
+	var/px = text2num(LAZYACCESS(modifiers, ICON_X)) - divided_size
+	var/py = text2num(LAZYACCESS(modifiers, ICON_Y)) - divided_size
 	user.do_attack_animation(target)
 	stick(target,user,px,py)
 	return .
@@ -62,8 +57,9 @@
 
 /obj/item/reagent_containers/pill/patch/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && prob(15) && isliving(hit_atom))
-		stick(hit_atom,rand(-7,7),rand(-7,7))
+	if(!. && prob(10) && isliving(hit_atom))
+		stick(hit_atom, throwingdatum.thrower, rand(-7,7), rand(-7,7))
+		to_chat(attached, span_bolddanger("[src] has stuck to you."))
 		attached.balloon_alert_to_viewers("[src] lands on its sticky side!")
 
 ///Signal handler for COMSIG_LIVING_IGNITED, deletes this patch, if it is flammable

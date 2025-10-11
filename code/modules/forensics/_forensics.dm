@@ -66,7 +66,7 @@
 		src.fibers = LAZY_LISTS_OR(src.fibers, fibers)
 	check_blood()
 
-/datum/forensics/Destroy(force, ...)
+/datum/forensics/Destroy(force)
 	var/atom/parent_atom = parent.resolve()
 	if (!isnull(parent_atom))
 		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))
@@ -110,10 +110,10 @@
 /// Adds a single fingerprint
 /datum/forensics/proc/add_fingerprint(mob/living/suspect, ignoregloves = FALSE)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/camera/ai_eye/ai_camera = suspect
+			var/mob/eye/ai_eye/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai
@@ -121,6 +121,10 @@
 	if(ishuman(suspect))
 		var/mob/living/carbon/human/human_suspect = suspect
 		add_fibers(human_suspect)
+		// MONKESTATION ADDITION START
+		if(HAS_TRAIT(human_suspect, TRAIT_NO_FINGERPRINTS))
+			return
+		// MONKESTATION ADDITION END
 		var/obj/item/gloves = human_suspect.gloves
 		if(gloves) //Check if the gloves (if any) hide fingerprints
 			if(!(gloves.body_parts_covered & HANDS) || HAS_TRAIT(gloves, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(human_suspect, TRAIT_FINGERPRINT_PASSTHROUGH))
@@ -192,10 +196,10 @@
 /// Adds a single hiddenprint
 /datum/forensics/proc/add_hiddenprint(mob/suspect)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/camera/ai_eye/ai_camera = suspect
+			var/mob/eye/ai_eye/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai

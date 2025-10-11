@@ -2,6 +2,7 @@
 /obj/item/toy/plush/nova
 	icon = 'monkestation/code/modules/blueshift/icons/plushes.dmi'
 	inhand_icon_state = null
+	custom_price = PAYCHECK_COMMAND * 4
 
 /obj/item/toy/plush/nova/borbplushie
 	name = "borb plushie"
@@ -18,6 +19,7 @@
 	attack_verb_simple = list("headbutt", "boop", "bap", "bump")
 	//squeak_override = list('modular_nova/modules/customization/game/objects/items/sound/deerplush.ogg' = 1)
 
+/* ///Multiple comment blocks used to remove plushies that do not align with the codebases rules.
 /obj/item/toy/plush/nova/fermis
 	name = "medcat plushie"
 	desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to find happiness and be kind to people."
@@ -52,6 +54,7 @@
 	attack_verb_continuous = list("beeps", "boops", "pings")
 	attack_verb_simple = list("beep", "boop", "ping")
 	//squeak_override = list('sound/machines/beep.ogg' = 1)
+*/
 
 /obj/item/toy/plush/nova/fox
 	name = "fox plushie"
@@ -61,6 +64,7 @@
 	attack_verb_simple = list("gecker", "boop", "nuzzle")
 	//squeak_override = list('modular_nova/modules/customization/game/objects/items/sound/deerplush.ogg' = 1)
 
+/*
 /obj/item/toy/plush/nova/duffmoth
 	name = "suspicious moth plushie"
 	desc = "A plushie depicting a certain moth. He probably got turned into a marketable plushie."
@@ -81,7 +85,7 @@
 
 /obj/item/toy/plush/nova/sarmieplush
 	name = "cosplayer plushie"
-	desc = "A stuffed toy who look like a familiar cosplayer, <b>he looks sad.</b>"
+	desc = "A stuffed toy who looks like a familiar cosplayer, <b>he looks sad.</b>"
 	icon_state = "plushie_sarmie"
 	attack_verb_continuous = list("baps")
 	attack_verb_simple = list("bap")
@@ -90,7 +94,7 @@
 
 /obj/item/toy/plush/nova/sharknet
 	name = "gluttonous shark plushie"
-	desc = "A heavy plushie of a rather large and hungry shark"
+	desc = "A heavy plushie of a rather large and hungry shark."
 	icon_state = "plushie_sharknet"
 	attack_verb_continuous = list("cuddles", "squishes", "wehs")
 	attack_verb_simple = list("cuddle", "squish", "weh")
@@ -127,6 +131,7 @@
 	attack_verb_continuous = list("slaps", "challenges")
 	attack_verb_simple = list("slap", "challenge")
 	//squeak_override = list('sound/weapons/slap.ogg' = 1)
+*/
 
 /obj/item/toy/plush/nova/ian
 	name = "plush corgi"
@@ -149,6 +154,7 @@
 	attack_verb_continuous = list("barks", "woofs", "wags her tail at")
 	gender = FEMALE
 
+/*
 /obj/item/toy/plush/nova/cat
 	name = "cat plushie"
 	desc = "A small cat plushie with black beady eyes."
@@ -349,6 +355,7 @@
 		playsound(src_turf, 'sound/effects/can_pop.ogg', 80, TRUE)
 		playsound(src_turf, 'sound/effects/bubbles.ogg', 50, TRUE)
 		qdel(src)
+*/
 
 /obj/item/toy/plush/nova/rubi
 	name = "huggable bee plushie"
@@ -372,6 +379,7 @@
 	mood_change = 0
 	timeout = 2 MINUTES
 
+/*
 /obj/item/toy/plush/nova/roselia
 	name = "obscene sergal plushie"
 	desc = "A plush recreation of a pink sergal. The chest is extremely padded and the small plush clothes are barely holding themselves together."
@@ -438,6 +446,7 @@
 	name = "Squish-Me-Tesh"
 	desc = "Winner of Be Made Into A Plushy by ClownCo!"
 	icon_state = "plushie_tobjv2"
+*/
 
 // Donation reward for tobjv
 /obj/item/toy/plush/nova/immovable_rod
@@ -451,6 +460,7 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		return
 
+/*
 // Donation reward for gamerguy14948
 /obj/item/toy/plush/nova/voodoo
 	name = "voodoo doll"
@@ -585,3 +595,4 @@
 	attack_verb_continuous = list("beeps", "washes", "mops", "squirts", "soaps")
 	attack_verb_simple = list("beep", "wash", "mop", "squirt", "soap")
 	//squeak_override = list('sound/machines/twobeep.ogg' = 1)
+*/

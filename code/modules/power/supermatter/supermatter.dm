@@ -53,8 +53,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/damage_archived = 0
 	var/list/damage_factors
 
-	/// How much extra power does the main zap generate.
-	var/zap_multiplier = 1
+	/// The zap power transmission over internal energy. W/MeV.
+	var/zap_transmission_rate = BASE_POWER_TRANSMISSION_RATE
 	var/list/zap_factors
 
 	/// The temperature at which we start taking damage
@@ -95,7 +95,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// How much power decay is negated. Complete power decay negation at 1.
 	var/gas_powerloss_inhibition = 0
 	/// Affects the amount of power the main SM zap makes.
-	var/gas_power_transmission = 0
+	var/gas_power_transmission_rate = 0
 	/// Affects the power gain the SM experiances from heat.
 	var/gas_heat_power_generation = 0
 
@@ -109,7 +109,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/external_damage_immediate = 0
 
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
-	var/zap_cutoff = 1500
+	var/zap_cutoff = 1.2 MEGA JOULES
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
@@ -153,13 +153,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
+	///Stores the tick of the machines subsystem of when the last zap energy accumulation occurred. Gives a passage of time in the perspective of SSmachines.
+	var/last_energy_accumulation_perspective_machines = 0
+	///Same as [last_energy_accumulation_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	var/last_high_energy_accumulation_perspective_machines = 0
+	/// Accumulated energy to be transferred from supermatter zaps.
+	var/list/zap_energy_accumulation = list()
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
 	///Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
-	var/atom/movable/supermatter_warp_effect/warp
+	var/atom/movable/warp_effect/warp
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
 	var/powerloss_linear_threshold = 0
 	///The offset of the linear powerloss function set so the transition is differentiable.
@@ -270,24 +276,26 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
-	zap_factors = calculate_zap_multiplier()
-	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	zap_factors = calculate_zap_transmission_rate()
+	var/delta_time = (SSmachines.times_fired - last_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
+	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
+	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
-		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
-		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
-		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 1.25 * internal_energy * zap_multiplier * delta_time,
+			zap_str = discharged_energy,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 300 * delta_time,
+			zap_cutoff = 240 KILO JOULES,
 			power_level = internal_energy,
 			color = zap_color,
 		)
+
 		last_power_zap = world.time
+	last_energy_accumulation_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -399,7 +407,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			"name" = factor,
 			"amount" = amount
 		))
-	data["zap_multiplier"] = zap_multiplier
+	data["zap_multiplier"] = zap_transmission_rate
 	data["zap_multiplier_factors"] = list()
 	for (var/factor in zap_factors)
 		var/amount = round(zap_factors[factor], 0.01)
@@ -577,20 +585,24 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 
 	gas_percentage = list()
-	gas_power_transmission = 0
+	gas_power_transmission_rate = 0
 	gas_heat_modifier = 0
 	gas_heat_resistance = 0
 	gas_heat_power_generation = 0
 	gas_powerloss_inhibition = 0
 
 	var/total_moles = absorbed_gasmix.total_moles()
-
+	if(total_moles < MINIMUM_MOLE_COUNT) //it's not worth processing small amounts like these, total_moles can also be 0 in vacuume
+		return
 	for (var/gas_path in absorbed_gasmix.gases)
-		gas_percentage[gas_path] = absorbed_gasmix.gases[gas_path][MOLES] / total_moles
+		var/mole_count = absorbed_gasmix.gases[gas_path][MOLES]
+		if(mole_count < MINIMUM_MOLE_COUNT) //save processing power from small amounts like these
+			continue
+		gas_percentage[gas_path] = mole_count / total_moles
 		var/datum/sm_gas/sm_gas = current_gas_behavior[gas_path]
 		if(!sm_gas)
 			continue
-		gas_power_transmission += sm_gas.power_transmission * gas_percentage[gas_path]
+		gas_power_transmission_rate += sm_gas.power_transmission * gas_percentage[gas_path]
 		gas_heat_modifier += sm_gas.heat_modifier * gas_percentage[gas_path]
 		gas_heat_resistance += sm_gas.heat_resistance * gas_percentage[gas_path]
 		gas_heat_power_generation += sm_gas.heat_power_generation * gas_percentage[gas_path]
@@ -668,24 +680,24 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	activation_logged = TRUE
 
 /**
- * Perform calculation for the main zap power multiplier.
+ * Perform calculation for the main zap power transmission rate in W/MeV.
  * Description of each factors can be found in the defines.
  *
  * Updates:
- * [/obj/machinery/power/supermatter_crystal/var/zap_multiplier]
+ * [/obj/machinery/power/supermatter_crystal/var/zap_transmission_rate]
  *
  * Returns: The factors that have influenced the calculation. list[FACTOR_DEFINE] = number
  */
-/obj/machinery/power/supermatter_crystal/proc/calculate_zap_multiplier()
-	var/list/additive_transmission = list()
-	additive_transmission[SM_ZAP_BASE] = 1
-	additive_transmission[SM_ZAP_GAS] = gas_power_transmission
+/obj/machinery/power/supermatter_crystal/proc/calculate_zap_transmission_rate()
+	var/list/additive_transmission_rate = list()
+	additive_transmission_rate[SM_ZAP_BASE] = BASE_POWER_TRANSMISSION_RATE
+	additive_transmission_rate[SM_ZAP_GAS] = BASE_POWER_TRANSMISSION_RATE * gas_power_transmission_rate
 
-	zap_multiplier = 0
-	for (var/transmission_types in additive_transmission)
-		zap_multiplier += additive_transmission[transmission_types]
-	zap_multiplier = max(zap_multiplier, 0)
-	return additive_transmission
+	zap_transmission_rate = 0
+	for (var/transmission_types in additive_transmission_rate)
+		zap_transmission_rate += additive_transmission_rate[transmission_types]
+	zap_transmission_rate = max(zap_transmission_rate, 0)
+	return additive_transmission_rate
 
 /**
  * Perform calculation for the waste multiplier.
@@ -819,8 +831,35 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/**
+ * Accumulates energy for the zap_energy_accumulation key.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * energy: The amount of energy to accumulate.
+ * Returns: The accumulated energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/accumulate_energy(key, energy)
+	. = (zap_energy_accumulation[key] ? zap_energy_accumulation[key] : 0) + energy
+	zap_energy_accumulation[key] = .
+
+/**
+ * Depletes a portion of the accumulated energy for the given key and returns it. Used for discharging energy from the supermatter.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * portion: The portion of the accumulated energy that gets discharged.
+ * Returns: The discharged energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/discharge_energy(key, portion = ZAP_ENERGY_DISCHARGE_PORTION)
+	. = portion * zap_energy_accumulation[key]
+	zap_energy_accumulation[key] -= .
+
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
+		return
+	if(zap_cutoff <= 0)
+		stack_trace("/obj/machinery/supermatter_zap() was called with a non-positive value")
+		return
+	if(zap_str <= 0) // Just in case something scales zap_str and zap_cutoff to 0.
 		return
 	. = zapstart.dir
 	//If the strength of the zap decays past the cutoff, we stop
@@ -923,7 +962,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				multi = 8
 		if(zap_flags & ZAP_SUPERMATTER_FLAGS)
 			var/remaining_power = target.zap_act(zap_str * multi, zap_flags)
-			zap_str = remaining_power * 0.5 //Coils should take a lot out of the power of the zap
+			zap_str = remaining_power / multi //Coils should take a lot out of the power of the zap
 		else
 			zap_str /= 3
 
@@ -958,6 +997,54 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			child_targets_hit = targets_hit.Copy() //Pass by ref begone
 		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon, color)
 
+// Warp Effect //
+
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/light_overlays/light_352.dmi'
+	icon_state = "light"
+	pixel_x = -176
+	pixel_y = -176
+/* // Pending whatever plane stuff has happened in https://github.com/tgstation/tgstation/pull/92357 and https://github.com/tgstation/tgstation/pull/91696
+/atom/movable/warp_effect/Initialize(mapload)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/Destroy(force)
+	// Just in case I've forgotten how the movement api works
+	var/offset = GET_TURF_PLANE_OFFSET(loc)
+	REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(offset), ref(src))
+	return ..()
+
+/atom/movable/warp_effect/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/turf/new_turf = get_turf(src)
+	var/turf/old_turf = get_turf(old_loc)
+	if(!new_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+		return
+	else if(get_turf(old_loc))
+		return
+	// If we're in a thing on a turf we COUNT as a distortion source
+	var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+	ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+
+/atom/movable/warp_effect/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	if(old_turf)
+		var/old_offset = GET_TURF_PLANE_OFFSET(old_turf)
+		REMOVE_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(old_offset), ref(src))
+	if(new_turf)
+		var/new_offset = GET_TURF_PLANE_OFFSET(new_turf)
+		ADD_TRAIT(GLOB, TRAIT_DISTORTION_IN_USE(new_offset), ref(src))
+*/
 #undef BIKE
 #undef COIL
 #undef ROD

@@ -11,7 +11,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
 
-	skillchips = list(/obj/item/skillchip/disk_verifier)
+	skillchips = list(/obj/item/skillchip/disk_verifier, /obj/item/skillchip/gorlex)
 	box = /obj/item/storage/box/survival/syndie
 	/// Amount of TC to automatically store in this outfit's uplink.
 	var/tc = 25
@@ -21,6 +21,9 @@
 	var/uplink_type = /obj/item/uplink/nuclear
 
 	id_trim = /datum/id_trim/chameleon/operative
+
+	/// Give them an explosive implant.
+	var/implant_explosive_implant = TRUE
 
 /datum/outfit/syndicate/plasmaman
 	name = "Syndicate Operative - Basic (Plasmaman)"
@@ -57,8 +60,9 @@
 
 	var/obj/item/implant/weapons_auth/weapons_implant = new/obj/item/implant/weapons_auth(nukie)
 	weapons_implant.implant(nukie)
-	var/obj/item/implant/explosive/explosive_implant = new/obj/item/implant/explosive(nukie)
-	explosive_implant.implant(nukie)
+	if(implant_explosive_implant)
+		var/obj/item/implant/explosive/explosive_implant = new/obj/item/implant/explosive(nukie)
+		explosive_implant.implant(nukie)
 	nukie.faction |= ROLE_SYNDICATE
 	nukie.update_icons()
 
@@ -161,3 +165,83 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	faction = "MI13"
+
+/datum/outfit/syndicate/junior
+	name = "Syndicate Junior Operative"
+
+	glasses = /obj/item/clothing/glasses/night
+	back = /obj/item/storage/backpack/fireproof
+	head = /obj/item/clothing/head/helmet/space/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate
+	suit_store = /obj/item/tank/jetpack/oxygen
+	belt = /obj/item/storage/belt/military
+	l_pocket = /obj/item/pinpointer/nuke
+	r_pocket = null
+	id = /obj/item/card/id/advanced/chameleon
+	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/pistol = 1,
+		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/pen/edagger = 1,
+	)
+	tc = 10
+	uplink_type = /obj/item/uplink/old
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/syndicate/junior/post_equip(mob/living/carbon/human/nukie, visualsOnly)
+	..()
+	var/obj/item/clothing/suit/space/anti_freeze = nukie.wear_suit
+	anti_freeze.toggle_spacesuit(nukie)
+
+/datum/outfit/syndicate/junior/plasmaman
+	name = "Syndicate Junior Operative (Plasmaman)"
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_HANDS
+
+
+/datum/outfit/syndicate/junior/plasmaman/New()
+	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	return ..()
+
+/datum/outfit/syndicate/commando
+	name = "Syndicate Commando Operative"
+
+	shoes = /obj/item/clothing/shoes/combat/swat
+	belt = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/pinpointer/commando_nuke
+	r_pocket = /obj/item/pinpointer/area_pinpointer/station_locked
+	backpack_contents = list(
+		/obj/item/syndicate_voucher/kit = 1,
+	)
+	tc = 0
+
+	uplink_type = null
+
+	implant_explosive_implant = FALSE
+
+/datum/outfit/syndicate/commando/plasmaman
+	name = "Syndicate Commando Operative (Plasmaman)"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+
+/datum/outfit/syndicate/commando/leader
+	name = "Syndicate Commando Operative Leader"
+	command_radio = TRUE
+
+	belt = /obj/item/gun/ballistic/automatic/pistol
+	head = /obj/item/clothing/head/hats/hos/beret/syndicate
+	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
+	backpack_contents = list(
+		/obj/item/syndicate_voucher/leader = 1,
+		/obj/item/syndicate_voucher/kit = 1,
+		/obj/item/choice_beacon/commando_support = 1,
+		/obj/item/disk/nuclear/nukie = 1,
+		/obj/item/nuke_recaller = 1,
+	)
+
+/datum/outfit/syndicate/commando/leader/plasmaman
+	name = "Syndicate Commando Operative Leader (Plasmaman)"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full

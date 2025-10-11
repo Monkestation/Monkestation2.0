@@ -16,7 +16,7 @@
 	src.pixel_shift = pixel_shift
 
 	if(ismovable(target))
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE) // temporary workaround. probably.
 
 	var/atom/atom_target = target
 	if(isturf(atom_target.loc))
@@ -151,8 +151,8 @@
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
-	if(isliving(spawned))
-		elevate_mob(spawned)
+	if(isliving(spawned) && !HAS_TRAIT(spawned, TRAIT_ON_ELEVATED_SURFACE))
+		on_entered(entered = spawned)
 
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER

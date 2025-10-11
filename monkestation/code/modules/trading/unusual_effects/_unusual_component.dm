@@ -9,6 +9,8 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	var/round_id = 0
 	///the particle spewer component path
 	var/particle_path = /datum/component/particle_spewer/confetti
+	///the particle spewer component
+	var/datum/component/particle_spewer/spewer
 	/// The original owners name
 	var/original_owner_ckey = "dwasint"
 	/// the slot this item goes in used when creating the particle itself
@@ -38,16 +40,10 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 		unusual_number = "[GLOB.total_unusuals_per_type["[particle_path]"]]"
 
 
-	source_object.AddComponent(src.particle_path)
+	spewer = source_object.AddComponent(src.particle_path)
 
 	if(!length(parsed_variables))
-		var/datum/component/particle_spewer/created = source_object.GetComponent(/datum/component/particle_spewer)
-		unusual_description = created.unusual_description
-
-	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
-	source_object.desc += span_notice("\n Unboxed on round: [round_id]")
-	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
-	source_object.desc += span_notice("\n Series Number: [unusual_number]")
+		unusual_description = spewer.unusual_description
 
 	if(!length(parsed_variables))
 		switch(unusual_number)
@@ -62,20 +58,40 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 			else
 				source_object.name = "unusual [unusual_description] [source_object.name]"
 
-	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 	save_unusual_data()
 
-/datum/component/unusual_handler/Destroy(force, silent)
-	. = ..()
-	UnregisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC)
+/datum/component/unusual_handler/Destroy(force)
+	QDEL_NULL(spewer)
+	return ..()
 
-/datum/component/unusual_handler/proc/append_unusual(atom/source, updates)
+/datum/component/unusual_handler/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(on_attack_self_secondary))
+
+/datum/component/unusual_handler/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SELF_SECONDARY))
+
+/datum/component/unusual_handler/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	source_object.desc = initial(source_object.desc)
-	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
-	source_object.desc += span_notice("\n Unboxed on: [round_id]")
-	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
-	source_object.desc += span_notice("\n Series Number: [unusual_number]")
+	examine_list += span_notice(" Unboxed by: [original_owner_ckey]")
+	examine_list += span_notice(" Unboxed on: [round_id]")
+	examine_list += span_notice(" Unusual Type: [unusual_description]")
+	examine_list += span_notice(" Series Number: [unusual_number]")
+	if(spewer)
+		examine_list += span_notice(span_italics("Right-click on it in order to [spewer.paused ? "enable" : "disable"] its effects."))
+
+/datum/component/unusual_handler/proc/on_attack_self_secondary(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if (spewer.paused)
+		spewer.paused = FALSE
+		spewer.update_processing()
+		to_chat(user, span_notice("You enable [source_object]'s effects."))
+		return
+	spewer.paused = TRUE
+	spewer.update_processing()
+	to_chat(user, span_notice("You disable [source_object]'s effects."))
 
 /datum/component/unusual_handler/proc/setup_from_list(list/parsed_results)
 	particle_path = text2path(parsed_results["type"])
@@ -92,10 +108,6 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	if(!fexists(json_file))
 		stack_trace("We are missing the unusual JSON file, this will mess up unusual counting and unique names!")
 	var/list/json = json_decode(file2text(json_file))
-
-	if(!json)
-		return
-
 	for(var/type in json)
 		GLOB.total_unusuals_per_type[type] = json[type]
 

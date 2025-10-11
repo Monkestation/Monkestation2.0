@@ -6,16 +6,16 @@
 	icon = 'monkestation/code/modules/blueshift/icons/storage.dmi'
 	resistance_flags = FLAMMABLE
 
-/obj/structure/rack/wooden/MouseDrop_T(obj/object, mob/user, params)
+/obj/structure/rack/wooden/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
 
-	object.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
-	object.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
+	dropped.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
+	dropped.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
 
-/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/structure/rack/wooden/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
 /obj/structure/rack/wooden/crowbar_act(mob/living/user, obj/item/tool)
@@ -141,6 +141,7 @@ GLOBAL_LIST_INIT(monke_wood_recipes, list(
 	new/datum/stack_recipe("sturdy wooden fence", /obj/structure/railing/wooden_fencing, 5, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE),
 	new/datum/stack_recipe("sturdy wooden fence gate", /obj/structure/railing/wooden_fencing/gate, 5, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE),
 	new/datum/stack_recipe("large wooden gate", /obj/structure/mineral_door/wood/large_gate, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE),
+	new/datum/stack_recipe("signboard", /obj/structure/signboard, 5, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),
 ))
 
 

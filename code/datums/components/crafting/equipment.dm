@@ -57,12 +57,29 @@
 	time = 20 SECONDS
 	category = CAT_EQUIPMENT
 
-/datum/crafting_recipe/freezer_cabinat
-	name = "Freezer Cabinet"
+/datum/crafting_recipe/secured_freezer_cabinet
+	name = "Secure Freezer Cabinet"
 	result = /obj/structure/closet/secure_closet/freezer/empty
 	reqs = list(
-		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/iron = 5,
 		/obj/item/assembly/igniter/condenser = 1,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
+	)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/secure_closet
+	name = "Secure Closet"
+	result = /obj/structure/closet/secure_closet
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/electronics/airlock = 1,
+	)
+	parts = list(
+		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
@@ -110,6 +127,9 @@
 	reqs = list(
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
+	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/space_bubble,
 	)
 	category = CAT_EQUIPMENT
 
@@ -197,4 +217,26 @@
 	) //the chainsaw of prank tools
 	tool_paths = list(/obj/item/bikehorn)
 	time = 40 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/rebar_quiver
+	name = "Rebar Storage Quiver"
+	result = /obj/item/storage/bag/rebar_quiver
+	time = 10
+	reqs = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/umbrella
+	name = "Umbrella"
+	result = /obj/item/umbrella
+	reqs = list(
+		/obj/item/stack/sheet/cloth = 3,
+		/obj/item/stack/rods = 1,
+	)
+	tool_behaviors = list(TOOL_CROWBAR)
+	time = 5 SECONDS
 	category = CAT_EQUIPMENT

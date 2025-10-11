@@ -57,7 +57,7 @@
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
 
-/datum/uplink_handler/Destroy(force, ...)
+/datum/uplink_handler/Destroy(force)
 	can_replace_objectives = null
 	replace_objectives = null
 	return ..()
@@ -120,6 +120,20 @@
 		item_stock[to_purchase.stock_key] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
+	on_update()
+	return TRUE
+
+/datum/uplink_handler/proc/purchase_raw_tc(mob/user, amount, atom/movable/source)
+	if(shop_locked)
+		return FALSE
+	if(telecrystals < amount)
+		return FALSE
+
+	telecrystals -= amount
+	var/tcs = new /obj/item/stack/telecrystal(user.drop_location(), amount)
+	user.put_in_hands(tcs)
+
+	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")
 	on_update()
 	return TRUE
 

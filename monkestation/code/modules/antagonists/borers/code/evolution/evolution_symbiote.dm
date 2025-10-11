@@ -10,7 +10,6 @@
 	unlocked_evolutions = list(/datum/borer_evolution/symbiote/chem_per_level)
 	evo_cost = 1
 	added_action = /datum/action/cooldown/borer/willing_host
-	skip_for_neutered = TRUE
 
 // T2
 /datum/borer_evolution/symbiote/chem_per_level
@@ -23,7 +22,7 @@
 /datum/borer_evolution/symbiote/chem_per_level/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.chem_storage_per_level += 10
-	cortical_owner.chem_regen_per_level += 0.5
+	cortical_owner.chem_regen_per_level += 0.25
 	cortical_owner.recalculate_stats()
 
 // T3 + T2 Path

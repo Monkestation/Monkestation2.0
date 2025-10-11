@@ -77,7 +77,7 @@
 	set_target(get_target())
 
 /datum/plane_master_debug/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_DEBUG) // monkestation edit: a debug UI should check for +DEBUG
 
 /datum/plane_master_debug/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -128,7 +128,7 @@
 	var/list/pending_relays = list()
 
 	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	for(var/plane_string as anything in our_planes)
+	for(var/plane_string in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
 		var/string_plane = "[plane.plane]"
@@ -341,7 +341,7 @@
 	var/list/our_planes = group.plane_masters
 
 	switch(action)
-		if("refresh")
+		if("rebuild")
 			group.rebuild_hud()
 		if("reset_mob")
 			set_target(null)

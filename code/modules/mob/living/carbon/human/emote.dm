@@ -39,10 +39,12 @@
 		return ..()
 	return FALSE
 
-/datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/human/glasses/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
+	if(!ishuman(user))
+		return
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "glasses")
-	flick_overlay_global(emote_animation, GLOB.clients, 1.6 SECONDS)
+	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 1.6 SECONDS)
 
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"
@@ -92,7 +94,7 @@
 
 	// MonkeStation Edit Start
 	// Alternative Scream Hook
-	if(user.alternative_screams.len)
+	if(LAZYLEN(user.alternative_screams))
 		return pick(user.alternative_screams)
 	// MonkeStation Edit End
 
@@ -283,3 +285,54 @@ monkestation edit end */
 		var/obj/item/organ/internal/butt/booty = user.get_organ_by_type(/obj/item/organ/internal/butt)
 		if(!booty.cooling_down)
 			booty.On_Fart(user)
+
+/// emotes for glowy goobers
+/datum/emote/living/carbon/human/glow
+	key = "glow"
+	key_third_person = "glows"
+	message = "glows brightly!"
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/glow/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.handle_glow_emote(user, 1.75, 1.2)
+
+/datum/emote/living/carbon/human/flare
+	key = "flare"
+	key_third_person = "flares"
+	message = "flares up to a dazzling intensity!"
+	emote_type = EMOTE_VISIBLE
+	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
+
+/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/flare/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.handle_glow_emote(user, 12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
+
+/datum/emote/living/carbon/human/flicker
+	key = "flicker"
+	key_third_person = "flicker"
+	message = "flickers."
+	emote_type = EMOTE_VISIBLE
+	sound = "sound/effects/sparks/sparks4.ogg"
+
+/datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/flicker/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.start_flicker(user)

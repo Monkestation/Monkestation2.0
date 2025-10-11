@@ -7,31 +7,34 @@
 	mutanteyes = /obj/item/organ/internal/eyes/ethereal
 	mutanttongue = /obj/item/organ/internal/tongue/ethereal
 	mutantheart = /obj/item/organ/internal/heart/ethereal
+	mutantspleen = null
 	external_organs = list(
 		/obj/item/organ/external/ethereal_horns = "None",
 		/obj/item/organ/external/tail/ethereal = "None")
-	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
-	exotic_bloodtype = "LE"
+	exotic_bloodtype = /datum/blood_type/crew/ethereal
+	inert_mutation = /datum/mutation/overload
+
+	// Body temperature for ethereals is much higher then humans as they like hotter environments
+	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+	temperature_homeostasis_speed = 3
+	temperature_normalization_speed = 1
+
 	siemens_coeff = 0.5 //They thrive on energy
-	brutemod = 1.25 //They're weak to punches
 	payday_modifier = 1
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FIXED_MUTANT_COLORS,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_BLOODLOSS_DAMAGE, //we handle that species-side.
-	)
-	species_traits = list(
-		DYNCOLORS,
-		NO_UNDERWEAR,
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/energybar
 	species_language_holder = /datum/language_holder/ethereal
-	toxic_food = NONE
-	// Body temperature for ethereals is much higher then humans as they like hotter environments
-	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
-	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
+	bodytemp_cold_damage_limit = 283 KELVIN // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 180
 	facial_hair_alpha = 180
@@ -47,7 +50,9 @@
 
 	var/current_color
 	var/EMPeffect = FALSE
+	var/EMP_timer = null
 	var/emageffect = FALSE
+	var/emag_timer = null
 	var/r1
 	var/g1
 	var/b1
@@ -56,6 +61,10 @@
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 	var/default_color
+	var/powermult = 1
+	var/rangemult = 1
+	var/flickering = FALSE
+	var/currently_flickered
 
 /datum/species/ethereal/Destroy(force)
 	QDEL_NULL(ethereal_light)
@@ -66,18 +75,18 @@
 	if(!ishuman(new_ethereal))
 		return
 	var/mob/living/carbon/human/ethereal = new_ethereal
-	default_color = ethereal.dna.features["ethcolor"]
+	var/datum/color_palette/generic_colors/palette = ethereal.dna.color_palettes[/datum/color_palette/generic_colors]
+	default_color = palette.ethereal_color
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
 	b1 = GETBLUEPART(default_color)
 	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(new_ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(on_after_attackedby))
+	RegisterSignal(ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_saboteur))
+	RegisterSignal(ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(on_after_attackedby))
 	ethereal_light = ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	spec_updatehealth(ethereal)
-	new_ethereal.set_safe_hunger_level()
-	update_mail_goodies(ethereal)
 
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
@@ -90,15 +99,9 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
+	UnregisterSignal(former_ethereal, COMSIG_ATOM_SABOTEUR_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY)
 	QDEL_NULL(ethereal_light)
-	return ..()
-
-/datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/ethereal
-		)
 	return ..()
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
@@ -110,100 +113,16 @@
 	return randname
 
 /datum/species/ethereal/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-
-
-/datum/species/ethereal/spec_life(mob/living/carbon/human/ethereal, seconds_per_tick, times_fired)
-	if(ethereal.stat == DEAD)
-		return
-	adjust_charge(ethereal, -ETHEREAL_BLOOD_CHARGE_FACTOR * seconds_per_tick, TRUE)
-	handle_charge(ethereal, seconds_per_tick, times_fired)
-
-/datum/species/ethereal/proc/adjust_charge(mob/living/carbon/human/ethereal, amount, passive)
-	if(passive)
-		if(ethereal.blood_volume < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE) //Do not apply the clamp if its below the passive reduction level(no infinite blood sorry)
-			return
-		if(ethereal.blood_volume + amount < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE+1)
-			ethereal.blood_volume = ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE+1 //bottom them off here if the end result would be less than the stopping point.
-		ethereal.blood_volume = clamp(ethereal.blood_volume + amount, ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE+1, ETHEREAL_BLOOD_CHARGE_DANGEROUS)
-		return
-	ethereal.blood_volume = clamp(ethereal.blood_volume + amount, ETHEREAL_BLOOD_CHARGE_NONE, ETHEREAL_BLOOD_CHARGE_DANGEROUS)
-
-/datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/ethereal, seconds_per_tick, times_fired)
-	brutemod = 1.15
-	var/word = pick("like you can't breathe","your lungs locking up","extremely lethargic")
-	var/blood_volume = ethereal.blood_volume
-	if(HAS_TRAIT(ethereal, TRAIT_ETHEREAL_NO_OVERCHARGE))
-		blood_volume = min(blood_volume, ETHEREAL_BLOOD_CHARGE_FULL)
-	switch(blood_volume)
-		if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
-			ethereal.add_mood_event("charge", /datum/mood_event/decharged)
-			ethereal.clear_alert("ethereal_overcharge")
-			ethereal.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/emptycell/ethereal)
-			brutemod = 2
-			if(SPT_PROB(7.5, seconds_per_tick))
-				to_chat(src, span_warning("You feel [word]."))
-			ethereal.adjustOxyLoss(round(0.01 * (ETHEREAL_BLOOD_CHARGE_LOW - ethereal.blood_volume) * seconds_per_tick, 1))
-		if(ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE to ETHEREAL_BLOOD_CHARGE_LOW)
-			ethereal.clear_alert("ethereal_overcharge")
-			ethereal.add_mood_event("charge", /datum/mood_event/decharged)
-			ethereal.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
-			brutemod = 1.5
-			if(ethereal.health > 10.5)
-				ethereal.apply_damage(0.155 * seconds_per_tick, TOX, null, null, ethereal)
-		if(ETHEREAL_BLOOD_CHARGE_LOW to ETHEREAL_BLOOD_CHARGE_NORMAL)
-			ethereal.clear_alert("ethereal_overcharge")
-			ethereal.add_mood_event("charge", /datum/mood_event/lowpower)
-			ethereal.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
-			brutemod = 1.25
-		if(ETHEREAL_BLOOD_CHARGE_ALMOSTFULL to ETHEREAL_BLOOD_CHARGE_FULL)
-			ethereal.clear_alert("ethereal_overcharge")
-			ethereal.clear_alert("ethereal_charge")
-			ethereal.add_mood_event("charge", /datum/mood_event/charged)
-			brutemod = 1
-		if(ETHEREAL_BLOOD_CHARGE_FULL to ETHEREAL_BLOOD_CHARGE_OVERLOAD)
-			ethereal.clear_alert("ethereal_charge")
-			ethereal.add_mood_event("charge", /datum/mood_event/overcharged)
-			ethereal.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
-			brutemod = 1.25
-		if(ETHEREAL_BLOOD_CHARGE_OVERLOAD to ETHEREAL_BLOOD_CHARGE_DANGEROUS)
-			ethereal.clear_alert("ethereal_charge")
-			ethereal.add_mood_event("charge", /datum/mood_event/supercharged)
-			ethereal.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
-			ethereal.apply_damage(0.2 * seconds_per_tick, TOX, null, null, ethereal)
-			brutemod = 1.5
-			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
-				discharge_process(ethereal)
-		else
-			ethereal.clear_mood_event("charge")
-			ethereal.clear_alert(ALERT_ETHEREAL_CHARGE)
-			ethereal.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
-
-/datum/species/ethereal/proc/discharge_process(mob/living/carbon/human/ethereal)
-	to_chat(ethereal, span_warning("You begin to lose control over your charge!"))
-	ethereal.visible_message(span_danger("[ethereal] begins to spark violently!"))
-
-	var/static/mutable_appearance/overcharge //shameless copycode from lightning spell
-	overcharge = overcharge || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
-	ethereal.add_overlay(overcharge)
-
-	if(do_after(ethereal, 5 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED)))
-		ethereal.flash_lighting_fx(5, 7, ethereal.dna.species.fixed_mut_color ? ethereal.dna.species.fixed_mut_color : ethereal.dna.features["mcolor"])
-
-		playsound(ethereal, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		ethereal.cut_overlay(overcharge)
-		tesla_zap(ethereal, 2, ethereal.blood_volume*9, ZAP_OBJ_DAMAGE | ZAP_GENERATES_POWER | ZAP_ALLOW_DUPLICATES)
-		adjust_charge(ethereal, ETHEREAL_BLOOD_CHARGE_FULL - ethereal.blood_volume)
-		ethereal.visible_message(span_danger("[ethereal] violently discharges energy!"), span_warning("You violently discharge energy!"))
-
-		ethereal.Paralyze(100)
+	var/datum/color_palette/generic_colors/palette = human_mob.dna.color_palettes[/datum/color_palette/generic_colors]
+	palette.ethereal_color = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/ethereal)
 	. = ..()
+	var/datum/color_palette/generic_colors/palette = ethereal.dna.color_palettes[/datum/color_palette/generic_colors]
 	if(!ethereal_light)
 		return
-	if(default_color != ethereal.dna.features["ethcolor"])
-		var/new_color = ethereal.dna.features["ethcolor"]
+	if(default_color != palette.ethereal_color)
+		var/new_color = palette.ethereal_color
 		r1 = GETREDPART(new_color)
 		g1 = GETGREENPART(new_color)
 		b1 = GETBLUEPART(new_color)
@@ -211,15 +130,24 @@
 		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
-		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + round(0.5 * healthpercent), current_color)
+		ethereal_light.set_light_range_power_color((1 + (2 * healthpercent)) * rangemult, (1 + round(0.5 * healthpercent)) * powermult, current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
+		if(flickering)
+			if(currently_flickered)
+				ethereal_light.set_light_on(FALSE)
+			else
+				ethereal_light.set_light_on(TRUE)
+		else
+			if(currently_flickered)
+				currently_flickered = FALSE
+			ethereal_light.set_light_on(TRUE)
 	else
 		ethereal_light.set_light_on(FALSE)
 		current_color = rgb(230, 230, 230)
 		fixed_mut_color = current_color
-	ethereal.hair_color = current_color
-	ethereal.facial_hair_color = current_color
+	ethereal.set_haircolor(current_color, TRUE, update = FALSE)
+	ethereal.set_facial_haircolor(current_color, TRUE, update = FALSE)
 	if(ethereal.organs_slot["horns"])
 		var/obj/item/organ/external/horms = ethereal.organs_slot["horns"]
 		horms.bodypart_overlay.draw_color = current_color
@@ -239,6 +167,16 @@
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
+/datum/species/ethereal/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/our_target = source
+	EMPeffect = TRUE
+	spec_updatehealth(our_target)
+	to_chat(our_target, span_warning("Something inside of you crackles in a bad way."))
+	our_target.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), our_target), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return COMSIG_SABOTEUR_SUCCESS
+
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER
 	if(emageffect)
@@ -248,7 +186,7 @@
 		to_chat(user, span_notice("You tap [H] on the back with your card."))
 	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
-	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 1 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
 
 /// Special handling for getting hit with a light eater
@@ -275,6 +213,50 @@
 	spec_updatehealth(H)
 	H.visible_message(span_danger("[H] stops flickering and goes back to their normal state!"))
 
+/datum/species/ethereal/proc/start_flicker(mob/living/carbon/human/ethereal, duration = 6 SECONDS, min = 1, max = 4)
+	flickering = TRUE
+	handle_flicker(ethereal, min, max)
+	addtimer(CALLBACK(src, PROC_REF(stop_flicker), ethereal), duration)
+
+/datum/species/ethereal/proc/handle_flicker(mob/living/carbon/human/ethereal, flickmin = 1, flickmax = 4)
+	if(!flickering)
+		currently_flickered = FALSE
+		spec_updatehealth(ethereal)
+		return
+	if(currently_flickered)
+		currently_flickered = FALSE
+	else
+		currently_flickered = TRUE
+	spec_updatehealth(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(handle_flicker), ethereal), rand(1, 4))
+
+/datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
+	flickering = FALSE
+	currently_flickered = FALSE
+
+/datum/species/ethereal/proc/handle_glow_emote(mob/living/carbon/human/ethereal, power, range, flare = FALSE, duration = 5 SECONDS, flare_time = 0)
+	powermult = power
+	rangemult = range
+	spec_updatehealth(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(stop_glow_emote), ethereal, flare, flare_time), duration)
+
+/datum/species/ethereal/proc/stop_glow_emote(mob/living/carbon/human/ethereal, flare, flare_time)
+	if(!flare)
+		powermult = 1
+		rangemult = 1
+		spec_updatehealth(ethereal)
+		return
+	powermult = 0.5
+	rangemult = 0.75
+	spec_updatehealth(ethereal)
+	start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
+	sleep(1.5 SECONDS)
+	powermult = 1
+	rangemult = 1
+	EMPeffect = TRUE
+	to_chat(ethereal, span_warning("Your shine flickers and fades."))
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
+
 /datum/species/ethereal/get_features()
 	var/list/features = ..()
 
@@ -284,22 +266,25 @@
 
 /datum/species/ethereal/proc/on_after_attackedby(mob/living/lightbulb, obj/item/item, mob/living/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
-	var/obj/item/clothing/mask/cigarette/cig = item
-	if(!proximity_flag || !istype(cig) || !istype(user) || cig.lit)
+	if(!proximity_flag || !istype(user))
 		return
-	cig.light()
-	user.visible_message(span_notice("[user] quickly strikes [item] across [lightbulb]'s skin, [lightbulb.p_their()] warmth lighting it!"))
-	return COMPONENT_NO_AFTERATTACK
 
-/datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
-	)
+	if(istype(item, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/cig = item
+		if(!cig.lit)
+			cig.light()
+			user.visible_message(span_notice("[user] quickly strikes [item] across [lightbulb]'s skin, [lightbulb.p_their()] warmth lighting it!"))
+			return COMPONENT_NO_AFTERATTACK
+		return
 
-/datum/species/ethereal/get_laugh_sound(mob/living/carbon/human/ethereal)
-	return 'monkestation/sound/voice/laugh/ethereal/ethereal_laugh_1.ogg'
+	if(istype(item, /obj/item/match))
+		var/obj/item/match/match = item
+		if(!match.lit)
+			match.matchignite()
+			user.visible_message(span_notice("[user] strikes [item] against [lightbulb], sparking it to life!"))
+			return COMPONENT_NO_AFTERATTACK
+		return
+	return
 
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \

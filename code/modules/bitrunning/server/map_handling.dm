@@ -51,19 +51,31 @@
 	is_ready = FALSE
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
-	if(!initialize_domain(map_key) || !initialize_safehouse() || !initialize_map_items())
+	if(!initialize_domain(map_key) || !initialize_safehouse() || !initialize_map_items() || !load_mob_segments())
 		balloon_alert(user, "initialization failed.")
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
 
 	is_ready = TRUE
+
+	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
+	if(prob(spawn_chance))
+		setup_glitch()
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	balloon_alert(user, "domain loaded.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
+
+	if(generated_domain.announce_to_ghosts)
+		notify_ghosts("Bitrunners have loaded a domain that offers ghost interactions. Check the spawners menu for more information.",
+			source = src,
+			header = "Matrix Glitch",
+			ignore_key = POLL_IGNORE_GLITCH,
+		)
 
 	return TRUE
 
@@ -128,7 +140,7 @@
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/initialize_safehouse()
-	var/turf/safehouse_load_turf = list()
+	var/list/turf/safehouse_load_turf = list()
 	for(var/obj/effect/landmark/bitrunning/safehouse_spawn/spawner in GLOB.landmarks_list)
 		safehouse_load_turf += get_turf(spawner)
 		qdel(spawner)

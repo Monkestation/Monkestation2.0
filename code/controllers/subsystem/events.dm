@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(events)
 			continue
 		var/datum/round_event_control/event = new event_type
 		if(!event.valid_for_map())
-			qdel(event)
+			qdel(event) //highly iffy on this as it does cause issues for admins sometimes
 			continue
 		control += event //add it to the list of all events (controls)
 	reschedule()
@@ -70,20 +70,21 @@ SUBSYSTEM_DEF(events)
 	for(var/datum/round_event_control/E in control)
 		if(!E.can_spawn_event(players_amt))
 			continue
-		if(E.weight < 0) //for round-start events etc.
+		var/weight = E.get_weight()
+		if(weight < 0) //for round-start events etc.
 			var/res = TriggerEvent(E)
 			if(res == EVENT_INTERRUPTED)
 				continue //like it never happened
 			if(res == EVENT_CANT_RUN)
 				return
-		sum_of_weights += E.weight
+		sum_of_weights += weight
 
 	sum_of_weights = rand(0,sum_of_weights) //reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
 		if(!E.can_spawn_event(players_amt))
 			continue
-		sum_of_weights -= E.weight
+		sum_of_weights -= E.get_weight()
 
 		if(sum_of_weights <= 0) //we've hit our goal
 			if(TriggerEvent(E))
@@ -135,6 +136,18 @@ GLOBAL_LIST(holidays)
 
 	if(isnull(GLOB.holidays) && !fill_holidays())
 		return // Failed to generate holidays, for some reason
+
+	// We should allow one datum to have multiple holidays if it is applicable. Could be a community related thing.
+	if(islist(holiday_to_find)) //MONKESTATION EDIT
+
+		var/list/valid_holidays = list()
+		for(var/holiday in holiday_to_find)
+			if(GLOB.holidays[holiday])
+				valid_holidays += GLOB.holidays[holiday]
+
+			if(length(valid_holidays))
+				return pick(valid_holidays) // Return a random valid holiday if multiple are found. Until all used checks can handle a list return.
+			return
 
 	return GLOB.holidays[holiday_to_find]
 

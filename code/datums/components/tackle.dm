@@ -43,7 +43,7 @@
 	src.min_distance = min_distance
 
 	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and clicking on your target with an empty hand."))
+	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -71,10 +71,10 @@
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.buckled || user.incapacitated())
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -100,9 +100,13 @@
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
+	if (user.pulling)
+		user.stop_pulling()
+
 	user.face_atom(clicked_atom)
 
 	tackling = TRUE
+	user.toggle_throw_mode()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -148,7 +152,6 @@
 		tackle = null
 		return
 
-	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
@@ -162,6 +165,11 @@
 	var/roll = rollTackle(target)
 	tackling = FALSE
 	tackle.gentle = TRUE
+
+	if(T.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
+		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
+		to_chat(T, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 	switch(roll)
 		if(-INFINITY to -5)
@@ -270,7 +278,8 @@
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_DWARF))
+//	if(HAS_TRAIT(target, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(target, TRAIT_DWARF) && !HAS_TRAIT(target, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
@@ -320,7 +329,7 @@
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(!sacker_moth_wing || sacker_moth_wing.burnt)
+		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(sacker_wing)
@@ -367,25 +376,12 @@
 		var/obj/machinery/vending/darth_vendor = hit
 		darth_vendor.tilt(user, 100)
 		return
-	else if(istype(hit, /obj/structure/window))
-		var/obj/structure/window/W = hit
-		splatWindow(user, W)
-		if(QDELETED(W))
-			return COMPONENT_MOVABLE_IMPACT_NEVERMIND
-		return
-
 	var/oopsie_mod = 0
 	var/danger_zone = (speed - 1) * 13 // for every extra speed we have over 1, take away 13 of the safest chance
 	danger_zone = max(min(danger_zone, 100), 1)
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/S = user
-		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
-		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
-			oopsie_mod -= 6
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
-			oopsie_mod -= 6
+	oopsie_mod -= floor(user.getarmor(BODY_ZONE_HEAD, MELEE) * 0.18)
+	oopsie_mod -= floor(user.getarmor(BODY_ZONE_CHEST, MELEE) * 0.12)
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY))
 		oopsie_mod += 6 //honk!
@@ -411,7 +407,7 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
-			user.emote("scream")
+			user.pain_emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.flash_act(1, TRUE, TRUE, length = 4.5)
@@ -475,31 +471,6 @@
 	tackling = FALSE
 	QDEL_NULL(tackle_ref)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-
-///A special case for splatting for handling windows
-/datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
-	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
-
-	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
-		for(var/i in 1 to speed)
-			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			shard.updateEmbedding()
-			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = null
-			shard.updateEmbedding()
-		W.atom_destruction()
-		user.stamina.adjust(-10 * speed)
-		user.Paralyze(3 SECONDS)
-		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
-
-	else
-		user.visible_message(span_danger("[user] smacks into [W] like a bug!"), span_userdanger("You smacks into [W] like a bug!"))
-		user.Paralyze(1 SECONDS)
-		user.Knockdown(3 SECONDS)
-		W.take_damage(30 * speed)
-		user.stamina.adjust(-10 * speed)
-		user.adjustBruteLoss(5 * speed)
 
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)

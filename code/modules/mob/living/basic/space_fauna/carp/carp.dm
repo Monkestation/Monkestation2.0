@@ -42,8 +42,8 @@
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 1500
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 1500
 
 	/// Cytology cells you can swab from this creature
 	var/cell_line = CELL_LINE_TABLE_CARP
@@ -114,10 +114,10 @@
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
-		on_tamed(tamer, feedback = FALSE)
+		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
@@ -142,10 +142,11 @@
 	set_greyscale(colors = list(pick_weight(carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
+/mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
+	ai_controller?.change_ai_movement_type(/datum/ai_movement/jps)
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
@@ -268,6 +269,10 @@
 	if (!disk_overlay)
 		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
 	new_overlays += disk_overlay
+
+/mob/living/basic/carp/advanced
+	health = 40
+	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE
 

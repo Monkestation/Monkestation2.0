@@ -158,7 +158,7 @@
 	supplementary_reagents = list(
 		/datum/reagent/consumable/honey = 8, //Hunny.
 		/datum/reagent/growthserum = 5,
-		/datum/reagent/medicine/morphine = 4, //morphine is a vital nutrient for space bears, but it is better as a supplemental for gameplay reasons.
+		/datum/reagent/medicine/painkiller/morphine = 4, //morphine is a vital nutrient for space bears, but it is better as a supplemental for gameplay reasons.
 		/datum/reagent/consumable/nutriment/vitamin = 3)
 
 	suppressive_reagents = list(
@@ -245,7 +245,7 @@
 	suppressive_reagents = list(
 		/datum/reagent/consumable/frostoil = -4,
 		/datum/reagent/cryostylane = -4,
-		/datum/reagent/medicine/morphine = -2,
+		/datum/reagent/medicine/painkiller/morphine = -2,
 		/datum/reagent/consumable/ice = -2) //Brrr!
 
 	virus_suspectibility = 0
@@ -654,7 +654,7 @@
 		/datum/reagent/drug/nicotine = -1)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/obj/item/queen_bee = 1)
+	resulting_atoms = list(/obj/item/queen_bee/bought = 1)
 
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))

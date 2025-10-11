@@ -121,13 +121,19 @@
 	message_animal_or_basic = initial(message_animal_or_basic)
 	if(!. && !user.can_speak() || user.getOxyLoss() >= 50)
 		return //stop the sound if oxyloss too high/cant speak
-	var/mob/living/carbon/carbon_user = user
-	// For masks that give unique death sounds
-	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
-		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
-		return
-	if(user.death_sound)
-		playsound(user, user.death_sound, 200, TRUE, TRUE)
+	var/death_sound = get_sound(user)
+	if(death_sound)
+		playsound(user, death_sound, 200, TRUE, TRUE)
+
+
+/datum/emote/living/deathgasp/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		// Alternative deathgasps.
+		if(LAZYLEN(human_user.alternative_deathgasps))
+			return pick(human_user.alternative_deathgasps)
+
+	return user.death_sound
 
 /datum/emote/living/drool
 	key = "drool"
@@ -257,6 +263,9 @@
 		return
 	var/kiss_type = /obj/item/hand_item/kisser
 
+	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
+		kiss_type = /obj/item/hand_item/kisser/syndie
+
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
@@ -280,15 +289,18 @@
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
 // MonkeStation Edit Start
-/datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
+/datum/emote/living/laugh/get_sound(mob/living/user)
+	if(isbasicmob(user))
+		var/mob/living/basic/mob = user
+		. = mob.get_laugh_sound()
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		// Alternative Laugh Hook
+		if(LAZYLEN(human_user.alternative_laughs))
+			return pick(human_user.alternative_laughs)
 
-	// Alternative Laugh Hook
-	if(user.alternative_laughs.len)
-		return pick(user.alternative_laughs)
-
-	return user.dna.species.get_laugh_sound(user)
+		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
+		return tongue?.get_laugh_sound(human_user)
 // MonkeStation Edit End
 
 /datum/emote/living/look
@@ -302,6 +314,12 @@
 	key_third_person = "nods"
 	message = "nods."
 	message_param = "nods at %t."
+
+/datum/emote/living/nodnod
+	key = "nod2"
+	key_third_person = "nodnod"
+	message = "nods their head twice."
+	message_param = "nods twice at %t."
 
 /datum/emote/living/point
 	key = "point"
@@ -388,12 +406,12 @@ monkestation edit end */
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
-/datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
+/datum/emote/living/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
 	if(!ishuman(user))
 		return
 	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "sigh")
-	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
+	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 2.0 SECONDS)
 
 /datum/emote/living/sit
 	key = "sit"
@@ -573,7 +591,7 @@ monkestation edit end */
 	if(!. || !isliving(user))
 		return
 
-	if(!TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_YAWN_PROPAGATION))
 		TIMER_COOLDOWN_START(user, COOLDOWN_YAWN_PROPAGATION, cooldown * 3)
 
 	var/mob/living/carbon/carbon_user = user
@@ -583,7 +601,7 @@ monkestation edit end */
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_RUNNING(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)
@@ -602,7 +620,7 @@ monkestation edit end */
 
 /// This yawn has been triggered by someone else yawning specifically, likely after a delay. Check again if they don't have the yawned recently trait
 /datum/emote/living/yawn/proc/propagate_yawn(mob/user)
-	if(!istype(user) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(!istype(user) || TIMER_COOLDOWN_RUNNING(user, COOLDOWN_YAWN_PROPAGATION))
 		return
 	user.emote("yawn")
 
@@ -620,6 +638,8 @@ monkestation edit end */
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	muzzle_ignore = TRUE // monkestation addition
+	stat_allowed = SOFT_CRIT // monkestation addition
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
 	. = ..() && intentional
@@ -636,7 +656,7 @@ monkestation edit end */
 	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
-	if(is_banned_from(user.ckey, "Emote"))
+	if(!isnull(user.ckey) && is_banned_from(user.ckey, "Emote"))
 		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
 		return FALSE
 	else if(QDELETED(user))
@@ -668,15 +688,6 @@ monkestation edit end */
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
-
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
 	key = "inhale"

@@ -9,6 +9,7 @@
 	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
@@ -41,6 +42,12 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
+	// monkestation start: prevent mindswap if you have TRAIT_NO_MINDSWAP
+	if(HAS_TRAIT(owner, TRAIT_NO_MINDSWAP))
+		if(feedback)
+			to_chat(owner, span_warning("Your mind can't be swapped!"))
+		return FALSE
+	// monkestation end
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
@@ -127,7 +134,7 @@
 
 	// Just in case the swappee's key wasn't grabbed by transfer_to...
 	if(to_swap_key)
-		caster.key = to_swap_key
+		caster.PossessByPlayer(to_swap_key)
 
 	// MIND TRANSFER END
 

@@ -73,6 +73,14 @@
 			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
 				cost = 12
 				delay = 4 SECONDS
+			//MONKESTATION ADDITION? This was in /tg/station's codebase, did we change it? And if so, why??
+			else if(the_rcd.window_type  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
+			//END OF ADDITION
 			if(!cost)
 				return FALSE
 
@@ -101,8 +109,13 @@
 			var/obj/structure/window/window_path = the_rcd.window_type
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
-			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
-				return FALSE
+			if(!initial(window_path.fulltile)) //only fulltile windows can be built here //Not anymore, buddy.
+				//return FALSE
+				//MONKESTATION ADDITION
+				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+				//END OF ADDITION
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
@@ -190,8 +203,12 @@
 	if(shock(user, 100))
 		return
 	tool.play_tool_sound(src, 100)
+	//MONKESTATION EDIT START
+	if(feeble_quirk_slow_interact(user, "cut", src))
+		return
+	//MONKESTATION EDIT END
 	deconstruct()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!isturf(loc))
@@ -201,17 +218,21 @@
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
+	//MONKESTATION EDIT START
+	if(feeble_quirk_slow_interact(user, "[anchored ? "unfasten" : "fasten"]", src))
+		return
+	//MONKESTATION EDIT END
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/grille/attackby(obj/item/W, mob/user, params)
+/obj/structure/grille/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
+	if(istype(attacking_item, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
 			return
-		var/obj/item/stack/rods/R = W
+		var/obj/item/stack/rods/R = attacking_item
 		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
 			span_notice("You rebuild the broken grille."))
 		repair_grille()
@@ -219,9 +240,9 @@
 		return TRUE
 
 //window placing begin
-	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))
+	else if(is_glass_sheet(attacking_item) || istype(attacking_item, /obj/item/stack/sheet/bronze))
 		if (!broken)
-			var/obj/item/stack/ST = W
+			var/obj/item/stack/ST = attacking_item
 			if (ST.get_amount() < 2)
 				to_chat(user, span_warning("You need at least two sheets of glass for that!"))
 				return
@@ -243,17 +264,17 @@
 				if(!clear_tile(user))
 					return
 				var/obj/structure/window/WD
-				if(istype(W, /obj/item/stack/sheet/plasmarglass))
+				if(istype(attacking_item, /obj/item/stack/sheet/plasmarglass))
 					WD = new/obj/structure/window/reinforced/plasma/fulltile(drop_location()) //reinforced plasma window
-				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
+				else if(istype(attacking_item, /obj/item/stack/sheet/plasmaglass))
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
-				else if(istype(W, /obj/item/stack/sheet/rglass))
+				else if(istype(attacking_item, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
-				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
+				else if(istype(attacking_item, /obj/item/stack/sheet/titaniumglass))
 					WD = new/obj/structure/window/reinforced/shuttle(drop_location())
-				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
+				else if(istype(attacking_item, /obj/item/stack/sheet/plastitaniumglass))
 					WD = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
-				else if(istype(W, /obj/item/stack/sheet/bronze))
+				else if(istype(attacking_item, /obj/item/stack/sheet/bronze))
 					WD = new/obj/structure/window/bronze/fulltile(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
@@ -265,7 +286,7 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+	else if((attacking_item.flags_1 & CONDUCT_1) && shock(user, 70))
 		return
 
 	return ..()

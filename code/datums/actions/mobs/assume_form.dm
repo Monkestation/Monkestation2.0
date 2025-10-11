@@ -29,14 +29,17 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/assume_form/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	determine_intent(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /// Rapid proc to test if we can assume the form of a given atom. Returns TRUE if we can, FALSE if we can't. Done like this so we can be nice and explicit.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/can_assume_form(atom/target_atom)
 	if(is_type_in_typecache(target_atom, blacklist_typecache) || (!isobj(target_atom) && !ismob(target_atom)))
+		return FALSE
+	if(usr.z != target_atom.z) // Fixes invisibility bug
 		return FALSE
 
 	return TRUE

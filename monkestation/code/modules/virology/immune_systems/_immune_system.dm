@@ -17,9 +17,10 @@
 		ANTIGEN_X	= 0,
 		ANTIGEN_Y	= 0,
 		ANTIGEN_Z	= 0,
+		ANTIGEN_IG 	= 0,
 		)
 
-/datum/immune_system/Destroy()
+/datum/immune_system/Destroy(force)
 	host = null
 	antibodies = null
 	return ..()
@@ -41,7 +42,7 @@
 			antibodies[antibody] = rand(10, 30) * boost
 		if(antibody in GLOB.blood_antigens)
 			antibodies[antibody] = rand(10, 20) * boost
-			var/blood_type = host.has_dna()?.blood_type
+			var/blood_type = host.has_dna()?.human_blood_type
 			if(blood_type)
 				switch(antibody)
 					if(ANTIGEN_O)
@@ -90,14 +91,14 @@
 		var/mob/living/carbon/human/H = host
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
 	for(var/ID in host.diseases)
-		var/datum/disease/advanced/D = host.diseases[ID]
+		var/datum/disease/acute/D = host.diseases[ID]
 		D.cure(target = host)
 	strength = 0
 	overloaded = TRUE
 
 
 //If even one antibody hass sufficient concentration, the disease won't be able to infect
-/datum/immune_system/proc/CanInfect(datum/disease/advanced/disease)
+/datum/immune_system/proc/CanInfect(datum/disease/acute/disease)
 	if (overloaded)
 		return TRUE
 
@@ -113,7 +114,7 @@
 	if(overloaded)
 		return
 
-	for(var/datum/disease/advanced/disease as anything in host.diseases)
+	for(var/datum/disease/acute/disease as anything in host.diseases)
 		for(var/A in disease.antigen)
 			var/tally = 0.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
@@ -126,11 +127,10 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 2.5
 
 			tally *= boost
-
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
 			else
@@ -138,7 +138,7 @@
 					antibodies[A] = min(antibodies[A] + 1, 100)
 
 /datum/immune_system/proc/NaturalImmune() //called with a 8% chance every time a virus activates
-	for (var/datum/disease/advanced/disease as anything in host.diseases)
+	for (var/datum/disease/acute/disease as anything in host.diseases)
 		for (var/A in disease.antigen)
 			var/tally = 1.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
@@ -151,7 +151,7 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 3.5
 
 			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
@@ -168,7 +168,6 @@
 						EMPTY_BLOCK_GUARD
 
 			tally *= boost
-
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else
@@ -192,7 +191,7 @@
 	if (overloaded)
 		return
 
-	for (var/datum/disease/advanced/disease as anything in host.diseases)
+	for (var/datum/disease/acute/disease as anything in host.diseases)
 		for (var/A in disease.antigen)
 			antibodies[A] = 100
 

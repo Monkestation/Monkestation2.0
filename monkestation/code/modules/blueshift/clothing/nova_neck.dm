@@ -5,6 +5,10 @@
 	icon_state = "eldritch_tie"
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
 
+/obj/item/clothing/neck/tie/disco/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/soulcatcher/attachable_soulcatcher)
+
 /obj/item/clothing/neck/mantle
 	name = "mantle"
 	desc = "A decorative drape over the shoulders. This one has a simple, dry color."
@@ -56,14 +60,10 @@
 	desc = "A plated mantle that one might wrap around the upper torso. The 'scales' of the garment signify the members of security and how you're carrying them on your shoulders."
 	icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
-	icon_state = "hosmantle_blue" //There's a red version if you remove the _blue, but its not coded in currently.
+	icon_state = "hosmantle"
 
-/obj/item/clothing/neck/mantle/bsmantle
-	name = "\proper the blueshield's mantle"
-	desc = "A plated mantle with command colors. Suitable for the one assigned to making sure they're still breathing."
-	icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
-	icon_state = "bsmantle"
+/obj/item/clothing/neck/mantle/hosmantle/blue
+	icon_state = "hosmantle_blue"
 
 /obj/item/clothing/neck/mantle/capmantle
 	name = "\proper the captain's mantle"
@@ -98,12 +98,12 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon, toggle_noun = "scarf")
 
-/obj/item/clothing/neck/face_scarf/AltClick(mob/user) //Make sure that toggling actually hides the snout so that it doesn't clip
+/obj/item/clothing/neck/face_scarf/click_alt(mob/user) //Make sure that toggling actually hides the snout so that it doesn't clip
 	if(icon_state != "face_scarf_t")
 		flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	else
 		flags_inv = HIDEFACIALHAIR
-	return TRUE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/maid_neck_cover
 	name = "maid neck cover"
@@ -163,7 +163,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/neck.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/neck.dmi'
 	icon_state = "cowboy_poncho"
-	heat_protection = CHEST
+
 
 /obj/item/clothing/neck/cowboylea/Initialize(mapload)
 	. = ..()
@@ -178,7 +178,7 @@
 	greyscale_config_worn = /datum/greyscale_config/ranger_poncho/worn
 	greyscale_colors = "#917A57#858585"	//Roughly the same color as the original non-greyscale item was
 	flags_1 = IS_PLAYER_COLORABLE_1
-	heat_protection = CHEST
+
 
 /obj/item/clothing/neck/ranger_poncho/Initialize(mapload)
 	. = ..()

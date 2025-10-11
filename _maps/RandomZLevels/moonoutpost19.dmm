@@ -1911,8 +1911,8 @@
 "mN" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -2999,7 +2999,7 @@
 /area/awaymission/moonoutpost19/research)
 "wy" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -3048,7 +3048,7 @@
 "wS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -3124,8 +3124,8 @@
 /area/awaymission/moonoutpost19/arrivals)
 "xH" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -3134,8 +3134,8 @@
 /area/awaymission/moonoutpost19/hive)
 "xP" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -4432,7 +4432,7 @@
 /area/awaymission/moonoutpost19/main)
 "Ku" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -4673,7 +4673,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/radio/off,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -5053,7 +5053,7 @@
 /area/awaymission/moonoutpost19/research)
 "Pv" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/basic/alien/sentinel,
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5851,11 +5851,11 @@
 /area/awaymission/moonoutpost19/arrivals)
 "WP" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/basic/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -5974,7 +5974,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/light/small/directional/west,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/engineering,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

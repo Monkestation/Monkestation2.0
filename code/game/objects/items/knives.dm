@@ -73,9 +73,8 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target) || !proximity_flag)
+/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
+	if(!isliving(target))
 		return
 	var/mob/living/M = target
 	if(!(M.mob_biotypes & MOB_ORGANIC))
@@ -120,7 +119,7 @@
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
-	force = 20
+	force = 17 // MONKESTATION EDIT ORG: 20
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")

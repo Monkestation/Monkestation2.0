@@ -186,7 +186,8 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 35
+	armour_penetration = 50
+	armour_ignorance = 5
 	block_chance = 50
 	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
@@ -194,6 +195,10 @@
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
+
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance -= 25 //OH GOD GET IT OFF ME
+
 	return ..()
 
 /obj/item/melee/energy/sword/cyborg
@@ -206,7 +211,7 @@
 	if(!user.cell)
 		return
 
-	var/obj/item/stock_parts/cell/our_cell = user.cell
+	var/obj/item/stock_parts/power_store/cell/our_cell = user.cell
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
 		attack_self(user)
 		to_chat(user, span_notice("It's out of charge!"))

@@ -1,7 +1,7 @@
 /obj/structure/destructible/clockwork/sigil/submission
 	name = "sigil of submission"
 	desc = "A strange sigil, with otherworldy drawings on it."
-	clockwork_desc = "A sigil pulsating with a glorious light. Anyone held on top of this for 8 seconds will become a loyal servant of Rat'var."
+	clockwork_desc = "A sigil pulsating with a glorious light. Anyone held on top of this for 8 seconds will become a loyal servant of Ratvar."
 	icon_state = "sigilsubmission"
 	effect_stand_time = 8 SECONDS
 	idle_color = "#FFFFFF"
@@ -31,12 +31,12 @@
 		animate(converted_mob.client, color = previous_colour, time = 1 SECONDS)
 
 	GLOB.main_clock_cult?.check_member_distribution()
-	if(isdrone(converted_mob) && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS))
+	if(isdrone(converted_mob) && (length(SSthe_ark.cogscarabs) < MAXIMUM_COGSCARABS))
 		var/mob/living/basic/drone/cogscarab/cogger = new /mob/living/basic/drone/cogscarab(get_turf(src))
-		cogger.key = converted_mob.key
+		cogger.PossessByPlayer(converted_mob.key)
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
 		cogger.visible_message("A light envelops \the [converted_mob]! As the light fades you see it has become a cogscarab!",
-							   span_brass("Rat'var has granted you your freedom, you must protect the ark at all costs!"))
+							   span_brass("Ratvar has granted you your freedom, you must protect the ark at all costs!"))
 		qdel(converted_mob)
 		return TRUE
 
@@ -58,16 +58,21 @@
 			converted_mob.adjustFireLoss(-(round(burndamage * 0.75)))
 
 		converted_mob.visible_message(span_warning("[converted_mob] sits completely motionless as \
-	 												[(brutedamage || burndamage) ? "a birght light pours from [converted_mob.p_their()] wounds as they close." \
-													: "as the sigil below [converted_mob.p_them()] glows brightly."]!"),
+	 												[(brutedamage || burndamage) ? "a bright light pours from [converted_mob.p_their()] wounds as they close." \
+													: "as the sigil below [converted_mob.p_them()] glows brightly"]!"),
 									 span_bigbrass("<i>You feel a flash of light and the world spin around you!</i>"))
 		send_clock_message(null, "[converted_mob] has been converted!")
+		converted_mob.remove_status_effect(/datum/status_effect/speech/slurring/clock)
 		return TRUE
 
 	visible_message(span_warning("\The [src] falters as though it cannot support more servants."))
 	return FALSE
 
 /obj/structure/destructible/clockwork/sigil/submission/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently converting [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE

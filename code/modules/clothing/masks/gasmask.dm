@@ -5,13 +5,14 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	"The Madman" = "joker",
 	"The Rainbow Color" = "rainbow",
 	"The Jester" = "chaos",
+	"The Joker" = "jimbo",
 ))
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING //monkestation edit
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
@@ -261,7 +262,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = MASKINTERNALS | GAS_FILTERING //monkestation edit
 	icon_state = "clown"
 	inhand_icon_state = "clown_hat"
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
@@ -286,6 +287,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		"The Coquette" = image(icon = src.icon, icon_state = "sexyclown"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
+		"The Joker" = image(icon = src.icon, icon_state = "jimbo"),
 		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
@@ -309,7 +311,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = MASKINTERNALS | GAS_FILTERING //monkestation edit
 	icon_state = "sexyclown"
 	inhand_icon_state = "sexyclown_hat"
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
@@ -322,7 +324,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = MASKINTERNALS | GAS_FILTERING //monkestation edit
 	icon_state = "mime"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
@@ -379,7 +381,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
-	clothing_flags = MASKINTERNALS
+	clothing_flags = MASKINTERNALS | GAS_FILTERING //monkestation edit
 	icon_state = "sexymime"
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES

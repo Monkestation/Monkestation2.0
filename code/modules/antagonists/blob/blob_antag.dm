@@ -6,6 +6,7 @@
 	show_in_antagpanel = FALSE
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
+	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
@@ -15,7 +16,7 @@
 	var/basic_report = ..()
 	//Display max blobpoints for blebs that lost
 	if(isovermind(owner.current)) //embarrasing if not
-		var/mob/camera/blob/overmind = owner.current
+		var/mob/eye/blob/overmind = owner.current
 		if(!overmind.victory_in_progress) //if it won this doesn't really matter
 			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of its growth."
 			return basic_report+point_report
@@ -26,8 +27,6 @@
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
-
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/blobalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/blob/on_gain()
 	create_objectives()
@@ -55,7 +54,7 @@
 
 	if(!isovermind(user))
 		return data
-	var/mob/camera/blob/blob = user
+	var/mob/eye/blob/blob = user
 	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
 
 	if(!blobstrain)
@@ -126,7 +125,7 @@
 		placement_override = BLOB_RANDOM_PLACEMENT
 		to_chat(owner, span_warning("Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!"))
 
-	var/mob/camera/blob/blob_cam = new /mob/camera/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob)
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
@@ -145,7 +144,7 @@
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		var/mob/camera/blob/blob_cam = owner.current
+		var/mob/eye/blob/blob_cam = owner.current
 		if(istype(blob_cam))
 			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
 

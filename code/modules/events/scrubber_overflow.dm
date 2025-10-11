@@ -7,6 +7,9 @@
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "The scrubbers release a tide of mostly harmless froth."
 	admin_setup = list(/datum/event_admin_setup/listed_options/scrubber_overflow)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
+	event_group = /datum/event_group/scrubber_overflow
 
 /datum/round_event/scrubber_overflow
 	announce_when = 1
@@ -16,7 +19,7 @@
 	/// Amount of reagents ejected from each scrubber
 	var/reagents_amount = 50
 	/// Probability of an individual scrubber overflowing
-	var/overflow_probability = 50
+	var/overflow_probability = 20 //monkestation edit: 20 down from 50
 	/// Specific reagent to force all scrubbers to use, null for random reagent choice
 	var/datum/reagent/forced_reagent_type
 	/// A list of scrubbers that will have reagents ejected from them
@@ -70,7 +73,7 @@
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "[command_name()] Engineering Division")
 
 /datum/round_event/scrubber_overflow/setup()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(!scrubber_turf)
 			continue
@@ -90,7 +93,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(!scrubber_turf)
 			continue
@@ -105,6 +108,7 @@
 /datum/round_event/scrubber_overflow/proc/get_overflowing_reagent(dangerous)
 	return dangerous ? get_random_reagent_id() : pick(safer_chems)
 
+/* monkestation edit: replaced in [monkestation/code/modules/events/scrubber_overflow.dm]
 /datum/round_event/scrubber_overflow/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent as anything in scrubbers)
 		if(!vent.loc)
@@ -124,6 +128,7 @@
 		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam/short, reagents_amount)
 
 		CHECK_TICK
+monkestation end */
 
 /datum/round_event_control/scrubber_overflow/threatening
 	name = "Scrubber Overflow: Threatening"

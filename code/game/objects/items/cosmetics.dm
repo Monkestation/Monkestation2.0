@@ -6,12 +6,16 @@
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
 
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
+
+	///Defines if lipstick color can be spawned as a random lipstick
+	var/lipstick_random = TRUE
 
 /obj/item/lipstick/Initialize(mapload)
 	. = ..()
@@ -24,8 +28,10 @@
 		update_appearance(UPDATE_ICON)
 
 /obj/item/lipstick/update_icon_state()
-	icon_state = "lipstick[open ? "_uncap" : null]"
-	inhand_icon_state = "lipstick[open ? "open" : null]"
+	var/initial_icon_state = icon_state
+	icon_state = "[icon_state][open ? "_uncap" : null]"
+	inhand_icon_state = "[icon_state][open ? "open" : null]"
+	icon_state = initial_icon_state
 	return ..()
 
 /obj/item/lipstick/update_overlays()
@@ -65,6 +71,14 @@
 	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
 
+/obj/item/lipstick/syndie
+	name = "syndie lipstick"
+	desc = "Syndicate branded lipstick with a killer dose of kisses. Observe safety regulations!"
+	icon_state = "slipstick"
+	lipstick_color = COLOR_SYNDIE_RED
+	lipstick_trait = TRAIT_SYNDIE_KISS
+	lipstick_random = FALSE
+
 /obj/item/lipstick/random
 	name = "lipstick"
 	icon_state = "random_lipstick"
@@ -78,7 +92,8 @@
 		for(var/obj/item/lipstick/lipstick_path as anything in (typesof(/obj/item/lipstick) - src.type))
 			if(!initial(lipstick_path.lipstick_color))
 				continue
-			possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
+			if(lipstick_path.lipstick_random)
+				possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
 	lipstick_color = pick(possible_colors)
 	name = possible_colors[lipstick_color]
 	update_appearance()
@@ -132,7 +147,7 @@
 
 	user.visible_message(span_warning("[user] begins to wipe [target]'s lipstick off with \the [src]."), \
 		span_notice("You begin to wipe off [target]'s lipstick..."))
-	if(!do_after(user, 10, target = target))
+	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))

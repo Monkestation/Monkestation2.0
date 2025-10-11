@@ -617,12 +617,18 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
-/obj/item/grenade/chem_grenade/bioterrorfoam
+// MONKESTATION EDIT START
+// MONKESTATION EDIT ORIGINAL /obj/item/grenade/chem_grenade/bioterrorfoam
+/obj/item/grenade/chem_grenade/large/bioterrorfoam
+// MONKESTATION EDIT END
 	name = "Bio terror foam grenade"
 	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
 	stage = GRENADE_READY
 
-/obj/item/grenade/chem_grenade/bioterrorfoam/Initialize(mapload)
+// MONKESTATION EDIT START
+// MONKESTATION EDIT ORIGINAL /obj/item/grenade/chem_grenade/bioterrorfoam/Initialize(mapload)
+/obj/item/grenade/chem_grenade/large/bioterrorfoam/Initialize(mapload)
+// MONKESTATION EDIT END
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_two = new(src)
@@ -637,12 +643,12 @@
 	beakers += beaker_one
 	beakers += beaker_two
 
-/obj/item/grenade/chem_grenade/tuberculosis
+/obj/item/grenade/chem_grenade/large/tuberculosis //monkestation edit: Large grenades
 	name = "Fungal tuberculosis grenade"
 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
 	stage = GRENADE_READY
 
-/obj/item/grenade/chem_grenade/tuberculosis/Initialize(mapload)
+/obj/item/grenade/chem_grenade/large/tuberculosis/Initialize(mapload) //monkestation edit: Large grenades
 	. = ..()
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/bluespace/beaker_two = new(src)
@@ -670,6 +676,23 @@
 
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 150)
 	beaker_two.reagents.add_reagent(/datum/reagent/water/holywater, 150)
+
+	beakers += beaker_one
+	beakers += beaker_two
+
+/obj/item/grenade/chem_grenade/insta_husk
+	name = "Uncle Poobs insta-fry"
+	desc = "The label on the side reads: -Instantly fries any organic and non organic matter to crispy perfection-"
+	stage = GRENADE_READY
+
+/obj/item/grenade/chem_grenade/insta_husk/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/cup/beaker/large/beaker_two = new(src)
+
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 5, reagtemp = 4500)
+	beaker_one.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 5, reagtemp = 4500)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/ice, 5, reagtemp = 100)
 
 	beakers += beaker_one
 	beakers += beaker_two

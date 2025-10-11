@@ -17,6 +17,7 @@ import {
   PreferencesMenuData,
   RandomSetting,
 } from './data';
+import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { RandomizationButton } from './RandomizationButton';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -30,6 +31,7 @@ import {
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
+import { InfernoNode } from 'inferno';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
@@ -44,6 +46,8 @@ const CharacterControls = (props: {
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
+  canDeleteCharacter: boolean;
+  handleDeleteCharacter: () => void;
 }) => {
   return (
     <Stack>
@@ -75,6 +79,18 @@ const CharacterControls = (props: {
           />
         </Stack.Item>
       )}
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleDeleteCharacter}
+          fontSize="22px"
+          icon="trash"
+          color="red"
+          tooltip="Delete character"
+          tooltipPosition="top"
+          disabled={!props.canDeleteCharacter}
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -83,8 +99,8 @@ const ChoicedSelection = (props: {
   name: string;
   catalog: FeatureChoicedServerData;
   selected: string;
-  supplementalFeature?: string;
-  supplementalValue?: unknown;
+  supplementalFeatures?: string[]; // Now an array of features
+  supplementalValues?: unknown[]; // Now an array of values
   onClose: () => void;
   onSelect: (value: string) => void;
   searchText: string;
@@ -94,8 +110,8 @@ const ChoicedSelection = (props: {
 
   const {
     catalog,
-    supplementalFeature,
-    supplementalValue,
+    supplementalFeatures = [],
+    supplementalValues = [],
     searchText,
     setSearchText,
   } = props;
@@ -108,10 +124,6 @@ const ChoicedSelection = (props: {
     return name;
   });
 
-  const use_small_supplemental =
-    supplementalFeature &&
-    (features[supplementalFeature].small_supplemental === true ||
-      features[supplementalFeature].small_supplemental === undefined);
   return (
     <Box
       className="theme-generic"
@@ -131,18 +143,24 @@ const ChoicedSelection = (props: {
         <Stack vertical fill>
           <Stack.Item>
             <Stack fill>
-              {supplementalFeature && use_small_supplemental && (
-                <Stack.Item>
-                  <FeatureValueInput
-                    act={act}
-                    feature={features[supplementalFeature]}
-                    featureId={supplementalFeature}
-                    shrink
-                    value={supplementalValue}
-                  />
-                </Stack.Item>
-              )}
-
+              {/* Handle small supplemental features */}
+              {supplementalFeatures.map((feature, index) => {
+                const use_small_supplemental =
+                  features[feature]?.small_supplemental ?? true;
+                return (
+                  use_small_supplemental && (
+                    <Stack.Item key={index}>
+                      <FeatureValueInput
+                        act={act}
+                        feature={features[feature]}
+                        featureId={feature}
+                        shrink
+                        value={supplementalValues[index]}
+                      />
+                    </Stack.Item>
+                  )
+                );
+              })}
               <Stack.Item grow>
                 <Box
                   style={{
@@ -234,32 +252,39 @@ const ChoicedSelection = (props: {
                 })}
             </Flex>
           </Stack.Item>
-          {supplementalFeature && !use_small_supplemental && (
-            <>
-              <Stack.Item mt={0.25}>
-                <Box
-                  pb={0.25}
-                  style={{
-                    'border-bottom': '1px solid rgba(255, 255, 255, 0.1)',
-                    'font-weight': 'bold',
-                    'font-size': '14px',
-                    'text-align': 'center',
-                  }}
-                >
-                  Select {features[supplementalFeature].name}
+          {/* Handle larger supplemental features */}
+          {supplementalFeatures.map((feature, index) => {
+            const use_small_supplemental =
+              features[feature]?.small_supplemental ?? true;
+            return (
+              !use_small_supplemental && (
+                <Box key={index}>
+                  <Stack.Item mt={0.25}>
+                    <Box
+                      pb={0.25}
+                      style={{
+                        'border-bottom': '1px solid rgba(255, 255, 255, 0.1)',
+                        'font-weight': 'bold',
+                        'font-size': '14px',
+                        'text-align': 'center',
+                      }}
+                    >
+                      Select {features[feature].name}
+                    </Box>
+                  </Stack.Item>
+                  <Stack.Item shrink mt={0.5}>
+                    <FeatureValueInput
+                      act={act}
+                      feature={features[feature]}
+                      featureId={feature}
+                      shrink
+                      value={supplementalValues[index]}
+                    />
+                  </Stack.Item>
                 </Box>
-              </Stack.Item>
-              <Stack.Item shrink mt={0.5}>
-                <FeatureValueInput
-                  act={act}
-                  feature={features[supplementalFeature]}
-                  featureId={supplementalFeature}
-                  shrink
-                  value={supplementalValue}
-                />
-              </Stack.Item>
-            </>
-          )}
+              )
+            );
+          })}
         </Stack>
       </Box>
     </Box>
@@ -320,7 +345,7 @@ const GenderButton = (props: {
 const MainFeature = (props: {
   catalog: FeatureChoicedServerData & {
     name: string;
-    supplemental_feature?: string;
+    supplemental_feature?: string | string[]; // Allow string or array of strings
   };
   currentValue: string;
   isOpen: boolean;
@@ -343,11 +368,24 @@ const MainFeature = (props: {
     setRandomization,
   } = props;
 
-  const supplementalFeature = catalog.supplemental_feature;
+  // Normalize supplementalFeature to always be an array
+  const supplementalFeatures = Array.isArray(catalog.supplemental_feature)
+    ? catalog.supplemental_feature
+    : catalog.supplemental_feature
+      ? [catalog.supplemental_feature]
+      : [];
+
+  const supplementalValues = supplementalFeatures.map((feature) =>
+    feature
+      ? data.character_preferences.supplemental_features[feature]
+      : undefined,
+  );
+
   let [searchText, setSearchText] = useLocalState(
     catalog.name + '_choiced_search',
     '',
   );
+
   const handleCloseInternal = () => {
     handleClose();
     setSearchText('');
@@ -365,13 +403,8 @@ const MainFeature = (props: {
               name={catalog.name}
               catalog={catalog}
               selected={currentValue}
-              supplementalFeature={supplementalFeature}
-              supplementalValue={
-                supplementalFeature &&
-                data.character_preferences.supplemental_features[
-                  supplementalFeature
-                ]
-              }
+              supplementalFeatures={supplementalFeatures} // Pass array of features
+              supplementalValues={supplementalValues} // Pass array of values
               onClose={handleCloseInternal}
               onSelect={handleSelect}
               searchText={searchText}
@@ -418,7 +451,6 @@ const MainFeature = (props: {
                 position: 'absolute',
                 right: '1px',
               },
-
               onOpen: (event) => {
                 // We're a button inside a button.
                 // Did you know that's against the W3C standard? :)
@@ -452,6 +484,7 @@ const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
+  children?: InfernoNode;
 }) => {
   return (
     <Stack.Item
@@ -482,6 +515,7 @@ const PreferenceList = (props: {
               <LabeledList.Item
                 key={featureId}
                 label={feature.name}
+                tooltip={feature.description}
                 verticalAlign="middle"
               >
                 <Stack fill>
@@ -508,6 +542,7 @@ const PreferenceList = (props: {
           },
         )}
       </LabeledList>
+      {props.children}
     </Stack.Item>
   );
 };
@@ -517,6 +552,10 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
     string | null
   >('currentClothingMenu', null);
+  const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] = useLocalState(
+    'deleteCharacterPopupOpen',
+    false,
+  );
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     'multiNameInputOpen',
     false,
@@ -617,6 +656,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
               />
             )}
 
+            {deleteCharacterPopupOpen && (
+              <DeleteCharacterPopup
+                close={() => setDeleteCharacterPopupOpen(false)}
+              />
+            )}
+
             <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
               <Stack.Item fill>
                 <Stack vertical fill>
@@ -630,6 +675,14 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                       setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true
+                      }
+                      canDeleteCharacter={
+                        Object.values(data.character_profiles).filter(
+                          (name) => name,
+                        ).length > 1
+                      }
+                      handleDeleteCharacter={() =>
+                        setDeleteCharacterPopupOpen(true)
                       }
                     />
                   </Stack.Item>

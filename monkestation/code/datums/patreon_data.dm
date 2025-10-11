@@ -1,75 +1,88 @@
-/client
-	var/datum/patreon_data/patreon
-
 /datum/patreon_data
-	///the client that owns this data
-	var/client/owner
+	/// The ckey of the linked player.
+	var/ckey
+	/// The persistent client of the linked player.
+	var/datum/persistent_client/owner
 	///the stored patreon client key for the information
 	var/client_key
 	///the stored patreon rank collected from the server
 	var/owned_rank = NO_RANK
 	///access rank in numbers
-	var/access_rank = 0
+	var/access_rank = ACCESS_NO_RANK
 
 
-/datum/patreon_data/New(client/created_client)
-	. = ..()
-	if(!created_client)
+/datum/patreon_data/New(ckey, datum/persistent_client/owner)
+	if(!owner)
 		return
-
+	src.ckey = ckey
+	src.owner = owner
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return
 
-	owner = created_client
+	fetch_key_and_rank()
+	access_rank = patreon_rank_to_key(owned_rank)
 
-	fetch_key(owner.ckey)
-	fetch_rank(owner.ckey)
-
-	assign_access_rank()
-
-
-/datum/patreon_data/proc/fetch_key(ckey)
-	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+/datum/patreon_data/proc/fetch_key_and_rank()
+	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
 	if(query_get_key.warn_execute())
 		if(query_get_key.NextRow())
 			client_key = query_get_key.item[1]
-	qdel(query_get_key)
-
-/datum/patreon_data/proc/fetch_rank(ckey)
-	var/datum/db_query/query_get_rank = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	if(query_get_rank.warn_execute())
-		if(query_get_rank.NextRow())
-			if(query_get_rank.item[1])
-				owned_rank = query_get_rank.item[1]
-				if(owned_rank == "UNSUBBED2")
-					owned_rank = NO_RANK
-			else
+			owned_rank = query_get_key.item[2]
+			if(owned_rank == "UNSUBBED2")
 				owned_rank = NO_RANK
-	qdel(query_get_rank)
-
-
-/datum/patreon_data/proc/assign_access_rank()
-	switch(owned_rank)
-		if(THANKS_RANK)
-			access_rank =  ACCESS_THANKS_RANK
-		if(ASSISTANT_RANK)
-			access_rank =  ACCESS_ASSISTANT_RANK
-		if(COMMAND_RANK)
-			access_rank =  ACCESS_COMMAND_RANK
-		if(TRAITOR_RANK)
-			access_rank =  ACCESS_TRAITOR_RANK
-		if(NUKIE_RANK, OLD_NUKIE_RANK)
-			access_rank =  ACCESS_NUKIE_RANK
+	qdel(query_get_key)
 
 /datum/patreon_data/proc/has_access(rank)
 	if(!access_rank)
-		assign_access_rank()
+		access_rank = patreon_rank_to_key(owned_rank)
 	if(rank <= access_rank)
 		return TRUE
 	return FALSE
 
 /datum/patreon_data/proc/is_donator()
-	if((owned_rank != NO_RANK) && (owned_rank != UNSUBBED))
-		return TRUE
-	return FALSE
+	return owned_rank && owned_rank != NO_RANK && owned_rank != UNSUBBED
+
+/proc/patreon_rank_to_key(raw_rank)
+	switch(raw_rank)
+		if(THANKS_RANK)
+			. =  ACCESS_THANKS_RANK
+		if(ASSISTANT_RANK)
+			. =  ACCESS_ASSISTANT_RANK
+		if(COMMAND_RANK)
+			. =  ACCESS_COMMAND_RANK
+		if(TRAITOR_RANK)
+			. =  ACCESS_TRAITOR_RANK
+		if(NUKIE_RANK, OLD_NUKIE_RANK, NUKIE_PREMIUM_RANK, ANOTHER_PREMIUM_RANK)
+			. =  ACCESS_NUKIE_RANK
+		else
+			. = ACCESS_NO_RANK // Silly but some still have null returns so default to no access.
+
+/proc/get_patreon_rank(ckey, raw = FALSE)
+	var/datum/patreon_data/cached_patreon = GLOB.persistent_clients_by_ckey[ckey]?.patreon
+	if(!isnull(cached_patreon))
+		return raw ? cached_patreon.owned_rank : cached_patreon.access_rank
+	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
+	var/owned_rank
+	var/access_rank
+	if(query_get_key.warn_execute())
+		if(query_get_key.NextRow())
+			owned_rank = query_get_key.item[1]
+			if(owned_rank == "UNSUBBED2")
+				owned_rank = NO_RANK
+	qdel(query_get_key)
+
+	if (!raw)
+		switch(owned_rank)
+			if(THANKS_RANK)
+				access_rank =  ACCESS_THANKS_RANK
+			if(ASSISTANT_RANK)
+				access_rank =  ACCESS_ASSISTANT_RANK
+			if(COMMAND_RANK)
+				access_rank =  ACCESS_COMMAND_RANK
+			if(TRAITOR_RANK)
+				access_rank =  ACCESS_TRAITOR_RANK
+			if(NUKIE_RANK, OLD_NUKIE_RANK, NUKIE_PREMIUM_RANK, ANOTHER_PREMIUM_RANK)
+				access_rank =  ACCESS_NUKIE_RANK
+
+	return access_rank

@@ -65,7 +65,7 @@
 	var/mob/dead/observer/picked_candidate = pick(candidates)
 
 	var/mob/living/basic/cortical_borer/neutered/new_mob = new(drop_location())
-	new_mob.ckey = picked_candidate.ckey
+	new_mob.PossessByPlayer(picked_candidate.ckey)
 
 	var/datum/antagonist/cortical_borer/borer_antagonist_datum = new
 
@@ -89,8 +89,8 @@
 		action = NOTIFY_ORBIT,
 		header = "Someone just got a new friend!"
 	)
-	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into a borer via a traitor item used by [user]")
-	log_game("[key_name(new_mob)] was spawned as a borer by [key_name(user)]")
+	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into a borer via a traitor item used by [user].")
+	log_game("[key_name(new_mob)] was spawned as a borer by [key_name(user)].")
 	visible_message("A borer wriggles out of the [src]!")
 
 	var/obj/item/cortical_cage/empty_cage = new(drop_location())

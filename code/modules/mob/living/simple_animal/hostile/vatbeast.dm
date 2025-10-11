@@ -32,9 +32,9 @@
 	slapper.Grant(src)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0)
 
-/mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
+/mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer, obj/item/food)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list(FACTION_NEUTRAL)
@@ -81,13 +81,13 @@
 	if(refund_cooldown)
 		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
 
-/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/user, params, atom/target)
 	// Check if we can slap
 	if(!isliving(target) || target == owner)
 		return FALSE
 
 	if(!owner.Adjacent(target))
-		owner.balloon_alert(caller, "too far!")
+		owner.balloon_alert(user, "too far!")
 		return FALSE
 
 	// Do the slap
@@ -97,8 +97,8 @@
 
 	// Give feedback from the slap.
 	// Additional feedback for if a rider did it
-	if(caller != owner)
-		to_chat(caller, span_notice("You command [owner] to slap [target] with its tentacles."))
+	if(user != owner)
+		to_chat(user, span_notice("You command [owner] to slap [target] with its tentacles."))
 
 	return TRUE
 

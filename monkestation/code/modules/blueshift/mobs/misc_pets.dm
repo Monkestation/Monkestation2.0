@@ -8,6 +8,7 @@
 	name = "Walter"
 	real_name = "Walter"
 	desc = "It's Walter, he bites criminals just as well as he bites toddlers."
+	unique_pet = TRUE
 
 /mob/living/basic/rabbit/daisy
 	name = "Daisy"
@@ -27,8 +28,9 @@
 	real_name = "Teshari"
 	desc = "A timeless classic."
 	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 30000
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 30000
+	worn_slot_flags = null
 
 /mob/living/basic/lizard/tegu
 	name = "tegu"

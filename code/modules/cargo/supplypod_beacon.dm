@@ -8,9 +8,14 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	interaction_flags_click = ALLOW_SILICON_REACH
+	/// The linked console
 	var/obj/machinery/computer/cargo/express/express_console
+	/// If linked
 	var/linked = FALSE
+	/// If this is ready to launch
 	var/ready = FALSE
+	/// If it's been launched
 	var/launched = FALSE
 
 /obj/item/supplypod_beacon/proc/update_status(consoleStatus)
@@ -79,16 +84,15 @@
 		update_status(SP_READY)
 	to_chat(user, span_notice("[src] linked to [C]."))
 
-/obj/item/supplypod_beacon/AltClick(mob/user)
-	if (!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-	if (express_console)
-		unlink_console()
-	else
+/obj/item/supplypod_beacon/click_alt(mob/user)
+	if(!express_console)
 		to_chat(user, span_alert("There is no linked console."))
+		return CLICK_ACTION_BLOCKING
+	unlink_console()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
-	if(!istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
+	if(IS_WRITING_UTENSIL(W)) //give a tag that is visible from the linked express console
 		return ..()
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))

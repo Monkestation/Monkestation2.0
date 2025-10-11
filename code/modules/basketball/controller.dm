@@ -49,7 +49,7 @@ GLOBAL_VAR(basketball_game)
 	GLOB.basketball_game = src
 	map_deleter = new
 
-/datum/basketball_controller/Destroy(force, ...)
+/datum/basketball_controller/Destroy(force)
 	. = ..()
 	GLOB.basketball_game = null
 	end_game()
@@ -194,7 +194,7 @@ GLOBAL_VAR(basketball_game)
 		var/client/player_client = GLOB.directory[player_key]
 		if(player_client)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
-		baller.key = player_key
+		baller.PossessByPlayer(player_key)
 
 		SEND_SOUND(baller, sound('sound/misc/whistle.ogg', volume=30))
 		if(is_player_referee)

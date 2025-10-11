@@ -21,7 +21,7 @@
 	worn_icon_state = "webbing_exp_corps"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/belts.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/belt.dmi'
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Webbing" = list(
 			RESKIN_ICON_STATE = "webbing_exp_corps",
@@ -87,13 +87,11 @@
 	icon_state = "exp_corps"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/hands.dmi'
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	uses_advanced_reskins = FALSE
-	unique_reskin = NONE
 
 /obj/item/clothing/gloves/chief_engineer/expeditionary_corps
 	name = "expeditionary corps insulated gloves"
@@ -114,9 +112,9 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/hands.dmi'
 	worn_icon_state = "exp_corps"
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/nitrile_expeditionary_corps
@@ -132,7 +130,7 @@
 	inhand_icon_state = "backpack"
 	icon = 'monkestation/code/modules/blueshift/icons/backpack.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob_backpack.dmi'
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Backpack" = list(
 			RESKIN_ICON_STATE = "exp_corps",
@@ -152,8 +150,8 @@
 	icon_state = "exp_corps"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/vest_expeditionary_corps
-	cold_protection = CHEST|GROIN|ARMS
-	heat_protection = CHEST|GROIN|ARMS
+
+
 	dog_fashion = null
 	allowed = list(
 		/obj/item/melee,
@@ -238,9 +236,9 @@
 		current_user.remove_client_colour(/datum/client_colour/glass_colour/lightgreen)
 		current_user.update_sight()
 
-/obj/item/clothing/head/helmet/expeditionary_corps/AltClick(mob/user)
+/obj/item/clothing/head/helmet/expeditionary_corps/click_alt(mob/user)
 	if(!current_user)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	nightvision = !nightvision
 	if(nightvision)
@@ -250,7 +248,7 @@
 		to_chat(user, span_notice("You flip the NV goggles up."))
 		disable_nv()
 	update_appearance()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/expeditionary_corps/dropped(mob/user)
 	. = ..()

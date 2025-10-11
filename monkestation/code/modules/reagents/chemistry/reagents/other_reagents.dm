@@ -9,16 +9,16 @@
 /datum/reagent/acetone_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people kills people!
 	. = ..()
 	if(methods & TOUCH | VAPOR | INGEST)
-		exposed_mob.adjustFireLoss(((reac_volume * 2) / 1.65))
-		exposed_mob.adjust_fire_stacks((reac_volume / 5))
+		exposed_mob.adjustFireLoss(min((reac_volume * 0.5) / 1.65, 25))
+		exposed_mob.adjust_fire_stacks(round(reac_volume / 50))
 
 /datum/reagent/acetone_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) // Old acetone oxide didn't have a metabolism effect!
 	. = ..()
 	var/uh_oh_message = pick("You rub your eyes.", "Your eyes lose focus for a second.", "Your stomach cramps!")
 	if (SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[uh_oh_message]"))
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organtype = affected_organtype) // Kills your stomach.
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 2 * REM * 1, required_organtype = affected_organtype) // Kills your eyes too.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Kills your stomach.
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Kills your eyes too.
 
 
 
@@ -58,13 +58,13 @@
 /datum/reagent/hydrogen_peroxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
 	. = ..()
 	if(methods & TOUCH)
-		exposed_mob.adjustFireLoss(((reac_volume * 2) / 3))
+		exposed_mob.adjustFireLoss(min((reac_volume * 0.5) / 3, 25))
 
 /datum/reagent/hydrogen_peroxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) // Old h2o2 didn't have a metabolizing effect either!
 	. = ..()
 	var/tummy_ache_message = pick("Your stomach rumbles.", "Your stomach is upset!", "You don't feel very good...")
 	if (SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[tummy_ache_message]"))
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organtype = affected_organtype) // Tumby hurty...
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM * 1, required_organ_flag = affected_organ_flags) // Tumby hurty...
 
 

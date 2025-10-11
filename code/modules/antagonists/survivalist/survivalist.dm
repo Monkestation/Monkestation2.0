@@ -2,6 +2,8 @@
 	name = "\improper Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
+	count_against_dynamic_roll_chance = FALSE
 	suicide_cry = "FOR MYSELF!!"
 	var/greet_message = ""
 
@@ -22,6 +24,7 @@
 
 /datum/antagonist/survivalist/guns
 	greet_message = "Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way."
+	hardcore_random_bonus = TRUE
 
 /datum/antagonist/survivalist/guns/forge_objectives()
 	var/datum/objective/steal_n_of_type/summon_guns/guns = new
@@ -32,6 +35,7 @@
 /datum/antagonist/survivalist/magic
 	name = "Amateur Magician"
 	greet_message = "Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way."
+	hardcore_random_bonus = TRUE
 
 /datum/antagonist/survivalist/magic/greet()
 	. = ..()

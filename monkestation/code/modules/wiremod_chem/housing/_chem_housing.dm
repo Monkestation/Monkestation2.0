@@ -17,7 +17,7 @@
 	var/buffer = 500
 	var/recharge_counter = 0
 
-/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
@@ -34,7 +34,7 @@
 		if(usedpower)
 			var/amount = max(usedpower, 0) // make sure we don't use negative power
 			var/area/A = get_area(src) // make sure it's in an area
-			A?.use_power(amount, AREA_USAGE_EQUIP)
+			A?.use_energy(amount, AREA_USAGE_EQUIP)
 		recharge_counter = 0
 		return
 	recharge_counter += seconds_per_tick
@@ -74,19 +74,19 @@
 	incoming_tank.forceMove(src)
 	connected_tank = incoming_tank
 
-/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/precursor_tank))
 		replace_tank(attacking_item, user)
 		return
 	return ..()
 
-/obj/structure/chemical_manufacturer/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_manufacturer/click_alt(mob/living/user)
 	remove_tank()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_manufacturer/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		to_chat(user, span_notice("You finish plunging the [name]."))
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()

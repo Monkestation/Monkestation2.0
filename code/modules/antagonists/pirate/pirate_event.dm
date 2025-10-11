@@ -15,8 +15,10 @@
 	map_flags = EVENT_SPACE_ONLY
 //monkestation edit start
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_COMMUNAL)
+	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 //monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()
@@ -26,6 +28,7 @@
 
 //monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
+	fakeable = FALSE
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list
 
@@ -100,8 +103,8 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
-	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
+	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
 			if(length(candidates) > 0)
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)

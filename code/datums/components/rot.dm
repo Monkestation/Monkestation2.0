@@ -42,20 +42,25 @@
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(rot_react))
 	if(isliving(parent))
+		var/mob/living/living_parent = parent
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(react_to_revive)) //mobs stop this when they come to life
 		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, PROC_REF(rot_react_touch))
+
+		RegisterSignal(parent, COMSIG_LIVING_BODY_TEMPERATURE_CHANGE, PROC_REF(check_for_temperature))
+		check_for_temperature(parent, living_parent.bodytemperature, living_parent.bodytemperature)
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
-		RegisterSignals(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
+		RegisterSignals(carbon_parent.reagents, list(
+			COMSIG_REAGENTS_ADD_REAGENT,
+			COMSIG_REAGENTS_DEL_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(check_reagent))
-		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(check_husk_trait))
+		), PROC_REF(check_reagent))
 		check_reagent(carbon_parent.reagents, null)
-		check_husk_trait(null)
-	if(ishuman(parent))
-		var/mob/living/carbon/human/human_parent = parent
-		RegisterSignal(parent, COMSIG_HUMAN_CORETEMP_CHANGE, PROC_REF(check_for_temperature))
-		check_for_temperature(null, 0, human_parent.coretemperature)
+
+		RegisterSignals(parent, list(
+			SIGNAL_ADDTRAIT(TRAIT_HUSK),
+			SIGNAL_REMOVETRAIT(TRAIT_HUSK),
+		), PROC_REF(check_husk_trait))
 
 	start_up(NONE) //If nothing's blocking it, start
 
@@ -147,7 +152,7 @@
 		return
 
 	//We're running just under the "worst disease", since we don't want these to be too strong
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 2,
 		ANTIGEN_COMMON	= 2,
@@ -162,7 +167,7 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 	)
-	var/datum/disease/advanced/disease = new virus_choice
+	var/datum/disease/acute/disease = new virus_choice
 	disease.makerandom(list(20,50),list(30,50),anti,bad,src)
 
 	var/note = "Rot Infection Contact [key_name(react_to)]"

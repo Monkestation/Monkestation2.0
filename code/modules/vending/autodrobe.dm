@@ -20,7 +20,6 @@
 				/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
 				/obj/item/clothing/head/bio_hood/plague = 1,
 				/obj/item/clothing/mask/gas/plaguedoctor = 1,
-				/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 				/obj/item/clothing/suit/toggle/owlwings = 1,
 				/obj/item/clothing/under/costume/owl = 1,
 				/obj/item/clothing/mask/gas/owl_mask = 1,
@@ -67,6 +66,19 @@
 				/obj/item/clothing/under/costume/worldchampiongi = 1,
 				/obj/item/clothing/head/milkmanhat = 2,
 				/obj/item/clothing/under/costume/milkman = 2,
+				/obj/item/clothing/shoes/bb_slippers = 1,
+				/obj/item/clothing/head/bb_wig = 1,
+		        /obj/item/clothing/under/costume/bb_dress = 1,
+				/obj/item/clothing/head/wizard/ralsei = 1,
+				/obj/item/clothing/suit/wizrobe/ralsei = 1,
+				/obj/item/clothing/neck/ralsei = 1,
+				/obj/item/clothing/glasses/ralsei = 1,
+				/obj/item/clothing/under/costume/susie = 1,
+				/obj/item/clothing/under/costume/kris = 1,
+				/obj/item/clothing/neck/kris = 1,
+				/obj/item/clothing/shoes/kris = 1,
+				/obj/item/clothing/gloves/kris = 1,
+				/obj/item/clothing/under/dress/hula = 1,
 				//Monkestation Addition end
 			),
 		),
@@ -88,6 +100,18 @@
 				/obj/item/clothing/suit/costume/shrine_maiden = 1,
 				/obj/item/gohei = 1,
 				/obj/item/clothing/under/costume/skeleton = 1,
+				//Monkestation Addition start
+				/obj/item/clothing/shoes/costume_2021/infinity_shoes = 5,
+				/obj/item/clothing/under/costume/infinity_under = 5,
+				/obj/item/clothing/suit/infinity_jacket = 5,
+				/obj/item/clothing/gloves/infinity_gloves = 5,
+				/obj/item/clothing/suit/thekiller_robe = 1,
+				/obj/item/clothing/head/thekiller_head = 1,
+				/obj/item/clothing/head/costume/dio = 1,
+				/obj/item/clothing/suit/costume/dio = 1,
+				/obj/item/clothing/under/costume/dio = 1,
+				/obj/item/clothing/shoes/dio = 1,
+				//Monkestation Addition end
 			),
 		),
 		list(
@@ -110,6 +134,7 @@
 				/obj/item/clothing/shoes/clown_shoes/green_jester_shoes =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/head/costume/jester/alt =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/rank/civilian/clown/jester/alt =1, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/costume/jimbo = 2, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/villain = 1,
 				/obj/item/clothing/suit/costume/joker = 1,
 				/obj/item/clothing/under/costume/joker = 1,
@@ -124,6 +149,8 @@
 				/obj/item/clothing/under/costume/harlequin =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/shoes/clown_shoes/harlequin_boots =2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/tragic = 2,
+				/obj/item/clothing/head/batterhat = 2,//MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/costume/batter = 2,//MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/streetmime = 1,
 				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
 				/obj/item/clothing/shoes/clown_shoes/yellow = 1,
@@ -183,6 +210,8 @@
 				/obj/item/clothing/mask/animal/cowmask = 1,
 				/obj/item/clothing/mask/animal/horsehead = 1,
 				/obj/item/clothing/head/lizard = 1,
+				/obj/item/clothing/head/costume/bunnyhead/regular = 1,
+				/obj/item/clothing/suit/costume/bunnysuit/regular = 1,
 			),
 		),
 		list(
@@ -227,6 +256,10 @@
 				/obj/item/clothing/suit/shipwreckedsuit = 2,
 				/obj/item/clothing/head/kingofbugshelmet = 2,
 				/obj/item/clothing/suit/kingofbugssuit = 2,
+				/obj/item/clothing/shoes/crueltysquad_shoes = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/costume/crueltysquad_under = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/glasses/crueltysquad_glasses = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/gloves/crueltysquad_gloves = 2, // MONKESTATION EDIT ADDITION
 			),
 		),
 	)
@@ -261,10 +294,14 @@
 		/obj/item/clothing/under/dress/wedding_dress = 1,
 		/obj/item/clothing/under/suit/tuxedo = 1,
 		/obj/item/clothing/head/costume/weddingveil = 1,
+		/obj/item/clothing/under/dress/ballgown = 1, //MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/dress/wlpinafore = 1, //MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/dress/ribbondress = 1, //MONKESTATION EDIT ADDITION
 		/obj/item/storage/belt/fannypack/cummerbund = 1,
 		/obj/item/clothing/suit/costume/drfreeze_coat = 1,
 		/obj/item/clothing/under/costume/drfreeze = 1,
 		/obj/item/clothing/head/costume/drfreezehat = 1,
+		/obj/item/clothing/head/costume/minicrown = 1, //MONKESTATION EDIT ADDITION
 	)
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = PAYCHECK_CREW * 0.8 //Default of 40.

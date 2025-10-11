@@ -3,12 +3,13 @@
 /obj/structure/desk_bell
 	name = "desk bell"
 	desc = "The cornerstone of any customer service job. You feel an unending urge to ring it."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/yogstation/yogbell.dmi'
 	icon_state = "desk_bell"
 	layer = OBJ_LAYER
 	anchored = FALSE
 	pass_flags = PASSTABLE // Able to place on tables
 	max_integrity = 5000 // To make attacking it not instantly break it
+
 	/// The amount of times this bell has been rang, used to check the chance it breaks
 	var/times_rang = 0
 	/// Is this bell broken?
@@ -28,6 +29,7 @@
 	. = ..()
 
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Secure"
 		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -69,7 +71,7 @@
 			playsound(user, 'sound/items/change_drill.ogg', 50, vary = TRUE)
 			broken_ringer = FALSE
 			times_rang = 0
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		return FALSE
 	return ..()
 
@@ -84,7 +86,7 @@
 			new/obj/item/stack/sheet/iron(drop_location())
 		new/obj/item/stack/sheet/iron(drop_location())
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /// Check if the clapper breaks, and if it does, break it
@@ -110,17 +112,25 @@
 	desc = "The cornerstone of any customer service job. This one's been modified for hyper-performance."
 	ring_cooldown_length = 0
 
-/obj/structure/desk_bell/MouseDrop(obj/over_object, src_location, over_location)
+/obj/structure/desk_bell/mouse_drop_dragged(atom/over_object, mob/user)
 	if(!istype(over_object, /obj/vehicle/ridden/wheelchair))
-		return
-	if(!Adjacent(over_object) || !Adjacent(usr))
 		return
 	var/obj/vehicle/ridden/wheelchair/target = over_object
 	if(target.bell_attached)
-		usr.balloon_alert(usr, "already has a bell!")
+		user.balloon_alert(user, "already has a bell!")
 		return
-	usr.balloon_alert(usr, "attaching bell...")
-	if(!do_after(usr, 0.5 SECONDS))
+	user.balloon_alert(user, "attaching bell...")
+	if(!do_after(user, 0.5 SECONDS))
 		return
 	target.attach_bell(src)
 	return ..()
+
+/obj/structure/desk_bell/wrench_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 10 SECONDS)) //Using a wrench on a thing as small as a bell? unwieldy.
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		set_anchored(!anchored)
+		tool.play_tool_sound(src)
+		return ITEM_INTERACT_SUCCESS
+	return FALSE

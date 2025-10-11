@@ -85,6 +85,9 @@ GLOBAL_LIST_INIT(hive_exits, list())
 
 	icon = 'monkestation/code/modules/botany/icons/apid_sprites.dmi'
 	icon_state = "hive_exit"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	anchored = TRUE
+	move_resist = INFINITY
 
 	var/obj/structure/beebox/hive/linked_hive
 
@@ -97,25 +100,25 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	RegisterSignal(get_area(src), COMSIG_AREA_ENTERED, PROC_REF(enter_area))
 
 /obj/structure/hive_exit/Destroy()
-	. = ..()
-	if(!linked_hive || !get_turf(linked_hive))
-		return
-	var/turf/turf = get_turf(linked_hive)
-	for(var/atom/movable/listed in atoms_inside)
-		if(isnull(turf))
-			continue
-		listed.forceMove(turf)
-	var/area/area = get_area(src)
-	for(var/atom/movable/movable as anything in area)
-		if(isturf(movable))
-			continue
-		if(isnull(turf))
-			continue
-		movable.forceMove(turf)
+	if(linked_hive)
+		var/turf/turf = get_turf(linked_hive)
+		for(var/atom/movable/listed in atoms_inside)
+			if(isnull(turf))
+				continue
+			listed.forceMove(turf)
+		var/area/area = get_area(src)
+		for(var/atom/movable/movable as anything in area)
+			if(isturf(movable))
+				continue
+			if(isnull(turf))
+				continue
+			movable.forceMove(turf)
+
+		linked_hive.linked_exit = null
+		linked_hive = null
 
 	GLOB.hive_exits -= src
-	linked_hive?.linked_exit = null
-	linked_hive = null
+	return ..()
 
 /obj/structure/hive_exit/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

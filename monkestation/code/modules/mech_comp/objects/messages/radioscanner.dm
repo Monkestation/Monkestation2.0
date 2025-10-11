@@ -1,3 +1,4 @@
+/*
 /obj/item/mcobject/messaging/radioscanner
 	name = "radio scanner component"
 	base_icon_state = "comp_radioscanner"
@@ -15,6 +16,11 @@
 	MC_ADD_INPUT("set frequency", set_frequency)
 	MC_ADD_CONFIG("Set Frequency", set_frequency_config)
 	RegisterSignal(radio, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(incoming_message))
+
+/obj/item/mcobject/messaging/radioscanner/Destroy(force)
+	UnregisterSignal(radio, COMSIG_RADIO_NEW_MESSAGE)
+	QDEL_NULL(radio)
+	return ..()
 
 /obj/item/mcobject/messaging/radioscanner/proc/change_frequency(num)
 	num = sanitize_frequency(num)
@@ -41,3 +47,4 @@
 	SIGNAL_HANDLER
 
 	fire("name=[speaker.GetVoice()]&message=[message]") //mimic list2params
+*/

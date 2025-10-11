@@ -11,6 +11,7 @@
 	var/obj/item/storage/bag/trash/trash_bag
 	/// The installed upgrade, if present
 	var/obj/item/janicart_upgrade/installed_upgrade
+	cover_amount = 35
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
@@ -33,37 +34,37 @@
 	if (installed_upgrade)
 		. += "It has been upgraded with [installed_upgrade], which can be removed with a screwdriver."
 
-/obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash))
+/obj/vehicle/ridden/janicart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		if(trash_bag)
 			to_chat(user, span_warning("[src] already has a trashbag hooked!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
-		trash_bag = I
+		trash_bag = attacking_item
 		RegisterSignal(trash_bag, COMSIG_QDELETING, PROC_REF(bag_deleted))
-		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
+		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, attacking_item)
 		update_appearance()
-	else if(istype(I, /obj/item/janicart_upgrade))
+	else if(istype(attacking_item, /obj/item/janicart_upgrade))
 		if(installed_upgrade)
 			to_chat(user, span_warning("[src] already has an upgrade installed! Use a screwdriver to remove it."))
 			return
-		var/obj/item/janicart_upgrade/new_upgrade = I
+		var/obj/item/janicart_upgrade/new_upgrade = attacking_item
 		new_upgrade.forceMove(src)
 		new_upgrade.install(src)
 		installed_upgrade = new_upgrade
 		to_chat(user, span_notice("You upgrade [src] with [new_upgrade]."))
 		update_appearance()
-	else if (istype(I, /obj/item/screwdriver) && installed_upgrade)
+	else if (istype(attacking_item, /obj/item/screwdriver) && installed_upgrade)
 		installed_upgrade.uninstall(src)
 		installed_upgrade.forceMove(get_turf(user))
 		user.put_in_hands(installed_upgrade)
 		to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
 		installed_upgrade = null
 		update_appearance()
-	else if(trash_bag && (!is_key(I) || is_key(inserted_key))) // don't put a key in the trash when we need it
-		trash_bag.attackby(I, user)
+	else if(trash_bag && (!is_key(attacking_item) || is_key(inserted_key))) // don't put a key in the trash when we need it
+		trash_bag.attackby(attacking_item, user)
 	else
 		return ..()
 

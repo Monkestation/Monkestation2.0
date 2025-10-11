@@ -38,6 +38,7 @@
 	// The `_` makes it first in ABC order.
 	group = "_real_name"
 	savefile_key = "real_name"
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/real_name/apply_to_human(mob/living/carbon/human/target, value)
 	target.real_name = value
@@ -71,6 +72,7 @@
 	explanation = "Backup human name"
 	group = "backup_human"
 	savefile_key = "human_name"
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/backup_human/create_informed_default_value(datum/preferences/preferences)
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
@@ -83,6 +85,7 @@
 	explanation = "Clown name"
 	group = "fun"
 	relevant_job = /datum/job/clown
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/clown/create_default_value()
 	return pick(GLOB.clown_names)
@@ -93,6 +96,7 @@
 	explanation = "Mime name"
 	group = "fun"
 	relevant_job = /datum/job/mime
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/mime/create_default_value()
 	return pick(GLOB.mime_names)
@@ -172,7 +176,7 @@
 		return FALSE
 
 	// If one of the roles is ticked in the antag prefs menu, this option will show.
-	var/static/list/ops_roles = list(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE, ROLE_OPERATIVE_MIDROUND, ROLE_CLOWN_OPERATIVE)
+	var/static/list/ops_roles = list(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE, ROLE_OPERATIVE_MIDROUND, ROLE_CLOWN_OPERATIVE, ROLE_JUNIOR_LONE_OPERATIVE, ROLE_COMMANDO_OPERATIVE, ROLE_COMMANDO_OPERATIVE_MIDROUND)
 	if(length(ops_roles & preferences.be_special))
 		return TRUE
 

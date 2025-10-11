@@ -8,14 +8,14 @@
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "command"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
-	header_program = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_TABLET
+	power_cell_use = NONE
+	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER
+	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
@@ -87,10 +87,11 @@
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
-	var/list/messengers_sorted = sort_by_job ? get_messengers_sorted_by_job() : get_messengers_sorted_by_name()
+	var/list/messengers_sorted = sort_by_job ? GLOB.pda_messengers_by_job : GLOB.pda_messengers_by_name
 
-	for(var/messenger_ref in messengers_sorted)
-		var/datum/computer_file/program/messenger/messenger = messengers_sorted[messenger_ref]
+	for(var/datum/computer_file/program/messenger/messenger as anything in messengers_sorted)
+		if(!istype(messenger) || !istype(messenger.computer))
+			continue
 		if(messenger == src || messenger.invisible)
 			continue
 
@@ -552,7 +553,7 @@
 	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
 /datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer))
+	if(!sender.can_perform_action(computer, ALLOW_RESTING))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
@@ -608,7 +609,7 @@
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[sender] [rigged ? "(as [fake_name]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
-	for(var/mob/player_mob as anything in GLOB.current_observers_list)
+	for(var/mob/player_mob as anything in GLOB.dead_mob_list)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
 			continue
@@ -677,7 +678,7 @@
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
 
 		if (isAI(receiver_mob))
-			sender_title = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+			sender_title = "<a href='byond://?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
@@ -686,7 +687,7 @@
 		to_chat(receiver_mob, span_infoplain("[icon2html(computer, receiver_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
 	if (alert_able && should_ring)
-		computer.ring(ringtone)
+		computer.ring(ringtone, list(receiver_mob))
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
@@ -725,6 +726,12 @@
 
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
+
+/datum/computer_file/program/messenger/proc/compare_name(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_identification, computer?.saved_identification)
+
+/datum/computer_file/program/messenger/proc/compare_job(datum/computer_file/program/messenger/rhs)
+	return sorttext(rhs.computer?.saved_job, computer?.saved_job)
 
 #undef PDA_MESSAGE_TIMESTAMP_FORMAT
 #undef MAX_PDA_MESSAGE_LEN

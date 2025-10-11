@@ -14,7 +14,7 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
-	demolition_mod = 1.5
+	demolition_mod = 1.4
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6.5)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
@@ -58,7 +58,7 @@
 
 /obj/item/chainsaw/attack_self(mob/user)
 	on = !on
-	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
+	to_chat(user, span_notice("As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")) // monkestation edit
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
@@ -99,12 +99,39 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/* MONKESTATION REMOVAL START
+/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+	if (target_mob.stat != DEAD)
+		return ..()
+
+	if (user.zone_selected != BODY_ZONE_HEAD)
+		return ..()
+
+	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
+	if (isnull(head))
+		return ..()
+
+	playsound(user, 'sound/weapons/slice.ogg', vol = 80, vary = TRUE)
+
+	target_mob.balloon_alert(user, "cutting off head...")
+	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
+		return TRUE
+
+	head.dismember(silent = FALSE)
+	user.put_in_hands(head)
+
+	return TRUE
+
+/obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
 	return FALSE
+MONKESTATION REMOVAL END */
+
+/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
 	name = "mounted chainsaw"

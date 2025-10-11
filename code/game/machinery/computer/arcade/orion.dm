@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 /obj/machinery/computer/arcade/orion_trail/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/moods),
+		get_asset_datum(/datum/asset/spritesheet_batched/moods),
 	)
 
 /obj/machinery/computer/arcade/orion_trail/ui_data(mob/user)
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	return static_data
 
-/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
+/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

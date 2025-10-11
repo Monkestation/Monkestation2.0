@@ -32,18 +32,55 @@
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
 
+	/// Updates features and clothing attached to a specific limb with limb-specific offsets
+/mob/living/carbon/proc/update_features(feature_key)
+	switch(feature_key)
+		if(OFFSET_UNIFORM)
+			update_worn_undersuit()
+		if(OFFSET_ID)
+			update_worn_id()
+		if(OFFSET_GLOVES)
+			update_worn_gloves()
+		if(OFFSET_GLASSES)
+			update_worn_glasses()
+		if(OFFSET_EARS)
+			update_inv_ears()
+		if(OFFSET_SHOES)
+			update_worn_shoes()
+		if(OFFSET_S_STORE)
+			update_suit_storage()
+		if(OFFSET_FACEMASK)
+			update_worn_mask()
+		if(OFFSET_HEAD)
+			update_worn_head()
+		if(OFFSET_FACE)
+			dna?.species?.handle_body(src) // updates eye icon
+			update_worn_mask()
+		if(OFFSET_BELT)
+			update_worn_belt()
+		if(OFFSET_BACK)
+			update_worn_back()
+		if(OFFSET_SUIT)
+			update_worn_oversuit()
+		if(OFFSET_NECK)
+			update_worn_neck()
+		if(OFFSET_HELD)
+			update_held_items()
+
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+	SEND_SIGNAL(src, COMSIG_CARBON_APPLY_OVERLAY, cache_index, .)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
@@ -59,6 +96,10 @@
 	if(same_z_layer)
 		return
 	update_z_overlays(GET_TURF_PLANE_OFFSET(new_turf), TRUE)
+	// horrible hacky "fix" for mesons weirdness on multi-z maps, forgive me for this ~Absolucy
+	if(client && (sight & SEE_TURFS) && length(SSmapping.multiz_levels))
+		set_sight(NONE)
+		update_sight()
 
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)
@@ -277,13 +318,13 @@
 	return hands
 
 /mob/living/carbon/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
+	var/fire_icon = "[dna?.species?.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"]"
 
 	if(!GLOB.fire_appearances[fire_icon])
 		GLOB.fire_appearances[fire_icon] = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
+			icon = dna?.species?.fire_dmi || 'icons/mob/effects/onfire.dmi',
+			icon_state = fire_icon,
+			layer = -HIGHEST_LAYER,
 			appearance_flags = RESET_COLOR,
 		)
 
@@ -294,14 +335,12 @@
 
 	var/mutable_appearance/damage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		if(!iter_part.dmg_overlay_type)
+		var/list/part_overlays = iter_part.get_bodypart_damage_state()
+		if(!LAZYLEN(part_overlays))
 			continue
-		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
-			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		if(iter_part.brutestate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
-		if(iter_part.burnstate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
+
+		damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+		damage_overlay.overlays += part_overlays
 
 	if(isnull(damage_overlay))
 		return
@@ -454,7 +493,7 @@
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
 		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
 
-		if(icon_render_keys[limb.body_zone] != old_key || get_top_offset() != last_top_offset) //If the keys match, that means the limb doesn't need to be redrawn
+		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
 	var/list/missing_bodyparts = get_missing_limbs()
@@ -471,15 +510,10 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
 			var/bodypart_icon = limb.get_limb_icon()
-			if(!istype(limb, /obj/item/bodypart/leg))
-				var/top_offset = get_top_offset()
-				for(var/image/image as anything in bodypart_icon)
-					image.pixel_y += top_offset
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
-		last_top_offset = get_top_offset()
 
 
 	remove_overlay(BODYPARTS_LAYER)
@@ -492,19 +526,6 @@
 		overlays_standing[BODYPARTS_LAYER] += bleh.extra_bodyparts
 
 	apply_overlay(BODYPARTS_LAYER)
-
-/// This looks at the chest and legs of the mob and decides how much our chest, arms, and head should be adjusted. This is useful for limbs that are larger or smaller than the scope of normal human height while keeping the feet anchored to the bottom of the tile
-/mob/living/carbon/proc/get_top_offset()
-	var/from_chest
-	var/from_leg
-	for(var/obj/item/bodypart/leg/leg_checked in bodyparts)
-		if(leg_checked.top_offset > from_leg || isnull(from_leg)) // We find the tallest leg available
-			from_leg = leg_checked.top_offset
-	if(isnull(from_leg))
-		from_leg = 0 // If we have no legs, we set this to zero to avoid any math issues that might stem from it being NULL
-	for(var/obj/item/bodypart/chest/chest_checked in bodyparts) // Take the height from the chest
-		from_chest = chest_checked.top_offset
-	return (from_chest + from_leg) // The total hight of the chest and legs together
 
 /////////////////////////
 // Limb Icon Cache 2.0 //
@@ -536,7 +557,7 @@
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		. += "-[human_owner.get_mob_height()]"
+		. += "-[human_owner.mob_height]"
 	return .
 
 ///Generates a cache key specifically for husks
@@ -548,7 +569,7 @@
 	. += "-[body_zone]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		. += "-[human_owner.get_mob_height()]"
+		. += "-[human_owner.mob_height]"
 	return .
 
 /obj/item/bodypart/head/generate_icon_key()
@@ -562,32 +583,24 @@
 		. += "-[facial_hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
 		. += "-[facial_hair_alpha]"
-		if(facial_hair_gradient_style)
-			. += "-[facial_hair_gradient_style]"
-			. += "-[facial_hair_gradient_color]"
-	if(show_missing_eyes)
-		. += "-SHOW_MISSING_EYES"
+		if(gradient_styles?[GRADIENT_FACIAL_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_FACIAL_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
+	if(show_eyeless)
+		. += "-SHOW_EYELESS"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .
 	if(hair_hidden)
 		. += "-HAIR_HIDDEN"
 	else
-		. += "-[hair_style]"
+		. += "-[hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
 		. += "-[hair_alpha]"
-		if(hair_gradient_style)
-			. += "-[hair_gradient_style]"
-			. += "-[hair_gradient_color]"
+		if(gradient_styles?[GRADIENT_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
 
-	return .
-
-/obj/item/bodypart/head/generate_husk_key()
-	. = ..()
-	if(show_missing_eyes)
-		. += "-SHOW_MISSING_EYES"
-	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

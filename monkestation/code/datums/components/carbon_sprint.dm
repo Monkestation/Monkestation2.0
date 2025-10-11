@@ -7,7 +7,7 @@
 	///Our very own dust
 	var/obj/effect/sprint_dust/dust = new(null)
 
-/datum/component/carbon_sprint/Destroy(force, silent)
+/datum/component/carbon_sprint/Destroy(force)
 	QDEL_NULL(dust)
 	return ..()
 
@@ -59,6 +59,8 @@
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * 0.7) //0.5 * cost Means almost infinnite sprint due to regen
 		else
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST)
+		if(HAS_TRAIT(carbon_parent, TRAIT_EXERTION_OVERHEAT))
+			carbon_parent.adjust_bodytemperature((carbon_parent.bodytemp_heat_damage_limit - carbon_parent.standard_body_temperature) * 0.15)
 	else if(sprinting)
 		stopSprint()
 

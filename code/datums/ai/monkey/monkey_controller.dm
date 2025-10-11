@@ -65,7 +65,7 @@ have ways of interacting with a specific mob and control it.
 	living_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
-	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
@@ -77,7 +77,8 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_LIVING_TRY_SYRINGE_INJECT,
+		COMSIG_LIVING_TRY_SYRINGE_WITHDRAW,
 		COMSIG_CARBON_CUFF_ATTEMPTED,
 		COMSIG_MOB_MOVESPEED_UPDATED,
 	))
@@ -161,8 +162,10 @@ have ways of interacting with a specific mob and control it.
 	var/obj/item/clothing/suit/costume/monkeysuit/S
 	var/obj/item/clothing/mask/gas/monkeymask/M
 	var/list/equipped = user.get_equipped_items(FALSE)
-	if(issimian(user))
-		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(TRAIT_MONKEYFRIEND in carbon_user?.dna?.species.inherent_traits)
+			ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
 	if(((M in equipped) && (S in equipped)))
 		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, CLOTHING_TRAIT)
 

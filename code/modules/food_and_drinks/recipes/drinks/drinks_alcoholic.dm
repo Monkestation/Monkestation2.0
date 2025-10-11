@@ -31,11 +31,6 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 
-/datum/chemical_reaction/drink/wine
-	results = list(/datum/reagent/consumable/ethanol/wine = 10)
-	required_reagents = list(/datum/reagent/consumable/grapejuice = 10)
-	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
-
 /datum/chemical_reaction/drink/spacebeer
 	results = list(/datum/reagent/consumable/ethanol/beer = 10)
 	required_reagents = list(/datum/reagent/consumable/flour = 10)
@@ -122,6 +117,11 @@
 /datum/chemical_reaction/drink/manly_dorf
 	results = list(/datum/reagent/consumable/ethanol/manly_dorf = 3)
 	required_reagents = list (/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/ale = 2)
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/drink/honeybee_mead
+	results = list(/datum/reagent/consumable/ethanol/honeybee_mead = 3)
+	required_reagents = list (/datum/reagent/consumable/ethanol/mead = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/greenbeer
@@ -290,7 +290,7 @@
 
 /datum/chemical_reaction/drink/neurotoxin
 	results = list(/datum/reagent/consumable/ethanol/neurotoxin = 2)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gargle_blaster = 1, /datum/reagent/medicine/morphine = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gargle_blaster = 1, /datum/reagent/medicine/painkiller/morphine = 1)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/snowwhite
@@ -558,7 +558,7 @@
 
 /datum/chemical_reaction/drink/the_juice
 	results = list(/datum/reagent/consumable/ethanol/the_juice = 5)
-	required_reagents = list(/datum/reagent/consumable/mushroom_tea = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/consumable/ethanol/neurotoxin = 1, /datum/reagent/medicine/morphine = 1)
+	required_reagents = list(/datum/reagent/consumable/mushroom_tea = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/consumable/ethanol/neurotoxin = 1, /datum/reagent/medicine/painkiller/morphine = 1)
 	mix_message = "The liquids all swirl together into a deep purple."
 
 /datum/chemical_reaction/drink/helianthus

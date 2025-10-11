@@ -14,10 +14,13 @@
 	src.potential_recruits = potential_recruits
 	src.department = department
 
-/datum/team/nation/Destroy(force, ...)
+/datum/team/nation/Destroy(force)
 	department = null
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()
+
+/datum/team/nation/proc/operator""()
+	return "[name || department?.department_name || "ERROR???"]"
 
 /**
  * Signal for adding new crewmembers (players joining the game) to the revolution.

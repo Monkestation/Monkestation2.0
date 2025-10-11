@@ -41,6 +41,8 @@
 	if(!is_ready)
 		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 		return
+	if(isobserver(examiner) && (obj_flags & EMAGGED))
+		. += span_notice("Ominous warning lights are blinking red. This server has been tampered with.")
 
 /// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -48,6 +50,13 @@
 
 	var/obj/machinery/byteforge/chosen_forge = get_random_nearby_forge()
 	if(isnull(chosen_forge))
+		return
+
+	if((obj_flags & EMAGGED) && isliving(arrived))
+		var/mob/living/creature = arrived
+
+		if(creature.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch, check_subtypes = TRUE))
+			INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge)
 		return
 
 	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))

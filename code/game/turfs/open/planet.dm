@@ -72,8 +72,13 @@
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
-	damaged_dmi = 'icons/turf/floors/junglegrass.dmi'
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
+
+/turf/open/misc/grass/broken_states()
+	return list("jungle_damaged")
+
+/turf/open/misc/grass/burnt_states()
+	return list("jungle_damaged")
 
 /turf/closed/mineral/random/jungle
 	baseturfs = /turf/open/misc/dirt/dark/jungle
@@ -92,3 +97,11 @@
 
 /turf/closed/mineral/random/jungle/space_safe
 	baseturfs = /turf/open/misc/dirt/dark/station/airless
+
+/turf/open/misc/dirt/filling
+	name = "filling dirt"
+	desc = "Compressed dirt, meant to fill very large holes. It's very annoying and slow to walk through"
+	slowdown = 1.5
+
+/turf/open/misc/dirt/filling/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	return FALSE

@@ -38,11 +38,12 @@
 	lock_amount = 1,
 	list/target_typecache = list(),
 	list/immune = list(),
-	icon = 'icons/mob/silicon/cameramob.dmi',
+	icon = 'icons/mob/eyemob.dmi',
 	icon_state = "marker",
 	datum/callback/on_click_callback,
 	datum/callback/on_lock,
 	datum/callback/can_target_callback,
+	catcher_default_click = TRUE, //monkestation edit
 )
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -68,7 +69,7 @@
 		RegisterSignal(mouse_tracker, COMSIG_CLICK, PROC_REF(on_catcher_click))
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/lock_on_cursor/Destroy(force, silent)
+/datum/component/lock_on_cursor/Destroy(force)
 	clear_visuals()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(on_click_callback)

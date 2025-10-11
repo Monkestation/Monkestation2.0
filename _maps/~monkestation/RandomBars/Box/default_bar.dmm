@@ -19,12 +19,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/station/service/theater)
-"cD" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/stool/bar/directional/west,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "cH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -62,6 +56,11 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"dQ" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "ei" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -97,6 +96,12 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"fV" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/barsign/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "gW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -130,6 +135,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"kr" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "kE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -151,6 +162,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/theater)
+"py" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "rt" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -186,7 +204,10 @@
 /area/station/service/theater)
 "uI" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/stool/bar/directional/west,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "vg" = (
@@ -206,8 +227,7 @@
 /area/station/commons/lounge)
 "zm" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/autoname/directional/east,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
@@ -217,7 +237,15 @@
 /area/station/commons/lounge)
 "zQ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/barsign/directional/north,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ai" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "Ca" = (
@@ -265,12 +293,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"DZ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light_switch/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "Ea" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Theater";
@@ -294,8 +316,7 @@
 /area/station/commons/lounge)
 "EP" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/autoname/directional/north,
-/obj/machinery/restaurant_portal/restaurant,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "FT" = (
@@ -328,12 +349,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"Jm" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/autoname/directional/east,
-/obj/machinery/computer/slot_machine,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "JF" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/spawner/random/entertainment/arcade{
@@ -347,6 +362,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Lc" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/jukebox,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "Ly" = (
@@ -363,6 +384,17 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
+/area/station/commons/lounge)
+"Mq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
+/turf/open/floor/iron/textured,
 /area/station/commons/lounge)
 "Nm" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -397,12 +429,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"PD" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/autoname/directional/west,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "QZ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/disposalpipe/segment{
@@ -410,10 +436,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"SZ" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
 "Tq" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck,
 /obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
@@ -429,16 +461,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
-"WG" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/media/jukebox,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/station/commons/lounge)
 "XC" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"YS" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ZX" = (
@@ -453,15 +486,15 @@ Ca
 tH
 EF
 tH
-PD
-uI
-cD
-uI
-DZ
+tH
+kr
+YS
+SZ
+YS
+py
+Ai
 tH
 XC
-tH
-tH
 ei
 tH
 tH
@@ -469,13 +502,13 @@ sZ
 "}
 (2,1,1) = {"
 Ca
-zQ
+tH
+EF
 EF
 EF
 EF
 EF
 eq
-EF
 EF
 EF
 EF
@@ -488,33 +521,33 @@ sZ
 "}
 (3,1,1) = {"
 Ca
-tH
+fV
 kE
 tH
 DV
 On
 EF
-On
+uI
 On
 tH
 Nm
 QZ
 vO
-Jm
+vO
 IP
 JF
 sZ
 "}
 (4,1,1) = {"
-zF
-Dt
+Ca
+Lc
 tH
 tH
 TB
 TB
 EF
-Ly
 Tq
+ZX
 tH
 tH
 cL
@@ -525,12 +558,12 @@ Od
 sZ
 "}
 (5,1,1) = {"
-Ca
-EP
+Mq
+tH
 tH
 tH
 FT
-FT
+zQ
 dy
 FT
 CA
@@ -544,8 +577,8 @@ uC
 ae
 "}
 (6,1,1) = {"
-Ca
-WG
+zF
+tH
 tH
 tH
 tH
@@ -563,16 +596,16 @@ NZ
 NZ
 "}
 (7,1,1) = {"
-Ca
-eR
+Mq
+tH
 tH
 DR
 ZX
-az
+CQ
 EF
 fx
 TB
-Cg
+CQ
 tH
 tH
 mi
@@ -582,16 +615,16 @@ NZ
 NZ
 "}
 (8,1,1) = {"
-zF
-tH
+Ca
+EP
 tH
 xm
 Ly
-CQ
+az
 EF
 xm
 TB
-CQ
+Cg
 tH
 tH
 mi
@@ -621,9 +654,9 @@ dp
 "}
 (10,1,1) = {"
 Ca
-fx
-TB
-Cg
+dQ
+Dt
+eR
 Ca
 cH
 Uq

@@ -108,7 +108,7 @@
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
 	consume_callback = null
 	target = null
@@ -217,7 +217,7 @@
 			tile.singularity_pull(parent, singularity_size)
 
 		for (var/atom/movable/thing as anything in tile)
-			if(thing == parent)
+			if(thing == parent || QDELETED(thing))
 				continue
 			if (in_consume_range)
 				consume(src, thing)
@@ -254,6 +254,8 @@
 				break
 			// eat the stuff if we're going to move into it so it doesn't mess up our movement
 			for(var/atom/thing_on_turf in current_turf.contents)
+				if(thing_on_turf == parent || QDELETED(thing_on_turf))
+					continue
 				consume(src, thing_on_turf)
 			consume(src, current_turf)
 
@@ -286,7 +288,7 @@
 			if (STAGE_ONE)
 				steps = 1
 			if (STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2//Now THIS is right
 			if (STAGE_THREE)
 				steps = 3
 			if (STAGE_FOUR)
@@ -373,7 +375,7 @@
 	for(var/mob/living/target as anything in GLOB.mob_living_list)
 		if(target.z != atom_parent.z)
 			continue
-		if(target.status_effects & GODMODE)
+		if(HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		var/distance_from_target = get_dist(target, atom_parent)
 		if(distance_from_target < closest_distance)

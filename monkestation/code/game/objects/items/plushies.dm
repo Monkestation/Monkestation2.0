@@ -61,3 +61,4 @@
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "durrcell"
 	squeak_override = list('monkestation/sound/voice/durrcell-squeak.ogg'=1)
+

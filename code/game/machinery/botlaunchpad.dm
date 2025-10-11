@@ -1,11 +1,11 @@
 /obj/machinery/botpad
-	name = "Bot pad"
+	name = "orbital bot pad"
 	desc = "A lighter version of the orbital mech pad modified to launch bots. Requires linking to a remote to function."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "botpad"
 	circuit = /obj/item/circuitboard/machine/botpad
 	// ID of the console, used for linking up
-	var/id = "botlauncher"
+	// var/id = "botlauncher" MONKESTATION removal
 	var/obj/item/botpad_remote/connected_remote
 	var/datum/weakref/launched_bot // we need this to recall the bot
 
@@ -21,15 +21,12 @@
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
-		return
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	multitool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.
@@ -44,6 +41,9 @@
 			user.balloon_alert(user, "too many bots on the pad!")
 			return
 		possible_bot = robot  // We don't change the launched_bot var here because we are not sure if there is another bot on the pad.
+	if(QDELETED(possible_bot)) //MONKESTATION addition
+		user.balloon_alert(user, "no bots detected on the pad!")
+		return
 	launched_bot = WEAKREF(possible_bot)
 	podspawn(list(
 		"target" = get_turf(src),
@@ -51,20 +51,19 @@
 		"style" = STYLE_SEETHROUGH,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
-	use_power(active_power_usage)
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	var/atom/our_bot = launched_bot?.resolve()
 	if(isnull(our_bot))
-		user.balloon_alert(user, "no bots detected on the pad!")
+		user.balloon_alert(user, "no bot to send back to the pad!")
 		return
 	user.balloon_alert(user, "bot sent back to pad")
 	if(isbasicbot(our_bot))
 		var/mob/living/basic/bot/basic_bot = our_bot
-		basic_bot.summon_bot(src)
-		return
-	var/mob/living/simple_animal/bot/simple_bot = our_bot
-	simple_bot.call_bot(src,  get_turf(src))
+		basic_bot.summon_bot(user, get_turf(src))
+	else
+		var/mob/living/simple_animal/bot/simple_bot = our_bot
+		simple_bot.call_bot(user, get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
 	style = STYLE_SEETHROUGH

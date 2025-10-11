@@ -1,10 +1,12 @@
 /datum/round_event_control/antagonist/solo/obsessed
 	antag_flag = ROLE_OBSESSED
-	tags = list(TAG_COMBAT)
+	tags = list(TAG_COMBAT, TAG_TARGETED, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_datum = /datum/antagonist/obsessed
 	typepath = /datum/round_event/antagonist/solo/obsessed
 	restricted_roles = list(
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -16,8 +18,9 @@
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
+		JOB_BRIDGE_ASSISTANT,
 	)
-	weight = 6
+	weight = 4
 	max_occurrences = 3
 
 /datum/round_event_control/antagonist/solo/obsessed/midround

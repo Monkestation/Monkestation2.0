@@ -1,9 +1,6 @@
-//if its not enough I could also make it so it takes longer to abscond from other areas
-GLOBAL_LIST_EMPTY(clock_warp_areas)
-
 /obj/machinery/computer/camera_advanced/ratvar
 	name = "Ratvarian Observation Console"
-	desc = "Used by the servants of Rat'var to conduct operations on Nanotrasen property."
+	desc = "Used by the servants of Ratvar to conduct operations on Nanotrasen property."
 	icon_screen = "ratvar1"
 	icon_keyboard = "ratvar_key1"
 	icon_state = "ratvarcomputer"
@@ -17,10 +14,7 @@ GLOBAL_LIST_EMPTY(clock_warp_areas)
 	START_PROCESSING(SSobj, src)
 	actions += new /datum/action/innate/clockcult/warp(src)
 	actions += new /datum/action/innate/clockcult/show_warpable_areas(src)
-	var/datum/action/innate/clockcult/add_warp_area/add_area = new(src)
-	actions += add_area
-	if(!length(GLOB.clock_warp_areas))
-		add_area.choose_starting_warp_areas() //slightly hacky but handling it on the action is cheaper as it lets us just build our warpable areas once without needing globals
+	actions += new /datum/action/innate/clockcult/add_warp_area(src)
 
 /obj/machinery/computer/camera_advanced/ratvar/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -73,11 +67,11 @@ GLOBAL_LIST_EMPTY(clock_warp_areas)
 		return
 
 	var/mob/living/cam_user = owner
-	var/mob/camera/ai_eye/remote/cam = cam_user.remote_control
+	var/mob/eye/ai_eye/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
-	if(!(target_area in GLOB.clock_warp_areas))
-		to_chat(owner, span_brass("This area is not currently warpable."))
+	if(!(SSthe_ark.marked_areas[target_area]))
+		to_chat(owner, span_brass("This area is not marked."))
 		return
 
 	if(isclosedturf(target_loc))

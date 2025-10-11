@@ -120,8 +120,7 @@
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(M.satiety < MAX_SATIETY)
-		M.satiety += 30 * REM * seconds_per_tick
+	M.adjust_satiety(30 * REM * seconds_per_tick)
 	. = ..()
 
 /// The basic resource of vat growing.
@@ -280,29 +279,24 @@
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
+	holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
+
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			heating = 5
-			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
-			if(isslime(M))
-				heating = rand(5, 20)
+			heating = 0.1 KELVIN
 		if(15 to 25)
-			heating = 10
-			if(isslime(M))
-				heating = rand(10, 20)
+			heating = 0.33 KELVIN
 		if(25 to 35)
-			heating = 15
-			if(isslime(M))
-				heating = rand(15, 20)
+			heating = 0.66 KELVIN
 		if(35 to INFINITY)
-			heating = 20
-			if(isslime(M))
-				heating = rand(20, 25)
-	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
-	..()
+			heating = 1.2 KELVIN
+
+	affected_mob.adjust_bodytemperature(heating * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(39 CELCIUS))
+	return ..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -317,33 +311,33 @@
 	bypass_restriction = TRUE
 	turf_exposure = TRUE
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	var/cooling = 0
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
+	holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
+
+	var/cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 	switch(current_cycle)
 		if(1 to 15)
-			cooling = -10
-			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
-			if(isslime(M))
-				cooling = -rand(5, 20)
+			if(isslime(affected_mob))
+				cooling = -rand(5,20)
 		if(15 to 25)
-			cooling = -20
-			if(isslime(M))
-				cooling = -rand(10, 20)
+			cooling *= 2
+			if(isslime(affected_mob))
+				cooling = -rand(10,20)
 		if(25 to 35)
-			cooling = -30
+			cooling *= 3
+			if(isslime(affected_mob))
+				cooling = -rand(15,20)
 			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
-				cooling = -rand(15, 20)
+				affected_mob.emote("shiver")
 		if(35 to INFINITY)
-			cooling = -40
+			cooling *= 4
 			if(prob(5))
-				M.emote("shiver")
-			if(isslime(M))
-				cooling = -rand(20, 25)
-	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
-	..()
+				affected_mob.emote("shiver")
+
+	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 15 KELVIN)
+	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -401,11 +395,10 @@
 			if(prob(5))
 				victim.vomit()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(!holder.has_reagent(/datum/reagent/consumable/milk))
-		if(SPT_PROB(5, seconds_per_tick))
-			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
-	..()
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!holder.has_reagent(/datum/reagent/consumable/milk) && SPT_PROB(5, seconds_per_tick))
+		affected_mob.visible_message(span_warning("[affected_mob] [pick("dry heaves!","coughs!","splutters!")]"))
+	return ..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -424,13 +417,12 @@
 
 	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
 
-/datum/reagent/consumable/salt/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+/datum/reagent/consumable/salt/expose_mob(mob/living/carbon/exposed_carbon, methods, reac_volume)
 	. = ..()
-	var/mob/living/carbon/carbies = exposed_mob
-	if(!(methods & (PATCH|TOUCH|VAPOR)))
+	if(!iscarbon(exposed_carbon) || !(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
-		iter_wound.on_salt(reac_volume, carbies)
+	for(var/datum/wound/iter_wound as anything in exposed_carbon.all_wounds)
+		iter_wound.on_salt(reac_volume, exposed_carbon)
 
 // Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals, and it might soak up the body's water as well!
 // A saltwater mixture would be best, but we're making improvised chems here, not real ones.
@@ -591,7 +583,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(0.2 KELVIN * REM * seconds_per_tick, 0, M.standard_body_temperature)
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -603,7 +595,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, seconds_per_tick, times_fired)
-	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+	target_mob.adjust_bodytemperature(WARM_DRINK KELVIN * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(45 CELCIUS))
 	..()
 
 /datum/reagent/consumable/flour
@@ -866,7 +858,7 @@
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
 	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
+	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion), override = TRUE)
 
 /datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
 	UnregisterSignal(living_holder, COMSIG_QDELETING)
@@ -914,7 +906,8 @@
 	if(isethereal(M))
 		M.blood_volume += 1 * seconds_per_tick
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES | SHOCK_NOSTUN) //the shock is coming from inside the house //MONKESTATION ADDITION NO STUN
+		M.Immobilize(1 SECOND) //MONKESTATION ADDITION
 		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
@@ -1001,14 +994,14 @@
 	color = "#800000"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
+	taste_description = "chocolate and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/chocolatepudding
 	required_drink_type = /datum/reagent/consumable/chocolatepudding
-	name = "chocolate pudding"
-	desc = "Tasty."
+	name = "Chocolate Pudding"
+	desc = "Chocolate pudding in a clear cup with soft whipping cream and chocolate sprinkles."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "chocolatepudding"
 
@@ -1018,15 +1011,48 @@
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
+	taste_description = "vanilla and happiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/vanillapudding
 	required_drink_type = /datum/reagent/consumable/vanillapudding
-	name = "vanilla pudding"
-	desc = "Tasty."
+	name = "Vanilla Pudding"
+	desc = "Vanilla pudding in a clear cup with a dollop of icing shaped like a baby bunny on top."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillapudding"
+
+/datum/reagent/consumable/flan
+	name = "Flan"
+	description = "A carefully constructed caramel pudding."
+	color = "#ce6f30"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "caramel custard"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/flan
+	required_drink_type = /datum/reagent/consumable/flan
+	name = "Flan"
+	desc = "Tasty and caramelly."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "flan"
+
+/datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	description = "Cherry pudding in a clear cup with icing and a cherry on top."
+	color = "#bd4138"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "Cherry with a cherry on top"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/glass_style/drinking_glass/cherrypudding
+	required_drink_type = /datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	desc = "A sweet creamy treat"
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "cherrypudding"
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"

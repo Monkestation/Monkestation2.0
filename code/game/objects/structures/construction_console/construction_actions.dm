@@ -5,7 +5,7 @@
 /datum/action/innate/construction
 	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
-	var/mob/camera/ai_eye/remote/base_construction/remote_eye
+	var/mob/eye/ai_eye/remote/base_construction/remote_eye
 	///Console itself
 	var/obj/machinery/computer/camera_advanced/base_construction/base_console
 	///Is this used to build only on the station z level?
@@ -52,11 +52,11 @@
 	var/atom/rcd_target = target_turf
 	//Find airlocks and other shite
 	for(var/obj/S in target_turf)
-		if(LAZYLEN(S.rcd_vals(owner,base_console.internal_rcd)))
+		if(LAZYLEN(S.rcd_vals(owner, base_console.internal_rcd)))
 			rcd_target = S //If we don't break out of this loop we'll get the last placed thing
 	owner.changeNext_move(CLICK_CD_RANGE)
 	check_rcd()
-	base_console.internal_rcd.afterattack(rcd_target, owner, TRUE, "") //Activate the RCD and force it to work remotely!
+	base_console.internal_rcd.rcd_create(rcd_target, owner) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 
 /datum/action/innate/construction/configure_mode

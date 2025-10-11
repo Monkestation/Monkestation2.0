@@ -6,7 +6,7 @@ import { NtosWindow } from '../layouts';
 export const NtosPortraitPrinter = (props) => {
   const { act, data } = useBackend();
   const [listIndex, setListIndex] = useLocalState('listIndex', 0);
-  const { paintings, search_string, search_mode } = data;
+  const { paintings, search_string, search_mode, is_console } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];
   const current_portrait_author =
@@ -60,6 +60,7 @@ export const NtosPortraitPrinter = (props) => {
                         style={{
                           'vertical-align': 'middle',
                           '-ms-interpolation-mode': 'nearest-neighbor',
+                          'image-rendering': 'pixelated',
                         }}
                       />
                     </Stack.Item>
@@ -98,8 +99,8 @@ export const NtosPortraitPrinter = (props) => {
                     <Stack.Item grow={3}>
                       <Button
                         icon="check"
-                        content="Print Portrait"
-                        disabled={!got_paintings}
+                        content={!is_console ? 'View Only' : 'Print Portrait'}
+                        disabled={!got_paintings || !is_console}
                         onClick={() =>
                           act('select', {
                             selected: paintings[listIndex]['ref'],

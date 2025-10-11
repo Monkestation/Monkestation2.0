@@ -133,6 +133,8 @@
 
 /obj/item/surgery_tray/attack_self(mob/user, modifiers)
 	. = ..()
+	if (loc != user) // prevents attack_self_tk from placing it on user
+		return
 	if(.)
 		return
 	var/turf/open/placement_turf = get_turf(user)
@@ -146,7 +148,7 @@
 	return
 
 /obj/item/surgery_tray/attack_hand(mob/living/user)
-	if(!user.can_perform_action(src, NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_HANDS) || !length(contents))
 		return ..()
 	var/obj/item/grabbies = pick(contents)
 	if(grabbies)

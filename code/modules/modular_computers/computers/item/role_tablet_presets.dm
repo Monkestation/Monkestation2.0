@@ -5,6 +5,7 @@
 /obj/item/modular_computer/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	max_capacity = parent_type::max_capacity * 2
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -33,6 +34,8 @@
 	name = "head of personnel PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
+	inserted_item = /obj/item/pen/fountain
+	stored_paper = 20
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -47,6 +50,7 @@
 	name = "head of security PDA"
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
+	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -60,6 +64,7 @@
 	name = "chief engineer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
+	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -75,6 +80,7 @@
 	name = "chief medical officer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
+	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -97,6 +103,7 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/scipaper_program,
 	)
 
 /obj/item/modular_computer/pda/heads/quartermaster
@@ -135,6 +142,9 @@
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
+		//MONKESTATION EDIT START
+		/datum/computer_file/program/lifeline
+		//MONKESTATION EDIT END
 	)
 
 /obj/item/modular_computer/pda/warden
@@ -179,6 +189,8 @@
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 	)
 
 /obj/item/modular_computer/pda/roboticist
@@ -214,7 +226,7 @@
 	name = "paramedic PDA"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/radar/lifeline,
+		/datum/computer_file/program/lifeline, // monkestation edit `/datum/computer_file/program/radar/lifeline` -> `/datum/computer_file/program/lifeline`
 	)
 
 /obj/item/modular_computer/pda/viro
@@ -377,6 +389,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /* monkestation removal: don't force ringer off by default

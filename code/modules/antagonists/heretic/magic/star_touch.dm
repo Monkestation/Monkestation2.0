@@ -42,13 +42,15 @@
 	for(var/turf/cast_turf as anything in get_turfs(victim))
 		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	caster.apply_status_effect(/datum/status_effect/cosmic_beam, victim)
+	owner.log_message("used [name] on [key_name(victim)]", LOG_ATTACK)
+	victim.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
 	var/list/target_turfs = list(get_turf(owner))
 	var/range = ascended ? 2 : 1
 	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
-	for (var/direction as anything in directions)
+	for (var/direction in directions)
 		for (var/i in 1 to range)
 			target_turfs += get_ranged_target_turf(owner, direction, i)
 	return target_turfs
@@ -116,7 +118,7 @@
 
 /datum/status_effect/cosmic_beam
 	id = "cosmic_beam"
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
@@ -144,7 +146,7 @@
 		active = FALSE
 	return ..()
 
-/datum/status_effect/cosmic_beam/tick(seconds_per_tick, times_fired)
+/datum/status_effect/cosmic_beam/tick(seconds_between_ticks, times_fired)
 	if(!current_target)
 		lose_target()
 		return

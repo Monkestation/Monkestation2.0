@@ -7,23 +7,22 @@
 	icon_state = "bluespace-prison"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //ha ha no getting out!!
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 /obj/machinery/fugitive_capture/examine(mob/user)
 	. = ..()
 	. += span_notice("Add a prisoner by dragging them into the machine.")
 
-/obj/machinery/fugitive_capture/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/fugitive_capture/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/fugitive_hunter = user
-	if(!isliving(fugitive_hunter))
-		return
-	if(HAS_TRAIT(fugitive_hunter, TRAIT_UI_BLOCKED) || !Adjacent(fugitive_hunter) || !target.Adjacent(fugitive_hunter) || !ishuman(target))
+	if(!isliving(fugitive_hunter) || !ishuman(target))
 		return
 	var/mob/living/carbon/human/fugitive = target
 	var/datum/antagonist/fugitive/fug_antag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)
 	if(!fug_antag)
 		to_chat(fugitive_hunter, span_warning("This is not a wanted fugitive!"))
 		return
-	if(do_after(fugitive_hunter, 50, target = fugitive))
+	if(do_after(fugitive_hunter, 5 SECONDS, target = fugitive))
 		add_prisoner(fugitive, fug_antag)
 
 /obj/machinery/fugitive_capture/proc/add_prisoner(mob/living/carbon/human/fugitive, datum/antagonist/fugitive/antag)
@@ -31,7 +30,7 @@
 	antag.is_captured = TRUE
 	to_chat(fugitive, span_userdanger("You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture."))
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/computer/shuttle/hunter
 	name = "shuttle console"
@@ -138,6 +137,19 @@
 	if(gored)
 		name = gored.real_name
 
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
+
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -153,3 +165,47 @@
 	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
 		Even if it's completely useless to us, resist the urge to chew it."
 
+/**
+ * # Bounty Locator
+ *
+ * Locates a random, living fugitive and reports their name/location on a 40 second cooldown.
+ *
+ * Locates a random fugitive antagonist via the GLOB.antagonists list, and reads out their real name and area name.
+ * Captured or dead fugitives are not reported.
+ */
+/obj/machinery/fugitive_locator
+	name = "Bounty Locator"
+	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
+		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for no matter where they're hiding."
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator-Purple"
+	density = TRUE
+	/// Cooldown on locating a fugitive.
+	COOLDOWN_DECLARE(locate_cooldown)
+
+/obj/machinery/fugitive_locator/interact(mob/user)
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
+		return
+	var/mob/living/bounty = locate_fugitive()
+	if(!bounty)
+		say("No bounty targets detected.")
+	else
+		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
+
+	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
+
+///Locates a random fugitive via their antag datum and returns them.
+/obj/machinery/fugitive_locator/proc/locate_fugitive()
+	var/list/datum_list = shuffle(GLOB.antagonists)
+	for(var/datum/antagonist/fugitive/fugitive_datum in datum_list)
+		if(!fugitive_datum.owner)
+			stack_trace("Fugitive locator tried to locate a fugitive antag datum with no owner.")
+			continue
+		if(fugitive_datum.is_captured)
+			continue
+		var/mob/living/found_fugitive = fugitive_datum.owner.current
+		if(found_fugitive.stat == DEAD)
+			continue
+
+		return found_fugitive

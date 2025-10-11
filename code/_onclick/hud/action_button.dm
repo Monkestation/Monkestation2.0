@@ -3,6 +3,7 @@
 	var/datum/hud/our_hud
 	var/actiontooltipstyle = ""
 	screen_loc = null
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 	/// The icon state of our active overlay, used to prevent re-applying identical overlays
 	var/active_overlay_icon_state
@@ -105,7 +106,7 @@
 	closeToolTip(usr)
 	return ..()
 
-/atom/movable/screen/movable/action_button/MouseDrop(over_object)
+/atom/movable/screen/movable/action_button/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
@@ -130,9 +131,12 @@
 		our_hud.position_action_relative(src, button)
 		save_position()
 		return
+
 	. = ..()
+
 	our_hud.position_action(src, screen_loc)
 	save_position()
+	our_hud.hide_landings()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
 	var/mob/user = our_hud.mymob
@@ -267,6 +271,7 @@
 	icon = 'icons/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/hud/our_hud
 	var/expanded = FALSE
 	/// Id of any currently running timers that set our color matrix
@@ -274,12 +279,12 @@
 
 /atom/movable/screen/button_palette/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.toggle_palette = null
 		our_hud = null
 	return ..()
 
-/atom/movable/screen/button_palette/Initialize(mapload)
+/atom/movable/screen/button_palette/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
 
@@ -392,6 +397,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/palette_scroll
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
 	var/scroll_direction = 0
@@ -438,7 +444,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 
 /atom/movable/screen/palette_scroll/down/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.palette_down = null
 		our_hud = null
 	return ..()
@@ -451,7 +457,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 
 /atom/movable/screen/palette_scroll/up/Destroy()
 	if(our_hud)
-		our_hud.mymob?.client?.screen -= src
+		our_hud.mymob?.canon_client?.screen -= src
 		our_hud.palette_up = null
 		our_hud = null
 	return ..()
@@ -469,7 +475,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/action_landing/Destroy()
 	if(owner)
 		owner.landing = null
-		owner?.owner?.mymob?.client?.screen -= src
+		owner?.owner?.mymob?.canon_client?.screen -= src
 		owner.refresh_actions()
 		owner = null
 	return ..()

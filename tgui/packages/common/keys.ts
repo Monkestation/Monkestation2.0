@@ -19,13 +19,18 @@
  */
 export enum KEY {
   Alt = 'Alt',
+  ArrowDown = 'ArrowDown',
+  ArrowLeft = 'ArrowLeft',
+  ArrowRight = 'ArrowRight',
+  ArrowUp = 'ArrowUp',
   Backspace = 'Backspace',
   Control = 'Control',
   Delete = 'Delete',
   Down = 'Down',
   End = 'End',
   Enter = 'Enter',
-  Escape = 'Esc',
+  Esc = 'Esc',
+  Escape = 'Escape',
   Home = 'Home',
   Insert = 'Insert',
   Left = 'Left',
@@ -37,3 +42,18 @@ export enum KEY {
   Tab = 'Tab',
   Up = 'Up',
 }
+
+/**
+ * ### isEscape
+ *
+ * Checks if the user has hit the 'ESC' key on their keyboard.
+ * There's a weirdness in BYOND where this could be either the string
+ * 'Escape' or 'Esc' depending on the browser. This function handles
+ * both cases.
+ *
+ * @param key - the key to check, typically from event.key
+ * @returns true if key is Escape or Esc, false otherwise
+ */
+export const isEscape = (key: string): boolean => {
+  return key === KEY.Esc || key === KEY.Escape;
+};

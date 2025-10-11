@@ -34,8 +34,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
-	. = ..()
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon = "echo", color_path)
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
 		return COMPONENT_INCOMPATIBLE
@@ -65,7 +64,7 @@
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/echolocation/Destroy(force, silent)
+/datum/component/echolocation/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
 	QDEL_NULL(client_color)
@@ -173,10 +172,10 @@
 	layer = ECHO_LAYER
 	show_when_dead = TRUE
 
-/atom/movable/screen/fullscreen/echo/Initialize(mapload)
+/atom/movable/screen/fullscreen/echo/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	particles = new /particles/echo()
 
 /atom/movable/screen/fullscreen/echo/Destroy()
-	QDEL_NULL(particles)
+	particles = null
 	return ..()

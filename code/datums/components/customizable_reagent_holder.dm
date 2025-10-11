@@ -62,8 +62,11 @@
 			handle_fill(ingredient)
 
 
-/datum/component/customizable_reagent_holder/Destroy(force, silent)
-	QDEL_NULL(top_overlay)
+/datum/component/customizable_reagent_holder/Destroy(force)
+	if(top_overlay)
+		var/atom/atom_parent = parent
+		atom_parent.cut_overlay(top_overlay)
+		top_overlay = null
 	return ..()
 
 

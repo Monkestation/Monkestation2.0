@@ -6,11 +6,13 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
+	blood_overlay_type = "uniform"
 
 	/// Has this undersuit been freshly laundered and, as such, imparts a mood bonus for wearing
 	var/freshly_laundered = FALSE
@@ -53,7 +55,17 @@
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
 	register_context()
-	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE)
+	// MONKESTATION EDIT START
+	// AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING, body = TRUE) - original
+	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
+	// MONKESTATION EDIT END
+
+/obj/item/clothing/under/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = NONE
@@ -88,17 +100,16 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 	if(accessory_overlay)
 		. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/cabling = attacking_item
 		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
 		cabling.use(1)
 		has_sensor = HAS_SENSORS
+		update_wearer_status()
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/clothing/accessory))
@@ -120,6 +131,7 @@
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
+	update_wearer_status()
 	update_appearance()
 
 /obj/item/clothing/under/emp_act(severity)
@@ -141,10 +153,7 @@
 			var/mob/M = loc
 			to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
 
-	if(ishuman(loc))
-		var/mob/living/carbon/human/ooman = loc
-		if(ooman.w_uniform == src)
-			ooman.update_suit_sensors()
+	update_wearer_status()
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	. = ..()
@@ -164,13 +173,21 @@
 		freshly_laundered = FALSE
 		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
+/obj/item/clothing/under/proc/update_wearer_status()
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/ooman = loc
+	ooman.update_suit_sensors()
+	ooman.med_hud_set_status()
+
 /mob/living/carbon/human/update_suit_sensors()
 	. = ..()
 	update_sensor_list()
 
 /mob/living/carbon/human/proc/update_sensor_list()
-	var/obj/item/clothing/under/U = w_uniform
-	if(istype(U) && U.has_sensor > NO_SENSORS && U.sensor_mode)
+	var/obj/item/clothing/under/uniform = w_uniform
+	if(!QDELETED(src) && istype(uniform) && uniform.has_sensor > NO_SENSORS && uniform.sensor_mode)
 		GLOB.suit_sensors_list |= src
 	else
 		GLOB.suit_sensors_list -= src
@@ -238,6 +255,15 @@
 	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color
+
+/// Updates the accessory's worn overlay mutable appearance
+/obj/item/clothing/under/proc/update_accessory_overlay()
+	if(isnull(accessory_overlay))
+		return
+
+	cut_overlay(accessory_overlay)
+	create_accessory_overlay()
+	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -315,20 +341,16 @@
 			if(SENSOR_COORDS)
 				to_chat(user_mob, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
+	update_wearer_status()
 
-/obj/item/clothing/under/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
+	update_wearer_status()
+	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
@@ -351,19 +373,16 @@
 
 	return TRUE
 
-/obj/item/clothing/under/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/clothing/under/click_alt(mob/living/user)
 	if(!can_adjust)
 		balloon_alert(user, "can't be adjusted!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!can_use(user))
-		return
+		return NONE
 	rolldown()
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/clothing/under/alt_click_secondary(mob/user)
+/obj/item/clothing/under/click_alt_secondary(mob/user)
 	. = ..()
 	if(.)
 		return

@@ -224,7 +224,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='byond://?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -267,7 +267,7 @@
 	return ..()
 
 /datum/action/innate/bci_charge_action/Trigger(trigger_flags)
-	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
+	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
 		to_chat(owner, span_boldwarning("[circuit_component.parent] has no power cell."))
@@ -280,7 +280,7 @@
 
 /datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
-	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
+	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 	button.maptext = cell ? MAPTEXT("[cell.percent()]%") : ""
 
 /obj/machinery/bci_implanter

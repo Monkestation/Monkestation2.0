@@ -100,22 +100,35 @@ SUBSYSTEM_DEF(outdoor_effects)
 	var/current_color
 	var/enabled = TRUE // Micro-optimization to avoid having to check config or bitflags
 
+/datum/controller/subsystem/outdoor_effects/Recover()
+	sunlighting_planes = SSoutdoor_effects.sunlighting_planes.Copy()
+	current_step_datum = SSoutdoor_effects.current_step_datum
+	next_step_datum = SSoutdoor_effects.next_step_datum
+	weather_light_affecting_event = SSoutdoor_effects.weather_light_affecting_event
+	sunlight_overlays = SSoutdoor_effects.sunlight_overlays?.Copy()
+	weather_planes_need_vis = SSoutdoor_effects.weather_planes_need_vis
+	last_color = SSoutdoor_effects.last_color
+	next_day = SSoutdoor_effects.next_day
+	current_color = SSoutdoor_effects.current_color
+	enabled = SSoutdoor_effects.enabled
+
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"
 	return ..()
 
 /datum/controller/subsystem/outdoor_effects/proc/fullPlonk()
-	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
-		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
-			var/area/TArea = T.loc
-			if (TArea.static_lighting)
-				GLOB.SUNLIGHT_QUEUE_WORK += T
+	var/list/zs = SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) | SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting)
+			continue
+		for(var/z in zs)
+			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
 	if(CONFIG_GET(flag/disable_sunlight_visuals))
 		disable()
 		return SS_INIT_NO_NEED
-	if(SSmapping.config.map_name == "Oshan Station")
+	if(SSmapping.current_map.map_name == "Oshan Station")
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			qdel(listed_time)
 		time_cycle_steps = list(
@@ -134,16 +147,32 @@ SUBSYSTEM_DEF(outdoor_effects)
 	fire(FALSE, TRUE)
 
 	var/daylight = FALSE
+	var/dark_days = FALSE
 	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
+		if(SSmapping.level_trait(z, ZTRAIT_JUSTWEATHER))
+			dark_days = TRUE
+			continue
 		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
 			daylight = TRUE
 			continue
 
-	if(!daylight)
+	if(!daylight && !dark_days)
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			listed_time.color = GLOB.starlight_color
 
+	if(dark_days)
+		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
+			listed_time.color = COLOR_BLACK
+
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs()
+	var/list/zs = SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) | SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting && !istype(area, /area/space))
+			continue
+		for(var/z in zs)
+			GLOB.SUNLIGHT_QUEUE_WORK += area.get_turfs_by_zlevel(z)
 
 /// Disables the subsystem, cleaning up its vars and preventing it from firing.
 /datum/controller/subsystem/outdoor_effects/proc/disable()
@@ -153,14 +182,6 @@ SUBSYSTEM_DEF(outdoor_effects)
 	QDEL_NULL(current_step_datum)
 	QDEL_NULL(next_step_datum)
 	weather_light_affecting_event = null
-
-/datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs(list/targets)
-	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
-		for (var/turf/T in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
-			var/area/TArea = T.loc
-			if (TArea.static_lighting || istype(TArea, /area/space))
-				GLOB.SUNLIGHT_QUEUE_WORK += T
-
 
 /datum/controller/subsystem/outdoor_effects/proc/check_cycle()
 	if(!next_step_datum)

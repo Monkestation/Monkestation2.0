@@ -2,9 +2,18 @@ import { useBackend } from '../backend';
 import { Button, ColorBox, Stack, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
+export const alert_relevancies = {
+  ALERT_RELEVANCY_SAFE: 0,
+  ALERT_RELEVANCY_WARN: 1,
+  ALERT_RELEVANCY_PERTINENT: 2,
+};
+
 export const NtosMain = (props) => {
   const { act, data } = useBackend();
   const {
+    alert_style,
+    alert_color,
+    alert_name,
     PC_device_theme,
     show_imprint,
     programs = [],
@@ -48,6 +57,28 @@ export const NtosMain = (props) => {
                   />
                 </Stack.Item>
               ))}
+              <Stack.Item right={0}>
+                <Button
+                  className={
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_PERTINENT
+                      ? 'alertIndicator alertBlink'
+                      : 'alertIndicator'
+                  }
+                  textColor={
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_SAFE
+                      ? alert_color
+                      : '#000000'
+                  }
+                  backgroundColor={
+                    alert_style === alert_relevancies.ALERT_RELEVANCY_SAFE
+                      ? '#0000000'
+                      : alert_color
+                  }
+                  tooltip="The current alert level. Indicator becomes more intense when there is a threat, moreso if your department is responsible for handling it."
+                >
+                  {alert_name}
+                </Button>
+              </Stack.Item>
             </Stack>
             <Stack>
               {removable_media.map((device) => (
@@ -111,7 +142,7 @@ export const NtosMain = (props) => {
                   (proposed_login.IDName
                     ? '(' + proposed_login.IDName + ')'
                     : '')
-                : proposed_login.IDName ?? ''}
+                : (proposed_login.IDName ?? '')}
             </Table.Row>
             <Table.Row>
               Assignment:{' '}
@@ -119,7 +150,7 @@ export const NtosMain = (props) => {
                 ? login.IDJob +
                   ' ' +
                   (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
-                : proposed_login.IDJob ?? ''}
+                : (proposed_login.IDJob ?? '')}
             </Table.Row>
           </Table>
         </Section>

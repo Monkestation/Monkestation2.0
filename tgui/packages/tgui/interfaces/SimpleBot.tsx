@@ -49,7 +49,7 @@ export const SimpleBot = (props) => {
               {!access ? <NoticeBox>Locked!</NoticeBox> : <SettingsDisplay />}
             </Section>
           </Stack.Item>
-          {access && (
+          {!!access && (
             <Stack.Item grow>
               <Section fill scrollable title="Controls">
                 <ControlsDisplay />
@@ -184,7 +184,7 @@ const SettingsDisplay = (props) => {
           />
         </Tooltip>
       </LabeledControls.Item>
-      {allow_possession && (
+      {!!allow_possession && (
         <LabeledControls.Item label="Personality">
           <Tooltip
             content={

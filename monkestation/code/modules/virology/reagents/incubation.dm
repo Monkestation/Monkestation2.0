@@ -1,7 +1,7 @@
 /datum/reagent/proc/disease_incubate(atom/movable/parent, datum/disease/disease, obj/machinery/disease2/incubator/machine)
 	return
 
-/datum/reagent/proc/stage_disease_incubate(datum/disease/disease, list/symptoms, obj/machinery/disease2/incubator/machine)
+/datum/reagent/proc/stage_disease_incubate(atom/movable/parent, datum/disease/disease, list/symptoms, obj/machinery/disease2/incubator/machine)
 	return
 
 
@@ -22,7 +22,7 @@
 /datum/reagent/uranium/uraniumvirusfood/unstable/disease_incubate(atom/movable/parent, datum/disease/disease, obj/machinery/disease2/incubator/machine)
 	disease.log += "<br />[ROUND_TIME()] Antigen Mutation (Unstable Uranium Gel in [parent])"
 	disease.antigenmutate()
-	if(istype(parent, /obj/item/weapon/virusdish))
+	if(isvirusdish(parent))
 		var/obj/item/weapon/virusdish/dish = parent
 		dish.analysed = FALSE
 		dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED

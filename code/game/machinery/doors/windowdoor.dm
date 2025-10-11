@@ -82,7 +82,9 @@
 		return
 
 	set_light(l_outer_range = 0)
+#ifndef DISABLE_DEMOS
 	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
+#endif
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -149,13 +151,15 @@
 		return
 
 	add_fingerprint(user)
-	if(!requiresID())
-		user = null
+	if(isliving(user) && isnull(user.mind))
+		var/mob/living/living_user = user
+		if(living_user.mob_size < MOB_SIZE_HUMAN)
+			return
 
 	if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
 		open()
 
-	else if(allowed(user))
+	else if(requiresID() && allowed(user))
 		open_and_close()
 
 	else

@@ -26,7 +26,7 @@
 
 			if(length(managed_slimes) >= max_capacity)
 				slime.death()
-				slime.visible_message("The pressure of the slimes kills [slime].")
+				slime.visible_message(span_warning("[slime] dies from being crowded in with so many other slimes!"))
 				continue
 
 			managed_slimes |= slime
@@ -37,7 +37,7 @@
 	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)
 		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(start_break))
 
-/datum/corral_data/Destroy(force, ...)
+/datum/corral_data/Destroy(force)
 	QDEL_LIST(corral_connectors)
 	for(var/turf/turf as anything in corral_turfs)
 		if(!QDELETED(turf))
@@ -71,7 +71,7 @@
 
 	if(length(managed_slimes) >= max_capacity)
 		var/mob/living/living = arrived
-		living.visible_message("The pressure of the slimes kills [living].")
+		living.visible_message(span_warning("[arrived] dies from being crowded in with so many other slimes!"))
 		living.death()
 		return
 

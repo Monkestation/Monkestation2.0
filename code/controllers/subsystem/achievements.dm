@@ -60,8 +60,8 @@ SUBSYSTEM_DEF(achievements)
 	qdel(query)
 
 	for(var/client/player as anything in GLOB.clients)
-		if(player?.player_details?.achievements && !player.player_details.achievements.initialized)
-			player.player_details.achievements.InitializeData()
+		if(player?.persistent_client?.achievements && !player.persistent_client.achievements.initialized)
+			player.persistent_client.achievements.InitializeData()
 
 	return SS_INIT_SUCCESS
 
@@ -70,8 +70,8 @@ SUBSYSTEM_DEF(achievements)
 
 /datum/controller/subsystem/achievements/proc/save_achievements_to_db()
 	var/list/cheevos_to_save = list()
-	for(var/ckey in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[ckey]
+	for(var/ckey in GLOB.persistent_clients_by_ckey)
+		var/datum/persistent_client/PD = GLOB.persistent_clients_by_ckey[ckey]
 		if(!PD || !PD.achievements)
 			continue
 		cheevos_to_save += PD.achievements.get_changed_data()

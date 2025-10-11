@@ -76,7 +76,7 @@
  * * force set to true to force the deletion to be allowed.
  * * ... an optional list of extra arguments to pass to the proc
  */
-/datum/callback/Destroy(force=FALSE, ...)
+/datum/callback/Destroy(force = FALSE)
 	SHOULD_CALL_PARENT(FALSE)
 	if (force)
 		return ..()
@@ -111,7 +111,7 @@
 		else
 			calling_arguments = args
 	if(datum_flags & DF_VAR_EDITED)
-		if(usr != GLOB.AdminProcCallHandler && !usr?.client?.ckey) //This happens when a timer or the MC invokes a callback
+		if(usr != GLOB.AdminProcCallHandler && !(usr && usr?.client?.ckey)) //This happens when a timer or the MC invokes a callback
 			return HandleUserlessProcCall(usr, object, delegate, calling_arguments)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)

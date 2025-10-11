@@ -16,7 +16,7 @@
 
 	var/chance = 3
 		// Under normal conditions, the percentage chance per tick to activate.
-	var/max_chance = 6
+	var/max_chance = 9
 		// Maximum percentage chance per tick.
 
 	var/multiplier = 1
@@ -32,6 +32,9 @@
 	var/datum/symptom_varient/attached_varient
 		// This is our attached varient used for updating desc and Symptom copy code.
 
+/datum/symptom/Destroy(force)
+	QDEL_NULL(attached_varient)
+	return ..()
 
 /datum/symptom/proc/minormutate()
 	if (prob(20))
@@ -40,13 +43,14 @@
 /datum/symptom/proc/multiplier_tweak(tweak)
 	multiplier = clamp(multiplier+tweak,1,max_multiplier)
 
-
 /datum/symptom/proc/can_run_effect(active_stage = -1, seconds_per_tick)
 	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1 || badness == EFFECT_DANGER_HELPFUL) && prob(min(chance * seconds_per_tick, max_chance)))
 		return TRUE
 	return FALSE
 
-/datum/symptom/proc/run_effect(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/proc/run_effect(mob/living/carbon/mob, datum/disease/acute/disease)
+	if(isnull(mob))
+		CRASH("run_effect called without a valid mob!")
 	if(count < 1)
 		first_activate(mob, disease)
 	activate(mob, disease)
@@ -54,14 +58,14 @@
 	count += 1
 
 ///this runs the first time its activated
-/datum/symptom/proc/first_activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/proc/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
 
 // The actual guts of the effect. Has a prob(chance)% to get called per tick.
-/datum/symptom/proc/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/proc/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 
 // If activation makes any permanent changes to the effect, this is where you undo them.
 // Will not get called if the virus has never been activated.
-/datum/symptom/proc/deactivate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/proc/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
 
 /datum/symptom/proc/on_touch(mob/living/carbon/mob, toucher, touched, touch_type)
 	// Called when the sufferer of the symptom bumps, is bumped, or is touched by hand.
@@ -73,7 +77,7 @@
 /datum/symptom/proc/on_speech(mob/living/mob)
 
 
-/datum/symptom/proc/disable_effect(mob/living/mob, datum/disease/advanced/disease)
+/datum/symptom/proc/disable_effect(mob/living/mob, datum/disease/acute/disease)
 	if (count > 0)
 		deactivate(mob, disease)
 

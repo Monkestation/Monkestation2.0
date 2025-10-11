@@ -21,9 +21,9 @@
 		delete_extract(holder)
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
-	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
-		qdel(M)
+	var/obj/item/slime_extract/extract = holder.my_atom
+	if(!QDELETED(extract) && extract.Uses <= 0 && !length(results)) //if the slime doesn't output chemicals
+		qdel(extract)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
@@ -262,7 +262,7 @@
 	required_container = /obj/item/slime_extract/yellow
 
 /datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
+	new /obj/item/stock_parts/power_store/cell/emproof/slime(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimeglow

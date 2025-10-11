@@ -16,11 +16,15 @@
 
 /datum/antagonist/vassal/favorite/on_gain()
 	. = ..()
-	SEND_SIGNAL(master, BLOODSUCKER_MAKE_FAVORITE, src)
+	SEND_SIGNAL(master, COMSIG_BLOODSUCKER_MAKE_FAVORITE, src)
 
 /datum/antagonist/vassal/favorite/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_RESISTED
 
-///Set the Vassal's rank to their Bloodsucker level
-/datum/antagonist/vassal/favorite/proc/set_vassal_level(mob/living/carbon/human/target)
-	master.bloodsucker_level = vassal_level
+///Set the Vassal's rank to their Bloodsucker level, and transfer all abilities to the Bloodsucker level.
+/datum/antagonist/vassal/favorite/proc/set_vassal_level(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
+	for(var/datum/action/cooldown/bloodsucker/bloodsucker_powers as anything in powers)
+		powers -= bloodsucker_powers
+		vassal_bloodsucker_datum.powers += bloodsucker_powers
+		bloodsucker_powers.bloodsuckerdatum_power = vassal_bloodsucker_datum
+	vassal_bloodsucker_datum.bloodsucker_level = vassal_level

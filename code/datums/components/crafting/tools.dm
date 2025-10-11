@@ -46,3 +46,24 @@
 	)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
+
+/datum/crafting_recipe/makeshift_radio_jammer
+	name = "Makeshift Radio Jammer"
+	result = /obj/item/jammer/makeshift
+	reqs = list(
+		/obj/item/universal_scanner = 1,
+		/obj/item/encryptionkey = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS
+
+/datum/crafting_recipe/lantern/pineapple
+	name = "Pineapp-o'-lantern"
+	result = /obj/item/flashlight/lantern/pineapple
+	time = 2 SECONDS
+	reqs = list (
+		/obj/item/food/grown/pineapple = 1,
+		/obj/item/flashlight = 1
+		//Doesn't require a lantern like the original version, which adds a cool bit of utility to the recipe because it's not longer super limited.
+	)
+	category = CAT_TOOLS

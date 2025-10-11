@@ -26,11 +26,11 @@
 #define OPFOR_REQUEST_UPDATE_COOLDOWN (5 MINUTES)
 #define OPFOR_PING_COOLDOWN (1 MINUTES)
 
-#define OPFOR_TEXT_LIMIT_TITLE 40
+#define OPFOR_TEXT_LIMIT_TITLE 64
 #define OPFOR_TEXT_LIMIT_BACKSTORY 2000
 #define OPFOR_TEXT_LIMIT_DESCRIPTION 1000
 #define OPFOR_TEXT_LIMIT_JUSTIFICATION 1000
-#define OPFOR_TEXT_LIMIT_MESSAGE 300
+#define OPFOR_TEXT_LIMIT_MESSAGE MAX_MESSAGE_LEN
 
 #define OPFOR_EQUIPMENT_LIMIT 10
 #define OPFOR_EQUIPMENT_COUNT_LIMIT 5
@@ -79,4 +79,4 @@
 #define OPFOR_EQUIPMENT_CATEGORY_OTHER "Other"
 
 #define BAN_OPFOR "OPFOR ban"
-#define ADMIN_PASS_OPFOR(src) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];pass_opfor_candidate=1'>PASS</a>)"
+#define ADMIN_PASS_OPFOR(src) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];pass_opfor_candidate=1'>PASS</a>)"

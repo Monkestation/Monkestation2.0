@@ -94,12 +94,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/stone
 	value_per_unit = 0.005
-	beauty_modifier = 0.01
+	beauty_modifier = 20 / SHEET_MATERIAL_AMOUNT
 	color = "#59595a"
 	greyscale_colors = "#59595a"
-	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.75, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_PLATING
 
 /obj/item/stack/stone
@@ -117,7 +115,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	. = ..()
 	. += span_notice("With a <b>chisel</b> or even a <b>pickaxe</b> of some kind, you could cut this into <b>blocks</b>.")
 
-/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
 	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)
@@ -263,14 +261,15 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/item/cutting_board/AltClick(mob/user)
+/obj/item/cutting_board/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing on board")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
+	update_appearance()
 	balloon_alert(user, "cleared board")
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///Drops all contents at the turf of the item
 /obj/item/cutting_board/proc/drop_everything_contained()
@@ -417,14 +416,14 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	drop_everything_contained()
 	return ..()
 
-/obj/structure/large_mortar/AltClick(mob/user)
+/obj/structure/large_mortar/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/large_mortar/proc/drop_everything_contained()
@@ -613,24 +612,25 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	return ..()
 
 /obj/structure/millstone/deconstruct(disassembled)
-	var/obj/item/stack/sheet/mineral/stone = new (drop_location())
+	var/obj/item/stack/sheet/mineral/stone/stone = new (drop_location())
 	stone.amount = 6
 	stone.update_appearance(UPDATE_ICON)
 	transfer_fingerprints_to(stone)
 	return ..()
 
-/obj/structure/millstone/AltClick(mob/user)
+/obj/structure/millstone/click_alt(mob/user)
 	if(!length(contents))
 		balloon_alert(user, "nothing inside!")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
 	balloon_alert(user, "removed all items")
-	return
+	return CLICK_ACTION_SUCCESS
 
-/obj/structure/millstone/CtrlShiftClick(mob/user)
+/obj/structure/millstone/click_ctrl_shift(mob/user)
 	set_anchored(!anchored)
 	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
+	return CLICK_ACTION_SUCCESS
 
 /// Drops all contents at the mortar
 /obj/structure/millstone/proc/drop_everything_contained()
@@ -652,11 +652,11 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/millstone/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	balloon_alert_to_viewers("disassembling...")
-	if(!do_after(user, 2 SECONDS, src))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
+		return ITEM_INTERACT_BLOCKING
 	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/millstone/attackby(obj/item/attacking_item, mob/user)
 	if(istype(attacking_item, /obj/item/storage/bag))
@@ -723,9 +723,9 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 	user.mind.adjust_experience(/datum/skill/primitive, 5)
 
-	for(var/target_item as anything in contents)
+	for(var/target_item in contents)
 		var/obj/item/food/grown/food_item = target_item
-		if(food_item.mill_reagent)
+		if(istype(food_item) && food_item.mill_reagent)
 			reagents.add_reagent(food_item.mill_reagent, food_item.seed.potency * 0.2)
 		seedify(target_item, t_max = 1)
 
@@ -774,7 +774,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /// A helper for the primitive variant, for mappers.
 /obj/item/storage/bag/plants/primitive
 	current_skin = RESKIN_LINEN // Just so it displays properly when in suit storage
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 	icon = 'monkestation/code/modules/blueshift/icons/plant_bag.dmi'
 	icon_state = "plantbag_primitive"
@@ -793,7 +793,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	bag.make_primitive()
 
 /obj/item/storage/bag/plants/portaseeder
-	uses_advanced_reskins = FALSE
+	item_flags = NONE
 	unique_reskin = null
 
 #undef RESKIN_LINEN
@@ -826,10 +826,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/griddle/stone/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 #define OVEN_TRAY_Y_OFFSET -12
 
@@ -897,10 +897,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/oven/stone/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 #undef OVEN_TRAY_Y_OFFSET
 
@@ -937,10 +937,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/machinery/primitive_stove/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5)
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /// Stove component subtype with changed visuals and not much else
 /datum/component/stove/primitive
@@ -1167,10 +1167,12 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	if(has_clay)
 		new /obj/item/stack/clay(get_turf(src))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/throwing_wheel/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	anchored = !anchored
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/throwing_wheel/proc/use_clay(spawn_type, mob/user)
 	var/spinning_speed = user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER) * DEFAULT_SPIN
@@ -1398,21 +1400,19 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	if(glass.steps_remaining[STEP_JACKS])
 		. += "The glass requires [glass.steps_remaining[STEP_JACKS]] more jacking actions!"
 
-/obj/item/glassblowing/blowing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return ..()
-	if(istype(target, /obj/item/glassblowing/molten_glass))
-		var/obj/item/glassblowing/molten_glass/attacking_glass = target
+/obj/item/glassblowing/blowing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/glassblowing/molten_glass))
+		var/obj/item/glassblowing/molten_glass/attacking_glass = interacting_with
 		var/obj/item/glassblowing/molten_glass/glass = glass_ref?.resolve()
 		if(glass)
 			to_chat(user, span_warning("[src] already has some glass on it!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(attacking_glass, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		glass_ref = WEAKREF(attacking_glass)
-		to_chat(user, span_notice("[src] picks up [target]."))
+		to_chat(user, span_notice("[src] picks up [interacting_with]."))
 		icon_state = "blow_pipe_full"
-		return
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/glassblowing/blowing_rod/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -1774,9 +1774,9 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	name = "Glass-blowing Metal Cup"
 	result = /obj/item/glassblowing/metal_cup
 
-/obj/item/glassblowing/metal_cup/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/glass_obj = I
+/obj/item/glassblowing/metal_cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/ore/glass))
+		var/obj/item/stack/ore/glass/glass_obj = attacking_item
 		if(!glass_obj.use(1))
 			return
 		has_sand = TRUE
@@ -1909,7 +1909,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	COOLDOWN_DECLARE(forging_cooldown)
 	/// Is the forge in use or not? If true, prevents most interactions with the forge
 	var/in_use = FALSE
-	/// The current 'level' of the forge, how upgraded is it from zero to three
+	/// The current 'level' of the forge, how upgraded is it from one to seven
 	var/forge_level = FORGE_LEVEL_YOU_PLAY_LIKE_A_NOOB
 	/// What smoke particles should be coming out of the forge
 	var/smoke_state = SMOKE_STATE_NONE
@@ -1917,6 +1917,8 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	var/obj/item/plate/oven_tray/used_tray
 	/// List of possible choices for the selection radial
 	var/list/radial_choice_list = list()
+	///Currently used particle type, if any
+	var/particle_type
 
 /obj/structure/reagent_forge/examine(mob/user)
 	. = ..()
@@ -1976,7 +1978,8 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 /obj/structure/reagent_forge/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(particles)
+	if(particle_type)
+		remove_shared_particles("[particle_type]_reagent_forge")
 	if(used_tray)
 		QDEL_NULL(used_tray)
 	. = ..()
@@ -2099,29 +2102,27 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	smoke_state = new_state
 
-	QDEL_NULL(particles)
+	if (particle_type)
+		remove_shared_particles("[particle_type]_reagent_forge")
+		particle_type = null
 
 	switch(smoke_state)
 		if(SMOKE_STATE_NONE)
 			icon_state = "forge_inactive"
 			set_light(0, 0) // If we aren't heating up and thus not on fire, turn the fire light off
 			return
-
 		if(SMOKE_STATE_BAD)
-			particles = new /particles/smoke()
-			particles.position = list(6, 4, 0)
-
+			particle_type = /particles/smoke
 		if(SMOKE_STATE_NEUTRAL)
-			particles = new /particles/smoke/steam()
-			particles.position = list(6, 4, 0)
-
+			particle_type = /particles/smoke/steam
 		if(SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild()
-			particles.position = list(6, 4, 0)
-
+			particle_type = /particles/smoke/steam/mild
 		if(SMOKE_STATE_NOT_COOKING)
-			particles = new /particles/smoke/mild()
-			particles.position = list(6, 4, 0)
+			particle_type = /particles/smoke/mild
+
+	if(particle_type)
+		var/obj/effect/abstract/shared_particle_holder/smoke = add_shared_particles(particle_type, "[particle_type]_reagent_forge")
+		smoke.particles.position = list(6, 4, 0)
 
 	icon_state = "forge_active"
 	set_light(3, 1, LIGHT_COLOR_FIRE)
@@ -2192,27 +2193,31 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	playsound(src, 'sound/weapons/parry.ogg', 50, TRUE) // Play a feedback sound to really let players know we just did an upgrade
 
 //this will allow click dragging certain items
-/obj/structure/reagent_forge/MouseDrop_T(obj/attacking_item, mob/living/user)
+/obj/structure/reagent_forge/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	if(!isliving(user))
 		return
 
-	if(!isobj(attacking_item))
+	if(!isobj(dropped))
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
-		refuel(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
+		refuel(dropped, user)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
-		refuel(attacking_item, user, TRUE)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/coal)) // Coal is a strong fuel that doesn't need bellows to heat up properly
+		refuel(dropped, user, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/ore))
-		smelt_ore(attacking_item, user)
+	if(istype(dropped, /obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
+		refuel(dropped, user, TRUE)
 		return
 
-/obj/structure/reagent_forge/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(dropped, /obj/item/stack/ore))
+		smelt_ore(dropped, user)
+		return
+
+/obj/structure/reagent_forge/attackby(attacking_item, user, modifiers, attack_modifiers)
 	if(!used_tray && istype(attacking_item, /obj/item/plate/oven_tray))
 		add_tray_to_forge(user, attacking_item)
 		return TRUE
@@ -2231,6 +2236,10 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		refuel(attacking_item, user, TRUE)
 		return TRUE
 
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/plasma)) //Mmm, Spicy strong fuel
+		refuel(attacking_item,user,TRUE)
+		return TRUE
+
 	if(istype(attacking_item, /obj/item/stack/ore))
 		smelt_ore(attacking_item, user)
 		return TRUE
@@ -2247,6 +2256,11 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		handle_metal_cup_melting(attacking_item, user)
 		return TRUE
 
+	if(istype(attacking_item, /obj/item/glassblowing/blowing_rod))
+		blowrod_act(user, attacking_item)
+
+	if(istype(attacking_item, /obj/item/forging/billow))
+		billow_act(user, attacking_item)
 	return ..()
 
 /// Take the given tray and place it inside the forge, updating everything relevant to that
@@ -2288,10 +2302,10 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	if(is_strong_fuel)
 		if(forge_fuel_strong >= 5 MINUTES)
-			fail_message(user, "[src] is full on coal")
+			fail_message(user, "[src] is full on regular fuel")
 			return
 	if(forge_fuel_weak >= 5 MINUTES)
-		fail_message(user, "[src] is full on wood")
+		fail_message(user, "[src] is full on weak fuel")
 		return
 
 	balloon_alert_to_viewers("refueling...")
@@ -2339,6 +2353,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 
 	for(var/spawn_ore in 1 to ore_to_sheet_amount)
 		new spawning_item(src_turf)
+		user.mind.adjust_experience(/datum/skill/smithing, 1) //Just a little bit of XP, as a treat.
 
 	in_use = FALSE
 	qdel(ore_item)
@@ -2562,6 +2577,16 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		SKILL_SPEED_MODIFIER = list(1, 0.95, 0.9, 0.85, 0.75, 0.6, 0.5),
 		SKILL_PROBS_MODIFIER = list(0, 5, 10, 20, 40, 80, 100)
 	)
+	skill_item_path = /obj/item/clothing/neck/cloak/skill_reward/smithing
+
+/obj/item/clothing/neck/cloak/skill_reward/smithing
+	name = "legendary smith's cloak"
+	desc = "Those who wear this cloak have the knowledge and understanding to create weapons and tools rivaling that of a god. \
+	Often heros' songs are sung about their deeds, but only the wise know the heros' deeds were only possible thanks to a blacksmith."
+	icon = 'monkestation/code/modules/smithing/icons/cloaks.dmi'
+	worn_icon = 'monkestation/code/modules/smithing/icons/neck.dmi'
+	icon_state = "smithingcloak"
+	associated_skill_path = /datum/skill/smithing
 
 /// Called on an object when a tool with wrench capabilities is used to left click an object
 /atom/proc/billow_act(mob/living/user, obj/item/tool)

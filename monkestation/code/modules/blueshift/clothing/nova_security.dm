@@ -20,7 +20,6 @@
 	desc = "A utility uniform worn by Lopland-certified Security officers."
 	icon_state = "util_sec"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/nova/utility/redsec
 	desc = "A utility uniform worn by trained Security officers."
@@ -37,8 +36,6 @@
 	desc = "An asymmetrical, unisex uniform with the legs replaced by a utility skirt."
 	worn_icon_state = "security_skirt"
 	icon_state = "security_skirt"
-	uses_advanced_reskins = FALSE
-	unique_reskin = null
 	alt_covers_chest = FALSE
 
 /obj/item/clothing/under/rank/security/peacekeeper/trousers
@@ -51,7 +48,7 @@
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "workpants_blue",
@@ -67,7 +64,7 @@
 	name = "security shorts"
 	desc = "Some Peacekeeper-blue combat shorts. Definitely should pair it with a vest for safety."
 	icon_state = "workshorts_blue"
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant, Short" = list(
 			RESKIN_ICON_STATE = "workshorts_blue",
@@ -103,16 +100,16 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "plain_skirt_blue",
 			RESKIN_WORN_ICON_STATE = "plain_skirt_blue"
-	    ),
+		),
 		"Black Variant" = list(
 			RESKIN_ICON_STATE = "plain_skirt_black",
 			RESKIN_WORN_ICON_STATE = "plain_skirt_black"
-	    ),
+		),
 	)
 
 /obj/item/clothing/under/rank/security/peacekeeper/miniskirt
@@ -123,16 +120,16 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-	uses_advanced_reskins = TRUE
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 		"Blue Variant" = list(
 			RESKIN_ICON_STATE = "miniskirt_blue",
 			RESKIN_WORN_ICON_STATE = "miniskirt_blue"
-	    ),
+		),
 		"Black Variant" = list(
 			RESKIN_ICON_STATE = "miniskirt_black",
 			RESKIN_WORN_ICON_STATE = "miniskirt_black"
-	    ),
+		),
 	)
 
 /*
@@ -278,8 +275,8 @@
 	icon_state = "peacekeeper_jacket"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	heat_protection = CHEST|GROIN|ARMS
+
+
 
 /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/Initialize(mapload)
 	. = ..()
@@ -300,9 +297,9 @@
 	worn_icon_state = "peacekeeper"
 	siemens_coefficient = 0.5
 	strip_delay = 20
-	cold_protection = 0
+
 	min_cold_protection_temperature = null
-	heat_protection = 0
+
 	max_heat_protection_temperature = null
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/none
@@ -358,9 +355,9 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "cowboy_vest"
 	body_parts_covered = CHEST|ARMS
-	cold_protection = CHEST|ARMS
+
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	heat_protection = CHEST|ARMS
+
 
 /obj/item/clothing/suit/jacket/det_suit/cowboyvest
 	name = "blonde cowboy vest"
@@ -369,9 +366,9 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "cowboy_vest"
 	body_parts_covered = CHEST|ARMS
-	cold_protection = CHEST|ARMS
+
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	heat_protection = CHEST|ARMS
+
 
 /obj/item/clothing/under/rank/security/detective/runner
 	name = "runner sweater"

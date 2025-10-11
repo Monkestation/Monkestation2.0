@@ -40,6 +40,39 @@
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "cowboyboots_black"
 
+/obj/item/clothing/shoes/crueltysquad_shoes
+	name = "CSIJ level I combat boots"
+	desc = "Boots specifically designed to fit into the CSIJ level I body armor."
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_state = "crueltysquad_shoes"
+
+/obj/item/clothing/shoes/costume_2021/infinity_shoes
+	name = "infinity sneakers"
+	desc = "Even for offbrand sneakers, these are outdated for the Kung Company."
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_state = "infinity_shoes"
+
+/obj/item/clothing/shoes/bb_slippers
+	name = "bb slippers"
+	desc = "Despite looking like they'd fall off at any moment, they seem to stay on perfectly."
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_state = "bb_slippers"
+
+/obj/item/clothing/shoes/civilprotection_boots
+	name = "civil protection boots"
+	desc = "for the officers chasing engineers."
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
+	icon_state = "civilprotection_boots"
+
+/obj/item/clothing/shoes/civilprotection_boots/Initialize(mapload)//copied from jackboots (should these be a subtype of jackboots?)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddComponent(/datum/component/shoesteps/combine_boot_sounds)
+
 //START HEELS
 
 /obj/item/clothing/shoes/heels
@@ -117,5 +150,14 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/shoes/ballheels
+	name = "ball heels"
+	desc = "A stylish pair of footwear that are difficult to walk in, somehow you are expected to dance in these."
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
+	icon_state = "ballheels"
+	inhand_icon_state = "ballheels"
+	can_be_tied = FALSE
 
 //END HEELS

@@ -29,10 +29,10 @@
 	. = ..()
 
 	if(organ_owner)
-		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+		if((organ_flags & ORGAN_VITAL) && !special && !(HAS_TRAIT(organ_owner, TRAIT_GODMODE)))
 			if(organ_owner.stat != DEAD)
 				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
-			organ_owner.death()
+			organ_owner.death(null, "losing your [name]")
 
 	START_PROCESSING(SSobj, src)
 
@@ -41,9 +41,24 @@
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+	if(damage >= maxHealth || !decay_factor) // already fully decayed, or we don't decay at all, don't bother with further checks
 		return
-	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
+	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
+		return
+	if(HAS_TRAIT(src, TRAIT_NO_ORGAN_DECAY) || (owner && HAS_TRAIT(owner, TRAIT_NO_ORGAN_DECAY)))
+		return
+	var/air_temperature_factor = 1
+	if(owner)
+		if(owner.bodytemperature <= T0C)
+			return
+		air_temperature_factor = min((owner.bodytemperature - T0C) / 20, 1)
+	else
+		var/datum/gas_mixture/exposed_air = return_air()
+		if(exposed_air)
+			if(exposed_air.temperature <= T0C)
+				return
+			air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
+	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here
@@ -57,7 +72,7 @@
 	if(failure_time > 0)
 		failure_time--
 
-	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+	if(organ_flags & ORGAN_EMP) //Synthetic organ has been emped, is now failing.
 		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 

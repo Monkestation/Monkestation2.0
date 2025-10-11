@@ -9,6 +9,7 @@
 	. = ..()
 	if(.)
 		return
+	playsound(src, SFX_BUTTON_CLICK, vol = 45, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
 	flick(icon_down, src)
 	fire(stored_message)
 	log_message("triggered by [key_name(user)]", LOG_MECHCOMP)
@@ -16,10 +17,12 @@
 
 /obj/item/mcobject/messaging/button/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!isturf(target))
+	if(!isturf(target) || !proximity_flag)
 		return
 
 	if(!user.dropItemToGround(src))
+		return
+	if(!user.CanReach(target))
 		return
 	forceMove(target)
 	if(isclosedturf(target))

@@ -3,7 +3,7 @@
 
 /datum/ai_planning_subtree/cleaning_subtree_slime/SelectBehaviors(datum/ai_controller/basic_controller/controller, seconds_per_tick)
 	if(controller.blackboard_key_exists(BB_CLEAN_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/execute_clean_slime, BB_CLEAN_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/execute_clean/slime, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/list/final_hunt_list = list()
@@ -13,5 +13,5 @@
 	final_hunt_list += controller.blackboard[BB_HUNTABLE_PESTS]
 	final_hunt_list += controller.blackboard[BB_HUNTABLE_TRASH]
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets_slime, BB_CLEAN_TARGET, final_hunt_list)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets/slime, BB_CLEAN_TARGET, final_hunt_list) // Add a final parameter here if you want a search range
 

@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/wand/fireball,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
-	/obj/item/gun/magic/staff/babel,
+	/* /obj/item/gun/magic/staff/babel, [monkestation removal: this is admin only now] */	
 	/obj/item/scrying,
 	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 /datum/summon_things_controller/New()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(on_latejoin))
 
-/datum/summon_things_controller/Destroy(force, ...)
+/datum/summon_things_controller/Destroy(force)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 

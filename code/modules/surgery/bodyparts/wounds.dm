@@ -2,7 +2,7 @@
 /obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || (owner.status_flags & GODMODE))
+	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || (HAS_TRAIT(owner, TRAIT_GODMODE)))
 		return
 
 	var/mangled_state = get_mangled_state()
@@ -74,7 +74,7 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
-	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100))
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
@@ -122,10 +122,13 @@
 						possible_wounds -= other_path
 						continue
 
-	while (length(possible_wounds))
+	while (TRUE)
 		var/datum/wound/possible_wound = pick_weight(possible_wounds)
-		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+		if (isnull(possible_wound))
+			break
+
 		possible_wounds -= possible_wound
+		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
 
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
@@ -174,13 +177,14 @@
  * * max_severity: The maximum severity that will be considered.
  * * severity_pick_mode: The "pick mode" to be used. See get_corresponding_wound_type's documentation
  * * wound_source: The source of the wound to be applied. Nullable.
+ * * smited: If the wound is to be applied from a smite.
  *
  * For the rest of the args, refer to get_corresponding_wound_type().
  *
  * Returns:
  * A new wound instance if the application was successful, null otherwise.
 */
-/mob/living/carbon/proc/cause_wound_of_type_and_severity(wounding_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source)
+/mob/living/carbon/proc/cause_wound_of_type_and_severity(wounding_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source, smited = FALSE)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
@@ -190,7 +194,7 @@
 
 	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode)
 	if (corresponding_typepath)
-		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
+		return limb.force_wound_upwards(corresponding_typepath, smited = smited, wound_source = wound_source)
 
 /// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
 /mob/living/carbon/proc/get_wound_threshold_of_wound_type(wounding_type, severity, default, obj/item/bodypart/limb, wound_source)

@@ -14,17 +14,24 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/ashwalker,
 	)
 	species_language_holder = /datum/language_holder/ashwalker
+	/// The aging component given by the species.
+	var/datum/component/ash_age/ash_age
+
+/datum/species/lizard/ashwalker/Destroy(force)
+	QDEL_NULL(ash_age)
+	return ..()
 
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
 	. = ..()
 	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
-	carbon_target.AddComponent(/datum/component/ash_age)
+	ash_age = carbon_target.AddComponent(/datum/component/ash_age)
 	carbon_target.faction |= FACTION_ASHWALKER
 
 /datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/carbon_target)
 	. = ..()
 	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
-	carbon_target.faction &= FACTION_ASHWALKER
+	QDEL_NULL(ash_age)
+	carbon_target.faction -= FACTION_ASHWALKER
 
 /datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
 	SIGNAL_HANDLER
@@ -117,8 +124,8 @@
 
 /datum/status_effect/ashwalker_damage //tracks the damage dealt to this mob by ashwalkers
 	id = "ashwalker_damage"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// How much damage has been dealt to the mob
@@ -148,10 +155,12 @@
 /obj/item/bodypart/arm/left/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER
 	burn_modifier = ASHWALKER_BURN_MODIFIER
+	hand_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/right/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER
 	burn_modifier = ASHWALKER_BURN_MODIFIER
+	hand_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/leg/left/lizard/ashwalker
 	brute_modifier = ASHWALKER_BRUTE_MODIFIER

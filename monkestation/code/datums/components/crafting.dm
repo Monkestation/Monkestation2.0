@@ -11,6 +11,7 @@
 		/obj/item/grenade = 1
 	)
 	time = 1.5 SECONDS
+	always_available = FALSE
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/ph_sensor //Ghetto science goggles for the wanna-be Walter White's upon our grimey-ass station.
@@ -19,7 +20,7 @@
 	result = /obj/item/ph_meter
 	reqs = list(
 		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/pen = 1,

@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
+	RegisterSignal(C, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(component_ui_interact))
 
 #define COOKING TRUE
 #define CRAFTING FALSE
@@ -20,6 +20,7 @@
 	var/mode = CRAFTING
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
+	var/forced_mode = FALSE //MONKESTATION ADDITION
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -181,7 +182,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R, time_override = null)
 	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
@@ -191,8 +192,8 @@
 					if(istype(content, R.result))
 						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time, target = a))
-				return "."
+			if(ismob(a) && !do_after(a, time_override ? time_override : R.time, target = a))
+				return ", interrupted."
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
@@ -322,10 +323,14 @@
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
 	for(var/part in R.parts)
-		if(istype(part, /datum/reagent))
+		//MONKESTATION EDIT START
+		if(ispath(part, /datum/reagent))
 			var/datum/reagent/RG = locate(part) in Deletion
 			if(RG.volume > partlist[part])
 				RG.volume = partlist[part]
+			if(RG.data?["viruses"]) //Purge diseases from food
+				RG.data["viruses"] = list()
+			//MONKESTATION EDIT END
 			. += RG
 			Deletion -= RG
 			continue
@@ -339,6 +344,12 @@
 		else
 			while(partlist[part] > 0)
 				var/atom/movable/AM = locate(part) in Deletion
+				//MONKESTATION EDIT START
+				var/datum/reagents/reagents = AM.reagents
+				for(var/datum/reagent/reagent as anything in reagents?.reagent_list) //Purge diseases from food
+					if(reagent.data?["viruses"])
+						reagent.data["viruses"] = list()
+				//MONKESTATION EDIT END
 				. += AM
 				Deletion -= AM
 				partlist[part] -= 1
@@ -403,6 +414,7 @@
 	var/list/data = list()
 	var/list/material_occurences = list()
 
+	data["forced_mode"] = forced_mode //MONKESTATION ADDITION
 	data["recipes"] = list()
 	data["categories"] = list()
 	data["foodtypes"] = FOOD_FLAGS
@@ -447,7 +459,22 @@
 
 	return data
 
-/datum/component/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
+	var/atom/movable/result = construct_item(user, recipe)
+	if(istext(result)) //We failed to make an item and got a fail message
+		to_chat(user, span_warning("Construction failed[result]"))
+		return FALSE
+	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
+		user.put_in_hands(result)
+	else if(!istype(result, /obj/effect/spawner))
+		result.forceMove(user.drop_location())
+	to_chat(user, span_notice("[recipe.name] crafted."))
+	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	recipe.on_craft_completion(user, result)
+	return TRUE
+
+
+/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -476,6 +503,8 @@
 			display_compact = !display_compact
 			. = TRUE
 		if("toggle_mode")
+			if(forced_mode) //MONKESTATION ADDITION
+				return
 			mode = !mode
 			var/mob/user = usr
 			update_static_data(user)
@@ -483,8 +512,8 @@
 
 /datum/component/personal_crafting/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/crafting),
-		get_asset_datum(/datum/asset/spritesheet/crafting/cooking),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting/cooking),
 	)
 ///
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)

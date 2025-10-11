@@ -3,10 +3,10 @@
 	desc = "Stabby stabby"
 
 /datum/action/changeling/sting/Trigger(trigger_flags)
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+		return FALSE
 	var/mob/user = owner
-	if(!user || !user.mind)
-		return
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = user?.mind?.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling)
 		return
 	if(!changeling.chosen_sting)
@@ -67,9 +67,9 @@
 	name = "Transformation Sting"
 	desc = "We silently sting an organism, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. \
-		For complex humanoids, the transformation is temporarily, but the duration is paused while the victim is dead or in stasis. \
+		For complex humanoids, the transformation only lasts 8 minutes, but the duration is paused while the victim is dead or in stasis. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
-		Does not provide a warning to others. Mutations will not be transferred."
+		Does not provide a warning to others. Mutations will not be transferred." // monkestation edit
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
@@ -112,7 +112,8 @@
 		|| !target.has_dna() \
 		|| HAS_TRAIT(target, TRAIT_HUSK) \
 		|| HAS_TRAIT(target, TRAIT_BADDNA) \
-		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkey(target))) // sure, go ahead, make a monk-clone
+		|| HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING) \
+		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkeybasic(target))) // sure, go ahead, make a monk-clone
 		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting))
@@ -123,7 +124,7 @@
 /datum/action/changeling/sting/transformation/sting_action(mob/living/user, mob/living/target)
 	var/final_duration = sting_duration
 	var/final_message = span_notice("We transform [target] into [selected_dna.dna.real_name].")
-	if(ismonkey(target))
+	if(ismonkeybasic(target))
 		final_duration = INFINITY
 		final_message = span_warning("Our genes cry out as we transform the lesser form of [target] into [selected_dna.dna.real_name] permanently!")
 
@@ -166,7 +167,7 @@
 		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!"))
 		return
 	..()
-	if(ismonkey(target))
+	if(ismonkeybasic(target))
 		to_chat(user, span_notice("Our genes cry out as we sting [target.name]!"))
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
@@ -209,7 +210,7 @@
 
 /datum/action/changeling/sting/mute
 	name = "Mute Sting"
-	desc = "We silently sting a human, completely silencing them for a short time. Costs 20 chemicals."
+	desc = "We silently sting a human, completely silencing them for a minute. Costs 20 chemicals." // monkestation edit
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	button_icon_state = "sting_mute"
 	chemical_cost = 20
@@ -223,7 +224,7 @@
 /datum/action/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "We temporarily blind our victim. Costs 25 chemicals."
-	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time."
+	helptext = "This sting completely blinds a target for 40 seconds, and leaves them with blurred vision for 80 seconds." // monkestation edit
 	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1

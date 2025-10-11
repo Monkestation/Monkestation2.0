@@ -15,62 +15,13 @@
 			confidential = TRUE)
 		return
 	if(!chosen_client)
-		if(is_mentor())
-			if(findtext(whom, "Discord"))
-				if(!msg)
-					msg = input(src,"Message:", "Private message") as text|null
-
-					if(!msg)
-						return
-				to_chat(src,
-				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
-				confidential = TRUE)
-
-				var/id = "None"
-				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
-				if(request)
-					id = "[request.id]"
-
-				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-				if(regular_webhook_url)
-					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-					if(!embed)
-						return
-					send2mentorchat_webhook(embed, key)
-
-				return
+		if(findtext(whom, "Discord"))
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
-				confidential = TRUE)
-		else
-			if(findtext(whom, "Discord"))
-				if(!msg)
-					msg = input(src,"Message:", "Private message") as text|null
-
-					if(!msg)
-						return
-				to_chat(src,
-				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
-				confidential = TRUE)
-
-				var/id = "None"
-				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
-				if(request)
-					id = "[request.id]"
-
-				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-				if(regular_webhook_url)
-					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-					if(!embed)
-						return
-					send2mentorchat_webhook(embed, key)
-
-				return
-			/// Mentor we are replying to left. Mentorhelp instead.
-			mentorhelp(msg)
+				html = span_warning("Unfortunately, replying to Discord mentor replys are disabled because the mentor ticket system lacks functionality that Plexora needs.")
+			)
+			return
+		mentorhelp(msg)
 		return
 
 	/// Get message text, limit it's length.and clean/escape html
@@ -81,7 +32,7 @@
 			return
 
 		if(!chosen_client)
-			if(is_mentor())
+			if(check_mentor_rights_for(src, R_MENTOR))
 				to_chat(src,
 					type = MESSAGE_TYPE_MODCHAT,
 					html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
@@ -91,8 +42,8 @@
 				mentorhelp(msg)
 				return
 
-		/// Neither party is a mentor, they shouldn't be PMing!
-		if(!chosen_client.is_mentor() && !is_mentor())
+		/// Neither party is a mentor, and the chosen client doesnt have mentor rights, they shouldn't be PMing!
+		if(!check_mentor_rights_for(chosen_client, R_MENTOR) && !check_mentor_rights_for(src, R_MENTOR))
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
@@ -102,9 +53,12 @@
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(chosen_client)]: [msg]")
 
 	msg = emoji_parse(msg)
-	chosen_client << 'sound/items/bikehorn.ogg'
-	if(chosen_client.is_mentor())
-		if(is_mentor())
+	SEND_SOUND(chosen_client, 'sound/items/bikehorn.ogg')
+	var/list/all_requests = GLOB.mentor_requests.requests
+	var/list/chosen_requests = all_requests[chosen_client.ckey]
+	var/chosen_requests_len = length(chosen_requests)
+	if(check_mentor_rights_for(chosen_client, R_MENTOR))
+		if(check_mentor_rights_for(src, R_MENTOR))
 			/// Both are Mentors
 			to_chat(chosen_client,
 				type = MESSAGE_TYPE_MODCHAT,
@@ -124,37 +78,34 @@
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
 				confidential = TRUE)
-
+			var/datum/request/request = chosen_requests[chosen_requests_len]
+			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
 	else
-		if(is_mentor())
+		if(check_mentor_rights_for(src, R_MENTOR))
 			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.
 			to_chat(chosen_client, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, chosen_client, TRUE, FALSE, FALSE)]</b>: [msg]</font>")
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
 				confidential = TRUE)
-
+			var/datum/request/request = chosen_requests[chosen_requests_len]
+			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
 
 	var/id = "None"
 
-	if(!is_mentor())
-		var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
+	if(!check_mentor_rights_for(src, R_MENTOR))
+		var/list/our_requests = all_requests[ckey]
+		var/our_requests_len = length(our_requests)
+		var/datum/request/request = our_requests[our_requests_len]
 		if(request)
 			id = "[request.id]"
 	else
-		var/datum/request/request = GLOB.mentor_requests.requests[chosen_client.ckey][length(GLOB.mentor_requests.requests[chosen_client.ckey])]
+		var/datum/request/request = chosen_requests[chosen_requests_len]
 		if(request)
 			id = "[request.id]"
 
-	if(is_mentor() && chosen_client.is_mentor())
+	if(check_mentor_rights_for(src, R_MENTOR) && check_mentor_rights_for(chosen_client, R_MENTOR))
 		id = "Both Mentors, ID Retrival may be wrong: [id]"
-
-	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-	if(regular_webhook_url)
-		var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-		if(!embed)
-			return
-		send2mentorchat_webhook(embed, key)
 
 	/// We don't use message_Mentors here because the sender/receiver might get it too
 	for(var/client/honked_clients in GLOB.mentors | GLOB.admins)

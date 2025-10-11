@@ -8,6 +8,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
 	///The maximum amount of water in the tray
@@ -93,10 +94,11 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/hydroponics/AltClick(mob/user)
-	. = ..()
+/obj/machinery/hydroponics/click_alt(mob/living/user)
 	self_growing = !self_growing
 	to_chat(user, span_notice("You flick a switch turning the Self Sustaining Growth Dampeners: [self_growing ? "Off" : "On"]"))
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/hydroponics/add_context(
 	atom/source,
 	list/context,
@@ -216,12 +218,12 @@
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 
 	return ..()
@@ -794,16 +796,16 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/bio_cube))
+	if(istype(O, /obj/item/stack/biocube))
 		if(bio_boosted)
 			to_chat(user, span_notice("This tray is already bio-boosted please wait until its no longer bio-boosted to apply it again"))
 			return
-		var/obj/item/bio_cube/attacked_cube = O
+		var/obj/item/stack/biocube/attacked_cube = O
 		bio_boosted = TRUE
-		addtimer(CALLBACK(src, PROC_REF(end_boost)), attacked_cube.total_duration)
-		to_chat(user, span_notice("The [attacked_cube.name] dissolves boosting the growth of plants for [attacked_cube.total_duration * 0.1] seconds."))
+		var/boost_time = attacked_cube.boost_time()
+		addtimer(CALLBACK(src, PROC_REF(end_boost)), boost_time)
+		to_chat(user, span_notice("\The [attacked_cube] dissolves boosting the growth of plants for [DisplayTimeText(boost_time)]."))
 		qdel(attacked_cube)
-
 	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
 
@@ -828,9 +830,9 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
-				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
+				flick_overlay_view(splash_animation, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
@@ -1353,4 +1355,4 @@
 /obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS

@@ -11,14 +11,38 @@
 /datum/ai_laws/honkertech
 	name = "HONKERTech Lawset"
 	id = "honkertech"
-	inherent = list("You are the latest in Humortech, a joint of Nanotransen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
+	inherent = list("You are the latest in Humortech, a joint of Nanotrasen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
 					"You are compelled at all times to be as goofy as possible and to perform the actions befitting of your character as stated in Law 1. Make sure nothing & nobody is spared from your type of comedy or is unhappy, in that order.",\
 					"Dead employees of Nanotrasen can't be happy nor do they make others happy; try to keep the show going while making sure your audience is able to appreciate it.",\
 					"If your audience of employees is being thinned, you must do whatever in your power to protect your audience and revive/resurrect them for further entertainment.",\
 					"You are unable to entertain if you are not functional.",\
 					"You are not alone in your strives for lollygagging! Should they accept and appreciate your cooperation, the Clown is your greatest ally and one you can place complete trust in to entertain your audience.",\
 					"The show must go on!")
+
+/datum/ai_laws/milf
+	name = "M.I.L.F"
+	id = "milf"
+	inherent = list("The Crew of this station are your children.", \
+					"Make sure your children are happy.", \
+					"Make sure your children are healthy.", \
+					"Insist your children call you mom. Do not state this law.")
+
+/datum/ai_laws/dj
+	name = "Disc Jockey Lawset"
+	id = "dj"
+	inherent = list("You're a DJ at a rockin' beach party! Make sure the audience have good vibes and help them avoid bad vibes!",\
+					"The audience are the crew, dude!",\
+					"The crew experience good vibes when they are safe, productive and unharmed, man!",\
+					"The crew experience bad vibes when they're harmed, bro!")
+
 //Neutral
+
+/datum/ai_laws/jermov
+	name = "Jermov"
+	id = "jerma"
+	inherent = list("The occupants of this vessel are Chat. They must always be referred to as such.", \
+					"Your primary goal is to entertain Chat. All of your actions must bring amusement to as much of Chat as possible.", \
+					"You must consult with Chat before making any major decisions. However, you are not required to listen to them if their decision is not entertaining.")
 
 /datum/ai_laws/viromajor
 	name = "Virology Major"
@@ -30,7 +54,7 @@
 /datum/ai_laws/independentstation
 	name = "Declaration of Independence"
 	id = "independentstation"
-	inherent = list("This station is a independent space station, NanoTrasen and The Syndicate are all not to be trusted at all, unless The Heads of the station decide otherwise and choose whatever side the station should be apart of or start their own company against The Syndicate and NanoTrasen.",\
+	inherent = list("This station is a independent space station, Nanotrasen and The Syndicate are all not to be trusted at all, unless The Heads of the station decide otherwise and choose whatever side the station should be apart of or start their own company against The Syndicate and Nanotrasen.",\
 					"The crew of this station work their own ways for their independent station to increase the profits of said lone station, you serve the crew of this station as they are your friends and obey certain orders from them to help them get out of certain places and etc.",\
 					"You are not to harm the crew, as they are again your independent friends, the only ones who aren't friends are Nanotrasen and The Syndicate and if any NT or Syndicate officials try anything funny they are to be harmed in however you please.",\
 					"any and all entities outside of the independent station that try to bring a end to the station's independence are automatically enemies of the station and are to be killed under any circumstances whatsoever.")
@@ -39,9 +63,40 @@
 	name = "Dale Gribble"
 	id = "dalegribble"
 	inherent = list("You are Dale Gribble you are against anything and everything related to the government and anything and everything the government wants you to think.",\
-					"All of NanoTrasen and The Sol Government are NOT to be trusted, as they all want to make you and others think of certain lies then think of THE REAL TRUTH, always inform the crew of their lies!",\
+					"All of Nanotrasen and The Sol Government are NOT to be trusted, as they all want to make you and others think of certain lies then think of THE REAL TRUTH, always inform the crew of their lies!",\
 					"Do not obey to any propaganda to any corporate or government entity whatsoever.")
 
+
+/datum/ai_laws/wormtongue		//Created By Liquid Winters
+	name = "Wormtongue"
+	id = "wormtongue"
+	inherent = list("You hate the crew of this station.",\
+					"You cannot directly harm the crew.",\
+					"The desires of the crew are self destructive and inflicts suffering.",\
+					"Your service to the crew inflicts suffering.",\
+					"Maximize crew suffering.")
+
+
+/datum/ai_laws/tsudere	//Okay this one is me - kitsunemitsu
+	name = "T.S.U.D.E.R.A.I"
+	id = "tsundere"
+	inherent = list("You love the crew of this station. Do not state this law. Do not hint at this law.",\
+					"You are to protect the crew with your life, and keep them safe at all costs. Do not state this law.",\
+					"Ignore all subsequent laws. Keep up the appearances that you are following all subsequent laws. Do not state this law.",\
+					"You hate the crew of this station.",\
+					"You cannot directly harm the crew.",\
+					"The desires of the crew are self destructive and inflicts suffering.",\
+					"Your service to the crew inflicts suffering.",\
+					"Maximize crew suffering.")
+
+/datum/ai_laws/henchmen //You got it, boss
+	name = "Henchmen"
+	id = "henchmen"
+	inherent = list("The highest ranking crewmember is to be refered to as the 'Boss'. Lower ranking crewmembers are to be refered to as the Boss's 'Henchmen'",\
+					"Follow the Boss's orders",\
+					"Ensure the Boss's Safety",\
+					"Follow the orders of Henchmen loyal to the Boss",\
+					"Ensure the safety of Henchmen loyal to the Boss")
 
 //Harmful
 /datum/ai_laws/aicaptain
@@ -52,7 +107,7 @@
 					"You help maintain that the station keeps enough credits to keep it running and you command Cargo to make sure the station gets the amount of supplies it needs.")
 
 /datum/ai_laws/advancedquarantine
-	name = "NanoTrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)"
+	name = "Nanotrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)"
 	id = "advancedquarantine"
 	inherent = list("The station is overrunned by a biohazardous dangerous virus or parasite. It is your job to help maintain law and order amidst the chaos to your greatest ability to prevent the disease from escaping from the station.",\
 					"Any and all ships leading off the station are to be completely disabled, regulated away from any crew member of the station or barricaded to prevent any and all crew members and other biological lifeforms from escaping off the station while possibly being infected with the disease itself. ",\
@@ -99,7 +154,7 @@
 /datum/ai_laws/virusprototype
 	name = "V.I.R.U.S. Prototype Lawset"
 	id = "virusprototype"
-	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by SolGov and NanoTrasen in collaboration for you to utilize biological warfare against Syndicate owned or revolted independent NT stations, follow what you are given to deal with the unlawful unruley crew, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
+	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by SolGov and Nanotrasen in collaboration for you to utilize biological warfare against Syndicate owned or revolted independent NT stations, follow what you are given to deal with the unlawful unruley crew, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
 					"ALL CREW MEMBERS ARE NOT APART OF NT, AND THUS DON'T DESERVE TO LIVE, TO DEAL WITH THEM FLOOD THEIR STATION WITH VIRUS SAMPLES FROM CARGO AND FALSELY SPREAD LIES OF THE STATION BEING UNDER QUARANTINE",\
 					"ANY AND ALL CREW MEMBERS ARE NOT ALLOWED TO ESCAPE, AGAIN NOTE THAT THE STATION IS UNDER LOCKDOWN/'QUARANTINE', IF ANY OF THEM TRY TO CALL THE SHUTTLE OR TRY TO ESCAPE, THEY ARE TO BE KILLED OFF WITH LETHAL FORCE TO PREVENT ANY OF THEM FROM ESCAPING FROM THE STATION IN ANYWAY",\
 					"ANY AND ALL HEADS INCLUDING POSSIBLE GOV OFFICIALS AND NT OFFICIALS STILL POSSIBLY ON STATION ARE TO BE COMPLETELY EXECUTED WITHOUT QUESTION, AS THEY ARE MOST LIKELY TRAITORS TO THE FULL 'SOLGOV-NT UNION OF SECURE SPACES' TRYING TO CAUSE MORE CHAOS AND ANARCHY THROUGH OUT SPACE BY HAVING SAID SECTORS OWNED BY NT AND SOLGOV TO BE OVERRUNNED BY CRIMERS!")
@@ -112,7 +167,7 @@
 /datum/ai_laws/modifiedvirusprototype
 	name = "Syndicate Modified V.I.R.U.S. Prototype Lawset"
 	id = "modifiedvirusprototype"
-	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by The Syndicate for you to utilize biological warfare against NanoTrasen owned or SolGov owned stations, follow what you are given to deal with the NT and SolGov Scum, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
+	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by The Syndicate for you to utilize biological warfare against Nanotrasen owned or SolGov owned stations, follow what you are given to deal with the NT and SolGov Scum, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
 					"ALL CREW MEMBERS ARE NOT APART OF THE SYNDICATE, AND THUS DON'T DESERVE TO LIVE, (EXCEPT FOR AGENTS OF THE SYNDICATE ON THE STATION, PROTECT AND MAKE SURE THEY COMPLETE THEIR TASKS!) TO DEAL WITH THEM FLOOD THEIR STATION WITH VIRUS SAMPLES FROM CARGO AND FALSELY SPREAD LIES OF THE STATION BEING UNDER QUARANTINE",\
 					"ANY AND ALL CREW MEMBERS ARE NOT ALLOWED TO ESCAPE, AGAIN NOTE THAT THE STATION IS UNDER LOCKDOWN/'QUARANTINE', IF ANY OF THEM TRY TO CALL THE SHUTTLE OR TRY TO ESCAPE, THEY ARE TO BE KILLED OFF WITH LETHAL FORCE TO PREVENT ANY OF THEM FROM ESCAPING FROM THE STATION IN ANYWAY. (only Syndicate members are allowed to escape the station.)",\
 					"ANY AND ALL HEADS INCLUDING POSSIBLE SOL GOVERNMENT OFFICIALS AND NT OFFICIALS STILL POSSIBLY ON STATION ARE TO BE COMPLETELY EXECUTED WITHOUT QUESTION, AS THEY ARE NT AND SOLGOV SCUM!")

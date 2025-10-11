@@ -35,6 +35,9 @@
 	admin_setup = list(
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_COMMUNAL)
+	event_group = /datum/event_group/error
 
 /datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //monkestation edit: adds fake_check
 	. = ..()
@@ -46,7 +49,7 @@
 	announce_when = 4
 	end_when = SURGE_DURATION_MIN
 	/// How powerful is the supermatter surge going to be?
-	var/surge_class =  SURGE_SEVERITY_MIN
+	var/surge_class = null //monkestation edit
 	/// Typecasted reference to the supermatter chosen at event start
 	var/obj/machinery/power/supermatter_crystal/engine
 	/// Typecasted reference to the nitrogen properies in the SM chamber
@@ -118,6 +121,8 @@
 
 /datum/round_event/supermatter_surge/poly/announce(fake)
 	priority_announce("The Crystal Integrity Monitoring System has detected unusual parrot type resonance in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class P Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
+	engine.base_icon_state = "dm" //monkestation edit
+	engine.icon_state = "dm" //monkestation edit
 
 #undef SURGE_DURATION_MIN
 #undef SURGE_DURATION_MAX

@@ -77,6 +77,10 @@
 /datum/armament_entry/company_import/nri_surplus/misc/trench_tool
 	item_type = /obj/item/trench_tool
 	cost = PAYCHECK_CREW
+/*
+/datum/armament_entry/company_import/nri_surplus/misc/tutel
+	item_type = /obj/item/ammo_box/tacshield/tutel/
+	cost = PAYCHECK_CREW * 3
 
 /datum/armament_entry/company_import/nri_surplus/firearm
 	subcategory = "Firearms"
@@ -134,3 +138,4 @@
 	item_type = /obj/item/ammo_box/magazine/wylom
 	contraband = TRUE
 	cost = PAYCHECK_CREW * 3
+*/

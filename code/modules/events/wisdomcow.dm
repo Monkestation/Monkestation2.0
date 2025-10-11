@@ -10,6 +10,9 @@
 		/datum/event_admin_setup/listed_options/wisdom_cow,
 		/datum/event_admin_setup/input_number/wisdom_cow,
 	)
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_POSITIVE, TAG_MAGICAL)
+	event_group = /datum/event_group/guests
 
 /datum/round_event/wisdomcow
 	///Location override that, if set causes the cow to spawn in a pre-determined locaction instead of randomly.
@@ -27,7 +30,7 @@
 	if(spawn_location)
 		targetloc = spawn_location
 	else
-		targetloc = get_safe_random_station_turf()
+		targetloc = get_safe_random_station_turf_equal_weight()
 	var/mob/living/basic/cow/wisdom/wise = new(targetloc, selected_wisdom, selected_experience)
 	do_smoke(1, holder = wise, location = targetloc)
 	announce_to_ghosts(wise)

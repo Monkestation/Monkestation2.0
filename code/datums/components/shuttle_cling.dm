@@ -61,6 +61,9 @@
 /datum/component/shuttle_cling/proc/update_state()
 	SIGNAL_HANDLER
 
+	if(QDELETED(src))
+		return
+
 	if(!is_on_hyperspace(parent))
 		qdel(src)
 		return
@@ -177,7 +180,7 @@
 
 	qdel(src)
 
-/datum/component/shuttle_cling/Destroy(force, silent)
+/datum/component/shuttle_cling/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)
 	QDEL_NULL(hyperloop)
 

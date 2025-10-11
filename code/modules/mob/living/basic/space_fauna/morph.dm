@@ -16,7 +16,7 @@
 	maxHealth = 150
 	health = 150
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = TCMB
+	bodytemp_cold_damage_limit = TCMB
 
 	obj_damage = 50
 	melee_damage_lower = 20
@@ -147,7 +147,7 @@
 	SIGNAL_HANDLER
 
 	// linters hate this if it's not async for some reason even though nothing blocks
-	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), caller = source, target = target)
+	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), user = source, target = target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Handles the logic for attacking anything.

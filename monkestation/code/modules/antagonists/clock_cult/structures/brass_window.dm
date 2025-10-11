@@ -9,6 +9,7 @@
 	decon_speed = 4 SECONDS
 	glass_type = /obj/item/stack/sheet/bronze
 	glass_amount = 1
+	uses_color = FALSE
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(on_reebe(src))
@@ -46,8 +47,12 @@
 /obj/structure/window/reinforced/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	return
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/clockwork/spawner, 0)
+
 /obj/structure/window/reinforced/clockwork/unanchored
 	anchored = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/clockwork/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window-0"

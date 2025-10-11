@@ -11,8 +11,8 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 100
-	active_power_usage = 1000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
 
@@ -179,17 +179,17 @@
 	//No other icons for it atm
 
 
-/obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH)
+/obj/machinery/power/am_control_unit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(!anchored)
-			W.play_tool_sound(src, 75)
+			attacking_item.play_tool_sound(src, 75)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				span_notice("You secure the anchor bolts to the floor."), \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			W.play_tool_sound(src, 75)
+			attacking_item.play_tool_sound(src, 75)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				span_notice("You remove the anchor bolts."), \
 				"<span class='italics'>You hear a ratchet.</span>")
@@ -198,16 +198,16 @@
 		else
 			to_chat(user, span_warning("Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!"))
 
-	else if(istype(W, /obj/item/antimatter_jar))
+	else if(istype(attacking_item, /obj/item/antimatter_jar))
 		if(fuel_jar)
 			to_chat(user, span_warning("There is already a [fuel_jar] inside!"))
 			return
 
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		fuel_jar = W
-		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
-				span_notice("You load an [W.name]."), \
+		fuel_jar = attacking_item
+		user.visible_message("[user.name] loads an [attacking_item.name] into the [src.name].", \
+				span_notice("You load an [attacking_item.name]."), \
 				"<span class='italics'>You hear a thunk.</span>")
 	else
 		return ..()
@@ -319,30 +319,30 @@
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR>"
-	dat += "<A href='?src=[REF(src)];refresh=1'>Refresh</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];close=1'>Close</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];refresh=1'>Refresh</A><BR>"
 	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=[REF(src)];togglestatus=1'>Toggle Status</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];togglestatus=1'>Toggle Status</A><BR>"
 
 	dat += "Stability: [stability]%<BR>"
 	dat += "Reactor parts: [linked_shielding.len]<BR>" //TODO: perhaps add some sort of stability check
 	dat += "Cores: [linked_cores.len]<BR><BR>"
 	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=[REF(src)];refreshstability=1'>(update)</A><BR>"
+	dat += "-Average Stability: [stored_core_stability] <A href='byond://?src=[REF(src)];refreshstability=1'>(update)</A><BR>"
 	dat += "Last Produced: [display_power(stored_power)]<BR>"
 
 	dat += "Fuel: "
 	if(!fuel_jar)
 		dat += "<BR>No fuel receptacle detected."
 	else
-		dat += "<A href='?src=[REF(src)];ejectjar=1'>Eject</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];ejectjar=1'>Eject</A><BR>"
 		dat += "- [fuel_jar.fuel]/[fuel_jar.fuel_max] Units<BR>"
 
 		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=[REF(src)];strengthdown=1'>--</A>|<A href='?src=[REF(src)];strengthup=1'>++</A><BR><BR>"
+		dat += "- <A href='byond://?src=[REF(src)];strengthdown=1'>--</A>|<A href='byond://?src=[REF(src)];strengthup=1'>++</A><BR><BR>"
 
 
-	user << browse(dat, "window=AMcontrol;size=420x500")
+	user << browse(HTML_SKELETON(dat), "window=AMcontrol;size=420x500")
 	onclose(user, "AMcontrol")
 	return
 

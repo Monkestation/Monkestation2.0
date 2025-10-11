@@ -2,6 +2,7 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Resume",
 			/* offset = */ 0,
@@ -12,28 +13,42 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
-			"Settings",
+			"Game Settings",
 			/* offset = */ 1,
-			CALLBACK(src, PROC_REF(home_open_settings)),
+			CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
 	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
+			src,
+			"Edit Character",
+			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ null,
 			src,
 			"Redeem Code",
-			/* offset = */ 2,
+			/* offset = */ 3,
 			CALLBACK(src, PROC_REF(start_redeem)),
 		)
 	)
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Open Lootbox",
-			/* offset = */ 3,
+			/* offset = */ 4,
 			CALLBACK(src, PROC_REF(try_open_lootbox)),
 		)
 	)
@@ -41,27 +56,30 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Open Map",
-			/* offset = */ 4,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_map)),
 		)
 	)
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Admin Help",
-			/* offset = */ 5,
+			/* offset = */ 6,
 		)
 	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/leave_body(
 			null,
+			/* hud_owner = */ null,
 			src,
 			"Leave Body",
-			/* offset = */ 6,
+			/* offset = */ 7,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -76,37 +94,19 @@
 	client?.try_open_or_buy_lootbox()
 
 /datum/escape_menu/proc/open_map()
-	var/redirect = ""
-	switch(SSmapping.config.map_name)
-		if("Ice Box Station")
-			redirect = "IceBoxStation"
-		if("Oshan Station")
-			redirect = "Oshan"
-		if("Kilo Station")
-			redirect = "KiloStation"
-		if("MetaStation")
-			redirect = "MetaStation"
-		if("NorthStar")
-			redirect = "NorthStar"
-		if("Delta Station")
-			redirect = "DeltaStation"
-		if("Tramstation")
-			redirect = "TramStation"
-		if("Blueshift")
-			redirect = "Blueshift"
-		if("Ouroboros")
-			redirect = "Ouroboros"
-		if("Void Raptor")
-			redirect = "VoidRaptor"
-	if(client)
-		client << link("https://maps.monkestation.com/Monke/[redirect]/")
+	var/url = SSmapping.current_map.mapping_url
+	if(url && client)
+		client << link(url)
 
-/datum/escape_menu/proc/home_open_settings()
-	client?.prefs.ui_interact(client?.mob)
-	qdel(src)
+/datum/escape_menu/proc/home_open_game_settings()
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_SETTINGS)
+
+/datum/escape_menu/proc/home_open_character_settings()
+	usr?.client?.prefs?.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 	VAR_PRIVATE
 		atom/movable/screen/escape_menu/home_button_text/home_button_text
@@ -115,6 +115,7 @@
 
 /atom/movable/screen/escape_menu/home_button/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,
@@ -127,6 +128,7 @@
 
 	home_button_text = new /atom/movable/screen/escape_menu/home_button_text(
 		src,
+		/* hud_owner = */ src,
 		button_text,
 	)
 
@@ -169,7 +171,7 @@
 		button_text
 		hovered = FALSE
 
-/atom/movable/screen/escape_menu/home_button_text/Initialize(mapload, button_text)
+/atom/movable/screen/escape_menu/home_button_text/Initialize(mapload, datum/hud/hud_owner, button_text)
 	. = ..()
 
 	src.button_text = button_text
@@ -201,6 +203,7 @@
 
 /atom/movable/screen/escape_menu/home_button/admin_help/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,
@@ -324,6 +327,7 @@
 
 /atom/movable/screen/escape_menu/home_button/leave_body/Initialize(
 	mapload,
+	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,

@@ -154,7 +154,7 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	cell_type = /obj/item/stock_parts/cell/bluespace;
+	cell_type = /obj/item/stock_parts/power_store/cell/bluespace;
 	start_charge = 100
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
@@ -162,10 +162,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+600
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/magical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (
@@ -282,7 +280,7 @@
 /area/shuttle/pirate)
 "aW" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "be" = (

@@ -7,6 +7,7 @@
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/limbgrower
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 
 	/// The category of limbs we're browing in our UI.
 	var/selected_category = SPECIES_HUMAN
@@ -21,7 +22,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/autounlocking/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_APID, SPECIES_ARACHNIDS, SPECIES_ETHEREAL, SPECIES_FLORAN, SPECIES_GOBLIN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_ORNITHID, SPECIES_PLASMAMAN, SPECIES_SATYR, RND_CATEGORY_LIMBS_OTHER,) // Monkestation Edit:
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 
@@ -149,7 +150,7 @@
 	if((user.istate & ISTATE_HARM)) //so we can hit the machine
 		return ..()
 
-/obj/machinery/limbgrower/ui_act(action, list/params)
+/obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -184,7 +185,7 @@
 				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
-			use_power(power)
+			use_energy(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			var/temp_category = params["active_tab"]

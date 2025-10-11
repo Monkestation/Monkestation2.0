@@ -30,6 +30,7 @@
 	if(!client)
 		return FALSE
 	canon_client = client
+	client.persistent_client.set_mob(src)
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
@@ -46,9 +47,9 @@
 
 	if(hud_used)
 		if (forced_interaction_mode)
-			client.imode.replace(forced_interaction_mode)
+			client.imode?.replace(forced_interaction_mode)
 		else
-			client.imode.reload_hud(src)
+			client.imode?.reload_hud(src)
 		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
 		if(!client)
 			return FALSE
@@ -94,32 +95,42 @@
 	sync_mind()
 
 	//Reload alternate appearances
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		if(!alt_hud.apply_to_new_mob(src))
+			alt_hud.hide_from(src, absolute = TRUE)
 
 	update_client_colour()
 	update_mouse_pointer()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
 		else
 			client.change_view(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))
 
-		if(client.player_details.player_actions.len)
-			for(var/datum/action/A in client.player_details.player_actions)
-				A.Grant(src)
+		for(var/datum/action/A as anything in persistent_client.player_actions)
+			A.Grant(src)
 
-		for(var/foo in client.player_details.post_login_callbacks)
-			var/datum/callback/CB = foo
+		for(var/datum/callback/CB as anything in persistent_client.post_login_callbacks)
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+#ifndef DISABLE_DEMOS
 	SSdemo.write_event_line("setmob [client.ckey] \ref[src]") //Monkestation Edit: REPLAYS
+#endif
 	log_mob_tag("NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)

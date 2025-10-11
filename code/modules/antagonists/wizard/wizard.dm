@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	preview_outfit = /datum/outfit/wizard
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
+	hardcore_random_bonus = TRUE
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -34,10 +35,11 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
-	antagpanel_category = "Wizard Federation"
+	antagpanel_category = ANTAG_GROUP_WIZARDS
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
 	show_name_in_check_antagonists = TRUE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE // monkestation addition
 	/// The wizard team this wizard minion is part of.
 	var/datum/team/wizard/wiz_team
 
@@ -113,7 +115,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /// Initialises the grand ritual action for this mob
 /datum/antagonist/wizard/proc/assign_ritual()
-	ritual = new(owner.current)
+	ritual = new(owner) //monkestation edit: adds directly to owner instead of owner.current
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -255,6 +257,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "Wizard Apprentice"
 	antag_hud_name = "apprentice"
 	can_assign_self_objectives = FALSE
+	move_to_lair = FALSE
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice

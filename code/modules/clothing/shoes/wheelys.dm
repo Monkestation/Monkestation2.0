@@ -11,7 +11,7 @@
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
+	// clothing_flags = LARGE_WORN_ICON MONKESTATION REMOVAL - Flag is no longer necessary
 	actions_types = list(/datum/action/item_action/wheelys)
 	///False means wheels are not popped out
 	var/wheelToggle = FALSE
@@ -57,6 +57,10 @@
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)
 	. = ..()
+
+/obj/item/clothing/shoes/wheelys/cheap
+	name = "Cheap Wheely-Heels"
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
 
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"

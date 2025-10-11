@@ -1,5 +1,5 @@
 /datum/movespeed_modifier/status_effect/bloodchill
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 2
 
 /datum/movespeed_modifier/status_effect/bonechill
 	multiplicative_slowdown = 3
@@ -56,3 +56,6 @@
 
 /datum/movespeed_modifier/status_effect/guardian_shield
 	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/status_effect/sledgehammer_thrown_stagger
+	multiplicative_slowdown = 3

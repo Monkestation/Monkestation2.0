@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
-	var/slowdown = affected_mob.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(has_cure())
 		if(SPT_PROB(cure_chance, seconds_per_tick))
@@ -106,18 +106,14 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) || HAS_TRAIT(affected_mob, TRAIT_NOBREATH) || affected_mob.check_airborne_sterility())
+		return
+
+	if((affected_mob.stat == DEAD) && process_dead == FALSE) // Only create clouds if we process our dead.
 		return
 
 	affected_mob.spread_airborne_diseases()
-	/*
-	var/turf/T = affected_mob.loc
-	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
-			var/turf/V = get_turf(C)
-			if(disease_air_spread_walk(T, V))
-				C.AirborneContractDisease(src, force_spread)
-	*/
+
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE

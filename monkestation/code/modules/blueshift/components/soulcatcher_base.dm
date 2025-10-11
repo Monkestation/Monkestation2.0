@@ -77,7 +77,8 @@ GLOBAL_LIST_EMPTY(soulcatchers)
  * * target_name - The name that we want to assign to the created room.
  * * target_desc - The description that we want to assign to the created room.
  */
-/datum/component/soulcatcher/proc/create_room(target_name = "Default Room", target_desc = "An orange platform suspended in space orbited by reflective cubes of various sizes. There really isn't much here at the moment.")
+/datum/component/soulcatcher/proc/create_room(target_name = "Default Room", \
+										target_desc = "An orange platform suspended in space orbited by reflective cubes of various sizes. There really isn't much here at the moment.")
 	var/datum/soulcatcher_room/created_room = new(src)
 	created_room.name = target_name
 	created_room.room_description = target_desc
@@ -302,7 +303,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	if(!message_to_send) //Why say nothing?
 		return FALSE
 
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+	var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 	var/tag = sheet.icon_tag("nif-soulcatcher")
 	var/soulcatcher_icon = ""
 

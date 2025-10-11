@@ -75,9 +75,9 @@
 	item_type = /obj/item/mod/module/rad_protection
 	cost = PAYCHECK_CREW
 
-/datum/armament_entry/company_import/nakamura_modsuits/protection_modules/emp_shield
+/datum/armament_entry/company_import/nakamura_modsuits/protection_modules/emp_shielding
 	item_type = /obj/item/mod/module/emp_shield
-	cost = PAYCHECK_CREW
+	cost = PAYCHECK_COMMAND * 2
 
 /datum/armament_entry/company_import/nakamura_modsuits/protection_modules/armor_plates
 	item_type = /obj/item/mod/module/armor_booster/retractplates
@@ -126,6 +126,11 @@
 	item_type = /obj/item/mod/module/springlock/contractor
 	cost = PAYCHECK_COMMAND * 2
 
+/datum/armament_entry/company_import/nakamura_modsuits/utility_modules/holster
+	item_type = /obj/item/mod/module/holster
+	cost = PAYCHECK_COMMAND * 3
+	restricted = TRUE
+
 // Mobility modules, jetpacks and stuff
 
 /datum/armament_entry/company_import/nakamura_modsuits/mobility_modules
@@ -145,10 +150,6 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/mobility_modules/pathfinder
 	item_type = /obj/item/mod/module/pathfinder
-	cost = PAYCHECK_CREW
-
-/datum/armament_entry/company_import/nakamura_modsuits/mobility_modules/disposals
-	item_type = /obj/item/mod/module/disposal_connector
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/nakamura_modsuits/mobility_modules/sphere
@@ -190,15 +191,3 @@
 /datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/hat_stabilizer
 	item_type = /obj/item/mod/module/hat_stabilizer
 	cost = PAYCHECK_CREW
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/kinesis
-	item_type = /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/antigrav
-	item_type = /obj/item/mod/module/anomaly_locked/antigrav/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 15
-
-/datum/armament_entry/company_import/nakamura_modsuits/novelty_modules/teleporter
-	item_type = /obj/item/mod/module/anomaly_locked/teleporter/prebuilt/locked
-	cost = PAYCHECK_COMMAND * 20

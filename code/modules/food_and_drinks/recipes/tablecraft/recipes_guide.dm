@@ -37,7 +37,6 @@
 	non_craftable = TRUE
 
 /datum/crafting_recipe/food/reaction/New()
-	. = ..()
 	if(!ispath(reaction, /datum/chemical_reaction))
 		return
 
@@ -80,6 +79,14 @@
 
 /datum/crafting_recipe/food/reaction/vanillapudding
 	reaction = /datum/chemical_reaction/food/vanillapudding
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/reaction/flan
+	reaction = /datum/chemical_reaction/food/flan
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/reaction/cherrypudding
+	reaction = /datum/chemical_reaction/food/cherrypudding
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/reaction/chocolatebar

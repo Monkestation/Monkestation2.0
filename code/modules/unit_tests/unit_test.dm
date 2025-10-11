@@ -126,15 +126,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
 		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
 	else
-		// We are probably running in real CI, so just pretend it worked and move on
+#ifdef CIBUILDING
+		// We are runing in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+#else
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+#endif
+
 
 /// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
 /datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
@@ -148,7 +151,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")
@@ -167,14 +170,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
 	log_world("::group::[test_path]")
 
 	if(skip_test)
-		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.current_map.map_name].")
 
 	else
 
@@ -220,6 +223,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
+	// The following are just generic, singular types.
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
@@ -246,14 +250,22 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
-		///this instant starts a timer, and if its being instantly deleted it can cause issues
-		/obj/machinery/atm,
-		/datum/hotspot,
+		/obj/machinery/atm, // starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
+		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
+		/obj/effect/transmission_beam, // relies on the existence of a PTL
+		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
+		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		/obj/effect/ghost_arena_corner, // this is used to mark two corners of the ghost arena at centcom, and should never be created outside of the two instances mapped in there
+		// THESE WILL EAT OTHER ITEMS AND ALSO LAZYLOAD AN AREA
+		/obj/structure/bingle_hole,
+		/obj/structure/bingle_pit_overlay,
+		// monkestation end
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -279,15 +291,15 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	ignore += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	ignore += typesof(/mob/camera/imaginary_friend)
+	ignore += typesof(/mob/eye/imaginary_friend)
 	//No pod to gondola
 	ignore += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	ignore += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	ignore += typesof(/mob/camera/ai_eye/remote/base_construction)
+	ignore += typesof(/mob/eye/ai_eye/remote/base_construction)
 	//See above
-	ignore += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	ignore += typesof(/mob/eye/ai_eye/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
@@ -324,14 +336,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
+
+	// monkestation start
 	///we need to use json_decode to run randoms properly
 	ignore += typesof(/obj/item/device/cassette_tape)
-	ignore += typesof(/datum/cassette/cassette_tape)
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
-	ignore += typesof(/datum/weather_event)
-	ignore += typesof(/datum/particle_weather)
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
+	// monkestation end
 
 	return ignore
 
@@ -347,13 +359,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

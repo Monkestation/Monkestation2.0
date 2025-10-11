@@ -70,13 +70,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(\
-			/datum/component/tameable,\
-			food_types = list(/obj/item/food/grown/ash_flora),\
-			tame_chance = 10,\
-			bonus_tame_chance = 5,\
-			after_tame = CALLBACK(src, PROC_REF(tamed)),\
-		)
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -91,6 +85,7 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, goliath_foods)
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+	update_appearance(UPDATE_OVERLAYS)
 
 
 /mob/living/basic/mining/goliath/Destroy()
@@ -142,6 +137,9 @@
 		return
 	balloon_alert(user, "ready to ride")
 	qdel(attacking_item)
+	make_rideable()
+
+/mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
 	buckle_lying = 0
 	add_overlay("goliath_saddled")
@@ -171,7 +169,7 @@
 	icon_state = tentacle_warning_state
 
 /// Get ready for mounting
-/mob/living/basic/mining/goliath/proc/tamed()
+/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
 	new /obj/effect/temp_visual/heart(src.loc)
 	tamed = TRUE
 	//monkestation edit
@@ -191,6 +189,24 @@
 
 /mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
+
+/// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
+/mob/living/basic/mining/goliath/deathmatch
+	saddled = TRUE
+	buckle_lying = 0
+
+/mob/living/basic/mining/goliath/deathmatch/Initialize(mapload)
+	. = ..()
+	make_rideable()
+
+/mob/living/basic/mining/goliath/deathmatch/make_rideable()
+	add_overlay("goliath_saddled")
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath/deathmatch)
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient

@@ -1,0 +1,1243 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"at" = (
+/obj/item/mail/junkmail,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"aE" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/cup/glass/bottle/champagne{
+	desc = "It's been a day.. Pass the good alcohol!";
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"aT" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/escape/engine)
+"dx" = (
+/obj/machinery/computer/communications,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ej" = (
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6;
+	name = "first class ticket field";
+	threshold = 1500
+	},
+/obj/structure/mineral_door/manual_colony_door{
+	name = "First Class";
+	desc = "Pulling this one wont create or handle an emergency, but it will get people richer than you screaming to go away."
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"fj" = (
+/turf/open/floor/catwalk_floor/titanium/Airless,
+/area/shuttle/escape)
+"gj" = (
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"hc" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"iw" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"iy" = (
+/obj/machinery/power/shuttle_engine/propulsion/right,
+/turf/open/floor/plating,
+/area/shuttle/escape/engine)
+"lg" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "haugan-class";
+	dir = 1;
+	name = "Poor People Remover"
+	},
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/escape)
+"lT" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/clothing/under/suit/waiter{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/clothing/under/suit/waiter{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/clothing/under/costume/maid,
+/obj/item/clothing/head/costume/maidheadband,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"mG" = (
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/brig)
+"nE" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"oc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "Shuttle Captain seat"
+	},
+/obj/effect/mob_spawn/corpse/human/clown,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"oi" = (
+/obj/structure/closet/crate/mail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/escape/engine)
+"om" = (
+/obj/item/holosign_creator/atmos{
+	desc = "How generous!";
+	pixel_y = -8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"oE" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"oG" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "wait staff seat"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"oL" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"pD" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 2;
+	name = "wait staff seat"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"qf" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/escape)
+"qi" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"qk" = (
+/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"qq" = (
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"rE" = (
+/turf/template_noop,
+/area/template_noop)
+"sT" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"tp" = (
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"tv" = (
+/obj/item/paper/fluff{
+	default_raw_text = "<center><h1>Plane Crash!</h1><br>1 die in fireball at Nanotrasen Proving Grounds!<br><i><font color='grey'>An image of a Yate Haugan Neo crashing is attached below.</font></i></center>";
+	name = "Recent Air News";
+	desc = "Unfortunate. Wonder what that implies for your shuttle.";
+	icon_state = "newspaper";
+	inhand_icon_state = "newspaper"
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"uG" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"uI" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/machinery/door/poddoor/preopen{
+	id = "haugan-mail";
+	dir = 8;
+	name = "Cargo Bay Seal"
+	},
+/turf/open/floor/plating/reinforced,
+/area/shuttle/escape/engine)
+"vj" = (
+/obj/structure/closet/crate/mail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"vW" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "non-reclining shuttle seat";
+	desc = "An uncomfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights. You aren't allowed to recline it, because its in front of an emergency exit."
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"wh" = (
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"xv" = (
+/obj/structure/closet/crate/large{
+	desc = "For you! since you must be in this class if you are willingly sitting in this room.";
+	name = "super-economy meals crate"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/knife/combat,
+/mob/living/basic/mouse/rat,
+/obj/item/food/bowled/wish,
+/turf/open/floor/iron/dark/textured_corner,
+/area/shuttle/escape/engine)
+"xw" = (
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"yf" = (
+/obj/structure/closet/crate/mail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/machinery/button/door/directional/north{
+	id = "haugan-mail";
+	name = "cargo door controller"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"Bs" = (
+/obj/structure/table/rolling,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"BQ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "Shuttle HoP seat"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"BS" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"Dh" = (
+/obj/structure/closet/crate/large,
+/obj/item/crowbar/large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/escape/engine)
+"DB" = (
+/obj/item/chair/plastic{
+	pixel_y = 20
+	},
+/obj/structure/sign/poster/contraband/microwave/directional/north,
+/obj/machinery/microwave,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 8
+	},
+/area/shuttle/escape/engine)
+"DI" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/chair,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/liquids_spawner{
+	reagent_list = list(/datum/reagent/blood = 50)
+	},
+/obj/item/organ/internal/butt{
+	pixel_y = -5
+	},
+/obj/item/shears{
+	pixel_y = -1;
+	pixel_x = -9
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/brig)
+"DK" = (
+/obj/machinery/modular_computer/preset/cargochat{
+	name = "ATC chatroom console";
+	console_department = "bingbing_airlines";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"DP" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"DY" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/button/door/directional/east{
+	id = "haugan-class";
+	name = "poor people sight remover"
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"EB" = (
+/obj/item/gps/computer/beacon{
+	name = "\improper Shuttle GPS beacon";
+	gpstag = "7500"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Fa" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig";
+	desc = "An impromptu, quickly constructed 'Holding Cell' for unruly passengers. Also doubles as a interrogation room.";
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/brig)
+"Fl" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape/engine)
+"Gp" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/mail/junkmail,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/escape/engine)
+"GN" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"HX" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape/engine)
+"Jb" = (
+/obj/machinery/power/shuttle_engine/propulsion/left,
+/turf/open/floor/plating,
+/area/shuttle/escape/engine)
+"Jf" = (
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/escape/brig)
+"Jv" = (
+/obj/structure/flippedtable,
+/obj/item/flashlight/lamp,
+/obj/effect/decal/cleanable/blood,
+/obj/item/food/badrecipe{
+	desc = "Must be super super economy."
+	},
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 4
+	},
+/area/shuttle/escape/brig)
+"JE" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"JI" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ki" = (
+/obj/structure/closet/crate/cardboard{
+	name = "economy in-flight meals box";
+	desc = "A box which contains meals for the masses. Noone would notice if you took <i>one</i>, right?"
+	},
+/obj/item/food/ready_donk/country_chicken,
+/obj/item/food/ready_donk/country_chicken,
+/obj/item/food/ready_donk/country_chicken,
+/obj/item/food/ready_donk/donkhiladas,
+/obj/item/food/ready_donk/donkhiladas,
+/obj/item/food/ready_donk/donkhiladas,
+/obj/item/food/ready_donk/donkrange_chicken,
+/obj/item/food/ready_donk/donkrange_chicken,
+/obj/item/food/ready_donk/donkrange_chicken,
+/obj/item/food/ready_donk/mac_n_cheese,
+/obj/item/food/ready_donk/mac_n_cheese,
+/obj/item/food/ready_donk/mac_n_cheese,
+/obj/item/food/ready_donk/nachos_grandes,
+/obj/item/food/ready_donk/nachos_grandes,
+/obj/item/food/ready_donk/nachos_grandes,
+/obj/item/food/ready_donk/salisbury_steak,
+/obj/item/food/ready_donk/salisbury_steak,
+/obj/item/food/ready_donk/salisbury_steak,
+/obj/item/food/peanuts/salted,
+/obj/item/food/peanuts/salted,
+/obj/item/food/peanuts/wasabi,
+/obj/item/food/peanuts/wasabi,
+/obj/item/food/peanuts/honey_roasted,
+/obj/item/food/peanuts/honey_roasted,
+/obj/item/food/peanuts/barbecue,
+/obj/item/food/peanuts/barbecue,
+/obj/item/food/peanuts,
+/obj/item/food/peanuts,
+/obj/item/storage/cans/sixsoda,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"LC" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Ml" = (
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/machinery/door/airlock/mining{
+	name = "Cargo Hold"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/turf/open/floor/plating/reinforced,
+/area/shuttle/escape/engine)
+"MP" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Nn" = (
+/obj/structure/chair/plastic{
+	dir = 8;
+	pixel_x = -5;
+	desc = "Also known as 'Super-Economy Class Seating' because they're paying to you sit in it."
+	},
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 1
+	},
+/area/shuttle/escape/engine)
+"Oh" = (
+/obj/machinery/door/airlock/command{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Op" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Os" = (
+/turf/open/floor/mineral/titanium/white/airless,
+/area/shuttle/escape)
+"OA" = (
+/obj/docking_port/mobile/emergency{
+	name = "Haugan emergency spaceplane";
+	port_direction = 4;
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/titanium/Airless,
+/area/shuttle/escape)
+"OJ" = (
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/cup/glass/bottle/wine,
+/obj/structure/closet/crate/freezer{
+	name = "first class in-flight meals freezer";
+	desc = "A freezer. as the name implies, it's contents are not for poor people, like you."
+	},
+/obj/item/food/bearsteak,
+/obj/item/food/bbqribs,
+/obj/item/food/cake/bscc,
+/obj/item/food/bonbon/chocolate_truffle,
+/obj/item/food/bonbon/chocolate_truffle,
+/obj/item/food/bonbon/caramel_truffle,
+/obj/item/food/bonbon/caramel_truffle,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 8
+	},
+/area/shuttle/escape/engine)
+"Sf" = (
+/obj/structure/mineral_door/manual_colony_door{
+	name = "Spaceplane Airlock";
+	desc = "<i>Pull in case of emergency</i> is etched into the front, alternatively, you can open it whilst there is no emergency to create one."
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Tb" = (
+/obj/structure/closet/secure_closet/medical1,
+/obj/item/stack/sheet/iron,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/healthanalyzer,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
+/obj/item/defibrillator/loaded,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"UN" = (
+/obj/structure/closet/crate/large{
+	name = "bulk EVA supplies crate";
+	desc = "Go ahead! throw it overboard for the rest of the crew to use! Whoever ordered it probably didnt need it as much as you did."
+	},
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva/plasmaman,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead,
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead,
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/iron/dark/textured_half,
+/area/shuttle/escape/engine)
+"VY" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Xr" = (
+/obj/structure/chair/comfy/brown{
+	color = "#c45c57";
+	dir = 2
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"XJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "Shuttle RD seat"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ym" = (
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"ZH" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "shuttle CMO seat"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+rE
+rE
+rE
+rE
+"}
+(2,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(3,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(4,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(5,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(6,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(7,1,1) = {"
+rE
+rE
+uG
+uG
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+uG
+sT
+HX
+Fl
+Fl
+Fl
+Fl
+Fl
+rE
+rE
+"}
+(8,1,1) = {"
+rE
+sT
+uG
+tp
+EB
+uG
+Xr
+aE
+BS
+oG
+qf
+MP
+LC
+GN
+LC
+Op
+LC
+Op
+LC
+GN
+LC
+Op
+Fl
+xv
+oi
+Jf
+Jv
+Fl
+Fl
+rE
+"}
+(9,1,1) = {"
+sT
+ag
+iw
+XJ
+VY
+uG
+Ym
+Ym
+DY
+VY
+qf
+VY
+LC
+Op
+LC
+Op
+LC
+Op
+LC
+Op
+LC
+Op
+Ml
+qq
+Gp
+mG
+gj
+aT
+Jb
+rE
+"}
+(10,1,1) = {"
+uG
+qk
+oc
+JI
+VY
+sT
+lg
+lg
+qf
+ej
+qf
+VY
+LC
+Op
+LC
+Op
+LC
+Op
+LC
+Op
+LC
+qi
+Fl
+yf
+lT
+Fa
+DI
+aT
+Jb
+rE
+"}
+(11,1,1) = {"
+uG
+tv
+JI
+JI
+VY
+Oh
+JE
+JE
+oE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+JE
+uI
+qq
+at
+xw
+Bs
+Fl
+Fl
+Fl
+"}
+(12,1,1) = {"
+uG
+dx
+BQ
+JI
+VY
+sT
+VY
+VY
+vW
+Op
+VY
+VY
+LC
+Op
+LC
+Op
+VY
+VY
+LC
+Op
+LC
+qi
+Fl
+vj
+DP
+at
+UN
+aT
+iy
+rE
+"}
+(13,1,1) = {"
+sT
+ag
+iw
+ZH
+VY
+sT
+Tb
+VY
+vW
+Op
+VY
+VY
+LC
+Op
+LC
+Op
+VY
+VY
+LC
+Op
+LC
+Op
+Ml
+qq
+at
+wh
+Ki
+aT
+iy
+rE
+"}
+(14,1,1) = {"
+rE
+sT
+uG
+oL
+DK
+sT
+pD
+VY
+vW
+Op
+om
+hc
+LC
+nE
+LC
+nE
+VY
+hc
+LC
+nE
+LC
+Op
+Fl
+DB
+OJ
+Dh
+Nn
+Fl
+Fl
+rE
+"}
+(15,1,1) = {"
+rE
+rE
+uG
+uG
+uG
+sT
+uG
+sT
+uG
+sT
+Sf
+sT
+uG
+sT
+uG
+sT
+Sf
+sT
+uG
+sT
+uG
+sT
+HX
+Fl
+Fl
+Fl
+Fl
+Fl
+rE
+rE
+"}
+(16,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(17,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(18,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(19,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(20,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+Os
+rE
+rE
+rE
+rE
+"}
+(21,1,1) = {"
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+fj
+rE
+rE
+rE
+rE
+rE
+OA
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+rE
+Os
+rE
+rE
+rE
+rE
+"}

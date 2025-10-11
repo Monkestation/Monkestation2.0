@@ -402,3 +402,78 @@
 		temp_gender = gender
 	if(temp_gender != PLURAL)
 		. = "es"
+
+/datum/mind/p_they(capitalized, temp_gender)
+	return current?.p_they(capitalized, temp_gender) || ..()
+
+/datum/mind/p_their(capitalized, temp_gender)
+	return current?.p_their(capitalized, temp_gender) || ..()
+
+/datum/mind/p_theirs(capitalized, temp_gender)
+	return current?.p_theirs(capitalized, temp_gender) || ..()
+
+/datum/mind/p_them(capitalized, temp_gender)
+	return current?.p_them(capitalized, temp_gender) || ..()
+
+/datum/mind/p_have(temp_gender)
+	return current?.p_have(temp_gender) || ..()
+
+/datum/mind/p_are(temp_gender)
+	return current?.p_are(temp_gender) || ..()
+
+/datum/mind/p_were(temp_gender)
+	return current?.p_were(temp_gender) || ..()
+
+/datum/mind/p_do(temp_gender)
+	return current?.p_do(temp_gender) || ..()
+
+/datum/mind/p_s(temp_gender)
+	return current?.p_s(temp_gender) || ..()
+
+/datum/mind/p_es(temp_gender)
+	return current?.p_es(temp_gender) || ..()
+
+//MONKESTATION EDIT START
+// Genders for plushies
+/obj/item/toy/plush/p_they(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "it"
+	switch(temp_gender)
+		if(FEMALE)
+			. = "she"
+		if(MALE)
+			. = "he"
+		if(PLURAL)
+			. = "they"
+	if(capitalized)
+		. = capitalize(.)
+
+/obj/item/toy/plush/p_have(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "has"
+	if(temp_gender == PLURAL)
+		. = "have"
+
+/obj/item/toy/plush/p_their(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "its"
+	switch(temp_gender)
+		if(FEMALE)
+			. = "her"
+		if(MALE)
+			. = "his"
+		if(PLURAL)
+			. = "their"
+	if(capitalized)
+		. = capitalize(.)
+
+/obj/item/toy/plush/p_are(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	. = "is"
+	if(temp_gender == PLURAL)
+		. = "are"
+//MONKESTATION EDIT END

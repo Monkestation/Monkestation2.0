@@ -4,6 +4,7 @@
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
 	suicide_cry = "HAHAHAHAHA!!"
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE // monkestation addition
 
 /datum/antagonist/wishgranter/forge_objectives()
 	var/datum/objective/hijack/hijack = new
@@ -25,7 +26,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-	H.dna.add_mutation(/datum/mutation/human/hulk)
-	H.dna.add_mutation(/datum/mutation/human/xray)
-	H.dna.add_mutation(/datum/mutation/human/pressure_adaptation)
-	H.dna.add_mutation(/datum/mutation/human/telekinesis)
+	H.dna.add_mutation(/datum/mutation/hulk, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/xray, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/pressure_adaptation, MUTATION_SOURCE_WISHGRANTER)
+	H.dna.add_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_WISHGRANTER)

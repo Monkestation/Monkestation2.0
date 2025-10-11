@@ -11,8 +11,8 @@
 	var/step_delay = 1
 
 	// This is to stop squeak spam from inhand usage
-	var/last_use = 0
-	var/use_delay = 20
+	COOLDOWN_DECLARE(spam_cooldown)
+	var/use_delay = 2 SECONDS
 
 	///extra-range for this component's sound
 	var/sound_extra_range = -1
@@ -37,7 +37,7 @@
 		AddComponent(/datum/component/connect_loc_behalf, parent, item_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposing_react))
 		if(isitem(parent))
-			RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), PROC_REF(play_squeak))
+			RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_HIT_REACT), PROC_REF(play_squeak))
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(use_squeak))
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
@@ -82,6 +82,11 @@
 /datum/component/squeak/proc/step_squeak()
 	SIGNAL_HANDLER
 
+	if(istype(parent, /obj/item/clothing/shoes/clown_shoes/cluwne))
+		var/obj/item/clothing/shoes/clown_shoes/cluwne/shoe = parent
+		if(shoe.sound_dampener)
+			return
+
 	if(steps > step_delay)
 		play_squeak()
 		steps = 0
@@ -99,6 +104,10 @@
 		return
 	if(ismob(arrived) && !arrived.density) // Prevents 10 overlapping mice from making an unholy sound while moving
 		return
+	if(isliving(arrived))
+		var/mob/living/living_arrived = arrived
+		if(living_arrived.mob_size < MOB_SIZE_HUMAN)
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent?.loc))
 		play_squeak()
@@ -106,8 +115,8 @@
 /datum/component/squeak/proc/use_squeak()
 	SIGNAL_HANDLER
 
-	if(last_use + use_delay < world.time)
-		last_use = world.time
+	if(COOLDOWN_FINISHED(src, spam_cooldown))
+		COOLDOWN_START(src, spam_cooldown, use_delay)
 		play_squeak()
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)

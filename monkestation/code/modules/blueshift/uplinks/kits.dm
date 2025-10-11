@@ -19,7 +19,7 @@
 	name = "M-90gl Carbine Case (Hard)"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine \
 		with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with two spare magazines \
-		and a box of 40mm rubber slugs."
+		and a box of 40mm HE."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 	cost = 14
 
@@ -37,13 +37,6 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	cost = 14 // normally 16
 	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
-	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
-	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
-		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
-	cost = 16
-	item = /obj/item/storage/toolbox/guncase/rocketlauncher
 
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase
 	name = "Syndicate Revolver Case (Moderate)"

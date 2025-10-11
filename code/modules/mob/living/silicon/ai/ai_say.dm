@@ -4,14 +4,17 @@
 	return ..()
 
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
-	var/mob/M = speaker.GetSource()
+//	var/mob/M = speaker.GetSource() // MONKESTATION EDIT OLD
+	var/mob/M = speaker.GetJob() // MONKESTATION EDIT NEW -- NTSL
 	if(M)
-		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
+		return "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+	if(jobtitles)
+		return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+	return "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	// AIs cannot speak if silent AI is on.
@@ -54,101 +57,45 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-#define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
+/mob/living/silicon/ai
+	var/datum/vox_holder/ai/vox_holder
 
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
+/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+	. = ..()
+	vox_holder = new(src)
 
-	if(incapacitated())
-		return
+/mob/living/silicon/ai/Destroy()
+	QDEL_NULL(vox_holder)
+	return ..()
 
-	var/dat = {"
-	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
-	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
-	<UL><LI>You can also click on the word to PREVIEW it.</LI>
-	<LI>You can only say 30 words for every announcement.</LI>
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
-	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
-	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
-	"}
+/datum/vox_holder/ai
+	check_hearing = TRUE
+	var/mob/living/silicon/ai/parent
 
-	var/index = 0
-	for(var/word in GLOB.vox_sounds)
-		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
-			dat += " / "
+/datum/vox_holder/ai/New(mob/living/silicon/ai/parent)
+	. = ..()
+	src.parent = parent
 
-	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
-	popup.set_content(dat)
-	popup.open()
+/datum/vox_holder/ai/Destroy(force)
+	parent = null
+	return ..()
 
+/datum/vox_holder/ai/ui_host(mob/user)
+	return parent
 
-/mob/living/silicon/ai/proc/announcement()
-	var/static/announcing_vox = 0 // Stores the time of the last announcement
-	if(announcing_vox > world.time)
-		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
-		return
+/datum/vox_holder/ai/ui_state(mob/user)
+	return GLOB.default_state
 
-	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
+/datum/vox_holder/ai/default_origin_turf(mob/speaker)
+	return get_turf(parent)
 
-	if(!message || announcing_vox > world.time)
-		return
-
-	last_announcement = message
-
-	if(incapacitated())
-		return
-
-	if(control_disabled)
-		to_chat(src, span_warning("Wireless interface disabled, unable to interact with announcement PA."))
-		return
-
-	var/list/words = splittext(trim(message), " ")
-	var/list/incorrect_words = list()
-
-	if(words.len > 30)
-		words.len = 30
-
-	for(var/word in words)
-		word = lowertext(trim(word))
-		if(!word)
-			words -= word
-			continue
-		if(!GLOB.vox_sounds[word])
-			incorrect_words += word
-
-	if(incorrect_words.len)
-		to_chat(src, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
-		return
-
-	announcing_vox = world.time + VOX_DELAY
-
-	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
-	log_talk(message, LOG_SAY, tag="VOX Announcement")
-
-	var/list/players = list()
-	var/turf/ai_turf = get_turf(src)
-	for(var/mob/player_mob as anything in GLOB.player_list)
-		var/turf/player_turf = get_turf(player_mob)
-		if(is_valid_z_level(ai_turf, player_turf))
-			players += player_mob
-	minor_announce(capitalize(message), "[name] announces:", players = players, should_play_sound = FALSE)
-
-	for(var/word in words)
-		play_vox_word(word, ai_turf, null)
-
-
-/proc/play_vox_word(word, ai_turf, mob/only_listener)
+/proc/play_vox_word_legacy(word, ai_turf, mob/only_listener)
 
 	word = lowertext(word)
 
-	if(GLOB.vox_sounds[word])
-
-		var/sound_file = GLOB.vox_sounds[word]
+	var/datum/vox_voice/used_vox_voice = GLOB.vox_voices[/datum/vox_voice/normal::name]
+	if(used_vox_voice.sounds[word])
+		var/sound_file = used_vox_voice.sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
@@ -172,6 +119,4 @@
 			SEND_SOUND(only_listener, voice)
 		return TRUE
 	return FALSE
-
-#undef VOX_DELAY
 #endif

@@ -3,6 +3,7 @@
 		TRAIT_GENELESS,
 		TRAIT_NEVER_WOUNDED,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
@@ -28,9 +29,3 @@
 	user.update_sight()
 	if(!QDELETED(signer))
 		QDEL_NULL(signer)
-
-/datum/species/abductor/get_scream_sound(mob/living/carbon/human/human)
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'
-
-/datum/species/abductor/get_laugh_sound(mob/living/carbon/human/human)
-	return 'sound/weather/ashstorm/inside/weak_end.ogg'

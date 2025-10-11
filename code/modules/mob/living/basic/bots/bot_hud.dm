@@ -1,13 +1,11 @@
 /mob/living/basic/bot/proc/diag_hud_set_bothealth()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/icon_image = icon(icon, icon_state, dir)
-	holder.pixel_y = icon_image.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/our_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = our_icon.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	if(bot_mode_flags & BOT_MODE_ON)
 		holder.icon_state = "hudstat"
 		return
@@ -18,8 +16,7 @@
 
 /mob/living/basic/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	var/image/holder = hud_list[DIAG_BOT_HUD]
-	var/icon/icon_image = icon(icon, icon_state, dir)
-	holder.pixel_y = icon_image.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return
@@ -47,12 +44,14 @@
 	if(isnull(ai_controller))
 		return
 
+	//Removes path images and handles removing hud client images
 	clear_path_hud()
+
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 
 	var/atom/move_target = ai_controller.current_movement_target
 	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
@@ -61,9 +60,6 @@
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
 		return
-
-	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
-		hud.remove_atom_from_hud(src)
 
 	for(var/index in 1 to our_path.len)
 		if(index == 1 || index == our_path.len)
@@ -117,4 +113,9 @@
 		var/image/our_image = current_pathed_turfs[index]
 		animate(our_image, alpha = 0, time = 0.3 SECONDS)
 		current_pathed_turfs -= index
+
+	// Call hud remove handlers to ensure viewing user client images are removed
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
 

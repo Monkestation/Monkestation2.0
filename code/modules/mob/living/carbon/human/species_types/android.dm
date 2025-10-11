@@ -1,16 +1,13 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	species_traits = list(
-		NO_DNA_COPY,
-		NOTRANSSTING,
-		NO_UNDERWEAR,
-		NOHUSK,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_HUSK,
 		TRAIT_GENELESS,
-		TRAIT_LIMBATTACHMENT,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
@@ -24,6 +21,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_VIRUSIMMUNE,
 		// monkestation edit: making androids closer to IPCs
 		TRAIT_REVIVES_BY_HEALING,
@@ -49,11 +47,8 @@
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	mutantbutt = /obj/item/organ/internal/butt/cyber
 	species_language_holder = /datum/language_holder/synthetic
-	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	reagent_tag = PROCESS_SYNTHETIC // They don't HAVE a liver, but if they did, they'd have synthetic chem processing.
-	special_step_sounds = list('sound/effects/servostep.ogg')
-
 
 
 	bodypart_overrides = list(
@@ -64,7 +59,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
-	examine_limb_id = SPECIES_HUMAN
 
 
 //Taken from TGstation
@@ -112,8 +106,3 @@
 	),
 	)
 	return to_add
-
-/datum/species/android/on_species_gain(mob/living/carbon/C)
-	. = ..()
-	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
-	C.set_safe_hunger_level()

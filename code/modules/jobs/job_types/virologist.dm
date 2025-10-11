@@ -44,7 +44,7 @@
 		// End Monkestation Addition
 	)
 	rpg_title = "Plague Doctor"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/outfit/job/virologist
@@ -62,6 +62,7 @@
 	belt = /obj/item/modular_computer/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
+	gloves = /obj/item/clothing/gloves/latex
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/virology

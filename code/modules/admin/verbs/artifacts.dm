@@ -1,23 +1,16 @@
 /datum/artifactpanel
-	var/user
+	var/client/user
 
-/datum/admins/proc/open_artifactpanel()
-	set category = "Admin.Game"
-	set name = "Artifact Panel"
-	set desc = "Artifact panel"
+ADMIN_VERB(open_artifactpanel, R_ADMIN, FALSE, "Artifact Panel", "Opens the artifact panel.", ADMIN_CATEGORY_GAME)
+	var/datum/artifactpanel/artifactpanel = new(user)
 
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/datum/artifactpanel/artifactpanel = new(usr)
-
-	artifactpanel.ui_interact(usr)
+	artifactpanel.ui_interact(user.mob)
 
 /datum/artifactpanel/New(to_user, mob/living/silicon/robot/to_borg)
-	user = CLIENT_FROM_VAR(to_user)
+	user = to_user
 
 /datum/artifactpanel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/artifactpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -26,10 +19,15 @@
 		ui.open()
 
 /datum/artifactpanel/ui_data(mob/user)
-	. = list()
-	.["artifacts"] = list()
+	. = list("artifacts" = list())
 	for(var/obj/art in GLOB.running_artifact_list)
 		var/datum/component/artifact/component = GLOB.running_artifact_list[art]
+		var/list/activators = list()
+		for(var/datum/artifact_activator/activator as anything in component.activators)
+			activators += activator.name
+		var/list/effect = list()
+		for(var/datum/artifact_effect/effects as anything in component.artifact_effects)
+			effect += effects.type_name
 		.["artifacts"] += list(list(
 			"name" = art.name,
 			"ref" = REF(art),
@@ -37,6 +35,9 @@
 			"active" = component.active,
 			"typename" = component.type_name,
 			"lastprint" = "[art.fingerprintslast]",
+			"trigger" = english_list(activators, nothing_text = "None"),
+			"effect" = english_list(effect, nothing_text = "None"),
+			"fault" = component.chosen_fault?.name,
 		))
 
 /datum/artifactpanel/ui_act(action, params)
