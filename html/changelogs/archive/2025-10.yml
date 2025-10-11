@@ -402,3 +402,60 @@
   Absolucy:
   - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
       it prints out a whole stack of cables.
+  - qol: You can now search for specific signal names in the GPS's UI.
+  - qol: Portable liquid pumps now take 0.5 seconds to (un)wrench, instead of 2 seconds.
+  - qol: Portable liquid pumps now suck up reagents from adjacent tiles, in addition
+      to the tile its currently on.
+  - code_imp: Improved portable liquid pump code slightly.
+  Coll6:
+  - bugfix: Mortar an pestle, piggyback riding, and the processor console.
+  MrMelbert:
+  - code_imp: Adds a unit test for chair buckling
+  TheColorCyan:
+  - qol: (ghost) Gives Health sensor assemblies a UI so its easier to use.
+  - bugfix: fixes clock cult abilities using too little power
+  - bugfix: fixes clock cult regenerating and getting too little power from integration
+      cogs
+  - bugfix: clock sense no longer displays only half of the available power
+  - bugfix: fixes drying racks spitting out matter bins on deconstruction
+  - bugfix: fixes unusuals being unable to be disabled
+  ThePooba:
+  - bugfix: interacting with shallow puddles now does stuff (walking without shoes
+      and slipping into it)
+  - rscadd: you can now craft the raised and lowered tiles for liquids
+  - bugfix: coffin invisibility
+  - bugfix: tempgun hot and cold mode not having an effect
+  - bugfix: the cryo and pyro pistols now work as intended and do damage
+  Xander3359:
+  - bugfix: Fixed mech chargers not giving enough charge to charge a mech
+  - bugfix: (Melbert) Dragging defibs and modsuits off your back works again
+  - bugfix: (SyncIt21) actions buttons can be dragged anywhere again
+  - balance: (necromanceranne) Gravity anomalies can be properly clicked. Rather than
+      chain stunning you, the anomaly will knock you down. You can avoid the negatives
+      of gravity anomalies by wearing magboots. (Yes, it did not really protect you
+      until now)
+  - balance: (necromanceranne) Flux anomalies detonate in a much smaller explosion,
+      but release a wide EMP as well.
+  - balance: (necromanceranne) Long range gas analyzers can now scan anomalies.
+  - spellcheck: (lelandkemble) whispering now spelled correctly
+  - balance: (Ghommie) airlocks affected by dimensional anomalies retain their access,
+      as well as access-adjacent attributes such as emergency access and unrestricted
+      sides.
+  - bugfix: (Ghommie) Bluespace anomalies should no longer teleport 'un-teleportable'
+      mobs like anchored AIs or megafauna.
+  - bugfix: (Jacquerel) Neutralising an anomaly cannot produce more anomaly cores
+      than are supposed to exist in a single round
+  - code_imp: (SyncIt21) removes a redundant var from anomaly effects
+  - bugfix: (SyncIt21) Fixes runtimes for some anomaly effects
+  flleeppyy:
+  - sound: tank dispensers now have noises.
+  - code_imp: changed the pull request templating to include testing, and pre-merge
+      checklist
+  notghosti:
+  - bugfix: Holy water processes in synthetic mobs, meaning they can now be deconverted
+  - rscadd: Chicken scanners are now printable, and unlocked same time plant scanners
+      are.
+  - code_imp: Chicken scanners node now have correct sorting flags
+  - map: Extended the decal of caution across the chicken room
+  - map: Icebox chicken room has chicken scanners
+  - map: Icebox botany/chicken room distro been cleaned to use less piping.

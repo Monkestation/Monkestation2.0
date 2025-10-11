@@ -1334,6 +1334,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
+///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
+#define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+
 ///Trait given to atoms currently affected by projectile dampeners
 #define TRAIT_GOT_DAMPENED "got_dampened"
 
