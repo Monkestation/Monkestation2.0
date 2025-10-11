@@ -3,10 +3,10 @@
 	description = "The Nosferatu Clan is unable to blend in with the crew, with no abilities such as Masquerade and Veil. \n\
 		Additionally, has a permanent bad back and looks like a Bloodsucker upon a simple examine by those in touch with the occult, and is entirely unidentifiable, \n\
 		they can fit in the vents regardless of their form and equipment. \n\
-		The Favorite Vassal is permanetly disfigured, and can also ventcrawl, but only while entirely nude."
+		The Favorite Vassal is permanently disfigured, and can also ventcrawl, but only while entirely nude."
 	clan_objective = /datum/objective/bloodsucker/kindred
 	join_icon_state = "nosferatu"
-	join_description = "You are permanetly disfigured, look like a Bloodsucker to all who examine you, \
+	join_description = "You are permanently disfigured, look like a Bloodsucker to all who examine you, \
 		lose your Masquerade ability, but gain the ability to Ventcrawl even while clothed."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
 	banned_powers = list(/datum/action/cooldown/bloodsucker/masquerade, /datum/action/cooldown/bloodsucker/veil)

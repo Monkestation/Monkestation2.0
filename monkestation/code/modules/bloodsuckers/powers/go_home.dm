@@ -1,33 +1,25 @@
 
-#define GOHOME_START 0
-#define GOHOME_FLICKER_ONE 2
-#define GOHOME_FLICKER_TWO 4
-#define GOHOME_TELEPORT 6
-
 /**
- * Given to Bloodsuckers near Sol if they have a Coffin claimed.
- * Teleports them to their Coffin after a delay.
+ * Given to Bloodsuckers if they have a Coffin claimed.
+ * Teleports them to their Coffin on use.
  * Makes them drop everything if someone witnesses the act.
  */
 /datum/action/cooldown/bloodsucker/gohome
 	name = "Vanishing Act"
-	desc = "As dawn aproaches, disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
+	desc = "Disperse into mist and return directly to your Lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
 	button_icon_state = "power_gohome"
 	active_background_icon_state = "vamp_power_off_oneshot"
 	base_background_icon_state = "vamp_power_off_oneshot"
 	power_explanation = "Vanishing Act: \n\
 		Activating Vanishing Act will, after a short delay, teleport the user to their Claimed Coffin. \n\
-		The power will cancel out if the Claimed Coffin is somehow destroyed. \n\
-		Immediately after activating, lights around the user will begin to flicker. \n\
+		Immediately after activating, lights around the user will temporarily flicker. \n\
 		Once the user teleports to their coffin, in their place will be a Rat or Bat."
-	power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
+	power_flags = BP_AM_STATIC_COOLDOWN
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	purchase_flags = NONE
 	bloodcost = 100
-	constant_bloodcost = 2
-	cooldown_time = 100 SECONDS
-	///What stage of the teleportation are we in
-	var/teleporting_stage = GOHOME_START
+	cooldown_time = 5 MINUTES
+
 	///The types of mobs that will drop post-teleportation.
 	var/static/list/spawning_mobs = list(
 		/mob/living/basic/mouse = 3,
@@ -46,49 +38,29 @@
 	if (!check_teleport_valid(owner, bloodsuckerdatum_power.coffin, TELEPORT_CHANNEL_MAGIC))
 		owner.balloon_alert(owner, "something holds you back!")
 		return FALSE
-	
+
 	if((bloodsuckerdatum_power.bloodsucker_blood_volume-get_blood_cost()) <= bloodsuckerdatum_power.frenzy_threshold)
 		owner.balloon_alert(owner, "using this would send you into a frenzy!")
 		return FALSE
-	
+
+	if(!isturf(owner.loc))
+		owner.balloon_alert(owner, "you cannot teleport right now!")
+		return FALSE
+
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/gohome/ActivatePower(trigger_flags)
 	. = ..()
-	owner.balloon_alert(owner, "preparing to teleport...")
 
-/datum/action/cooldown/bloodsucker/gohome/process(seconds_per_tick)
-	. = ..()
-	if(!.)
-		return FALSE
+	var/turf/old_turf = get_turf(owner)
 
-	switch(teleporting_stage)
-		if(GOHOME_START)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 3, 20)
-		if(GOHOME_FLICKER_ONE)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 4, 40)
-		if(GOHOME_FLICKER_TWO)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 4, 60)
-		if(GOHOME_TELEPORT)
-			INVOKE_ASYNC(src, PROC_REF(teleport_to_coffin), owner)
-	teleporting_stage++
+	teleport_to_coffin(owner)
+	flicker_lights(4, 60, old_turf)
 
-/datum/action/cooldown/bloodsucker/gohome/ContinueActive(mob/living/user, mob/living/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!isturf(owner.loc))
-		return FALSE
-	if(QDELETED(bloodsuckerdatum_power.coffin))
-		user.balloon_alert(user, "coffin destroyed!")
-		to_chat(owner, span_warning("Your coffin has been destroyed! You no longer have a destination."))
-		return FALSE
-	return TRUE
-
-/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume)
-	for(var/obj/machinery/light/nearby_lights in view(flicker_range, get_turf(owner)))
+/datum/action/cooldown/bloodsucker/gohome/proc/flicker_lights(flicker_range, beat_volume, turf/source_turf)
+	for(var/obj/machinery/light/nearby_lights in view(flicker_range, source_turf))
 		nearby_lights.flicker(5)
-	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
+	playsound(source_turf, 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
 /datum/action/cooldown/bloodsucker/gohome/proc/teleport_to_coffin(mob/living/carbon/user)
 	var/drop_item = FALSE
@@ -130,8 +102,3 @@
 
 /datum/effect_system/steam_spread/bloodsucker
 	effect_type = /obj/effect/particle_effect/fluid/smoke/vampsmoke
-
-#undef GOHOME_START
-#undef GOHOME_FLICKER_ONE
-#undef GOHOME_FLICKER_TWO
-#undef GOHOME_TELEPORT

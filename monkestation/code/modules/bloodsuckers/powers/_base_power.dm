@@ -33,13 +33,11 @@
 	/// If the Power is currently active, differs from action cooldown because of how powers are handled.
 	var/active = FALSE
 	///Can increase to yield new abilities - Each Power ranks up each Rank
-	var/level_current = 0
+	var/level_current = 1
 	///The cost to ACTIVATE this Power
 	var/bloodcost = 0
 	///The cost to MAINTAIN this Power - Only used for Constant Cost Powers
 	var/constant_bloodcost = 0
-	/// A multiplier for the bloodcost during sol.
-	var/sol_multiplier
 
 	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
 	var/stupid_looping_timer_id
@@ -57,25 +55,12 @@
 	bloodsuckerdatum_power = null
 	return ..()
 
-/datum/action/cooldown/bloodsucker/proc/on_sol_warning(datum/source, danger_level, vampire_warning_message, vassal_warning_message)
-	SIGNAL_HANDLER
-	if(danger_level != DANGER_LEVEL_SOL_ROSE || !active)
-		return
-	if(check_flags & BP_CANT_USE_DURING_SOL)
-		if(can_deactivate())
-			to_chat(owner, span_userdanger("Sol prevents you from using [name]!"), type = MESSAGE_TYPE_WARNING)
-			DeactivatePower()
-	else if(sol_multiplier)
-		to_chat(owner, span_userdanger("Sol burdens your body, [name] now costs more blood to upkeep!"), type = MESSAGE_TYPE_WARNING)
-
-/// Gets the current cost of the ability, accounting for `sol_multiplier` during Sol.
-/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE, cost_override = null)
-	if(isnull(cost_override))
-		. = constant ? constant_bloodcost : bloodcost
+/// Gets the activation cost of the ability. If constant is TRUE, returns the upkeep cost instead.
+/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE)
+	if (constant)
+		return constant_bloodcost
 	else
-		. = cost_override
-	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
-		. *= sol_multiplier
+		return bloodcost
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -191,9 +176,6 @@
 		if(!can_upkeep)
 			to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 			return FALSE
-	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
-		to_chat(user, span_warning("You can't use [src] during Sol!"))
-		return FALSE
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
@@ -201,7 +183,7 @@
 	// Calculate Cooldown (by power's level)
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
 		cooldown_time = initial(cooldown_time)
-	else
+	else if (!(power_flags & BP_AM_CUSTOM_COOLDOWN))
 		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
 	. = ..()
@@ -215,8 +197,16 @@
 	return active
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
+	var/bloodcost
+
+	if (cost_override)
+		bloodcost = cost_override
+	else
+		bloodcost = get_blood_cost()
+
+	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
+
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = get_blood_cost(cost_override = cost_override)
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
@@ -234,8 +224,6 @@
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
 
-	var/bloodcost = get_blood_cost()
-	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons()
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()
@@ -273,12 +261,13 @@
 
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(QDELETED(user))
-		return FALSE
-	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
 		return FALSE
 	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
+
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	if(constant_bloodcost <= 0)
 		return TRUE
@@ -310,10 +299,10 @@
 /datum/action/cooldown/bloodsucker/proc/get_power_explanation()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
-	if(level_current != 0)
-		. += "LEVEL: [level_current] [name]:"
-	else
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 		. += "(Inherent Power) [name]:"
+	else
+		. += "LEVEL: [level_current] [name]:"
 
 	. += get_power_explanation_extended()
 
@@ -323,10 +312,10 @@
 /datum/action/cooldown/bloodsucker/proc/get_power_desc()
 	SHOULD_CALL_PARENT(TRUE)
 	var/new_desc = ""
-	if(level_current != 0)
-		new_desc += "<br><b>LEVEL:</b> [level_current]"
-	else
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 		new_desc += "<br><b>(Inherent Power)</b>"
+	else
+		new_desc += "<br><b>LEVEL:</b> [level_current]"
 	if(bloodcost > 0)
 		new_desc += "<br><br><b>COST:</b> [bloodcost] Blood"
 	if(constant_bloodcost > 0)

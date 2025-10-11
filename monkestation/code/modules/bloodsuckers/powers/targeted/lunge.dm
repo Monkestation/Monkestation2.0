@@ -4,26 +4,26 @@
 	button_icon_state = "power_lunge"
 	power_explanation = "Predatory Lunge:\n\
 		Click any player to start spinning wildly and, after a short delay, dash at them.\n\
+		This has a max range of 4 tiles.\n\
 		When lunging at someone, you will grab them, immediately starting off at aggressive.\n\
 		Riot gear and Monster Hunters are protected and will only be passively grabbed.\n\
 		You cannot use the Power if you are already grabbing someone, or are being grabbed.\n\
 		If you grab from behind, or from darkness (Cloak of Darkness works), you will knock the target down.\n\
 		If used on a dead body, will tear their heart out.\n\
-		Higher levels increase the knockdown dealt to enemies.\n\
-		At level 4, you will no longer spin, but you will be limited to tackling from only 6 tiles away."
+		Higher levels increase the knockdown dealt to enemies & the range of the ability.\n\
+		At level 3, you will no longer spin and will instead lunge immediately."
 	power_flags = NONE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 10
-	sol_multiplier = 15
 	cooldown_time = 10 SECONDS
 	power_activates_immediately = FALSE
+	target_range = 4
 
 /datum/action/cooldown/bloodsucker/targeted/lunge/upgrade_power()
 	. = ..()
-	//range is lowered when you get stronger.
-	if(level_current > 3)
-		target_range = 6
+
+	target_range++
 
 /datum/action/cooldown/bloodsucker/targeted/lunge/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -66,7 +66,7 @@
 /datum/action/cooldown/bloodsucker/targeted/lunge/FireTargetedPower(atom/target_atom)
 	. = ..()
 	owner.face_atom(target_atom)
-	if(level_current > 3)
+	if(level_current >= 3)
 		do_lunge(target_atom)
 		return
 
@@ -86,7 +86,7 @@
 		var/y_offset = base_y + rand(-3, 3)
 		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
-	if(!do_after(owner, 4 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_SLOWDOWNS), extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom), hidden = TRUE))
+	if(!do_after(owner, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_SLOWDOWNS), extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom), hidden = TRUE))
 		end_target_lunge(base_x, base_y)
 
 		return FALSE
