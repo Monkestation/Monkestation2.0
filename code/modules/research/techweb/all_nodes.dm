@@ -72,6 +72,7 @@
 		"igniter",
 		"infrared_emitter",
 		"intercom_frame",
+		"inspector_booth",
 		"kitchen_knife",
 		"recipe_card",
 		"bottling_kit",

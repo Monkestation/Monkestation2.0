@@ -1560,3 +1560,13 @@
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
 	)
+
+/obj/item/circuitboard/machine/inspector_booth
+	name = "Inspector Booth"
+	build_path = /obj/machinery/inspector_booth
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stack/sheet/glass = 1
+	)
