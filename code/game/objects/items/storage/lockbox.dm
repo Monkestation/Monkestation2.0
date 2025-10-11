@@ -145,7 +145,7 @@
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in hand to [open ? "close":"open"] it in order to access contents.")
+	. += span_notice("Use in hand to [open ? "close it":"open it in order to access contents"].")
 
 /obj/item/storage/lockbox/medal/attack_self(mob/user, modifiers)
 	// . = ..()
