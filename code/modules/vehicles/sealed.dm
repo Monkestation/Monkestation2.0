@@ -118,8 +118,10 @@
 	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
-	else
-		inserted_key.equip_to_best_slot(user)
+		inserted_key = null
+		return
+	if(!inserted_key.equip_to_best_slot(user))
+		inserted_key.forceMove(get_turf(src))
 	inserted_key = null
 
 /obj/vehicle/sealed/Destroy()
