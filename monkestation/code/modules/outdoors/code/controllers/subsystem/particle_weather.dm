@@ -133,7 +133,8 @@ SUBSYSTEM_DEF(particle_weather)
 /datum/controller/subsystem/particle_weather/proc/disable()
 	flags |= SS_NO_FIRE
 	enabled = FALSE
-	stop_weather()
+	stop_weather("Default")
+	stop_weather("Eclipse")
 
 /datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = FALSE, eclipse = FALSE)
 	if(!enabled)
