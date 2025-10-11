@@ -649,6 +649,14 @@ ADMIN_VERB(run_empty_query, R_DEBUG, FALSE, "Run Empty Query", "Runs a specified
 
 	message_admins("[key_name_admin(user)] ran [val] empty queries.")
 
+ADMIN_VERB(test_pathfinding, R_DEBUG, FALSE, "Toggle Pathfind Testing", "Enables/Disables pathfinding testing action buttons", ADMIN_CATEGORY_DEBUG)
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Pathfind Testing")
+	log_admin("[key_name(user)] [user.holder.path_debug ? "disabled" : "enabled"] their pathfinding debug tools")
+	if(!user.holder.path_debug)
+		user.holder.path_debug = new(user.holder)
+	else
+		QDEL_NULL(user.holder.path_debug)
+
 ADMIN_VERB(clear_turf_reservations, R_DEBUG, FALSE, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
 	var/answer = tgui_alert(
 		user,
