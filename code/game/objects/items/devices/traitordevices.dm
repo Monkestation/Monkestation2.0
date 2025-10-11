@@ -6,6 +6,8 @@ BATTERER
 
 RADIOACTIVE MICROLASER
 
+GEAR CELL INJECTOR (from guilty gear)
+
 */
 
 /*
@@ -719,3 +721,51 @@ effective or pretty fucking useless.
 	light_outer_range = 2
 	light_power = 1
 	light_color = COLOR_SOFT_RED
+
+/obj/item/gear_cell_injector
+	name = "\improper Gear Cell Injector"
+	desc = "Use to gain UNLIMITED POWWAAH and/or UNLIMITED MALIGNANT CAANCEERS. Probably safe."
+	icon = 'icons/obj/medical/syringe.dmi'
+	icon_state = "dnainjector"
+	inhand_icon_state = "dnainjector"
+	worn_icon_state = "pen"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
+/obj/item/gear_cell_injector/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!iscarbon(user))
+		return FALSE
+	var/mob/living/carbon/gear_to_be = user
+	var/datum/action/cooldown/dragon_install/magic
+	magic = new(gear_to_be)
+	magic.Grant(gear_to_be)
+	qdel(src)
+
+//see buffs.dm for the actual dragon install status, it's a powerful healing stun res crit res unarmed damage buff that stuns when its out
+
+/datum/action/cooldown/dragon_install //dragon install into losing is sol's best true combo
+	name = "Dragon Install"
+	cooldown_time = 3 MINUTES
+
+/datum/action/cooldown/dragon_install/Trigger(trigger_flags, atom/target)
+	. = ..()
+	if(!iscarbon(owner) || (next_use_time > world.time))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.balloon_alert(carbon_owner, "activating")
+	carbon_owner.visible_message(span_warning("[carbon_owner] assumes a fighting stance, [carbon_owner.p_their()] eyes glowing red!"))
+	if(!do_after(carbon_owner, 2 SECONDS))
+		return
+	carbon_owner.apply_status_effect(/datum/status_effect/dragon_install)
+	StartCooldown()
+	for(var/i in 0 to 2) //shamelessly stolen from ash heretic
+		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, get_turf(carbon_owner.loc)))
+			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+			flame_tile.alpha = 125
+			nearby_turf.hotspot_expose(750, 50, 1)
+			for(var/mob/living/fried_living in nearby_turf.contents - owner)
+				fried_living.apply_damage(10, BURN)
+
+		stoplag(0.2 SECONDS)
+
