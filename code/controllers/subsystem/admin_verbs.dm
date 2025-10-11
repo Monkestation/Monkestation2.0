@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		verb_singleton.unassign_from_client(admin)
 	admin.init_verbs()
 
-/datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
+/datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...) //note that client/admin will sometimes be passed a mob so we retype it if so
 	if(IsAdminAdvancedProcCall())
 		message_admins("PERMISSION ELEVATION: [key_name_admin(admin)] attempted to dynamically invoke admin verb '[verb_type]'.")
 		return
@@ -132,6 +132,11 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(ismob(admin))
 		var/mob/mob = admin
 		admin = mob.client
+
+	var/verb_permissions = initial(verb_type.permissions)
+	if(!check_rights_for(admin, verb_permissions))
+		to_chat(admin, span_red("Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(verb_permissions," ")]."), confidential = TRUE)
+		return
 
 	if(!ispath(verb_type, /datum/admin_verb) || verb_type == /datum/admin_verb)
 		CRASH("Attempted to dynamically invoke admin verb with invalid typepath '[verb_type]'.")

@@ -60,3 +60,9 @@
 
 /// Create a typed null global
 #define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X); GLOBAL_UNMANAGED(X)
+
+/// Create an alist global with an initializer expression
+#define GLOBAL_ALIST_INIT(X, InitValue) GLOBAL_RAW(/alist/##X); GLOBAL_MANAGED(X, InitValue)
+
+/// Create an alist global that is initialized as an empty alist
+#define GLOBAL_ALIST_EMPTY(X) GLOBAL_LIST_INIT(X, alist())
