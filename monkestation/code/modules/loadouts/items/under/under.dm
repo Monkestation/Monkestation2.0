@@ -226,6 +226,11 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Blue PJs"
 	item_path = /obj/item/clothing/under/misc/pj/blue
 
+/datum/loadout_item/under/miscellaneous/jester
+	name = "Jester Suit"
+	item_path = /obj/item/clothing/under/rank/civilian/clown/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/maidcostume
 	name = "Maid Costume"
