@@ -1,8 +1,6 @@
-import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
 import {
-  Dimmer,
   Stack,
   Divider,
   Section,
@@ -15,7 +13,6 @@ type Data = {
   rating: number;
   comment: string;
   max_length: number;
-  is_centcom: BooleanLike;
 };
 
 export const NtosNtRep = (props) => {
@@ -65,19 +62,6 @@ export const NtosNtRepContent = (props) => {
   };
   return (
     <Stack vertical fill>
-      {!is_centcom && (
-        <Dimmer>
-          <Box
-            color="red"
-            fontFamily={'Bahnschrift'}
-            fontSize={3}
-            textAlign="center"
-            my={1}
-          >
-            Non-Centcom ID detected.
-          </Box>
-        </Dimmer>
-      )}
       <Section title="Rating">
         <Box fontSize={1.1}>
           How much would you recommend this station to a Central Command member?
