@@ -1033,3 +1033,10 @@
 	item_path = /obj/item/clothing/mask/mrbaghead
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+// Milthy
+/datum/loadout_item/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	item_path = /obj/item/clothing/suit/monkey_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
