@@ -320,7 +320,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			deadguy.heal_ordered_damage(10, list(STAMINA, BURN, BRUTE, TOX, OXY, CLONE, BRAIN))
 			if(deadguy.health >= deadguy.maxHealth)
 				deadguy.grab_ghost()
-				deadguy.revive(TRUE)
+				deadguy.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 				revive_notice = FALSE
 				deadguy.visible_message(span_progenitor("[deadguy]'s sigils flare brightly as they are once again in the realm of the living!"), span_progenitor("You rise once more!"))
 				playsound(deadguy, 'sound/magic/darkspawn/demented_outburst_scream.ogg', 40, FALSE)
