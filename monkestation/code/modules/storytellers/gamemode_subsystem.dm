@@ -465,7 +465,6 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		if(!ishuman(player_mob))
 			continue
-
 		active_players++
 		if(player_mob.mind?.assigned_role)
 			var/datum/job/player_role = player_mob.mind.assigned_role
