@@ -11,6 +11,7 @@
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
+	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
@@ -318,8 +319,8 @@
 	owner.announce_objectives()
 	if(bloodsucker_level_unspent >= 2)
 		to_chat(owner, span_announce("As a latejoiner, you have [bloodsucker_level_unspent] bonus Ranks, entering your claimed coffin allows you to spend a Rank."))
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
+	play_stinger()
 
 /datum/antagonist/bloodsucker/farewell()
 	to_chat(owner.current, span_userdanger("<FONT size = 3>With a snap, your curse has ended. You are no longer a Bloodsucker. You live once more!</FONT>"))
