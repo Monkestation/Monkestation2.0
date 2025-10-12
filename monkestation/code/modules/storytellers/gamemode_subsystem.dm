@@ -456,8 +456,14 @@ SUBSYSTEM_DEF(gamemode)
 	eng_crew = 0
 	med_crew = 0
 	sec_crew = 0
-	for(var/mob/living/carbon/human/player_mob in GLOB.alive_player_list)
-		if(player_mob.client?.is_afk())
+	for(var/mob/player_mob as anything in GLOB.player_list)
+		if(!player_mob.client)
+			continue
+		if(player_mob.stat) //If they're alive
+			continue
+		if(player_mob.client.is_afk()) //If afk
+			continue
+		if(!ishuman(player_mob))
 			continue
 
 		active_players++
