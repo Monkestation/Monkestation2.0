@@ -33,6 +33,9 @@
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 
+	if(sprite_datum.is_emissive)
+		appearance.overlays += emissive_appearance_copy(appearance, limb)
+
 	appearance.pixel_y += sprite_datum.y_pixel_offset
 
 	return appearance
