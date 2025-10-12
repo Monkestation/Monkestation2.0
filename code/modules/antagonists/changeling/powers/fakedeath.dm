@@ -103,7 +103,7 @@
 	// Heal all damage and some minor afflictions,
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
-	user.revive(flags_to_heal & ~HEAL_LIMBS)
+	user.revive(flags_to_heal & ~HEAL_LIMBS, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	to_chat(user, span_changeling("We have revived ourselves."))
 
 	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
