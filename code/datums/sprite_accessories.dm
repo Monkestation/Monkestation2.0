@@ -80,6 +80,8 @@
 	var/dimension_y = 32
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
+	/// Y pixel offset of the sprite
+	var/y_pixel_offset = 0
 
 	var/datum/color_palette/palette
 	var/palette_key

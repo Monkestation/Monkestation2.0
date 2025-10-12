@@ -186,7 +186,7 @@
 	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_COLOR
 	is_emissive = TRUE
-	y_pixel_offset = 8
+	y_pixel_offset = 14
 
 /datum/sprite_accessory/anime_halo/none
 	name = "None"
@@ -287,3 +287,4 @@
 /datum/sprite_accessory/anime_halo/crowned
 	name = "Crowned halo"
 	icon_state = "crowned"
+	y_pixel_offset = 24

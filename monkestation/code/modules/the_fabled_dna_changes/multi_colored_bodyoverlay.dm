@@ -4,7 +4,7 @@
 	if(sprite_datum.layers)
 		var/mutable_appearance/MA = mutable_appearance(layer = layer)
 		for(var/state in sprite_datum.layers)
-			var/mutable_appearance/returned =  get_image(layer, limb, state)
+			var/mutable_appearance/returned = get_image(layer, limb, state)
 			color_image(returned, layer, limb, sprite_datum.layers[state])
 			MA.overlays += returned
 		return MA
@@ -32,6 +32,8 @@
 
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	appearance.pixel_y += sprite_datum.y_pixel_offset
 
 	return appearance
 
