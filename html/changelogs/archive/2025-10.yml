@@ -471,3 +471,19 @@
       you can only access its item storage when the lid is open.
   SirNightKnight:
   - bugfix: fixed modsuit control unequipment not working
+2025-10-12:
+  MilkForever:
+  - qol: The description for the stabilized light pink extracts will now mention the
+      pacifism effect.
+  notghosti:
+  - map: Blueshift AI sat now runs through the SMES unit.
+  - map: Blueshift Cameras now have more accurate network tags for minisat, telecomms,
+      engine, and aicore.
+  - map: Blueshift has had cameras added in missing rooms, including medical patient
+      room, around the new bend in construction, solar, partly outside the ai sat,
+      and that one door between cargo office and cargo bay are now visible.
+  - map: Blueshift construction now has access tied to it, instead of only the Maintenace
+      entrance.
+  - map: Blueshift AI foyer has been split into foyer and AI interior.
+  - map: Blueshift AI sat uses the convenient giant body of space to rid of waste
+      gas rather than the stations distro
