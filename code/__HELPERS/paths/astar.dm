@@ -45,6 +45,8 @@
 	var/adjacent = TYPE_PROC_REF(/turf, reachable_turf_test)
 	/// Whether we should do multi-z pathing or not.
 	var/check_z_levels
+	/// Whether to smooth the path by replacing cardinal turns with diagonals
+	var/smooth_diagonals = TRUE
 	/// Binary sorted list of nodes (lowest weight at end for easy Pop)
 	VAR_PRIVATE/list/open
 	/// Turf -> node mapping for nodes in open list
@@ -65,7 +67,7 @@
 	path = null
 	pass_info = null
 
-/datum/pathfind/astar/proc/setup(atom/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, list/datum/callback/on_finish)
+/datum/pathfind/astar/proc/setup(atom/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, list/datum/callback/on_finish, smooth_diagonals = TRUE)
 	src.requester = requester
 	src.end = get_turf(end)
 	src.dist = dist
@@ -77,6 +79,7 @@
 	src.simulated_only = simulated_only
 	src.pass_info = new(requester, access, multiz_checks = check_z_levels)
 	src.check_z_levels = check_z_levels
+	src.smooth_diagonals = smooth_diagonals
 	src.on_finish = on_finish
 
 /datum/pathfind/astar/start()
@@ -212,10 +215,73 @@
 	if(path)
 		for(var/i = 1 to round(0.5 * length(path)))
 			path.Swap(i, length(path) - i + 1)
+
+		if(smooth_diagonals)
+			path = smooth_path_diagonals(path)
+
 	hand_back(path)
 	openc = null
 	closed = null
 	return ..()
+
+/datum/pathfind/astar/proc/smooth_path_diagonals(list/input_path)
+	if(!input_path || length(input_path) < 3)
+		return input_path
+
+	var/list/smoothed = list()
+	var/i = 1
+
+	while(i <= length(input_path))
+		var/turf/current = input_path[i]
+		smoothed += current
+
+		// need at least 2 more turfs to check for smoothing
+		if(i + 2 > length(input_path))
+			i++
+			continue
+
+		var/turf/next = input_path[i + 1]
+		var/turf/after_next = input_path[i + 2]
+
+		var/dir1 = get_dir(current, next)
+		var/dir2 = get_dir(next, after_next)
+
+		//if card and perp hen attempt to see if diagonal possible
+		if(!ISDIAGONALDIR(dir1) && !ISDIAGONALDIR(dir2) && dir1 != dir2 && dir1 != REVERSE_DIR(dir2))
+			var/diagonal_dir = dir1 | dir2
+			var/turf/diagonal_target = get_step(current, diagonal_dir)
+			if(diagonal_target == after_next)
+				if(can_move_diagonal(current, after_next, pass_info))
+					i += 2
+					continue
+
+		i++
+
+	return smoothed
+
+/datum/pathfind/astar/proc/can_move_diagonal(turf/from, turf/end, datum/can_pass_info/pass_info)
+	if(!from || !end)
+		return FALSE
+
+	var/diagonal_dir = get_dir(from, end)
+	if(!ISDIAGONALDIR(diagonal_dir))
+		return FALSE
+
+	var/dir1 = diagonal_dir & 3
+	var/dir2 = diagonal_dir & 12
+
+	var/turf/intermediate1 = get_step(from, dir1)
+	var/turf/intermediate2 = get_step(from, dir2)
+
+	if(intermediate1 && !intermediate1.density && call(from, adjacent)(requester, intermediate1, pass_info))
+		if(call(intermediate1, adjacent)(requester, end, pass_info))
+			return TRUE
+
+	if(intermediate2 && !intermediate2.density && call(from, adjacent)(requester, intermediate2, pass_info))
+		if(call(intermediate2, adjacent)(requester, end, pass_info))
+			return TRUE
+
+	return FALSE
 
 /proc/heap_path_weight_compare_astar(list/a, list/b)
 	return b[TOTAL_COST_F] - a[TOTAL_COST_F]
