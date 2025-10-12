@@ -45,7 +45,7 @@
 			balloon_alert(user, "The Ark cannot support any more cogscarabs.")
 			return
 
-		if(!SSthe_ark.marked_areas[get_area(src)] || !on_reebe(src))
+		if(!SSthe_ark.marked_areas[get_area(src)] && !on_reebe(src))
 			to_chat(user, span_notice("Soul vessels can only be converted in marked areas or on reebe."))
 			return
 
