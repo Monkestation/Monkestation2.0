@@ -873,7 +873,9 @@
 "Ox" = (
 /obj/structure/sign/warning/radiation/directional/east,
 /obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/dark/textured,
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "Po" = (
 /obj/machinery/holopad,

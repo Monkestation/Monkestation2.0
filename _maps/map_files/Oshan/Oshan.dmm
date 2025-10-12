@@ -40730,8 +40730,8 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "mUc" = (
