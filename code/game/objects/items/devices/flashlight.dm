@@ -406,7 +406,7 @@
 /obj/item/flashlight/flare/Initialize(mapload)
 	. = ..()
 	if(randomize_fuel)
-		fuel = rand(1 MINUTES, 2 MINUTES)
+		fuel = rand(5 MINUTES, 7 MINUTES)
 	if(on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
