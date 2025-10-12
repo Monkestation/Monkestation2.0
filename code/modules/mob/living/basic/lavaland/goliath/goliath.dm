@@ -98,7 +98,7 @@
 	if (saddled)
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
-/mob/living/basic/mining/goliath/revive(full_heal_flags, excess_healing, force_grab_ghost)
+/mob/living/basic/mining/goliath/revive(full_heal_flags, excess_healing, force_grab_ghost, revival_policy)
 	. = ..()
 	if (!.)
 		return
