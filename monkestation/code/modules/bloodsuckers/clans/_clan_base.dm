@@ -162,8 +162,12 @@
 	// Upgrade Power Prompt
 	var/list/options = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.powers)
-		if(!(power::purchase_flags & BLOODSUCKER_CAN_BUY))
+		if (name == CLAN_TREMERE)
+			if (!(power::purchase_flags & TREMERE_CAN_BUY))
+				continue
+		else if (!(power::purchase_flags & BLOODSUCKER_CAN_BUY))
 			continue
+
 		if (power::purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			continue
 		if(power in banned_powers)
@@ -195,6 +199,7 @@
 
 	finalize_spend_rank(bloodsuckerdatum, cost_rank, blood_cost)
 
+	//Recursively allows you to rank up multiple times (if you want) without having to open and close coffin door.
 	if (bloodsuckerdatum.bloodsucker_level_unspent > 0)
 		spend_rank(source, target, cost_rank, blood_cost)
 
