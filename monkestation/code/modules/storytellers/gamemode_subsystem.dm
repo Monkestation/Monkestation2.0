@@ -250,7 +250,8 @@ SUBSYSTEM_DEF(gamemode)
 	var/cap = FLOOR((total_number / ANTAG_CAP_DENOMINATOR), 1) + ANTAG_CAP_FLAT
 	return cap
 
-/datum/controller/subsystem/gamemode/proc/get_antag_count()
+/// Return the total point value of active antags, if return_count is set then we instead just return the total amount of active datums
+/datum/controller/subsystem/gamemode/proc/get_antag_count(return_count = FALSE)
 	. = 0
 	var/alist/already_counted = alist() // Never count the same mind twice
 	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
@@ -456,14 +457,8 @@ SUBSYSTEM_DEF(gamemode)
 	eng_crew = 0
 	med_crew = 0
 	sec_crew = 0
-	for(var/mob/player_mob as anything in GLOB.player_list)
-		if(!player_mob.client)
-			continue
-		if(player_mob.stat) //If they're alive
-			continue
-		if(player_mob.client.is_afk()) //If afk
-			continue
-		if(!ishuman(player_mob))
+	for(var/mob/living/carbon/human/player_mob in GLOB.alive_player_list)
+		if(player_mob.client?.is_afk())
 			continue
 		active_players++
 		if(player_mob.mind?.assigned_role)

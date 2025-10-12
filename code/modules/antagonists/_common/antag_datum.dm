@@ -42,11 +42,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
+
 	//Antag panel properties
 	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/show_in_antagpanel = TRUE
 	///Antagpanel will display these together, REQUIRED
 	var/antagpanel_category = "Uncategorized"
+
 	///Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
@@ -63,6 +65,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// How many points does this antag contribute to the antag cap, we could probably handle this as a global but doing it as a var allows for more dynamic values
+	var/antag_count_points = 0
 
 	//ANTAG UI
 
