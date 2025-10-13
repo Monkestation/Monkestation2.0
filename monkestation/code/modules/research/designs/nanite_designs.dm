@@ -429,8 +429,8 @@
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/blinding
-	name = "Blindness"
-	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
+	name = "Optical Disruption"
+	desc = "The nanites suppress the host's ocular nerves, making them nearsighted and making it harder to aim guns."
 	id = "blinding_nanites"
 	program_type = /datum/nanite_program/blinding
 	category = list("Suppression Nanites")
