@@ -58,8 +58,6 @@
 			)
 		)
 
-	browse_messages(null, usr.ckey, null, TRUE)
-
 ///Opens your latest admin ticket.
 /datum/escape_menu/proc/view_latest_ticket()
 	client?.view_latest_ticket()
