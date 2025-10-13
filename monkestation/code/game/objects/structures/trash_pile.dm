@@ -67,7 +67,6 @@
 
 /obj/structure/trash_pile/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	icon_state = pick(
