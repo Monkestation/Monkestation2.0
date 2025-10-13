@@ -1189,6 +1189,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 ///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)
 	if(locked == new_locked)
+		parent.update_appearance() // exists cases where icon still changes
 		return
 	locked = new_locked
 	if(new_locked > STORAGE_NOT_LOCKED)

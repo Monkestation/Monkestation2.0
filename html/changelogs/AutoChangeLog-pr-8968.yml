@@ -1,0 +1,5 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "ship engines are now breakable in shipbreaking area with sledgehammer and five rewards"
+  - bugfix: "sledgehammer bonus damage now applies properly in shipbreaking area"

@@ -30,7 +30,7 @@
 	remove_arms(changeling, defibber, defib)
 
 	if(changeling.stat == DEAD)
-		changeling.revive(heal_flags)
+		changeling.revive(heal_flags, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	else
 		changeling.fully_heal(heal_flags)
 
