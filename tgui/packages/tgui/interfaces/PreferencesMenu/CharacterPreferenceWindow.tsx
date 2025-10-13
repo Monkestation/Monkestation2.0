@@ -114,10 +114,6 @@ export const CharacterPreferenceWindow = (props) => {
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              {/*
-                    Fun fact: This isn't "Jobs" so that it intentionally
-                    catches your eyes, because it's really important!
-                  */}
               Loadout
             </PageButton>
           </Stack.Item>

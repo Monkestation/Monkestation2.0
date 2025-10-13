@@ -34,25 +34,19 @@ export const PreferencesMenu = () => {
   }
 
   let pageContents;
-  // Having the window size be dynamic causes it to move (if tgui-dev isn't running)
-  // this might be worth changing later but for now it's just not worth the hassle
-  let window_width = 1415;
   switch (window) {
     case PreferencesCurrentWindow.Character:
       pageContents = <CharacterPreferenceWindow />;
       break;
     case PreferencesCurrentWindow.Game:
       switch (currentPageLocal) {
-        case PreferencesSelectedPage.Keybindings:
-          // window_width = 970;
-          pageContents = <KeybindingsPage />;
-          break;
         case PreferencesSelectedPage.Settings:
-          // window_width = 1250;
           pageContents = <GamePreferencesPage />;
           break;
+        case PreferencesSelectedPage.Keybindings:
+          pageContents = <KeybindingsPage />;
+          break;
         case PreferencesSelectedPage.Volume:
-          // window_width = 1290;
           pageContents = <VolumeMixerPage />;
           break;
         case PreferencesSelectedPage.Character:
@@ -133,12 +127,7 @@ export const PreferencesMenu = () => {
   );
 
   return (
-    <Window
-      title="Preferences"
-      width={window_width}
-      height={800}
-      theme="generic"
-    >
+    <Window title="Preferences" width={1215} height={800} theme="generic">
       <Window.Content>
         <Stack horizontal height="100%">
           <Stack.Item>
