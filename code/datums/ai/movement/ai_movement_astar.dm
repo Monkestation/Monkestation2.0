@@ -5,6 +5,7 @@
 	max_pathing_attempts = 20
 	var/maximum_length = AI_MAX_PATH_LENGTH
 	var/check_z_levels = TRUE
+	var/smooth_diagonals = TRUE
 
 /datum/ai_movement/astar/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	. = ..()
@@ -19,6 +20,7 @@
 		minimum_distance = controller.get_minimum_distance(),
 		access = controller.get_access(),
 		check_z_levels = check_z_levels,
+		smooth_diagonals = smooth_diagonals,
 		subsystem = SSai_movement,
 		extra_info = controller,
 	)
@@ -39,6 +41,7 @@
 /datum/ai_movement/astar/bot
 	max_pathing_attempts = 25
 	maximum_length = 25
+	smooth_diagonals = FALSE
 
 /datum/ai_movement/astar/bot/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	var/datum/move_loop/loop = ..()

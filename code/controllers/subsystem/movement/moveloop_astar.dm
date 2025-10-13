@@ -32,6 +32,7 @@
 	turf/avoid,
 	simulated_only,
 	check_z_levels,
+	smooth_diagonals,
 	dist,
 	adjacent,
 	subsystem,
@@ -56,6 +57,7 @@
 		avoid,
 		simulated_only,
 		check_z_levels,
+		smooth_diagonals,
 		dist,
 		adjacent,
 		initial_path)
@@ -79,6 +81,8 @@
 	var/list/movement_path
 	/// Should we attempt to path across Z-levels?
 	var/check_z_levels = TRUE
+	/// Should diagonal movements be smoothed?
+	var/smooth_diagonals = TRUE
 	/// Proc used for distance heuristics.
 	var/dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d)
 	/// Proc used for turf adjacency checks.
@@ -94,7 +98,7 @@
 	. = ..()
 	on_finish_callbacks += CALLBACK(src, PROC_REF(on_finish_pathing))
 
-/datum/move_loop/has_target/astar/setup(delay, timeout, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, dist, adjacent, list/initial_path)
+/datum/move_loop/has_target/astar/setup(delay, timeout, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, smooth_diagonals, dist, adjacent, list/initial_path)
 	. = ..()
 	if(!.)
 		return
@@ -108,17 +112,21 @@
 	src.simulated_only = simulated_only
 	if(!isnull(check_z_levels))
 		src.check_z_levels = check_z_levels
+	if(!isnull(smooth_diagonals))
+		src.smooth_diagonals = smooth_diagonals
 	if(!isnull(dist))
 		src.dist = dist
 	if(!isnull(adjacent))
 		src.adjacent = adjacent
 	movement_path = initial_path?.Copy()
 
-/datum/move_loop/has_target/astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, dist, adjacent, list/initial_path)
+/datum/move_loop/has_target/astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, smooth_diagonals, dist, adjacent, list/initial_path)
 	if(isnull(max_node_depth))
 		max_node_depth = initial(max_node_depth)
 	if(isnull(check_z_levels))
 		check_z_levels = initial(check_z_levels)
+	if(isnull(smooth_diagonals))
+		smooth_diagonals = initial(smooth_diagonals)
 	if(isnull(dist))
 		dist = initial(dist)
 	if(isnull(adjacent))
@@ -132,6 +140,7 @@
 		avoid == src.avoid && \
 		simulated_only == src.simulated_only && \
 		check_z_levels == src.check_z_levels && \
+		smooth_diagonals == src.smooth_diagonals && \
 		dist == src.dist && \
 		adjacent == src.adjacent
 
@@ -154,7 +163,7 @@
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
-	if(SSpathfinder.astar_pathfind(moving, target, dist, max_nodes, max_node_depth, minimum_distance, adjacent, access, avoid, simulated_only, check_z_levels, on_finish = on_finish_callbacks))
+	if(SSpathfinder.astar_pathfind(moving, target, dist, max_nodes, max_node_depth, minimum_distance, adjacent, access, avoid, simulated_only, check_z_levels, smooth_diagonals, on_finish = on_finish_callbacks))
 		is_pathing = TRUE
 		SEND_SIGNAL(src, COMSIG_MOVELOOP_REPATH)
 
