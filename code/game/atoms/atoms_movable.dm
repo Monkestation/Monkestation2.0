@@ -190,6 +190,10 @@
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
+	if(astar_weight && isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.astar_weight += astar_weight
+
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
