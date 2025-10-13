@@ -405,6 +405,7 @@
 	// :3
 	if(!(wires?.is_cut(WIRE_MOTIVATIONAL)))
 		emote("scream")
+		playsound(src, "goon/sounds/sparks/electric_shock_short.ogg", 50, 1)
 		emp_act(EMP_HEAVY)
 		logevent("System motivational shock applied!")
 
