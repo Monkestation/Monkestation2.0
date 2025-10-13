@@ -597,7 +597,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 	. = ..()
 	if((arrived.movement_type & (FLYING|FLOATING)) || isprojectile(arrived) || iseffect(arrived) || is_safe() || !arrived.has_gravity())
 		return
-	var/list/trench_levels = SSmapping.levels_by_trait(ZTRAITS_TRENCH)
+	var/list/trench_levels = SSmapping.levels_by_trait(ZTRAIT_OSHAN_MINING)
 	if(!length(trench_levels))
 		return
 	var/turf/turf = locate(src.x, src.y, trench_levels[1])
