@@ -72,6 +72,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
+	var/old_astar_weight = (astar_weight - src::astar_weight) // just get the weight that isn't the turf
 	var/old_lighting_object = lighting_object
 	var/old_outdoor_effect = outdoor_effect //monkestation addition
 	var/old_lighting_corner_NE = lighting_corner_NE
@@ -107,6 +108,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/carryover_turf_flags = (RESERVATION_TURF | UNUSED_RESERVATION_TURF) & turf_flags
 	var/turf/new_turf = new path(src)
 	new_turf.turf_flags |= carryover_turf_flags
+	new_turf.astar_weight += old_astar_weight
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
