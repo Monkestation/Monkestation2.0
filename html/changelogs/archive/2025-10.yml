@@ -472,9 +472,19 @@
   SirNightKnight:
   - bugfix: fixed modsuit control unequipment not working
 2025-10-12:
+  Absolucy:
+  - bugfix: Fixed the Monster Hunter weapon forge not working properly.
+  Absolucy, LettuceGuardian:
+  - image: Changed the Navigate HUD button sprite to actually say "Navigate" instead
+      of being a tiny icon. Sprites by LettuceGuardian.
+  - bugfix: The walk/run button no longer disappears when you sprint.
   MilkForever:
   - qol: The description for the stabilized light pink extracts will now mention the
       pacifism effect.
+  Snack-Max:
+  - rscadd: Adds Quartermaster Turtleneck and Casualwear to Loadout
+  TheColorCyan:
+  - rscadd: Milthy's donator item - monkey varsity jacket
   notghosti:
   - map: Blueshift AI sat now runs through the SMES unit.
   - map: Blueshift Cameras now have more accurate network tags for minisat, telecomms,
@@ -487,3 +497,10 @@
   - map: Blueshift AI foyer has been split into foyer and AI interior.
   - map: Blueshift AI sat uses the convenient giant body of space to rid of waste
       gas rather than the stations distro
+  - qol: Once associated config is set up, antagonistic revival methods and cloning
+      will give a better corresponding death flavor text,
+2025-10-13:
+  ThePooba:
+  - bugfix: ship engines are now breakable in shipbreaking area with sledgehammer
+      and five rewards
+  - bugfix: sledgehammer bonus damage now applies properly in shipbreaking area

@@ -67,10 +67,6 @@
 
 /obj/structure/trash_pile/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	icon_state = pick(
@@ -145,15 +141,6 @@
 		return
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
-
-/obj/structure/trash_pile/proc/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
-	SIGNAL_HANDLER
-
-	if(!isliving(arrived))
-		return
-	balloon_alert(arrived, "the trash slows you down!")
-	var/mob/living/trashdiver = arrived
-	trashdiver.apply_status_effect(/datum/status_effect/speed_boost, 0.5 SECONDS, 4, type)
 
 /obj/structure/trash_pile/attack_hand_secondary(mob/mob_user, list/modifiers)
 	. = ..()
