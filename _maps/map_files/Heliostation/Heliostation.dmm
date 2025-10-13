@@ -18157,10 +18157,6 @@
 /area/station/service/library)
 "bJt" = (
 /obj/structure/table/wood,
-/obj/machinery/camera/directional/east{
-	c_tag = "Library Office";
-	name = "Library Office Camera"
-	},
 /obj/item/pen/red,
 /obj/item/pen/blue,
 /obj/item/pen,
@@ -39985,6 +39981,15 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/checkpoint/science/research)
+"ilT" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/obj/machinery/camera/directional/east{
+	c_tag = "Library Office";
+	name = "Library Office Camera"
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "ilX" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -121107,7 +121112,7 @@ byN
 byN
 bGI
 bHX
-bDG
+ilT
 bRp
 bMx
 bxo
