@@ -67,7 +67,7 @@
 	path = null
 	pass_info = null
 
-/datum/pathfind/astar/proc/setup(atom/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, list/datum/callback/on_finish, smooth_diagonals = TRUE)
+/datum/pathfind/astar/proc/setup(atom/requester, atom/end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, smooth_diagonals = TRUE, list/datum/callback/on_finish)
 	src.requester = requester
 	src.end = get_turf(end)
 	src.dist = dist

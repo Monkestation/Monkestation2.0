@@ -97,9 +97,9 @@ SUBSYSTEM_DEF(pathfinder)
 	return TRUE
 
 /// Initiates an A* pathfind. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/astar_pathfind(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/astar_pathfind(requester, end, dist = TYPE_PROC_REF(/turf, heuristic_cardinal_3d), maxnodes, maxnodedepth = 30, mintargetdist, adjacent = TYPE_PROC_REF(/turf, reachable_turf_test), list/access = list(), turf/exclude, simulated_only = TRUE, check_z_levels = TRUE, smooth_diagonals = TRUE, list/datum/callback/on_finish)
 	var/datum/pathfind/astar/path = new()
-	path.setup(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, access, exclude, simulated_only, check_z_levels, on_finish)
+	path.setup(requester, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, access, exclude, simulated_only, check_z_levels, smooth_diagonals, on_finish)
 	if(path.start())
 		active_pathing += path
 		return TRUE
