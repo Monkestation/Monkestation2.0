@@ -100,6 +100,9 @@ SUBSYSTEM_DEF(hotspots)
 		if(heat)
 			listed_hotspot.bonus_heat += listed_hotspot.per_disturbance
 		total_heat += heat
+
+// removed bc it makes mining on Oshan hellish ~Lucy
+/*
 	if(total_heat)
 		kerpow(triggered)
 
@@ -119,6 +122,7 @@ SUBSYSTEM_DEF(hotspots)
 		return viewers(range, get_turf(target_loc))
 	else
 		return typecache_filter_list(target_loc.get_all_contents(), GLOB.typecache_living)
+*/
 
 ///this is where we handle the interaction between using a stomper on a turf and affecting a hotspot
 ///if its the center it locks position, if not it drifts it away from the stomper
