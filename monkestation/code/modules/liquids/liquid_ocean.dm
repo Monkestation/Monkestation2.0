@@ -592,17 +592,20 @@ GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/pit/wall
 	icon_state = "pit_wall"
 
+#ifndef UNIT_TESTS
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(is_safe())
+	if((arrived.movement_type & (FLYING|FLOATING)) || isprojectile(arrived) || iseffect(arrived) || is_safe() || !arrived.has_gravity())
 		return
-	if(arrived.movement_type & FLYING)
+	var/list/trench_levels = SSmapping.levels_by_trait(ZTRAITS_TRENCH)
+	if(!length(trench_levels))
 		return
-	if(isprojectile(arrived))
+	var/turf/turf = locate(src.x, src.y, trench_levels[1])
+	if(!turf)
 		return
-	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
-	visible_message("[arrived] falls helplessly into \the [src]")
+	visible_message(span_warning("[arrived] falls helplessly into \the [src]!"))
 	arrived.forceMove(turf)
+#endif
 
 /turf/open/floor/plating/ocean/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't drop things
