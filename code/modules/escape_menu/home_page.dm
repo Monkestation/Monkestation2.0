@@ -104,16 +104,7 @@
 		resource_panels.Cut()
 		return
 	//list of offsets we give, so missing icons don't leave a random gap.
-	var/list/offset_order = list(
-		-60,
-		-120,
-		-180,
-		-240,
-		-300,
-		-360,
-		-420,
-		-480,
-	)
+	var/horizontal_offset = -60
 	resource_panels = list()
 
 	var/githuburl = CONFIG_GET(string/githuburl)
@@ -126,9 +117,9 @@
 			/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 			CALLBACK(client, TYPE_VERB_REF(/client, reportissue)),
 			/* button_overlay = */ "bug",
-			/* end_point */ offset_order[1],
+			/* end_point */ horizontal_offset,
 		))
-		offset_order -= offset_order[1]
+		horizontal_offset -= 60
 		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
@@ -137,9 +128,9 @@
 			/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 			CALLBACK(client, TYPE_VERB_REF(/client, github)),
 			/* button_overlay = */ "github",
-			/* end_point */ offset_order[1],
+			/* end_point */ horizontal_offset,
 		))
-		offset_order -= offset_order[1]
+		horizontal_offset -= 60
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
@@ -151,9 +142,9 @@
 			/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 			CALLBACK(client, TYPE_VERB_REF(/client, forum)),
 			/* button_overlay = */ "forums",
-			/* end_point */ offset_order[1],
+			/* end_point */ horizontal_offset,
 		))
-		offset_order -= offset_order[1]
+		horizontal_offset -= 60
 
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
@@ -165,9 +156,9 @@
 			/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 			CALLBACK(client, TYPE_VERB_REF(/client, rules)),
 			/* button_overlay = */ "rules",
-			/* end_point */ offset_order[1],
+			/* end_point */ horizontal_offset,
 		))
-		offset_order -= offset_order[1]
+		horizontal_offset -= 60
 
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
@@ -179,9 +170,9 @@
 			/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 			CALLBACK(client, TYPE_VERB_REF(/client, wiki)),
 			/* button_overlay = */ "wiki",
-			/* end_point */ offset_order[1],
+			/* end_point */ horizontal_offset,
 		))
-		offset_order -= offset_order[1]
+		horizontal_offset -= 60
 
 	resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 		null,
@@ -191,7 +182,7 @@
 		/* button_screen_loc */ "BOTTOM:30,RIGHT:-20",
 		CALLBACK(client, TYPE_VERB_REF(/client, changelog)),
 		/* button_overlay = */ "changelog",
-		/* end_point */ offset_order[1],
+		/* end_point */ horizontal_offset,
 	))
 
 /datum/escape_menu/proc/home_resume()

@@ -13,8 +13,8 @@
 		)
 	)
 
-	var/vertical_amount = -30 //we start at -50, add -20 (40 for admins due to feedback links) each time we go down.
-	var/horizontal_amount = -170 //increasing by 150, we fit 3 per line this way.
+	var/vertical_amount = -30 //we start at -30, add -20 (40 for admins due to feedback links) each time we go down.
+	var/horizontal_amount = -170 //increasing by 170, we fit 3 per line this way.
 
 	if(length(GLOB.admins))
 		page_holder.give_screen_object(
@@ -154,4 +154,4 @@
 		adding = TRUE
 	client?.prefs.save_preferences()
 	source.update_text()
-	to_chat(client, span_notice("User has been [!adding ? "un" : ""]ignored in OOC."))
+	to_chat(client, span_notice("[ckey] has been [!adding ? "un" : ""]ignored in OOC."))
