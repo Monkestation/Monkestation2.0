@@ -39981,15 +39981,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/checkpoint/science/research)
-"ilT" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
-/obj/machinery/camera/directional/east{
-	c_tag = "Library Office";
-	name = "Library Office Camera"
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "ilX" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -59804,6 +59795,11 @@
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/directional/east{
+	name = "Gravity Camera";
+	network = list("ss13","engineer");
+	c_tag = "Gravity Airlock"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "pFW" = (
@@ -77486,6 +77482,15 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/captain)
+"wvR" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/obj/machinery/camera/directional/east{
+	c_tag = "Library Office";
+	name = "Library Office Camera"
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "wvX" = (
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/structure/sign/poster/official/carwo_magazine/directional/south,
@@ -78505,6 +78510,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
+/obj/machinery/camera/directional/west{
+	c_tag = "Gravity Control Room";
+	name = "Gravity Camera";
+	network = list("ss13","engineer")
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "wPX" = (
@@ -121112,7 +121122,7 @@ byN
 byN
 bGI
 bHX
-ilT
+wvR
 bRp
 bMx
 bxo
