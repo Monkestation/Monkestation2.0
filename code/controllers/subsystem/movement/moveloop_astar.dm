@@ -122,15 +122,15 @@
 
 /datum/move_loop/has_target/astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, atom/chasing, repath_delay, max_nodes, max_node_depth, minimum_distance, list/access, turf/avoid, simulated_only, check_z_levels, smooth_diagonals, dist, adjacent, list/initial_path)
 	if(isnull(max_node_depth))
-		max_node_depth = initial(max_node_depth)
+		max_node_depth = src::max_node_depth
 	if(isnull(check_z_levels))
-		check_z_levels = initial(check_z_levels)
+		check_z_levels = src::check_z_levels
 	if(isnull(smooth_diagonals))
-		smooth_diagonals = initial(smooth_diagonals)
+		smooth_diagonals = src::smooth_diagonals
 	if(isnull(dist))
-		dist = initial(dist)
+		dist = src::dist
 	if(isnull(adjacent))
-		adjacent = initial(adjacent)
+		adjacent = src::adjacent
 	return ..() && \
 		repath_delay == src.repath_delay && \
 		max_nodes == src.max_nodes && \
