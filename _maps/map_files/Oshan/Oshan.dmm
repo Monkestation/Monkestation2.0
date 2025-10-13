@@ -819,10 +819,10 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "and" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/requests_console/directional/south,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/ce)
 "anf" = (
@@ -8547,10 +8547,10 @@
 "cNy" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/requests_console/directional/north,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/computer/atmos_alert,
+/obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/storage/gas)
 "cNC" = (
@@ -11829,16 +11829,13 @@
 /area/station/engineering/atmos)
 "dKw" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/requests_console/directional/east{
-	department = "EVA";
-	name = "EVA Requests Console"
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/requests_console/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "dKR" = (
@@ -15002,9 +14999,6 @@
 	name = "Walter's bed"
 	},
 /mob/living/basic/pet/dog/dobermann/walter,
-/obj/machinery/requests_console/directional/east{
-	name = "Blueshield Requests Console"
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
@@ -15012,6 +15006,7 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/requests_console/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "eKT" = (
@@ -16411,8 +16406,8 @@
 /area/station/security/execution/transfer)
 "ffH" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ffP" = (
@@ -21633,10 +21628,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/requests_console/directional/west,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/announcement,
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/tcommsat/computer)
 "gRt" = (
@@ -23016,11 +23011,11 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "hoE" = (
-/obj/machinery/requests_console/auto_name/directional/south,
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/checkpoint/engineering)
 "hoI" = (
@@ -25458,16 +25453,13 @@
 /area/station/commons/vacant_room/commissary)
 "iaY" = (
 /obj/structure/rack,
-/obj/machinery/requests_console/directional/west{
-	department = "Engineering";
-	name = "Engineering Requests Console"
-	},
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/light/directional/west,
 /obj/item/rcl/pre_loaded,
 /obj/item/multitool,
 /obj/item/clothing/glasses/meson/engine,
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/storage_shared)
 "iaZ" = (
@@ -27899,7 +27891,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/machinery/requests_console/directional/west,
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "iRu" = (
@@ -35061,11 +35053,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/machinery/requests_console/directional/south{
-	department = "Security";
-	name = "Security Requests Console"
-	},
 /obj/structure/table,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -35896,7 +35885,6 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/hop)
 "lpi" = (
-/obj/machinery/requests_console/directional/south,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/turf_decal/siding/red{
@@ -35906,6 +35894,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "lpq" = (
@@ -39850,9 +39839,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "mHE" = (
-/obj/machinery/requests_console/auto_name/directional/south,
 /obj/item/radio/intercom/directional/west,
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/miningdock/cafeteria)
 "mHG" = (
@@ -44023,10 +44012,10 @@
 	},
 /obj/structure/table,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/requests_console/directional/north,
 /obj/effect/turf_decal/siding/dark{
 	dir = 9
 	},
+/obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "nVc" = (
@@ -47570,12 +47559,12 @@
 /area/station/security/brig)
 "oXS" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
-/obj/machinery/requests_console/directional/west,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "oYc" = (
@@ -51408,8 +51397,8 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
 /obj/machinery/chem_dispenser/frontier_appliance,
-/obj/machinery/requests_console/directional/north,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "qga" = (
@@ -52746,10 +52735,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "qBI" = (
-/obj/machinery/requests_console/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/warden)
 "qBL" = (
@@ -57026,11 +57015,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/disease2/centrifuge,
 /obj/item/storage/box/tube,
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "rUG" = (
@@ -59158,7 +59147,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/lobby)
 "sEJ" = (
-/obj/machinery/requests_console/directional/north,
+/obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/eighties/red,
 /area/station/service/theater)
 "sEP" = (
@@ -75484,7 +75473,6 @@
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "xFE" = (
-/obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/ore_update,
@@ -75496,6 +75484,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/machinery/requests_console/auto_name/directional/south,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "xFX" = (
