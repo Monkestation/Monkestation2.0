@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
-	/// How many points does this antag contribute to the antag cap, we could probably handle this as a global but doing it as a var allows for more dynamic values
+	/// How many points does this antag contribute to the antag cap
 	var/antag_count_points = 10
 
 	//ANTAG UI
