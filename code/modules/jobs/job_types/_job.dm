@@ -137,6 +137,7 @@
 	///donator bypass for holidays
 	var/job_donor_bypass = null //MONKESTATION EDIT
 
+	//yes this could probably be a config but I dont really care
 	///How many points of antag capacity does this job give
 	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
