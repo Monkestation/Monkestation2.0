@@ -70751,6 +70751,7 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "uTN" = (

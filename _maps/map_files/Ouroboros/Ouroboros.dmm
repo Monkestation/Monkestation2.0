@@ -26858,6 +26858,7 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "hWZ" = (

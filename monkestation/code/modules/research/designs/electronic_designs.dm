@@ -34,6 +34,18 @@
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/nanite_disk
+	name = "Nanite Program Disk"
+	desc = "Stores nanite programs."
+	id = "nanite_disk"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/disk/nanite_program
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/pocket_heater
 	name = "Pocket Heater"
 	desc = "A highly compact electronic heater that fits in your pocket."

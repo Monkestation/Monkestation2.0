@@ -56528,6 +56528,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
+"rkg" = (
+/obj/item/storage/box/disks_nanite,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/science/explab)
 "rki" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/east,
@@ -256900,7 +256905,7 @@ cyL
 yeC
 yeC
 yeC
-yeC
+rkg
 dOK
 bgx
 puh

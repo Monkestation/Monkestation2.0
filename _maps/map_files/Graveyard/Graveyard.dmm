@@ -51782,6 +51782,8 @@
 /turf/open/floor/iron,
 /area/graveyard/bunker/science)
 "ufL" = (
+/obj/item/storage/box/disks_nanite,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/science/circuits)
 "ufM" = (

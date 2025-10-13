@@ -14195,6 +14195,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table/glass,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "eBD" = (

@@ -24665,6 +24665,7 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "lOL" = (

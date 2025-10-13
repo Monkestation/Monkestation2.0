@@ -59421,6 +59421,7 @@
 /obj/structure/sign/poster/random/directional/south,
 /obj/structure/table,
 /obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

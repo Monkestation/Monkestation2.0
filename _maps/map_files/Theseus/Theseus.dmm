@@ -64921,6 +64921,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/structure/table,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/side,
 /area/station/science/circuits)
 "sTR" = (

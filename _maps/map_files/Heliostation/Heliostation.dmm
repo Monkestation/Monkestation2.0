@@ -19725,6 +19725,7 @@
 /obj/structure/rack,
 /obj/machinery/light/directional/north,
 /obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
 "bXb" = (

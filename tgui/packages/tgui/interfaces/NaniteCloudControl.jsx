@@ -671,7 +671,7 @@ export const NaniteProgramHub = (props) => {
 
 export const NaniteCloudControl = (props) => {
   const { act, data } = useBackend();
-  const { current_view, new_backup_id } = data;
+  const { has_disk, current_view, new_backup_id } = data;
   return (
     <Window width={1295} height={700}>
       <Window.Content scrollable>
@@ -683,9 +683,35 @@ export const NaniteCloudControl = (props) => {
             <NaniteDiskBox />
           </Stack.Item>
           <Stack.Item width="375px">
+            <Section height="64px" title="Backup Disk">
+              {!has_disk ? (
+                <NoticeBox>No disk inserted</NoticeBox>
+              ) : (
+                <>
+                  <Button
+                    icon="eject"
+                    content="Eject"
+                    disabled={!has_disk}
+                    onClick={() => act('eject')}
+                  />
+                  <Button
+                    content="Save from Cloud"
+                    color="good"
+                    disabled={!has_disk}
+                    onClick={() => act('store_backup')}
+                  />
+                  <Button
+                    content="Load to Cloud"
+                    color="bad"
+                    disabled={!has_disk}
+                    onClick={() => act('load_backup')}
+                  />
+                </>
+              )}
+            </Section>
             <Section
               scrollable
-              height="640px"
+              height="570px"
               fill
               title="Cloud Storage"
               buttons={
