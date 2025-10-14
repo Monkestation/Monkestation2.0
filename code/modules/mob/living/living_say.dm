@@ -260,12 +260,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
-	//monkestation edit
-	if(radio_freq && can_hear())
-		var/atom/movable/virtualspeaker/V = speaker
-		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/misc/talk/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-	//monkestation edit end
+	if(client?.prefs?.read_preference(/datum/preference/toggle/sound_ai_radio) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
+		var/atom/movable/virtualspeaker/vspeaker = speaker
+		if(isAI(vspeaker.source))
+			playsound_local(
+				get_turf(src),
+				'goon/sounds/misc/talk/radio_ai.ogg',
+				vol = 170,
+				vary = TRUE,
+				pressure_affected = FALSE,
+				use_reverb = FALSE,
+				mixer_channel = CHANNEL_MOB_SOUNDS
+			)
 
 	var/deaf_message
 	var/deaf_type
