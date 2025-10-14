@@ -8,6 +8,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	max_integrity = 250
 	req_access = list()
 	state_open = FALSE
@@ -55,9 +56,9 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
 	/// Power contributed by this machine to charge the mod suits cell without any capacitors
-	var/base_charge_rate = 200
+	var/base_charge_rate = 0.2 * STANDARD_CELL_RATE
 	/// Final charge rate which is base_charge_rate + contribution by capacitors
-	var/final_charge_rate = 250
+	var/final_charge_rate = 0.25 * STANDARD_CELL_RATE
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
@@ -278,7 +279,7 @@
 	. = ..()
 
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		final_charge_rate = base_charge_rate + (capacitor.tier * 50)
+		final_charge_rate = base_charge_rate + (capacitor.tier * 0.05 * STANDARD_CELL_RATE)
 
 	set_access()
 
@@ -439,13 +440,9 @@
 	image.color = COLOR_RED
 	return image
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
-	if(!istype(user) || user.stat || !Adjacent(user) || !Adjacent(A) || !isliving(A))
+/obj/machinery/suit_storage_unit/mouse_drop_receive(atom/A, mob/living/user, params)
+	if(!isliving(A))
 		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.body_position == LYING_DOWN)
-			return
 	var/mob/living/target = A
 	if(!state_open)
 		to_chat(user, span_warning("The unit's doors are shut!"))

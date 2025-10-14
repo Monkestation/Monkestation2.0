@@ -369,7 +369,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
-	var/list/items = mob_occupant.get_equipped_items(include_pockets = TRUE)
+	var/list/items = mob_occupant.get_equipped_items(INCLUDE_POCKETS)
 	items |= mob_occupant.held_items
 	for(var/obj/item/item_content as anything in items)
 		if(!isitem(item_content) || QDELING(item_content))
@@ -519,82 +519,82 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	return holy_successors
 
-/obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
-	if(isobserver(target) && target == user)
-		attempt_return(target)
+/obj/machinery/cryopod/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(isobserver(dropped) && dropped == user)
+		attempt_return(dropped)
 		return
-	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
+	if(!istype(dropped) || !can_interact(user) || !dropped.Adjacent(user) || !ismob(dropped) || isanimal(dropped) || !istype(user.loc, /turf) || dropped.buckled)
 		return
 
 	if(occupant)
 		to_chat(user, span_notice("[src] is already occupied!"))
 		return
 
-	if(target.stat == DEAD)
+	if(dropped.stat == DEAD)
 		to_chat(user, span_warning("Dead people can not be put into cryo."))
 		return
 
-	if(target.GetComponent(/datum/component/previous_body))
-		to_chat(user, span_warning("[src] seems to reject [target]."))
+	if(dropped.GetComponent(/datum/component/previous_body))
+		to_chat(user, span_warning("[src] seems to reject [dropped]."))
 		return
 
 // Allows admins to enable players to override SSD Time check.
 	if(allow_timer_override)
-		if(tgui_alert(user, "Would you like to place [target] into [src]?", "Place into Cryopod?", list("Yes", "No")) != "No")
-			to_chat(user, span_danger("You put [target] into [src]. [target.p_theyre(capitalized = TRUE)] in the cryopod."))
-			log_admin("[key_name(user)] has put [key_name(target)] into a overridden stasis pod.")
-			message_admins("[key_name(user)] has put [key_name(target)] into a overridden stasis pod. [ADMIN_JMP(src)]")
+		if(tgui_alert(user, "Would you like to place [dropped] into [src]?", "Place into Cryopod?", list("Yes", "No")) != "No")
+			to_chat(user, span_danger("You put [dropped] into [src]. [dropped.p_theyre(capitalized = TRUE)] in the cryopod."))
+			log_admin("[key_name(user)] has put [key_name(dropped)] into a overridden stasis pod.")
+			message_admins("[key_name(user)] has put [key_name(dropped)] into a overridden stasis pod. [ADMIN_JMP(src)]")
 
-			add_fingerprint(target)
+			add_fingerprint(dropped)
 
-			close_machine(target)
-			name = "[name] ([target.name])"
+			close_machine(dropped)
+			name = "[name] ([dropped.name])"
 
 // Allows players to cryo others. Checks if they have been AFK for 30 minutes.
-	if(target.key && user != target)
-		if (target.get_organ_by_type(/obj/item/organ/internal/brain) ) //Target the Brain
-			if(!target.mind || target.ssd_indicator ) // Is the character empty / AI Controlled
-				if(target.lastclienttime + ssd_time >= world.time)
-					to_chat(user, span_notice("You can't put [target] into [src] for another [round(((ssd_time - (world.time - target.lastclienttime)) / (1 MINUTES)), 1)] minutes."))
-					log_admin("[key_name(user)] has attempted to put [key_name(target)] into a stasis pod, but they were only disconnected for [round(((world.time - target.lastclienttime) / (1 MINUTES)), 1)] minutes.")
-					message_admins("[key_name(user)] has attempted to put [key_name(target)] into a stasis pod. [ADMIN_JMP(src)]")
+	if(dropped.key && user != dropped)
+		if (dropped.get_organ_by_type(/obj/item/organ/internal/brain) ) //Target the Brain
+			if(!dropped.mind || dropped.ssd_indicator ) // Is the character empty / AI Controlled
+				if(dropped.lastclienttime + ssd_time >= world.time)
+					to_chat(user, span_notice("You can't put [dropped] into [src] for another [round(((ssd_time - (world.time - dropped.lastclienttime)) / (1 MINUTES)), 1)] minutes."))
+					log_admin("[key_name(user)] has attempted to put [key_name(dropped)] into a stasis pod, but they were only disconnected for [round(((world.time - dropped.lastclienttime) / (1 MINUTES)), 1)] minutes.")
+					message_admins("[key_name(user)] has attempted to put [key_name(dropped)] into a stasis pod. [ADMIN_JMP(src)]")
 					return
-				else if(tgui_alert(user, "Would you like to place [target] into [src]?", "Place into Cryopod?", list("Yes", "No")) == "Yes")
-					if(target.mind.assigned_role.req_admin_notify)
+				else if(tgui_alert(user, "Would you like to place [dropped] into [src]?", "Place into Cryopod?", list("Yes", "No")) == "Yes")
+					if(dropped.mind.assigned_role.req_admin_notify)
 						tgui_alert(user, "They are an important role! [AHELP_FIRST_MESSAGE]")
-					to_chat(user, span_danger("You put [target] into [src]. [target.p_theyre(capitalized = TRUE)] in the cryopod."))
-					log_admin("[key_name(user)] has put [key_name(target)] into a stasis pod.")
-					message_admins("[key_name(user)] has put [key_name(target)] into a stasis pod. [ADMIN_JMP(src)]")
+					to_chat(user, span_danger("You put [dropped] into [src]. [dropped.p_theyre(capitalized = TRUE)] in the cryopod."))
+					log_admin("[key_name(user)] has put [key_name(dropped)] into a stasis pod.")
+					message_admins("[key_name(user)] has put [key_name(dropped)] into a stasis pod. [ADMIN_JMP(src)]")
 
-					add_fingerprint(target)
+					add_fingerprint(dropped)
 
-					close_machine(target)
-					name = "[name] ([target.name])"
+					close_machine(dropped)
+					name = "[name] ([dropped.name])"
 
-		else if(iscyborg(target))
-			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
+		else if(iscyborg(dropped))
+			to_chat(user, span_danger("You can't put [dropped] into [src]. [dropped.p_theyre(capitalized = TRUE)] online."))
 		else
-			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
+			to_chat(user, span_danger("You can't put [dropped] into [src]. [dropped.p_theyre(capitalized = TRUE)] conscious."))
 		return
 
-	if(target == user && (tgui_alert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", list("Yes", "No")) != "Yes"))
+	if(dropped == user && (tgui_alert(dropped, "Would you like to enter cryosleep?", "Enter Cryopod?", list("Yes", "No")) != "Yes"))
 		return
 
-	if(target == user)
-		if(target.mind.assigned_role.req_admin_notify)
-			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
-		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
+	if(dropped == user)
+		if(dropped.mind.assigned_role.req_admin_notify)
+			tgui_alert(dropped, "You're an important role! [AHELP_FIRST_MESSAGE]")
+		var/datum/antagonist/antag = dropped.mind.has_antag_datum(/datum/antagonist)
 		if(antag)
-			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
+			tgui_alert(dropped, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
 
-	if(LAZYLEN(target.buckled_mobs) > 0)
-		if(target == user)
+	if(LAZYLEN(dropped.buckled_mobs) > 0)
+		if(dropped == user)
 			to_chat(user, span_danger("You can't fit into the cryopod while someone is buckled to you."))
 		else
-			to_chat(user, span_danger("You can't fit [target] into the cryopod while someone is buckled to them."))
+			to_chat(user, span_danger("You can't fit [dropped] into the cryopod while someone is buckled to them."))
 		return
 
-	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
+	if(!istype(dropped) || !can_interact(user) || !dropped.Adjacent(user) || !ismob(dropped) || isanimal(dropped) || !istype(user.loc, /turf) || dropped.buckled)
 		return
 		// rerun the checks in case of shenanigans
 
@@ -602,19 +602,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		to_chat(user, span_notice("[src] is already occupied!"))
 		return
 
-	if(target == user)
+	if(dropped == user)
 		visible_message(span_infoplain("[user] starts climbing into the cryo pod."))
 	else
-		visible_message(span_infoplain("[user] starts putting [target] into the cryo pod."))
+		visible_message(span_infoplain("[user] starts putting [dropped] into the cryo pod."))
 
-	to_chat(target, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"))
+	to_chat(dropped, span_warning("<b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b>"))
 
-	log_admin("[key_name(target)] entered a stasis pod.")
-	message_admins("[key_name_admin(target)] entered a stasis pod. [ADMIN_JMP(src)]")
-	add_fingerprint(target)
+	log_admin("[key_name(dropped)] entered a stasis pod.")
+	message_admins("[key_name_admin(dropped)] entered a stasis pod. [ADMIN_JMP(src)]")
+	add_fingerprint(dropped)
 
-	close_machine(target)
-	name = "[name] ([target.name])"
+	close_machine(dropped)
+	name = "[name] ([dropped.name])"
 
 // Attacks/effects.
 /obj/machinery/cryopod/blob_act()

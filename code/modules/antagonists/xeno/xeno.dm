@@ -22,6 +22,7 @@
 	antagpanel_category = ANTAG_GROUP_XENOS
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
+	antag_flags = FLAG_ANTAG_CAP_TEAM
 	var/datum/team/xeno/xeno_team
 
 /datum/antagonist/xeno/on_gain()
@@ -48,13 +49,26 @@
 	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
 /datum/antagonist/xeno/forge_objectives()
+	if(locate(/datum/objective/escape_captivity) in objectives)
+		return
 	var/datum/objective/advance_hive/objective = new
 	objective.owner = owner
 	objectives += objective
 
+// xenos in captivity do not count
+//SScommunications might not be loaded if captive xenos didn't spawn naturally (2% chance) and instead were placed in the cell by a player
+//Any xenomorphs in the captivity area count as captive xenomorphs for research generation, and shouldn't count towards the antag cap
+/datum/antagonist/xeno/should_count_for_antag_cap()
+	. = ..()
+	if(!.)
+		return
+	if(istype(get_area(owner.current), /area/station/science/xenobiology/cell))
+		return FALSE
+
 //Related code for neutered xenomorphs
 /datum/antagonist/xeno/neutered
 	name = "\improper Neutered Xenomorph"
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
 
 /datum/antagonist/xeno/neutered/forge_objectives()
 	var/datum/objective/survive/objective = new
@@ -78,7 +92,7 @@
 			return
 		captive_team = new
 		captive_team.progenitor = owner
-		antag_flags |= FLAG_ANTAG_CAP_IGNORE // monkestation edit: first captive xeno does not count against cap
+		antag_flags |= FLAG_ANTAG_CAP_IGNORE
 	else
 		if(!istype(new_team))
 			CRASH("Wrong xeno team type provided to create_team")
@@ -100,7 +114,7 @@
 	explanation_text = "Escape from captivity."
 
 /datum/objective/escape_captivity/check_completion()
-	if(!istype(get_area(owner), SScommunications.captivity_area))
+	if(!istype(get_area(owner.current), SScommunications.captivity_area))
 		return TRUE
 
 /datum/objective/advance_hive
@@ -116,68 +130,38 @@
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
 	var/datum/mind/progenitor
-
-/datum/team/xeno/captive/roundend_report()
-	var/list/parts = list()
-	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
-	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
-
-	parts += "<span class='header'>The [name] were:</span> <br>"
-
-	if(check_captivity(progenitor.current) == CAPTIVE_XENO_PASS)
-		parts += span_greentext("The progenitor of this hive was [progenitor.key], as [progenitor], who successfully escaped captivity!") + "<br>"
-	else
-		parts += span_redtext("The progenitor of this hive was [progenitor.key], as [progenitor], who failed to escape captivity") + "<br>"
-
-	for(var/datum/mind/alien_mind in members)
-		if(alien_mind == progenitor)
-			continue
-
-		switch(check_captivity(alien_mind.current))
-			if(CAPTIVE_XENO_DEAD)
-				parts += "[printplayer(alien_mind, fleecheck = FALSE)] while trying to escape captivity!"
-			if(CAPTIVE_XENO_FAIL)
-				parts += "[printplayer(alien_mind, fleecheck = FALSE)] in captivity!"
-				captive_count++
-			if(CAPTIVE_XENO_PASS)
-				parts += "[printplayer(alien_mind, fleecheck = FALSE)] and managed to [span_greentext("escape captivity!")]"
-				escape_count++
-
-	parts += "<br> <span class='neutraltext big'> Overall, [captive_count] xenomorphs remained alive and in captivity, and [escape_count] managed to escape!</span> <br>"
-
-	var/thank_you_message
-	if(captive_count > escape_count)
-		thank_you_message = "xenobiological containment architecture"
-	else
-		thank_you_message = "xenofauna combat effectiveness"
-
-	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]</b>.</span>"
-
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div> <br>"
-
-/datum/team/xeno/captive/proc/check_captivity(mob/living/captive_alien)
-	if(!captive_alien || captive_alien.stat == DEAD)
-		return CAPTIVE_XENO_DEAD
-
-	if(istype(get_area(captive_alien), SScommunications.captivity_area))
-		return CAPTIVE_XENO_FAIL
-
-	return CAPTIVE_XENO_PASS
+	var/captive_xenos = 1
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
-	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered
+	if (HAS_TRAIT(src, TRAIT_NEUTERED)) //skip antagonist assignment if neutered (lamarr)
 		mind.add_antag_datum(/datum/antagonist/xeno/neutered)
 		return
-	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
-			mind.add_antag_datum(/datum/antagonist/xeno/captive)
-		else
-			mind.add_antag_datum(/datum/antagonist/xeno)
+	if(mind.has_antag_datum(/datum/antagonist/xeno)|| mind.has_antag_datum(/datum/antagonist/xeno/captive))
+		return //already has an antag datum, no need to add it again)
+	mind.add_antag_datum(/datum/antagonist/xeno)
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
+	mind.special_role = ROLE_ALIEN
+	var/area/xenocell = locate(/area/station/science/xenobiology/cell)
+	if(xenocell)
+		RegisterSignal(xenocell, COMSIG_AREA_ENTERED, PROC_REF(on_xenobio_cell_occupancy_changed))
+		RegisterSignal(xenocell, COMSIG_AREA_EXITED, PROC_REF(on_xenobio_cell_occupancy_changed))
 
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
+/mob/living/carbon/alien/proc/on_xenobio_cell_occupancy_changed()
+	var/datum/team/xeno/xeno_team = locate(/datum/team/xeno) in GLOB.antagonist_teams
+	var/datum/team/xeno/captive/captive_team = locate(/datum/team/xeno/captive) in GLOB.antagonist_teams
+	for(var/datum/mind/alien in xeno_team?.members)
+		if(istype(get_area(alien.current), /area/station/science/xenobiology/cell)  && alien.current.stat != DEAD)
+			if(!alien.has_antag_datum(/datum/antagonist/xeno/captive))
+				alien.add_antag_datum(/datum/antagonist/xeno/captive)
+				captive_team.captive_xenos++
+				captive_team.add_member(alien)
+		else //make sure if they arent in xenobiology that they dont have the captive datum
+			if(alien.has_antag_datum(/datum/antagonist/xeno/captive))
+				alien.remove_antag_datum(/datum/antagonist/xeno/captive)
+				captive_team.captive_xenos--
+		xeno_team.add_member(alien) //ensure the alien remains a part of the xeno team
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()

@@ -377,6 +377,11 @@
 		marktwo.capacitor = markone.capacitor
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
+	QDEL_NULL(marktwo.manipulator)
+	if (markone.manipulator)
+		marktwo.manipulator = markone.manipulator
+		markone.manipulator.forceMove(marktwo)
+		markone.manipulator = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))

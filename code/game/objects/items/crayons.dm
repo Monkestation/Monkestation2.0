@@ -28,6 +28,7 @@
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	/// Icon state to use when capped
 	var/icon_capped
@@ -276,13 +277,6 @@
 	if(!ui)
 		ui = new(user, src, "Crayon", name)
 		ui.open()
-
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	is_capped = !is_capped
-	balloon_alert(user, is_capped ? "capped" : "cap removed")
-	update_appearance()
 
 /obj/item/toy/crayon/proc/staticDrawables()
 	. = list()
@@ -534,6 +528,24 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
+	return
+
+/obj/item/toy/crayon/attack(mob/target, mob/living/user)
+	if(!edible || (target != user) || !iscarbon(user))
+		return ..()
+	var/covered = ""
+	if(user.is_mouth_covered(ITEM_SLOT_HEAD))
+		covered = "headgear"
+	else if(user.is_mouth_covered(ITEM_SLOT_MASK))
+		covered = "mask"
+	if(covered)
+		balloon_alert(user, "remove your [covered]!")
+		return
+	to_chat(user, span_notice("You take a bite of the [name]. Delicious!"))
+	var/eaten = use_charges(user, 5, FALSE)
+	if(check_empty(user)) //Prevents division by zero
+		return
+	reagents.trans_to(user, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))
@@ -730,6 +742,7 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
@@ -757,10 +770,22 @@
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
+	register_context()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
 		set_painting_tool_color(pick("#DA0000", "#FF9300", "#FFF200", "#A8E61D", "#00B7EF", "#DA00FF"))
 	refill()
+
+/obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
+		return .
+
+	if(has_cap)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
@@ -840,6 +865,10 @@
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return
 
+			if(HAS_TRAIT(target, TRAIT_WINDOW_POLARIZED))
+				balloon_alert(user, "can't paint polarized window!")
+				return FALSE
+
 			if(istype(target, /obj/item/pipe))
 				if(GLOB.pipe_color_name.Find(paint_color))
 					var/obj/item/pipe/target_pipe = target
@@ -912,7 +941,7 @@
 	balloon_alert(user, "can't match those colours!")
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+/obj/item/toy/crayon/spraycan/click_alt(mob/user)
 	if(!has_cap)
 		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped

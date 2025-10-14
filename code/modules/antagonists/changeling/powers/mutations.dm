@@ -25,7 +25,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/weapon/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
@@ -101,7 +101,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/suit/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)

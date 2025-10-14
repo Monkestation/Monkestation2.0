@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 			addFile(filed_mind.current)
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/paper/employment_contract(src, employee.mind.name)
+	new /obj/item/paper/employment_contract(src, employee.mind.name, employee.mind.assigned_role)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
 	if(virgin)

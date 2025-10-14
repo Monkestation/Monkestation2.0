@@ -3,10 +3,11 @@
 	desc = "Snap restraints, break lockers and doors, or deal terrible damage with your bare hands."
 	button_icon_state = "power_strength"
 	power_explanation = "Brawn:\n\
-		Click any person to bash into them, break restraints you have or knocking a grabber down. Only one of these can be done per use.\n\
+		Click any person to bash into them, break any restraints on you (except silver handcuffs), or knock a grabber down. Only one of these can be done per use.\n\
 		Punching a Cyborg will heavily EMP them in addition to deal damage.\n\
 		At level 3, you get the ability to break closets open, additionally can both break restraints AND knock a grabber down in the same use.\n\
 		At level 4, you get the ability to bash airlocks open, as long as they aren't bolted.\n\
+		At level 5, you get the ability to break even silver handcuffs.\n\
 		Higher levels will increase the damage and knockdown when punching someone."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -17,6 +18,12 @@
 	target_range = 1
 	power_activates_immediately = TRUE
 	prefire_message = "Select a target."
+
+/datum/action/cooldown/bloodsucker/targeted/brawn/upgrade_power()
+	. = ..()
+
+	if (level_current == 5)
+		check_flags |= BP_ALLOW_WHILE_SILVER_CUFFED
 
 /datum/action/cooldown/bloodsucker/targeted/brawn/ActivatePower(trigger_flags)
 	// Did we break out of our handcuffs?
@@ -144,7 +151,7 @@
 			return
 		var/obj/structure/closet/target_closet = target_atom
 		user.balloon_alert(user, "you prepare to bash [target_closet] open...")
-		if(!do_after(user, 2.5 SECONDS, target_closet))
+		if(!do_after(user, 2.5 SECONDS, target_closet, hidden = TRUE))
 			user.balloon_alert(user, "interrupted!")
 			return FALSE
 		target_closet.visible_message(span_danger("[target_closet] breaks open as [user] bashes it!"))
@@ -157,7 +164,7 @@
 		var/obj/machinery/door/target_airlock = target_atom
 		playsound(get_turf(user), 'sound/machines/airlock_alien_prying.ogg', 40, TRUE, -1)
 		owner.balloon_alert(owner, "you prepare to tear open [target_airlock]...")
-		if(!do_after(user, 2.5 SECONDS, target_airlock))
+		if(!do_after(user, 2.5 SECONDS, target_airlock, hidden = TRUE))
 			user.balloon_alert(user, "interrupted!")
 			return FALSE
 		if(target_airlock.Adjacent(user))

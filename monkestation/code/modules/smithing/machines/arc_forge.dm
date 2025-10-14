@@ -9,8 +9,8 @@
 	max_integrity = 1000
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 3000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	circuit = null
 	light_outer_range = 5
@@ -63,10 +63,10 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/arc_forge/AltClick(mob/user)
+/obj/machinery/arc_forge/click_alt(mob/user)
 	if(attempt_material_forge())
-		return TRUE
-	. = ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/arc_forge/proc/attempt_material_forge()
 	if(!slot_one_item || !slot_two_item)

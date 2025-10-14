@@ -141,8 +141,8 @@ Striking a noncultist, however, will tear their flesh."}
 		return FALSE
 
 /obj/item/restraints/legcuffs/bola/cult
-	name = "\improper Nar'Sien bola"
-	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
+	name = "\improper Nar'Sian bola"
+	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sian cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	inhand_icon_state = "bola_cult"
 	breakouttime = 6 SECONDS
@@ -297,8 +297,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened
-	name = "\improper Nar'Sien hardened armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened armor"
+	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_armor"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
@@ -322,8 +322,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 100
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened helmet"
+	desc = "A heavily-armored helmet worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
 	armor_type = /datum/armor/cult_hoodie_hardened
@@ -964,7 +964,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/shield/mirror
 	name = "mirror shield"
-	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
+	desc = "An infamous shield used by Nar'Sian sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
 	icon_state = "mirror_shield" // eshield1 for expanded
 	inhand_icon_state = "mirror_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'

@@ -518,7 +518,7 @@
  *
  * Arguments:
  * -[mat][datum/material] : the material type to check for 3 cases
- * a) If it's an path its ref is retrived
+ * a) If it's an path its ref is retrieved
  * b) If it's text then its an category material & there is no way to deal with it so return 0
  * c) If normal material proceeds as usual
  */
@@ -532,7 +532,7 @@
  * if this container does not support glass, any glass in 'I' will not be taken into account
  *
  * Arguments:
- * - [I][obj/item]: the item whos materials must be retrived
+ * - [I][obj/item]: the item whos materials must be retrieved
  */
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I)
 	if(!istype(I) || !I.custom_materials)
