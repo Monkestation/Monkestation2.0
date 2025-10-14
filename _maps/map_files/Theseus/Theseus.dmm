@@ -48334,12 +48334,6 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/reinforced,
 /obj/item/storage/box/chemimp{
 	pixel_x = 8;
 	pixel_y = 9
@@ -48351,8 +48345,6 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/end{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /obj/item/storage/box/teleport_blocker,
 /obj/item/storage/lockbox/loyalty{
 	pixel_y = 1;
