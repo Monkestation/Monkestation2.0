@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/datum/job/player_role = player.mind?.assigned_role
 		if(player_role)
 			points += player_role.antag_capacity_points
-	return ANTAG_CAP_FLAT + max(points - (ANTAG_CAP_FLAT), 1)
+	return ANTAG_CAP_FLAT + max(points - (ANTAG_CAP_FLAT + 5), 1)
 
 /// Return the total point value of active antags
 /datum/controller/subsystem/gamemode/proc/get_antag_count()
