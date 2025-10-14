@@ -8,6 +8,11 @@ import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
 import { BooleanLike, classes } from 'common/react';
 
+type ExosuitDesign = Design & {
+  constructionTime: number;
+  craftable: BooleanLike;
+};
+
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
   authorization: BooleanLike;
@@ -15,10 +20,7 @@ type ExosuitFabricatorData = FabricatorData & {
   combat_parts_allowed: BooleanLike;
   emagged: BooleanLike;
   silicon_user: BooleanLike;
-};
-
-type ExosuitDesign = Design & {
-  craftable: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
 export const ExosuitFabricator = (props) => {

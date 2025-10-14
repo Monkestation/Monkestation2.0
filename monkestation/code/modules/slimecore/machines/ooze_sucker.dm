@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
-/obj/machinery/plumbing/ooze_sucker/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_sucker/click_ctrl(mob/user)
 	if(!can_interact(user) || !length(upgrade_disks))
 		return ..()
 

@@ -36,6 +36,10 @@
 
 	var/pollinated = FALSE
 
+	/// Is this plant currently being harvested from?
+	/// Used to prevent excessive lag from harvesting multiple times at the same time.
+	var/harvesting = FALSE
+
 /datum/component/plant_growing/Initialize(max_reagents = 40, maximum_seeds = 1)
 	. = ..()
 
@@ -91,8 +95,8 @@
 	for(var/datum/reagent/reagent as anything in movable_parent.reagents.reagent_list)
 		reagent.on_plant_grower_apply(parent)
 
-	for(var/item in managed_seeds)
-		var/obj/item/seeds/seed = managed_seeds[item]
+	for(var/_item, seed_item in managed_seeds)
+		var/obj/item/seeds/seed = seed_item
 		if(!seed)
 			continue
 
@@ -138,18 +142,24 @@
 
 
 /datum/component/plant_growing/proc/try_plant_seed(datum/source, obj/item/seeds/seed, mob/living/user)
-	SIGNAL_HANDLER
+	//SIGNAL_HANDLER (commented so we can use check_tick)
 	if(istype(seed, /obj/item/seeds/sample))
 		return FALSE
 	if(istype(seed, /obj/item/storage/bag/plants))
-		for(var/id in managed_seeds)
-			var/obj/item/seeds/harvest = managed_seeds[id]
+		if(harvesting)
+			return COMPONENT_NO_AFTERATTACK
+		harvesting = TRUE
+		for(var/_id, item in managed_seeds)
+			var/obj/item/seeds/harvest = item
 			if(!harvest || istype(seed, /obj/item/seeds/sample))
 				continue
 			SEND_SIGNAL(harvest, COMSIG_PLANT_TRY_HARVEST, user)
+			CHECK_TICK
 
-		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			seed.atom_storage?.attempt_insert(G, user, TRUE)
+		for(var/obj/item/food/grown/grown in get_turf(user))
+			seed.atom_storage?.attempt_insert(grown, user, TRUE)
+			CHECK_TICK
+		harvesting = FALSE
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/movable/movable_parent = parent
@@ -180,26 +190,45 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/plant_growing/proc/try_harvest(datum/source, mob/living/user)
-	if(!length(managed_seeds))
+	if(!length(managed_seeds) || harvesting)
 		return
 
-	for(var/item in managed_seeds)
-		var/obj/item/seeds/seed = managed_seeds[item]
-		if(!seed)
-			continue
-		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_HARVEST, user)
+	var/atom/movable/movable_parent = parent
+	if(isobj(movable_parent) && !movable_parent.anchored)
+		movable_parent.balloon_alert(user, "unanchored!")
+		to_chat(user, span_warning("\The [movable_parent] must be anchored in order to harvest from it!"))
+		return
 
+	var/turf/parent_turf = get_turf(movable_parent)
+	if(length(parent_turf.contents) >= 50)
+		movable_parent.balloon_alert(user, "too crowded!")
+		to_chat(user, span_warning("The tile is too crowded, clear some items off of it!"))
+		return
+
+	var/amount_of_shit = 0
+	for(var/obj/item/thing in range(1, parent_turf))
+		amount_of_shit++
+
+	if(amount_of_shit >= 100)
+		movable_parent.balloon_alert(user, "too crowded!")
+		to_chat(user, span_warning("The area around \the [movable_parent] is too crowded, clean some items up!"))
+		return
+
+	harvesting = TRUE
+	for(var/_item, seed_item in managed_seeds)
+		var/obj/item/seeds/seed = seed_item
+		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_HARVEST, user)
+		CHECK_TICK
+	harvesting = FALSE
 
 /datum/component/plant_growing/proc/try_pollinate(datum/source)
 	if(!length(managed_seeds))
 		return
 
 	pollinated = TRUE
-	var/set_time =  rand(600, 900)
-	for(var/item in managed_seeds)
-		var/obj/item/seeds/seed = managed_seeds[item]
-		if(!seed)
-			continue
+	var/set_time =  rand(1 MINUTES, 1.5 MINUTES)
+	for(var/_item, seed_item in managed_seeds)
+		var/obj/item/seeds/seed = seed_item
 		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_POLLINATE, parent, set_time)
 
 	addtimer(VARSET_CALLBACK(src, pollinated, FALSE), set_time)
@@ -305,16 +334,16 @@
 	bio_boosted = !bio_boosted
 
 /datum/component/plant_growing/proc/try_secateur(datum/source, mob/user)
-	for(var/item in managed_seeds)
-		var/obj/item/seeds/seed = managed_seeds[item]
+	for(var/_item, seed_item in managed_seeds)
+		var/obj/item/seeds/seed = seed_item
 		if(!seed)
 			continue
 		SEND_SIGNAL(seed, COMSIG_PLANT_TRY_SECATEUR, user)
 	return TRUE
 
 /datum/component/plant_growing/proc/try_graft(datum/source, mob/user, obj/item/graft/snip)
-	for(var/item in managed_seeds)
-		var/obj/item/seeds/seed = managed_seeds[item]
+	for(var/_item, seed_item in managed_seeds)
+		var/obj/item/seeds/seed = seed_item
 		if(!seed)
 			continue
 		if(seed.apply_graft(snip))

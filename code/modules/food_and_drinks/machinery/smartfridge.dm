@@ -294,7 +294,12 @@
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-	..()
+	//remove all component parts inherited from smartfridge cause they were not required in crafting
+	var/obj/item/circuitboard/machine/smartfridge/board = locate() in component_parts
+	component_parts -= board
+	qdel(board)
+	component_parts.Cut()
+	return ..()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
@@ -309,7 +314,7 @@
 	.["verb"] = "Take"
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/smartfridge/drying_rack/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
@@ -317,6 +322,8 @@
 	var/mob/living_mob = ui.user
 
 	switch(action)
+		if("Dry")
+			toggle_drying(FALSE)
 		if("Release")
 			var/amount = text2num(params["amount"])
 			if(isnull(amount) || !isnum(amount))

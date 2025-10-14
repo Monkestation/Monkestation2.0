@@ -52,7 +52,7 @@
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
 	source.balloon_alert_to_viewers("repacking...")
-	if(!do_after(user, 3 SECONDS, target = source))
+	if(!do_after(user, repacking_time, target = source))
 		return
 
 	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)

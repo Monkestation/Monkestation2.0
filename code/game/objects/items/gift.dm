@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	inhand_icon_state = "gift"
 	resistance_flags = FLAMMABLE
 
-	var/obj/item/contains_type
+	var/atom/contains_type
 
 /obj/item/a_gift/Initialize(mapload)
 	. = ..()
@@ -44,15 +44,19 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	qdel(src)
 
-	var/obj/item/I = new contains_type(get_turf(M))
-	if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
-		M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
-		M.investigate_log("has unwrapped a present containing [I.type].", INVESTIGATE_PRESENTS)
-		M.put_in_hands(I)
-		I.add_fingerprint(M)
-		I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
+	if(isitem(contains_type))
+		var/atom/I = new contains_type(get_turf(M))
+		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
+			M.put_in_hands(I)
+			I.add_fingerprint(M)
+			I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
+		else
+			M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+			return
 	else
-		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+		new contains_type(M.drop_location(), M)
+	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [contains_type] inside!"))
+	M.investigate_log("has unwrapped a present containing [contains_type.type].", INVESTIGATE_PRESENTS)
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
@@ -145,4 +149,38 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
 
+	return gift_type
+
+/obj/item/a_gift/spooky
+	name = "spooky gift"
+	desc = "Could contain tricks or treats!"
+
+/obj/item/a_gift/spooky/Initialize(mapload)
+	. = ..()
+	icon_state = "spooky_gift"
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+
+	contains_type = get_gift_type()
+
+/obj/item/a_gift/spooky/get_gift_type()
+	var/gift_type_list = list(/obj/item/food/burger/ghost,
+		/obj/item/paper/selfdestruct/job_application,
+		/obj/item/stack/sheet/hauntium,
+		/obj/item/tome,
+		/obj/item/clothing/suit/costume/ghost_sheet,
+		/obj/item/food/cookie/sugar/spookycoffin,
+		/obj/item/food/cookie/sugar/spookyskull,
+		/mob/living/basic/skeleton,
+		/obj/effect/mine/sound/bwoink,
+		/obj/effect/mine/shrapnel/sting,
+		/obj/item/clothing/mask/cigarette/syndicate,
+		/obj/item/clothing/mask/cigarette/candy,
+		/obj/effect/mine/sound/spooky,
+		/obj/item/knife,
+		/obj/item/restraints/legcuffs/beartrap/prearmed,
+		/obj/item/skeleton_potion,
+		/obj/item/bad_luck
+		)
+	var/gift_type = pick(gift_type_list)
 	return gift_type

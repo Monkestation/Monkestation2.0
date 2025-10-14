@@ -257,7 +257,7 @@ Difficulty: Extremely Hard
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
-	user.revive(ADMIN_HEAL_ALL)
+	user.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)
 	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
 	clone.dust()
@@ -317,18 +317,6 @@ Difficulty: Extremely Hard
 	var/turf/T = get_turf(target)
 	mineral_scan_pulse(T, world.view + 1)
 	. = ..()
-
-/obj/item/crusher_trophy/ice_block_talisman
-	name = "ice block talisman"
-	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason."
-	icon_state = "ice_trap_talisman"
-	denied_type = /obj/item/crusher_trophy/ice_block_talisman
-
-/obj/item/crusher_trophy/ice_block_talisman/effect_desc()
-	return "mark detonation to freeze a creature in a block of ice for a period, preventing them from moving"
-
-/obj/item/crusher_trophy/ice_block_talisman/on_mark_detonation(mob/living/target, mob/living/user)
-	target.apply_status_effect(/datum/status_effect/ice_block_talisman)
 
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"

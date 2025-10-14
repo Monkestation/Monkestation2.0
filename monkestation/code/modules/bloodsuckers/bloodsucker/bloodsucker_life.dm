@@ -201,7 +201,7 @@
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
-		bloodsuckeruser.revive()
+		bloodsuckeruser.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	for(var/datum/wound/iter_wound as anything in bloodsuckeruser.all_wounds)
 		iter_wound.remove_wound()
 	for(var/obj/item/organ/organ as anything in typecache_filter_list(bloodsuckeruser.organs, yucky_organ_typecache))

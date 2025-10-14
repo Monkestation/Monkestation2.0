@@ -41,6 +41,9 @@
 	QDEL_NULL(monitor)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
+/datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	add_team_hud(new_body)
+
 /datum/antagonist/vassal/proc/setup_monitor(mob/target)
 	QDEL_NULL(monitor)
 	if(QDELETED(master?.owner?.current) || QDELETED(master.tracker))

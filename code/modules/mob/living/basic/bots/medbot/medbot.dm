@@ -15,7 +15,7 @@
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
 	bot_type = MED_BOT
@@ -201,7 +201,7 @@
 /mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
-	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
+	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !HAS_SILICON_ACCESS(user))
 		return
 	switch(action)
 		if("heal_threshold")
@@ -368,7 +368,7 @@
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
 	heal_amount = 5
-	maints_access_required = list(ACCESS_MEDICAL, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
 
 /mob/living/basic/bot/medbot/nukie
 	name = "Oppenheimer"
@@ -376,7 +376,7 @@
 	skin = "bezerk"
 	health = 40
 	maxHealth = 40
-	maints_access_required = list(ACCESS_SYNDICATE)
+	req_one_access = list(ACCESS_SYNDICATE)
 	radio_key = /obj/item/encryptionkey/syndicate
 	radio_channel = RADIO_CHANNEL_SYNDICATE
 	damage_type_healer = HEAL_ALL_DAMAGE
