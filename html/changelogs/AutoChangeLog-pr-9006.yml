@@ -1,0 +1,13 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Heliostation Emitters now have a proper smes connected to engines power."
+  - map: "Heliostation PTL is now no longer hooked up to the stations power, rather engines,"
+  - map: "Heliostations Starboard solars has a SMES unit and door access changed to proper"
+  - map: "Heliostation CE now has a CE monitor in their room"
+  - map: "Heliostation EVA and pathology has been shifted in order to not block a external airlock access"
+  - map: "Heliostation Bow solars now has a camera."
+  - map: "Heliostation AI Core will now be hooked to the accurate grid and actually recharge."
+  - map: "Heliostation Gravity generator has proper camera coverage"
+  - map: "Heliostation Library no longer has a floating camera"
+  - map: "Heliostation Brig air control is now a actual checkpoint for air"

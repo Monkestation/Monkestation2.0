@@ -1,0 +1,5 @@
+author: "Cmpwarrior"
+delete-after: True
+changes:
+  - rscadd: "Adds some jester-themed clown clothing to the loadout selector (clown only)"
+  - rscadd: "Adds greyscale capabilities to some jester clothing items"

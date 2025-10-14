@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Changed the escape menu to hopefully be more useful and not as laggy."
