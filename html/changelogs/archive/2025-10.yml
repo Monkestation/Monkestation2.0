@@ -504,3 +504,36 @@
   - bugfix: ship engines are now breakable in shipbreaking area with sledgehammer
       and five rewards
   - bugfix: sledgehammer bonus damage now applies properly in shipbreaking area
+2025-10-14:
+  Absolucy:
+  - rscadd: Added a preference to allow you to turn off the AI radio blip sounds.
+  - qol: The MOD ash accretion module now works when mining underwater on Oshan.
+  BobDABuilder9001:
+  - bugfix: Cyborgs can place rods and glass on window sills.
+  - qol: Placing glass on a window sill or on a grill no longer anchors it for one
+      but not the other
+  Cmpwarrior:
+  - rscadd: Adds some jester-themed clown clothing to the loadout selector (clown
+      only)
+  - rscadd: Adds greyscale capabilities to some jester clothing items
+  JohnFulpWillard:
+  - qol: Changed the escape menu to hopefully be more useful and not as laggy.
+  LassiH:
+  - balance: flares now can be extinquished by light eaters
+  notghosti:
+  - bugfix: Venus Human Traps will now heal on vines again, and be punished for daring
+      to leave them.
+  - map: Heliostation Emitters now have a proper smes connected to engines power.
+  - map: Heliostation PTL is now no longer hooked up to the stations power, rather
+      engines,
+  - map: Heliostations Starboard solars has a SMES unit and door access changed to
+      proper
+  - map: Heliostation CE now has a CE monitor in their room
+  - map: Heliostation EVA and pathology has been shifted in order to not block a external
+      airlock access
+  - map: Heliostation Bow solars now has a camera.
+  - map: Heliostation AI Core will now be hooked to the accurate grid and actually
+      recharge.
+  - map: Heliostation Gravity generator has proper camera coverage
+  - map: Heliostation Library no longer has a floating camera
+  - map: Heliostation Brig air control is now a actual checkpoint for air
