@@ -315,7 +315,7 @@ Striking a noncultist, however, will tear their flesh."}
 	melee = 50
 	bullet = 40
 	laser = 50
-	energy = 50
+	energy = 20
 	bomb = 50
 	bio = 100
 	fire = 100
@@ -339,7 +339,7 @@ Striking a noncultist, however, will tear their flesh."}
 	melee = 50
 	bullet = 40
 	laser = 50
-	energy = 50
+	energy = 20
 	bomb = 50
 	bio = 100
 	fire = 100
