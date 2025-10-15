@@ -100,7 +100,9 @@
 
 	soul.PossessByPlayer(ghost.ckey)
 	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
-	soul.faction = list("[REF(master)]")
+	if(!soul.mind)
+		soul.mind_initialize()
+	soul.mind.enslave_mind_to_creator(master)
 	balloon_alert(master, "the scythe glows")
 	add_overlay("soulscythe_gem")
 	density = TRUE
@@ -258,6 +260,10 @@
 	faction = list()
 	blood_volume = MAX_BLOOD_LEVEL
 	hud_type = /datum/hud/soulscythe
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 8
+	lighting_cutoff_blue = 5
 
 /mob/living/basic/soulscythe/Initialize(mapload)
 	. = ..()
@@ -266,7 +272,7 @@
 
 /mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick, times_fired) // done like this because there's no need to go through all of life since the item does the work anyways
 	if(stat == CONSCIOUS)
-		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(1 * seconds_per_tick))
+		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(DELTA_WORLD_TIME(SSmobs), 1))
 	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 /// Special projectile for the soulscythe.
