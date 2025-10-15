@@ -538,7 +538,15 @@
   - map: Heliostation Library no longer has a floating camera
   - map: Heliostation Brig air control is now a actual checkpoint for air
 2025-10-15:
+  Absolucy:
+  - bugfix: Darkspawn can no longer use Silver Tongue to recall a shuttle when admins
+      have disabled recalling.
+  - admin: Darkspawn recalling the shuttle with Silver Tongue is now logged.
+  JohnFulpWillard:
+  - balance: You can now wear gloves with only one hand.
   Lawlolawl:
   - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
       Only the correct bank account can unlock/lock the crate now. Previously, mining
       crates were stuck locked permanently after relocking.
+  notghosti:
+  - map: Boxstation AI boards are now accessible via RD access.
