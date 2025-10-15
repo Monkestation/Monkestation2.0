@@ -70,7 +70,7 @@
 				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 		if(WIRE_MOTIVATIONAL)
 			R.motivate()
-			R.visible_message(span_notice("[R]'s servo's begin to flare widly."), span_notice("You feel a sharp artifical pain."))
+			R.visible_message(span_notice("[R]'s servos begin to flare widly."), span_notice("You feel a sharp artifical pain."))
 
 /datum/wires/robot/on_cut(wire, mend, source)
 	var/mob/living/silicon/robot/R = holder
