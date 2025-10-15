@@ -766,7 +766,7 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated(IGNORE_CRIT))
+	if(incapacitated(IGNORE_SOFTCRIT))
 		return
 
 	var/obj/item/held_item = get_active_held_item()

@@ -1042,7 +1042,7 @@
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
-/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
 		return

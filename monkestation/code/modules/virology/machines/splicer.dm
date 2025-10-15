@@ -6,6 +6,8 @@
 	name = "disease splicer"
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "splicer"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.6
+	light_color = "#00FF00"
 
 	icon_keyboard = null
 	icon_screen = null
@@ -21,10 +23,6 @@
 
 	///the slot we are set to grab from
 	var/target_slot = 1
-	idle_power_usage = 100
-	active_power_usage = 600
-
-	light_color = "#00FF00"
 
 /obj/machinery/computer/diseasesplicer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!isvirusdish(tool) && !istype(tool, /obj/item/disk/disease))

@@ -1045,6 +1045,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = list(span_notice("<i>You examine [src] closer, and note the following...</i>"))
 	. += list("\t>[span_admin("[ADMIN_FULLMONTY(src)]")]")
 
+/mob/dead/observer/get_status_tab_items()
+	. = ..()
+	if(!GLOB.observer_default_invisibility)
+		. += "Ghosts visible to the living!"
+	else if (!invisibility)
+		. += "You are visible to the living!"
+	else if (invisibility <= SEE_INVISIBLE_LIVING)
+		. += "You are visibile to most living mobs!"
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

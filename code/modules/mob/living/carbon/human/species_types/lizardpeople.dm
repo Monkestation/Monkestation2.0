@@ -22,9 +22,9 @@
 	mutantstomach = /obj/item/organ/internal/stomach/lizard
 	mutantheart = /obj/item/organ/internal/heart/lizard
 	mutantbrain = /obj/item/organ/internal/brain/lizard
+	brutemod = 0.9 //scales and osteoderms are tougher than skin i looked this up and found actual papers on it to prove it
 	coldmod = 1.5
 	heatmod = 0.67
-	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/meat/slab
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
@@ -101,24 +101,52 @@ Lizard subspecies: ASHWALKERS
 	id = SPECIES_LIZARD_ASH
 	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
+	mutanteyes = /obj/item/organ/internal/eyes/night_vision/ashwalker
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
-		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
-	species_language_holder = /datum/language_holder/lizard/ash
-	/*digitigrade_customization = DIGITIGRADE_FORCED*/ //MONKESTATION REMOVAL: not needed
-	examine_limb_id = SPECIES_LIZARD
 	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard/ashwalker,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard/ashwalker,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/ashwalker,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/ashwalker,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/ashwalker,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/ashwalker,
 	)
+	examine_limb_id = SPECIES_LIZARD
+	species_language_holder = /datum/language_holder/ashwalker
+	/// The aging component given by the species.
+	var/datum/component/ash_age/ash_age
+
+/datum/species/lizard/ashwalker/Destroy(force)
+	QDEL_NULL(ash_age)
+	return ..()
+
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/carbon_target, datum/species/old_species)
+	. = ..()
+	RegisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK, PROC_REF(mob_attack))
+	ash_age = carbon_target.AddComponent(/datum/component/ash_age)
+	carbon_target.faction |= FACTION_ASHWALKER
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/carbon_target)
+	. = ..()
+	UnregisterSignal(carbon_target, COMSIG_MOB_ITEM_ATTACK)
+	QDEL_NULL(ash_age)
+	carbon_target.faction -= FACTION_ASHWALKER
+
+/datum/species/lizard/ashwalker/proc/mob_attack(datum/source, mob/mob_target, mob/user)
+	SIGNAL_HANDLER
+
+	if(!isliving(mob_target))
+		return
+	var/mob/living/living_target = mob_target
+	var/datum/status_effect/ashwalker_damage/ashie_damage = living_target.has_status_effect(/datum/status_effect/ashwalker_damage)
+	if(!ashie_damage)
+		ashie_damage = living_target.apply_status_effect(/datum/status_effect/ashwalker_damage)
+	ashie_damage.register_mob_damage(living_target)
 
 /*
 Lizard subspecies: SILVER SCALED

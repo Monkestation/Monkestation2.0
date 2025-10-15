@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Soulscythe spirits now have night vision."
+  - qol: "Soulscythe spirits now inherit all of their master's factions."
+  - qol: "Soulscythe's blood regeneration is now based on delta time, so they will still regenerate blood at normal speeds when the server is lagging."
