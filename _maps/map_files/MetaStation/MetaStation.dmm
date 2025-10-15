@@ -49720,8 +49720,16 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/item/shield/riot,
 /obj/item/melee/baton/security/loaded,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /obj/item/melee/baton/security/loaded,
 /obj/item/melee/baton/security/loaded,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "rbs" = (
@@ -60777,28 +60785,6 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"uPC" = (
-/obj/structure/rack{
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 1
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 4;
-	pixel_y = -7
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "uPN" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -65456,10 +65442,6 @@
 	},
 /obj/item/clothing/suit/hooded/ablative,
 /obj/machinery/light_switch/directional/east,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = -5
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wBn" = (
@@ -98092,7 +98074,7 @@ aaa
 aaa
 aeq
 daO
-uPC
+dRj
 sDw
 wBh
 hxF

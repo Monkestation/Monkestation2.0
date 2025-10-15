@@ -22794,17 +22794,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "hho" = (
+/obj/machinery/flasher/portable,
+/obj/effect/turf_decal/box,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 5
-	},
-/obj/structure/table,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -2;
-	pixel_y = 5
 	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
@@ -48922,26 +48918,19 @@
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/dragnet,
 /obj/item/key/security,
 /obj/item/key/security,
-/obj/item/flashlight/seclite{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/flashlight/seclite{
-	pixel_x = 0;
-	pixel_y = 3
-	},
-/obj/item/flashlight/seclite{
-	pixel_x = 3;
-	pixel_y = 5
-	},
 /obj/item/grenade/barrier{
-	pixel_x = 4
+	pixel_x = -4
 	},
 /obj/item/grenade/barrier,
 /obj/item/grenade/barrier{
-	pixel_x = -4
+	pixel_x = 4
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
@@ -57818,23 +57807,20 @@
 /area/station/commons/fitness/recreation)
 "sbF" = (
 /obj/structure/rack,
+/obj/item/gun/energy/e_gun{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 4;
-	pixel_y = -8
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -4;
-	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
@@ -60740,6 +60726,9 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/table,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -60747,18 +60736,6 @@
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 9
-	},
-/obj/item/melee/baton/security/loaded{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/melee/baton/security/loaded{
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/item/melee/baton/security/loaded{
-	pixel_x = 5;
-	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
@@ -75283,14 +75260,13 @@
 "xxe" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/item/storage/box/firingpins{
+	pixel_x = -5;
+	pixel_y = -1
 	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/item/storage/box/firingpins{
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /obj/item/melee/baton/security/loaded{
 	pixel_x = 5;
@@ -76360,19 +76336,19 @@
 /area/station/security/warden)
 "xRz" = (
 /obj/structure/rack,
+/obj/item/gun/energy/disabler{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
-/obj/item/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "xRB" = (

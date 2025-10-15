@@ -9496,18 +9496,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -2;
-	pixel_y = 3
-	},
+/obj/item/gun/energy/temperature/security,
+/obj/item/gun/energy/ionrifle,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "cgP" = (
@@ -61649,9 +61640,26 @@
 	pixel_x = 1;
 	pixel_y = -31
 	},
-/obj/item/gun/energy/ionrifle,
-/obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 1;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oAT" = (
@@ -81472,14 +81480,10 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical{
-	pixel_x = -1;
-	pixel_y = 10
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /obj/item/crowbar/large,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = -1
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tms" = (
@@ -100504,18 +100508,6 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/north,
-/obj/item/melee/baton/security/loaded{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/melee/baton/security/loaded{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/melee/baton/security/loaded{
-	pixel_x = 1;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "xLi" = (

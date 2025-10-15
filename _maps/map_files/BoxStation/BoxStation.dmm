@@ -39652,8 +39652,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "mJo" = (
@@ -45520,7 +45518,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Core Modules";
-	req_access = list("rd")
+	req_access = list("captain")
 	},
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = -3;
@@ -53222,18 +53220,13 @@
 "rhw" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/rack,
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -7
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -2
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
+/obj/item/gun/energy/ionrifle{
 	pixel_y = 3
 	},
+/obj/item/gun/energy/temperature/security{
+	pixel_y = -3
+	},
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "rhD" = (
@@ -58866,12 +58859,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = -3;
-	pixel_y = 4
-	},
+/obj/vehicle/ridden/secway,
+/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "sWX" = (
@@ -61695,7 +61684,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "High-Risk Modules";
-	req_access = list("rd")
+	req_access = list("captain")
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 4;
@@ -63902,13 +63891,11 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/gun/energy/temperature/security{
-	pixel_y = -3
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_y = 4
 	},
-/obj/item/gun/energy/ionrifle{
-	pixel_y = 3
-	},
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/effect/nettingportal,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "uBT" = (

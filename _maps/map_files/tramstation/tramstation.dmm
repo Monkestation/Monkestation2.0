@@ -27700,17 +27700,10 @@
 /area/station/maintenance/starboard/central)
 "hHw" = (
 /obj/structure/rack,
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "hHI" = (
@@ -45352,20 +45345,17 @@
 /area/station/command/gateway)
 "ndR" = (
 /obj/structure/rack,
+/obj/item/gun/energy/disabler{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = -2
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 0;
-	pixel_y = 2
-	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "ndX" = (
@@ -66155,24 +66145,16 @@
 /area/station/medical/pharmacy)
 "tzy" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/secure/safe/directional/north{
-	name = "armory safe B"
-	},
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = 5
-	},
 /obj/item/grenade/barrier{
 	pixel_x = 4
 	},
 /obj/item/grenade/barrier,
 /obj/item/grenade/barrier{
 	pixel_x = -4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/secure/safe/directional/north{
+	name = "armory safe B"
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)

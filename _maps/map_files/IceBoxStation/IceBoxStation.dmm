@@ -19092,21 +19092,18 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "fQd" = (
+/obj/structure/rack,
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
-	},
-/obj/structure/rack,
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = 7;
-	pixel_y = -6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -29821,17 +29818,17 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "jfW" = (
+/obj/item/grenade/barrier{
+	pixel_x = 4
+	},
+/obj/item/grenade/barrier,
+/obj/item/grenade/barrier{
+	pixel_x = -4;
+	pixel_y = 0
+	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
-	},
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_x = 0;
-	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
@@ -34809,20 +34806,16 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "kIJ" = (
+/obj/structure/railing,
+/obj/structure/rack,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/dragnet,
 /obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/structure/table,
-/obj/structure/railing,
-/obj/item/grenade/barrier{
-	pixel_x = 4
-	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = -4;
-	pixel_y = 0
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
@@ -48538,6 +48531,7 @@
 /turf/open/floor/carpet/grimey,
 /area/station/maintenance/aft/greater)
 "oMz" = (
+/obj/structure/rack,
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
@@ -48553,7 +48547,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/rack,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "oMN" = (
@@ -50607,16 +50600,6 @@
 /area/station/service/library)
 "puq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "pus" = (

@@ -25922,20 +25922,23 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/table/reinforced,
+/obj/item/grenade/barrier{
+	pixel_y = 10;
+	pixel_x = 6
+	},
+/obj/item/grenade/barrier{
+	pixel_y = 9;
+	pixel_x = -6
+	},
+/obj/item/grenade/barrier{
+	pixel_y = 5
+	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
-/obj/structure/rack/shelf,
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -1;
-	pixel_y = -9
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -1;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/laser/heavylaser{
-	pixel_x = -1;
-	pixel_y = 4
+/obj/item/storage/box/handcuffs{
+	pixel_x = 9;
+	pixel_y = -1
 	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
@@ -71375,15 +71378,12 @@
 /area/station/security/brig/entrance)
 "vbE" = (
 /obj/item/storage/box/teargas{
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/storage/box/handcuffs{
-	pixel_x = -5;
-	pixel_y = 1
-	},
+/obj/item/storage/box/handcuffs,
 /obj/item/storage/box/flashbangs{
-	pixel_x = -5;
+	pixel_x = -3;
 	pixel_y = -3
 	},
 /obj/structure/table,
@@ -71391,18 +71391,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/grenade/barrier{
-	pixel_y = 6;
-	pixel_x = 8
-	},
-/obj/item/grenade/barrier{
-	pixel_y = 1;
-	pixel_x = 13
-	},
-/obj/item/grenade/barrier{
-	pixel_y = -4;
-	pixel_x = 9
-	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "vbF" = (
