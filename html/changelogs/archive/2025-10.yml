@@ -538,7 +538,35 @@
   - map: Heliostation Library no longer has a floating camera
   - map: Heliostation Brig air control is now a actual checkpoint for air
 2025-10-15:
+  Absolucy:
+  - bugfix: Darkspawn can no longer use Silver Tongue to recall a shuttle when admins
+      have disabled recalling.
+  - admin: Darkspawn recalling the shuttle with Silver Tongue is now logged.
+  - qol: Soulscythe spirits now have night vision.
+  - qol: Soulscythe spirits now inherit all of their master's factions.
+  - qol: Soulscythe's blood regeneration is now based on delta time, so they will
+      still regenerate blood at normal speeds when the server is lagging.
+  JohnFulpWillard:
+  - balance: You can now wear gloves with only one hand.
   Lawlolawl:
   - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
       Only the correct bank account can unlock/lock the crate now. Previously, mining
       crates were stuck locked permanently after relocking.
+  notghosti:
+  - map: Boxstation AI boards are now accessible via RD access.
+  - rscadd: Borers can now access "Lookup Reactions" panel in their chemical injector
+  - rscadd: Added a unique neutered borer ability, Dissect Corpse.
+  - rscadd: Borers names are now their first and second names, while their whole government
+      ID is their real names
+  - rscdel: Neutered borers no longer have access to willing host, nor will progress
+      learn blood chemicals objectives.
+  - qol: Borer basic chemical guide is expanded on some,
+  - qol: Borer learn focus explanation actually explains the induvial upgrades.
+  - qol: Borer messages will now be capitalized automatically.
+  - balance: Neutered borers now have unique growth objectives, that of dissection
+      and learning blood chemicals which are indivualized.
+  - balance: Neutered borers will have red text visuals and hud elements rather than
+      purple.
+  - bugfix: PAI's leaving modular computers (Such as your pda) Will now update the
+      sprite to not include the PAI card in it.
+  - map: Heliostation supermatter will no longer depower
