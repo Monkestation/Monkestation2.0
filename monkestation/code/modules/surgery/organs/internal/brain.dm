@@ -35,6 +35,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	/// The mind of the oozeling that became this core.
 	/// This MUST be named `mind`, in order to allow IS_[antag] macros to work on cores.
 	var/datum/mind/mind
+	/// The original language holder of the oozeling who died.
+	var/datum/language_holder/stored_language_holder
 
 ///////
 /// Core storage
@@ -90,6 +92,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/prosthetic_limb,
 		/datum/quirk/quadruple_amputee,
 		/datum/quirk/stowaway,
+		/datum/quirk/cybernetics_quirk,
 	))
 
 	var/rebuilt = TRUE
@@ -108,6 +111,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	QDEL_NULL(membrane_mur)
 	QDEL_NULL(stored_dna)
 	QDEL_LIST(stored_quirks)
+	QDEL_NULL(stored_language_holder)
 
 	mind = null
 
@@ -192,12 +196,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	copy_mind_and_dna(victim)
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
-/obj/item/organ/internal/brain/slime/proc/enable_coredeath() // No longer used.
-	coredeath = TRUE
-	if(owner?.stat == DEAD)
-		copy_mind_and_dna(owner)
-		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
-
 /obj/item/organ/internal/brain/slime/proc/copy_mind_and_dna(mob/living/carbon/human/slime)
 	if(QDELETED(mind))
 		mind = brainmob?.mind || slime.mind || slime.last_mind
@@ -208,6 +206,17 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		if(QDELETED(stored_dna))
 			stored_dna = new
 		slime.dna.copy_dna(stored_dna)
+
+	var/datum/language_holder/slime_language_holder = slime.get_language_holder()
+	if(slime_language_holder)
+		stored_language_holder = new slime_language_holder.type
+		stored_language_holder.copy_languages(slime_language_holder)
+
+	var/datum/atom_voice/slime_voice = slime.get_voice()
+	if(slime_voice)
+		if(!voice)
+			voice = new
+		voice.copy_from(slime_voice)
 
 ///////
 /// CORE EJECTION PROC
@@ -246,6 +255,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		AddComponent(/datum/component/gps/no_bsa, "[victim.real_name]'s Core")
 
 	if(brainmob)
+		if(stored_language_holder)
+			brainmob.get_language_holder()?.copy_languages(stored_language_holder)
+
 		membrane_mur.Grant(brainmob)
 		var/datum/antagonist/changeling/target_ling = brainmob.mind?.has_antag_datum(/datum/antagonist/changeling)
 
@@ -422,6 +434,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	var/client/original_client = brainmob?.client || mind?.current?.client
 	original_client?.prefs?.safe_transfer_prefs_to(new_body)
+	if(stored_language_holder)
+		new_body.get_language_holder()?.copy_languages(stored_language_holder)
+		QDEL_NULL(stored_language_holder)
+	if(voice)
+		if(!new_body.voice)
+			new_body.voice = new
+		new_body.voice.copy_from(voice)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
@@ -449,12 +468,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		for(var/obj/item/bodypart/bodypart as anything in new_body.bodyparts)
 			if(istype(bodypart, /obj/item/bodypart/chest))
 				continue
-			if(istype(bodypart, /obj/item/bodypart/head))
-				// Living mobs eyes are stored in the body so remove the organs properly for their effect to work.
-				if(new_body.has_quirk(/datum/quirk/cybernetics_quirk/bright_eyes)) // Either they have their eyes in their core or they are destroyed dont spawn another.
-					var/obj/item/organ/internal/eyes/eyes = new_body.get_organ_slot(ORGAN_SLOT_EYES)
-					eyes.Remove(new_body)
-					qdel(eyes)
 			bodypart.drop_limb() // Drop limb should delete the limb for oozelings unless someone changes it.
 		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))

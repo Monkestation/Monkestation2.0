@@ -631,7 +631,7 @@
 	if(!isliving(target))
 		if(isturf(target)) // non dense turfs
 			return can_hit_turfs && direct_target
-		if(target.layer < hit_threshhold)
+		if(target.layer < hit_threshhold && !HAS_TRAIT(target, TRAIT_PROJECTILE_SINK))
 			return FALSE
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE

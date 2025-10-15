@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
 	SSliquids.active_ocean_turfs -= src
 	SSliquids.ocean_turfs -= src
-	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in ocean_turfs)
+	for(var/turf/open/floor/plating/ocean/listed_ocean in ocean_turfs)
 		listed_ocean.rebuild_adjacent()
 
 /turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
@@ -193,13 +193,13 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			else if(!(directional_turf in atmos_adjacent_turfs))
 				var/obj/machinery/door/found_door = locate(/obj/machinery/door) in directional_turf
 				if(found_door)
-					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, TYPE_PROC_REF(/turf/open/floor/plating/ocean, door_opened))
+					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, PROC_REF(door_opened))
 				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 				continue
 			else
 				open_turfs.Add(direction)
 
-	if(open_turfs.len)
+	if(length(open_turfs))
 		SSliquids.active_ocean_turfs |= src
 	SSliquids.unvalidated_oceans -= src
 

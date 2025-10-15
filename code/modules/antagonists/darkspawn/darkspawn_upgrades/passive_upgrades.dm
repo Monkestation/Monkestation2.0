@@ -61,7 +61,7 @@
 
 /datum/psi_web/stamina_res
 	name = "Vigor Sigils"
-	desc = "Unlocking this sigil reduces stamina damage taken by 50%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces stamina damage taken by 40%, stacks diminishingly."
 	lore_description = "The Kalak sigils, representing eternity, are etched onto the legs."
 	icon_state = "vigor"
 	willpower_cost = 2
@@ -139,9 +139,6 @@
 /datum/psi_web/fast_cooldown/on_loss()
 	REMOVE_TRAIT(shadowhuman, TRAIT_FAST_COOLDOWNS, type)
 
-////////////////////////////////////////////////////////////////////////////////////
-//--------------------------Fighter Passive Upgrades------------------------------//
-////////////////////////////////////////////////////////////////////////////////////
 /datum/psi_web/sunglasses
 	name = "Lightblind Sigil"
 	desc = "Protects you from strong flashes of light."
@@ -149,7 +146,7 @@
 	icon_state = "light_blind"
 	willpower_cost = 1
 	menu_tab = STORE_PASSIVE
-	shadow_flags = DARKSPAWN_FIGHTER
+	shadow_flags = ALL_DARKSPAWN_CLASSES
 
 /datum/psi_web/sunglasses/on_gain()
 	ADD_TRAIT(shadowhuman, TRAIT_NOFLASH, type)
@@ -157,10 +154,14 @@
 /datum/psi_web/sunglasses/on_loss()
 	REMOVE_TRAIT(shadowhuman, TRAIT_NOFLASH, type)
 
+////////////////////////////////////////////////////////////////////////////////////
+//--------------------------Fighter Passive Upgrades------------------------------//
+////////////////////////////////////////////////////////////////////////////////////
+
 //Halves lightburn damage.
 /datum/psi_web/light_resistance
 	name = "Shadowskin Sigil"
-	desc = "Unlocking this sigil reduces light damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces light damage taken by 25%, stacks diminishingly."
 	lore_description = "The Xlynsh sigil, representing refraction, is etched onto the abdomen."
 	icon_state = "shadow_skin"
 	willpower_cost = 3
@@ -176,7 +177,7 @@
 
 /datum/psi_web/brute_res
 	name = "Callous Sigil"
-	desc = "Unlocking this sigil reduces brute damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces brute damage taken by 25%, stacks diminishingly."
 	lore_description = "The Hh'sha sigil, representing perserverance, is etched onto the abdomen."
 	icon_state = "callous"
 	willpower_cost = 3
@@ -192,7 +193,7 @@
 
 /datum/psi_web/burn_res
 	name = "Stifle Sigil"
-	desc = "Unlocking this sigil reduces burn damage taken by 40%, stacks diminishingly."
+	desc = "Unlocking this sigil reduces burn damage taken by 25%, stacks diminishingly."
 	lore_description = "The Khophg sigil, representing suffocation, is etched onto the abdomen."
 	icon_state = "stifle"
 	willpower_cost = 3
