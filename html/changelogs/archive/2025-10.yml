@@ -537,3 +537,8 @@
   - map: Heliostation Gravity generator has proper camera coverage
   - map: Heliostation Library no longer has a floating camera
   - map: Heliostation Brig air control is now a actual checkpoint for air
+2025-10-15:
+  Lawlolawl:
+  - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
+      Only the correct bank account can unlock/lock the crate now. Previously, mining
+      crates were stuck locked permanently after relocking.
