@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"map_name": "MultiZ Debug",
+	"map_path": "map_files/debug",
+	"map_file": "multiz.dmm",
+	"ignored_unit_tests": [
+		"/datum/unit_test/required_map_items",
+		"/datum/unit_test/vendor_boards"
+	],
+	"traits": [
+		{
+			"Up": true,
+			"Linkage": "Cross"
+		},
+		{
+			"Up": true,
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	]
+}
