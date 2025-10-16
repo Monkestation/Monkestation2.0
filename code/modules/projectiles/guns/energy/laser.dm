@@ -31,9 +31,11 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = null
+	worn_icon_state = null
+	worn_icon_state = "shotgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavylaser)
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
 	cell_type = /obj/item/stock_parts/power_store/cell/quickcharge
 
 /obj/item/gun/energy/laser/heavylaser/Initialize(mapload)
