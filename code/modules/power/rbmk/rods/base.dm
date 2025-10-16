@@ -1,3 +1,9 @@
+/************************************************************
+ * RBMK Fuel Rod (Base Type)
+ * - Provides standardized depletion & data output
+ * - Subtypes override only what they need (fuel, outputs, visuals)
+ ************************************************************/
+
 /obj/item/rbmk/fuel_rod
     name = "Fuel Rod"
     desc = "A generic RBMK fuel rod."
@@ -9,48 +15,47 @@
     /************************************************************
      * Core variables
      ************************************************************/
-    var/fuel_amount = 100            // total fuel charge
-    var/heat_per_tick = 1            // temperature contribution
-    var/rad_output = 5               // radiation output per tick
-    var/flux_output = 0              // neutron flux contribution
-    var/active = TRUE                // operational state
+    var/fuel_amount = 100                // total fuel charge (ticks of life)
+    var/heat_per_tick = 1                // base temperature contribution
+    var/rad_output = 5                   // radiation per tick
+    var/flux_output = 0                  // neutron flux per tick
+    var/active = TRUE                    // is this rod currently producing power?
 
     // Depletion visuals
     var/depleted_icon_state = "empty"
     var/depleted_desc = "A spent fuel rod, inert and useless."
 
-    // Visuals / categorization
+    // Classification
     var/rod_type = "generic"
     var/rod_color = "white"
-    var/icon_color = "white"
 
     /************************************************************
-     * Contribution multipliers
-     * (lets special rods override without redefining process_rod)
+     * Multipliers (for subtypes / modifiers)
      ************************************************************/
-    var/thermal_mult = 1.0           // multiplier on heat
-    var/flux_mult = 1.0              // multiplier on flux
-    var/rad_mult = 1.0               // multiplier on radiation
+    var/thermal_mult = 1.0               // affects heat generation
+    var/flux_mult = 1.0                  // affects neutron output
+    var/rad_mult = 1.0                   // affects radiation emission
 
 /************************************************************
- * Default processing (can be overridden by subtypes)
+ * Processing (called every reactor cycle)
  ************************************************************/
 /obj/item/rbmk/fuel_rod/proc/process_rod()
-    // --- Fuel depletion ---
-    if (fuel_amount > 0)
-        fuel_amount -= 1
-    else
-        if (active)
+    // Handle depletion first
+    if(fuel_amount <= 0)
+        if(active)
             active = FALSE
             icon_state = depleted_icon_state
             desc = depleted_desc
+        // once depleted, return no contribution
         return list()
 
-    // --- Contribution payload ---
+    fuel_amount -= 1
+
+    // Return contribution payload
     return list(
         "flux"         = flux_output * flux_mult,
         "heat"         = heat_per_tick * thermal_mult,
         "radiation"    = rad_output * rad_mult,
-        "flux_mult"    = flux_mult,       // so core can chain multipliers
-        "thermal_mult" = thermal_mult
+        "thermal_mult" = thermal_mult,
+        "flux_mult"    = flux_mult
     )

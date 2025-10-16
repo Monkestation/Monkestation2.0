@@ -1,5 +1,8 @@
-/// rbmk_process.dm
-// Handles per-tick reactor operations
+/*************************************************************
+ * RBMK Process Logic
+ * - Runs every tick while the reactor is active
+ * - Handles rods, flux, heat, radiation, coolant interaction
+ *************************************************************/
 
 /obj/machinery/rbmk/reactor/process(delta_time)
     // --- Repairable if cool enough ---
@@ -71,6 +74,9 @@
     thermal_output = round(((temperature * RBMK_HEAT_SCALING) * thermal_mult) * rod_effect)
     radiation      = round(radiation * rod_effect)
 
+    // --- Transfer heat to coolant ---
+    rbmk_coolant_exchange(src)
+
     // --- Coolant loop integration ---
     rbmk_sample_coolant(src)
     if(coolant_internal)
@@ -108,3 +114,48 @@
     // --- Visuals & consoles ---
     update_reactor_icon()
     update_linked_consoles()
+
+
+/*************************************************************
+ * RBMK Coolant Energy Exchange
+ * - Moves thermal energy between core and coolant_internal
+ *************************************************************/
+
+/// Reactor-to-coolant heat & pressure transfer
+/proc/rbmk_coolant_exchange(obj/machinery/rbmk/reactor/R)
+    if(!R || !R.coolant_internal)
+        return
+
+    var/datum/gas_mixture/mix = R.coolant_internal
+    var/temp_diff = R.temperature - mix.temperature
+    if(abs(temp_diff) < 0.5)
+        return
+
+    // --- Gas-based efficiency curve ---
+    var/efficiency = 1.0
+    for(var/gas_path in mix.gases)
+        switch(gas_path)
+            if(/datum/gas/nitrogen)        efficiency += 0.10
+            if(/datum/gas/carbon_dioxide)  efficiency += 0.25
+            if(/datum/gas/oxygen)          efficiency -= 0.05
+            if(/datum/gas/plasma)          efficiency -= 0.40
+
+    // --- Thermal transfer ---
+    var/transfer = temp_diff * 0.03 * efficiency
+    R.temperature -= transfer
+    mix.temperature += transfer * 0.5
+
+    // --- Pressure response ---
+    var/new_pressure = mix.return_pressure() + (transfer / 50)
+    if(new_pressure > RBMK_PRESSURE_CRITICAL)
+        R.instability += 5
+    R.pressure = clamp(new_pressure, 0, RBMK_PRESSURE_EXTREME)
+
+    // --- Waste gas buildup ---
+    mix.assert_gases(/datum/gas/oxygen)
+    mix.gases[/datum/gas/oxygen][MOLES] += clamp(transfer / 2000, 0, 10)
+
+    // --- History ---
+    R.coolant_pressure_history += R.pressure
+    if(length(R.coolant_pressure_history) > 50)
+        R.coolant_pressure_history.Cut(1, 2)
