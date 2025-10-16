@@ -181,14 +181,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/anomalock_active
 	show_duration = TRUE
 
-/datum/status_effect/voltaic_overdrive/tick(seconds_between_ticks)
-	. = ..()
-
-	if(owner.health <= owner.crit_threshold)
-		owner.heal_overall_damage(5, 5)
-		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
-
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
 	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
