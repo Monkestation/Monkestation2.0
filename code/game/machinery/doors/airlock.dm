@@ -1742,14 +1742,14 @@
 		return
 	switch(action)
 		if("disrupt-main")
-			if(remaining_main_outage())
+			if(!main_power_timer)
 				loseMainPower()
 				update_appearance()
 			else
 				to_chat(usr, span_warning("Main power is already offline."))
 			. = TRUE
 		if("disrupt-backup")
-			if(remaining_backup_outage())
+			if(!backup_powedr_time)
 				loseBackupPower()
 				update_appearance()
 			else
