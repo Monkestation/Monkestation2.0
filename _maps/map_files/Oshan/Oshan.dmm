@@ -1837,7 +1837,7 @@
 	},
 /area/station/engineering/atmospherics_engine)
 "aGr" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "aGw" = (
@@ -7286,6 +7286,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "cph" = (
@@ -10412,12 +10413,10 @@
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
 "dok" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "dom" = (
@@ -12546,6 +12545,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "dXf" = (
@@ -12926,14 +12926,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "ecF" = (
-/obj/machinery/button/door{
-	desc = "Controls the shutters over the brig windows.";
-	id = "securityshutter";
-	name = "Security Lockdown Button";
-	pixel_x = -21;
-	pixel_y = 9;
-	req_access = list("security")
-	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -13066,6 +13058,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
+"eeH" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/computer/armory{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/brig)
 "eeK" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
@@ -15470,9 +15470,8 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "eSx" = (
-/obj/structure/rack/gunrack,
-/obj/effect/spawner/armory_spawn/mod_lasers_small,
 /obj/effect/turf_decal/bot,
+/obj/machinery/ammo_workbench,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "eSy" = (
@@ -16369,6 +16368,7 @@
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/turf_decal/box/red,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/security/evidence)
 "ffi" = (
@@ -17566,24 +17566,6 @@
 /turf/open/floor/carpet/grimey,
 /area/station/service/abandoned_gambling_den)
 "fzA" = (
-/obj/machinery/button/door{
-	desc = "A door remote control switch for the interior brig doors.";
-	id = "innerbrig";
-	name = "Brig Interior Door Control";
-	normaldoorcontrol = 1;
-	pixel_x = -9;
-	pixel_y = 10;
-	req_access = list("security")
-	},
-/obj/machinery/button/door{
-	desc = "A door remote control switch for the exterior brig doors.";
-	id = "outerbrig";
-	name = "Brig Exterior Door Control";
-	normaldoorcontrol = 1;
-	pixel_x = 9;
-	pixel_y = 10;
-	req_access = list("security")
-	},
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
 	name = "Brig Entrance Flasher";
@@ -19851,9 +19833,13 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
-/obj/structure/rack/gunrack,
-/obj/effect/spawner/armory_spawn/mod_lasers_small,
 /obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/hooded/ablative,
+/obj/item/gun/energy/temperature/security,
+/obj/item/gun/energy/ionrifle{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "glm" = (
@@ -20857,17 +20843,16 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/service/abandoned_gambling_den)
 "gDK" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
-	},
 /obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/item/clothing/suit/hooded/ablative,
-/obj/item/gun/energy/temperature/security,
-/obj/item/gun/energy/ionrifle{
-	pixel_y = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "gDM" = (
@@ -23269,20 +23254,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "htr" = (
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 9
-	},
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 6
-	},
-/obj/effect/turf_decal/trimline/red/filled/warning{
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 9
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/porta_turret/ai,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "htx" = (
@@ -25499,6 +25474,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "iba" = (
@@ -26646,6 +26622,12 @@
 /area/station/hallway/primary/central)
 "itR" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/turretid{
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	name = "Antechamber Turret Control";
+	req_access = list("minisat");
+	pixel_y = 30
+	},
 /turf/open/floor/plating/ocean,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "itS" = (
@@ -34847,6 +34829,29 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"kYz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	req_access = list("armory");
+	name = "Weapon Distribution"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/north{
+	name = "Requests Window"
+	},
+/obj/item/paper{
+	pixel_x = -3
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/structure/desk_bell{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "kYD" = (
 /obj/structure/wrestling_corner{
 	dir = 8
@@ -39967,6 +39972,7 @@
 /obj/structure/rack/gunrack,
 /obj/effect/spawner/armory_spawn/mod_lasers_small,
 /obj/effect/turf_decal/bot,
+/obj/machinery/digital_clock/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "mIp" = (
@@ -41786,7 +41792,6 @@
 "niT" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/item/gun/energy/disabler{
 	pixel_x = -3;
@@ -41798,6 +41803,7 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "nji" = (
@@ -43193,7 +43199,7 @@
 "nGh" = (
 /obj/machinery/turretid{
 	pixel_y = -25;
-	req_access = list("armory");
+	req_access = list("security");
 	control_area = "/area/station/ai_monitored/security/armory";
 	name = "Armory control panel"
 	},
@@ -47390,7 +47396,7 @@
 	id = "secentranceflasher";
 	name = "Brig Entrance Flasher";
 	pixel_y = 42;
-	req_access = list("security");
+	req_access = list("armory");
 	pixel_x = -10
 	},
 /obj/machinery/button/door/directional/north{
@@ -47398,7 +47404,7 @@
 	id = "innerbrig";
 	name = "Brig Interior Door Control";
 	normaldoorcontrol = 1;
-	req_access = list("security");
+	req_access = list("armory");
 	pixel_x = -9
 	},
 /obj/machinery/button/door/directional/north{
@@ -47406,21 +47412,21 @@
 	id = "outerbrig";
 	name = "Brig Exterior Door Control";
 	normaldoorcontrol = 1;
-	req_access = list("security");
+	req_access = list("armory");
 	pixel_x = 9
 	},
 /obj/machinery/button/door/directional/north{
 	desc = "Controls the shutters over the brig windows.";
 	id = "securityshutter";
 	name = "Security Lockdown Button";
-	req_access = list("security");
+	req_access = list("armory");
 	pixel_y = 33
 	},
 /obj/machinery/button/door/directional/north{
 	desc = "Controls the shutters over the brig windows.";
 	id = "prisonshutters";
 	name = "Prison Lockdown Button";
-	req_access = list("security");
+	req_access = list("armory");
 	pixel_y = 42;
 	pixel_x = 9
 	},
@@ -51061,11 +51067,6 @@
 	pixel_y = 14;
 	pixel_x = -9
 	},
-/obj/machinery/button/door/directional/north{
-	pixel_x = 10;
-	name = "Prison Lockdown Button";
-	id = "prisonshutters"
-	},
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -51972,7 +51973,6 @@
 /area/station/maintenance/abandon_cafeteria)
 "qoO" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
-/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
@@ -56371,11 +56371,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/disposal/incinerator)
-"rHp" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/floor/iron/dark/textured,
-/area/station/security/brig)
 "rHB" = (
 /obj/machinery/arc_forge,
 /obj/effect/turf_decal/box/corners{
@@ -56972,10 +56967,7 @@
 	dir = 10
 	},
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/computer/armory{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot_white,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "rTg" = (
@@ -59828,7 +59820,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "sNC" = (
@@ -64666,6 +64657,17 @@
 "unl" = (
 /turf/open/floor/engine,
 /area/station/science/explab)
+"unm" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/flasher/portable{
+	name = "Moth Lamp"
+	},
+/obj/effect/turf_decal/box,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/security/armory)
 "unp" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
@@ -69586,6 +69588,15 @@
 	dir = 8
 	},
 /area/station/engineering/atmos)
+"vMW" = (
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "Armory Shutters";
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "vMZ" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
@@ -71490,11 +71501,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tcomms)
 "wsF" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 5
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 4
 	},
-/obj/machinery/ammo_workbench,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "wsH" = (
@@ -74965,17 +74976,16 @@
 "xvP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 5
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
@@ -103374,7 +103384,7 @@ jzc
 rTd
 tPP
 kOp
-aiQ
+unm
 aiQ
 riL
 oYc
@@ -104400,7 +104410,7 @@ rWy
 gap
 fCU
 aGr
-tPP
+kYz
 gDK
 xvP
 nsA
@@ -104915,8 +104925,8 @@ iSB
 qBL
 tpd
 tPP
-tPP
-tPP
+vMW
+vMW
 tPP
 tPP
 tPP
@@ -105172,7 +105182,7 @@ vZS
 eOd
 gYz
 erC
-iaZ
+dok
 dok
 dXc
 iaZ
@@ -105688,7 +105698,7 @@ pBU
 glJ
 rKw
 eCT
-ufN
+eeH
 rTk
 hXY
 hCM
@@ -105945,7 +105955,7 @@ pBU
 glJ
 vnw
 fcT
-rHp
+ufN
 uBf
 xta
 hCM
