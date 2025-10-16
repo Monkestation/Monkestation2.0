@@ -1412,3 +1412,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// they get warm when they do exercisey things
 #define TRAIT_EXERTION_OVERHEAT "exertion_overheat"
+
+/// For if a body has been dissected, to prevent repeats.
+#define TRAIT_BORER_DISSECTION "borer_dissection"

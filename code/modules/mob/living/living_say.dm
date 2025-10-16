@@ -273,6 +273,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				mixer_channel = CHANNEL_MOB_SOUNDS
 			)
 
+	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		message_range = 1
+		spans = spans.Copy()
+		spans |= SPAN_ITALICS
+
 	var/deaf_message
 	var/deaf_type
 
