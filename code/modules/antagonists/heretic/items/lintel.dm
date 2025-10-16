@@ -46,6 +46,9 @@
 		return
 	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
 	. += span_hypnophrase("It has <b>[charges]</b> charge\s remaining.")
+	for (var/i in 1 to length(charge_timers))
+		var/timeleft = timeleft(charge_timers[i])
+		. += span_hypnophrase("<b>CHARGE #[i] in [DisplayTimeText(timeleft)]</b>")
 
 /obj/item/heretic_lintel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
@@ -81,3 +84,4 @@
 
 /obj/item/heretic_lintel/proc/recharge()
 	charges = min(charges+1, max_charges)
+	charge_timers.Remove(charge_timers[1])
