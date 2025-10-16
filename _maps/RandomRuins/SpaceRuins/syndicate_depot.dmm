@@ -767,7 +767,6 @@
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
 /obj/item/poster/random_contraband,
-/obj/item/flashlight/lamp/space_bubble,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "hM" = (
@@ -8928,7 +8927,7 @@ ya
 ya
 et
 et
-et
+hq
 hq
 hq
 hq
@@ -9010,7 +9009,7 @@ et
 et
 et
 et
-et
+hq
 hq
 hq
 hq
