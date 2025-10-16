@@ -1702,9 +1702,9 @@
 
 	var/list/power = list()
 	power["main"] = remaining_main_outage() ? 0 : 2 // boolean
-	power["main_timeleft"] = remaining_main_outage()
+	power["main_timeleft"] = round(remaining_main_outage() / 10)
 	power["backup"] = remaining_backup_outage() ? 0 : 2 // boolean
-	power["backup_timeleft"] = remaining_backup_outage()
+	power["backup_timeleft"] = round(remaining_backup_outage() / 10)
 	data["power"] = power
 
 	data["shock"] = secondsElectrified == MACHINE_NOT_ELECTRIFIED ? 2 : 0
