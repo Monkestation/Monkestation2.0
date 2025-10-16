@@ -1749,7 +1749,7 @@
 				to_chat(usr, span_warning("Main power is already offline."))
 			. = TRUE
 		if("disrupt-backup")
-			if(!backup_powedr_time)
+			if(!backup_power_time)
 				loseBackupPower()
 				update_appearance()
 			else
