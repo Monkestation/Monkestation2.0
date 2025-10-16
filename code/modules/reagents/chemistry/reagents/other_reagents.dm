@@ -354,6 +354,7 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	turf_exposure = TRUE
 	metabolized_traits = list(TRAIT_HOLY)
+	process_flags = ORGANIC | SYNTHETIC
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater

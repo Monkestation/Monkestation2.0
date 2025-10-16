@@ -79,7 +79,7 @@
 			// It's just flavor, no tangible punishment
 	return ..()
 
-/mob/living/basic/pet/poppy/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/pet/poppy/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	become_area_sensitive(INNATE_TRAIT)
 	set_light_on(TRUE)
 	..()

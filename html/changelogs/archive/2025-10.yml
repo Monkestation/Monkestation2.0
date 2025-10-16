@@ -338,8 +338,17 @@
   - bugfix: Multi-cell charging racks now use power from the grid like normal cell
       chargers do, instead of rapidly draining the APC.
   - bugfix: Fixed slime cores not properly saving/restoring voices.
+  - bugfix: Fixed the cursed katana's combo attacks not working.
+  CannibalHunter:
+  - rscadd: '[Donator] Bullke''s Invincible Outfit'
   LassiH:
   - balance: every darkspawn class can now get lightblind sigils
+  LettuceGuardian:
+  - qol: Bunches up the specialty armour plates+helmets into their respective crates,
+      prices adjusted accordingly.
+  - balance: Ash chance is more reasonable, lowered to 20%.
+  Singul0:
+  - bugfix: Suppressors actually works now
   Sorenon:
   - bugfix: fixed the antag selection preference page not having a scroll bar
   SyncIt21, ZephyrTFA, ArcaneMusic, LT3, TheColorCyan:
@@ -370,6 +379,11 @@
       coils)
   - bugfix: inserting a material sheet into an lathes should show the correct animation
       color
+  Uristthedorf:
+  - rscadd: Cloning now copies your underwear.
+  - bugfix: Cloning is more accurate, rejoice lizards.
+  - bugfix: Mutations now work in clones even if the original body is destroyed.
+  - balance: more accurate cloning also means copying mutations.
   flleeppyy:
   - rscadd: Statpanel now shows if players can see you as a ghost.
   - rscadd: As a ghost, examining a mob will show you if you're visible to them or
@@ -384,3 +398,175 @@
   - map: Ice box arrivals and dorms are slightly less hallway heavy for it's distro
   - map: Heliostation primary R&D airlock has science access akin to the surrounding
       doors.
+2025-10-10:
+  Absolucy:
+  - qol: Renamed the "Cable Coil" design to "Cable Coil (x30)", to make it clear that
+      it prints out a whole stack of cables.
+  - qol: You can now search for specific signal names in the GPS's UI.
+  - qol: Portable liquid pumps now take 0.5 seconds to (un)wrench, instead of 2 seconds.
+  - qol: Portable liquid pumps now suck up reagents from adjacent tiles, in addition
+      to the tile its currently on.
+  - code_imp: Improved portable liquid pump code slightly.
+  Coll6:
+  - bugfix: Mortar an pestle, piggyback riding, and the processor console.
+  MrMelbert:
+  - code_imp: Adds a unit test for chair buckling
+  TheColorCyan:
+  - qol: (ghost) Gives Health sensor assemblies a UI so its easier to use.
+  - bugfix: fixes clock cult abilities using too little power
+  - bugfix: fixes clock cult regenerating and getting too little power from integration
+      cogs
+  - bugfix: clock sense no longer displays only half of the available power
+  - bugfix: fixes drying racks spitting out matter bins on deconstruction
+  - bugfix: fixes unusuals being unable to be disabled
+  ThePooba:
+  - bugfix: interacting with shallow puddles now does stuff (walking without shoes
+      and slipping into it)
+  - rscadd: you can now craft the raised and lowered tiles for liquids
+  - bugfix: coffin invisibility
+  - bugfix: tempgun hot and cold mode not having an effect
+  - bugfix: the cryo and pyro pistols now work as intended and do damage
+  Xander3359:
+  - bugfix: Fixed mech chargers not giving enough charge to charge a mech
+  - bugfix: (Melbert) Dragging defibs and modsuits off your back works again
+  - bugfix: (SyncIt21) actions buttons can be dragged anywhere again
+  - balance: (necromanceranne) Gravity anomalies can be properly clicked. Rather than
+      chain stunning you, the anomaly will knock you down. You can avoid the negatives
+      of gravity anomalies by wearing magboots. (Yes, it did not really protect you
+      until now)
+  - balance: (necromanceranne) Flux anomalies detonate in a much smaller explosion,
+      but release a wide EMP as well.
+  - balance: (necromanceranne) Long range gas analyzers can now scan anomalies.
+  - spellcheck: (lelandkemble) whispering now spelled correctly
+  - balance: (Ghommie) airlocks affected by dimensional anomalies retain their access,
+      as well as access-adjacent attributes such as emergency access and unrestricted
+      sides.
+  - bugfix: (Ghommie) Bluespace anomalies should no longer teleport 'un-teleportable'
+      mobs like anchored AIs or megafauna.
+  - bugfix: (Jacquerel) Neutralising an anomaly cannot produce more anomaly cores
+      than are supposed to exist in a single round
+  - code_imp: (SyncIt21) removes a redundant var from anomaly effects
+  - bugfix: (SyncIt21) Fixes runtimes for some anomaly effects
+  flleeppyy:
+  - sound: tank dispensers now have noises.
+  - code_imp: changed the pull request templating to include testing, and pre-merge
+      checklist
+  notghosti:
+  - bugfix: Holy water processes in synthetic mobs, meaning they can now be deconverted
+  - rscadd: Chicken scanners are now printable, and unlocked same time plant scanners
+      are.
+  - code_imp: Chicken scanners node now have correct sorting flags
+  - map: Extended the decal of caution across the chicken room
+  - map: Icebox chicken room has chicken scanners
+  - map: Icebox botany/chicken room distro been cleaned to use less piping.
+2025-10-11:
+  Absolucy:
+  - bugfix: Actually fixed ashwalkers speaking Draconic instead of Ashtongue.
+  CannibalHunter:
+  - rscadd: Donator item, Mr Bag Head's Paper Sack!
+  Lawlolawl:
+  - bugfix: Fixed medal box showing incorrect sprites.
+  - bugfix: Fixed toggling open/closed lid of medal box. You can now toggle the lid
+      of the medal box by using it in hand (after unlocking it with ID). Note that
+      you can only access its item storage when the lid is open.
+  SirNightKnight:
+  - bugfix: fixed modsuit control unequipment not working
+2025-10-12:
+  Absolucy:
+  - bugfix: Fixed the Monster Hunter weapon forge not working properly.
+  Absolucy, LettuceGuardian:
+  - image: Changed the Navigate HUD button sprite to actually say "Navigate" instead
+      of being a tiny icon. Sprites by LettuceGuardian.
+  - bugfix: The walk/run button no longer disappears when you sprint.
+  MilkForever:
+  - qol: The description for the stabilized light pink extracts will now mention the
+      pacifism effect.
+  Snack-Max:
+  - rscadd: Adds Quartermaster Turtleneck and Casualwear to Loadout
+  TheColorCyan:
+  - rscadd: Milthy's donator item - monkey varsity jacket
+  notghosti:
+  - map: Blueshift AI sat now runs through the SMES unit.
+  - map: Blueshift Cameras now have more accurate network tags for minisat, telecomms,
+      engine, and aicore.
+  - map: Blueshift has had cameras added in missing rooms, including medical patient
+      room, around the new bend in construction, solar, partly outside the ai sat,
+      and that one door between cargo office and cargo bay are now visible.
+  - map: Blueshift construction now has access tied to it, instead of only the Maintenace
+      entrance.
+  - map: Blueshift AI foyer has been split into foyer and AI interior.
+  - map: Blueshift AI sat uses the convenient giant body of space to rid of waste
+      gas rather than the stations distro
+  - qol: Once associated config is set up, antagonistic revival methods and cloning
+      will give a better corresponding death flavor text,
+2025-10-13:
+  ThePooba:
+  - bugfix: ship engines are now breakable in shipbreaking area with sledgehammer
+      and five rewards
+  - bugfix: sledgehammer bonus damage now applies properly in shipbreaking area
+2025-10-14:
+  Absolucy:
+  - rscadd: Added a preference to allow you to turn off the AI radio blip sounds.
+  - qol: The MOD ash accretion module now works when mining underwater on Oshan.
+  BobDABuilder9001:
+  - bugfix: Cyborgs can place rods and glass on window sills.
+  - qol: Placing glass on a window sill or on a grill no longer anchors it for one
+      but not the other
+  Cmpwarrior:
+  - rscadd: Adds some jester-themed clown clothing to the loadout selector (clown
+      only)
+  - rscadd: Adds greyscale capabilities to some jester clothing items
+  JohnFulpWillard:
+  - qol: Changed the escape menu to hopefully be more useful and not as laggy.
+  LassiH:
+  - balance: flares now can be extinquished by light eaters
+  notghosti:
+  - bugfix: Venus Human Traps will now heal on vines again, and be punished for daring
+      to leave them.
+  - map: Heliostation Emitters now have a proper smes connected to engines power.
+  - map: Heliostation PTL is now no longer hooked up to the stations power, rather
+      engines,
+  - map: Heliostations Starboard solars has a SMES unit and door access changed to
+      proper
+  - map: Heliostation CE now has a CE monitor in their room
+  - map: Heliostation EVA and pathology has been shifted in order to not block a external
+      airlock access
+  - map: Heliostation Bow solars now has a camera.
+  - map: Heliostation AI Core will now be hooked to the accurate grid and actually
+      recharge.
+  - map: Heliostation Gravity generator has proper camera coverage
+  - map: Heliostation Library no longer has a floating camera
+  - map: Heliostation Brig air control is now a actual checkpoint for air
+2025-10-15:
+  Absolucy:
+  - bugfix: Darkspawn can no longer use Silver Tongue to recall a shuttle when admins
+      have disabled recalling.
+  - admin: Darkspawn recalling the shuttle with Silver Tongue is now logged.
+  - qol: Soulscythe spirits now have night vision.
+  - qol: Soulscythe spirits now inherit all of their master's factions.
+  - qol: Soulscythe's blood regeneration is now based on delta time, so they will
+      still regenerate blood at normal speeds when the server is lagging.
+  JohnFulpWillard:
+  - balance: You can now wear gloves with only one hand.
+  Lawlolawl:
+  - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
+      Only the correct bank account can unlock/lock the crate now. Previously, mining
+      crates were stuck locked permanently after relocking.
+  notghosti:
+  - map: Boxstation AI boards are now accessible via RD access.
+  - rscadd: Borers can now access "Lookup Reactions" panel in their chemical injector
+  - rscadd: Added a unique neutered borer ability, Dissect Corpse.
+  - rscadd: Borers names are now their first and second names, while their whole government
+      ID is their real names
+  - rscdel: Neutered borers no longer have access to willing host, nor will progress
+      learn blood chemicals objectives.
+  - qol: Borer basic chemical guide is expanded on some,
+  - qol: Borer learn focus explanation actually explains the induvial upgrades.
+  - qol: Borer messages will now be capitalized automatically.
+  - balance: Neutered borers now have unique growth objectives, that of dissection
+      and learning blood chemicals which are indivualized.
+  - balance: Neutered borers will have red text visuals and hud elements rather than
+      purple.
+  - bugfix: PAI's leaving modular computers (Such as your pda) Will now update the
+      sprite to not include the PAI card in it.
+  - map: Heliostation supermatter will no longer depower

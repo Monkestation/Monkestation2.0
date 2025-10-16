@@ -693,6 +693,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	restricted_roles = list(JOB_CLOWN)
 	requires_purchase = FALSE
 
+/datum/loadout_item/head/jester2
+	name = "Alternate Jester Hat"
+	item_path = /obj/item/clothing/head/costume/jester2
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
 /*
 *	JOB BERETS
 */
