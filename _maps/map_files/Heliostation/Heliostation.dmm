@@ -71640,16 +71640,19 @@
 /area/station/maintenance/department/science/xenobiology)
 "ugQ" = (
 /obj/structure/rack,
-/obj/item/shield/riot{
-	pixel_x = -5;
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "uhg" = (
@@ -74042,13 +74045,14 @@
 "vew" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/box/firingpins{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/item/shield/riot{
+	pixel_x = 5;
+	pixel_y = -2
 	},
-/obj/item/storage/box/firingpins{
-	pixel_y = 3;
-	pixel_x = 4
+/obj/item/shield/riot,
+/obj/item/shield/riot{
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -76977,14 +76981,22 @@
 "wkc" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs{
-	pixel_x = -12;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/storage/box/handcuffs{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 7;
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/firingpins{
+	pixel_y = 0;
+	pixel_x = 7
+	},
+/obj/item/storage/box/firingpins{
+	pixel_x = -8;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "wkd" = (
