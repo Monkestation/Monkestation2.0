@@ -33,6 +33,7 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavylaser)
 	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
 	cell_type = /obj/item/stock_parts/power_store/cell/quickcharge
 
 /obj/item/gun/energy/laser/heavylaser/Initialize(mapload)
@@ -42,7 +43,7 @@
 /obj/item/stock_parts/power_store/cell/quickcharge
 	name = "Fast-charging energy cell"
 	maxcharge = STANDARD_CELL_CHARGE * 3
-	chargerate =  STANDARD_CELL_RATE * 6
+	chargerate =  STANDARD_CELL_RATE * 2
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"

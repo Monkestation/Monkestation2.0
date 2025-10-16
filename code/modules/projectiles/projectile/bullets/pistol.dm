@@ -152,3 +152,6 @@
 	stamina = 40 // ~6 shots to drop
 	sharpness = NONE
 	embedding = null
+	debilitating = TRUE
+	debilitate_mult = 1
+

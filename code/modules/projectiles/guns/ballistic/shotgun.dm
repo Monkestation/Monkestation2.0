@@ -47,6 +47,7 @@
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
+	rack_delay = 8
 	can_be_sawn_off = TRUE
 	pbk_gentle = TRUE
 

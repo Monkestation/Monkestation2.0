@@ -26,9 +26,9 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+	damage = 18
 	wound_bonus = -30
 	bare_wound_bonus = 40
-	armour_penetration = -30
 
 /obj/projectile/beam/laser/heavylaser
 	generic_name = "concentrated laser beam"
@@ -36,10 +36,9 @@
 	damage = 23
 	pass_flags = PASSTABLE | PASSGLASS
 	projectile_piercing = PASSGRILLE
-	wound_bonus = -30
-	bare_wound_bonus = 10
+	wound_bonus = -60
+	bare_wound_bonus = 0
 	armour_penetration = 0
-	demolition_mod = 1.3
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
