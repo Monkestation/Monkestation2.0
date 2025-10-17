@@ -7,7 +7,7 @@
 	wires = list(
 		WIRE_AI, WIRE_CAMERA,
 		WIRE_LAWSYNC, WIRE_LOCKDOWN,
-		WIRE_RESET_MODEL
+		WIRE_RESET_MODEL, WIRE_MOTIVATIONAL
 	)
 	add_duds(2)
 	..()
@@ -26,6 +26,7 @@
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
+	status += "The indicator next to to the smile sticker is [is_cut(WIRE_MOTIVATIONAL) ? "off" : "on"]."
 	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODEL)] wire."
 	return status
 
@@ -67,6 +68,9 @@
 		if(WIRE_RESET_MODEL)
 			if(R.has_model())
 				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
+		if(WIRE_MOTIVATIONAL)
+			R.motivate()
+			R.visible_message(span_notice("[R]'s servos begin to flare widly."), span_notice("You feel a sharp artifical pain."))
 
 /datum/wires/robot/on_cut(wire, mend, source)
 	var/mob/living/silicon/robot/R = holder
@@ -103,6 +107,9 @@
 			if(R.has_model() && !mend)
 				R.ResetModel()
 				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
+		if(WIRE_MOTIVATIONAL)
+			R.logevent("Motivational Controller fault [mend?"cleared":"detected"]")
+			log_silicon("[key_name(usr)] [is_cut(WIRE_MOTIVATIONAL) ? "mended" : "disabled"] [key_name(R)] via wire")
 
 /datum/wires/robot/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
