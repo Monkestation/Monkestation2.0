@@ -146,7 +146,7 @@
 		objectives |= assault_team.objectives
 
 /datum/antagonist/assault_operative/proc/give_alias()
-	var/chosen_name = sanitize_text(tgui_input_text(owner.current, "Please input your desired name!", "Name", "Randy Random"))
+	var/chosen_name = sanitize_text(tgui_input_text(owner.current, "Please input your desired name!", "Name", owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || "Randy Random"))
 	if(!chosen_name)
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/human = owner.current
