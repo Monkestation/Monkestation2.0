@@ -1661,3 +1661,41 @@ MONKESTATION REMOVAL END */
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	affected_mob.remove_status_effect(/datum/status_effect/grouped/anesthetic, name)
 	..()
+
+///lean is tasty yum yum drink it alllllll
+/datum/reagent/medicine/painkiller/lean
+	name = "Lean"
+	description = "A disgustingly purple drink made from all sorts of bad shit"
+	reagent_state = LIQUID
+	color = "#ae00ff"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	ph = 7
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_ANTICONVULSANT)
+	overdose_threshold = 45
+	pain_modifier = 0.5
+
+/datum/reagent/medicine/painkiller/lean/on_mob_metabolize(mob/living/affected_mob)
+	var/matrix/lean = matrix(45, MATRIX_ROTATE)
+	affected_mob.transform = lean
+	..()
+
+/datum/reagent/medicine/painkiller/lean/on_mob_end_metabolize(mob/living/affected_mob)
+	var/matrix/lean = matrix(0, MATRIX_ROTATE)
+	affected_mob.transform = lean
+	..()
+
+/datum/reagent/medicine/painkiller/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(current_cycle >= 5)
+		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_heavy, name)
+	..()
+
+/datum/reagent/medicine/painkiller/lean/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	if(SPT_PROB(18, seconds_per_tick))
+		affected_mob.drop_all_held_items()
+		affected_mob.set_dizzy_if_lower(4 SECONDS)
+		affected_mob.set_jitter_if_lower(4 SECONDS)
+		var/obj/item/organ/internal/brain/our_brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(prob(50))
+			our_brain.apply_organ_damage(1)
+	..()
