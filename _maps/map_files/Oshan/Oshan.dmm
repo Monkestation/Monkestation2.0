@@ -1999,6 +1999,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/rd)
 "aIO" = (
@@ -13677,10 +13678,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/circuitboard/aicore,
 /obj/item/computer_disk/ordnance,
-/obj/machinery/keycard_auth{
-	pixel_x = 4;
-	pixel_y = 9
-	},
 /obj/item/stamp/head/rd{
 	pixel_x = -7;
 	pixel_y = 9
@@ -57258,6 +57255,7 @@
 	name = "Research Director's Office"
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "rVi" = (
