@@ -213,8 +213,8 @@
 	generate_items_inside(list(
 		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 4,
 		/obj/item/ammo_box/c980grenade/shrapnel = 1,
-		/obj/item/ammo_box/c980grenade/smoke = 1,
-		/obj/item/ammo_box/c980grenade/riot = 3,
+		/obj/item/ammo_box/c980grenade = 2,
+		/obj/item/ammo_box/c980grenade/riot = 2,
 		/obj/item/clothing/mask/gas/sechailer/swat = 1,
 	), src)
 
@@ -223,13 +223,13 @@
 	name = "\improper Wylom heavy rifle gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom
-	extra_to_spawn = /obj/item/ammo_box/magazine/wylom
+	extra_to_spawn = /obj/item/ammo_box/wylom
 
 /obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom/PopulateContents()
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/ammo_box/magazine/wylom = 3,
+		/obj/item/ammo_box/wylom = 3,
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko

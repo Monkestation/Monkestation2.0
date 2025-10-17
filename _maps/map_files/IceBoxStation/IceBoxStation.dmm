@@ -8028,7 +8028,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cqW" = (
-/obj/vehicle/ridden/secway,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark/textured,
@@ -27503,6 +27502,8 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "iuS" = (
 /obj/machinery/airalarm/directional/north,
+/obj/vehicle/ridden/secway,
+/obj/item/key/security,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/security/armory/upper)
 "iuU" = (
@@ -32740,17 +32741,21 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "kaF" = (
-/obj/item/grenade/barrier{
-	pixel_x = 4
-	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = -4;
-	pixel_y = 0
-	},
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -5
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
@@ -51309,7 +51314,6 @@
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
 "pEF" = (
-/obj/item/key/security,
 /obj/structure/table,
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
@@ -51320,6 +51324,14 @@
 /obj/item/melee/baton/security/loaded{
 	pixel_x = -2;
 	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_x = 4
+	},
+/obj/item/grenade/barrier,
+/obj/item/grenade/barrier{
+	pixel_x = -4;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)

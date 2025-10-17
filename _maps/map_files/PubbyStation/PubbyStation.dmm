@@ -50215,6 +50215,15 @@
 "uoS" = (
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
+"upL" = (
+/obj/structure/rack,
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/e_gun/dragnet,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "upV" = (
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 1
@@ -51921,10 +51930,17 @@
 /area/station/maintenance/department/security/brig)
 "vIm" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet{
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser/heavylaser{
 	pixel_x = 0;
-	pixel_y = 3
+	pixel_y = -1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -79094,7 +79110,7 @@ hiD
 ajj
 ajT
 aNZ
-afH
+upL
 amh
 amZ
 anJ

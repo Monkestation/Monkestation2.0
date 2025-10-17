@@ -20788,6 +20788,7 @@
 	pixel_y = -3;
 	pixel_x = 4
 	},
+/obj/effect/spawner/random/armory/disablers,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -60493,7 +60494,18 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/rack,
-/obj/effect/spawner/random/armory/disablers,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -1;
+	pixel_y = -5
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 2;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},

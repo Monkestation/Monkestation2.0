@@ -11,9 +11,11 @@
 
 /datum/armor/under_syndicate
 	melee = 10
+	energy = 10
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
@@ -29,9 +31,11 @@
 
 /datum/armor/syndicate_skirt
 	melee = 10
+	energy = 10
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -46,10 +50,11 @@
 	melee = 10
 	bullet = 10
 	laser = 10
-	energy = 10
+	energy = 20
 	bio = 10
 	fire = 50
 	acid = 40
+	wound = 20
 
 /obj/item/clothing/under/syndicate/bloodred/sleepytime
 	name = "blood-red pajamas"
@@ -176,3 +181,12 @@
 	has_sensor = NO_SENSORS
 	resistance_flags = FIRE_PROOF
 	inhand_icon_state = null
+	armor_type = /datum/armor/syndicate_plasmeme
+
+/datum/armor/syndicate_plasmeme
+	melee = 10
+	energy = 10
+	bio = 100
+	fire = 95
+	acid = 95
+	wound = 10

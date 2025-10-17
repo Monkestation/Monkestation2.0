@@ -23,6 +23,11 @@
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/heavylaser
+	projectile_type = /obj/projectile/beam/laser/conlaser
+	e_cost = LASER_SHOTS(30, STANDARD_CELL_CHARGE * 3) //30 shots
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/carbine
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
