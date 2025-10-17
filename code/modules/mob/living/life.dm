@@ -55,7 +55,7 @@
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events(seconds_per_tick, times_fired)
-			// Handle alerts
+			// Handle tempature alerts
 			body_temperature_alerts()
 
 		//Handle temperature/pressure differences between body and environment
