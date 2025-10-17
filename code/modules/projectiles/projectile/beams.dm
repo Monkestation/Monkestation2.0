@@ -30,7 +30,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
-/obj/projectile/beam/laser/heavylaser
+/obj/projectile/beam/laser/conlaser
 	generic_name = "concentrated laser beam"
 	icon_state = "heavylaser"
 	damage = 23
