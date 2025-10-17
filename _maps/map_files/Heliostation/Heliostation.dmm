@@ -19736,9 +19736,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "bWX" = (
-/obj/item/storage/box/disks_nanite,
 /obj/structure/rack,
 /obj/machinery/light/directional/north,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
 "bXb" = (
@@ -36215,10 +36216,6 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"gSY" = (
-/obj/machinery/nanite_programmer,
-/turf/open/floor/iron/dark/herringbone,
-/area/station/science/circuits)
 "gTf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49801,7 +49798,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "lWb" = (
-/obj/machinery/nanite_program_hub,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
@@ -127107,7 +127103,7 @@ wKH
 uHo
 oMA
 caq
-gSY
+fbi
 dqn
 fbi
 aLu
