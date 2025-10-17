@@ -315,7 +315,7 @@
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_stat_change(mob/living/carbon/user, new_stat)
 	SIGNAL_HANDLER
-	if(ISINRANGE_EX(new_stat, CONSCIOUS, DEAD))
+	if(ISINRANGE_EX(new_stat, CONSCIOUS, DEAD) && user.health <= user.crit_threshold)
 		resurrection_butterfly(user)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_health_update(mob/living/carbon/user)
