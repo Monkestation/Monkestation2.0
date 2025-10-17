@@ -197,7 +197,7 @@
 		return FALSE
 
 	if(attack_type == LEAP_ATTACK)
-		final_block_chance -= 25 //OH GOD GET IT OFF ME
+		final_block_chance = 25 //Eswords have reduced chances of blocking tackles, body throws, or leaps.
 
 	return ..()
 
