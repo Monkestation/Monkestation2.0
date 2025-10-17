@@ -10,6 +10,7 @@
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
 	ambient_buzz_vol = 20
+	astar_weight = 10
 
 /*
 * Departmental Maintenance
