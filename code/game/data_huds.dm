@@ -61,10 +61,10 @@
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_NANITE_FULL_HUD)
 
 /datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD, NANITE_HUD, DIAG_NANITE_FULL_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD, DIAG_NANITE_FULL_HUD)
 
 /datum/atom_hud/data/bot_path
 	// This hud exists so the bot can see itself, that's all
@@ -394,12 +394,28 @@ Security HUDs! Basic mode shows only the job.
 Diagnostic HUDs!
 ************************************************/
 
-/mob/living/proc/hud_set_nanite_indicator()
+/mob/living/proc/hud_set_nanite_indicator(remove = FALSE)
 	var/image/holder = hud_list[NANITE_HUD]
-	holder.pixel_y = get_cached_height() - world.icon_size
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon = 'monkestation/icons/obj/machines/nanites/nanite_hud.dmi'
 	holder.icon_state = null
-	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
-		holder.icon_state = "nanite_ping"
+	if(remove)
+		return //bye icon
+	holder.icon_state = "nanite_ping"
+
+///Updates the nanite volume bar visible in diagnostic HUDs
+/datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
+	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
+	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	if(remove || stealth)
+		return //bye icon
+	var/nanite_percent = (nanite_volume / max_nanites) * 100
+	nanite_percent = clamp(CEILING(nanite_percent, 10), 10, 100)
+	holder.icon = 'monkestation/icons/obj/machines/nanites/nanite_hud.dmi'
+	holder.icon_state = "nanites[nanite_percent]"
 
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)
