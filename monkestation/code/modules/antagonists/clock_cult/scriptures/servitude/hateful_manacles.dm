@@ -3,7 +3,7 @@
 	desc = "Forms replicant manacles around a target's wrists that function like handcuffs, restraining the target."
 	tip = "Handcuff a target at close range to subdue them for conversion or vitality extraction."
 	button_icon_state = "Hateful Manacles"
-	power_cost = 50
+	power_cost = STANDARD_CELL_CHARGE * 0.05
 	invocation_time = 1.5 SECONDS // 1.5 to invoke, 3 to cuff
 	invocation_text = list("Shackle the heretic...", "Break them in body and spirit!")
 	slab_overlay = "hateful_manacles"

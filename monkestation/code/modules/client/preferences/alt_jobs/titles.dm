@@ -207,6 +207,7 @@
 		"Private Investigator",
 		"Forensic Scientist",
 		"Paranormal Investigator",
+		"Inspector",
 	)
 
 /datum/job/doctor

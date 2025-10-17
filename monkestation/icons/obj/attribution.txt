@@ -1,0 +1,3 @@
+misc.dmi
+    slab sprite edited by pooba, original from Andor Salga
+    Skeleton potion created by pooba

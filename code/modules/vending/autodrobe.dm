@@ -132,8 +132,8 @@
 				/obj/item/clothing/head/costume/jester = 1,
 				/obj/item/clothing/under/rank/civilian/clown/jester = 1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/shoes/clown_shoes/green_jester_shoes =1, // MONKESTATION EDIT ADDITION
-				/obj/item/clothing/head/costume/jester/alt =1, // MONKESTATION EDIT ADDITION
-				/obj/item/clothing/under/rank/civilian/clown/jester/alt =1, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/head/costume/jester2 =1, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/rank/civilian/clown/jester2 =1, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/jimbo = 2, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/costume/villain = 1,
 				/obj/item/clothing/suit/costume/joker = 1,

@@ -118,7 +118,11 @@
 	if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()
-	SEND_SIGNAL(bopper, COMSIG_ITEM_AFTERATTACK, victim, owner, TRUE) //just use a light eater attack on everyone
+	// extinguish owner as well
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		living_owner.extinguish_mob()
+	SEND_SIGNAL(bopper, COMSIG_LIGHT_EATER_EAT, victim, bopper, TRUE)
 
 /obj/item/darkspawn_extinguish
 	name = "extinguish"
@@ -603,7 +607,7 @@
 	if(isliving(AM))
 		var/mob/living/target = AM
 		if(!IS_TEAM_DARKSPAWN(target))
-			target.apply_status_effect(/datum/status_effect/speed_boost, 3, 1 SECONDS, type) //slow field, makes it harder to escape
+			target.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS, 3, type) //slow field, makes it harder to escape
 
 /obj/effect/temp_visual/darkspawn/chasm/Destroy()
 	new/obj/effect/temp_visual/darkspawn/detonate(get_turf(src))

@@ -197,6 +197,8 @@
 		. = FALSE // this ain't a vampire?!
 		CRASH("[type] applied to non-bloodsucker ([owner]) somehow")
 
+	update_in_shade()
+
 	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
 
@@ -205,7 +207,7 @@
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsol, COMSIG_SOL_END)
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
@@ -213,19 +215,27 @@
 		return
 	var/bloodsucker_level = bloodsucker.bloodsucker_level
 	if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
-		if(bloodsucker_level > 0)
-			to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
+		if(protected)
+			if(bloodsucker_level > 0)
+				to_chat(owner, span_userdanger("The UV rays creep through the locker slits, seriously burning you!"))
+			else
+				to_chat(owner, span_userdanger("The slits of light coming through the locker starts to burn you!"))
 		else
-			to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
+			if(bloodsucker_level > 0)
+				to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
+			else
+				to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
 		COOLDOWN_START(bloodsucker, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
-	if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
+	if(!HAS_TRAIT(owner, TRAIT_NOFIRE) && !protected)
 		if(owner.fire_stacks <= 0)
 			owner.fire_stacks = 0
 		if(bloodsucker_level > 0)
 			owner.adjust_fire_stacks(0.25 + bloodsucker_level / 10)
 			owner.ignite_mob()
-	// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
-	owner.take_overall_damage(burn = (0.75 + (bloodsucker_level / 4)) * seconds_between_ticks)
+	var/multiplier = protected ? 0.4 : 1
+	if(!protected || owner.health > 10)
+		// they'll take around 60 damage total during Sol at rank 1, to 165 damage total at rank 8 (not counting any damage from being set on fire)
+		owner.take_overall_damage(burn = (0.75 + (bloodsucker_level / 4)) * seconds_between_ticks * multiplier)
 	owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
 
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
@@ -237,6 +247,15 @@
 	SIGNAL_HANDLER
 	if(istype(owner.loc, /obj/structure/closet/crate/coffin))
 		qdel(src)
+	else
+		update_in_shade()
+
+/datum/status_effect/bloodsucker_sol/proc/update_in_shade()
+	SIGNAL_HANDLER
+	var/in_shade = isstructure(owner.loc)
+	if(protected != in_shade)
+		protected = in_shade
+		linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	name = "Solar Flares"
@@ -245,3 +264,7 @@
 	base_icon_state = "sol_alert"
 	icon_state = "sol_alert"
 
+/atom/movable/screen/alert/status_effect/bloodsucker_sol/update_icon_state()
+	. = ..()
+	var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
+	icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"

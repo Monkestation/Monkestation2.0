@@ -65,7 +65,7 @@
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
-	base_icon_state = "coffincoffin"
+	base_icon_state = "coffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
