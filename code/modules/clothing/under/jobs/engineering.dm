@@ -72,3 +72,9 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/engineering/machinist
+	desc = "It's a rugged jumpsuit with a sturdy set of overalls. It is very dirty and smells of oil."
+	name = "machinist's jumpsuit"
+	icon_state = "machinist"
+	inhand_icon_state = "machinist"

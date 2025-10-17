@@ -42,7 +42,7 @@
 	jobtype = /datum/job/machinist
 
 	id_trim = /datum/id_trim/job/machinist
-	uniform = /obj/item/clothing/under/rank/cargo/miner/machinist
+	uniform = /obj/item/clothing/under/rank/engineering/machinist
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
 	head = /obj/item/clothing/head/utility/welding
@@ -63,7 +63,3 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/machinist)
-
-/obj/item/clothing/under/rank/cargo/miner/machinist
-	desc = "It's a rugged jumpsuit with a sturdy set of overalls. It is very dirty and smells of oil."
-	name = "machinist's jumpsuit"
