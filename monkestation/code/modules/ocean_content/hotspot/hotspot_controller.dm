@@ -100,6 +100,9 @@ SUBSYSTEM_DEF(hotspots)
 		if(heat)
 			listed_hotspot.bonus_heat += listed_hotspot.per_disturbance
 		total_heat += heat
+
+// removed bc it makes mining on Oshan hellish ~Lucy
+/*
 	if(total_heat)
 		kerpow(triggered)
 
@@ -119,6 +122,7 @@ SUBSYSTEM_DEF(hotspots)
 		return viewers(range, get_turf(target_loc))
 	else
 		return typecache_filter_list(target_loc.get_all_contents(), GLOB.typecache_living)
+*/
 
 ///this is where we handle the interaction between using a stomper on a turf and affecting a hotspot
 ///if its the center it locks position, if not it drifts it away from the stomper
@@ -140,8 +144,9 @@ SUBSYSTEM_DEF(hotspots)
 			listed_hotspot.can_drift = FALSE
 
 		///we handle movement and recentering here
-		listed_hotspot.drift_direction = angle2dir(arctan(hotspot_center.x - stomped.x, hotspot_center.y - stomped.y))
+		listed_hotspot.drift_direction = angle2dir(get_angle(stomped, hotspot_center))
 		listed_hotspot.move_center(get_step(hotspot_center, listed_hotspot.drift_direction))
+		testing("hotspot at [AREACOORD(hotspot_center)] drifting: angle = [get_angle(stomped, hotspot_center)], dir = [dir2text(angle2dir(get_angle(stomped, hotspot_center)))]")
 
 ///this proc returns the heat value from the given turf
 /datum/controller/subsystem/hotspots/proc/return_heat(turf/source)

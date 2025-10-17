@@ -230,22 +230,6 @@
 		else
 			to_chat(M, span_userdanger("You fall in the water!"))
 
-/obj/effect/abstract/liquid_turf/proc/ChangeToNewTurf(turf/NewT)
-	if(NewT.liquids)
-		stack_trace("Liquids tried to change to a new turf, that already had liquids on it!")
-
-	UnregisterSignal(my_turf, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
-	if(SSliquids.evaporation_queue[my_turf])
-		SSliquids.evaporation_queue -= my_turf
-		SSliquids.evaporation_queue[NewT] = TRUE
-	my_turf.liquids = null
-	my_turf = NewT
-	liquid_group.move_liquid_group(src)
-	NewT.liquids = src
-	loc = NewT
-	RegisterSignal(my_turf, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
-	RegisterSignal(my_turf, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
-
 /**
  * Handles COMSIG_ATOM_EXAMINE for the turf.
  *

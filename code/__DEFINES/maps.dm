@@ -228,10 +228,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 //monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
+#define ZTRAIT_OSHAN_MINING "Oshan Mining"
+
 #define ZTRAIT_ECLIPSE "Eclipse"
 
 ///Z level traits for Lavaland
 #define ZTRAITS_TRENCH list(\
+	ZTRAIT_OSHAN_MINING = TRUE, \
 	ZTRAIT_GRAVITY = TRUE, \
 	ZTRAIT_MINING = TRUE, \
 	ZTRAIT_NOPARALLAX = TRUE, \
