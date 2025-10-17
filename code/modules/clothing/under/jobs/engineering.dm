@@ -77,4 +77,3 @@
 	desc = "It's a rugged jumpsuit with a sturdy set of overalls. It is very dirty and smells of oil."
 	name = "machinist's jumpsuit"
 	icon_state = "machinist"
-	inhand_icon_state = "machinist"
