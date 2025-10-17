@@ -1,4 +1,3 @@
-
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon = 'icons/effects/effects.dmi'

@@ -294,6 +294,8 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
+	return TRUE
+
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
 	if(seconds_electrified && get_charge() && shock(user))
 		return ITEM_INTERACT_BLOCKING

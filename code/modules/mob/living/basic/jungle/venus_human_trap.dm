@@ -187,8 +187,6 @@
 
 /mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(!.)
-		return FALSE
 
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
 	if(!vines_in_range && !alert_shown)

@@ -150,7 +150,7 @@
 				owner.balloon_alert(owner, "not dead!")
 				return FALSE
 			target.mind?.grab_ghost()
-			target.revive(ADMIN_HEAL_ALL)
+			target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 		to_chat(user, span_warning("We revive [target]!"))
 		owner.balloon_alert(owner, "successfully revived!")
@@ -169,7 +169,7 @@
 	else
 		// no escaping at this point
 		target.mind?.grab_ghost(TRUE)
-		target.revive(ADMIN_HEAL_ALL)
+		target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
 	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))

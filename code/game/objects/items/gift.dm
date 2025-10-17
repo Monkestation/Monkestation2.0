@@ -55,8 +55,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			return
 	else
 		new contains_type(M.drop_location(), M)
-	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [contains_type] inside!"))
-	M.investigate_log("has unwrapped a present containing [contains_type.type].", INVESTIGATE_PRESENTS)
+	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [contains_type::name] inside!"))
+	M.investigate_log("has unwrapped a present containing [contains_type].", INVESTIGATE_PRESENTS)
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,

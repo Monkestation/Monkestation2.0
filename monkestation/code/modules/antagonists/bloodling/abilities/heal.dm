@@ -43,7 +43,7 @@
 	if(carbon_mob.stat != DEAD)
 		return FALSE
 
-	carbon_mob.revive()
+	carbon_mob.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	// Any oxygen damage they suffered whilst in crit
 	carbon_mob.adjustOxyLoss(-200)
 	return TRUE

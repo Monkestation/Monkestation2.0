@@ -118,7 +118,11 @@
 	if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()
-	SEND_SIGNAL(bopper, COMSIG_ITEM_AFTERATTACK, victim, owner, TRUE) //just use a light eater attack on everyone
+	// extinguish owner as well
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		living_owner.extinguish_mob()
+	SEND_SIGNAL(bopper, COMSIG_LIGHT_EATER_EAT, victim, bopper, TRUE)
 
 /obj/item/darkspawn_extinguish
 	name = "extinguish"
