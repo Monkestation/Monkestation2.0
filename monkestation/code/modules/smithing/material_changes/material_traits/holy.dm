@@ -16,11 +16,7 @@
 	SIGNAL_HANDLER
 	var/damage_multiplier = 1
 	if(IS_BLOODSUCKER(victim))
-		// extra damage during sol
-		if(victim.has_status_effect(/datum/status_effect/bloodsucker_sol))
-			damage_multiplier *= 3
-		else
-			damage_multiplier *= 2
+		damage_multiplier *= 2
 
 	// werewolves have insane damage resistance, so 3x damage
 	if(iswerewolf(victim))

@@ -21,7 +21,7 @@
 	base_background_icon_state = "tremere_power_off"
 	button_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
 	background_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_DURING_SOL
+	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS
 	level_current = 1
 	button_icon_state = "power_dominate"
 	purchase_flags = TREMERE_CAN_BUY

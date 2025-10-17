@@ -85,14 +85,14 @@
 /// Space_Station_13_areas.dm  <--- all the areas
 
 //////////////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/objective/bloodsucker/survive
 	name = "bloodsuckersurvive"
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
 
 /datum/objective/bloodsucker/survive/check_completion()
 	return ..() || (!QDELETED(owner.current) && !bloodsucker_datum?.final_death)
-
+*/
 // WIN CONDITIONS?
 // Handled by parent
 
@@ -220,7 +220,7 @@
 
 // EXPLANATION
 /datum/objective/bloodsucker/tremere_power/update_explanation_text()
-	explanation_text = "Upgrade a Blood Magic power to the maximum level, remember that Vassalizing gives more Ranks!"
+	explanation_text = "Upgrade a Blood Magic power to at least level [TREMERE_OBJECTIVE_POWER_LEVEL], remember that Vassalizing gives more Ranks!"
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/tremere_power/check_completion()

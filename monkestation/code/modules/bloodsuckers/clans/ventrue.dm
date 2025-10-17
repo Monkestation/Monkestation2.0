@@ -1,5 +1,5 @@
 ///The maximum level a Ventrue Bloodsucker can be, before they have to level up their vassal instead.
-#define VENTRUE_MAX_LEVEL 3
+#define VENTRUE_MAX_LEVEL 4
 ///How much it costs for a Ventrue to rank up without a spare rank to spend.
 #define BLOODSUCKER_BLOOD_RANKUP_COST (550)
 

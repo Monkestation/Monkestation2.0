@@ -2,12 +2,10 @@
  *	MEZMERIZE
  *	 Locks a target in place for a certain amount of time.
  *
- * 	Level 2: Additionally mutes
  * 	Level 3: Can be used through face protection
  * 	Level 5: Doesn't need to be facing you anymore
  */
 
-#define MESMERIZE_MUTE_LEVEL 2
 #define MESMERIZE_GLASSES_LEVEL 3
 #define MESMERIZE_FACING_LEVEL 5
 /datum/action/cooldown/bloodsucker/targeted/mesmerize
@@ -17,7 +15,6 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 30
-	sol_multiplier = 2
 	cooldown_time = 30 SECONDS
 	target_range = 4
 	power_activates_immediately = FALSE
@@ -38,23 +35,22 @@
 	/// at this protection mesmerize will fail
 	var/max_eye_protection = 2
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
-	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
+	. += "[src] a target, locking them in place for a short time and muting them.<br>"
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_explanation_extended()
 	. = list()
-	. += "Click any player to attempt to mesmerize them. This will stun the victim."
-	. += "The victim will realize they are being mesmerized, but will be unable to talk, but at level [MESMERIZE_MUTE_LEVEL] they will be also muted."
+	. += "Click any player to attempt to mesmerize them. If successful, will stun the victim."
+	. += "The victim will realize they are being mesmerized, but will be muted for [DisplayTimeText(get_mute_time())]."
 	if(blocked_by_glasses && requires_facing_target)
 		. += "[src] requires you to not be wearing glasses and to be facing your target."
 	else if(blocked_by_glasses)
 		. += "[src] requires you to not be wearing glasses."
 	else if(requires_facing_target)
 		. += "[src] requires you to be facing your target."
-	. += "You cannot wear anything covering your face, and both parties must be facing eachother."
 	. += "Obviously, both parties need to not be blind."
 	. += "If your target is already mesmerized or a bloodsucker, the Power will fail."
 	. += "Flash protection will slow down mesmerize, but welding protection will completely stop it."
-	. += "Once mesmerized, the target will be unable to move for [DisplayTimeText(get_power_time())] and muted for [DisplayTimeText(get_mute_time())], scaling with level."
+	. += "Once mesmerized, the target will be unable to move for [DisplayTimeText(get_power_time())], scaling with level."
 	. += "At level [MESMERIZE_GLASSES_LEVEL], you will be able to use the power through items covering your face."
 	. += "At level [MESMERIZE_FACING_LEVEL], you will be able to mesmerize regardless of your target's direction."
 	. += "Additionally it works on silicon lifeforms, causing a EMP effect instead of a freeze."
@@ -68,7 +64,7 @@
 		to_chat(user, span_warning("You have no eyes with which to mesmerize."))
 		return FALSE
 	// Check: Eyes covered?
-	if(blocked_by_glasses && istype(user) && (user.is_eyes_covered() && level_current <= 2) || !isturf(user.loc))
+	if(blocked_by_glasses && istype(user) && (user.is_eyes_covered() && level_current < MESMERIZE_GLASSES_LEVEL) || !isturf(user.loc))
 		user.balloon_alert(user, "your eyes are concealed from sight.")
 		return FALSE
 	return TRUE
@@ -194,9 +190,8 @@
 	mesmerized_target.become_blind(MESMERIZE_TRAIT)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/mute_target(mob/living/mesmerized_target)
-	if(level_current >= MESMERIZE_MUTE_LEVEL)
-		mesmerized_target.set_silence_if_lower(get_mute_time())
-		mesmerized_target.set_emote_mute_if_lower(get_mute_time())
+	mesmerized_target.set_silence_if_lower(get_mute_time())
+	mesmerized_target.set_emote_mute_if_lower(get_mute_time())
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/DeactivatePower(deactivate_flags)
 	. = ..()
@@ -228,4 +223,3 @@
 
 #undef MESMERIZE_GLASSES_LEVEL
 #undef MESMERIZE_FACING_LEVEL
-#undef MESMERIZE_MUTE_LEVEL

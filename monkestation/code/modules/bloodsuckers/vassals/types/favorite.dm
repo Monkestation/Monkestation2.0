@@ -8,8 +8,7 @@
 	show_in_antagpanel = FALSE
 	antag_hud_name = "vassal6"
 	special_type = FAVORITE_VASSAL
-	vassal_description = "The Favorite Vassal gets unique abilities over other Vassals depending on your Clan \
-		and becomes completely immune to Mindshields. If part of Ventrue, this is the Vassal you will rank up."
+	vassal_description = "The Favorite Vassal gets unique abilities over other Vassals depending on your Clan. If part of Ventrue, this is the Vassal you will rank up."
 
 	///Bloodsucker levels, but for Vassals, used by Ventrue.
 	var/vassal_level
@@ -17,9 +16,6 @@
 /datum/antagonist/vassal/favorite/on_gain()
 	. = ..()
 	SEND_SIGNAL(master, COMSIG_BLOODSUCKER_MAKE_FAVORITE, src)
-
-/datum/antagonist/vassal/favorite/pre_mindshield(mob/implanter, mob/living/mob_override)
-	return COMPONENT_MINDSHIELD_RESISTED
 
 ///Set the Vassal's rank to their Bloodsucker level, and transfer all abilities to the Bloodsucker level.
 /datum/antagonist/vassal/favorite/proc/set_vassal_level(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
