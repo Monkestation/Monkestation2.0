@@ -42,6 +42,8 @@
 	var/list/no_process_traits
 	// List of species that cannot choose this quirk
 	var/list/species_blacklist
+	// List of species that are allowed to choose this quirk, no others will be
+	var/list/species_whitelist
 
 /datum/quirk/New()
 	. = ..()
@@ -201,6 +203,11 @@
 /datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
 	if(LAZYLEN(species_blacklist) && (mob_species.id in species_blacklist))
 		return FALSE
+	if(LAZYLEN(species_whitelist))
+		if(mob_species.id in species_whitelist)
+			return TRUE
+		else
+			return FALSE
 	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
 		return FALSE
 	return TRUE
