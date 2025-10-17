@@ -1,6 +1,6 @@
 /datum/job/machinist
 	title = JOB_STATION_MACHINIST
-	description = "Hone your skills, make prototypes and \
+	description = "Hone your skills, make prototypes, \
 		and make custom orders."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
@@ -65,5 +65,5 @@
 	skillchips = list(/obj/item/skillchip/job/machinist)
 
 /obj/item/clothing/under/rank/cargo/miner/machinist
-	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty and smells of oil"
+	desc = "It's a rugged jumpsuit with a sturdy set of overalls. It is very dirty and smells of oil."
 	name = "machinist's jumpsuit"
