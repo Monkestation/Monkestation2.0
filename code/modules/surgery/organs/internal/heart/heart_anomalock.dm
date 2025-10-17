@@ -185,13 +185,12 @@
 	. = ..()
 
 	if(owner.health <= owner.crit_threshold)
-		owner.heal_overall_damage(5, 5)
+		owner.heal_overall_damage(2, 2)
 		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
+		owner.adjustToxLoss(-2)
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
-	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
 	owner.add_filter("emp_shield", 2, outline_filter(1, "#639BFF"))
@@ -200,7 +199,6 @@
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
-	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
