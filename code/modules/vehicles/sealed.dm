@@ -5,6 +5,8 @@
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
+	///Determines which occupants provide access when bumping into doors
+	var/access_provider_flags = VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -33,7 +35,7 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/mob/occupant as anything in return_drivers())
+		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
 			if(conditionalwall.try_safety_unlock(occupant))
 				return
 			conditionalwall.bumpopen(occupant)
@@ -116,8 +118,10 @@
 	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
-	else
-		inserted_key.equip_to_best_slot(user)
+		inserted_key = null
+		return
+	if(!inserted_key.equip_to_best_slot(user))
+		inserted_key.forceMove(get_turf(src))
 	inserted_key = null
 
 /obj/vehicle/sealed/Destroy()

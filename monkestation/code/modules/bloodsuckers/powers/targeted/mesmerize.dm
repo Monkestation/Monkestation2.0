@@ -158,7 +158,7 @@
 	// slow them down during the mesmerize
 	mute_target(mesmerized_target)
 
-	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target)))
+	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target), hidden = TRUE))
 		StartCooldown(cooldown_time * 0.5)
 		DeactivatePower()
 		return

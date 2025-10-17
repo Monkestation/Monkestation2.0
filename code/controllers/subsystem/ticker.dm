@@ -54,6 +54,13 @@ SUBSYSTEM_DEF(ticker)
 	/// What is going to be reported to other stations at end of round?
 	var/news_report
 
+	///The status of the NT Rep, updated when one joins or the round ends.
+	var/nanotrasen_rep_status = NT_REP_STATUS_DOESNT_EXIST
+	///The score, out of 5, that the NT rep has given the station. 0 if they died.
+	var/nanotrasen_rep_score = 0
+	///A comment the rep has given, if any.
+	var/nanotrasen_rep_comments
+
 
 	var/roundend_check_paused = FALSE
 

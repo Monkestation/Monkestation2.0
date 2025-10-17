@@ -5,6 +5,7 @@
 	icon_state = "composter"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/composters
+	interaction_flags_atom = INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 
 	/// Current level of biomatter in the composter.
 	var/biomatter = 0
@@ -165,27 +166,12 @@
 	balloon_alert(user, "safeties overriden")
 	return TRUE
 
-/obj/item/seeds/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	. = ..()
-	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !isatom(src_location))
+/obj/machinery/composters/mouse_drop_receive(atom/dropped, mob/user, params)
+	if(!istype(dropped, /obj/item/food) && !istype(dropped, /obj/item/seeds))
 		return
-	var/atom/seed_loc = src_location
-	// ensure the stuff we're mouse dropping is ALSO adjacent
-	var/obj/machinery/composters/dropped = over
-	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(seed_loc.contents)
-
-/obj/item/food/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	. = ..()
-	// ensure user is next to what we're mouse dropping into
-	if(!Adjacent(usr, over) || !isatom(src_location))
-		return
-	var/atom/food_loc = src_location
-	// ensure the stuff we're mouse dropping is ALSO adjacent
-	var/obj/machinery/composters/dropped = over
-	if(istype(dropped) && Adjacent(src_location, over_location))
-		dropped.compost(food_loc.contents)
+	var/atom/seed_loc = dropped.loc
+	if(user.Adjacent(seed_loc))
+		compost(seed_loc.contents)
 
 /obj/item/stack/biocube
 	name = "biocube"

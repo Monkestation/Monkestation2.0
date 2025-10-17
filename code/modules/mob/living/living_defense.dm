@@ -228,7 +228,7 @@
 			Knockdown(4 SECONDS)
 			emote("scream", intentional=FALSE)
 		return
-	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, thrown_item.armour_ignorance, FALSE, thrown_item.weak_against_armour)
 	if(istype(AM, /obj/item/slasher_machette))
 		if(istype(thrown_by) && IS_SLASHER(thrown_by)) // Must be slasher must have a mind and slasher antag datum.
 			apply_damage(5, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
@@ -598,11 +598,14 @@
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
 	// and this is apparently at least less likely to trigger issues than a full white/static flash
-	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
-		type = /atom/movable/screen/fullscreen/flash/black
-
-	overlay_fullscreen("flash", type)
-	addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
+	var/flash_mode = client?.prefs?.read_preference(/datum/preference/choiced/flash_visuals)
+	if(flash_mode == "Blur")
+		apply_status_effect(/datum/status_effect/flash_blur, length)
+	else
+		if(flash_mode == "Dark")
+			type = /atom/movable/screen/fullscreen/flash/black
+		overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
 	SEND_SIGNAL(src, COMSIG_MOB_FLASHED, intensity, override_blindness_check, affect_silicon, visual, type, length)
 	return TRUE
 

@@ -34,6 +34,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/get_insulation(temperature)
 	return temperature_insulation
 
+/mob/living/carbon/human/dummy/med_hud_set_health()
+	return
+
+/mob/living/carbon/human/dummy/med_hud_set_status()
+	return
+
 /*
 	MONKESTATION EDIT START
 	This causes a problem with tall players as some of their overlays will go outside of the 32x32 range which the mob's icon is restricted to

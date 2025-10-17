@@ -30,7 +30,7 @@
 	..()
 
 	var/mob/living/carbon/carbon_mob = target
-	if(!do_after(owner, 2 SECONDS))
+	if(!do_after(owner, 2 SECONDS, hidden = TRUE))
 		return FALSE
 
 	// A bit of everything healing not much but helpful
@@ -43,7 +43,7 @@
 	if(carbon_mob.stat != DEAD)
 		return FALSE
 
-	carbon_mob.revive()
+	carbon_mob.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	// Any oxygen damage they suffered whilst in crit
 	carbon_mob.adjustOxyLoss(-200)
 	return TRUE
