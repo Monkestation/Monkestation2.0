@@ -253,7 +253,6 @@
 
 		qdel(created_ore)
 		new_boulder.set_custom_materials(new_mats)
-
 	slam_jams -= slam_jams_needed
 
 
