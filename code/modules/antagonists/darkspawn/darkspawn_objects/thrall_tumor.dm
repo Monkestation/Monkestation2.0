@@ -81,6 +81,7 @@
 		span_progenitor(span_bolditalic("NOT LIKE THIS!")),
 		span_hear("You hear a massive, violent thump!"),
 	)
+	angery.uncuff()
 	angery.buckled?.unbuckle_mob(angery)
 	angery.stamina?.revitalize(forced = TRUE)
 	angery.SetAllImmobility(0)
