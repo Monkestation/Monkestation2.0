@@ -28242,7 +28242,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	color = "#009dc4"
 	},
-/obj/machinery/vending/games,
+/obj/machinery/washing_machine,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "iWL" = (
@@ -35102,7 +35102,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
 	},
-/obj/machinery/vending/cart,
+/obj/machinery/vending/games,
 /turf/open/floor/iron/smooth,
 /area/station/commons/fitness/recreation)
 "lbA" = (
@@ -36516,8 +36516,8 @@
 /turf/closed/wall,
 /area/station/service/bar)
 "lzg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/dark/textured,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/station/medical/cryo)
 "lzo" = (
 /obj/structure/disposalpipe/segment,
