@@ -195,7 +195,7 @@
 	else if (isliving(AM))
 		var/mob/living/L = AM
 		if(liquid_group.slippery)
-			if(prob(7) && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
+			if(L.m_intent == MOVE_INTENT_SPRINT && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)
 		if(!(L.movement_type & FLYING))
 			if(ishuman(AM))

@@ -4,6 +4,7 @@ import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
+import { RecipeLookup } from './common/RecipeLookup';
 
 export const BorerChem = (props) => {
   const { act, data } = useBackend();
@@ -11,7 +12,20 @@ export const BorerChem = (props) => {
   return (
     <Window width={565} height={400} title="Injector" theme="wizard">
       <Window.Content scrollable>
-        <Section title="Status">
+        <Section
+          title="Status"
+          buttons={[
+            <Button
+              key="reaction_lookup"
+              icon="book"
+              disabled={!data.reagent_holder}
+              content="Reaction search"
+              tooltip="Look up recipes and reagents!"
+              tooltipPosition="bottom-start"
+              onClick={() => act('reaction_lookup')}
+            />
+          ]}
+        >
           <LabeledList>
             <LabeledList.Item label="Storage">
               <ProgressBar value={data.energy / data.maxEnergy}>

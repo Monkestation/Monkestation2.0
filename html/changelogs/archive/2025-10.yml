@@ -504,3 +504,111 @@
   - bugfix: ship engines are now breakable in shipbreaking area with sledgehammer
       and five rewards
   - bugfix: sledgehammer bonus damage now applies properly in shipbreaking area
+2025-10-14:
+  Absolucy:
+  - rscadd: Added a preference to allow you to turn off the AI radio blip sounds.
+  - qol: The MOD ash accretion module now works when mining underwater on Oshan.
+  BobDABuilder9001:
+  - bugfix: Cyborgs can place rods and glass on window sills.
+  - qol: Placing glass on a window sill or on a grill no longer anchors it for one
+      but not the other
+  Cmpwarrior:
+  - rscadd: Adds some jester-themed clown clothing to the loadout selector (clown
+      only)
+  - rscadd: Adds greyscale capabilities to some jester clothing items
+  JohnFulpWillard:
+  - qol: Changed the escape menu to hopefully be more useful and not as laggy.
+  LassiH:
+  - balance: flares now can be extinquished by light eaters
+  notghosti:
+  - bugfix: Venus Human Traps will now heal on vines again, and be punished for daring
+      to leave them.
+  - map: Heliostation Emitters now have a proper smes connected to engines power.
+  - map: Heliostation PTL is now no longer hooked up to the stations power, rather
+      engines,
+  - map: Heliostations Starboard solars has a SMES unit and door access changed to
+      proper
+  - map: Heliostation CE now has a CE monitor in their room
+  - map: Heliostation EVA and pathology has been shifted in order to not block a external
+      airlock access
+  - map: Heliostation Bow solars now has a camera.
+  - map: Heliostation AI Core will now be hooked to the accurate grid and actually
+      recharge.
+  - map: Heliostation Gravity generator has proper camera coverage
+  - map: Heliostation Library no longer has a floating camera
+  - map: Heliostation Brig air control is now a actual checkpoint for air
+2025-10-15:
+  Absolucy:
+  - bugfix: Darkspawn can no longer use Silver Tongue to recall a shuttle when admins
+      have disabled recalling.
+  - admin: Darkspawn recalling the shuttle with Silver Tongue is now logged.
+  - qol: Soulscythe spirits now have night vision.
+  - qol: Soulscythe spirits now inherit all of their master's factions.
+  - qol: Soulscythe's blood regeneration is now based on delta time, so they will
+      still regenerate blood at normal speeds when the server is lagging.
+  JohnFulpWillard:
+  - balance: You can now wear gloves with only one hand.
+  Lawlolawl:
+  - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
+      Only the correct bank account can unlock/lock the crate now. Previously, mining
+      crates were stuck locked permanently after relocking.
+  notghosti:
+  - map: Boxstation AI boards are now accessible via RD access.
+  - rscadd: Borers can now access "Lookup Reactions" panel in their chemical injector
+  - rscadd: Added a unique neutered borer ability, Dissect Corpse.
+  - rscadd: Borers names are now their first and second names, while their whole government
+      ID is their real names
+  - rscdel: Neutered borers no longer have access to willing host, nor will progress
+      learn blood chemicals objectives.
+  - qol: Borer basic chemical guide is expanded on some,
+  - qol: Borer learn focus explanation actually explains the induvial upgrades.
+  - qol: Borer messages will now be capitalized automatically.
+  - balance: Neutered borers now have unique growth objectives, that of dissection
+      and learning blood chemicals which are indivualized.
+  - balance: Neutered borers will have red text visuals and hud elements rather than
+      purple.
+  - bugfix: PAI's leaving modular computers (Such as your pda) Will now update the
+      sprite to not include the PAI card in it.
+  - map: Heliostation supermatter will no longer depower
+2025-10-16:
+  Absolucy:
+  - qol: Shaft Miners now have external airlock access on Icebox and any other planetary
+      maps.
+  - qol: Flashes now apply a heavy screen blur by default, instead of rapidly brightening/darkening
+      the screen in a way potentially dangerous to some players.
+  - qol: If you wish to return to the old white or black screen flash tho, you can
+      change it with the "Screen Flash Visuals" setting under Gameplay in Game Preferences.
+  JupiterJaeden:
+  - balance: Removed the RNG slip from liquid spills. Makes it so you only slip if
+      you sprint. Does not affect the regular/guaranteed slips like sprayed water,
+      space lube, etc.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  TheColorCyan:
+  - bugfix: fixed restrain psi trap requiring you to step on it twice to activate
+  - bugfix: warlock extinguish spell now actually extinguishes lights
+  - bugfix: extinguish spell now also extinguishes the owner
+  notghosti:
+  - bugfix: silicons can depower airlocks via their UI again
+2025-10-17:
+  Absolucy:
+  - bugfix: Fixed pocket protector storage not being removed.
+  - bugfix: '"Secret" testmerges are now actually excluded from the changelog and
+      in-game revision info. (they aren''t really that secret anyways but whatever)'
+  - bugfix: Fixed being able to turn unanchored ooze suckers on.
+  - bugfix: Fixed the achievements for muting Poly or giving Poly loudmode as signal
+      technician.
+  - bugfix: Fixed admins not being able to flip tables.
+  - code_imp: Maps can now configure station traits to ban from rolling on that specific
+      map.
+  notghosti:
+  - bugfix: Mobs will be alerted of temperature while not on fire.
+  - bugfix: Anomalies have had their contained flag fixed, and are no longer rouging
+      the great wilds of space, but somehow always the syndicate depo despite moving
+      randomly.
