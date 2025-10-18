@@ -1644,7 +1644,7 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/modular_computer/preset/cargochat/medical,
+/obj/machinery/computer/department_orders/medical,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -4506,6 +4506,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/break_room)
 "bxU" = (
@@ -12474,6 +12475,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "dVJ" = (
@@ -12710,10 +12712,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
-	},
-/obj/structure/liquid_pump,
-/obj/effect/turf_decal/box/white{
-	color = "#EFB341"
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
@@ -13071,6 +13069,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "eeK" = (
@@ -14861,6 +14860,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "eHM" = (
@@ -24050,6 +24050,32 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
+"hFj" = (
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	name = "Security Lockdown Shutters";
+	id = "securityshutter"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "Brig";
+	req_access = list("security")
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Brig"
+	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/paper{
+	pixel_x = 5
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/security/brig)
 "hFs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24292,18 +24318,6 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/item/phone{
-	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
-	pixel_y = -3;
-	pixel_x = -6
-	},
-/obj/item/toy/figure/secofficer{
-	pixel_x = 6
-	},
-/obj/item/toy/figure/secofficer{
-	pixel_y = 9;
-	pixel_x = -8
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "hHZ" = (
@@ -24376,7 +24390,10 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
 	},
-/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "hJv" = (
@@ -32240,6 +32257,7 @@
 	dir = 6
 	},
 /obj/machinery/photocopier,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/hop)
 "knL" = (
@@ -34292,9 +34310,17 @@
 	req_access = list("security");
 	name = "Brig"
 	},
-/obj/structure/desk_bell/departmental/security{
-	pixel_x = -6;
-	pixel_y = -3
+/obj/item/toy/figure/secofficer{
+	pixel_y = 9;
+	pixel_x = -8
+	},
+/obj/item/phone{
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
+	pixel_y = -3;
+	pixel_x = -6
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = 6
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -43311,11 +43337,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "nGo" = (
-/obj/machinery/recharge_station,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/modular_computer/preset/cargochat/medical,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -43659,6 +43685,7 @@
 "nMO" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/north,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "nMW" = (
@@ -46569,6 +46596,10 @@
 /obj/effect/turf_decal/siding/thinplating_new,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
+"oFe" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/plating,
+/area/station/medical/storage)
 "oFf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit/green{
@@ -50336,7 +50367,6 @@
 /area/station/hallway/primary/central)
 "pKj" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/airalarm/directional/west,
 /obj/structure/chair/comfy{
 	dir = 4
 	},
@@ -56440,10 +56470,6 @@
 "rFp" = (
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/abandoned_gambling_den)
-"rFB" = (
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/circuit/green,
-/area/station/engineering/engine_smes)
 "rFG" = (
 /obj/structure/chair/pew/left,
 /obj/structure/cable,
@@ -57085,7 +57111,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
 "rTd" = (
-/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
@@ -66592,6 +66617,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/station/engineering/engine_smes)
 "uPO" = (
@@ -76554,6 +76580,17 @@
 /obj/item/reagent_containers/condiment/flour,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"xRf" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	req_access = list("pharmacy");
+	name = "Pharmacy Requests"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Pharmacy Requests"
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/pharmacy)
 "xRl" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/dark,
@@ -76929,10 +76966,10 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
 	},
-/obj/machinery/computer/department_orders/medical,
-/obj/effect/turf_decal/bot{
-	dir = 1
+/obj/effect/turf_decal/box/white{
+	color = "#EFB341"
 	},
+/obj/structure/liquid_pump,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "xZe" = (
@@ -103221,7 +103258,7 @@ pfg
 fvF
 meC
 meC
-meC
+xRf
 vCe
 dQR
 tXC
@@ -104842,7 +104879,7 @@ cLy
 vOt
 udW
 fZn
-hrp
+hFj
 hHK
 maA
 mug
@@ -108359,7 +108396,7 @@ jSQ
 bey
 ovi
 gTr
-gTr
+oFe
 pyE
 jvd
 gTr
@@ -121509,7 +121546,7 @@ uPA
 blV
 qvS
 blV
-rFB
+blV
 fxs
 bnw
 ajy
