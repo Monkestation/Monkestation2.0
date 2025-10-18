@@ -29,7 +29,7 @@
 		listed_network.train_head = null
 		listed_network = null
 
-/obj/vehicle/ridden/cargo_train/Move(newloc, dir)
+/obj/vehicle/ridden/cargo_train/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	var/turf/old_loc = src.loc
 	. = ..()
 	if(old_loc == src.loc)

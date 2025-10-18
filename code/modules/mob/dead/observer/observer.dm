@@ -1033,6 +1033,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/mob/dead/observer/target_ghost = target
 
 		target_ghost.change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+	else if(is_admin(src)) // stupid snowflake checks for admins to mess with people
+		if(istype(target, /obj/structure/table))
+			var/obj/structure/table/table = target
+			table.flip_table(src)
+		else if(istype(target, /obj/structure/flippedtable))
+			var/obj/structure/flippedtable/flipped_table = target
+			flipped_table.unflip_table(src)
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()

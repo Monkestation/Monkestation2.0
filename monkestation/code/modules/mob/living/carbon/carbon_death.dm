@@ -4,10 +4,11 @@
 		to_chat(src, policy, avoid_highlighting = TRUE)
 	return ..()
 
-/mob/living/carbon/revive(full_heal_flags, excess_healing, force_grab_ghost)
+/mob/living/carbon/revive(full_heal_flags, excess_healing, force_grab_ghost, revival_policy)
 	var/old_stat = stat
 	. = ..()
 	if(old_stat == DEAD)
-		var/policy = get_policy(POLICY_REVIVAL)
+		var/policy = get_policy(revival_policy)
+
 		if(policy)
 			to_chat(src, policy, avoid_highlighting = TRUE)
