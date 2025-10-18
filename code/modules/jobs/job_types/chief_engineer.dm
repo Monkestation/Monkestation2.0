@@ -46,7 +46,7 @@
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 2
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

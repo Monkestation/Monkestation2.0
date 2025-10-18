@@ -246,30 +246,34 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Gets the number of antagonists the antagonist injection events will stop rolling after.
 /datum/controller/subsystem/gamemode/proc/get_antag_cap()
-	var/total_number = get_correct_popcount() + (sec_crew * 2)
-	var/cap = FLOOR((total_number / ANTAG_CAP_DENOMINATOR), 1) + ANTAG_CAP_FLAT
-	return cap
+	var/points = 0
+	for(var/mob/living/player in get_active_players())
+		var/datum/job/player_role = player.mind?.assigned_role
+		if(player_role)
+			points += player_role.antag_capacity_points
+	return ANTAG_CAP_FLAT + max(points - (ANTAG_CAP_FLAT + 5), 1)
 
+/// Return the total point value of active antags
 /datum/controller/subsystem/gamemode/proc/get_antag_count()
 	. = 0
-	var/alist/already_counted = alist() // Never count the same mind twice
+	var/alist/already_counted = alist() //only count their highest point antag
 	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
-		if(QDELETED(antag) || QDELETED(antag.owner) || already_counted[antag.owner])
+		if(QDELETED(antag) || QDELETED(antag.owner))
 			continue
 		if(!antag.should_count_for_antag_cap())
 			continue
-		if(antag.antag_flags & FLAG_ANTAG_CAP_TEAM)
-			var/datum/team/antag_team = antag.get_team()
-			if(antag_team)
-				if(already_counted[antag_team])
-					continue
-				already_counted[antag_team] = TRUE
-		if(antag.antag_flags & FLAG_ANTAG_CAP_SINGLE)
-			if(already_counted[antag.type])
-				continue
-			already_counted[antag.type] = TRUE
-		already_counted[antag.owner] = TRUE
-		.++
+
+		var/counted_value = already_counted[antag.owner]
+		if(counted_value && counted_value > antag.antag_count_points)
+			continue
+
+		counted_value = antag.antag_count_points
+		if(antag.owner.current && !ishuman(antag.owner.current) && !(antag.antag_flags & FLAG_ANTAG_CAP_IGNORE_HUMANITY))
+			counted_value /= 2 //non humans count for half
+		already_counted[antag.owner] = counted_value
+
+	for(var/datum/mind/owner, points in already_counted)
+		. += points
 
 /// Whether events can inject more antagonists into the round
 /datum/controller/subsystem/gamemode/proc/can_inject_antags()
@@ -449,22 +453,21 @@ SUBSYSTEM_DEF(gamemode)
 		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
 	scheduled_events += scheduled
 
+//simplified version of `get_active_player_count()`
+/datum/controller/subsystem/gamemode/proc/get_active_players()
+	. = list()
+	for(var/mob/living/carbon/human/player_mob in GLOB.alive_player_list)
+		if(player_mob.client?.is_afk())
+			continue
+		. += player_mob
+
 /datum/controller/subsystem/gamemode/proc/update_crew_infos()
-	// Very similar logic to `get_active_player_count()`
 	active_players = 0
 	head_crew = 0
 	eng_crew = 0
 	med_crew = 0
 	sec_crew = 0
-	for(var/mob/player_mob as anything in GLOB.player_list)
-		if(!player_mob.client)
-			continue
-		if(player_mob.stat) //If they're alive
-			continue
-		if(player_mob.client.is_afk()) //If afk
-			continue
-		if(!ishuman(player_mob))
-			continue
+	for(var/mob/living/carbon/human/player_mob in get_active_players())
 		active_players++
 		if(player_mob.mind?.assigned_role)
 			var/datum/job/player_role = player_mob.mind.assigned_role
@@ -872,7 +875,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	dat += " <a href='byond://?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(src)];panel=main'>Refresh</a>"
 	dat += "<BR><font color='#888888'><i>Storyteller determines points gained, event chances, and is the entity responsible for rolling events.</i></font>"
 	dat += "<BR>Active Players: [active_players]   (Head: [head_crew], Sec: [sec_crew], Eng: [eng_crew], Med: [med_crew])"
-	dat += "<BR>Antagonist Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
+	dat += "<BR>Antagonist Point Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
 	dat += "<HR>"
 	dat += "<a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
 	dat += " <a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"

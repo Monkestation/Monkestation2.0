@@ -211,7 +211,7 @@
 	return active_players
 
 ///Uses stripped down and bastardized code from respawn character
-/proc/make_body(mob/dead/observer/ghost_player)
+/proc/make_body(mob/dead/observer/ghost_player, apply_prefs = TRUE)
 	if(!ghost_player || !ghost_player.key)
 		return
 
@@ -219,7 +219,9 @@
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+	if(apply_prefs)
+		ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+
 	new_character.dna.update_dna_identity()
 	new_character.PossessByPlayer(ghost_player.key)
 

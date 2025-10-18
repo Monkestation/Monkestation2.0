@@ -14,14 +14,9 @@
 	density = FALSE
 	layer = TURF_LAYER + 0.1
 	var/item_value_consumed = 0
-	var/max_item_value = 300
-	var/bingles_ready = 0
-	var/bingle_per_item_value = 50
-	var/ghost_edible = FALSE
 	var/current_pit_size = 1 // 1 = 1x1, 2 = 2x2, 3 = 3x3 can go higher
 	var/list/pit_overlays = list()
 	var/last_bingle_spawn_value = 0
-	var/last_bingle_poll_value = 0
 	var/max_pit_size = 40 // Maximum size (40x40) for the pit
 	var/healing_range = 3
 	var/static/datum/team/bingles/bingle_team

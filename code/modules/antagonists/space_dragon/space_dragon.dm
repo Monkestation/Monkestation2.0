@@ -7,6 +7,7 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	stinger_sound = 'sound/magic/demon_attack1.ogg'
+	antag_count_points = 15
 	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
 	/// The innate ability to summon rifts

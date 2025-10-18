@@ -100,7 +100,7 @@
 /obj/structure/destructible/clockwork/anchoring_crystal/process(seconds_per_tick)
 	for(var/mob/living/affected_mob in crystal_area)
 		if(IS_CLOCK(affected_mob))
-			affected_mob.adjustToxLoss(-2.5 * seconds_per_tick) //slightly better tox healing as well as better stam healing around it for servants
+			affected_mob.adjustToxLoss(-2.5 * seconds_per_tick, TRUE) //slightly better tox healing as well as better stam healing around it for servants
 			affected_mob.stamina.adjust(7.5 * seconds_per_tick, TRUE)
 			continue
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
@@ -110,7 +110,7 @@
 		SSthe_ark.adjust_clock_power(5 * seconds_per_tick, TRUE)
 		return
 
-	charging_for = min(charging_for + (seconds_per_tick * DELTA_WORLD_TIME(SSthe_ark)), ANCHORING_CRYSTAL_CHARGE_DURATION)
+	charging_for = min(charging_for + (seconds_per_tick * (DELTA_WORLD_TIME(SSthe_ark) SECONDS)), ANCHORING_CRYSTAL_CHARGE_DURATION)
 
 	if(shields < initial(shields) && COOLDOWN_FINISHED(src, recently_hit_cd))
 		playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
