@@ -72,12 +72,10 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	target.apply_status_effect(/datum/status_effect/wonderland_district)
 
 /obj/effect/anomaly/dimensional/wonderland
-	aSignal = null
+	anomaly_core = null
 	range = 5
 	immortal = TRUE
-	drops_core = FALSE
 	relocations_left = -1
-	forced_theme_path = /datum/dimension_theme/wonderland
 
 /obj/effect/anomaly/dimensional/wonderland/relocate()
 	var/datum/anomaly_placer/placer = new()

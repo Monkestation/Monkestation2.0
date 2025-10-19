@@ -67,10 +67,6 @@
 
 /obj/structure/trash_pile/Initialize(mapload)
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	icon_state = pick(
@@ -146,15 +142,6 @@
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
 
-/obj/structure/trash_pile/proc/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
-	SIGNAL_HANDLER
-
-	if(!isliving(arrived))
-		return
-	balloon_alert(arrived, "the trash slows you down!")
-	var/mob/living/trashdiver = arrived
-	trashdiver.apply_status_effect(/datum/status_effect/speed_boost, 0.5 SECONDS, 4, type)
-
 /obj/structure/trash_pile/attack_hand_secondary(mob/mob_user, list/modifiers)
 	. = ..()
 	if(!iscarbon(mob_user))
@@ -211,14 +198,14 @@
 	if(COOLDOWN_FINISHED(src, trash_cooldown))
 		COOLDOWN_START(src, trash_cooldown, trash_delay * 0.5 + rand() * trash_delay) // x0.5 to x1.5
 		remaining_trash_throws[ckey]--
-		var/item_to_spawn
-		item_to_spawn = pick_weight_recursive(GLOB.trash_pile_loot)
-		var/obj/item/spawned_item = new item_to_spawn(drop_location())
-		if(!QDELETED(spawned_item))
-			var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
-			// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
-			if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
-				playsound(src, 'sound/weapons/punchmiss.ogg', 10)
+		var/item_to_spawn = pick_weight_recursive(GLOB.trash_pile_loot)
+		if(item_to_spawn)
+			var/obj/item/spawned_item = new item_to_spawn(drop_location())
+			if(!QDELETED(spawned_item))
+				var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
+				// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
+				if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
+					playsound(src, 'sound/weapons/punchmiss.ogg', 10)
 
 	if(COOLDOWN_FINISHED(src, funny_sound_cooldown))
 		COOLDOWN_START(src, funny_sound_cooldown, funny_sound_delay * 0.5 + rand() * funny_sound_delay) // x0.5 to x1.5

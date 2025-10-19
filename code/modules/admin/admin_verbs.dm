@@ -142,10 +142,11 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
-/client/proc/enable_stealth_mode()
-	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-	if(!new_key)
-		return
+/client/proc/enable_stealth_mode(new_key, source)
+	if (!new_key)
+		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		if(!new_key)
+			return
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
@@ -159,9 +160,9 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
-
-	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')")
-	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')")
+	source = isnull(source) ? " via [source]." : ""
+	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 
 /client/proc/disable_stealth_mode()
 	var/previous_fakekey = holder.fakekey

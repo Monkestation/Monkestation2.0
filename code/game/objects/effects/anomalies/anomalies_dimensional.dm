@@ -2,7 +2,7 @@
 /obj/effect/anomaly/dimensional
 	name = "dimensional anomaly"
 	icon_state = "dimensional"
-	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
+	anomaly_core = /obj/item/assembly/signaler/anomaly/dimensional
 	immortal = TRUE
 	immobile = TRUE
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
@@ -16,7 +16,7 @@
 	/// If set, it will always use this theme path instead of a random one.
 	var/forced_theme_path
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
 

@@ -919,3 +919,19 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "invicible_boots"
+
+/obj/item/clothing/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	desc = "A brown paper sack painted with a red face. You also notice the signature 'MrBagHead' inside the bag."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mrbagheadsack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	desc = "Dark grey varsity jacket with a monkey face on the back!"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "monkey_jacket"
+	worn_icon_state = "monkey_jacket"
