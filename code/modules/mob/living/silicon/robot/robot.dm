@@ -401,6 +401,13 @@
 		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
+/mob/living/silicon/robot/proc/motivate()
+	// :3
+	if(!wires?.is_cut(WIRE_MOTIVATIONAL))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "scream")
+		playsound(src, "goon/sounds/sparks/electric_shock_short.ogg", 50, 1)
+		emp_act(EMP_HEAVY)
+		logevent("System motivational shock applied!")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
