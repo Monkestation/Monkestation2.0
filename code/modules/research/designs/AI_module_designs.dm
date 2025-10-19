@@ -420,8 +420,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/dj_module
-	name = "Dj Module"
-	desc = "Allows for the construction of a Dj AI Core Module."
+	name = "Disc Jockey Module"
+	desc = "Allows for the construction of a Disc Jockey AI Core Module."
 	id = "dj_module"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/core/full/dj
