@@ -9,9 +9,7 @@
 	join_description = "You will burn if you enter the Chapel, lose all default powers, \
 		but gain special Blood Magic instead, and gain ranks by Vassalizing crew."
 
-/datum/bloodsucker_clan/tremere/New(mob/living/carbon/user)
-	. = ..()
-	bloodsuckerdatum.remove_nondefault_powers()
+/datum/bloodsucker_clan/tremere/give_starting_clan_powers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.all_bloodsucker_powers)
 		if((initial(power.purchase_flags) & TREMERE_CAN_BUY) && initial(power.level_current) == 1)
 			bloodsuckerdatum.BuyPower(new power)

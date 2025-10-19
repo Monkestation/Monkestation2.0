@@ -193,7 +193,6 @@
 		current_heart?.beating = FALSE
 	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
 	if(current_eyes)
-		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 		current_eyes.color_cutoffs = list(25, 8, 5)
 		current_eyes.sight_flags |= SEE_MOBS

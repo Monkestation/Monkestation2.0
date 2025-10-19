@@ -256,10 +256,11 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
+			if (bloodsuckerdatum.bloodsucker_level_unspent > 0)
+				bloodsuckerdatum.SpendRank()
+			if (bloodsuckerdatum.bloodsucker_level_unspent < 1)
 				bloodsuckerdatum.blood_level_gain()
-			bloodsuckerdatum.SpendRank()
-		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
+		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the opportunity to do so.
 		bloodsuckerdatum.check_begin_torpor()
 	return TRUE
 

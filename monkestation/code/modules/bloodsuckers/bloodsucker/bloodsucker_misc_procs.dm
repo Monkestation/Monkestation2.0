@@ -61,7 +61,7 @@
 		to_chat(owner.current, span_cultbold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to the Bloodsucker's Cause!"))
 
 /datum/antagonist/bloodsucker/proc/RankUp()
-	if(!owner?.current || IS_FAVORITE_VASSAL(owner.current))
+	if(!owner?.current)
 		return
 	bloodsucker_level_unspent++
 	owner.current.balloon_alert(owner.current, "You have grown more ancient!")
@@ -106,11 +106,11 @@
 /**
  * Called when a Bloodsucker reaches Final Death
  * Releases all Vassals and gives them the ex_vassal datum.
+ * Revenge vassals are handled separately by the COMSIG_BLOODSUCKER_FINAL_DEATH signal.
  */
 /datum/antagonist/bloodsucker/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
-		// Skip over any Bloodsucker Vassals, they're too far gone to have all their stuff taken away from them
-		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker) || all_vassals.special_type == REVENGE_VASSAL)
+		if(all_vassals.special_type == REVENGE_VASSAL)
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)

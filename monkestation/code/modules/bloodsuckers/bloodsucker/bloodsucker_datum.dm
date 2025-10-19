@@ -114,7 +114,6 @@
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NOBREATH,
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_BLEED_WARN,
 		TRAIT_NO_MIRROR_REFLECTION,
@@ -180,6 +179,8 @@
 	ensure_brain_nonvital(current_mob)
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
+
+#define BLOODSUCKER_TESTING
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -483,7 +484,6 @@
 		newheart.beating = initial(newheart.beating)
 	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(user_eyes)
-		user_eyes.flash_protect = initial(user_eyes.flash_protect)
 		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
 		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
 		user_eyes.sight_flags = initial(user_eyes.sight_flags)

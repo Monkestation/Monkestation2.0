@@ -51,10 +51,7 @@
 	RegisterSignal(bloodsuckerdatum, COMSIG_BLOODSUCKER_EXITS_FRENZY, PROC_REF(on_exit_frenzy))
 
 	give_clan_objective()
-
-	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.all_bloodsucker_powers)
-		if((initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY))
-			bloodsuckerdatum.BuyPower(new power)
+	give_starting_clan_powers()
 
 	for(var/banned_power in banned_powers)
 		var/datum/action/power = locate(banned_power) in bloodsuckerdatum.powers
@@ -62,6 +59,11 @@
 			bloodsuckerdatum.RemovePower(power)
 
 	SEND_SIGNAL(owner_datum.owner, COMSIG_BLOODSUCKER_CLAN_CHOSEN, owner_datum, src)
+
+/datum/bloodsucker_clan/proc/give_starting_clan_powers()
+	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.all_bloodsucker_powers)
+		if((initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY))
+			bloodsuckerdatum.BuyPower(new power)
 
 /datum/bloodsucker_clan/Destroy(force)
 	UnregisterSignal(bloodsuckerdatum, list(

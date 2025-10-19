@@ -17,10 +17,9 @@
 	. = ..()
 	SEND_SIGNAL(master, COMSIG_BLOODSUCKER_MAKE_FAVORITE, src)
 
-///Set the Vassal's rank to their Bloodsucker level, and transfer all abilities to the Bloodsucker level.
-/datum/antagonist/vassal/favorite/proc/set_vassal_level(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
-	for(var/datum/action/cooldown/bloodsucker/bloodsucker_powers as anything in powers)
-		powers -= bloodsucker_powers
-		vassal_bloodsucker_datum.powers += bloodsucker_powers
-		bloodsucker_powers.bloodsuckerdatum_power = vassal_bloodsucker_datum
-	vassal_bloodsucker_datum.bloodsucker_level = vassal_level
+///Transfers the vassals powers to the new bloodsucker datum
+/datum/antagonist/vassal/favorite/proc/transfer_vassal_powers(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
+	for(var/datum/action/cooldown/bloodsucker/bloodsucker_power as anything in powers)
+		RemovePower(bloodsucker_power)
+		vassal_bloodsucker_datum.BuyPower(bloodsucker_power)
+		bloodsucker_power.bloodsuckerdatum_power = vassal_bloodsucker_datum

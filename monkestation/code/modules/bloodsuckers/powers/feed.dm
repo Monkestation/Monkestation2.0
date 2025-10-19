@@ -282,10 +282,6 @@
 		if(give_warnings)
 			owner.balloon_alert(owner, "suit too thick!")
 		return FALSE
-	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(target_user.mind) && !bloodsuckerdatum_power.frenzied)
-		if(give_warnings)
-			owner.balloon_alert(owner, "cant drink from mindless!")
-		return FALSE
 	return TRUE
 
 // Status effect given to (still living) mobs after a bloodsucker feeds on them

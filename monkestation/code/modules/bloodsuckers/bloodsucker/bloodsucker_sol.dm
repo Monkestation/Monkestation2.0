@@ -30,7 +30,6 @@
  * # Torpor
  *
  * Torpor is what deals with the Bloodsucker falling asleep, their healing, the effects, ect.
- * This is basically what Sol is meant to do to them, but they can also trigger it manually if they wish to heal, as Burn is only healed through Torpor.
  * You cannot manually exit Torpor, it is instead entered/exited by:
  *
  * Torpor is triggered by:
@@ -55,7 +54,7 @@
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
 	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache)) && !is_in_torpor())
+	if((total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache) || length(user.get_missing_limbs()) > 0) && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
@@ -70,7 +69,7 @@
 
 	// You are in a Coffin, so instead we'll check TOTAL damage, here.
 	if(istype(user.loc, /obj/structure/closet/crate/coffin))
-		if(total_damage <= 10)
+		if(total_damage <= 10 && length(user.get_missing_limbs()) == 0)
 			torpor_end()
 	else
 		if(total_brute <= 10)
