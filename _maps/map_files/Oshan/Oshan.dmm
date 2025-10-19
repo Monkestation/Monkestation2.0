@@ -33085,13 +33085,13 @@
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "kyT" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "kyU" = (
@@ -52310,13 +52310,13 @@
 /turf/open/floor/carpet/donk,
 /area/station/command/heads_quarters/hos)
 "qqz" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "qqB" = (
@@ -123988,7 +123988,7 @@ wQI
 wQI
 fxe
 bMQ
-tuw
+roh
 mhO
 bUk
 gro

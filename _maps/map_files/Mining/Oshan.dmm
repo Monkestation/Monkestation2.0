@@ -69,6 +69,7 @@
 	name = "Mining Station EVA"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "eQ" = (
@@ -119,6 +120,10 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/production)
+"fL" = (
+/obj/machinery/duct/industrial/waste,
+/turf/open/floor/iron/dark/textured,
+/area/mine/production)
 "hY" = (
 /turf/open/floor/iron/dark/corner{
 	dir = 4
@@ -131,6 +136,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "jl" = (
@@ -162,6 +168,7 @@
 "mQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "mT" = (
@@ -214,10 +221,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/north,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "on" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer4,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "ph" = (
@@ -226,6 +235,12 @@
 /obj/effect/turf_decal/trimline/blue,
 /obj/structure/drain,
 /turf/open/floor/noslip,
+/area/mine/production)
+"pn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct/industrial/waste,
+/turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "py" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/supply{
@@ -257,6 +272,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
 	dir = 1
 	},
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "qg" = (
@@ -341,6 +357,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/plumbing/floor_pump/input/on/waste/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "uR" = (
@@ -391,6 +408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/plumbing/floor_pump/input/on/waste/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "wo" = (
@@ -529,7 +547,7 @@
 	name = "Mining Shuttle Airlock"
 	},
 /obj/structure/fans/tiny/forcefield{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
@@ -542,9 +560,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
+"AE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct/industrial/waste,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "AI" = (
+/obj/machinery/plumbing/disposer{
+	buffer = 500;
+	disposal_rate = 50
+	},
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "Ba" = (
@@ -571,6 +599,10 @@
 "CN" = (
 /turf/open/genturf/orange,
 /area/ocean/generated)
+"CU" = (
+/obj/machinery/plumbing/floor_pump/input/on/waste/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/mine/production)
 "Dv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -580,6 +612,10 @@
 "Dw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/plumbing/layer_manifold{
+	buffer = 500;
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "DN" = (
@@ -589,6 +625,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
 	dir = 1
 	},
+/obj/machinery/plumbing/floor_pump/input/on/waste/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "DT" = (
@@ -641,6 +678,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/east,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "EH" = (
@@ -650,6 +688,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "ES" = (
@@ -686,6 +725,13 @@
 /obj/machinery/suit_storage_unit,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
+"Gg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct/industrial/waste,
+/turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "Gh" = (
 /obj/machinery/porta_turret/aux_base,
@@ -733,6 +779,10 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/structure/liquid_pump,
+/obj/effect/turf_decal/box/white{
+	color = "#EFB341"
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "Ht" = (
@@ -795,6 +845,7 @@
 "KL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "KT" = (
@@ -804,6 +855,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "KV" = (
@@ -883,6 +935,7 @@
 "Po" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
 "Pz" = (
@@ -892,6 +945,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
 	dir = 1
 	},
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "Qb" = (
@@ -934,6 +988,9 @@
 "Ss" = (
 /obj/machinery/door/airlock/external{
 	name = "Lavaland Shuttle Airlock"
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
@@ -1063,6 +1120,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "ZF" = (
@@ -18229,7 +18287,7 @@ Fy
 Sw
 Et
 Lf
-Lf
+CU
 VV
 pB
 uT
@@ -18486,14 +18544,14 @@ jI
 jI
 vj
 HK
-Lf
-Lf
-Lf
+fL
+fL
+fL
 eF
-Lf
-Lf
-Lf
-Lf
+fL
+fL
+fL
+fL
 Lf
 zo
 MI
@@ -18743,7 +18801,7 @@ VX
 ze
 TP
 HK
-Lf
+fL
 Lf
 ZF
 uT
@@ -18992,22 +19050,22 @@ WK
 qg
 Aw
 py
-Aw
+AE
 mQ
 is
 KL
-ML
+pn
 GM
 GM
 rX
-Lf
+fL
 ML
 ML
 ny
 ML
 ML
 ML
-ML
+pn
 Lf
 wE
 MI
@@ -19253,18 +19311,18 @@ bq
 bq
 Bh
 HZ
-ML
+pn
 zo
 zo
 xk
-Lf
+fL
 ML
 fd
 uT
 fG
 zo
 KE
-ML
+pn
 Lf
 Wa
 MI
@@ -19510,18 +19568,18 @@ cj
 cj
 Bh
 Ox
-Ht
+Gg
 EG
 Ax
-Ht
-Ht
+Gg
+Gg
 Ht
 Yf
 uT
 cQ
 ul
 uF
-ML
+pn
 Lf
 Hd
 uT
@@ -19771,7 +19829,7 @@ HG
 Bh
 Bh
 ND
-ML
+pn
 tZ
 Hh
 uT
@@ -20028,7 +20086,7 @@ IF
 Qb
 Bh
 tw
-ML
+pn
 Lf
 FS
 uT
@@ -20285,7 +20343,7 @@ Ih
 yi
 Bh
 tw
-ML
+pn
 Lf
 tw
 MI
@@ -20542,7 +20600,7 @@ Ih
 se
 Bh
 mT
-ML
+pn
 Lf
 Ah
 uT
