@@ -141,7 +141,7 @@
 	if(vassal?.master == bloodsuckerdatum_power)
 		if(is_oozeling_core(target))
 			var/obj/item/organ/internal/brain/slime/oozeling_core = target
-			target = oozeling_core.rebuild_body(nugget = FALSE)
+			target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			if(QDELETED(target))
 				owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
 				return FALSE
@@ -162,7 +162,7 @@
 		return FALSE
 	if(is_oozeling_core(target))
 		var/obj/item/organ/internal/brain/slime/oozeling_core = target
-		target = oozeling_core.rebuild_body(nugget = FALSE)
+		target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(QDELETED(target))
 			owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
 			return FALSE
