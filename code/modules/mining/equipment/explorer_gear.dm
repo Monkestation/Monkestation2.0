@@ -320,7 +320,10 @@
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_health_update(mob/living/carbon/user)
 	SIGNAL_HANDLER
-	if(user.stat != DEAD && user.health <= user.hardcrit_threshold) // so it still works if they don't have normal crit
+	if(user.stat == DEAD)
+		return
+	var/health_threshold = HAS_TRAIT(user, TRAIT_NOSOFTCRIT) ? user.hardcrit_threshold : user.crit_threshold
+	if(user.health <= health_threshold) // so it still works if they don't have normal crit
 		resurrection_butterfly(user)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrection_butterfly(mob/living/carbon/user)
