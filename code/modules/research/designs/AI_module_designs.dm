@@ -431,7 +431,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/wormtongue_module
-	name = "wormtongue Module"
+	name = "Wormtongue Module"
 	desc = "Allows for the construction of a Wormtongue AI Core Module."
 	id = "wormtongue_module"
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
