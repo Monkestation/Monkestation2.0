@@ -596,3 +596,37 @@
   - bugfix: extinguish spell now also extinguishes the owner
   notghosti:
   - bugfix: silicons can depower airlocks via their UI again
+2025-10-17:
+  Absolucy:
+  - bugfix: Fixed pocket protector storage not being removed.
+  - bugfix: '"Secret" testmerges are now actually excluded from the changelog and
+      in-game revision info. (they aren''t really that secret anyways but whatever)'
+  - bugfix: Fixed being able to turn unanchored ooze suckers on.
+  - bugfix: Fixed the achievements for muting Poly or giving Poly loudmode as signal
+      technician.
+  - bugfix: Fixed admins not being able to flip tables.
+  - code_imp: Maps can now configure station traits to ban from rolling on that specific
+      map.
+  notghosti:
+  - bugfix: Mobs will be alerted of temperature while not on fire.
+  - bugfix: Anomalies have had their contained flag fixed, and are no longer rouging
+      the great wilds of space, but somehow always the syndicate depo despite moving
+      randomly.
+2025-10-19:
+  Absolucy:
+  - bugfix: Fixed godslayer armor healing triggering if you're unconscious but fully
+      healthy.
+  - bugfix: Reviving an oozeling core now properly shows them the revival policy/blackout
+      message.
+  Absolucy, ThePooba:
+  - rscadd: Added stomper boots, used to stomp hotspots on the Oshan station.
+  - bugfix: Hopefully fixed some wacky angle calculations with stomping hotspots.
+  BobDABuilder9001:
+  - balance: made lock heretics consecrated use charges, changed its crafting recipe
+      and made it a small item
+  Tractor-Maam:
+  - code_imp: the AIs doomsday will now always take 27.2 seconds to send the alert
+      to the station once armed, instead of 3 seconds of random delay from that number.
+  notghosti:
+  - rscadd: A motivational shock wire to cyborgs
+  - map: Guarantees a blue space beacon at each teleporter
