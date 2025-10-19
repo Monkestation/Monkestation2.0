@@ -13405,6 +13405,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "ejE" = (
+/obj/effect/landmark/start{
+	name = "Machinist"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/lesser)
 "ejJ" = (
@@ -16517,14 +16520,6 @@
 	dir = 9
 	},
 /obj/structure/toilet,
-/mob/living/basic/clown{
-	name = "Shittle, The Destroyer Of Toilets";
-	limb_destroyer = 1;
-	health = 1000;
-	desc = "Imprisoned for his many sins.";
-	maxHealth = 1000;
-	wound_bonus = 10
-	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/lesser)
@@ -19043,6 +19038,9 @@
 /area/station/engineering/supermatter/room)
 "fWq" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start{
+	name = "Machinist"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/lesser)
 "fWt" = (
@@ -28695,6 +28693,9 @@
 "jcn" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start{
+	name = "Machinist"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/lesser)
 "jcs" = (
@@ -61241,6 +61242,9 @@
 	name = "Machining Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/landmark/navigate_destination{
+	location = "Machining Room"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "thb" = (
