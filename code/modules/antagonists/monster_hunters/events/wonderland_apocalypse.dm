@@ -89,6 +89,10 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	immortal = FALSE
 	relocations_left = 0
 
+// no detonation effect
+/obj/effect/anomaly/dimensional/wonderland/rift/detonate()
+	return
+
 /obj/structure/wonderland_rift
 	name = "Wonderland Door"
 	desc = "A door leading to a magical beautiful land."
