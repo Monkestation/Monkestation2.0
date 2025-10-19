@@ -479,7 +479,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			new_organ = SSwardrobe.provide_type(new_organ)
 			new_organ.Insert(new_body, special = TRUE, drop_if_replaced = FALSE)
 		new_body.visible_message(span_warning("[new_body]'s body fully forms from [new_body.p_their()] core!"))
-		to_chat(owner, span_purple("Your body fully forms from your core!"))\
+		to_chat(owner, span_purple("Your body fully forms from your core!"))
 
 	membrane_mur.Remove(brainmob)
 	brainmob?.mind?.transfer_to(new_body)
