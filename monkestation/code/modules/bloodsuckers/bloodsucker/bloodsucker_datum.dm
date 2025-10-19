@@ -180,8 +180,6 @@
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
 
-#define BLOODSUCKER_TESTING
-
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
 	new /obj/structure/closet/crate/coffin(user_loc)
