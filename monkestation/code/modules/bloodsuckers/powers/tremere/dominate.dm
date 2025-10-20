@@ -62,18 +62,9 @@
 	. += "Vassalizing or reviving a vassal will make this ability go on cooldown for [DisplayTimeText(get_vassalize_cooldown())]."
 	. += "This also works on Oozeling cores."
 
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckValidTarget(atom/target_atom)
-	// oozeling cores have special snowflake checks
-	if(!is_oozeling_core(target_atom))
-		return ..()
-	var/obj/item/organ/internal/brain/slime/oozeling_core = target_atom
-	if(level_current >= DOMINATE_VASSALIZE_LEVEL && oozeling_core.mind)
-		return TRUE
-	return FALSE
-
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckCanTarget(atom/target_atom)
 	var/mob/living/selected_target = target_atom
-	if(level_current >= DOMINATE_VASSALIZE_LEVEL || (!is_oozeling_core(selected_target) && selected_target.stat >= SOFT_CRIT))
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL || selected_target.stat >= SOFT_CRIT)
 		if(selected_target?.mind && owner.Adjacent(selected_target))
 			return TRUE
 	. = ..()
@@ -108,7 +99,7 @@
 	var/mob/living/target_mob = target
 	var/mob/living/user = owner
 	user.face_atom(target)
-	if((is_oozeling_core(target) || target_mob.stat != CONSCIOUS) && level_current >= DOMINATE_VASSALIZE_LEVEL)
+	if(target_mob.stat != CONSCIOUS && level_current >= DOMINATE_VASSALIZE_LEVEL)
 		if(user.Adjacent(target))
 			attempt_ghoulize(target, user)
 			return TRUE
@@ -139,18 +130,11 @@
 		owner.balloon_alert(owner, "their body refuses to react...")
 		return FALSE
 	if(vassal?.master == bloodsuckerdatum_power)
-		if(is_oozeling_core(target))
-			var/obj/item/organ/internal/brain/slime/oozeling_core = target
-			target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-			if(QDELETED(target))
-				owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
-				return FALSE
-		else
-			if(target.stat != DEAD)
-				owner.balloon_alert(owner, "not dead!")
-				return FALSE
-			target.mind?.grab_ghost()
-			target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+		if(target.stat != DEAD)
+			owner.balloon_alert(owner, "not dead!")
+			return FALSE
+		target.mind?.grab_ghost()
+		target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 		to_chat(user, span_warning("We revive [target]!"))
 		owner.balloon_alert(owner, "successfully revived!")
@@ -160,16 +144,9 @@
 	if(!vassal_datum)
 		owner.balloon_alert(owner, "not a valid target for vassalizing!")
 		return FALSE
-	if(is_oozeling_core(target))
-		var/obj/item/organ/internal/brain/slime/oozeling_core = target
-		target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-		if(QDELETED(target))
-			owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
-			return FALSE
-	else
-		// no escaping at this point
-		target.mind?.grab_ghost(TRUE)
-		target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	// no escaping at this point
+	target.mind?.grab_ghost(TRUE)
+	target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
 	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))
@@ -188,9 +165,6 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/victim_has_blood(mob/living/target)
-	// oozeling cores don't have blood volume anyways
-	if(is_oozeling_core(target))
-		return TRUE
 	// you can always revive non-temporary vassal
 	if(IS_VASSAL(target))
 		return TRUE

@@ -13,7 +13,7 @@
 	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
 		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
 	required_atoms = list(
-		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
+		list(/mob/living/carbon/human) = 1,
 	)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
@@ -85,10 +85,6 @@
 			var/is_valid_state = (sacrifice.stat != CONSCIOUS || HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
 			if(!heretic_datum.can_sacrifice(sacrifice) || !is_valid_state)
 				atoms -= sacrifice
-		else if(istype(thingy, /obj/item/organ/internal/brain/slime))
-			var/obj/item/organ/internal/brain/slime/core = thingy
-			if(!heretic_datum.can_sacrifice(core))
-				atoms -= core
 		else
 			atoms -= thingy
 
@@ -183,13 +179,6 @@
 	for(var/sacrifice_candidate in selected_atoms)
 		if(ishuman(sacrifice_candidate))
 			sacrifice = sacrifice_candidate
-			break
-		else if(istype(sacrifice_candidate, /obj/item/organ/internal/brain/slime))
-			var/obj/item/organ/internal/brain/slime/core = sacrifice_candidate
-			sacrifice = core.rebuild_body(nugget = FALSE)
-			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
-			selected_atoms -= core
-			selected_atoms += sacrifice
 			break
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")

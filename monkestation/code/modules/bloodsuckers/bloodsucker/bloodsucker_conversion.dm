@@ -27,7 +27,7 @@
  * conversion_target - Person being vassalized
  */
 /datum/antagonist/bloodsucker/proc/can_make_vassal(mob/living/conversion_target)
-	if(!iscarbon(conversion_target) && !is_oozeling_core(conversion_target))
+	if(!iscarbon(conversion_target))
 		return FALSE
 	if(length(vassals) == return_current_max_vassals())
 		to_chat(owner.current, span_danger("You find that your powers run thin, and are unable to dominate [conversion_target.p_their()] mind with your blood!"))

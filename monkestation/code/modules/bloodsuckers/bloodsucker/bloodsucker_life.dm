@@ -344,8 +344,4 @@
 		span_hear("<span class='italics'>You hear a wet, bursting sound."))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
-/datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
-	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-	heal_vampire_organs(new_body)
-
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

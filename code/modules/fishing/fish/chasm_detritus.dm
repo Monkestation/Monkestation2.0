@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/restricted/bodies
 	default_contents_chance = 12.5
 	default_contents_key = BODIES_ONLY
-	chasm_storage_restricted_type = list(/mob, /obj/item/organ/internal/brain/slime)
+	chasm_storage_restricted_type = list(/mob)
 
 /// This also includes all mobs fallen into chasms, regardless of distance
 /datum/chasm_detritus/restricted/bodies/get_chasm_contents(turf/fishing_spot)
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /// if none are sentient choose randomly.
 /datum/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
 	for(var/thing in chasm_stuff)
-		if(astype(thing, /mob)?.mind || astype(thing, /obj/item/organ/internal/brain/slime)?.mind)
+		if(astype(thing, /mob)?.mind)
 			return thing
 	return ..()
 
