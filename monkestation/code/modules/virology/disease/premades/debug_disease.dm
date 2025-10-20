@@ -1,6 +1,7 @@
 /datum/disease/acute/premade/disease_debug
 	name = "Debug Virus"
 	form = "Infective code"
+	origin = "Rouge Code"
 	category = DISEASE_DEBUG
 
 	symptoms = list(
