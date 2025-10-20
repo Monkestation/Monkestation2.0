@@ -35718,10 +35718,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"lut" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
-/area/station/medical/pharmacy)
 "luw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -111199,7 +111195,7 @@ oBH
 xQF
 oBH
 mOv
-lut
+sjK
 oBH
 oBH
 oBH
