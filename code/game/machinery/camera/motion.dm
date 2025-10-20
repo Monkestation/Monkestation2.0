@@ -31,6 +31,8 @@
 /obj/machinery/camera/proc/newTarget(mob/target)
 	if(isAI(target))
 		return FALSE
+	if(isobserver(target))
+		return FALSE
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
