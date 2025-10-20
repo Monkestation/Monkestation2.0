@@ -60087,7 +60087,7 @@
 /area/station/service/library)
 "sqg" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "sqs" = (
 /obj/machinery/skill_station,

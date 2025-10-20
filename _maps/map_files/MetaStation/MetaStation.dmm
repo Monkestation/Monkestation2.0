@@ -10189,7 +10189,7 @@
 /area/station/maintenance/port/aft)
 "dKd" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "dKl" = (
 /obj/structure/sign/warning/pods,
@@ -45918,7 +45918,6 @@
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "pPl" = (

@@ -51141,7 +51141,7 @@
 /area/station/construction/mining/aux_base)
 "lTX" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/security/prison/mess)
 "lTZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -81097,7 +81097,7 @@
 /area/station/commons/dorms)
 "teF" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics/chicken)
 "teU" = (
 /obj/effect/spawner/structure/window,
@@ -85756,7 +85756,7 @@
 /area/station/maintenance/fore)
 "ukZ" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ulg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

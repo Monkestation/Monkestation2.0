@@ -34796,7 +34796,7 @@
 /area/station/commons/toilet/restrooms)
 "kHG" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "kHQ" = (
 /obj/structure/sign/poster/official/wtf_is_co2,
@@ -40350,7 +40350,7 @@
 /area/station/engineering/atmos)
 "mwe" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/kitchen)
 "mwj" = (
 /obj/effect/turf_decal/stripes/line,
@@ -54165,7 +54165,7 @@
 /area/station/hallway/secondary/entry)
 "qUj" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall,
+/turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "qUv" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan,
@@ -60773,7 +60773,7 @@
 /area/station/engineering/gravity_generator)
 "sVz" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sVB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69059,7 +69059,7 @@
 /area/space/nearstation)
 "vDD" = (
 /obj/machinery/smartfridge/drinks,
-/turf/closed/wall,
+/turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "vDK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -73679,7 +73679,7 @@
 "wVr" = (
 /obj/structure/cable,
 /obj/machinery/smartfridge,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "wVD" = (
 /obj/machinery/computer/operating,

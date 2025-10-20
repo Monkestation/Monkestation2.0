@@ -13077,7 +13077,7 @@
 /area/station/maintenance/department/cargo)
 "ehG" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "eia" = (
 /obj/machinery/button/door/directional/east{
@@ -56053,6 +56053,10 @@
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"saB" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "saI" = (
 /obj/machinery/corral_corner{
 	mapping_id = "3"
@@ -69174,7 +69178,7 @@
 /area/station/security/prison/shower)
 "wgw" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "wgM" = (
 /obj/machinery/airalarm/directional/east,
@@ -70610,6 +70614,10 @@
 /obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"wDt" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/pharmacy)
 "wDy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/east,
@@ -90611,7 +90619,7 @@ pzt
 jZY
 nQm
 dyk
-gLY
+saB
 emg
 juc
 fzI
@@ -109386,7 +109394,7 @@ rfU
 oBH
 oBH
 vHT
-lut
+wDt
 oBH
 oBH
 oBH
