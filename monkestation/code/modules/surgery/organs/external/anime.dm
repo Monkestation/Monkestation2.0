@@ -95,7 +95,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/anime_halo
 
 /datum/bodypart_overlay/mutant/anime_halo
-	color_source = ORGAN_COLOR_ANIME
+	color_source = ORGAN_COLOR_ANIME_HALO
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = "anime_halo"
 
@@ -104,3 +104,8 @@
 
 /datum/bodypart_overlay/mutant/anime_halo/get_base_icon_state()
 	return sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.head?.flags_inv & HIDEEARS)
+		return FALSE
+	return ..()

@@ -184,7 +184,7 @@
 
 /datum/sprite_accessory/anime_halo
 	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
-	color_src = ANIME_COLOR
+	color_src = ANIME_HALO_COLOR
 	is_emissive = TRUE
 	y_pixel_offset = 14
 

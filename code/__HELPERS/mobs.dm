@@ -181,6 +181,7 @@
 		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list), //Monkestation Addition
 		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list), //Monkestation Addition
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]", //Monkestation Addition
+		"animehalocolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 		"goblin_ears" = pick(GLOB.goblin_ears_list), //Monkestation Addition
 		"goblin_nose" = pick(GLOB.goblin_nose_list), //Monkestation Addition
 		"floran_leaves" = pick(GLOB.floran_leaves_list), //Monkestation Addition

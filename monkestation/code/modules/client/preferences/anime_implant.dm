@@ -228,3 +228,32 @@
 		if(item == "Anime")
 			return TRUE
 	return FALSE
+
+/datum/preference/color/anime_halo_color
+	savefile_key = "feature_animehalocolor"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/color/anime_halo_color/create_default_value()
+	return sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]")
+
+/datum/preference/color/anime_halo_color/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["animehalocolor"] = value
+
+/datum/preference/color/anime_halo_color/is_valid(value)
+	if (!..(value))
+		return FALSE
+	return TRUE
+
+/datum/preference/color/anime_halo_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/datum/preference_middleware/quirks/located = locate(/datum/preference_middleware/quirks) in preferences.middleware
+	if(!located)
+		return FALSE
+	var/list/quirks = located.get_selected_quirks()
+	for(var/item in quirks)
+		if(item == "Anime")
+			return TRUE
+	return FALSE

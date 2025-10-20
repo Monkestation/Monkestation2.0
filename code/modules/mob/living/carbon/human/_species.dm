@@ -840,6 +840,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = source.eye_color_left
 							if(ANIME_COLOR)
 								accessory_overlay.color = source.dna.features["animecolor"]
+							if(ANIME_HALO_COLOR)
+								accessory_overlay.color = source.dna.features["animehalocolor"]
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
