@@ -12030,6 +12030,7 @@
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "3"
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "dMC" = (
@@ -43856,6 +43857,7 @@
 	mapping_id = "6";
 	dir = 1
 	},
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nNY" = (
