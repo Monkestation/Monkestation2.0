@@ -44,7 +44,7 @@
 /datum/antagonist/vassal/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
 	powers += power
 	power.Grant(owner.current)
-	log_uplink("[key_name(owner.current)] purchased [power].")
+	log_uplink("[key_name(owner.current)] gained [power].")
 
 /datum/antagonist/vassal/proc/RemovePower(datum/action/cooldown/bloodsucker/power)
 	if(power.active)
