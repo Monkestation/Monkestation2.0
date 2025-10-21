@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
@@ -397,8 +397,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			item.forceMove(turf)
 	stored_items.Cut()
 
-/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE) as /mob/living/carbon/human
-	RETURN_TYPE(/mob/living/carbon/human)
+/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE, revival_policy = POLICY_REVIVAL) as /mob/living/carbon/human
 	if(rebuilt)
 		return owner
 
@@ -488,6 +487,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	transfer_observers_to(new_body)
 
 	drop_items_to_ground(new_body.drop_location())
+
+	var/policy = get_policy(revival_policy)
+	if(policy)
+		to_chat(new_body, policy, avoid_highlighting = TRUE)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
