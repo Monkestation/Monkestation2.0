@@ -76,7 +76,7 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
 	owner.set_pain_mod(id, 0.5)
-	owner.add_homeostasis_level(id, owner.standard_body_temperature, 0.5 KELVIN)
+	owner.add_homeostasis_level(id, owner.standard_body_temperature, 10 KELVIN)
 
 	var/datum/physiology/physiology = astype(owner, /mob/living/carbon/human)?.physiology
 	if(physiology)
@@ -94,7 +94,6 @@
 		physiology.stun_mod /= 0.75
 
 /datum/status_effect/cursed_blood/tick(seconds_between_ticks, times_fired)
-	var/needs_update = FALSE
 	var/healing_amount = base_healing * seconds_between_ticks
 	if(owner.health <= owner.crit_threshold)
 		healing_amount *= 2
@@ -103,8 +102,6 @@
 	adjust_all_damages(healing_amount)
 	adjust_bleed_wounds(healing_amount)
 	heal_wounds()
-	if(needs_update)
-		owner.updatehealth()
 
 /datum/status_effect/cursed_blood/proc/adjust_all_damages(amount)
 	var/needs_update = FALSE
