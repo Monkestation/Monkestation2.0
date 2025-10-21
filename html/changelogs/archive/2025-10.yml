@@ -633,3 +633,15 @@
 2025-10-20:
   ThePooba:
   - bugfix: fixed admin suit dropping items
+2025-10-21:
+  '@Krysonism, @Imaginos16, @MTandi, @san7890':
+  - image: updated smart fridge sprites for all variants
+  - bugfix: smart fridges no longer overlap with walls, but they can be welded down
+      to a floor and mapspawn welded
+  Cmpwarrior:
+  - rscadd: Adds a new AI core design based off Fracktail from Super Paper Mario
+  notghosti:
+  - bugfix: Motion sensitive cameras no longer detect observers and eye mobs entering
+      a ai monitored area.
+  - rscadd: Adds wormtongue, tsundere, disc joky, tsundere, and milf to ai law boards
+      and spawners

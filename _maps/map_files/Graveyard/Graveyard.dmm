@@ -3325,7 +3325,7 @@
 /area/station/medical/pathology)
 "blG" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "blR" = (
 /obj/machinery/airalarm/directional/south,
@@ -8555,7 +8555,7 @@
 /area/station/maintenance/aft)
 "dlm" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "dlr" = (
 /obj/machinery/camera/autoname/directional/west,
@@ -21245,7 +21245,7 @@
 /area/station/engineering/supermatter/room)
 "ihE" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "ihO" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible{
@@ -30224,7 +30224,7 @@
 /area/station/science/research)
 "lLr" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "lLv" = (
 /turf/closed/wall,
@@ -32507,7 +32507,8 @@
 /obj/machinery/smartfridge/drinks{
 	icon_state = "boozeomat"
 	},
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/service/bar)
 "mBh" = (
 /obj/structure/table/wood,
@@ -34473,7 +34474,7 @@
 /area/graveyard/bunker/security)
 "nmZ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "nna" = (
 /obj/machinery/light/directional/north,
@@ -52011,7 +52012,7 @@
 /area/station/maintenance/port)
 "ukf" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/service/hydroponics)
 "ukh" = (
 /obj/machinery/light/small/directional/north,

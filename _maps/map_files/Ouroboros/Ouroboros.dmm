@@ -60124,7 +60124,7 @@
 /area/station/security/brig/entrance)
 "rLd" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/dark,
 /area/station/security/corrections_officer)
 "rLh" = (
 /obj/structure/railing,
