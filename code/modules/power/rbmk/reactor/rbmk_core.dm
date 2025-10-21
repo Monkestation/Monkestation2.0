@@ -1,10 +1,10 @@
 /*************************************************************
  * RBMK Reactor Core (single 3×3 sprite)
- * - Handles rods, visuals, atmos ports, and console sync
- * - Process logic handled in rbmk_process.dm
+ * - Handles rod storage, visuals, atmos ports, and console sync
+ * - Processing logic handled in rbmk_process.dm
  *************************************************************/
 
-/// RBMK Reactor Core
+/// Reactor core
 /obj/machinery/rbmk/reactor
     name = "RBMK Reactor Core"
     desc = "A massive nuclear reactor core. Insert rods at your own risk."
@@ -13,28 +13,30 @@
 
     // --- Physical properties ---
     anchored = TRUE
-    density = TRUE                      // solid, holds items
-    mouse_opacity = 2                   // full clickable bounds
+    density = TRUE
+    mouse_opacity = 2
     bound_width = 96
     bound_height = 96
+    bound_x = -32
+    bound_y = -32
     pixel_x = -32
     pixel_y = -32
 
     // --- Layering ---
+    layer = BELOW_OBJ_LAYER
     plane = GAME_PLANE
-    layer = ABOVE_OBJ_LAYER             // ensure rods render on top
 
-    // --- Ports (spawned by atmos) ---
+    // --- Atmos / port vars ---
     var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
     var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet = null
 
-    // --- Fuel slots ---
+    // --- Fuel slots (now hold data lists, not objects) ---
     var/list/normal_slots = list()
     var/list/special_slots = list()
     var/max_normal_slots = 12
     var/max_special_slots = 4
 
-    // --- Reactor state ---
+    // --- State ---
     var/temperature = 0
     var/radiation = 0
     var/thermal_output = 0
@@ -48,7 +50,7 @@
     var/flux = 0
     var/instability = 0
 
-    // --- Moderator tracking ---
+    // --- Moderator ---
     var/moderator_level = 0
     var/list/moderator_history = list()
 
@@ -81,16 +83,14 @@
 /// Initialize
 /obj/machinery/rbmk/reactor/Initialize(mapload)
     . = ..()
+    pixel_x = -32
+    pixel_y = -32
 
-    // Ambient temperature baseline
     var/turf/T = get_turf(src)
-    if(istype(T))
-        var/datum/gas_mixture/env = T.return_air()
-        temperature = env ? env.temperature : (T0C + 20)
-    else
-        temperature = T0C + 20
+    var/datum/gas_mixture/env = T ? T.return_air() : null
+    temperature = env ? env.temperature : (T0C + 20)
 
-    // Initialize slots
+    // Init empty slots
     normal_slots = list()
     special_slots = list()
     for(var/i in 1 to max_normal_slots)
@@ -98,7 +98,6 @@
     for(var/j in 1 to max_special_slots)
         special_slots[j] = null
 
-    // Setup coolant and processing
     rbmk_init_coolant(src)
     START_PROCESSING(SSmachines, src)
     rbmk_relink_ports(src)
@@ -110,122 +109,99 @@
     return ..()
 
 /*************************************************************
- * Item Interaction (modern system)
+ * Interaction — click handling
  *************************************************************/
 
-/// Called when a player clicks the reactor while holding an item
-/obj/machinery/rbmk/reactor/item_interaction(mob/living/user, obj/item/I, list/modifiers)
-    if(QDELETED(src) || QDELETED(I))
-        return ITEM_INTERACT_BLOCKING
-
-    if(!anchored)
-        balloon_alert(user, "not secured!")
-        return ITEM_INTERACT_BLOCKING
-
-    // Only handle rods
-    if(!istype(I, /obj/item/rbmk/fuel_rod))
-        return ..()
-
-    if(try_insert_rod(I, user))
-        playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-        return ITEM_INTERACT_SUCCESS
-
-    balloon_alert(user, "no available slots")
-    return ITEM_INTERACT_BLOCKING
+/// Click with hand — if holding a rod, insert it
+/obj/machinery/rbmk/reactor/attack_hand(mob/user)
+    if(QDELETED(user))
+        return
+    var/obj/item/I = user.get_active_held_item()
+    if(istype(I, /obj/item/rbmk/fuel_rod))
+        world.log << "🧪 attack_hand(): Holding [I.type]"
+        if(try_insert_rod(I, user))
+            playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+            play_center_click(user)
+            return
+    else
+        world.log << "❌ attack_hand(): [I] is not a /obj/item/rbmk/fuel_rod"
 
 /*************************************************************
- * Rod Handling
+ * Visual click helper
  *************************************************************/
 
-/// Disable melee damage
-/obj/machinery/rbmk/reactor/attack_generic(mob/user, damage, ...)
-    return FALSE
+/// Plays a centered attack animation on the reactor
+/obj/machinery/rbmk/reactor/proc/play_center_click(mob/user)
+    if(!user) return
+    var/turf/T = get_turf(src)
+    if(!T) return
+    var/turf/center = locate(T.x + 1, T.y + 1, T.z)
+    if(center)
+        user.do_attack_animation(center)
 
-/// Legacy Click fallback (for admin or old calls)
-/obj/machinery/rbmk/reactor/Click(location, control, params, mob/user)
-    if(!user)
-        return
-    var/list/p = params2list(params)
-    if(p["button"] == "left")
-        var/obj/item/I = user.get_active_held_item()
-        if(istype(I, /obj/item/rbmk/fuel_rod))
-            if(try_insert_rod(I, user))
-                return
-    return ..()
+/*************************************************************
+ * Rod Handling (debug + qdel)
+ *************************************************************/
 
-/// Insert a fuel rod
+/// Inserts a rod and stores its data internally
 /obj/machinery/rbmk/reactor/proc/try_insert_rod(obj/item/rbmk/fuel_rod/R, mob/user)
-    if(!R || QDELETED(R))
+    if(!R)
+        world.log << "❌ No rod reference!"
         return FALSE
 
+    world.log << "⚙️ try_insert_rod() called with [R] ([R.type])"
+    if(QDELETED(R))
+        world.log << "❌ Rod already deleted!"
+        return FALSE
+
+    // Ensure slots exist
+    if(!length(normal_slots))
+        normal_slots = list()
+        for(var/i in 1 to max_normal_slots)
+            normal_slots[i] = null
+    if(!length(special_slots))
+        special_slots = list()
+        for(var/j in 1 to max_special_slots)
+            special_slots[j] = null
+
+    // Choose slot type
     var/list/target_slots
     var/slot_type = "normal"
-    if(R.rod_type in list("plasma", "telecrystal"))
+    if(R.rod_type in list("plasma", "telecrystal", "supermatter"))
         target_slots = special_slots
         slot_type = "special"
     else
         target_slots = normal_slots
 
-    var/max_slots = (slot_type == "special") ? max_special_slots : max_normal_slots
+    world.log << "➡ Target slot type: [slot_type] ([length(target_slots)] slots)"
 
-    // Find open slot
-    for(var/i in 1 to max_slots)
+    // Try insertion
+    for(var/i in 1 to length(target_slots))
         if(!target_slots[i])
-            target_slots[i] = R
+            world.log << "✅ Found empty slot #[i], inserting..."
+            var/list/rod_data = list(
+                "fuel_amount"   = R.fuel_amount,
+                "heat_per_tick" = R.heat_per_tick,
+                "rad_output"    = R.rad_output,
+                "flux_output"   = R.flux_output,
+                "thermal_mult"  = R.thermal_mult,
+                "flux_mult"     = R.flux_mult,
+                "rad_mult"      = R.rad_mult,
+                "rod_type"      = R.rod_type,
+                "rod_color"     = R.rod_color
+            )
 
-            // Move rod into the reactor
-            if(!R.forceMove(src))
-                to_chat(user, span_warning("The [R.name] failed to seat properly in the reactor!"))
-                target_slots[i] = null
-                return FALSE
-
-            R.active = TRUE
-            R.mouse_opacity = 0
-            R.invisibility = 101
-            R.anchored = TRUE
-            R.density = FALSE
-            R.layer = BELOW_MOB_LAYER
-
-            to_chat(user, span_notice("You insert [R.name] into the [slot_type] reactor slot."))
+            target_slots[i] = rod_data
+            qdel(R)
+            to_chat(user, span_notice("You insert a [rod_data["rod_type"]] fuel rod into the [slot_type] reactor slot."))
+            world.log << "✅ qdel called successfully for [R.type] (slot #[i])"
+            running = TRUE
             update_linked_consoles()
             return TRUE
 
     to_chat(user, span_warning("No available [slot_type] rod slots in the reactor!"))
+    world.log << "❌ No available [slot_type] slots for [R.type]"
     return FALSE
-
-/// Eject a rod
-/obj/machinery/rbmk/reactor/proc/eject_rod(kind, index, mob/user)
-    var/list/slots = (kind == "special") ? special_slots : normal_slots
-    if(index > length(slots))
-        to_chat(user, span_warning("Invalid slot index."))
-        return FALSE
-
-    var/obj/item/rbmk/fuel_rod/R = slots[index]
-    if(!R)
-        to_chat(user, span_warning("That slot is empty."))
-        return FALSE
-
-    slots[index] = null
-    R.forceMove(get_turf(src))
-    R.invisibility = 0
-    R.mouse_opacity = 1
-    R.anchored = FALSE
-    R.density = TRUE
-    R.layer = ABOVE_MOB_LAYER
-
-    to_chat(user, span_notice("You eject [R.name] from the reactor core."))
-    update_linked_consoles()
-    return TRUE
-
-/*************************************************************
- * Collision / Rendering
- *************************************************************/
-
-/// Let mobs walk across but make items rest visually on top
-/obj/machinery/rbmk/reactor/CanPass(atom/movable/mover, turf/target)
-    if(ismob(mover))
-        return TRUE
-    return ..()
 
 /*************************************************************
  * Console Sync

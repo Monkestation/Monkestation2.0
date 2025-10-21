@@ -5,6 +5,7 @@
  * - Burns faster and accelerates reactor heat growth
  ************************************************************/
 
+/// Plutonium Fuel Rod
 /obj/item/rbmk/fuel_rod/plutonium
     name = "Plutonium Fuel Rod"
     desc = "Extremely powerful and unstable, outputting heavy radiation."
@@ -28,20 +29,20 @@
 /************************************************************
  * Plutonium processing logic
  ************************************************************/
+
+/// Plutonium rods burn fuel fast and run hot
 /obj/item/rbmk/fuel_rod/plutonium/process_rod()
-    // --- Fuel depletion ---
-    if (fuel_amount > 0)
-        fuel_amount -= 1
-    else
-        if (active)
+    if(fuel_amount <= 0)
+        if(active)
             active = FALSE
             icon_state = depleted_icon_state
             desc = depleted_desc
         return list()
 
-    // --- Contribution payload ---
+    fuel_amount -= 1
+
     return list(
-        "flux"         = flux_output * flux_mult,     // strong neutron flux
+        "flux"         = flux_output * flux_mult,      // strong neutron flux
         "heat"         = heat_per_tick * thermal_mult, // extreme heat output
         "radiation"    = rad_output * rad_mult,        // high radiation
         "flux_mult"    = flux_mult,

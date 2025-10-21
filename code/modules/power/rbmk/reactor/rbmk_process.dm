@@ -4,6 +4,7 @@
  * - Handles rods, flux, heat, radiation, coolant interaction
  *************************************************************/
 
+/// Main process loop
 /obj/machinery/rbmk/reactor/process(delta_time)
     // --- Repairable if cool enough ---
     repairable = (temperature < (RBMK_MAX_TEMP * RBMK_REPAIRABLE_TEMP_RATIO))
@@ -13,24 +14,10 @@
         if(temperature > RBMK_AMBIENT_TEMP)
             temperature = max(RBMK_AMBIENT_TEMP, temperature - RBMK_IDLE_COOL_RATE)
 
-            // Sample coolant even when idle
             rbmk_sample_coolant(src)
             if(coolant_internal)
                 pressure = coolant_internal.return_pressure()
-
-                // Record gas history snapshot
-                var/datum/gas_mixture/mix = coolant_internal
-                var/total = mix.total_moles()
-                if(total > 0)
-                    var/list/snapshot = list()
-                    for(var/gas_path in mix.gases)
-                        var/moles = mix.gases[gas_path][MOLES]
-                        var/percent = (moles / total) * 100
-                        snapshot[gas_path] = percent
-                    coolant_gas_hist += list(snapshot)
-                    if(length(coolant_gas_hist) > 50)
-                        coolant_gas_hist.Cut(1, 2)
-
+                rbmk_record_gas_snapshot()
             update_reactor_icon()
         else
             icon_state = "reactor_off"
@@ -44,29 +31,91 @@
     thermal_output = 0
     flux = 0
     var/has_active_rods = FALSE
-    var/thermal_mult = 1
-    var/flux_mult = 1
+    var/thermal_mult = 1.0
+    var/flux_mult = 1.0
 
-    // --- Process rods ---
-    for(var/obj/item/rbmk/fuel_rod/R in normal_slots + special_slots)
-        if(!R || !R.active)
+    /*************************************************************
+     * Internal Rod Data Processing
+     *************************************************************/
+
+    var/new_normal_slots = list()
+    var/new_special_slots = list()
+
+    for(var/i in 1 to length(normal_slots))
+        var/rod_data = normal_slots[i]
+        if(!rod_data)
+            new_normal_slots += null
             continue
+        var/result = rbmk_process_rod_data(rod_data)
+        if(result)
+            flux        += result["flux"]
+            radiation   += result["radiation"]
+            temperature += result["heat"]
+            if("thermal_mult" in result)
+                thermal_mult *= result["thermal_mult"]
+            if("flux_mult" in result)
+                flux_mult *= result["flux_mult"]
+            if(rod_data["fuel_amount"] > 0)
+                new_normal_slots += rod_data
+                has_active_rods = TRUE
+            else
+                new_normal_slots += null
+        else
+            new_normal_slots += null
 
-        var/contrib = R.process_rod()
+    for(var/i in 1 to length(special_slots))
+        var/rod_data = special_slots[i]
+        if(!rod_data)
+            new_special_slots += null
+            continue
+        var/result = rbmk_process_rod_data(rod_data)
+        if(result)
+            flux        += result["flux"]
+            radiation   += result["radiation"]
+            temperature += result["heat"]
+            if("thermal_mult" in result)
+                thermal_mult *= result["thermal_mult"]
+            if("flux_mult" in result)
+                flux_mult *= result["flux_mult"]
+            if(rod_data["fuel_amount"] > 0)
+                new_special_slots += rod_data
+                has_active_rods = TRUE
+            else
+                new_special_slots += null
+        else
+            new_special_slots += null
 
-        // Base contributions
-        flux        += contrib["flux"]
-        radiation   += contrib["radiation"]
-        temperature += contrib["heat"]
+    normal_slots = new_normal_slots
+    special_slots = new_special_slots
 
-        // Multipliers
-        if("thermal_mult" in contrib)
-            thermal_mult *= contrib["thermal_mult"]
-        if("flux_mult" in contrib)
-            flux_mult *= contrib["flux_mult"]
+    /*************************************************************
+     * Special rod behaviors
+     *************************************************************/
 
-        if(contrib["flux"] > 0 || contrib["heat"] > 0 || contrib["radiation"] > 0)
-            has_active_rods = TRUE
+    // Telecrystal rods charge if reactor is hot enough
+    for(var/rod_data in special_slots)
+        if(!rod_data) continue
+        if(rod_data["rod_type"] == "telecrystal")
+            if(thermal_output >= 2000)
+                var/prog = rod_data["charge_progress"]
+                var/maxp = rod_data["charge_max"]
+                var/rate = 1
+                if(thermal_output >= 10000)
+                    rate = 3
+                else if(thermal_output >= 5000)
+                    rate = 2
+                prog += rate
+                if(prog >= maxp && !rod_data["charged"])
+                    rod_data["charged"] = TRUE
+                    to_chat(src, span_warning("A telecrystal rod hums violently as it finishes charging with bluespace energy!"))
+                rod_data["charge_progress"] = prog
+
+        else if(rod_data["rod_type"] == "supermatter" && prob(2))
+            trigger_meltdown("Supermatter destabilization!")
+
+    /*************************************************************
+     * Post-processing and cooling
+     *************************************************************/
 
     // --- Apply control rod scaling ---
     var/rod_effect = (100 - control_rod_depth) / 100
@@ -81,19 +130,7 @@
     rbmk_sample_coolant(src)
     if(coolant_internal)
         pressure = coolant_internal.return_pressure()
-
-        // Record gas history snapshot
-        var/datum/gas_mixture/mix = coolant_internal
-        var/total = mix.total_moles()
-        if(total > 0)
-            var/list/snapshot = list()
-            for(var/gas_path in mix.gases)
-                var/moles = mix.gases[gas_path][MOLES]
-                var/percent = (moles / total) * 100
-                snapshot[gas_path] = percent
-            coolant_gas_hist += list(snapshot)
-            if(length(coolant_gas_hist) > 50)
-                coolant_gas_hist.Cut(1, 2)
+        rbmk_record_gas_snapshot()
 
     // --- Natural decay ---
     flux = max(0, flux - RBMK_FLUX_DECAY)
@@ -114,6 +151,52 @@
     // --- Visuals & consoles ---
     update_reactor_icon()
     update_linked_consoles()
+
+
+/*************************************************************
+ * Helper: process individual rod data entries
+ *************************************************************/
+
+/// Processes a stored rod data entry
+/proc/rbmk_process_rod_data(list/rod_data)
+    if(!rod_data)
+        return null
+
+    // Burn fuel unless infinite
+    if(rod_data["fuel_amount"] != INFINITY)
+        rod_data["fuel_amount"] -= 1
+
+    if(rod_data["fuel_amount"] <= 0)
+        return null
+
+    return list(
+        "flux"         = rod_data["flux_output"] * rod_data["flux_mult"],
+        "heat"         = rod_data["heat_per_tick"] * rod_data["thermal_mult"],
+        "radiation"    = rod_data["rad_output"] * rod_data["rad_mult"],
+        "thermal_mult" = rod_data["thermal_mult"],
+        "flux_mult"    = rod_data["flux_mult"]
+    )
+
+
+/*************************************************************
+ * Helper: record gas mix snapshot for console graphs
+ *************************************************************/
+
+/obj/machinery/rbmk/reactor/proc/rbmk_record_gas_snapshot()
+    if(!coolant_internal)
+        return
+    var/datum/gas_mixture/mix = coolant_internal
+    var/total = mix.total_moles()
+    if(total <= 0)
+        return
+    var/list/snapshot = list()
+    for(var/gas_path in mix.gases)
+        var/moles = mix.gases[gas_path][MOLES]
+        var/percent = (moles / total) * 100
+        snapshot[gas_path] = percent
+    coolant_gas_hist += list(snapshot)
+    if(length(coolant_gas_hist) > 50)
+        coolant_gas_hist.Cut(1, 2)
 
 
 /*************************************************************
