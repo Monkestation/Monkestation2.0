@@ -613,11 +613,35 @@
       the great wilds of space, but somehow always the syndicate depo despite moving
       randomly.
 2025-10-19:
+  Absolucy:
+  - bugfix: Fixed godslayer armor healing triggering if you're unconscious but fully
+      healthy.
+  - bugfix: Reviving an oozeling core now properly shows them the revival policy/blackout
+      message.
   Absolucy, ThePooba:
   - rscadd: Added stomper boots, used to stomp hotspots on the Oshan station.
   - bugfix: Hopefully fixed some wacky angle calculations with stomping hotspots.
   BobDABuilder9001:
   - balance: made lock heretics consecrated use charges, changed its crafting recipe
       and made it a small item
+  Tractor-Maam:
+  - code_imp: the AIs doomsday will now always take 27.2 seconds to send the alert
+      to the station once armed, instead of 3 seconds of random delay from that number.
   notghosti:
   - rscadd: A motivational shock wire to cyborgs
+  - map: Guarantees a blue space beacon at each teleporter
+2025-10-20:
+  ThePooba:
+  - bugfix: fixed admin suit dropping items
+2025-10-21:
+  '@Krysonism, @Imaginos16, @MTandi, @san7890':
+  - image: updated smart fridge sprites for all variants
+  - bugfix: smart fridges no longer overlap with walls, but they can be welded down
+      to a floor and mapspawn welded
+  Cmpwarrior:
+  - rscadd: Adds a new AI core design based off Fracktail from Super Paper Mario
+  notghosti:
+  - bugfix: Motion sensitive cameras no longer detect observers and eye mobs entering
+      a ai monitored area.
+  - rscadd: Adds wormtongue, tsundere, disc joky, tsundere, and milf to ai law boards
+      and spawners

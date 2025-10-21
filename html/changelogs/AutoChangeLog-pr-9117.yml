@@ -1,4 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - code_imp: "the AIs doomsday will now always take 27.2 seconds to send the alert to the station once armed, instead of 3 seconds of random delay from that number."

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Reviving an oozeling core now properly shows them the revival policy/blackout message."
