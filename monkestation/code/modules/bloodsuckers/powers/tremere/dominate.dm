@@ -131,7 +131,7 @@
 		owner.balloon_alert(owner, "attempting to revive.")
 	else
 		owner.balloon_alert(owner, "attempting to vassalize.")
-	if(!do_after(user, vassal_creation_time, target, NONE, TRUE))
+	if(!do_after(user, vassal_creation_time, target, NONE, TRUE, hidden = TRUE))
 		return FALSE
 	if(!victim_has_blood(target))
 		return FALSE
@@ -141,7 +141,7 @@
 	if(vassal?.master == bloodsuckerdatum_power)
 		if(is_oozeling_core(target))
 			var/obj/item/organ/internal/brain/slime/oozeling_core = target
-			target = oozeling_core.rebuild_body(nugget = FALSE)
+			target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			if(QDELETED(target))
 				owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
 				return FALSE
@@ -150,7 +150,7 @@
 				owner.balloon_alert(owner, "not dead!")
 				return FALSE
 			target.mind?.grab_ghost()
-			target.revive(ADMIN_HEAL_ALL)
+			target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 		to_chat(user, span_warning("We revive [target]!"))
 		owner.balloon_alert(owner, "successfully revived!")
@@ -162,14 +162,14 @@
 		return FALSE
 	if(is_oozeling_core(target))
 		var/obj/item/organ/internal/brain/slime/oozeling_core = target
-		target = oozeling_core.rebuild_body(nugget = FALSE)
+		target = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(QDELETED(target))
 			owner.balloon_alert(owner, "we fail to rebuild [oozeling_core]...")
 			return FALSE
 	else
 		// no escaping at this point
 		target.mind?.grab_ghost(TRUE)
-		target.revive(ADMIN_HEAL_ALL)
+		target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
 	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))

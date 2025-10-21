@@ -90,13 +90,14 @@
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
-/obj/item/clothing/shoes/clown_shoes/cluwne
+/obj/item/clothing/shoes/clown_shoes/cluwne/cursed
 	desc = "The insides seem awfully wet with grease and smells of something foul. Which maniac would wear this?!"
 	name = "cluwne shoes"
 	icon_state = "cluwne"
-
+	slowdown = SHOES_SLOWDOWN+1
 	has_storage = FALSE
+	sound_dampener = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize(mapload)
+/obj/item/clothing/shoes/clown_shoes/cluwne/cursed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)

@@ -129,8 +129,9 @@
 /atom/movable/screen/navigate
 	name = "navigate"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "navigate"
-	screen_loc = ui_navigate_menu
+	icon_state = "act_nav"
+	base_icon_state = "act_nav"
+	screen_loc = ui_above_movement
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/navigate/Click()
@@ -139,11 +140,19 @@
 	var/mob/living/navigator = usr
 	navigator.navigate()
 
+/atom/movable/screen/navigate/update_icon_state()
+	if(length(hud?.mymob?.client?.navigation_images))
+		icon_state = "[base_icon_state]_on"
+	else
+		icon_state = base_icon_state
+	return ..()
+
 /atom/movable/screen/craft
 	name = "crafting menu"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "craft"
+	icon_state = "craft_long"
 	screen_loc = ui_crafting
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator
 	name = "create new area"
@@ -188,7 +197,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(IGNORE_STASIS))
+	if(usr.incapacitated(IGNORE_STASIS|IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -278,7 +287,7 @@
 		return TRUE
 	if(world.time <= user.next_move)
 		return TRUE
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -416,10 +425,8 @@
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
-		if(MOVE_INTENT_RUN)
+		if(MOVE_INTENT_RUN, MOVE_INTENT_SPRINT)
 			icon_state = "running"
-		if(MOVE_INTENT_SPRINT)
-			icon_state = "sprinting"
 	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
@@ -495,7 +502,7 @@
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated(IGNORE_CRIT))
+	if(usr.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -1108,5 +1115,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(!isliving(source))
 		return
 	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
+
+
 
 #undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT

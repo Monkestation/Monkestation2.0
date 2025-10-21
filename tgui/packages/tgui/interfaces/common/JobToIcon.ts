@@ -18,7 +18,7 @@ const BASEICONS = {
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
-  'CentCom Official': 'medal',
+  'Retired Captain': 'medal',
   'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
@@ -188,6 +188,7 @@ const ALTTITLES = {
   'Private Investigator': BASEICONS['Detective'],
   'Forensic Scientist': BASEICONS['Detective'],
   'Paranormal Investigator': BASEICONS['Detective'],
+  'Inspector': BASEICONS['Detective'],
   // Geneticist - dna
   'Mutation Researcher': BASEICONS['Geneticist'],
   // Head of Personnel - dog

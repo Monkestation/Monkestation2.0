@@ -16,7 +16,7 @@
 	var/obj/item/light_eater/armblade
 
 /datum/action/cooldown/spell/toggle/light_eater/process()
-	active = owner.is_holding_item_of_type(/obj/item/light_eater)
+	active = !!owner?.is_holding_item_of_type(/obj/item/light_eater)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/light_eater/can_cast_spell(feedback)
@@ -59,7 +59,7 @@
 	var/obj/item/gun/ballistic/bow/shadow_caster/bow
 
 /datum/action/cooldown/spell/toggle/shadow_caster/process()
-	active = owner.is_holding_item_of_type(/obj/item/gun/ballistic/bow/shadow_caster)
+	active = !!owner?.is_holding_item_of_type(/obj/item/gun/ballistic/bow/shadow_caster)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_caster/can_cast_spell(feedback)

@@ -417,7 +417,7 @@
 
 	held_item?.play_tool_sound(target)
 	target.visible_message(
-		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [user.p_their()] [selected_bodypart.name] and shaking [user.p_them()] up!"),
+		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [target.p_their()] [selected_bodypart.name] and shaking [target.p_them()] up!"),
 		span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name], shaking you up!")
 	)
 

@@ -135,7 +135,7 @@
 		if("PC_exit")
 			//you can't close apps in emergency mode.
 			if(isnull(internal_cell) || internal_cell.charge)
-				active_program.kill_program(usr)
+				active_program?.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
@@ -231,5 +231,4 @@
 
 /obj/item/modular_computer/ui_close(mob/user)
 	. = ..()
-	if(active_program)
-		active_program.ui_close(user)
+	active_program?.ui_close(user)

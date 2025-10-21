@@ -766,12 +766,12 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated())
+	if(incapacitated(IGNORE_SOFTCRIT))
 		return
 
-	var/obj/item/I = get_active_held_item()
-	if(I)
-		I.attack_self(src)
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		held_item.attack_self(src)
 		update_held_items()
 		return
 

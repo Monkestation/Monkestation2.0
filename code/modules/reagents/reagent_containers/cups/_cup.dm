@@ -212,8 +212,10 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
-	target.update_appearance()
-	return ITEM_INTERACT_SUCCESS
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = attacking_item.get_temperature()
@@ -561,7 +563,7 @@
 			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
 		)
 		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || picked_option)
+		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || !picked_option)
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start grinding..."))
 		if(!do_after(user, 2.5 SECONDS, target = src))

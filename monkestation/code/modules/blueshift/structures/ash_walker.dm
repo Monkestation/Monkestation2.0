@@ -742,7 +742,7 @@
 		qdel(src)
 		return
 
-	living_inside.revive(ADMIN_HEAL_ALL)
+	living_inside.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	living_inside.forceMove(get_turf(src))
 	living_inside.mind.grab_ghost()
 	living_inside.balloon_alert_to_viewers("[living_inside] breaks out of [src]!")

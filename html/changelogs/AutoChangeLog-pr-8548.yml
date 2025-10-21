@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fixed being unable to open bags in crit or resting"

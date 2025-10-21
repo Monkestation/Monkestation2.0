@@ -14,6 +14,9 @@
 /// The max amount of dirtiness a microwave can be
 #define MAX_MICROWAVE_DIRTINESS 100
 
+/// For the wireless version, and display fluff
+#define TIER_1_CELL_CHARGE_RATE (0.25 * STANDARD_CELL_CHARGE)
+
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
@@ -66,7 +69,7 @@
 
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
-
+	register_context()
 	set_wires(new /datum/wires/microwave(src))
 	create_reagents(100)
 	soundloop = new(src, FALSE)
@@ -95,6 +98,41 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
+/obj/machinery/microwave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(cell_powered)
+		if(!isnull(cell))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
+		else if(held_item && istype(held_item, /obj/item/stock_parts/power_store/cell))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Insert cell"
+
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unsecure" : "Install/Secure"]"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.atom_storage)
+		context[SCREENTIP_CONTEXT_RMB] = "Dump contents"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(broken > NOT_BROKEN)
+		if(broken == REALLY_BROKEN && held_item?.tool_behaviour == TOOL_WIRECUTTER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+
+		else if(broken == KINDA_BROKEN && held_item?.tool_behaviour == TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = "Repair"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	context[SCREENTIP_CONTEXT_LMB] = "Show menu"
+
+	if(vampire_charging_capable)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Change to [vampire_charging_enabled ? "cook" : "charge"]"
+
+	if(length(ingredients) != 0)
+		context[SCREENTIP_CONTEXT_RMB] = "Start [vampire_charging_enabled ? "charging" : "cooking"]"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
 	efficiency = 0
@@ -106,6 +144,13 @@
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
+	if(vampire_charging_capable)
+		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave™ allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the charge mode.")
+		. += span_info("Because nothing says 'future' like charging your PDA while overcooking your leftovers. Nanotrasen Wave™ - Multitasking, redefined.")
+
+	if(cell_powered)
+		. += span_notice("This model is wireless, powered by portable cells. [isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell."]")
+
 	if(!operating)
 		. += span_notice("Right-click [src] to turn it on.")
 
@@ -137,7 +182,10 @@
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
 		"[span_notice("- Capacity: <b>[max_n_of_items]</b> items.")]\n"+\
-		span_notice("- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.")
+		span_notice("- Power: <b>[efficiency * TIER_1_CELL_CHARGE_RATE]W</b>.")
+
+		if(cell_powered)
+			. += span_notice("- Charge: <b>[isnull(cell) ? "INSERT CELL" : "[round(cell.percent())]%"]</b>.")
 
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 
@@ -156,7 +204,7 @@
 	. = ..()
 
 	// All of these will use a full icon state instead
-	if (panel_open || dirty == MAX_MICROWAVE_DIRTINESS || broken || dirty_anim_playing)
+	if(panel_open || dirty == MAX_MICROWAVE_DIRTINESS || broken || dirty_anim_playing)
 		return .
 
 	var/ingredient_count = 0
@@ -197,10 +245,10 @@
 	var/border_icon_state
 	var/door_icon_state
 
-	if (open)
+	if(open)
 		door_icon_state = "door_open"
 		border_icon_state = "mwo"
-	else if (operating)
+	else if(operating)
 		door_icon_state = "door_on"
 		border_icon_state = "mw1"
 	else
@@ -215,7 +263,7 @@
 
 	. += border_icon_state
 
-	if (!open)
+	if(!open)
 		. += "door_handle"
 
 	return .
@@ -223,11 +271,11 @@
 #undef MICROWAVE_INGREDIENT_OVERLAY_SIZE
 
 /obj/machinery/microwave/update_icon_state()
-	if (broken)
+	if(broken)
 		icon_state = "mwb"
-	else if (dirty_anim_playing)
+	else if(dirty_anim_playing)
 		icon_state = "mwbloody1"
-	else if (dirty == MAX_MICROWAVE_DIRTINESS)
+	else if(dirty == MAX_MICROWAVE_DIRTINESS)
 		icon_state = open ? "mwbloodyo" : "mwbloody"
 	else if(operating)
 		icon_state = "back_on"
@@ -333,18 +381,18 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if (isnull(tool.atom_storage))
+	//MONKESTATION EDIT START
+	if(istype(tool, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding = tool
+		return stuff_mob_in(riding.rider, user)
+	//MONKESTATION EDIT END
+
+	if(isnull(tool.atom_storage))
 		return
 	handle_dumping(user, tool)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/microwave/proc/handle_dumping(mob/living/user, obj/item/tool)
-	//MONKESTATION EDIT START
-	if (istype(tool, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding = tool
-		return stuff_mob_in(riding.rider, user)
-	//MONKESTATION EDIT END
-
 	var/loaded = 0
 	if(!istype(tool, /obj/item/storage/bag/tray))
 		// Non-tray dumping requires a do_after
@@ -413,7 +461,7 @@
 	switch(choice)
 		if("eject")
 			// monkestation edit start: microwave "enhancements"
-			if (!can_eject)
+			if(!can_eject)
 				balloon_alert(user, "the lock is stuck!")
 				return
 			// monkestation end
@@ -455,6 +503,11 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
+	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		balloon_alert(cooker, "no power draw!")
+		return
+
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
@@ -486,9 +539,13 @@
 	start(cooker)
 
 /obj/machinery/microwave/proc/wzhzhzh()
+	if(cell_powered && !isnull(cell))
+		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			return
+
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
-
 	set_light(1.5)
 	soundloop.start()
 	update_appearance()
@@ -584,12 +641,12 @@
 			var/should_dirty = !(sigreturn & COMPONENT_MICROWAVE_DONTDIRTY)
 			if(isstack(cooked_item))
 				var/obj/item/stack/cooked_stack = cooked_item
-				if (should_dirty) dirty += cooked_stack.amount
+				if(should_dirty) dirty += cooked_stack.amount
 			else
-				if (should_dirty) dirty++
-		if (sigreturn & COMPONENT_MICROWAVE_DONTEJECT)
+				if(should_dirty) dirty++
+		if(sigreturn & COMPONENT_MICROWAVE_DONTEJECT)
 			dont_eject = TRUE
-		if (sigreturn & COMPONENT_MICROWAVE_DONTOPEN)
+		if(sigreturn & COMPONENT_MICROWAVE_DONTOPEN)
 			shouldnt_open = TRUE
 		// monkestation end
 
@@ -605,7 +662,7 @@
 		broken = REALLY_BROKEN
 		if(cursed_chef || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-	else if (!dont_eject) // monkestation edit: microwave "enhancements" - + if (!dont_eject)
+	else if(!dont_eject) // monkestation edit: microwave "enhancements" - + if(!dont_eject)
 		dump_inventory_contents()
 
 	after_finish_loop(dontopen = shouldnt_open) // monkestation edit: microwave "enhancements" - () -> (dontopen = shouldnt_open)
@@ -669,3 +726,4 @@
 #undef REALLY_BROKEN
 
 #undef MAX_MICROWAVE_DIRTINESS
+#undef TIER_1_CELL_CHARGE_RATE

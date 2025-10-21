@@ -339,7 +339,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-/mob/camera/verb/ghost()
+/mob/eye/verb/ghost()
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
@@ -724,7 +724,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
-	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
+	if (isobserver(user) && user.client.holder && (isliving(over) || iseyemob(over)))
 		if (user.client.holder.cmd_ghost_drag(src,over))
 			return
 
@@ -1033,6 +1033,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/mob/dead/observer/target_ghost = target
 
 		target_ghost.change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+	else if(is_admin(src)) // stupid snowflake checks for admins to mess with people
+		if(istype(target, /obj/structure/table))
+			var/obj/structure/table/table = target
+			table.flip_table(src)
+		else if(istype(target, /obj/structure/flippedtable))
+			var/obj/structure/flippedtable/flipped_table = target
+			flipped_table.unflip_table(src)
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()
@@ -1045,6 +1052,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = list(span_notice("<i>You examine [src] closer, and note the following...</i>"))
 	. += list("\t>[span_admin("[ADMIN_FULLMONTY(src)]")]")
 
+/mob/dead/observer/get_status_tab_items()
+	. = ..()
+	if(!GLOB.observer_default_invisibility)
+		. += "Ghosts visible to the living!"
+	else if (!invisibility)
+		. += "You are visible to the living!"
+	else if (invisibility <= SEE_INVISIBLE_LIVING)
+		. += "You are visibile to most living mobs!"
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

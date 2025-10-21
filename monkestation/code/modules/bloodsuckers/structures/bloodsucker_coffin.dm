@@ -1,21 +1,31 @@
 /datum/antagonist/bloodsucker/proc/claim_coffin(obj/structure/closet/crate/claimed, area/current_area)
+	var/static/list/banned_areas_typecache
+	if(!banned_areas_typecache)
+		banned_areas_typecache = typecacheof(list(
+			/area/icemoon,
+			/area/lavaland,
+			/area/ocean,
+			/area/shuttle,
+			/area/space,
+		))
+
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner.current)
-			to_chat(owner, "This is your [src].")
+			to_chat(owner, span_notice("This is your [src]."))
 		else
-			to_chat(owner, "This [src] has already been claimed by another.")
+			to_chat(owner, span_warning("This [src] has already been claimed by another."))
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
 	// this if check is split up bc it's annoying to read and mentally parse when it's combined into one big if statement
 	var/valid_lair_area = TRUE
 	if(!coffin_turf)
 		valid_lair_area = FALSE
-	else if(!is_eclipse_level(coffin_turf.z) && !(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
-		if(!is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
+	else if(!(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
+		if(is_centcom_level(coffin_turf.z) || is_type_in_typecache(current_area, banned_areas_typecache) || (istype(current_area, /area/ruin) && current_area.outdoors))
 			valid_lair_area = FALSE
 	if(!valid_lair_area)
-		claimed.balloon_alert(owner.current, "not part of station!")
+		claimed.balloon_alert(owner.current, "ineligible area!")
 		return
 	// This is my Lair
 	coffin = claimed
@@ -55,6 +65,7 @@
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
+	base_icon_state = "coffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -77,6 +88,7 @@
 	name = "secure coffin"
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
+	base_icon_state = "securecoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -99,6 +111,7 @@
 	name = "meat coffin"
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
+	base_icon_state = "meatcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
@@ -121,6 +134,7 @@
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
+	base_icon_state = "metalcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
@@ -298,7 +312,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch that would lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_after(resident, 5 SECONDS, src))
+		if(!do_after(resident, 5 SECONDS, src, hidden = TRUE))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))

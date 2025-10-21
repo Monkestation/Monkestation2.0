@@ -202,9 +202,8 @@
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
 	antag_hud = new_character.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", src)
-	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
-		var/datum/antagonist/A = a
-		A.on_body_transfer(old_current, current)
+	for(var/datum/antagonist/antag as anything in antag_datums) //Makes sure all antag datums effects are applied in the new body
+		antag.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -220,6 +219,9 @@
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
 	if(!isnull(old_current))
 		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.after_body_transfer(old_current, current)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
