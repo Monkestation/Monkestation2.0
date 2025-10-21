@@ -45,6 +45,7 @@
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(src)] [notes]. Infection chance now [D.infectionchance]%"
 
 		LAZYADD(diseases, D)
+		D.carrier = FALSE
 		D.affected_mob = src
 		//SSdisease.active_diseases += D
 		D.after_add()
