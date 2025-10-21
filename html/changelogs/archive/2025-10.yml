@@ -638,8 +638,28 @@
   - image: updated smart fridge sprites for all variants
   - bugfix: smart fridges no longer overlap with walls, but they can be welded down
       to a floor and mapspawn welded
+  Absolucy:
+  - balance: The cursed katana is now far more effective against fauna - both dealing
+      more damage and having a far higher block chance.
+  - rscadd: Quantum Pad boards and Quantum Keycards can now be printed by the cargo
+      techfab, so they can do interesting setups with deliveries or mining.
+  - rscadd: Engineering can now print Quantum Keycards, because it was silly that
+      they could print Quantum Pad boards but not the keycards.
+  - bugfix: Fixed an oversight that could lead to tram incidents not being counted,
+      especially with oozelings.
+  - bugfix: Beepsky no longer gets mad if you're holding a Spatial Rift Nullifier
+  - balance: The Darkspawn Extinguish spell now also extinguishes the air, putting
+      out fires and purging plasma.
+  - qol: You can now use the RCD to place plating over ocean tiles.
+  Absolucy, Bilbo367:
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
   Cmpwarrior:
   - rscadd: Adds a new AI core design based off Fracktail from Super Paper Mario
+  LettuceGuardian:
+  - rscadd: Wardens get a megaphone and bandolier in their locker.
+  SyncIt21:
+  - bugfix: runtime with smart fridge tooltip
   notghosti:
   - bugfix: Motion sensitive cameras no longer detect observers and eye mobs entering
       a ai monitored area.
