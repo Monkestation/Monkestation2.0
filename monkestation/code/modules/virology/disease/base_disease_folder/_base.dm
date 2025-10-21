@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	var/list/immune_data = GetImmuneData(mob)
 
-	if(!istype(mob, /mob/living/basic/mouse/plague) || carrier) //plague mice don't trigger effects to not kill em
+b	if(!istype(mob, /mob/living/basic/mouse/plague) && (!carrier)) //plague mice don't trigger effects to not kill em
 		for(var/datum/symptom/e in symptoms)
 			if (e.can_run_effect(immune_data[1], seconds_per_tick))
 				e.run_effect(mob, src)

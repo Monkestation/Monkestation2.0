@@ -46,7 +46,7 @@
 
 		LAZYADD(diseases, D)
 		if(patient_zero)
-			D.carrier = FALSE
+			D.carrier = TRUE
 		D.affected_mob = src
 		//SSdisease.active_diseases += D
 		D.after_add()
