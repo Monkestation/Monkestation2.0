@@ -7147,7 +7147,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bhr" = (
 /turf/closed/wall/rock/porous,
 /area/station/security/prison/workout)
@@ -10807,6 +10807,9 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"cln" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "clR" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -11413,7 +11416,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "cwl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/canister,
@@ -25706,7 +25709,7 @@
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gYz" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 4"
@@ -27115,7 +27118,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/liquid_barrier,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hyO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/spawner/directional/south,
@@ -33251,7 +33254,7 @@
 	},
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jqL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/textured,
@@ -37388,7 +37391,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kGA" = (
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
@@ -43884,7 +43887,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mFo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -54041,7 +54044,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pNc" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -57642,7 +57645,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qTp" = (
 /obj/machinery/door/airlock{
 	id_tag = "private_b";
@@ -57841,7 +57844,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qVN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59801,7 +59804,7 @@
 /obj/item/multitool,
 /obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rAS" = (
 /turf/closed/wall,
 /area/station/service/library/lounge)
@@ -65803,7 +65806,7 @@
 "ttj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ttr" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -66302,7 +66305,7 @@
 	},
 /obj/item/electropack,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tBt" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice/catwalk/mining,
@@ -66468,7 +66471,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tEF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/item/radio/intercom/directional/south,
@@ -69542,7 +69545,7 @@
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uBQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -72111,6 +72114,9 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
+"vmV" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "vnd" = (
 /obj/structure/ladder,
 /obj/machinery/door/firedoor/border_only{
@@ -191810,12 +191816,12 @@ pbH
 pbH
 pbH
 pbH
-qVr
-qVr
-qVr
-qVr
-qVr
-qVr
+cln
+cln
+cln
+cln
+cln
+cln
 sph
 tsg
 rzt
@@ -192066,12 +192072,12 @@ fGS
 pbH
 uvU
 umu
-qVr
-qVr
+cln
+cln
 mFh
-bfH
-bfH
-qVr
+vmV
+vmV
+cln
 gYw
 cHY
 aLR
@@ -192323,12 +192329,12 @@ jXF
 pbH
 mAL
 nKU
-qVr
+cln
 tEx
-bfH
-bfH
-bfH
-qVr
+vmV
+vmV
+vmV
+cln
 pNa
 uGJ
 pTP
@@ -192580,12 +192586,12 @@ tdQ
 pbH
 lcc
 hMd
-qVr
+cln
 ttj
-bfH
-bfH
-bfH
-bfH
+vmV
+vmV
+vmV
+vmV
 pNa
 qEj
 xmY
@@ -192837,7 +192843,7 @@ cjz
 qKE
 chE
 ffk
-qVr
+cln
 uBM
 ttj
 bhf
@@ -193094,11 +193100,11 @@ cwX
 pbH
 kBo
 iwz
-qVr
-bfH
-bfH
-bfH
-bfH
+cln
+vmV
+vmV
+vmV
+vmV
 kGv
 qSS
 ilM
@@ -193351,12 +193357,12 @@ nwE
 pbH
 mAL
 nKU
-qVr
-bfH
-bfH
-bfH
-bfH
-qVr
+cln
+vmV
+vmV
+vmV
+vmV
+cln
 jqK
 ijR
 ecg
@@ -193608,12 +193614,12 @@ lSW
 pbH
 vSa
 cJR
-qVr
-qVr
+cln
+cln
 rAB
 qVL
 tBo
-qVr
+cln
 gYw
 vav
 vGI
@@ -193866,12 +193872,12 @@ pbH
 pbH
 pbH
 pbH
-qVr
-qVr
-qVr
-qVr
-qVr
-qVr
+cln
+cln
+cln
+cln
+cln
+cln
 tZT
 cZH
 pWw

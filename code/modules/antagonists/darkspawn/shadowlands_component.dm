@@ -22,7 +22,7 @@
 		return
 
 	var/turf/location = get_turf(owner)
-	if(location && !is_centcom_level(location.z) && !is_reserved_level(location.z) && !owner.client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
+	if(location && !is_centcom_level(location.z) && !is_reserved_level(location.z) && owner.client?.prefs?.read_preference(/datum/preference/choiced/flash_visuals) == "Light")
 		owner.overlay_fullscreen("shadowlands", /atom/movable/screen/fullscreen/shadowlands)
 	else
 		owner.clear_fullscreen("shadowlands")

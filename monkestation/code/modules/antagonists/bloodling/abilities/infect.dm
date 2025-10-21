@@ -70,7 +70,7 @@
 
 	if(carbon_mob.stat == DEAD)
 		// This cures limbs and anything, the target is made a changeling through this process anyhow
-		carbon_mob.revive(ADMIN_HEAL_ALL)
+		carbon_mob.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	if(!thrall)

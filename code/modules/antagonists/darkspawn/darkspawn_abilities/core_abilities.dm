@@ -185,8 +185,12 @@
 	if(target.machine_stat)
 		to_chat(owner, span_warning("[target] has lost power."))
 		return
+	if(SSshuttle.emergency_no_recall || SSshuttle.admin_emergency_no_recall)
+		to_chat(owner, span_warning("The ruse was a failure, the shuttle will arrive anyways."))
+		return
 	SSshuttle.emergency.cancel()
 	to_chat(owner, span_velvet("The ruse was a success. The shuttle is on its way back."))
+	owner.log_message("recalled the shuttle using [src]", LOG_GAME)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/silver_tongue/proc/play_recall_sounds(obj/machinery/C, iterations) //neato sound effects
