@@ -1936,7 +1936,7 @@
 /area/centcom/syndicate_mothership/control)
 "yZ" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
-/turf/closed/indestructible/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "zi" = (
 /obj/structure/chair/office,
@@ -4479,9 +4479,9 @@ Ox
 sU
 sU
 sU
-sU
-sU
-sU
+Ox
+Ox
+Ox
 Ox
 Ox
 Ox
@@ -4582,9 +4582,9 @@ sU
 Ox
 Ox
 Ox
-Ox
-Ox
-Ox
+xu
+xu
+xu
 xu
 xu
 xu

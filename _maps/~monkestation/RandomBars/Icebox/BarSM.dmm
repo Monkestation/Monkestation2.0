@@ -1114,7 +1114,7 @@
 /area/station/commons/lounge)
 "Kf" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/carpet/neon/simple/yellow/nodots,
 /area/station/service/bar/backroom)
 "Kg" = (
 /obj/structure/displaycase/forsale/kitchen{

@@ -49,12 +49,19 @@ PROCESSING_SUBSYSTEM_DEF(station)
 				message_admins(message)
 				continue
 
+			if (station_trait_path in SSmapping.current_map?.banned_station_traits)
+				var/message = "[station_trait_path] was requested in the future station traits, but the current map ([SSmapping.current_map.map_name]) forbids it!"
+				log_game(message)
+				message_admins(message)
+				continue
+
 			setup_trait(station_trait_path)
 
 		return
 
-	for(var/i in subtypesof(/datum/station_trait))
-		var/datum/station_trait/trait_typepath = i
+	for(var/datum/station_trait/trait_typepath as anything in subtypesof(/datum/station_trait))
+		if(trait_typepath in SSmapping.current_map?.banned_station_traits)
+			continue
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))

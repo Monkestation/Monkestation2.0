@@ -34,15 +34,17 @@
 	add_team_hud(current_mob)
 	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 	setup_monitor(current_mob)
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 /datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	QDEL_NULL(monitor)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+	UnregisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 /datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
-	add_team_hud(new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vassal/proc/setup_monitor(mob/target)
 	QDEL_NULL(monitor)
@@ -167,6 +169,12 @@
 	/// Message told to your (former) Master.
 	if(master && master.owner)
 		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
+
+/datum/antagonist/vassal/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vassal/admin_add(datum/mind/new_owner, mob/admin)
 	var/list/datum/mind/possible_vampires = list()

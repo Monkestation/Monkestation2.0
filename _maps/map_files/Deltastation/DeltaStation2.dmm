@@ -2570,11 +2570,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/turf_decal/siding/white/corner{
+/obj/machinery/duct,
+/obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "aBV" = (
@@ -8543,6 +8543,11 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/large,
 /area/station/security/checkpoint/escape)
+"bUN" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "bUQ" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron,
@@ -9104,9 +9109,8 @@
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "cbB" = (
-/obj/machinery/food_cart,
-/obj/effect/turf_decal/bot/right,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/smartfridge,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "cbR" = (
@@ -17164,6 +17168,9 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/service/kitchen)
@@ -36328,7 +36335,6 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/server)
 "iza" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -36338,7 +36344,7 @@
 	id = "cafe_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/structure/displaycase/forsale/kitchen,
+/obj/machinery/smartfridge/food,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -37045,6 +37051,15 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/hos)
+"iHG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
 "iHH" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -39963,7 +39978,6 @@
 	name = "Teleporter Shutters";
 	req_access = list("command")
 	},
-/obj/machinery/bluespace_beacon,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -41898,6 +41912,7 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "jOK" = (
@@ -44649,7 +44664,8 @@
 /area/station/cargo/storage)
 "ktO" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ktP" = (
 /obj/effect/landmark/start/hangover,
@@ -51125,7 +51141,7 @@
 /area/station/construction/mining/aux_base)
 "lTX" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/security/prison/mess)
 "lTZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -54489,9 +54505,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mKC" = (
-/obj/machinery/icecream_vat,
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/food_cart,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "mKL" = (
@@ -66779,7 +66795,8 @@
 /area/station/science/robotics/mechbay)
 "pLw" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "pLx" = (
 /obj/structure/cable,
@@ -71499,6 +71516,15 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"qOX" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "chemisttop";
+	name = "Pharmacy Shutters"
+	},
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "qPa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
@@ -77968,12 +77994,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "suk" = (
-/obj/effect/turf_decal/siding/white,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/bot/right,
+/obj/machinery/icecream_vat,
+/turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "sup" = (
 /obj/structure/cable,
@@ -81070,7 +81097,7 @@
 /area/station/commons/dorms)
 "teF" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics/chicken)
 "teU" = (
 /obj/effect/spawner/structure/window,
@@ -85729,7 +85756,7 @@
 /area/station/maintenance/fore)
 "ukZ" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/security/prison/garden)
 "ulg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -90221,6 +90248,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -91011,10 +91039,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
-"vyY" = (
-/obj/machinery/smartfridge,
-/turf/closed/wall,
-/area/station/service/kitchen)
 "vze" = (
 /obj/structure/bookcase/random,
 /obj/item/radio/intercom/directional/south{
@@ -95458,6 +95482,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/medical/surgery/theatre)
 "wzr" = (
@@ -100648,13 +100673,13 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "xNk" = (
-/obj/effect/landmark/start/hangover,
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "cafe_counter";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/structure/displaycase/forsale/kitchen,
 /turf/open/floor/iron/white/smooth_corner{
 	dir = 8
 	},
@@ -112715,7 +112740,7 @@ btH
 btH
 bPC
 bRL
-kkh
+bUN
 uCC
 kkh
 wQD
@@ -133499,7 +133524,7 @@ jOD
 suk
 mKC
 cbB
-vyY
+xtp
 xtp
 pwA
 ogy
@@ -142559,9 +142584,9 @@ uNY
 squ
 pEU
 cwh
-kgq
+qOX
 pTz
-pLw
+cwh
 cwh
 udd
 tLm
@@ -145108,7 +145133,7 @@ ivA
 gAH
 kSu
 jrJ
-mOP
+iHG
 mOP
 dlx
 rBB

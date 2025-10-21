@@ -180,6 +180,10 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
+	greyscale_config = /datum/greyscale_config/jester_hat
+	greyscale_config_worn = /datum/greyscale_config/jester_hat_worn
+	greyscale_colors = "#51E33F#FF1F1F#FFC130"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"

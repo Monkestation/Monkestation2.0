@@ -195,7 +195,7 @@
 	else if (isliving(AM))
 		var/mob/living/L = AM
 		if(liquid_group.slippery)
-			if(prob(7) && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
+			if(L.m_intent == MOVE_INTENT_SPRINT && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)
 		if(!(L.movement_type & FLYING))
 			if(ishuman(AM))
@@ -229,22 +229,6 @@
 				to_chat(C, span_userdanger("You fall in and swallow some water!"))
 		else
 			to_chat(M, span_userdanger("You fall in the water!"))
-
-/obj/effect/abstract/liquid_turf/proc/ChangeToNewTurf(turf/NewT)
-	if(NewT.liquids)
-		stack_trace("Liquids tried to change to a new turf, that already had liquids on it!")
-
-	UnregisterSignal(my_turf, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
-	if(SSliquids.evaporation_queue[my_turf])
-		SSliquids.evaporation_queue -= my_turf
-		SSliquids.evaporation_queue[NewT] = TRUE
-	my_turf.liquids = null
-	my_turf = NewT
-	liquid_group.move_liquid_group(src)
-	NewT.liquids = src
-	loc = NewT
-	RegisterSignal(my_turf, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
-	RegisterSignal(my_turf, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 
 /**
  * Handles COMSIG_ATOM_EXAMINE for the turf.
