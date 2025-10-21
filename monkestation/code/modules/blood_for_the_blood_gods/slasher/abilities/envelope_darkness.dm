@@ -40,6 +40,9 @@
 	if(!isliving(owner))
 		return FALSE
 
+	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
+		return FALSE
+
 	var/mob/living/living_owner = owner
 	do_jaunt(living_owner)
 	StartCooldown()
