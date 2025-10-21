@@ -76,7 +76,7 @@ const haloPresets = {
 };
 
 export const feature_animecolor: Feature<string> = {
-  name: 'Anime Color',
+  name: 'Anime Implant Color',
   small_supplemental: false,
   predictable: false,
   component: (props: FeatureValueProps<string>) => {
