@@ -7324,7 +7324,8 @@
 /area/icemoon/underground/explored)
 "chi" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "chj" = (
 /obj/machinery/door/airlock/maintenance,
@@ -17696,6 +17697,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
+"foZ" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/wood,
+/area/station/hallway/secondary/service)
 "fpa" = (
 /obj/structure/closet/wardrobe/pjs,
 /obj/effect/landmark/start/hangover,
@@ -21611,7 +21616,8 @@
 /area/station/engineering/storage/tech)
 "gCg" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "gCh" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -49079,9 +49085,12 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "oUK" = (
-/obj/item/radio/intercom/directional/east,
 /obj/structure/table,
 /obj/item/aquarium_kit,
+/obj/machinery/light/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Service - Hall"
+	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "oUL" = (
@@ -55754,10 +55763,6 @@
 /area/station/hallway/secondary/entry)
 "qYD" = (
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/light/directional/east,
-/obj/machinery/camera/directional/east{
-	c_tag = "Service - Hall"
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -60082,7 +60087,7 @@
 /area/station/service/library)
 "sqg" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "sqs" = (
 /obj/machinery/skill_station,
@@ -245039,7 +245044,7 @@ uln
 vqD
 kQW
 fjw
-mdZ
+foZ
 mdZ
 mdZ
 exw

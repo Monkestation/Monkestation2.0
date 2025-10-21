@@ -14615,6 +14615,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/starboard)
 "eDV" = (
@@ -32953,6 +32956,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"kcg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/maintenance/starboard)
 "kcl" = (
 /obj/machinery/computer/records/medical{
 	dir = 4
@@ -34786,7 +34796,7 @@
 /area/station/commons/toilet/restrooms)
 "kHG" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "kHQ" = (
 /obj/structure/sign/poster/official/wtf_is_co2,
@@ -36192,6 +36202,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/components/trinary/mixer/flipped,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lfU" = (
@@ -40339,7 +40350,7 @@
 /area/station/engineering/atmos)
 "mwe" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/kitchen)
 "mwj" = (
 /obj/effect/turf_decal/stripes/line,
@@ -54154,7 +54165,7 @@
 /area/station/hallway/secondary/entry)
 "qUj" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall,
+/turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "qUv" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan,
@@ -60762,7 +60773,7 @@
 /area/station/engineering/gravity_generator)
 "sVz" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sVB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69048,7 +69059,7 @@
 /area/space/nearstation)
 "vDD" = (
 /obj/machinery/smartfridge/drinks,
-/turf/closed/wall,
+/turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "vDK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -71613,11 +71624,11 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/surgery,
 /obj/item/razor,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/fore)
 "woJ" = (
@@ -73668,7 +73679,7 @@
 "wVr" = (
 /obj/structure/cable,
 /obj/machinery/smartfridge,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "wVD" = (
 /obj/machinery/computer/operating,
@@ -75352,7 +75363,6 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -77155,6 +77165,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
+"ybx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/engine,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "ybH" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral{
@@ -106735,7 +106752,7 @@ wSY
 glG
 msW
 cij
-cio
+ybx
 cio
 lJg
 ciy
@@ -120641,7 +120658,7 @@ fLD
 lDu
 kcS
 iuV
-kcS
+kcg
 eDx
 kcS
 lwQ

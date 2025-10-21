@@ -13077,7 +13077,7 @@
 /area/station/maintenance/department/cargo)
 "ehG" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "eia" = (
 /obj/machinery/button/door/directional/east{
@@ -17138,7 +17138,6 @@
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "fAQ" = (
@@ -21144,7 +21143,7 @@
 /area/station/command/heads_quarters/nt_rep)
 "gLY" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/kitchen,
 /area/station/service/hydroponics)
 "gMb" = (
 /obj/docking_port/stationary/escape_pod{
@@ -35719,10 +35718,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"lut" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
-/area/station/medical/pharmacy)
 "luw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -56054,6 +56049,10 @@
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"saB" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "saI" = (
 /obj/machinery/corral_corner{
 	mapping_id = "3"
@@ -56485,6 +56484,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"sjK" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "sjM" = (
 /obj/machinery/light/small/broken/directional/west,
 /obj/structure/table,
@@ -67865,6 +67868,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/service/chapel/funeral)
+"vKC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/engine,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "vLk" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
@@ -69168,7 +69178,7 @@
 /area/station/security/prison/shower)
 "wgw" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "wgM" = (
 /obj/machinery/airalarm/directional/east,
@@ -70604,6 +70614,10 @@
 /obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"wDt" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/pharmacy)
 "wDy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/east,
@@ -90605,7 +90619,7 @@ pzt
 jZY
 nQm
 dyk
-gLY
+saB
 emg
 juc
 fzI
@@ -109380,7 +109394,7 @@ rfU
 oBH
 oBH
 vHT
-lut
+wDt
 oBH
 oBH
 oBH
@@ -110157,7 +110171,7 @@ okq
 nrJ
 rTf
 myj
-lut
+sjK
 bkW
 nCY
 jOM
@@ -111181,7 +111195,7 @@ oBH
 xQF
 oBH
 mOv
-lut
+sjK
 oBH
 oBH
 oBH
@@ -119745,7 +119759,7 @@ dCt
 kPa
 mlb
 eWG
-fIl
+vKC
 fIl
 wDR
 suH
