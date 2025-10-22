@@ -3,7 +3,7 @@
 	desc = "Prepares the Ark for activation, alerting the crew of your existence."
 	tip = "Prepares the Ark for activation, alerting the crew of your existence."
 	button_icon_state = "Spatial Gateway"
-	power_cost = 1500
+	power_cost = STANDARD_CELL_CHARGE * 1.5
 	invocation_time = 14 SECONDS
 	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
 	invokers_required = 6

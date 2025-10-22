@@ -5303,7 +5303,7 @@
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bHT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
@@ -9645,7 +9645,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ddu" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/turf_decal/bot,
@@ -12060,6 +12060,9 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"dQp" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "dQx" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
@@ -12854,7 +12857,7 @@
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "edD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
@@ -13074,7 +13077,7 @@
 /area/station/maintenance/department/cargo)
 "ehG" = (
 /obj/machinery/smartfridge/organ,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "eia" = (
 /obj/machinery/button/door/directional/east{
@@ -13670,7 +13673,7 @@
 "etr" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ett" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -5
@@ -14599,7 +14602,7 @@
 "eHI" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eHO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17135,7 +17138,6 @@
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "fAQ" = (
@@ -20452,7 +20454,7 @@
 "gDn" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gDq" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
@@ -21141,7 +21143,7 @@
 /area/station/command/heads_quarters/nt_rep)
 "gLY" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/kitchen,
 /area/station/service/hydroponics)
 "gMb" = (
 /obj/docking_port/stationary/escape_pod{
@@ -26006,7 +26008,7 @@
 	name = "Xenobiology Secure Chamber Blast Door"
 	},
 /turf/open/floor/plating/reinforced,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "iqi" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -28592,7 +28594,7 @@
 	name = "Xenobiology Secure Chamber Blast Door"
 	},
 /turf/open/floor/plating/reinforced,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jiL" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark/side{
@@ -31592,6 +31594,9 @@
 "kfT" = (
 /turf/closed/wall/r_wall,
 /area/station/security/evidence)
+"kgb" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "kgc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33210,7 +33215,7 @@
 /obj/structure/cable,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating/reinforced,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kIl" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/autoname/directional/south,
@@ -35713,10 +35718,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"lut" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
-/area/station/medical/pharmacy)
 "luw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39531,7 +39532,7 @@
 "mFj" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mFp" = (
 /obj/machinery/duct,
 /turf/open/floor/wood/large,
@@ -45566,7 +45567,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Core Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = -3;
@@ -56048,6 +56049,10 @@
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"saB" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "saI" = (
 /obj/machinery/corral_corner{
 	mapping_id = "3"
@@ -56479,6 +56484,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"sjK" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "sjM" = (
 /obj/machinery/light/small/broken/directional/west,
 /obj/structure/table,
@@ -59695,7 +59704,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tmt" = (
 /obj/machinery/firealarm/directional/east{
 	pixel_y = -5
@@ -61636,7 +61645,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "High-Risk Modules";
-	req_access = list("captain")
+	req_access = list("rd")
 	},
 /obj/item/ai_module/reset/purge{
 	pixel_y = 4;
@@ -67859,6 +67868,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/service/chapel/funeral)
+"vKC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/engine,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "vLk" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/plating,
@@ -68026,7 +68042,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vOP" = (
 /obj/effect/turf_decal/tile/purple/full,
 /obj/effect/turf_decal/box,
@@ -68806,7 +68822,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vZw" = (
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_x = -32
@@ -69162,7 +69178,7 @@
 /area/station/security/prison/shower)
 "wgw" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "wgM" = (
 /obj/machinery/airalarm/directional/east,
@@ -69356,7 +69372,7 @@
 	name = "science camera"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "wiT" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -70598,6 +70614,10 @@
 /obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"wDt" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/pharmacy)
 "wDy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/east,
@@ -90599,7 +90619,7 @@ pzt
 jZY
 nQm
 dyk
-gLY
+saB
 emg
 juc
 fzI
@@ -109374,7 +109394,7 @@ rfU
 oBH
 oBH
 vHT
-lut
+wDt
 oBH
 oBH
 oBH
@@ -110151,7 +110171,7 @@ okq
 nrJ
 rTf
 myj
-lut
+sjK
 bkW
 nCY
 jOM
@@ -111175,7 +111195,7 @@ oBH
 xQF
 oBH
 mOv
-lut
+sjK
 oBH
 oBH
 oBH
@@ -119739,7 +119759,7 @@ dCt
 kPa
 mlb
 eWG
-fIl
+vKC
 fIl
 wDR
 suH
@@ -122678,7 +122698,7 @@ aIr
 ksa
 uoo
 ksa
-fJl
+dQp
 kIh
 jiE
 jiE
@@ -122686,7 +122706,7 @@ bHS
 iqb
 jiE
 kIh
-fJl
+dQp
 ksa
 uoo
 ksa
@@ -122935,15 +122955,15 @@ ksa
 ksa
 fEP
 uoo
-fJl
-fJl
-fJl
-fck
+dQp
+dQp
+dQp
+kgb
 dcC
 vZv
-fJl
-fJl
-fJl
+dQp
+dQp
+dQp
 uoo
 uoo
 uoo
@@ -123192,15 +123212,15 @@ ksa
 ksa
 fEP
 ksa
-fJl
-fck
-fck
-fck
-fck
-fck
-fck
-fck
-fJl
+dQp
+kgb
+kgb
+kgb
+kgb
+kgb
+kgb
+kgb
+dQp
 ksa
 uoo
 ksa
@@ -123449,15 +123469,15 @@ ksa
 ksa
 fEP
 uoo
-fJl
+dQp
 vOG
 gDn
-fck
+kgb
 mFj
-fck
+kgb
 etr
 eHI
-fJl
+dQp
 uoo
 aVH
 aVH
@@ -123706,15 +123726,15 @@ ksa
 ksa
 fEP
 ksa
-fJl
-fck
-fck
-fck
-fck
-fck
-fck
-fck
-fJl
+dQp
+kgb
+kgb
+kgb
+kgb
+kgb
+kgb
+kgb
+dQp
 ksa
 aVH
 ksa
@@ -123963,15 +123983,15 @@ ksa
 ksa
 fEP
 uoo
-fJl
-fJl
-fJl
+dQp
+dQp
+dQp
 tms
 wiL
-fck
-fJl
-fJl
-fJl
+kgb
+dQp
+dQp
+dQp
 uoo
 aVH
 uoo
@@ -124222,11 +124242,11 @@ ksa
 ksa
 ksa
 ksa
-fJl
-fJl
-fJl
-fJl
-fJl
+dQp
+dQp
+dQp
+dQp
+dQp
 ksa
 ksa
 ksa

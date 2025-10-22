@@ -6,6 +6,10 @@
 	ability_explanation = "\
 	Lets you evolve strong passive modifiers into the hosts you inhabit\n\
 	Your focuses will follow you when you leave your host\n\
+	Head - Evolves the hosts eyes to be resistant against bright lights, see in the dark and understanding of the airlock wires. \n\
+	Chest - Removes the need for a host to breathe, eat, or need a heart to live.\n\
+	Arms - Insulates the host from any shocks, while improving their ability to carry bodies and build faster.\n\
+	Legs - Increases the host's natural stride, letting them move faster.\n\
 	"
 
 /datum/action/cooldown/borer/learn_focus/Trigger(trigger_flags, atom/target)

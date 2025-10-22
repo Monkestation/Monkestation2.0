@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	if(!length(compileerrors) && (compiledcode != rawcode))
 		user.log_message(rawcode, LOG_NTSL)
 		compiledcode = rawcode
-	if(user.mind.assigned_role == JOB_SIGNAL_TECHNICIAN) //achivement description says only Signal Technician gets the achivement
+	if(istype(user.mind?.assigned_role, /datum/job/signal_technician)) //achivement description says only Signal Technician gets the achivement
 		var/freq = length(freq_listening[1]) ? freq_listening[1] : 1459
 		var/atom/movable/M = new()
 		var/atom/movable/virtualspeaker/speaker = new(null, M, server_radio)

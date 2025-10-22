@@ -1422,7 +1422,7 @@
 /area/shuttle/ruin/free_miner)
 "GT" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "He" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

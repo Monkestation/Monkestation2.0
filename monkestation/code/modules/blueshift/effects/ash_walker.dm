@@ -476,7 +476,7 @@
 		var/mob/living/simple_animal/hostile/hostile_animal = find_animal
 		hostile_animal.attack_same = FALSE
 
-	find_animal.revive(HEAL_ALL)
+	find_animal.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	return TRUE
 
 /datum/ash_ritual/revive_animal/proc/revive_basic(obj/effect/ash_rune/success_rune)
@@ -495,7 +495,7 @@
 
 	find_animal.faction = list(FACTION_ASHWALKER)
 
-	find_animal.revive(HEAL_ALL)
+	find_animal.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	return TRUE
 
 GLOBAL_LIST_EMPTY(ash_rituals)
