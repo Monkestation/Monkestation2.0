@@ -62,8 +62,8 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
 
 /datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
-	for(var/obj/item/I in owner.held_items)
-		REMOVE_TRAIT(I, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+	for(var/obj/item/held_item in owner.held_items)
+		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
