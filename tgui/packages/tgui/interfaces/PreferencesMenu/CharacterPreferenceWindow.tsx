@@ -29,7 +29,7 @@ const CharacterProfiles = (props: {
   return (
     <Stack justify="center" wrap>
       {profiles.map((profile, slot) => (
-        <Stack.Item key={slot}>
+        <Stack.Item key={slot} my={0.25}>
           <Button
             selected={slot === props.activeSlot}
             onClick={() => {

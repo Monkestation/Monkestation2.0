@@ -1,14 +1,6 @@
 // @ts-nocheck
 import { useBackend, useSharedState, useLocalState } from '../../backend';
-import {
-  Box,
-  Button,
-  Section,
-  Stack,
-  FitText,
-  Tabs,
-  Table,
-} from '../../components';
+import { Box, Button, Section, Stack, Tabs, Table } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
 import { NameInput } from './names';
@@ -97,7 +89,7 @@ export const LoadoutManager = (props) => {
                   align="center"
                   tooltip="This is your total Monkecoin amount."
                 >
-                  <FitText maxFontSize={22}>{total_coins}</FitText>
+                  {total_coins}
                 </Button>
               </Stack.Item>
             </Stack>
