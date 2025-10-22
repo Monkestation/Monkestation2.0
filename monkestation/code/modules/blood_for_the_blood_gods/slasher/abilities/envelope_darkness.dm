@@ -33,14 +33,16 @@
 	/// List of valid exit points
 	var/list/exit_point_list
 
+/datum/action/cooldown/slasher/envelope_darkness/PreActivate(atom/target)
+	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
+		return FALSE
+	return ..()
+
 /datum/action/cooldown/slasher/envelope_darkness/Activate(atom/target)
 	if(!owner || !target)
 		return FALSE
 
 	if(!isliving(owner))
-		return FALSE
-
-	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
 		return FALSE
 
 	var/mob/living/living_owner = owner
