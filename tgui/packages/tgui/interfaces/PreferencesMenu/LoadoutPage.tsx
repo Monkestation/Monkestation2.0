@@ -76,9 +76,6 @@ export const LoadoutManager = (props) => {
                   handleRotate={() => {
                     act('rotate');
                   }}
-                  handleStore={() => {
-                    act('open_store');
-                  }}
                 />
               </Stack.Item>
               <Stack.Item>
