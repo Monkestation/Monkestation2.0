@@ -1,4 +1,4 @@
-import { Button, DmIcon, Stack } from 'tgui-core/components';
+import { Button, DmIcon, Stack } from '../../components';
 
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';

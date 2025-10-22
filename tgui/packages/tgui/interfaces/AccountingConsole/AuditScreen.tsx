@@ -1,4 +1,4 @@
-import { Blink, Modal, Section, Table } from 'tgui-core/components';
+import { Blink, Modal, Section, Table } from '../../components';
 import { useBackend } from '../../backend';
 import { getRandomDoomMessage } from './helpers';
 import type { Data } from './types';

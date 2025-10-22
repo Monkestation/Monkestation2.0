@@ -1,4 +1,4 @@
-import { Button, Stack } from 'tgui-core/components';
+import { Button, Stack } from '../../components';
 
 import { useBackend } from '../../backend';
 import type { SCREENS } from './types';

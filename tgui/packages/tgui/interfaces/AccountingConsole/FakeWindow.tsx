@@ -1,4 +1,4 @@
-import { Box, Button, DmIcon, Stack } from 'tgui-core/components';
+import { Box, Button, DmIcon, Stack } from '../../components';
 import { useBackend } from '../../backend';
 import { type Data, SCREENS } from './types';
 

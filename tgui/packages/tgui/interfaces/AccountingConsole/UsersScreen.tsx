@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
   Table,
-} from 'tgui-core/components';
+} from '../../components';
 import { useBackend, useSharedState } from '../../backend';
 import { getRandomDoomMessage } from './helpers';
 import { SortButton } from './Sort';
