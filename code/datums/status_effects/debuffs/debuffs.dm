@@ -49,7 +49,7 @@
 	if(!.)
 		return
 
-	// 🧠 Optional anti-drop logic (for shuttle dock or tripped)
+	// anti-drop logic (for shuttle dock or tripped)
 	if(prevent_drop)
 		for(var/obj/item/I in owner.held_items)
 			ADD_TRAIT(I, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
@@ -70,7 +70,7 @@
 	owner.knockdown_diminish = 1
 	return ..()
 
-// ✅ Cleaner tripped version — now uses prevent_drop flag instead of the hack
+// cleaner tripped version — now uses prevent_drop flag instead of the hack
 /datum/status_effect/incapacitating/knockdown/tripped
 	id = "tripped"
 
