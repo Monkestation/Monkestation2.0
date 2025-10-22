@@ -51,8 +51,8 @@
 
 	// anti-drop logic (for shuttle dock or tripped)
 	if(prevent_drop)
-		for(var/obj/item/I in owner.held_items)
-			ADD_TRAIT(I, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+		for(var/obj/item/held_item in owner.held_items)
+			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 	// Apply floored trait so the mob falls over
 	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
