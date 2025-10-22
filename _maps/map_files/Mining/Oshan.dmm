@@ -29,6 +29,10 @@
 "cQ" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/mining/eva,
+/obj/item/toy/figure/wizard{
+	pixel_y = 15;
+	pixel_x = -3
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "du" = (
@@ -72,32 +76,14 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
-"eQ" = (
-/obj/structure/table,
-/obj/item/gps/mining{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/gps/mining{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/gps/mining{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/item/gps/mining{
-	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/turf/open/floor/iron,
-/area/mine/production)
 "fd" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "fl" = (
@@ -115,14 +101,38 @@
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"fB" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "fG" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "fL" = (
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
+/area/mine/production)
+"hO" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/effect/turf_decal/box,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/turf/open/floor/iron,
 /area/mine/production)
 "hY" = (
 /turf/open/floor/iron/dark/corner{
@@ -236,6 +246,27 @@
 /obj/structure/drain,
 /turf/open/floor/noslip,
 /area/mine/production)
+"pm" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/gps/mining{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/gps/mining{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/gps/mining{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "pn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -295,6 +326,13 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/ocean/plating_real,
 /area/ocean/dark)
+"qK" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "rb" = (
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
@@ -302,6 +340,7 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box,
+/obj/effect/turf_decal/siding/thinplating_new,
 /turf/open/floor/iron,
 /area/mine/production)
 "se" = (
@@ -348,6 +387,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/turf_decal/siding/thinplating_new,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "uH" = (
@@ -376,6 +416,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/structure/fireplace,
 /turf/open/floor/iron/white/textured_large,
 /area/mine/production)
 "vj" = (
@@ -394,6 +435,9 @@
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/light/directional/south,
 /obj/structure/drain,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
 /turf/open/floor/noslip,
 /area/mine/production)
 "vN" = (
@@ -402,7 +446,17 @@
 /obj/effect/turf_decal/bot_red,
 /obj/item/soap,
 /obj/structure/drain,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
 /turf/open/floor/noslip,
+/area/mine/production)
+"wc" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/mine/production)
 "wd" = (
 /obj/effect/turf_decal/stripes/line{
@@ -418,14 +472,8 @@
 /area/mine/production)
 "wE" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/structure/table,
-/obj/item/pickaxe{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/pickaxe{
-	pixel_x = 5;
-	pixel_y = 1
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -516,6 +564,11 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/mine/production)
+"zu" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "zX" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -550,6 +603,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
+"At" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/chair/plastic{
+	dir = 8;
+	name = "Motivated Plastic Chair"
+	},
+/turf/open/floor/iron,
 /area/mine/production)
 "Aw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -712,6 +773,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/production)
+"Fp" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "Fy" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/effect/turf_decal/bot_red,
@@ -743,6 +811,29 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"Gu" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/table,
+/obj/item/pickaxe{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/pickaxe{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/item/toy/figure/miner{
+	pixel_x = 8
+	},
+/obj/item/toy/figure/miner{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "Gw" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
@@ -770,11 +861,6 @@
 	},
 /turf/open/floor/plating/ocean/plating_real,
 /area/ocean/dark)
-"Hd" = (
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/iron,
-/area/mine/production)
 "Hh" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -782,6 +868,9 @@
 /obj/structure/liquid_pump,
 /obj/effect/turf_decal/box/white{
 	color = "#EFB341"
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -802,6 +891,9 @@
 "HK" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/chair/stool/bar/directional/north,
+/obj/effect/turf_decal/siding/thinplating_new/end{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "HZ" = (
@@ -840,6 +932,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 "KL" = (
@@ -862,6 +957,15 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/porta_turret/aux_base,
 /turf/open/floor/plating/ocean/plating_real,
+/area/mine/production)
+"Ld" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/turf_decal/bot,
+/obj/item/toy/figure/cargotech{
+	pixel_y = 16;
+	pixel_x = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "Lf" = (
 /turf/open/floor/iron/dark/textured,
@@ -892,6 +996,12 @@
 "MI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/mine/production)
+"MK" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/iron,
 /area/mine/production)
 "ML" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -953,6 +1063,14 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/maintenance/service)
+"Qp" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/mine/production)
 "QL" = (
 /obj/effect/turf_decal/trimline/red/filled/arrow_ccw,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1078,6 +1196,11 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating/ocean/plating_real,
 /area/ocean/dark)
+"WW" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/production)
 "XB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/corner{
@@ -1103,6 +1226,9 @@
 /obj/item/pen,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("mine")
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -1131,6 +1257,9 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/siding/thinplating_new/end{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/mine/production)
 
@@ -18298,9 +18427,9 @@ wd
 Ca
 vk
 uT
-qu
-qu
-qu
+MI
+uT
+uT
 qu
 qu
 CN
@@ -18553,11 +18682,11 @@ fL
 fL
 fL
 Lf
-zo
-MI
-qu
-qu
-qu
+wc
+hO
+At
+Wa
+uT
 qu
 qu
 CN
@@ -18800,7 +18929,7 @@ Lz
 VX
 ze
 TP
-HK
+MK
 fL
 Lf
 ZF
@@ -18810,11 +18939,11 @@ Lf
 xk
 Po
 Lf
-eQ
+wc
+zo
+zo
+pm
 MI
-qu
-qu
-qu
 qu
 qu
 CN
@@ -19055,7 +19184,7 @@ mQ
 is
 KL
 pn
-GM
+Qp
 GM
 rX
 fL
@@ -19068,10 +19197,10 @@ ML
 pn
 Lf
 wE
+qK
+qK
+Gu
 MI
-qu
-qu
-qu
 qu
 qu
 CN
@@ -19312,23 +19441,23 @@ bq
 Bh
 HZ
 pn
-zo
-zo
-xk
+wE
+qK
+fB
 fL
 ML
 fd
 uT
 fG
-zo
+Fp
 KE
 pn
 Lf
-Wa
+Lf
+Lf
+Lf
+Lf
 MI
-qu
-qu
-qu
 qu
 qu
 CN
@@ -19581,11 +19710,11 @@ ul
 uF
 pn
 Lf
-Hd
+WW
+Ld
+WW
+zu
 uT
-qu
-qu
-qu
 qu
 qu
 CN
@@ -19840,9 +19969,9 @@ KT
 yp
 uT
 uT
-qu
-qu
-qu
+MI
+uT
+uT
 qu
 qu
 CN
