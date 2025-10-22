@@ -201,6 +201,9 @@
 /datum/preference/choiced/anime_halo/init_possible_values()
 	return assoc_to_keys_features(GLOB.anime_halo_list)
 
+/datum/preference/choiced/anime_halo/create_default_value()
+	return /datum/sprite_accessory/anime_halo/none::name
+
 /datum/preference/choiced/anime_halo/icon_for(value)
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_halo_list[value]
