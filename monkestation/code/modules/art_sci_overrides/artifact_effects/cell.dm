@@ -7,12 +7,12 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
-	valid_type_paths = list(/obj/item/stock_parts/cell/artifact)
+	valid_type_paths = list(/obj/item/stock_parts/power_store/cell/artifact)
 	research_value = TECHWEB_DISCOUNT_MINOR
-	examine_discovered = span_warning("It appears to hold power")
+	examine_discovered = span_warning("It appears to hold power.")
 
 /datum/artifact_effect/cell/setup()
-	var/obj/item/stock_parts/cell/artifact/cell = our_artifact.holder
+	var/obj/item/stock_parts/power_store/cell/artifact/cell = our_artifact.holder
 	cell.maxcharge = rand(5 KW, 500 MW) // the heavenly battery
 	cell.charge = cell.maxcharge / 2
 	cell.chargerate = rand(5000, round(cell.maxcharge * 0.4))
@@ -20,9 +20,9 @@
 	potency += cell.chargerate / 4000
 
 /datum/artifact_effect/cell/effect_activate()
-	var/obj/item/stock_parts/cell/artifact/cell = our_artifact.holder
+	var/obj/item/stock_parts/power_store/cell/artifact/cell = our_artifact.holder
 	cell.ratingdesc = TRUE
 
 /datum/artifact_effect/cell/effect_deactivate()
-	var/obj/item/stock_parts/cell/artifact/cell = our_artifact.holder
+	var/obj/item/stock_parts/power_store/cell/artifact/cell = our_artifact.holder
 	cell.ratingdesc = FALSE

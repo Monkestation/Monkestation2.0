@@ -106,7 +106,7 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/item/reagent_containers/cup/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/reagent_containers/cup/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!isliving(over))
 		return
@@ -115,7 +115,7 @@
 		return
 
 	if(!spillable)
-		return
+		return NONE
 
 	var/mob/living/chugger = over
 	var/chugging = TRUE //guys this is literally so fucking epic. We are really chugging shit
@@ -154,110 +154,102 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-
-/obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-
-	if(SEND_SIGNAL(src, COMSIG_TRY_EAT_TRAIT, target))
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/reagent_containers/cup/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!check_allowed_items(target, target_self = TRUE))
-		return
-
+		return NONE
 	if(!spillable)
-		return
+		return NONE
 
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(target.reagents.holder_full())
 			to_chat(user, span_warning("[target] is full."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		if(trans)
-			to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
-			after_pour(trans, target, user) // monkestation addition: pouring sounds
-			SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
+		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty and can't be refilled!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.holder_full())
 			to_chat(user, span_warning("[src] is full."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	target.update_appearance()
+	return NONE
 
-/obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
+/obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return NONE
+	if(!check_allowed_items(target, target_self = TRUE))
+		return NONE
 	if(!spillable)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE
 
 	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty!"))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.holder_full())
 			to_chat(user, span_warning("[src] is full."))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
-	target.update_appearance()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, params)
+	return ..()
+
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return
+		return TRUE
 
 	//Cooling method
 	if(istype(attacking_item, /obj/item/extinguisher))
 		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
+		to_chat(user, span_notice("You cool \the [src] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return
+		return TRUE
 
 	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
+			return ITEM_INTERACT_BLOCKING
+		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
-		else
-			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
-			qdel(attacking_egg)
-		return
-
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You break [attacking_egg] in [src]."))
+		attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+		qdel(attacking_egg)
+		return ITEM_INTERACT_SUCCESS
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
@@ -541,74 +533,84 @@
 	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
+	/// Reference to the item inside the mortar, ready to be grinded
 	var/obj/item/grinded
 
-/obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
-	if(grinded)
-		grinded.forceMove(drop_location())
-		grinded = null
-		to_chat(user, span_notice("You eject the item inside."))
+/obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
+	if(!grinded)
+		return CLICK_ACTION_BLOCKING
+	grinded.forceMove(drop_location())
+	grinded = null
+	balloon_alert(user, "ejected")
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
-	..()
-	if(istype(I,/obj/item/pestle))
-		if(grinded)
-			if(user.stamina.loss > 50)
-				to_chat(user, span_warning("You are too tired to work!"))
-				return
-			var/list/choose_options = list(
-				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
-				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
-			)
-			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
-				to_chat(user, span_notice("You start grinding..."))
-				if(do_after(user, 25, target = src))
-					user.stamina.adjust(-40)
-					switch(picked_option)
-						if("Juice") //prioritize juicing
-							if(grinded.juice_results)
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
-								QDEL_NULL(grinded)
-								return
-						if("Grind")
-							if(grinded.grind_results)
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You break [grinded] into powder."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-						else
-							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
-							return
-			return
-		else
+/obj/item/reagent_containers/cup/mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return
+
+	// Try to grind with a pestle
+	if(istype(tool, /obj/item/pestle))
+		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(user.staminaloss > 50)
+			to_chat(user, span_warning("You are too tired to work!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/list/choose_options = list(
+			"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
+			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+		)
+		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
+		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || !picked_option)
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You start grinding..."))
+		if(!do_after(user, 2.5 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		user.stamina.adjust(-40)
+		switch(picked_option)
+			if("Juice") //prioritize juicing
+				if(grinded.juice_results)
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+				else
+					grinded.on_grind()
+					reagents.add_reagent_list(grinded.grind_results)
+					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+					to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+			if("Grind")
+				if(grinded.grind_results)
+					grinded.on_grind()
+					reagents.add_reagent_list(grinded.grind_results)
+					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+					to_chat(user, span_notice("You break [grinded] into powder."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+				else
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+			else
+				to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+				return ITEM_INTERACT_BLOCKING
+
+	// Try to insert an item
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_results || I.grind_results)
-		I.forceMove(src)
-		grinded = I
+	if(tool.juice_results || tool.grind_results)
+		tool.forceMove(src)
+		grinded = tool
 		return
 	to_chat(user, span_warning("You can't grind this!"))
 

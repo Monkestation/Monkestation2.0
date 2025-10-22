@@ -1,8 +1,12 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_mouse_drop = NEED_HANDS
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
+	///Determines which occupants provide access when bumping into doors
+	var/access_provider_flags = VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -14,7 +18,7 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/MouseDrop_T(atom/dropping, mob/M)
+/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/M, params)
 	if(!istype(dropping) || !istype(M))
 		return ..()
 	if(M == dropping)
@@ -31,7 +35,7 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/mob/occupant as anything in return_drivers())
+		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
 			if(conditionalwall.try_safety_unlock(occupant))
 				return
 			conditionalwall.bumpopen(occupant)
@@ -91,16 +95,16 @@
 /obj/vehicle/sealed/proc/exit_location(M)
 	return drop_location()
 
-/obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
-	if(key_type && !is_key(inserted_key) && is_key(I))
-		if(user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You insert [I] into [src]."))
+/obj/vehicle/sealed/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(key_type && !is_key(inserted_key) && is_key(attacking_item))
+		if(user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_notice("You insert [attacking_item] into [src]."))
 			if(inserted_key) //just in case there's an invalid key
 				inserted_key.forceMove(drop_location())
-			inserted_key = I
+			inserted_key = attacking_item
 			inserted_key.forceMove(src)
 		else
-			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+			to_chat(user, span_warning("[attacking_item] seems to be stuck to your hand!"))
 		return
 	return ..()
 
@@ -114,8 +118,10 @@
 	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
-	else
-		inserted_key.equip_to_best_slot(user)
+		inserted_key = null
+		return
+	if(!inserted_key.equip_to_best_slot(user))
+		inserted_key.forceMove(get_turf(src))
 	inserted_key = null
 
 /obj/vehicle/sealed/Destroy()

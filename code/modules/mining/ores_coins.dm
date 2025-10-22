@@ -72,7 +72,7 @@
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
-	icon_state = "Uranium ore"
+	icon_state = "uranium"
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = NONE
@@ -85,7 +85,7 @@
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
-	icon_state = "Iron ore"
+	icon_state = "iron"
 	singular_name = "iron ore chunk"
 	points = 1
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
@@ -97,7 +97,7 @@
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
-	icon_state = "Glass ore"
+	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
-	icon_state = "Plasma ore"
+	icon_state = "plasma"
 	singular_name = "plasma ore chunk"
 	points = 15
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
-	icon_state = "Silver ore"
+	icon_state = "silver"
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
-	icon_state = "Gold ore"
+	icon_state = "gold"
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
-	icon_state = "Diamond ore"
+	icon_state = "diamond"
 	singular_name = "diamond ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
@@ -190,9 +190,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
+/obj/item/stack/ore/diamond/five
+	amount = 5
+
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
-	icon_state = "Bananium ore"
+	icon_state = "bananium"
 	singular_name = "bananium ore chunk"
 	points = 60
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
@@ -203,7 +206,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
-	icon_state = "Titanium ore"
+	icon_state = "titanium"
 	singular_name = "titanium ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
@@ -224,7 +227,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/ore.dmi'
-	icon_state = "Gibtonite ore"
+	icon_state = "gibtonite"
 	inhand_icon_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
@@ -243,25 +246,25 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	set_wires(null)
 	return ..()
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && isigniter(I))
-		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
+/obj/item/gibtonite/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!wires && isigniter(attacking_item))
+		user.visible_message(span_notice("[user] attaches [attacking_item] to [src]."), span_notice("You attach [attacking_item] to [src]."))
 		set_wires(new /datum/wires/explosive/gibtonite(src))
 		attacher = key_name(user)
-		qdel(I)
+		qdel(attacking_item)
 		add_overlay("Gibtonite_igniter")
 		return
 
 	if(wires && !primed)
-		if(is_wire_tool(I))
+		if(is_wire_tool(attacking_item))
 			wires.interact(user)
 			return
 
-	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(attacking_item.tool_behaviour == TOOL_MINING || istype(attacking_item, /obj/item/resonator) || attacking_item.force >= 10)
 		GibtoniteReaction(user)
 		return
 
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		defuse(user)
 		return
 
@@ -275,7 +278,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(det_timer)
 		deltimer(det_timer)
 	defuser?.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
-	icon_state = "Gibtonite ore"
+	icon_state = "gibtonite"
 	quality = GIBTONITE_QUALITY_LOW
 
 /obj/item/gibtonite/attack_self(user)
@@ -296,7 +299,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	primed = TRUE
 	playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
-	icon_state = "Gibtonite active"
+	icon_state = "gibtonite_active"
 	var/notify_admins = FALSE
 	if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
 		notify_admins = TRUE
@@ -406,9 +409,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] credit\s.")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+/obj/item/coin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = attacking_item
 		if(string_attached)
 			to_chat(user, span_warning("There already is a string attached to this coin!"))
 			return
@@ -581,20 +584,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			continue
 		target_airlock.lock()
 
-/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return NONE
 	if(!IS_HERETIC(user))
-		var/mob/living/living_user = user
-		living_user.adjustBruteLoss(5)
-		living_user.adjustFireLoss(5)
-		return
-	if(istype(target_atom, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You put insert the [src] into the airlock."))
-		target_airlock.emag_act(user, src)
-		qdel(src)
+		user.adjustBruteLoss(5)
+		user.adjustFireLoss(5)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/door/airlock/target_airlock = interacting_with
+	to_chat(user, span_warning("You insert [src] into the airlock."))
+	target_airlock.emag_act(user, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 #undef GIBTONITE_QUALITY_HIGH
 #undef GIBTONITE_QUALITY_LOW

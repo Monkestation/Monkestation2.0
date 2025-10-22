@@ -35,6 +35,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
@@ -128,8 +129,8 @@
 /obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	atom_storage.max_slots = 12
-	atom_storage.max_total_storage = 24
+	atom_storage.max_slots = 13
+	atom_storage.max_total_storage = 26
 	atom_storage.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -145,6 +146,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
@@ -157,6 +159,7 @@
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/breath/medical,
 		/obj/item/surgical_drapes, //for true paramedics
+		/obj/item/surgical_processor,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
@@ -327,6 +330,11 @@
 /obj/item/storage/medkit/advanced/get_medbot_skin()
 	return "advanced"
 
+/obj/item/storage/medkit/advanced/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
+
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
 		return
@@ -391,8 +399,8 @@
 	if(empty)
 		return
 	var/static/list/items_inside = list(
-		/obj/item/stack/medical/suture/medicated = 2,
-		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/stack/heal_pack/brute_pack = 2,
+		/obj/item/stack/heal_pack/burn_pack = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/healthanalyzer/advanced = 1,
@@ -472,23 +480,23 @@
 	generate_items_inside(items_inside,src)
 
 //medibot assembly
-/obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
 		return ..()
-
 	//Making a medibot!
 	if(contents.len >= 1)
 		balloon_alert(user, "items inside!")
-		return
+		return FALSE
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
 	medbot_assembly.set_skin(get_medbot_skin())
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
-	medbot_assembly.robot_arm = bodypart.type
+	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
-	qdel(bodypart)
+	qdel(tool)
 	qdel(src)
+	return FALSE
 
 /*
  * Pill Bottles
@@ -816,19 +824,20 @@
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
-/obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
+/obj/item/storage/organbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_reagent_container(tool) && tool.is_open_container())
+		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
-			return
-	if(istype(I, /obj/item/plunger))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/plunger))
 		balloon_alert(user, "plunging...")
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
-		return
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)

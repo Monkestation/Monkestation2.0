@@ -61,6 +61,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/default_custom_objective = "Cause chaos on the space station."
 	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
 	var/hardcore_random_bonus = FALSE
+	/// A path to the audio stinger that plays upon gaining this datum.
+	var/stinger_sound
 
 	//ANTAG UI
 
@@ -126,7 +128,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
-/datum/antagonist/ui_act(action, params)
+/datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -200,6 +202,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	apply_innate_effects(new_body)
 	if(count_against_dynamic_roll_chance && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
+
+///Called by the transfer_to() mind proc after the the player (key and client) is transfered.
+/datum/antagonist/proc/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	return
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -336,6 +342,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/greet()
 	if(!silent)
 		to_chat(owner.current, span_big("You are \the [src]."))
+		play_stinger()
+
+/// Plays the antag stinger sound, if we have one
+/datum/antagonist/proc/play_stinger()
+	if(isnull(stinger_sound))
+		return
+	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
@@ -490,6 +503,18 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	return finish_preview_icon(render_preview_outfit(preview_outfit))
 
+/// Returns TRUE if this antag should count against the antag cap, FALSE otherwise.
+/datum/antagonist/proc/should_count_for_antag_cap()
+	if(!count_against_dynamic_roll_chance || (antag_flags & (ANTAG_FAKE | FLAG_ANTAG_CAP_IGNORE)))
+		return FALSE
+	var/mob/antag_mob = owner.current
+	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
+		return FALSE
+	// don't count admins mucking around on centcom or whatever
+	if(istype(get_area(antag_mob), /area/centcom))
+		return FALSE
+	return TRUE
+
 /datum/antagonist/proc/edit_memory(mob/user)
 	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
@@ -574,6 +599,10 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
+	for(var/client/staff as anything in GLOB.admins)
+		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
+			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+		window_flash(staff, ignorepref = TRUE)
 
 	var/datum/objective/custom/custom_objective = new()
 	custom_objective.owner = owner

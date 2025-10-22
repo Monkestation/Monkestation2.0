@@ -2,7 +2,7 @@
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
-	clonable = FALSE
+	trauma_flags = NONE
 
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
@@ -132,7 +132,7 @@
 		"slides out of a fold in spacetime")
 
 	to_chat(user, span_notice("You try to align with the bluespace stream..."))
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, 2 SECONDS, target = src, hidden = TRUE))
 		return
 
 	var/turf/source_turf = get_turf(src)
@@ -357,7 +357,7 @@ monkestation end */
 	scan_desc = "criminal mind"
 	gain_text = span_warning("Justice is coming for you.")
 	lose_text = span_notice("You were absolved for your crimes.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// A ref to our fake beepsky image that we chase the owner with
 	var/obj/effect/client_image_holder/securitron/beepsky
 
@@ -458,12 +458,7 @@ monkestation end */
 	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
 	if(isnull(owner.ai_controller))
@@ -473,12 +468,7 @@ monkestation end */
 	if(!SPT_PROB(3, seconds_per_tick))
 		return
 
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.grant_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
@@ -489,12 +479,7 @@ monkestation end */
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 	to_chat(owner, span_green("The urge subsides."))
 
 	//MONKESTATION ADDITION START - Adds a log when primal instincts is turned off.
@@ -512,7 +497,7 @@ monkestation end */
 	gain_text = span_notice("You feel like protecting the fire axe is one of your greatest duties.")
 	lose_text = span_warning("You feel like you lost your sense of duty.")
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	var/static/list/talk_lines = list(
 		"I'm proud of you.",
 		"I believe in you!",

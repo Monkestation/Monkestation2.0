@@ -20,6 +20,8 @@
 	var/unique = FALSE
 	/// whether or not we have been carved out
 	var/carved = FALSE
+	/// whether, the book cannot be carved out or not
+	var/cannot_carve = FALSE
 
 	/// Specific window size for the book, i.e: "1920x1080", Size x Width
 	var/window_size = null
@@ -85,7 +87,7 @@
 	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
 
-	if(istype(attacking_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
 		if(user.is_blind())
@@ -168,6 +170,8 @@
 
 /// Called when user attempts to carve the book with an item
 /obj/item/book/proc/try_carve(obj/item/carving_item, mob/living/user, params)
+	if(cannot_carve)
+		return FALSE
 	if(carved)
 		return FALSE
 	if(!(user.istate & ISTATE_HARM))

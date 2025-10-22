@@ -23,8 +23,8 @@
 	src.infused_desc = infused_desc
 	src.body_zone = body_zone
 
-	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted))
-	RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed))
+	RegisterSignal(target, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_implanted), override = TRUE)
+	RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removed), override = TRUE)
 
 /datum/element/noticable_organ/Detach(obj/item/organ/target)
 	UnregisterSignal(target, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))

@@ -225,7 +225,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
-
 /// Checks if the given mob is in the mansus realm
 #define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
@@ -240,6 +239,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// Checks if the given mob is a abductee.
+#define IS_ABDUCTEE(mob) (mob.mind?.has_antag_datum(/datum/antagonist/abductee))
+
+// Antag resource defines
+#define ANTAG_RESOURCE_DARKSPAWN "psi"
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
@@ -339,22 +344,29 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 #define ANTAG_GROUP_CREW "Deviant Crew"
 #define ANTAG_GROUP_BINGLES "Bingles"
+#define ANTAG_GROUP_DARKSPAWN "Darkspawn"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"
 #define HUNTER_PACK_BOUNTY "Bounty Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Shikaris"
 
-// This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG					(1 << 0)
-/// monkestation addition: Whether the antagonist can see exploitable info on people they examine.
-#define FLAG_CAN_SEE_EXPOITABLE_INFO	(1 << 1)
-// monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.
-#define FLAG_ANTAG_CAP_IGNORE			(1 << 2)
-// monkestation addition: The storyteller will count everyone on this antag's team as a singular antag instead.
-#define FLAG_ANTAG_CAP_TEAM				(1 << 3)
+/// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
+/// or isn't necessarily a "real" antag (like Ashwalkers)
+#define ANTAG_FAKE (1 << 0)
+/// Whether the antagonist can see exploitable info on people they examine.
+#define FLAG_CAN_SEE_EXPOITABLE_INFO (1 << 1)
+///  The storyteller will ignore this antag datum as counting against the antag cap.
+#define FLAG_ANTAG_CAP_IGNORE (1 << 2)
+/// The storyteller will count everyone on this antag's team as a singular antag instead.
+#define FLAG_ANTAG_CAP_TEAM (1 << 3)
+/// The storyteller will only count a single instance of this type of antag datum.
+/// Basically FLAG_ANTAG_CAP_TEAM if you're too lazy to refactor the antag to actually use a team.
+#define FLAG_ANTAG_CAP_SINGLE (1 << 4)
 
 #define FREEDOM_IMPLANT_CHARGES 4
+
+#define MALF_MAX_PP 400
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1

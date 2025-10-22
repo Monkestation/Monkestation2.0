@@ -11,7 +11,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MAJOR_VERSION 5
+#define DB_MAJOR_VERSION 6
 
 /**
  * DB minor schema version
@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 28 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 0 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -183,7 +183,6 @@
 #define INIT_ORDER_ICON_SMOOTHING -7
 #define INIT_ORDER_OVERLAY -8
 #define INIT_ORDER_XKEYSCORE -10
-#define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_STARLIGHT -21
 #define INIT_ORDER_OUTDOOR_EFFECTS -22
@@ -214,6 +213,7 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_POLLUTION 18
+#define FIRE_PRIORITY_LIQUID_TURFS 19
 #define FIRE_PRIORITY_WET_FLOORS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
@@ -238,6 +238,7 @@
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_PROJECTILES 85
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
 #define FIRE_PRIORITY_MOBS 100
@@ -316,6 +317,16 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Machines subsystem subtasks.
+#define SSMACHINES_MACHINES_EARLY 1
+#define SSMACHINES_APCS_EARLY 2
+#define SSMACHINES_APCS_ENVIRONMENT 3
+#define SSMACHINES_APCS_LIGHTS 4
+#define SSMACHINES_APCS_EQUIPMENT 5
+#define SSMACHINES_APCS_LATE 6
+#define SSMACHINES_MACHINES 7
+#define SSMACHINES_MACHINES_LATE 8
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
@@ -373,3 +384,13 @@
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+
+///The default state, no NT Representative ever spawned in.
+#define NT_REP_STATUS_DOESNT_EXIST 0
+///The state we enter once an NT Rep spawns in, we only check roundend for survival.
+#define NT_REP_STATUS_DIED 1
+///The state we enter on roundend if at least one NT Rep survived.
+#define NT_REP_STATUS_SURVIVED 2
+
+///The max amount of stars/score the NT rep can give
+#define MAX_NT_REP_SCORE 5

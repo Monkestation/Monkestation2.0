@@ -40,6 +40,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
 
+/obj/item/match/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/storage/box/matches)
+
 /obj/item/match/proc/matchignite()
 	if(lit || burnt)
 		return
@@ -257,11 +260,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/mask/cigarette/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(lit)
 		return ..()
 
-	var/lighting_text = W.ignition_effect(src, user)
+	var/lighting_text = attacking_item.ignition_effect(src, user)
 	if(!lighting_text)
 		return ..()
 
@@ -286,12 +289,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/the_smoker = user
 	return the_smoker.can_breathe_helmet()
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/cup/glass, mob/user, proximity)
-	. = ..()
-	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
-		return
+/obj/item/clothing/mask/cigarette/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return NONE
+	var/obj/item/reagent_containers/cup/glass = interacting_with
 	if(!istype(glass)) //you can dip cigarettes into beakers
-		return
+		return NONE
 
 	if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
@@ -300,8 +303,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_warning("[glass] is empty!"))
 	else
 		to_chat(user, span_warning("[src] is full!"))
-
-	return AFTERATTACK_PROCESSED_ITEM
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()
@@ -318,6 +320,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	set_light_on(TRUE)
 	if(!(flags_1 & INITIALIZED_1))
@@ -372,6 +375,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	set_light_on(FALSE)
 	if(ismob(loc))
@@ -854,7 +858,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
-	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
+	playsound(victim, SFX_RICOCHET, 100, TRUE)
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
@@ -902,12 +906,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
+		if(fancy)
+			playsound(src.loc , 'sound/items/lighter/zippo_on.ogg', 100, 1)
+		else
+			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg', 100, 1)
 	else
 		hitsound = SFX_SWING_HIT
 		force = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
+		if(fancy)
+			playsound(src.loc , 'sound/items/lighter/zippo_off.ogg', 100, 1)
+		else
+			playsound(src.loc , 'sound/items/lighter/lighter_off.ogg', 100, 1)
 	set_light_on(lit)
 	update_appearance()
 
@@ -957,7 +969,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 	user.apply_damage(5, BURN, hitzone)
 	user.visible_message(
-		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process."),
+		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn[user.p_s()] [user.p_their()] finger in the process."),
 		span_warning("You burn yourself while lighting the lighter!")
 	)
 	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)

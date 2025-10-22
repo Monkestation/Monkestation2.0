@@ -33,7 +33,7 @@
 		to_chat(user, span_brass("[src] needs to be anchored to the floor first."))
 		return
 
-	if(depowered)
+	if(!length(transmission_sigils))
 		to_chat(user, span_brass("[src] isn't connected to power!"))
 		return
 
@@ -41,13 +41,13 @@
 		to_chat(user, span_brass("[src] is still warming up, it will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]."))
 		return
 
-	var/datum/tinker_cache_item/chosen_item = tgui_input_list(user, "Select an item to create at the forge.", "Forging", \
-															(on_reebe(src) ? reebe_craftable : reebe_craftable + station_craftable))
+	var/list/valid_list = (on_reebe(src) ? reebe_craftable : reebe_craftable + station_craftable)
+	var/datum/tinker_cache_item/chosen_item = tgui_input_list(user, "Select an item to create at the forge.", "Forging", valid_list)
 	if(!chosen_item)
 		return
 
-	chosen_item = station_craftable[chosen_item]
-	if(!can_interact(user) || !anchored || depowered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
+	chosen_item = valid_list[chosen_item]
+	if(!can_interact(user) || !anchored || !is_powered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
 	if(!length(transmission_sigils))
@@ -58,7 +58,7 @@
 	if(!chosen_item.time_delay_mult)
 		amount_to_create = tgui_input_number(user, "How many would you like to create?", "Tinkerers Cache", max_value = 10, min_value = 1)
 
-	if(!use_power(chosen_item.power_use * amount_to_create))
+	if(!use_energy(chosen_item.power_use * amount_to_create))
 		to_chat(user, span_brass("You need more power to forge this item."))
 		return
 
@@ -97,25 +97,31 @@
 /datum/tinker_cache_item/speed_robes
 	name = "Robes Of Divinity"
 	item_path = /obj/item/clothing/suit/clockwork/speed
-	power_use = 200
+	power_use = 300
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/invis_cloak
 	name = "Shrouding Cloak"
 	item_path = /obj/item/clothing/suit/clockwork/cloak
-	power_use = 200
+	power_use = 300
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/sight_goggles
 	name = "Wraith Spectacles"
 	item_path = /obj/item/clothing/glasses/clockwork/wraith_spectacles
-	power_use = 500
+	power_use = 400
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/hud_visor
 	name = "Judicial Visor"
 	item_path = /obj/item/clothing/glasses/clockwork/judicial_visor
 	power_use = 400
+	allowed_on_reebe = FALSE
+
+/datum/tinker_cache_item/borg_shell
+	name = "Clockwork Cyborg Shell"
+	item_path = /obj/item/robot_suit/prebuilt/clockwork
+	power_use = 750
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/replica_fabricator
@@ -132,13 +138,13 @@
 /datum/tinker_cache_item/tools
 	name = "Equipped Toolbelt"
 	item_path = /obj/item/storage/belt/utility/clock
-	power_use = 300
+	power_use = 150
 	time_delay_mult = 0.75
 
 /datum/tinker_cache_item/trap
 	name = "Flipper (Trap)"
 	item_path = /obj/item/clockwork/trap_placer/flipper
-	power_use = 75
+	power_use = 50
 	time_delay_mult = 0
 
 /datum/tinker_cache_item/trap/skewer

@@ -53,10 +53,11 @@
 	current_sort += target.type
 	to_chat(user, span_notice("[target] has been added to [src]'s sorting list."))
 
-/obj/item/conveyor_sorter/AltClick(mob/user)
+/obj/item/conveyor_sorter/click_alt(mob/user)
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	current_sort = list()
+	return CLICK_ACTION_SUCCESS
 
 /obj/effect/decal/conveyor_sorter
 	name = "conveyor sorter"
@@ -122,12 +123,13 @@
 	else
 		return ..()
 
-/obj/effect/decal/conveyor_sorter/AltClick(mob/user)
+/obj/effect/decal/conveyor_sorter/click_alt(mob/user)
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	sorting_list = list()
+	return CLICK_ACTION_SUCCESS
 
-/obj/effect/decal/conveyor_sorter/CtrlClick(mob/user)
+/obj/effect/decal/conveyor_sorter/click_ctrl(mob/user)
 	visible_message("[src] begins to ping violently!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	qdel(src)
@@ -144,7 +146,7 @@
 	id = "conveysorter"
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/conveyor_sorter
-	materials = list(/datum/material/iron = 500, /datum/material/plastic = 500)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MISC
 	)
@@ -183,10 +185,10 @@
 	id = "conveyor_sorter_improved"
 	build_path = /obj/item/conveyor_sorter/improved
 	materials = list(
-		/datum/material/iron = 500,
-		/datum/material/plastic = 500,
-		/datum/material/gold = 500,
-		/datum/material/bluespace = 500,
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT*5,
 	)
 
 

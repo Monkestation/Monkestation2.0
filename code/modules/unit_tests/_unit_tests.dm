@@ -79,6 +79,8 @@
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
+/// Helper to allocate a new object with the implied type (the type of the variable it's assigned to) in the corner of the test room
+#define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
 #include "abductor_baton_spell.dm"
@@ -98,6 +100,7 @@
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
+#include "buckle.dm"
 #include "cable_powernets.dm"
 #include "card_mismatch.dm"
 #include "cardboard_cutouts.dm"
@@ -143,6 +146,7 @@
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "language_key_conflicts.dm"
+#include "language_transfer.dm"
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
@@ -225,6 +229,7 @@
 #include "station_trait_tests.dm"
 #include "status_effect_validity.dm"
 #include "stomach.dm"
+#include "storage.dm"
 #include "strange_reagent.dm"
 #include "strippable.dm"
 #include "stuns.dm"
@@ -232,6 +237,7 @@
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
+#include "text.dm"
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "trait_addition_and_removal.dm"
@@ -239,6 +245,7 @@
 #include "trick_weapon_icons.dm"
 #include "turf_icons.dm"
 #include "tutorial_sanity.dm"
+#include "unequip_defib.dm"
 #include "unit_test.dm"
 #include "vendor_boards.dm"
 #include "verify_config_tags.dm"

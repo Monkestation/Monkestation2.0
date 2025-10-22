@@ -10,7 +10,7 @@
 		return
 
 	if(victim != attacker)
-		if(!do_after(attacker, 5 SECONDS, victim))
+		if(!do_after(attacker, 5 SECONDS, victim, hidden = TRUE))
 			return
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),
@@ -19,7 +19,7 @@
 		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 		return TRUE
 
-	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker)))
+	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker), hidden = TRUE))
 		victim.visible_message(
 			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
 			span_notice("You take a sip from \the [src]."),
@@ -103,8 +103,8 @@
 	icon = 'monkestation/icons/bloodsuckers/stakes.dmi'
 	icon_state = "wood"
 	inhand_icon_state = "wood"
-	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
+	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -220,8 +220,8 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	starting_title = "the Archive of the Kindred"
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
-	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
+	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"
@@ -292,6 +292,8 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 /obj/item/book/kindred/ui_static_data(mob/user)
 	var/list/clans = list()
 	for(var/datum/bloodsucker_clan/clan_type as anything in subtypesof(/datum/bloodsucker_clan))
+		if(!clan_type::display_in_archive)
+			continue
 		clans += list(list(
 			"name" = clan_type::name,
 			"desc" = clan_type::description,

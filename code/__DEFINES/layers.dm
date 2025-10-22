@@ -68,7 +68,6 @@
 
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
-#define LIGHTING_PLANE_ADDITIVE 11
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 12
@@ -319,6 +318,15 @@
 #define PLANE_CRITICAL_CUT_RENDER (1<<2)
 
 #define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
+
+//---------- Plane Master offsetting_flags -------------
+// Describes how different plane masters behave regarding being offset
+/// This plane master will not be offset itself, existing only once with an offset of 0
+/// Mostly used for planes that really don't need to be duplicated, like the hud planes
+#define BLOCKS_PLANE_OFFSETTING (1<<0)
+/// This plane master will have its relays offset to match the highest rendering plane that matches the target
+/// Required for making things like the blind fullscreen not render over runechat
+#define OFFSET_RELAYS_MATCH_HIGHEST (1<<1)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1

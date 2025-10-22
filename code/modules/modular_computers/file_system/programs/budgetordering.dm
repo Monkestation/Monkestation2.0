@@ -1,11 +1,11 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
 	filedesc = "NT IRN"
-	category = PROGRAM_CATEGORY_SUPL
-	program_icon_state = "request"
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
+	program_open_overlay = "request"
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
-	requires_ntnet = TRUE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
 	tgui_id = "NtosCargo"
 	///Are you actually placing orders with it?
@@ -48,19 +48,21 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
+/* commented out bc we should only be handling this once in ui_data now
 	//Aquire access from the inserted ID card.
 	if(!length(access))
 		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
 		if(!D)
 			return FALSE
 		access = D.GetAccess()
+*/
 
 	if(paccess_to_check in access)
 		return TRUE
 
 	return FALSE
 
-/datum/computer_file/program/budgetorders/ui_data()
+/datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()
 	data["location"] = SSshuttle.supply.getStatusText()
 	data["department"] = "Cargo"
@@ -85,9 +87,10 @@
 //Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
+	var/list/access = id_card?.GetAccess()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access_view , null, P.contraband) || P.hidden)
+		if(!is_visible_pack(user, P.access_view, access, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(

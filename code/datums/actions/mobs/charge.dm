@@ -22,9 +22,10 @@
 	var/list/charging = list()
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
@@ -209,7 +210,7 @@
 	var/mob/living/living_target = target
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
-		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
+		if(human_target.check_block(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
 			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 

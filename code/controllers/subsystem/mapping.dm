@@ -112,6 +112,10 @@ SUBSYSTEM_DEF(mapping)
 		if(!current_map || current_map.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
 			current_map = old_config
+	var/mapping_url = config.Get(/datum/config_entry/string/webmap_url)
+	if(mapping_url != "")
+		var/map_name = replacetext_char(trimtext(current_map.map_name), " ", "")
+		current_map.mapping_url = replacetext_char(mapping_url, "$map", map_name)
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
 	plane_to_offset = list()
@@ -965,7 +969,7 @@ ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specifi
 			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
 			var/string_plane = "[offset_plane]"
 
-			if(!initial(master_type.allows_offsetting))
+			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
 				plane_offset_blacklist[string_plane] = TRUE
 				var/render_target = initial(master_type.render_target)
 				if(!render_target)
@@ -1026,3 +1030,14 @@ ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specifi
 	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
 		GLOB.default_lighting_underlays_by_z.len = z_level
 	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+
+///Returns the map name, with an openlink action tied to it (if one exists) for the map.
+/datum/map_config/proc/return_map_name(webmap_included)
+	var/text
+	if(feedback_link)
+		text = "<a href='byond://?action=openLink&link=[url_encode(feedback_link)]'>[map_name]</a>"
+	else
+		text = map_name
+	if(webmap_included && !isnull(SSmapping.current_map.mapping_url))
+		text += " | <a href='byond://?action=openWebMap'>(Show Map)</a>"
+	return text

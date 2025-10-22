@@ -3,8 +3,9 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
-	strip_delay = 40
-	equip_delay_other = 40
+	interaction_flags_click = NEED_DEXTERITY
+	strip_delay = 4 SECONDS
+	equip_delay_other = 4 SECONDS
 	blood_overlay_type = "mask"
 
 /obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
@@ -77,10 +78,9 @@
 	else
 		. += span_notice("The tie can be untied with Alt-Click.")
 
-/obj/item/clothing/neck/tie/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/neck/tie/click_alt(mob/living/user)
 	if(clip_on)
-		return
+		return NONE
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
@@ -92,11 +92,11 @@
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
@@ -105,6 +105,7 @@
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -473,25 +474,21 @@
 	selling = !selling
 	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
 
-/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
+/obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/export_report/ex = export_item_and_contents(interacting_with, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> credits[interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
 	else
-		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+		to_chat(user, span_warning("There is no export value for [interacting_with] or any items within it."))
 
-	return .
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"

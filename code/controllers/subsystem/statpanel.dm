@@ -26,23 +26,19 @@ SUBSYSTEM_DEF(statpanels)
 
 		if(isnull(SSmapping.current_map))
 			global_data = list("Loading")
-/*
 		else if(SSmapping.current_map.feedback_link)
 			global_data = list(list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
-*/
 		else
 			global_data = list("Map: [SSmapping.current_map?.map_name]")
 
-/*
 		if(SSmapping.current_map?.mapping_url)
 			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
-*/
 
 		if(cached)
 			global_data += "Next Map: [cached.map_name]"
 
 		global_data += list(
-			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]", //monkestation addition
+			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]",
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
 			"Round Time: [ROUND_TIME()]",

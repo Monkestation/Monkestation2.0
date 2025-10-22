@@ -5,6 +5,7 @@
 	inhand_icon_state = "blueprints"
 	attack_verb_continuous = list("attacks", "baps", "hits")
 	attack_verb_simple = list("attack", "bap", "hit")
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
 
@@ -47,6 +48,7 @@
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 	var/list/image/showing = list()
 	var/client/viewing
 	var/legend = FALSE //Viewing the wire legend

@@ -252,11 +252,11 @@ SUBSYSTEM_DEF(gamemode)
 
 /datum/controller/subsystem/gamemode/proc/get_antag_count()
 	. = 0
-	var/list/already_counted = list() // Never count the same mind twice
+	var/alist/already_counted = alist() // Never count the same mind twice
 	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
 		if(QDELETED(antag) || QDELETED(antag.owner) || already_counted[antag.owner])
 			continue
-		if(!antag.count_against_dynamic_roll_chance || (antag.antag_flags & (FLAG_FAKE_ANTAG | FLAG_ANTAG_CAP_IGNORE)))
+		if(!antag.should_count_for_antag_cap())
 			continue
 		if(antag.antag_flags & FLAG_ANTAG_CAP_TEAM)
 			var/datum/team/antag_team = antag.get_team()
@@ -264,9 +264,10 @@ SUBSYSTEM_DEF(gamemode)
 				if(already_counted[antag_team])
 					continue
 				already_counted[antag_team] = TRUE
-		var/mob/antag_mob = antag.owner.current
-		if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
-			continue
+		if(antag.antag_flags & FLAG_ANTAG_CAP_SINGLE)
+			if(already_counted[antag.type])
+				continue
+			already_counted[antag.type] = TRUE
 		already_counted[antag.owner] = TRUE
 		.++
 
@@ -310,7 +311,7 @@ SUBSYSTEM_DEF(gamemode)
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
-					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & ANTAG_FAKE))
 						real = TRUE
 						break
 				if(real)
@@ -1029,8 +1030,8 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 		else
 			event_lookup = event_pools[statistics_track_page]
 	var/list/assoc_spawn_weight = list()
+	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 	for(var/datum/round_event_control/event as anything in event_lookup)
-		var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 		if(event.roundstart != roundstart_event_view)
 			continue
 		if(event.can_spawn_event(players_amt))

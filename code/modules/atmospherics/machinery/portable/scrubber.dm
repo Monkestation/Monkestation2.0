@@ -149,7 +149,7 @@
 	else if(on && holding)
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
+/obj/machinery/portable_atmospherics/scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -226,5 +226,5 @@
 	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE

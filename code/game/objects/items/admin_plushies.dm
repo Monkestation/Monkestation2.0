@@ -218,7 +218,7 @@
 	item_path = /obj/item/toy/plush/admin/gabbie
 	item_cost = 7500
 
-/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
 		playsound(src.loc, 'sound/items/eatfood.ogg', 50)
 		to_chat(user, span_warning("Gabbie chomps up the rat!"))
@@ -450,7 +450,7 @@
 	name = "Siro Yamamuchi Plush"
 	item_path = /obj/item/toy/plush/admin/siro
 	item_cost = 7500
-/obj/item/toy/plush/admin/siro/AltClick(mob/user)
+/obj/item/toy/plush/admin/siro/click_alt(mob/user)
 	if(icon_state == "siro")
 		icon_state = "siro-mask"
 	else
@@ -489,7 +489,7 @@
 	if (mask_on)
 		. += "shion-mask"
 
-/obj/item/toy/plush/admin/shion/AltClick(mob/living/user)
+/obj/item/toy/plush/admin/shion/click_alt(mob/living/user)
 	if(!Adjacent(user) || user.incapacitated())
 		return
 	mask_on = !mask_on
@@ -521,7 +521,7 @@
 			if(50 to INFINITY)
 				. += span_notice("Her hair has been brushed! It sparkles with beauty! It's the most beautiful hair in the galaxy!")
 
-/obj/item/toy/plush/admin/shion/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/toy/plush/admin/shion/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/razor))
 		if(shaved)
 			to_chat(user, span_warning("You can't shave [src], she has already been shaved!"))
@@ -563,4 +563,27 @@
 /datum/store_item/plushies/mcsteal
 	name = "McSteal Plush"
 	item_path = /obj/item/toy/plush/admin/mcsteal
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/birdion
+	name = "birdion aziz"
+	desc = "It's Birdion! You feel the urge to beat the shit out of her."
+	icon_state = "birdion"
+	pet_message = "You beat the shit out of birdion. You feel better."
+	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	gender = FEMALE
+
+/obj/item/toy/plush/admin/birdion/click_alt(mob/user)
+	if(icon_state == "birdion")
+		icon_state = "birdion-mask"
+	else
+		icon_state = "birdion"
+
+/datum/loadout_item/plushies/birdion
+	name = "Birdion Plush"
+	item_path = /obj/item/toy/plush/admin/birdion
+
+/datum/store_item/plushies/birdion
+	name = "Birdion Plush"
+	item_path = /obj/item/toy/plush/admin/birdion
 	item_cost = 7500

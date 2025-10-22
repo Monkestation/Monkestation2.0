@@ -21,6 +21,7 @@
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT
 	armor_type = /datum/armor/machinery_atmospherics
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
@@ -304,7 +305,10 @@
 		return FALSE
 
 	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
-	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
+	if(target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		if(ISODD(given_layer))
+			return FALSE
+	else if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
 	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
@@ -369,9 +373,9 @@
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
 
-/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pipe)) //lets you autodrop
-		var/obj/item/pipe/pipe = W
+/obj/machinery/atmospherics/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/pipe)) //lets you autodrop
+		var/obj/item/pipe/pipe = attacking_item
 		if(user.dropItemToGround(pipe))
 			pipe.set_piping_layer(piping_layer) //align it with us
 			return TRUE
@@ -380,7 +384,7 @@
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
@@ -394,11 +398,14 @@
 		var/empty_mixes = 0
 		for(var/gas_mix_number in 1 to device_type)
 			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
-			if(!(gas_mix.total_moles() > 0))
+			if(!gas_mix.total_moles())
 				empty_mixes++
+			if(!nodes[gas_mix_number] || (istype(nodes[gas_mix_number], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(gas_mix_number)))
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
-	if(!(int_air.total_moles() > 0))
+	if(!int_air.total_moles())
 		empty_pipe = TRUE
 
 	if(!empty_pipe)
@@ -408,8 +415,7 @@
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	var/time_taken = empty_pipe ? 0 : 20
-	if(I.use_tool(src, user, time_taken, volume = 50))
+	if(I.use_tool(src, user, empty_pipe ? 0 : 2 SECONDS, volume = 50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
@@ -419,9 +425,10 @@
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
-		return deconstruct(TRUE)
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Getter for can_unwrench
@@ -581,12 +588,6 @@
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
-		L.handle_ventcrawl(src)
-		return
-	return ..()
-
 /**
  * Getter of a list of pipenets
  *
@@ -622,6 +623,13 @@
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+/// Return TRUE if there is device connected to portables_connector
+/obj/machinery/atmospherics/proc/portable_device_connected(node)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = nodes[node]
+	if(portable_devices_connector.connected_device)
+		return TRUE
+	return FALSE
 
 #undef PIPE_VISIBLE_LEVEL
 #undef PIPE_HIDDEN_LEVEL

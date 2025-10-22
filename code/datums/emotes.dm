@@ -66,6 +66,10 @@
 	var/falloff_exponent = SOUND_FALLOFF_EXPONENT
 	/// The extra range for audible emotes.
 	var/extra_range = 0
+	/// The volume to play an audible emote at.
+	var/volume = 50
+	/// Lets emote proceed without early returning in the event the message is empty.
+	var/empty_message_intentional
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -105,20 +109,21 @@
 
 	msg = replace_pronoun(user, msg)
 
-	if(!msg)
+	if(!msg && !empty_message_intentional)
 		return
 
-	user.log_message(msg, LOG_EMOTE)
-	var/dchatmsg = "<b>[user]</b> [msg]"
+	if(user.client)
+		user.log_message(msg ? msg : "performed a messageless emote. ([type])", LOG_EMOTE)
+	var/dchatmsg = "<b>[user]</b> [msg ? msg : "performed an emote."]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		var/tmp_vary = should_vary(user)
 		playsound(
 			source = user,
 			soundin = tmp_sound,
-			vol = 50,
+			vol = get_emote_volume(user),
 			vary = tmp_vary,
 			extrarange = extra_range,
 			falloff_exponent = falloff_exponent,
@@ -132,17 +137,18 @@
 				continue
 			if((ghost.client?.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
-	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
-		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
-	else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
-		user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
-	if(emote_type & EMOTE_IMPORTANT)
-		for(var/mob/living/viewer in viewers())
-			if(viewer.is_blind() && !viewer.can_hear())
-				to_chat(viewer, msg)
+	if(msg)
+		if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
+			user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
+		else if(emote_type & EMOTE_VISIBLE)	//emote is only visible
+			user.visible_message(msg, visible_message_flags = EMOTE_MESSAGE)
+		if(emote_type & EMOTE_IMPORTANT)
+			for(var/mob/living/viewer in viewers())
+				if(viewer.is_blind() && !viewer.can_hear())
+					to_chat(viewer, msg)
 
 	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
-	SSblackbox.record_feedback("tally", "emote_used", 1, name)
+	// SSblackbox.record_feedback("tally", "emote_used", 1, name)
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -176,6 +182,9 @@
  */
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+
+/datum/emote/proc/get_emote_volume(mob/living/user)
+	return volume
 
 /**
  * To replace pronouns in the inputed string with the user's proper pronouns.
@@ -322,18 +331,21 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/atom/proc/manual_emote(text)
-	if(!text)
+/atom/proc/manual_emote(text, log_emote = TRUE)
+	if (!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
-	log_message(text, LOG_EMOTE)
+	if (log_emote)
+		log_message(text, LOG_EMOTE)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 	return TRUE
 
-/mob/manual_emote(text)
+/mob/manual_emote(text, log_emote = null)
 	if (stat != CONSCIOUS)
 		return FALSE
-	. = ..()
+	if (isnull(log_emote))
+		log_emote = !isnull(client)
+	. = ..(text, log_emote)
 	if (!.)
 		return FALSE
 	if (!client)

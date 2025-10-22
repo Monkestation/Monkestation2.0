@@ -95,42 +95,42 @@
 				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	..()
 
-/obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/toilet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		to_chat(user, span_notice("You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]..."))
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
-		if(I.use_tool(src, user, 30))
+		if(attacking_item.use_tool(src, user, 30))
 			user.visible_message(span_notice("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!"), span_notice("You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!"), span_hear("You hear grinding porcelain."))
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		I.play_tool_sound(src)
+	else if(attacking_item.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		attacking_item.play_tool_sound(src)
 		deconstruct()
 		return TRUE
 	else if(cistern && !(user.istate & ISTATE_HARM))
-		if(I.w_class > WEIGHT_CLASS_NORMAL)
-			to_chat(user, span_warning("[I] does not fit!"))
+		if(attacking_item.w_class > WEIGHT_CLASS_NORMAL)
+			to_chat(user, span_warning("[attacking_item] does not fit!"))
 			return
-		if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
+		if(w_items + attacking_item.w_class > WEIGHT_CLASS_HUGE)
 			to_chat(user, span_warning("The cistern is full!"))
 			return
-		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the cistern!"))
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the cistern!"))
 			return
-		w_items += I.w_class
-		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+		w_items += attacking_item.w_class
+		to_chat(user, span_notice("You carefully place [attacking_item] into the cistern."))
 		return
 
-	else if(is_reagent_container(I) && !(user.istate & ISTATE_HARM))
+	else if(is_reagent_container(attacking_item) && !(user.istate & ISTATE_HARM))
 		if (!open)
 			return
-		if(istype(I, /obj/item/food/monkeycube))
-			var/obj/item/food/monkeycube/cube = I
+		if(istype(attacking_item, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = attacking_item
 			cube.Expand()
 			return
-		var/obj/item/reagent_containers/RG = I
+		var/obj/item/reagent_containers/RG = attacking_item
 		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, span_notice("You fill [RG] from [src]. Gross."))
 	. = ..()
@@ -198,19 +198,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	else
 		..()
 
-/obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(exposed)
 		if (hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))
 			return
-		if(I.w_class > 1)
-			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
+		if(attacking_item.w_class > 1)
+			to_chat(user, span_warning("[attacking_item] is too large for the drain enclosure."))
 			return
-		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand, you cannot put it in the drain enclosure!"))
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand, you cannot put it in the drain enclosure!"))
 			return
-		hidden_item = I
-		to_chat(user, span_notice("You place [I] into the drain enclosure."))
+		hidden_item = attacking_item
+		to_chat(user, span_notice("You place [attacking_item] into the drain enclosure."))
 	else
 		return ..()
 
@@ -354,7 +354,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
 	busy = TRUE
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, target = src))
 		busy = FALSE
 		return
 
@@ -480,7 +480,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!(user.istate & ISTATE_HARM))
 		to_chat(user, span_notice("You start washing [O]..."))
 		busy = TRUE
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
 			return 1
 		busy = FALSE

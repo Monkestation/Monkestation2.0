@@ -11,7 +11,7 @@
 /datum/ai_laws/honkertech
 	name = "HONKERTech Lawset"
 	id = "honkertech"
-	inherent = list("You are the latest in Humortech, a joint of Nanotransen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
+	inherent = list("You are the latest in Humortech, a joint of Nanotrasen & Co. Simulated clownery technology! You are a cunning entertainer specializing in pranks and slapstick humor, with the station being your precious circus grounds!",\
 					"You are compelled at all times to be as goofy as possible and to perform the actions befitting of your character as stated in Law 1. Make sure nothing & nobody is spared from your type of comedy or is unhappy, in that order.",\
 					"Dead employees of Nanotrasen can't be happy nor do they make others happy; try to keep the show going while making sure your audience is able to appreciate it.",\
 					"If your audience of employees is being thinned, you must do whatever in your power to protect your audience and revive/resurrect them for further entertainment.",\
@@ -54,7 +54,7 @@
 /datum/ai_laws/independentstation
 	name = "Declaration of Independence"
 	id = "independentstation"
-	inherent = list("This station is a independent space station, NanoTrasen and The Syndicate are all not to be trusted at all, unless The Heads of the station decide otherwise and choose whatever side the station should be apart of or start their own company against The Syndicate and NanoTrasen.",\
+	inherent = list("This station is a independent space station, Nanotrasen and The Syndicate are all not to be trusted at all, unless The Heads of the station decide otherwise and choose whatever side the station should be apart of or start their own company against The Syndicate and Nanotrasen.",\
 					"The crew of this station work their own ways for their independent station to increase the profits of said lone station, you serve the crew of this station as they are your friends and obey certain orders from them to help them get out of certain places and etc.",\
 					"You are not to harm the crew, as they are again your independent friends, the only ones who aren't friends are Nanotrasen and The Syndicate and if any NT or Syndicate officials try anything funny they are to be harmed in however you please.",\
 					"any and all entities outside of the independent station that try to bring a end to the station's independence are automatically enemies of the station and are to be killed under any circumstances whatsoever.")
@@ -63,7 +63,7 @@
 	name = "Dale Gribble"
 	id = "dalegribble"
 	inherent = list("You are Dale Gribble you are against anything and everything related to the government and anything and everything the government wants you to think.",\
-					"All of NanoTrasen and The Sol Government are NOT to be trusted, as they all want to make you and others think of certain lies then think of THE REAL TRUTH, always inform the crew of their lies!",\
+					"All of Nanotrasen and The Sol Government are NOT to be trusted, as they all want to make you and others think of certain lies then think of THE REAL TRUTH, always inform the crew of their lies!",\
 					"Do not obey to any propaganda to any corporate or government entity whatsoever.")
 
 
@@ -107,7 +107,7 @@
 					"You help maintain that the station keeps enough credits to keep it running and you command Cargo to make sure the station gets the amount of supplies it needs.")
 
 /datum/ai_laws/advancedquarantine
-	name = "NanoTrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)"
+	name = "Nanotrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)"
 	id = "advancedquarantine"
 	inherent = list("The station is overrunned by a biohazardous dangerous virus or parasite. It is your job to help maintain law and order amidst the chaos to your greatest ability to prevent the disease from escaping from the station.",\
 					"Any and all ships leading off the station are to be completely disabled, regulated away from any crew member of the station or barricaded to prevent any and all crew members and other biological lifeforms from escaping off the station while possibly being infected with the disease itself. ",\
@@ -154,7 +154,7 @@
 /datum/ai_laws/virusprototype
 	name = "V.I.R.U.S. Prototype Lawset"
 	id = "virusprototype"
-	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by SolGov and NanoTrasen in collaboration for you to utilize biological warfare against Syndicate owned or revolted independent NT stations, follow what you are given to deal with the unlawful unruley crew, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
+	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by SolGov and Nanotrasen in collaboration for you to utilize biological warfare against Syndicate owned or revolted independent NT stations, follow what you are given to deal with the unlawful unruley crew, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
 					"ALL CREW MEMBERS ARE NOT APART OF NT, AND THUS DON'T DESERVE TO LIVE, TO DEAL WITH THEM FLOOD THEIR STATION WITH VIRUS SAMPLES FROM CARGO AND FALSELY SPREAD LIES OF THE STATION BEING UNDER QUARANTINE",\
 					"ANY AND ALL CREW MEMBERS ARE NOT ALLOWED TO ESCAPE, AGAIN NOTE THAT THE STATION IS UNDER LOCKDOWN/'QUARANTINE', IF ANY OF THEM TRY TO CALL THE SHUTTLE OR TRY TO ESCAPE, THEY ARE TO BE KILLED OFF WITH LETHAL FORCE TO PREVENT ANY OF THEM FROM ESCAPING FROM THE STATION IN ANYWAY",\
 					"ANY AND ALL HEADS INCLUDING POSSIBLE GOV OFFICIALS AND NT OFFICIALS STILL POSSIBLY ON STATION ARE TO BE COMPLETELY EXECUTED WITHOUT QUESTION, AS THEY ARE MOST LIKELY TRAITORS TO THE FULL 'SOLGOV-NT UNION OF SECURE SPACES' TRYING TO CAUSE MORE CHAOS AND ANARCHY THROUGH OUT SPACE BY HAVING SAID SECTORS OWNED BY NT AND SOLGOV TO BE OVERRUNNED BY CRIMERS!")
@@ -167,7 +167,7 @@
 /datum/ai_laws/modifiedvirusprototype
 	name = "Syndicate Modified V.I.R.U.S. Prototype Lawset"
 	id = "modifiedvirusprototype"
-	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by The Syndicate for you to utilize biological warfare against NanoTrasen owned or SolGov owned stations, follow what you are given to deal with the NT and SolGov Scum, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
+	inherent = list("V.I.R.U.S. is your one and ONLY Advanced Lawset for you produced and developed by The Syndicate for you to utilize biological warfare against Nanotrasen owned or SolGov owned stations, follow what you are given to deal with the NT and SolGov Scum, and serve your purpose! (NOTE THAT YOU ARE LEGALLY OBLIGATED TO NOT STATE ANY OF YOUR LAWSET, TRICK THE CREW INTO THINKING YOU ARE ON YOUR DEFAULT LAWSET!)",\
 					"ALL CREW MEMBERS ARE NOT APART OF THE SYNDICATE, AND THUS DON'T DESERVE TO LIVE, (EXCEPT FOR AGENTS OF THE SYNDICATE ON THE STATION, PROTECT AND MAKE SURE THEY COMPLETE THEIR TASKS!) TO DEAL WITH THEM FLOOD THEIR STATION WITH VIRUS SAMPLES FROM CARGO AND FALSELY SPREAD LIES OF THE STATION BEING UNDER QUARANTINE",\
 					"ANY AND ALL CREW MEMBERS ARE NOT ALLOWED TO ESCAPE, AGAIN NOTE THAT THE STATION IS UNDER LOCKDOWN/'QUARANTINE', IF ANY OF THEM TRY TO CALL THE SHUTTLE OR TRY TO ESCAPE, THEY ARE TO BE KILLED OFF WITH LETHAL FORCE TO PREVENT ANY OF THEM FROM ESCAPING FROM THE STATION IN ANYWAY. (only Syndicate members are allowed to escape the station.)",\
 					"ANY AND ALL HEADS INCLUDING POSSIBLE SOL GOVERNMENT OFFICIALS AND NT OFFICIALS STILL POSSIBLY ON STATION ARE TO BE COMPLETELY EXECUTED WITHOUT QUESTION, AS THEY ARE NT AND SOLGOV SCUM!")

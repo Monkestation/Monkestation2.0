@@ -16,7 +16,7 @@
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
-	temperature_homeostasis_speed = 2
+	temperature_homeostasis_speed = 3
 	temperature_normalization_speed = 1
 
 	siemens_coeff = 0.5 //They thrive on energy
@@ -50,7 +50,9 @@
 
 	var/current_color
 	var/EMPeffect = FALSE
+	var/EMP_timer = null
 	var/emageffect = FALSE
+	var/emag_timer = null
 	var/r1
 	var/g1
 	var/b1
@@ -59,6 +61,10 @@
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 	var/default_color
+	var/powermult = 1
+	var/rangemult = 1
+	var/flickering = FALSE
+	var/currently_flickered
 
 /datum/species/ethereal/Destroy(force)
 	QDEL_NULL(ethereal_light)
@@ -124,15 +130,24 @@
 		var/healthpercent = max(ethereal.health, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
-		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + round(0.5 * healthpercent), current_color)
+		ethereal_light.set_light_range_power_color((1 + (2 * healthpercent)) * rangemult, (1 + round(0.5 * healthpercent)) * powermult, current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
+		if(flickering)
+			if(currently_flickered)
+				ethereal_light.set_light_on(FALSE)
+			else
+				ethereal_light.set_light_on(TRUE)
+		else
+			if(currently_flickered)
+				currently_flickered = FALSE
+			ethereal_light.set_light_on(TRUE)
 	else
 		ethereal_light.set_light_on(FALSE)
 		current_color = rgb(230, 230, 230)
 		fixed_mut_color = current_color
-	ethereal.set_haircolor(current_color, update = FALSE)
-	ethereal.set_facial_haircolor(current_color, update = FALSE)
+	ethereal.set_haircolor(current_color, TRUE, update = FALSE)
+	ethereal.set_facial_haircolor(current_color, TRUE, update = FALSE)
 	if(ethereal.organs_slot["horns"])
 		var/obj/item/organ/external/horms = ethereal.organs_slot["horns"]
 		horms.bodypart_overlay.draw_color = current_color
@@ -171,7 +186,7 @@
 		to_chat(user, span_notice("You tap [H] on the back with your card."))
 	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
-	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 1 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
 
 /// Special handling for getting hit with a light eater
@@ -197,6 +212,50 @@
 	emageffect = FALSE
 	spec_updatehealth(H)
 	H.visible_message(span_danger("[H] stops flickering and goes back to their normal state!"))
+
+/datum/species/ethereal/proc/start_flicker(mob/living/carbon/human/ethereal, duration = 6 SECONDS, min = 1, max = 4)
+	flickering = TRUE
+	handle_flicker(ethereal, min, max)
+	addtimer(CALLBACK(src, PROC_REF(stop_flicker), ethereal), duration)
+
+/datum/species/ethereal/proc/handle_flicker(mob/living/carbon/human/ethereal, flickmin = 1, flickmax = 4)
+	if(!flickering)
+		currently_flickered = FALSE
+		spec_updatehealth(ethereal)
+		return
+	if(currently_flickered)
+		currently_flickered = FALSE
+	else
+		currently_flickered = TRUE
+	spec_updatehealth(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(handle_flicker), ethereal), rand(1, 4))
+
+/datum/species/ethereal/proc/stop_flicker(mob/living/carbon/human/ethereal)
+	flickering = FALSE
+	currently_flickered = FALSE
+
+/datum/species/ethereal/proc/handle_glow_emote(mob/living/carbon/human/ethereal, power, range, flare = FALSE, duration = 5 SECONDS, flare_time = 0)
+	powermult = power
+	rangemult = range
+	spec_updatehealth(ethereal)
+	addtimer(CALLBACK(src, PROC_REF(stop_glow_emote), ethereal, flare, flare_time), duration)
+
+/datum/species/ethereal/proc/stop_glow_emote(mob/living/carbon/human/ethereal, flare, flare_time)
+	if(!flare)
+		powermult = 1
+		rangemult = 1
+		spec_updatehealth(ethereal)
+		return
+	powermult = 0.5
+	rangemult = 0.75
+	spec_updatehealth(ethereal)
+	start_flicker(ethereal, duration = 1.5 SECONDS, min = 1, max = 2)
+	sleep(1.5 SECONDS)
+	powermult = 1
+	rangemult = 1
+	EMPeffect = TRUE
+	to_chat(ethereal, span_warning("Your shine flickers and fades."))
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/species/ethereal/get_features()
 	var/list/features = ..()

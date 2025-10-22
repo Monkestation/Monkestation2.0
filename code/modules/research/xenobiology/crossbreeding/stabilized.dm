@@ -94,7 +94,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/bluespace
 	colour = "bluespace"
-	effect_desc = "On a two minute cooldown, when the owner has taken enough damage, they are teleported to a safe place."
+	effect_desc = "On a two minute cooldown, when the owner enters critical condition, they are teleported to a safe place."
 
 /obj/item/slimecross/stabilized/sepia
 	colour = "sepia"
@@ -180,7 +180,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/lightpink
 	colour = "light pink"
-	effect_desc = "The owner moves at high speeds while holding this extract, also stabilizes anyone in critical condition around you using Epinephrine."
+	effect_desc = "The owner moves at high speeds while holding this extract and prevents them from harming other beings, also stabilizes anyone in critical condition around you using Epinephrine."
 
 /obj/item/slimecross/stabilized/adamantine
 	colour = "adamantine"

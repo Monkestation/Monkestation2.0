@@ -162,6 +162,7 @@
 		"Head of Medical",
 		"Chief Physician",
 		"Head Physician",
+		"Sr. Attending Physician"
 	)
 
 /datum/job/clown
@@ -206,6 +207,7 @@
 		"Private Investigator",
 		"Forensic Scientist",
 		"Paranormal Investigator",
+		"Inspector",
 	)
 
 /datum/job/doctor
@@ -332,6 +334,7 @@
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
 		"Ripperdoc",
+		"Cybertronic Engineer",
 	)
 
 /datum/job/science_guard //See orderly
@@ -380,6 +383,7 @@
 		"Apprentice Engineer",
 		"Engineering Trainee",
 		"Station Reliability Engineer",
+		"Builder",
 	)
 
 /datum/job/virologist

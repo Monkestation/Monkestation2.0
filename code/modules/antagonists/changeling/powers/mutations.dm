@@ -25,7 +25,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/weapon/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
@@ -101,7 +101,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/suit/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
@@ -210,17 +210,13 @@
 	effectiveness = 80, \
 	)
 
-/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
 	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.deconstruct(FALSE)
+		var/obj/smash = target
+		smash.deconstruct(FALSE)
 
 	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
+		target.attack_alien(user) //muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/opening = target

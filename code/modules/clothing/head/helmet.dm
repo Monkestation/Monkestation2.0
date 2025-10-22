@@ -41,7 +41,7 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(issignaler(attacking_item))
 		var/obj/item/assembly/signaler/attached_signaler = attacking_item
 		// There's a flashlight in us. Remove it first, or it'll be lost forever!
@@ -397,6 +397,12 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/gladiator/cheap
+	name = "gladiator helmet replica"
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
+	armor_type = /datum/armor/none
 
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"

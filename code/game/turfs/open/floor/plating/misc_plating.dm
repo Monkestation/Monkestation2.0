@@ -69,6 +69,8 @@
 	canSmoothWith = SMOOTH_GROUP_FLOOR_SNOWED
 	planetary_atmos = TRUE
 
+/turf/open/floor/plating/snowed/smoothed/arena
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 

@@ -448,7 +448,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 */
 /proc/check_rights(rights_required, show_msg=1)
 	if(usr?.client)
-		if (check_rights_for(usr.client, rights_required))
+		if(check_rights_for(usr.client, rights_required))
 			return TRUE
 		else
 			if(show_msg)

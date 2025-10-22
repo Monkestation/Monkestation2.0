@@ -50,7 +50,7 @@
 	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder or refined dust"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/bouldertech/refinery/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/refinery/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/refined_dust/my_dust = attacking_item
 		update_boulder_count()
@@ -126,6 +126,7 @@
 		if(istype(potential_boulder, /obj/item/processing/refined_dust))
 			boulders_concurrent-- //We count dust.
 			refine_dust(potential_boulder)
+			continue
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(boulder.durability < 0)
@@ -148,7 +149,7 @@
 		return PROCESS_KILL
 
 /obj/machinery/bouldertech/refinery/proc/refine_dust(obj/item/processing/refined_dust/dust)
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION)
+	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION)
 	var/list/processable_ores = list()
 	for(var/datum/material/possible_mat as anything in dust.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))

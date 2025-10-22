@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -48,8 +47,10 @@
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE
+	var/centcom = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
+	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 
@@ -72,6 +73,11 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
+		//TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_FENCE_CLIMBER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_UNOBSERVANT,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)

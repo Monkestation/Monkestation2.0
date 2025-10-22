@@ -68,7 +68,7 @@
 
 	AddComponent(/datum/component/clothing_damaged_by_bullets)
 
-/obj/item/clothing/head/helmet/sf_sacrificial/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/head/helmet/sf_sacrificial/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!(istype(attacking_item, /obj/item/sacrificial_face_shield)))
@@ -80,9 +80,9 @@
 	QDEL_NULL(face_shield)
 	return ..()
 
-/obj/item/clothing/head/helmet/sf_sacrificial/AltClick(mob/user)
+/obj/item/clothing/head/helmet/sf_sacrificial/click_alt(mob/user)
 	remove_face_shield(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Attached the passed face shield to the helmet.
 /obj/item/clothing/head/helmet/sf_sacrificial/proc/add_face_shield(mob/living/carbon/human/user, obj/shield_in_question, on_spawn)
@@ -244,8 +244,8 @@
 
 // Hardened vests negate any and all projectile armor penetration, in exchange for having mid af bullet armor
 /datum/armor/armor_sf_hardened
-	melee = ARMOR_LEVEL_TINY //It's anti-armor piercing projectile armor, it shouldn't be good against melee.
-	bullet = ARMOR_LEVEL_TINY
+	melee = ARMOR_LEVEL_WEAK //It's anti-armor piercing projectile armor, it shouldn't be good against melee.
+	bullet = ARMOR_LEVEL_WEAK
 	laser = ARMOR_LEVEL_TINY
 	energy = ARMOR_LEVEL_TINY
 	bomb = ARMOR_LEVEL_TINY
@@ -342,3 +342,10 @@
 		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it. \
 		This one has a red stripe down the front."
 	icon_state = "enclosed_emt"
+
+/obj/item/clothing/head/helmet/toggleable/sf_hardened/emt2
+	name = "'Extractor' enclosed helmet"
+	desc = "A thick-fronted helmet with extendable visor for whole face protection. The materials and geometry of the helmet \
+		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it. \
+		This one has a red cross on the front."
+	icon_state = "enclosed_emt2"

@@ -664,7 +664,7 @@
 "cy" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1780,8 +1780,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "gx" = (
-/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser{
-	dir = 8
+/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault{
+	dir = 8;
+	uses = 4
 	},
 /turf/open/floor/carpet/orange,
 /area/shuttle/sbc_starfury)
@@ -1865,7 +1866,7 @@
 "gN" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -3310,7 +3311,8 @@
 /area/shuttle/sbc_starfury)
 "kw" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault{
-	dir = 8
+	dir = 8;
+	uses = 4
 	},
 /turf/open/floor/carpet,
 /area/shuttle/sbc_starfury)
@@ -3485,7 +3487,7 @@
 "lg" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
@@ -4055,7 +4057,7 @@
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
 "qQ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "qS" = (
@@ -5046,8 +5048,8 @@
 /area/shuttle/sbc_starfury)
 "MQ" = (
 /obj/structure/closet/crate,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -3;
 	pixel_y = -3
 	},

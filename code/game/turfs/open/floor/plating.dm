@@ -21,11 +21,6 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
-	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
-	/// And if our baseturfs are compatible.
-	/// See [/obj/item/stack/tile/proc/place_tile].
-	var/allow_replacement = TRUE
-
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
@@ -63,7 +58,7 @@
 				return
 			else
 				to_chat(user, span_notice("You begin reinforcing the floor..."))
-				if(do_after(user, 30, target = src))
+				if(do_after(user, 3 SECONDS, target = src))
 					if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 						PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -83,7 +78,7 @@
 				return
 			else
 				to_chat(user, span_notice("You begin insulating the floor..."))
-				if(do_after(user, 30, target = src))
+				if(do_after(user, 3 SECONDS, target = src))
 					if (Lorem.get_amount() >= 1 && !istype(src, /turf/open/floor/engine/insulation))
 						PlaceOnTop(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -162,26 +157,31 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/iron))
-		var/obj/item/stack/tile/iron/P = I
-		if(P.use(1))
-			var/obj/L = locate(/obj/structure/lattice) in src
-			if(L)
-				qdel(L)
-			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
-			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!ismetaltile(tool))
+		return NONE
+
+	var/obj/item/stack/tile/tiles = tool
+	if(!tiles.use(1))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/lattice = locate(/obj/structure/lattice) in src
+	if(lattice)
+		qdel(lattice)
+	to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+	playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+	ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	return ITEM_INTERACT_SUCCESS
+
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(prob(attacking_item.force * 20 - 25))
+		user.visible_message(span_danger("[user] smashes through [src]!"), \
+						span_danger("You smash through [src] with [attacking_item]!"))
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		if(prob(I.force * 20 - 25))
-			user.visible_message(span_danger("[user] smashes through [src]!"), \
-							span_danger("You smash through [src] with [I]!"))
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		else
-			to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger("You hit [src], to no effect!"))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
@@ -197,9 +197,10 @@
 /turf/open/floor/plating/foam/ex_act()
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	return
+/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0
@@ -215,7 +216,6 @@
 	heat_capacity = INFINITY
 
 	baseturfs = /turf/open/floor/plating
-	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
 

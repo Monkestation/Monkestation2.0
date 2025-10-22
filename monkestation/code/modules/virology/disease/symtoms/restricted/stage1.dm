@@ -32,7 +32,7 @@
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if(iscarbon(affected_mob))
-			for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
 			for(var/obj/item/I in affected_mob.held_items)
 				affected_mob.dropItemToGround(I)
@@ -192,4 +192,5 @@
 			if(prob(12))
 				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
 				mob.set_silence_if_lower(5 SECONDS)
+				mob.set_emote_mute_if_lower(5 SECONDS)
 	multiplier_tweak(0.1)

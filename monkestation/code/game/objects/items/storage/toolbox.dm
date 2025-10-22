@@ -1,5 +1,5 @@
 /obj/item/storage/toolbox/brig_physician
-	name = "Brig Phyiscan's Toolbox"
+	name = "Brig Physician's Toolbox"
 	desc = "Capable of robusting and repairing any troublesome robots after the fact."
 	icon_state = "toolbox-brigphys"
 	inhand_icon_state = "toolbox-brigphys"
@@ -11,6 +11,6 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil/industrial(src)

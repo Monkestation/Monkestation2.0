@@ -62,6 +62,7 @@
 	//Alternative Scream/Laugh Vars
 	var/list/alternative_screams
 	var/list/alternative_laughs
+	var/list/alternative_deathgasps
 	//MonkeStation Edit End
 
 /obj/item/clothing/Initialize(mapload)
@@ -74,32 +75,6 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
-
-/obj/item/clothing/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/M = usr
-
-//monkestation edit start, this is currently removed as it breaks things
-/*	if(istype(over_object, /atom/movable/screen/inventory))
-		var/atom/movable/screen/inventory/slot = over_object
-		if(M.get_item_by_slot(slot.slot_id))
-			var/obj/item/clothing/item = M.get_item_by_slot(slot.slot_id)
-			if(!M.temporarilyRemoveItemFromInventory(item))
-				return
-			if(!M.put_in_active_hand(item))
-				if(!M.put_in_inactive_hand(item))
-					if(!M.active_storage?.attempt_insert(item, M))
-						item.forceMove(get_turf(M))
-			item.equip_to_best_slot()*/
-//monkestation edit end
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -137,30 +112,31 @@
 		moth_snack.clothing = WEAKREF(src)
 	moth_snack.attack(target, user, params)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by))
-		return ..()
+/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = NONE
+	if(!istype(weapon, repairable_by))
+		return
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return..()
+			return
+
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			cloth_repair.use(1)
-			repair(user, params)
-			return TRUE
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
+
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return TRUE
-			repair(user, params)
-			return TRUE
-
-	return ..()
+				return ITEM_INTERACT_BLOCKING
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
@@ -272,6 +248,8 @@
 		LAZYREMOVE(wearer.alternative_screams, alternative_screams)
 	if(LAZYLEN(alternative_laughs))
 		LAZYREMOVE(wearer.alternative_laughs, alternative_laughs)
+	if(LAZYLEN(alternative_deathgasps))
+		LAZYREMOVE(wearer.alternative_deathgasps, alternative_deathgasps)
 	//MonkeStation Edit End
 
 /obj/item/clothing/equipped(mob/living/user, slot)
@@ -298,6 +276,8 @@
 			LAZYADD(wearer.alternative_screams, alternative_screams)
 		if(LAZYLEN(alternative_laughs))
 			LAZYADD(wearer.alternative_laughs, alternative_laughs)
+		if(LAZYLEN(alternative_deathgasps))
+			LAZYADD(wearer.alternative_deathgasps, alternative_deathgasps)
 		//MonkeStation Edit End
 
 // If the item is a piece of clothing and is being worn, make sure it updates on the player
@@ -357,7 +337,7 @@
 
 	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
 		. += "[src] allows you talk on radios through sign language."
-	
+
 	switch (max_heat_protection_temperature)
 		if (400 to 1000)
 			. += "[src] offers the wearer limited protection from fire."

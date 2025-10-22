@@ -112,9 +112,10 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/storage/toolbox/guncase/skyrat/AltClick(mob/user)
+/obj/item/storage/toolbox/guncase/skyrat/click_alt(mob/user)
 	opened = !opened
 	update_icon()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/toolbox/guncase/skyrat/attack_self(mob/user)
 	. = ..()
@@ -344,3 +345,48 @@
 
 	weapon_to_spawn = /obj/item/gun/ballistic/revolver/takbok
 	extra_to_spawn = /obj/item/ammo_box/c585trappiste
+
+// Moar gunsets
+/obj/item/storage/toolbox/guncase/skyrat/pistol
+	name = "'Makarov pistol' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol
+	extra_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/skyrat/pistol/aps
+	name = "'Stechkin APS machine pistol' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/aps
+	extra_to_spawn = /obj/item/ammo_box/magazine/m9mm_aps
+
+
+/obj/item/storage/toolbox/guncase/skyrat/c20r
+	name = "'C-20r SMG' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
+	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
+
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
+	name = "\improper Quarad light machinegun storage case"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg
+	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum
+	var/extra_to_spawn2 = /obj/item/ammo_box/magazine/c65xeno_drum/pierce
+	var/extra_to_spawn3 = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary
+	var/extra_to_spawn4 = /obj/item/clothing/head/helmet/toggleable/riot
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new extra_to_spawn2 (src)
+	new extra_to_spawn3 (src)
+	new extra_to_spawn4 (src)
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase/evil   ///Currently unavailable, exists for easy testing and admeming
+	name = "\improper EVIL Quarad light machinegun storage case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
+	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum/evil
+	extra_to_spawn2 = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
+	extra_to_spawn3 = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
+

@@ -177,8 +177,8 @@
  *	This is called on Bloodsucker's Assign, and when they end Torpor.
  */
 
-/datum/antagonist/bloodsucker/proc/heal_vampire_organs()
-	var/mob/living/carbon/bloodsuckeruser = owner.current
+/datum/antagonist/bloodsucker/proc/heal_vampire_organs(mob/living/carbon/mob_override)
+	var/mob/living/carbon/bloodsuckeruser = mob_override || owner.current
 	if(!iscarbon(bloodsuckeruser))
 		return
 
@@ -195,12 +195,13 @@
 	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
+		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 		current_eyes.color_cutoffs = list(25, 8, 5)
 		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
-		bloodsuckeruser.revive()
+		bloodsuckeruser.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	for(var/datum/wound/iter_wound as anything in bloodsuckeruser.all_wounds)
 		iter_wound.remove_wound()
 	for(var/obj/item/organ/organ as anything in typecache_filter_list(bloodsuckeruser.organs, yucky_organ_typecache))
@@ -313,6 +314,7 @@
 		COMSIG_SOL_RISE_TICK,
 		COMSIG_SOL_WARNING_GIVEN,
 	))
+	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
 	if(!iscarbon(owner.current))
@@ -341,5 +343,9 @@
 		span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
 		span_hear("<span class='italics'>You hear a wet, bursting sound."))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
+	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	heal_vampire_organs(new_body)
 
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

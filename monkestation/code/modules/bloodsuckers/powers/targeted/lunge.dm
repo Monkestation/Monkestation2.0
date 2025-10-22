@@ -86,7 +86,7 @@
 		var/y_offset = base_y + rand(-3, 3)
 		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
-	if(!do_after(owner, 4 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_SLOWDOWNS), extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom)))
+	if(!do_after(owner, 4 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_SLOWDOWNS), extra_checks = CALLBACK(src, PROC_REF(CheckCanTarget), target_atom), hidden = TRUE))
 		end_target_lunge(base_x, base_y)
 
 		return FALSE
@@ -114,7 +114,7 @@
 	var/turf/targeted_turf = get_turf(hit_atom)
 
 	var/dist = get_dist(owner, targeted_turf)
-	if(target_range ? (dist <= target_range) : in_view_range(owner, targeted_turf, TRUE))
+	if(target_range ? (dist <= target_range) : CAN_THEY_SEE(owner, targeted_turf))
 		var/safety = dist * 3 + 1
 		var/consequetive_failures = 0
 		while(--safety && !hit_atom.Adjacent(owner))

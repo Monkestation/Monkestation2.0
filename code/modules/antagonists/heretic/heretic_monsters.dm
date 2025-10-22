@@ -9,12 +9,9 @@
 	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE // monkestation addition
+	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
-
-/datum/antagonist/heretic_monster/on_gain()
-	. = ..()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/heretic/heretic_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 /datum/antagonist/heretic_monster/on_removal()
 	if(!silent)
@@ -22,7 +19,7 @@
 			to_chat(master.current, span_warning("The essence of [owner], your servant, fades from your mind."))
 		if(owner.current)
 			to_chat(owner.current, span_deconversion_message("Your mind begins to fill with haze - your master is no longer[master ? " [master]":""], you are free!"))
-			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = owner.current)
+			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of The Mansus!"), ignored_mobs = owner.current)
 
 	master = null
 	return ..()
@@ -40,5 +37,5 @@
 
 	objectives += master_obj
 	owner.announce_objectives()
-	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
+	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of The Mansus."))
 	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))

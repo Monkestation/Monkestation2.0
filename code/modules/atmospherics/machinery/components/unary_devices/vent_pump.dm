@@ -16,6 +16,7 @@
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
@@ -59,11 +60,11 @@
 		sensor.outlet_id = id_tag
 		multi_tool.set_buffer(null)
 		balloon_alert(user, "output linked to sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
 	multi_tool.set_buffer(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
@@ -238,7 +239,7 @@
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE

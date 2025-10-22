@@ -6,8 +6,8 @@
 		Activating Veil of Many Faces will shroud you in smoke and forge you a new identity.\n\
 		Your name and appearance will be completely randomized, and turning the ability off again will undo it all."
 	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_DURING_SOL
-	purchase_flags = BLOODSUCKER_DEFAULT_POWER | VASSAL_CAN_BUY
+	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_DURING_SOL | BP_ALLOW_WHILE_SILVER_CUFFED
+	purchase_flags = BLOODSUCKER_DEFAULT_POWER
 	bloodcost = 15
 	constant_bloodcost = 0.1
 	cooldown_time = 10 SECONDS
@@ -48,7 +48,7 @@
 		return
 	var/mob/living/carbon/human/user = owner
 	to_chat(user, span_notice("You return to your old form."))
-	originalDNA.copy_dna(user, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
+	originalDNA.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
 	user.real_name = originalname
 	user.updateappearance(mutcolor_update=1)
 	//user.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.

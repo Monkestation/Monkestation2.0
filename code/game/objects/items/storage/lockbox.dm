@@ -12,51 +12,82 @@
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
+	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.locked = TRUE
+	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
+	update_icon_state()
 
-/obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = atom_storage.locked
-	if(W.GetID())
-		if(broken)
-			balloon_alert(user, "broken!")
-			return
-		if(allowed(user))
-			if(atom_storage.locked)
-				atom_storage.locked = STORAGE_NOT_LOCKED
-			else
-				atom_storage.locked = STORAGE_FULLY_LOCKED
-			locked = atom_storage.locked
-			if(locked)
-				icon_state = icon_locked
-				atom_storage.close_all()
-			else
-				icon_state = icon_closed
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
-			balloon_alert(user, locked ? "locked" : "unlocked")
-			return
-
-		else
-			balloon_alert(user, "access denied!")
-			return
-	if(!locked)
+/obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
 		return ..()
+
+	if(can_unlock(user, card))
+		toggle_locked(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if (broken) // emagged
+		balloon_alert(user, "broken!")
+		return FALSE
+	if(check_access(id_card))
+		return TRUE
+	if(!silent)
+		balloon_alert(user, "access denied!")
+	return FALSE
+
+/obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
+	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
+
+/obj/item/storage/lockbox/update_icon_state()
+	. = ..()
+	if(broken)
+		icon_state = icon_broken
+	else if(atom_storage?.locked)
+		icon_state = icon_locked
+	else if(open)
+		icon_state = icon_open
 	else
-		balloon_alert(user, "locked!")
+		icon_state = icon_closed
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
+		open = TRUE
 		broken = TRUE
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = src.icon_broken
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
 			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
@@ -104,9 +135,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_CAPTAIN)
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
 
 /obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
@@ -117,15 +145,34 @@
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
-	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+	. += span_notice("Use in hand to [open ? "close it":"open it in order to access contents"].")
 
-/obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(user.can_perform_action(src))
-		if(!atom_storage.locked)
-			open = (open ? FALSE : TRUE)
-			update_appearance()
-		..()
+/obj/item/storage/lockbox/medal/attack_self(mob/user, modifiers)
+	// . = ..()
+	if (atom_storage?.locked < STORAGE_FULLY_LOCKED) // not fully locked
+		if (open)
+			open = FALSE
+			atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+		else
+			open = TRUE
+			atom_storage.set_locked(STORAGE_NOT_LOCKED)
+	return
+
+/obj/item/storage/lockbox/medal/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
+		return ..()
+
+	if(can_unlock(user, card))
+		if (!open) // Addition: can only relock if lid closed
+			if (atom_storage?.locked > STORAGE_SOFT_LOCKED)
+				// lid is closed, so still soft locked
+				atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+			else
+				atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "close lid!")
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -139,16 +186,17 @@
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
 /obj/item/storage/lockbox/medal/update_icon_state()
-	if(atom_storage?.locked)
+	. = ..()
+	if(atom_storage?.locked > STORAGE_SOFT_LOCKED)
 		icon_state = "medalbox+l"
-		return ..()
+		return
 
 	icon_state = "medalbox"
 	if(open)
 		icon_state += "open"
 	if(broken)
 		icon_state += "+b"
-	return ..()
+	return
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()
@@ -242,34 +290,18 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/datum/bank_account/buyer_account
-	var/privacy_lock = TRUE
 
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	add_traits(list(TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_BANNED_FROM_CARGO_SHUTTLE), TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/id_card = W.GetID()
-	if(!id_card)
-		return ..()
-
-	if(id_card.registered_account != buyer_account)
+/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if(id_card.registered_account == buyer_account)
+		return TRUE
+	if(!silent)
 		balloon_alert(user, "incorrect bank account!")
-		return FALSE
-
-	if(privacy_lock)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = icon_locked
-		REMOVE_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		icon_state = icon_closed
-	privacy_lock = atom_storage.locked
-	user.visible_message(
-		span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
-		span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."),
-	)
 	return FALSE
 
 ///screentips for lockboxes

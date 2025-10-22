@@ -42,6 +42,15 @@
 	if(!istype(bloodsuckerdatum_power) || QDELETED(bloodsuckerdatum_power.coffin))
 		owner.balloon_alert(owner, "coffin was destroyed!")
 		return FALSE
+
+	if (!check_teleport_valid(owner, bloodsuckerdatum_power.coffin, TELEPORT_CHANNEL_MAGIC))
+		owner.balloon_alert(owner, "something holds you back!")
+		return FALSE
+	
+	if((bloodsuckerdatum_power.bloodsucker_blood_volume-get_blood_cost()) <= bloodsuckerdatum_power.frenzy_threshold)
+		owner.balloon_alert(owner, "using this would send you into a frenzy!")
+		return FALSE
+	
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/gohome/ActivatePower(trigger_flags)
@@ -89,11 +98,11 @@
 		for(var/mob/living/watchers in viewers(world.view, get_turf(owner)) - owner)
 			if(QDELETED(watchers.client) || watchers.client?.is_afk() || watchers.stat != CONSCIOUS)
 				continue
-			if(watchers.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(watchers))
 				continue
 			if(watchers.is_blind())
 				continue
-			if(!IS_BLOODSUCKER(watchers) && !IS_VASSAL(watchers) && !HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
+			if(!HAS_MIND_TRAIT(watchers, TRAIT_BLOODSUCKER_ALIGNED) && !HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
 				drop_item = TRUE
 				break
 	// Drop all necessary items (handcuffs, legcuffs, items if seen)
@@ -112,7 +121,7 @@
 	new new_mob(current_turf)
 	/// TELEPORT: Move to Coffin & Close it!
 	user.set_resting(TRUE, TRUE, FALSE)
-	do_teleport(owner, bloodsuckerdatum_power.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(owner, bloodsuckerdatum_power.coffin, no_effects = TRUE, forced = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	bloodsuckerdatum_power.coffin.close(owner)
 	bloodsuckerdatum_power.coffin.take_contents()
 	playsound(bloodsuckerdatum_power.coffin.loc, bloodsuckerdatum_power.coffin.close_sound, vol = 15, vary = TRUE, extrarange = -3)

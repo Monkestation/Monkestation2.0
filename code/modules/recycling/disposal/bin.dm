@@ -64,6 +64,7 @@
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal
@@ -106,28 +107,28 @@
 	air_contents.merge(removed)
 	trunk_check()
 
-/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/disposal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 			toggle_panel_open()
-			I.play_tool_sound(src)
+			attacking_item.play_tool_sound(src)
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
-		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=0))
+		else if(attacking_item.tool_behaviour == TOOL_WELDER && panel_open)
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
-			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
+			if(attacking_item.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
 				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 				deconstruct()
 			return
 
-	if(!(user.istate & ISTATE_HARM))
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
+	if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
+		if((attacking_item.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
-		place_item_in_disposal(I, user)
+		place_item_in_disposal(attacking_item, user)
 		update_appearance()
 		return 1 //no afterattack
 	else
@@ -160,7 +161,7 @@
 	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
 
 /// Mouse drop another mob or self
-/obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/disposal/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(istype(target))
 		stuff_mob_in(target, user)
 
@@ -288,23 +289,20 @@
 	..()
 
 ///How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
+/obj/machinery/disposal/proc/on_storage_dump(datum/source, datum/storage/storage, mob/user)
 	SIGNAL_HANDLER
 
 	. = STORAGE_DUMP_HANDLED
 
-	to_chat(user, span_notice("You dump out [storage_source] into [src]."))
+	to_chat(user, span_notice("You dump out [storage.parent] into [src]."))
 
-	for(var/obj/item/to_dump in storage_source)
-		if(to_dump.loc != storage_source)
-			continue
-		if(user.active_storage != storage_source && to_dump.on_found(user))
+	for(var/obj/item/to_dump in storage.real_location)
+		if(user.active_storage != storage && to_dump.on_found(user))
 			return
-		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+		if(!storage.attempt_remove(to_dump, src, silent = TRUE))
 			continue
 		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
-
 
 /obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
@@ -335,11 +333,12 @@
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/bag = I
+/obj/machinery/disposal/bin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
+		var/obj/item/storage/bag/trash/bag = attacking_item
 		to_chat(user, span_warning("You empty the bag."))
 		bag.atom_storage.remove_all(src)
 		update_appearance()
@@ -369,7 +368,7 @@
 	data["isai"] = isAI(user)
 	return data
 
-/obj/machinery/disposal/bin/ui_act(action, params)
+/obj/machinery/disposal/bin/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -477,13 +476,13 @@
 	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
-	use_power(idle_power_usage) // base power usage
+	use_energy(idle_power_usage) // base power usage
 
 	if(!pressure_charging) // if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power(idle_power_usage) // charging power usage
+	use_energy(idle_power_usage) // charging power usage
 
 	var/atom/L = loc //recharging from loc turf
 
@@ -582,7 +581,7 @@
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved into \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED

@@ -47,6 +47,11 @@
 	var/choice = tgui_alert(user, "Are you sure? This costs 5k Monkecoins", "Mailbox", list("Yes", "No"))
 	if(choice != "Yes")
 		return
+
+	// are you sure
+	var/secondchoice = tgui_alert(user, "Please make sure to Adminhelp and check for any available admins that can review your cassette before submitting, you will not be refunded if it is denied. If an admin does not review your cassette, and you are connected at the end of the round, you may be refunded.", "Mailbox", list("Acknowledge", "Cancel"))
+	if(secondchoice != "Acknowledge")
+		return
 	///these two parts here should be commented out for local testing without a db
 	if(user.client.prefs.metacoins < 5000)
 		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
