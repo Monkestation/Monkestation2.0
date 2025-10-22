@@ -134,7 +134,6 @@
 	name = "secure command circuit board spawner"
 	loot = list(
 		/obj/item/circuitboard/computer/accounting,
-		/obj/item/circuitboard/computer/bank_machine,
 		/obj/item/circuitboard/computer/communications,
 		/obj/item/circuitboard/computer/crew,
 	)
