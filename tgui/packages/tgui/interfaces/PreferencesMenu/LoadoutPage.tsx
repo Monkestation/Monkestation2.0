@@ -63,7 +63,7 @@ export const LoadoutManager = (props) => {
   });
 
   return (
-    <Stack>
+    <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
       <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
@@ -126,7 +126,7 @@ export const LoadoutManager = (props) => {
               <Section
                 title={selectedTab.title}
                 fill
-                overflowY="auto"
+                scrollable
                 buttons={
                   <Button.Confirm
                     icon="times"
