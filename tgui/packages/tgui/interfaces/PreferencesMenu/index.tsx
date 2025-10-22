@@ -73,11 +73,14 @@ export const PreferencesMenu = () => {
           Characters
         </PageButton>
         <Button
+          align="center"
+          fontSize="1em"
+          fluid
           onClick={() => {
             act('open_store');
           }}
         >
-          Store
+          Loadout Store
         </Button>
       </Stack.Item>
       <Stack.Divider />
@@ -113,6 +116,9 @@ export const PreferencesMenu = () => {
         <Stack.Item>
           <Button
             wrap
+            align="center"
+            fontSize="1em"
+            fluid
             onClick={() => {
               act('try_fix_preview');
             }}
@@ -127,17 +133,15 @@ export const PreferencesMenu = () => {
   );
 
   return (
-    <Window title="Preferences" width={1215} height={800} theme="generic">
+    <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Stack horizontal height="100%">
-          <Stack.Item>
-            <Section height="100%" title="Preferences">
-              {settingsCatergories}
-            </Section>
-          </Stack.Item>
-          <Stack.Divider />
-          <Stack.Item grow>{pageContents}</Stack.Item>
-        </Stack>
+        <Section height="100%" title="Preferences">
+          <Stack horizontal fill>
+            <Stack.Item>{settingsCatergories}</Stack.Item>
+            <Stack.Divider />
+            <Stack.Item grow>{pageContents}</Stack.Item>
+          </Stack>
+        </Section>
       </Window.Content>
     </Window>
   );
