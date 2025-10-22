@@ -63,10 +63,7 @@ export const LoadoutManager = (props) => {
   });
 
   return (
-    <Stack
-      height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
-      maxWidth={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
-    >
+    <Stack>
       <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
@@ -108,10 +105,10 @@ export const LoadoutManager = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        <Stack fill vertical maxWidth={'80%'}>
+        <Stack fill vertical>
           <Stack.Item>
             <Section title="Loadout Categories" align="center">
-              <Tabs overflowX="auto">
+              <Tabs style={{ 'flex-wrap': 'wrap' }}>
                 {loadout_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}
@@ -129,7 +126,7 @@ export const LoadoutManager = (props) => {
               <Section
                 title={selectedTab.title}
                 fill
-                scrollable
+                overflowY="auto"
                 buttons={
                   <Button.Confirm
                     icon="times"
