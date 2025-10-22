@@ -219,7 +219,7 @@
 /datum/job/proc/special_config_check()
 	return FALSE
 
-/mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
+/mob/living/proc/on_job_equipping(datum/job/equipping)
 	return
 
 /mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
