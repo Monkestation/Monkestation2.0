@@ -904,6 +904,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "invicible_mask"
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEEYES
 
 /obj/item/clothing/gloves/fingerless/invicible_invisible

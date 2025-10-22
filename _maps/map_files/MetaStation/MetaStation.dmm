@@ -3962,6 +3962,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "bny" = (
@@ -10188,7 +10189,7 @@
 /area/station/maintenance/port/aft)
 "dKd" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "dKl" = (
 /obj/structure/sign/warning/pods,
@@ -14233,14 +14234,11 @@
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "ffv" = (
@@ -33373,7 +33371,13 @@
 /area/station/commons/dorms)
 "lyE" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "chem_lockdown";
+	name = "Chemistry Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "lyF" = (
 /obj/effect/turf_decal/tile/red,
@@ -40331,6 +40335,17 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
+"nQW" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "nQX" = (
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -45253,12 +45268,9 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "pDQ" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/smartfridge/organ,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "main_surgery"
-	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "pDU" = (
@@ -45894,10 +45906,13 @@
 "pPb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/smartfridge/food,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
 	},
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "kitchen_counter";
@@ -47947,7 +47962,13 @@
 /area/station/engineering/atmos)
 "qxG" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "hydro_service";
+	name = "Service Shutter"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "qxR" = (
 /obj/structure/disposalpipe/segment,
@@ -54596,7 +54617,9 @@
 /area/station/engineering/atmos)
 "sKt" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "sKy" = (
 /obj/machinery/holopad,
@@ -67711,12 +67734,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "xnd" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "surgeryc";
-	name = "Privacy Shutter"
-	},
-/obj/effect/spawner/structure/window,
 /obj/machinery/smartfridge/organ,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/medical/surgery/aft)
 "xnk" = (
@@ -69103,16 +69122,13 @@
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Bar"
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "xOw" = (
@@ -96601,7 +96617,7 @@ noD
 aNf
 aNa
 xiv
-sKt
+nQW
 cJv
 oHG
 slC
