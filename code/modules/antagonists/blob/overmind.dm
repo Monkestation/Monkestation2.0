@@ -4,7 +4,6 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
-
 /mob/eye/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -24,30 +23,52 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
 	hud_type = /datum/hud/blob_overmind
-	var/obj/structure/blob/special/core/blob_core = null // The blob overmind's core
+	///Ref to our core structure
+	var/obj/structure/blob/special/core/blob_core = null
+	///How many points do we have, used for building and attacking
 	var/blob_points = 0
+	///The maximum amount of points we can have
 	var/max_blob_points = OVERMIND_MAX_POINTS_DEFAULT
+	///Used for tracking the attacking/expanding cooldown
 	var/last_attack = 0
+	///What strain do we have
 	var/datum/blobstrain/reagent/blobstrain
+	///List of our minion mobs
 	var/list/blob_mobs = list()
-	/// A list of all blob structures
+	///A list of all blob structures
 	var/list/all_blobs = list()
+	///Assoc list of all blob structures keyed to their type
+	var/alist/all_blobs_by_type = alist()
 	var/list/resource_blobs = list()
 	var/list/factory_blobs = list()
 	var/list/node_blobs = list()
+	///How many free rerolls do we have left
 	var/free_strain_rerolls = OVERMIND_STARTING_REROLLS
-	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
-	var/nodes_required = TRUE //if the blob needs nodes to place resource and factory blobs
+	///Time since we last rerolled, used to give free rerolls
+	var/last_reroll_time = 0
+	///If the blob needs nodes near by to place resource and factory blobs
+	var/nodes_required = TRUE
+	///Have we placed our core yet
 	var/placed = FALSE
-	var/manualplace_min_time = OVERMIND_STARTING_MIN_PLACE_TIME // Some time to get your bearings
-	var/autoplace_max_time = OVERMIND_STARTING_AUTO_PLACE_TIME // Automatically place the core in a random spot
+	///Minimum amount of time before you can place your core
+	var/manualplace_min_time = OVERMIND_STARTING_MIN_PLACE_TIME
+	///Amount of time you have before your core will be force played in a random spot
+	var/autoplace_max_time = OVERMIND_STARTING_AUTO_PLACE_TIME
+	///List of blob structures in valid areas, might be able to make this be a simple counter instead
 	var/list/blobs_legit = list()
-	var/max_count = 0 //The biggest it got before death
+	///The highest amount of tiles we got before round end
+	var/highest_tile_count = 0
+	///How many tiles we need to win
 	var/blobwincount = OVERMIND_WIN_CONDITION_AMOUNT
+	///Are we winning, son?
 	var/victory_in_progress = FALSE
+	///Are we currently rerolling
 	var/rerolling = FALSE
+	///What size should we announce this overmind at
 	var/announcement_size = OVERMIND_ANNOUNCEMENT_MIN_SIZE // Announce the biohazard when this size is reached
+	///When should we announce this blob
 	var/announcement_time
+	///Have we been announced yet
 	var/has_announced = FALSE
 
 	/// The list of strains the blob can reroll for.
@@ -154,12 +175,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, PROC_REF(victory)), 450)
-	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
+	else if(!free_strain_rerolls && ((last_reroll_time + BLOB_POWER_REROLL_FREE_TIME) < world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
 
-	if(!victory_in_progress && max_count < blobs_legit.len)
-		max_count = blobs_legit.len
+	if(!victory_in_progress && highest_tile_count < blobs_legit.len)
+		highest_tile_count = blobs_legit.len
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)

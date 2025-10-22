@@ -18,7 +18,7 @@
 	if(isovermind(owner.current)) //embarrasing if not
 		var/mob/eye/blob/overmind = owner.current
 		if(!overmind.victory_in_progress) //if it won this doesn't really matter
-			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of its growth."
+			var/point_report = "<br><b>[owner.name]</b> took over [overmind.highest_tile_count] tiles at the height of its growth."
 			return basic_report+point_report
 	return basic_report
 
@@ -46,6 +46,17 @@
 
 	return icon
 
+/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
+	if(isovermind(owner.current))
+		return FALSE
+	if(!pop_action)
+		pop_action = new
+	pop_action.Grant(owner.current)
+
+/datum/antagonist/blob/proc/create_objectives()
+	var/datum/objective/blob_takeover/main = new
+	main.owner = owner
+	objectives += main
 
 /datum/antagonist/blob/ui_data(mob/user)
 	var/list/data = list()
@@ -66,18 +77,6 @@
 	data["name"] = blobstrain.name
 
 	return data
-
-/datum/antagonist/blob/proc/create_objectives()
-	var/datum/objective/blob_takeover/main = new
-	main.owner = owner
-	objectives += main
-
-/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
-	if(isovermind(owner.current))
-		return FALSE
-	if(!pop_action)
-		pop_action = new
-	pop_action.Grant(owner.current)
 
 /datum/objective/blob_takeover
 	explanation_text = "Reach critical mass!"

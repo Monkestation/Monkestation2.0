@@ -1,0 +1,1 @@
+/mob/eye/blob/lesser

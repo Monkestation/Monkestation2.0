@@ -1,7 +1,9 @@
 // Overmind defines
 
 #define OVERMIND_MAX_POINTS_DEFAULT 100 // Max point storage
-#define OVERMIND_STARTING_POINTS 60 // Points granted upon start
+///Mamimum amount of points a lesser overmind can have
+#define OVERMIND_LESSER_MAX_POINTS_DEFAULT 60
+#define OVERMIND_STARTING_POINTS 80 // Points granted upon start
 #define OVERMIND_STARTING_REROLLS 1 // Free strain rerolls at the start
 #define OVERMIND_STARTING_MIN_PLACE_TIME (1 MINUTES) // Minimum time before the core can be placed
 #define OVERMIND_STARTING_AUTO_PLACE_TIME (6 MINUTES) // After this time, randomly place the core somewhere viable
@@ -24,14 +26,6 @@
 
 
 // Structure properties
-
-#define BLOB_CORE_MAX_HP 400
-#define BLOB_CORE_HP_REGEN 2 // Bases health regeneration rate every process(), can be added on by strains
-#define BLOB_CORE_CLAIM_RANGE 12 // Range in which blob tiles are 'claimed' (converted from dead to alive, rarely useful)
-#define BLOB_CORE_PULSE_RANGE 4 // The radius up to which the core activates structures, and up to which structures can be built
-#define BLOB_CORE_EXPAND_RANGE 3 // Radius of automatic expansion
-#define BLOB_CORE_STRONG_REINFORCE_RANGE 1 // The radius of tiles surrounding the core that get upgraded
-#define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
 
 #define BLOB_NODE_MAX_HP 200
 #define BLOB_NODE_HP_REGEN 3
