@@ -40,6 +40,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	inhand_icon_state = "blackskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "plaid skirt"
@@ -52,6 +53,7 @@
 	greyscale_config = /datum/greyscale_config/plaidskirt
 	greyscale_config_worn = /datum/greyscale_config/plaidskirt_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/dress/skirt/turtleskirt
 	name = "turtleneck skirt"
