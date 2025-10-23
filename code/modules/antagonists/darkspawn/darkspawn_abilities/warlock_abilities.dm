@@ -131,6 +131,9 @@
 		target.extinguish_mob()
 		if(target.bodytemperature > target.standard_body_temperature)
 			target.bodytemperature = target.standard_body_temperature
+	else if(istype(victim, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/glowshroom = victim
+		glowshroom.convert_to_shadowshroom()
 	else if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()
