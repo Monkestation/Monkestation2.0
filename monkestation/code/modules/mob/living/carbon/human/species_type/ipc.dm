@@ -25,7 +25,7 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
-		
+
 	)
 
 	mutant_organs = list(
