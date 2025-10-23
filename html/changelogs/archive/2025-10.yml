@@ -668,3 +668,6 @@
 2025-10-22:
   notghosti:
   - balance: Darkspawn thrall will not resist conversion if buckle cuffed to a table.
+2025-10-23:
+  Greenpoison:
+  - config: Increased time to become dept heads.

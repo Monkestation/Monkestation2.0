@@ -1,0 +1,5 @@
+author: "Killermankey"
+delete-after: True
+changes:
+  - balance: "Upped vendozers speed, hp, and armor. Much more worth making now"
+  - balance: "lowered the wood cost and removed the oven from vendozer craft. Alot less rng now"
