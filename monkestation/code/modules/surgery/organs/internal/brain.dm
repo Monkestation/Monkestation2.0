@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(gps_active)
 		user.visible_message(
 			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
-			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissipates and items start to come out."),
 			span_notice("You hear a wet crunching sound."),
 		)
 		gps_active = FALSE
@@ -179,6 +179,31 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	core_ejected = FALSE
 	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+
+/obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
+	if(!istype(stake))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_BLOCKING
+	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
+	user.balloon_alert_to_viewers("staking core...")
+	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(
+		span_danger("[user] drives \the [stake] into [src]!"),
+		span_danger("You drive \the [stake] into [src]!"),
+	)
+	user.balloon_alert_to_viewers("staked core!")
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
+	if(bloodsucker_datum)
+		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+		drop_items_to_ground(drop_location())
+		bloodsucker_datum.final_death(skip_destruction = TRUE)
+		qdel(src)
+	else
+		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)
+		set_organ_damage(maxHealth) // you're stabbing it with a stake.
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
 	if(isoozeling(owner))
