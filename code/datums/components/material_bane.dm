@@ -59,7 +59,7 @@
 	do_passive_bane_effects(seconds_per_tick)
 	bane_power = clamp(bane_power, 0, max_bane_power)
 
-/datum/component/material_bane/proc/do_passive_bane_effects(var/seconds_per_tick)
+/datum/component/material_bane/proc/do_passive_bane_effects(seconds_per_tick)
 	var/mob/living/carbon/human/humholder = parent
 	if(bane_power > 0)
 		sizzle.start()
@@ -89,7 +89,7 @@
 	if(!was_baned)
 		bane_power = max(bane_power - (25 * seconds_per_tick), 0)
 
-/datum/component/material_bane/proc/check_held_shiz(var/seconds_per_tick)
+/datum/component/material_bane/proc/check_held_shiz(seconds_per_tick)
 	var/mob/living/carbon/human/humholder = parent
 	if(humholder.gloves)
 		if(!(!(humholder.gloves.body_parts_covered & HANDS) || HAS_TRAIT(humholder.gloves, TRAIT_FINGERPRINT_PASSTHROUGH)))
