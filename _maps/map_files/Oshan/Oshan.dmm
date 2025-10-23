@@ -4420,6 +4420,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /obj/machinery/duct/industrial/waste,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/captain/private)
 "bxb" = (
@@ -5167,6 +5168,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/hydroponics/chicken)
 "bHT" = (
@@ -6266,6 +6268,7 @@
 /obj/structure/closet/emcloset/wall/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
 "bZS" = (
@@ -9253,6 +9256,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "cXw" = (
@@ -12365,6 +12369,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "dUn" = (
@@ -12549,6 +12554,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hos)
 "dXv" = (
@@ -14471,6 +14477,7 @@
 	name = "Chief Medical Officer's Office"
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "eCE" = (
@@ -17926,6 +17933,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/nt_rep)
 "fGB" = (
@@ -19431,6 +19439,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "geQ" = (
@@ -22571,6 +22580,7 @@
 	dir = 4
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "hiv" = (
@@ -24993,6 +25003,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "hVl" = (
@@ -29441,6 +29452,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/miningdock)
 "juF" = (
@@ -32949,6 +32961,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/bar/backroom)
 "kCA" = (
@@ -33762,6 +33775,7 @@
 	id_tag = "innercargo";
 	name = "Cargo Auxiliary"
 	},
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "kOf" = (
@@ -35935,6 +35949,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "lrZ" = (
@@ -37738,6 +37753,7 @@
 	name = "Incinerator"
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/disposal/incinerator)
 "lVT" = (
@@ -38707,6 +38723,7 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
 "mor" = (
@@ -40154,6 +40171,7 @@
 	name = "Quartermaster's Office"
 	},
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/qm)
 "mNF" = (
@@ -41440,13 +41458,6 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
-"ngq" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/plating/reinforced,
-/area/station/cargo/miningoffice)
 "ngw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -44699,9 +44710,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/structure/closet/secure_closet/tac{
-	req_access = list("captain")
-	},
+/obj/structure/closet/secure_closet/tac,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
@@ -49300,6 +49309,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "pyJ" = (
@@ -56807,6 +56817,7 @@
 	},
 /obj/machinery/duct/industrial/waste,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "rVi" = (
@@ -57825,6 +57836,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/medical)
 "snG" = (
@@ -58829,6 +58841,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/interrogation)
 "sDh" = (
@@ -58950,6 +58963,7 @@
 	name = "Psychology"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/medical/psychology)
 "sFz" = (
@@ -60639,6 +60653,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "tgW" = (
@@ -61794,6 +61809,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/miningoffice)
 "tzI" = (
@@ -62603,6 +62619,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "tMk" = (
@@ -68412,6 +68429,7 @@
 	name = "Chemistry"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/pharmacy,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "vCj" = (
@@ -74267,6 +74285,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/server)
 "xtr" = (
@@ -76074,6 +76093,7 @@
 	},
 /obj/machinery/duct/industrial/waste,
 /obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "xUj" = (
@@ -76192,6 +76212,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "xXd" = (
@@ -95931,7 +95952,7 @@ uLw
 jzw
 nRT
 tLU
-ngq
+ygc
 aGj
 egg
 lwW
