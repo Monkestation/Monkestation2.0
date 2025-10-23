@@ -160,6 +160,7 @@
 		"boxcutter",
 		"cable_coil",
 		"cable_coil",
+		"chicken_scanner",
 		"industrial_coil",
 		"crowbar",
 		"cultivator",

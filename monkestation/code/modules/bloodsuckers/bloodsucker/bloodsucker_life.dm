@@ -201,7 +201,7 @@
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
-		bloodsuckeruser.revive()
+		bloodsuckeruser.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	for(var/datum/wound/iter_wound as anything in bloodsuckeruser.all_wounds)
 		iter_wound.remove_wound()
 	for(var/obj/item/organ/organ as anything in typecache_filter_list(bloodsuckeruser.organs, yucky_organ_typecache))
@@ -345,7 +345,7 @@
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
-	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE)
+	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)
 
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

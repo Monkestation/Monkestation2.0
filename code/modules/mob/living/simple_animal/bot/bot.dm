@@ -26,8 +26,8 @@
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	light_power = 0.9
+	interaction_flags_click = ALLOW_SILICON_REACH
 	req_one_access = list(ACCESS_ROBOTICS)
-
 	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
 	///Cooldown between salutations for commissioned bots
@@ -386,13 +386,9 @@
 		ui = new(user, src, "SimpleBot", name)
 		ui.open()
 
-/mob/living/simple_animal/bot/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/mob/living/simple_animal/bot/click_alt(mob/living/user)
 	unlock_with_id(user)
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
@@ -441,11 +437,11 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/bot/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if (!.)
-		return
-	do_sparks(5, TRUE, src)
+/mob/living/simple_animal/bot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		do_sparks(5, TRUE, src)
+		. = TRUE
+	return ..() || .
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
@@ -1008,7 +1004,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	bot_reset()
 
-/mob/living/simple_animal/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return

@@ -11,6 +11,7 @@
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
+	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
@@ -25,7 +26,8 @@
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
 	/// Cooldown for bloodsuckers going into Frenzy.
 	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
-
+	//Timer to track how long the bloodsucker has been in torpor
+	COOLDOWN_DECLARE(bloodsucker_torpor_max_time)
 	///Used for assigning your name
 	var/bloodsucker_name
 	///Used for assigning your title
@@ -47,7 +49,6 @@
 	var/handling_death = FALSE
 	/// If this bloodsucker has suffered final death.
 	var/final_death = FALSE
-
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
 
@@ -123,6 +124,7 @@
 		TRAIT_STABLEHEART,
 		TRAIT_STABLELIVER,
 		TRAIT_TOXIMMUNE,
+		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		// they eject zombie tumors and xeno larvae during eepy time anyways
 		TRAIT_NO_ZOMBIFY, // they're already undead lol
@@ -157,6 +159,7 @@
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, PROC_REF(after_expose_reagents))
 	RegisterSignal(current_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
@@ -194,7 +197,7 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
@@ -209,6 +212,9 @@
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
+
+/datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/bloodsucker/proc/get_status_tab_items(datum/source, list/items)
 	SIGNAL_HANDLER
@@ -313,8 +319,8 @@
 	owner.announce_objectives()
 	if(bloodsucker_level_unspent >= 2)
 		to_chat(owner, span_announce("As a latejoiner, you have [bloodsucker_level_unspent] bonus Ranks, entering your claimed coffin allows you to spend a Rank."))
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
+	play_stinger()
 
 /datum/antagonist/bloodsucker/farewell()
 	to_chat(owner.current, span_userdanger("<FONT size = 3>With a snap, your curse has ended. You are no longer a Bloodsucker. You live once more!</FONT>"))
@@ -591,6 +597,12 @@
 	var/blood_volume = round(reagents[blood_reagent], 0.1)
 	if(blood_volume > 0)
 		bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
+
+/datum/antagonist/bloodsucker/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"

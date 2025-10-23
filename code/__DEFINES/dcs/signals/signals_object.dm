@@ -9,6 +9,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
@@ -61,9 +63,9 @@
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
 
-// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+// /obj/machinery/cryo_cell signals
 
-/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
+/// from /obj/machinery/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
 /// from /obj/proc/unfreeze()

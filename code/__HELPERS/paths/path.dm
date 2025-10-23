@@ -353,7 +353,7 @@
 		if(istype(living_construct, /mob/living/basic/slime) || istype(living_construct, /mob/living/basic/xenofauna))
 			src.xenofauna_or_slime = TRUE
 
-	if(iscameramob(construct_from))
+	if(iseyemob(construct_from))
 		src.camera_type = construct_from.type
 	src.is_bot = isbot(construct_from)
 

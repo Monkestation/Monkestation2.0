@@ -151,7 +151,7 @@
 		var/was_dead = FALSE
 		if(master.current.stat == DEAD)
 			was_dead = TRUE
-		master.current.revive(ADMIN_HEAL_ALL)
+		master.current.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(was_dead)
 			to_chat(master.current, span_progenitor("Returning to Nullspace has revitalized your form!"))
 

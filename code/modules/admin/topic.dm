@@ -36,9 +36,6 @@
 	else if(href_list["ahelp_tickets"])
 		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
-	else if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
-
 	else if(href_list["getplaytimewindow"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -754,6 +751,13 @@
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
+
+		if(href_list["stealth"])
+			if(!check_rights(R_STEALTH, TRUE))
+				return
+			if (!usr.client.holder.fakekey)
+				to_chat(usr, span_warning("You have been automatically stealthed via STLTH-FLW as [span_bold(usr.ckey)]"))
+				usr.client.enable_stealth_mode(usr.ckey, "STLTH-FLW")
 
 		usr.client?.admin_follow(locate(href_list["adminplayerobservefollow"]))
 	else if(href_list["admingetmovable"])

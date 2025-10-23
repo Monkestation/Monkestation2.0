@@ -98,10 +98,10 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	spell_requirements = NONE
 	resource_costs = list(ANTAG_RESOURCE_DARKSPAWN = 55)
-	cooldown_time = 1 SECONDS //to prevent double clicking by accident
+	cooldown_time = 20 SECONDS //to prevent double clicking by accident
 	die_with_shapeshifted_form = FALSE
 	convert_damage = TRUE
-	convert_damage_type = STAMINA
+	convert_damage_type = BRUTE
 	sound = 'sound/magic/darkspawn/devour_will_end.ogg'
 	possible_shapes = list(/mob/living/simple_animal/hostile/crawling_shadows)
 

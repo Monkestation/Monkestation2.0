@@ -7,6 +7,8 @@ $department_map: (
   'Assistant': colors.$grey,
   'Captain': colors.fg(colors.$blue),
   'Cargo': colors.$brown,
+  'Central': #86ff82,
+  //only the first word matters, apparently.
   'Civilian': colors.$grey,
   'Command': colors.$yellow,
   'Security': colors.$red,

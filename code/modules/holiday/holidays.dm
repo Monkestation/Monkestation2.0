@@ -591,7 +591,7 @@
 	return "Have a spooky Halloween!"
 
 /datum/holiday/halloween/getStationPrefix()
-	return pick("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons")
+	return pick("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons", "Harvest", "Bewitched", "Autumnal", "Zombified")
 
 // NOVEMBER
 
@@ -876,6 +876,25 @@
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+///Halloween
+/datum/holiday/halloween/celebrate()
+	. = ..()
+	GLOB.maintenance_loot += list(
+		list(
+			/obj/item/clothing/head/utility/hardhat/pumpkinhead = 10,
+			/obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin = 1,
+			/obj/item/food/grown/pumpkin = 10,
+			/obj/item/food/cookie/sugar/spookyskull = 10,
+			/obj/item/food/cookie/sugar/spookycoffin = 10,
+			/obj/item/food/candy_corn = 10,
+			/obj/item/food/candy = 10,
+			/obj/item/food/candiedapple = 10,
+			/obj/item/food/chocolatebar = 10,
+			/obj/item/a_gift/spooky = 10,
+		) = 3000,
+	)
+
 
 /// Takes a holiday datum, a starting month, ending month, max amount of days to test in, and min/max year as input
 /// Returns a list in the form list("yyyy/m/d", ...) representing all days the holiday runs on in the tested range

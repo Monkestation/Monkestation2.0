@@ -138,23 +138,22 @@
 		return
 	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
-/obj/item/paper/AltClick(mob/living/user, obj/item/I)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/paper/click_alt(mob/living/user, obj/item/I)
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src
 		if(!Carbon.copied)
 			to_chat(user, span_notice("Take off the carbon copy first."))
-			return
+			return CLICK_ACTION_BLOCKING
 	if(!can_be_folded)
 		to_chat(user, span_notice("This paper cannot be folded into a plane."))
-		return
+		return CLICK_ACTION_BLOCKING
 	//Origami Master
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active)
 		make_plane(user, I, /obj/item/paperplane/syndicate)
 	else
 		make_plane(user, I, /obj/item/paperplane)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Paper plane folding

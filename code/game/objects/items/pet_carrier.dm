@@ -18,6 +18,8 @@
 	throw_speed = 2
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -72,9 +74,9 @@
 		open = TRUE
 	update_appearance()
 
-/obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.can_perform_action(src))
-		return
+/obj/item/pet_carrier/click_alt(mob/living/user)
+	if(open)
+		return CLICK_ACTION_BLOCKING
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)
@@ -82,6 +84,7 @@
 	else
 		playsound(user, 'sound/machines/boltsup.ogg', 30, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
 	if((user.istate & ISTATE_HARM))
@@ -152,10 +155,9 @@
 	if(!open)
 		. += "[base_icon_state]_[locked ? "" : "un"]locked"
 
-/obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	. = ..()
-	if(isopenturf(over_atom) && usr.can_perform_action(src, NEED_DEXTERITY) && usr.Adjacent(over_atom) && open && occupants.len)
-		usr.visible_message(span_notice("[usr] unloads [src]."), \
+/obj/item/pet_carrier/mouse_drop_dragged(atom/over_atom, mob/user, src_location, over_location, params)
+	if(isopenturf(over_atom) && open && occupants.len)
+		user.visible_message(span_notice("[user] unloads [src]."), \
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)

@@ -210,6 +210,9 @@
 	for (var/datum/wound/iterated_wound as anything in wounds)
 		base_chance += iterated_wound.get_dismember_chance_bonus(base_chance)
 
+	if (body_zone == BODY_ZONE_CHEST)
+		base_chance = base_chance * WOUND_DISEMBOWEL_MODIFIER
+
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
@@ -275,7 +278,7 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
+	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE, violent = violent)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 

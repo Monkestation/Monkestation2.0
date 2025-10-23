@@ -691,7 +691,7 @@
 /area/station/service/bar)
 "HW" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall/mineral/abductor/fake,
+/turf/open/floor/mineral/fake_abductor,
 /area/station/service/bar/backroom)
 "HY" = (
 /obj/machinery/camera/directional/east{
