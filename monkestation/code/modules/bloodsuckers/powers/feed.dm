@@ -274,7 +274,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/target_user = target
-	if(!(target_user.dna?.species) || !(target_user.mob_biotypes & MOB_ORGANIC))
+	if(!(target_user.dna?.species) || !(target_user.mob_biotypes & MOB_ORGANIC) || HAS_TRAIT(target, TRAIT_NOBLOOD))
 		if(give_warnings)
 			owner.balloon_alert(owner, "no blood!")
 		return FALSE
