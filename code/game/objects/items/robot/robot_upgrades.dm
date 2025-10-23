@@ -788,3 +788,31 @@
 	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
 	icon_state = "cyborg_upgrade3"
 	new_model = /obj/item/robot_model/centcom
+
+/obj/item/borg/upgrade/nvmeson
+	name = "night vision mesons upgrae"
+	desc = "An advanced mop replacement for the janiborg's standard mop."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/borg/sight/meson in R.model.modules)
+			R.model.remove_module(M, TRUE)
+
+		var/obj/item/borg/sight/meson/nightvision/meson = new /obj/item/borg/sight/meson/nightvision(R.model)
+		R.model.basic_modules += meson
+		R.model.add_module(meson, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/borg/sight/meson/nightvision/A in R.model.modules)
+			R.model.remove_module(A, TRUE)
+
+		var/obj/item/borg/sight/meson/M = new (R.model)
+		R.model.basic_modules += M
+		R.model.add_module(M, FALSE, TRUE)
