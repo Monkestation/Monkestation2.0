@@ -627,7 +627,7 @@
 			return
 
 
-	if(sight_mode & (BORGMESON || BORGNVMESON))
+	if(sight_mode & (BORGMESON|BORGNVMESON))
 		new_sight |= SEE_TURFS
 		if(sight_mode & BORGNVMESON)
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(10, 30, 10))
