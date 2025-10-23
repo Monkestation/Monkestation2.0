@@ -13,7 +13,6 @@
 	//1 = 25 points gained per second of holding a bane material
 	var/bane_speed_mult
 
-	COOLDOWN_DECLARE(passive_message_cooldown)
 	COOLDOWN_DECLARE(active_message_cooldown)
 
 /datum/component/material_bane/Initialize(our_bane = list(/datum/material/silver), damaging = TRUE, effect_power = 1, max_bane_power = 500, bane_speed_mult = 1)
@@ -62,43 +61,40 @@
 
 /datum/component/material_bane/proc/do_passive_bane_effects(var/seconds_per_tick)
 	var/mob/living/carbon/human/humholder = parent
-		if(bane_power > 0)
-			sizzle.start()
-		else
-			sizzle.stop()
-		switch(bane_power)
-			if(0 to 100)
-				if(SPT_PROB(10, seconds_per_tick))
-					humholder.emote("twitch_s")
-			if(101 to 200)
-				if(SPT_PROB(10, seconds_per_tick))
-					humholder.emote("twitch")
-			if(201 to 300)
-				if(SPT_PROB(10, seconds_per_tick))
-					humholder.emote("scream")
-					humholder.set_jitter_if_lower(1 MINUTES)
-					owner.adjust_confusion(2 SECONDS)
-					humholder.Stun(1 SECOND)
-			if(301 to INFINITY)
-				if(SPT_PROB(10, seconds_per_tick))
-					humholder.emote("scream")
-					humholder.Paralyze(1 SECOND)
-					owner.set_jitter_if_lower(3 MINUTES)
-					owner.adjust_confusion(5 SECONDS)
-		if(bane_power > 100)
-			sizzle.start()
-			humholder.take_bodypart_damage(0, (((bane_power / 200) * effect_power) * seconds_per_tick))
-		if(!was_baned)
-			bane_power = max(bane_power - (20 * seconds_per_tick))
+	if(bane_power > 0)
+		sizzle.start()
+	else
+		sizzle.stop()
+	switch(bane_power)
+		if(0 to 100)
+			if(SPT_PROB(10, seconds_per_tick))
+				humholder.emote("twitch_s")
+		if(101 to 200)
+			if(SPT_PROB(10, seconds_per_tick))
+				humholder.emote("twitch")
+		if(201 to 300)
+			if(SPT_PROB(10, seconds_per_tick))
+				humholder.emote("scream")
+				humholder.set_jitter_if_lower(1 MINUTES)
+				humholder.adjust_confusion(2 SECONDS)
+		if(301 to INFINITY)
+			if(SPT_PROB(10, seconds_per_tick))
+				humholder.emote("scream")
+				humholder.Paralyze(1 SECOND)
+				humholder.set_jitter_if_lower(3 MINUTES)
+				humholder.adjust_confusion(5 SECONDS)
+	if(bane_power > 100)
+		sizzle.start()
+		humholder.take_bodypart_damage(0, (((bane_power / 200) * effect_power) * seconds_per_tick))
+	if(!was_baned)
+		bane_power = max(bane_power - (25 * seconds_per_tick), 0)
 
 /datum/component/material_bane/proc/check_held_shiz(var/seconds_per_tick)
 	var/mob/living/carbon/human/humholder = parent
 	if(humholder.gloves)
-		if(!(humholder.gloves.body_parts_covered & HANDS) || HAS_TRAIT(humholder.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
-			return FALSE
-	var/hand_num = 0
+		if(!(!(humholder.gloves.body_parts_covered & HANDS) || HAS_TRAIT(humholder.gloves, TRAIT_FINGERPRINT_PASSTHROUGH)))
+			return
 	for(var/obj/item/held in humholder.held_items)
-		hand_num += 1
 		if(held.custom_materials)
 			for(var/material in held.custom_materials)
 				var/datum/material/possible_ouch = GET_MATERIAL_REF(material)

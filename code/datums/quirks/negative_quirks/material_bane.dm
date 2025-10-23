@@ -10,33 +10,33 @@
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 
 /datum/quirk/material_bane/add(client/client_source)
-	var/bane_mat = client_source?.prefs?.read_preference(/datum/preference/choiced/material_bane_material) || "Silver"
+	var/bane_mat = client_source?.prefs?.read_preference(/datum/preference/choiced/material_bane) || "Silver"
 	var/the_bane_to_do = /datum/material/silver
 	switch(bane_mat)
-		if(bane_mat = "Iron")
+		if("Iron")
 			the_bane_to_do = /datum/material/iron
-		if(bane_mat = "Glass")
+		if("Glass")
 			the_bane_to_do = /datum/material/glass
-		if(bane_mat = "Silver")
+		if("Silver")
 			the_bane_to_do = /datum/material/silver
-		if(bane_mat = "Gold")
+		if("Gold")
 			the_bane_to_do = /datum/material/gold
-		if(bane_mat = "Plastic")
+		if("Plastic")
 			the_bane_to_do = /datum/material/plastic
-		if(bane_mat = "Uranium")
+		if("Uranium")
 			the_bane_to_do = /datum/material/uranium
-		if(bane_mat = "Diamond")
+		if("Diamond")
 			the_bane_to_do = /datum/material/diamond
-		if(bane_mat = "Bluespace Crystal")
+		if("Bluespace Crystal")
 			the_bane_to_do = /datum/material/bluespace
-		if(bane_mat = "Titanium")
+		if("Titanium")
 			the_bane_to_do = /datum/material/titanium
-		if(bane_mat = "Wood")
+		if("Wood")
 			the_bane_to_do = /datum/material/wood
-		if(bane_mat = "Plasma")
+		if("Plasma")
 			the_bane_to_do = /datum/material/plasma
 
-	quirk_holder.AddComponentFrom(QUIRK_TRAIT, /datum/component/material_bane, the_bane_to_do)
+	quirk_holder.AddComponentFrom(QUIRK_TRAIT, /datum/component/material_bane, list(the_bane_to_do), TRUE, 1, 500, 1)
 
 /datum/quirk/material_bane/remove()
 	quirk_holder.RemoveComponentSource(QUIRK_TRAIT, /datum/component/material_bane)
