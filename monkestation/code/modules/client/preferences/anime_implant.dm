@@ -208,13 +208,10 @@
 
 	var/datum/sprite_accessory/accessory = GLOB.anime_halo_list[value]
 
-	if(accessory.icon_state == null || accessory.icon_state == "none")
-		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
-		return invalid_icon
+	if(isnull(accessory.icon_state) || accessory.icon_state == "none")
+		return icon('icons/mob/landmarks.dmi', "x")
 
-	var/icon/final_icon = icon(accessory.icon, "[accessory.icon_state]_preview")
-
-	return final_icon
+	return icon(accessory.icon, "[accessory.icon_state]_preview")
 
 /datum/preference/choiced/anime_halo/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["anime_halo"] = value
@@ -242,11 +239,6 @@
 
 /datum/preference/color/anime_halo_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["animehalocolor"] = value
-
-/datum/preference/color/anime_halo_color/is_valid(value)
-	if (!..(value))
-		return FALSE
-	return TRUE
 
 /datum/preference/color/anime_halo_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
