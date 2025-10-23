@@ -1,3 +1,4 @@
+#define MATERIAL_BANE_MAX_PASSIVE_PER_CLOTHING 10
 /datum/quirk/material_bane
 	name = "Material Allergy"
 	desc = "For whatever reason (perhaps it was that ancient statue you knocked over yesterday), a certain material is dangerous to you. It'll be extra dangerous to get attacked with and touching it invites a variety of issues."
@@ -9,7 +10,7 @@
 	hardcore_value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 	var/datum/material/ourbane = /datum/material/silver
-	var/how_yeowched = 0
+	var/collective_bane_power = 0
 
 /datum/quirk/material_bane/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, PROC_REF(eye_contact))
@@ -20,24 +21,23 @@
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 
 /datum/quirk/material_bane/on_process(seconds_per_tick)
+	var/was_baned = FALSE
 	var/mob/living/carbon/human/humholder = quirk_holder
 	var/has_gloves = FALSE
+	var/amount_ouch_to_cause = 0
+	var/num_ouchy_clothes = 0
 	for(var/obj/item/equippies in humholder.get_equipped_items())
 		var/obj/item/gloves = humholder.gloves
 		if(gloves)
 			if(!(gloves.body_parts_covered & HANDS) || HAS_TRAIT(gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
 				has_gloves = TRUE
 		if(equippies.custom_materials)
-			var/ouch_ratio = 0
-			var/hurts_us = FALSE
-			var/total_mats = 0
-			var/how_much_of_ouch = 0 
 			for(var/material in equippies.custom_materials)
 				var/datum/material/possible_ouch = GET_MATERIAL_REF(material)
 				if(istype(possible_ouch, our_bane))
-					hurts_us = TRUE
-					how_much_of_ouch = equippies.custom_materials[possible_ouch]
-				total_mats += equippies.custom_materials[possible_ouch]
-			if(hurts_us)
-				ouch_ratio = how_much_of_ouch / total_mats
+					num_ouchy_clothes += 1
+					was_baned = TRUE
+					if(prob(10))
+						humholder.visible_message(span_warning("[humholder] sizzles on contact with [equippies]"), span_warning("You sizzle and twitch as [equippies] painfully scalds you!"), span_warning("You hear a meaty sizziling noise, like frying bacon."))
+		collective_bane_power = max((MATERIAL_BANE_MAX_PASSIVE_PER_CLOTHING * num_ouchy_clothes), collective_bane_power)
 					
