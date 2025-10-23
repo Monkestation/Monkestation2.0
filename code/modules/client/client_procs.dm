@@ -1230,6 +1230,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
 /client/proc/set_right_click_menu_mode()
+
+	// still hard-coded to shift, but should be changed in the future for custom inspect keybindings
 	switch(context_menu_requires_shift)
 		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
 			winset(src, "mapwindow.map", "right-click=false")
