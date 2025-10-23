@@ -626,7 +626,6 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-
 	if(sight_mode & (BORGMESON|BORGNVMESON))
 		new_sight |= SEE_TURFS
 		if(sight_mode & BORGNVMESON)
