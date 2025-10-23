@@ -1289,7 +1289,7 @@
 	)
 
 /datum/design/borg_upgrade_nvgmeson
-	name = "Nightvision Mesons Sight"
+	name = "Nightvision Meson Sight"
 	id = "borg_upgrade_nvmeson"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/nvmeson

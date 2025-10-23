@@ -797,17 +797,17 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/nvmeson/action(mob/living/silicon/robot/R)
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/sight/meson in R.model.modules)
-			R.model.remove_module(M, TRUE)
+			R.model.remove_module(meson, TRUE)
 
 		var/obj/item/borg/sight/meson/nightvision/meson = new /obj/item/borg/sight/meson/nightvision(R.model)
 		R.model.basic_modules += meson
 		R.model.add_module(meson, FALSE, TRUE)
 
-/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/nvmeson/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/sight/meson/nightvision/A in R.model.modules)
