@@ -43,8 +43,6 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
-	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
-	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
 	var/prevent_drop = FALSE
 
 /datum/status_effect/incapacitating/knockdown/on_apply()
