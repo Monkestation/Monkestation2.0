@@ -146,6 +146,7 @@
 	greyscale_config_worn = /datum/greyscale_config/short_dress/worn
 	greyscale_colors = "#ff3636#363030"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/pinktutu
 	name = "pink tutu"
@@ -156,7 +157,7 @@
 	name = "flower dress"
 	desc = "Lovely dress. Colored like the autumn leaves."
 	icon_state = "flower_dress"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/redformal
 	name = "formal red dress"
