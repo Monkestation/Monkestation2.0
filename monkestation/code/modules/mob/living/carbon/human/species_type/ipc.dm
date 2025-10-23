@@ -25,7 +25,6 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
-		TRAIT_COLD_BLOODED, // This gets removed by their lungs.
 	)
 
 	mutant_organs = list(
@@ -102,8 +101,6 @@
 		A.Remove(C)
 		QDEL_NULL(A)
 	var/obj/item/organ/internal/lungs/L = C.get_organ_slot("lungs") //Hacky and bad. Will be rewritten entirely in KapuCarbons anyway.
-	if(istype(L, /obj/item/organ/internal/lungs/synth))
-		REMOVE_TRAIT(C, TRAIT_COLD_BLOODED, SPECIES_TRAIT)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)

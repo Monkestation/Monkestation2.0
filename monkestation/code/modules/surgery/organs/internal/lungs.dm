@@ -27,16 +27,6 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 
-/obj/item/organ/internal/lungs/synth/Remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	if(isipc(owner)) // The idea is to their description, their lungs regulate tempature, rather than air. Losing it loses that regulation.
-		ADD_TRAIT(owner, TRAIT_COLD_BLOODED, SPECIES_TRAIT) // Not a organ trait since it comes from a lack of a organ, more akin to the species itself..
-
-/obj/item/organ/internal/lungs/synth/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(isipc(owner))
-		REMOVE_TRAIT(owner, TRAIT_COLD_BLOODED, SPECIES_TRAIT)
-
 /obj/item/organ/internal/lungs/synth/emp_act(severity)
 	. = ..()
 
