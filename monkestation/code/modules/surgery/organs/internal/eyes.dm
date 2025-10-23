@@ -66,7 +66,7 @@
 /obj/item/organ/internal/eyes/synth
 	name = "optical sensors"
 	icon_state = "cybernetic_eyeballs"
-	desc = "A very basic set of optical sensors with no extra vision modes or functions."
+	desc = "A very basic set of optical sensors, only helping serve against protecting vision from bright lights."
 	maxHealth = 1 * STANDARD_ORGAN_THRESHOLD
 	flash_protect = FLASH_PROTECTION_WELDER
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION
