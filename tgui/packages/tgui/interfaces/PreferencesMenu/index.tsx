@@ -135,7 +135,7 @@ export const PreferencesMenu = () => {
   return (
     <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Section title="Preferences">
+        <Section>
           <Stack horizontal fill>
             <Stack.Item>{settingsCatergories}</Stack.Item>
             <Stack.Divider />
