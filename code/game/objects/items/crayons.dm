@@ -476,7 +476,7 @@
 		wait_time *= 3
 
 	if(!instant)
-		if(!do_after(user, 5 SECONDS, target = target))
+		if(!do_after(user, 5 SECONDS, target = target, max_interact_count = 4))
 			return ITEM_INTERACT_BLOCKING
 
 	if(!use_charges(user, cost))
