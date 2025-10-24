@@ -4,6 +4,7 @@
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loafer"
 	base_icon_state = "loafer"
+	construct_type = /obj/structure/disposalconstruct/loafer
 	var/is_loafing = FALSE
 	var/static/list/loaf_blacklist
 
