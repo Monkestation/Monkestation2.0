@@ -1896,6 +1896,7 @@
 #include "code\datums\storage\subtypes\cards.dm"
 #include "code\datums\storage\subtypes\fish_case.dm"
 #include "code\datums\storage\subtypes\implant.dm"
+#include "code\datums\storage\subtypes\misc.dm"
 #include "code\datums\storage\subtypes\organ_box.dm"
 #include "code\datums\storage\subtypes\pockets.dm"
 #include "code\datums\storage\subtypes\rped.dm"
