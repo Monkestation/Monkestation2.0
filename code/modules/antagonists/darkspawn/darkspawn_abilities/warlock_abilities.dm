@@ -133,7 +133,8 @@
 			target.bodytemperature = target.standard_body_temperature
 	else if(istype(victim, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/glowshroom = victim
-		glowshroom.convert_to_shadowshroom()
+		glowshroom.spread_cooldown = INFINITY // this glowshroom is now neutered
+		glowshroom.set_light(0)
 	else if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()

@@ -231,31 +231,6 @@
 	if(!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
 		qdel(src)
 
-/// "Seamlessly" converts this glowshroom into a shadowshroom with the same stats.
-/obj/structure/glowshroom/proc/convert_to_shadowshroom()
-	var/datum/plant_gene/trait/glow/glow_gene = myseed?.get_gene(/datum/plant_gene/trait/glow)
-	if(!glow_gene || istype(glow_gene, /datum/plant_gene/trait/glow/shadow))
-		return
-	// backup old vars so it's "seamless"
-	var/old_loc = loc
-	var/old_icon_variant = icon_variant
-	var/old_atom_integrity = atom_integrity
-	var/old_generation = generation
-	var/obj/item/seeds/new_seeds = myseed.Copy()
-	// remove the old glow gene
-	var/datum/plant_gene/trait/glow/old_glow_gene = locate() in new_seeds.genes
-	new_seeds.genes -= old_glow_gene
-	qdel(old_glow_gene)
-	// add the shadow emission gene >:3
-	var/datum/plant_gene/trait/glow/shadow/shadow_gene = new
-	new_seeds.genes += shadow_gene
-	shadow_gene.on_new_seed(new_seeds) // doesn't actually do anything, just here to avoid issues in case it ever DOES do anything in the future
-	// okay now we delete ourselves and create the shadowshroom with the new seeds
-	qdel(src)
-	var/obj/structure/glowshroom/shadowshroom/new_shadow = new(old_loc, new_seeds, old_icon_variant)
-	new_shadow.generation = old_generation
-	new_shadow.update_integrity(old_atom_integrity)
-
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
 		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
