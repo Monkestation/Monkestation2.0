@@ -55,22 +55,27 @@
 	icon_state = null
 	if(add_mouse_opacity)
 		mouse_opacity = MOUSE_OPACITY_OPAQUE
-
+/*
 	if(ishuman(outlined_atom))
 		//humans are special, we want to exclude things like wounds so the outline isn't animated.
 		var/mob/living/carbon/human/human_outline = outlined_atom
 		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER, HALO_LAYER)))
 	else
-		icon = outlined_atom.icon
-		icon_state = outlined_atom.icon_state
-		copy_overlays(outlined_atom)
-	transform = outlined_atom.transform
-	dir = outlined_atom.dir
-	add_filter("batong_outline", 1, outline_filter(color_strength, paint_colour))
+*/
+//		copy_overlays(outlined_atom)
+	var/mutable_appearance/outline_appearance = new(outlined_atom.appearance)
+//	icon = outline_appearance.icon
+//	icon_state = outline_appearance.icon_state
+	appearance = outline_appearance
+//	transform = outline_appearance.transform
+//	dir = outline_appearance.dir
+
+	add_filter("crayon_outline", 1, outline_filter(color_strength, paint_colour))
 	add_filter("alpha_mask", 2, alpha_mask_filter(
 		icon = getFlatIcon(outlined_atom.appearance, defdir = outlined_atom.dir, no_anim = TRUE),
 		flags = MASK_INVERSE,
 	))
+
 
 ///Common crayon decals in map.
 /obj/effect/decal/cleanable/crayon/rune4
