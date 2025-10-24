@@ -240,6 +240,7 @@
 	var/old_loc = loc
 	var/old_icon_variant = icon_variant
 	var/old_atom_integrity = atom_integrity
+	var/old_generation = generation
 	var/obj/item/seeds/new_seeds = myseed.Copy()
 	// remove the old glow gene
 	var/datum/plant_gene/trait/glow/old_glow_gene = locate() in new_seeds.genes
@@ -252,6 +253,7 @@
 	// okay now we delete ourselves and create the shadowshroom with the new seeds
 	qdel(src)
 	var/obj/structure/glowshroom/shadowshroom/new_shadow = new(old_loc, new_seeds, old_icon_variant)
+	new_shadow.generation = old_generation
 	new_shadow.update_integrity(old_atom_integrity)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
