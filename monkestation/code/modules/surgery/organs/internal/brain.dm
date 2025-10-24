@@ -189,19 +189,26 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	user.balloon_alert_to_viewers("staking core...")
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(
-		span_danger("[user] drives \the [stake] into [src]!"),
-		span_danger("You drive \the [stake] into [src]!"),
-	)
 	user.balloon_alert_to_viewers("staked core!")
 	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
 	if(bloodsucker_datum)
 		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+		user.visible_message(
+			span_danger("[user] drives \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
+			span_danger("You drive \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
+			span_hear("You hear a wet, crackling sound."),
+		)
+		to_chat(brainmob, span_userdanger("Your soul escapes your melting core as the abyss welcomes you to your Final Death."))
 		drop_items_to_ground(drop_location())
 		bloodsucker_datum.final_death(skip_destruction = TRUE)
 		qdel(src)
 	else
 		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)
+		user.visible_message(
+			span_danger("[user] drives \the [stake] into [src], making a loud crunching sound!"),
+			span_danger("You drive \the [stake] into [src], making a loud crunching sound!"),
+			span_hear("You hear a loud crunching sound."),
+		)
 		set_organ_damage(maxHealth) // you're stabbing it with a stake.
 	return ITEM_INTERACT_SUCCESS
 
