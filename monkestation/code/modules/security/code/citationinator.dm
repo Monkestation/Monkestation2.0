@@ -64,7 +64,7 @@
 	final_paper_text += "<center><b>[sanitize(new_citation.name)]</b></center><br>"
 	final_paper_text += "</table><br>"
 	final_paper_text += "Citations are payable at the Security Warrant Console at the front of the station brig.<br><br>"
-	final_paper_text += "<i>Accepting this ticket does not indicate an admission of guilt. If you wish to dispute this citation, please contact the Head of Security or the onboard legal counsel.</i><br><br>"
+	final_paper_text += "<i>Accepting this ticket does not indicate an admission of guilt. If you wish to dispute this citation, please contact the Captain, Head of Security, or the onboard legal counsel.</i><br><br>"
 	final_paper_text += "<i>Refusing to accept this ticket, or failure to pay/dispute this citation within a reasonable timeframe, may result in you being charged with Fine Evasion (code 111) and serving time in the station brig.</i><br>"
 
 	var/obj/item/paper/slip = new(drop_location())
