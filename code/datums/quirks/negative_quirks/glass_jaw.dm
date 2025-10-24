@@ -34,6 +34,9 @@
 
 /datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 	SIGNAL_HANDLER
+	if(isbodypart(def_zone))
+		var/obj/item/bodypart/hitting = def_zone
+		def_zone = hitting.body_zone
 	if((damagetype != BRUTE) || (def_zone != BODY_ZONE_HEAD))
 		return
 	var/actual_damage = damage - (damage * blocked/100)
