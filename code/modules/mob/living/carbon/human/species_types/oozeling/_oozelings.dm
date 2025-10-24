@@ -48,7 +48,6 @@
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
 		/datum/action/cooldown/slime_hydrophobia,
-		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
 	var/list/extra_actions = list()

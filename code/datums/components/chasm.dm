@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if(isliving(arrived) || is_oozeling_core(arrived))
+	if(isliving(arrived))
 		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
 		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
 			qdel(arrived)
@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if(isliving(gone) || is_oozeling_core(gone))
+	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
 
@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	var/new_cat = get_chasm_category(new_turf)
 	var/list/mobs = list()
 	for(var/fallen in src)
-		if(ismob(fallen) || is_oozeling_core(fallen))
+		if(ismob(fallen))
 			mobs += fallen
 	LAZYREMOVE(GLOB.chasm_fallen_mobs[old_cat], mobs)
 	LAZYADD(GLOB.chasm_fallen_mobs[new_cat], mobs)
