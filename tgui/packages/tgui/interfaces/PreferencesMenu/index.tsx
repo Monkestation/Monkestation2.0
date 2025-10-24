@@ -33,7 +33,7 @@ export const PreferencesMenu = () => {
     };
   }
 
-  let pageContents;
+  let pageContents: any;
   switch (window) {
     case PreferencesCurrentWindow.Character:
       pageContents = <CharacterPreferenceWindow />;
@@ -135,7 +135,7 @@ export const PreferencesMenu = () => {
   return (
     <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Section height="100%" title="Preferences">
+        <Section title="Preferences">
           <Stack horizontal fill>
             <Stack.Item>{settingsCatergories}</Stack.Item>
             <Stack.Divider />
