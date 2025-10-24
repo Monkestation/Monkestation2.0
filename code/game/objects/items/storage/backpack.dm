@@ -166,6 +166,7 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
