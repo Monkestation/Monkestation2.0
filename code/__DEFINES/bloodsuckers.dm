@@ -44,13 +44,9 @@
 #define BLOODSUCKER_SPAM_HEALING (15 SECONDS)
 ///Spam prevention for Sol Masquerade messages.
 #define BLOODSUCKER_SPAM_MASQUERADE (60 SECONDS)
-
-///Spam prevention for Sol messages.
-#define BLOODSUCKER_SPAM_SOL (30 SECONDS)
-//monkestation edit
 //Torpor softlock prevention - define it high as it is a failsafe
 #define BLOODSUCKER_TORPOR_MAX_TIME (120 SECONDS)
-//monkestation end
+
 /**
  * Clan defines
  */
@@ -82,10 +78,8 @@
 #define BP_CANT_USE_WHILE_INCAPACITATED (1<<3)
 /// This Power can't be used while unconscious
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
-/// This Power can't be used during Sol
-#define BP_CANT_USE_DURING_SOL (1<<5)
 /// This Power CAN be used while silver cuffed
-#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<5)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)
@@ -102,8 +96,10 @@
 #define BP_AM_SINGLEUSE (1<<1)
 /// This Power has a Static cooldown
 #define BP_AM_STATIC_COOLDOWN (1<<2)
+/// This Power has a custom cooldown scaling (do not use automatic cooldown reduction per level)
+#define BP_AM_CUSTOM_COOLDOWN (1<<3)
 /// This Power doesn't cost bloot to run while unconscious
-#define BP_AM_COSTLESS_UNCONSCIOUS (1<<3)
+#define BP_AM_COSTLESS_UNCONSCIOUS (1<<4)
 
 /**
  * Bloodsucker Signals
@@ -135,11 +131,7 @@
  * Sol signals & Defines
  */
 #define COMSIG_SOL_RANKUP_BLOODSUCKERS "sol_rankup_bloodsuckers"
-#define COMSIG_SOL_RISE_TICK "sol_rise_tick"
-#define COMSIG_SOL_NEAR_START "sol_near_start"
-#define COMSIG_SOL_END "sol_end"
-///Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
-#define COMSIG_SOL_WARNING_GIVEN "sol_warning_given"
+
 ///Called on a Bloodsucker's Lifetick.
 #define COMSIG_BLOODSUCKER_ON_LIFETICK "bloodsucker_on_lifetick"
 
@@ -157,7 +149,7 @@
  */
 ///Drinks blood the normal Bloodsucker way.
 #define BLOODSUCKER_DRINK_NORMAL "bloodsucker_drink_normal"
-///Drinks blood but is snobby, refusing to drink from mindless
+///Drinks blood but is snobby, taking a mood penalty for drinking from mindless
 #define BLOODSUCKER_DRINK_SNOBBY "bloodsucker_drink_snobby"
 ///Drinks blood from disgusting creatures without Humanity consequences.
 #define BLOODSUCKER_DRINK_INHUMANELY "bloodsucker_drink_imhumanely"

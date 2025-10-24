@@ -7923,7 +7923,7 @@
 /area/station/maintenance/starboard/aft)
 "csW" = (
 /obj/structure/closet/secure_closet/brig{
-	id = "brig1";
+	id = "Cell 4";
 	name = "Cell 1 locker"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -19393,6 +19393,18 @@
 /obj/item/clothing/suit/toggle/labcoat,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"fLQ" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 2";
+	name = "Cell 1 locker"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "fMa" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/item/radio/intercom/directional/east,
@@ -28421,6 +28433,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
+"iuz" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 3";
+	name = "Cell 1 locker"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "iuG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -67372,7 +67396,7 @@
 /area/station/command/heads_quarters/captain/private)
 "tBj" = (
 /obj/structure/closet/secure_closet/brig{
-	id = "brig1";
+	id = "Cell 1";
 	name = "Cell 1 locker"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -108770,10 +108794,10 @@ xhM
 csW
 tvm
 bBg
-tBj
+iuz
 tvm
 bBg
-tBj
+fLQ
 tvm
 bBg
 tBj
