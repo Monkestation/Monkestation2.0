@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 //monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 6,
-		//Sorry Lucy, I stole your gifts. ~MCP.
+		/obj/item/a_gift/anything/wiz_name = 4,
 		/obj/item/implanter/dust = 3,
 		/obj/item/vending_refill/sovietsoda = 3,
 		/obj/item/vending_refill/donksnackvendor = 3,
