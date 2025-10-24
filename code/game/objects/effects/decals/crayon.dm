@@ -4,20 +4,26 @@
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
 	gender = NEUTER
-	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
 	flags_1 = ALLOW_DARK_PAINTS_1
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
-	var/paint_colour = "#FFFFFF"
+	var/paint_colour = COLOR_WHITE
 	///Used by `create_outline` to determine how strong (how wide) the outline itself will be.
 	var/color_strength
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, color_strength)
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null, color_strength)
 	. = ..()
+	if(isclosedturf(loc) && loc.density)
+		// allows for wall graffiti to be seen
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
+		layer = FLOOR_CLEAN_LAYER
 	if(e_name)
 		name = e_name
-	desc = "A [name] vandalizing the station."
+	if(desc_override)
+		desc = "[desc_override]"
+	else
+		desc = "A [name] vandalizing the station."
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
@@ -33,8 +39,8 @@
 	src.color_strength = color_strength
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 
-/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
-	return isgroundlessturf(T)
+/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
 
 /**
  * Using a given atom, gives this decal an outline of said atom, then masks the contents,
@@ -60,8 +66,34 @@
 		copy_overlays(outlined_atom)
 	transform = outlined_atom.transform
 	dir = outlined_atom.dir
-	add_filter("crayon_outline", 1, outline_filter(color_strength, paint_colour))
+	add_filter("batong_outline", 1, outline_filter(color_strength, paint_colour))
 	add_filter("alpha_mask", 2, alpha_mask_filter(
 		icon = getFlatIcon(outlined_atom.appearance, defdir = outlined_atom.dir, no_anim = TRUE),
 		flags = MASK_INVERSE,
 	))
+
+///Common crayon decals in map.
+/obj/effect/decal/cleanable/crayon/rune4
+	icon_state = "rune4"
+	paint_colour = COLOR_CRAYON_RED
+
+/obj/effect/decal/cleanable/crayon/rune2
+	icon_state = "rune2"
+
+/obj/effect/decal/cleanable/crayon/x
+	icon_state = "x"
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE
+
+/obj/effect/decal/cleanable/crayon/l
+	icon_state = "l"
+
+/obj/effect/decal/cleanable/crayon/i
+	icon_state = "i"
+
+/obj/effect/decal/cleanable/crayon/e
+	icon_state = "e"
+
+/obj/effect/decal/cleanable/crayon/i/orange
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE
