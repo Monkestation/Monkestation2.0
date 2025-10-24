@@ -50,32 +50,20 @@
  * outlined_atom: Anything you wish to draw an outline of.
  * add_mouse_opacity: Boolean on whether you want mouse opacity, which allows the outline to be clickable/examinable without the context menu.
  */
-/obj/effect/decal/cleanable/crayon/proc/create_outline(atom/outlined_atom, add_mouse_opacity = FALSE)
-	icon = null
-	icon_state = null
+/obj/effect/decal/cleanable/crayon/proc/create_outline(mob/living/outlined_atom, add_mouse_opacity = FALSE)
+	var/icon/outline_icon = getFlatIcon(outlined_atom.appearance, defdir = outlined_atom.dir, no_anim = TRUE)
+	if(istype(outlined_atom))
+		outline_icon.Turn(outlined_atom.get_lying_angle())
+	icon = outline_icon
+
 	if(add_mouse_opacity)
 		mouse_opacity = MOUSE_OPACITY_OPAQUE
-/*
-	if(ishuman(outlined_atom))
-		//humans are special, we want to exclude things like wounds so the outline isn't animated.
-		var/mob/living/carbon/human/human_outline = outlined_atom
-		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER, HALO_LAYER)))
-	else
-*/
-//		copy_overlays(outlined_atom)
-	var/mutable_appearance/outline_appearance = new(outlined_atom.appearance)
-//	icon = outline_appearance.icon
-//	icon_state = outline_appearance.icon_state
-	appearance = outline_appearance
-//	transform = outline_appearance.transform
-//	dir = outline_appearance.dir
 
 	add_filter("crayon_outline", 1, outline_filter(color_strength, paint_colour))
 	add_filter("alpha_mask", 2, alpha_mask_filter(
-		icon = getFlatIcon(outlined_atom.appearance, defdir = outlined_atom.dir, no_anim = TRUE),
+		icon = outline_icon,
 		flags = MASK_INVERSE,
 	))
-
 
 ///Common crayon decals in map.
 /obj/effect/decal/cleanable/crayon/rune4
