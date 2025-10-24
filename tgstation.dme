@@ -1441,6 +1441,7 @@
 #include "code\datums\elements\attack_equip.dm"
 #include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bane.dm"
+#include "code\datums\elements\bane_inducing.dm"
 #include "code\datums\elements\basic_eating.dm"
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
