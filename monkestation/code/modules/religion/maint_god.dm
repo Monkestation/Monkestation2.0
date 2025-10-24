@@ -76,7 +76,6 @@
 	favor_cost = 50
 	var/amount = 5
 
-
 /datum/religion_rites/maint_loot/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool) // Like an assistant, I steal code from other functions.
@@ -84,18 +83,15 @@
 		var/lootspawn = pick_weight(GLOB.good_maintenance_loot)
 		while(islist(lootspawn))
 			lootspawn = pick_weight(lootspawn)
-		// if we get the anything gift, reroll the gift. If we get it 20 times in a row, thats just bad luck
-		// or good luck depending on how you look at it
-		var/attempts = 0
-		while(lootspawn == /obj/item/a_gift/anything/wiz_name && attempts < 20)
+		// if we get the anything gift, reroll the gift.
+		//var/attempts = 0 (Theoretical infinite loop. Probably don't need to worry about this?)
+		while(lootspawn == /obj/item/a_gift/anything/wiz_name)// && attempts < 20)
 			lootspawn = pick_weight(GLOB.good_maintenance_loot)
 			while(islist(lootspawn))
 				lootspawn = pick_weight(lootspawn)
-			attempts += 1
-
-		// If you somehow rolled the gift 20 times in a row, that's just bad luck my dude.
-		if(lootspawn == /obj/item/a_gift/anything/wiz_name)
-			continue
+			//attempts += 1
+	//	if(lootspawn == /obj/item/a_gift/anything/wiz_name)
+	//		continue
 
 		new lootspawn(altar_turf)
 	return TRUE
