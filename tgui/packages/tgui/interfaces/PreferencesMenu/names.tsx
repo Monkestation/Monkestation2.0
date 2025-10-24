@@ -54,7 +54,7 @@ export const MultiNameInput = (props: {
         }
 
         return (
-          <Modal>
+          <Modal ml={20}>
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
                 buttons={

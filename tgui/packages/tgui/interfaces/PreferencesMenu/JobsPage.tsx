@@ -353,7 +353,7 @@ const JoblessRoleDropdown = (props) => {
   ];
 
   return (
-    <Box position="absolute" right={0} width="30%">
+    <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
         selected={selected}
