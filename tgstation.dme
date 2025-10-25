@@ -7117,7 +7117,7 @@
 #include "monkestation\code\modules\bloodsuckers\clans\nosferatu.dm"
 #include "monkestation\code\modules\bloodsuckers\clans\tremere.dm"
 #include "monkestation\code\modules\bloodsuckers\clans\vassal.dm"
-#include "monkestation\code\modules\bloodsuckers\clans\venture.dm"
+#include "monkestation\code\modules\bloodsuckers\clans\ventrue.dm"
 #include "monkestation\code\modules\bloodsuckers\controllers\sunlight.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\_base_power.dm"
 #include "monkestation\code\modules\bloodsuckers\powers\cloak.dm"

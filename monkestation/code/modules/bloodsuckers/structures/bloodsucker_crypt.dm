@@ -291,6 +291,9 @@
 		to_chat(user, span_warning("You can't vassalize people until you enter a Clan (Through your Antagonist UI button)"))
 		user.balloon_alert(user, "join a clan first!")
 		return
+	if(bloodsuckerdatum.my_clan.name == CLAN_VASSAL)
+		to_chat(user, span_warning("As a vassalized bloodsucker, you cannot make thralls of your own."))
+		return
 
 	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(buckled_carbons)
 	// Are they our Vassal?
@@ -428,7 +431,7 @@
 	blood_draining = FALSE
 	return TRUE
 
-/// Offer them the oppertunity to join now.
+/// Offer them the opportunity to join now.
 /obj/structure/bloodsucker/vassalrack/proc/do_disloyalty(mob/living/user, mob/living/target)
 	if(disloyalty_offered)
 		return FALSE

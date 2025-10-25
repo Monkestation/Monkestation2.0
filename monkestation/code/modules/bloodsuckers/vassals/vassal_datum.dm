@@ -95,7 +95,6 @@
 /datum/antagonist/vassal/on_gain()
 	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	/// Enslave them to their Master
 	if(!master || !istype(master, master))
 		return
@@ -118,23 +117,37 @@
 	return ..()
 
 /datum/antagonist/vassal/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
-	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
 	if(!QDELETED(master))
 		if(special_type && master.special_vassals[special_type])
-			master.special_vassals[special_type] -= src
+			master.special_vassals.Remove(special_type)
 		master.vassals -= src
 		owner.enslaved_to = null
-	if(owner.current)
-		UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
-		REMOVE_TRAITS_IN(owner.current, BLOODSUCKER_TRAIT)
+
+	var/datum/antagonist/bloodsucker/converted_bloodsucker_datum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	//If this vassal has become a bloodsucker through ventrue conversion, we do not remove these things - but we do remove a couple other things instead
+	if (!converted_bloodsucker_datum)
+		REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
+		if(owner.current)
+			UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
+			REMOVE_TRAITS_IN(owner.current, BLOODSUCKER_TRAIT)
+
+		//Remove Language & Hud
+		owner.current?.remove_language(/datum/language/vampiric)
+		//Remove Vassal Powers
+		QDEL_LIST(powers)
+	else
+		var/datum/action/cooldown/bloodsucker/recuperate/recuperate_power = locate(/datum/action/cooldown/bloodsucker/recuperate) in converted_bloodsucker_datum.powers
+		if (recuperate_power)
+			converted_bloodsucker_datum.RemovePower(recuperate_power)
+
+		var/datum/action/cooldown/bloodsucker/distress/distress_power = locate(/datum/action/cooldown/bloodsucker/distress) in converted_bloodsucker_datum.powers
+		if (distress_power)
+			converted_bloodsucker_datum.RemovePower(distress_power)
+
 	// remove the monitor
 	QDEL_NULL(monitor)
-	//Remove Recuperate Power
-	QDEL_LIST(powers)
-	//Remove Language & Hud
-	owner.current?.remove_language(/datum/language/vampiric)
+
 	return ..()
 
 /datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
