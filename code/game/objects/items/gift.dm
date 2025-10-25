@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
 
-			//Here is all the debug and admin items I could find. There's probably some missing
+			//Here is all the debug items I could find. There's probably some missing
 			//but hopefully I got most of them.
 			//There are PROBABLY repeats from the list above but it shouldn't matter.
 			/obj/item/airlock_painter/decal/debug,
@@ -192,7 +192,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/melee/skateboard/hoverboard/admin,
 			/obj/item/mining_scanner/admin,
 			/obj/item/mod/control/pre_equipped/administrative,
-			/obj/item/reagent_containers/cup/bottle/adminordrazine,
 			/obj/item/construction/rcd/combat/admin,
 			/obj/item/construction/rtd/admin,
 			/obj/item/banhammer,
@@ -200,25 +199,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/bombcore/badmin/summon,
 			/obj/item/bombcore/badmin/summon/clown,
 			/obj/item/camera/spooky/badmin,
-			/obj/item/antag_granter,
-			/obj/item/antag_granter/changeling,
-			/obj/item/antag_granter/clock_cultist,
-			/obj/item/antag_granter/heretic,
 			/obj/item/antag_spawner,
-			/obj/item/antag_spawner/assault_operative,
 			/obj/item/antag_spawner/contract,
-			/obj/item/antag_spawner/loadout,
-			/obj/item/antag_spawner/loadout/monkey_crash,
-			/obj/item/antag_spawner/loadout/monkey_man,
-			/obj/item/antag_spawner/loadout/monkey_man/ricky,
-			/obj/item/antag_spawner/nuke_ops,
-			/obj/item/antag_spawner/nuke_ops/borg_tele,
-			/obj/item/antag_spawner/nuke_ops/borg_tele/assault,
-			/obj/item/antag_spawner/nuke_ops/borg_tele/medical,
-			/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur,
-			/obj/item/antag_spawner/nuke_ops/clown,
-			/obj/item/antag_spawner/slaughter_demon,
-			/obj/item/antag_spawner/slaughter_demon/laughter,
 			/obj/item/areaeditor,
 			/obj/item/areaeditor/blueprints,
 			/obj/item/areaeditor/blueprints/cyborg,
