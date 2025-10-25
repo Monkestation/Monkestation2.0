@@ -210,7 +210,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/autosurgeon/perfect_serverlink,
 			/obj/item/paper/fluff/junkmail_redpill/true,
 			/obj/item/clothing/mask/animal/small/tribal/cursed,
-			/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka,
 			/obj/item/bounty_cube/debug_cube,
 			/obj/item/storage/box/debugbox/tools,
 			)
