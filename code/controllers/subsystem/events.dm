@@ -11,8 +11,6 @@ SUBSYSTEM_DEF(events)
 	var/frequency_lower = 1800 //3 minutes lower bound.
 	var/frequency_upper = 6000 //10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
-	var/wizardmode = FALSE
-
 /datum/controller/subsystem/events/Initialize()
 	for(var/datum/round_event_control/event_type as anything in typesof(/datum/round_event_control))
 		if(!event_type::typepath || !event_type::name)
@@ -43,13 +41,6 @@ SUBSYSTEM_DEF(events)
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
 			return
-
-
-/datum/controller/subsystem/events/proc/toggleWizardmode()
-	wizardmode = !wizardmode
-	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
-	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
-
 
 /datum/controller/subsystem/events/proc/resetFrequency()
 	frequency_lower = initial(frequency_lower)
