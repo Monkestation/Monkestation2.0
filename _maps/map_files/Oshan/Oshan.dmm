@@ -5091,6 +5091,13 @@
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"bFT" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron/vaporwave,
+/area/station/maintenance/port/central)
 "bGe" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/teleporter_hub{
@@ -12742,6 +12749,7 @@
 /area/station/engineering/storage/tech)
 "dYK" = (
 /obj/structure/cable,
+/obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dYM" = (
@@ -21355,6 +21363,11 @@
 /obj/machinery/door/poddoor/massdriver_ordnance,
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
+"gJF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/vaporwave,
+/area/station/maintenance/port/central)
 "gJG" = (
 /turf/closed/wall,
 /area/station/common/cryopods)
@@ -24034,6 +24047,7 @@
 /area/station/maintenance/port/central)
 "hDn" = (
 /obj/structure/cable,
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "hDq" = (
@@ -27452,6 +27466,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/ordnance/bomb)
+"iGI" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/vaporwave,
+/area/station/maintenance/port/central)
 "iGL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -40565,6 +40586,10 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
+"mOT" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/vaporwave,
+/area/station/maintenance/port/central)
 "mOU" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
@@ -53508,6 +53533,7 @@
 /area/station/engineering/atmos/storage/gas)
 "qLT" = (
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/port/central)
 "qMk" = (
@@ -56942,6 +56968,12 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"rQS" = (
+/obj/effect/spawner/random/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "rQT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -61312,6 +61344,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "tkK" = (
@@ -62991,6 +63024,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/port)
+"tKZ" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/plating,
+/area/station/maintenance/port/central)
 "tLb" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -107698,7 +107735,7 @@ fcy
 kND
 slK
 bds
-tmz
+iGI
 tmz
 pdl
 tJs
@@ -107956,8 +107993,8 @@ kND
 kND
 kND
 oHs
-nWr
-bTY
+rQS
+mOT
 hDl
 ikJ
 hDn
@@ -108475,7 +108512,7 @@ mSq
 dYK
 lTp
 pdl
-ikJ
+gJF
 kND
 meJ
 cgU
@@ -108987,9 +109024,9 @@ mSq
 jkJ
 mSq
 bTY
-ahm
+bFT
 csW
-csW
+tKZ
 kDK
 meJ
 cgU
