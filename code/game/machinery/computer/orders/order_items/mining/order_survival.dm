@@ -1,6 +1,11 @@
 /datum/orderable_item/survival //should be used for anything that makes sure the miner is not dead in ways that do not involve killing stuff
 	category_index = CATEGORY_SURVIVAL
 
+/datum/orderable_item/survival/chasm_filler
+	item_path = /obj/item/chasm_filler
+	desc = "A capsule that can be thrown into chasms to fill them with thick dirt."
+	cost_per_order = 350
+
 /datum/orderable_item/survival/survival_pen
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival
 	cost_per_order = 500
@@ -9,8 +14,8 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 1000
 
-/datum/orderable_item/survival/luxury_pen/oozling //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling
+/datum/orderable_item/survival/luxury_pen/oozeling //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN
@@ -25,13 +30,13 @@
 	item_path = /obj/item/autosurgeon/toolset/synthcare
 	cost_per_order = 750
 
+/datum/orderable_item/survival/robopiates //monkestation edit Slows you down so only really good for out of fight usage
+	item_path = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	cost_per_order = 500
+
 /datum/orderable_item/survival/temperature //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
 	cost_per_order = 200
-
-/datum/orderable_item/survival/magnetic //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
-	cost_per_order = 250
 
 /datum/orderable_item/survival/speed //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
@@ -47,6 +52,10 @@
 
 /datum/orderable_item/survival/capsule
 	item_path = /obj/item/survivalcapsule
+	cost_per_order = 400
+
+/datum/orderable_item/survival/bathroom
+	item_path = /obj/item/survivalcapsule/bathroom
 	cost_per_order = 400
 
 /datum/orderable_item/survival/medkit_basic

@@ -132,7 +132,7 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aA" = (
@@ -276,8 +276,8 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Cockpit"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aX" = (
@@ -314,7 +314,7 @@
 /area/shuttle/abandoned)
 "bb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bc" = (

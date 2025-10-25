@@ -83,6 +83,7 @@
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
 	track.Grant(owner.current)
+	powers += track
 	return ..()
 
 /datum/antagonist/monsterhunter/on_removal()
@@ -150,7 +151,7 @@
 			"id" = trick_weapon,
 			"name" = trick_weapon::name,
 			"desc" = trick_weapon::ui_desc,
-			"icon" = text_ref(trick_weapon::icon_preview || trick_weapon::icon),
+			"icon" = trick_weapon::icon_preview || trick_weapon::icon,
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
 	return list("weapons" = weapons)
@@ -193,6 +194,7 @@
 	var/datum/action/cooldown/spell/summonitem/recall = new
 	recall.mark_item(weapon)
 	recall.Grant(user)
+	powers += recall
 
 	podspawn(list(
 		"target" = get_turf(user),

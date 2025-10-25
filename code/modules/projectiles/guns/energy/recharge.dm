@@ -4,7 +4,7 @@
 	base_icon_state = "kineticgun"
 	desc = "A self recharging gun. Holds one shot at a time."
 	automatic_charge_overlays = FALSE
-	cell_type = /obj/item/stock_parts/cell/emproof
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
 	/// Does it hold charge when not put away?
@@ -77,7 +77,12 @@
 			carried++
 	carried = max(carried, 1)
 	deltimer(recharge_timerid)
-	recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
+	var/actual_recharge_time = set_recharge_time * carried
+	if(actual_recharge_time > 0)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), actual_recharge_time, TIMER_STOPPABLE)
+	else
+		recharge_timerid = null
+		reload()
 
 /obj/item/gun/energy/recharge/emp_act(severity)
 	return
@@ -118,6 +123,9 @@
 	knife_x_offset = 20
 	knife_y_offset = 12
 
+/obj/item/gun/energy/recharge/ebow/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
@@ -157,12 +165,13 @@
 	attenuated to launch kinetic bolts that <b>disrupt flashlights and cameras, if only temporarily</b>. This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
 	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
 
-/obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
-	// you should just shoot them, but in case you can't/wont
+/obj/item/gun/energy/recharge/fisher/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	if(user.Adjacent(target))
-		var/obj/projectile/energy/fisher/melee/simulated_hit = new
-		simulated_hit.on_hit(target)
+	if(.)
+		return
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = user
+	simulated_hit.on_hit(target_mob)
 
 /obj/item/gun/energy/recharge/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	// ...you reeeeeally just shoot them, but in case you can't/won't

@@ -2,14 +2,14 @@
 #define ADD_HAT 0
 #define REMOVE_HAT 1
 
-/obj/item/clothing/head/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/head) && !istype(I, /obj/item/clothing/head/mob_holder) && !istype(src, /obj/item/clothing/head/mob_holder)) //No putting Ian on a hat or vice-reversa
+/obj/item/clothing/head/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/clothing/head) && !istype(attacking_item, /obj/item/clothing/head/mob_holder) && !istype(src, /obj/item/clothing/head/mob_holder)) //No putting Ian on a hat or vice-reversa
 		if(contents) 					//Checking for previous hats and preventing towers that are too large
-			if(I.contents)
-				if(I.contents.len + contents.len + 1 > HAT_CAP)
+			if(attacking_item.contents)
+				if(attacking_item.contents.len + contents.len + 1 > HAT_CAP)
 					to_chat(user,"<span class='warning'>You think that this hat tower is perfect the way it is and decide against adding another.</span>")
 					return
-				for(var/obj/item/clothing/head/hat_movement in I.contents)
+				for(var/obj/item/clothing/head/hat_movement in attacking_item.contents)
 					hat_movement.name = initial(name)
 					hat_movement.desc = initial(desc)
 					hat_movement.forceMove(src)
@@ -17,12 +17,21 @@
 			if(hat_count + 1 > HAT_CAP)
 				to_chat(user,"<span class='warning'>You think that this hat tower is perfect the way it is and decide against adding another.</span>")
 				return
-		var/obj/item/clothing/head/new_hat = I
+		var/obj/item/clothing/head/new_hat = attacking_item
 		if(user.transferItemToLoc(new_hat,src)) //Moving the new hat to the base hat's contents
 			to_chat(user, "<span class='notice'>You place the [new_hat] upon the [src].</span>")
 			update_hats(ADD_HAT, user)
 	else
 		. = ..()
+
+/obj/item/clothing/head/attack_self(mob/user, modifiers)
+	if(length(contents) > 0)
+		for (var/obj/item/clothing/head/hat in contents)
+			hat.forceMove(get_turf(user))
+			hat.restore_initial()
+
+		to_chat(user, span_warning("You take apart the pile of hats."))
+		update_hats(NONE, user)
 
 
 /obj/item/clothing/head/verb/detach_stacked_hat()
@@ -45,6 +54,7 @@
 			break
 		throwing_hat.forceMove(wearer_location)
 		throwing_hat.throw_at(destination, rand(1, 4), 10)
+		throwing_hat.restore_initial()
 		hat_count--
 	update_hats(NONE, user)
 	if(user)
@@ -59,7 +69,38 @@
 
 	cut_overlays()
 
-	if(length(contents))
+	switch(length(contents)) //Section for naming/description
+		if(0)
+			restore_initial()
+			remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
+		if (1,2)
+			name = "Pile of Hats"
+			desc = "A meagre pile of hats"
+		if (3)
+			name = "Stack of Hats"
+			desc = "A decent stack of hats"
+		if(5,6)
+			name = "Towering Pillar of Hats"
+			desc = "A magnificent display of pride and wealth"
+		if(7,8)
+			name = "A Dangerous Amount of Hats"
+			desc = "A truly grand tower of hats"
+		if(9,10)
+			name = "A Lesser Hatularity"
+			desc = "A tower approaching unstable levels of hats"
+		if(11,12,13,14,15)
+			name = "A Hatularity"
+			desc = "A tower that has grown far too powerful"
+		if(16,17,18,19)
+			name = "A Greater Hatularity"
+			desc = "A monument to the madness of man"
+		if(20)
+			name = "The True Hat Tower"
+			desc = "<span class='narsiesmall'>AFTER NINE YEARS IN DEVELOPMENT, HOPEFULLY IT WILL HAVE BEEN WORTH THE WAIT</span>"
+
+	if(length(contents) > 0)
+		desc += "<BR>You can use it in hand to separate all the hats."
+
 		//This section prepares the in-hand and on-ground icon states for the hats.
 		var/current_hat = 1
 		for(var/obj/item/clothing/head/selected_hat in contents)
@@ -75,39 +116,8 @@
 
 		add_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
 
-		switch(length(contents)) //Section for naming/description
-			if(0)
-				name = initial(name)
-				desc = initial(desc)
-				remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
-			if (1,2)
-				name = "Pile of Hats"
-				desc = "A meagre pile of hats"
-			if (3)
-				name = "Stack of Hats"
-				desc = "A decent stack of hats"
-			if(5,6)
-				name = "Towering Pillar of Hats"
-				desc = "A magnificent display of pride and wealth"
-			if(7,8)
-				name = "A Dangerous Amount of Hats"
-				desc = "A truly grand tower of hats"
-			if(9,10)
-				name = "A Lesser Hatularity"
-				desc = "A tower approaching unstable levels of hats"
-			if(11,12,13,14,15)
-				name = "A Hatularity"
-				desc = "A tower that has grown far too powerful"
-			if(16,17,18,19)
-				name = "A Greater Hatularity"
-				desc = "A monument to the madness of man"
-			if(20)
-				name = "The True Hat Tower"
-				desc = "<span class='narsiesmall'>AFTER NINE YEARS IN DEVELOPMENT, HOPEFULLY IT WILL HAVE BEEN WORTH THE WAIT</span>"
-
 	worn_overlays() //This is where the actual worn icon is generated
 	user.update_worn_head() //Regenerate the wearer's head appearance so that they have real-time hat updates.
-
 
 #undef HAT_CAP
 #undef ADD_HAT

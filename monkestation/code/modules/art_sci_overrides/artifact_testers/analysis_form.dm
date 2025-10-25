@@ -36,48 +36,14 @@
 	var/list/chosentriggers = list()
 	var/list/chosen_effects = list()
 	var/chosen_fault = ""
+	var/static/list/all_list
 
-/obj/item/sticker/analysis_form/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/pen))
-		ui_interact(user)
-	else
-		return ..()
-
-/obj/item/sticker/analysis_form/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "ArtifactForm", name)
-		ui.open()
-
-/obj/item/sticker/analysis_form/ui_act(action, params)
+/obj/item/sticker/analysis_form/Initialize(mapload)
 	. = ..()
-	if(.)
-		return
-	if(!istype(usr.get_active_held_item(), /obj/item/pen))
-		to_chat(usr, span_notice("You need a pen to write on [src]!"))
-		return
-	switch(action)
-		if("origin")
-			chosen_origin = params["origin"]
-		if("type")
-			var/trig_type = params["type"]
-			if(trig_type in chosen_effects)
-				chosen_effects -= trig_type
-			else
-				chosen_effects += trig_type
-		if("fault")
-			chosen_fault = params["fault"]
-		if("trigger")
-			var/trig_act = params["trigger"]
-			if(trig_act in chosentriggers)
-				chosentriggers -= trig_act
-			else
-				chosentriggers += trig_act
-	if(attached)
-		analyze_attached()
+	if(!all_list)
+		all_list = initialize_static_list()
 
-/obj/item/sticker/analysis_form/ui_static_data(mob/user)
-	. = ..()
+/obj/item/sticker/analysis_form/proc/initialize_static_list()
 	var/list/origins_names = list()
 	for(var/datum/artifact_origin/subtype as anything in subtypesof(/datum/artifact_origin))
 		origins_names += initial(subtype.name)
@@ -96,19 +62,71 @@
 			continue //shhhhh
 		artifact_names += initial(subtype.type_name)
 
-	.["allorigins"] = origins_names
-	.["allfaults"] = allfaults
-	.["alltypes"] = artifact_names
-	.["alltriggers"] = trigger_names
-	return
+	return list(
+		"allorigins" = sort_list(origins_names),
+		"allfaults" = sort_list(allfaults),
+		"alltypes" = sort_list(artifact_names),
+		"alltriggers" = sort_list(trigger_names),
+	)
+
+/obj/item/sticker/analysis_form/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/pen))
+		ui_interact(user)
+	else
+		return ..()
+
+/obj/item/sticker/analysis_form/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ArtifactForm", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/obj/item/sticker/analysis_form/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/user = ui.user
+	if(!istype(user.get_active_held_item(), /obj/item/pen))
+		to_chat(user, span_notice("You need a pen to write on [src]!"))
+		return
+	switch(action)
+		if("origin")
+			. = TRUE
+			chosen_origin = params["origin"]
+		if("type")
+			. = TRUE
+			var/trig_type = params["type"]
+			if(trig_type in chosen_effects)
+				chosen_effects -= trig_type
+			else
+				chosen_effects += trig_type
+		if("fault")
+			. = TRUE
+			chosen_fault = params["fault"]
+		if("trigger")
+			. = TRUE
+			var/trig_act = params["trigger"]
+			if(trig_act in chosentriggers)
+				chosentriggers -= trig_act
+			else
+				chosentriggers += trig_act
+
+	if(.)
+		SStgui.update_uis(src)
+		if(attached)
+			analyze_attached()
+
+/obj/item/sticker/analysis_form/ui_static_data(mob/user)
+	return all_list
 
 /obj/item/sticker/analysis_form/ui_data(mob/user)
-	. = ..()
-	.["chosenorigin"] = chosen_origin
-	.["chosenfault"] = chosen_fault
-	.["chosentype"] = chosen_effects
-	.["chosentriggers"] = chosentriggers
-	return .
+	return list(
+		"chosenorigin" = chosen_origin,
+		"chosenfault" = chosen_fault,
+		"chosentype" = chosen_effects,
+		"chosentriggers" = chosentriggers,
+	)
 
 /obj/item/sticker/analysis_form/can_interact(mob/user)
 	if(attached && user.Adjacent(attached))
@@ -121,27 +139,20 @@
 
 /obj/item/sticker/analysis_form/unregister_signals(datum/source)
 	. = ..()
-	UnregisterSignal(attached, list(COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(attached, COMSIG_ATOM_EXAMINE)
 
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-		return
-	ui_interact(user)
+	if(isobserver(user) || in_range(user, attached || src))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/sticker/analysis_form/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("It has an artifact analysis form attached to it...")
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/, ui_interact), user)
-
-/obj/item/sticker/analysis_form/examine(mob/user)
-	. = ..()
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-		return
-	ui_interact(user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+	if(!in_range(user, attached || src) && !isobserver(user))
 		return UI_CLOSE
 	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
@@ -155,8 +166,8 @@
 	return ..()
 //analysis
 
-/obj/item/sticker/analysis_form/stick(atom/target, mob/living/user, px,py)
-	..()
+/obj/item/sticker/analysis_form/attempt_attach(atom/target, mob/user, px, py)
+	. = ..()
 	analyze_attached()
 
 /obj/item/sticker/analysis_form/peel(atom/source)
@@ -174,7 +185,7 @@
 	if(chosen_fault)
 		to_analyze.holder.name += " ![chosen_fault]! "
 	if(chosen_effects)
-		for(var/effect as anything in chosen_effects)
+		for(var/effect in chosen_effects)
 			to_analyze.holder.name += " ([effect]) "
 	to_analyze.analysis = src
 	to_analyze.process_stimuli(STIMULUS_DATA,TRUE)
@@ -184,7 +195,7 @@
 	if(!to_analyze)
 		return
 	to_analyze.holder.name = to_analyze.fake_name
-	QDEL_NULL(to_analyze.analysis)
+	to_analyze.analysis = null
 
 /obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
 	var/baseval = CARGO_CRATE_VALUE

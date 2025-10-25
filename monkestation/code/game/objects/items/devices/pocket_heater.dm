@@ -1,13 +1,7 @@
-/// How long one of these lasts with a 10 MJ cell, in seconds.
-#define HEATER_TIME 1800
-
-/// How much charge this consumes per second.
-#define CHARGE_PER_SECOND (10000 / HEATER_TIME)
-
-/obj/item/pocket_heater/loaded/Initialize(mapload)
-	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
-	capacitor = new /obj/item/stock_parts/capacitor(src)
+/// How long one of these lasts with a 10 KJ cell.
+#define HEATER_TIME (30 MINUTES)
+/// How much charge this consumes per second, using the define above.
+#define CHARGE_PER_SECOND ((10 * STANDARD_CELL_CHARGE) / HEATER_TIME)
 
 /obj/item/pocket_heater
 	name = "pocket heater"
@@ -16,10 +10,15 @@
 	icon_state = "heater_off"
 	w_class = WEIGHT_CLASS_SMALL
 
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/obj/item/stock_parts/capacitor/capacitor
 
 	var/on = FALSE
+
+/obj/item/pocket_heater/loaded/Initialize(mapload)
+	. = ..()
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
+	capacitor = new /obj/item/stock_parts/capacitor(src)
 
 /obj/item/pocket_heater/Destroy(force)
 	. = ..()
@@ -55,8 +54,8 @@
 	else
 		. += span_warning("It lacks a capacitor.")
 
-/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "already has a cell!")
 		else

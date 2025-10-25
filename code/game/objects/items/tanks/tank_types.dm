@@ -13,10 +13,11 @@
 /obj/item/tank/internals
 	alternate_worn_layer = ABOVE_HEAD_LAYER
 //MONKESTATION EDIT STOP
-/obj/item/tank/internals/AltClick(mob/user)
-	..()
-	if((loc == user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH|NEED_HANDS))
-		toggle_internals(user)
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|NEED_HANDS|ALLOW_RESTING
+
+/obj/item/tank/internals/click_alt(mob/user)
+	toggle_internals(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/tank/internals/examine(mob/user)
 	. = ..()
@@ -102,9 +103,9 @@
 	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
-/obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/flamethrower))
-		var/obj/item/flamethrower/F = W
+/obj/item/tank/internals/plasma/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/flamethrower))
+		var/obj/item/flamethrower/F = attacking_item
 		if ((!F.status) || (F.ptank))
 			return
 		if(!user.transferItemToLoc(src, F))

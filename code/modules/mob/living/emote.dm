@@ -121,13 +121,19 @@
 	message_animal_or_basic = initial(message_animal_or_basic)
 	if(!. && !user.can_speak() || user.getOxyLoss() >= 50)
 		return //stop the sound if oxyloss too high/cant speak
-	var/mob/living/carbon/carbon_user = user
-	// For masks that give unique death sounds
-	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
-		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
-		return
-	if(user.death_sound)
-		playsound(user, user.death_sound, 200, TRUE, TRUE)
+	var/death_sound = get_sound(user)
+	if(death_sound)
+		playsound(user, death_sound, 200, TRUE, TRUE)
+
+
+/datum/emote/living/deathgasp/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		// Alternative deathgasps.
+		if(LAZYLEN(human_user.alternative_deathgasps))
+			return pick(human_user.alternative_deathgasps)
+
+	return user.death_sound
 
 /datum/emote/living/drool
 	key = "drool"
@@ -585,7 +591,7 @@ monkestation edit end */
 	if(!. || !isliving(user))
 		return
 
-	if(!TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_YAWN_PROPAGATION))
 		TIMER_COOLDOWN_START(user, COOLDOWN_YAWN_PROPAGATION, cooldown * 3)
 
 	var/mob/living/carbon/carbon_user = user
@@ -595,7 +601,7 @@ monkestation edit end */
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_RUNNING(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)
@@ -614,7 +620,7 @@ monkestation edit end */
 
 /// This yawn has been triggered by someone else yawning specifically, likely after a delay. Check again if they don't have the yawned recently trait
 /datum/emote/living/yawn/proc/propagate_yawn(mob/user)
-	if(!istype(user) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+	if(!istype(user) || TIMER_COOLDOWN_RUNNING(user, COOLDOWN_YAWN_PROPAGATION))
 		return
 	user.emote("yawn")
 

@@ -6,7 +6,7 @@
 	light_color = COLOR_SOFT_RED
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
-	var/mob/camera/ai_eye/remote/eyeobj
+	var/mob/eye/ai_eye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("ss13")
 	/// Typepath of the action button we use as "off"
@@ -21,6 +21,8 @@
 
 	/// List of all actions to give to a user when they're well, granted actions
 	var/list/actions = list()
+	///the net it's looking at
+	var/datum/cameranet/camnet
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
 
@@ -50,6 +52,20 @@
 	if(move_down_action)
 		actions += new move_down_action(src)
 
+	camnet = GLOB.cameranet //the default cameranet
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	unset_machine()
+	QDEL_NULL(eyeobj)
+	QDEL_LIST(actions)
+	current_user = null
+	return ..()
+
+/obj/machinery/computer/camera_advanced/process()
+	if(!can_use(current_user) || (issilicon(current_user) && !HAS_SILICON_ACCESS(current_user)))
+		unset_machine()
+		return PROCESS_KILL
+
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)
 		networks -= i
@@ -65,6 +81,7 @@
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
 	eyeobj.origin = src
+	eyeobj.networks = networks
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
 	for(var/datum/action/to_grant as anything in actions)
@@ -95,19 +112,13 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
+	if(!can_use(user) || (issilicon(user) && !HAS_SILICON_ACCESS(user)))
 		user.unset_machine()
 
-/obj/machinery/computer/camera_advanced/Destroy()
-	if(eyeobj)
-		QDEL_NULL(eyeobj)
-	QDEL_LIST(actions)
-	current_user = null
-	return ..()
-
-/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
-	if(M == current_user)
-		remove_eye_control(M)
+/obj/machinery/computer/camera_advanced/proc/unset_machine()
+	if(!QDELETED(current_user))
+		remove_eye_control(current_user)
+	end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)
@@ -135,10 +146,10 @@
 		var/camera_location
 		var/turf/myturf = get_turf(src)
 		if(eyeobj.use_static != FALSE)
-			if((!length(z_lock) || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
+			if((!length(z_lock) || (myturf.z in z_lock)) && camnet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
-				for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+				for(var/obj/machinery/camera/C as anything in camnet.cameras)
 					if(!C.can_use() || length(z_lock) && !(C.z in z_lock))
 						continue
 					var/list/network_overlap = networks & C.network
@@ -177,36 +188,36 @@
 	if(should_supress_view_changes)
 		user.client.view_size.supress()
 
-/mob/camera/ai_eye/remote
+/mob/eye/ai_eye/remote
 	name = "Inactive Camera Eye"
 	ai_detector_visible = FALSE
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
 	var/mob/living/eye_user = null
-	var/obj/machinery/origin
+	var/obj/machinery/computer/camera_advanced/origin
 	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
 
-/mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
+/mob/eye/ai_eye/remote/update_remote_sight(mob/living/user)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	user.set_sight(SEE_TURFS)
 	return TRUE
 
-/mob/camera/ai_eye/remote/Destroy()
+/mob/eye/ai_eye/remote/Destroy()
 	if(origin && eye_user)
 		origin.remove_eye_control(eye_user,src)
 	origin = null
 	. = ..()
 	eye_user = null
 
-/mob/camera/ai_eye/remote/GetViewerClient()
+/mob/eye/ai_eye/remote/GetViewerClient()
 	if(eye_user)
 		return eye_user.client
 	return null
 
-/mob/camera/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		destination = get_turf(destination)
 		if (destination)
@@ -217,7 +228,8 @@
 		update_ai_detect_hud()
 
 		if(use_static)
-			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
+			var/datum/cameranet/origin_camnet = astype(origin, /obj/machinery/computer/camera_advanced)?.camnet || GLOB.cameranet
+			origin_camnet.visibility(src, GetViewerClient(), null, use_static)
 
 		if(visible_icon)
 			if(eye_user.client)
@@ -226,7 +238,7 @@
 				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image
 
-/mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
+/mob/eye/ai_eye/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -252,7 +264,7 @@
 /datum/action/innate/camera_off/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
 	console.remove_eye_control(owner)
 
@@ -264,10 +276,10 @@
 /datum/action/innate/camera_jump/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
-	var/list/cameras_by_tag = GLOB.cameranet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
+	var/list/cameras_by_tag = origin.camnet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
@@ -294,7 +306,7 @@
 /datum/action/innate/camera_multiz_up/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(UP))
 		to_chat(owner, span_notice("You move upwards."))
 	else
@@ -308,7 +320,7 @@
 /datum/action/innate/camera_multiz_down/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(DOWN))
 		to_chat(owner, span_notice("You move downwards."))
 	else

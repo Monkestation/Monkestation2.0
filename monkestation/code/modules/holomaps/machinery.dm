@@ -12,8 +12,8 @@
 	icon_state = "station_map"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 16
-	active_power_usage = 128
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.16
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/station_map
 	light_color = HOLOMAP_HOLOFIER
 
@@ -29,6 +29,7 @@
 
 	/// The various images and icons for the map are stored in here, as well as the actual big map itself.
 	var/datum/station_holomap/holomap_datum
+	var/bonus_parts = /obj/item/stock_parts/micro_laser
 
 /obj/machinery/station_map/Initialize()
 	. = ..()
@@ -278,6 +279,7 @@
 	name = "\improper engineering station map"
 	icon_state = "station_map_engi"
 	circuit = /obj/item/circuitboard/machine/station_map/engineering
+	bonus_parts = /obj/item/stock_parts/subspace/analyzer
 
 /obj/machinery/station_map/engineering/Initialize(mapload)
 	. = ..()
@@ -324,6 +326,40 @@
 	name = "Station Map"
 	build_path = /obj/machinery/station_map/directional/north
 	req_components = list(/obj/item/stock_parts/scanning_module = 3, /obj/item/stock_parts/micro_laser = 4)
+	var/static/list/map_names_paths = list(
+		/obj/machinery/station_map/directional/north = "Station",
+		/obj/machinery/station_map/engineering/directional/north = "Station Engineering",
+		/obj/machinery/station_map/strategic = "Station Strategic",
+	)
+
+/obj/item/circuitboard/machine/station_map/screwdriver_act(mob/living/user, obj/item/tool)
+	var/static/list/display_map_names_paths
+	if(!display_map_names_paths)
+		display_map_names_paths = list()
+		for(var/path in map_names_paths)
+			display_map_names_paths[map_names_paths[path]] = path
+	var/choice = tgui_input_list(user, "Choose a new map type", "Select an Item", sort_list(display_map_names_paths))
+	if(isnull(choice))
+		return
+	if(isnull(display_map_names_paths[choice]))
+		return
+	set_type(display_map_names_paths[choice])
+	return TRUE
+
+/obj/item/circuitboard/machine/station_map/proc/set_type(obj/machinery/station_map/typepath)
+	build_path = typepath
+	name = "[map_names_paths[build_path]] Map"
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 3,
+		/obj/item/stock_parts/micro_laser = 3,
+		initial(typepath.bonus_parts) = 1,)
+
+/obj/item/circuitboard/machine/station_map/apply_default_parts(obj/machinery/machine)
+	for(var/typepath in map_names_paths)
+		if(istype(machine, typepath))
+			set_type(typepath)
+			break
+	return ..()
 
 /obj/item/circuitboard/machine/station_map/engineering
 	name = "Engineering Station Map"

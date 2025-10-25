@@ -1,7 +1,7 @@
 /obj/item/organ/external/floran_leaves
 	name = "floran leaves"
 	desc = "you shouldn't see this"
-	organ_flags = ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_UNREMOVABLE | ORGAN_HIDDEN
 	icon_state = "floran_leaves"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
@@ -15,23 +15,15 @@
 /datum/bodypart_overlay/mutant/floran_leaves
 	layers = EXTERNAL_ADJACENT
 	feature_key = "floran_leaves"
-	// color_source = ORGAN_COLOR_MUTSECONDARY
+	color_source = ORGAN_COLOR_MUTSECONDARY
 
-	var/color_swapped_layer = EXTERNAL_ADJACENT//Remove when MUTCOLORS_SECONDARY works
-	var/color_inverse_base = 255//Remove when MUTCOLORS_SECONDARY works
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR_SECONDARY
+	fallback_key = MUTANT_COLOR
+
 
 /datum/bodypart_overlay/mutant/floran_leaves/get_global_feature_list()
 	return GLOB.floran_leaves_list
-
-/datum/bodypart_overlay/mutant/floran_leaves/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)//Remove when MUTCOLORS_SECONDARY works
-	if(draw_layer != bitflag_to_layer(color_swapped_layer))
-		return ..()
-
-	if(draw_color)
-		var/list/rgb_list = rgb2num(draw_color)
-		overlay.color = rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3])
-	else
-		overlay.color = null
 
 /datum/bodypart_overlay/mutant/floran_leaves/get_base_icon_state()
 	return sprite_datum.icon_state

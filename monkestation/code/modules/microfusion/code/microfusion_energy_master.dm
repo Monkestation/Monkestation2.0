@@ -18,11 +18,11 @@
 	ammo_x_offset = 2
 
 	/// What type of power cell this uses
-	var/obj/item/stock_parts/cell/microfusion/cell
+	var/obj/item/stock_parts/power_store/cell/microfusion/cell
 	/// The cell we will spawn with
-	var/cell_type = /obj/item/stock_parts/cell/microfusion
+	var/cell_type = /obj/item/stock_parts/power_store/cell/microfusion
 	/// The cell type we check when inserting a cell
-	var/base_cell_type = /obj/item/stock_parts/cell/microfusion
+	var/base_cell_type = /obj/item/stock_parts/power_store/cell/microfusion
 	/// If the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	/// How many charge sections do we have?
@@ -235,7 +235,7 @@
 			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			. = span_danger("[user] casually lights [to_ignite.loc == user ? "[user.p_their()] [to_ignite.name]" : to_ignite] with [src]. Damn.")
 
-/obj/item/gun/microfusion/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/gun/microfusion/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return
@@ -264,13 +264,12 @@
 	playsound(src, 'sound/items/crowbar.ogg', 70, TRUE)
 	remove_emitter()
 
-/obj/item/gun/microfusion/AltClick(mob/user)
-	. = ..()
-	if(can_interact(user))
-		var/obj/item/microfusion_gun_attachment/to_remove = input(user, "Please select what part you'd like to remove.", "Remove attachment")  as null|obj in sort_names(attachments)
-		if(!to_remove)
-			return
-		remove_attachment(to_remove, user)
+/obj/item/gun/microfusion/click_alt(mob/living/user)
+	var/obj/item/microfusion_gun_attachment/to_remove = input(user, "Please select what part you'd like to remove.", "Remove attachment")  as null|obj in sort_names(attachments)
+	if(!to_remove)
+		return CLICK_ACTION_BLOCKING
+	remove_attachment(to_remove, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/microfusion/proc/remove_all_attachments()
 	if(attachments.len)
@@ -578,11 +577,11 @@
 
 
 /// Try to insert the cell into the gun, if successful, return TRUE
-/obj/item/gun/microfusion/proc/insert_cell(mob/user, obj/item/stock_parts/cell/microfusion/inserting_cell, display_message = TRUE)
+/obj/item/gun/microfusion/proc/insert_cell(mob/user, obj/item/stock_parts/power_store/cell/microfusion/inserting_cell, display_message = TRUE)
 	var/hotswap = FALSE
 	if(cell)
 		hotswap = TRUE
-	var/obj/item/stock_parts/cell/old_cell = cell
+	var/obj/item/stock_parts/power_store/cell/old_cell = cell
 	if(inserting_cell.charge)
 		balloon_alert(user, "can't insert a charged cell!")
 		return FALSE
@@ -604,7 +603,7 @@
 
 /// Ejecting a cell.
 /obj/item/gun/microfusion/proc/eject_cell(mob/user, display_message = TRUE, put_in_hands = TRUE)
-	var/obj/item/stock_parts/cell/microfusion/old_cell = cell
+	var/obj/item/stock_parts/power_store/cell/microfusion/old_cell = cell
 	old_cell.forceMove(get_turf(src))
 	old_cell.cell_removal_discharge()
 	if(user)

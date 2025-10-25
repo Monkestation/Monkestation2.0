@@ -15,6 +15,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	var/obj/item/noz
 	var/volume = 500
@@ -28,6 +29,7 @@
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -90,14 +92,7 @@
 	else
 		return ..()
 
-/obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = loc
-	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-	return ..()
-
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == noz)
 		remove_noz()
 		return TRUE
@@ -134,9 +129,9 @@
 		return INITIALIZE_HINT_QDEL
 	reagents = loc.reagents //This mister is really just a proxy for the tank's reagents
 
-/obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/spray/mister/try_spray(atom/target, mob/user)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
-		return
+		return FALSE
 	return ..()
 
 //Janitor tank
@@ -290,49 +285,58 @@
 			return
 	return
 
-/obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
-	if(AttemptRefill(target, user))
-		return
+/obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(AttemptRefill(interacting_with, user))
+		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
-	var/Adj = user.Adjacent(target)
+
+	var/Adj = user.Adjacent(interacting_with)
 	if(nozzle_mode == RESIN_LAUNCHER)
-		if(Adj)
-			return //Safety check so you don't blast yourself trying to refill your tank
+		if(Adj && (user.istate & ISTATE_HARM))
+			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
 			balloon_alert(user, "not enough water!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
 			balloon_alert(user, "still recharging!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_all(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
 		user.log_message("used Resin Launcher", LOG_GAME)
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
-		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, interacting_with, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
 		RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(resin_landed))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(target))
+		if(!isturf(interacting_with))
+			return NONE
+		if(!Adj)
 			balloon_alert(user, "too far!")
-			return
-		for(var/S in target)
-			if(istype(S, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
+			return ITEM_INTERACT_BLOCKING
+		for(var/thing in interacting_with)
+			if(istype(thing, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(thing, /obj/structure/foamedmetal/resin))
 				balloon_alert(user, "already has resin!")
-				return
+				return ITEM_INTERACT_BLOCKING
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
+			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(interacting_with))
 			foam.group.target_size = 0
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)
-		else
-			balloon_alert(user, "still being synthesized!")
-			return
+			return ITEM_INTERACT_SUCCESS
+
+		balloon_alert(user, "still being synthesized!")
+		return ITEM_INTERACT_BLOCKING
+
+	return NONE
 
 /obj/item/extinguisher/mini/nozzle/proc/resin_stop_check(datum/move_loop/source, result)
 	SIGNAL_HANDLER

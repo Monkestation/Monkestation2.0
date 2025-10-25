@@ -27,6 +27,9 @@
 		return FALSE
 	if(!can_pay_cost(owner) || !can_use(owner, trigger_flags))
 		return FALSE
+	var/datum/action/cooldown/already_set = owner.click_intercept
+	if(already_set && already_set != src)
+		already_set.unset_click_ability(owner)
 
 	if(prefire_message)
 		to_chat(owner, span_announce("[prefire_message]"))
@@ -36,6 +39,11 @@
 		return InterceptClickOn(owner, null, target)
 
 	return set_click_ability(owner)
+
+/datum/action/cooldown/bloodsucker/targeted/unset_click_ability(mob/on_who, refund_cooldown)
+	. = ..()
+	if(active)
+		DeactivatePower()
 
 /datum/action/cooldown/bloodsucker/targeted/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)
@@ -62,7 +70,7 @@
 	return istype(target_atom)
 
 /// Click Target
-/datum/action/cooldown/bloodsucker/targeted/proc/click_with_power(atom/target_atom)
+/datum/action/cooldown/bloodsucker/targeted/proc/click_with_power(atom/target_atom, params)
 	// CANCEL RANGED TARGET check
 	if(power_in_use || !CheckValidTarget(target_atom))
 		return FALSE
@@ -70,23 +78,32 @@
 	if(!can_pay_cost() || !can_use(owner) || !CheckCanTarget(target_atom))
 		return TRUE
 	power_in_use = TRUE // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
-	FireTargetedPower(target_atom) // We use this instead of ActivatePower(trigger_flags), which has no input
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		. = FireSecondaryTargetedPower(target_atom, modifiers)
+	else
+		. = FireTargetedPower(target_atom, modifiers)
 	// Skip this part so we can return TRUE right away.
 	if(power_activates_immediately)
 		power_activated_sucessfully() // Mesmerize pays only after success.
 	power_in_use = FALSE
-	return TRUE
 
 /// Like ActivatePower, but specific to Targeted (and takes an atom input). We don't use ActivatePower for targeted.
 /datum/action/cooldown/bloodsucker/targeted/proc/FireTargetedPower(atom/target_atom)
 	log_combat(owner, target_atom, "used [name] on")
+	return TRUE
 
 /// The power went off! We now pay the cost of the power.
-/datum/action/cooldown/bloodsucker/targeted/proc/power_activated_sucessfully()
+/datum/action/cooldown/bloodsucker/targeted/proc/power_activated_sucessfully(cost_override = 0, cooldown_override)
 	unset_click_ability(owner)
-	pay_cost()
-	StartCooldown()
+	pay_cost(cost_override)
+	StartCooldown(cooldown_override)
 	DeactivatePower()
 
+/// Called on right click
+/datum/action/cooldown/bloodsucker/targeted/proc/FireSecondaryTargetedPower(atom/target, params)
+	return FireTargetedPower(target, params)
+
 /datum/action/cooldown/bloodsucker/targeted/InterceptClickOn(mob/living/user, params, atom/target)
-	click_with_power(target)
+	return click_with_power(target, params)
+

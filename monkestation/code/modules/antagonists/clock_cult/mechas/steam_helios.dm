@@ -44,7 +44,7 @@
 
 //cant put new parts in
 /obj/vehicle/sealed/mecha/steam_helios/populate_parts()
-	cell = new /obj/item/stock_parts/cell/clock(src)
+	cell = new /obj/item/stock_parts/power_store/cell/clock(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic/clock(src) //walking is free
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic/clock(src)
 	manipulator = new /obj/item/stock_parts/manipulator/femto/clock(src)
@@ -98,7 +98,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_JUDICIAL_MARK)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before marking another tile."))
 		return
@@ -158,7 +158,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before discharging steam again."))
 		return

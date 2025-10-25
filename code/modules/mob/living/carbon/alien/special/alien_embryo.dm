@@ -5,12 +5,14 @@
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
-	///What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
+	/// What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
 	var/stage = 0
 	/// Are we bursting out of the poor sucker who's the xeno mom?
 	var/bursting = FALSE
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
+	/// If the embryo is neutered, it cannot evolve into a drone, and then eventually into a queen.
+	var/neutered = FALSE
 
 /obj/item/organ/internal/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
@@ -70,6 +72,8 @@
 				slowdown *= 2 // spaceacillin doubles the time it takes to grow
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+			if(owner.has_reagent(/datum/reagent/medicine/stimulants))
+				slowdown *= 10 //stimulants greatly stun the babys growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
@@ -88,18 +92,21 @@
 /obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
 	if(!owner || bursting)
 		return
-
+	var/neuter_status
+	if(neutered)
+		neuter_status = "Lamarr"
+	else
+		neuter_status = "alien larva"
 	bursting = TRUE
-
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as an alien larva that will burst out of [owner.real_name]?",
+		"Do you want to play as [neuter_status], that will burst out of [owner.real_name]?",
 		role = ROLE_ALIEN,
 		check_jobban = ROLE_ALIEN,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
 		alert_pic = /mob/living/carbon/alien/larva,
-		role_name_text = "alien larva"
-	)
+		role_name_text = neuter_status
+		)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -117,7 +124,7 @@
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, cut_overlay), overlay), 0.7 SECONDS) // monkestation edit: just use a timer to always ensure the overlay is removed
 
 	var/atom/xeno_loc = get_turf(owner)
-	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
+	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc, neutered) //monkestation edit: The value is true if it cant evolve into a drone. False if it can.
 	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
@@ -161,3 +168,7 @@ Des: Removes all images from the mob infected by this embryo
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				alien.client?.images -= I
+
+/obj/item/organ/internal/body_egg/alien_embryo/neutered
+	name = "neutered alien embryo"
+	neutered = TRUE

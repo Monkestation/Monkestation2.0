@@ -205,28 +205,43 @@
 
 /obj/machinery/mineral/ore_redemption/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src))
+/obj/machinery/mineral/ore_redemption/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", attacking_item))
 		return
-	if(panel_open)
-		input_dir = turn(input_dir, -90)
-		output_dir = turn(output_dir, -90)
-		to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)]."))
-		unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
-		register_input_turf() // register the new one
-		update_appearance(UPDATE_OVERLAYS)
-		return TRUE
+	if(default_deconstruction_crowbar(attacking_item))
+		return
+
+	if(!powered())
+		return ..()
+
+	var/obj/item/stack/ore/O = attacking_item
+	if(istype(O))
+		if(isnull(O.refined_type))
+			to_chat(user, span_warning("[O] has already been refined!"))
+			return
+
+	return ..()
+
+/obj/machinery/mineral/ore_redemption/click_alt(mob/living/user)
+	if(!panel_open)
+		return CLICK_ACTION_BLOCKING
+	input_dir = turn(input_dir, -90)
+	output_dir = turn(output_dir, -90)
+	to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)]."))
+	unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
+	register_input_turf() // register the new one
+	update_appearance(UPDATE_OVERLAYS)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -250,7 +265,7 @@
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
-				"icon" = text_ref(sheet_type::icon),
+				"icon" = sheet_type::icon,
 				"icon_state" = sheet_type::icon_state,
 			))
 
@@ -262,7 +277,7 @@
 				"id" = alloy.id,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
-				"icon" = text_ref(alloy_type::icon),
+				"icon" = alloy_type::icon,
 				"icon_state" = alloy_type::icon_state,
 			))
 	data["disconnected"] = null
@@ -293,7 +308,30 @@
 			)
 	return data
 
-/obj/machinery/mineral/ore_redemption/ui_act(action, params)
+/obj/machinery/mineral/ore_redemption/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/datum/component/material_container/mat_container = materials.mat_container
+	if (mat_container)
+		for(var/datum/material/material as anything in mat_container.materials)
+			var/obj/material_display = initial(material.sheet_type)
+			data["material_icons"] += list(list(
+				"id" = REF(material),
+				"product_icon" = icon2base64(getFlatIcon(image(icon = initial(material_display.icon), icon_state = initial(material_display.icon_state)), no_anim=TRUE)),
+			))
+
+	for(var/research in stored_research.researched_designs)
+		var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
+		var/obj/alloy_display = initial(alloy.build_path)
+		data["material_icons"] += list(list(
+			"id" = alloy.id,
+			"product_icon" = icon2base64(getFlatIcon(image(icon = initial(alloy_display.icon), icon_state = initial(alloy_display.icon_state)), no_anim=TRUE)),
+		))
+
+	return data
+
+
+/obj/machinery/mineral/ore_redemption/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -358,7 +396,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, action = "released", name = "sheets")
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)

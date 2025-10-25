@@ -120,7 +120,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return FALSE
 	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
 		return FALSE
-	tram_part.tram_travel(destination_platform)
+	if(!tram_part.tram_travel(destination_platform))
+		return FALSE // lift_master failure
 	say("The next station is: [destination_platform.name]")
 	update_appearance()
 	return TRUE
@@ -388,6 +389,10 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	malfunctioning = FALSE
 	process()
 
+/obj/machinery/crossing_signal/proc/temp_malfunction()
+	start_malfunction()
+	addtimer(CALLBACK(src, PROC_REF(end_malfunction)), 15 SECONDS)
+
 /**
  * Finds the tram, just like the tram computer
  *
@@ -420,7 +425,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
  */
 /obj/machinery/crossing_signal/proc/update_operating()
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
@@ -446,7 +451,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
 
@@ -659,7 +664,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		update_appearance()
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	if(malfunctioning)
 		icon_state = "[base_icon_state][pick(sign_states)]"
@@ -668,44 +673,44 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		return PROCESS_KILL
 
 	if(!tram.travelling)
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-		if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
 			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
 			previous_destination = tram.idle_platform
 			update_appearance()
 			return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/west))
 		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/central))
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/west))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/central))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/west))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
-		if(istype(previous_destination, /obj/effect/landmark/tram/tramstation/east))
+		if(istype(previous_destination, /obj/effect/landmark/tram/platform/tramstation/east))
 			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
 			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
 		update_appearance()
 		return PROCESS_KILL
 
-	if(istype(tram.idle_platform, /obj/effect/landmark/tram/tramstation/east))
+	if(istype(tram.idle_platform, /obj/effect/landmark/tram/platform/tramstation/east))
 		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
 		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
 		update_appearance()
@@ -722,12 +727,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/button/tram
 	name = "tram request"
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "tramctrl"
-	skin = "tramctrl"
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
-	light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 

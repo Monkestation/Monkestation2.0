@@ -1,11 +1,13 @@
+///how much do we heal per do_after() loop
+#define HEALED_PER_LOOP 10
 /datum/scripture/slab/sentinels_compromise
 	name = "Sentinel's Compromise"
-	desc = "Heals a large amount of non-toxin damage on a target then converts 50% of it back as toxin damage to you."
+	desc = "Continuously heals non-toxin damage on a target then converts 80% of it back as toxin damage to you."
 	tip = "Works well with Properity Prisms. Cannot be used by cogscarabs."
-	power_cost = 80
+	power_cost = STANDARD_CELL_CHARGE * 0.15
 	cogs_required = 1
 	invocation_time = 1 SECONDS //short invocation but using it also takes some time afterwards
-	invocation_text = list("By the light of Eng'Ine...") //the second line is said when used on someone
+	invocation_text = list("By the light of Engine...") //the second line is said when used on someone
 	button_icon_state = "Sentinel's Compromise"
 	category = SPELLTYPE_SERVITUDE //you have a healing spell please please PLEASE use it
 	slab_overlay = "compromise"
@@ -32,26 +34,29 @@
 		return FALSE
 
 	healed_mob.cure_husk()
-
 	if(healed_mob.stat == DEAD) //technically the husk healing is free but it should be fine
 		return FALSE
 
-	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
-
 	//MMMMMM, CHUNKY
-	var/total_damage = (healed_mob.getBruteLoss() + healed_mob.getFireLoss() + healed_mob.getOxyLoss() + healed_mob.getCloneLoss()) * 0.6
-	healed_mob.stamina.adjust(healed_mob.staminaloss * 0.6)
-	healed_mob.adjustBruteLoss(-healed_mob.getBruteLoss() * 0.6)
-	healed_mob.adjustFireLoss(-healed_mob.getFireLoss() * 0.6)
-	healed_mob.adjustOxyLoss(-healed_mob.getOxyLoss() * 0.6)
-	healed_mob.adjustCloneLoss(-healed_mob.getCloneLoss() * 0.6)
 	healed_mob.blood_volume = BLOOD_VOLUME_NORMAL
 	healed_mob.set_nutrition(NUTRITION_LEVEL_FULL)
 	healed_mob.bodytemperature = BODYTEMP_NORMAL
-	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 100) //if you have over 100 units of holy water then it should take multiple to purge
-	healed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -50)
+	healed_mob.pain_controller?.remove_all_pain()
+	if(apply_heal(healed_mob))
+		while(do_after(invoker, invocation_time, healed_mob))
+			if(!apply_heal(healed_mob)) //im sure theres a better way to do this but im too tired
+				break
 
+	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
 	new /obj/effect/temp_visual/heal(get_turf(healed_mob), "#1E8CE1")
-
-	invoker.adjustToxLoss(min(total_damage * 0.5, 80), forced = TRUE)
 	return TRUE
+
+/datum/scripture/slab/sentinels_compromise/proc/apply_heal(mob/living/healed_mob)
+	var/healed_amount = -healed_mob.heal_ordered_damage(HEALED_PER_LOOP, list(BRUTE, BURN, OXY, CLONE, BRAIN))
+	healed_mob.stamina.adjust(HEALED_PER_LOOP)
+	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, HEALED_PER_LOOP)
+	if(!invoker.adjustToxLoss(healed_amount * 0.8, TRUE, TRUE) || invoker.getToxLoss() > 80 || healed_amount < HEALED_PER_LOOP)
+		return FALSE
+	return TRUE
+
+#undef HEALED_PER_LOOP

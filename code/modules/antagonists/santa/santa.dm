@@ -3,6 +3,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
 	suicide_cry = "FOR CHRISTMAS!!"
 
 /datum/antagonist/santa/on_gain()

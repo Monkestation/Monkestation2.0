@@ -44,6 +44,10 @@
 	name = "\improper Combat boots"
 	desc = "Replica of a high speed (not anymore), no drag combat boots."
 
+/obj/item/clothing/shoes/combat/nutcracker
+	desc = "High speed, low drag combat boots. The toe looks weirdly rigid."
+	clothing_traits = list(TRAIT_NUTCRACKER) //evil meanie shoes for bullying people
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
@@ -62,13 +66,24 @@
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-	AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
+	if(type == /obj/item/clothing/shoes/jackboots/sec/hos)
+		AddComponent(/datum/component/shoesteps/hosboots)
+	else
+		AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
+
+/obj/item/clothing/shoes/jackboots/sec/hos
+	name = "head of security jackboots"
+	icon_state = "jackboots_hos"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time. \
+	These ones are extra protective and extra loud."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	armor_type = /datum/armor/combat_swat
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"

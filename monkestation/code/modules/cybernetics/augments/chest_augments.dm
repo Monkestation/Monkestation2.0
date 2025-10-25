@@ -137,6 +137,7 @@
 	overlay.color = "#77BD5D"
 
 	RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_overlay)),max_ticks_cooldown/2)
 
@@ -151,9 +152,9 @@
 		overlays += overlay
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/proc/remove_overlay()
-	QDEL_NULL(overlay)
-
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	overlay = null
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()

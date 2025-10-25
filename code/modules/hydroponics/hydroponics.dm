@@ -8,6 +8,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
 	///The maximum amount of water in the tray
@@ -93,10 +94,11 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/hydroponics/AltClick(mob/user)
-	. = ..()
+/obj/machinery/hydroponics/click_alt(mob/living/user)
 	self_growing = !self_growing
 	to_chat(user, span_notice("You flick a switch turning the Self Sustaining Growth Dampeners: [self_growing ? "Off" : "On"]"))
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/hydroponics/add_context(
 	atom/source,
 	list/context,
@@ -216,12 +218,12 @@
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 
 	return ..()
@@ -1353,4 +1355,4 @@
 /obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS

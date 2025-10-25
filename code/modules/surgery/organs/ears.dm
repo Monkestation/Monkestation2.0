@@ -68,12 +68,12 @@
 	// instead adjust the amount of damage (so we might escalate to deafness) and reset the duration if appropriate
 	if (ddeaf > 0 && HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
 		set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-		deaf = max(deaf, ddeaf*damage_multiplier)
+		deaf = max(deaf, ddeaf*damage_multiplier*0.75)
 		update_hearing_loss()
 		return
 
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	deaf = max(deaf + ddeaf*damage_multiplier*0.75, 0)
 	update_hearing_loss()
 
 /obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
@@ -88,9 +88,11 @@
 	var/was_deaf = HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE)
 	var/was_hoh = HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
 
-	if (!deaf && was_hoh || was_deaf)
-		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
-		REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+	if (!deaf)
+		if (was_deaf)
+			REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		if (was_hoh)
+			REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
 		return
 
 	if (damage < 25 && !(organ_flags & ORGAN_FAILING))

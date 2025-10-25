@@ -61,8 +61,10 @@
 	icon_keyboard = "med_key"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/dna_console
-
+	interaction_flags_click = ALLOW_SILICON_REACH
 	light_color = LIGHT_COLOR_BLUE
+
+	clicksound = null
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
 	var/datum/techweb/stored_research
@@ -155,6 +157,8 @@
 	///Counter for CRISPR charges
 	var/crispr_charges = 0
 
+	var/static/list/chromosome_ckey_list = null
+
 /obj/machinery/computer/dna_console/process()
 	. = ..()
 
@@ -164,73 +168,152 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/dna_console/attackby(obj/item/item, mob/user, params)
+/obj/machinery/computer/dna_console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Store chromosomes in the console if there's room
-	if (istype(item, /obj/item/chromosome))
-		item.forceMove(src)
-		stored_chromosomes += item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+	if(istype(tool, /obj/item/chromosome))
+		return store_chromosome(user, tool)
+	else if(istype(tool, /obj/item/disk/data))
+		return insert_or_swap_disk(user, tool)
+	else if(istype(tool, /obj/item/dnainjector/activator))
+		return recycle_activator(user, tool)
+	else
+		return NONE
 
-	// Insert data disk if console disk slot is empty
-	// Swap data disk if there is one already a disk in the console
-	if (istype(item, /obj/item/disk/data)) //INSERT SOME DISKETTES
-		// Insert disk into DNA Console
-		if (!user.transferItemToLoc(item,src))
-			return
-		// If insertion was successful and there's already a diskette in the console, eject the old one.
-		if(diskette)
-			eject_disk(user)
-		// Set the new diskette.
-		diskette = item
-		to_chat(user, span_notice("You insert [item]."))
-		return
+/obj/machinery/computer/dna_console/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/disk/data))
+		return upload_disk(user, tool)
+	else
+		return ..()
 
-/* MONKESTATION REMOVAL -- Moved to monkestation/code/game/machinery/computer/dna_console.dm
-	// Recycle non-activator used injectors
-	// Turn activator used injectors (aka research injectors) to chromosomes
-	if(istype(item, /obj/item/dnainjector/activator))
-		var/obj/item/dnainjector/activator/activator = item
-		if(activator.used)
-			if(activator.research && activator.filled)
-				if(prob(60))
-					var/c_typepath = generate_chromosome()
-					var/obj/item/chromosome/CM = new c_typepath (src)
-					stored_chromosomes += CM
-					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
-				else
-					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
-			if(activator.crispr_charge)
-				crispr_charges++
-				to_chat(user, span_notice("CRISPR charge added."))
-			qdel(item)
-			to_chat(user,span_notice("Recycled [item]."))
-			return
+/obj/machinery/computer/dna_console/click_ctrl(mob/user)
+	var/obj/item/disk/data/disk = user.get_active_held_item()
+	if(!istype(disk))
+		return CLICK_ACTION_BLOCKING
+	download_disk(user, disk)
+	return CLICK_ACTION_SUCCESS
+
+/// Store chromosomes in the console if there's room
+/obj/machinery/computer/dna_console/proc/store_chromosome(mob/living/user, obj/item/chromosome/chromosome)
+	chromosome.forceMove(src)
+	stored_chromosomes += chromosome
+	to_chat(user, span_notice("You insert [chromosome]."))
+	return ITEM_INTERACT_SUCCESS
+
+/// Insert data disk if console disk slot is empty
+/// Swap data disk if there is one already a disk in the console
+/obj/machinery/computer/dna_console/proc/insert_or_swap_disk(mob/living/user, obj/item/disk/data/disk)
+	// Insert disk into DNA Console
+	if (!user.transferItemToLoc(disk, src))
+		return ITEM_INTERACT_FAILURE
+	// If insertion was successful and there's already a diskette in the console, eject the old one.
+	if(diskette)
+		eject_disk(user)
+	// Set the new diskette.
+	diskette = disk
+	to_chat(user, span_notice("You insert [disk]."))
+	return ITEM_INTERACT_SUCCESS
+
+/// Uploads everything from the given disk.
+/obj/machinery/computer/dna_console/proc/upload_disk(mob/living/user, obj/item/disk/data/disk)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_BLOCKING
+	if(!length(disk.mutations))
+		balloon_alert(user, "nothing on disk!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "uploading disk...")
+	if(!do_after(user, 2 SECONDS, src))
+		return ITEM_INTERACT_BLOCKING
+	var/list/unlocked_names
+	var/list/existing_ids
+	for(var/datum/mutation/mutation in stored_mutations)
+		LAZYADD(existing_ids, mutation.id_string())
+	var/uploaded = 0
+	for(var/datum/mutation/mutation in disk.mutations)
+		if(mutation.id_string() in existing_ids)
+			continue
+		var/datum/mutation/stored = mutation.make_copy()
+		stored_mutations += stored
+		uploaded++
+
+		var/datum/mutation/mutation_type = stored.type
+		if(stored_research && !(mutation_type in stored_research.discovered_mutations))
+			stored_research.discovered_mutations += mutation_type
+			LAZYADD(unlocked_names, "[stored.name]")
+	balloon_alert(user, "uploaded [uploaded] mutation\s")
+	// avoids spam if we upload a disk with a lot of unknown mutations somehow, by just grouping them into one message
+	if(LAZYLEN(unlocked_names))
+		say("Successfully unlocked [english_list(unlocked_names)].")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/dna_console/proc/download_disk(mob/living/user, obj/item/disk/data/disk)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	if(!disk.can_write(src, user))
+		return
+	if(!length(stored_mutations))
+		balloon_alert(user, "nothing to download!")
+		return
+	balloon_alert(user, "downloading to disk...")
+	if(!do_after(user, 2 SECONDS, src, extra_checks = CALLBACK(disk, TYPE_PROC_REF(/obj/item/disk/data, can_write), src, user)))
+		return
+	var/list/existing_ids
+	for(var/datum/mutation/mutation in disk.mutations)
+		LAZYADD(existing_ids, mutation.id_string())
+	var/uploaded = 0
+	for(var/datum/mutation/mutation in stored_mutations)
+		if(mutation.id_string() in existing_ids)
+			continue
+		var/datum/mutation/stored = mutation.make_copy()
+		disk.mutations += stored
+		uploaded++
+		if(length(disk.mutations) >= disk.max_mutations)
+			break
+	balloon_alert(user, "downloaded [uploaded] mutation\s to disk")
+
+/// Recycle non-activator used injectors
+/// Turn activator used injectors (aka research injectors) to chromosomes
+/obj/machinery/computer/dna_console/proc/recycle_activator(mob/living/user, obj/item/dnainjector/activator/activator)
+	if(!activator.used)
+		//recycle unused activators
+		qdel(activator)
+		to_chat(user, span_notice("Recycled unused [activator]."))
+		return ITEM_INTERACT_SUCCESS
+
+	LAZYINITLIST(chromosome_ckey_list)
+	if(activator.research && activator.filled)
+		if(!chromosome_ckey_list[activator.filled])
+			chromosome_ckey_list[activator.filled] = 0
+
+		if(chromosome_ckey_list[activator.filled] < 3)
+			chromosome_ckey_list[activator.filled]++
+			var/chromosome_path = generate_chromosome()
+			var/obj/item/chromosome/chromosome = new chromosome_path(src)
+			stored_chromosomes += chromosome
+			to_chat(user, span_notice("[capitalize(chromosome.name)] added to storage."))
 		else
-			//recycle unused activators
-			qdel(item)
-			to_chat(user, span_notice("Recycled unused [item]."))
-			return
-*/
-	return ..()
+			to_chat(user, span_notice("All available genetic data already extracted from injected user"))
+
+	if(activator.crispr_charge)
+		crispr_charges++
+		to_chat(user, span_notice("CRISPR charge added."))
+
+	qdel(activator)
+	to_chat(user, span_notice("Recycled [activator]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/dna_console/AltClick(mob/user)
-	// Make sure the user can interact with the machine.
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-
+/obj/machinery/computer/dna_console/click_alt(mob/user)
 	eject_disk(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/dna_console/Initialize(mapload)
 	. = ..()
+
+	register_context()
 
 	// Connect with a nearby DNA Scanner on init
 	connect_to_scanner()
@@ -248,6 +331,19 @@
 	// already discovered mutations
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		stored_research = SSresearch.science_tech
+
+/obj/machinery/computer/dna_console/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Open interface"
+	else if(istype(held_item, /obj/item/disk/data))
+		context[SCREENTIP_CONTEXT_LMB] = diskette ? "Swap disk" : "Insert disk"
+		context[SCREENTIP_CONTEXT_RMB] = "Upload disk contents"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Download to disk"
+	else if(istype(held_item, /obj/item/chromosome))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert chromosome"
+	else if(istype(held_item, /obj/item/dnainjector/activator))
+		context[SCREENTIP_CONTEXT_LMB] = "Recycle activator"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/computer/dna_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -447,9 +543,9 @@
 			to_chat(usr,span_notice("DNA scrambled."))
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -585,9 +681,9 @@
 			// Check if we cracked a mutation
 			check_discovery(alias)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Apply a chromosome to a specific mutation.
@@ -622,9 +718,9 @@
 					stored_chromosomes -= chromosome
 					chromosome.apply(mutation)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
@@ -761,9 +857,9 @@
 				scanner_occupant.domutcheck()
 
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 
 			return
 
@@ -845,9 +941,9 @@
 				else
 					injector_ready = world.time + INJECTOR_TIMEOUT * 5
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Save a mutation to the console's storage buffer.
@@ -886,12 +982,10 @@
 			var/datum/mutation/stored = mutation.make_copy()
 			stored_mutations += stored
 
-			// monkestationn start: mark as discovered when saving from disk
 			var/datum/mutation/mutation_type = stored.type
 			if(stored_research && !(mutation_type in stored_research.discovered_mutations))
 				stored_research.discovered_mutations += mutation_type
 				say("Successfully unlocked [stored.name].")
-			// monkestationn end
 
 			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
@@ -1072,9 +1166,9 @@
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Combines two mutations from the disk to try and create a new mutation
@@ -1138,9 +1232,9 @@
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Sets the Genetic Makeup pulse strength.
@@ -1377,9 +1471,9 @@
 			if(I)
 				injector_ready = world.time + INJECTOR_TIMEOUT
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the scanner occupant
@@ -1417,9 +1511,9 @@
 
 			apply_genetic_makeup(type, buffer_slot)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the next scanner occupant. This sets
@@ -1486,9 +1580,9 @@
 			genetic_damage_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Cancels the delayed action - In this context it is not the genetic damage
@@ -1645,9 +1739,9 @@
 			injector_selection[adv_inj] += original.make_copy()
 			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Deletes a mutation from an advanced injector

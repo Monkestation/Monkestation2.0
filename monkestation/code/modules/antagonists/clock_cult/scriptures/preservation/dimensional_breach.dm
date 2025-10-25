@@ -3,12 +3,12 @@
 	desc = "Prepares the Ark for activation, alerting the crew of your existence."
 	tip = "Prepares the Ark for activation, alerting the crew of your existence."
 	button_icon_state = "Spatial Gateway"
-	power_cost = 5000
+	power_cost = STANDARD_CELL_CHARGE * 1.5
 	invocation_time = 14 SECONDS
-	invocation_text = list("Oh bright Eng'ine, take my soul...", "to complete, our great goal...", "through the rifts you shall come...", "they will see where the light is from!")
+	invocation_text = list("Brightest Engine, take my soul...", "To complete our greatest goal...", "through the rifts you now shall come...", "to show them where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
-	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg'
+	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
 	fast_invoke_mult = 1
 	cogs_required = 5
 
@@ -25,7 +25,7 @@
 		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
 		return FALSE
 
-	if(!(get_charged_anchor_crystals() >= ANCHORING_CRYSTALS_TO_SUMMON))
+	if(SSthe_ark.charged_anchoring_crystals < ANCHORING_CRYSTALS_TO_SUMMON)
 		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, the ark cannot open until enough anchoring crystals are summoned and protected."))
 		return FALSE
 

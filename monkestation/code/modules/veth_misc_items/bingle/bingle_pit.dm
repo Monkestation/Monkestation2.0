@@ -42,6 +42,7 @@
 			/obj/structure/bingle_pit_overlay,
 		))
 	SSbingle_pit.add_bingle_hole(src)
+	ADD_TRAIT(src, TRAIT_PROJECTILE_SINK, INNATE_TRAIT)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_entered),
@@ -55,7 +56,7 @@
 
 /obj/structure/bingle_hole/Destroy()
 	SSbingle_pit.remove_bingle_hole(src)
-	spit_em_out()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(eject_bingle_hole_contents), get_turf(src))
 	QDEL_LIST(pit_overlays)
 	return ..()
 
@@ -88,21 +89,6 @@
 /obj/structure/bingle_hole/proc/on_entered(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 	swallow(arrived) // swallow does all the needed checks
-
-/obj/structure/bingle_hole/proc/spit_em_out()
-	var/turf/target_turf = get_turf(src)
-	if(!target_turf)
-		return
-
-	var/area/bingle_pit = GLOB.areas_by_type[/area/misc/bingle_pit]
-	for(var/atom/movable/thing in bingle_pit?.contents)
-		if(QDELETED(thing))
-			continue
-		thing.forceMove(target_turf)
-		var/dir = pick(GLOB.alldirs)
-		var/turf/edge = get_edge_target_turf(src, dir)
-		if(ismob(thing) || isobj(thing))
-			thing.throw_at(edge, rand(1, 5), rand(1, 5))
 
 /datum/armor/structure_bingle_hole
 	energy = 75
@@ -381,6 +367,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	src.parent_pit = parent_pit
+	ADD_TRAIT(src, TRAIT_PROJECTILE_SINK, INNATE_TRAIT)
 
 /obj/structure/bingle_pit_overlay/Destroy()
 	parent_pit?.pit_overlays -= src
@@ -449,7 +436,8 @@
 // Update the spawn proc to ensure proper tracking
 /obj/structure/bingle_hole/proc/spawn_bingle_from_ghost()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		question = "Do you want to play as a Bingle?",
+		question = "<span class='ooc'>Do you want to play as a Bingle?</span>\
+		\n<span class='boldnotice'>You will return to your previous body on conclusion.</span>",
 		role = ROLE_BINGLE,
 		check_jobban = ROLE_BINGLE,
 		poll_time = 20 SECONDS,
@@ -466,12 +454,18 @@
 		return
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
+	var/datum/mind/ghost_mind = selected.mind
+	ghost_mind?.active = TRUE
 
 	var/mob/living/basic/bingle/bingle = new(spawn_loc, src)
-	player_mind.transfer_to(bingle)
-	player_mind.add_antag_datum(/datum/antagonist/bingle)
+	bingle.PossessByPlayer(selected.key)
+
+	if(ghost_mind)
+		bingle.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
+
+	var/datum/mind/antag_mind = bingle.mind
+	antag_mind.add_antag_datum(/datum/antagonist/bingle)
+
 	if(item_value_consumed >= 500)
 		bingle.icon_state = "bingle_armored"
 		bingle.maxHealth = 300
@@ -492,13 +486,6 @@
 	if(length(eligible_turfs))
 		return pick(eligible_turfs)
 
-/area/misc/bingle_pit
-	name = "Bingle Pit"
-	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_BLOODSUCKER_LAIR | UNIQUE_AREA
-	has_gravity = TRUE
-	requires_power = FALSE
-	static_lighting = TRUE
-
 /obj/structure/bingle_pit_overlay/examine(mob/user)
 	. = ..()
 	if(parent_pit)
@@ -515,5 +502,26 @@
 		to_chat(user, span_warning("Your bingle hands pass harmlessly through the pit!"))
 		return
 	return ..()
+
+/proc/eject_bingle_hole_contents(turf/target_turf)
+	if(!target_turf)
+		return
+
+	var/area/bingle_pit = GLOB.areas_by_type[/area/misc/bingle_pit]
+	for(var/atom/movable/thing in bingle_pit?.contents)
+		if(QDELETED(thing))
+			continue
+		thing.forceMove(target_turf)
+		var/dir = pick(GLOB.alldirs)
+		var/turf/edge = get_edge_target_turf(target_turf, dir)
+		thing.throw_at(edge, rand(1, 5), rand(1, 5))
+		CHECK_TICK
+
+/area/misc/bingle_pit
+	name = "Bingle Pit"
+	area_flags = NOTELEPORT | EVENT_PROTECTED | ABDUCTOR_PROOF | ALWAYS_VALID_BLOODSUCKER_LAIR | UNIQUE_AREA
+	has_gravity = TRUE
+	requires_power = FALSE
+	static_lighting = TRUE
 
 #undef TRAIT_FALLING_INTO_BINGLE_HOLE

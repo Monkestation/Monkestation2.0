@@ -12,12 +12,11 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsuneblack/attack_self(mob/user)
-    adjustmask(user)
+	adjustmask(user)
 
-/obj/item/clothing/mask/kitsuneblack/AltClick(mob/user)
-    . = ..()
-    adjustmask(user)
-    return TRUE
+/obj/item/clothing/mask/kitsuneblack/click_alt(mob/user)
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/kitsunewhite
 	name = "White Kitsune Mask"
@@ -33,12 +32,11 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsunewhite/attack_self(mob/user)
-    adjustmask(user)
+	adjustmask(user)
 
-/obj/item/clothing/mask/kitsunewhite/AltClick(mob/user)
-    . = ..()
-    adjustmask(user)
-    return TRUE
+/obj/item/clothing/mask/kitsunewhite/click_alt(mob/user)
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/ookmask
 	name = "Paper Monkey Mask"
@@ -78,9 +76,9 @@
 		else
 			qdel(src)
 
-/obj/item/clothing/mask/breath/sec_bandana/AltClick(mob/user)
+/obj/item/clothing/mask/breath/sec_bandana/click_alt(mob/user)
 	suit.RemoveMask()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/sec_bandana/medical
 	icon_state = "sec_bandana_medical"

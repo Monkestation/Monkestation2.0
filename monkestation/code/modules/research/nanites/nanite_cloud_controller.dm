@@ -17,9 +17,9 @@
 	eject()
 	return ..()
 
-/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
+/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/nanite_program))
+		var/obj/item/disk/nanite_program/N = attacking_item
 		if (user.transferItemToLoc(N, src))
 			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
@@ -30,11 +30,13 @@
 		..()
 
 
-/obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
+/obj/machinery/computer/nanite_cloud_controller/click_alt(mob/user)
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
-	return
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/computer/nanite_cloud_controller/proc/eject(mob/living/user)
 	if(!disk)

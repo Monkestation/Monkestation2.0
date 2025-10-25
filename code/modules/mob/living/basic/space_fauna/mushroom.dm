@@ -16,6 +16,7 @@
 	speed = 1
 	melee_damage_lower = 4
 	melee_damage_upper = 4
+	health = 60
 	maxHealth = 60
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
@@ -122,7 +123,7 @@
 	adjustBruteLoss(-consumed.maxHealth)
 	qdel(consumed)
 
-/mob/living/basic/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return

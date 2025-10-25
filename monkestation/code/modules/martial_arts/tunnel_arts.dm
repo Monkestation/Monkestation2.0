@@ -30,7 +30,6 @@
 
 /datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
-	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY))
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
 

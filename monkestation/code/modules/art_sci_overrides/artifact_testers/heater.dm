@@ -60,7 +60,7 @@
 		if(-INFINITY to BODYTEMP_COLD_WARNING_1)
 			. += emissive_appearance(icon, "heat-3", src)
 			. += mutable_appearance(icon, "heat-3", src)
-			
+
 	// MONKESTATION EDIT END ART_SCI_OVERRIDE
 
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/RefreshParts()
@@ -101,7 +101,7 @@
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, "pad_open", "pad_norm", tool))
 		change_pipe_connection(panel_open)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -110,7 +110,7 @@
 	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/multitool_act(mob/living/user, obj/item/multitool/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!panel_open)
 		balloon_alert(user, "open panel!")
 		return

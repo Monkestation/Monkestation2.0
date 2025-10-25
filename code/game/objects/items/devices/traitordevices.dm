@@ -150,7 +150,7 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -390,23 +390,23 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/jammer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(.)
-		return
-
-	if (!(target in view(disruptor_range, user)))
+/obj/item/jammer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	target.balloon_alert(user, "radio distrupted!")
-	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [target]."))
-	disable_radios_on(target)
+	interacting_with.balloon_alert(user, "radio distrupted!")
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	disable_radios_on(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/jammer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
 	var/list/target_contents = target.get_all_contents() + target
 	for (var/obj/item/radio/radio in target_contents)
-		if(ignore_syndie && radio.syndie)
+		if((ignore_syndie && radio.syndie) || radio.ignores_radio_jammers)
 			continue
 		radio.set_broadcasting(FALSE)
 	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
@@ -431,29 +431,32 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/wrench/combat))
-		return ..()
-
+/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/wrench/combat))
+		return NONE
 	if(!(user.istate & ISTATE_HARM))
-		return
-
-	if(!attacking_item.toolspeed)
-		return
-
+		return NONE
+	if(!tool.toolspeed)
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructed!")
-	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_danger("[user] bashes [src] with [tool]!"),
+		span_danger("You bash [src] with [tool]!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+	)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
@@ -639,38 +642,41 @@ effective or pretty fucking useless.
 	balloon_alert(user, "targetting [target_mode_on ? "on" : "off"]")
 	update_icon_state()
 
-/obj/item/missile_targeter/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/missile_targeter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/missile_targeter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(!(check_usability(user)))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!target_mode_on)
 		balloon_alert(user, "targeting mode off!")
-		return
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/turf/targeted_turf = get_turf(target)
+		return ITEM_INTERACT_BLOCKING
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/targeted_turf = get_turf(interacting_with)
 	if(targeted_turf.density)
 		balloon_alert(user, "target has to be in the open!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(targeted_turf == designated_target)
 		balloon_alert(user, "already being targeted!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(targeting)
 		balloon_alert(user, "already targetting!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	targeting = TRUE
 
-	if(!do_after(user, 3 SECONDS, target = target))
+	if(!do_after(user, 3 SECONDS, target = interacting_with))
 		targeting = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 	designated_target = targeted_turf
 	if(target_laser)
 		qdel(target_laser)
 	target_laser = new /obj/effect/abstract/targetting_laser(designated_target)
 	playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
 	targeting = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/missile_targeter/update_icon_state()
 	. = ..()
@@ -685,7 +691,7 @@ effective or pretty fucking useless.
 		return
 	icon_state = "missile_targeter_0"
 
-/obj/item/missile_targeter/AltClick(mob/living/user)
+/obj/item/missile_targeter/click_alt(mob/living/user)
 	if(!(check_usability(user)))
 		return
 	if(!designated_target)

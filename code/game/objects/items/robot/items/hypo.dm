@@ -67,11 +67,17 @@
 		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
 		/datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake,\
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
-		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
+		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
-		/datum/reagent/consumable/ethanol/fernet\
+		/datum/reagent/consumable/ethanol/fernet,\
+	)
+#define CENTCOM_SERVICE_REAGENTS list(\
+		/datum/reagent/consumable/icetea, /datum/reagent/consumable/melon_soda, /datum/reagent/consumable/bogril,\
+		/datum/reagent/consumable/ethanol/absinthe, /datum/reagent/consumable/ethanol/coconut_rum, /datum/reagent/consumable/ethanol/curacao,\
+		/datum/reagent/consumable/ethanol/hcider, /datum/reagent/consumable/ethanol/beer/maltliquor, /datum/reagent/consumable/ethanol/navy_rum,\
+		/datum/reagent/consumable/ethanol/rice_beer, /datum/reagent/consumable/ethanol/yuyake, /datum/reagent/consumable/ethanol/wine_voltaic\
 	)
 
 ///Borg Hypospray
@@ -92,7 +98,7 @@
 	 */
 	var/max_volume_per_reagent = 30
 	/// Cell cost for charging a reagent
-	var/charge_cost = 50
+	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
@@ -206,7 +212,7 @@
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/reagent_containers/borghypo/ui_act(action, params)
+/obj/item/reagent_containers/borghypo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -229,11 +235,9 @@
 	. += "Currently loaded: [selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."]"
 	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
 
-/obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
-	. = ..()
-	if(user.stat == DEAD || user != loc)
-		return //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
+/obj/item/reagent_containers/borghypo/click_alt(mob/living/user)
 	change_transfer_amount(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Default Medborg Hypospray
 /obj/item/reagent_containers/borghypo/medical
@@ -293,7 +297,7 @@
 		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
-	charge_cost = 20
+	charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	recharge_time = 2
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
@@ -306,7 +310,7 @@
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 20
+	charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	recharge_time = 3
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
@@ -345,31 +349,89 @@
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
-/obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return .
+/obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return .
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(target.is_refillable())
-		if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
-			balloon_alert(user, "not enough [selected_reagent.name]!")
-			return .
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			balloon_alert(user, "[target] is full!")
-			return .
+		return ITEM_INTERACT_BLOCKING
+	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
+		balloon_alert(user, "not enough [selected_reagent.name]!")
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
 
-		// This is the in-between where we're storing the reagent we're going to pour into the container
-		// because we cannot specify a singular reagent to transfer in trans_to
-		var/datum/reagents/shaker = new()
-		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
-		shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+	// This is the in-between where we're storing the reagent we're going to pour into the container
+	// because we cannot specify a singular reagent to transfer in trans_to
+	var/datum/reagents/shaker = new()
+	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
+	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
-		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
-	return .
+	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer // Solids! Condiments! The borger uprising!
+	name = "Condiment Synthesizer"
+	desc = "An advanced condiment synthesizer"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "flour"
+	possible_transfer_amounts = list(5,10,20,1)
+	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
+	charge_cost = 0.04 * STANDARD_CELL_CHARGE //Costs double the power of the borgshaker due to synthesizing solids
+	recharge_time = 6 //Double the recharge time too, for the same reason.
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
+	default_reagent_types = HACKED_SERVICE_REAGENTS
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BorgHypo", name)
+		ui.open()
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
+	var/list/condiments = list()
+	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
+		if(reagent)
+			condiments.Add(list(list(
+				"name" = reagent.name,
+				"volume" = round(reagent.volume, 0.01) - 1,
+				"description" = reagent.description,
+			))) // list in a list because Byond merges the first list...
+
+	var/data = list()
+	data["theme"] = tgui_theme
+	data["minVolume"] = amount_per_transfer_from_this
+	data["maxVolume"] = max_volume_per_reagent
+	data["reagents"] = condiments
+	data["selectedReagent"] = selected_reagent?.name
+	return data
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/M, mob/user)
+	return
+
+/obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.is_refillable())
+		return NONE
+	if(!selected_reagent)
+		balloon_alert(user, "no reagent selected!")
+		return ITEM_INTERACT_BLOCKING
+	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
+		balloon_alert(user, "not enough [selected_reagent.name]!")
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	// This is the in-between where we're storing the reagent we're going to pour into the container
+	// because we cannot specify a singular reagent to transfer in trans_to
+	var/datum/reagents/shaker = new()
+	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
+	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"
@@ -379,6 +441,15 @@
 	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
+
+/obj/item/reagent_containers/borghypo/borgshaker/centcom
+	max_volume_per_reagent = 50
+	charge_cost = 0.05 * STANDARD_CELL_CHARGE
+	recharge_time = 1
+
+/obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
+	default_reagent_types += CENTCOM_SERVICE_REAGENTS
+	. = ..()
 
 #undef BASE_MEDICAL_REAGENTS
 #undef EXPANDED_MEDICAL_REAGENTS

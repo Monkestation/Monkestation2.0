@@ -75,7 +75,7 @@
 		return ..()
 	var/mob/living/mob_target = target
 	mob_target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-	mob_target.stamina.adjust(-35)
+	mob_target.stamina.adjust(-65)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	return ..()
 
@@ -110,6 +110,15 @@
 	. = ..()
 	var/datum/action/cooldown/bingle/spawn_hole/makehole = new pit_spawner(src)
 	makehole.Grant(src)
+
+/mob/living/basic/bingle/armored
+	icon_state = "bingle_armored"
+	maxHealth = 300
+	obj_damage = 100
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	armour_penetration = 20
+	evolved = TRUE
 
 /mob/living/basic/bingle/proc/evolve()
 	var/mob/living/basic/bingle/bongle = src
