@@ -38887,6 +38887,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
+"lkJ" = (
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/engine,
+/area/station/service/abandoned_gambling_den/gaming)
 "lkK" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -75588,7 +75592,7 @@ bGL
 wXr
 bJe
 bKj
-bLv
+lkJ
 bMB
 tDS
 bOz

@@ -36329,6 +36329,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"mAt" = (
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "mAy" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -84799,7 +84803,7 @@ sBL
 fJs
 uxS
 ehn
-uxS
+mAt
 uxS
 vcg
 sBL

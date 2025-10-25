@@ -15567,6 +15567,7 @@
 "eDB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weldingtool/empty,
+/obj/effect/spawner/random/loafer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "eDD" = (

@@ -74626,6 +74626,13 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
+"xTd" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/carpet/green,
+/area/station/service/abandoned_gambling_den)
 "xTe" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
@@ -123307,7 +123314,7 @@ fsH
 vfK
 mTR
 vUf
-lhs
+xTd
 lhs
 lhs
 vfK
