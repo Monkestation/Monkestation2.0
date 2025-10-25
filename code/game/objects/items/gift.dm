@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/gun/energy/beam_rifle/debug,
 			/obj/item/gun/magic/wand/death/debug,
 			/obj/item/gun/magic/wand/resurrection/debug,
-			/obj/item/gun/magic/wand/safety/debug
+			/obj/item/gun/magic/wand/safety/debug,
 			/obj/item/storage/box/debugbox,
 			/obj/item/storage/box/debugbox/guns,
 			/obj/item/storage/box/debugbox/guns/automatic,
