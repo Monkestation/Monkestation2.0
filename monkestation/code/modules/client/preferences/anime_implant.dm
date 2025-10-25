@@ -211,7 +211,7 @@
 	if(isnull(accessory.icon_state) || accessory.icon_state == "none")
 		return icon('icons/mob/landmarks.dmi', "x")
 
-	return icon(accessory.icon, "[accessory.icon_state]_preview")
+	return icon('monkestation/icons/mob/anime/anime_halo_preview.dmi', "[accessory.icon_state]_preview")
 
 /datum/preference/choiced/anime_halo/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["anime_halo"] = value

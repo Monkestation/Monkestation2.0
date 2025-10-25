@@ -36,8 +36,6 @@
 	if(sprite_datum.is_emissive)
 		appearance.overlays += emissive_appearance_copy(appearance, limb)
 
-	appearance.pixel_y += sprite_datum.y_pixel_offset
-
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb, key_name)
