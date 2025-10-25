@@ -6,7 +6,7 @@
 	visual_gender = FALSE
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_WEB_SURFER,
+		TRAIT_ARACHNID_WEB_SURFER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	external_organs = list(
@@ -149,8 +149,8 @@ GLOBAL_LIST_INIT(silk_recipes, list ( \
 		new /datum/stack_recipe("mummy wrapping", /obj/item/clothing/under/costume/mummy, 3, check_density = FALSE, category = CAT_CLOTHING), \
 		)),
 	new /datum/stack_recipe_list("arachnid web structures", list(
+		new /datum/stack_recipe("arachnid web", /obj/structure/spider/stickyweb/arachnid, 5, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		new /datum/stack_recipe("arachnid solid web", /obj/structure/spider/solid/arachnid, 4, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
-		new /datum/stack_recipe("arachnid sticky web", /obj/structure/spider/stickyweb/arachnid, 5, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		new /datum/stack_recipe("arachnid web spikes", /obj/structure/spider/spikes/arachnid, 6, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		new /datum/stack_recipe("arachnid web passage", /obj/structure/spider/passage/arachnid, 4, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		)),
@@ -205,24 +205,21 @@ GLOBAL_LIST_INIT(silk_recipes, list ( \
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 5, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-/obj/structure/spider/stickyweb/arachnid // increased chance to go through, reduced integrity.
-	name = "arachnid sticky web"
-	desc = "Designed to slow things down, really fragile."
-	max_integrity = 5
+/obj/structure/spider/stickyweb/arachnid // reduced integrity, only carbons with more than two arachnid limbs can surf on it freely.
+	name = "arachnid web"
+	desc = "Designed to slow anything that isn't an arachnid. Really fragile."
+	max_integrity = 10
+	arachnid = TRUE
 
 /obj/structure/spider/stickyweb/arachnid/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(genetic)
-		return
-	if(sealed)
-		return FALSE
 	if(isliving(mover))
-		if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
+		if(HAS_TRAIT(mover, TRAIT_ARACHNID_WEB_SURFER))
 			return TRUE
-		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
+		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_ARACHNID_WEB_SURFER))
 			return TRUE
-		if(prob(20))
+		if(prob(50))
 			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
-		return prob(50)
+		return prob(30)
