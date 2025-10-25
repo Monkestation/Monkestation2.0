@@ -141,6 +141,97 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/uplink/nuclear/debug,
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
+
+			//Here lies... the DEFINITIVE list of every single admin or debug item in the game. Yes, i
+			//went through all 13896 items and this is every single debug or admin item.
+			//There are PROBABLY repeats from the list above but it shouldn't matter.
+
+			/obj/item/airlock_painter/decal/debug
+			/obj/item/autosurgeon/organ/nif/debug
+			/obj/item/borg/projectile_dampen/debug
+			/obj/item/bounty_cube/debug_cube
+			/obj/item/card/id/advanced/debug
+			/obj/item/climbing_hook/infinite
+			/obj/item/clothing/ears/earmuffs/debug
+			/obj/item/clothing/glasses/debug
+			/obj/item/coin/gold/debug
+			/obj/item/debug/artifact_activator
+			/obj/item/debug/human_spawner
+			/obj/item/debug/omnitool
+			/obj/item/disk/data/debug
+			/obj/item/disk/surgery/debug
+			/obj/item/disk/tech_disk/debug
+			/obj/item/food/hotdog/debug
+			/obj/item/gps/visible_debug
+			/obj/item/gun/energy/beam_rifle/debug
+			/obj/item/gun/magic/wand/death/debug
+			/obj/item/gun/magic/wand/resurrection/debug
+			/obj/item/gun/magic/wand/safety/debug
+			/obj/item/storage/box/debugbox
+			/obj/item/storage/box/debugbox/guns
+			/obj/item/storage/box/debugbox/guns/automatic
+			/obj/item/storage/box/debugbox/guns/bow
+			/obj/item/storage/box/debugbox/guns/e_gun
+			/obj/item/storage/box/debugbox/guns/laser
+			/obj/item/storage/box/debugbox/guns/magic
+			/obj/item/storage/box/debugbox/guns/miscballistics
+			/obj/item/storage/box/debugbox/guns/miscenergy
+			/obj/item/storage/box/debugbox/guns/miscguns
+			/obj/item/storage/box/debugbox/guns/recharge
+			/obj/item/storage/box/debugbox/guns/revolver
+			/obj/item/storage/box/debugbox/guns/rifle
+			/obj/item/storage/box/debugbox/guns/shotgun
+			/obj/item/storage/box/debugbox/tools
+			/obj/item/ai_module/core/full/admin
+			/obj/item/clothing/neck/admincloak
+			/obj/item/clothing/under/misc/adminsuit
+			/obj/item/clothing/shoes/gunboots
+			/obj/item/hourglass/admin
+			/obj/item/integrated_circuit/admin
+			/obj/item/kinetic_crusher/adminpilebunker
+			/obj/item/kinetic_crusher/compact
+			/obj/item/melee/skateboard/hoverboard/admin
+			/obj/item/mining_scanner/admin
+			/obj/item/mod/control/pre_equipped/administrative
+			/obj/item/reagent_containers/cup/bottle/adminordrazine
+			/obj/item/construction/rcd/combat/admin
+			/obj/item/construction/rtd/admin
+			/obj/item/banhammer
+			/obj/item/bombcore/badmin
+			/obj/item/bombcore/badmin/summon
+			/obj/item/bombcore/badmin/summon/clown
+			/obj/item/camera/spooky/badmin
+			/obj/item/antag_granter
+			/obj/item/antag_granter/changeling
+			/obj/item/antag_granter/clock_cultist
+			/obj/item/antag_granter/heretic
+			/obj/item/antag_spawner
+			/obj/item/antag_spawner/assault_operative
+			/obj/item/antag_spawner/contract
+			/obj/item/antag_spawner/loadout
+			/obj/item/antag_spawner/loadout/monkey_crash
+			/obj/item/antag_spawner/loadout/monkey_man
+			/obj/item/antag_spawner/loadout/monkey_man/ricky
+			/obj/item/antag_spawner/nuke_ops
+			/obj/item/antag_spawner/nuke_ops/borg_tele
+			/obj/item/antag_spawner/nuke_ops/borg_tele/assault
+			/obj/item/antag_spawner/nuke_ops/borg_tele/medical
+			/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+			/obj/item/antag_spawner/nuke_ops/clown
+			/obj/item/antag_spawner/slaughter_demon
+			/obj/item/antag_spawner/slaughter_demon/laughter
+			/obj/item/areaeditor
+			/obj/item/areaeditor/blueprints
+			/obj/item/areaeditor/blueprints/cyborg
+			/obj/item/areaeditor/blueprints/slime
+			/obj/item/gun/ballistic/revolver/grenadelauncher
+			/obj/item/storage/box/debugbox/guns
+			/obj/item/autosurgeon/perfect_serverlink
+			/obj/item/paper/fluff/junkmail_redpill/true
+			/obj/item/clothing/mask/animal/small/tribal/cursed
+			/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka
+			/obj/item/bounty_cube/debug_cube
+			/obj/item/storage/box/debugbox/tools
 			)
 		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.
