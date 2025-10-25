@@ -784,3 +784,19 @@
   - map: Brig cells on thesues is now connected to holding monitors, and thus will
       unlock
   - spellcheck: Inisimin is now spelt invisimin
+2025-10-25:
+  Absolucy:
+  - bugfix: Fixed unwelding loafers deleting them.
+  - bugfix: Oozeling cores can now properly be staked.
+  JohnFulpWillard:
+  - bugfix: Character settings' alternate names menu now looks properly.
+  - bugfix: You can now always change your operative name rather than having an empty
+      box if nukies is disabled in your prefs.
+  - qol: Character settings menu is now slightly less wide.
+  JupiterJaeden:
+  - qol: Updates the citationinator to print a way more official-looking ticket, as
+      well as moving it to the default section of the SecTech vendor and reducing
+      its price.
+  notghosti:
+  - balance: Updates all subtypes of `/obj/item/clothing/under/dress` clothing cover
+      flags to be more to what one would expect
