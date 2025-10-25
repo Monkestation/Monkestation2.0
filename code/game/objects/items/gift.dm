@@ -142,8 +142,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
 
-			//Here lies... the DEFINITIVE list of every single admin or debug item in the game. Yes, i
-			//went through all 13896 items and this is every single debug or admin item.
+			//Here lies a list of every single admin or debug item in the game. I went through all
+			//13876 items, but it's probably not perfect.
 			//There are PROBABLY repeats from the list above but it shouldn't matter.
 			/obj/item/airlock_painter/decal/debug,
 			/obj/item/autosurgeon/organ/nif/debug,
