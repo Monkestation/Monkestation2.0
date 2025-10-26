@@ -264,7 +264,7 @@ export const NaniteProgrammerContent = (props) => {
     return <NoticeBox textAlign="center">Download a nanite program</NoticeBox>;
   }
   return (
-    <Section title={name} height="640px" fill scrollable>
+    <Section title={name} fill scrollable>
       <Section title="Info" level={2}>
         <Grid>
           <Grid.Column>{desc}</Grid.Column>
@@ -577,7 +577,6 @@ export const NaniteProgramHub = (props) => {
   const programsInCategory = (programs && programs[selectedCategory]) || [];
   return (
     <Section
-      height="640px"
       fill
       scrollable
       title="Programs"
@@ -675,11 +674,11 @@ export const NaniteCloudControl = (props) => {
   return (
     <Window width={1295} height={700}>
       <Window.Content scrollable>
-        <Stack>
-          <Stack.Item width="500px">
+        <Stack fill>
+          <Stack.Item width="500px" grow basis={0}>
             <NaniteProgramHub />
           </Stack.Item>
-          <Stack.Item width="420px">
+          <Stack.Item width="420px" grow basis={0}>
             <NaniteDiskBox />
           </Stack.Item>
           <Stack.Item width="375px">
@@ -711,8 +710,10 @@ export const NaniteCloudControl = (props) => {
             </Section>
             <Section
               scrollable
-              height="570px"
+              grow
               fill
+              height="90%" /* I can't think of a better way to size this window. It's not perfect but it does work. Without this it will always be larger than the window making you have to scroll the whole window to get to the bottom. */
+              basis={0}
               title="Cloud Storage"
               buttons={
                 current_view ? (
