@@ -119,6 +119,11 @@ GLOBAL_LIST_INIT(tendrils, list())
 	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
 
+/obj/effect/collapse/attack_robot(mob/living/user)
+	. = ..()
+	if (Adjacent(user))
+		return attack_hand(user)
+
 /obj/effect/collapse/Destroy()
 	collected.Cut()
 	QDEL_NULL(emitted_light)

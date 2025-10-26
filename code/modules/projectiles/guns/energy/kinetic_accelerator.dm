@@ -147,6 +147,14 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	max_mod_capacity = 80
+	can_bayonet = FALSE
+	knife_x_offset = 21
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/Initialize(mapload)
+	. = ..()
+	var/obj/item/knife/combat/survival/cyborg/knife = new(src)
+	bayonet = knife
+	update_appearance()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL

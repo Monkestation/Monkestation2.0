@@ -251,6 +251,11 @@
 	organ.forceMove(get_turf(src))
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/borg/apparatus/organ_storage/monster
+	name = "core storage bag"
+	desc = "A container for holding and application of various monster organs."
+	storable = list(/obj/item/organ/internal/monster_core)
+
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
