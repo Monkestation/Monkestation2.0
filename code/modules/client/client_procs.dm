@@ -1230,13 +1230,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
 /client/proc/set_right_click_menu_mode()
-	var/rclick_type
-	if(mob?.rclick_always_context_menu)
-		rclick_type = RIGHTCLICK_BOTH
-	else
-		rclick_type = context_menu_requires_shift
 
-	switch(rclick_type)
+	// still hard-coded to shift, but should be changed in the future for custom inspect keybindings
+	switch(context_menu_requires_shift)
 		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
 			winset(src, "mapwindow.map", "right-click=false")
 			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")

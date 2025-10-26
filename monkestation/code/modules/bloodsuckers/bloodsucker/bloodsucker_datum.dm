@@ -1,3 +1,8 @@
+#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
+#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
+#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
+
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -15,13 +20,11 @@
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
-	var/max_blood_volume = 600
+	var/max_blood_volume = BLOODSUCKER_MAX_BLOOD_DEFAULT
 
 	var/datum/bloodsucker_clan/my_clan
 
 	// TIMERS //
-	///Timer between alerts for Burn messages
-	COOLDOWN_DECLARE(bloodsucker_spam_sol_burn)
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
 	/// Cooldown for bloodsuckers going into Frenzy.
@@ -59,9 +62,8 @@
 
 	var/bloodsucker_level = 0
 	var/bloodsucker_level_unspent = 1
-	var/sol_levels_remaining = 3
+	var/sol_levels_remaining = 6
 	var/additional_regen
-	var/blood_over_cap = 0
 	var/bloodsucker_regen_rate = 0.3
 
 	// Used for Bloodsucker Objectives
@@ -77,8 +79,6 @@
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
 	var/atom/movable/screen/bloodsucker/rank_counter/vamprank_display
-	///Sunlight timer HUD
-	var/atom/movable/screen/bloodsucker/sunlight_counter/sunlight_display
 
 	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
 
@@ -114,7 +114,6 @@
 		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NOBREATH,
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_BLEED_WARN,
 		TRAIT_NO_MIRROR_REFLECTION,
@@ -167,7 +166,6 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
-	RegisterSignal(current_mob, SIGNAL_REMOVETRAIT(TRAIT_SHADED), PROC_REF(handle_sol))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -208,10 +206,8 @@
 		var/datum/hud/hud_used = current_mob.hud_used
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
-		hud_used.infodisplay -= sunlight_display
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
-		QDEL_NULL(sunlight_display)
 
 /datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
@@ -231,9 +227,6 @@
 
 	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
-
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter(null, bloodsucker_hud)
-	bloodsucker_hud.infodisplay += sunlight_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
 	UnregisterSignal(owner.current, COMSIG_MOB_HUD_CREATED)
@@ -257,10 +250,6 @@
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
 	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
-	RegisterSignal(SSsol, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsol, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
 	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 
@@ -287,7 +276,7 @@
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
-	UnregisterSignal(SSsol, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
@@ -392,8 +381,6 @@
 	if(length(objectives))
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
-			if(objective.objective_name == "Optional Objective")
-				continue
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
@@ -495,7 +482,6 @@
 		newheart.beating = initial(newheart.beating)
 	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(user_eyes)
-		user_eyes.flash_protect = initial(user_eyes.flash_protect)
 		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
 		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
 		user_eyes.sight_flags = initial(user_eyes.sight_flags)
@@ -515,8 +501,8 @@
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives()
 	// Claim a Lair Objective
 	objectives += new /datum/objective/bloodsucker/lair(null, owner)
-	// Survive Objective
-	objectives += new /datum/objective/bloodsucker/survive(null, owner)
+	// Escape Objective
+	objectives += new /datum/objective/escape(null)
 
 	// Conversion objective.
 	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
@@ -526,7 +512,6 @@
 		weighted_objectives[subtypesof(/datum/objective/bloodsucker/conversion)] = 1
 	var/conversion_objective_type = pick_weight_recursive(weighted_objectives)
 	var/datum/objective/bloodsucker/conversion_objective = new conversion_objective_type(null, owner)
-	conversion_objective.objective_name = "Optional Objective"
 	objectives += conversion_objective
 
 /datum/antagonist/bloodsucker/proc/on_moved(datum/source)
@@ -567,7 +552,7 @@
 	affected_limbs[new_limb.body_zone] = new_limb
 	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
 
-	var/extra_damage = 1 + (bloodsucker_level / 2)
+	var/extra_damage = 1 + (bloodsucker_level * BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
 	new_limb.unarmed_damage_low += extra_damage
 	new_limb.unarmed_damage_high += extra_damage
 
@@ -575,7 +560,7 @@
 	SIGNAL_HANDLER
 	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
 		return
-	var/extra_damage = 1 + (bloodsucker_level / 2)
+	var/extra_damage = 1 + (bloodsucker_level / BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
 
 	affected_limbs[lost_limb.body_zone] = null
 	UnregisterSignal(lost_limb, COMSIG_QDELETING)

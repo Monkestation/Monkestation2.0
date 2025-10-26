@@ -630,3 +630,190 @@
   notghosti:
   - rscadd: A motivational shock wire to cyborgs
   - map: Guarantees a blue space beacon at each teleporter
+2025-10-20:
+  ThePooba:
+  - bugfix: fixed admin suit dropping items
+2025-10-21:
+  '@Krysonism, @Imaginos16, @MTandi, @san7890':
+  - image: updated smart fridge sprites for all variants
+  - bugfix: smart fridges no longer overlap with walls, but they can be welded down
+      to a floor and mapspawn welded
+  Absolucy:
+  - balance: The cursed katana is now far more effective against fauna - both dealing
+      more damage and having a far higher block chance.
+  - rscadd: Quantum Pad boards and Quantum Keycards can now be printed by the cargo
+      techfab, so they can do interesting setups with deliveries or mining.
+  - rscadd: Engineering can now print Quantum Keycards, because it was silly that
+      they could print Quantum Pad boards but not the keycards.
+  - bugfix: Fixed an oversight that could lead to tram incidents not being counted,
+      especially with oozelings.
+  - bugfix: Beepsky no longer gets mad if you're holding a Spatial Rift Nullifier
+  - balance: The Darkspawn Extinguish spell now also extinguishes the air, putting
+      out fires and purging plasma.
+  - qol: You can now use the RCD to place plating over ocean tiles.
+  Absolucy, Bilbo367:
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
+  Cmpwarrior:
+  - rscadd: Adds a new AI core design based off Fracktail from Super Paper Mario
+  LettuceGuardian:
+  - rscadd: Wardens get a megaphone and bandolier in their locker.
+  SyncIt21:
+  - bugfix: runtime with smart fridge tooltip
+  notghosti:
+  - bugfix: Motion sensitive cameras no longer detect observers and eye mobs entering
+      a ai monitored area.
+  - rscadd: Adds wormtongue, tsundere, disc joky, tsundere, and milf to ai law boards
+      and spawners
+2025-10-22:
+  notghosti:
+  - balance: Darkspawn thrall will not resist conversion if buckle cuffed to a table.
+2025-10-23:
+  Greenpoison:
+  - config: Increased time to become dept heads.
+  Infernal-0:
+  - qol: Personal photo albums, from the photographer quirk, are now indestructible
+  JupiterJaeden:
+  - balance: Sol is GONE, but you still get free levels every 10 mins - the cap on
+      free levels has been increased from 3 to 6.
+  - balance: All clans (except tremere, unchanged) now get every vampire ability at
+      level 1 roundstart, but only level up 1 ability at a time.
+  - balance: Vampires no longer have hardcrit immunity.
+  - balance: Vampires no longer have extra flash vulnerability (like mothpeople).
+  - qol: Vampires no longer go mute and deaf when in frenzy.
+  - balance: The bonus to max blood volume and regeneration per level has been nerfed.
+  - bugfix: Bloodsucker abilities are now fixed to actually take blood to activate
+      again (this was broken for idk how long)
+  - balance: The bloodsucker maximum blood volume is now the actual bloodsucker maximum
+      blood volume, instead of letting you have up to double the listed max blood.
+      Extra blood drank still counts towards blood thickening.
+  - balance: The amount of blood required to level up from drinking from sentient
+      mobs (blood thickening) starts higher by default but increases a bit less per
+      level. It also no longer increases when you receive free levels, but rather
+      only when you actually use blood thickening to level up. You also no longer
+      get ANY blood thickening from drinking from vassals (previously was 1/4 the
+      regular amount).
+  - balance: Ventrue has had its initial max level increased from 3 to 4 (you now
+      advance to level 4 before having to spend levels on your favorite vassal). In
+      addition, ventrue's favorite vassal follows the same power scaling as their
+      master (you don't level up every power every rank, you just get 1 power per
+      rank). However, after the ventrue vassal has fully turned into a vampire, both
+      them and their master can rank up normally by drinking blood again.
+  - balance: Ventrue can no longer spend a flat amount of blood to level up their
+      vassal, and instead just follows the normal blood thickening scaling.
+  - balance: Ventrue vampires can now drink from mindless mobs in a pinch, but take
+      a severe mood penalty.
+  - qol: You can level up multiple times inside a coffin without having to open and
+      re-shut it.
+  - balance: 'Buffs/changes vanishing act: Vanishing act is now an ability every vampire
+      gets when they make a lair, and you can use it instantly at any time, but it
+      has a 5 min cooldown. Similar to heretic blade breaks, but way more counterable.
+      You also still drop all your shit if someone sees you in a lit area. Being full
+      stunned, silver cuffed, or bluespace grounded will all still prevent vanishing
+      act.'
+  - balance: 'Buffs trespass: Higher levels now increase the range of trespass, +1
+      per level.'
+  - balance: Buffs predatory lunge - the "spinning" telegraphing effect has been reduced
+      to 1s, and is gone at level 3 instead of 4. The ability now has a range that
+      starts at 4 tiles and increases every level.
+  - bugfix: Fixes predatory lunge not working before level 4 unless you were adjacent
+      to the target.
+  - balance: 'Changes cloak of darkness: only makes you unable to sprint rather than
+      forcing walking. You also can now start your cloak even if others can see you.
+      However, similar to the current behavior of tremere''s obfuscate, if you attack
+      or get attacked while in cloak, your cloak will break.'
+  - balance: 'Changes fortitude: Removes fortitude forcing to walk, however: you are
+      still unable to sprint, and the ability is a limited duration, starting at 10s
+      with a 30s cooldown. Higher levels increase the duration and reduce the cooldown.
+      Level 4 is still full stun immunity, for the duration of the ability. Also,
+      activating/ending fortitude gives chat messages and an icon above your head
+      to everyone around you, as the old tell (force walking) is now gone.'
+  - balance: 'Buffs mesmerize: mesmerize now silences the target on lvl 1 instead
+      of 2.'
+  - balance: 'Nerfs brawn slightly: brawn now requires level 2 to break restraints
+      and no longer lets you break doors at level 4.'
+  - bugfix: Brawn now respects pacifism when attacking someone.
+  - qol: Feed now requires you to be pulling someone, and automatically ends when
+      you stop pulling someone.
+  - balance: Feed is now a lot more obvious to other players around when you start
+      it, displaying an icon above your head and playing a sound. (don't feed in the
+      public halls you sickos!)
+  - balance: The time it takes to feed by default is much faster, and still gets a
+      bit faster every level (although now linearly instead of exponentially), but
+      also now can't go below 2 seconds.
+  - balance: '"Immortal Haste" has been renamed to "Sweeping Dash" and nerfed to have
+      a range- the range starts at 2 tiles and increases 1 per level. The knockdown
+      still increases with every level as well.'
+  - balance: Revenge and favorite vassals can now both be deconverted by mindshield.
+  - balance: Vampires get "Escape on the escape shuttle alive and not in custody"
+      objective instead of just survive, and also their random vassalization objective
+      is no longer optional.
+  - balance: Vampires can no longer cure deep-rooted/permanent traumas by sleeping
+      in a coffin/entering torpor, making them both paxxable and lobotomizable.
+  - balance: Tremere's Thaumaturgy blood shield has had its block chance reduced from
+      75% to 50%.
+  - balance: Tremere's Thaumaturgy now has higher level requirements to unlock each
+      of its abilities, and also can no longer break airlocks at any level.
+  - balance: Tremere's Obfuscation now makes you fully revealed when you are hit instead
+      of 100 alpha still.
+  - qol: Tremere's temporary vassals made by dominate now have hard of hearing and
+      soft spoken instead of being fully mute and deaf (they can still hear and speak
+      totally normally with lvl 4 dominate)
+  - spellcheck: Fixed a number of typos in vampire ability descriptions and code comments,
+      as well as updating many ability descriptions.
+  - qol: You now enter torpor if you have any missing limbs in a coffin, even if you
+      are otherwise healthy.
+  - bugfix: Fixes bluespace grounding implants not affecting slasher jaunts.
+  Killermankey:
+  - balance: Upped vendozers speed, hp, and armor. Much more worth making now
+  - balance: lowered the wood cost and removed the oven from vendozer craft. Alot
+      less rng now
+  Snack-Max:
+  - rscadd: Representative's Turtleneck and Skirtleneck
+  ThatGuy-GEWP:
+  - bugfix: Inspect menu is now Shift+RightClick, and can be changed back in settings,
+      or to right-click only.
+  TheColorCyan:
+  - rscadd: Oozeling perks now mention their ability to consume and regrow limbs
+  - rscadd: Oozeling perks now mention that they have soft landing
+  notghosti:
+  - rscdel: Removed brig access from BlueShield ID's (this is security officer equipment/holding
+      cells, not access to the brig)
+  - balance: Heatsinks are no longer a secret insanely powerful pair of lungs.
+  - bugfix: IPC's spawn with lungs
+  - map: Brig cells on thesues is now connected to holding monitors, and thus will
+      unlock
+  - spellcheck: Inisimin is now spelt invisimin
+2025-10-25:
+  Absolucy:
+  - bugfix: Fixed unwelding loafers deleting them.
+  - bugfix: Oozeling cores can now properly be staked.
+  JohnFulpWillard:
+  - bugfix: Character settings' alternate names menu now looks properly.
+  - bugfix: You can now always change your operative name rather than having an empty
+      box if nukies is disabled in your prefs.
+  - qol: Character settings menu is now slightly less wide.
+  JupiterJaeden:
+  - qol: Updates the citationinator to print a way more official-looking ticket, as
+      well as moving it to the default section of the SecTech vendor and reducing
+      its price.
+  notghosti:
+  - balance: Updates all subtypes of `/obj/item/clothing/under/dress` clothing cover
+      flags to be more to what one would expect
+2025-10-26:
+  EatsTheGrapes:
+  - bugfix: Added checks to prevent infinite plant growth and harvesting loops in
+      hydroponics.
+  - balance: Implemented a short cooldown and growth clamp to prevent reagent-based
+      runaway loops.
+  - code_imp: Cleaned up process logic indentation and ensured growth resets properly
+      after harvest.
+  ThatGuy-GEWP:
+  - bugfix: LOOC's Default is now i
+  - bugfix: Rest's Default is now U again
+  - balance: Pixel-shift's Default has been moved from B to N
+  notghosti:
+  - map: Theseus fore hallway has had it south side split into aft hallway
+  - map: Reconnects drone bay to power network on thesues
+  - map: Gives AI sat Foyer a APC on thesues
+  - map: Fixes thesues satelitte power net
