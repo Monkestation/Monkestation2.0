@@ -134,12 +134,6 @@
 	throwforce = 15
 	bayonet = TRUE
 
-/obj/item/knife/combat/survival/cyborg
-	name = "worn survival knife"
-	icon_state = "knife_short" // For bayonett sprite
-	desc = "abstract item, if this is ever read in game then god is dead and whoever is reading probably killed them. Bug report this"
-	bare_wound_bonus = 10 //To reduce lethality against normal folks really.
-
 /obj/item/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
