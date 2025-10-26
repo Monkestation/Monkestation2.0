@@ -138,7 +138,6 @@
 	to_chat(humholder, span_warning("Owwwwwww!"))
 	if(prob(20))
 		humholder.Paralyze(1 SECOND)
-		humholder.emote("scream")
 
 /datum/component/material_bane/proc/is_this_bane(atom/thing)
 	if(thing.custom_materials)
