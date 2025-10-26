@@ -116,6 +116,7 @@
 		flags_cover |= HEADCOVERSEYES
 		flags_inv |= HIDEEYES
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	user.update_worn_glasses()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
