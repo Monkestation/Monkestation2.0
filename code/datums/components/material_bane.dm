@@ -140,11 +140,10 @@
 		humholder.Paralyze(1 SECOND)
 
 /datum/component/material_bane/proc/is_this_bane(atom/thing)
-	if(thing.custom_materials)
-		for(var/material in thing.custom_materials)
-			var/datum/material/possible_ouch = GET_MATERIAL_REF(material)
-			if(is_type_in_list(possible_ouch, our_bane))
-				return TRUE
+	for(var/material in thing?.custom_materials)
+		var/datum/material/possible_ouch = GET_MATERIAL_REF(material)
+		if(is_type_in_list(possible_ouch, our_bane))
+			return TRUE
 	var/datum/component/bane_inducing/ough = thing.GetComponent(/datum/component/bane_inducing)
 	if(ough)
 		for(var/material in ough.mats_we_pretend_to_be)
