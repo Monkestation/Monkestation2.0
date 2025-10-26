@@ -16,8 +16,11 @@
 	switch (intent)
 		if (INTENT_DISARM)
 			M.istate |= ISTATE_SECONDARY
+			M.istate |= ISTATE_HARM
+			M.istate |= ISTATE_BLOCKING
 		if (INTENT_GRAB)
 			M.istate |= ISTATE_CONTROL
+			M.istate |= ISTATE_HARM
 			M.istate |= ISTATE_BLOCKING
 		if (INTENT_HARM)
 			M.istate |= ISTATE_HARM
