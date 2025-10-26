@@ -604,6 +604,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
 
+/// The person with this trait always appears as 'unknown', but doesnt obscure the examine.
+#define TRAIT_ANONYMOUS "anonymous"
+
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 

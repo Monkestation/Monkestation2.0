@@ -402,3 +402,13 @@
 /datum/crafting_recipe/balloon_vest/check_requirements(mob/user, list/collected_requirements)
 	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
+/datum/crafting_recipe/voiceconcealer
+	result = /obj/item/clothing/mask/gas/voiceconcealer
+	reqs = list(
+		/obj/item/clothing/mask/gas = 1,
+		/obj/item/assembly/voice = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/plastic = 1,
+	)
+	time = 8 SECONDS
+	category = CAT_CLOTHING
