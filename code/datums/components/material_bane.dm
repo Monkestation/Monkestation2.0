@@ -16,13 +16,13 @@
 	COOLDOWN_DECLARE(active_message_cooldown)
 
 /datum/component/material_bane/Initialize(our_bane = list(/datum/material/silver), damaging = TRUE, effect_power = 1, max_bane_power = 500, bane_speed_mult = 1)
+	if(!ishuman(parent))
+		return COMPONENT_INCOMPATIBLE
 	src.our_bane = our_bane
 	src.damaging = damaging
 	src.effect_power = effect_power
 	src.max_bane_power = max_bane_power
 	src.bane_speed_mult = bane_speed_mult
-	if(!ishuman(parent))
-		return COMPONENT_INCOMPATIBLE
 	sizzle = new(parent)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -138,6 +138,7 @@
 	to_chat(humholder, span_warning("Owwwwwww!"))
 	if(prob(20))
 		humholder.Paralyze(1 SECOND)
+		humholder.emote("scream")
 
 /datum/component/material_bane/proc/is_this_bane(atom/thing)
 	if(thing.custom_materials)

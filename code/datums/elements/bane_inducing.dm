@@ -5,18 +5,10 @@
 
 /datum/component/bane_inducing/Initialize(datum/target, mats_we_pretend_to_be=/datum/material/silver)
 	. = ..()
-	if(!islist(mats_we_pretend_to_be))
-		var/list/datum/material/dem_mats = list(mats_we_pretend_to_be)
-		src.mats_we_pretend_to_be = dem_mats
-	else
-		src.mats_we_pretend_to_be = mats_we_pretend_to_be
+	src.mats_we_pretend_to_be += islist(mats_we_pretend_to_be) ?  mats_we_pretend_to_be : list(mats_we_pretend_to_be)
 
 /datum/component/bane_inducing/InheritComponent(datum/component/bane_inducing/new_comp, original, mats_we_pretend_to_be)
 	if(!original)
 		return
 	if(mats_we_pretend_to_be)
-		if(!islist(mats_we_pretend_to_be))
-			var/list/datum/material/dem_mats = list(mats_we_pretend_to_be)
-			src.mats_we_pretend_to_be += dem_mats
-		else
-			src.mats_we_pretend_to_be += mats_we_pretend_to_be
+		src.mats_we_pretend_to_be += islist( mats_we_pretend_to_be) ?  mats_we_pretend_to_be : list(mats_we_pretend_to_be)
