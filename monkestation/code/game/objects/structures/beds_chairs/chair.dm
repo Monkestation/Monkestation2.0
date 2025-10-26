@@ -29,7 +29,7 @@
 
 /obj/item/chair/silk
 	name = "silk chair"
-	desc = "It's way too soft for it to make a dent on anything.'"
+	desc = "It's way too soft for it to make a dent on anything."
 	icon = 'monkestation/icons/obj/silk_structures.dmi'
 	icon_state = "chair_toppled"
 	origin_type = /obj/structure/chair/silk
