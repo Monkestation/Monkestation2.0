@@ -501,5 +501,5 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 
 /obj/item/clothing/mask/gas/voiceconcealer
-	desc = "A face-covering mask that has been significantly modified near the mouth to block off the users voice whilst repeating it through a speaker. Inconspicuous and great for concealing your identity."
+	desc = "A face-covering mask that has been significantly modified near the mouth to block off the users voice whilst repeating it through a speaker. Great for concealing your identity as long as you make sure to hide every other identifying feature."
 	clothing_traits = list(TRAIT_ANONYMOUS)
