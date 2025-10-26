@@ -31408,6 +31408,7 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "iTt" = (

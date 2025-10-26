@@ -4315,6 +4315,7 @@
 "bmO" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "bmX" = (

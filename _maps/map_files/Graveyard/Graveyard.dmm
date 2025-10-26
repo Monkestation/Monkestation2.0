@@ -43467,6 +43467,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "qRC" = (

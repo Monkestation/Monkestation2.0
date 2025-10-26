@@ -30074,6 +30074,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"dIr" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "dJm" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Pit"
@@ -93225,7 +93236,7 @@ bCP
 bHw
 bCP
 fBp
-iJc
+dIr
 bWO
 bWO
 wCz

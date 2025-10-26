@@ -27695,6 +27695,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/toy/figure/engineer,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "fnq" = (
@@ -53729,6 +53730,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},

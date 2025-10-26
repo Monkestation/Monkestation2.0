@@ -42558,6 +42558,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/east,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "niB" = (

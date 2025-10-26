@@ -7673,7 +7673,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/reagent_dispensers/plumbed,
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "cmL" = (
