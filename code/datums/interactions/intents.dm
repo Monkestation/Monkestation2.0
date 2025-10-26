@@ -10,6 +10,8 @@
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		M.istate = ISTATE_SECONDARY
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		M.istate = ISTATE_CONTROL
 
 	switch (intent)
 		if (INTENT_DISARM)

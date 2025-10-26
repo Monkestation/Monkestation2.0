@@ -48,6 +48,10 @@
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
+/obj/item/borg/apparatus/attack_self_secondary(mob/living/silicon/robot/user)
+	if(!stored || !issilicon(user))
+		return ..()
+	stored.attack_self_secondary(user)
 
 //Alt click drops the stored item.
 /obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)

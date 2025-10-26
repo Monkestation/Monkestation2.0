@@ -146,6 +146,16 @@
 		. = TRUE
 	update_appearance()
 
+/obj/item/tk_grab/attack_self_secondary(mob/user, modifiers)
+	if(!focus)
+		return
+	if(QDELING(focus))
+		qdel(src)
+		return
+	if(focus.attack_self_secondary_tk(user) & ITEM_INTERACT_ANY_BLOCKER)
+		. = TRUE
+	update_appearance()
+
 /obj/item/tk_grab/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
@@ -158,7 +168,7 @@
 		return NONE
 
 	if(interacting_with == focus)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.istate & ISTATE_SECONDARY)
 			. = focus.attack_self_secondary_tk(user) || NONE
 		else
 			. = interacting_with.attack_self_tk(user) || NONE

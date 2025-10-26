@@ -1608,6 +1608,7 @@
 #include "code\datums\interactions\cyborg_combat_mode.dm"
 #include "code\datums\interactions\intents.dm"
 #include "code\datums\interactions\interaction_mode.dm"
+#include "code\datums\interactions\no_interaction.dm"
 #include "code\datums\keybinding\_defines.dm"
 #include "code\datums\keybinding\_keybindings.dm"
 #include "code\datums\keybinding\admin.dm"
