@@ -22,6 +22,11 @@
 
 	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
 
+	///Does this have a helmet strap?
+	var/has_helmet_strap = FALSE
+	///Is the helmet strap buckled?
+	var/helmet_strap_buckled = TRUE
+
 /datum/armor/head_helmet
 	melee = 35
 	bullet = 30
@@ -34,7 +39,29 @@
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD, TRUE)
+
+/obj/item/clothing/head/helmet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
+	if(!has_helmet_strap)
+		return
+	if(helmet_strap_buckled)
+		var/mutable_appearance/helmet_strap_overlay = mutable_appearance('icons/mob/clothing/head/helmet.dmi', "helmet_strap", offset_spokesman = src, offset_const = -1)
+		. += helmet_strap_overlay
+
+/obj/item/clothing/head/helmet/item_ctrl_click(mob/user)
+	if(!has_helmet_strap)
+		return CLICK_ACTION_BLOCKING
+	var/mob/living/carbon/human/wearer = get(loc, /mob/living)
+	if(!istype(wearer))
+		return CLICK_ACTION_BLOCKING
+	helmet_strap_buckled = !helmet_strap_buckled
+	playsound(src, 'sound/items/equip/toolbelt_equip.ogg', 10, TRUE, -3)
+	balloon_alert(user, "[helmet_strap_buckled ? "chin strap buckled" : "chin strap unbuckled"]")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/sec
 	var/flipped_visor = FALSE
@@ -43,6 +70,9 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	visor_toggle_up_sound = SFX_VISOR_UP
 	visor_toggle_down_sound = SFX_VISOR_DOWN
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
+	desc_controls = "CTRL-Click to toggle the chinstrap, Alt-Click to flip the visor."
+	has_helmet_strap = TRUE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -80,9 +110,11 @@
 	icon_state = base_icon_state
 	if(flipped_visor)
 		flags_cover &= ~HEADCOVERSEYES
+		flags_inv &= ~HIDEEYES
 		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
 	else
 		flags_cover |= HEADCOVERSEYES
+		flags_inv |= HIDEEYES
 		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -129,6 +161,8 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -197,6 +231,7 @@
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
 	tint = 2
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
@@ -236,14 +271,13 @@
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
 	armor_type = /datum/armor/helmet_swat
-
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEHAIR //monkestation edit
 	dog_fashion = null
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
@@ -272,6 +306,8 @@
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
+	desc_controls = "CTRL-Click to toggle the chinstrap."
+	has_helmet_strap = TRUE
 
 /obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
 	. = ..()
@@ -571,15 +607,14 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	armor_type = /datum/armor/toggleable_riot
-	flags_inv = HIDEEARS|HIDEHAIR
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = null
 	flags_cover = null
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	desc_controls = "CTRL-Click to toggle the chinstrap."
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -602,6 +637,7 @@
 	inhand_icon_state = "justice_helmet"
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
