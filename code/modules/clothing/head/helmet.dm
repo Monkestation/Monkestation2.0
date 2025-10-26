@@ -609,7 +609,7 @@
 	armor_type = /datum/armor/toggleable_riot
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
-	flags_cover = null
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
