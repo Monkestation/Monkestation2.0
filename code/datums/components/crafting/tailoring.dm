@@ -403,6 +403,7 @@
 	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/voiceconcealer
+	name = "Voice Obfuscator Gas Mask"
 	result = /obj/item/clothing/mask/gas/voiceconcealer
 	reqs = list(
 		/obj/item/clothing/mask/gas = 1,
