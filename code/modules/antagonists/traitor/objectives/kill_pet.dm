@@ -12,7 +12,7 @@
 	name = "Kill the %DEPARTMENT HEAD%'s beloved %PET%"
 	description = "The %DEPARTMENT HEAD% has particularly annoyed us by sending us spam emails and we want their %PET% dead to show them what happens when they cross us. "
 
-	progression_minimum = 0 MINUTES
+	progression_minimum = 1000000 MINUTES
 	telecrystal_reward = list(1, 2)
 	progression_reward = list(3 MINUTES, 6 MINUTES)
 
@@ -41,12 +41,12 @@
 	duplicate_type = /datum/traitor_objective/kill_pet
 
 /datum/traitor_objective/kill_pet/medium_risk
-	progression_minimum = 10 MINUTES
+	progression_minimum = 1000000 MINUTES
 	progression_reward = list(5 MINUTES, 8 MINUTES)
 	limited_to_department_head = FALSE
 
 /datum/traitor_objective/kill_pet/high_risk
-	progression_minimum = 25 MINUTES
+	progression_minimum = 1000000 MINUTES
 	progression_reward = list(14 MINUTES, 18 MINUTES)
 	telecrystal_reward = list(2, 3)
 
