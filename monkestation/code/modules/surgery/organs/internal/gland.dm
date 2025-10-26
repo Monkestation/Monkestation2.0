@@ -40,9 +40,10 @@
 	if(DOING_INTERACTION(owner, "making_silk"))
 		to_chat(spider, span_warning("Already weaving!"))
 		return
-	if(owner.nutrition > NUTRITION_LEVEL_VERY_HUNGRY && do_after(owner, 3 SECONDS, interaction_key = "making_silk"))
+	while(owner.nutrition > NUTRITION_LEVEL_VERY_HUNGRY && do_after(owner, 3 SECONDS, interaction_key = "making_silk"))
 		to_chat(spider, span_notice("You produce a piece of silk from your wrists."))
 		owner.adjust_nutrition(-10)
-		new /obj/item/stack/sheet/silk/(get_turf(owner))
-	else
-		to_chat(spider, span_warning("You fail to produce any silk.")) //The owner moved or is too hungry.
+		var/obj/item/stack/sheet/silk/produced_silk = new /obj/item/stack/sheet/silk
+		owner.put_in_hands(produced_silk)
+
+	to_chat(spider, span_warning("You fail to produce any silk.")) //The owner moved or is too hungry.
