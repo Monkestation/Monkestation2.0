@@ -49507,6 +49507,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
+"tNu" = (
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "tNx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -88077,7 +88081,7 @@ adX
 hoR
 afw
 kfl
-agf
+tNu
 ags
 adX
 adX

@@ -49758,7 +49758,7 @@
 "xOn" = (
 /obj/machinery/smartfridge,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xOy" = (
 /obj/machinery/door/window/left/directional/south{

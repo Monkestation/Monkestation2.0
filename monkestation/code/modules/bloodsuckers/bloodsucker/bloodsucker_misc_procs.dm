@@ -61,9 +61,10 @@
 		to_chat(owner.current, span_cultbold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become a criminal to the Bloodsucker's Cause!"))
 
 /datum/antagonist/bloodsucker/proc/RankUp()
-	if(!owner?.current || IS_FAVORITE_VASSAL(owner.current))
+	if(!owner?.current)
 		return
 	bloodsucker_level_unspent++
+	owner.current.balloon_alert(owner.current, "You have grown more ancient!")
 	if(!my_clan)
 		to_chat(owner.current, span_notice("You have gained a rank. Join a Clan to spend it."))
 		return
@@ -78,13 +79,11 @@
 /datum/antagonist/bloodsucker/proc/RankDown()
 	bloodsucker_level_unspent--
 
-/datum/antagonist/bloodsucker/proc/remove_nondefault_powers(return_levels = FALSE)
+/datum/antagonist/bloodsucker/proc/remove_nondefault_powers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
 		if(power.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			continue
 		RemovePower(power)
-		if(return_levels)
-			bloodsucker_level_unspent++
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
@@ -107,16 +106,16 @@
 /**
  * Called when a Bloodsucker reaches Final Death
  * Releases all Vassals and gives them the ex_vassal datum.
+ * Revenge vassals are handled separately by the COMSIG_BLOODSUCKER_FINAL_DEATH signal.
  */
 /datum/antagonist/bloodsucker/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
-		// Skip over any Bloodsucker Vassals, they're too far gone to have all their stuff taken away from them
-		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker) || all_vassals.special_type == REVENGE_VASSAL)
+		if(all_vassals.special_type == REVENGE_VASSAL)
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)
 
-// Blood level gain is used to give Bloodsuckers more levels if they are being agressive and drinking from real, sentient people.
+// Blood level gain is used to give Bloodsuckers more levels if they are being aggressive and drinking from real, sentient people.
 // The maximum blood that counts towards this
 /datum/antagonist/bloodsucker/proc/blood_level_gain()
 	var/level_cost = get_level_cost()
@@ -138,8 +137,34 @@
 /datum/antagonist/bloodsucker/proc/get_level_cost()
 	var/level_cost = (0.3 + (0.05 * blood_level_gain_amount))
 	level_cost = min(level_cost, BLOOD_LEVEL_GAIN_MAX)
-	level_cost = max_blood_volume * level_cost
+	level_cost = ((BLOODSUCKER_MAX_BLOOD_DEFAULT * 1.5) + (blood_level_gain_amount * BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP)) * level_cost
 	return level_cost
+
+/// Animates the power icon above the vampire's head. Returns a reference to the icon to remove it later.
+/atom/movable/proc/do_power_icon_animation(power_icon)
+	var/mutable_appearance/alert = mutable_appearance('monkestation/icons/bloodsuckers/actions_bloodsucker.dmi', power_icon)
+	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
+
+	alert.layer = layer + 0.1
+
+	var/atom/movable/flick_visual/visual = new()
+	visual.appearance = alert
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	visual.alpha = 0
+
+	src.vis_contents += visual
+
+	animate(visual, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
+
+	LAZYADD(update_on_z, visual)
+
+	return visual
+
+/// Removes the power icon above the vampire's head.
+/atom/movable/proc/remove_power_icon_animation(atom/movable/flick_visual/visual)
+	LAZYREMOVE(update_on_z, visual)
+
+	qdel(visual)
 
 /**
  * CARBON INTEGRATION
