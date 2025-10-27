@@ -91,7 +91,7 @@
 				humholder.set_jitter_if_lower(3 MINUTES)
 				humholder.adjust_confusion(5 SECONDS)
 	if(bane_power > 250)
-		humholder.take_bodypart_damage(0, (((bane_power / 200) * effect_power) * seconds_per_tick))
+		humholder.take_bodypart_damage(0, (((bane_power / 100) * effect_power) * seconds_per_tick))
 	if(!was_baned)
 		bane_power = max(bane_power - (25 * seconds_per_tick), 0)
 
