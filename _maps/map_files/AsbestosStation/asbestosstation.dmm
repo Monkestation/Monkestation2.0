@@ -933,11 +933,6 @@
 "eD" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/science/ordnance_maint)
-"eG" = (
-/obj/structure/lattice/catwalk,
-/obj/item/spear,
-/turf/open/water/sewage,
-/area/station/maintenance/aft/lesser)
 "eH" = (
 /obj/machinery/door/airlock/security{
 	name = "Armoury"
@@ -1976,6 +1971,10 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/water/sewage,
 /area/station/medical/pathology/isolation)
+"iZ" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
 "jb" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/stripes/line,
@@ -2883,9 +2882,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nq" = (
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
+/turf/closed/wall,
+/area/station/maintenance/department/engine/atmos/lesser)
 "ns" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
@@ -2956,8 +2954,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage/gas)
 "nG" = (
-/turf/closed/wall,
-/area/station/maintenance/department/engine/atmos/lesser)
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "nH" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics HFR Room"
@@ -4708,6 +4707,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
+"vj" = (
+/turf/closed/wall,
+/area/station/science/circuits)
 "vl" = (
 /obj/structure/closet/crate/mod,
 /turf/open/floor/iron,
@@ -6241,7 +6243,7 @@
 "BP" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical/morgue)
+/area/station/maintenance/central)
 "BQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 8
@@ -6778,9 +6780,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/space/basic,
 /area/space/nearstation)
-"Eq" = (
-/turf/closed/wall,
-/area/station/science/circuits)
 "Er" = (
 /obj/machinery/telecomms/bus/preset_two,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -6889,10 +6888,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"ER" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/maintenance/central/greater)
 "ES" = (
 /obj/machinery/fax{
 	fax_name = "Service Hallway";
@@ -7967,6 +7962,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"JE" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "JG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 6
@@ -9304,10 +9303,6 @@
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
-"Pf" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
 "Pi" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern,
@@ -9403,6 +9398,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
+"PD" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
 "PE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
@@ -9438,8 +9437,8 @@
 /area/station/engineering/supermatter/room)
 "PL" = (
 /obj/effect/spawner/structure/window,
-/turf/closed/wall,
-/area/station/maintenance/fore/lesser)
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/morgue)
 "PM" = (
 /obj/machinery/computer/security/labor,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -9673,6 +9672,11 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"QH" = (
+/obj/structure/lattice/catwalk,
+/obj/item/spear,
+/turf/open/water/sewage,
+/area/station/maintenance/aft/lesser)
 "QI" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -10196,10 +10200,6 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/station/command/bridge)
-"SX" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "SY" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -10271,10 +10271,6 @@
 "TB" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/bridge)
-"TC" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/greater)
 "TE" = (
 /obj/structure/closet/secure_closet/miner,
 /turf/open/floor/iron,
@@ -10873,6 +10869,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
+"WC" = (
+/obj/effect/spawner/structure/window,
+/turf/closed/wall,
+/area/station/maintenance/fore/lesser)
 "WD" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -26947,13 +26947,13 @@ ti
 ti
 ti
 ti
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
 jD
 jD
-nG
+nq
 Pc
 he
 Pc
@@ -27204,7 +27204,7 @@ ui
 ui
 ui
 ui
-nG
+nq
 jD
 jD
 jD
@@ -27461,7 +27461,7 @@ ui
 ui
 ui
 ui
-nG
+nq
 jD
 jD
 jD
@@ -27716,15 +27716,15 @@ QS
 ti
 ti
 ti
-nG
-nG
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
+nq
+nq
 jD
-nG
-nG
+nq
+nq
 Pc
 qN
 qN
@@ -27973,10 +27973,10 @@ QS
 QS
 QS
 QS
-nG
+nq
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -28230,18 +28230,18 @@ QS
 ti
 QS
 QS
-nG
+nq
 jD
 jD
-nG
-jD
-jD
-jD
+nq
 jD
 jD
 jD
 jD
-nG
+jD
+jD
+jD
+nq
 jD
 jD
 dp
@@ -28487,7 +28487,7 @@ QS
 ti
 ti
 ti
-nG
+nq
 jD
 jD
 jD
@@ -28747,7 +28747,7 @@ QS
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -28755,7 +28755,7 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 dp
@@ -29001,20 +29001,20 @@ QS
 ti
 QS
 QS
-nG
+nq
 jD
 jD
-nG
-nG
+nq
+nq
 jD
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
 jD
-nG
-nG
-nG
+nq
+nq
+nq
 dp
 bc
 Qe
@@ -29258,7 +29258,7 @@ QS
 ti
 QS
 QS
-nG
+nq
 jD
 jD
 jD
@@ -29267,7 +29267,7 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -29515,7 +29515,7 @@ QS
 QS
 QS
 QS
-nG
+nq
 jD
 jD
 jD
@@ -29524,19 +29524,19 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
 jD
 jD
 jD
-nG
+nq
 ns
 ns
 JT
@@ -29772,24 +29772,24 @@ QS
 ti
 ti
 ti
-nG
+nq
 jD
 jD
-nG
-nG
-nG
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
+nq
+nq
+nq
 jD
 jD
-nG
-nG
-nG
+nq
+nq
+nq
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -30029,7 +30029,7 @@ QS
 ti
 QS
 QS
-nG
+nq
 jD
 jD
 jD
@@ -30038,7 +30038,7 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -30046,11 +30046,11 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
-nG
+nq
 ns
 ns
 JT
@@ -30295,19 +30295,19 @@ jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
-nG
+nq
 jD
-nG
-jD
-jD
-nG
+nq
 jD
 jD
-nG
-nG
+nq
+jD
+jD
+nq
+nq
 ns
 ns
 ns
@@ -30543,27 +30543,27 @@ QS
 ti
 QS
 QS
-nG
-nG
-nG
+nq
+nq
+nq
 jD
-nG
-nG
-nG
+nq
+nq
+nq
 jD
-nG
-nG
-nG
-nG
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
 jD
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
 ns
 ns
 ns
@@ -30806,18 +30806,18 @@ QS
 QS
 QS
 QS
-nG
+nq
 jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
 jD
 jD
-nG
+nq
 ns
 ns
 JT
@@ -31063,7 +31063,7 @@ QS
 QS
 QS
 QS
-nG
+nq
 jD
 jD
 jD
@@ -31074,7 +31074,7 @@ jD
 jD
 jD
 jD
-nG
+nq
 ns
 ns
 JT
@@ -31320,12 +31320,12 @@ QS
 QS
 QS
 QS
-nG
+nq
 jD
 jD
 jD
 jD
-nG
+nq
 jD
 jD
 jD
@@ -31577,18 +31577,18 @@ QS
 QS
 QS
 QS
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
 jD
-nG
-nG
-nG
-nG
+nq
+nq
+nq
+nq
 jD
-nG
-nG
+nq
+nq
 ns
 ns
 JT
@@ -39731,9 +39731,9 @@ qH
 qH
 qH
 qH
-SX
-SX
-SX
+BP
+BP
+BP
 qH
 qH
 qH
@@ -42562,7 +42562,7 @@ qH
 HZ
 HZ
 HZ
-HZ
+qH
 HZ
 HZ
 qH
@@ -42814,13 +42814,13 @@ HZ
 qH
 LD
 LD
-iP
+LD
 LD
 iP
 LD
-iP
 LD
-iP
+LD
+LD
 iP
 LD
 LD
@@ -43074,7 +43074,7 @@ iP
 iP
 iP
 iP
-LD
+iP
 iP
 iP
 iP
@@ -43328,10 +43328,10 @@ HZ
 HZ
 iP
 iP
-LD
 iP
 iP
-LD
+iP
+iP
 iP
 iP
 iP
@@ -43584,17 +43584,17 @@ HZ
 Gk
 HZ
 LD
-iP
 LD
-iP
-iP
 LD
 iP
 iP
 LD
-LD
-LD
-LD
+iP
+iP
+iP
+iP
+iP
+iP
 iP
 iP
 Te
@@ -43842,15 +43842,15 @@ ku
 ku
 LD
 iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
 LD
-iP
-iP
-iP
-iP
-iP
-iP
-iP
-iP
 iP
 iP
 LD
@@ -44099,15 +44099,15 @@ uW
 ku
 iP
 iP
-LD
-LD
-LD
-LD
 iP
-LD
-LD
 iP
-LD
+iP
+iP
+iP
+iP
+iP
+iP
+iP
 iP
 iP
 LD
@@ -44360,11 +44360,11 @@ iP
 iP
 iP
 iP
-iP
-iP
-iP
-iP
 LD
+iP
+iP
+iP
+iP
 iP
 iP
 iP
@@ -44614,14 +44614,14 @@ ku
 LD
 LD
 LD
-LD
 iP
-LD
-LD
-LD
-LD
 iP
-LD
+iP
+iP
+iP
+iP
+iP
+iP
 iP
 iP
 LD
@@ -44841,7 +44841,7 @@ Ga
 xn
 xn
 xn
-ER
+iZ
 xn
 xn
 Nq
@@ -44870,8 +44870,7 @@ oD
 ku
 iP
 iP
-iP
-iP
+LD
 iP
 iP
 iP
@@ -44879,6 +44878,7 @@ iP
 iP
 iP
 LD
+iP
 iP
 iP
 iP
@@ -45098,7 +45098,7 @@ Qc
 xn
 xn
 xn
-ER
+iZ
 xn
 xn
 Nq
@@ -45128,14 +45128,14 @@ ku
 iP
 iP
 iP
-LD
-LD
-iP
-LD
-LD
 iP
 iP
-LD
+iP
+iP
+iP
+iP
+iP
+iP
 iP
 iP
 LD
@@ -45385,16 +45385,16 @@ ku
 iP
 iP
 LD
-LD
 iP
 iP
 iP
-LD
 iP
 iP
-LD
-LD
-LD
+iP
+iP
+iP
+iP
+iP
 LD
 Jq
 Jq
@@ -45446,7 +45446,7 @@ tf
 bA
 DI
 DI
-BP
+PL
 oj
 NE
 oj
@@ -45612,7 +45612,7 @@ Ga
 xn
 xn
 xn
-ER
+iZ
 xn
 xn
 xn
@@ -45643,16 +45643,16 @@ NG
 sg
 NG
 HZ
-HZ
-HZ
+qH
+qH
 HZ
 qH
 HZ
 HZ
-HZ
+qH
 qH
 HZ
-HZ
+qH
 HZ
 Te
 Jq
@@ -45703,7 +45703,7 @@ bA
 bA
 DI
 DI
-BP
+PL
 oj
 NE
 oj
@@ -45869,7 +45869,7 @@ Ga
 xn
 xn
 xn
-ER
+iZ
 xn
 xn
 xn
@@ -45960,7 +45960,7 @@ tf
 bA
 DI
 DI
-BP
+PL
 oj
 NE
 oj
@@ -46731,7 +46731,7 @@ tf
 bA
 DI
 DI
-BP
+PL
 oj
 oj
 NE
@@ -46988,7 +46988,7 @@ tf
 bA
 DI
 DI
-BP
+PL
 oj
 oj
 NE
@@ -47245,7 +47245,7 @@ Ey
 bA
 DI
 DI
-BP
+PL
 oj
 oj
 NE
@@ -47716,7 +47716,7 @@ Te
 Te
 Jq
 Te
-Pf
+JE
 Te
 Te
 Jq
@@ -47973,7 +47973,7 @@ Te
 Jq
 Jq
 Te
-Pf
+JE
 BB
 BB
 Jq
@@ -48230,7 +48230,7 @@ Te
 Te
 Jq
 Te
-Pf
+JE
 BB
 BB
 Jq
@@ -49036,13 +49036,13 @@ sw
 sw
 CO
 eS
-nq
-nq
-nq
-nq
-nq
-nq
-nq
+nG
+nG
+nG
+nG
+nG
+nG
+nG
 eS
 Ey
 fG
@@ -49293,13 +49293,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
 fG
 ec
 fG
 fG
-nq
+nG
 eS
 Ey
 fG
@@ -49550,13 +49550,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
 fG
 fG
-eG
+QH
 fG
-nq
+nG
 eS
 Ey
 fG
@@ -49807,13 +49807,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
-eG
+QH
 ec
 fG
 fG
-nq
+nG
 eS
 fl
 EO
@@ -50325,7 +50325,7 @@ fG
 ec
 fG
 fG
-eG
+QH
 fG
 fG
 fG
@@ -50578,13 +50578,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
 fG
 fG
 fG
 fG
-nq
+nG
 eS
 fl
 EO
@@ -50835,13 +50835,13 @@ sw
 sw
 bb
 eS
-nq
+nG
 fG
 fG
 fG
 ec
 fG
-nq
+nG
 eS
 fl
 EO
@@ -51092,13 +51092,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
 fG
-eG
+QH
 fG
 fG
-nq
+nG
 eS
 fl
 EO
@@ -51349,13 +51349,13 @@ sw
 sw
 CO
 eS
-nq
+nG
 fG
 fG
 fG
 fG
 fG
-nq
+nG
 eS
 fl
 EO
@@ -51606,13 +51606,13 @@ sw
 sw
 CO
 eS
-nq
-nq
-nq
+nG
+nG
+nG
 fG
 fG
-nq
-nq
+nG
+nG
 eS
 fl
 EO
@@ -53321,7 +53321,7 @@ AV
 AV
 AV
 AV
-PL
+WC
 xK
 xK
 Nq
@@ -53578,7 +53578,7 @@ tR
 tR
 AV
 AV
-PL
+WC
 xK
 xK
 xK
@@ -53604,9 +53604,9 @@ qH
 qH
 qH
 qH
-SX
-SX
-SX
+BP
+BP
+BP
 qH
 vY
 vY
@@ -53835,7 +53835,7 @@ jR
 tR
 AV
 AV
-PL
+WC
 xK
 xK
 xK
@@ -54888,7 +54888,7 @@ BV
 BV
 BV
 dm
-TC
+PD
 dm
 BV
 dm
@@ -63175,7 +63175,7 @@ oN
 oN
 GE
 GE
-Eq
+vj
 Lm
 Lm
 Lm
