@@ -110,7 +110,7 @@
 		SSthe_ark.adjust_clock_power(5 * seconds_per_tick, TRUE)
 		return
 
-	charging_for = min(charging_for + (seconds_per_tick * (DELTA_WORLD_TIME(SSthe_ark) SECONDS)), ANCHORING_CRYSTAL_CHARGE_DURATION)
+	charging_for = min(charging_for + (seconds_per_tick * (DELTA_WORLD_TIME_WITHOUT_HIBERNATION(SSthe_ark) SECONDS)), ANCHORING_CRYSTAL_CHARGE_DURATION)
 
 	if(shields < initial(shields) && COOLDOWN_FINISHED(src, recently_hit_cd))
 		playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
@@ -137,7 +137,7 @@
 	. = ..()
 	if(IS_CLOCK(user) || isobserver(user))
 		. += span_brass(\
-		charge_state == FULLY_CHARGED ? "It is fully charged and is indestructable." : "It will be fully charged in [DisplayTimeText(ANCHORING_CRYSTAL_CHARGE_DURATION-charging_for)].")
+		"[charge_state == FULLY_CHARGED ? "It is fully charged and is indestructable." : "It will be fully charged in [DisplayTimeText(ANCHORING_CRYSTAL_CHARGE_DURATION-charging_for)]."]")
 
 //do all the stuff for finishing charging
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/finish_charging()
