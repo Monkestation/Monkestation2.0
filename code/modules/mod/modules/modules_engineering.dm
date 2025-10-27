@@ -236,3 +236,29 @@
 /obj/item/extinguisher/mini/nozzle/mod
 	name = "MOD atmospheric mister"
 	desc = "An atmospheric resin mister with three modes, mounted as a module."
+
+/obj/item/mod/module/stomper
+	name = "MOD stomper module"
+	// todo: write an actual desc
+	icon_state = "stomper"
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/stomper)
+	cooldown_time = 1 SECONDS
+
+/obj/item/mod/module/stomper/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/user = mod.wearer
+	var/turf/user_turf = get_turf(user)
+	if(!user_turf || !SSmapping.level_trait(user_turf.z, ZTRAIT_OSHAN))
+		user.balloon_alert(user, "must be in ocean!")
+		return
+	user.balloon_alert(user, "stomped")
+	user.visible_message(span_notice("[user] stomps down on \the [user_turf] with \the [src]!"))
+	SShotspots.stomp(user_turf)
+	// animate them jumping
+	animate(user, pixel_z = user.pixel_z + 4, time = 0.1 SECONDS)
+	animate(pixel_z = user.pixel_z - 4, time = 0.1 SECONDS)
