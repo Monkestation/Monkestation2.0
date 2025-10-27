@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
-	/// How many points does this antag contribute to antag cap usage
+	/// How many points does this antag contribute to antag cap usage, should only be updated via set_antag_count_points()
 	var/antag_count_points = 10
 
 	//ANTAG UI
@@ -632,5 +632,11 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	can_assign_self_objectives = FALSE
 	owner.announce_objectives()
+
+///Should be called to set antag_count_points()
+/datum/antagonist/proc/set_antag_count_points(new_value = 10, old_value = antag_count_points) //handling vars this way allows us to pass to parent
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_COUNT_POINTS_SET, new_value, old_value)
+	antag_count_points = new_value
 
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH
