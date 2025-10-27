@@ -241,6 +241,8 @@
 	completed_objectives += to_remove
 	update_objectives()
 	generate_objectives()
+	var/datum/antagonist/traitor/tator = IS_TRAITOR(owner)
+	tator?.antag_count_points += 1 //would like to make this better in the future but this is just for proof of concept
 
 /// Updates the objectives on the uplink and deletes
 /datum/uplink_handler/proc/update_objectives()
