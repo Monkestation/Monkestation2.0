@@ -506,30 +506,14 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	var/mob/living/carbon/C = eater
 
-	if(HAS_TRAIT(eater, TRAIT_FOOD_ABSORBTION))
+	if(HAS_TRAIT(eater, TRAIT_FOOD_ABSORPTION))
 		if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
 			return
-		var/chest_covered = FALSE
-		var/head_covered = FALSE
-		var/arms_covered = FALSE
-		var/hands_covered = FALSE
-		var/legs_covered = FALSE
-		var/feet_covered = FALSE
+		var/covered_bodyparts = NONE
 		for(var/obj/item/clothing/equipped in C.get_equipped_items())
-			if(equipped.body_parts_covered & CHEST)
-				chest_covered = TRUE
-			if(equipped.body_parts_covered & HEAD)
-				head_covered = TRUE
-			if(equipped.body_parts_covered & ARMS)
-				arms_covered = TRUE
-			if(equipped.body_parts_covered & HANDS)
-				hands_covered = TRUE
-			if(equipped.body_parts_covered & LEGS)
-				legs_covered = TRUE
-			if(equipped.body_parts_covered & FEET)
-				feet_covered = TRUE
+			covered_bodyparts |= equipped.body_parts_covered
 
-		if(chest_covered && head_covered && arms_covered && hands_covered && legs_covered && feet_covered && C.is_mouth_covered())
+		if((covered_bodyparts & CHEST|HEAD|ARMS|HANDS|LEGS|FEET) == (CHEST|HEAD|ARMS|HANDS|LEGS|FEET) && C.is_mouth_covered())
 			var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
 			to_chat(feeder, span_warning("You have to expose the membrane on [who] body."))
 			return FALSE

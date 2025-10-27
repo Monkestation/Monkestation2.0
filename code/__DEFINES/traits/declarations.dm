@@ -666,7 +666,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_DRUNKEN_BRAWLER "drunken brawler" */
 
 /// Makes user able to absorb food through any exposed body part.
-#define TRAIT_FOOD_ABSORBTION "food_absorbtion"
+#define TRAIT_FOOD_ABSORPTION "food_absorbtion"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
