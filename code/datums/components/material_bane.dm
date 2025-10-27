@@ -135,9 +135,12 @@
 	var/mob/living/carbon/human/humholder = parent
 	was_baned = TRUE
 	bane_power += rand(25, 100)
-	to_chat(humholder, span_warning("Owwwwwww!"))
-	if(prob(20))
-		humholder.Paralyze(1 SECOND)
+	to_chat(humholder, span_danger("OWWWWWWW!! BURNS!!"))
+	humholder.adjustFireLoss(10)
+	if(prob(25))
+		humholder.Paralyze(0.5 SECOND)
+	else
+		humholder.Stun(0.25 SECOND)
 
 /datum/component/material_bane/proc/is_this_bane(atom/thing)
 	for(var/material in thing?.custom_materials)
