@@ -46,6 +46,8 @@
 	turf_type = /turf/open/floor/silk
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/silk
+	force = 0
+	throwforce = 0
 
 /turf/open/floor/silk
 	name = "silk floor"

@@ -149,10 +149,10 @@ GLOBAL_LIST_INIT(silk_recipes, list ( \
 		new /datum/stack_recipe("mummy wrapping", /obj/item/clothing/under/costume/mummy, 3, check_density = FALSE, category = CAT_CLOTHING), \
 		)),
 	new /datum/stack_recipe_list("arachnid web structures", list(
-		new /datum/stack_recipe("arachnid web", /obj/structure/spider/stickyweb/arachnid, 5, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
+		new /datum/stack_recipe("arachnid web", /obj/structure/spider/stickyweb/arachnid, 3, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		new /datum/stack_recipe("arachnid solid web", /obj/structure/spider/solid/arachnid, 4, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
-		new /datum/stack_recipe("arachnid web spikes", /obj/structure/spider/spikes/arachnid, 6, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
-		new /datum/stack_recipe("arachnid web passage", /obj/structure/spider/passage/arachnid, 4, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
+		new /datum/stack_recipe("arachnid web spikes", /obj/structure/spider/spikes/arachnid, 5, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
+		new /datum/stack_recipe("arachnid web passage", /obj/structure/spider/passage/arachnid, 3, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 		)),
 	new /datum/stack_recipe("refine silk into cloth", /obj/item/stack/sheet/cloth, 2, 1, 6, time = 2 SECONDS, check_density = FALSE, category = CAT_TOOLS), \
 	new /datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 2, 2, 6, check_density = FALSE, category = CAT_TOOLS), \
