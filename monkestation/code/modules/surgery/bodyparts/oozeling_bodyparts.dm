@@ -13,7 +13,7 @@
 	can_dismember = TRUE
 
 /obj/item/bodypart/head/oozeling/can_dismember(obj/item/item)
-	if(bodypart_flags & BODYPART_UNREMOVABLE || (owner && HAS_TRAIT(owner, TRAIT_NODISMEMBER)))
+	if((bodypart_flags & BODYPART_UNREMOVABLE) || (owner && HAS_TRAIT(owner, TRAIT_NODISMEMBER)))
 		return FALSE
 	return TRUE
 
