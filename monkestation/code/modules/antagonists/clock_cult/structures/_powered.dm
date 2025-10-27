@@ -80,7 +80,7 @@
 		return
 
 	if(!enabled)
-		if(!length(transmission_sigils) || !SSthe_ark.adjust_passive_power(passive_consumption, TRUE))
+		if(!length(transmission_sigils) || !SSthe_ark.adjust_passive_power(passive_consumption, TRUE)) //the actual adjustment is done in repowered()
 			if(user)
 				balloon_alert(user, "not enough power!")
 			return

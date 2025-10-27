@@ -119,8 +119,8 @@
 	icon_state = "automaticbox"
 	desc = "Holds a lot of automatic ballistics"
 
-/obj/item/storage/box/debugbox/guns/automatic/PopulateContents()
-	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/automatic)) // Might still be too big
+/obj/item/storage/box/debugbox/guns/automatic/PopulateContents() //remove CTF laser subtypes so its not literally OFF THE SCREEN
+	for(var/obj/item/gun as anything in (typesof(/obj/item/gun/ballistic/automatic) - (subtypesof(/obj/item/gun/ballistic/automatic/laser/ctf) - /obj/item/gun/ballistic/automatic/laser/ctf/marksman)))
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/miscballistics // Misc Ballistic guns
