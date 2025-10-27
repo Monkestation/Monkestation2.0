@@ -61,6 +61,7 @@
 		// Engineering
 		/datum/job/station_engineer,
 		/datum/job/atmospheric_technician,
+		/datum/job/machinist,
 		// Spooktober
 		/datum/job/yellowclown,
 		/datum/job/skeleton,

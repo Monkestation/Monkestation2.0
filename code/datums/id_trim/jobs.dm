@@ -1153,6 +1153,35 @@
 		)
 	job = /datum/job/station_engineer
 
+/datum/id_trim/job/machinist
+	assignment = "Machinist"
+	trim_state = "trim_stationengineer"
+	department_color = COLOR_ENGINEERING_ORANGE
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
+	sechud_icon_state = SECHUD_STATION_ENGINEER
+	minimal_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING,
+		ACCESS_ENGINE_EQUIP,
+		ACCESS_EXTERNAL_AIRLOCKS,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_TECH_STORAGE,
+		ACCESS_MECH_ENGINE,
+		)
+	extra_access = list(
+		ACCESS_ATMOSPHERICS,
+		ACCESS_MINISAT,
+		ACCESS_TCOMMS,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_CE,
+		)
+	job = /datum/job/machinist
+
 /datum/id_trim/job/virologist
 	assignment = "Pathologist"
 	trim_state = "trim_virologist"
