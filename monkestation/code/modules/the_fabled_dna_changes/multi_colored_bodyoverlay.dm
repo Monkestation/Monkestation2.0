@@ -33,9 +33,6 @@
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 
-	if(sprite_datum.is_emissive)
-		appearance.overlays += emissive_appearance_copy(appearance, limb)
-
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb, key_name)

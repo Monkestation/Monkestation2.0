@@ -105,6 +105,12 @@
 /datum/bodypart_overlay/mutant/anime_halo/get_base_icon_state()
 	return sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/anime_halo/get_emissive_overlay(layer, obj/item/bodypart/limb)
+	if(!sprite_datum.is_emissive)
+		return
+	layer = bitflag_to_layer(layer)
+	. = emissive_appearance_copy(get_image(layer, limb), limb)
+
 /datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.head?.flags_inv & HIDEEARS)
 		return FALSE
