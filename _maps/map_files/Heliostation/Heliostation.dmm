@@ -1422,18 +1422,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"agI" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Air to Ports"
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/station/engineering/atmos)
 "agJ" = (
 /obj/structure/chair/office,
 /obj/machinery/firealarm/directional/west,
@@ -56070,9 +56058,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "omW" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -68563,13 +68548,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"tbh" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/meter,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "tbj" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap{
@@ -72748,13 +72726,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"uGc" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "uGf" = (
 /obj/machinery/door/airlock/glass{
 	name = "Legal Consultation"
@@ -103336,7 +103307,7 @@ qDd
 eSD
 uPO
 uPO
-agI
+uPO
 uPO
 uPO
 xyg
@@ -103593,7 +103564,7 @@ mbq
 cAe
 crj
 crj
-tbh
+crj
 crj
 crj
 crj
@@ -103850,7 +103821,7 @@ rKd
 oGj
 crj
 crj
-cyL
+crj
 crj
 dyf
 ood
@@ -104107,7 +104078,7 @@ off
 aZY
 crj
 crj
-uGc
+nlQ
 fCA
 crj
 crj
@@ -104364,7 +104335,7 @@ tti
 uma
 crj
 crj
-uGc
+nlQ
 crj
 crj
 crj
