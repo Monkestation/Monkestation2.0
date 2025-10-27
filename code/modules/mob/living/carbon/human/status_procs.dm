@@ -7,7 +7,7 @@
 	amount = dna.species.spec_stun(src, amount) * physiology.knockdown_mod
 	return ..()
 
-/mob/living/carbon/human/Paralyze(amount, ignore_canstun = FALSE)
+/mob/living/carbon/human/Paralyze(amount, ignore_canstun = FALSE, ignores_diminish = FALSE)
 	amount = dna.species.spec_stun(src, amount)
 	return ..()
 
