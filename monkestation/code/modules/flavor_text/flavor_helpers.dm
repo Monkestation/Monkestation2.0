@@ -14,7 +14,7 @@
 
 	var/datum/flavor_text/found_flavor = linked_flavor
 	// Simple animals, basic animals, anything that's not a human/silicon is lumped under "simple"
-	if(found_flavor?.linked_species != "simple" || HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))
+	if(found_flavor?.linked_species != "simple" || HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return null
 
 	return found_flavor
@@ -25,7 +25,7 @@
 		return linked_flavor
 
 	var/shown_name = get_visible_name()
-	if(shown_name == "Unknown" || HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS)) // Redundant, but just in case
+	if(shown_name == "Unknown" || HAS_TRAIT(src, TRAIT_UNKNOWN)) // Redundant, but just in case
 		return null
 
 	var/datum/flavor_text/found_flavor
@@ -47,7 +47,7 @@
 		return linked_flavor
 
 	var/datum/flavor_text/found_flavor = linked_flavor
-	if(found_flavor?.linked_species != "silicon" || HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))
+	if(found_flavor?.linked_species != "silicon" || HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return null
 
 	return found_flavor
