@@ -528,7 +528,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/voiceconcealer/proc/obscure_spans(mob/living/carbon/user, list/speech_args)
 	SIGNAL_HANDLER
 
-	speech_args[SPEECH_SPANS] = list(SPAN_ROBOT) // I said NO. (this breaks megaphones.)
+	speech_args[SPEECH_SPANS] |= SPAN_ROBOT // I said NO.
 
 
 
