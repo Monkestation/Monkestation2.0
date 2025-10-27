@@ -186,6 +186,9 @@
 	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_HALO_COLOR
 	is_emissive = TRUE
+	dimension_x = 32
+	center = TRUE
+	dimension_y = 64
 
 /datum/sprite_accessory/anime_halo/none
 	name = "None"
