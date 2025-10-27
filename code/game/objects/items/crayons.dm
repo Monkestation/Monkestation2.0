@@ -1089,13 +1089,6 @@
 	charges = INFINITE_CHARGES
 	desc = "Now with 30% more bluespace technology."
 
-/obj/item/toy/crayon/spraycan/roboticist
-	name = "roboticist spraycan"
-	desc = "Paint for restyling unattached robotic limbs. Sadly doesn't shine like chrome."
-	icon_state = "robocan"
-	icon_capped = "robocan_cap"
-	icon_uncapped = "robocan"
-
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION
