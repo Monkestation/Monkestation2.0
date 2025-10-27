@@ -817,3 +817,16 @@
   - map: Reconnects drone bay to power network on thesues
   - map: Gives AI sat Foyer a APC on thesues
   - map: Fixes thesues satelitte power net
+2025-10-27:
+  Absolucy:
+  - bugfix: The Glass Jaw quirk now properly works again.
+  - bugfix: Bronze chairs now spin automatically once more.
+  - image: (Capsandi) New BSA impact animation.
+  - admin: (TheVekter) Made logging for BSA targeting and firing easier to find for
+      admins.
+  - qol: Trying to pour plasma on a DNR oozeling core will just tell you that their
+      soul has departed.
+  Snack-Max:
+  - rscadd: Added new May Rain hairstyle
+  call me evil McDonalds cause I'm hatin it:
+  - bugfix: IPCs autorevive when they heal tox and oxy damage too.
