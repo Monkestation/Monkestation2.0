@@ -503,3 +503,32 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/voiceconcealer
 	desc = "A face-covering mask that has been significantly modified near the mouth to block off the users voice whilst repeating it through a speaker. Great for concealing your identity as long as you make sure to hide every other identifying feature."
 	clothing_traits = list(TRAIT_ANONYMOUS)
+
+/obj/item/clothing/mask/gas/voiceconcealer/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		RegisterSignal(user, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(obscure_speech))
+		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(obscure_spans))
+		var/obj/item/organ/internal/tongue/user_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
+		user_tongue.temp_say_mod = "states"
+
+/obj/item/clothing/mask/gas/voiceconcealer/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_TRY_MODIFY_SPEECH)
+	UnregisterSignal(user, COMSIG_MOB_SAY)
+	var/obj/item/organ/internal/tongue/user_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
+	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
+
+
+/obj/item/clothing/mask/gas/voiceconcealer/proc/obscure_speech()
+	SIGNAL_HANDLER
+
+	return PREVENT_MODIFY_SPEECH // no lizard toungesss exposssing you
+
+/obj/item/clothing/mask/gas/voiceconcealer/proc/obscure_spans(mob/living/carbon/user, list/speech_args)
+	SIGNAL_HANDLER
+
+	speech_args[SPEECH_SPANS] = list(SPAN_ROBOT) // I said NO. (this breaks megaphones.)
+
+
+
