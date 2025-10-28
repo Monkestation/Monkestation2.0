@@ -85,10 +85,13 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	if(.)
-		user.SpinAnimation(7,1)
-		if(intentional)
-			TIMER_COOLDOWN_START(user, COOLDOWN_FLIP, 1.5 SECONDS)
+	if(!.)
+		return
+
+	if(intentional && user.check_spinflip(COOLDOWN_FLIP, COOLDOWN_SPIN))
+		return
+
+	user.SpinAnimation(7, 1)
 
 	if(isliving(user) && intentional)
 		var/mob/living/L = user
@@ -104,8 +107,6 @@
 	if(.)
 		return
 	if(!can_run_emote(user, intentional=intentional))
-		return
-	if(intentional && user.check_spinflip(COOLDOWN_FLIP, COOLDOWN_SPIN))
 		return
 	if(isliving(user))
 		var/mob/living/flippy_mcgee = user
