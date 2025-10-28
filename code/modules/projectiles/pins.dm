@@ -417,7 +417,7 @@
 	)
 
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
-	if(!istype(user) || is_type_in_list(get_area(user), blacklist))
+	if(!istype(user) || is_type_in_list(get_area(user), blacklist) || is_station_area_or_adjacent(get_area(user)))
 		return FALSE
 	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
 		return TRUE
