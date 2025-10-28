@@ -1196,6 +1196,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
+/obj/machinery/requests_console/auto_name/directional/east,
 /turf/open/floor/wood,
 /area/station/command/bridge)
 "atX" = (
@@ -15429,6 +15430,16 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"ePD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct/industrial/waste,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/security/brig)
 "ePK" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/sand,
@@ -32196,10 +32207,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/port)
-"klb" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/central/aft)
 "klr" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/camera/autoname/directional/west,
@@ -42032,12 +42039,7 @@
 "nlb" = (
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/armor/centcom_formal,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/head/hats/centhat,
-/obj/item/clothing/head/hats/centcom_cap,
-/obj/item/clothing/under/rank/centcom/centcom_skirt,
-/obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/under/rank/centcom/intern,
 /obj/item/clothing/under/rank/centcom/officer_skirt,
 /obj/item/clothing/under/rank/centcom/officer,
@@ -103942,7 +103944,7 @@ dSe
 wIy
 xQl
 lIs
-fCU
+ePD
 nGh
 tPP
 vWi
@@ -114726,7 +114728,7 @@ jxG
 wWm
 enq
 wWm
-klb
+wWm
 rJL
 bqF
 wRr
