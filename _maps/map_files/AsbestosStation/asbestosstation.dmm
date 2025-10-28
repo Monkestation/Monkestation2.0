@@ -970,7 +970,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped,
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/on/layer2{
+	node1_concentration = 0.21;
+	node2_concentration = 0.79;
+	target_pressure = 4500
+	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "aYl" = (
@@ -9455,11 +9459,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
-"jxl" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/start/gary/uncommon,
-/turf/open/water/sewage,
-/area/station/maintenance/central/greater)
 "jxo" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/plating,
@@ -12836,6 +12835,12 @@
 "ndz" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science/ordnance_maint)
+"ndQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/gary,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "ndX" = (
 /obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron,
@@ -18869,12 +18874,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/water/sewage,
 /area/station/maintenance/port)
-"tfO" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/effect/landmark/start/gary/uncommon,
-/turf/open/water/sewage,
-/area/station/maintenance/starboard/greater)
 "tfZ" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -20885,11 +20884,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"vkH" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/start/gary/uncommon,
-/turf/open/water/sewage,
-/area/station/maintenance/central/lesser)
 "vkJ" = (
 /obj/machinery/portable_atmospherics/canister/bz,
 /obj/effect/turf_decal/stripes/corner{
@@ -46397,7 +46391,7 @@ xKA
 xKA
 dvN
 ncV
-xKA
+ndQ
 xFg
 ygg
 age
@@ -53373,7 +53367,7 @@ bmg
 bmg
 bmg
 euO
-jxl
+cuH
 dsa
 fhp
 eUq
@@ -54180,7 +54174,7 @@ fJM
 fJM
 dcE
 hAk
-vkH
+hAk
 xkK
 abw
 abw
@@ -63131,7 +63125,7 @@ mEB
 tVU
 fSL
 fSL
-jxl
+cuH
 cSZ
 fSL
 lgl
@@ -69073,7 +69067,7 @@ imP
 imP
 imP
 hfI
-tfO
+arK
 imP
 cPB
 cPB
