@@ -87,6 +87,8 @@
 	. = ..()
 	if(.)
 		user.SpinAnimation(7,1)
+		if(intentional)
+			TIMER_COOLDOWN_START(user, COOLDOWN_SPIN_FLIP, 1.5 SECONDS)
 
 	if(isliving(user) && intentional)
 		var/mob/living/L = user
@@ -105,6 +107,11 @@
 		return
 	if(isliving(user))
 		var/mob/living/flippy_mcgee = user
+		if(intentional && TIMER_COOLDOWN_RUNNING(flippy_mcgee, COOLDOWN_SPIN_FLIP))
+			flippy_mcgee.visible_message(span_warning("[flippy_mcgee] flops onto the floor face-first like an idiot!"), span_userdanger("You flop onto the floor face-first like an idiot!"))
+			flippy_mcgee.apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+			flippy_mcgee.Paralyze(1 SECONDS)
+			return
 		if(prob(20))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
@@ -130,6 +137,8 @@
 	. = ..()
 	if(.)
 		user.spin(20, 1)
+		if(intentional)
+			TIMER_COOLDOWN_START(user, COOLDOWN_SPIN_FLIP, 1.5 SECONDS)
 		if(isliving(user) && intentional)
 			var/mob/living/L = user
 			if(iscarbon(L))
@@ -146,6 +155,12 @@
 	if(!can_run_emote(user, intentional=intentional))
 		return
 	if(!iscarbon(user))
+		return
+
+	if(intentional && TIMER_COOLDOWN_RUNNING(user, COOLDOWN_SPIN_FLIP))
+		user.visible_message(span_warning("[user] flops onto the floor face-first like an idiot!"), span_userdanger("You flop onto the floor face-first like an idiot!"))
+		user.apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		user.Paralyze(1 SECONDS)
 		return
 
 	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)

@@ -58,6 +58,7 @@
 
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
+#define COOLDOWN_SPIN_FLIP "spin_flip_cooldown"
 
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
