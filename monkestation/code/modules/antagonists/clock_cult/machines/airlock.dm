@@ -81,7 +81,7 @@
 
 	if(!SSthe_ark.adjust_passive_power(total_cost, TRUE))
 		deconstruct(FALSE, should_del = FALSE)
-		visible_message("\The [src] is unable to sustain its power draw and collapses!")
+		visible_message(span_warning("\The [src] is unable to sustain its power draw and collapses!"))
 		return INITIALIZE_HINT_QDEL
 
 	for(var/obj/machinery/door/airlock/bronze/clock/player_made/lock in tracked_airlocks)
