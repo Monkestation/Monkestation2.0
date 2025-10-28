@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed neck strangling not strangling the victim."
-  - rscdel: "removed lung popping from breathing in not enough mols."

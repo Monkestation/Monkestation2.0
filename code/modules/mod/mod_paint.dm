@@ -149,20 +149,20 @@
 	. = ..()
 	name = "MOD [skin] skin applier"
 
-/obj/item/mod/skin_applier/pre_attack(atom/attacked_atom, mob/living/user, params)
+/obj/item/mod/skin_applier/interact_with_atom(atom/attacked_atom, mob/living/user, params)
 	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
+		return NONE
 	var/obj/item/mod/control/mod = attacked_atom
 	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return TRUE
+		balloon_alert(user, "unit active!")
+		return ITEM_INTERACT_BLOCKING
 	if(!istype(mod.theme, compatible_theme))
 		balloon_alert(user, "incompatible theme!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	mod.set_mod_skin(skin)
 	balloon_alert(user, "skin applied")
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/skin_applier/honkerative
 	skin = "honkerative"

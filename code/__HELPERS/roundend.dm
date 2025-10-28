@@ -225,8 +225,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 			if(greentexted)
 				var/score = round(human_mob.hardcore_survival_score * 2)
-				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				player_client?.give_award(/datum/award/score/hardcore_random, human_mob, score)
 				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				player_client?.prefs.adjust_metacoins(player_client.ckey, 500, "hardcore random greentext")
 				return
 
 	if(considered_escaped(human_mob.mind))
