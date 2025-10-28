@@ -14,6 +14,11 @@ Format:
 	feedbackurl (link in-game shown to players to leave feedback for the map)
 endmap
 
+map loopstation
+    minplayers 40
+    votable
+endmap
+
 map heliostation
 	minplayers 25
 	votable
