@@ -1,0 +1,4 @@
+author: "Greenpoison"
+delete-after: True
+changes:
+  - map: "added/modified atmos map content for EVERY map currently in the pool."
