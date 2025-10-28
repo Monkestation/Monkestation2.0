@@ -8,9 +8,9 @@
 	slowdown = 0.25
 
 /datum/armor/space_syndicate
-	melee = 40
-	bullet = 50
-	laser = 30
+	melee = 50
+	bullet = 60
+	laser = 40
 	energy = 40
 	bomb = 30
 	bio = 30

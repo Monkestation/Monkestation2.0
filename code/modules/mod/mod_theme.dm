@@ -160,8 +160,8 @@
 	)
 
 /datum/armor/mod_theme_engineering
-	melee = 10
-	bullet = 5
+	melee = 20
+	bullet = 10
 	laser = 20
 	energy = 10
 	bomb = 10
@@ -222,8 +222,8 @@
 
 /datum/armor/mod_theme_atmospheric
 	melee = 10
-	bullet = 5
-	laser = 10
+	bullet = 20
+	laser = 20
 	energy = 15
 	bomb = 10
 	bio = 100
@@ -285,8 +285,8 @@
 	)
 
 /datum/armor/mod_theme_advanced
-	melee = 15
-	bullet = 5
+	melee = 20
+	bullet = 20
 	laser = 20
 	energy = 15
 	bomb = 50
@@ -536,10 +536,10 @@
 	)
 
 /datum/armor/mod_theme_medical
-	melee = 5
-	bullet = 5
-	laser = 5
-	energy = 5
+	melee = 10
+	bullet = 10
+	laser = 10
+	energy = 10
 	bomb = 10
 	bio = 100
 	fire = 60
@@ -675,7 +675,7 @@
 
 /datum/armor/mod_theme_research
 	melee = 20
-	bullet = 15
+	bullet = 20
 	laser = 5
 	energy = 5
 	bomb = 100
@@ -736,8 +736,8 @@
 	)
 
 /datum/armor/mod_theme_security
-	melee = 15
-	bullet = 15
+	melee = 20
+	bullet = 30
 	laser = 15
 	energy = 15
 	bomb = 25
@@ -797,10 +797,10 @@
 	)
 
 /datum/armor/mod_theme_safeguard
-	melee = 15
-	bullet = 15
-	laser = 15
-	energy = 15
+	melee = 20
+	bullet = 20
+	laser = 20
+	energy = 20
 	bomb = 40
 	bio = 100
 	fire = 100
@@ -864,9 +864,9 @@
 	)
 
 /datum/armor/mod_theme_magnate
-	melee = 20
-	bullet = 15
-	laser = 15
+	melee = 25
+	bullet = 20
+	laser = 20
 	energy = 15
 	bomb = 50
 	bio = 100
@@ -1015,10 +1015,10 @@
 	)
 
 /datum/armor/mod_theme_syndicate
-	melee = 15
-	bullet = 20
+	melee = 30
+	bullet = 30
 	laser = 15
-	energy = 15
+	energy = 20
 	bomb = 35
 	bio = 100
 	fire = 50
@@ -1083,10 +1083,10 @@
 	)
 
 /datum/armor/mod_theme_elite
-	melee = 35
-	bullet = 30
-	laser = 35
-	energy = 35
+	melee = 40
+	bullet = 40
+	laser = 40
+	energy = 40
 	bomb = 55
 	bio = 100
 	fire = 100
@@ -1151,7 +1151,7 @@
 
 /datum/armor/mod_theme_infiltrator
 	melee = 50
-	bullet = 50
+	bullet = 60
 	laser = 40
 	energy = 50
 	bomb = 40
@@ -1578,7 +1578,7 @@
 
 /datum/armor/mod_theme_responsory
 	melee = 50
-	bullet = 40
+	bullet = 50
 	laser = 50
 	energy = 50
 	bomb = 50

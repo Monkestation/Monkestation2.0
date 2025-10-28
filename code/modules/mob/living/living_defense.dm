@@ -16,7 +16,7 @@
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
 			to_chat(src, span_userdanger("Your armor was penetrated!"))
-	else if(our_armor >= 100)
+	else if(our_armor >= 80)
 		if(absorb_text)
 			to_chat(src, span_notice("[absorb_text]"))
 		else
@@ -114,10 +114,10 @@
 	)
 	if(hitting_projectile.stamina)
 		apply_damage(
-			damage = hitting_projectile.stamina,
+			damage = round(hitting_projectile.stamina  * (100 - src.run_armor_check(attack_flag = ENERGY)) * 0.01, 0.1),
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = armor_check,
+			blocked = src.run_armor_check(attack_flag = ENERGY),
 			attack_direction = hitting_projectile.dir,
 		)
 	if(hitting_projectile.pain)
@@ -169,6 +169,7 @@
 	if(impacting_projectile.grazing)
 		. += 50
 	return .
+
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0

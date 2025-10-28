@@ -20011,7 +20011,6 @@
 /area/station/science/breakroom)
 "gxN" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 6;
 	pixel_y = 3
@@ -20034,6 +20033,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "gxO" = (
@@ -33230,7 +33230,6 @@
 /area/station/engineering/atmos)
 "kIQ" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/clothing/suit/armor/vest/alt/sec{
 	pixel_y = 3;
@@ -33254,6 +33253,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "kIR" = (
@@ -34040,8 +34040,21 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
+/obj/structure/rack,
+/obj/item/gun/grenadelauncher{
+	pixel_y = 9
+	},
+/obj/item/grenade/barrier{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "kVD" = (
@@ -45456,19 +45469,17 @@
 "oDW" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/rack,
-/obj/item/gun/grenadelauncher{
-	pixel_y = 9
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -3;
+	pixel_y = 4
 	},
-/obj/item/grenade/barrier{
-	pixel_x = -6;
-	pixel_y = 3
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 2;
+	pixel_y = 1
 	},
-/obj/item/grenade/barrier{
-	pixel_y = 3
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 6;
-	pixel_y = 3
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 7;
+	pixel_y = -3
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -47870,6 +47881,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/vehicle/ridden/secway,
+/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ptZ" = (
@@ -60094,7 +60107,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "tsP" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/clothing/suit/armor/riot{
 	pixel_x = 6;
@@ -60125,6 +60137,7 @@
 /obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_y = 6
 	},
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tsV" = (

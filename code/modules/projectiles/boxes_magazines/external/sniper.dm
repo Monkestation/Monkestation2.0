@@ -44,7 +44,7 @@
 
 // Wylom AMR magazine
 
-/obj/item/ammo_box/magazine/wylom
+/obj/item/ammo_box/magazine/wylom_internal
 	name = "anti-materiel magazine (.60 Strela)"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "wylom_mag"
