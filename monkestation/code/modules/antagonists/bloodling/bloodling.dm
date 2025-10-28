@@ -9,7 +9,8 @@
 	suicide_cry = "CONSUME!! CLAIM!! THERE WILL BE ANOTHER!!"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoBloodling"
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 15
 
 	// If this bloodling is ascended or not
 	var/is_ascended = FALSE

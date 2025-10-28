@@ -39,7 +39,7 @@
 	)
 	rpg_title = "Guard"
 	job_flags = STATION_JOB_FLAGS
-
+	antag_capacity_points = 3
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 

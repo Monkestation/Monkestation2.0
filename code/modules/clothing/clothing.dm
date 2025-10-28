@@ -16,6 +16,14 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -521,6 +529,44 @@ BLIND     // can't see anything
 	update_item_action_buttons()
 	return TRUE
 
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/obj/item/clothing/proc/adjust_visor(mob/living/user)
+	if(!can_use(user))
+		return FALSE
+
+	visor_toggling()
+
+	var/message
+	if(up)
+		message = src.alt_toggle_message || "You push [src] out of the way."
+	else
+		message = src.toggle_message || "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
+
+	update_item_action_buttons()
+
+	if(user.is_holding(src))
+		user.update_held_items()
+		return TRUE
+	user.update_clothing(slot_flags)
+	if(!iscarbon(user))
+		return TRUE
+	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.head_update(src, forced = 1)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		carbon_user.update_tint()
+	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
+		carbon_user.cutoff_internals()
+	return TRUE
+
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
 	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
@@ -532,6 +578,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	update_icon_state()
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up

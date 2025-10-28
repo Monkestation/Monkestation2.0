@@ -242,3 +242,5 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_PORTAL_CLOSE "portal_closed"
 #define SFX_PORTAL_CREATED "portal_created"
 #define SFX_SCREECH "screech"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
