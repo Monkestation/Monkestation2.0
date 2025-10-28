@@ -105,13 +105,10 @@
 		return
 	if(!can_run_emote(user, intentional=intentional))
 		return
+	if(intentional && user.check_spinflip(COOLDOWN_FLIP, COOLDOWN_SPIN))
+		return
 	if(isliving(user))
 		var/mob/living/flippy_mcgee = user
-		if(intentional && TIMER_COOLDOWN_RUNNING(flippy_mcgee, COOLDOWN_SPIN))
-			flippy_mcgee.visible_message(span_warning("[flippy_mcgee] flops onto the floor face-first like an idiot!"), span_userdanger("You flop onto the floor face-first like an idiot!"))
-			flippy_mcgee.apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
-			flippy_mcgee.Paralyze(1 SECONDS)
-			return
 		if(prob(20))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
@@ -135,18 +132,19 @@
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
-	if(.)
-		user.spin(20, 1)
-		if(intentional)
-			TIMER_COOLDOWN_START(user, COOLDOWN_SPIN, 1.5 SECONDS)
-		if(isliving(user) && intentional)
-			var/mob/living/L = user
-			if(iscarbon(L))
-				var/mob/living/carbon/hat_loser = user
-				if(hat_loser.head)
-					var/obj/item/clothing/head/worn_headwear = hat_loser.head
-					if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
-						worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
+	if(!.)
+		return
+	if(intentional && user.check_spinflip(COOLDOWN_SPIN, COOLDOWN_FLIP))
+		return
+	user.spin(20, 1)
+	if(isliving(user) && intentional)
+		var/mob/living/L = user
+		if(iscarbon(L))
+			var/mob/living/carbon/hat_loser = user
+			if(hat_loser.head)
+				var/obj/item/clothing/head/worn_headwear = hat_loser.head
+				if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
+					worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)
 	. = ..()
@@ -157,12 +155,6 @@
 	if(!iscarbon(user))
 		return
 
-	if(intentional && TIMER_COOLDOWN_RUNNING(user, COOLDOWN_FLIP))
-		user.visible_message(span_warning("[user] flops onto the floor face-first like an idiot!"), span_userdanger("You flop onto the floor face-first like an idiot!"))
-		user.apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
-		user.Paralyze(1 SECONDS)
-		return
-
 	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
 		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
@@ -171,6 +163,19 @@
 		to_chat(user, span_warning("You feel woozy from spinning."))
 		user.set_dizzy_if_lower(BEYBLADE_DIZZINESS_DURATION)
 		user.adjust_confusion_up_to(BEYBLADE_CONFUSION_INCREMENT, BEYBLADE_CONFUSION_LIMIT)
+
+/mob/proc/check_spinflip(our_cooldown, other_cooldown)
+	return FALSE
+
+/mob/living/check_spinflip(our_cooldown, other_cooldown)
+	TIMER_COOLDOWN_START(src, our_cooldown, 1.5 SECONDS)
+	if(TIMER_COOLDOWN_RUNNING(src, other_cooldown))
+		visible_message(span_warning("[src] flops onto the floor face-first like an idiot!"), span_userdanger("You flop onto the floor face-first like an idiot!"))
+		apply_damage(rand(5, 10), BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		Paralyze(1 SECONDS, ignore_canstun = TRUE)
+		playsound(get_turf(src), 'sound/effects/bang.ogg', vol = 40, vary = TRUE)
+		return TRUE
+	return FALSE
 
 #undef BEYBLADE_PUKE_THRESHOLD
 #undef BEYBLADE_PUKE_NUTRIENT_LOSS
