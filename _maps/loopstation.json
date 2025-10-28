@@ -3,7 +3,6 @@
 	"map_name": "LoopStation",
 	"map_path": "map_files/LoopStation",
 	"map_file": "LoopStation.dmm",
-	"space_ruin_levels": 2,
 	"shuttles": {
 		"cargo": "cargo_nova",
 		"whiteship": "whiteship_meta",
