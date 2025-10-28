@@ -800,3 +800,39 @@
   notghosti:
   - balance: Updates all subtypes of `/obj/item/clothing/under/dress` clothing cover
       flags to be more to what one would expect
+2025-10-26:
+  EatsTheGrapes:
+  - bugfix: Added checks to prevent infinite plant growth and harvesting loops in
+      hydroponics.
+  - balance: Implemented a short cooldown and growth clamp to prevent reagent-based
+      runaway loops.
+  - code_imp: Cleaned up process logic indentation and ensured growth resets properly
+      after harvest.
+  ThatGuy-GEWP:
+  - bugfix: LOOC's Default is now i
+  - bugfix: Rest's Default is now U again
+  - balance: Pixel-shift's Default has been moved from B to N
+  notghosti:
+  - map: Theseus fore hallway has had it south side split into aft hallway
+  - map: Reconnects drone bay to power network on thesues
+  - map: Gives AI sat Foyer a APC on thesues
+  - map: Fixes thesues satelitte power net
+2025-10-27:
+  Absolucy:
+  - bugfix: The Glass Jaw quirk now properly works again.
+  - bugfix: Bronze chairs now spin automatically once more.
+  - image: (Capsandi) New BSA impact animation.
+  - admin: (TheVekter) Made logging for BSA targeting and firing easier to find for
+      admins.
+  - qol: Trying to pour plasma on a DNR oozeling core will just tell you that their
+      soul has departed.
+  Snack-Max:
+  - rscadd: Added new May Rain hairstyle
+  call me evil McDonalds cause I'm hatin it:
+  - bugfix: IPCs autorevive when they heal tox and oxy damage too.
+2025-10-28:
+  Absolucy:
+  - bugfix: Storytellers should now be the only thing firing events, rather than the
+      legacy Events subsystem.
+  Greenpoison:
+  - map: added/modified atmos map content for EVERY map currently in the pool.
