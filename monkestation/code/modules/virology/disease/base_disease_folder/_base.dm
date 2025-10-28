@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	for(var/datum/symptom/symptom in symptoms)
 		symptom.disable_effect(target, src)
 	target.diseases -= src
+	target.med_hud_set_status()
 	logger.Log(LOG_CATEGORY_VIRUS, "[affected_mob.name] was cured of virus [real_name()] at [loc_name(affected_mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(affected_mob.loc)))
 	//--Plague Stuff--
 	/*
@@ -202,7 +203,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	var/list/immune_data = GetImmuneData(mob)
 
-	if(!istype(mob, /mob/living/basic/mouse/plague)) //plague mice don't trigger effects to not kill em
+	if(!istype(mob, /mob/living/basic/mouse/plague) && (!carrier)) //plague mice don't trigger effects to not kill em
 		for(var/datum/symptom/e in symptoms)
 			if (e.can_run_effect(immune_data[1], seconds_per_tick))
 				e.run_effect(mob, src)
