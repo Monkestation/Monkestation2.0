@@ -90,7 +90,7 @@
 
 	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if((pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING))
-		losebreath += 2  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
+		losebreath ++  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
 
 	if(losebreath < 1)
 		var/pre_sig_return = SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired)
