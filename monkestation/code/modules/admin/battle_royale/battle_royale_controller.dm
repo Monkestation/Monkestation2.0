@@ -398,13 +398,12 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		ui = new(user, src, "BattleRoyalePanel")
 		ui.open()
 
-///datum/battle_royale_controller/ui_state(mob/user)
-//	return GLOB.fun_state
+/datum/battle_royale_controller/ui_status(mob/user, datum/ui_state/state)
+	return check_rights_for(user.client, R_FUN) ? UI_INTERACTIVE : UI_CLOSE
 
 ///datum/battle_royale_controller/ui_static_data(mob/user)
 
 /datum/battle_royale_controller/ui_data(mob/user)
-	message_admins("1")
 	var/list/data = list()
 	var/list/current_data_values = list()
 	var/list/prize_list = list()
