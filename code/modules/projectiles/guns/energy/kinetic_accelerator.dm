@@ -146,7 +146,6 @@
 	icon_state = "kineticgun_b"
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
 	can_bayonet = FALSE
 	sharpness = SHARP_EDGED
 	force = 15
