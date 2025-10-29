@@ -30,7 +30,7 @@
 							/area/station/cargo/power_station, /area/station/engineering/power_station, /area/station/science/power_station,
 							/area/station/science/power_station, /area/station/security/power_station, /area/station/service/power_station,
 							/area/station/medical/aslyum, /area/station/medical/virology/isolation, /area/graveyard/tunnels, /area/graveyard/bunker,
-							/area/ruin/space/ancientstation,
+							/area/ruin/space/ancientstation, /area/ruin/powered/golem_ship,
 						)
 	target_trait = ZTRAIT_STATION
 

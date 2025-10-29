@@ -393,13 +393,12 @@
 //Wastes firing pin - restricts a weapon to only outside when mining - based on area defines not z-level
 /obj/item/firing_pin/wastes
 	name = "Wastes firing pin"
-	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
+	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon. It cannot be used around space, space ruins, or the station."
 	fail_message = "Wastes check failed! - Make your way to lavaland or the Ice Caves!"
 	pin_hot_swappable = FALSE
 	pin_removable = FALSE
-	var/list/wastes = list( //locations you CAN use this
-		/area/icemoon/underground/unexplored, //surface outdoor of icemoon is not here because its the first floor, full of the most player activity.
-		/area/icemoon/underground/explored,
+	var/list/area/wastes = list( //locations you CAN use this
+		/area/icemoon/underground,
 
 		/area/lavaland/surface/outdoors,
 
@@ -410,17 +409,30 @@
 
 		/area/centcom/central_command_areas //can be used mostly anywhere on centcom, mainly for admins.
 	)
-	var/list/blacklist = list( //Locations you CANNOT use things with this pin specifically, for stuff like ghost role ruins.
+	var/list/area/blacklist = list( //Locations you CANNOT use things with this pin specifically, for stuff like ghost role ruins.
 		/area/space, //no going outside
 		/area/ruin/space, //no explorers >:(
-		/area/ruin/powered/reebe // no stomping clock cults >:(
+		/area/ruin/powered/reebe, // no stomping clock cults >:(
+		/area/station, // no station areas >:I
 	)
+	/// How far can we use this pin next to blacklisted areas?
+	var/blacklisted_area_range = 5
 
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
-	if(!istype(user) || is_type_in_list(get_area(user), blacklist) || is_station_area_or_adjacent(get_area(user)))
+	if(!istype(user))
 		return FALSE
-	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+	var/turf/center = get_turf(src)
+	var/list/turfs = RANGE_TURFS(blacklisted_area_range, center)
+	for(var/turf/checked_turf as anything in turfs)
+		for(var/area/blacklisted_area as anything in blacklist)
+			if(ispath(checked_turf.loc.type, blacklisted_area))
+				if(!(is_type_in_list(get_area(user), blacklist)))
+					to_chat(user, span_warning("Blacklisted zone detected nearby!"))
+				return FALSE
+
+	if(is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
 		return TRUE
+
 	return FALSE
 
 /obj/item/firing_pin/cargo //Firing pin for use in cargo only
