@@ -6046,7 +6046,7 @@
 "bTq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "brig_post";
 	name = "Security Shutters"
 	},
@@ -9498,7 +9498,6 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "cZU" = (
@@ -13862,7 +13861,6 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/cell_charger_multi/wall_mounted/directional/west,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "evJ" = (
@@ -23187,16 +23185,16 @@
 /obj/machinery/door/window/right/directional/east{
 	name = "Brig Entrance Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "brig_post";
-	name = "Security Shutters";
-	dir = 4
-	},
 /obj/structure/desk_bell{
 	pixel_y = 2;
 	pixel_x = 6
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "brig_post";
+	name = "Security Shutters";
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "huF" = (
@@ -23769,11 +23767,11 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Brig Entrance Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/structure/desk_bell/departmental/security,
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "brig_post";
 	name = "Security Shutters"
 	},
-/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "hDv" = (
@@ -26267,9 +26265,9 @@
 "ium" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "cell_pub_shutters";
-	name = "Security Shutters"
+	name = "Brig Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/security/brig)
@@ -30348,9 +30346,8 @@
 "jLu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
-	id = "armory_window_shutters";
-	name = "Armory Window Shutters"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "armory_window_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/ai_monitored/security/armory)
@@ -31527,10 +31524,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/north,
-/obj/structure/statue/silver/sec{
-	name = "Statue of Security Officer Calhoun";
-	desc = "Now... about that beer I owed ya!"
-	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "kfJ" = (
@@ -37827,9 +37821,8 @@
 /area/station/security/prison/rec)
 "mcY" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "sec_locker_shutters";
-	name = "Locker Room Shutters"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "sec_locker_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/security/lockers)
@@ -47519,7 +47512,7 @@
 "poj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "brig_post";
 	name = "Security Shutters";
 	dir = 4
@@ -50098,7 +50091,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/item/kirbyplants/random,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "qdE" = (
@@ -59200,9 +59193,8 @@
 "tcM" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
-	id = "hos_office";
-	name = "HoS Office Shutters"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hos_office"
 	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
@@ -63063,10 +63055,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/red/corner,
-/obj/structure/statue/silver/sec{
-	name = "Statue of Security Officer Doe";
-	desc = "You were good son, real good; maybe even the best."
-	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "uqz" = (
@@ -66062,7 +66051,6 @@
 	pixel_y = -10
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "vlq" = (
@@ -75508,13 +75496,11 @@
 "ygY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
-	id = "hos_office";
-	name = "HoS Office Shutters";
-	dir = 1
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cell_pub_shutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/hos)
+/area/station/security/brig)
 "ygZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -100792,7 +100778,7 @@ jKd
 bwt
 kqh
 jwD
-ium
+ygY
 jGX
 jVY
 wOd
@@ -108222,7 +108208,7 @@ ksa
 xXP
 ksa
 xXP
-ygY
+tcM
 abT
 mqW
 heD
@@ -108479,7 +108465,7 @@ xXP
 xXP
 xXP
 xXP
-ygY
+tcM
 mhf
 vPG
 bYx
@@ -108736,7 +108722,7 @@ ksa
 xXP
 ksa
 xXP
-ygY
+tcM
 fSW
 aAl
 aAl
