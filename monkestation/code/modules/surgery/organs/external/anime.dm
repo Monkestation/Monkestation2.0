@@ -89,6 +89,7 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_ANIME_HALO
+	organ_flags = ORGAN_ROBOTIC
 
 	preference = "feature_anime_halo"
 
