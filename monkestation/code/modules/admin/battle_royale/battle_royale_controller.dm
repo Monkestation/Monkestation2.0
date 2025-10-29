@@ -5,14 +5,14 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 #define COIN_PRIZE "Coins"
 #define PLAYER_HEALTH_VALUE 150
-//Battle royale controller, IF THERE ARE MULTIPLE OF THESE SOMETHING HAS GONE VERY WRONG
+//Battle royale controller, IF THERE ARE MULTIPLE OF THESE SOMETHING HAS GONE VERY WRONG, should probably convert into an SS
 /datum/battle_royale_controller
 	///Is this controller active and processing
 	var/active = FALSE
 	///How long has this datum been active for
 	var/active_for = 0
 	///list of our /datum/battle_royale_data datums
-	var/list/data_datums
+	var/alist/data_datums
 	///list of all our players assigned "antag" datums
 	var/list/players = list()
 	///Tracker var for what data in data_datums we should use next
@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 						MEDIUM_THREAT = 0,
 						LOW_THREAT = 0)
 	///What is the expected time for the entire station to be covered in storms
-	var/max_duration = 0
+	var/max_duration = 20 MINUTES
 	///Assoc list of loot tables to use
 	var/static/list/loot_tables = list(COMMON_LOOT_TABLE = GLOB.royale_common_loot,
 									UTILITY_LOOT_TABLE = GLOB.royale_utility_loot,
@@ -44,11 +44,11 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	GLOB.battle_royale_controller = src
 	storm_controller.royale_controller = src
 
-/datum/battle_royale_controller/Destroy(force, ...)
+/datum/battle_royale_controller/Destroy(force)
 	message_admins("Battle royale controller datum destroyed, force ending it's current royale.")
 	GLOB.battle_royale_controller = null
 	current_data = null
-	QDEL_LIST(data_datums)
+	QDEL_LIST_ASSOC(data_datums)
 	QDEL_NULL(storm_controller)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 	active_for += seconds_per_tick SECONDS
 	if(check_data())
-		current_data = data_datums["[next_data_datum_value]"]
+		current_data = data_datums[next_data_datum_value]
 		next_data_datum_value++
 
 	spawn_loot_pods(calculate_spawned_loot_pods(seconds_per_tick))
@@ -86,6 +86,9 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 	active = TRUE //some external things check for this so we want this even while we are not actually active
 	build_data_datums(fast, custom)
+	if(fast)
+		max_duration = 10 MINUTES
+
 	if(storm_controller.start_consuming_delay == -1) //have to use an exact value check as admins can set the delay to 0
 		storm_controller.start_consuming_delay = (fast ? 2 MINUTES : 5 MINUTES)
 
@@ -109,9 +112,14 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		SSticker.start_immediately = TRUE
 
 	send_to_playing_players(span_boldannounce("Battle Royale: Clearing world mobs."))
-	for(var/mob/living/mob as() in GLOB.mob_living_list)
-		mob.dust(TRUE, FALSE, TRUE)
-		CHECK_TICK
+	var/sanity = 0
+	while(sanity < 10 && length(GLOB.mob_living_list))
+		sanity++
+		for(var/mob/living/mob in GLOB.mob_living_list)
+			if(istype(mob, /mob/living/carbon/human/dummy))
+				continue
+			mob.dust(TRUE, FALSE, TRUE)
+			CHECK_TICK
 
 	send_setup_messages()
 
@@ -142,7 +150,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 	activate()
 	if(length(data_datums))
-		current_data = data_datums["[next_data_datum_value]"]
+		current_data = data_datums[next_data_datum_value]
 		next_data_datum_value++
 
 	if(current_data)
@@ -192,8 +200,9 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 ///End a battle royale
 /datum/battle_royale_controller/proc/end_royale(mob/living/winner)
 	deactivate()
-	storm_controller?.end_storm()
-	storm_controller?.stop_storm()
+	if(storm_controller)
+		storm_controller.end_storm()
+		storm_controller.stop_storm()
 	SSticker.force_ending = TRUE
 	if(winner && !QDELETED(winner))
 		winner.revive(ADMIN_HEAL_ALL)
@@ -203,9 +212,9 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			if(!prizes[prize])
 				continue
 			if(prize == COIN_PRIZE)
-				winner.client.prefs.adjust_metacoins(winner.ckey, prizes[prize], "Won battle royale.")
+				winner.client?.prefs.adjust_metacoins(winner.ckey, prizes[prize], "Won battle royale.")
 			else
-				winner.client.client_token_holder.adjust_antag_tokens(prize, prizes[prize])
+				winner.client?.client_token_holder.adjust_antag_tokens(prize, prizes[prize])
 				to_chat(winner, span_boldnotice("You have gained [prizes[prize]] [prize] token(s) for winning battle royale."))
 
 		var/turf/winner_turf = get_turf(winner)
@@ -265,23 +274,23 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		deactivate()
 		return FALSE
 
-	if(!data_datums["[next_data_datum_value]"])
+	if(!data_datums[next_data_datum_value])
 		return FALSE
 
-	var/datum/battle_royale_data/next_data = data_datums["[next_data_datum_value]"]
+	var/datum/battle_royale_data/next_data = data_datums[next_data_datum_value]
 	if(active_for >= next_data?.active_time)
 		return TRUE
 	return FALSE
 
 ///Build our data_datums list, if fast is TRUE then we will use the faster pre-made battle_royale_data set, if custom is TRUE then we will use custom data if possible
 /datum/battle_royale_controller/proc/build_data_datums(fast = FALSE, custom = FALSE)
-	QDEL_LIST(data_datums)
-	var/list/new_data_datums = list()
+	QDEL_LIST_ASSOC(data_datums)
+	var/alist/new_data_datums = alist()
 	var/highest_active_time = 0
 	if(custom && length(GLOB.custom_battle_royale_data))
 		for(var/data_value in GLOB.custom_battle_royale_data)
 			var/datum/battle_royale_data/custom/data_datum = GLOB.custom_battle_royale_data[data_value]
-			new_data_datums["[data_datum.active_time]"] = data_datum
+			new_data_datums[data_datum.active_time] = data_datum
 			if(data_datum.active_time > highest_active_time)
 				highest_active_time = data_datum.active_time
 	else
@@ -291,24 +300,22 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 				qdel(data_datum)
 				continue
 
-			if(new_data_datums["[data_datum.active_time]"])
-				message_admins("[data_datum] created with duplicate active_time to [new_data_datums["[data_datum.active_time]"]] in new_data_datums.")
+			if(new_data_datums[data_datum.active_time])
+				message_admins("[data_datum] created with duplicate active_time to [new_data_datums[data_datum.active_time]] in new_data_datums.")
 				qdel(data_datum)
 				continue
 
-			new_data_datums["[data_datum.active_time]"] = data_datum
+			new_data_datums[data_datum.active_time] = data_datum
 			if(data_datum.active_time > highest_active_time)
 				highest_active_time = data_datum.active_time
 
 	max_duration = 0
 	var/data_datums_iterator = 0
 	for(var/i in 1 to highest_active_time)
-		if(new_data_datums["[i]"])
-			var/datum/battle_royale_data/data_datum = new_data_datums["[i]"]
-			new_data_datums -= "[i]"
-			new_data_datums["[data_datums_iterator++]"] = data_datum
-			if(data_datum.final_time)
-				max_duration = data_datum.final_time
+		if(new_data_datums[i])
+			var/datum/battle_royale_data/data_datum = new_data_datums[i]
+			new_data_datums -= i
+			new_data_datums[data_datums_iterator++] = data_datum
 
 	if(!max_duration)
 		message_admins("No max length set for battle royale.")
@@ -430,7 +437,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			"rare_drop_prob" = custom_data.rare_drop_prob,
 			"super_drop_prob" = custom_data.super_drop_prob,
 			"pods_per_second" = custom_data.pods_per_second,
-			"final_time" = custom_data.final_time,
 			"converted_time" = "[DisplayTimeText(custom_data.active_time)]"
 		))
 
@@ -519,7 +525,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 				"rare_drop_prob",
 				"super_drop_prob",
 				"pods_per_second",
-				"final_time",
 			)
 
 			var/input_var = tgui_input_list(usr, "What var do you want to adjust?", "Adjust var", data_var_list)

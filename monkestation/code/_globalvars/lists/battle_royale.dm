@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(royale_common_loot, list(
 		/obj/item/storage/toolbox/mechanical = 3,
 		/obj/item/storage/toolbox/emergency = 3,
 		/obj/item/storage/toolbox/electrical = 3,
-		/obj/item/tailclub = 3
+		/obj/item/tailclub = 3,
 ))
 
 ///utility things, very common at the start with a steep weight decrease in the mid game
@@ -270,8 +270,8 @@ GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/storage/box/syndie_kit/imp_macrobomb = 1, //take them with you
 		/obj/item/storage/pill_bottle/maintenance_pill/full = 1,
 		/obj/item/storage/toolbox/haunted = 1,
-		list(/obj/item/stack/cannonball/the_big_one = 1, /obj/structure/cannon = 1, /obj/item/reagent_containers/cup/bucket/wooden = 1, /obj/structure/fermenting_barrel/gunpowder = 1),
-		/obj/vehicle/ridden/monkey_ball = 1
+		list(/obj/item/stack/cannonball/the_big_one = 1, /obj/structure/cannon = 1, /obj/item/reagent_containers/cup/bucket/wooden = 1, /obj/structure/fermenting_barrel/gunpowder = 1) = 1,
+		/obj/vehicle/ridden/monkey_ball = 1,
 ))
 
 ///things in this table have a chance to be spawned in addition to something from another table
@@ -289,5 +289,5 @@ GLOBAL_LIST_INIT(royale_extra_loot, list(
 		/obj/item/ammo_box/magazine/tommygunm45 = 3,
 		/obj/item/ammo_box/magazine/wt550m9 = 1,
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 1,
-		/obj/item/ammo_box/magazine/wt550m9/wtic = 1
+		/obj/item/ammo_box/magazine/wt550m9/wtic = 1,
 ))

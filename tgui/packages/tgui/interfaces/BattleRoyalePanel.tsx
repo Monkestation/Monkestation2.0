@@ -34,11 +34,10 @@ type royaledataset = {
   rare_drop_prob: number;
   super_drop_prob: number;
   pods_per_second: number;
-  final_time?: number;
   converted_time?: string;
 };
 
-export const BattleRoyalePanel = (props, context) => {
+export const BattleRoyalePanel = (props) => {
   const { act, data } = useBackend<BattleRoyalePanelContext>();
   const active_dataset = data.active_dataset || [];
   const prizes = data.prizes;
@@ -184,9 +183,6 @@ export const BattleRoyalePanel = (props, context) => {
                       </LabeledList.Item>
                       <LabeledList.Item label="Pods Per Second">
                         {royaledataset.pods_per_second}
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Final Time">
-                        {royaledataset.final_time}
                       </LabeledList.Item>
                     </div>
                   </LabeledList>
