@@ -9359,6 +9359,7 @@
 /area/station/solars/starboard/aft)
 "cXt" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/lockers)
 "cXu" = (
@@ -19122,6 +19123,7 @@
 /area/station/service/hydroponics/chicken)
 "gki" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/lockers)
 "gkj" = (
@@ -50067,14 +50069,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
-"qdz" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/red/line,
-/obj/machinery/suit_storage_unit/security,
-/turf/open/floor/iron/dark,
-/area/station/security/office)
 "qdE" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 4
@@ -108196,7 +108190,7 @@ heD
 kCR
 uUq
 tcM
-qdz
+lqh
 sHr
 cdi
 xzX
@@ -108710,7 +108704,7 @@ aAl
 tCR
 soW
 tcM
-qdz
+lqh
 sHr
 oMj
 dTK
