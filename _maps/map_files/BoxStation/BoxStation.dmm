@@ -24269,10 +24269,9 @@
 	id = "engineering";
 	name = "Engineering Blast Door"
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_pass_shutters";
-	name = "Engineering Shutters";
-	dir = 8
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "engi_pass_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
@@ -28809,10 +28808,9 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/hidden{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_pass_shutters";
-	name = "Engineering Shutters";
-	dir = 8
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "engi_pass_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
@@ -31020,10 +31018,9 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/pink/hidden{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_pass_shutters";
-	name = "Engineering Shutters";
-	dir = 8
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "engi_pass_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
@@ -31232,20 +31229,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
-"kaD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "engineering";
-	name = "Engineering Blast Door"
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_office_shutters";
-	name = "Engineering Shutters";
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/engineering/break_room)
 "kaH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -35082,14 +35065,13 @@
 "lls" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_office_shutters";
-	name = "Engineering Shutters";
-	dir = 8
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "engineering";
 	name = "Engineering Blast Door"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "engi_office_shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
@@ -48656,12 +48638,11 @@
 	name = "Engineering Desk";
 	req_one_access = list("atmospherics","engineering")
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_office_shutters";
-	name = "Engineering Shutters";
-	dir = 8
-	},
 /obj/structure/desk_bell/departmental/engineering,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "engi_office_shutters"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/break_room)
 "pFs" = (
@@ -105471,7 +105452,7 @@ aco
 lku
 elt
 oqK
-kaD
+lls
 pFi
 ufs
 dMW
