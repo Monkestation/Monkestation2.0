@@ -196,8 +196,6 @@ GLOBAL_LIST_INIT(backpacklist, list(
 #define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT "Implant"
 
-	//Female Uniforms
-GLOBAL_LIST_EMPTY(female_clothing_icons)
 	//Auto-generated 'fallback' clothing icons
 GLOBAL_LIST_EMPTY(fallback_clothing_icons)
 
