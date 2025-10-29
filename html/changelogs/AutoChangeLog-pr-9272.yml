@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some mining fauna, i.e demonic watchers or lavaland elites, not being considered \"mining mobs\" for the cursed katana and such."
