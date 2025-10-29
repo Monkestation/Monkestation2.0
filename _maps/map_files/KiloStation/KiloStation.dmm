@@ -160,7 +160,6 @@
 	dir = 1
 	},
 /obj/item/storage/medkit/regular,
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/office)
 "abn" = (
@@ -38564,7 +38563,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/office)
 "lVu" = (
