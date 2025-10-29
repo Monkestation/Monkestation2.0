@@ -1,3 +1,5 @@
+#define COST_PER_AIRLOCK 1
+
 /obj/structure/door_assembly/door_assembly_bronze/clock
 	airlock_type = /obj/machinery/door/airlock/bronze/clock
 
@@ -9,7 +11,7 @@
 	hackProof = TRUE
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_CLOCKCULT)
-	damage_deflection = 7
+	damage_deflection = 6
 
 /obj/machinery/door/airlock/bronze/clock/Initialize(mapload)
 	. = ..()
@@ -62,3 +64,55 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru/clock
 	glass = TRUE
 	opacity = FALSE
+
+//player made airlocks drain passive power when placed near other airlocks
+/obj/machinery/door/airlock/bronze/clock/player_made
+	//var/list/tracked_airlocks
+	///How much passive power are we using
+	var/power_usage = 0
+
+/obj/machinery/door/airlock/bronze/clock/player_made/Initialize(mapload)
+	. = ..()
+	var/list/tracked_airlocks = list()
+	var/total_cost = 0
+	for(var/obj/machinery/door/airlock/bronze/clock/player_made/airlock in orange(1, src))
+		tracked_airlocks += airlock
+		total_cost -= COST_PER_AIRLOCK * 2
+
+	if(!SSthe_ark.adjust_passive_power(total_cost, TRUE))
+		deconstruct(FALSE, should_del = FALSE)
+		visible_message(span_warning("\The [src] is unable to sustain its power draw and collapses!"))
+		return INITIALIZE_HINT_QDEL
+
+	for(var/obj/machinery/door/airlock/bronze/clock/player_made/lock in tracked_airlocks)
+		track_airlock(lock, TRUE)
+
+/obj/machinery/door/airlock/bronze/clock/player_made/examine(mob/user)
+	. = ..()
+	if(isobserver(user) || IS_CLOCK(user))
+		. += span_brass("Due to instability, clockwork airlocks placed near each other must drain passive power to stop from collapsing, \
+						this one is currently draining [power_usage] power.")
+
+/obj/machinery/door/airlock/bronze/clock/player_made/proc/track_airlock(obj/machinery/door/airlock/bronze/clock/player_made/tracked, recurse = FALSE)
+	RegisterSignal(tracked, COMSIG_QDELETING, PROC_REF(on_tracked_qdel))
+	if(recurse)
+		tracked.track_airlock(src)
+	power_usage += COST_PER_AIRLOCK
+	SSthe_ark.adjust_passive_power(-COST_PER_AIRLOCK)
+
+/obj/machinery/door/airlock/bronze/clock/player_made/proc/on_tracked_qdel(obj/machinery/door/airlock/bronze/clock/player_made/tracked)
+	untrack_airlock(tracked, TRUE)
+
+/obj/machinery/door/airlock/bronze/clock/player_made/proc/untrack_airlock(obj/machinery/door/airlock/bronze/clock/player_made/untracked, recurse = FALSE)
+	if(recurse)
+		untracked.untrack_airlock(src)
+	SSthe_ark.adjust_passive_power(COST_PER_AIRLOCK)
+	power_usage -= COST_PER_AIRLOCK
+
+/obj/machinery/door/airlock/bronze/clock/player_made/glass
+	name = "clear bronze airlock"
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru/clock
+	glass = TRUE
+	opacity = FALSE
+
+#undef COST_PER_AIRLOCK

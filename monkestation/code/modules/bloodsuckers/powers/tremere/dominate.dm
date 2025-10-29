@@ -137,6 +137,9 @@
 	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
 		owner.balloon_alert(owner, "their body refuses to react...")
 		return FALSE
+	if(target?.mind?.dnr)
+		owner.balloon_alert(owner, "there's no soul...")
+		return FALSE
 	if(vassal?.master == bloodsuckerdatum_power)
 		if(is_oozeling_core(target))
 			var/obj/item/organ/internal/brain/slime/oozeling_core = target

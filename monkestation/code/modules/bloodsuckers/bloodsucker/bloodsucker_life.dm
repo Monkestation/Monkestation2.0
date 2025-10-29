@@ -76,7 +76,7 @@
 	AddBloodVolume(blood_taken)
 	// Reagents (NOT Blood!)
 	if(target.reagents?.total_volume)
-		target.reagents.trans_to(owner.current, INGEST, 1) // Run transfer of 1 unit of reagent from them to me.
+		target.reagents.trans_to(owner.current, amount = 1, methods = INGEST) // Run transfer of 1 unit of reagent from them to me.
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', vol = 40, vary = TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	total_blood_drank += blood_taken
 	if(target.mind && !IS_VASSAL(target)) // Checks if the target has a mind and is not a vassal
@@ -291,11 +291,12 @@
 	owner.current.blood_volume = bloodsucker_blood_volume
 
 /// Gibs the Bloodsucker, roundremoving them.
-/datum/antagonist/bloodsucker/proc/final_death()
+/datum/antagonist/bloodsucker/proc/final_death(skip_destruction = FALSE)
+	var/mob/living/body = owner.current
 	// If we have no body, end here.
-	if(QDELETED(owner.current))
+	if(QDELETED(body))
 		return
-	UnregisterSignal(owner.current, list(
+	UnregisterSignal(body, list(
 		COMSIG_LIVING_LIFE,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
@@ -307,32 +308,37 @@
 	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
-	if(!iscarbon(owner.current))
-		owner.current.gib(TRUE, FALSE, FALSE)
-		return
-	// Drop anything in us and play a tune
-	var/mob/living/carbon/user = owner.current
-	owner.current.drop_all_held_items()
-	owner.current.unequip_everything()
-	user.remove_all_embedded_objects()
-	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+	if(!skip_destruction)
+		if(iscarbon(body))
+			// Drop anything in us and play a tune
+			var/mob/living/carbon/carbon_body = body
+			carbon_body.drop_all_held_items()
+			carbon_body.unequip_everything()
+			carbon_body.remove_all_embedded_objects()
+			playsound(carbon_body, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+		else
+			body.gib(TRUE, FALSE, FALSE)
 
 	if(SEND_SIGNAL(src, COMSIG_BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
+		return
+	if(skip_destruction || QDELETED(body))
 		return
 
 	// Elders get dusted, Fledglings get gibbed.
 	if(bloodsucker_level >= 4)
-		user.visible_message(
-			span_warning("[user]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains."),
+		body.visible_message(
+			span_warning("[body]'s skin crackles and dries, [body.p_their()] skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains."),
 			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
-			span_hear("You hear a dry, crackling sound."))
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-		return
-	user.visible_message(
-		span_warning("[user]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),
-		span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
-		span_hear("<span class='italics'>You hear a wet, bursting sound."))
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+			span_hear("You hear a dry, crackling sound.")
+		)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	else
+		body.visible_message(
+			span_warning("[body]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),
+			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
+			span_hear("You hear a wet, bursting sound.")
+		)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)

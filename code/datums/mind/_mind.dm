@@ -106,6 +106,8 @@
 	var/list/book_titles_read
 	/// Variable that lets the event picker see if someones getting chosen or not
 	var/picking = FALSE
+	/// If this mind has set DNR or not.
+	var/dnr = FALSE
 
 /datum/mind/New(_key)
 	key = _key
