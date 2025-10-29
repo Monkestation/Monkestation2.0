@@ -7,16 +7,16 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #24e87e,
-   $label: #24e87e,
-   $good: rgba(36, 232, 127, 0.50),
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $primary: #24e87e,
+  $label: #24e87e,
+  $good: rgba(36, 232, 127, 0.5),
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 @use '../base.scss' with (
-   $color-bg: #121b12,
-   $color-bg-grad-spread: 0%,
- );
+  $color-bg: #121b12,
+  $color-bg-grad-spread: 0%
+);
 
 .theme-ntos_terminal {
   // Atomic classes
@@ -68,7 +68,6 @@
   }
 
   .Button {
-    font: Inconsolata;
     color: #24e87e;
     text-shadow: 0 0 2px #24e87e;
   }
@@ -83,7 +82,8 @@
   body {
     //background-color: black;
     color: white;
-    font: 1.3rem Inconsolata;
+    font-family: Inconsolata;
+    letter-spacing: 1px;
     text-shadow: 0 0 2px #24e87e;
 
     //font: bold 12px Arial, 'Helvetica Neue', Helvetica, sans-serif;

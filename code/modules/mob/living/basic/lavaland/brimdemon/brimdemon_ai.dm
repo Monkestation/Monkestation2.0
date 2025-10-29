@@ -25,13 +25,13 @@
 
 /datum/ai_behavior/move_to_cardinal/brimdemon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	if (!succeeded)
+	if(!succeeded)
 		return
 	var/mob/living/target = controller.blackboard[target_key]
 	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
-	if(!ability?.IsAvailable())
+	if(QDELETED(target) || QDELETED(controller.pawn) || !ability?.IsAvailable())
 		return
-	ability.InterceptClickOn(caller = controller.pawn, target = target)
+	ability.InterceptClickOn(user = controller.pawn, target = target)
 
 /datum/ai_planning_subtree/targeted_mob_ability/brimbeam
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/brimbeam

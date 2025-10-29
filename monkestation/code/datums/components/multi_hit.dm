@@ -23,6 +23,9 @@
 
 ///this is incredibly cursed i should probably move the default defines into this to make it not have a ton of if statements but that feels wrong aswell.
 /datum/component/multi_hit/Initialize(continues_travel, icon_state, icon, width, height, center_offset, attacking_direction, after_hit_callback, pre_hit_callback, stamina_cost)
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	if(continues_travel)
 		src.continues_travel = continues_travel
 	if(icon_state)
@@ -44,13 +47,18 @@
 	if(stamina_cost)
 		src.stamina_cost = stamina_cost
 	item_parent = parent
+
+/datum/component/multi_hit/Destroy(force)
+	after_hit_callback = null
+	pre_hit_callback = null
+	return ..()
+
 /datum/component/multi_hit/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_hit_callback))
 
 /datum/component/multi_hit/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
-
 
 /datum/component/multi_hit/proc/pre_hit_callback(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
@@ -64,7 +72,7 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.stamina.current > 100)
+		if(carbon_user.stamina.current > STAMINA_MAXIMUM_TO_SWING)
 			carbon_user.stamina.adjust(-stamina_cost)
 
 	///list of targeted turfs in order of apperance
@@ -108,7 +116,7 @@
 		for(var/mob/living/target in listed_turf.contents)
 			if(pre_hit_callback)
 				pre_hit_callback.Invoke(parent, target, user, targeted_turfs)
-			item_parent.multi_attack(target, user, attacking_direction)
+			item_parent.attack(target, user)
 			if(after_hit_callback)
 				after_hit_callback.Invoke(parent, target, user, targeted_turfs)
 			if(!continues_travel)
@@ -134,7 +142,7 @@
 
 	QDEL_IN(hit_effect, 3)
 
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(item_parent.attack_speed * 1.2)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 

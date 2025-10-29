@@ -26,7 +26,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "aO" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/plastitanium,
@@ -63,7 +63,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "bG" = (
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "cc" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -73,8 +73,8 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cj" = (
 /obj/structure/transit_tube/crossing,
-/turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "ct" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -125,6 +125,9 @@
 	},
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"cI" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "cR" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
@@ -139,14 +142,14 @@
 	pixel_x = 3
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "da" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "dd" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -188,7 +191,7 @@
 /obj/item/card/id/advanced/black/syndicate_command/crew_id,
 /obj/item/card/id/advanced/black/syndicate_command/crew_id,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "fd" = (
 /obj/structure/transit_tube/crossing,
 /turf/open/space/basic,
@@ -234,7 +237,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hA" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "hD" = (
 /obj/structure/table/reinforced,
@@ -250,8 +253,8 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "iL" = (
 /obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "iU" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -259,7 +262,7 @@
 /obj/item/melee/energy/sword/saber/red,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "iW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -349,7 +352,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "ln" = (
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
@@ -407,10 +410,10 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "oM" = (
 /obj/structure/cable,
@@ -469,8 +472,8 @@
 /area/space)
 "qU" = (
 /obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "qY" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
@@ -483,13 +486,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ru" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rH" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 1;
-	pixel_y = 20
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rM" = (
@@ -512,7 +513,7 @@
 "sg" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "sq" = (
 /obj/machinery/door/window{
 	name = "Control Room";
@@ -544,7 +545,7 @@
 	amount = 15
 	},
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "sL" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/mineral/plastitanium,
@@ -616,7 +617,7 @@
 /obj/item/storage/medkit/regular,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "xJ" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -705,7 +706,7 @@
 "Bm" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "BK" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -777,7 +778,7 @@
 /obj/item/ammo_box/magazine/smgm45,
 /obj/item/gun/ballistic/automatic/c20r/unrestricted,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "DA" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -879,7 +880,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Im" = (
 /obj/structure/table/reinforced,
@@ -904,7 +905,7 @@
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "IV" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -945,6 +946,10 @@
 "Kz" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"KM" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Lk" = (
 /obj/structure/transit_tube/crossing,
 /turf/closed/mineral/random,
@@ -958,6 +963,10 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"LN" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Mc" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -1002,7 +1011,7 @@
 	req_access = list("syndicate")
 	},
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Nr" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1015,7 +1024,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Nt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_pump,
@@ -1027,7 +1036,11 @@
 	},
 /obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
+"Oo" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Ox" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium,
@@ -1038,7 +1051,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "OI" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -1057,7 +1070,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Qg" = (
 /obj/machinery/suit_storage_unit/syndicate{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black;
@@ -1078,11 +1091,14 @@
 /obj/item/dualsaber/green,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "QG" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/closed/mineral/random,
 /area/space)
+"QU" = (
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "QX" = (
 /mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
@@ -1102,7 +1118,7 @@
 "RU" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Sc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1147,10 +1163,10 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "TB" = (
 /turf/closed/indestructible/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "UQ" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Vk" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -1159,7 +1175,7 @@
 	on = 0;
 	shot_delay = 10
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/syndicate/hull,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Vq" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
@@ -1169,8 +1185,8 @@
 /area/virtual_domain/safehouse)
 "Wd" = (
 /obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/closed/wall/r_wall/syndicate/hull,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Wy" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1201,7 +1217,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 /obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "Yi" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/plastic,
@@ -2680,12 +2696,12 @@ qx
 nB
 nB
 we
-ru
-ru
-uP
+QU
+QU
+cI
 sg
-ru
-ru
+QU
+QU
 nB
 nB
 nB
@@ -2739,9 +2755,9 @@ qx
 nB
 nB
 qU
-Fp
-uP
-uP
+Oo
+cI
+cI
 li
 cj
 Lk
@@ -2796,12 +2812,12 @@ qx
 qx
 nB
 nB
-ru
+QU
 eB
-uP
+cI
 nO
-uP
-ru
+cI
+QU
 nB
 qx
 qx
@@ -2854,12 +2870,12 @@ qx
 qx
 qx
 nB
-ru
+QU
 wL
-oM
-uP
-dw
-ru
+LN
+cI
+KM
+QU
 yZ
 nB
 nB
@@ -2914,10 +2930,10 @@ qx
 qx
 Wd
 OH
-oM
-uP
+LN
+cI
 RU
-ru
+QU
 we
 nB
 nB
@@ -2971,11 +2987,11 @@ BK
 BK
 BK
 IH
-oM
-oM
-uP
+LN
+LN
+cI
 RU
-ru
+QU
 nB
 nB
 qx
@@ -3030,10 +3046,10 @@ qx
 qx
 iL
 cZ
-uP
-uP
+cI
+cI
 RU
-ru
+QU
 nB
 nB
 qx
@@ -3086,12 +3102,12 @@ qx
 qx
 qx
 nB
-ru
-ru
+QU
+QU
 Dj
 QF
-ru
-ru
+QU
+QU
 nB
 nB
 qx
@@ -3145,10 +3161,10 @@ qx
 nB
 nB
 nB
-ru
-ru
-ru
-ru
+QU
+QU
+QU
+QU
 nB
 nB
 we

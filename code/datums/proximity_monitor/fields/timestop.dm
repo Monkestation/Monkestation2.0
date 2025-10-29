@@ -82,7 +82,7 @@
 	src.immune = immune
 	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
@@ -93,7 +93,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
@@ -194,9 +194,8 @@
 	escape_the_negative_zone(O)
 
 /datum/proximity_monitor/advanced/timestop/process()
-	for(var/i in frozen_mobs)
-		var/mob/living/m = i
-		m.Stun(20, ignore_canstun = TRUE)
+	for(var/mob/living/frozen_mob as anything in frozen_mobs)
+		frozen_mob.apply_status_effect(/datum/status_effect/time_stopped)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/target)
 	. = ..()
@@ -212,8 +211,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
-	victim.Stun(20, ignore_canstun = TRUE)
-	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	victim.apply_status_effect(/datum/status_effect/time_stopped)
 	SSmove_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
@@ -226,8 +224,7 @@
 		basic_victim.ai_controller?.set_ai_status(AI_STATUS_OFF)
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
-	victim.AdjustStun(-20, ignore_canstun = TRUE)
-	victim.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	victim.remove_status_effect(/datum/status_effect/time_stopped)
 	frozen_mobs -= victim
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
@@ -248,3 +245,27 @@
 /datum/proximity_monitor/advanced/timestop/proc/atom_broke_channel(datum/source)
 	SIGNAL_HANDLER
 	qdel(host)
+
+/datum/status_effect/time_stopped
+	id = "time_stopped"
+	duration = 2 SECONDS // will get refreshed whenever the timestop processes
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_REFRESH
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	var/static/list/timestop_traits = list(
+		TRAIT_MUTE,
+		TRAIT_EMOTEMUTE,
+		TRAIT_INCAPACITATED,
+		TRAIT_IMMOBILIZED,
+		TRAIT_HANDS_BLOCKED,
+	)
+
+/datum/status_effect/time_stopped/on_apply()
+	owner.add_traits(timestop_traits, TRAIT_STATUS_EFFECT(id))
+	owner.stamina?.pause()
+	return TRUE
+
+/datum/status_effect/time_stopped/on_remove()
+	owner.remove_traits(timestop_traits, TRAIT_STATUS_EFFECT(id))
+	owner.stamina?.resume()

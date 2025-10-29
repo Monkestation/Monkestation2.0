@@ -3,9 +3,9 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
+
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
+
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 40
@@ -50,6 +50,18 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
 
+//MONKESTATION EDIT START
+/obj/item/clothing/suit/armor/surplus
+	name = "surplus armor vest"
+	desc = "An armored vest that provides decent protection against most types of damage."
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_state = "armorvest"
+	inhand_icon_state = "armor"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back/armorvest
+//MONKESTATION EDIT STOP
+
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
@@ -63,6 +75,16 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
 
+/obj/item/clothing/suit/armor/vest/press
+	name = "press armor vest"
+	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "armor_press"
+
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
@@ -71,9 +93,9 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/vest_marine
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /datum/armor/vest_marine
@@ -84,6 +106,16 @@
 	bomb = 50
 	bio = 100
 	fire = 40
+	acid = 50
+	wound = 20
+
+/datum/armor/pmc
+	melee = 40
+	bullet = 50
+	laser = 60
+	energy = 50
+	bomb = 50
+	bio = 100
 	acid = 50
 	wound = 20
 
@@ -99,6 +131,14 @@
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/armor/vest/marine/pmc
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
+	w_class = WEIGHT_CLASS_BULKY
+	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
@@ -128,8 +168,8 @@
 	inhand_icon_state = "greatcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/armor_hos
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+
 	strip_delay = 80
 
 /datum/armor/armor_hos
@@ -153,8 +193,10 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
-	icon_state = "pimpcoat" // monkestation edit
+	icon_state = "hoswinter"
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+///obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat in monkestation\code\modules\aesthetics\items\clothing.dm
 
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
@@ -173,8 +215,8 @@
 	icon_state = "warden_alt"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS|HANDS
-	heat_protection = CHEST|GROIN|ARMS|HANDS
+
+
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
@@ -190,8 +232,8 @@
 	icon_state = "leathercoat-sec"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/vest/capcarapace
@@ -236,8 +278,8 @@
 	icon_state = "riot"
 	inhand_icon_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 	armor_type = /datum/armor/armor_riot
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
@@ -251,6 +293,39 @@
 	fire = 80
 	acid = 80
 	wound = 20
+
+/obj/item/clothing/suit/armor/balloon_vest
+	name = "balloon vest"
+	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."
+	icon_state = "balloon-vest"
+	inhand_icon_state = "balloon_armor"
+	blood_overlay_type = "armor"
+	armor_type = /datum/armor/balloon_vest
+	siemens_coefficient = 0
+	strip_delay = 70
+	equip_delay_other = 50
+
+/datum/armor/balloon_vest
+	melee = 10
+	laser = 10
+	energy = 10
+	fire = 60
+	acid = 50
+
+/obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(isitem(hitby))
+		var/obj/item/item_hit = hitby
+		if(item_hit.get_sharpness())
+			pop()
+
+	else if(istype(hitby, /obj/projectile/bullet))
+		pop()
+
+	return ..()
+
+/obj/item/clothing/suit/armor/balloon_vest/proc/pop()
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	qdel(src)
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -289,20 +364,20 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 20
+	wound = 25 //monkestation edit: 20 to 25
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
-	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as occasionally reflecting them."
+	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as reflecting them." //monkestation edit
 	icon_state = "armor_reflec"
 	inhand_icon_state = "armor_reflec"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	heat_protection = CHEST|GROIN|ARMS
+
+
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/hit_reflect_chance = 50
+	//var/hit_reflect_chance = 50  //monkestation removal
 
 /datum/armor/armor_laserproof
 	melee = 10
@@ -313,10 +388,12 @@
 	acid = 100
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
+	if(def_zone == "") //something is fucky and this happens every now and then but the damage defaults to the person's chest so this is okayish
+		return TRUE
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
-	if (prob(hit_reflect_chance))
-		return TRUE
+	//if(prob(hit_reflect_chance)) //monkestation removal
+	return TRUE
 
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "detective's flak vest"
@@ -338,18 +415,18 @@
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	slowdown = 0.7
+	slowdown = 0.5 //monkestation edit, 0.7 to 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 //All of the armor below is mostly unused
 
 /datum/armor/armor_swat
 	melee = 40
-	bullet = 30
+	bullet = 40 //monkestation edit, 30 to 40
 	laser = 30
 	energy = 40
 	bomb = 50
@@ -384,8 +461,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	clothing_flags = THICKMATERIAL
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 	armor_type = /datum/armor/armor_tdome
 
 /datum/armor/armor_tdome
@@ -413,8 +490,8 @@
 /obj/item/clothing/suit/armor/tdome/holosuit
 	name = "thunderdome suit"
 	armor_type = /datum/armor/tdome_holosuit
-	cold_protection = null
-	heat_protection = null
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
 
 /datum/armor/tdome_holosuit
 	melee = 10
@@ -473,6 +550,7 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
+	body_parts_covered = CHEST|ARMS //Monke: Durathread covers arms.
 	dog_fashion = null
 
 /datum/armor/vest_durathread
@@ -507,7 +585,7 @@
 	icon_state = "rus_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 	dog_fashion = null
@@ -531,8 +609,8 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
 
 /obj/item/clothing/suit/armor/elder_atmosian/Initialize(mapload)
 	. = ..()
@@ -541,13 +619,13 @@
 	)
 
 /datum/armor/armor_elder_atmosian
-	melee = 25
-	bullet = 20
+	melee = 30
+	bullet = 30
 	laser = 30
 	energy = 30
 	bomb = 85
 	bio = 10
-	fire = 65
+	fire = 100
 	acid = 40
 	wound = 15
 
@@ -587,7 +665,7 @@
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/coat_militia
 

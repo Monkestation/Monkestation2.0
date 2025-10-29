@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/malf
 	antag_datum = /datum/antagonist/malf_ai
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN) //not exactly alien but close enough
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN, TAG_CREW_ANTAG, TAG_MUNDANE) //not exactly alien but close enough / Not actually crew but is part of the initial staff
 	antag_flag = ROLE_MALF
 	enemy_roles = list(
 		JOB_CHEMIST,
@@ -10,12 +10,16 @@
 		JOB_SCIENTIST,
 		JOB_ROBOTICIST,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 	)
+	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	maximum_antags = 1
 	exclusive_roles = list(JOB_AI)
 	required_enemies = 4
-	weight = 2
+	weight = 8
 	min_players = 35
 	max_occurrences = 1
 

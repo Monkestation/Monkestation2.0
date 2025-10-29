@@ -178,11 +178,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
+#define BIOME_MEDIUM_HEAT "medium_heat"
 #define BIOME_HIGHMEDIUM_HEAT "highmedium_heat"
 #define BIOME_HIGH_HEAT "high_heat"
 
 #define BIOME_LOW_HUMIDITY "low_humidity"
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
+#define BIOME_MEDIUM_HUMIDITY "medium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
 
@@ -220,11 +222,19 @@ Always compile, always use that verb, and always make sure that it works for wha
 //All
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
+/// Checks the job changes in the map config for the passed change key.
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
+
 //monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
+#define ZTRAIT_OSHAN_MINING "Oshan Mining"
+
+#define ZTRAIT_ECLIPSE "Eclipse"
+
 ///Z level traits for Lavaland
 #define ZTRAITS_TRENCH list(\
+	ZTRAIT_OSHAN_MINING = TRUE, \
 	ZTRAIT_GRAVITY = TRUE, \
 	ZTRAIT_MINING = TRUE, \
 	ZTRAIT_NOPARALLAX = TRUE, \
@@ -235,8 +245,32 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define WEATHER_MESSAGE_DELAY 30 SECONDS
 #define ZTRAIT_DAYCYCLE "Daycycle"
 #define ZTRAIT_STARLIGHT "Starlight"
+#define ZTRAIT_JUSTWEATHER "WeatherOnly"
 #define PARTICLEWEATHER_RAIN "weather_rain"
 #define PARTICLEWEATHER_SNOW "weather_snow"
 #define PARTICLEWEATHER_DUST "weather_dust"
 #define PARTICLEWEATHER_RADS "weather_rads"
 //monkestation end
+
+#define ZTRAITS_ECLIPSE list(\
+	list(\
+		ZTRAIT_UP = TRUE, \
+		ZTRAIT_GRAVITY = TRUE, \
+		ZTRAIT_MINING = TRUE, \
+		ZTRAIT_NOPARALLAX = TRUE, \
+		ZTRAIT_DAYCYCLE = TRUE, \
+		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+		ZTRAIT_BASETURF = /turf/open/misc/dirt/forest, \
+		ZTRAIT_ECLIPSE = TRUE, \
+	), \
+	list(\
+		ZTRAIT_DOWN = TRUE, \
+		ZTRAIT_GRAVITY = TRUE, \
+		ZTRAIT_MINING = TRUE, \
+		ZTRAIT_NOPARALLAX = TRUE, \
+		ZTRAIT_DAYCYCLE = TRUE, \
+		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+		ZTRAIT_BASETURF = /turf/open/openspace/forest, \
+		ZTRAIT_ECLIPSE = TRUE, \
+	)\
+)

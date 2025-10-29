@@ -83,3 +83,29 @@
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
 	icon_state = "saints_shoes"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/flowery
+	name = "perfumed flats"
+	desc = "Delicately hand crafted flats that feel good on the feet but terrible for your wallet."
+	icon_state = "floweryflats"
+	inhand_icon_state = "floweryflats"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/starry
+	name = "blue flats"
+	desc = "Comftorble flat shoes that give a nice fresh shine."
+	icon_state = "starflats"
+	inhand_icon_state = "starflats"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/kris
+	name = "vessel's boots"
+	desc = "* Boots, they appear to be a replica of the ones a legendary vessel wore while saving the world."
+	icon_state = "kris_boots"
+	inhand_icon_state = null 
+
+/obj/item/clothing/shoes/dio
+	name = "flamboyant sabatons"
+	desc = "So pointy you could use them like knives!"
+	icon_state = "dioelfshoes"
+	inhand_icon_state = null 

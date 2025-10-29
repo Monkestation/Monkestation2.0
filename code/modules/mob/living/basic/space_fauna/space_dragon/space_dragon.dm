@@ -36,8 +36,8 @@
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	melee_attack_cooldown = CLICK_CD_MELEE
-	mob_size = MOB_SIZE_LARGE
-	armour_penetration = 30
+	mob_size = MOB_SIZE_HUGE
+	armour_penetration = 75
 	pixel_x = -16
 	base_pixel_x = -16
 	maptext_height = 64
@@ -100,7 +100,7 @@
 
 /// Select scale colour with the colour picker
 /mob/living/basic/space_dragon/proc/select_colour()
-	chosen_colour = input(src, "What colour would you like to be?" ,"Colour Selection", COLOR_WHITE) as color|null
+	chosen_colour = tgui_color_picker(src, "What colour would you like to be?", "Colour Selection", COLOR_WHITE)
 	if(!chosen_colour) // Redo proc until we get a color
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()

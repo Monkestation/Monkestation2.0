@@ -2,17 +2,20 @@
 	name = "Paradox Clone"
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_SPOOKY, TAG_TARGETED)
 	typepath = /datum/round_event/antagonist/solo/ghost/paradox_clone
-	antag_flag = ROLE_WIZARD
+	antag_flag = ROLE_PARADOX_CLONE
+	track = EVENT_TRACK_MAJOR
 	antag_datum = /datum/antagonist/paradox_clone
 	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	maximum_antags = 1
 	required_enemies = 2
-	weight = 4
+	weight = 6
 	max_occurrences = 2
 	prompted_picking = TRUE
 
@@ -32,22 +35,43 @@
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
-	if(prompted_picking)
-		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
-	for(var/i in 1 to antag_count)
-		if(!candidates.len)
-			break
-		var/mob/candidate = pick_n_take(candidates)
+	var/list/cliented_list = list()
+	for(var/mob/living/mob as anything in candidates)
+		cliented_list += mob.client
+	if(length(cliented_list))
+		mass_adjust_antag_rep(cliented_list, 1)
+
+
+	if(prompted_picking)
+		candidates = SSpolling.poll_ghost_candidates(
+			"Would you like to be a paradox clone?",
+			check_jobban = ROLE_PARADOX_CLONE,
+			poll_time = 20 SECONDS,
+			alert_pic = /datum/antagonist/paradox_clone,
+			role_name_text = "paradox clone",
+			chat_text_border_icon = /datum/antagonist/paradox_clone,
+		)
+
+	var/list/weighted_candidates = return_antag_rep_weight(candidates)
+	var/selected_count = 0
+	while(length(weighted_candidates) && selected_count < antag_count)
+		var/client/candidate_ckey = pick_n_take_weighted(weighted_candidates)
+		var/client/candidate_client = GLOB.directory[candidate_ckey]
+		if(QDELETED(candidate_client) || QDELETED(candidate_client.mob))
+			continue
+		var/mob/candidate = candidate_client.mob
+		candidate_client.prefs?.reset_antag_rep()
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		clone_victim = find_original()
 		new_human = duplicate_object(clone_victim, pick(possible_spawns))
-		new_human.key = candidate.key
+		new_human.PossessByPlayer(candidate_ckey)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind
+		selected_count++
 	setup = TRUE
 
 

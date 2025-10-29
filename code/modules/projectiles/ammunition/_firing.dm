@@ -1,14 +1,29 @@
+
+/**
+ * Fires the bullet in this casing
+ *
+ * * target - what was clicked on (where the bullet will go)
+ * * user - who is firing the bullet
+ * * params - click params. like x, y, shift, etc
+ * * distro - how much the bullet will spread
+ * * quiet - if the bullet is suppressed
+ * * zone_override - optional, the zone the bullet will aim for. if not supplied, uses the user's selected zone
+ * * spread - how much the bullet will spread
+ * * fired_from - the object that fired the bullet
+ */
 /obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	distro += variance
 	var/targloc = get_turf(target)
 	ready_proj(target, user, quiet, zone_override, fired_from)
+	var/obj/projectile/thrown_proj
 	if(pellets == 1)
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread
 				spread = round(1 - 0.5) * distro
-		if(!throw_proj(target, targloc, user, params, spread, fired_from))
+		thrown_proj = throw_proj(target, targloc, user, params, spread, fired_from)
+		if(isnull(thrown_proj))
 			return FALSE
 	else
 		if(isnull(loaded_projectile))
@@ -29,6 +44,7 @@
 			var/throwtarget = get_step(fired_from, get_dir(target, fired_from))
 			firer.safe_throw_at(throwtarget, 1, 2)
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_FIRE_CASING, target, user, fired_from, randomspread, spread, zone_override, params, distro, thrown_proj)
 	return TRUE
 
 /obj/item/ammo_casing/proc/tk_firing(mob/living/user, atom/fired_from)
@@ -41,10 +57,7 @@
 	loaded_projectile.firer = user
 	loaded_projectile.fired_from = fired_from
 	loaded_projectile.hit_prone_targets = (user.istate & ISTATE_HARM)
-	if (zone_override)
-		loaded_projectile.def_zone = zone_override
-	else
-		loaded_projectile.def_zone = user.zone_selected
+	loaded_projectile.def_zone = zone_override || user.zone_selected
 	loaded_projectile.suppressed = quiet
 
 	if(isgun(fired_from))
@@ -58,6 +71,8 @@
 	if(reagents && loaded_projectile.reagents)
 		reagents.trans_to(loaded_projectile, reagents.total_volume, transfered_by = user) //For chemical darts/bullets
 		qdel(reagents)
+
+	SEND_SIGNAL(src, COMSIG_CASING_READY_PROJECTILE, target, user, quiet, zone_override, fired_from)
 
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(fired_from)

@@ -22,18 +22,21 @@
 		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
 		return
 
+	if (SEND_SIGNAL(src, COMSIG_PRE_MOB_CHANGED_TYPE) & COMPONENT_BLOCK_MOB_CHANGE)
+		return
+
 	var/mob/desired_mob
 	if(isturf(location))
 		desired_mob = new new_type(location)
 	else
 		desired_mob = new new_type(src.loc)
 
-	if(!desired_mob || !ismob(desired_mob))
+	if(!ismob(desired_mob))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
 		qdel(desired_mob)
 		return
 
-	if( istext(new_name) )
+	if(istext(new_name) )
 		desired_mob.name = new_name
 		desired_mob.real_name = new_name
 	else
@@ -43,13 +46,13 @@
 	if(has_dna() && desired_mob.has_dna())
 		var/mob/living/carbon/old_mob = src
 		var/mob/living/carbon/new_mob = desired_mob
-		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
-		new_mob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+		old_mob.dna.copy_dna(new_mob.dna, NONE)
+		new_mob.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
 		var/mob/living/carbon/human/new_human = desired_mob
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()
-		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+		new_human.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 	//Ghosts have copys of their minds, but if an admin put somebody else in their og body, the mind will have a new mind.key
 	//	and transfer_to will transfer the wrong person since it uses mind.key
@@ -60,7 +63,7 @@
 
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
-		desired_mob.key = key
+		desired_mob.PossessByPlayer(key)
 
 	SEND_SIGNAL(src, COMSIG_MOB_CHANGED_TYPE, desired_mob)
 	if(delete_old_mob)

@@ -26,7 +26,7 @@
 		PROC_REF(delete_self),
 	)
 
-/datum/component/admin_popup/Destroy(force, silent)
+/datum/component/admin_popup/Destroy(force)
 	var/client/parent_client = parent
 
 	parent_client?.screen -= admin_popup
@@ -83,7 +83,7 @@
 	/// The `world.time` when the last color update occurred.
 	var/last_update_time = 0
 
-/atom/movable/screen/admin_popup/Initialize(mapload, ...)
+/atom/movable/screen/admin_popup/Initialize(mapload, datum/hud/hud_owner, ...)
 	. = ..()
 
 	START_PROCESSING(SSobj, src)
@@ -104,9 +104,9 @@
 
 	last_color_index = (last_color_index % colors.len) + 1
 
-	var/message = "<b style='color: [colors[last_color_index]]; text-align: center; font-size: 32px'>"
-	message += "HEY! An admin is trying to talk to you!<br>Check your chat window, and click their name to respond!"
-	message += "</b>"
+	var/message = "<span style='color: [colors[last_color_index]]; text-align: center; font-size: 24pt'>"
+	message += "HEY!<br>An admin is trying to talk to you!<br>Check your chat window,<br>and click their name to respond!"
+	message += "</span>"
 
 	maptext = MAPTEXT(message)
 	last_update_time = world.time

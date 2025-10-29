@@ -1,0 +1,298 @@
+2024-02-10:
+  Absolucy:
+  - bugfix: Fix the hypnotic whisper donator items not having any actual pizazz to
+      the whisper.
+  - balance: The hacked serverlink implant is no longer job-restricted.
+  - qol: The hacked serverlink implant can now do sleeper agent surgery if the user
+      has the relevant objective.
+  - balance: The serverlink R&D tech node is no longer locked behind BEPIS tech (bitrunners
+      literally never buy the techdisks anyways)
+  - bugfix: Fix broken disposal piping in the DeltaStation curator study.
+  - bugfix: Fix succumb last words being double-encoded (i.e `i'm` becoming `i&#39;lm`)
+  - qol: Changed directional area names to be less confusing, i.e "Fore Maintenance"
+      is now "North Maintenance", and "Port Quarter Solars" is now "Southwest Solars".
+  - rscdel: Removed "VALID", "AHELP", "ICKY", and "OCKY" from the possible Tourettes
+      phrases.
+  - rscadd: Added "MROW" to the possible possible Tourettes phrases.
+  Absolucy, ChungusGamer666, GPeckman:
+  - rscadd: Burning items now get (small) smoke particles. Sick. (ChungusGamer666)
+  - bugfix: Burning objects now clear their burning overlay properly. (ChungusGamer666)
+  - qol: Examining burning objects will always tell you that they are burning. (ChungusGamer666)
+  - bugfix: The fire visual on mobs should no longer persist after the fire has been
+      extinguished. (GPeckman)
+  CannibalHunter:
+  - rscadd: Added a new traitor weapon. The "Whispering-Jester .45"!
+  DexeeXI:
+  - rscadd: :)
+  DimWhat:
+  - bugfix: Fixed bodytype swapping in magic mirrors.
+  - bugfix: Made a few clothing items lacking alternate sprites nonadjustable.
+  - bugfix: Cowboy sec hats no longer make you bald
+  DrDiasyl aka DrTuxedo#0931, Absolucy:
+  - qol: Now blocking an attack will play a sound and display a spark effect, giving
+      back feedback
+  - sound: 'parry.ogg was updated to a better-sounding version sound: shieldbash.ogg
+      no longer has noise and unnecessary silence sound: New block_shield.ogg and
+      block_blade.ogg for shields and energy swords'
+  - code_imp: Cultists items no longer have their own code for playing parrying sounds
+  FernandoJ8:
+  - sound: The Guide to Advanced Mimery book series now only make a very faint noise
+      when turning their pages, in order to match their description
+  KittyNoodle:
+  - rscadd: 5 additional tapes to every radio room.
+  - rscdel: Removes a lot of kat artifacts across tramstation
+  - bugfix: Fixes disposals on tramstation and deltastation.
+  - bugfix: Deltastation xenobio maints is once again wired correctly
+  - bugfix: Fixes the broken access on engi maints in tramstation.
+  KnigTheThrasher:
+  - rscdel: Removed underwear from lizards
+  - rscdel: Ashwalkers are unable to wear underclothes
+  KnigTheThrasher, DimWhat:
+  - rscadd: Added updated digitigrade sprites from DimWhat
+  - rscdel: Removed normal leg type from lizards
+  Melbert, Absolucy:
+  - balance: Transformation sting now lasts 8 minutes, down from permanent. However,
+      the effect is paused for dead and stasis mobs, making it permanent SO LONG AS
+      they stay dead or in stasis. The effect is also permanent if used on a monkey.
+  - balance: Transformation sting now costs 33 chemicals, down from 50.
+  - balance: Transformation sting now costs 2 dna points, down from 3.
+  NicoDeLuna:
+  - rscadd: Elite Simian hairstyle
+  SeeBeeSee:
+  - bugfix: Food/seed items can no longer be composted regardless of distance, must
+      be adjacent.
+  - balance: Hard-capped killer tomatoes from having near-instant speed and potentially
+      infinite health/damage
+  The-Black-Screen:
+  - rscadd: added more badges to the main README file.
+  - image: added `fueled-by-potassium.svg` to `monkestation/badges`.
+  - spellcheck: fixed grammatical errors.
+  - code_imp: switched over to our links
+  carlarctg, Weird Orb, Ghommie, nikothedude, Jacquerel, MrMelbert, san7890, Helg2:
+  - image: Heavily reworks and resprites first aid analyzers. They now display if
+      they're happy, sad, angry, or warning you! Also a 'pricking' animation.
+  - rscadd: First aid analyzers are now found in all basic and specialized medkits.
+      Toxin medkits get a new* disease analyzer. Miners get a miner-colored one in
+      their box.
+  - balance: Scanning yourself with a first aid analyzer will 'create a holo-image
+      with treatment instructions next to your wounds', doubling the speed of treatment
+      of scanned wounds!
+  - sound: Health analyzers and gene scanners now have a scanning sound, courtesy
+      of CM.
+  - refactor: Refactored some wound code to make treatment duration changes and changes
+      in the description of wounds easier.
+  - bugfix: Fixed a dummy parent feature of the health analyzer (Verbose mode) showing
+      up, uselessly, on the disease and first aid subtypes.
+  - image: Surgical processors and slime scanners have recieved a similar resprite.
+  - bugfix: Woundscans no longer runtime
+  - bugfix: Normal health analyzers can no longer give the first aid bonus when woundscanning
+  - rscadd: Several common 'household' reagents can be used as improvised medicine
+      treatment.
+  - rscadd: Drinking tea will help mend (non-bone) wounds over time.
+  - rscadd: Flour and corn starch may be splashed onto wounds to help dry them up,
+      though they'll have a negative effect on burn wounds.
+  - rscadd: Added a new reagent, saltwater, made by combining table salt with water.
+  - rscadd: Table salt and saltwater can be splashed onto wounds as well, reducing
+      bleeding and improving sanitization and disinfection significantly. However,
+      the coarse undiluted salt will irritate the wounds, reducing clot rate and flesh
+      healing, and both of the reagents will increase a burn wound's infestation rate.
+  - rscadd: Altered Table Salt's recipe to just need sodium and chloride. Changed
+      the recipe of Pentetic Acid and Heparin to need table salt (sodium x chloride)
+      and thus slightly altered the total output of those reagents (pentacid went
+      from 5u per reaction to 4u, heparin 4u->3u)
+  - rscadd: Saline-Glucose Solution now needs 2u of saltwater and 1u of sugar, meaning
+      the overall recipe should be completely unchanged in practice. Contact me on
+      discord if any issues arise from these chemical changes!
+  - qol: First aid analyzers now give easy-to-understand direct information, with
+      the specific recommended treatments bolded in the analysis text. They also have
+      a 'unique' extra bit of info, telling you about improvised ways to remedy your
+      wound.
+  - balance: Bone gel standart amount has been increased to 5.
+  thgvr, KnigTheThrasher:
+  - rscadd: '*thump and *squeal emotes for sarathi aka lizardpeople'
+  - rscadd: upgraded *weh
+  wraith-54321:
+  - bugfix: you can no longer hit people with clockwork weapons from range
+2024-02-13:
+  Absolucy:
+  - rscadd: Painkillers (i.e morphine, miner's salve) now actually induce analgesic
+      effects, preventing various pain-related effects, such as screaming due to pain,
+      and also provides a speed bonus during surgery.
+  - rscadd: The tenacity trauma (traumatic neuropathy) also applies analgesic effects.
+  - refactor: Simplified code related to reagents adding traits.
+  - qol: Prevent certain antagonists from being fucked over by associated phobias.
+      Heretics (+minions) will ignore fear of heresy, magical antags will ignore fear
+      of the supernatural,, bloodsuckers (+vassals) and blood cultists will ignore
+      fear of blood.
+  Gboster-0:
+  - rscadd: You can now hide a chameleon gear's action buttons by using a multitool
+      on them
+  KnigTheThrasher:
+  - rscdel: :)
+  Maximo and DimWhat:
+  - rscadd: Added a bunny suit, bunny ears, tail coat, heels, and necktie collar to
+      the autodrobe, bardrobe, and monkeshop.
+  - rscadd: Added a a specialized syndicate bunny costume set to the Badassery section
+      of the buylist. I regret nothing.
+  - rscadd: Added a bunny magician set to the magivend.
+  - rscadd: A bunch of misc bunny suit sets as well.
+  - balance: Added syndicate heels to the maid kit for parity.
+  - code_imp: Added code support for tieing/untieing more ties.
+  NicoDeLuna:
+  - rscadd: Adds new Culinary Artisan clothes to chefdrobe
+  ? '[Gandalf2k15](https://github.com/Gandalf2k15), [Nerev4r](https://github.com/Nerev4r),
+    [tf-4](https://github.com/tf-4), [ArcaneMusic](https://github.com/ArcaneMusic),
+    [Zenitheevee](https://github.com/Zenitheevee), [Gandalf2k15](https://github.com/Gandalf2k15),
+    [YakumoChen](https://github.com/YakumoChen), [OrionTheFox](https://github.com/OrionTheFox),
+    [RatFromTheJungle](https://github.com/RatFromTheJungle), [ErdinyoBarboza](https://github.com/ErdinyoBarboza),
+    [Zonespace27](https://github.com/Zonespace27), [Useroth](https://github.com/Useroth),
+    [Paxilmaniac](https://github.com/Paxilmaniac), [Zergspower](https://github.com/Zergspower),
+    [vinylspiders](https://github.com/vinylspiders), [out-of-phaze](https://github.com/out-of-phaze),
+    [Hatterhat](https://github.com/Hatterhat), [burgerenergy](https://github.com/burgerenergy)'
+  : - rscadd: Ports microfusion energy guns
+2024-02-16:
+  Absolucy:
+  - bugfix: Fix kidnap objectives having incorrect area names (i.e Port instead of
+      West)
+  - rscadd: Added upgraded blood filtering surgeries! These are obtained through the
+      same research as its wound-tending counterparts, and work faster while also
+      removing toxin damage.
+  - balance: Very slightly reduced the amount of reagents that blood filtering purges
+      (by around 2%), to compensate for the increased speed offered by the upgraded
+      surgeries.
+  CannibalHunter:
+  - rscadd: Added an Arcade to Centcom!
+  DimWhat:
+  - bugfix: fixed bunny suits, tailcoats, heels, and artisan chef not looking right
+      with lizards
+  Gboster-0:
+  - balance: traitors ascending into wizardhood no longer have their items deleted,
+      instead they are stripped in the wizard den
+  TTNT789:
+  - rscadd: beast claw
+2024-02-18:
+  Absolucy:
+  - qol: Chat messages relating to antag/event token submissions are now properly
+      formatted.
+2024-02-20:
+  KittyNoodle:
+  - rscadd: Adds an admin office for AbberantQuerist.
+  Seven:
+  - bugfix: Fixes changelings not being put into their headslug when using last resort
+  - bugfix: 'Fixes changeling headslugs not putting their eggs into dead bodies /:cl:'
+2024-02-21:
+  Absolucy:
+  - rscadd: a goose for the tram to run over
+  - balance: Slimes feed more aggressively on mindless mobs and monkeys, up to 2x
+      faster on a mindless monkey.
+  - qol: Slimes will now automatically attach onto a monkey placed next to them with
+      a xenobio console (the slime that's grown the most will always be the one to
+      attach, as long as it's not already feeding on something)
+  DimWhat:
+  - rscadd: Buffed syndicate heels damage and made them a pointy weapon
+  - image: Updated the QM and cargotech jumpsuit/skirt sprites
+  Gboster-0:
+  - bugfix: the PTL no longer caps its power output at 2.5 Terawatts due to an obscure
+      bug
+  The_Awful and DimWhat:
+  - rscadd: Added the ability to store a bonus tiny item in bunnysuits. The syndi
+      one holds small items.
+  ? '[OrionTheFox](https://github.com/OrionTheFox), [Thunder12345](https://github.com/Thunder12345),
+    [sadkris](https://github.com/sadkris), [CRITAWAKETS](https://github.com/CRITAWAKETS)'
+  : - image: Resprited a majority of undershirts (OrionTheFox)
+    - rscadd: Added new fishnet style socks, in a choice of three lengths (Thunder12345)
+    - rscadd: Transgender-themed thigh-highs and knee-highs to the clothing options
+        for socks (sadkris)
+    - rscadd: Added in a new sock type, Thigh-high and Knee-high ace socks. (CRITAWAKETS)
+2024-02-22:
+  Absolucy:
+  - bugfix: Fix the supermatter cascade eating the server itself on icebox
+  - bugfix: Fixed a runtime with the SM cascade from a mistyped check
+  - bugfix: Fixed a potential roundstart runtime in the Achievements subsystem.
+  DimWhat:
+  - rscadd: Added a new wand for wizards to purchase
+  - rscadd: Added a plasmabunny clothing set
+  - image: Fixed a few sprite errors in the syndi and british bunnysuits.
+  - bugfix: 'Made the bowtie collar layer properly
+
+      fixes a strange bug with greyscale bunnysuits for lizards'
+  - spellcheck: fixed a few descriptions to the bunny sets.
+2024-02-23:
+  Absolucy:
+  - refactor: Cleaned up unneeded repetitive code for antag token granting
+  - config: Token redeemable antags are now config-based instead of hardcoded.
+  - bugfix: The menu to choose an antag now shows the antag's name instead of the
+      datum typepath.
+  Melbert:
+  - refactor: Fire effects get added to mobs in a different way now. Maybe it will
+      get stuck less. Report any oddities.
+  dwasint:
+  - rscadd: antag rep, for every roll you go without being antag your odds increase,
+      resetting when you become and antag, passing a roll won't remove your rep
+  - rscadd: replays are back
+2024-02-24:
+  Gboster-0:
+  - bugfix: Artefacts will no longer fail to activate their faults inside of peoples
+      backpacks. Beware!
+2024-02-25:
+  MrMelbert, mc-oofert:
+  - bugfix: Stairs are now resistant to being shoved by mobs with high move force.
+  - bugfix: fixed border-only firedoors being able to be walked through while closed
+2024-02-26:
+  DimWhat:
+  - rscadd: Arachnids have adopted the concept of gender.
+  - rscadd: Added ethereal gender and bodytype options.
+  - image: fixed some ethereal sprite inconsistencies.
+  - rscadd: Added dimorphism to florans.
+  - image: Fixes a few issues with bunnysuit and tailcoat sprites
+2024-02-27:
+  Absolucy:
+  - bugfix: The Monster Hunters midround event no longer has a blank name.
+  - rscadd: You can now light cigarettes by striking it across your local ethereal!
+      Don't worry, it doesn't harm them, although they may find it annoying.
+  AlbertNanotracen:
+  - rscadd: Voltaic Yellow Wine - New "base" drink, found in booze-o-mat. No special
+      effects besides acting as a weak ethereal food. Not very potent in terms of
+      alcohol.
+  - rscadd: Telepole - New mixed drink themed after thunderstorms, gives the same
+      shock-resist grey bull does. Made from 1 part Voltaic Wine, 1 Part Sake, and
+      2 parts Dark & Stormy. Moderately potent.
+  - rscadd: Pod Tesla - New mixed drink, themed after the old removed tesla engine
+      (the singulo gets a cocktail, it should too!) Grants a brave - bull phobia resist,
+      and a stronger grey bull shock resist allowing you to (temporarily) resist tesla
+      arcs from reactive armor and the SM's tesla coils. Gives a pleasant thought
+      to whoever drank it, because this thing is a pain to make. Made from 5 parts
+      admiralty, 5 parts telepole, and 3 parts brave bull. Highly potent.
+  - qol: Unsure if this counts as QOL or balance, but the fact sol dry is in 3 different
+      cocktails but the bartender has to buy 30u cans of it made me feel it deserved
+      being added to the soda dispenser.
+  - image: 'Added graphics for the above drinks, shown below, from left to right:
+      Pod tesla, Voltaic Yellow wine, Telepole, Voltaic Wine (bottle)
+
+      <img width="171" alt="image"
+
+      src="https://github.com/tgstation/tgstation/assets/69398298/901b2f64-1723-44b6-8f78-ef21bd477d96">'
+  - bugfix: Ice cups no longer instantly melt when vended
+  DimWhat:
+  - bugfix: Fixed the bunny wand not giving you cursed gloves
+  Melbert:
+  - bugfix: Fixes hallucination and encrypted announcements printing to the Newscaster.
+  lessthnthree:
+  - qol: Air alarms now display the source of triggered fire alarms/firedoors
+2024-02-28:
+  13spacemen, Kapu1178, KnigTheThrasher:
+  - refactor: Footprint sprites are now based on your shoes and legs, shoes have priority
+  - image: Monkey legs now produce pawprints instead of footprints
+  - rscadd: Footprint support for simians and lizards
+  Absolucy:
+  - bugfix: Vaulting over climbables now displays the proper name of the object, instead
+      of just `/datum/element/climbable`
+  AlbertNanotracen:
+  - bugfix: Dirty ice cups should work as intended
+  - rscadd: Added wellcheers, a contraband soda with various side effects.
+  - image: resprites all cans in the drinks icon file
+  - image: resprites the canholder sprite in storage.dmi
+2024-02-29:
+  lmenvs:
+  - rscadd: Adds Rickdude's Nukie tier redeems.  Thank you!
+  - rscadd: Adds Django's donator items, sprited by Dimwhat.  Thank you!

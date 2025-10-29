@@ -35,7 +35,7 @@
 	/// Changes the amount of time needed for a plant to become harvestable.
 	var/production = 25
 	/// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/yield = 3
+	var/yield = 30
 	/// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
@@ -71,8 +71,6 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
-	/// How many pixels on the Y axis this plant should be shifted.
-	var/seed_offset = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -97,7 +95,7 @@
 	var/list/generated_infusions = list()
 	for(var/datum/hydroponics/plant_mutation/infusion/listed_item as anything in infusion_mutations)
 		var/datum/hydroponics/plant_mutation/infusion/created_list_item = new listed_item
-		generated_mutations += created_list_item
+		generated_infusions += created_list_item
 	infusion_mutations = generated_infusions
 
 	if(!nogenes) // not used on Copy()
@@ -184,7 +182,7 @@
 	copy_seed.icon_dead = icon_dead
 	copy_seed.growthstages = growthstages
 	copy_seed.growing_icon = growing_icon
-	copy_seed.seed_offset = seed_offset
+	copy_seed.plant_icon_offset = plant_icon_offset
 	copy_seed.traits_in_progress = traits_in_progress
 
 	if(istype(src, /obj/item/seeds/spliced))
@@ -233,10 +231,6 @@
 /obj/item/seeds/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/projectile/energy/flora/yield))
 		var/rating = 1
-		if(istype(loc, /obj/machinery/hydroponics))
-			var/obj/machinery/hydroponics/H = loc
-			rating = H.rating
-
 		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
@@ -247,69 +241,84 @@
 
 // Harvest procs
 /obj/item/seeds/proc/getYield()
-	var/return_yield = yield
-
-	var/obj/machinery/hydroponics/parent = loc
-	if(istype(loc, /obj/machinery/hydroponics))
-		if(parent.yieldmod == 0)
-			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
-		else
-			return_yield *= (parent.yieldmod)
-
-	return return_yield
+	return yield
 
 
 /obj/item/seeds/proc/harvest(mob/user)
 	///Reference to the tray/soil the seeds are planted in.
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
-	///Count used for creating the correct amount of results to the harvest.
-	var/t_amount = 0
+	var/atom/movable/parent = loc //for ease of access
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.drop_location() : parent.drop_location() //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
-	var/product_count = getYield()
-
-	if(product_count >= 10)
-		product_count = 10 + log(1.02) * (getYield() - 1)
+	var/seed_harvest_ratio = 0.2
+	var/seedless = get_gene(/datum/plant_gene/trait/seedless)
+	///the value of yield that the harvest amount stops being linear and slows down
+	var/yield_linearity_breakpoint = 100
+	///linear region growth coeff
+	var/harvest_linear_coeff = 0.1
+	///harvest amount gets close to 20 as yield gets close to +infinity
+	var/maximum_harvest_amount = 20
+	///to be calculated later based on yield
+	var/harvest_amount = 0
+	var/harvest_counter = 0
+	var/maximum_seed_production = 0
+	var/seed_counter = 0
+	var/plant_yield = getYield()
 
 	if(user.client)
-		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 50)
+		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 20)
 
-	while(t_amount < product_count)
-		if(prob(25))
+	if(plant_yield >= yield_linearity_breakpoint)
+		harvest_amount = floor(qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield))
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+
+	else
+		harvest_amount = floor(plant_yield * harvest_linear_coeff)
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+			if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
+				maximum_seed_production = 1
+
+	while(harvest_counter < harvest_amount)
+		while(seed_counter < maximum_seed_production)
 			var/obj/item/seeds/seed_prod
-			if(prob(50) && has_viable_mutations())
+			if(prob(65) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
 				ADD_TRAIT(seed_prod, TRAIT_PLANT_WILDMUTATE, "mutated")
 			else
 				seed_prod = src.Copy_drop(output_loc)
-			result.Add(seed_prod) // User gets a consumable
-			t_amount++
+			result.Add(seed_prod)
+			harvest_counter++
+			seed_counter++
+		var/obj/item/food/grown/item_grown
+		if(prob(10) && has_viable_mutations())
+			item_grown = create_valid_mutation(output_loc)
 		else
-			var/obj/item/food/grown/t_prod
-			if(prob(10) && has_viable_mutations())
-				t_prod = create_valid_mutation(output_loc)
-			else
-				t_prod = new product(output_loc, src)
-				if(parent.myseed.plantname != initial(parent.myseed.plantname))
-					t_prod.name = parent.myseed.plantname
-				t_prod.seed.name = parent.myseed.name
-				t_prod.seed.desc = parent.myseed.desc
-				t_prod.seed.plantname = parent.myseed.plantname
-			result.Add(t_prod) // User gets a consumable
-			if(!t_prod)
-				return
-			t_amount++
-			product_name = t_prod.seed.plantname
-	if(product_count >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
-	parent.update_tray(user, product_count)
-	parent.update_overlays()
+			if(!product)
+				harvest_counter++
+				continue
+			item_grown = new product(output_loc, src)
+			if(plantname != initial(plantname))
+				item_grown.name = plantname
+			if(istype(item_grown))
+				item_grown.seed.name = name
+				item_grown.seed.desc = desc
+				item_grown.seed.plantname = plantname
+		result.Add(item_grown) // User gets a consumable
+		if(!item_grown)
+			return
+		harvest_counter++
+		if(istype(item_grown))
+			product_name = item_grown.seed.plantname
+	user.log_message("harvested [harvest_amount] of [product_name] (with [seed_counter] seeds)", LOG_GAME)
+	if(harvest_amount >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result
+
 
 /**
  * This is where plant chemical products are handled.
@@ -321,46 +330,46 @@
 /obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-	var/reagent_max = 0
+	var/total_reagents = 0
+	var/potency_rate = potency/100
 	for(var/rid in reagents_add)
-		reagent_max += reagents_add[rid]
+		total_reagents += reagents_add[rid] * potency_rate
 	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
-		for(var/rid in reagents_add)
-			var/reagent_overflow_mod = reagents_add[rid]
-			if(reagent_max > 1)
-				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
-			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
-			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-			var/list/data
-			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-				data = list("blood_type" = "O-")
-			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-				data = grown_edible.tastes // apple tastes of apple.
-			T.reagents.add_reagent(rid, amount, data)
+		if(total_reagents > 0)
+			var/grown_edible_volume = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
+			var/fitting_proportion = min(1/total_reagents, 1)
+			for(var/rid in reagents_add)
+				var/amount = max(1, round(grown_edible_volume * potency_rate * reagents_add[rid] * fitting_proportion, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
+				var/list/data
+				if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
+					data = list("blood_type" = /datum/blood_type/crew/human/o_minus)
+				if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
+					data = grown_edible.tastes // apple tastes of apple.
+				T.reagents.add_reagent(rid, amount, data)
 
-		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
-			grown_edible.on_juice()
-			grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
+			//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
+			if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
+				grown_edible.on_juice()
+				grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
 
-		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
-		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+			/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
+			var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 
-		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
-		if(get_gene(/datum/plant_gene/trait/chem_heating))
-			T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
-			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
-			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
-			T.reagents.handle_reactions()
-			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
-		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
-		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
-			T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
-			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
-			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
-			T.reagents.handle_reactions()
-			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
+			// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
+			if(get_gene(/datum/plant_gene/trait/chem_heating))
+				T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
+				T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+				T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
+				T.reagents.handle_reactions()
+				playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
+			// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
+			else if(get_gene(/datum/plant_gene/trait/chem_cooling))
+				T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
+				T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+				T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
+				T.reagents.handle_reactions()
+				playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
 /// Setters procs ///
 
@@ -421,11 +430,6 @@
 		return
 
 	var/max_potency = MAX_PLANT_YIELD
-	for(var/datum/plant_gene/trait/trait in genes)
-		if(trait.trait_flags & TRAIT_LIMIT_POTENCY)
-			max_potency = 100
-			break
-
 	potency = clamp(potency + adjustamt, 0, max_potency)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 	if(C)
@@ -559,7 +563,7 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(O))
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
 		if(isnull(choice))
 			return
@@ -607,13 +611,20 @@
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
-		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
+		var/datum/plant_gene/reagent/R = new(pick_reagent(), random_amount) // monkestation edit: pick_reagent proc
 		if(R.can_add(src))
 			if(!R.try_upgrade_gene(src))
 				genes += R
 		else
 			qdel(R)
 	reagents_from_genes()
+
+// monkestation start: pick_reagent proc
+/// Returns a random reagent ID.
+/// Just a wrapper around [get_random_reagent_id] by default, this exists so subtypes can override it.
+/obj/item/seeds/proc/pick_reagent()
+	return get_random_reagent_id()
+// monkestation end
 
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)

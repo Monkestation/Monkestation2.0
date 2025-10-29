@@ -2,7 +2,7 @@
 	holder_type = /obj/machinery/door/airlock/shell
 	proper_name = "Circuit Airlock"
 
-/datum/wires/airlock/shell/on_cut(wire, mend)
+/datum/wires/airlock/shell/on_cut(wire, mend, source)
 	// Don't allow them to re-enable autoclose.
 	if(wire == WIRE_TIMING)
 		return
@@ -27,15 +27,16 @@
 /obj/machinery/door/airlock/shell/canAIControl(mob/user)
 	return FALSE
 
-/obj/machinery/door/airlock/shell/canAIHack(mob/user)
-	return FALSE
+// MONKESTATION REMOVAL, what if we couldn't bypass the entire point of a AI wire?
+///obj/machinery/door/airlock/shell/canAIHack(mob/user)
+//	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	return isAdminGhostAI(user)
 
-/obj/machinery/door/airlock/shell/set_wires()
+/obj/machinery/door/airlock/shell/get_wires()
 	return new /datum/wires/airlock/shell(src)
 
 /obj/item/circuit_component/airlock

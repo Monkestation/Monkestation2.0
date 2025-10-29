@@ -10,7 +10,7 @@
 	module_type = MODULE_TOGGLE
 	complexity = 4
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	/// Whether or not the cloak turns off on bumping.
@@ -28,7 +28,7 @@
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -44,7 +44,7 @@
 
 	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	on_deactivation(display_message = TRUE, deleting = FALSE)
 
 /obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
@@ -73,7 +73,7 @@
 	bumpoff = FALSE
 	stealth_alpha = 20
 	active_power_cost = DEFAULT_CHARGE_DRAIN
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
 ///Camera Vision - Prevents flashes, blocks tracking.
@@ -121,10 +121,6 @@
 	icon_state = "hacker"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
-	/// Minimum amount of power we can drain in a single drain action
-	var/mindrain = 200
-	/// Maximum amount of power we can drain in a single drain action
-	var/maxdrain = 400
 	/// Whether or not the communication console hack was used to summon another antagonist.
 	var/communication_console_hack_success = FALSE
 	/// How many times the module has been used to force open doors.
@@ -162,7 +158,7 @@
 	icon_state = "recall"
 	removable = FALSE
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/weapon_recall)
 	cooldown_time = 0.5 SECONDS
 	/// The item linked to the module that will get recalled.
@@ -193,7 +189,7 @@
 		return
 	var/distance = get_dist(mod.wearer, linked_weapon)
 	var/in_view = (linked_weapon in view(mod.wearer))
-	if(!in_view && !drain_power(use_power_cost * distance))
+	if(!in_view && !drain_power(use_energy_cost * distance))
 		balloon_alert(mod.wearer, "not enough charge!")
 		return
 	linked_weapon.forceMove(linked_weapon.drop_location())
@@ -251,14 +247,14 @@
 		Due to utilizing a skintight dampening shield, this one is entirely sealed against electromagnetic interference; \
 		it also dutifully protects the secrets of the Spider Clan from unknowing outsiders."
 	icon_state = "dnalock_ninja"
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 
 /obj/item/mod/module/dna_lock/reinforced/on_mod_activation(datum/source, mob/user)
 	. = ..()
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
-	if(mod.ai == user)
-		to_chat(mod.ai, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+	if(mod.ai_assistant == user)
+		to_chat(mod.ai_assistant, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
 		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
@@ -276,7 +272,7 @@
 		it will piss off everyone around them."
 	icon_state = "emp_pulse"
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	cooldown_time = 8 SECONDS
 
 /obj/item/mod/module/emp_shield/pulse/on_use()
@@ -285,89 +281,52 @@
 		return
 	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
 	empulse(src, heavy_range = 4, light_range = 6)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
-///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
-/obj/item/mod/module/status_readout
-	name = "MOD status readout module"
-	desc = "A once-common module, this technology went unfortunately out of fashion; \
-		and right into the arachnid grip of the Spider Clan. This hooks into the suit's spine, \
-		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
-		and even useful information such as their overall health and wellness."
-	icon_state = "status"
-	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
-	incompatible_modules = list(/obj/item/mod/module/status_readout)
-	tgui_id = "status_readout"
-
-/obj/item/mod/module/status_readout/add_ui_data()
-	. = ..()
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
-	if(!length(mod.wearer?.diseases))
-		return
-	var/list/viruses = list()
-	for(var/datum/disease/virus as anything in mod.wearer.diseases)
-		var/list/virus_data = list()
-		virus_data["name"] = virus.name
-		virus_data["type"] = virus.spread_text
-		virus_data["stage"] = virus.stage
-		virus_data["maxstage"] = virus.max_stages
-		virus_data["cure"] = virus.cure_text
-		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+/// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.
+/obj/item/mod/module/status_readout/ninja
+	name = "MOD Spider Clan status readout module"
+	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
+		and, according to the extra markings on this particular unit's casing, right into the arachnid grip of the Spider Clan. \
+		Like other similar units, this one hooks into the suit's spine, and is capable of capturing and displaying \
+		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
+		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
+	display_time = TRUE
+	death_sound = null
+	death_sound_volume = null
 
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
 	name = "MOD energy net module"
 	desc = "A custom-built net-thrower. While conventional implementations of this capturing device \
-		tilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
+		utilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
 		trapping field capable of immobilizing even the strongest opponents."
 	icon_state = "energy_net"
 	removable = FALSE
 	module_type = MODULE_ACTIVE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 5 SECONDS
 	/// List of all energy nets this module made.
 	var/list/energy_nets = list()
+
+/obj/item/mod/module/energy_net/on_suit_deactivation(deleting)
+	for(var/obj/structure/energy_net/net as anything in energy_nets)
+		net.atom_destruction(ENERGY)
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
-		balloon_alert(mod.wearer, "invalid target!")
-		return
-	var/mob/living/living_target = target
-	if(locate(/obj/structure/energy_net) in get_turf(living_target))
-		balloon_alert(mod.wearer, "already trapped!")
-		return
-	for(var/turf/between_turf as anything in get_line(get_turf(mod.wearer), get_turf(living_target)))
-		if(between_turf.density)
-			balloon_alert(mod.wearer, "not through obstacles!")
-			return
-	if(IS_SPACE_NINJA(mod.wearer))
+	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
-	mod.wearer.Beam(living_target, "n_beam", time = 1.5 SECONDS)
-	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
-	net.affected_mob = living_target
-	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
-	if(living_target.buckled)
-		living_target.buckled.unbuckle_mob(living_target, force = TRUE)
-	net.buckle_mob(living_target, force = TRUE)
-	drain_power(use_power_cost)
+	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
+	net.preparePixelProjectile(target, mod.wearer)
+	net.firer = mod.wearer
+	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
 	energy_nets += net
@@ -470,7 +429,7 @@
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting)
 	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 
-/obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(charge_boost(attacking_item, user))
 		return TRUE
 	return ..()

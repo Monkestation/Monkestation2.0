@@ -143,7 +143,7 @@
 		affix_desc = "on [target.p_their()] sensitive antennae"
 		affix_desc_target = "on your highly sensitive antennae"
 		brutal_noogie = TRUE
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(user.dna?.check_mutation(/datum/mutation/hulk))
 		prefix_desc = "sickeningly brutal"
 		brutal_noogie = TRUE
 
@@ -178,7 +178,7 @@
 	var/damage = rand(1, 5)
 	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
 		damage += rand(3,7)
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(user.dna?.check_mutation(/datum/mutation/hulk))
 		damage += rand(3,7)
 
 	if(damage >= 5)
@@ -225,6 +225,12 @@
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
+	//MONKESTATION EDIT START
+	var/feeble = HAS_TRAIT(slapped, TRAIT_FEEBLE)
+	var/no_harm = feeble && HAS_TRAIT(user, TRAIT_PACIFISM) && slapped != user
+	if(no_harm)
+		slap_volume *= 0.5
+	//MONKESTATION EDIT END
 	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(/datum/status_effect/offering)
 	if(kiss_check && istype(kiss_check.offered_item, /obj/item/hand_item/kisser) && (user in kiss_check.possible_takers))
 		user.visible_message(
@@ -268,11 +274,29 @@
 				)
 	else
 		user.visible_message(
-			span_danger("[user] slaps [slapped]!"),
-			span_notice("You slap [slapped]!"),
-			span_hear("You hear a slap."),
+			//MONKESTATION EDIT START
+			// span_danger("[user] slaps [slapped]!"), - MONKESTATION EDIT ORIGINAL
+			// span_notice("You slap [slapped]!"), - MONKESTATION EDIT ORIGINAL
+			// span_hear("You hear a slap."), - MONKESTATION EDIT ORIGINAL
+			span_danger("[user] [no_harm?"gently ":""]slaps [slapped]!"),
+			span_notice("You [no_harm?"gently ":""]slap [slapped]!"),
+			span_hear("You hear a [no_harm?"light ":""]slap."),
+			//MONKESTATION EDIT END
 		)
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
+	//MONKESTATION EDIT START
+	if (feeble && !no_harm)
+		var/damage = 5
+		var/attack_direction = get_dir(user, slapped)
+		var/obj/item/bodypart/affecting = slapped.get_bodypart(slapped.get_random_valid_zone(user.zone_selected))
+		var/armor_block = slapped.run_armor_check(affecting, MELEE)
+		slapped.apply_damage(damage, BRUTE, affecting, armor_block, attack_direction = attack_direction)
+
+		slapped.visible_message(
+			span_danger("[user] hurt [slapped]!"),
+			span_userdanger("[user]'s slap really hurt!"),
+		)
+	//MONKESTATION EDIT END
 	return
 
 /obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
@@ -469,9 +493,10 @@
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hand_item/kisser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -489,6 +514,7 @@
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -524,6 +550,12 @@
 	color = COLOR_BLACK
 	kiss_type = /obj/projectile/kiss/death
 
+/obj/item/hand_item/kisser/syndie
+	name = "syndie kiss"
+	desc = "oooooo you like syndicate ur a syndiekisser"
+	color = COLOR_SYNDIE_RED
+	kiss_type = /obj/projectile/kiss/syndie
+
 /obj/projectile/kiss
 	name = "kiss"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -535,13 +567,21 @@
 	damage_type = BRUTE
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
+	var/silent_blown = FALSE
+
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
-	if(firer)
+	if(firer && !silent_blown)
 		name = "[name] blown by [firer]"
+
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
+	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
+
 	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
@@ -595,7 +635,6 @@
 	living_target.visible_message("<b>[living_target]</b> [other_msg]", span_userdanger("Whoa! [self_msg]"))
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
-	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -617,6 +656,18 @@
 	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
 
+// Based on energy gun characteristics
+/obj/projectile/kiss/syndie
+	name = "syndie kiss"
+	color = COLOR_SYNDIE_RED
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	damage_type = BURN
+	armor_flag = LASER
+	armour_penetration = 0
+	damage = 25
+	wound_bonus = -20
+	bare_wound_bonus = 40
+	silent_blown = TRUE
 
 /obj/projectile/kiss/french
 	name = "french kiss (is that a hint of garlic?)"

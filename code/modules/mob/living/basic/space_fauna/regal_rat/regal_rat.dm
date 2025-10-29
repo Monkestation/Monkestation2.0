@@ -62,6 +62,7 @@
 		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
 		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_chat_border_icon = /obj/item/food/cheese/wedge,\
 	)
 
 	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
@@ -104,7 +105,7 @@
 		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
 		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Sentient Rat Created",
 	)
 

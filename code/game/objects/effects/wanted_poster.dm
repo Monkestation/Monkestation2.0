@@ -84,7 +84,7 @@
 	var/textLen = min(length(text), 7)
 	var/startX = 16 - (2*textLen)
 	var/i
-	for(i=1; i <= textLen, i++)
+	for(i=1; i <= textLen; i++)
 		var/letter = uppertext(text[i])
 		var/icon/letter_icon = icon("icon" = 'icons/misc/Font_Minimal.dmi', "icon_state" = letter)
 		letter_icon.Shift(EAST, startX) //16 - (2*n)
@@ -93,9 +93,10 @@
 		poster_icon.Blend(letter_icon, ICON_OVERLAY)
 		startX = startX + 4
 
-/obj/structure/sign/poster/wanted/roll_and_drop(atom/location)
+/obj/structure/sign/poster/wanted/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
 	pixel_y = 0
 	var/obj/item/poster/rolled_poster = new poster_item_type(location, original_icon, wanted_name, desc, posterHeaderText, posterHeaderColor)
-	forceMove(rolled_poster)
+	if(!user?.put_in_hands(rolled_poster))
+		forceMove(rolled_poster)
 	return rolled_poster

@@ -3,7 +3,7 @@
 	name = "mail"
 	gender = NEUTER
 	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mail_small"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
@@ -64,6 +64,8 @@
 			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
 			ACCOUNT_CAR = COLOR_BEIGE,
 			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+			ACCOUNT_CMD = COLOR_BLUE_GRAY,
+			ACCOUNT_CC = COLOR_CENTCOM_GREEN,
 		)
 
 	// Icons
@@ -98,10 +100,10 @@
 		postmark_image.appearance_flags |= RESET_COLOR
 		add_overlay(postmark_image)
 
-/obj/item/mail/attackby(obj/item/W, mob/user, params)
+/obj/item/mail/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	// Destination tagging
-	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/destination_tag = W
+	if(istype(attacking_item, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/destination_tag = attacking_item
 
 		if(sort_tag != destination_tag.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
@@ -124,6 +126,7 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
+	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -171,7 +174,7 @@
 				goodies[quirk_goodie] = 5
 
 	for(var/iterator in 1 to goodie_count)
-		var/target_good = pick_weight(goodies)
+		var/target_good = pick_weight(fill_with_ones(goodies)) // monkestation edit: fix pick_weight runtime
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
@@ -215,19 +218,21 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
 	lid_x = -26
 	lid_y = 2
+	paint_jobs = null
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
 	if(opened)
-		icon_state = "[initial(icon_state)]open"
+		icon_state = "[base_icon_state]open"
 		if(locate(/obj/item/mail) in src)
-			icon_state = initial(icon_state)
+			icon_state = base_icon_state
 	else
-		icon_state = "[initial(icon_state)]sealed"
+		icon_state = "[base_icon_state]sealed"
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
@@ -275,11 +280,16 @@
 	populate(INFINITY)
 
 
+/// Opened mail crate
+/obj/structure/closet/crate/mail/preopen
+	opened = TRUE
+	icon_state = "mailopen"
+
 /// Mailbag.
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
@@ -293,7 +303,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/cargo/mail_token, // monkestation edit
 	))
 
 /obj/item/paper/fluff/junkmail_redpill

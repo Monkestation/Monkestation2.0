@@ -1,0 +1,501 @@
+2025-07-03:
+  Absolucy:
+  - balance: Burning yellow extracts no longer electrocute and deal damage, instead
+      they cause painful disorientation for a few seconds.
+  - balance: Burning metal extracts now just applies and ignites thermite to adjacent
+      walls, instead of instantly deleting them.
+  - rscadd: Blood Brothers is no longer a conversion antag.
+  - rscdel: Midround BBs are gone, mostly because I have no clue how to make those
+      work properly midround when you need at least 2 people to sign up.
+  - balance: Tweaked the weights for antags that might spawn alongside roundstart
+      BBs, for variety's sake.
+  - balance: The curator whip disarm no longer instantly tosses the item into your
+      other hand.
+  - balance: Instead, the disarm tosses the item away from the both of you, potentially
+      into a nearby bin or clown.
+  - balance: Halved the curator's whip tripping time to 2 seconds.
+  - bugfix: Oozelings will no longer literally lose their brain upon being sacrificed
+      by a heretic.
+  - bugfix: Tracking a target who's beheaded or an oozeling core using your living
+      heart as a heretic will now actually show the brain/core sprite, instead of
+      nothing at all.
+  Absolucy, Mothblocks:
+  - balance: Instead of too much damage to the head beheading someone, it will now
+      split their skull in half. While their skull is open, you can rip out their
+      eyes with your hands. and they will spill their brain out of their head if they
+      slip. Zombies can still be beheaded, though.
+  - rscadd: You can right click on a dead body using a sharp weapon while targeting
+      their head to decapitate them after a short delay, though. More powerful weapons
+      do this quicker - a double-bladed energy sword is faster than a normal energy
+      sword, which itself is still faster than a circular saw.
+  - balance: The Path of Blades ascension will accept either a beheaded person, or
+      someone with their skull split open.
+  Absolucy, ReezeBL:
+  - bugfix: fixed a PDA's messenger TGUI issue with handling of destroyed recipients.
+  BValon:
+  - spellcheck: ooze.dm; all instances of var/mob/living/vored_mob -> var/mob/living/devoured_mob,
+      as well as comments referencing the same.
+  - spellcheck: clowncar.dm; all instance of voreman -> victim (thank you Shion for
+      the recommendation!)
+  - spellcheck: industrial_lift.dm; comment - vore -> devour
+  - spellcheck: archived changelogs; two instances - changed vore -> devour
+  EssentialTomato:
+  - bugfix: Fixed syndicate rebar quiver not loading the last bolt when chambered.
+  - bugfix: Fixed engineering cyborg resource dupe glitch.
+  - bugfix: Fixed cyborgs accidentally ripping out their modules.
+  - balance: (Fikou) Space Ninja's energy net uses a projectile to catch people now.
+  - rscadd: Added a roundstart crate that only contains meteor satellites if they
+      are not a current station goal.
+  F-e-r-n:
+  - balance: Gives awakened dragon a 30% reduction to all stamina damage. Go wild.
+  - balance: Makes the neck snap threshold on awakened dragon neck grab instead of
+      strangle grab.
+  - balance: 'Gives awakened dragon an instant neck grab on vulcan pinch, which can
+      be comboed with their neck snap.
+
+      :cl:'
+  Helixsix:
+  - balance: Reduces stamina drain to 5 from 15 by order of pooba -pooba wrote this
+  Ice Type, Sian:
+  - rscadd: Adds a new Syndicate Fireaxe, 12 TC from the uplink, bulky and obvious,
+      but packs a mean punch and can cut through even rwalls.
+  - rscadd: A new emote, that allows you to nod twice.
+  - qol: Fireaxes now destroy windowsills in one hit, no need to whip out a wrench.
+  Ice-Type:
+  - balance: Hardlight spears have lowered damage on hit, however have much more lethal
+      embed damage, high AP, and esword-level melee damage.
+  - balance: Commanding hardlight spears are cheaper, to fit their lower power level
+  - bugfix: Jagged bolts now are as powerful as before.
+  - code_imp: A handful of files have been pulled out of modularisation
+  MrBagHead:
+  - rscadd: The Seed Splicer's infusion process has been overhauled. Synthesizable
+      Reagents from a beaker can now be infused into a seed one by one. Each reagent
+      in the beaker has a chance to be infused into the seed, with the chance increasing
+      based on the reagent's volume (1% per 5 units).
+  - balance: Infusing seeds now causes damage. The total volume of reagents in the
+      beaker will inflict a base amount of damage to the seed (0.1 damage per unit
+      of reagent). Seeds can be destroyed if they take too much damage.
+  Shoddd:
+  - balance: boxing no longer uses rng
+  - balance: boxers can now grab people who are laying down
+  ThePooba:
+  - rscadd: added meatman
+  - rscadd: slasher now has an instant aggro grab
+  - balance: smashing open a cargo crate now has a small chance to break the shit
+      inside and if it is an ammunition box another chance to explode it 12% chance
+      ammo explosion and 33% chance for an item to be crushed
+  - image: added some supermatter icons for delamination from yogstation - not implemented
+      yet tho
+  Veth-s:
+  - rscadd: Added five new modsuits for drags event.
+  flleeppyy:
+  - admin: stealthed admin logs now show the key they are/were under
+  - rscadd: OOC pronouns
+  - rscadd: lemons have a unique suicide now.
+  iamcooldan:
+  - rscadd: more biogenerator items
+  - rscadd: cow cubes and pig cubes
+  - config: caps cows and pigs to 35 each
+  notghosti:
+  - balance: Anti-Magic Vacuoles now caps at a total of 5 uses
+  - rscadd: Headache syndrome is now a mixture of old viro and new patho.
+  - qol: Extrapolators secondary feature now can be used to see some minor disease
+      information.
+  - admin: spawning diseases via admin tools will now ask you for the maximum chance/multipilier
+      BEFORE asking you for its current. (Gives better reference to the intended disease
+      numbers)
+  - balance: Longevity syndrome no longer heals toxins on toxins lovers or toxin immune.
+  - balance: Longevity syndrome has received a slight healing nerf to 4 brute/burn.
+      (Was 5)
+  - balance: Longevity syndrome cure backlash has been significantly increased to
+      0.5 of damage healed (Was 0.2)
+  - balance: Regeneration Coma max multiplier has been reduced to 12. (Was 15).
+  - balance: Regeneration Coma no crit trait threshold multipilier has been reduced
+      to 9 (Was 12)
+  - balance: Regeneration Coma sleeping multiplier has been increased to 0.3, to keep
+      in line with before. (Was 0.25)
+  - balance: Regeneration Coma triggers at higher damage threshold of 80 brute&burn
+      (Was 70)
+  - bugfix: Anima syndrome will now actually create pathogenic clouds
+  - bugfix: The common cold is a 'Viral infection', not a virus. Also good for clarity
+      as they function differently in-game.
+  - bugfix: Flesh death, Dizziness, and Flesh eating will now actually function.
+  - code_imp: Extrapolators can no longer be used to retrieve variants or use scanners
+      in code
+  - rscdel: Fever, nano-symboysis, silliconisis, and voice change have been code blocked
+      for being nonfunctional. And wont show in play until fixed
+  - map: Thesues now uses AI minisat access for the minisat.
+  - map: Fixed a missing pipe in medical  Thesues
+  - map: ' Tramstation has received a expansion to pathology'
+  - map: Reorganized several pathology workplaces.
+  - map: Added pathology consoles in pathology and in medical.
+  - map: More pathology runs on their own distro.
+  throwawayuseless:
+  - qol: Increases max program limit of nanites from 20 -> 50.
+2025-07-04:
+  Absolucy:
+  - qol: Hopefully restored the original quick-equip behavior somewhat.
+  - bugfix: Jacob's ladder now skips the colony and reebe Z-levels.
+  EssentialTomato:
+  - bugfix: Fixed extreme case of empathy while relocating someone's limb.
+2025-07-06:
+  Absolucy:
+  - admin: 'Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(),
+      _html_encode(), _html_decode(), _url_encode(), and _url_decode()'
+  - bugfix: Fixed the unborgable quirk not actually working.
+  - bugfix: Fixed bloodsuckers being able to spam their coffin to open a bunch of
+      blood thickening prompts to rank up when they really shouldn't be able to.
+  - bugfix: The air on the planet used for the the hermit/colony ghost role will no
+      longer kill you.
+  Cmpwarrior:
+  - rscadd: Added a new AI Core design based off of Tenna (from Deltarune)
+  - bugfix: Removed stray white pixels from some AI core sprites.
+  Fikou:
+  - admin: _generator wrapper for sdql, RandList proc for generators
+2025-07-07:
+  EssentialTomato:
+  - map: Fixed Pubbystation Artifact science access,
+2025-07-09:
+  Absolucy:
+  - qol: 'A few sounds no longer go through walls: grandfather clock ticking, whistles,
+      wumpas, and boulder processing.'
+  QueenReduviidae:
+  - bugfix: Chickens possible mutation scan now includes required items.
+  - bugfix: Pigeons are no longer basically impossible to get.
+  iamcooldan:
+  - bugfix: biogen now actually dispenses water
+2025-07-11:
+  Absolucy:
+  - rscdel: Fully removed cyberlinks from the game. You can just use implants now
+      without having to solve a maze 5 times.
+  - rscdel: The Neuralinked quirk is also gone, as cyberlinks are no more.
+  Addust:
+  - rscadd: Free Miners have been added, based off the ghostrole from Yogstation.
+  Coll6:
+  - bugfix: Uncapped organs can be repaired again like brains.
+  - code_imp: Force maxhealth to default to organ's maxHealth when argument is null.
+  EssentialTomato:
+  - bugfix: Minor hair dye spray fix.
+  Ice-Type:
+  - rscdel: The fireplace no longer makes sound
+  KittyNoodle:
+  - rscadd: Ethereals can now wear underclothes.
+2025-07-12:
+  Absolucy:
+  - bugfix: Fixed xenobio golem mind transfer stuff resulting in you being marked
+      as your own master.
+  - qol: The storyteller should no longer roll high-threat roundstart antags two rounds
+      in a row.
+  Coll6:
+  - code_imp: Underlying admin verb system ported to AVD
+  - code_imp: Mentors converted to implement AVD system
+  - code_imp: Mentor file reading edits and database storing.
+2025-07-13:
+  567Turtle, Absolucy:
+  - rscadd: Added a new species, Onis!
+  - rscadd: Onis have slightly more health, more resistant to wounds, are slightly
+      slower than normal humans, are stunned for slightly longer, and are resistant
+      to heat but much weaker to cold.
+  - rscadd: Onis have a (very much nerfed) fire breath.
+  - bugfix: Fixed bodypart speed modifiers not properly updating when species is set.
+  Absolucy:
+  - admin: Added logging to various heretic spells, such as moon smile.
+  - admin: Added logging for starting a Spess.tv stream with the broadcast camera.
+  - bugfix: Fixed a rare edge-case where you could get rewarded for station goal completion
+      multiple times.
+  - bugfix: Fixed unlinking the launchpad remote not working.
+  - bugfix: (Melbert) Fixes some atmos and record related log messages.
+  - bugfix: (Sealed101) sanity dropping below zero should now properly slowly recover
+      back to zero instead of dropping even further.
+  - sound: (grungussuss) ambience no longer gets cut off for ghosts.
+  - qol: Cleaner slimes will now target trash on top of "blocked" turfs (something
+      with a dense object that it can't cross over) when they can still path right
+      next to it just fine.
+  Ice-Type:
+  - rscadd: Gives NT representatives a good assistant points punchcard.
+  ThePooba:
+  - rscadd: gives slasher an unremoveable backpack you know what you did
+  antlersss:
+  - rscadd: Added new Antlers plushie
+  - bugfix: 100% more Antlers
+2025-07-14:
+  Absolucy, SmArtKar:
+  - balance: Discounts now pick 4-6 items each from a unique category.
+  - balance: Items that cost below 4 TC cannot get discounted anymore.
+  - balance: Elite syndicate MODs for traitors can no longer get discounted.
+  Ice-Type:
+  - bugfix: Using anatomic panacea as an oozeling no longer instantly kills you
+  - balance: closets no longer ash things inside when broken - crates are unaffected
+  - code_imp: Adds a new "ash_chance" variable for crates and lockers that let you
+      set the chance to be ashed
+2025-07-16:
+  Absolucy:
+  - bugfix: Clothes that would hide ears/tails now properly hide anime implants too.
+  - bugfix: You can no longer win the lottery after cryoing.
+  BValon:
+  - rscdel: Removed "B166ER" from ai.txt
+  - rscdel: Removed "Fagor" from ai.txt
+  BingusSS13:
+  - bugfix: The intercoms in Charlie Station's AI core are now functional.
+  - qol: The uncommon intercom in Charlie Station's AI core now has loud mode.
+  Ice Type, Absolucy:
+  - bugfix: You now gotta be a crewmember to roll antag
+  Ice-Type:
+  - balance: Miner pens with stimulants now have an equivalent dose of methamphetamine
+      instead
+  - code_imp: Monkestation medipens are no longer in the special monkestation folder
+  - qol: You can now use pixel perfect scaling at higher resolutions
+  LettuceGuardian:
+  - rscadd: Five new turtlenecks to pick out from the undershirt section.
+  Siro:
+  - bugfix: Delay round end will once again delay the round end reboot properly.
+  notghosti:
+  - bugfix: Spiders, borers, syndicate drones, venus human traps, and fugitive hunters
+      have their warning about interfering with station events removed
+  - map: Heliostation chem facotry small room now has ventalation.
+  - map: Voidraptor blueshield and NT rep office now use their respective accesses
+2025-07-17:
+  Addust:
+  - bugfix: Frontier surplus crates on Sheffield-class free mining vessels have had
+      their security locks removed by Johnson & Co. (free miners no longer lose frontier
+      surplus to dusting)
+  - map: A Johnson & Co engineering team has completely redone the office of the Nanotrasen
+      Representative assigned to Pubby Station, pending more serious works at the
+      site
+  BingusSS13:
+  - bugfix: Radiation storms will no longer affect Charlie Station on Ice Box.
+  Ice-Type:
+  - bugfix: fixes the nodnod/nod2 emote.
+  - rscdel: removes the inferior version that was overwriting
+  Wisemonster:
+  - map: Added rechargers to QM offices
+  notghosti:
+  - rscadd: Add a new AI verb, Hide Jobtitle display, which disables AI's native ability
+      to 'hear' jobtitles.
+  - rscadd: gothic coat can be equipped on the neck slot.
+  - rscadd: gothic coat now actually covers various parts of the body
+  - rscadd: Captains gloves can now transmit sign language
+  - rscadd: Gloves that can transmit sign language on radio now have a description
+      mentioning it on inspect.
+  - qol: Eyepatches can be adjusted with alt click.
+  - qol: Greyscale Kitsune mask can be adjusted by alt clicking the icon.
+  - bugfix: Greyscale kitsune mask now shows beards/faces when in the up postion and
+      hides while put down
+  - bugfix: You can no longer eat through plastic on the greyscale kitsune mask.
+2025-07-18:
+  Absolucy:
+  - map: HelioStation, Lead Poisoning Station, PubbyStation, and Theseus now all properly
+      have XenoDrobe vendors mapped into xenobiology.
+  - map: Lead Poisoning Station now has proper Xenobiologist spawn points.
+  - qol: You can now click on the song URL in the music player widget in chat.
+  - qol: It's now obvious whenever someone can't be decapitated, instead of just wasting
+      time swinging at their head without any feedback.
+  Absolucy, Melbert:
+  - balance: Mobs now have a tiny bit of innate insulation.
+  - balance: Returning to standard body temperature is 3x faster.
+  - balance: Max body temp is limited to ~600 kelvin (330 celsius).
+  leaKsi, SmArtKar, grungussuss:
+  - rscadd: You can now buckle to bar stools.
+  - qol: Stopping orbiting now automatically breaks you out of auto-observe.
+  - bugfix: Medibots no longer pointlessly attempt to heal players with "No Healing"
+      challenge.
+  leaKsi, Time-Green:
+  - bugfix: Hardcore random pays your score again as non-antag.
+  steelphoenix4:
+  - bugfix: Fix store not giving you the right lizard plushie
+2025-07-19:
+  ThePooba:
+  - rscadd: Added Missing Barsigns from TG
+  - rscadd: Added Cargo Crate for Wallmount barsign
+  - code_imp: Added some barsign checks
+  Thedragmeme:
+  - map: Updates Icebox's Service and connecting maint areas
+2025-07-20:
+  Absolucy:
+  - balance: Fire breath now requires your mouth to be uncovered, so a muzzle/mask/etc
+      will stop onis from setting you on fire.
+  - qol: Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat
+      messages.
+  EssentialTomato:
+  - bugfix: Fixed the sprite for the budgeted sat crates.
+  Killermankey:
+  - code_imp: Split atoms.dm file into like 10 seperate files
+  ThePooba:
+  - rscadd: Tackling is now rightclick so you dont break your neck throwing a cigarette
+  - bugfix: TCMB adjusted to correct temperature
+  - bugfix: exodrones work now and arn't shit
+  Thedragmeme:
+  - bugfix: Added the missing clothes vendor for xenobio on Theseus
+  - bugfix: Attempts to make Xenobios power not immediately run out round start.
+  - map: Updated Theseus' Hydroponics and Chicken Ranch
+2025-07-21:
+  CannibalHunter:
+  - rscadd: The (Lab "Coat") donator item for SethDiedAgain
+  Cmpwarrior:
+  - rscadd: 'Added a "carved square pumpkin" to the loadout selector under hats. Note:
+      The "toggle helmet light" does not actually produce laight.'
+  - rscadd: Cigarettes, cigars, and other smokable items now produce faint amounts
+      of light when lit up.
+  EssentialTomato:
+  - bugfix: (MTandi) Binary devices no longer ignore the volume of the output pipe
+      network
+  - bugfix: (MTandi) Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in
+      lathes.
+  - image: (MTandi) Updated cell sprites
+  leaKsi, Ghommie, Melbert, vinylspiders:
+  - refactor: Refactored mutation code backend. Report any issue.
+  notghosti:
+  - balance: Bamboo syringe guns no longer use firing pins
+2025-07-22:
+  Absolucy:
+  - balance: Various antag events (especially roundstart high-threat antags) are now
+      weighted less if any have occurred in the past few rounds.
+  Absolucy, Constellado:
+  - rscadd: Added umbrellas!
+  - rscadd: Umbrellas can be bought at a ClothesMate, or crafted with 3 cloth and
+      an iron rod.
+  - balance: Sol is now deadly once again for bloodsuckers - they will burn if unprotected
+      during Sol.
+  - balance: Bloodsuckers will now be fully protected from Sol if they hide in a locker
+      or cover themselves with an umbrella, tho.
+  - bugfix: Hopefully fixed Venture favorite vassals not being able to some of the
+      powers they're given.
+  Absolucy, itsmeowdev:
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - qol: Optimized GAGS using rust-g IconForge, reducing worst-case generation time
+      to 1ms.
+  - admin: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: (LT3) Fixed opening character preferences menu before subsystem is initialized
+  Addust:
+  - rscadd: Nanotrasen has begun hiring bridge assistants in duos to defend fireaxes
+      and fetch coffee.
+  - map: Johnson & Co has installed coffee machines on the bridges of all in-service
+      stations.
+  LettuceGuardian:
+  - rscadd: Empty detective holsters and whetstones can now be found in the black
+      market.
+  - balance: Adjusted the price of the default black market holster to 200-300 credits.
+  - image: Adjusted the grey, black, red and blue turtleneck sprites.
+  Tractor Maam:
+  - spellcheck: the regular Hardlight Spear Implant will not use the Commanding Hardlight
+      Spear Implant's information when inside a implant pad.
+  V2LenKagamine:
+  - bugfix: asteroid area slightly larger to fix thing
+  Wisemonster:
+  - balance: rReduced heretic's void chill temperature loss from -12 kelvin per tick,
+      to -5 kelvin per tick
+  notghosti:
+  - qol: Evil subtypes of drones no longer have door passthrough, and will have to
+      open the door like anyone normal.
+2025-07-23:
+  Draggeru:
+  - bugfix: Adds the missing botany machines to Icebox
+2025-07-24:
+  Absolucy:
+  - bugfix: Fixed binary translator keys being invisible.
+  JupiterJaeden:
+  - bugfix: Setting arrest status with the records console now immediately updates
+      sechud visuals.
+  - bugfix: Ninja security record hacks now immediately update sechud visuals.
+  antlersss:
+  - balance: reduced slowdown of heavy-duty medical kits by 75%
+  notghosti:
+  - map: Icebox service will no longer depower
+  - rscadd: ICARUS Weapons System Ignition Now triggers a unrecallable shuttle.
+  - rscadd: ICARUS Weapons System Ignition now auto elevates to Gamma alert.
+2025-07-25:
+  Absolucy:
+  - map: MetaStation's singularity/tesla engine is now fully surrounded by reinforced
+      walls (like every other station with a singulo/tesla), so that a single piece
+      of stray space dust won't end the round early.
+  Absolucy, Acantharctia, SmArtKar:
+  - rscadd: Added the Analgesia quirk, which makes you (almost) unable to perceive
+      how much your injuries hurt, and prevents you seeing the damage overlay when
+      damaged. Better keep a close eye on your health.
+  Ice-Type:
+  - map: Box station's kitchen is now much bigger and more usable, space selflessly
+      donated from the lathe room.
+  Killermankey:
+  - rscadd: Vendozer, Traitor super trash tank that you must craft
+  - rscadd: Hotdog bus, currently admin only.
+  - bugfix: Vehicles can now take bullets for their drivers like its supposed to.
+      Which was broken before (underlying code was fixed. Not every vehicle.)
+  Wisemonster:
+  - balance: Increased the weight gain of lone ops (not junior ops) by 5x
+  - balance: Major events can no longer roll junior ops (unsecure disks will still
+      spawn them)
+  - balance: Junior ops spawn time from an unsecure disk increased from 10-20 minutes
+      to 15-25
+2025-07-26:
+  Ice-Type:
+  - bugfix: fixes subpar construction work in the box station kitchen
+  ThePooba:
+  - bugfix: Crashing the wienermobile now just knowcks you over and doesnt hurt  or
+      throw you
+2025-07-27:
+  Absolucy:
+  - bugfix: Fixed runechat emote/looc icons being too big.
+  - bugfix: Fixed screentip icons having awkward spacing.
+  - rscadd: 'Added a new alternate job title for xenobiologist: "Slime Mage"'
+  BanementI:
+  - bugfix: Fixed the DJ law board to actually include laws.
+  BingusSS13:
+  - map: Added an ectoscopic sniffer to Charlie Station and KS13
+  - bugfix: Cut cable pieces on maps like KS13 (The Derelict) are no longer invisible.
+  - map: Most airlocks in KS13's engineering are now named.
+  - bugfix: Fixed access on the windoors in KS13's engineering.
+  - map: Added cut cables to KS13's engineering.
+  - map: Very minor change to KS13's engineering hallway area.
+  EssentialTomato, SyncIt21:
+  - bugfix: Cable layers 1 & 3 can now be used by machine's like emitters, smes, tesla
+      coil, particle collector & turbine.
+  - bugfix: Terminals (smes & apc) can operate on different cable layers by installing
+      them with right click.
+  Ice-Type:
+  - map: Cleans up the box station kitchen, further
+  JohnFulpWillard:
+  - balance: Monkeys and Simians can now be gendered.
+  - rscadd: You can opt out of having your character's ckey revealed at the credits.
+  Kapu1178:
+  - rscadd: The Detective's Fedora grants the ability to investigate - with style.
+  WeLoveCastingSpells:
+  - rscadd: Added 3 new costumes to the Autodrobe.. Kris, Susie, Ralsei.
+  leaKsi:
+  - bugfix: Mentors can once again use Mentor Manager menu and their mentor cloaks.
+  notghosti:
+  - map: Thesues does not start with two professional RCD's
+  - map: Blueshift pathology will not depower
+  - rscadd: 'More research nodes use the base nodes as a starting point. (No effect
+      one actual research)
+
+      add; Tier  4 Bluespace part exchange devices now have bluespace beakers'
+  - rscdel: Engineering lathe can no long print antibody scanners and test tubes.
+  - balance: Basic security tech is now a prerequisite to actual security technologies.
+2025-07-29:
+  ThePooba:
+  - rscadd: Added flan, 5 caramel, 5 cream, 5 eggyolk gets you 20 flan, put it in
+      a drink cup for  pretty sprite
+  - rscadd: Ported the donks from TG donk plush and donk vendor, donk vendor and BODA
+      vendor now spawn in maints. boda vendor also has a new cola, Space Boda!
+  - rscadd: more lizard food, korta burgers, updated some food sprites.
+  - rscadd: added Bogril (its bovril available in the coffee vendor)
+  - balance: Ported fix for Knock heretics ID card deleting itself
+  - code_imp: Iconchecker fixes, 90% less jerma tiles from damaged floors maybe
+  - balance: Turned the weinermobile into a Hover Dog with a key
+  ancient-engineer:
+  - rscadd: Added Cretaceous Speed as a floorpill name
+2025-07-30:
+  Veth, Robert Mcsteal (killermankey), absolucy:
+  - rscadd: The bingle tide is here to put you in the pit, Choc.
+  Wisemonster:
+  - spellcheck: Renamed "Target stage" in the disease splicer to "Target slot".
+  leaKsi, Ghommie:
+  - bugfix: False anomaly alarms now work.
+  notghosti:
+  - map: Theseus Ordnance burn chamber will now properly pressurize
+  - map: Cleaned up roundstart turfs on blueshift
+  - map: Blueshift shipbreaking now has a roof

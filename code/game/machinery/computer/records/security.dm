@@ -27,6 +27,7 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+	projectiles_pass_chance = 0
 
 /obj/machinery/computer/records/security/laptop/syndie
 	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
@@ -79,7 +80,6 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "SecurityRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -146,6 +146,8 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	var/datum/record/crew/target
 	if(params["crew_ref"])
 		target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -154,28 +156,30 @@
 
 	switch(action)
 		if("add_crime")
-			add_crime(usr, target, params)
+			add_crime(user, target, params)
 			return TRUE
 
 		if("delete_record")
+			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
 		if("edit_crime")
-			edit_crime(usr, target, params)
+			edit_crime(user, target, params)
 			return TRUE
 
 		if("invalidate_crime")
-			invalidate_crime(usr, target, params)
+			invalidate_crime(user, target, params)
 			return TRUE
 
 		if("print_record")
-			print_record(usr, target, params)
+			print_record(user, target, params)
 			return TRUE
 
 		if("set_note")
-			var/note = params["note"]
-			target.security_note = trim(note, MAX_MESSAGE_LEN)
+			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
+			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
+			target.security_note = note
 			return TRUE
 
 		if("set_wanted")
@@ -188,13 +192,15 @@
 			investigate_log("[target.name] has been set from [target.wanted_status] to [wanted_status] by [key_name(usr)].", INVESTIGATE_RECORDS)
 			target.wanted_status = wanted_status
 
+			update_matching_security_huds(target.name)
+
 			return TRUE
 
 	return FALSE
 
 /// Handles adding a crime to a particular record.
 /obj/machinery/computer/records/security/proc/add_crime(mob/user, datum/record/crew/target, list/params)
-	var/input_name = trim(params["name"], MAX_CRIME_NAME_LEN)
+	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
@@ -208,13 +214,15 @@
 
 	var/input_details
 	if(params["details"])
-		input_details = trim(params["details"], MAX_MESSAGE_LEN)
+		input_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 
 	if(params["fine"] == 0)
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
 		target.crimes += new_crime
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
 		target.wanted_status = WANTED_ARREST
+
+		update_matching_security_huds(target.name)
 
 		return TRUE
 
@@ -237,11 +245,11 @@
 		return FALSE
 
 	if(params["name"] && length(params["name"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.name = trim(params["name"], MAX_CRIME_NAME_LEN)
+		editing_crime.name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 		return TRUE
 
 	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.details = trim(params["details"], MAX_MESSAGE_LEN)
+		editing_crime.details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 		return TRUE
 
 	return FALSE
@@ -292,6 +300,7 @@
 		target.wanted_status = WANTED_DISCHARGED
 		investigate_log("[key_name(user)] has invalidated [target.name]'s last valid crime. Their status is now [WANTED_DISCHARGED].", INVESTIGATE_RECORDS)
 
+		update_matching_security_huds(target.name)
 	return TRUE
 
 /// Finishes printing, resets the printer.
@@ -305,7 +314,7 @@
 /// Handles printing records via UI. Takes the params from UI_act.
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
-		balloon_alert(usr, "printer busy")
+		balloon_alert(user, "printer busy")
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
@@ -314,9 +323,9 @@
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/printable
-	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || target.name
-	var/input_description = trim(params["desc"], MAX_BROADCAST_LEN) || "No further details."
-	var/input_header = trim(params["head"], 8) || capitalize(params["type"])
+	var/input_alias = strip_html_full(params["alias"], MAX_NAME_LEN) || target.name
+	var/input_description = strip_html_full(params["desc"], MAX_BROADCAST_LEN) || "No further details."
+	var/input_header = strip_html_full(params["head"], 8) || capitalize(params["type"])
 
 	switch(params["type"])
 		if("missing")
@@ -493,8 +502,7 @@
 		investigate_log("[names_of_entries.Join(", ")] have been set to [status_to_set] by [parent.get_creator()].", INVESTIGATE_RECORDS)
 		if(successful_set > COMP_SECURITY_ARREST_AMOUNT_TO_FLAG)
 			message_admins("[successful_set] security entries have been set to [status_to_set] by [parent.get_creator_admin()]. [ADMIN_COORDJMP(src)]")
-		for(var/mob/living/carbon/human/human as anything in GLOB.human_list)
-			human.sec_hud_set_security_status()
+		update_all_security_huds()
 
 #undef COMP_SECURITY_ARREST_AMOUNT_TO_FLAG
 #undef PRINTOUT_MISSING

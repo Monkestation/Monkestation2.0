@@ -30,7 +30,7 @@
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	inhand_icon_state = "waiter"
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION|CLOTHING_DIGITIGRADE_VARIATION
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"
@@ -150,3 +150,21 @@
 	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
 	icon_state = "carpskin_suit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/suit/butler
+	name = "butler uniform"
+	desc = "Of course sir, right away."
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	worn_icon = 'icons/mob/clothing/under/suits.dmi'
+	icon_state = "butleruni"
+	inhand_icon_state = "butleruni"
+	can_adjust = TRUE
+	inhand_icon_state = null
+
+/obj/item/clothing/under/suit/fancysuit
+	name = "black silk suit"
+	desc = "A nice suit with a blue tinge, made from fabric that breathes well when worn."
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	worn_icon = 'icons/mob/clothing/under/suits.dmi'
+	icon_state = "starsuit"
+	can_adjust = FALSE

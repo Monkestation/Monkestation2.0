@@ -46,7 +46,7 @@
 
 /// Trim for Bounty Hunters hired by centcom.
 /datum/id_trim/centcom/bounty_hunter
-	access = list(ACCESS_CENT_GENERAL)
+	access = list(ACCESS_CENT_GENERAL, ACCESS_BOUNTY_HUNTER)
 	assignment = "Bounty Hunter"
 
 /// Trim for Centcom Bartenders.
@@ -111,6 +111,9 @@
 
 	access = list(ACCESS_CENT_GENERAL) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
+/datum/id_trim/centcom/ert/chat_span()
+	return "job__ert"
+
 /// Trim for ERT Commanders. All station and centcom access.
 /datum/id_trim/centcom/ert/commander
 	assignment = JOB_ERT_COMMANDER
@@ -173,7 +176,7 @@
 /// Trim for generic ERT janitors. No universal ID card changing access.
 /datum/id_trim/centcom/ert/janitor
 	assignment = JOB_ERT_JANITOR
-	trim_state = "trim_ert_janitor"
+	trim_state = "trim_janitor"
 	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_JANITORIAL_RESPONSE_OFFICER
 
@@ -193,6 +196,9 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/datum/id_trim/centcom/ert/clown/chat_span()
+	return "job__clown"
 
 /datum/id_trim/centcom/ert/militia
 	assignment = "Frontier Militia"

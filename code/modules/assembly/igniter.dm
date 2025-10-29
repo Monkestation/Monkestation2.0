@@ -1,5 +1,4 @@
 #define EXPOSED_VOLUME 1000
-#define ROOM_TEMP 293
 #define MIN_FREEZE_TEMP 50
 #define MAX_FREEZE_TEMP 1000000
 
@@ -7,7 +6,7 @@
 	name = "igniter"
 	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	var/datum/effect_system/spark_spread/sparks
 	heat = 1000
 	drop_sound = 'sound/items/handling/component_drop.ogg'
@@ -58,7 +57,7 @@
 	name = "condenser"
 	desc = "A small electronic device able to chill their surroundings."
 	icon_state = "freezer"
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=300)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	heat = 200
 
 /obj/item/assembly/igniter/condenser/activate()
@@ -68,10 +67,9 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		var/datum/gas_mixture/enviro = location.return_air()
-		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
+		enviro.temperature = clamp(min(T20C, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
 	sparks.start()
 
 #undef EXPOSED_VOLUME
-#undef ROOM_TEMP
 #undef MIN_FREEZE_TEMP
 #undef MAX_FREEZE_TEMP

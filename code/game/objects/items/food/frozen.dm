@@ -219,7 +219,7 @@
 		/datum/reagent/water = 11,
 	)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
-	foodtypes = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
+	foodtypes = FRUIT | PINEAPPLE
 
 /obj/item/food/snowcones/mime
 	name = "mime snowcone"
@@ -353,7 +353,7 @@
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "popsicle_stick"
 	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden."
-	custom_materials = list(/datum/material/wood = 20)
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.20)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
@@ -421,3 +421,14 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/popsicle/meatsicle
+	name = "Meatsicle"
+	desc = "A horrific abomination of raw meat, glazed with sugar on a stick, then frozen."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/sugar = 4,
+	)
+	overlay_state = "meatsicle"
+	foodtypes = RAW | MEAT | SUGAR

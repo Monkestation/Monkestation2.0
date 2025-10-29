@@ -2,7 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -102,7 +102,7 @@
 	data["loop"] = loop
 	return data
 
-/obj/item/assembly/timer/ui_act(action, params)
+/obj/item/assembly/timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

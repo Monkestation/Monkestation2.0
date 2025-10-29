@@ -56,14 +56,13 @@
 	else if(!harvesting)
 		open_machine()
 
-/obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/harvester/click_alt(mob/living/user)
 	if(harvesting || !user || !isliving(user) || state_open)
-		return
-	if(can_harvest())
-		start_harvest()
+		return CLICK_ACTION_BLOCKING
+	if(!can_harvest())
+		return CLICK_ACTION_BLOCKING
+	start_harvest()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered() || state_open || !occupant || !iscarbon(occupant))
@@ -91,8 +90,18 @@
 /obj/machinery/harvester/proc/start_harvest()
 	if(!occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
-	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+
+	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(carbon_occupant.stat < UNCONSCIOUS)
+		notify_ghosts(
+			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			source = src,
+			header = "Gruesome!",
+			action = NOTIFY_ORBIT,
+		)
+
+	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("The [name] begins warming up!"))
@@ -133,7 +142,7 @@
 				O.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(BP)
 		break
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/end_harvesting(success = TRUE)
@@ -194,6 +203,7 @@
 /obj/machinery/harvester/Exited(atom/movable/gone, direction)
 	if (!state_open && gone == occupant)
 		container_resist_act(gone)
+	return ..()
 
 /obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)

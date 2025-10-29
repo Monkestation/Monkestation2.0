@@ -1,17 +1,8 @@
 import { resolveAsset } from '../assets';
-import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Divider, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type BloodsuckerInformation = {
   power: PowerInfo[];
@@ -27,25 +18,7 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props: any, context: any) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-export const AntagInfoRevengeVassal = (props: any, context: any) => {
+export const AntagInfoRevengeVassal = (props: any) => {
   return (
     <Window width={620} height={300}>
       <Window.Content>
@@ -56,6 +29,9 @@ export const AntagInfoRevengeVassal = (props: any, context: any) => {
 };
 
 const VassalInfo = () => {
+  const {
+    data: { objectives },
+  } = useBackend<Info>();
   return (
     <Stack vertical fill>
       <Stack.Item minHeight="20rem">
@@ -66,7 +42,7 @@ const VassalInfo = () => {
               Master!
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout />
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -92,18 +68,14 @@ const VassalInfo = () => {
   );
 };
 
-const PowerSection = (props: any, context: any) => {
-  const { act, data } = useBackend<BloodsuckerInformation>(context);
+const PowerSection = (props: any) => {
+  const { act, data } = useBackend<BloodsuckerInformation>();
   const { power } = data;
   if (!power) {
     return <Section minHeight="220px" />;
   }
 
-  const [selectedPower, setSelectedPower] = useLocalState(
-    context,
-    'power',
-    power[0]
-  );
+  const [selectedPower, setSelectedPower] = useLocalState('power', power[0]);
 
   return (
     <Section
@@ -116,7 +88,8 @@ const PowerSection = (props: any, context: any) => {
           tooltipPosition="left"
           tooltip={'Select a Power to explain.'}
         />
-      }>
+      }
+    >
       <Stack>
         <Stack.Item grow>
           <Dropdown
@@ -126,7 +99,7 @@ const PowerSection = (props: any, context: any) => {
             options={power.map((powers) => powers.power_name)}
             onSelected={(powerName: string) =>
               setSelectedPower(
-                power.find((p) => p.power_name === powerName) || power[0]
+                power.find((p) => p.power_name === powerName) || power[0],
               )
             }
           />

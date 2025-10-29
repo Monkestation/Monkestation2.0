@@ -109,7 +109,7 @@ the modular shield components(not generator) are climbable
 
 /obj/machinery/modular_shield_generator/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/modular_shield_generator(src)
+	set_wires(new /datum/wires/modular_shield_generator(src))
 	if(mapload && active && anchored)
 		activate_shields()
 
@@ -153,9 +153,9 @@ the modular shield components(not generator) are climbable
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(is_wire_tool(W) && panel_open)
+	if(is_wire_tool(attacking_item) && panel_open)
 		wires.interact(user)
 		return TRUE
 
@@ -282,7 +282,7 @@ the modular shield components(not generator) are climbable
 	data["initiating_field"] = initiating
 	return data
 
-/obj/machinery/modular_shield_generator/ui_act(action, params)
+/obj/machinery/modular_shield_generator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

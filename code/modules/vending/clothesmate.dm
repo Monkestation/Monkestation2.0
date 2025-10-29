@@ -32,6 +32,7 @@
 				/obj/item/clothing/head/cowboy/white = 1,
 				/obj/item/clothing/head/cowboy/grey = 1,
 				/obj/item/clothing/head/costume/sombrero/green = 1,
+				/obj/item/clothing/head/hats/fez = 3, //MONKESTATION ADDITION
 			),
 		),
 
@@ -39,6 +40,7 @@
 			"name" = "Accessories",
 			"icon" = "glasses",
 			"products" = list(
+				/obj/item/clothing/accessory/pride = 15,
 				/obj/item/clothing/accessory/waistcoat = 4,
 				/obj/item/clothing/suit/toggle/suspenders = 4,
 				/obj/item/clothing/neck/tie/horrible = 3,
@@ -51,6 +53,8 @@
 				/obj/item/storage/belt/fannypack = 3,
 				/obj/item/storage/belt/fannypack/blue = 3,
 				/obj/item/storage/belt/fannypack/red = 3,
+				/obj/item/umbrella = 3,
+				/obj/item/umbrella/parasol = 2,
 			),
 		),
 
@@ -66,7 +70,11 @@
 				/obj/item/clothing/under/costume/buttondown/shorts = 4,
 				/obj/item/clothing/under/dress/sundress = 2,
 				/obj/item/clothing/under/dress/tango = 2,
+				/obj/item/clothing/under/dress/ballgown = 2, //MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/dress/wlpinafore = 2, //MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/dress/ribbondress = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
+				/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator = 4, //MONKESTATION ADDITION
 				/obj/item/clothing/under/dress/skirt/turtleskirt = 4,
 				/obj/item/clothing/under/misc/overalls = 2,
 				/obj/item/clothing/under/pants/camo = 2,
@@ -76,6 +84,7 @@
 				/obj/item/clothing/under/dress/sailor = 1,
 				/obj/item/clothing/under/dress/redeveninggown = 1,
 				/obj/item/clothing/suit/apron/purple_bartender = 2,
+				/obj/item/clothing/under/costume/citizen_uniform = 4,
 			),
 		),
 
@@ -137,9 +146,18 @@
 
 				/obj/item/clothing/suit/hooded/ethereal_raincoat = 3,
 				/obj/item/clothing/under/ethereal_tunic = 3,
-
+				/obj/item/clothing/head/costume/hairpin = 2,
+				/obj/item/clothing/under/costume/yukata = 2,
+				/obj/item/clothing/under/costume/yukata/green = 2,
+				/obj/item/clothing/under/costume/yukata/white = 2,
+				/obj/item/clothing/under/costume/kimono = 2,
+				/obj/item/clothing/under/costume/kimono/red = 2,
+				/obj/item/clothing/under/costume/kimono/purple = 2,
+				/obj/item/clothing/shoes/sandal/alt = 4,
+				/obj/item/clothing/mask/kitsune = 3,
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,
+				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,
 				/obj/item/clothing/head/costume/deckers = 20,

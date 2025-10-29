@@ -27,6 +27,10 @@
 	response_harm_simple = "splat"
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
+	//MONKESTATION EDIT START
+	death_sound = 'sound/effects/mousesqueek.ogg'
+	death_message = "falls limp and lifeless..."
+	//MONKESTATION EDIT STOP
 
 	/// Whether this rat is friendly to players
 	var/tame = FALSE
@@ -36,21 +40,37 @@
 	var/contributes_to_ratcap = TRUE
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
-	/// responsible for disease stuff
-	var/list/ratdisease = list()
+
+	var/chooses_bodycolor = TRUE
+
+	///can they heal for eating non-cheese
+	var/hungry = FALSE
+
+//MONKESTATION EDIT START
+/mob/living/basic/mouse/get_scream_sound()
+	return 'sound/effects/mousesqueek.ogg'
+/mob/living/basic/mouse/get_laugh_sound()
+	return 'sound/effects/mousesqueek.ogg'
+//MONKESTATION EDIT STOP
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
+		var/cap = CONFIG_GET(number/ratcap)
+		if (LAZYLEN(SSmobs.cheeserats) > cap)
+			do_sparks(rand(3, 4), FALSE, src)
+			visible_message(span_warning("ERROR: Bluespace Disturbance Detected. More than [cap] entities will disturb bluespace harmonics. Entity eradicated."))
+			return INITIALIZE_HINT_QDEL
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
-	body_color = new_body_color
-	if(isnull(body_color))
-		body_color = pick("brown", "gray", "white")
-	held_state = "mouse_[body_color]" // not handled by variety element
-	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	if(chooses_bodycolor)
+		body_color = new_body_color
+		if(isnull(body_color))
+			body_color = pick("brown", "gray", "white")
+		held_state = "mouse_[body_color]" // not handled by variety element
+		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(
@@ -58,12 +78,13 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	make_tameable()
+	AddComponent(/datum/component/swarming, 16, 16) //max_x, max_y
 
 /mob/living/basic/mouse/proc/make_tameable()
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -91,7 +112,7 @@
 	adjust_health(maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
-/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(!contributes_to_ratcap)
 		return ..()
 
@@ -108,7 +129,6 @@
 
 // On death, remove the mouse from the ratcap, and turn it into an item if applicable
 /mob/living/basic/mouse/death(gibbed)
-	var/list/data = list("viruses" = ratdisease)
 	SSmobs.cheeserats -= src
 	// Rats with a mind will not turn into a lizard snack on death
 	if(mind)
@@ -121,8 +141,15 @@
 		var/obj/item/food/deadmouse/mouse = new(loc)
 		mouse.name = name
 		mouse.icon_state = icon_dead
+		//MONKESTATION EDIT START
+		var/list/data = list("viruses"=list(),"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"immunity"=list())
+		for(var/datum/disease/D as anything in diseases)
+			var/datum/disease/DA = D.Copy()
+			DA.spread_flags = DISEASE_SPREAD_BLOOD //please stop killing the station with the black death from eating rats
+			data["viruses"] += DA
+		data["immunity"] = immune_system.GetImmunity()
+		//MONKESTATION EDIT END
 		mouse.reagents.add_reagent(/datum/reagent/blood, 2, data)
-		mouse.ratdisease = src.ratdisease
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -139,6 +166,26 @@
 	if(istype(attack_target, /obj/item/food/cheese))
 		try_consume_cheese(attack_target)
 		return TRUE
+	//MONKESTATION EDIT START
+	if(istype(attack_target, /obj/item))
+		if(!attack_target.GetComponent(/datum/component/edible))
+			return
+		if(istype(attack_target, /obj/item/food/cheese))
+			return //mice savour cheese differently
+		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
+		edible.UseByMouse(edible, src)
+		if(hungry && prob(90))
+			adjust_health(-4)
+
+		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
+			if(istype(target_reagent, /datum/reagent/toxin))
+				visible_message(
+					span_warning("[src] devours [attack_target]! They pause for a moment..."),
+					span_warning("You devour [attack_target], something tastes off..."),
+				)
+				if(health != 0)
+					adjust_health(4)
+	//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)
@@ -152,7 +199,7 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
@@ -303,8 +350,6 @@
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
-	///responsible for holding diseases for dead rat
-	var/list/ratdisease = list()
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
 
@@ -336,7 +381,7 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
-/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/living_user = user
 	if(istype(living_user) && attacking_item.get_sharpness() && (living_user.istate & ISTATE_HARM))
 		if(!isturf(loc))
@@ -355,18 +400,16 @@
 
 	return ..()
 
-/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && reagents && target.is_open_container())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		// is_open_container will not return truthy if target.reagents doesn't exist
-		var/datum/reagents/target_reagents = target.reagents
-		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
-		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-			to_chat(user, span_notice("You dip [src] into [target]."))
-		else
-			to_chat(user, span_warning("That's a terrible idea."))
-		return .
+/obj/item/food/deadmouse/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isnull(reagents) || !interacting_with.is_open_container())
+		return NONE
+
+	// is_open_container will not return truthy if target.reagents doesn't exist
+	var/datum/reagents/target_reagents = interacting_with.reagents
+	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"
@@ -384,6 +427,13 @@
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me cleans its whiskers in disapproval.",
+			"*me squeaks sadly.",
+			"*me sheds a single small tear.",
+			"MY LIEGE! NO!!",
+			"*me offers a crumb of cheese to cheer you up.",
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

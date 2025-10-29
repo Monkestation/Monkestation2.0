@@ -16,6 +16,7 @@ Slimecrossing Armor
 	armor_type = /datum/armor/mask_nobreath
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/mask_nobreath
 	bio = 50
@@ -39,10 +40,6 @@ Slimecrossing Armor
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
-
 /obj/structure/light_prism
 	name = "light prism"
 	desc = "A shining crystal of semi-solid light. Looks fragile."
@@ -52,11 +49,8 @@ Slimecrossing Armor
 	anchored = TRUE
 	max_integrity = 10
 
-/obj/structure/light_prism/Initialize(mapload, newcolor)
+/obj/structure/light_prism/Initialize(mapload, newcolor = COLOR_WHITE)
 	. = ..()
-	#if DM_VERSION < 515
-	newcolor ||= COLOR_WHITE // If you're reading this and developing on 515 or later, you can remove this line
-	#endif
 	color = newcolor
 	set_light_color(newcolor)
 	set_light(5)
@@ -74,7 +68,7 @@ Slimecrossing Armor
 	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
+	var/new_color = tgui_color_picker(owner, "Choose the lens color:", "Color change", glasses.glasses_color)
 	if(!new_color)
 		return
 	glasses.glasses_color = new_color
@@ -114,22 +108,10 @@ Slimecrossing Armor
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src == carbon_user.head)
-			to_chat(user, span_warning("You feel at peace. <b style='color:pink'>Why would you want anything else?</b>"))
-			return TRUE
-	return FALSE
-
-/obj/item/clothing/head/peaceflower/attack_hand(mob/user, list/modifiers)
-	if(at_peace_check(user))
-		return
-	return ..()
-
-/obj/item/clothing/head/peaceflower/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	if(at_peace_check(usr))
-		return
+/obj/item/clothing/head/peaceflower/can_mob_unequip(mob/user)
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_warning("You feel at peace. <b style='color:pink'>Why would you want anything else?</b>"))
+		return FALSE
 	return ..()
 
 /obj/item/clothing/suit/armor/heavy/adamantine
@@ -140,12 +122,12 @@ Slimecrossing Armor
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	inhand_icon_state = null
 	flags_inv = NONE
-	obj_flags = IMMUTABLE_SLOW
+	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
-	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
+	if((def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)) && prob(hit_reflect_chance))
 		return TRUE
 	else
 		return FALSE

@@ -209,7 +209,7 @@
 // moved out of admins.dm because things other than admin procs were calling this.
 /**
  * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
- * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
+ * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with ANTAG_FAKE won't pass.
 */
 /proc/is_special_character(mob/M, allow_fake_antags = FALSE)
 	if(!SSticker.HasRoundStarted())
@@ -231,7 +231,7 @@
 	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
 	var/faker = FALSE
 	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+		if((antag_datum.antag_flags & ANTAG_FAKE))
 			faker = TRUE
 		else
 			return TRUE
@@ -240,10 +240,22 @@
 	// Else, return FALSE.
 	return (faker && allow_fake_antags)
 
+/**
+ * Checks if this mob is an antag
+ * By default excludes antags like Valentines, which are "fake antags"
+ */
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
+			return TRUE
 
-/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
-	return TRUE
+	return FALSE
 
+/mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
+	return FALSE
+
+/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
+	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
 
 /**
  * Fancy notifications for ghosts
@@ -257,62 +269,58 @@
  * * source The source of the notification
  * * alert_overlay The alert overlay to show in the alert message
  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
  * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(
+	message,
+	ghost_sound,
+	enter_link,
+	atom/source,
+	mutable_appearance/alert_overlay,
+	action = NOTIFY_JUMP,
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	ignore_key,
+	header = "",
+	notify_volume = 100
+)
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
+
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
-		var/orbit_link
-		if(source && action == NOTIFY_ORBIT)
-			orbit_link = " <a href='?src=[REF(ghost)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(ghost, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
+
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
+			window_flash(ghost.client)
+
 		if(ghost_sound)
 			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
-		if(flashwindow)
-			window_flash(ghost.client)
-		if(!source)
-			continue
-		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-		if(!alert)
-			continue
-		var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-		if(ui_style)
-			alert.icon = ui_style2icon(ui_style)
-		if (header)
-			alert.name = header
-		alert.desc = message
-		alert.action = action
-		alert.target = source
-		if(!alert_overlay)
-			alert_overlay = new(source)
-			var/icon/size_check = icon(source.icon, source.icon_state)
-			var/scale = 1
-			var/width = size_check.Width()
-			var/height = size_check.Height()
-			if(width > world.icon_size || height > world.icon_size)
-				if(width >= height)
-					scale = world.icon_size / width
-				else
-					scale = world.icon_size / height
-			alert_overlay.transform = alert_overlay.transform.Scale(scale)
-			alert_overlay.appearance_flags |= TILE_BOUND
-		alert_overlay.layer = FLOAT_LAYER
-		alert_overlay.plane = FLOAT_PLANE
-		alert.add_overlay(alert_overlay)
 
-/**
- * Heal a robotic body part on a mob
- */
+		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
+			continue
+
+		var/custom_link = enter_link ? " [enter_link]" : ""
+		var/link = " <a href='byond://?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+
+		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
+
+		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
+			category = "[REF(source)]_notify_action",
+			type = /atom/movable/screen/alert/notify_action,
+			new_master = source,
+		)
+		toast.action = action
+		toast.desc = "[message] -- Click to [action]."
+		toast.name = header
+		toast.target = source
+
+/// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting || IS_ORGANIC_LIMB(affecting))
@@ -339,12 +347,14 @@
 		return
 	return TRUE
 
-///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
+///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
+		return FALSE
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
+		return FALSE
 	return TRUE
 
 /**
@@ -366,14 +376,13 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 20 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control", chat_text_border_icon = M)
 
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = C.key
+		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
@@ -423,7 +432,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)
@@ -531,56 +540,8 @@
 			"name" = offhand.name,
 		)
 
-	GLOB.logger.Log(
+	logger.Log(
 		LOG_CATEGORY_TARGET_ZONE_SWITCH,
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
-
-/**
- * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob
- * copy_amount - number of lines to return
- * line_chance - chance to return a line, if you don't want just the most recent x lines
- */
-/mob/proc/copy_recent_speech(copy_amount = LING_ABSORB_RECENT_SPEECH, line_chance = 100)
-	var/list/recent_speech = list()
-	var/list/say_log = list()
-	var/log_source = logging
-	for(var/log_type in log_source)
-		var/nlog_type = text2num(log_type)
-		if(nlog_type & LOG_SAY)
-			var/list/reversed = log_source[log_type]
-			if(islist(reversed))
-				say_log = reverse_range(reversed.Copy())
-				break
-
-	for(var/spoken_memory in say_log)
-		if(recent_speech.len >= copy_amount)
-			break
-		if(!prob(line_chance))
-			continue
-		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
-
-	var/list/raw_lines = list()
-	for (var/key as anything in recent_speech)
-		raw_lines += recent_speech[key]
-
-	return raw_lines
-
-/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
-/// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
-/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
-/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
-/mob/proc/grant_actions_by_list(list/input)
-	if(length(input) <= 0)
-		return
-
-	for(var/action in input)
-		var/datum/action/ability = new action(src)
-		ability.Grant(src)
-
-		var/blackboard_key = input[action]
-		if(isnull(blackboard_key))
-			continue
-
-		ai_controller?.set_blackboard_key(blackboard_key, ability)

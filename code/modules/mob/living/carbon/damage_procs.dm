@@ -101,6 +101,8 @@
 		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
 		heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
+	if(amount < 0)
+		SEND_SIGNAL(src, COMSIG_CARBON_TAKE_BRUTE_DAMAGE, amount)
 	return amount
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
@@ -150,41 +152,41 @@
 	return ..()
 
 /mob/living/carbon/pre_stamina_change(diff as num, forced)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return 0
 	return diff
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [TRAIT_GODMODE]), call the damage proc on that organ.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be done
  * * maximum - currently an arbitrarily large number, can be set so as to limit damage
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
+ * * required_organ_flag - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organtype)
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	affected_organ.apply_organ_damage(amount, maximum)
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [TRAIT_GODMODE]), call the set damage proc on that organ, which can
  * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
  * * amount - damage to be set to
- * * required_organtype - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
+ * * required_organ_flag - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/setOrganLoss(slot, amount, required_organtype)
+/mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(required_organtype && (affected_organ.status != required_organtype))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	if(affected_organ.damage == amount)
 		return
@@ -244,13 +246,13 @@
  *
  * It automatically updates health status
  */
-/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype)
-	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype)
+/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype = NONE, target_zone = null)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, required_bodytype, target_zone)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(brute, burn, required_bodytype))
+	if(picked.heal_damage(brute, burn, required_bodytype, updating_health))
 		update_damage_overlays()
 	return max(damage_calculator - picked.get_damage(TRUE), 0)
 
@@ -267,7 +269,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 
 ///Heal MANY bodyparts, in random order
@@ -294,7 +296,7 @@
 
 /// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return //godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
@@ -308,7 +310,14 @@
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, FALSE, updating_health, required_bodytype, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		update |= picked.receive_damage(
+			brute_per_part,
+			burn_per_part,
+			blocked = FALSE,
+			updating_health = FALSE,
+			required_bodytype = required_bodytype,
+			wound_bonus = CANT_WOUND, // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		)
 
 		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

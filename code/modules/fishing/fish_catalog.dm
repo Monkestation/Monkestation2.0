@@ -5,9 +5,6 @@
 	icon_state = "fishbook"
 	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
 
-/obj/item/book/fish_catalog/on_read(mob/user)
-	ui_interact(user)
-
 /obj/item/book/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -19,7 +16,7 @@
 	var/static/fish_info
 	if(!fish_info)
 		fish_info = list()
-		for(var/_fish_type as anything in subtypesof(/obj/item/fish))
+		for(var/_fish_type in subtypesof(/obj/item/fish))
 			var/obj/item/fish/fish = _fish_type
 			var/list/fish_data = list()
 			if(!initial(fish.show_in_catalog))
@@ -106,5 +103,5 @@
 
 /obj/item/book/fish_catalog/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/fish)
+		get_asset_datum(/datum/asset/spritesheet_batched/fish)
 	)

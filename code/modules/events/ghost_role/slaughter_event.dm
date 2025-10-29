@@ -10,14 +10,18 @@
 	description = "Spawns a slaughter demon, to hunt by travelling through pools of blood."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/slaughter
 	minimum_required = 1
 	role_name = "slaughter demon"
 
 /datum/round_event/ghost_role/slaughter/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SLAUGHTER_DEMON, alert_pic = /mob/living/basic/demon/slaughter, role_name_text = role_name)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick_n_take(candidates)
@@ -32,7 +36,6 @@
 	new /obj/effect/dummy/phased_mob(spawn_location, spawned)
 
 	player_mind.transfer_to(spawned)
-	spawned.generate_antagonist_status()
 
 	message_admins("[ADMIN_LOOKUPFLW(spawned)] has been made into a slaughter demon by an event.")
 	spawned.log_message("was spawned as a slaughter demon by an event.", LOG_GAME)

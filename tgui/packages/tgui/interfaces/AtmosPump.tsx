@@ -11,12 +11,12 @@ type Data = {
   max_pressure: number;
 };
 
-export const AtmosPump = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosPump = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, max_rate, max_pressure, rate, pressure } = data;
 
   return (
-    <Window width={335} height={115}>
+    <Window width={345} height={115}>
       <Window.Content>
         <Section>
           <LabeledList>

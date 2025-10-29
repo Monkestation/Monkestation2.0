@@ -1,12 +1,16 @@
 /datum/round_event_control/antagonist/solo/revolutionary
 	name = "Roundstart Revolution"
-	tags = list(TAG_COMMUNAL, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_COMMUNAL, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head/event_trigger
 	typepath = /datum/round_event/antagonist/solo/revolutionary
+	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
 		JOB_CYBORG,
@@ -17,13 +21,17 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	base_antags = 2
 	enemy_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
 	required_enemies = 6
@@ -31,8 +39,9 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 0 //value was 3, we need to manually test if this works or not before allowing it normally
-	max_occurrences = 1
+	weight = 0
+	max_occurrences = 0
+	event_icon_state = "revolution"
 
 /datum/antagonist/rev/head/event_trigger
 	remove_clumsy = TRUE
@@ -61,6 +70,8 @@
 	revolution.round_result(finished)
 
 /datum/round_event/antagonist/solo/revolutionary/tick()
+	if(finished)
+		return
 	var/winner = revolution.process_victory()
 	if(isnull(winner))
 		return

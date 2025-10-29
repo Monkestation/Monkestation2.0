@@ -91,7 +91,7 @@
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/stack/medical/bone_gel/four = 2,
+					/obj/item/stack/medical/bone_gel = 2,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs,
 				)
@@ -108,10 +108,11 @@
 		shmancy degrees? Just get started with this crate containing a medical duffelbag, \
 		Sterilizine spray and collapsible roller bed."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
-					/obj/item/reagent_containers/medigel/sterilizine,
-					/obj/item/roller,
-				)
+	contains = list(
+		/obj/item/storage/backpack/duffelbag/med/surgery,
+		/obj/item/reagent_containers/medigel/sterilizine,
+		/obj/item/emergency_bed,
+	)
 	crate_name = "surgical supplies crate"
 
 /datum/supply_pack/medical/salglucanister
@@ -124,6 +125,7 @@
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
 
+/* Monkestation Removal: Old Virology
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	desc = "Contains twelve different bottles of several viral samples for virology \
@@ -143,19 +145,11 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
-
-/datum/supply_pack/medical/cmoturtlenecks
-	name = "Chief Medical Officer Turtlenecks"
-	desc = "Contains the CMO's turtleneck and turtleneck skirt."
-	cost = CARGO_CRATE_VALUE * 2
-	access = ACCESS_CMO
-	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
-					/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
-				)
+End Monkestation Removal*/
 
 /datum/supply_pack/medical/arm_implants
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
+	contains = list(/obj/item/organ/internal/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"

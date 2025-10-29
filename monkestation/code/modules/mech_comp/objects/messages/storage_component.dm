@@ -18,7 +18,7 @@
 	MC_ADD_INPUT("fire", send_signal)
 	MC_ADD_CONFIG("Swap Output Signal", swap_signal)
 
-	create_storage(1000, WEIGHT_CLASS_BULKY, 1000, TRUE, storage_type = /datum/storage/component_storage)
+	create_storage(1000, WEIGHT_CLASS_BULKY, 1000, TRUE)
 
 /obj/item/mcobject/messaging/storage/multitool_act_secondary(mob/living/user, obj/item/tool)
 	var/obj/item/multitool/multitool = tool
@@ -44,9 +44,3 @@
 		say("[inserter.name] recieved from [component.name]")
 		return TRUE
 	return
-
-//we want to overright this so we can't attempt insertion by normal means
-/datum/storage/component_storage/on_attackby(datum/source, obj/item/thing, mob/user, params)
-	return COMPONENT_NO_AFTERATTACK
-
-

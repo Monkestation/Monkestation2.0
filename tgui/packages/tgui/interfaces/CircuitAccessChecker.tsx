@@ -10,8 +10,8 @@ type Data = {
   accesses: string[];
 };
 
-export const CircuitAccessChecker = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CircuitAccessChecker = (props) => {
+  const { act, data } = useBackend<Data>();
   const { oneAccess, regions = [], accesses = [] } = data;
 
   return (
@@ -27,8 +27,8 @@ export const CircuitAccessChecker = (props, context) => {
           </LabeledList.Item>
         </LabeledList>
         <AccessConfig
-          accesses={regions}
-          selectedList={accesses}
+          accesses={regions || []}
+          selectedList={accesses || []}
           accessMod={(ref) =>
             act('set', {
               access: ref,

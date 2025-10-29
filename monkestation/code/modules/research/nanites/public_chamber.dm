@@ -163,7 +163,7 @@
 			if(nanites && nanites.cloud_id != cloud_id)
 				change_cloud(attacker)
 			return
-		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
+		if((L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD | MOB_ROBOTIC)) && !issilicon(L))
 			inject_nanites(attacker)
 
 /obj/machinery/public_nanite_chamber/open_machine(drop, density_to_set)
@@ -182,15 +182,15 @@
 		return
 	open_machine()
 
-/obj/machinery/public_nanite_chamber/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+/obj/machinery/public_nanite_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))//sent icon_state is irrelevant...
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()
@@ -198,9 +198,9 @@
 /obj/machinery/public_nanite_chamber/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(!Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
+/obj/machinery/public_nanite_chamber/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!Adjacent(dropped) || !user.Adjacent(dropped) || !iscarbon(dropped))
 		return
-	if(close_machine(target, user))
-		log_combat(user, target, "inserted", null, "into [src].")
+	if(close_machine(dropped, user))
+		log_combat(user, dropped, "inserted", null, "into [src].")
 	add_fingerprint(user)

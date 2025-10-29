@@ -26,14 +26,16 @@
 		if(smoothing_flags & SMOOTH_CORNERS)
 			icon_state = ""
 	GLOB.cameranet.updateVisibility(src)
+	GLOB.thrallnet.updateVisibility(src)
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
+	GLOB.thrallnet.updateVisibility(src)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/structure/ui_act(action, params)
+/obj/structure/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	return ..()
 

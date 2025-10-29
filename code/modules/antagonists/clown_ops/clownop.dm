@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/clown_operative_elite
 	preview_outfit_behind = /datum/outfit/clown_operative
 	nuke_icon_state = "bananiumbomb_base"
+	antag_count_points = 8
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
@@ -16,14 +17,12 @@
 	message_admins("[key_name_admin(admin)] has clown op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
 
-/datum/antagonist/nukeop/clownop/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/nukeop/clownop/on_gain()
 	. = ..()
-	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NAIVE, CLOWNOP_TRAIT)
 
-/datum/antagonist/nukeop/clownop/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	REMOVE_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
+/datum/antagonist/nukeop/clownop/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_NAIVE, CLOWNOP_TRAIT)
 	return ..()
 
 /datum/antagonist/nukeop/clownop/equip_op()
@@ -48,14 +47,12 @@
 	challengeitem = /obj/item/nuclear_challenge/clownops
 	suicide_cry = "HAPPY BIRTHDAY!!"
 
-/datum/antagonist/nukeop/leader/clownop/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/nukeop/leader/clownop/on_gain()
 	. = ..()
-	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NAIVE, CLOWNOP_TRAIT)
 
-/datum/antagonist/nukeop/leader/clownop/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	REMOVE_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
+/datum/antagonist/nukeop/leader/clownop/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_NAIVE, CLOWNOP_TRAIT)
 	return ..()
 
 /datum/antagonist/nukeop/leader/clownop/equip_op()

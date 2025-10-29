@@ -8,6 +8,9 @@
 	description = "Bolts open all doors in one or more departments."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_SPOOKY)
+	event_group = /datum/event_group/error
 
 /datum/round_event/grey_tide
 	announce_when = 50
@@ -35,6 +38,8 @@
 		grey_tide_areas += pick_n_take(potential_areas)
 
 /datum/round_event/grey_tide/announce(fake)
+	if(fake)
+		severity = rand(1,3)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 
 /datum/round_event/grey_tide/start()

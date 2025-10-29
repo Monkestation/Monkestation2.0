@@ -41,7 +41,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				"trim" = trim,
 				)
 			continue
-		for(var/department_type as anything in job.departments_list)
+		for(var/department_type in job.departments_list)
 			var/datum/job_department/department = departments_by_type[department_type]
 			if(!department)
 				stack_trace("get_manifest() failed to get job department for [department_type] of [job.type]")
@@ -108,38 +108,42 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+	var/datum/dna/record_dna = new()
+	person.dna.copy_dna(record_dna)
 
 	var/chosen_assignment = person_client?.prefs.alt_job_titles[assignment] || assignment
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = "[person.get_blood_type() || "None"]",
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
-		gender = person_gender,
-		initial_rank = assignment,
-		name = person.real_name,
-		rank = chosen_assignment	,
-		species = person.dna.species.name,
-		trim = assignment,
-		// Locked specifics
-		dna_ref = person.dna,
-		mind_ref = person.mind,
-	)
-
-	new /datum/record/crew(
-		age = person.age,
-		blood_type = person.dna.blood_type,
-		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = chosen_assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
+		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
+		// Locked specifics
+		locked_dna = record_dna,
+		mind_ref = person.mind,
+	)
+
+	var/datum/record/crew/crewfile = new (
+		age = person.age,
+		blood_type = "[person.get_blood_type() || "None"]",
+		character_appearance = character_appearance,
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
+		gender = person_gender,
+		initial_rank = assignment,
+		name = person.real_name,
+		rank = chosen_assignment,
+		species = record_dna.species.name,
+		trim = assignment,
+		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Crew specific
 		lock_ref = REF(lockfile),
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),
@@ -148,6 +152,10 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
+
+	person.mind.crewfile = crewfile
+	person.mind.lockfile = lockfile
+	person.crew_hud_set_crew_status() //MONKE, when someone is added to crew, set their crew hud status, to make hud know they're crew.
 
 	return
 
@@ -159,3 +167,52 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	target.rank = assignment
 	target.trim = trim
+
+/**
+ * Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).
+ * Args:
+ * - name - The name of the record we're looking for, which should be the name of the person.
+ * - person - The mob we're taking pictures of to update the records.
+ * - add_height_chart - If we should add a height chart to the background of the photo.
+ */
+/datum/manifest/proc/change_pictures(name, mob/living/person, add_height_chart = FALSE)
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		return FALSE
+
+	target.character_appearance = new(person.appearance)
+	target.recreate_manifest_photos(add_height_chart)
+	return TRUE
+
+/datum/manifest/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/manifest/ui_status(mob/user, datum/ui_state/state)
+	return (isnewplayer(user) || isobserver(user) || isAI(user) || ispAI(user) || user.client?.holder) ? UI_INTERACTIVE : UI_CLOSE
+
+/datum/manifest/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "CrewManifest")
+		ui.open()
+
+/datum/manifest/ui_data(mob/user)
+	var/list/positions = list()
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/open = 0
+		var/list/exceptions = list()
+		for(var/datum/job/job as anything in department.department_jobs)
+			if(job.total_positions == -1)
+				exceptions += job.title
+				continue
+			var/open_slots = job.total_positions - job.current_positions
+			if(open_slots < 1)
+				continue
+			open += open_slots
+		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
+
+	return list(
+		"manifest" = get_manifest(),
+		"positions" = positions
+	)
+

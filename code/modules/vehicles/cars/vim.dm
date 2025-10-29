@@ -13,7 +13,7 @@
 	enter_delay = 20
 	movedelay = 0.6
 	engine_sound_length = 0.3 SECONDS
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 4
 	light_power = 2
 	light_on = FALSE
@@ -21,6 +21,7 @@
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
+	explode_on_destruction = FALSE // monkestation edit: don't boom
 
 /datum/armor/car_vim
 	melee = 70

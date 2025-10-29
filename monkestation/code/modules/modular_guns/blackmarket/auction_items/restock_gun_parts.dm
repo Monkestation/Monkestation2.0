@@ -1,0 +1,99 @@
+/datum/market_item/ammo
+	category = "Ammo"
+	markets = list(/datum/market/restock/guns_galore)
+
+/datum/market_item/ammo/m10mm_ammo_box
+	name = "10mm Ammo Box"
+	desc = "A 10mm Ammo Box."
+	item = /obj/item/ammo_box/c10mm
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70
+
+/datum/market_item/ammo/m10mm_mag
+	name = "10mm Mag"
+	desc = "A 10mm Mag."
+	item = /obj/item/ammo_box/magazine/m10mm
+
+	price_min = CARGO_CRATE_VALUE * 3.4
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 3
+	availability_prob = 90
+
+/datum/market_item/ammo/m50ae_ammo_box
+	name = ".50ae Ammo Box"
+	desc = "A .50ae Ammo Box."
+	item = /obj/item/ammo_box/c50
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70
+
+/obj/item/ammo_box/c50
+	name = "ammo box (.50ae)"
+	icon_state = "10mmbox"
+	ammo_type = /obj/item/ammo_casing/a50ae
+	max_ammo = 15
+
+/datum/market_item/ammo/m50_mag
+	name = ".50ae Mag"
+	desc = "A .50ae Mag."
+	item = /obj/item/ammo_box/magazine/m50
+
+	price_min = CARGO_CRATE_VALUE * 3.4
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 3
+	availability_prob = 90
+
+/datum/market_item/ammo/m45
+	name = ".45 APC Mag"
+	desc = "Fits into standard 1911s."
+	item = /obj/item/ammo_box/magazine/m45
+
+	price_min = CARGO_CRATE_VALUE * 3.4
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 1
+	availability_prob = 90
+
+/datum/market_item/ammo/c35sol
+	name = ".35 Short Box"
+	desc = "A box of .35 Short."
+	item = /obj/item/ammo_box/c35sol
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70
+
+/datum/market_item/ammo/c585trappiste
+	name = ".585 Trappiste Box"
+	desc = "A box of .585 Trappiste"
+	item = /obj/item/ammo_box/c585trappiste
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70
+
+/datum/market_item/ammo/mag_9mm
+	name = "9mm magazine"
+	desc = "A 9mm magazine for the makarov"
+	item = /obj/item/ammo_box/magazine/m9mm
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.5
+	stock_max = 5
+	availability_prob = 70
+
+/datum/market_item/ammo/mag_9mm_hp
+	name = "9mm HP magazine"
+	desc = "A 9mm hollowpoint magazine for the makarov"
+	item = /obj/item/ammo_box/magazine/m9mm/hp
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 3.5
+	stock_max = 3
+	availability_prob = 70

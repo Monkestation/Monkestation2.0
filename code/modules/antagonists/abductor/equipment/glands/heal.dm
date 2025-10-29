@@ -1,12 +1,12 @@
 /obj/item/organ/internal/heart/gland/heal
 	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
-	cooldown_low = 200
-	cooldown_high = 400
+	cooldown_low = 20 SECONDS
+	cooldown_high = 40 SECONDS
 	uses = -1
 	human_only = TRUE
 	icon_state = "health"
 	mind_control_uses = 3
-	mind_control_duration = 3000
+	mind_control_duration = 5 MINUTES
 
 /obj/item/organ/internal/heart/gland/heal/activate()
 	if(!(owner.mob_biotypes & MOB_ORGANIC))
@@ -22,27 +22,27 @@
 			return
 
 	var/obj/item/organ/internal/appendix/appendix = owner.get_organ_slot(ORGAN_SLOT_APPENDIX)
-	if((!appendix && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || (appendix.organ_flags & ORGAN_SYNTHETIC))))
+	if((!appendix && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (appendix && ((appendix.organ_flags & ORGAN_FAILING) || IS_ROBOTIC_ORGAN(appendix))))
 		replace_appendix(appendix)
 		return
 
 	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
-	if((!liver && !HAS_TRAIT(owner, TRAIT_NOMETABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || (liver.organ_flags & ORGAN_SYNTHETIC))))
+	if((!liver && !HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM)) || (liver && ((liver.damage > liver.high_threshold) || IS_ROBOTIC_ORGAN(liver))))
 		replace_liver(liver)
 		return
 
 	var/obj/item/organ/internal/lungs/lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC))))
+	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || IS_ROBOTIC_ORGAN(lungs))))
 		replace_lungs(lungs)
 		return
 
 	var/obj/item/organ/internal/stomach/stomach = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if((!stomach && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || (stomach.organ_flags & ORGAN_SYNTHETIC))))
+	if((!stomach && !HAS_TRAIT(owner, TRAIT_NOHUNGER)) || (stomach && ((stomach.damage > stomach.high_threshold) || IS_ROBOTIC_ORGAN(stomach))))
 		replace_stomach(stomach)
 		return
 
 	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
-	if(!eyes || (eyes && ((eyes.damage > eyes.low_threshold) || (eyes.organ_flags & ORGAN_SYNTHETIC))))
+	if(!eyes || (eyes && ((eyes.damage > eyes.low_threshold) || IS_ROBOTIC_ORGAN(eyes))))
 		replace_eyes(eyes)
 		return
 
@@ -157,7 +157,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird rumble behind your eye sockets..."))
 
-	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(100, 200))
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(10 SECONDS, 20 SECONDS))
 
 /obj/item/organ/internal/heart/gland/heal/proc/finish_replace_eyes()
 	var/eye_type = /obj/item/organ/internal/eyes
@@ -175,7 +175,7 @@
 	else
 		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))
 
-	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(150, 300))
+	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(150 SECONDS, 30 SECONDS))
 
 /obj/item/organ/internal/heart/gland/heal/proc/finish_replace_limb(body_zone)
 	owner.visible_message(span_warning("With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!"),
@@ -205,7 +205,7 @@
 		if(owner.reagents.has_reagent(R.type))
 			keep_going = TRUE
 	if(keep_going)
-		addtimer(CALLBACK(src, PROC_REF(keep_replacing_blood)), 30)
+		addtimer(CALLBACK(src, PROC_REF(keep_replacing_blood)), 3 SECONDS)
 
 /obj/item/organ/internal/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
 	if(!IS_ORGANIC_LIMB(chest))

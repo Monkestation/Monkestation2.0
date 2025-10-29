@@ -14,9 +14,9 @@
 	. = ..()
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 
-/obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
+/obj/machinery/nanite_programmer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/nanite_program))
+		var/obj/item/disk/nanite_program/N = attacking_item
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, span_notice("You insert [N] into [src]"))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
@@ -47,11 +47,13 @@
 	disk = null
 	program = null
 
-/obj/machinery/nanite_programmer/AltClick(mob/user)
+/obj/machinery/nanite_programmer/click_alt(mob/user)
 	if(disk && !issilicon(user))
 		to_chat(user, span_notice("You take out [disk] from [src]."))
 		eject(user)
-	return
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/nanite_programmer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -161,7 +163,7 @@
 				investigate_log("[key_name(usr)] edited [program.name]'s trigger delay timer into [timer/10] s", INVESTIGATE_NANITES)
 			. = TRUE
 
-/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
 	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/nanite_programmer))

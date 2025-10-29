@@ -1,10 +1,12 @@
 /mob/living/basic/chicken/snowy
 	icon_suffix = "snowy"
+	worn_slot_flags = null
 
 	breed_name = "Snow"
 	egg_type = /obj/item/food/egg/snowy
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 40
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 40
+	liked_foods = list(/obj/item/food/grown/icepepper = 4)
 
 	book_desc = "These chickens require a sub-zero environment to live. They will melt if its not cold enough for them."
 /obj/item/food/egg/snowy
@@ -13,6 +15,9 @@
 
 	layer_hen_type = /mob/living/basic/chicken/snowy
 
+	high_temp = 24
+	low_pressure = 3
+	high_pressure = 2003
 
 /obj/item/food/egg/snowy/consumed_egg(datum/source, mob/living/eater, mob/living/feeder)
 	eater.apply_status_effect(SNOWY_EGG)

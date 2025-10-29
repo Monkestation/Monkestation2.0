@@ -2,7 +2,7 @@
 
 /datum/nanite_program/sleepy
 	name = "Sleep Induction"
-	desc = "The nanites induce rapid narcolepsy when triggered."
+	desc = "The nanites induce rapid narcolepsy when triggered, putting the host to sleep for around 20 seconds after a random delay." //the "around" is an ass-covering manuever and i do not apologize
 	can_trigger = TRUE
 	trigger_cost = 15
 	trigger_cooldown = 1200
@@ -15,7 +15,7 @@
 
 /datum/nanite_program/paralyzing
 	name = "Paralysis"
-	desc = "The nanites force muscle contraction, effectively paralyzing the host."
+	desc = "The nanites force muscle contraction, effectively stunning the host." //funny that this is called paralysis and it does stun instead of para
 	use_rate = 3
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
@@ -44,7 +44,7 @@
 
 /datum/nanite_program/stun
 	name = "Neural Shock"
-	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
+	desc = "The nanites pulse the host's nerves when triggered, incapacitating them for about 4 seconds."
 	can_trigger = TRUE
 	trigger_cost = 4
 	trigger_cooldown = 300
@@ -268,3 +268,96 @@
 /datum/nanite_program/bad_mood/disable_passive_effect()
 	. = ..()
 	host_mob.clear_mood_event("nanite_sadness")
+
+/datum/nanite_program/conversation_filter
+	name = "Conversation Filter"
+	desc = "The nanites pre-process words, granting the ability to filter out certain phrases."
+	use_rate = 0.1
+	unique = FALSE
+	rogue_types = list(/datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/conversation_filter/register_extra_settings()
+	. = ..()
+	extra_settings[NES_INVALID_PHRASE] = new /datum/nanite_extra_setting/text("")
+	extra_settings[NES_PHRASE_REPLACEMENT] = new /datum/nanite_extra_setting/text("\[Invalid Phrase Detected.\]")
+	extra_settings[NES_REPLACEMENT_MODE] = new /datum/nanite_extra_setting/boolean(TRUE, "Whole Sentence", "Phrase Only")
+
+/datum/nanite_program/conversation_filter/on_mob_add()
+	. = ..()
+	RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, PROC_REF(on_hear))
+
+/datum/nanite_program/conversation_filter/on_mob_remove()
+	UnregisterSignal(host_mob, COMSIG_MOVABLE_HEAR)
+
+/datum/nanite_program/conversation_filter/proc/on_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
+	if(!activated)
+		return
+
+	var/datum/nanite_extra_setting/phrase = extra_settings[NES_INVALID_PHRASE]
+	var/datum/nanite_extra_setting/replacement_mode = extra_settings[NES_REPLACEMENT_MODE]
+	var/datum/nanite_extra_setting/replacement_setting = extra_settings[NES_PHRASE_REPLACEMENT]
+	var/replacement_phrase = replacement_setting.get_value()
+
+	if(!phrase.get_value())
+		return
+
+	if(!replacement_phrase)
+		replacement_phrase = ""
+
+	if(findtext(hearing_args[HEARING_RAW_MESSAGE], phrase.get_value()))
+		if (replacement_mode.get_value())
+			hearing_args[HEARING_RAW_MESSAGE] = replacement_phrase
+		else
+			var/message = hearing_args[HEARING_RAW_MESSAGE]
+			message = replacetext(message, phrase.get_value(), replacement_phrase)
+			hearing_args[HEARING_RAW_MESSAGE] = message
+
+#define NES_GRAVITY "Gravity Field"
+#define NANITE_GRAV_NORMAL "1G"
+#define NANITE_GRAV_HIGH "2G"
+
+/datum/nanite_program/gravity
+	name = "Gravito-Kinetic Field Conduction"
+	desc = "The nanites channel an artifical gravitational field through the host."
+	use_rate = 3
+	rogue_types = list(/datum/nanite_program/glitch)
+	var/gravitymod = 0
+	var/current_mode
+	unique = FALSE
+
+/datum/nanite_program/gravity/register_extra_settings()
+	. = ..()
+	extra_settings[NES_GRAVITY] = new /datum/nanite_extra_setting/type(NANITE_GRAV_NORMAL, list(NANITE_GRAV_NORMAL, NANITE_GRAV_HIGH))
+
+/datum/nanite_program/gravity/active_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
+
+	if (current_mode != mode.get_value() && passive_enabled)
+		disable_passive_effect() // toggles it so that it updates
+		enable_passive_effect()
+
+/datum/nanite_program/gravity/enable_passive_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
+	current_mode = mode.get_value()
+	switch(current_mode)
+		if(NANITE_GRAV_NORMAL)
+			gravitymod = 1
+
+		if(NANITE_GRAV_HIGH)
+			gravitymod = 2
+
+	to_chat(host_mob, span_warning("Gravity starts warping around you!"))
+	host_mob.AddElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
+
+/datum/nanite_program/gravity/disable_passive_effect()
+	. = ..()
+	to_chat(host_mob, span_notice("The non-newtonian nonsense is no more, thankfully."))
+	host_mob.RemoveElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
+
+#undef NES_GRAVITY
+#undef NANITE_GRAV_NORMAL
+#undef NANITE_GRAV_HIGH

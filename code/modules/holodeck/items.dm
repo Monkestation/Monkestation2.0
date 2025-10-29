@@ -93,20 +93,21 @@
 	to_chat(user, span_warning("You are too primitive to use this device!"))
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/W, mob/user, params)
+/obj/machinery/readybutton/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	to_chat(user, span_warning("The device is a solid button, there's nothing you can do with it!"))
 
 /obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(user.stat || machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_warning("This device is not powered!"))
 		return
 
-	currentarea = get_area(src.loc)
-	if(!currentarea)
+	currentarea = get_area(src)
+	if(isnull(currentarea))
 		qdel(src)
+		return
 
 	if(eventstarted)
 		to_chat(usr, span_warning("The event has already begun!"))
@@ -118,10 +119,12 @@
 
 	var/numbuttons = 0
 	var/numready = 0
-	for(var/obj/machinery/readybutton/button in currentarea)
-		numbuttons++
-		if (button.ready)
-			numready++
+	for(var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/readybutton/button in area_turf)
+				numbuttons++
+				if(button.ready)
+					numready++
 
 	if(numbuttons == numready)
 		begin_event()
@@ -134,17 +137,19 @@
 
 	eventstarted = TRUE
 
-	for(var/obj/structure/window/W in currentarea)
-		if(W.flags_1&NODECONSTRUCT_1) // Just in case: only holo-windows
-			qdel(W)
+	for(var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/structure/window/barrier in area_turf)
+				if(barrier.flags_1 & (NODECONSTRUCT_1 | HOLOGRAM_1))// Just in case: only holo-windows
+					qdel(barrier)
 
-	for(var/mob/M in currentarea)
-		to_chat(M, span_userdanger("FIGHT!"))
+			for(var/mob/contestant in area_turf)
+				to_chat(contestant, span_userdanger("FIGHT!"))
 
 /obj/machinery/conveyor/holodeck
 
-/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(!user.transferItemToLoc(I, drop_location()))
+/obj/machinery/conveyor/holodeck/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!user.transferItemToLoc(attacking_item, drop_location()))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma

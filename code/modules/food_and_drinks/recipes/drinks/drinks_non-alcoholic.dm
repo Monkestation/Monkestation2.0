@@ -55,6 +55,10 @@
 	results = list(/datum/reagent/consumable/bananashake = 3)
 	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/maltshake
+	results = list(/datum/reagent/consumable/ethanol/maltshake = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
 /datum/chemical_reaction/drink/pumpkin_latte
 	results = list(/datum/reagent/consumable/pumpkin_latte = 15)
 	required_reagents = list(/datum/reagent/consumable/pumpkinjuice = 5, /datum/reagent/consumable/coffee = 5, /datum/reagent/consumable/cream = 5)
@@ -158,6 +162,10 @@
 	results = list(/datum/reagent/consumable/funky_monkey = 3)
 	required_reagents = list(/datum/reagent/consumable/coco = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/banana = 1)
 
+/datum/chemical_reaction/drink/ook_monkey
+	results = list(/datum/reagent/consumable/ook_monkey = 4)
+	required_reagents = list(/datum/reagent/consumable/funky_monkey = 3, /datum/reagent/consumable/monkey_energy = 1)
+
 /datum/chemical_reaction/drink/green_giant
 	results = list(/datum/reagent/consumable/green_giant = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/creme_de_menthe = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/limejuice = 1)
@@ -178,3 +186,6 @@
 	results = list(/datum/reagent/consumable/mississippi_queen = 50)
 	required_reagents = list(/datum/reagent/consumable/tomatojuice = 15, /datum/reagent/consumable/mayonnaise = 10, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/vinegar = 2, /datum/reagent/consumable/capsaicin = 10, /datum/reagent/consumable/coco = 2)
 
+/datum/chemical_reaction/drink/t_letter
+	results = list(/datum/reagent/consumable/t_letter = 2)
+	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/tea = 1)

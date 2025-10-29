@@ -16,7 +16,7 @@
 	if(length(guardians) && !allow_multiple)
 		balloon_alert(user, "already have one!")
 		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
 		to_chat(user, ling_failure)
 		return
 	if(used)
@@ -32,11 +32,13 @@
 		used = TRUE
 		to_chat(user, use_message)
 		var/guardian_type_name = capitalize(initial(guardian_path.creator_name))
-		var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 			"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
-			jobban_type = ROLE_PAI,
+			check_jobban = ROLE_PAI,
 			poll_time = 10 SECONDS,
 			ignore_category = POLL_IGNORE_HOLOPARASITE,
+			alert_pic = guardian_path,
+			role_name_text = "guardian spirit",
 		)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/candidate = pick(candidates)

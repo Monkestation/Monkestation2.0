@@ -119,6 +119,7 @@
 	icon_state = "can"
 	loot = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/sunset_sarsaparilla = 3, //monkestation edit
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
 		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
@@ -156,6 +157,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/sake = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/grappa = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
 		/obj/item/reagent_containers/cup/bottle/ethanol = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/fernet = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne = 2,
@@ -185,7 +187,7 @@
 	name = "seed vault seeds"
 	icon_state = "seed"
 	loot = list(
-		/obj/item/seeds/gatfruit = 10,
+		// /obj/item/seeds/gatfruit = 10,
 		/obj/item/seeds/cherry/bomb = 10,
 		/obj/item/seeds/berry/glow = 10,
 		/obj/item/seeds/sunflower/moonflower = 8,

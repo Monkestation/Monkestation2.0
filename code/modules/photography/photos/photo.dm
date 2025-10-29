@@ -42,7 +42,7 @@
 			continue
 		if(!isobserver(seen))
 			continue
-		set_custom_materials(list(/datum/material/hauntium = 2000))
+		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		grind_results = list(/datum/reagent/hauntium = 20)
 		break
 
@@ -68,7 +68,7 @@
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
 	if(burn_paper_product_attackby_check(P, user))
 		return
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
@@ -92,7 +92,7 @@
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
 	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor; image-rendering:pixelated' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
 		+ "</body></html>", "window=photo_showing;size=480x608")
 	onclose(user, "[name]")

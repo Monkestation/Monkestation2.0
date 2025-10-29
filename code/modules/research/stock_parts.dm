@@ -14,6 +14,20 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
+/obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	//its very important to NOT block so frames can still interact with it
+	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
+		return NONE
+
+	var/obj/machinery/attacked_machinery = attacked_object
+	if(!LAZYLEN(attacked_machinery.component_parts))
+		return ITEM_INTERACT_FAILURE
+
+	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
 /obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/rped)
@@ -51,31 +65,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	return TRUE
 
-/obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
-		return ..()
-
-	if(ismachinery(attacked_object))
-		var/obj/machinery/attacked_machinery = attacked_object
-
-		if(!attacked_machinery.component_parts)
-			return ..()
-
-		if(works_from_distance)
-			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
-			attacked_machinery.exchange_parts(user, src)
-		return
-
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	if(!adjacent && !works_from_distance)
-		return
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return
-	attacked_frame.attackby(src, user)
-	if(works_from_distance)
-		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
-
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
 	if(alt_sound && prob(1))
@@ -103,6 +92,14 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_part_entered))
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_part_exited))
 
+/obj/item/storage/part_replacer/bluespace/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
+/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
 /**
  * Signal handler for when a part has been inserted into the BRPED.
  *
@@ -121,10 +118,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
 
 
-	if(!istype(inserted_component, /obj/item/stock_parts/cell))
+	if(!istype(inserted_component, /obj/item/stock_parts/power_store/cell))
 		return
 
-	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+	var/obj/item/stock_parts/power_store/cell/inserted_cell = inserted_component
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
@@ -166,7 +163,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
-		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -177,7 +174,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
-		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/power_store/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -188,7 +185,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
-		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/power_store/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -199,7 +196,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
-		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/power_store/cell/bluespace(src)
+		new /obj/item/reagent_containers/cup/beaker/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -219,6 +217,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
+/obj/item/storage/part_replacer/cyborg/Initialize(mapload)
+	. = ..()
+
+	atom_storage.max_slots = 200
+	atom_storage.max_total_storage = 400
+
 /obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
 	var/list/part_list = list()
 	//Assemble a list of current parts, then sort them by their rating!
@@ -228,7 +232,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 			continue
 		part_list += component_part
 		//Sort the parts. This ensures that higher tier items are applied first.
-	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+	sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 	return part_list
 
 /proc/cmp_rped_sort(obj/item/first_item, obj/item/second_item)
@@ -261,32 +265,32 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module
 	name = "scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/manipulator
 	name = "micro-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
-	custom_materials = list(/datum/material/iron=30)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
 	base_name = "manipulator"
 
 /obj/item/stock_parts/micro_laser
 	name = "micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/matter_bin
 	name = "matter bin"
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "matter_bin"
-	custom_materials = list(/datum/material/iron=80)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 //Rating 2
 
@@ -296,7 +300,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "adv_capacitor"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
@@ -304,7 +308,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "adv_scan_module"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/manipulator/nano
 	name = "nano-manipulator"
@@ -312,7 +316,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "nano_mani"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=30)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
 
 /obj/item/stock_parts/micro_laser/high
 	name = "high-power micro-laser"
@@ -320,7 +324,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "high_micro_laser"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
@@ -328,7 +332,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "advanced_matter_bin"
 	rating = 2
 	energy_rating = 3
-	custom_materials = list(/datum/material/iron=80)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 //Rating 3
 
@@ -338,7 +342,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "super_capacitor"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/phasic
 	name = "phasic scanning module"
@@ -346,7 +350,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "super_scan_module"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/manipulator/pico
 	name = "pico-manipulator"
@@ -354,7 +358,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "pico_mani"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=30)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
 
 /obj/item/stock_parts/micro_laser/ultra
 	name = "ultra-high-power micro-laser"
@@ -362,7 +366,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny laser used in certain devices."
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/matter_bin/super
 	name = "super matter bin"
@@ -370,7 +374,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "super_matter_bin"
 	rating = 3
 	energy_rating = 5
-	custom_materials = list(/datum/material/iron=80)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 //Rating 4
 
@@ -380,7 +384,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/scanning_module/triphasic
 	name = "triphasic scanning module"
@@ -388,7 +392,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "triphasic_scan_module"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/manipulator/femto
 	name = "femto-manipulator"
@@ -396,7 +400,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "femto_mani"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=30)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
 
 /obj/item/stock_parts/micro_laser/quadultra
 	name = "quad-ultra micro-laser"
@@ -404,7 +408,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny laser used in certain devices."
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/stock_parts/matter_bin/bluespace
 	name = "bluespace matter bin"
@@ -412,7 +416,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "bluespace_matter_bin"
 	rating = 4
 	energy_rating = 10
-	custom_materials = list(/datum/material/iron=80)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.8)
 
 // Subspace stock parts
 
@@ -420,43 +424,43 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "subspace ansible"
 	icon_state = "subspace_ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/subspace/filter
 	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/subspace/amplifier
 	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/subspace/treatment
 	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/subspace/analyzer
 	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/subspace/crystal
 	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
-	custom_materials = list(/datum/material/glass=50)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 
 // Misc. Parts
 
@@ -464,13 +468,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "card reader"
 	icon_state = "card_reader"
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 
 /obj/item/stock_parts/water_recycler
 	name = "water recycler"
 	icon_state = "water_recycler"
 	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
-	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
+	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT * 2, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

@@ -1,0 +1,307 @@
+2024-04-01:
+  DexeeXI:
+  - balance: All Stations now have Preloaded Drone Dispensers!
+  - rscdel: removes an unneeded tip of the round
+  - bugfix: 'tram biodome bar: elevator now has a hole so it functions correctly'
+  - bugfix: missing vent/scrubber pipe on east end of tram replaced
+  - qol: syndie lavaland pathology now reimplemented, first pass.
+  The-Black-Screen:
+  - rscadd: added the new chemistry machines and cargo shelves.
+  - bugfix: fixed the modular computers, fixed the announcements function on appropriate
+      request consoles.
+  - code_imp: changed the map file paths of both `boxstation.dm` files in `monkestation/code/random_rooms/bars`
+      and `monkestation/code/random_rooms/engines`.
+  Yawet330:
+  - rscadd: Bloodsuckers Forced Evolution ability.
+  lizardqueenlexi, ChungusGamer666, LovliestPlant, KnigTheThrasher, MrMelbert:
+  - bugfix: Heads impaled on spears now render in the correct place on the tip, instead
+      of halfway down the shaft.
+  - bugfix: Blind personnel are no longer able to magically see heads impaled on spears
+      from a distance.
+  - rscadd: Added colorblindness as a mild brain trauma.
+  - rscadd: Stethoscopes may be used on the chest, groin, or extremities to assess
+      organ damage, blood level, and/or suffocation damage depending on the targeted
+      area.
+  - rscadd: Shining flashlights into the mouth or eyes of other players will additionally
+      assess brain health, suffocation damage, and/or blood level depending on the
+      targeted area.
+  - balance: Halves the duration of the flash effect from shining lights into players'
+      eyes (2s -> 1s). Use combat mode to get the full duration.
+  - bugfix: added combat mode/harm intent support for the previous pr
+  - balance: Blind people don't get alerted when someone in a cardboard box pops out
+      nearby
+2024-04-02:
+  Absolucy:
+  - bugfix: (JohnFulpWillard) Time on servers hosted outside of the UK should now
+      properly have their timezone offset.
+  - bugfix: (FlufflesTheDog) Certain areas are now properly protected against grid
+      check. Namely the supermatter should consistently be protected.
+  - bugfix: (Ghommie) Fixes the sparring contract. You can now spar with no stakes
+      and just for fun.
+  - bugfix: (ChungusGamer666) Exotic blood types no longer persist through species
+      change if the new species does not have an exotic blood type.
+  - bugfix: (mc-oofert) You are now made a ghost faster if you get gibbed.
+  - bugfix: (AnturK) Fixes bioscramble picking the (unimplemented) base wing type.
+  - bugfix: (AnturK) Fixes setting prebuilt shutter ids with the multitool.
+  - bugfix: "Fixed revolutionaries winning resulting in ATTENTION [x \u221E]"
+  JohnFulpWillard:
+  - bugfix: The TEG now works again (still unobtainable by regular means though).
+  - bugfix: the TEG and its circulators can now be rotated counterclockwise again.
+  - refactor: The TEG now uses a TGUI interface rather than the old HTML one.
+2024-04-03:
+  MilkForever:
+  - rscadd: Added the admin-only Waffles corporate MODsuit.
+  Tractor Mann:
+  - refactor: Jukebox Beacon Code has been refactored, changes to note is that jukeboxes
+      no longer deploy instantly and now come with a wrench.
+2024-04-04:
+  Absolucy:
+  - bugfix: Fix sleeping carp not properly detecting combat mode, resulting in things
+      like not being able to normally grab people and always reflecting projectiles.
+  - bugfix: Airlock mapping helpers now work with windoors.
+2024-04-05:
+  Absolucy:
+  - bugfix: Allow dot radio prefixes to also work with the tgui-say radio prefix display.
+  - rscadd: Potassium iodide can now be used to decontaminate items (i.e fill a fire
+      extinguisher or spray bottle with it, and spray it on green glowing items)
+  - bugfix: The revival policy message now only displays when you're actually revived
+      (i.e it'll no longer display after using a regenerative slime extract to simply
+      heal your wounds)
+  Absolucy, Watermelon914:
+  - refactor: Auxlua no longer uses the timer subsystem to get stuff done, so Lua
+      scripts shouldn't slow down timers anymore.
+  - bugfix: Fixed lua error logging.
+  - admin: Admins can now run lua files bigger than 36 KB by importing them directly.
+2024-04-06:
+  Jacquerel:
+  - bugfix: Dismounting from a piggyback no longer allows you to phase through other
+      players.
+2024-04-08:
+  Absolucy:
+  - qol: Added tinyfans to the solars airlocks on MetaStation.
+  - qol: Added catwalk covering to the flooring of solars areas on MetaStation.
+  - qol: 'All the solars panels on MetaStation are now actually deployed (consistent
+      with other maps), rather than requiring you to manually place them for 2 of
+      the solars.
+
+      qol; Made that stupid weirdo Meta northwest solars make sense.'
+  - qol: Added catwalk covering to the SMES wiring output on MetaStation.
+  - balance: Borger artifacts no longer react if touched with a robotic limb.
+  - balance: Borger artifacts will now just turn your arm robotic the first time you
+      touch it.
+  - qol: Made the examine text for borger artifacts more obvious.
+  - bugfix: You can now properly surgically reattach an oozeling's head.
+  - balance: Lowered the weight of the gravity generator blackout event to 8 (from
+      30), and capped it at 2 occurrences.
+  - balance: Lowered the weight of the radiation storm event to 5 (from 10), and capped
+      it at 1 occurrence.
+  - balance: All scrubber clog+overflow events now share the same occurrence counter.
+  - bugfix: You should no longer roll obsessed without being prompted for it first.
+  Absolucy, Thlumyn:
+  - rscadd: Oozelings and Slimepeople can now get wings from flight potions.
+  Bastian0930:
+  - bugfix: Rod of Asclepius can no longer be used with telepathy. The geneticist
+      responsible has been forced to roll a boulder for the rest of time.
+  DimWhat:
+  - image: Touched up both the worn and object sprites for ascots.
+  Gboster-0:
+  - rscadd: Added two new types of wiring to the youtool vendor, high-voltages no
+      longer seem scary if you just prepare
+  KittyNoodle:
+  - bugfix: fixes Aetericilide being useless.
+  MrMelbert:
+  - qol: Breathing cold air now has a particle effect associated, careful not to let
+      your glasses fog up.
+  - qol: Breathing cold air will now occasionally make your spaceman shiver. Brrr.
+  SeeBeeSee:
+  - rscadd: Added new honeydew melons that distill into honey, as well as slices for
+      a quick snack
+  The-Black-Screen:
+  - rscadd: added miscellaneous things around parts of the map.
+  - rscdel: removed all custom notes.
+  - bugfix: fixed the teg engine map file and miscellaneous things around parts of
+      the map.
+  - code_imp: changed the code in `monkestation/code/random_rooms/engines/boxstation.dm`
+      to re-enable the teg engine.
+  Tractor Mann:
+  - bugfix: fixed Rocket Jump Waltz in the jukebox, you can actually listen to it
+      end now hopefully.
+2024-04-09:
+  DimWhat:
+  - bugfix: Simians no longer turn invisible when husked.
+  KnigTheThrasher:
+  - rscadd: Added a new reagent container (aka. I fixed the bitrunning beach bar)
+2024-04-10:
+  JohnFulpWillard:
+  - bugfix: Malkavian bloodsuckers now whisper revelations again.
+2024-04-12:
+  Absolucy:
+  - qol: Added balloon alerts whenever you start plunging something.
+  Rex9001:
+  - rscadd: A new honeydew specific achievement
+  - balance: You can now eat whilst wearing a horsemask
+2024-04-13:
+  Absolucy:
+  - bugfix: Fixed the bug where your actions would be permanently slowed down after
+      wading through liquid.
+  - bugfix: Fix invalid events (with blank names) being considered to run.
+  AlbertNanotracen:
+  - rscadd: 'Mars celebrates the 250th anniversary of the Martian Concession this
+      year, and this has brought Martian cuisine to new heights of popularity. Find
+      a new selection of Martian foods and drinks available in your crafting menu
+      today!
+
+      Port #77757'
+  - bugfix: wellcheers is now based on sanity rather than mood
+  - image: resprites martian cans
+  - image: adds inhands for martian cans and wellcheers
+  - image: minor tweaks to other cans
+  - spellcheck: 'updates wellcheers mood text
+
+      Port #77562'
+  - bugfix: a few issues with Martian food
+  Bastian0930:
+  - bugfix: Bloodsuckers are unable to spam click the persuasion rack and lose all
+      their blood, as part of the new clan training.
+  - bugfix: Bloodsuckers will not torture basic mobs or animals, after a clan agreement
+      involving the Animal Rights Consortium.
+  dwasint:
+  - bugfix: Ensure deleted slimes are properly tracked, to prevent weird errors that
+      broke slime pen management consoles.
+  - bugfix: Fixed some wonky logic with liquid code.
+2024-04-14:
+  KnigTheThrasher:
+  - rscadd: Added composters into every perma botany
+2024-04-15:
+  Absolucy:
+  - qol: People who can't taste things also can't smell things.
+  - qol: Mute people who can still use sign language are now capable of using sign
+      language to invoke spells. Wizards are still too egotistical to even consider
+      doing so, tho.
+2024-04-16:
+  KnigTheThrasher:
+  - bugfix: Fixed Icebox tests
+2024-04-17:
+  Absolucy:
+  - qol: Heavily increases and randomizes the speech cooldown of parrots.
+  DimWhat:
+  - rscadd: Added two new tails to the anime quirk
+  KittyNoodle:
+  - balance: Hardlight spears can no longer be used with scarp.
+  - balance: Hardlight spear damage and wounding reduced.
+  - balance: Hardlight spear homing removed.
+  - balance: Hardlight spear embed chance halved
+  - balance: Hardlight spears now have cooldown after firing before you can use another
+      spear.
+  KnigTheThrasher:
+  - bugfix: Tram disposals should work now
+  TTNT789:
+  - rscadd: adds a viking costume to the autodrobe
+  Yawet330:
+  - bugfix: Fusion, why?
+  wraith-54321:
+  - balance: Clockwork airlocks lose their damage deflection when placed on reebe
+  - balance: Clockwork walls take half as long to deconstruct on reebe
+2024-04-19:
+  Absolucy:
+  - rscadd: Added a HUD that appears when hovering your mouse over ooze compressors,
+      showing the current extract it is making, and the progress on making said extract.
+  - bugfix: Fixed the normal slime extract menu coming up on ooze compressors after
+      selecting a crossbreed.
+  - bugfix: Fixed xenobiology machinery taking up absurd amounts of power while doing
+      nothing.
+  - balance: Increased range of stabilized grey extract from 1 to 3.
+  - qol: Increased biomass cube stack size (5 -> 15).
+  - qol: Biocubes now fit in science bags.
+  - qol: You can dump biocubes from a science bag into the biomass recycler.
+  - qol: You can right click the slime market with a science bag to sell all the extracts
+      without the confirmation prompt.
+  - rscadd: Added balloon alerts to lots of xenobio-related actions.
+  - qol: You can toggle ooze suckers directly via right click.
+  - qol: You can now right click an active ooze compressor to cancel the current recipe.
+  - qol: Slime mutation syringes now show whether they've been used or not in the
+      examine text.
+  - bugfix: Removing accessories from slimes now works properly.
+  - bugfix: Fix holoparasite resetting not working.
+  - code_imp: Added a safety check that'll emit a (harmless) runtime if something
+      tries to pass an invalid target mob to `SSpolling.poll_ghost_candidates_for_mob`.
+2024-04-20:
+  DexeeXI:
+  - bugfix: restores prefilled drone fab on meta.
+2024-04-21:
+  Absolucy:
+  - qol: Droppers can now only transfer 1u, 2u, or 5u.
+  - rscadd: Re-added the Blood Brothers antagonist into the game, and made them available
+      to storytellers, both roundstart and midround.
+  - rscadd: Instead of teaming up random people together, Blood Brothers will now
+      start out with one player and let them convert a single other person over to
+      blood brother using a flash.
+  - qol: Blood Brothers can now identify each other by HUD.
+  - qol: You can now escape the nuke by going to the deepest level of Icebox.
+  CannibalHunter:
+  - rscadd: Added Henchmen Outfits to the monkeshop
+  KnigTheThrasher:
+  - bugfix: Fixed tram tests (again)
+  Uristthedorf:
+  - rscadd: Clown dagger is now as slippery as maximum potency banana peel.
+  - rscadd: Clown dagger forces victim to laugh.
+  - rscadd: Clown dagger gives both victim and attacker positive moodlet.
+  - rscadd: Choosing clown bible makes the bible slippery.
+2024-04-22:
+  Absolucy:
+  - qol: Battlecruiser Allies now get the Syndicate faction, allowing them to go back
+      with the battlecruiser crew to their base without being gunned down by turrets.
+  DexeeXI:
+  - rscdel: Slasher removed from storyteller. Code retained for improvement/fixes
+      before next halloween!
+2024-04-23:
+  DexeeXI:
+  - rscadd: TEG crate.
+  - rscdel: Geothermal power crates are now gone
+  - rscadd: Box; Prison Skirts in Prison Laundry, Fire Alarm for Transfer Center,
+      Lapvend near sci, Mechcomp between Engine and Atmos.
+  - qol: KC13 (which doesnt exist) now has some silver.
+  KnigTheThrasher:
+  - bugfix: fixed tram slum bar failing tests (again)
+2024-04-24:
+  DimWhat:
+  - bugfix: Fixed alternate clothing styles (alt clicking) not working on lizards
+  lmenvs:
+  - rscadd: Adds Quilark's Syndie tier donator items
+2024-04-26:
+  Absolucy:
+  - bugfix: Fixed a runtime error whenever someone examined an air alarm.
+  - bugfix: Fixed imposter wizards breaking the roundend report.
+  - code_imp: Added sanity checks to some team-related code, which will runtime if
+      they get invalid input, instead of breaking things further down the line.
+  - bugfix: The game window should no longer be titled "/tg/station 13" during early
+      initialization.
+  AlbertNanotracen:
+  - balance: Immune strength higher than normal decays while not in use.
+  - balance: Aetericilide is a stronger immune healer, not preventative medication.
+  - balance: Returns Aluxive to its initial values.
+  - qol: Pathologist specific mail is now useable with your work.
+  - rscadd: Pathologists now have bounties that they can do.
+  - rscdel: There is no longer a crate pathologists can order that contains old virology
+      materials.
+  - rscadd: (Re)Added the mind restoration symptom.
+  Flleeppyy, Absolucy:
+  - sound: Added unique announcement jingles to each heretic path's ascension, replacing
+      the old "space-time anomalies detected" announcement.
+  Yawet330:
+  - bugfix: Fusion should now actually partially ignore plasmaglass instead of being
+      puppy-tier harmless you can stand next to.
+2024-04-27:
+  Absolucy:
+  - bugfix: Fix duels being broken. (Ah eto, bleh?)
+  Yawet330:
+  - bugfix: Admins can now abuse announcements again. (requires perms needed to restart
+      server/start round early to use HTML)
+  - bugfix: Add Admin AI law now actually works (thanks /tg/), admins can now also
+      insert unsanitised HTML as they wish.
+2024-04-29:
+  Absolucy:
+  - bugfix: Fixed full charge APC helpers resulting in APCs practically having no
+      roundstart power instead.
+  RikuTheKiller:
+  - rscadd: Nanites are now capable of contributing to the research network.

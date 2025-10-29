@@ -399,6 +399,42 @@
 	result = /obj/item/food/donkpocket/gondola
 	category = CAT_PASTRY
 
+/datum/crafting_recipe/food/donkpocket/deluxe
+	time = 15
+	name = "Deluxe Donk-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/onion_slice/red = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe/nocarb
+	time = 15
+	name = "Deluxe Meat-pocket"
+	reqs = list(
+		/obj/item/organ/internal/heart = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/slab = 1,
+		/obj/item/food/grown/herbs = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe/nocarb
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe/vegan
+	time = 15
+	name = "Deluxe Donk-roll"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/tofu = 2
+	)
+	result = /obj/item/food/donkpocket/deluxe/vegan
+	category = CAT_PASTRY
+
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin
@@ -603,7 +639,7 @@
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/egg = 2,
 		/datum/reagent/consumable/coco = 5,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_brownie_batter
 	category = CAT_PASTRY
@@ -616,7 +652,7 @@
 		/obj/item/food/egg = 2,
 		/datum/reagent/consumable/coco = 5,
 		/datum/reagent/consumable/peanut_butter = 5,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
 	category = CAT_PASTRY
@@ -630,4 +666,41 @@
 		/datum/reagent/consumable/cream = 5,
 	)
 	result = /obj/item/food/crunchy_peanut_butter_tart
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/chocolate_chip_cookie
+	name = "Chocolate chip cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/chocolatebar = 1,
+	)
+	result = /obj/item/food/cookie/chocolate_chip_cookie
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/snickerdoodle
+	name = "Snickerdoodle"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/vanilla = 5,
+	)
+	result = /obj/item/food/cookie/snickerdoodle
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/thumbprint_cookie
+	name = "Thumbprint cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/cherryjelly = 5,
+	)
+	result = /obj/item/food/cookie/thumbprint_cookie
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/macaron
+	name = "Macaron"
+	reqs = list(
+		/datum/reagent/consumable/eggwhite = 2,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/flour = 5,
+	)
+	result = /obj/item/food/cookie/macaron
 	category = CAT_PASTRY

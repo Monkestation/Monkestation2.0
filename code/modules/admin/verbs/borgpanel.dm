@@ -1,21 +1,6 @@
-/datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin.Game"
-	set name = "Show Borg Panel"
-	set desc = "Show borg panel"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if (!iscyborg(borgo))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
-	if (!iscyborg(borgo))
-		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
-
-	var/datum/borgpanel/borgpanel = new(usr, borgo)
-
-	borgpanel.ui_interact(usr)
-
-
+ADMIN_VERB(borg_panel, R_ADMIN, FALSE, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/silicon/robot/borgo)
+	var/datum/borgpanel/borgpanel = new(user.mob, borgo)
+	borgpanel.ui_interact(user.mob)
 
 /datum/borgpanel
 	var/mob/living/silicon/robot/borg
@@ -31,7 +16,7 @@
 	borg = to_borg
 
 /datum/borgpanel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/borgpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -78,7 +63,7 @@
 		.["ais"] += list(list("name" = ai.name, "ref" = REF(ai), "connected" = (borg.connected_ai == ai)))
 
 
-/datum/borgpanel/ui_act(action, params)
+/datum/borgpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -90,14 +75,12 @@
 			borg.cell.charge = newcharge
 			message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
 			log_silicon("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
-			add_event_to_buffer(user, borg, "set the charge of [key_name(borg)] to [borg.cell.charge].", "SILICON")
 		if ("remove_cell")
 			QDEL_NULL(borg.cell)
 			message_admins("[key_name_admin(user)] deleted the cell of [ADMIN_LOOKUPFLW(borg)].")
 			log_silicon("[key_name(user)] deleted the cell of [key_name(borg)].")
-			add_event_to_buffer(user, borg, "deleted the cell of [key_name(borg)].", "SILICON")
 		if ("change_cell")
-			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/cell)))
+			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/power_store/cell)))
 			if (!ispath(chosen))
 				chosen = text2path(chosen)
 			if (chosen)
@@ -109,54 +92,44 @@
 				borg.diag_hud_set_borgcell()
 				message_admins("[key_name_admin(user)] changed the cell of [ADMIN_LOOKUPFLW(borg)] to [new_cell].")
 				log_silicon("[key_name(user)] changed the cell of [key_name(borg)] to [new_cell].")
-				add_event_to_buffer(user, borg, "changed the cell of [key_name(borg)] to [new_cell].", "SILICON")
 		if ("toggle_emagged")
 			borg.SetEmagged(!borg.emagged)
 			if (borg.emagged)
 				message_admins("[key_name_admin(user)] emagged [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] emagged [key_name(borg)].")
-				add_event_to_buffer(user, borg, "emagged [key_name(borg)].", "SILICON")
 			else
 				message_admins("[key_name_admin(user)] un-emagged [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] un-emagged [key_name(borg)].")
-				add_event_to_buffer(user, borg, "un-emagged [key_name(borg)].", "SILICON")
 		if ("toggle_lawupdate")
 			borg.lawupdate = !borg.lawupdate
 			if (borg.lawupdate)
 				message_admins("[key_name_admin(user)] enabled lawsync on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] enabled lawsync on [key_name(borg)].")
-				add_event_to_buffer(user, borg, "enabled lawsync on [key_name(borg)].", "SILICON")
 			else
 				message_admins("[key_name_admin(user)] disabled lawsync on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] disabled lawsync on [key_name(borg)].")
-				add_event_to_buffer(user, borg, "disabled lawsync on [key_name(borg)].", "SILICON")
 		if ("toggle_lockdown")
 			borg.SetLockdown(!borg.lockcharge)
 			if (borg.lockcharge)
 				message_admins("[key_name_admin(user)] locked down [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] locked down [key_name(borg)].")
-				add_event_to_buffer(user, borg, "locked down [key_name(borg)].", "SILICON")
 			else
 				message_admins("[key_name_admin(user)] released [ADMIN_LOOKUPFLW(borg)] from lockdown.")
 				log_silicon("[key_name(user)] released [key_name(borg)] from lockdown.")
-				add_event_to_buffer(user, borg, "released [key_name(borg)] from lockdown.", "SILICON")
 		if ("toggle_scrambledcodes")
 			borg.scrambledcodes = !borg.scrambledcodes
 			if (borg.scrambledcodes)
 				message_admins("[key_name_admin(user)] enabled scrambled codes on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] enabled scrambled codes on [key_name(borg)].")
-				add_event_to_buffer(user, borg, "enabled scrambled codes on [key_name(borg)].", "SILICON")
 			else
 				message_admins("[key_name_admin(user)] disabled scrambled codes on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] disabled scrambled codes on [key_name(borg)].")
-				add_event_to_buffer(user, borg, "disabled scrambled codes on [key_name(borg)].", "SILICON")
 		if ("rename")
 			var/new_name = sanitize_name(tgui_input_text(user, "What would you like to name this cyborg?", "Cyborg Reclassification", borg.real_name, MAX_NAME_LEN), allow_numbers = TRUE)
 			if(!new_name)
 				return
 			message_admins("[key_name_admin(user)] renamed [ADMIN_LOOKUPFLW(borg)] to [new_name].")
 			log_silicon("[key_name(user)] renamed [key_name(borg)] to [new_name].")
-			add_event_to_buffer(user, borg, "renamed [key_name(borg)] to [new_name].", "SILICON")
 			borg.fully_replace_character_name(borg.real_name,new_name)
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
@@ -164,7 +137,6 @@
 			if (installedupgrade)
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
-				add_event_to_buffer(user, borg, "removed the [installedupgrade] upgrade from [key_name(borg)].", "SILICON")
 				qdel(installedupgrade) // see [mob/living/silicon/robot/on_upgrade_deleted()].
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
@@ -172,7 +144,6 @@
 				borg.upgrades += upgrade
 				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
-				add_event_to_buffer(user, borg, "added the [upgrade] borg upgrade to [key_name(borg)].", "SILICON")
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel
@@ -190,7 +161,6 @@
 						borg.radio.keyslot.independent = FALSE
 				message_admins("[key_name_admin(user)] removed the [channel] radio channel from [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] removed the [channel] radio channel from [key_name(borg)].")
-				add_event_to_buffer(user, borg, "removed the [channel] radio channel from [key_name(borg)].", "SILICON")
 			else // We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new()
@@ -201,7 +171,6 @@
 					borg.radio.keyslot.independent = TRUE
 				message_admins("[key_name_admin(user)] added the [channel] radio channel to [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] added the [channel] radio channel to [key_name(borg)].")
-				add_event_to_buffer(user, borg, "added the [channel] radio channel to [key_name(borg)].", "SILICON")
 			borg.radio.recalculateChannels()
 		if ("setmodule")
 			var/new_model_path = text2path(params["module"])
@@ -209,7 +178,6 @@
 				borg.model.transform_to(new_model_path)
 				message_admins("[key_name_admin(user)] changed the model of [ADMIN_LOOKUPFLW(borg)] to [new_model_path].")
 				log_silicon("[key_name(user)] changed the model of [key_name(borg)] to [new_model_path].")
-				add_event_to_buffer(user, borg, "changed the model of [key_name(borg)] to [new_model_path].", "SILICON")
 		if ("slavetoai")
 			var/mob/living/silicon/ai/newai = locate(params["slavetoai"]) in GLOB.ai_list
 			if (newai && newai != borg.connected_ai)
@@ -220,7 +188,6 @@
 				borg.notify_ai(TRUE)
 				message_admins("[key_name_admin(user)] slaved [ADMIN_LOOKUPFLW(borg)] to the AI [ADMIN_LOOKUPFLW(newai)].")
 				log_silicon("[key_name(user)] slaved [key_name(borg)] to the AI [key_name(newai)].")
-				add_event_to_buffer(user, borg, "slaved [key_name(borg)] to the AI [key_name(newai)].", "SILICON")
 			else if (params["slavetoai"] == "null")
 				borg.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				if(borg.shell)
@@ -228,7 +195,6 @@
 				borg.set_connected_ai(null)
 				message_admins("[key_name_admin(user)] freed [ADMIN_LOOKUPFLW(borg)] from being slaved to an AI.")
 				log_silicon("[key_name(user)] freed [key_name(borg)] from being slaved to an AI.")
-				add_event_to_buffer(user, borg, "freed [key_name(borg)] from being slaved to an AI.", "SILICON")
 			if (borg.lawupdate)
 				borg.lawsync()
 

@@ -21,6 +21,13 @@
 	/// Abstract root value
 	var/abstract_type = /datum/dynamic_ruleset/midround
 
+/datum/dynamic_ruleset/midround/forget_startup()
+	living_players = list()
+	living_antags = list()
+	dead_players = list()
+	list_observers = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
@@ -125,7 +132,7 @@
 		return
 
 	mode.log_dynamic_and_announce("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	candidates = poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
+	candidates = SSpolling.poll_ghost_candidates("Looking for volunteers to become [antag_flag] for [name]", check_jobban = antag_flag_override, role = antag_flag || antag_flag_override, poll_time = 30 SECONDS, alert_pic = /obj/structure/sign/poster/contraband/syndicate_recruitment, role_name_text = antag_flag)
 
 	if(!candidates || candidates.len <= 0)
 		mode.log_dynamic_and_announce("The ruleset [name] received no applications.")
@@ -169,7 +176,12 @@
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
 		finish_setup(new_character, i)
-		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts(
+			"[applicant.name] has been picked for the ruleset [name]!",
+			source = new_character,
+			action = NOTIFY_ORBIT,
+			header = "Something Interesting!",
+		)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = make_body(applicant)
@@ -194,7 +206,7 @@
 	if (!mode.picking_specific_rule(sleeper_agent))
 		return
 
-	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
+///	mode.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator)
 
 ///subtype to handle checking players
 /datum/dynamic_ruleset/midround/from_living
@@ -225,6 +237,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
 	restricted_roles = list(
@@ -363,18 +376,19 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT, // monkestation addition : Jobs
+		JOB_BRIG_PHYSICIAN,
+		JOB_BLUESHIELD,
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
-	weight = 5
+	weight = 0
 	cost = 7
 	minimum_round_time = 70 MINUTES
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
-	/// The nuke ops team datum.
-	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
@@ -400,7 +414,6 @@
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(index == 1)
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
-		nuke_team = leader_antag_datum.nuke_team
 		new_character.mind.add_antag_datum(leader_antag_datum)
 		return
 	return ..()
@@ -437,6 +450,8 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -486,6 +501,10 @@
 	repeatable = TRUE
 	var/list/vents = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/forget_startup()
+	vents = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
 	// 50% chance of being incremented by one
 	required_candidates += prob(50)
@@ -507,7 +526,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-	new_xeno.key = applicant.key
+	new_xeno.PossessByPlayer(applicant.key)
 	new_xeno.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")
 	log_dynamic("[key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
@@ -564,6 +583,10 @@
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
 		spawn_locs += (C.loc)
@@ -578,8 +601,6 @@
 
 	var/mob/living/basic/space_dragon/S = new (pick(spawn_locs))
 	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	player_mind.special_role = ROLE_SPACE_DRAGON
 	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
 
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
@@ -603,6 +624,10 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 
 	var/datum/team/abductor_team/new_team
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/forget_startup()
+	new_team = null
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -636,6 +661,10 @@
 
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
 	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
 		if(!isturf(carp_spawn.loc))
@@ -649,7 +678,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
-	ninja.key = applicant.key
+	ninja.PossessByPlayer(applicant.key)
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a Space Ninja by the midround ruleset.")
@@ -690,6 +719,10 @@
 	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
 
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/forget_startup()
+	spawn_locs = list()
+	return ..()
+
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
@@ -715,30 +748,10 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
 	var/mob/living/basic/revenant/revenant = new(pick(spawn_locs))
-	revenant.key = applicant.key
+	revenant.PossessByPlayer(applicant.key)
 	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
 	return revenant
-
-/// Midround Sentient Disease Ruleset (From Ghosts)
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
-	name = "Sentient Disease"
-	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
-	antag_datum = /datum/antagonist/disease
-	antag_flag = ROLE_SENTIENT_DISEASE
-	required_candidates = 1
-	minimum_players = 25
-	weight = 4
-	cost = 8
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/sentient_disease/generate_ruleset_body(mob/applicant)
-	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
-	virus.key = applicant.key
-	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
-	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by the midround ruleset.")
-	log_game("[key_name(virus)] was spawned as a sentient disease by the midround ruleset.")
-	return virus
 
 /// Midround Space Pirates Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/pirates
@@ -860,6 +873,10 @@
 	cost = 3
 	repeatable = TRUE
 	var/list/possible_spawns = list() ///places the antag can spawn
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/forget_startup()
+	possible_spawns = list()
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)

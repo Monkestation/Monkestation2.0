@@ -27,7 +27,7 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
+	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum, /obj/item/gun/energy/laser/musket, /obj/item/gun/energy/disabler/smoothbore)
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/pirate/armored
@@ -67,6 +67,10 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
 
+/obj/item/clothing/suit/costume/justice/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
 /datum/armor/costume_justice
 	melee = 35
 	bullet = 30
@@ -100,11 +104,11 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
-	name = "black and red space suit replica"
-	icon_state = "syndicate-black-red"
+	name = "red space suit replica" //monkestation edit
+	icon_state = "syndicate" //monkestation edit
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
-	inhand_icon_state = "syndicate-black-red"
+	inhand_icon_state = "space_suit_syndicate" //monkestation edit
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -127,7 +131,7 @@
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen)
+	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/costume/chickensuit
 	name = "chicken suit"
@@ -246,7 +250,7 @@
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
@@ -258,7 +262,7 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
@@ -280,9 +284,9 @@
 	armor_type = /datum/armor/carp_costume_spaceproof
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -302,7 +306,7 @@
 	armor_type = /datum/armor/carp_hood_spaceproof
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|PLASMAMAN_HELMET_EXEMPT
 	body_parts_covered = HEAD
@@ -333,7 +337,7 @@
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	//cold_protection = CHEST|GROIN|ARMS
+	//
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
@@ -346,7 +350,7 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "ian"
 	body_parts_covered = HEAD
-	//cold_protection = HEAD
+	//
 	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
@@ -424,7 +428,10 @@
 	name = "gothic coat"
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
+	body_parts_covered = ARMS|HANDS|CHEST|GROIN //the model has a glove on it so protect the hands.
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
@@ -484,7 +491,7 @@
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "mysticrobe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/spellbook, /obj/item/storage/book/bible)
+	allowed = list(/obj/item/spellbook, /obj/item/book/bible)
 	flags_inv = HIDEJUMPSUIT
 	hoodtype = /obj/item/clothing/head/hooded/mysticrobe
 
@@ -553,12 +560,21 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/clothing/suit/costume/soviet/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
+
 /obj/item/clothing/suit/costume/yuri
 	name = "yuri initiate coat"
 	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "yuri_coat"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/costume/yuri/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/costume/tmc
 	name = "\improper Lost M.C. cut"
@@ -574,4 +590,43 @@
 	icon_state = "pg_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/irs
+	name = "internal revenue service jacket"
+	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
+	icon_state = "irs_suit"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/irs/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/hooded/hotdog
+	name = "hotdog suit"
+	desc = "With great hotdog comes great responsi-bun-ity."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/hotdog
+
+/obj/item/clothing/head/hooded/hotdog
+	name = "hotdog suit hood"
+	desc = "There's a certain joke to be made here."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR
+
+/obj/item/clothing/suit/costume/dio
+	name = "flamboyant jacket"
+	desc = "It exudes a menancing aura."
+	icon_state = "dio_jacket"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

@@ -63,19 +63,24 @@ export class ServerPreferencesFetcher extends Component<
         style={{
           'background-color': 'rgba(0, 0, 0, 0.75)',
           'font-weight': 'bold',
-        }}>
+        }}
+      >
         Error: Unable to fetch preferences clientside data.
         <br />
         (Your character data is OK, this is a UI error)
         <br />
-        Contact a maintainer or create an issue report by pressing Report Issue
-        in the top right of the game window.
+        Try refreshing the preferences window with F5, or closing and reopening
+        it.
+        <br />
+        If that fails, then contact a maintainer or create an issue report by
+        pressing Report Issue in the top right of the game window.
         <br />
         <Box
           textAlign="left"
           fontSize="12px"
           textColor="white"
-          style={{ 'white-space': 'pre-wrap' }}>
+          style={{ 'white-space': 'pre-wrap' }}
+        >
           Error Details:{'\n'}
           {typeof lastError === 'object' &&
           Object.keys(lastError).includes('stack')

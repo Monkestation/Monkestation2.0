@@ -1,7 +1,7 @@
 import type { Inferno } from 'inferno';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {
@@ -19,7 +19,7 @@ const QuirkList = (props: {
     string,
     Quirk & {
       failTooltip?: string;
-    }
+    },
   ][];
   onClick: (quirkName: string, quirk: Quirk) => void;
 }) => {
@@ -37,7 +37,8 @@ const QuirkList = (props: {
             tabIndex="1"
             onClick={() => {
               props.onClick(quirkKey, quirk);
-            }}>
+            }}
+          >
             <Stack fill>
               <Stack.Item
                 align="center"
@@ -45,7 +46,8 @@ const QuirkList = (props: {
                   'min-width': '15%',
                   'max-width': '15%',
                   'text-align': 'center',
-                }}>
+                }}
+              >
                 <Icon color="#333" fontSize={3} name={quirk.icon} />
               </Stack.Item>
 
@@ -64,19 +66,22 @@ const QuirkList = (props: {
 
                   // Fixes an IE bug for text overflowing in Flex boxes
                   'min-width': '0%',
-                }}>
+                }}
+              >
                 <Stack vertical fill>
                   <Stack.Item
                     className={`${className}--${getValueClass(quirk.value)}`}
                     style={{
                       'border-bottom': '1px solid black',
-                      'padding': '2px',
-                    }}>
+                      padding: '2px',
+                    }}
+                  >
                     <Stack
                       fill
                       style={{
                         'font-size': '1.2em',
-                      }}>
+                      }}
+                    >
                       <Stack.Item grow basis="content">
                         <b>{quirk.name}</b>
                       </Stack.Item>
@@ -92,8 +97,9 @@ const QuirkList = (props: {
                     basis="content"
                     style={{
                       'margin-top': 0,
-                      'padding': '3px',
-                    }}>
+                      padding: '3px',
+                    }}
+                  >
                     {quirk.description}
                   </Stack.Item>
                 </Stack>
@@ -103,7 +109,11 @@ const QuirkList = (props: {
         );
 
         if (quirk.failTooltip) {
-          return <Tooltip content={quirk.failTooltip}>{child}</Tooltip>;
+          return (
+            <Tooltip key={quirkKey} content={quirk.failTooltip}>
+              {child}
+            </Tooltip>
+          );
         } else {
           return child;
         }
@@ -120,20 +130,22 @@ const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
       color="black"
       fontSize="1.2em"
       px={3}
-      py={0.5}>
+      py={0.5}
+    >
       {props.children}
     </Box>
   );
 };
 
-export const QuirksPage = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const QuirksPage = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [selectedQuirks, setSelectedQuirks] = useLocalState(
-    context,
-    `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks
-  );
+  const selectedQuirks = data.selected_quirks;
+  const speciesDisallowedQuirks = data.species_disallowed_quirks;
+
+  const setSelectedQuirks = (selected_quirks) => {
+    data.selected_quirks = selected_quirks;
+  };
 
   return (
     <ServerPreferencesFetcher
@@ -203,6 +215,9 @@ export const QuirksPage = (props, context) => {
             }
           }
 
+          if (speciesDisallowedQuirks.includes(quirk.name)) {
+            return 'This quirk is incompatible with your selected species.';
+          }
           return undefined;
         };
 
@@ -294,8 +309,8 @@ export const QuirksPage = (props, context) => {
 
                       setSelectedQuirks(
                         selectedQuirks.filter(
-                          (otherQuirk) => quirkName !== otherQuirk
-                        )
+                          (otherQuirk) => quirkName !== otherQuirk,
+                        ),
                       );
 
                       act('remove_quirk', { quirk: quirk.name });

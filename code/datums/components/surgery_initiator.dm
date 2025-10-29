@@ -13,8 +13,10 @@
 
 	var/obj/item/surgery_tool = parent
 	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	///Make sure we can use the surgery UI while laying down
+	surgery_tool.interaction_flags_atom |= INTERACT_ATOM_IGNORE_MOBILITY
 
-/datum/component/surgery_initiator/Destroy(force, silent)
+/datum/component/surgery_initiator/Destroy(force)
 	last_user_ref = null
 	surgery_target_ref = null
 
@@ -130,7 +132,6 @@
 	var/required_tool_type = TOOL_CAUTERY
 	var/obj/item/close_tool = user.get_inactive_held_item()
 	var/is_robotic = the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC
-
 	if(is_robotic)
 		required_tool_type = TOOL_SCREWDRIVER
 
@@ -325,7 +326,7 @@
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
 	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
-
+	// add some signal here maybe to alert serverlink users the starting tool
 	user.visible_message(
 		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),
 		span_notice("You drape [parent] over [target]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."),

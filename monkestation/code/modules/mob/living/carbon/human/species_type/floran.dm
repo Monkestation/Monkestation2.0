@@ -2,15 +2,13 @@
 	name = "\improper Floran"
 	plural_form = "Florans"
 	id = SPECIES_FLORAN
-	sexes = FALSE
-	species_traits = list(
-		MUTCOLORS,
-		MUTCOLORS_SECONDARY,
-		NO_UNDERWEAR,
-	)
+	sexes = TRUE
 	inherent_traits = list(
-		TRAIT_PLANT_SAFE,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_JUMPSUIT,
+		TRAIT_EASYDISMEMBER,
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
@@ -18,15 +16,11 @@
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
-	burnmod = 1.8
 	heatmod = 0.67 //Same as lizard people
 	coldmod = 1.5 //Same as lizard people
-	speedmod = -0.1 //Same as arachnids
-	payday_modifier = 0.75
 	meat = /obj/item/food/meat/slab/human/mutant/plant
-	exotic_blood = /datum/reagent/water
-	// disliked_food = VEGETABLES | FRUIT | GRAIN
-	liked_food = MEAT | BUGS | GORE
+	exotic_bloodtype = /datum/blood_type/water
+	inert_mutation = list(/datum/mutation/spores, /datum/mutation/sapblood)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 
@@ -38,12 +32,12 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/floran,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/floran,
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	mutanttongue = /obj/item/organ/internal/tongue/floran
 	mutanteyes = /obj/item/organ/internal/eyes/floran
-
-	ass_image = 'icons/ass/asspodperson.png'
+	mutantheart = /obj/item/organ/internal/heart/pod
 
 /datum/species/floran/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+	. = ..()
 	if(H.stat == DEAD)
 		return
 
@@ -52,23 +46,11 @@
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		if(light_amount > 0.3)
-			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
-			H.adjustToxLoss(-0.5 * seconds_per_tick)
-			H.adjustOxyLoss(-0.5 * seconds_per_tick)
+			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.10 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
+			H.adjustToxLoss(-0.25 * seconds_per_tick)
+			H.adjustOxyLoss(-0.25 * seconds_per_tick)
 
-/datum/species/floran/on_species_gain(mob/living/carbon/new_floran, datum/species/old_species, pref_load)
-	. = ..()
-	if(ishuman(new_floran))
-		update_mail_goodies(new_floran)
-
-/datum/species/floran/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/podperson
-		)
-	return ..()
-
-/datum/species/floran/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/floran/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
@@ -81,17 +63,6 @@
 
 /datum/species/floran/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)
-
-/datum/species/floran/get_scream_sound(mob/living/carbon/human/human)
-	return pick(
-		'sound/voice/lizard/lizard_scream_1.ogg',
-		'sound/voice/lizard/lizard_scream_2.ogg',
-		'sound/voice/lizard/lizard_scream_3.ogg',
-		'monkestation/sound/voice/screams/lizard/lizard_scream_5.ogg',
-	)
-
-/datum/species/floran/get_laugh_sound(mob/living/carbon/human/human)
-	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
 
 /datum/species/floran/get_species_description()
 	return "Plant-based humanoids, they are extremely violent carnivores with no central government or power structure, \
@@ -109,41 +80,28 @@
 	to_add += list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
-			SPECIES_PERK_NAME = "Carnivore",
-			SPECIES_PERK_DESC = "As a vicious carnivore, your claws do more damage to your prey.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "sun",
 			SPECIES_PERK_NAME = "Photosynthesis",
 			SPECIES_PERK_DESC = "Your green skin slowly heals itself while it is illuminated.",
 		),
 		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Agile",
+			SPECIES_PERK_DESC = "Florans run slightly faster than other species, but are still outpaced by Goblins.",
+		),
+		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "",
+			SPECIES_PERK_ICON = "fire",
 			SPECIES_PERK_NAME = "Flammable Skin",
 			SPECIES_PERK_DESC = "Your flammable skin is highly susceptible to burn damage.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Plant Biology",
+			SPECIES_PERK_DESC = "PlantbGone and potassium will do large amounts of damage to a Floran."
 		),
 		)
 
 	return to_add
-
-
-/obj/item/organ/external/floran_leaves
-	name = "floran leaves"
-	desc = "you shouldn't see this"
-	organ_flags = ORGAN_UNREMOVABLE
-	icon_state = "floran_leaves"
-	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
-
-	preference = "feature_floran_leaves"
-	zone = BODY_ZONE_CHEST
-	slot = ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES
-
-	use_mob_sprite_as_obj_sprite = TRUE
-	bodypart_overlay = /datum/bodypart_overlay/mutant/floran_leaves
-
-/datum/bodypart_overlay/mutant/floran_leaves
-	layers = EXTERNAL_ADJACENT
-	feature_key = "floran_leaves"

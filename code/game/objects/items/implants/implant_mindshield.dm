@@ -21,7 +21,7 @@
 	if(!.)
 		return FALSE
 	if(target.mind)
-		if((SEND_SIGNAL(target.mind, COMSIG_PRE_MINDSHIELD_IMPLANT, user) & COMPONENT_MINDSHIELD_RESISTED) || target.mind.unconvertable)
+		if((SEND_SIGNAL(target.mind, COMSIG_PRE_MINDSHIELD_IMPLANT, user) & COMPONENT_MINDSHIELD_RESISTED) || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE)) // monkestation edit: mind.unconvertable -> TRAIT_UNCONVERTABLE
 			if(!silent)
 				target.visible_message(span_warning("[target] seems to resist the implant!"), span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
 			removed(target, TRUE)
@@ -52,8 +52,10 @@
 /obj/item/implanter/mindshield
 	name = "implanter (mindshield)"
 	imp_type = /obj/item/implant/mindshield
+	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit
 
 /obj/item/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
 	imp_type = /obj/item/implant/mindshield
+

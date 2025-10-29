@@ -23,7 +23,7 @@
 
 /datum/getrev/proc/get_log_message()
 	var/list/msg = list()
-	msg += "Running /tg/ revision: [date]"
+	msg += "Running Monkestation revision: [date]"
 	if(originmastercommit)
 		msg += "origin/master: [originmastercommit]"
 
@@ -37,16 +37,20 @@
 	else if(!originmastercommit)
 		msg += "No commit information"
 
+	msg += "Running rust-g version [rustg_get_version()]"
+
 	return msg.Join("\n")
 
-/datum/getrev/proc/GetTestMergeInfo(header = TRUE)
+/datum/getrev/proc/GetTestMergeInfo(header = TRUE, hide_silent = TRUE)
 	if(!testmerge.len)
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		var/cm = tm.head_commit
-		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
+		if(hide_silent && findtext(tm.title, @"[s]"))
+			continue
+		var/details = ": '" + html_encode(trimtext(tm.title)) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
 /client/verb/showrevinfo()
@@ -54,7 +58,7 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	var/list/msg = list("")
+	var/list/msg = list()
 	// Round ID
 	if(GLOB.round_id)
 		msg += "<b>Round ID:</b> [GLOB.round_id]"
@@ -68,23 +72,23 @@
 	msg += "<b>Server revision compiled on:</b> [revdata.date]"
 	var/pc = revdata.originmastercommit
 	if(pc)
-		msg += "Master commit: <a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[pc]</a>"
-	if(revdata.testmerge.len)
+		msg += "<b>Master commit:</b> <a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[pc]</a>"
+	if(length(revdata.testmerge))
 		msg += revdata.GetTestMergeInfo()
 	if(revdata.commit && revdata.commit != revdata.originmastercommit)
-		msg += "Local commit: [revdata.commit]"
+		msg += "<b>Local commit:</b> [revdata.commit]"
 	else if(!pc)
 		msg += "No commit information"
 	if(world.TgsAvailable())
 		var/datum/tgs_version/version = world.TgsVersion()
-		msg += "TGS version: [version.raw_parameter]"
+		msg += "<b>TGS version</b>: [version.raw_parameter]"
 		var/datum/tgs_version/api_version = world.TgsApiVersion()
-		msg += "DMAPI version: [api_version.raw_parameter]"
+		msg += "<b>DMAPI version</b>: [api_version.raw_parameter]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"
-	msg += "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]"
-	msg += "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]"
-	msg += "Enforce Human Authority: [CONFIG_GET(flag/enforce_human_authority)]"
-	msg += "Allow Latejoin Antagonists: [CONFIG_GET(flag/allow_latejoin_antagonists)]"
-	to_chat(src, "<span class='infoplain'>[msg.Join("<br>")]</span>")
+	msg += "<b>Protect Authority Roles From Traitor:</b> [CONFIG_GET(flag/protect_roles_from_antagonist) ? "Yes" : "No"]"
+	msg += "<b>Protect Assistant Role From Traitor:</b> [CONFIG_GET(flag/protect_assistant_from_antagonist) ? "Yes" : "No"]"
+	msg += "<b>Enforce Human Authority:</b> [CONFIG_GET(flag/enforce_human_authority) ? "Yes" : "No"]"
+	msg += "<b>Allow Latejoin Antagonists:</b> [CONFIG_GET(flag/allow_latejoin_antagonists) ? "Yes" : "No"]"
+	to_chat(src, fieldset_block("Server Revision Info", span_infoplain(jointext(msg, "<br>")), "boxed_message"), type = MESSAGE_TYPE_INFO)

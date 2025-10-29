@@ -1,7 +1,7 @@
 /obj/item/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mop"
 	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -47,36 +47,6 @@
 	GLOB.janitor_devices -= src
 	return ..()
 
-/obj/item/mop/proc/attack_on_liquids_turf(obj/item/mop/the_mop, turf/T, mob/user, obj/effect/abstract/liquid_turf/liquids)
-	if(!user.Adjacent(T))
-		return FALSE
-	var/free_space = max_reagent_volume - src.reagents.total_volume
-	var/looping = TRUE
-	var/speed_mult = 1
-	var/datum/liquid_group/targeted_group = T.liquids.liquid_group
-	while(looping)
-		if(speed_mult >= 0.2)
-			speed_mult -= 0.05
-		if(free_space <= 0)
-			to_chat(user, "<span class='warning'>Your mop can't absorb any more!</span>")
-			looping = FALSE
-			return TRUE
-		if(do_after(user, src.mopspeed * speed_mult, target = T))
-			if(the_mop.reagents.total_volume == the_mop.max_reagent_volume)
-				to_chat(user, "<span class='warning'>Your [src.name] can't absorb any more!</span>")
-				return TRUE
-			if(targeted_group.reagents_per_turf)
-				targeted_group.trans_to_seperate_group(the_mop.reagents, min(targeted_group.reagents_per_turf, 5))
-				to_chat(user, "<span class='notice'>You soak up some liquids with the [src.name].</span>")
-			else if(T.liquids.liquid_group)
-				targeted_group = T.liquids.liquid_group
-			else
-				looping = FALSE
-		else
-			looping = FALSE
-	user.changeNext_move(CLICK_CD_MELEE)
-	return TRUE
-
 
 ///Checks whether or not we should clean.
 /obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
@@ -85,14 +55,16 @@
 	// Disable normal cleaning if there are liquids.
 	if(isturf(atom_to_clean) && turf_to_clean.liquids)
 		to_chat(cleaner, span_warning("It would be quite difficult to clean this with a pool of liquids on top!"))
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED
 
 	if(clean_blacklist[atom_to_clean.type])
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 	if(reagents.total_volume < 0.1)
-		to_chat(cleaner, span_warning("Your mop is dry!"))
-		return DO_NOT_CLEAN
-	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
+		cleaner.balloon_alert(cleaner, "mop is dry!")
+		return CLEAN_BLOCKED
+	if(reagents.has_chemical_flag(REAGENT_CLEANS, amount = 1))
+		return CLEAN_ALLOWED
+	return CLEAN_BLOCKED|CLEAN_NO_XP
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.
@@ -102,12 +74,14 @@
  * * cleaned_turf the turf that is being cleaned
  * * cleaner the mob that is doing the cleaning
  */
-/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner, clean_succeeded)
+	if(!clean_succeeded)
+		return
 	reagents.expose(cleaned_turf, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
-	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
+	reagents.remove_all(val2remove) //reaction() doesn't use up the reagents
 
 /obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
@@ -167,7 +141,8 @@
 	throw_speed = 4
 	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
-	armour_penetration = 10
+	armour_penetration = 20
+	armour_ignorance = 10
 	attack_verb_continuous = list("mops", "stabs", "shanks", "jousts")
 	attack_verb_simple = list("mop", "stab", "shank", "joust")
 	sharpness = SHARP_EDGED //spears aren't pointy either.  Just assume it's carved into a naginata-style blade

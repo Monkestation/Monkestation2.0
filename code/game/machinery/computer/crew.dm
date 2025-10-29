@@ -44,6 +44,7 @@
 	. += create_table_notices(list(
 		"name",
 		"job",
+		"is_robot", //MONKESTATION EDIT ADDITION - Displaying robotic species Icon
 		"life_status",
 		"suffocation",
 		"toxin",
@@ -64,6 +65,7 @@
 		var/list/entry = list()
 		entry["name"] = player_record["name"]
 		entry["job"] = player_record["assignment"]
+		entry["is_robot"] = player_record["is_robot"] //MONKESTATION EDIT ADDITION - Displaying robotic species Icon
 		entry["life_status"] = player_record["life_status"]
 		entry["suffocation"] = player_record["oxydam"]
 		entry["toxin"] = player_record["toxdam"]
@@ -105,6 +107,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SECURITY_OFFICER_SCIENCE = 15,
 		JOB_SECURITY_OFFICER_SUPPLY = 16,
 		JOB_DETECTIVE = 17,
+		JOB_SECURITY_ASSISTANT = 18, // monkestation edit: add security assistants
+		JOB_BRIG_PHYSICIAN = 19, // monkestation edit: add brig physician
 		// 20-29: Medbay
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_CHEMIST = 21,
@@ -116,14 +120,17 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SCIENTIST = 31,
 		JOB_ROBOTICIST = 32,
 		JOB_GENETICIST = 33,
+		JOB_XENOBIOLOGIST = 34, // Monkestation Addition:
 		// 40-49: Engineering
 		JOB_CHIEF_ENGINEER = 40,
 		JOB_STATION_ENGINEER = 41,
 		JOB_ATMOSPHERIC_TECHNICIAN = 42,
+		JOB_SIGNAL_TECHNICIAN = 43, // monkestation edit
 		// 50-59: Cargo
 		JOB_QUARTERMASTER = 50,
 		JOB_SHAFT_MINER = 51,
 		JOB_CARGO_TECHNICIAN = 52,
+		JOB_LATEJOIN_EXPLORER = 53, //monkestation edit: explorer
 		// 60+: Civilian/other
 		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_BARTENDER = 61,
@@ -136,7 +143,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
-		// 200-229: Centcom
+		JOB_LATEJOIN_BARBER = 72, //monkestation edit: barber
+		// 200-239: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
 		JOB_CENTCOM_OFFICIAL = 210,
@@ -153,15 +161,20 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_ERT_CHAPLAIN = 225,
 		JOB_ERT_JANITOR = 226,
 		JOB_ERT_DEATHSQUAD = 227,
+		JOB_NT_REP = 230,
+		JOB_BLUESHIELD = 231,
+		JOB_NANOTRASEN_REPRESENTATIVE = 230,
+		JOB_BRIDGE_ASSISTANT = 232,
 
 		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
+		JOB_PRISONER = 998,
 		JOB_ASSISTANT = 999,
 	)
 
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "CrewConsole")
+		ui = new(user, src, "CrewConsoleNova") // MONKESTATION EDIT CHANGE - ORIGINAL: ui = new(user, src, "CrewConsole")
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
@@ -179,15 +192,20 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		z = T.z
 	. = list(
 		"sensors" = update_data(z),
-		"link_allowed" = isAI(user)
+		"link_allowed" = HAS_AI_ACCESS(user),
 	)
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
+	// MONKESTATION EDIT START
+	var/nt_net = get_ntnet_wireless_status(z)
+	// MONKESTATION EDIT END
 
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
+		// MONKESTATION EDIT START
+		/* original - modified and moved into get_tracking_level
 		if(!tracked_mob)
 			stack_trace("Null entry in suit sensors or nanite sensors list.")
 			continue
@@ -231,6 +249,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				continue
 
 			sensor_mode = uniform.sensor_mode
+		*/
+		var/sensor_mode = get_tracking_level(tracked_mob, z, nt_net)
+		if (sensor_mode == SENSOR_OFF)
+			continue
+		var/mob/living/tracked_living_mob = tracked_mob
+		// MONKESTATION EDIT END
 
 		// The entry for this human
 		var/list/entry = list(
@@ -247,6 +271,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+
+		// MONKESTATION EDIT ADDITION START - Checking for robotic race
+		if (isipc(tracked_living_mob))
+			entry["is_robot"] = TRUE
+		// MONKESTATION EDIT ADDITION END
 
 		// Current status
 		if (sensor_mode >= SENSOR_LIVING)
@@ -266,9 +295,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (sensor_mode >= SENSOR_COORDS)
 			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
 
-		// Trackability
-		entry["can_track"] = tracked_living_mob.can_track()
-
 		results[++results.len] = entry
 
 	// Cache result
@@ -277,7 +303,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	return results
 
-/datum/crewmonitor/ui_act(action,params)
+/datum/crewmonitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -286,7 +312,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/mob/living/silicon/ai/AI = usr
 			if(!istype(AI))
 				return
-			AI.ai_camera_track(params["name"])
+			AI.ai_tracking_tool.track_name(AI, params["name"])
 
 #undef SENSORS_UPDATE_PERIOD
 #undef UNKNOWN_JOB_ID

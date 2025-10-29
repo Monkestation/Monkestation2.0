@@ -1,21 +1,30 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from 'tgui/components';
+import {
+  Stack,
+  Input,
+  Section,
+  Tabs,
+  NoticeBox,
+  Box,
+  Icon,
+  Button,
+} from 'tgui/components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
 import { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
-export const MedicalRecordTabs = (props, context) => {
-  const { act, data } = useBackend<MedicalRecordData>(context);
+export const MedicalRecordTabs = (props) => {
+  const { act, data } = useBackend<MedicalRecordData>();
   const { records = [], station_z } = data;
 
   const errorMessage = !records.length
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState(context, 'search', '');
+  const [search, setSearch] = useLocalState('search', '');
 
   const sorted: MedicalRecord[] = flow([
     filter((record: MedicalRecord) => isRecordMatch(record, search)),
@@ -50,7 +59,8 @@ export const MedicalRecordTabs = (props, context) => {
             <Button
               disabled
               icon="plus"
-              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open.">
+              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open."
+            >
               Create
             </Button>
           </Stack.Item>
@@ -61,12 +71,12 @@ export const MedicalRecordTabs = (props, context) => {
 };
 
 /** Individual crew tab */
-const CrewTab = (props: { record: MedicalRecord }, context) => {
+const CrewTab = (props: { record: MedicalRecord }) => {
   const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
-  >(context, 'medicalRecord', undefined);
+  >('medicalRecord', undefined);
 
-  const { act, data } = useBackend<MedicalRecordData>(context);
+  const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;
   const { record } = props;
   const { crew_ref, name, rank } = record;
@@ -76,6 +86,19 @@ const CrewTab = (props: { record: MedicalRecord }, context) => {
     if (selectedRecord?.crew_ref === crew_ref) {
       setSelectedRecord(undefined);
     } else {
+      // GOD, I REALLY HATE IT!
+      // THIS FUCKING HACK NEEDED CAUSE "WINSET MAP"
+      // MAKING UI DISAPPEAR, AND WE NEED RE-RENDER SHIT
+      // AFTER BYOND DONE MAKING THEIR SHIT
+      // Anyway... that's better than hack before
+      if (selectedRecord === undefined) {
+        setTimeout(() => {
+          act('view_record', {
+            assigned_view: assigned_view,
+            crew_ref: crew_ref,
+          });
+        });
+      }
       setSelectedRecord(record);
       act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }
@@ -86,7 +109,8 @@ const CrewTab = (props: { record: MedicalRecord }, context) => {
       className="candystripe"
       label={name}
       onClick={() => selectRecord(record)}
-      selected={selectedRecord?.crew_ref === crew_ref}>
+      selected={selectedRecord?.crew_ref === crew_ref}
+    >
       <Box wrap>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>

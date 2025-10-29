@@ -16,7 +16,7 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
@@ -101,7 +101,7 @@
 	spawn_count = 6
 	open_status = TRUE
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
-	custom_premium_price = PAYCHECK_COMMAND * 1.75
+	//custom_premium_price = PAYCHECK_COMMAND * 1.75 monkestation removal
 	contents_tag = "donut"
 
 /obj/item/storage/fancy/donut_box/Initialize(mapload)
@@ -227,16 +227,18 @@
 	register_context()
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
+	if(..() == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	. = ..()
+/obj/item/storage/fancy/cigarettes/click_alt(mob/living/user)
 	var/obj/item/lighter = locate(/obj/item/lighter) in contents
 	if(lighter)
 		quick_remove_item(lighter, user)
 	else
 		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return CLICK_ACTION_SUCCESS
 
 /// Removes an item from the packet if there is one
 /obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
@@ -287,6 +289,15 @@
 
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
+
+/obj/item/storage/fancy/cigarettes/crafted
+	name = "cigarette packet"
+	desc = "A handmade box of cigarettes. It lacks branding."
+	base_icon_state = "base"
+	icon_state = "base"
+	spawn_type = null
+	spawn_count = 6
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
@@ -506,8 +517,8 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
-	custom_materials = list(/datum/material/glass = 2000)
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
@@ -536,7 +547,7 @@
 	name = "coffee condiments display"
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
-	custom_materials = list(/datum/material/wood = 1000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT/2)
 	resistance_flags = FLAMMABLE
 	foldable_result = /obj/item/stack/sheet/mineral/wood
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN

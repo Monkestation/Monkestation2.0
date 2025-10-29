@@ -7,8 +7,8 @@
 	greyscale_colors = rgb(214, 67, 67)
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/meat
-	value_per_unit = 0.05
-	beauty_modifier = -0.3
+	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = -600 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 0.7
 	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
@@ -18,24 +18,44 @@
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/edible))
+	qdel(source.GetComponent(/datum/component/blood_walk))
+	qdel(source.GetComponent(/datum/component/bloody_spreader))
 
 /datum/material/meat/on_applied_obj(obj/O, amount, material_flags)
 	. = ..()
-	make_edible(O, amount, material_flags)
+	make_meaty(O, amount, material_flags)
 
 /datum/material/meat/on_applied_turf(turf/T, amount, material_flags)
 	. = ..()
-	make_edible(T, amount, material_flags)
+	make_meaty(T, amount, material_flags)
 
-/datum/material/meat/proc/make_edible(atom/source, amount, material_flags)
-	var/nutriment_count = 3 * (amount / MINERAL_MATERIAL_AMOUNT)
-	var/oil_count = 2 * (amount / MINERAL_MATERIAL_AMOUNT)
+/datum/material/meat/proc/make_meaty(atom/source, amount, material_flags)
+	var/nutriment_count = 3 * (amount / SHEET_MATERIAL_AMOUNT)
+	var/oil_count = 2 * (amount / SHEET_MATERIAL_AMOUNT)
 	source.AddComponent(/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), \
 		foodtypes = RAW | MEAT | GROSS, \
 		eat_time = 3 SECONDS, \
-		tastes = list("Fleshy"))
+		tastes = list("Meaty"))
 
+
+	source.AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = (nutriment_count + oil_count) * 0.3,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
+
+	// Turfs can't handle the meaty goodness of blood walk.
+	if(!ismovable(source))
+		return
+
+	source.AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 35,\
+		max_blood = (nutriment_count + oil_count) * 0.3,\
+	)
 
 /datum/material/meat/mob_meat
 	init_flags = MATERIAL_INIT_BESPOKE

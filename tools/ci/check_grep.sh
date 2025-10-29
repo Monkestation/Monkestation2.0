@@ -76,6 +76,21 @@ if $grep '\tarmor = list' $map_files; then
 	echo -e "${RED}ERROR: Outdated armor list in map file.${NC}"
 	st=1
 fi;
+
+part "as anything on typeless loops"
+if $grep 'var/[^/]+ as anything' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' used in a typeless for loop. This doesn't do anything and should be removed.${NC}"
+    st=1
+fi;
+
+part "as anything on internal functions"
+if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|hearers)\(' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' typed for loop over an internal function. These functions have some internal optimization that relies on the loop not having 'as anything' in it.${NC}"
+    st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'nanotransen' $map_files; then
 	echo
@@ -85,6 +100,11 @@ fi;
 if $grep -i'centcomm' $map_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in maps, please remove the extra M(s).${NC}"
+    st=1
+fi;
+if $grep -i"rat'var" $map_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in maps, please remove the apostrophe(s).${NC}"
     st=1
 fi;
 
@@ -111,6 +131,14 @@ if $grep 'allocate\(/mob/living/carbon/human[,\)]' $unit_test_files ||
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
+fi;
+
+section "516 Href Styles"
+part "byond href styles"
+if $grep "href[\s='\"\\\\]*\?" $code_files ; then
+    echo
+    echo -e "${RED}ERROR: BYOND requires internal href links to begin with \"byond://\".${NC}"
+    st=1
 fi;
 
 section "common mistakes"
@@ -155,6 +183,13 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "direct Destroy() calls"
+if $grep '(?:\.|^\s+)Destroy\(\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Destroy() should never be directly called, use qdel() instead.${NC}"
+	st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
@@ -164,6 +199,16 @@ fi;
 if $grep -ni 'nanotransen' $code_files; then
 	echo
     echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
+    st=1
+fi;
+if $grep -ni "rat'var" $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Ratvar detected in code, please remove the apostrophe(s).${NC}"
+    st=1
+fi;
+if $grep -ni "oozling" $code_files; then
+	echo
+    echo -e "${RED}ERROR: Misspelling(s) of Oozeling detected in code, please ensure there is an e before 'ling'.${NC}"
     st=1
 fi;
 part "map json naming"
@@ -230,7 +275,7 @@ if [ "$pcre2_support" -eq 1 ]; then
 		st=1
 	fi
 	part "datum stockpart sanity"
-	if $grep -P 'for\b.*/obj/item/stock_parts/(?!cell)(?![\w_]+ in )' $code_files; then
+	if $grep -P 'for\b.*/obj/item/stock_parts/(?!power_store)(?![\w_]+ in )' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Should be using datum/stock_part instead"
 		st=1

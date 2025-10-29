@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(infected_cleanables, list())
 				pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',src,"pathogen_blood")
 				pathogen.plane = HUD_PLANE
 				pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-			for (var/mob/L in GLOB.science_goggles_wearers)
+			for (var/mob/L in GLOB.virus_viewers)
 				if (L.client)
 					L.client.images |= pathogen
 
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(infected_cleanables, list())
 		block = perp.check_contact_sterility(BODY_ZONE_LEGS)
 		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
 
-	for(var/datum/disease/advanced/contained_virus as anything in diseases)
+	for(var/datum/disease/acute/contained_virus as anything in diseases)
 		if (!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
 			perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over [src]])")
 		else if (bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))

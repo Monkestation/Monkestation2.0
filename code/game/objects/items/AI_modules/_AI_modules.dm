@@ -15,7 +15,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
 	/// Used to skip laws being checked (for reset & remove boards that have no laws)
@@ -36,7 +36,7 @@
 
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
-	to_chat(user, examine_block(display_laws()))
+	to_chat(user, boxed_message(display_laws()))
 
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()
@@ -80,7 +80,6 @@
 			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			log_silicon("[key_name(user)] tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			add_event_to_buffer(user, law_datum.owner, "tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.", "SILICON")
 			overflow = TRUE
 
 	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
@@ -109,7 +108,6 @@
 	borg_txt = borg_txt.Join()
 	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
 	log_silicon("LAW: [key_name(user)] used [src.name] on [key_name(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
-	add_event_to_buffer(user, law_datum.owner, "used [src.name] on [key_name(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]", "SILICON")
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""] , [length(affected_cyborgs) ? ", impacting synced borgs [borg_flw.Join()]" : ""]")
 	if(law_datum.owner)
 		deadchat_broadcast("<b> changed [span_name("[ainame]")]'s laws at [get_area_name(user, TRUE)].</b>", span_name("[user]"), follow_target=user, message_type=DEADCHAT_LAWCHANGE)

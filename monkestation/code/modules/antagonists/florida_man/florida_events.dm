@@ -4,8 +4,9 @@
 	weight = 14
 	max_occurrences = 3
 	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/florida_man
 	minimum_required = 1
@@ -26,10 +27,16 @@
 			return H.equipOutfit(/datum/outfit/florida_man_four)
 
 /datum/round_event/ghost_role/florida_man/spawn_role()
-	var/list/candidates = get_candidates()
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as Florida Man?",
+		role = ROLE_FLORIDA_MAN,
+		poll_time = 20 SECONDS,
+		alert_pic = /datum/antagonist/florida_man,
+		role_name_text = "florida man"
+	)
 	var/turf/spawn_loc = find_safe_turf()//Used for the Drop Pod type of spawn
 
-	if(!candidates.len)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick_n_take(candidates)

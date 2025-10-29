@@ -51,21 +51,26 @@
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
 /obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
+	if(owner.on_fire)
+		return
+	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
+	var/delta_time_capped = min(delta_time, 8)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate * seconds_per_tick)
+			owner.adjustPlasma(plasma_rate * delta_time)
 		else
 			var/heal_amt = heal_rate
 			if(!isalien(owner))
 				heal_amt *= 0.2
-			owner.adjustPlasma(0.5 * plasma_rate * seconds_per_tick)
-			owner.adjustBruteLoss(-heal_amt * seconds_per_tick)
-			owner.adjustFireLoss(-heal_amt * seconds_per_tick)
-			owner.adjustOxyLoss(-heal_amt * seconds_per_tick)
-			owner.adjustCloneLoss(-heal_amt * seconds_per_tick)
+			owner.adjustPlasma(0.5 * plasma_rate * delta_time_capped)
+			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
+			owner.adjustFireLoss(-heal_amt * delta_time_capped)
+			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
+			owner.adjustCloneLoss(-heal_amt * delta_time_capped)
 	else
-		owner.adjustPlasma(0.1 * plasma_rate * seconds_per_tick)
+		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
 /obj/item/organ/internal/alien/plasmavessel/on_insert(mob/living/carbon/organ_owner)
 	. = ..()
@@ -101,10 +106,13 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	organ_owner.grant_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	if(!QDELING(organ_owner))
+		organ_owner.remove_language(/datum/language/xenocommon, source = LANGUAGE_GLAND)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

@@ -6,21 +6,30 @@
 
 import { classes } from 'common/react';
 import { RefObject } from 'inferno';
-import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
+import {
+  computeFlexClassName,
+  computeFlexItemClassName,
+  computeFlexItemProps,
+  computeFlexProps,
+  FlexItemProps,
+  FlexProps,
+} from './Flex';
 
 type StackProps = FlexProps & {
   vertical?: boolean;
   fill?: boolean;
+  zebra?: boolean;
 };
 
 export const Stack = (props: StackProps) => {
-  const { className, vertical, fill, ...rest } = props;
+  const { className, vertical, fill, zebra, ...rest } = props;
   return (
     <div
       className={classes([
         'Stack',
         fill && 'Stack--fill',
         vertical ? 'Stack--vertical' : 'Stack--horizontal',
+        zebra && 'Stack--zebra',
         className,
         computeFlexClassName(props),
       ])}

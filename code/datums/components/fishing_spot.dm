@@ -33,13 +33,15 @@
 	var/obj/item/fishing_rod/rod = possibly_rod
 	if(!istype(rod))
 		return
-	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
+	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
 	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK
+	// In case the fishing source has anything else to do before beginning to fish.
+	fish_source.on_start_fishing(rod, user, parent)
 	start_fishing_challenge(rod, user)
 	return COMPONENT_NO_AFTERATTACK
 

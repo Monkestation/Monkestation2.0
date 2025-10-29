@@ -66,8 +66,8 @@
 /client/Move(new_loc, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
-	next_move_dir_add = 0
-	next_move_dir_sub = 0
+	next_move_dir_add = NONE
+	next_move_dir_sub = NONE
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!direct || !new_loc)
@@ -84,7 +84,7 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
-	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
+	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
 		return FALSE
 
 	var/mob/living/L = mob //Already checked for isliving earlier
@@ -96,7 +96,8 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(new_loc,direct,mob)
+		var/mob/living/silicon/ai/smoovin_ai = mob
+		return smoovin_ai.AIMove(direct)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -114,13 +115,15 @@
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
 
-	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
+	if (SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
 		return FALSE
 
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
-	var/new_glide_size = DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? sqrt(2) : 1 ) )
-	mob.set_glide_size(new_glide_size) // set it now in case of pulled objects
+	var/glide_delay = add_delay
+	if(NSCOMPONENT(direct) && EWCOMPONENT(direct))
+		glide_delay = FLOOR(glide_delay * sqrt(2), world.tick_lag)
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(glide_delay)) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
@@ -138,7 +141,7 @@
 	. = ..()
 
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
-		add_delay *= sqrt(2)
+		add_delay = FLOOR(add_delay * sqrt(2), world.tick_lag)
 
 	var/after_glide = 0
 	if(visual_delay)
@@ -259,7 +262,7 @@
 						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
 						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
-				if(stepTurf.turf_flags & NOJAUNT)
+				if((SSticker.current_state < GAME_STATE_FINISHED) && (stepTurf.turf_flags & NOJAUNT)) // monkestation edit: allow jaunts to work after roundend
 					to_chat(L, span_warning("Some strange aura is blocking the way."))
 					return
 				if(locate(/obj/effect/blessing) in stepTurf)
@@ -348,7 +351,7 @@
 			continue
 		return rebound
 
-/mob/has_gravity()
+/mob/has_gravity(turf/gravity_turf)
 	return mob_negates_gravity() || ..()
 
 /**
@@ -368,6 +371,8 @@
  */
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
+
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
@@ -521,25 +526,19 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
-
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
-	if(!above_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
-	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
-		if(buckled)
-			to_chat(src, span_warning("[buckled] is is not capable of flight."))
-		else
-			to_chat(src, span_warning("You are not Superman."))
+	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 
-	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
+	balloon_alert(src, "moving up...")
+	if(!do_after(src, 1 SECONDS))
+		return
+
+	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
@@ -548,17 +547,19 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = GET_TURF_BELOW(current_turf)
-	if(!below_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
-	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
+	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+		return
+
+	balloon_alert(src, "moving down...")
+	if(!do_after(src, 1 SECONDS))
+		return
+
+	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 	return FALSE
 

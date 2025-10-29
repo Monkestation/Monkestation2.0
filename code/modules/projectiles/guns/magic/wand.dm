@@ -28,29 +28,33 @@
 	icon_state = "[base_icon_state][charges ? null : "-drained"]"
 	return ..()
 
+/obj/item/gun/magic/wand/can_trigger_gun(mob/living/user, akimbo_usage)
+	if(akimbo_usage)
+		return FALSE
+	return ..()
+
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
 	if(target == user)
 		return
 	..()
 
-/obj/item/gun/magic/wand/afterattack(atom/target, mob/living/user)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/magic/wand/try_fire_gun(atom/target, mob/living/user, params)
 	if(!charges)
 		shoot_with_empty_chamber(user)
-		return
+		return FALSE
 	if(target == user)
-		if(no_den_usage)
-			var/area/A = get_area(user)
-			if(istype(A, /area/centcom/wizard_station))
-				to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
-				return
-			else
-				no_den_usage = 0
+		if(no_den_usage && istype(get_area(user), /area/centcom/wizard_station))
+			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
+			return FALSE
 		zap_self(user)
-	else
-		. |= ..()
-	update_appearance()
+		. = TRUE
 
+	else
+		. = ..()
+
+	if(.)
+		update_appearance()
+	return .
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message(span_danger("[user] zaps [user.p_them()]self with [src]."))
@@ -81,7 +85,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
+			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // This heals suicides
 			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
@@ -126,7 +130,7 @@
 			user.investigate_log("has been killed by a bolt of resurrection.", INVESTIGATE_DEATHS)
 			user.death(FALSE)
 			return
-	user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
+	user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // This heals suicides
 	to_chat(user, span_notice("You feel great!"))
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -256,3 +260,25 @@
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
+
+
+/////////////////////////////////////
+//WAND OF SHRINKING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/shrink
+	name = "wand of shrinking"
+	desc = "Feel the tiny eldritch terror of an itty... bitty... head!"
+	ammo_type = /obj/item/ammo_casing/magic/shrink/wand
+	icon_state = "shrinkwand"
+	base_icon_state = "shrinkwand"
+	fire_sound = 'sound/magic/staff_shrink.ogg'
+	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = TRUE
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/gun/magic/wand/shrink/zap_self(mob/living/user)
+	to_chat(user, span_notice("The world grows large..."))
+	charges--
+	user.AddComponent(/datum/component/shrink, -1) // small forever
+	return ..()

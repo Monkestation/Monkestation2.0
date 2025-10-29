@@ -17,6 +17,7 @@
 	icon_state = "ethdisco_head_0"
 	anchored = TRUE
 	density = TRUE
+	light_system = OVERLAY_LIGHT // monkestation edit: use overlay lighting
 	var/TurnedOn = FALSE
 	var/current_color
 	var/TimerID
@@ -36,10 +37,10 @@
 		TurnOn()
 		to_chat(user, span_notice("You turn the disco ball on!"))
 
-/obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
-	. = ..()
+/obj/structure/etherealball/click_alt(mob/living/carbon/human/user)
 	set_anchored(!anchored)
 	to_chat(user, span_notice("You [anchored ? null : "un"]lock the disco ball."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
@@ -47,7 +48,7 @@
 
 /obj/structure/etherealball/proc/TurnOff()
 	TurnedOn = FALSE
-	set_light(0)
+	set_light(0, update = FALSE) // monkestation edit: use overlay lighting
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	update_appearance()
 	if(TimerID)
@@ -55,9 +56,9 @@
 
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	current_color = random_color()
-	set_light(l_outer_range = range, l_power = power, l_color = current_color)
-	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
+	current_color = "#[random_color()]"
+	set_light(l_outer_range = range, l_power = power, l_color = current_color, update = FALSE) // monkestation edit: use overlay lighting
+	add_atom_colour(current_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 	TimerID = addtimer(CALLBACK(src, PROC_REF(DiscoFever)), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
 

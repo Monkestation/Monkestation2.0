@@ -30,26 +30,47 @@
 	///weak ref to the dna vault
 	var/datum/weakref/dna_vault_ref
 
-/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !target)
-		return .
+/obj/item/dna_probe/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/dna_vault))
+		if(dna_vault_ref?.resolve())
+			// Weirdly we can upload to any existing DNA vault so long as we're linked to any other existing DNA vault.
+			return try_upload_dna(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		else
+			return try_linking_vault(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
+	scan_dna(interacting_with, user)
+	return ITEM_INTERACT_BLOCKING
 
-	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref?.resolve())
-		try_linking_vault(target, user)
-	else
-		scan_dna(target, user)
-
-/obj/item/dna_probe/proc/try_linking_vault(atom/target, mob/user)
+/obj/item/dna_probe/proc/try_linking_vault(obj/machinery/dna_vault/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 	if(!our_vault)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
 		playsound(src, 'sound/machines/terminal_success.ogg', 50)
-		return
+		return TRUE
+	return FALSE
+
+/obj/item/dna_probe/proc/try_upload_dna(obj/machinery/dna_vault/target, mob/user)
+	var/uploaded = 0
+	var/plant_dna_length = length(stored_dna_plants)
+	var/human_dna_length = length(stored_dna_human)
+	var/animal_dna_length = length(stored_dna_animal)
+	if(plant_dna_length)
+		uploaded += plant_dna_length
+		target.plant_dna += stored_dna_plants
+		stored_dna_plants.Cut()
+	if(human_dna_length)
+		uploaded += human_dna_length
+		target.human_dna += stored_dna_human
+		stored_dna_human.Cut()
+	if(animal_dna_length)
+		uploaded += animal_dna_length
+		target.animal_dna += stored_dna_animal
+		stored_dna_animal.Cut()
+	target.check_goal()
+	playsound(target, 'sound/misc/compiler-stage1.ogg', 50)
+	to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
+	return uploaded
 
 /obj/item/dna_probe/proc/scan_dna(atom/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
@@ -57,22 +78,24 @@
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 50)
 		balloon_alert(user, "need database!")
 		return
-	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/hydro_tray = target
-		if(!hydro_tray.myseed)
+	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && target.GetComponent(/datum/component/plant_growing))
+		var/obj/item/seeds/seed = locate(/obj/item/seeds) in target.contents
+		var/datum/component/growth_information/info = seed?.GetComponent(/datum/component/growth_information)
+		if(QDELETED(seed) || QDELETED(info))
 			return
-		if(our_vault.plant_dna[hydro_tray.myseed.type])
+		if(our_vault.plant_dna[seed.type])
 			to_chat(user, span_notice("Plant data is already present in vault storage."))
 			return
-		if(stored_dna_plants[hydro_tray.myseed.type])
+		if(stored_dna_plants[seed.type])
 			to_chat(user, span_notice("Plant data already present in local storage."))
 			return
-		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
+		if(info.plant_state != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return .
-		stored_dna_plants[hydro_tray.myseed.type] = TRUE
+		stored_dna_plants[seed.type] = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
+
 	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault.human_dna[human_target.dna.unique_identity])

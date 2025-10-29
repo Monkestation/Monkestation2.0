@@ -9,7 +9,7 @@
 // Delete self without hitting
 #define PROJECTILE_DELETE_WITHOUT_HITTING 3
 
-// Caliber defines: (current count stands at 24)
+// Caliber defines: (current count stands at 27)
 /// The caliber used by the [L6 SAW][/obj/item/gun/ballistic/automatic/l6_saw].
 #define CALIBER_712X82MM "mm71282"
 /// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
@@ -28,6 +28,8 @@
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles and the desert eagle.
 #define CALIBER_50 ".50"
+/// The caliber used by the giant admin only revolver
+#define CALIBER_500 ".500"
 /// The caliber used by the gyrojet pistol.
 #define CALIBER_75 ".75"
 /// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
@@ -52,14 +54,49 @@
 #define CALIBER_ARROW "arrow"
 /// The caliber used by the harpoon gun.
 #define CALIBER_HARPOON "harpoon"
+/// The caliber used by the rebar crossbow.
+#define CALIBER_REBAR "sharpened rod"
+/// The caliber used by the rebar crossbow when forced to hold 2 rods.
+#define CALIBER_REBAR_FORCED "sharpened rod"
+/// The caliber used by the syndicate rebar crossbow.
+#define CALIBER_REBAR_SYNDIE "sharpened rod"
 /// The caliber used by the meat hook.
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
 #define CALIBER_A223 "a223"
+/// The caliber used by bolt action rifles.
+#define CALIBER_STRILKA310 ".310_strilka"
+/// The caliber used by the atlatl spear thrower
+#define CALIBER_SPEAR "throwing spear"
+//Peashooter ammo for mech and minigun
+#define CALIBER_22LR ".22 LR"
+//20mm ammo for mech
+#define CALIBER_ATR "20x160mm Neville"
+//60mm rockets for anti mech
+#define CALIBER_60MM "60mm Rocket"
+// The caliber used by the PACO
+#define CALIBER_35 ".35"
+// The caliber used by the Quarad machinegun
+#define CALIBER_C65XENO "6.5x39"
+// The caliber used by the mining autoshotgun
+#define KINETIC_20G "20 Gauge kinetic shell"
+// The caliber used by the mining LMG
+#define CALIBER_A762_KINETIC "7.65 Kinetic"
+// The caliber used by mining grenade launchers
+#define CALIBER_40MM_KINETIC "40mm Kinetic Grenade"
+// The caliber used by the mining revolver
+#define CALIBER_GOV_MINING ".45-70 Gov Kinetic"
+// The caliber used by the Thor kinetic mining rifle
+#define CALIBER_MINER_950 ".950 JDJ Kinetic"
+// The caliber used by the mining doublebarrel
+#define MINER_SHOTGUN "kinetic shotgun"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
+
+/// A spark will be generated for each THIS amount of damage dealt to a robotic limb by a projectile.
+#define PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK 20
 
 //Designed for things that need precision trajectories like projectiles.
 //Don't use this for anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
@@ -71,3 +108,10 @@
 
 #define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
 #define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
+
+///The self charging rate of energy guns that magically recharge themselves, in watts.
+#define STANDARD_ENERGY_GUN_SELF_CHARGE_RATE (0.05 * STANDARD_CELL_CHARGE)
+
+/// Macro to turn a number of laser shots into an energy cost, based on the above define
+/// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
+#define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members

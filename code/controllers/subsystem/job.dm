@@ -11,6 +11,8 @@ SUBSYSTEM_DEF(job)
 	var/list/name_occupations = list()
 	/// Dictionary of all jobs, keys are types.
 	var/list/datum/job/type_occupations = list()
+	/// List jobs failing the holiday check on enabled holiday jobs.
+	var/list/datum/job/holiday_restricted = list()
 
 	/// Dictionary of jobs indexed by the experience type they grant.
 	var/list/experience_jobs_map = list()
@@ -40,6 +42,8 @@ SUBSYSTEM_DEF(job)
 	 * Assumed Captain is always the highest in the chain of command.
 	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
 	 */
+	// Monkestation Edit Start: QM IS NOT A HEAD! removed this line 		JOB_QUARTERMASTER = 7,
+
 	var/list/chain_of_command = list(
 		JOB_CAPTAIN = 1,
 		JOB_HEAD_OF_PERSONNEL = 2,
@@ -47,8 +51,8 @@ SUBSYSTEM_DEF(job)
 		JOB_CHIEF_ENGINEER = 4,
 		JOB_CHIEF_MEDICAL_OFFICER = 5,
 		JOB_HEAD_OF_SECURITY = 6,
-		JOB_QUARTERMASTER = 7,
 	)
+	// Monkestation Edit End
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
@@ -96,6 +100,7 @@ SUBSYSTEM_DEF(job)
 	new_overflow.allow_bureaucratic_error = FALSE
 	new_overflow.spawn_positions = cap
 	new_overflow.total_positions = cap
+	new_overflow.job_flags |= JOB_CANNOT_OPEN_SLOTS
 
 	if(new_overflow.type == overflow_role)
 		return
@@ -103,6 +108,8 @@ SUBSYSTEM_DEF(job)
 	old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
 	old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
 	old_overflow.total_positions = initial(old_overflow.total_positions)
+	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
+		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
 	overflow_role = new_overflow.type
 	JobDebug("Overflow role set to : [new_overflow.type]")
 
@@ -126,6 +133,7 @@ SUBSYSTEM_DEF(job)
 	var/list/new_joinable_departments = list()
 	var/list/new_joinable_departments_by_type = list()
 	var/list/new_experience_jobs_map = list()
+	var/list/new_holiday_restricted_occupation = list()
 
 	for(var/job_type in all_jobs)
 		var/datum/job/job = new job_type()
@@ -134,8 +142,16 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
 			log_job_debug("Removed [job.title] due to map config")
 			continue
-		if(!CONFIG_GET(flag/spooktober_enabled) && job.job_flags & JOB_SPOOKTOBER) //if spooktober's not enabled, don't load spooktober jobs
-			continue
+
+		//MONKESTATION EDIT START
+		if(length(job.job_holiday_flags)) // Check if this job is part of a holiday. Skip holiday checks if it isnt.
+			if(!job.special_config_check()) // Check the special config in case this job must not be loaded for some reason.
+				continue
+			else
+				if(isnull(check_holidays(job.job_holiday_flags))) // We are sure we have holiday flags. If it fails here then its restricted.
+					new_holiday_restricted_occupation += job
+		//MONKESTATION EDIT END
+
 		new_all_occupations += job
 		name_occupations[job.title] = job
 		type_occupations[job_type] = job
@@ -161,6 +177,7 @@ SUBSYSTEM_DEF(job)
 			continue
 		new_experience_jobs_map[job.exp_granted_type] += list(job)
 
+	sortTim(new_holiday_restricted_occupation, GLOBAL_PROC_REF(cmp_job_display_asc)) //MONKESTATION EDIT
 	sortTim(new_joinable_departments_by_type, GLOBAL_PROC_REF(cmp_department_display_asc), associative = TRUE)
 	for(var/department_type in new_joinable_departments_by_type)
 		var/datum/job_department/department = new_joinable_departments_by_type[department_type]
@@ -170,6 +187,7 @@ SUBSYSTEM_DEF(job)
 			new_experience_jobs_map[department.department_experience_type] = department.department_jobs.Copy()
 
 	all_occupations = new_all_occupations
+	holiday_restricted = new_holiday_restricted_occupation //MONKESTATION EDIT
 	joinable_occupations = sortTim(new_joinable_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	joinable_departments = new_joinable_departments
 	joinable_departments_by_type = new_joinable_departments_by_type
@@ -213,6 +231,11 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
+//monkestation edit start
+	if(player.temp_assignment)
+		player.temp_assignment.current_positions--
+	player.temp_assignment = null
+//monkestation edit end
 	player.mind.set_assigned_role(job)
 	unassigned -= player
 	job.current_positions++
@@ -241,16 +264,20 @@ SUBSYSTEM_DEF(job)
 		if(check_job_eligibility(player, job, "FOC", add_job_to_log = FALSE) != JOB_AVAILABLE)
 			continue
 
-		// They have the job enabled, at this priority level, with no restrictions applying to them.
+//monkestation edit start
+		if(!assignable_by_job[job.type])
+			assignable_by_job[job.type] = list("[JP_LOW]" = list(), "[JP_MEDIUM]" = list(), "[JP_HIGH]" = list())
+		assignable_by_job[job.type]["[player_job_level]"] |= player
+//monkestation edit end
 		JobDebug("FOC pass, Player: [player], Level: [job_priority_level_to_string(level)]")
 		candidates += player
 	return candidates
 
 
-/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
+/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player, roundstart = FALSE, list/restricted_jobs = list()) //monkestation edit: adds roundstart and restricted_jobs
 	JobDebug("GRJ Giving random job, Player: [player]")
 	. = FALSE
-	for(var/datum/job/job as anything in shuffle(joinable_occupations))
+	for(var/datum/job/job as anything in shuffle(joinable_occupations - restricted_jobs)) //monkestation edit: adds - restricted_jobs
 		if(QDELETED(player))
 			JobDebug("GRJ player is deleted, aborting")
 			break
@@ -271,9 +298,15 @@ SUBSYSTEM_DEF(job)
 		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
 			continue
 
-		if(AssignRole(player, job, do_eligibility_checks = FALSE))
-			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
-			return TRUE
+//monkestation edit start
+		if(roundstart)
+			if(handle_temp_assignments(player, job))
+				return TRUE
+		else
+//monkestation edit end
+			if(AssignRole(player, job, do_eligibility_checks = FALSE))
+				JobDebug("GRJ Random job given, Player: [player], Job: [job]")
+				return TRUE
 
 		JobDebug("GRJ Player eligible but AssignRole failed, Player: [player], Job: [job]")
 
@@ -308,8 +341,14 @@ SUBSYSTEM_DEF(job)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			// Eligibility checks done as part of FindOccupationCandidates.
-			if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
+//monkestation removal start
+//			if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
+//				return TRUE
+//monkestation removal end
+//monkestation edit start
+			if(handle_temp_assignments(candidate, job))
 				return TRUE
+//monkestation edit end
 	return FALSE
 
 
@@ -331,7 +370,8 @@ SUBSYSTEM_DEF(job)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(candidate, job, do_eligibility_checks = FALSE)
+//		AssignRole(candidate, job, do_eligibility_checks = FALSE) //monkestation removal
+		handle_temp_assignments(candidate, job) //monkestation edit
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -346,8 +386,14 @@ SUBSYSTEM_DEF(job)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				// Eligibility checks done as part of FindOccupationCandidates
-				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
+//monkestation removal start
+//				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
+//					break
+//monkestation removal end
+//monkestation edit start
+				if(handle_temp_assignments(candidate, GetJobType(/datum/job/ai)))
 					break
+//monkestation edit end
 
 
 /** Proc DivideOccupations
@@ -398,7 +444,8 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in overflow_candidates)
 		JobDebug("AC1 pass, Player: [player]")
 		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE)
+//		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE) //monkestation removal
+		handle_temp_assignments(player, GetJobType(overflow_role)) //monkestation edit
 		overflow_candidates -= player
 	JobDebug("DO, AC1 end")
 
@@ -426,7 +473,7 @@ SUBSYSTEM_DEF(job)
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
-			if(PopcapReached())
+			if(!(player?.persistent_client?.patreon?.is_donator() || is_admin(player.client) || is_mentor(player.client)) && PopcapReached())
 				RejectPlayer(player)
 
 			// Loop through all jobs
@@ -455,7 +502,8 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
-				AssignRole(player, job, do_eligibility_checks = FALSE)
+//				AssignRole(player, job, do_eligibility_checks = FALSE) //monkestation removal
+				handle_temp_assignments(player, job) //monkestation edit
 				unassigned -= player
 				break
 
@@ -468,7 +516,8 @@ SUBSYSTEM_DEF(job)
 		HandleUnassigned(player)
 	JobDebug("DO, Ending handle unassigned.")
 
-	JobDebug("DO, Handle unrejectable unassigned")
+//monkestation removal start: we handle selecting antags after this
+/*	JobDebug("DO, Handle unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
@@ -476,8 +525,10 @@ SUBSYSTEM_DEF(job)
 				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
 				JobDebug("---------------------------------------------------")
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
-	JobDebug("DO, Ending handle unrejectable unassigned")
+	JobDebug("DO, Ending handle unrejectable unassigned")*/
+//monkestation removal end
 
+	handle_final_setup() //monkestation edit
 	JobDebug("All divide occupations tasks completed.")
 	JobDebug("---------------------------------------------------")
 
@@ -499,11 +550,12 @@ SUBSYSTEM_DEF(job)
 				RejectPlayer(player)
 				return
 
-			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE))
+//			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE)) //monkestation removal
+			if(!handle_temp_assignments(player, overflow_role_datum)) //monkestation edit
 				RejectPlayer(player)
 				return
 		if (BERANDOMJOB)
-			if(!GiveRandomJob(player))
+			if(!GiveRandomJob(player, TRUE)) //monkestation edit: adds second arg
 				RejectPlayer(player)
 				return
 		if (RETURNTOLOBBY)
@@ -519,22 +571,29 @@ SUBSYSTEM_DEF(job)
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/equipping, datum/job/job, client/player_client)
-
-	if(isnull(player_client?.prefs.alt_job_titles))
-		player_client.prefs.alt_job_titles = list()
-
-	var/chosen_title = player_client?.prefs.alt_job_titles[job.title] || job.title
-	var/default_title = job.title
-
 	equipping.job = job.title
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
 
+	//monkestation edit start
+	/* original
 	equipping.mind?.set_assigned_role_with_greeting(job, player_client)
+	equipping.on_job_equipping(job)
+	job.announce_job(equipping)
+	*/
+	if(isnull(player_client?.prefs.alt_job_titles))
+		player_client.prefs.alt_job_titles = list()
+	var/chosen_title = player_client?.prefs.alt_job_titles[job.title] || job.title
+
+	equipping.mind?.set_assigned_role_with_greeting(job, player_client, chosen_title)
 
 	equipping.on_job_equipping(job, player_client?.prefs)
-
 	job.announce_job(equipping, chosen_title)
+
+	var/mob/living/carbon/human/h_equipping = equipping
+	if(istype(h_equipping))
+		setup_alt_job_items(h_equipping, job, player_client)
+	// monkestation edit end
 
 	if(player_client?.holder)
 		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
@@ -542,32 +601,7 @@ SUBSYSTEM_DEF(job)
 		else
 			handle_auto_deadmin_roles(player_client, job.title)
 
-	if(player_client)
-		to_chat(player_client, "<span class='infoplain'><b>As the [job.title] you answer directly to [job.supervisors]. Special circumstances may change this.</b></span>")
-
-	job.radio_help_message(equipping)
-
-	if(player_client)
-		if(job.req_admin_notify)
-			to_chat(player_client, span_infoplain("<b>You are playing a job that is important for Game Progression. \
-				If you have to disconnect, please notify the admins via adminhelp.</b>"))
-		if(CONFIG_GET(number/minimal_access_threshold))
-			to_chat(player_client, span_boldnotice("As this station was initially staffed with a \
-				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-				have been added to your ID card."))
-
-		if(chosen_title != default_title)
-			to_chat(player_client, span_infoplain(span_warning("Remember that alternate titles are purely for flavor and roleplay.")))
-			to_chat(player_client, span_infoplain(span_doyourjobidiot("Do not use your \"[chosen_title]\" alt title as an excuse to forego your duties as a [job.title].")))
-
-	if(ishuman(equipping))
-		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
-
-		setup_alt_job_items(wageslave, job, player_client)
-
 	job.after_spawn(equipping, player_client)
-
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
@@ -886,13 +920,19 @@ SUBSYSTEM_DEF(job)
 
 /atom/proc/JoinPlayerHere(mob/joining_mob, buckle)
 	// By default, just place the mob on the same turf as the marker or whatever.
-	joining_mob.forceMove(get_turf(src))
+	// Set joining_mob as the new mob so subtypes can use it as a proper mob.
+	if(ispath(joining_mob))
+		joining_mob = new joining_mob(get_turf(src))
+	else
+		joining_mob.forceMove(get_turf(src))
+	return joining_mob
 
 /obj/structure/chair/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
+	var/mob/created_joining_mob = ..()
 	// Placing a mob in a chair will attempt to buckle it, or else fall back to default.
-	if(buckle && isliving(joining_mob))
-		buckle_mob(joining_mob, FALSE, FALSE)
+	if(buckle && isliving(created_joining_mob))
+		buckle_mob(created_joining_mob, FALSE, FALSE)
+	return created_joining_mob
 
 
 /atom/proc/JoinLaunchTowards(mob/joining_mob, obj/effect/oshan_launch_point/player/launched_point)
@@ -924,34 +964,23 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
-	//bad mojo
 	var/area/shuttle/arrival/arrivals_area = GLOB.areas_by_type[/area/shuttle/arrival]
-	if(arrivals_area)
-		//first check if we can find a chair
-		var/obj/structure/chair/shuttle_chair = locate() in arrivals_area
-		if(shuttle_chair)
-			return shuttle_chair
-
-		//last hurrah
+	if(!isnull(arrivals_area))
 		var/list/turf/available_turfs = list()
-		for(var/turf/arrivals_turf in arrivals_area)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
+		for (var/list/zlevel_turfs as anything in arrivals_area.get_zlevel_turf_lists())
+			for (var/turf/arrivals_turf as anything in zlevel_turfs)
+				var/obj/structure/chair/shuttle_chair = locate() in arrivals_turf
+				if(!isnull(shuttle_chair))
+					return shuttle_chair
+				if(arrivals_turf.is_blocked_turf(TRUE))
+					continue
 				available_turfs += arrivals_turf
+
 		if(length(available_turfs))
 			return pick(available_turfs)
 
-	//pick an open spot on arrivals and dump em
-	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
-	if(length(arrivals_turfs))
-		for(var/turf/arrivals_turf in arrivals_turfs)
-			if(!arrivals_turf.is_blocked_turf(TRUE))
-				return arrivals_turf
-		//last chance, pick ANY spot on arrivals and dump em
-		return pick(arrivals_turfs)
-
 	stack_trace("Unable to find last resort spawn point.")
 	return GET_ERROR_ROOM
-
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
@@ -977,7 +1006,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/datum/mind/head as anything in get_crewmember_minds())
+	for(var/datum/mind/head as anything in get_crewmember_minds(require_body = FALSE))
 		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			. += head
 
@@ -994,7 +1023,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/datum/mind/sec as anything in get_crewmember_minds())
+	for(var/datum/mind/sec as anything in get_crewmember_minds(require_body = FALSE))
 		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			. += sec
 
@@ -1107,6 +1136,26 @@ SUBSYSTEM_DEF(job)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
 
+	if(!possible_job.conditions_met())
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_CONDITIONS_UNMET, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return  JOB_UNAVAILABLE_CONDITIONS_UNMET
+
+	//MONKESTATION EDIT START
+	// Job is for donators of a specific level and fail if they did not meet the requirements.
+	if(((possible_job in holiday_restricted) || !isnull(possible_job.job_req_donor)) && (!is_admin(player.client) || !is_mentor(player.client)))
+		if(player.persistent_client?.patreon?.is_donator()) // They are a donator so we can check if they can bypass the restrictions.
+			if(!isnull(possible_job.job_req_donor) && !player.persistent_client?.patreon?.has_access(possible_job.job_req_donor))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
+
+			if(!isnull(possible_job.job_donor_bypass) && !player.persistent_client?.patreon?.has_access(possible_job.job_donor_bypass))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
+		else
+			JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+			return JOB_UNAVAILABLE_DONOR_RANK
+	//MONKESTATION EDIT END
+
 	// Run the banned check last since it should be the rarest check to fail and can access the database.
 	if(is_banned_from(player.ckey, possible_job.title))
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
@@ -1141,13 +1190,3 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 
 	return FALSE
-
-///trys to free up a job slot via the rank
-/datum/controller/subsystem/job/proc/FreeRole(rank)
-	if(!rank)
-		return
-	JobDebug("Freeing role: [rank]")
-	var/datum/job/job = GetJob(rank)
-	if(!job)
-		return FALSE
-	job.current_positions = max(0, job.current_positions - 1)

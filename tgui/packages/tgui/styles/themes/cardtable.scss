@@ -9,12 +9,12 @@
 @use '../colors.scss' with (
   $primary: #000000,
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
   $color-bg: #117039,
   $color-bg-grad-spread: 0%,
-  $border-radius: 0,
+  $border-radius: 0
 );
 
 //Made for the roulette table, probably requires a bunch of manual hacks to work for anything else
@@ -31,6 +31,14 @@
       'color-selected': #9d0808,
       'color-caution': #be6209,
       'color-danger': #9a9d00
+    )
+  );
+  @include meta.load-css(
+    '../components/ImageButton.scss',
+    $with: (
+      'color-default': #117039,
+      'color-disabled': #363636,
+      'color-selected': #9d0808
     )
   );
   @include meta.load-css(

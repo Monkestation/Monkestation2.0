@@ -9,6 +9,7 @@
 	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
@@ -41,6 +42,12 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
+	// monkestation start: prevent mindswap if you have TRAIT_NO_MINDSWAP
+	if(HAS_TRAIT(owner, TRAIT_NO_MINDSWAP))
+		if(feedback)
+			to_chat(owner, span_warning("Your mind can't be swapped!"))
+		return FALSE
+	// monkestation end
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
@@ -55,9 +62,19 @@
 	if(!isliving(cast_on))
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_MIND_TEMPORARILY_GONE))
+		to_chat(owner, span_warning("This creature's mind is somewhere else entirely!"))
+		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_NO_MINDSWAP))
+		to_chat(owner, span_warning("This type of magic can't operate on [cast_on.p_their()] mind!"))
+		return FALSE
+
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
+
 	if(isguardian(cast_on))
 		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
@@ -117,7 +134,7 @@
 
 	// Just in case the swappee's key wasn't grabbed by transfer_to...
 	if(to_swap_key)
-		caster.key = to_swap_key
+		caster.PossessByPlayer(to_swap_key)
 
 	// MIND TRANSFER END
 

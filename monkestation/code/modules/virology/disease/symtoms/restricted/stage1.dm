@@ -5,7 +5,8 @@
 	max_count = 10
 	stage = 1
 	badness = EFFECT_DANGER_HARMFUL
-	max_chance = 10
+	severity = 3
+	max_chance = 5
 	var/new_form = /mob/living/carbon/human
 	var/bantype
 	var/transformed_antag_datum //Do we add a specific antag datum once the transformation is complete?
@@ -31,7 +32,7 @@
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if(iscarbon(affected_mob))
-			for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
 			for(var/obj/item/I in affected_mob.held_items)
 				affected_mob.dropItemToGround(I)
@@ -43,9 +44,10 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
-		if(transformed_antag_datum)
-			new_mob.mind.add_antag_datum(transformed_antag_datum)
+				new_mob.PossessByPlayer(affected_mob.key)
+		if(transformed_antag_datum && !QDELETED(new_mob.mind))
+			var/datum/antagonist/given_antag = new_mob.mind.has_antag_datum(transformed_antag_datum) || new_mob.mind.add_antag_datum(transformed_antag_datum)
+			given_antag?.antag_flags |= FLAG_ANTAG_CAP_IGNORE // ensure they don't count against storyteller cap
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
@@ -53,50 +55,57 @@
 /datum/symptom/transformation/proc/replace_banned_player(mob/living/new_mob, mob/living/affected_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 5 SECONDS, affected_mob)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
-		affected_mob.ghostize(FALSE)
-		affected_mob.key = C.key
-	else
+	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [affected_mob.real_name]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, checked_target = affected_mob, alert_pic = affected_mob, role_name_text = "transformation victim")
+	if(isnull(chosen_one))
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
-			new_mob.key = null
+		return
+	to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
+	message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
+	affected_mob.ghostize(FALSE)
+	affected_mob.PossessByPlayer(chosen_one.key)
+
 
 /datum/symptom/transformation/robot
 	name = "Robotic Transformation"
 	new_form = /mob/living/silicon/robot
 	bantype = JOB_CYBORG
+	desc = "Restructures the subject cells into a Cyborg. Cure: Synthetic Cleaner"
 
 /datum/symptom/transformation/xeno
 	name = "Xenomorph Transformation"
 	new_form = /mob/living/carbon/alien/adult/hunter
 	bantype = ROLE_ALIEN
+	transformed_antag_datum = /datum/antagonist/xeno
+	desc = "Restructures the subject cells into a premative xeno hunter. Cure: Phlogisto"
 
 /datum/symptom/transformation/slime
 	name = "Advanced Mutation Transformation"
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/basic/slime
+	desc = "Restructures the subject cells into a slime. Cure: Water"
 
 /datum/symptom/transformation/corgi
 	name = "The Barkening"
 	new_form = /mob/living/basic/pet/dog/corgi
+	desc = "Restructures the subject cells into a corgi. Cure: Coco Powder"
 
 /datum/symptom/transformation/morph
 	name = "Gluttony's Blessing"
 	new_form = /mob/living/basic/morph
 	transformed_antag_datum = /datum/antagonist/morph
+	desc = "Restructures the subject cells into a morph. Cure: Lipolicide"
 
 /datum/symptom/transformation/gondola
 	name = "Gondola Transformation"
-	max_chance = 50
+	max_chance = 10
 	new_form = /mob/living/simple_animal/pet/gondola
+	desc = "Restructures the subject cells into a gondola. Cure: Condensed Capsaicin"
 
 /datum/symptom/transformation/gondola/digital
+	max_chance = 50
 	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
 
 /datum/symptom/anxiety
@@ -104,10 +113,11 @@
 	desc = "Causes the host to suffer from severe anxiety"
 	stage = 1
 	badness = EFFECT_DANGER_ANNOYING
+	severity = 3
 	restricted = TRUE
 	max_multiplier = 4
 
-/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 
 	switch(round(multiplier, 1))
 		if(2) //also changes say, see say.dm
@@ -134,3 +144,53 @@
 													span_userdanger("You cough up butterflies!"))
 				new /mob/living/basic/butterfly(mob.loc)
 				new /mob/living/basic/butterfly(mob.loc)
+
+/datum/symptom/death_sandwich
+	name = "Death Sandwich"
+	desc = "You ate it wrong, and now you will die. Cure: Anacea"
+	stage = 1
+	badness = EFFECT_DANGER_DEADLY
+	severity = 5
+	restricted = TRUE
+	max_multiplier = 3
+	chance = 25
+	max_chance = 25
+
+/datum/symptom/death_sandwich/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+	switch(round(multiplier))
+		if(1)
+			if(prob(12))
+				mob.emote("cough")
+			if(prob(4))
+				mob.emote("gag")
+			if(prob(4))
+				mob.adjustToxLoss(5)
+		if(2)
+			if(prob(40))
+				mob.emote("cough")
+			if(prob(20))
+				mob.emote("gag")
+			if(prob(8))
+				to_chat(mob, span_danger("Your body feels hot!"))
+				if(prob(20))
+					mob.take_bodypart_damage(burn = 1)
+			if(prob(24))
+				mob.adjustToxLoss(10)
+		if(3)
+			if(prob(40))
+				mob.emote("gag")
+			if(prob(80))
+				mob.emote("gasp")
+			if(prob(20))
+				mob.vomit(20, TRUE)
+			if(prob(20))
+				to_chat(mob, span_danger("Your body feels hot!"))
+				if(prob(60))
+					mob.take_bodypart_damage(burn = 2)
+			if(prob(48))
+				mob.adjustToxLoss(15)
+			if(prob(12))
+				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
+				mob.set_silence_if_lower(5 SECONDS)
+				mob.set_emote_mute_if_lower(5 SECONDS)
+	multiplier_tweak(0.1)

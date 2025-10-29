@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/Initialize()
 	if(!CONFIG_GET(flag/enable_night_shifts))
 		can_fire = FALSE
+		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
@@ -24,7 +25,12 @@ SUBSYSTEM_DEF(nightshift)
 	check_nightshift()
 
 /datum/controller/subsystem/nightshift/proc/announce(message)
-	priority_announce(message, sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
+	priority_announce(
+		text = message,
+		sound = 'sound/misc/notice2.ogg',
+		sender_override = "Automated Lighting System Announcement",
+		color_override = "grey",
+	)
 
 /datum/controller/subsystem/nightshift/proc/check_nightshift()
 	var/emergency = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED

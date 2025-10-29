@@ -134,7 +134,7 @@
 		maximum_progression
 	)
 
-/datum/traitor_objective/Destroy(force, ...)
+/datum/traitor_objective/Destroy(force)
 	handler = null
 	return ..()
 
@@ -190,7 +190,6 @@
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]")
-	add_event_to_buffer(handler.owner, data = "[objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]", log_key = "TRAITOR")
 	if(penalty_cost)
 		handler.telecrystals -= penalty_cost
 		objective_state = OBJECTIVE_STATE_FAILED
@@ -208,11 +207,12 @@
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
 	handle_cleanup()
 	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "completed"] [to_debug_string()]")
-	add_event_to_buffer(handler.owner, data = "[objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "completed"] [to_debug_string()]", log_key = "TRAITOR")
 	objective_state = OBJECTIVE_STATE_COMPLETED
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	save_objective()
 	handler.on_update() // Trigger an update to the UI
+	var/datum/antagonist/traitor/tator = handler.owner?.has_antag_datum(/datum/antagonist/traitor)
+	tator?.antag_count_points += 1 //would like to make this better in the future but this is just for proof of concept
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective(mob/user)
@@ -253,7 +253,6 @@
 /datum/traitor_objective/proc/on_objective_taken(mob/user)
 	SStraitor.on_objective_taken(src)
 	log_traitor("[key_name(handler.owner)] has taken an objective: [to_debug_string()]")
-	add_event_to_buffer(handler.owner, data = "has taken an objective: [to_debug_string()]", log_key = "TRAITOR")
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.
 /datum/traitor_objective/proc/generate_ui_buttons(mob/user)

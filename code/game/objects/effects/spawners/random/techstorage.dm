@@ -11,6 +11,7 @@
 	spawn_all_loot = FALSE
 	loot = list(
 		/obj/item/disk/data = 49,
+		/obj/item/disk/data/random = 5, // monkestation edit: add random dna data disks (this is a weighted list, it does NOT have to add up to 50 lol)
 		/obj/item/disk/nuclear/fake/obvious = 1,
 	)
 
@@ -44,6 +45,16 @@
 		/obj/item/circuitboard/machine/chem_dispenser/drinks,
 		/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
 		/obj/item/circuitboard/computer/slot_machine,
+		// monkestation start: botany stuff
+		/obj/item/circuitboard/machine/composters,
+		/obj/item/circuitboard/machine/plantgenes,
+		/obj/item/circuitboard/machine/biogenerator,
+		/obj/item/circuitboard/machine/splicer,
+		/obj/item/circuitboard/machine/hydroponics,
+		/obj/item/circuitboard/machine/seed_extractor,
+		/obj/item/circuitboard/machine/chicken_grinder,
+		/obj/item/circuitboard/machine/feed_machine,
+		// monkestation end
 	)
 
 /obj/effect/spawner/random/techstorage/rnd_all
@@ -61,8 +72,9 @@
 		/obj/item/circuitboard/machine/nanite_chamber,
 		/obj/item/circuitboard/machine/nanite_programmer,
 		/obj/item/circuitboard/machine/nanite_program_hub,
-		/obj/item/circuitboard/computer/scan_consolenew,
+		/obj/item/circuitboard/computer/dna_console,
 		/obj/item/circuitboard/machine/dnascanner,
+		/obj/item/circuitboard/machine/dna_infuser,
 	)
 
 /obj/effect/spawner/random/techstorage/security_all
@@ -102,7 +114,12 @@
 		/obj/item/circuitboard/computer/med_data,
 		/obj/item/circuitboard/machine/smoke_machine,
 		/obj/item/circuitboard/machine/chem_master,
-		/obj/item/circuitboard/computer/pandemic,
+		/obj/item/circuitboard/machine/diseaseanalyser, // MONKESTATION EDIT START: FUCK THE PANDEMIC. -dexee, 4/26/24
+		/obj/item/circuitboard/computer/diseasesplicer,
+		/obj/item/circuitboard/machine/centrifuge,
+		/obj/item/circuitboard/computer/pathology_data,
+		/obj/item/circuitboard/machine/incubator,
+	//	/obj/item/circuitboard/computer/pandemic, // MONKESTATION EDIT END: fuck the pandemic. we have better disease machines
 	)
 
 /obj/effect/spawner/random/techstorage/ai_all

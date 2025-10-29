@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
@@ -31,6 +31,10 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
+
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
  *
@@ -44,7 +48,7 @@
 /**
  * Called when the mark is activated by the heretic.
  */
-/datum/status_effect/eldritch/proc/on_effect()
+/datum/status_effect/eldritch/proc/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
@@ -57,7 +61,7 @@
 /datum/status_effect/eldritch/flesh
 	effect_icon_state = "emark1"
 
-/datum/status_effect/eldritch/flesh/on_effect()
+/datum/status_effect/eldritch/flesh/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
@@ -76,7 +80,7 @@
 	. = ..()
 	src.repetitions = max(1, repetition)
 
-/datum/status_effect/eldritch/ash/on_effect()
+/datum/status_effect/eldritch/ash/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.stamina.adjust(-6 * repetitions) // first one = 30 stam
@@ -94,6 +98,7 @@
 /datum/status_effect/eldritch/rust
 	effect_icon_state = "emark3"
 
+/* monkestation removal: reimplemented in [monkestation/code/modules/antagonists/heretic/status_effects/mark_effects.dm]
 /datum/status_effect/eldritch/rust/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
@@ -107,26 +112,29 @@
 			ORGAN_SLOT_HEART,
 		)
 
-		// Roughly 75% of their organs will take a bit of damage
+		// Roughly 25% of their organs will take a bit of damage
 		for(var/organ_slot in organs_to_damage)
-			if(prob(75))
+			if(prob(25)) //monkestation edit begin : Changes rust to not be busted as shit
 				carbon_owner.adjustOrganLoss(organ_slot, 20)
 
-		// And roughly 75% of their items will take a smack, too
+		// And roughly 50% of their items will take a smack, too
 		for(var/obj/item/thing in carbon_owner.get_all_gear())
-			if(!QDELETED(thing) && prob(75))
-				thing.take_damage(100)
+			if(!QDELETED(thing) && prob(50))
+				if(!istype(thing, /obj/item/card/id))
+					thing.take_damage(50) //monkestation edit end
 
 	return ..()
+monkestation end */
 
 // MARK OF VOID
 
 /datum/status_effect/eldritch/void
 	effect_icon_state = "emark4"
 
-/datum/status_effect/eldritch/void/on_effect()
-	owner.apply_status_effect(/datum/status_effect/void_chill/major)
+/datum/status_effect/eldritch/void/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
+	owner.apply_status_effect(/datum/status_effect/void_chill, 2)
 	owner.adjust_silence(10 SECONDS)
+	owner.adjust_emote_mute(10 SECONDS)
 	return ..()
 
 // MARK OF BLADES
@@ -234,7 +242,8 @@
 	QDEL_NULL(cosmic_diamond)
 	return ..()
 
-/datum/status_effect/eldritch/cosmic/on_effect()
+/datum/status_effect/eldritch/cosmic/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
+	owner.adjust_confusion(7 SECONDS) //monkestation edit
 	new teleport_effect(get_turf(owner))
 	new /obj/effect/forcefield/cosmic_field(get_turf(owner))
 	do_teleport(
@@ -255,8 +264,54 @@
 
 /datum/status_effect/eldritch/knock/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/eldritch/knock/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
+// MARK OF MOON
+
+/datum/status_effect/eldritch/moon
+	effect_icon_state = "emark8"
+	///Used for checking if the pacifism effect should end early
+	var/damage_sustained = 0
+
+/datum/status_effect/eldritch/moon/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	owner.emote(pick("giggle", "laugh"))
+	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	return TRUE
+
+/// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
+/datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
+	// The grasp itself deals stamina damage so we will ignore it
+	if(damagetype == STAMINA)
+		return
+
+	damage_sustained += damage
+
+	if(damage_sustained < 15)
+		return
+
+	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	owner.balloon_alert(owner, "you feel able to once again strike!")
+
+/datum/status_effect/eldritch/moon/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/
+	owner.adjust_confusion(30 SECONDS)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.emote(pick("giggle", "laugh"))
+	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	return ..()
+
+/datum/status_effect/eldritch/moon/on_remove()
+	. = ..()
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+
+	// Incase the trait was not removed earlier
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

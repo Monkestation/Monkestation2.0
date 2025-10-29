@@ -3,7 +3,7 @@
 	weight = WEIGHT_ADMIN
 
 /datum/keybinding/mentor/can_use(client/user)
-	return user.mentor_datum ? TRUE : FALSE
+	return user.mentor_datum?.check_for_rights(R_MENTOR)
 
 /datum/keybinding/mentor/mentor_say
 	hotkey_keys = list("F4")

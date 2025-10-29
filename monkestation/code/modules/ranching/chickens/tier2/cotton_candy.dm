@@ -1,9 +1,11 @@
 /mob/living/basic/chicken/cotton_candy
 	icon_suffix = "cotton_candy"
+	worn_slot_flags = null
 
 	breed_name = "Cotton Candy"
 	egg_type = /obj/item/food/egg/cotton_candy
-	mutation_list = list(/datum/mutation/ranching/chicken/dreamsicle)
+	mutation_list = list(/datum/ranching_mutation/chicken/dreamsicle)
+	liked_foods = list(/obj/item/food/grown/sugarcane = 3)
 
 	self_ability = /datum/action/cooldown/mob_cooldown/chicken/sugar_rush
 

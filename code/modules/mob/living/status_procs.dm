@@ -11,7 +11,7 @@
 /mob/living/proc/check_stun_immunity(check_flags = CANSTUN, force_stun = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return TRUE
 
 	if(force_stun) // Does not take priority over god mode? I guess
@@ -41,7 +41,9 @@
 	return 0
 
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
-	amount *= stun_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN, ignore_canstun))
@@ -72,7 +74,9 @@
 	return S
 
 /mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
-	amount *= stun_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= stun_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN, ignore_canstun))
@@ -97,7 +101,9 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
-	amount *= knockdown_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANKNOCKDOWN, ignore_canstun))
@@ -128,7 +134,9 @@
 	return K
 
 /mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
-	amount *= knockdown_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= knockdown_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANKNOCKDOWN, ignore_canstun))
@@ -203,7 +211,9 @@
 	return 0
 
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Can't go below remaining duration
-	amount *= paralyze_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun)) // this requires both can stun and can knockdown
@@ -234,7 +244,9 @@
 	return P
 
 /mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE, ignores_diminish = FALSE) //Adds to remaining duration
-	amount *= paralyze_diminish
+	ignores_diminish ||= amount < 0 // don't diminish lowering the duration
+	if(!ignores_diminish)
+		amount *= paralyze_diminish
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun))
@@ -247,6 +259,52 @@
 	if(!ignores_diminish)
 		paralyze_diminish = min(max(0.1, paralyze_diminish - round(amount * 0.05, 0.1)),1)
 	return P
+
+///////////////////////////////// DAZED //////////////////////////////////
+/mob/living/proc/IsDazed() //If we're dazed
+	return has_status_effect(/datum/status_effect/incapacitating/dazed)
+
+/mob/living/proc/AmountDazed() //How many deciseconds remain in our dazed status effect
+	var/datum/status_effect/incapacitating/dazed/D = IsDazed(FALSE)
+	if(D)
+		return D.duration - world.time
+	return 0
+
+/mob/living/proc/Daze(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/dazed/D = IsDazed(FALSE)
+		if(D)
+			D.duration = max(world.time + amount, D.duration)
+		else if(amount > 0)
+			D = apply_status_effect(/datum/status_effect/incapacitating/dazed, amount, updating)
+		return D
+
+/mob/living/proc/SetDaze(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/dazed/D = IsDazed(FALSE)
+		if(amount <= 0)
+			if(D)
+				qdel(D)
+		else if(D)
+			D.duration = world.time + amount
+		else
+			D = apply_status_effect(/datum/status_effect/incapacitating/dazed, amount, updating)
+		return D
+
+/mob/living/proc/AdjustDaze(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_DAZE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
+		var/datum/status_effect/incapacitating/dazed/D = IsDazed(FALSE)
+		if(D)
+			D.duration += amount
+		else if(amount > 0)
+			D = apply_status_effect(/datum/status_effect/incapacitating/dazed, amount, updating)
+		return D
 
 /* INCAPACITATED */
 
@@ -322,6 +380,7 @@
 	Knockdown(amount)
 	Stun(amount)
 	Immobilize(amount)
+	Daze(amount)
 
 
 /mob/living/proc/SetAllImmobility(amount)
@@ -329,6 +388,7 @@
 	SetKnockdown(amount)
 	SetStun(amount)
 	SetImmobilized(amount)
+	SetDaze(amount)
 
 
 /mob/living/proc/AdjustAllImmobility(amount)
@@ -336,7 +396,7 @@
 	AdjustKnockdown(amount)
 	AdjustStun(amount)
 	AdjustImmobilized(amount)
-
+	AdjustDaze(amount)
 
 /* UNCONSCIOUS */
 /mob/living/proc/IsUnconscious() //If we're unconscious
@@ -401,7 +461,7 @@
 /mob/living/proc/Sleeping(amount) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -413,7 +473,7 @@
 /mob/living/proc/SetSleeping(amount) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(amount <= 0)
@@ -428,7 +488,7 @@
 /mob/living/proc/AdjustSleeping(amount) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -441,11 +501,11 @@
 /mob/living/proc/PermaSleeping()
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, -1) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
-		S.duration = -1
+		S.duration = STATUS_EFFECT_PERMANENT
 	else
 		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, -1)
 	return S
@@ -516,6 +576,8 @@
 	return null
 
 /mob/living/proc/cure_husk(source)
+	if(!HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
@@ -532,18 +594,19 @@
 
 /mob/living/proc/cure_fakedeath(source)
 	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
+	update_stat()
 	if(stat != DEAD)
 		tod = null
 
 /// Induces fake death on a living mob.
 /mob/living/proc/fakedeath(source, silent = FALSE)
-	if(stat == DEAD)
-		return
-	if(!silent)
-		emote("deathgasp")
-	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
-	tod = station_time_timestamp()
+	if(stat != DEAD)
+		if(!silent)
+			emote("deathgasp")
+		tod = station_time_timestamp()
 
+	add_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)
+	update_stat()
 
 ///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
@@ -709,6 +772,9 @@
  * up_to - the upper end of the clamp, when adding the value
  */
 /mob/living/proc/adjust_drunk_effect(amount, down_to = 0, up_to = INFINITY)
+	if(HAS_TRAIT(src, TRAIT_LIVING_DRUNK))
+		return
+
 	if(!isnum(amount))
 		CRASH("adjust_drunk_effect: called with an invalid amount. (Got: [amount])")
 
@@ -726,6 +792,9 @@
  * set_to - the amount of "drunkness" to set on the mob.
  */
 /mob/living/proc/set_drunk_effect(set_to)
+	if(HAS_TRAIT(src, TRAIT_LIVING_DRUNK))
+		return
+
 	if(!isnum(set_to) || set_to < 0)
 		CRASH("set_drunk_effect: called with an invalid value. (Got: [set_to])")
 

@@ -44,6 +44,12 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
+	// monkestation start: prevent mindswap if you have TRAIT_NO_MINDSWAP
+	if(HAS_TRAIT(owner, TRAIT_NO_MINDSWAP))
+		if(feedback)
+			to_chat(owner, span_warning("Your mind can't be swapped!"))
+		return FALSE
+	// monkestation end
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
@@ -59,6 +65,12 @@
 			continue
 
 		if(!nearby_mob.key && target_requires_key)
+			continue
+
+		if(HAS_TRAIT(nearby_mob, TRAIT_MIND_TEMPORARILY_GONE))
+			continue
+
+		if(HAS_TRAIT(nearby_mob, TRAIT_NO_MINDSWAP))
 			continue
 
 		things += nearby_mob

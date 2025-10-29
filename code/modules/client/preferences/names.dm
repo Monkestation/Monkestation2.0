@@ -38,6 +38,7 @@
 	// The `_` makes it first in ABC order.
 	group = "_real_name"
 	savefile_key = "real_name"
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/real_name/apply_to_human(mob/living/carbon/human/target, value)
 	target.real_name = value
@@ -71,6 +72,7 @@
 	explanation = "Backup human name"
 	group = "backup_human"
 	savefile_key = "human_name"
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/backup_human/create_informed_default_value(datum/preferences/preferences)
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
@@ -83,6 +85,7 @@
 	explanation = "Clown name"
 	group = "fun"
 	relevant_job = /datum/job/clown
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/clown/create_default_value()
 	return pick(GLOB.clown_names)
@@ -93,6 +96,7 @@
 	explanation = "Mime name"
 	group = "fun"
 	relevant_job = /datum/job/mime
+	allow_numbers = TRUE // Monkestation addition
 
 /datum/preference/name/mime/create_default_value()
 	return pick(GLOB.mime_names)
@@ -155,3 +159,13 @@
 
 /datum/preference/name/bible/create_default_value()
 	return DEFAULT_BIBLE
+
+/// The first name given to nuclear operative antagonists. The last name will be chosen by the team leader.
+/datum/preference/name/operative_alias
+	savefile_key = "operative_alias"
+	allow_numbers = TRUE //You can get a little wacky with your alias nobody will judge you
+	explanation = "Operative Alias"
+	group = "antagonists"
+
+/datum/preference/name/operative_alias/create_default_value()
+	return pick(GLOB.operative_aliases)

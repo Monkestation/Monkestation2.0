@@ -8,18 +8,18 @@
 	name = "CQC"
 	id = MARTIALART_CQC
 	help_verb = /mob/living/proc/CQC_help
-	block_chance = 75
 	smashes_tables = TRUE
 	display_combos = TRUE
 	var/old_grab_state = null
 	var/mob/restraining_mob
+	/// Probability of successfully blocking attacks while on throw mode
+	block_chance = 75
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
 	RegisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	UnregisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY)
 	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
@@ -30,15 +30,18 @@
 		return
 	if(!can_use(cqc_user))
 		return
+	// monkestation edit: improved messaging
 	cqc_user.visible_message(
-		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
-		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+		span_danger("[cqc_user] twists [attacker]'s arm, sending [attacker.p_their()] [attack_weapon] back towards [attacker.p_them()]!"),
+		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist [attacker.p_their()] arm to send it right back at [attacker.p_them()]!"),
+		ignored_mobs = list(attacker),
 	)
+	to_chat(attacker, span_userdanger("[cqc_user] swiftly grabs and twists your arm, hitting you with your own [attack_weapon]!"), type = MESSAGE_TYPE_COMBAT)
+	// monkestation end
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
-	if(!touch_spell)
-		return
-	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
+	if(touch_spell)
+		INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
@@ -165,10 +168,32 @@
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
-		return FALSE
+		return MARTIAL_ATTACK_FAIL
+	if(attacker.grab_state == GRAB_KILL \
+		&& attacker.zone_selected == BODY_ZONE_HEAD \
+		&& attacker.pulling == defender \
+		&& defender.stat != DEAD \
+	)
+		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
+		if(!isnull(head))
+			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
+			defender.visible_message(
+				span_danger("[attacker] snaps the neck of [defender]!"),
+				span_userdanger("Your neck is snapped by [attacker]!"),
+				span_hear("You hear a sickening snap!"),
+				ignored_mobs = attacker
+			)
+			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
+			log_combat(attacker, defender, "snapped neck")
+			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
+			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
+				defender.death()
+				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
+			return MARTIAL_ATTACK_SUCCESS
+
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
-		return TRUE
+		return MARTIAL_ATTACK_SUCCESS
 	log_combat(attacker, defender, "attacked (CQC)")
 	attacker.do_attack_animation(defender)
 	var/picked_hit_type = pick("CQC", "Big Boss")
@@ -193,7 +218,7 @@
 		defender.apply_damage(10, BRUTE)
 		defender.Paralyze(6 SECONDS)
 		log_combat(attacker, defender, "sweeped (CQC)")
-	return TRUE
+	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/disarm_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
@@ -216,7 +241,7 @@
 	if(prob(65))
 		if(!defender.stat || !defender.IsParalyzed() || !restraining_mob)
 			held_item = defender.get_active_held_item()
-			defender.visible_message(span_danger("[attacker] strikes [defender]'s jaw with their hand!"), \
+			defender.visible_message(span_danger("[attacker] strikes [defender]'s jaw with [attacker.p_their()] hand!"), \
 							span_userdanger("Your jaw is struck by [attacker], you feel disoriented!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, span_danger("You strike [defender]'s jaw, leaving [defender.p_them()] disoriented!"))
 			playsound(get_turf(defender), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
@@ -254,17 +279,7 @@
 
 /// Refreshes the valid areas from the cook's mapping config, adding areas in config to the list of possible areas.
 /datum/martial_art/cqc/under_siege/proc/refresh_valid_areas()
-	var/list/job_changes = SSmapping.config.job_changes
-
-	if(!length(job_changes))
-		return
-
-	var/list/cook_changes = job_changes[JOB_COOK]
-
-	if(!length(cook_changes))
-		return
-
-	var/list/additional_cqc_areas = cook_changes["additional_cqc_areas"]
+	var/list/additional_cqc_areas = CHECK_MAP_JOB_CHANGE(JOB_COOK, "additional_cqc_areas")
 
 	if(!additional_cqc_areas)
 		return

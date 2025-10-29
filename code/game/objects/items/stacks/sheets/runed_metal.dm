@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_solid_ground = TRUE, \
-		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
+		desc = span_cultbold("Daemon Forge: Can make Nar'Sian Hardened Armor, Flagellant's Robes, \
 			and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 		category = CAT_CULT, \
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	icon_state = "sheet-runed"
 	inhand_icon_state = "sheet-runed"
 	icon = 'icons/obj/stack_objects.dmi'
-	mats_per_unit = list(/datum/material/runedmetal = MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)

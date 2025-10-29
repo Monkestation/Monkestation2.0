@@ -4,8 +4,8 @@
 	faction = list(FACTION_JUNGLE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	minbodytemp = 0
-	maxbodytemp = 450
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 450
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	status_flags = NONE
@@ -14,4 +14,4 @@
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_HUGE

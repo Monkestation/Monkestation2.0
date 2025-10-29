@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/mayonnaise,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
 "ag" = (
 /turf/open/floor/carpet/red,
 /area/virtual_domain/powered)
@@ -15,15 +22,6 @@
 /obj/machinery/grill,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
-"ax" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 7;
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
 "aE" = (
 /turf/open/floor/pod/light,
 /area/virtual_domain/powered)
@@ -35,6 +33,9 @@
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/plating,
+/area/virtual_domain/powered)
+"bd" = (
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "bf" = (
 /mob/living/basic/crab{
@@ -119,6 +120,15 @@
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"do" = (
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
 "dx" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -149,19 +159,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/pod/light,
 /area/virtual_domain/powered)
-"fN" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/pill/happy,
-/obj/item/toy/figure/bartender{
-	pixel_x = -8;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 8;
-	pixel_x = 5
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
 "gh" = (
 /obj/structure/flora/bush/stalky/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -170,13 +167,22 @@
 "gl" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"gx" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/happy,
+/obj/item/toy/figure/bartender{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
 "hk" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/pod/light,
-/area/virtual_domain/powered)
-"hy" = (
-/obj/machinery/light/directional/south,
-/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "hE" = (
 /obj/structure/sign/departments/restroom/directional/east,
@@ -187,13 +193,6 @@
 	name = "Surfer Shack 1"
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"is" = (
-/obj/effect/turf_decal/sand,
-/obj/item/coin/gold,
-/obj/structure/railing,
-/obj/machinery/media/jukebox,
-/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "iz" = (
 /turf/closed/indestructible/binary,
@@ -211,11 +210,15 @@
 /area/virtual_domain/powered)
 "jg" = (
 /obj/machinery/vending/hydronutrients,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "jl" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"js" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "jy" = (
 /obj/effect/turf_decal/sand{
@@ -268,6 +271,12 @@
 "lS" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
+"lU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "ml" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -276,20 +285,28 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
+"nO" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/virtual_domain/powered)
 "nP" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"of" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"oy" = (
+/obj/effect/mob_spawn/ghost_role/human/bartender{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
 "oP" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"pi" = (
-/obj/machinery/vending/cigarette/beach,
-/obj/effect/turf_decal/sand,
-/turf/open/floor/iron,
 /area/virtual_domain/powered)
 "pr" = (
 /turf/template_noop,
@@ -306,13 +323,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"qd" = (
-/obj/item/reagent_containers/condiment/milk,
-/obj/item/reagent_containers/condiment/mayonnaise,
-/obj/item/reagent_containers/condiment/flour,
-/obj/item/reagent_containers/condiment/flour,
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
 "qR" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/curtain,
@@ -324,15 +334,6 @@
 	name = "Chicken Joe"
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"ra" = (
-/obj/item/food/meat/rawbacon,
-/obj/item/food/meat/rawbacon,
-/obj/item/food/meat/rawcutlet,
-/obj/item/food/meat/rawcutlet,
-/obj/item/food/meat/slab/rawcrab,
-/obj/item/food/meat/slab/rawcrab,
-/turf/open/floor/wood,
 /area/virtual_domain/powered)
 "rc" = (
 /obj/machinery/light/directional/east,
@@ -349,10 +350,6 @@
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"rs" = (
-/obj/machinery/light/directional/east,
-/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "rT" = (
 /obj/item/toy/seashell,
@@ -402,7 +399,7 @@
 /obj/item/shovel/spade,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/cultivator,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "uU" = (
 /obj/effect/turf_decal/sand,
@@ -481,6 +478,9 @@
 "xw" = (
 /turf/open/floor/pod/dark,
 /area/virtual_domain/powered)
+"xz" = (
+/turf/open/misc/beach/sand/coastline_b,
+/area/virtual_domain/powered)
 "xJ" = (
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
@@ -503,6 +503,11 @@
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xT" = (
+/obj/machinery/vending/cigarette/beach,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
 /area/virtual_domain/powered)
 "xW" = (
 /turf/open/space/basic,
@@ -546,15 +551,6 @@
 /obj/machinery/food_cart,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
-"yx" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/turf/open/floor/wood,
-/area/virtual_domain/powered)
 "yB" = (
 /obj/item/instrument/guitar,
 /turf/open/floor/carpet/blue,
@@ -567,12 +563,26 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/carpet/red,
 /area/virtual_domain/powered)
+"zc" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/sand/coastline_b,
+/area/virtual_domain/powered)
 "zw" = (
 /obj/structure/punching_bag,
 /turf/open/floor/pod/dark,
 /area/virtual_domain/powered)
 "zI" = (
 /obj/structure/marker_beacon/indigo,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"zQ" = (
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/sand/coastline_b,
+/area/virtual_domain/powered)
+"zT" = (
+/obj/effect/turf_decal/stripes/line,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "zU" = (
@@ -583,6 +593,10 @@
 /obj/structure/chair,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
+"Aj" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "Al" = (
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/virtual_domain)
@@ -605,15 +619,6 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"AS" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/misc/beach/sand/coastline_b,
-/area/virtual_domain/powered)
-"AZ" = (
-/turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
 "Br" = (
 /obj/structure/table/wood/poker,
@@ -655,8 +660,8 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Cv" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/iron/grimy,
+/obj/machinery/growing/tray,
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "CA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -667,15 +672,6 @@
 /obj/machinery/vending/dinnerware,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"CW" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/obj/structure/railing,
-/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "Db" = (
 /obj/machinery/barsign/all_access,
@@ -760,12 +756,27 @@
 /obj/item/storage/medkit/brute,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
-"GQ" = (
-/turf/open/floor/iron/grimy,
+"Hl" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/structure/railing,
+/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "Hs" = (
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/white,
+/area/virtual_domain/powered)
+"Hu" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/turf/open/floor/wood,
 /area/virtual_domain/powered)
 "HF" = (
 /obj/machinery/deepfryer,
@@ -795,9 +806,9 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "IM" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "IP" = (
 /obj/machinery/vending/snack,
@@ -870,12 +881,18 @@
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/virtual_domain/powered)
 "NX" = (
 /obj/effect/landmark/bitrunning/loot_signal,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
+"Oq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "OE" = (
 /obj/effect/mob_spawn/ghost_role/human/beach{
 	dir = 4
@@ -885,11 +902,6 @@
 "OK" = (
 /obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
-"OO" = (
-/obj/effect/turf_decal/sand,
-/obj/structure/railing,
-/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "OR" = (
 /obj/machinery/light/directional/south,
@@ -918,6 +930,13 @@
 "Qb" = (
 /obj/machinery/griddle,
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Qm" = (
+/obj/effect/turf_decal/sand,
+/obj/item/coin/gold,
+/obj/structure/railing,
+/obj/machinery/jukebox,
+/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "Qu" = (
 /obj/structure/curtain,
@@ -1018,14 +1037,17 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
-"Ww" = (
-/turf/open/water/beach,
-/area/virtual_domain/powered)
-"WC" = (
-/obj/effect/mob_spawn/ghost_role/human/bartender{
-	dir = 4
+"Wr" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ww" = (
+/turf/open/water/beach,
 /area/virtual_domain/powered)
 "WL" = (
 /obj/machinery/light/directional/north,
@@ -1071,6 +1093,11 @@
 "Yq" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
+/area/virtual_domain/powered)
+"Yz" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/railing,
+/turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "YI" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1430,8 +1457,8 @@ gl
 gl
 gl
 gl
-gl
-gl
+of
+Oq
 ml
 ml
 ml
@@ -1473,8 +1500,8 @@ Al
 Al
 Al
 Al
-gl
-gl
+zT
+Aj
 ml
 ml
 ml
@@ -1516,8 +1543,8 @@ Fn
 Fn
 Fn
 Al
-gl
-gl
+Al
+Aj
 ml
 ml
 ml
@@ -1553,14 +1580,14 @@ bf
 Bw
 Fn
 Ev
-WC
+oy
 iR
 kG
 di
 Fn
 DL
 Al
-gl
+Aj
 ml
 ml
 ml
@@ -1603,7 +1630,7 @@ TG
 AP
 Fn
 Al
-gl
+lU
 ml
 ml
 ml
@@ -1683,9 +1710,9 @@ qc
 Fn
 Fn
 SD
-ax
-yx
-fN
+Hu
+Wr
+gx
 Fn
 Fn
 Al
@@ -1729,7 +1756,7 @@ dx
 kn
 kn
 kn
-CW
+Hl
 Fn
 Al
 gl
@@ -1755,7 +1782,7 @@ BJ
 kT
 Fn
 as
-pi
+xT
 Ir
 IP
 YN
@@ -1772,7 +1799,7 @@ uU
 lS
 lS
 lS
-OO
+Yz
 Fn
 Al
 gl
@@ -1815,7 +1842,7 @@ uU
 lS
 NX
 lS
-is
+Qm
 Fn
 Al
 gl
@@ -1858,7 +1885,7 @@ uU
 lS
 lS
 lS
-OO
+Yz
 Fn
 Al
 gl
@@ -1901,7 +1928,7 @@ uU
 uU
 uU
 uU
-OO
+Yz
 Fn
 Fn
 gl
@@ -1939,13 +1966,13 @@ TJ
 wb
 wD
 wD
-AS
-AS
-AS
-AS
-AS
-AS
-hy
+zc
+zc
+zc
+zc
+zc
+zc
+js
 Fn
 gl
 gl
@@ -1982,13 +2009,13 @@ yl
 ag
 wD
 wD
-AZ
+xz
 KZ
 Ww
 Ww
 Ww
 cG
-AZ
+xz
 Fn
 Al
 Al
@@ -2017,7 +2044,7 @@ TG
 TG
 TG
 TG
-ra
+do
 BM
 wD
 wD
@@ -2025,13 +2052,13 @@ Au
 wD
 rT
 wD
-AZ
+xz
 Ww
 Ww
 Ww
 Ww
 Ww
-AZ
+xz
 Fn
 Al
 iz
@@ -2047,7 +2074,7 @@ iz
 (23,1,1) = {"
 iz
 Al
-xb
+nO
 Fn
 Cb
 wD
@@ -2056,7 +2083,7 @@ wD
 BM
 HF
 TG
-qd
+ac
 BM
 aw
 TG
@@ -2068,13 +2095,13 @@ YJ
 YJ
 wD
 wD
-AZ
+xz
 Ww
 Ww
 Ww
 Ww
 Ww
-AZ
+xz
 Fn
 Al
 iz
@@ -2090,7 +2117,7 @@ xW
 (24,1,1) = {"
 iz
 Al
-xb
+nO
 Fn
 wD
 Gz
@@ -2111,13 +2138,13 @@ bQ
 wD
 wD
 wD
-AZ
+xz
 Ww
 Ww
 KZ
 KZ
 Ww
-hy
+js
 Fn
 Al
 iz
@@ -2133,7 +2160,7 @@ xW
 (25,1,1) = {"
 iz
 Al
-xb
+nO
 Fn
 OK
 Gz
@@ -2154,13 +2181,13 @@ XP
 yB
 wD
 wD
-AZ
+xz
 KZ
 Ww
 KZ
 gh
 Ww
-AZ
+xz
 Fn
 Al
 iz
@@ -2176,7 +2203,7 @@ xW
 (26,1,1) = {"
 iz
 Al
-xb
+nO
 Fn
 Nr
 wD
@@ -2197,13 +2224,13 @@ XL
 wD
 wD
 wD
-AZ
+xz
 Ww
 Ww
 Ww
 Ww
 Ww
-AZ
+xz
 Fn
 Al
 iz
@@ -2240,13 +2267,13 @@ xq
 jy
 wD
 wD
-AZ
+xz
 Ww
 cG
 Ww
 Ww
 KZ
-AZ
+xz
 Fn
 Al
 iz
@@ -2283,13 +2310,13 @@ CA
 Uh
 wD
 qW
-AZ
+xz
 Ww
 Ww
 Ww
 Ww
 Ww
-hy
+js
 Fn
 Al
 iz
@@ -2325,14 +2352,14 @@ wD
 wD
 wD
 Jt
-AZ
-AZ
-rs
-AZ
-AZ
-AZ
-AZ
-AZ
+xz
+xz
+zQ
+xz
+xz
+xz
+xz
+xz
 Fn
 Al
 iz
@@ -2628,7 +2655,7 @@ YI
 Fn
 Fn
 Fn
-GQ
+bd
 aE
 aE
 aE

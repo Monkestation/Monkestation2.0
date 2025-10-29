@@ -1,7 +1,7 @@
 /obj/structure/knock_tear
 	name = "???"
 	desc = "It stares back. Theres no reason to remain. Run."
-	max_integrity = INFINITE
+	max_integrity = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
@@ -38,7 +38,14 @@
 
 /// Ask ghosts if they want to make some noise
 /obj/structure/knock_tear/proc/poll_ghosts()
-	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
+	var/list/candidates = SSpolling.poll_ghost_candidates(
+		"Would you like to be a random eldritch monster attacking the crew?",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
+		alert_pic = src,
+		role_name_text = "eldritch monster"
+	)
 	while(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick_n_take(candidates)
 		ghost_to_monster(candidate, should_ask = FALSE)
@@ -74,7 +81,7 @@
 			return FALSE
 	var/monster_type = pick(monster_types)
 	var/mob/living/monster = new monster_type(loc)
-	monster.key = user.key
+	monster.PossessByPlayer(user.key)
 	monster.set_name()
 	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)

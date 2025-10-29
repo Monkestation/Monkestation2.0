@@ -24,18 +24,21 @@
 	if(!buyers_preferences.has_coins(item_cost))
 		to_chat(buyer, span_warning("You don't have the funds to buy the [name]"))
 		return FALSE
-	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
 
-	add_event_to_buffer(buyer,  data = "bought a [name] - [item_cost].", log_key = "META")
+
 	if(!one_time_buy)
-		finalize_purchase(buyer)
+		if(finalize_purchase(buyer))
+			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
 		return
+	else
+		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, "[buyer] bought a [name] for [item_cost]", donator_multiplier = FALSE)
 	attempt_spawn(buyer)
 
 
 /datum/store_item/proc/finalize_purchase(client/buyer)
 	SHOULD_CALL_PARENT(TRUE)
-	var/fail_message ="<span class='warning'>Failed to add purchase to database. You have not been charged.</span>"
+
+	var/fail_message = span_warning("Failed to add purchase to database. You have not been charged.")
 	if(!SSdbcore.IsConnected())
 		to_chat(buyer, fail_message)
 		return FALSE
@@ -68,7 +71,7 @@
 	var/mob/buyer_mob = get_mob_by_ckey(buyer.ckey)
 
 	if(!isliving(buyer_mob))
-		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", TRUE, FALSE)
+		buyer.prefs.adjust_metacoins(buyer.ckey, item_cost, "Spawned as Non-Living, Unable to utilize items", donator_multiplier = FALSE)
 		return
 
 	var/obj/item/created_item = new item_path

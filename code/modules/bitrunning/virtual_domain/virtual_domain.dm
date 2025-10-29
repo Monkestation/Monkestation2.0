@@ -7,7 +7,10 @@
 	map_dir = "_maps/virtual_domains"
 	map_name = "None"
 	key = "Virtual Domain"
+	place_on_top = TRUE
 
+	/// Whether to tell observers this map is being used
+	var/announce_to_ghosts = FALSE
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
 	/// The description of the map
@@ -20,6 +23,10 @@
 	var/filename = "virtual_domain.dmm"
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
+	/// If this domain blocks the use of items from disks, for whatever reason
+	var/forbids_disk_items = FALSE
+	/// If this domain blocks the use of spells from disks, for whatever reason
+	var/forbids_disk_spells = FALSE
 	/// Information given to connected clients via ability
 	var/help_text
 	// Name to show in the UI
@@ -32,3 +39,22 @@
 	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
+
+	/**
+	 * Modularity
+	 */
+
+	/// Whether to display this as a modular map
+	var/is_modular = FALSE
+	/// Byond will look for modular mob segment landmarks then choose from here at random. You can make them unique also.
+	var/list/datum/modular_mob_segment/mob_modules = list()
+	/// Forces all mob modules to only load once
+	var/modular_unique_mobs = FALSE
+
+/// Sends a point to any loot signals on the map
+/datum/lazy_template/virtual_domain/proc/add_points(points_to_add)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, points_to_add)
+
+/// Overridable proc to be called after the map is loaded.
+/datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
+	return

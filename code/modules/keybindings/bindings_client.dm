@@ -47,9 +47,10 @@
 
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
-	if(!movement_locked)
-		var/movement = movement_keys[_key]
-		if(!(next_move_dir_sub & movement))
+	var/movement = movement_keys[_key]
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
@@ -76,10 +77,9 @@
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
-	holder?.key_down(_key, src)
-	mob.focus?.key_down(_key, src)
+	holder?.key_down(_key, src, full_key)
+	mob.focus?.key_down(_key, src, full_key)
 	mob.update_mouse_pointer()
-
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -95,15 +95,19 @@
 
 	keys_held -= _key
 
-	if(!movement_locked)
-		var/movement = movement_keys[_key]
-		if(!(next_move_dir_add & movement))
+	var/movement = movement_keys[_key]
+	if(movement)
+		calculate_move_dir()
+		if(!movement_locked && !(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
 	for (var/kb_name in prefs.key_bindings_by_key[_key])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
+		if(isnull(kb))
+			stack_trace("seemingly non-existent keybinding [kb_name] bound to [_key]???")
+			continue
 		if(kb.can_use(src) && kb.up(src))
 			break
 	holder?.key_up(_key, src)

@@ -208,7 +208,7 @@
 		switch(pick(possible_punishments))
 			if(PUNISHMENT_OMEN)
 				to_chat(interfering, span_warning("You get a bad feeling... for interfering with [chaplain]'s sparring match..."))
-				interfering.AddComponent(/datum/component/omen)
+				interfering.AddComponent(/datum/component/omen, incidents_left = 10)
 			if(PUNISHMENT_LIGHTNING)
 				to_chat(interfering, span_warning("[GLOB.deity] has punished you for interfering with [chaplain]'s sparring match!"))
 				lightningbolt(interfering)
@@ -301,4 +301,4 @@
 				return
 			to_chat(loser, span_userdanger("You've lost ownership over your soul to [winner]!"))
 			var/obj/item/soulstone/anybody/chaplain/sparring/shard = new(shard_turf)
-			shard.capture_soul(loser, winner, forced = TRUE)
+			INVOKE_ASYNC(shard, TYPE_PROC_REF(/obj/item/soulstone, capture_soul), loser, winner, forced = TRUE)

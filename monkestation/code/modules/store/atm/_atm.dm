@@ -1,3 +1,6 @@
+/// List of bank accounts playing the lottery with amount of tickets sold.
+GLOBAL_LIST_EMPTY_TYPED(lottery_ticket_owners, /datum/bank_account)
+
 /obj/machinery/atm
 	name = "ATM"
 	desc = "You can withdraw or deposit Monkecoins in here, also acts as a terminal for flash sale items."
@@ -7,8 +10,6 @@
 
 	max_integrity = 10000
 
-	pixel_y = 30
-
 	icon = 'monkestation/icons/obj/machines/atm.dmi'
 	icon_state = "atm"
 
@@ -16,16 +17,17 @@
 	var/static/datum/store_item/flash_sale_datum
 	///the current size of the lottery prize pool
 	var/static/lottery_pool = 500
-	///list of bank accounts playing the lottery with amount of tickets sold
-	var/static/list/ticket_owners = list()
 	///static variable to check if a lottery is running
 	var/static/lottery_running = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
+
 /obj/machinery/atm/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -42,19 +44,21 @@
 
 /obj/machinery/atm/ui_data(mob/user)
 	var/list/data = list()
-
 	if(!user.client)
 		return
+
 	var/cash_balance = 0
-	var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
-	if(user_id && istype(user_id, /obj/item/card/id))
-		var/obj/item/card/id/id_card = user_id.GetID()
-		cash_balance = id_card.registered_account.account_balance
+	var/obj/item/card/id/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
+	if(user_id)
+		user_id = user_id.GetID()
+		if(istype(user_id))
+			cash_balance = user_id.registered_account.account_balance
 	else
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
 			var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-			cash_balance = user_account.account_balance
+			if(user_account)
+				cash_balance = user_account.account_balance
 
 	data["meta_balance"] = user.client.prefs.metacoins
 	data["cash_balance"] = cash_balance
@@ -92,22 +96,25 @@
 		if("buy_flash")
 			buy_flash_sale()
 			return TRUE
+		if("buy_lootbox")
+			buy_lootbox()
+			return TRUE
 	return TRUE
 
-/obj/machinery/atm/proc/pull_lottery_winner()
-	if(length(ticket_owners))
-		var/datum/bank_account/winning_account = pick_weight(ticket_owners)
+/obj/machinery/atm/proc/poll_lottery_winner()
+	if(length(GLOB.lottery_ticket_owners))
+		var/datum/bank_account/winning_account = pick_weight(GLOB.lottery_ticket_owners)
 		winning_account.account_balance += lottery_pool
 		priority_announce("[winning_account.account_holder] has just won the station lottery winning a total of [lottery_pool] credits! The next lottery will begin in 20 minutes!", "Nanotrasen Gambling Society")
 		lottery_pool = 0
 	else
 		priority_announce("No one has won the lottery with a prize pool of [lottery_pool] credits, the next lottery will happen in 20 minutes.", "Nanotrasen Gambling Society")
 	lottery_pool += 500
-	ticket_owners = list()
+	GLOB.lottery_ticket_owners.Cut()
 	lottery_running = FALSE
 	if(!lottery_running)
 		lottery_running = TRUE
-		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)
+		addtimer(CALLBACK(src, PROC_REF(poll_lottery_winner)), 20 MINUTES)
 
 /obj/machinery/atm/proc/buy_lottery()
 	if(!iscarbon(usr))
@@ -128,7 +135,7 @@
 			return
 
 		id_card.registered_account.account_balance -= tickets_bought * 100
-		ticket_owners[id_card.registered_account] += tickets_bought
+		GLOB.lottery_ticket_owners[id_card.registered_account] += tickets_bought
 		lottery_pool += tickets_bought * 100
 
 /obj/machinery/atm/proc/buy_flash_sale()
@@ -142,57 +149,94 @@
 
 /obj/machinery/atm/proc/attempt_withdraw()
 	var/mob/living/living_user = usr
-	var/current_balance = living_user.client.prefs.metacoins
+	if(!living_user)
+		return
 
+	var/current_balance = living_user.client.prefs.metacoins
 	var/withdraw_amount = tgui_input_number(living_user, "How many Monkecoins would you like to withdraw?", "ATM", 0 , current_balance, 0)
 
 	if(!withdraw_amount)
 		return
 	withdraw_amount = clamp(withdraw_amount, 0, current_balance)
-	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount, donator_multipler = FALSE))
+	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount, "Withdrew from an ATM", donator_multiplier = FALSE))
 		return
 
 	var/obj/item/stack/monkecoin/coin_stack = new(living_user.loc)
 	coin_stack.amount = withdraw_amount
+	coin_stack.update_desc()
 
 	living_user.put_in_hands(coin_stack)
+
+/obj/machinery/atm/proc/buy_lootbox()
+	var/mob/living/living_user = usr
+	if(!living_user)
+		return
+
+	var/current_balance = living_user.client.prefs.metacoins
+	if(tgui_alert(living_user, "Are you sure you would like to purchase a lootbox for [LOOTBOX_COST] monkecoins?", "Balance: [current_balance]", list("Yes", "No")) != "Yes")
+		return
+
+	if(!living_user.client.prefs.has_coins(LOOTBOX_COST))
+		to_chat(living_user, span_warning("Not enough monkecoins."))
+		return
+
+	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -LOOTBOX_COST, "Bought a lootbox"))
+		return
+
+	var/obj/item/lootbox/box = new(get_turf(living_user))
+	living_user.put_in_hands(box)
 
 
 /obj/machinery/atm/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
-	if(do_after(user, 1 SECONDS, src))
-		if(istype(attacking_item, /obj/item/stack/monkecoin))
-			var/obj/item/stack/monkecoin/attacked_coins = attacking_item
-			if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount, donator_multipler = FALSE))
-				say("Error acceptings coins, please try again later.")
-			qdel(attacked_coins)
-			say("Coins deposited to your account, have a nice day.")
+	if(QDELETED(user) || QDELETED(attacking_item) /* || DOING_INTERACTION(user, DOAFTER_SOURCE_ATM) */)
+		return
+/*
+	if(!do_after(user, 1 SECONDS, src, interaction_key = DOAFTER_SOURCE_ATM))
+		return
+	if(QDELETED(user) || QDELETED(attacking_item) || DOING_INTERACTION(user, DOAFTER_SOURCE_ATM))
+		return
+*/
+	if(istype(attacking_item, /obj/item/stack/monkecoin))
+		var/obj/item/stack/monkecoin/attacked_coins = attacking_item
+		var/coin_amount = attacked_coins.amount
+		if(QDELETED(attacked_coins) || !user.temporarilyRemoveItemFromInventory(attacked_coins, force = TRUE))
+			return
+		if(attacked_coins.amount != coin_amount)
+			stack_trace("Monkecoin stack amount somehow changed while removing from inventory (from [coin_amount] to [attacked_coins.amount])")
+		qdel(attacked_coins)
+		var/ckey = user.client?.ckey
+		if(!user.client?.prefs?.adjust_metacoins(ckey, coin_amount, "Deposited coins to an ATM", donator_multiplier = FALSE))
+			say("Error accepting coins, please try again later.")
+			user.put_in_hands(new /obj/item/stack/monkecoin(drop_location(), coin_amount, FALSE), merge_stacks = FALSE)
+			return
+		say("Coins deposited to your account, have a nice day.")
 
-		if(attacking_item in subtypesof(/obj/item/stack/spacecash))
-			var/obj/item/stack/spacecash/attacked_cash = attacking_item
-			var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
-			if(user_id && istype(user_id, /obj/item/card/id))
-				var/obj/item/card/id/id_card = user_id.GetID()
-				id_card.registered_account.account_balance += attacked_cash.get_item_credit_value()
-			else
-				if(ishuman(user))
-					var/mob/living/carbon/human/human_user = user
-					var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-					user_account.account_balance += attacked_cash.get_item_credit_value()
-			qdel(attacked_cash)
+	else if(istype(attacking_item, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/attacked_cash = attacking_item
+		var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
+		if(user_id && istype(user_id, /obj/item/card/id))
+			var/obj/item/card/id/id_card = user_id.GetID()
+			id_card.registered_account.account_balance += attacked_cash.get_item_credit_value()
+		else
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
+				user_account.account_balance += attacked_cash.get_item_credit_value()
+		qdel(attacked_cash)
 
-		else if(istype(attacking_item, /obj/item/holochip))
-			var/obj/item/holochip/attacked_chip = attacking_item
-			var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
-			if(user_id && istype(user_id, /obj/item/card/id))
-				var/obj/item/card/id/id_card = user_id.GetID()
-				id_card.registered_account.account_balance += attacked_chip.credits
-			else
-				if(ishuman(user))
-					var/mob/living/carbon/human/human_user = user
-					var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-					user_account.account_balance += attacked_chip.credits
-			qdel(attacked_chip)
+	else if(istype(attacking_item, /obj/item/holochip))
+		var/obj/item/holochip/attacked_chip = attacking_item
+		var/obj/item/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
+		if(user_id && istype(user_id, /obj/item/card/id))
+			var/obj/item/card/id/id_card = user_id.GetID()
+			id_card.registered_account.account_balance += attacked_chip.credits
+		else
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
+				user_account.account_balance += attacked_chip.credits
+		qdel(attacked_chip)
 
 /obj/machinery/atm/proc/withdraw_cash()
 	var/mob/living/living_mob = usr
@@ -222,8 +266,8 @@
 /obj/item/stack/monkecoin
 	name = "monkecoin"
 	singular_name = "monkecoin"
-	icon = 'monkestation/icons/obj/economy.dmi'
-	icon_state = "coins"
+	icon = 'monkestation/icons/obj/monkecoin.dmi'
+	icon_state = "monkecoin"
 	amount = 1
 	max_amount = INFINITY
 	throwforce = 0
@@ -231,19 +275,20 @@
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	merge_type = /obj/item/stack/monkecoin
 	var/value = 100
 
-/obj/item/stack/monkecoin/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+/obj/item/stack/monkecoin/Initialize(mapload, new_amount, merge = FALSE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	update_desc()
 
 /obj/item/stack/monkecoin/update_desc()
 	. = ..()
 	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total.\n"
-	desc +=	"Their are [amount] monkecoins in this stack."
+	desc = "Monkecoin, it's the backbone of the economy. "
+	desc += "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total."
+	update_icon_state()
 
 /obj/item/stack/monkecoin/get_item_credit_value()
 	return (amount*value)
@@ -258,12 +303,23 @@
 
 /obj/item/stack/monkecoin/update_icon_state()
 	. = ..()
+	var/coinpress = copytext("[amount]",1,2)
 	switch(amount)
-		if(1)
-			icon_state = initial(icon_state)
-		if(2 to 9)
-			icon_state = "[initial(icon_state)]_2"
-		if(10 to 24)
-			icon_state = "[initial(icon_state)]_3"
-		if(25 to INFINITY)
-			icon_state = "[initial(icon_state)]_4"
+		if(1 to 9)
+			icon_state = "[initial(icon_state)][coinpress]"
+		if(10 to 99)
+			icon_state = "[initial(icon_state)][coinpress]0"
+		if(100 to 999)
+			icon_state = "[initial(icon_state)][coinpress]00"
+		if(1000 to 8999)
+			icon_state = "[initial(icon_state)][coinpress]000"
+		if(9000 to INFINITY)
+			icon_state = "[initial(icon_state)]9000"
+
+/obj/item/stack/monkecoin/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] begins to gouge [user.p_their()] eyes with the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.emote("scream")
+	if(do_after(user, 5 SECONDS, src))
+		return BRUTELOSS
+	else
+		user.visible_message(span_suicide("[user] puts the [src] down away from [user.p_their()] eyes."))

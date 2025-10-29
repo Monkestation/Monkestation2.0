@@ -3,7 +3,7 @@
 /// Returns a bitfield gathered from all registered procs
 /// Arguments given here are packaged in a list and given to _SendSignal
 
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target._listen_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target?._listen_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
@@ -15,7 +15,7 @@
 #define AddElement(arguments...) _AddElement(list(##arguments))
 /// A wrapper for _RemoveElement that allows us to pretend we're using normal named arguments
 #define RemoveElement(arguments...) _RemoveElement(list(##arguments))
-
+#define HasElement(source, type) _HasElement(source, type)
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
 

@@ -1,51 +1,20 @@
 /datum/species/human
 	name = "\improper Human"
 	id = SPECIES_HUMAN
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-	)
-	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
-	)
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = TRUE
+	inherent_traits = list(
+		TRAIT_USES_SKINTONES,
+	)
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	disliked_food = GROSS | RAW | CLOTH | BUGS | GORE
-	liked_food = JUNKFOOD | FRIED
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	payday_modifier = 1
 
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.hairstyle = "Business Hair"
-	human.hair_color = "#bb9966" // brown
-	human.update_body_parts()
+	human.set_haircolor("#bb9966", update = FALSE) // brown
+	human.set_hairstyle("Business Hair", update = TRUE)
 
 /datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.skin_tone = random_skin_tone()
-
-/datum/species/human/get_scream_sound(mob/living/carbon/human/human)
-	if(human.gender == MALE)
-		if(prob(1))
-			return 'sound/voice/human/wilhelm_scream.ogg'
-		return pick(
-			'sound/voice/human/malescream_1.ogg',
-			'sound/voice/human/malescream_2.ogg',
-			'sound/voice/human/malescream_3.ogg',
-			'sound/voice/human/malescream_4.ogg',
-			'sound/voice/human/malescream_5.ogg',
-			'sound/voice/human/malescream_6.ogg',
-		)
-
-	return pick(
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/human/femalescream_2.ogg',
-		'sound/voice/human/femalescream_3.ogg',
-		'sound/voice/human/femalescream_4.ogg',
-		'sound/voice/human/femalescream_5.ogg',
-	)
 
 /datum/species/human/get_species_description()
 	return "Humans are the dominant species in the known galaxy. \

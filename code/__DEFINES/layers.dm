@@ -7,6 +7,9 @@
 #define FIELD_OF_VISION_BLOCKER_PLANE -90
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
+#define PLANE_NAME_TAGS_BLOCKER -89
+#define NAME_TAG_RENDER_TARGET "*NAME_TAG_RENDER_TARGET"
+
 #define CLICKCATCHER_PLANE -80
 
 #define PLANE_SPACE -25
@@ -16,23 +19,29 @@
 //Not ever visible, place beneath everything
 #define WEATHER_OVERLAY_PLANE -70
 #define WEATHER_RENDER_TARGET "*WEATHER_OVERLAY_PLANE"
+
+#define WEATHER_OVERLAY_PLANE_ECLIPSE -71
+#define WEATHER_ECLIPSE_RENDER_TARGET "*WEATHER_OVERLAY_PLANE_ECLIPSE"
+
 //monkestation end
 
-#define GRAVITY_PULSE_PLANE -14
+#define GRAVITY_PULSE_PLANE -16
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -13 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -15 //Transparent plane that shows openspace underneath the floor
 
-#define TRANSPARENT_FLOOR_PLANE -12
+#define TRANSPARENT_FLOOR_PLANE -14
 
-#define FLOOR_PLANE -11
+#define FLOOR_PLANE -13
 
-#define WALL_PLANE -10
-#define GAME_PLANE -9
-#define GAME_PLANE_FOV_HIDDEN -8
-#define GAME_PLANE_UPPER -7
-#define WALL_PLANE_UPPER -6
-#define GAME_PLANE_UPPER_FOV_HIDDEN -5
+#define WALL_PLANE -12
+#define GAME_PLANE -11
+#define GAME_PLANE_FOV_HIDDEN -10
+#define GAME_PLANE_UPPER -9
+#define WALL_PLANE_UPPER -8
+#define GAME_PLANE_UPPER_FOV_HIDDEN -7
+#define WEATHER_EFFECT_PLANE_ECLIPSE -6
+#define WEATHER_EFFECT_PLANE_MISC -5
 #define WEATHER_EFFECT_PLANE -4 // monkestation edit
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
@@ -43,10 +52,12 @@
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
+#define WEATHER_PLANE 1
 #define AREA_PLANE 2
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
 #define POINT_PLANE 5
+#define PLANE_NAME_TAGS 6
 
 //---------- LIGHTING -------------
 //monkestation begin
@@ -57,7 +68,6 @@
 
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
-#define LIGHTING_PLANE_ADDITIVE 11
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 12
@@ -82,6 +92,8 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+
+#define WEATHER_GLOW_PLANE 18
 
 ///---------------- MISC -----------------------
 
@@ -306,6 +318,15 @@
 #define PLANE_CRITICAL_CUT_RENDER (1<<2)
 
 #define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
+
+//---------- Plane Master offsetting_flags -------------
+// Describes how different plane masters behave regarding being offset
+/// This plane master will not be offset itself, existing only once with an offset of 0
+/// Mostly used for planes that really don't need to be duplicated, like the hud planes
+#define BLOCKS_PLANE_OFFSETTING (1<<0)
+/// This plane master will have its relays offset to match the highest rendering plane that matches the target
+/// Required for making things like the blind fullscreen not render over runechat
+#define OFFSET_RELAYS_MATCH_HIGHEST (1<<1)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1

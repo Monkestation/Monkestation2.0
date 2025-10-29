@@ -14,8 +14,8 @@
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
 	habitable_atmos = list("min_oxy" = 2, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 450
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 450
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
@@ -86,7 +86,7 @@
 /mob/living/basic/seedling/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
 
-	if(istype(target, /obj/machinery/hydroponics))
+	if(target.GetComponent(/datum/component/plant_growing))
 		treat_hydro_tray(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -99,24 +99,35 @@
 
 
 ///seedlings can water trays, remove weeds, or remove dead plants
-/mob/living/basic/seedling/proc/treat_hydro_tray(obj/machinery/hydroponics/hydro)
-
-	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD)
-		balloon_alert(src, "dead plant removed")
-		hydro.set_seed(null)
+/mob/living/basic/seedling/proc/treat_hydro_tray(atom/movable/hydro)
+	var/datum/component/plant_growing/growing = \
+			hydro.GetComponent(/datum/component/plant_growing)
+	if(!growing)
 		return
 
-	if(hydro.weedlevel > 0)
-		balloon_alert(src, "weeds uprooted")
-		hydro.set_weedlevel(0)
-		return
+	for(var/_item, seed_item in growing.managed_seeds)
+		var/obj/item/seeds/seed = seed_item
+		if(!seed)
+			continue
+		var/datum/component/growth_information/info = \
+				seed.GetComponent(/datum/component/growth_information)
+
+		if(info.plant_state == HYDROTRAY_PLANT_DEAD)
+			balloon_alert_to_viewers("dead plant removed")
+			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, seed_item)
+			return
+
+		if(growing.weed_level > 0)
+			balloon_alert_to_viewers("weeds uprooted")
+			SEND_SIGNAL(hydro, COMSIG_PLANT_ADJUST_WEED, -10)
+			return
 
 	var/list/can_reagents = held_can?.reagents.reagent_list
 
 	if(!length(can_reagents))
 		return
 
-	if((locate(/datum/reagent/water) in can_reagents) && (hydro.waterlevel < hydro.maxwater))
+	if((locate(/datum/reagent/water) in can_reagents) && (growing.water_precent < 100))
 		INVOKE_ASYNC(held_can, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, hydro)
 		return
 
@@ -324,12 +335,17 @@
 /datum/action/cooldown/mob_cooldown/solarbeam/proc/launch_beam(mob/living/firer, turf/target_turf)
 	for(var/atom/target_atom as anything in target_turf)
 
-		if(istype(target_atom, /obj/machinery/hydroponics))
-			var/obj/machinery/hydroponics/hydro = target_atom
-			hydro.adjust_plant_health(10)
+		if(target_atom.GetComponent(/datum/component/plant_growing))
+			var/datum/component/plant_growing/growing = target_atom.GetComponent(/datum/component/plant_growing)
+			for(var/item in growing.managed_seeds)
+				var/obj/item/seeds/seed = growing.managed_seeds[item]
+				if(!seed)
+					continue
+				SEND_SIGNAL(seed, COMSIG_ADJUST_PLANT_HEALTH, 10)
+
 			new /obj/effect/temp_visual/heal(target_turf, COLOR_HEALING_CYAN)
 
-		if(!isliving(target_atom))
+		if(!isliving(target_atom) || istype(target_atom, /mob/living/basic/pet/potty))
 			continue
 
 		var/mob/living/living_target = target_atom

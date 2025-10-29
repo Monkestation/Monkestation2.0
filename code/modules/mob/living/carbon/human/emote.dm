@@ -20,12 +20,31 @@
 	key = "dap"
 	key_third_person = "daps"
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
-	message_param = "give daps to %t."
+	message_param = "gives daps to %t."
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
 	message = "raises an eyebrow."
+
+/datum/emote/living/carbon/human/glasses
+	key = "glasses"
+	key_third_person = "glasses"
+	message = "pushes up their glasses."
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
+	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
+	if(istype(eyes_slot, /obj/item/clothing/glasses/regular) || istype(eyes_slot, /obj/item/clothing/glasses/sunglasses))
+		return ..()
+	return FALSE
+
+/datum/emote/living/carbon/human/glasses/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/image/emote_animation = image('icons/mob/species/human/emote_visuals.dmi', user, "glasses")
+	flick_overlay_global(user.apply_height_offsets(emote_animation, UPPER_BODY), GLOB.clients, 1.6 SECONDS)
 
 /datum/emote/living/carbon/human/grumble
 	key = "grumble"
@@ -64,13 +83,18 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 
+/datum/emote/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
+		return
+	return ..()
+
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 
 	// MonkeStation Edit Start
 	// Alternative Scream Hook
-	if(user.alternative_screams.len)
+	if(LAZYLEN(user.alternative_screams))
 		return pick(user.alternative_screams)
 	// MonkeStation Edit End
 
@@ -148,28 +172,25 @@ monkestation edit end */
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(.)
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings && findtext(select_message_type(user,intentional), "open"))
-			wings.open_wings()
-		else
-			wings.close_wings()
+	if(!.)
+		return
+	var/obj/item/organ/external/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(isnull(wings))
+		CRASH("[type] ran on a mob that has no wings!")
+	if(wings.wings_open)
+		wings.close_wings()
+	else
+		wings.open_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
-	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.mutant_bodyparts["wings"])
-		. = "opens " + message
-	else
-		. = "closes " + message
+	var/obj/item/organ/external/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/emote_verb = wings.wings_open ? "closes" : "opens"
+	return "[emote_verb] [message]"
 
 /datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
-	if(!..())
+	if(!istype(user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional))
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
-		return TRUE
+	return ..()
 
 /datum/emote/living/carbon/human/clear_throat
 	key = "clear"
@@ -227,7 +248,14 @@ monkestation edit end */
 //Butt-Based Farts
 /datum/emote/living/carbon/human/fart/run_emote(mob/user, params, type_override, intentional)
 	if(issilicon(user))
-		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!")
+		var/list/ignored_mobs = list()
+		for(var/mob/anything in GLOB.player_list)
+			if(!anything.client)
+				continue
+			if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				continue
+			ignored_mobs |= anything
+		user.visible_message("[user] lets out a synthesized fart!", "You let out a synthesized fart!", ignored_mobs = ignored_mobs)
 		playsound(user, pick(
 			'monkestation/sound/effects/robot_farts/rbf1.ogg',
 			'monkestation/sound/effects/robot_farts/rbf2.ogg',
@@ -247,7 +275,7 @@ monkestation edit end */
 			'monkestation/sound/effects/robot_farts/rbf16.ogg',
 			'monkestation/sound/effects/robot_farts/rbf17.ogg',
 			'monkestation/sound/effects/robot_farts/rbf18.ogg',
-		), 50, TRUE)
+		), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
 		return
 	. = ..()
 	if(user.stat == CONSCIOUS)
@@ -257,3 +285,54 @@ monkestation edit end */
 		var/obj/item/organ/internal/butt/booty = user.get_organ_by_type(/obj/item/organ/internal/butt)
 		if(!booty.cooling_down)
 			booty.On_Fart(user)
+
+/// emotes for glowy goobers
+/datum/emote/living/carbon/human/glow
+	key = "glow"
+	key_third_person = "glows"
+	message = "glows brightly!"
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/glow/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.handle_glow_emote(user, 1.75, 1.2)
+
+/datum/emote/living/carbon/human/flare
+	key = "flare"
+	key_third_person = "flares"
+	message = "flares up to a dazzling intensity!"
+	emote_type = EMOTE_VISIBLE
+	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
+
+/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/flare/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.handle_glow_emote(user, 12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
+
+/datum/emote/living/carbon/human/flicker
+	key = "flicker"
+	key_third_person = "flicker"
+	message = "flickers."
+	emote_type = EMOTE_VISIBLE
+	sound = "sound/effects/sparks/sparks4.ogg"
+
+/datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
+	if(!isethereal(user))
+		return FALSE
+	return ..()
+
+/datum/emote/living/carbon/human/flicker/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
+	. = ..()
+	var/datum/species/ethereal/goober = user.dna.species
+	goober.start_flicker(user)

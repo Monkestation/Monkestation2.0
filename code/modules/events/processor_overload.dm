@@ -5,6 +5,10 @@
 	min_players = 20
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Emps the telecomm processors, scrambling radio speech. Might blow up a few."
+	max_occurrences = 2
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
+	event_group = /datum/event_group/comms
 
 /datum/round_event/processor_overload
 	announce_when = 1
@@ -26,7 +30,7 @@
 	// whether it's, say, a tesla zapping tcomms, or some selective
 	// modification of the tcomms bus
 	if(prob(80) || fake)
-		priority_announce(alert)
+		priority_announce(alert, "Anomaly Alert")
 
 
 /datum/round_event/processor_overload/start()

@@ -7,12 +7,16 @@
 	screen_loc = "CENTER"
 	transform = null
 	plane = LIGHTING_PLANE
+	layer = LIGHTING_PRIMARY_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
 	needs_offsetting = FALSE
 
-/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
+
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	if(!SSoutdoor_effects.enabled)
+		return
 	SSoutdoor_effects.sunlighting_planes |= src
 	color = SSoutdoor_effects.last_color
 
@@ -21,11 +25,8 @@
 		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
 			daylight = TRUE
 			continue
-	if(!daylight)
-		SSoutdoor_effects.transition_sunlight_color(src, 1)
-	else
-		SSoutdoor_effects.transition_sunlight_color(src)
+	SSoutdoor_effects.transition_sunlight_color(src, !daylight)
 
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Destroy()
-	. = ..()
 	SSoutdoor_effects.sunlighting_planes -= src
+	return ..()

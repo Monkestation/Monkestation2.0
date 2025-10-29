@@ -20,6 +20,9 @@
 	var/catwalk_type = "maint"
 	var/static/list/catwalk_underlays = list()
 
+/turf/open/floor/catwalk_floor/icebox
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
 	if(!catwalk_underlays[catwalk_type])

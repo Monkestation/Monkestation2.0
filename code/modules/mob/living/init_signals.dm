@@ -1,10 +1,17 @@
 /// Called on [/mob/living/Initialize(mapload)], for the mob to register to relevant signals.
 /mob/living/proc/register_init_signals()
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), PROC_REF(on_knockedout_trait_gain))
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT), PROC_REF(on_knockedout_trait_loss))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT)), PROC_REF(on_knockedout_trait))
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), PROC_REF(on_deathcoma_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(on_deathcoma_trait_loss))
+
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_FAKEDEATH),
+		SIGNAL_REMOVETRAIT(TRAIT_FAKEDEATH),
+
+		SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
+		SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
+	), PROC_REF(update_medhud_on_signal))
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_loss))
@@ -29,6 +36,9 @@
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEAF), PROC_REF(on_hearing_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEAF), PROC_REF(on_hearing_regain))
 
 	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
@@ -55,18 +65,23 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
-/mob/living/proc/on_knockedout_trait_gain(datum/source)
-	SIGNAL_HANDLER
-	if(stat < UNCONSCIOUS)
-		set_stat(UNCONSCIOUS)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_loss))
 
-/// Called when [TRAIT_KNOCKEDOUT] is removed from the mob.
-/mob/living/proc/on_knockedout_trait_loss(datum/source)
+/// Called when [TRAIT_KNOCKEDOUT] is added or removed from the mob.
+/mob/living/proc/on_knockedout_trait(datum/source)
 	SIGNAL_HANDLER
-	if(stat <= UNCONSCIOUS)
-		update_stat()
+	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		become_blind(UNCONSCIOUS_TRAIT)
+		set_pain_mod(PAIN_MOD_KOD, 0.8)
+		add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
+		update_body() // Update eyelids
 
+	else
+		cure_blind(UNCONSCIOUS_TRAIT)
+		unset_pain_mod(PAIN_MOD_KOD)
+		remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
+		update_body() // Update eyelids
 
 /// Called when [TRAIT_DEATHCOMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)
@@ -78,6 +93,11 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
 
+/// Updates medhud when recieving relevant signals.
+/mob/living/proc/update_medhud_on_signal(datum/source)
+	SIGNAL_HANDLER
+	med_hud_set_health()
+	med_hud_set_status()
 
 /// Called when [TRAIT_IMMOBILIZED] is added to the mob.
 /mob/living/proc/on_immobilized_trait_gain(datum/source)
@@ -251,3 +271,24 @@
 /mob/living/proc/undense_changed(datum/source)
 	SIGNAL_HANDLER
 	update_density()
+
+///Called when [TRAIT_DEAF] is added to the mob.
+/mob/living/proc/on_hearing_loss()
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
+	stop_sound_channel(CHANNEL_AMBIENCE)
+
+///Called when [TRAIT_DEAF] is added to the mob.
+/mob/living/proc/on_hearing_regain()
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
+
+///Called when [TRAIT_COLD_BLOODED] is added to the mob.
+/mob/living/proc/on_cold_blooded_trait_gain()
+	SIGNAL_HANDLER
+	temperature_insulation -= initial(temperature_insulation)
+
+///Called when [TRAIT_COLD_BLOODED] is added to the mob.
+/mob/living/proc/on_cold_blooded_trait_loss()
+	SIGNAL_HANDLER
+	temperature_insulation += initial(temperature_insulation)

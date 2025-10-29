@@ -9,21 +9,21 @@
 		return COMPONENT_INCOMPATIBLE
 	src.range_modifier = range_modifier
 
-/datum/component/scope/Destroy(force, silent)
+/datum/component/scope/Destroy(force)
 	if(tracker)
 		stop_zooming(tracker.owner)
 	return ..()
 
 /datum/component/scope/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+	RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_GUN_TRY_FIRE,
 		COMSIG_ATOM_EXAMINE,
 	))
@@ -35,7 +35,7 @@
 		stop_zooming(user_mob)
 		return
 	tracker.calculate_params()
-	if(!length(user_client.keys_held & user_client.movement_keys))
+	if(!user_client.intended_direction)
 		user_mob.face_atom(tracker.given_turf)
 	animate(user_client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
@@ -46,14 +46,21 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+
+	// scoping in using a TK grab causes a lot of strange issues, so don't
+	var/obj/item/gun/thisgun = parent
+	if(thisgun.tk_firing(user))
+		to_chat(user, span_warning("You cannot comprehend what it would mean to scope in with your mind!"))
+		user.balloon_alert(user, "can't scope in!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(tracker)
 		stop_zooming(user)
 	else
 		start_zooming(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
@@ -152,8 +159,16 @@
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	if(isnull(icon_x))
+		icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+		if(isnull(icon_x))
+			icon_x = view_list[1]*world.icon_size/2
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
+	if(isnull(icon_y))
+		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+		if(isnull(icon_y))
+			icon_y = view_list[2]*world.icon_size/2
 	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
 	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
 	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)

@@ -14,9 +14,9 @@
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
-/obj/structure/easel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/canvas = I
+/obj/structure/easel/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/canvas))
+		var/obj/item/canvas/canvas = attacking_item
 		user.dropItemToGround(canvas)
 		painting = canvas
 		canvas.forceMove(get_turf(src))
@@ -42,6 +42,7 @@
 	icon_state = "11x11"
 	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION
 	var/width = 11
 	var/height = 11
 	var/list/grid
@@ -109,7 +110,7 @@
 		ui = new(user, src, "Canvas", name)
 		ui.open()
 
-/obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
+/obj/item/canvas/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 	else
@@ -143,7 +144,7 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_act(action, params)
+/obj/item/canvas/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -188,7 +189,7 @@
 				return FALSE
 			//I'd have this done inside the signal, but that'd have to be asynced,
 			//while we want the UI to be updated after the color is chosen, not before.
-			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			var/chosen_color = tgui_color_picker(user, "Pick new color", painting_implement, params["old_color"])
 			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
 				return FALSE
 			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
@@ -449,7 +450,7 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
@@ -462,7 +463,7 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
@@ -489,10 +490,10 @@
 	. = ..()
 	SSpersistent_paintings.painting_frames -= src
 
-/obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
-	if(!current_canvas && istype(I, /obj/item/canvas))
-		frame_canvas(user,I)
-	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
+/obj/structure/sign/painting/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!current_canvas && istype(attacking_item, /obj/item/canvas))
+		frame_canvas(user,attacking_item)
+	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(attacking_item,/obj/item/pen))
 		if(try_rename(user))
 			SStgui.update_uis(src)
 	else
@@ -521,10 +522,12 @@
 		current_canvas = null
 		update_appearance()
 
-/obj/structure/sign/painting/AltClick(mob/user)
-	. = ..()
-	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+/obj/structure/sign/painting/click_alt(mob/living/user)
+	if(!current_canvas?.can_select_frame(user))
+		return CLICK_ACTION_BLOCKING
+
+	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
@@ -643,7 +646,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -670,7 +673,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
@@ -678,6 +681,8 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
+	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

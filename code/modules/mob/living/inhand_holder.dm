@@ -7,7 +7,6 @@
 	icon_state = ""
 	slot_flags = NONE
 	var/mob/living/held_mob
-	var/destroying = FALSE
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	if(head_icon)
@@ -25,13 +24,12 @@
 	. = ..()
 
 /obj/item/clothing/head/mob_holder/Destroy()
-	destroying = TRUE
-	if(held_mob)
+	if(!QDELETED(held_mob))
 		release(FALSE)
 	return ..()
 
 /obj/item/clothing/head/mob_holder/proc/deposit(mob/living/L)
-	if(!istype(L))
+	if(!istype(L) || QDELING(L) || QDELETED(src))
 		return FALSE
 	L.setDir(SOUTH)
 	update_visuals(L)
@@ -63,10 +61,11 @@
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
 	if(!held_mob)
-		if(del_on_release && !destroying)
+		if(del_on_release && !QDELING(src))
 			qdel(src)
 		return FALSE
 	var/mob/living/released_mob = held_mob
+	SEND_SIGNAL(released_mob, COMSIG_MOB_DROPPED, loc, src) // monkestation edit: COMSIG_MOB_DROPPED
 	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/L = loc
@@ -78,7 +77,7 @@
 	released_mob.setDir(SOUTH)
 	if(display_messages)
 		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
-	if(del_on_release && !destroying)
+	if(del_on_release && !QDELING(src))
 		qdel(src)
 	return TRUE
 

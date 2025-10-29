@@ -45,7 +45,6 @@
 	. = ..()
 	on = !on
 	balloon_alert(user, "scrubber turned [on ? "on" : "off"]")
-
 	update_appearance()
 
 /obj/machinery/pollution_scrubber/update_icon(updates)
@@ -62,4 +61,4 @@
 		var/turf/open/open_turf = get_turf(src)
 		if(open_turf.pollution)
 			open_turf.pollution.scrub_amount(scrub_amount)
-			use_power(100)
+			use_energy(100)

@@ -108,7 +108,7 @@
 /turf/open/floor/mineral/plasma/disco,
 /area/shuttle/escape)
 "v" = (
-/obj/machinery/jukebox/disco/indestructible,
+/obj/machinery/dance_machine/disco/indestructible,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
 "w" = (

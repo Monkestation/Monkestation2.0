@@ -74,7 +74,8 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/melee/sickly_blade/knock,
+		/obj/item/spess_knife,
+		/obj/item/melee/sickly_blade/knock, //monkestation edit(maybe)
 		/obj/item/clockwork/replica_fabricator, //monkestation edit
 		/obj/item/clockwork/clockwork_slab, //monkestation edit
 	))
@@ -92,22 +93,21 @@
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)//This can be changed if this is too much //It's been 5 years
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
 	SSwardrobe.provide_type(/obj/item/analyzer, src)
-	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver/power
 	to_preload += /obj/item/crowbar/power
 	to_preload += /obj/item/weldingtool/experimental
-	to_preload += /obj/item/multitool
-	to_preload += /obj/item/stack/cable_coil
 	to_preload += /obj/item/extinguisher/mini
 	to_preload += /obj/item/analyzer
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/stack/cable_coil
 	return to_preload
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -247,6 +247,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
@@ -256,24 +257,31 @@
 		/obj/item/scalpel,
 		/obj/item/shears,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/stack/sticky_tape, //surgical tape
 		/obj/item/stamp,
 		/obj/item/sensor_device,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/surgical_drapes, //for true paramedics
+		/obj/item/surgical_processor,
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
+		/obj/item/device/antibody_scanner //monkestation addition
 	))
 
 /obj/item/storage/belt/medical/paramedic
+	name = "EMT belt"
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
@@ -292,6 +300,9 @@
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/ert/PopulateContents()
@@ -299,7 +310,7 @@
 	SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
 	SSwardrobe.provide_type(/obj/item/scalpel/advanced, src)
 	SSwardrobe.provide_type(/obj/item/retractor/advanced, src)
-	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel/four, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/cautery/advanced, src)
 	SSwardrobe.provide_type(/obj/item/surgical_drapes, src)
 	update_appearance()
@@ -334,7 +345,9 @@
 		/obj/item/clothing/glasses,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight/seclite,
+		/obj/item/citationinator, //monkestation edit
 		/obj/item/food/donut,
+		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
 		/obj/item/grenade,
 		/obj/item/holosign_creator/security,
 		/obj/item/knife/combat,
@@ -343,7 +356,7 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
+		/obj/item/stock_parts/power_store/cell/microfusion, //monkestation edit
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -361,7 +374,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
 
 /obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
@@ -406,6 +419,7 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/marker_beacon,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/stack/ore,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/bone,
@@ -419,6 +433,32 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/trench_tool, //monkestation edit
+		/obj/item/cargo_teleporter, //monkestation edit
+		/obj/item/storage/box/kinetic, //monkestation edit
+		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
+		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_casing/shotgun/hydrakinetic,
+		/obj/item/storage/box/kinetic/autoshotgun,
+		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
+		/obj/item/ammo_casing/a762/kinetic,
+		/obj/item/ammo_box/a762/kinetic,
+		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_box/a762/kinetic/big,
+		/obj/item/ammo_casing/a40mm/kinetic,
+		/obj/item/storage/box/kinetic/grenadelauncher,
+		/obj/item/ammo_casing/govmining,
+		/obj/item/ammo_box/govmining,
+		/obj/item/storage/box/kinetic/govmining,
+		/obj/item/ammo_casing/minerjdj,
+		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
+		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
 	))
 
 
@@ -478,7 +518,7 @@
 	icon_state = "championbelt"
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
-	custom_materials = list(/datum/material/gold=400)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
@@ -567,9 +607,9 @@
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
-	icon_state = "grenadebeltold"
+	icon_state = "military"
 	inhand_icon_state = "security"
-	worn_icon_state = "grenadebeltold"
+	worn_icon_state = "military"
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -597,9 +637,9 @@
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 30
+	atom_storage.max_slots = 100
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
+	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -610,6 +650,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/assembly/signaler,
 	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -636,7 +678,7 @@
 
 /obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
 	atom_storage.set_holdable(list(
 		/obj/item/gun/magic/wand,
 	))
@@ -648,6 +690,7 @@
 	new /obj/item/gun/magic/wand/teleport(src)
 	new /obj/item/gun/magic/wand/door(src)
 	new /obj/item/gun/magic/wand/fireball(src)
+	new /obj/item/gun/magic/wand/shrink(src)
 
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
@@ -781,9 +824,11 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
+	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
@@ -792,27 +837,23 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
+	atom_storage.set_holdable(list(/obj/item/melee/sabre))
+	atom_storage.click_alt_open = FALSE
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
+/obj/item/storage/belt/sabre/click_alt(mob/user)
+	if(!length(contents))
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/stored_item = contents[1]
+	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
+	user.put_in_hands(stored_item)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)
@@ -830,9 +871,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 
@@ -849,6 +890,7 @@
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,

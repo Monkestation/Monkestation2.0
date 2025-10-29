@@ -59,6 +59,10 @@
 	if(!choice)
 		return FALSE
 	set_holochassis(choice)
+	if (choice == "cat" || choice == "kitten")
+		ADD_TRAIT(src, TRAIT_CAT, PAI_FOLDED)
+	else
+		REMOVE_TRAIT(src, TRAIT_CAT, PAI_FOLDED)
 	balloon_alert(src, "[choice] composite engaged")
 	update_resting()
 	return TRUE
@@ -129,6 +133,7 @@
 		var/obj/item/modular_computer/pc = card.loc
 		pc.inserted_pai = null
 		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
+		pc.update_appearance(UPDATE_ICON)
 	if(isliving(card.loc))
 		var/mob/living/living_holder = card.loc
 		if(!living_holder.temporarilyRemoveItemFromInventory(card))

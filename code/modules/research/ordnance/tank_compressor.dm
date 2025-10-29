@@ -85,9 +85,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/circulator/get_node_connects()
-	return list(turn(dir, 180), dir) // airs[2] is input which is facing dir, airs[1] is output which is facing the other side of dir
-
 /obj/machinery/atmospherics/components/binary/tank_compressor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE
@@ -250,7 +247,7 @@
 	inserted_tank = null
 	inserted_disk = null
 	leaked_gas_buffer = null
-	QDEL_NULL(compressor_record) //We only want the list nuked, not the contents.
+	compressor_record.Cut() //We only want the list nuked, not the contents.
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/update_icon_state()
@@ -278,7 +275,7 @@
 		ui = new(user, src, "TankCompressor")
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params)
+/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

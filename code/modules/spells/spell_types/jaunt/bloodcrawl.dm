@@ -144,7 +144,7 @@
 
 	// Make the mob have the color of the blood pool it came out of
 	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
-	var/new_color = came_from?.get_blood_color()
+	var/new_color = came_from?.get_blood_dna_color()
 	if(!new_color)
 		return
 
@@ -162,6 +162,8 @@
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/magic/demon_consume.ogg'
+	/// consume count (statistics and stuff)
+	var/consume_count = 0
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter)
 	// Save this before the actual jaunt
@@ -220,7 +222,7 @@
 	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, src, jaunter) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
-	jaunter.revive(HEAL_ALL)
+	jaunter.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
@@ -228,6 +230,7 @@
 		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
+	consume_count++
 
 /**
  * Called when a victim starts to be consumed.
@@ -293,7 +296,7 @@
 
 		friend.forceMove(release_turf)
 		// Heals them back to state one
-		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
+		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL))
 			continue
 		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))

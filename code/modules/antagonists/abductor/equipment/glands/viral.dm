@@ -1,11 +1,11 @@
 /obj/item/organ/internal/heart/gland/viral
 	abductor_hint = "contamination incubator. The abductee becomes a carrier of a random advanced disease - of which they are unaffected by."
-	cooldown_low = 1800
-	cooldown_high = 2400
+	cooldown_low = 3 MINUTES
+	cooldown_high = 4 MINUTES
 	uses = 1
 	icon_state = "viral"
 	mind_control_uses = 1
-	mind_control_duration = 1800
+	mind_control_duration = 3 MINUTES
 
 /obj/item/organ/internal/heart/gland/viral/activate()
 	to_chat(owner, span_warning("You feel sick."))
@@ -24,8 +24,8 @@
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 	)
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
-	var/datum/disease/advanced/D = new virus_choice
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
+	var/datum/disease/acute/D = new virus_choice
 
 	D.makerandom(list(30,55),list(0,50),anti,bad,null)
 

@@ -27,7 +27,7 @@
 
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/bee = 1 )
 
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_SMALL
 	pixel_x = -16
 	base_pixel_x = -16
 
@@ -36,7 +36,7 @@
 	health = 10
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	faction = list(FACTION_HOSTILE)
+	faction = list(FACTION_HOSTILE, FACTION_HIVE)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB | PASSMACHINE
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
@@ -117,8 +117,8 @@
 /mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
 
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/hydro = target
+	if(target.GetComponent(/datum/component/plant_growing))
+		var/atom/movable/hydro = target
 		pollinate(hydro)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
@@ -166,25 +166,11 @@
 
 	add_overlay("[icon_base]_wings")
 
-/mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
-	if(!hydro.can_bee_pollinate())
-		return FALSE
-	hydro.recent_bee_visit = TRUE
-	addtimer(VARSET_CALLBACK(hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
-
-	var/growth = health //Health also means how many bees are in the swarm, roughly.
-	//better healthier plants!
-	hydro.adjust_plant_health(growth*0.5)
-	if(prob(BEE_POLLINATE_PEST_CHANCE))
-		hydro.adjust_pestlevel(-10)
-	if(prob(BEE_POLLINATE_YIELD_CHANCE))
-		hydro.myseed.adjust_yield(1)
-		hydro.yieldmod = 2
-	if(prob(BEE_POLLINATE_POTENCY_CHANCE))
-		hydro.myseed.adjust_potency(1)
+/mob/living/basic/bee/proc/pollinate(atom/movable/hydro)
+	SEND_SIGNAL(hydro, COMSIG_TRY_POLLINATE)
 
 	if(beehome)
-		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
+		beehome.bee_resources = min(beehome.bee_resources + health, 100)
 
 /mob/living/basic/bee/proc/assign_reagent(datum/reagent/toxin)
 	if(!istype(toxin))

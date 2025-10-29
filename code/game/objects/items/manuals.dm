@@ -162,7 +162,7 @@
 				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
+				Use it to cook or boil food ingredients (meats, doughs, egg, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
@@ -183,7 +183,7 @@
 				<b>Popcorn:</b> Microwave corn.<br>
 				<b>Meat Steak:</b> Microwave meat.<br>
 				<b>Meat Pie:</b> 1 plain pie + 1u black pepper + 1u salt + 2 meat cutlets<br>
-				<b>Boiled Spagetti:</b> Microwave spaghetti.<br>
+				<b>Boiled Spaghetti:</b>Raw Spaghetti + 50u water at 450+K<br>
 				<b>Donuts:</b> 1u sugar + 1 pastry base<br>
 				<b>Fries:</b> Process potato.
 
@@ -191,7 +191,7 @@
 				You can put your meals on your kitchen counter or load them in the snack vending machines.
 				</body>
 				</html>
-			"}
+			"}// Monkestation Edit: Removed spaghetti from microwave recipes
 
 /obj/item/book/manual/nuclear
 	name = "Fission Mailed: Nuclear Sabotage 101"
@@ -286,7 +286,7 @@
 	icon_state ="chemistrybook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemistry Textbook"
-	page_link = "en/jobs/medical/guide-to-chemistry"
+	page_link = "Guide_to_chemistry"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -300,7 +300,7 @@
 	icon_state ="bookEngineering2"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Engineering Textbook"
-	page_link = "Guide_to_engineering"
+	page_link = "Station_Engineer"
 
 /obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
@@ -308,7 +308,7 @@
 	icon_state = "bookSpaceLaw"
 	starting_author = "Nanotrasen"
 	starting_title = "Space Law"
-	page_link = "space-laws"
+	page_link = "Space_law"
 
 /obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] pretends to read \the [src] intently... then promptly dies of laughter!"))
@@ -319,7 +319,7 @@
 	icon_state = "bookInfections"
 	starting_author = "Infections Encyclopedia"
 	starting_title = "Pathology 101 - Curing Problems"
-	page_link = "en/jobs/medical/guide-to-pathology"
+	page_link = "Guide_to_pathology"
 
 /obj/item/book/manual/wiki/telescience
 	name = "Teleportation Science - Bluespace for dummies!"
@@ -340,7 +340,7 @@
 	icon_state ="bookDetective"
 	starting_author = "Nanotrasen"
 	starting_title = "The Film Noir: Proper Procedures for Investigations"
-	page_link = "en/jobs/security/detective"
+	page_link = "Detective" //currently do not have a detectives' guide, pointed to the job page for now 10/18/24
 
 /obj/item/book/manual/wiki/barman_recipes
 	name = "Barman Recipes: Mixing Drinks and Changing Lives"
@@ -354,14 +354,14 @@
 	icon_state = "borgbook"
 	starting_author = "XISC"
 	starting_title = "Robotics for Dummies"
-	page_link = "en/jobs/science/guide-to-robotics"
+	page_link = "Guide_to_robotics"
 
 /obj/item/book/manual/wiki/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	starting_author = "Dr. L. Ight"
 	starting_title = "Research and Development 101"
-	page_link = "en/jobs/science/guide-to-rnd"
+	page_link = "Guide_to_rnd"
 
 /obj/item/book/manual/wiki/cooking_to_serve_man
 	name = "To Serve Man"
@@ -376,42 +376,42 @@
 	icon_state = "book3"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Subspace Telecommunications And You"
-	page_link = "en/jobs/engineering/guide-to-telcom"
+	page_link = "Guide_to_telcom"
 
 /obj/item/book/manual/wiki/atmospherics
 	name = "Lexica Atmosia"
 	icon_state = "book5"
 	starting_author = "the City-state of Atmosia"
 	starting_title = "Lexica Atmosia"
-	page_link = "en/jobs/engineering/guide-to-atmospherics"
+	page_link = "Guide_to_atmospherics"
 
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
 	icon_state = "book8"
 	starting_author = "Medical Journal"
 	starting_title = "Medical Space Compendium, Volume 638"
-	page_link = "en/jobs/medical/guide-to-medicine"
+	page_link = "Guide_to_medicine"
 
 /obj/item/book/manual/wiki/surgery
 	name = "Brain Surgery for Dummies"
 	icon_state = "book4"
 	starting_author = "Dr. F. Fran"
 	starting_title = "Brain Surgery for Dummies"
-	page_link = "en/jobs/medical/guide-to-surgery"
+	page_link = "Guide_to_surgery"
 
 /obj/item/book/manual/wiki/grenades
 	name = "DIY Chemical Grenades"
 	icon_state = "book2"
 	starting_author = "W. Powell"
 	starting_title = "DIY Chemical Grenades"
-	page_link = "en/jobs/medical/guide-to-grenades"
+	page_link = "Guide_to_grenades"
 
 /obj/item/book/manual/wiki/ordnance
 	name = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	icon_state = "book6"
 	starting_author = "Cuban Pete"
 	starting_title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
-	page_link = "en/jobs/science/guide-to-ordnance"
+	page_link = "Guide_to_ordnance"
 
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
@@ -440,14 +440,14 @@
 	icon_state ="plumbingbook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemical Factories Without Narcotics"
-	page_link = "en/jobs/medical/guide-to-plumbing"
+	page_link = "Guide_to_plumbing"
 
 /obj/item/book/manual/wiki/cytology
 	name = "Unethically Grown Organics"
 	icon_state ="cytologybook"
 	starting_author = "Kryson"
 	starting_title = "Unethically Grown Organics"
-	page_link = "en/jobs/science/guide-to-cytology"
+	page_link = "Guide_to_cytology"
 
 /obj/item/book/manual/wiki/tgc
 	name = "Tactical Game Cards - Player's Handbook"
@@ -461,13 +461,13 @@
 	icon_state = "book6"
 	starting_author = "Dr. Mobius"
 	starting_title = "Artifact Science!"
-	page_link = "en/jobs/science/guide-to-artsci"
+	page_link = "Guide_to_artsci"
 
 /obj/item/book/manual/wiki/banned //manual specific for... well, handing a funny book to people that might be on the verge of breaking rules but we can have a funny way of handling those situations.
 	name = "How to Avoid Getting Banned"
 	icon_state = "bookSpaceLaw"
 	starting_author = "God"
 	starting_title = "How to Avoid Getting Banned"
-	page_link = "en/guides/how-to-avoid-getting-banned"
+	page_link = "How_to_avoid_getting_banned"
 
 //MONKESTATION EDIT END

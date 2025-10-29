@@ -93,7 +93,7 @@
 
 /datum/chemical_reaction/medicine/salglu_solution
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
-	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/water/salt = 2, /datum/reagent/consumable/sugar = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
 
 /datum/chemical_reaction/medicine/mine_salve
@@ -141,8 +141,8 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/pen_acid
-	results = list(/datum/reagent/medicine/pen_acid = 6)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
+	results = list(/datum/reagent/medicine/pen_acid = 5)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/consumable/salt = 1, /datum/reagent/toxin/cyanide = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/sal_acid
@@ -328,7 +328,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
 
 /datum/chemical_reaction/medicine/morphine
-	results = list(/datum/reagent/medicine/morphine = 2)
+	results = list(/datum/reagent/medicine/painkiller/morphine = 2)
 	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
 	required_temp = 480
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER | REACTION_TAG_DRUG
@@ -383,3 +383,8 @@
 	results = list(/datum/reagent/consumable/sugar = 1)
 	required_reagents = list(/datum/reagent/medicine/coagulant/seraka_extract = 1, /datum/reagent/lye = 1)
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/medicine/robopiates
+	results = list(/datum/reagent/medicine/painkiller/robopiates = 3)
+	required_reagents = list(/datum/reagent/silver = 1, /datum/reagent/dinitrogen_plasmide = 1, /datum/reagent/acetone = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_DRUG

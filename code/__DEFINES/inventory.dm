@@ -7,12 +7,15 @@
 #define WEIGHT_CLASS_SMALL 2
 /// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
 #define WEIGHT_CLASS_NORMAL 3
-/// Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+/// Items that can be wielded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
 #define WEIGHT_CLASS_BULKY 4
 /// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
 #define WEIGHT_CLASS_HUGE 5
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
+
+/// Weight class that can fit in pockets
+#define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -89,6 +92,10 @@
 #define HIDESNOUT (1<<12)
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
+///hides belts and riggings
+//#define HIDEBELT (1<<14)
+///hides antennae
+#define HIDEANTENNAE (1<<15)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
@@ -128,6 +135,20 @@
 #define ALT_STYLE 1
 #define DIGITIGRADE_STYLE 2
 
+///Inventory slots that can be blacklisted by a species from being equipped into
+DEFINE_BITFIELD(no_equip_flags, list(
+	"EXOSUIT" = ITEM_SLOT_OCLOTHING,
+	"JUMPSUIT" = ITEM_SLOT_ICLOTHING,
+	"GLOVES" = ITEM_SLOT_GLOVES,
+	"GLASSES" = ITEM_SLOT_EYES,
+	"EARPIECES" = ITEM_SLOT_EARS,
+	"MASKS" = ITEM_SLOT_MASK,
+	"HATS" = ITEM_SLOT_HEAD,
+	"SHOES" = ITEM_SLOT_FEET,
+	"BACKPACKS" = ITEM_SLOT_BACK,
+	"TIES" = ITEM_SLOT_NECK,
+))
+
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
 ///No alternative sprites based on bodytype
 #define CLOTHING_NO_VARIATION (1<<0)
@@ -135,10 +156,8 @@
 #define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
 ///The sprite works fine for digitigrade legs as-is.
 #define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
-///has a sprite for monkeys
-#define CLOTHING_MONKEY_VARIATION (1<<3)
 ///Has a sprite for snouted heads specifically.
-#define CLOTHING_SNOUTED_VARIATION (1<<4)
+#define CLOTHING_SNOUTED_VARIATION (1<<3)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -163,6 +182,34 @@
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
 
+/// A list of things that any suit storage can hold
+/// Should consist of ubiquitous, non-specialized items
+/// or items that are meant to be "suit storage agnostic" as
+/// a benefit, which of the time of this commit only applies
+/// to the captain's jetpack, here
+GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
+	/obj/item/clipboard,
+	/obj/item/flashlight,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/lighter,
+	/obj/item/pen,
+	/obj/item/modular_computer/pda,
+	/obj/item/toy,
+	/obj/item/radio,
+	/obj/item/storage/bag/books,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/stack/spacecash,
+	/obj/item/storage/wallet,
+	/obj/item/folder,
+	/obj/item/storage/box/matches,
+	/obj/item/clothing/mask/cigarette,
+	/obj/item/gun/energy/laser/bluetag,
+	/obj/item/gun/energy/laser/redtag,
+	/obj/item/storage/belt/holster
+)))
+
 //Allowed equipment lists for security vests.
 
 GLOBAL_LIST_INIT(detective_vest_allowed, list(
@@ -172,6 +219,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/lighter,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -191,6 +239,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -208,12 +257,41 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+))
+
+//Allowed list for all mining suits
+
+GLOBAL_LIST_INIT(mining_suit_allowed, list(
+	/obj/item/t_scanner/adv_mining_scanner,
+	/obj/item/melee/cleaving_saw,
+	/obj/item/climbing_hook,
+	/obj/item/flashlight,
+	///obj/item/grapple_gun, // MONKE EDIT: Don't have
+	/obj/item/tank/internals,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
+	/obj/item/kinetic_crusher,
+	/obj/item/knife,
+	/obj/item/mining_scanner,
+	/obj/item/organ/internal/monster_core,
+	/obj/item/storage/bag/ore,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/spear,
+	// Monke edit: Allow more things
+	/obj/item/tank/jetpack,
+	/obj/item/gun/ballistic/shotgun/autoshotgun,
+	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+	/obj/item/gun/ballistic/automatic/proto/pksmg,
+	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+	/obj/item/gun/ballistic/revolver/govmining,
 ))
 
 /// String for items placed into the left pocket.

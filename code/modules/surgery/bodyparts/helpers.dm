@@ -14,12 +14,40 @@
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
-	if(old_limb)
+	if(!QDELETED(old_limb))
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
+/// Replaces a single limb and returns the old one if there was one
+/mob/living/carbon/proc/return_and_replace_bodypart(obj/item/bodypart/new_limb, special)
+	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
+	if(!isnull(old_limb))
+		old_limb.drop_limb(special = special)
+		old_limb.moveToNullspace()
+
+	new_limb.try_attach_limb(src, special = special)
+	return old_limb // can be null
+
+/// Replaces the chosen limb(zone) to the original one
+/mob/living/carbon/proc/reset_to_original_bodypart(limb_zone)
+	if (!(limb_zone in BODY_ZONES_ALL))
+		stack_trace("Invalid zone [limb_zone] provided to reset_to_original_bodypart()")
+		return
+
+	// find old limb to del it first
+	var/obj/item/bodypart/old_limb = get_bodypart(limb_zone)
+	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
+		qdel(old_limb)
+
+	// mаke and attach the original limb
+	var/obj/item/bodypart/original_limb = newBodyPart(limb_zone)
+	original_limb.try_attach_limb(src, TRUE)
+	original_limb.update_limb(is_creating = TRUE)
+	regenerate_icons()
+
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(!i)
+	if(!i || length(hand_bodyparts) < i)
 		return FALSE
 	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
 	if(hand_instance && !hand_instance.bodypart_disabled)
@@ -156,8 +184,7 @@
 		if(BODY_ZONE_CHEST)
 			new_bodypart = new /obj/item/bodypart/chest/alien()
 	if(new_bodypart)
-		new_bodypart.update_limb(src)
-
+		new_bodypart.update_limb(is_creating = TRUE)
 
 
 /proc/skintone2hex(skin_tone)
@@ -189,19 +216,26 @@
 			. = "#fff4e6"
 		if("orange")
 			. = "#ffc905"
+		//Used exclusively for the jaundice yourself monkecoin shop purchase
+		if("simpsons_yellow")
+			. = "#F5CD30"
 
-		///simian tones
-		if("ffffff")
-			. = "#ffffff"
-		if("ffb089")
-			. = "#ffb089"
-		if("aeafb3")
-			. = "#aeafb3"
-		if("bfd0ca")
-			. = "#bfd0ca"
-		if("ce7d54")
-			. = "#ce7d54"
-		if("c47373")
-			. = "#c47373"
-		if("f4e2d5")
-			. = "#f4e2d5"
+/proc/body_zone_as_plaintext(body_zone)
+	switch (body_zone)
+		if (BODY_ZONE_L_ARM)
+			return "left arm"
+		if (BODY_ZONE_R_ARM)
+			return "right arm"
+		if (BODY_ZONE_L_LEG)
+			return "left leg"
+		if (BODY_ZONE_R_LEG)
+			return "right leg"
+		if (BODY_ZONE_PRECISE_L_HAND)
+			return "left hand"
+		if (BODY_ZONE_PRECISE_R_HAND)
+			return "right hand"
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			return "left foot"
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			return "right foot"
+	return body_zone

@@ -193,8 +193,8 @@
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/a762,
 		/obj/item/ammo_box/a762/surplus,
-		/obj/item/storage/toolbox/a762,
-		/obj/item/storage/toolbox/a762/surplus,
+		/obj/item/storage/toolbox/ammobox/a762,
+		/obj/item/storage/toolbox/ammobox/a762/surplus,
 		/obj/item/storage/toolbox/maint_kit,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
@@ -240,3 +240,20 @@
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/imports/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	cost = CARGO_CRATE_VALUE * 22
+	contraband = TRUE
+	contains = list(/obj/item/weaponcrafting/giant_wrench)
+	crate_name = "unknown parts crate"
+
+/datum/supply_pack/imports/sarcophagus
+	name = "Sarcophagus"
+	desc = "It's an empty sarcophagus, for the dearly departed who \
+	demand something fancier to be forever remembered in."
+	cost = PAYCHECK_COMMAND * 5
+	contains = list()
+	crate_type = /obj/structure/closet/crate/coffin/sarcophagus
+	crate_name = "Sarcophagus"

@@ -1,3 +1,4 @@
+
 /datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
@@ -64,7 +65,16 @@
 	return center
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE)
+/**
+ * Loads the ruins for a given z level.
+ * @param z_levels The z levels to load ruins on.
+ * @param budget The budget to spend on ruins. Compare against the cost of the ruins in /datum/map_template/ruin.
+ * @param whitelist A list of areas to allow ruins to be placed in.
+ * @param potentialRuins A list of ruins to choose from.
+ * @param clear_below Whether to clear the area below the ruin. Used for multiz ruins.
+ * @param mineral_budget The budget to spend on ruins that spawn ore vents. Map templates with vents have that defined by mineral_cost.
+ */
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins, clear_below = FALSE, mineral_budget = 15)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -77,6 +87,7 @@
 			return
 
 	var/list/ruins = potentialRuins.Copy()
+	var/list/placed_ruins = list()
 
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
@@ -93,14 +104,14 @@
 			R.allow_duplicates = FALSE // no multiples for testing
 			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin
 
-		if(R.cost > budget) //Why would you do that
+		if(R.cost > budget || R.mineral_cost > mineral_budget) //Why would you do that
 			continue
 		if(R.always_place)
 			forced_ruins[R] = -1
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while(budget > 0 && (ruins_available.len || forced_ruins.len))
+	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.
@@ -138,6 +149,23 @@
 									continue outer
 								else
 									break outer
+				if(current_pick.undesirable_ruins && !forced_z)
+					var/original_zLevel = target_z
+					var/z_list = z_levels.Copy()
+					while(length(z_list))
+						var/unwanted_zLevel = FALSE
+						for(var/undesirable in current_pick.undesirable_ruins)
+							if((undesirable in placed_ruins) && placed_ruins[undesirable] == target_z)
+								unwanted_zLevel = TRUE
+								break
+						if(unwanted_zLevel)
+							z_list -= target_z
+							if(!length(z_list))
+								target_z = original_zLevel
+							else
+								target_z = pick(z_list)
+						else
+							break
 
 				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
 				if(!placed_turf)
@@ -159,6 +187,7 @@
 			log_world("Failed to place [current_pick.name] ruin.")
 		else
 			budget -= current_pick.cost
+			mineral_budget -= current_pick.mineral_cost
 			if(!current_pick.allow_duplicates)
 				for(var/datum/map_template/ruin/R in ruins_available)
 					if(R.id == current_pick.id)
@@ -186,10 +215,11 @@
 									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
+			placed_ruins[current_pick.id] = target_z
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
-			if(R.cost > budget)
+			if(R.cost > budget || R.mineral_cost > mineral_budget)
 				ruins_available -= R
 
 	log_world("Ruin loader finished with [budget] left to spend.")

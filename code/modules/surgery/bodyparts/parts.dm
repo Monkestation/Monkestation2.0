@@ -16,7 +16,26 @@
 	///The bodytype(s) allowed to attach to this chest.
 	var/acceptable_bodytype = BODYTYPE_HUMANOID
 
+	var/icon/ass_image
+	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
 	var/obj/item/cavity_item
+
+	/// Offset to apply to equipment worn as a uniform
+	var/datum/worn_feature_offset/worn_uniform_offset
+	/// Offset to apply to equipment worn on the id slot
+	var/datum/worn_feature_offset/worn_id_offset
+	/// Offset to apply to equipment worn in the suit slot
+	var/datum/worn_feature_offset/worn_suit_storage_offset
+	/// Offset to apply to equipment worn on the hips
+	var/datum/worn_feature_offset/worn_belt_offset
+	/// Offset to apply to overlays placed on the back
+	var/datum/worn_feature_offset/worn_back_offset
+	/// Offset to apply to equipment worn as a suit
+	var/datum/worn_feature_offset/worn_suit_offset
+	/// Offset to apply to equipment worn on the neck
+	var/datum/worn_feature_offset/worn_neck_offset
+	/// Offset to apply to accessories
+	var/datum/worn_feature_offset/worn_accessory_offset
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !get_organs())
@@ -25,6 +44,14 @@
 
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
+	QDEL_NULL(worn_uniform_offset)
+	QDEL_NULL(worn_id_offset)
+	QDEL_NULL(worn_suit_storage_offset)
+	QDEL_NULL(worn_belt_offset)
+	QDEL_NULL(worn_back_offset)
+	QDEL_NULL(worn_suit_offset)
+	QDEL_NULL(worn_neck_offset)
+	QDEL_NULL(worn_accessory_offset)
 	return ..()
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
@@ -33,12 +60,12 @@
 		cavity_item = null
 	return ..()
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -5
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -47,6 +74,7 @@
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
+*/
 
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -72,101 +100,7 @@
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 
-/// Parent Type for arms, should not appear in game.
-/obj/item/bodypart/arm
-	name = "arm"
-	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
-	attack_verb_continuous = list("slaps", "punches")
-	attack_verb_simple = list("slap", "punch")
-	max_damage = 50
-	aux_layer = BODYPARTS_HIGH_LAYER
-	body_damage_coeff = 0.75
-	can_be_disabled = TRUE
-	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
-	unarmed_damage_low = 1
-	unarmed_damage_high = 10
-	unarmed_stun_threshold = 10
-	body_zone = BODY_ZONE_L_ARM
-
-	biological_state = BIO_STANDARD_JOINTED
-
-/obj/item/bodypart/arm/Destroy()
-	return ..()
-
-/obj/item/bodypart/arm/left
-	name = "left arm"
-	desc = "Did you know that the word 'sinister' stems originally from the \
-		Latin 'sinestra' (left hand), because the left hand was supposed to \
-		be possessed by the devil? This arm appears to be possessed by no \
-		one though."
-	icon_state = "default_human_l_arm"
-	body_zone = BODY_ZONE_L_ARM
-	body_part = ARM_LEFT
-	plaintext_zone = "left arm"
-	aux_zone = BODY_ZONE_PRECISE_L_HAND
-	held_index = 1
-	px_x = -6
-	px_y = 0
-	bodypart_trait_source = LEFT_ARM_TRAIT
-
-
-/obj/item/bodypart/arm/left/set_owner(new_owner)
-	. = ..()
-	if(. == FALSE)
-		return
-	if(owner)
-		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
-			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_loss))
-		else
-			REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
-	if(.)
-		var/mob/living/carbon/old_owner = .
-		if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_L_ARM))
-			UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
-			if(!owner || !HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
-				REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
-		else
-			UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM))
-
-
-///Proc to react to the owner gaining the TRAIT_PARALYSIS_L_ARM trait.
-/obj/item/bodypart/arm/left/proc/on_owner_paralysis_gain(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
-	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM))
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_loss))
-
-
-///Proc to react to the owner losing the TRAIT_PARALYSIS_L_ARM trait.
-/obj/item/bodypart/arm/left/proc/on_owner_paralysis_loss(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
-	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
-
-
-/obj/item/bodypart/arm/left/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
-
-
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/arm/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -180,9 +114,10 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
+	unarmed_damage_low = 2 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+*/
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -197,79 +132,7 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-
-/obj/item/bodypart/arm/right
-	name = "right arm"
-	desc = "Over 87% of humans are right handed. That figure is much lower \
-		among humans missing their right arm."
-	body_zone = BODY_ZONE_R_ARM
-	body_part = ARM_RIGHT
-	icon_state = "default_human_r_arm"
-	plaintext_zone = "right arm"
-	aux_zone = BODY_ZONE_PRECISE_R_HAND
-	aux_layer = BODYPARTS_HIGH_LAYER
-	held_index = 2
-	px_x = 6
-	px_y = 0
-	bodypart_trait_source = RIGHT_ARM_TRAIT
-
-/obj/item/bodypart/arm/right/set_owner(new_owner)
-	. = ..()
-	if(. == FALSE)
-		return
-	if(owner)
-		if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
-			ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_loss))
-		else
-			REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
-	if(.)
-		var/mob/living/carbon/old_owner = .
-		if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_R_ARM))
-			UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
-			if(!owner || !HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
-				REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
-		else
-			UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM))
-
-
-///Proc to react to the owner gaining the TRAIT_PARALYSIS_R_ARM trait.
-/obj/item/bodypart/arm/right/proc/on_owner_paralysis_gain(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	ADD_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
-	UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM))
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_loss))
-
-
-///Proc to react to the owner losing the TRAIT_PARALYSIS_R_ARM trait.
-/obj/item/bodypart/arm/right/proc/on_owner_paralysis_loss(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
-	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
-
-
-/obj/item/bodypart/arm/right/set_disabled(new_disabled)
-	. = ..()
-	if(isnull(.) || !owner)
-		return
-
-	if(!.)
-		if(bodypart_disabled)
-			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
-			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(!bodypart_disabled)
-		owner.set_usable_hands(owner.usable_hands + 1)
-
-	if(owner.hud_used)
-		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
-
-
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/arm/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -283,9 +146,10 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
+	unarmed_damage_low = 2
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+*/
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -313,8 +177,8 @@
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 2
-	unarmed_damage_high = 15
+	unarmed_damage_low = 8
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 10
 
 	/// Can these legs be digitigrade? See digitigrade.dm
@@ -323,9 +187,16 @@
 	var/digitigrade_id
 	/// Used solely by digitigrade limbs to remember what their old limb ID was.
 	var/old_limb_id
+	/// Used by the bloodysoles component to make footprints
+	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
+	///our step sound
+	var/list/step_sounds
 	biological_state = BIO_STANDARD_JOINTED
+	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
+	var/datum/worn_feature_offset/worn_foot_offset
 
 /obj/item/bodypart/leg/Destroy()
+	QDEL_NULL(worn_foot_offset)
 	return ..()
 
 /obj/item/bodypart/leg/left
@@ -391,12 +262,12 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/leg/left/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -3
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -404,9 +275,11 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
+	unarmed_damage_low = 3
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
+	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+*/
 
 /obj/item/bodypart/leg/left/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -485,12 +358,12 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
+/* //Non-Modular change: Removes Monkey bodyparts, moved to monkestation\code\modules\surgery\bodyparts\monkey_bodyparts.dm
 /obj/item/bodypart/leg/right/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_husk = 'icons/mob/species/monkey/bodyparts.dmi'
 	husk_type = "monkey"
-	top_offset = -3
 	icon_state = "default_monkey_r_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -498,9 +371,11 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
+	unarmed_damage_low = 3
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
+	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
+*/
 
 /obj/item/bodypart/leg/right/alien
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -514,15 +389,3 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/leg/right/tallboy
-	limb_id = SPECIES_TALLBOY
-	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
-
-/obj/item/bodypart/leg/left/tallboy
-	limb_id = SPECIES_TALLBOY
-	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50

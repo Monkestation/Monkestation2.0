@@ -50,8 +50,8 @@
 	mood_buff = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE, department = quirk_poster_department)
 	return ..()
 
-/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, params)
-	if (I.tool_behaviour == TOOL_WIRECUTTER)
+/obj/structure/sign/poster/quirk/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(mood_buff)
 	return ..()
 
@@ -79,7 +79,7 @@
 	src.department = department
 	RegisterSignal(host, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/datum/proximity_monitor/advanced/quirk_posters/field_turf_crossed(atom/movable/crossed, turf/location)
+/datum/proximity_monitor/advanced/quirk_posters/field_turf_crossed(atom/movable/crossed, turf/old_location, turf/new_location)
 	if (!isliving(crossed) || !can_see(crossed, host, current_range))
 		return
 	on_seen(crossed)

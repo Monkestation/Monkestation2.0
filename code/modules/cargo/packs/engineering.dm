@@ -60,7 +60,7 @@
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. \
 		Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 5 //Made of pure-grade bullshittinium
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
@@ -70,7 +70,7 @@
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard \
 		cell-based equipment anytime, anywhere. Contains two Inducers."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0} = 2) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -87,7 +87,7 @@
 	name = "Power Cell Crate"
 	desc = "Looking for power overwhelming? Look no further. Contains three high-voltage power cells."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/stock_parts/cell/high = 3)
+	contains = list(/obj/item/stock_parts/power_store/cell/high = 3)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -287,8 +287,6 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
-
-
 /datum/supply_pack/engine/collector
 	name = "Radiation Collector Crate"
 	desc = "Contains three radiation collectors. Useful for collecting energy off nearby Supermatter Crystals, Singularities or Teslas!"
@@ -298,3 +296,11 @@
 					/obj/machinery/power/rad_collector)
 	crate_name = "collector crate"
 
+/datum/supply_pack/engineering/portagrav
+	name = "Portable Gravity Unit Crate"
+	desc = "Contains a portable gravity unit, to make the clown float into the ceiling."
+	cost = CARGO_CRATE_VALUE * 4
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/machinery/power/portagrav = 1)
+	crate_name = "portable gravity unit crate"
+	crate_type = /obj/structure/closet/crate/engineering

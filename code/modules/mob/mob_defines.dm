@@ -28,6 +28,8 @@
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
+	/// It's like a client, but persists! Persistent clients will stick to a mob until the client in question is logged into a different mob.
+	var/datum/persistent_client/persistent_client
 
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
@@ -99,11 +101,6 @@
 	  */
 	var/name_archive //For admin things like possession
 
-	/// Default body temperature
-	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
-	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
-	var/old_bodytemperature = 0
-
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob
@@ -159,9 +156,6 @@
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
-
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object
 
@@ -183,7 +177,7 @@
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	///THe z level this mob is currently registered in
+	///The z level this mob is currently registered in
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
@@ -216,5 +210,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-	/// User is thinking in character. Used to revert to thinking state after stop_typing
-	var/thinking_IC = FALSE
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

@@ -8,6 +8,11 @@
 	description = "Spawns a nightmare, aiming to darken the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1
@@ -15,8 +20,15 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/nightmare/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_NIGHTMARE)
-	if(!candidates.len)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a Nightmare?",
+		role = ROLE_NIGHTMARE,
+		check_jobban = ROLE_NIGHTMARE,
+		poll_time = 20 SECONDS,
+		alert_pic = /datum/antagonist/nightmare,
+		role_name_text = "nightmare"
+	)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick(candidates)
@@ -30,10 +42,7 @@
 
 	var/mob/living/carbon/human/S = new (spawn_loc)
 	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
-	player_mind.special_role = ROLE_NIGHTMARE
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by an event.")
 	S.log_message("was spawned as a Nightmare by an event.", LOG_GAME)

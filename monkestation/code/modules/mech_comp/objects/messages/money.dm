@@ -1,5 +1,6 @@
 /obj/item/mcobject/messaging/payment
 	name = "payment component"
+	desc = "Known for eating your change."
 
 	icon_state = "comp_money"
 	base_icon_state = "comp_money"
@@ -14,11 +15,13 @@
 	///the string displayed after the payment threshold has been reached
 	var/output_string = ""
 
-/obj/item/mcobject/messaging/payment/update_desc(updates)
+	///CAN_BE_HIT required to allow payments of credits and accounts
+	obj_flags = CAN_BE_HIT
+
+/obj/item/mcobject/messaging/payment/examine(updates)
 	. = ..()
-	. += "Known for eating your change."
-	. += "Collected Money: [collected] credits"
-	. += "Current Price: [price] credits"
+	. += "<b>Collected Money</b>: [collected] credits"
+	. += "<b>Current Price</b>: [price] credits"
 
 /obj/item/mcobject/messaging/payment/Initialize(mapload)
 	. = ..()
@@ -80,7 +83,7 @@
 
 /obj/item/mcobject/messaging/payment/proc/eject_money()
 	if(collected)
-		var/obj/item/stack/spacecash/c1/money = new(src.loc)
+		var/obj/item/stack/spacecash/c1/money = new(drop_location())
 		money.amount = collected
 		collected = 0
 		update_appearance()
@@ -88,7 +91,7 @@
 
 /obj/item/mcobject/messaging/payment/attacked_by(obj/item/attacking_item, mob/living/user)
 	. = ..()
-	if(attacking_item in subtypesof(/obj/item/stack/spacecash))
+	if(istype(attacking_item, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/attacked_stack = attacking_item
 		var/total_value = attacked_stack.get_item_credit_value()
 		var/individual_value = attacked_stack.value
@@ -101,6 +104,7 @@
 				attacked_stack.amount -= amount_to_reduce
 			collected += actual_input
 			say("[output_string]")
+			fire(stored_message) // required to signal other components something happened.
 		else
 			collected += total_value
 			qdel(attacked_stack)
@@ -110,7 +114,10 @@
 		if(attacked_chip.credits >= price)
 			collected += price
 			attacked_chip.credits -= price
+			if(attacked_chip.credits == 0)
+				qdel(attacking_item)
 			say("[output_string]")
+			fire(stored_message) // required to signal other components something happened.
 		else
 			collected += attacked_chip.credits
 			qdel(attacked_chip)

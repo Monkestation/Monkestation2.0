@@ -41,12 +41,12 @@
 		return
 
 	opening = TRUE
-	update_appearance()
 	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
 			opening = FALSE
 			return
+	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 5)
 
 /obj/structure/falsewall/proc/toggle_open()
@@ -66,7 +66,7 @@
 		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
-		smoothing_flags = SMOOTH_BITMASK
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 		QUEUE_SMOOTH(src)
 
 /obj/structure/falsewall/update_icon_state()
@@ -83,11 +83,11 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opening)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!density)
@@ -96,22 +96,22 @@
 	var/turf/loc_turf = get_turf(src)
 	if(loc_turf.density)
 		to_chat(user, span_warning("[src] is blocked!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!isfloorturf(loc_turf))
 		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 	ChangeToWall()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
 		dismantle(user, TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
+/obj/structure/falsewall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!opening)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
@@ -190,7 +190,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
-/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/falsewall/uranium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 
@@ -383,7 +383,7 @@
 			new girder_type(loc)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
-			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1))
+			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 	qdel(src)
 
 /obj/structure/falsewall/material/mat_update_desc(mat)

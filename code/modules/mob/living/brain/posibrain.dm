@@ -40,16 +40,18 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
 
-/obj/item/mmi/posibrain/Topic(href, href_list)
-	if(href_list["activate"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			activate(ghost)
-
 ///Notify ghosts that the posibrain is up for grabs
 /obj/item/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, notify_volume = 75, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_POSIBRAIN, notify_suiciders = FALSE)
+		notify_ghosts(
+			"[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]",
+			ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null,
+			notify_volume = 75,
+			source = src,
+			action = NOTIFY_PLAY,
+			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
+			ignore_key = POLL_IGNORE_POSIBRAIN,
+		)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + ask_delay
 
@@ -72,17 +74,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
-/obj/item/mmi/posibrain/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
-	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
-	if(isnull(input_seed))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/mmi/posibrain/click_alt(mob/living/user)
+	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
+	if(isnull(input_seed) || !user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
 	ask_role = input_seed
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE
@@ -156,7 +155,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
 	else
-		brainmob.ckey = candidate.ckey
+		brainmob.PossessByPlayer(candidate.ckey)
 	name = "[initial(name)] ([brainmob.name])"
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)

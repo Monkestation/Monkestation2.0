@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"f" = (
+/turf/open/floor/iron/airless,
+/area/template_noop)
+"k" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/iron/airless,
+/area/template_noop)
+"t" = (
+/turf/open/space/basic,
+/area/template_noop)
+"z" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/floor/iron/airless,
+/area/template_noop)
+"R" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/iron/airless,
+/area/template_noop)
+"T" = (
+/obj/machinery/door/poddoor/shutters,
+/turf/open/floor/iron/airless,
+/area/template_noop)
+
+(1,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+R
+z
+R
+z
+R
+T
+"}
+(4,1,1) = {"
+a
+f
+f
+f
+f
+f
+T
+"}
+(5,1,1) = {"
+a
+R
+k
+R
+z
+R
+T
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+"}

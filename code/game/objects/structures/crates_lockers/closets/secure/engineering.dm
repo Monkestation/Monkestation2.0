@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/eng(src)
 	new /obj/item/storage/bag/garment/engineering_chief (src)
 	new /obj/item/computer_disk/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
@@ -13,7 +14,7 @@
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/door_remote/chief_engineer(src)
-
+	new /obj/item/storage/lockbox/medal/engineering(src)
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/ce(src)
@@ -87,6 +88,7 @@
 	..()
 	new /obj/item/radio/headset/headset_eng(src)
 
+	new /obj/item/storage/box/nanofrost(src) //monkestation addition
 	new /obj/item/storage/toolbox/mechanical(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/holosign_creator/atmos(src)
@@ -102,3 +104,24 @@
 	. = ..()
 
 	new /obj/item/pipe_dispenser(src)
+//monkestation addition start
+/obj/structure/closet/secure_closet/shipbreaker
+	name = "shipbreaker tool locker"
+	icon_state = "eng"
+	icon_door = "eng_tool"
+
+/obj/structure/closet/secure_closet/shipbreaker/PopulateContents()
+	..()
+	var/static/items_inside = list(
+		/obj/item/storage/toolbox/electrical = 1,
+		/obj/item/melee/sledgehammer = 1,
+		/obj/item/weldingtool/electric/raynewelder = 1,
+		/obj/item/pushbroom = 1,
+		/obj/item/storage/toolbox/mechanical = 1,
+		/obj/item/tank/jetpack/void = 1,
+		/obj/item/extinguisher = 1,)
+	generate_items_inside(items_inside,src)
+
+/obj/structure/closet/secure_closet/shipbreaker/populate_contents_immediate()
+	. = ..()
+//monkestation addition end

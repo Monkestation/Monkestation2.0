@@ -11,8 +11,6 @@
 	VAR_FINAL/on = FALSE
 	/// A reference to the current soup pot overtop
 	VAR_FINAL/obj/item/container
-	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
-	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
 	/// Typepath of particles to use for the particle holder.
 	VAR_FINAL/particle_type = /particles/smoke/steam/mild
 	/// The color of the flames around the burner.
@@ -23,6 +21,12 @@
 	var/container_y = 8
 	/// Modifies how much temperature is exposed to the reagents, and in turn modifies how fast the reagents are heated.
 	var/heat_coefficient = 0.033
+	///our stove temperature
+	var/temperature = J_LO
+	///list of temperatures
+	var/list/temperatures = list(J_LO, J_MED, J_HI)
+	///our temp index
+	var/temp_index = 1
 
 /datum/component/stove/Initialize(container_x = 0, container_y = 8, obj/item/spawn_container)
 	if(!ismachinery(parent))
@@ -37,6 +41,7 @@
 		add_container(spawn_container)
 
 /datum/component/stove/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(switch_temp))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
@@ -50,11 +55,12 @@
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
+	var/obj/machinery/real_parent = parent
 	if(!QDELING(parent))
-		var/obj/machinery/real_parent = parent
 		container.forceMove(real_parent.drop_location())
 
-	QDEL_NULL(soup_smoke)
+	if (particle_type)
+		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
@@ -73,8 +79,9 @@
 		turn_off()
 		return
 
+	SEND_SIGNAL(container, COMSIG_STOVE_PROCESS, temperature, seconds_per_tick, parent)
 	container?.reagents.expose_temperature(SOUP_BURN_TEMP + 80, heat_coefficient)
-	real_parent.use_power(real_parent.active_power_usage)
+	real_parent.use_energy(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
 	if(isturf(stove_spot))
@@ -120,7 +127,7 @@
 	if(!attacking_item.is_open_container())
 		return
 	if(!isnull(container))
-		to_chat(span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
+		to_chat(user, span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
 			What if it cross contaminates?"))
 		return COMPONENT_NO_AFTERATTACK
 
@@ -165,6 +172,7 @@
 /datum/component/stove/proc/on_requesting_context(obj/machinery/source, list/context, obj/item/held_item)
 	SIGNAL_HANDLER
 
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Temperature"
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off":"on"] burner"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -172,6 +180,14 @@
 	if(held_item.is_open_container())
 		context[SCREENTIP_CONTEXT_LMB] = "Place container"
 		return CONTEXTUAL_SCREENTIP_SET
+
+/datum/component/stove/proc/switch_temp(datum/source, atom/target)
+	temp_index++
+	if(temp_index > length(temperatures))
+		temp_index = 1
+	temperature = temperatures[temp_index]
+	var/atom/movable/parent_atom = parent
+	parent_atom.visible_message("Temperature set to [temperature]")
 
 /datum/component/stove/proc/on_examine(obj/machinery/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -216,10 +232,11 @@
 	update_smoke_type()
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 
-/datum/component/stove/proc/update_smoke_type(datum/source, new_temp, old_temp)
+/datum/component/stove/proc/update_smoke_type(datum/source, ...)
 	SIGNAL_HANDLER
 
 	var/existing_temp = container?.reagents.chem_temp || 0
+	var/old_type = particle_type
 	if(existing_temp >= SOUP_BURN_TEMP)
 		particle_type = /particles/smoke/steam/bad
 	else if(existing_temp >= WATER_BOILING_POINT)
@@ -227,18 +244,21 @@
 	else
 		particle_type = null
 
-	update_smoke()
+	update_smoke(old_type)
 
-/datum/component/stove/proc/update_smoke()
-	if(on && container?.reagents.total_volume > 0)
-		// Don't override existing particles, wasteful
-		if(isnull(soup_smoke) || soup_smoke.particles.type != particle_type)
-			QDEL_NULL(soup_smoke)
-			if(isnull(particle_type))
-				return
-			// this gets badly murdered by sidemap
-			soup_smoke = new(parent, particle_type)
-			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+/datum/component/stove/proc/update_smoke(old_type = null)
+	var/obj/obj_parent = parent
+
+	if (old_type)
+		obj_parent.remove_shared_particles("[old_type]_stove_[container_x]")
+
+	if(!on || !container?.reagents.total_volume)
+		if (!isnull(particle_type))
+			obj_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 		return
 
-	QDEL_NULL(soup_smoke)
+	if(isnull(particle_type))
+		return
+	var/obj/effect/abstract/shared_particle_holder/soup_smoke = obj_parent.add_shared_particles(particle_type, "[particle_type]_stove_[container_x]")
+	soup_smoke.particles.position = list(container_x, round(world.icon_size * 0.66), 0)
+

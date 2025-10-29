@@ -8,10 +8,11 @@
 	worn_icon_snouted = 'monkestation/icons/mob/mod.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HEAD
-	heat_protection = HEAD
-	cold_protection = HEAD
-	obj_flags = IMMUTABLE_SLOW
+
+
+	item_flags = IMMUTABLE_SLOW
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
@@ -29,10 +30,11 @@
 	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN
-	heat_protection = CHEST|GROIN
-	cold_protection = CHEST|GROIN
-	obj_flags = IMMUTABLE_SLOW
+
+
+	item_flags = IMMUTABLE_SLOW
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -43,9 +45,9 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = HANDS|ARMS
-	heat_protection = HANDS|ARMS
-	cold_protection = HANDS|ARMS
-	obj_flags = IMMUTABLE_SLOW
+
+
+	item_flags = IMMUTABLE_SLOW
 	supports_variations_flags = NONE
 
 /obj/item/clothing/shoes/mod
@@ -58,9 +60,9 @@
 	worn_icon_digitigrade = 'monkestation/icons/mob/mod.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = FEET|LEGS
-	heat_protection = FEET|LEGS
-	cold_protection = FEET|LEGS
-	obj_flags = IMMUTABLE_SLOW
+
+
+	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION

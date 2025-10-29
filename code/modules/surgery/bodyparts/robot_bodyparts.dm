@@ -41,6 +41,23 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
+	var/adjusted = FALSE
+
+/obj/item/bodypart/arm/left/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -73,6 +90,23 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/adjusted = FALSE
+
+/obj/item/bodypart/arm/right/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -105,6 +139,23 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/adjusted = FALSE
+
+/obj/item/bodypart/leg/left/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -137,6 +188,23 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/adjusted = FALSE
+
+/obj/item/bodypart/leg/right/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -169,22 +237,40 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	var/wired = FALSE
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/power_store/cell/cell = null
+	var/adjusted = FALSE
+
+/obj/item/bodypart/chest/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
+
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
 
-/obj/item/bodypart/chest/robot/handle_atom_del(atom/chest_atom)
-	if(chest_atom == cell)
+/obj/item/bodypart/chest/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("You have already inserted a cell!"))
 			return
@@ -225,8 +311,6 @@
 	screwtool.play_tool_sound(src)
 	to_chat(user, span_notice("Remove [cell] from [src]."))
 	cell.forceMove(drop_location())
-	cell = null
-
 
 /obj/item/bodypart/chest/robot/examine(mob/user)
 	. = ..()
@@ -246,11 +330,8 @@
 	if(wired)
 		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
-	if(cell)
-		cell.forceMove(drop_loc)
-		cell = null
-	..()
-
+	cell?.forceMove(drop_loc)
+	return ..()
 
 /obj/item/bodypart/head/robot
 	name = "cyborg head"
@@ -282,15 +363,34 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
+	head_flags = HEAD_EYESPRITES
+
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
+	var/adjusted = FALSE
 
-/obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
-	if(head_atom == flash1)
+/obj/item/bodypart/head/robot/wrench_act(mob/living/user, obj/item/wrench)
+	. = ..()
+	if(.)
+		return TRUE
+	wrench.play_tool_sound(src)
+	if(adjusted)
+		bodytype &= ~(BODYTYPE_DIGITIGRADE)
+		bodytype |= (BODYTYPE_HUMANOID)
+		adjusted = FALSE
+
+	else
+		bodytype &= ~(BODYTYPE_HUMANOID)
+		bodytype |= (BODYTYPE_DIGITIGRADE)
+		adjusted = TRUE
+	to_chat(user, span_notice("You modify [src] to be installed on a [adjusted == TRUE ? "digitigrade" : "humanoid"] body."))
+
+/obj/item/bodypart/head/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == flash1)
 		flash1 = null
-	if(head_atom == flash2)
+	if(gone == flash2)
 		flash2 = null
-	return ..()
 
 /obj/item/bodypart/head/robot/Destroy()
 	QDEL_NULL(flash1)
@@ -336,28 +436,17 @@
 	if(flash1 || flash2)
 		prytool.play_tool_sound(src)
 		to_chat(user, span_notice("You remove the flash from [src]."))
-		if(flash1)
-			flash1.forceMove(drop_location())
-			flash1 = null
-		if(flash2)
-			flash2.forceMove(drop_location())
-			flash2 = null
+		flash1?.forceMove(drop_location())
+		flash2?.forceMove(drop_location())
 	else
 		to_chat(user, span_warning("There is no flash to remove from [src]."))
 	return TRUE
 
-
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
-	if(flash1)
-		flash1.forceMove(drop_loc)
-		flash1 = null
-	if(flash2)
-		flash2.forceMove(drop_loc)
-		flash2 = null
-	..()
-
-
+	flash1?.forceMove(drop_loc)
+	flash2?.forceMove(drop_loc)
+	return ..()
 
 // Prosthetics - Cheap, mediocre, and worse than organic limbs
 // The fact they dont have a internal biotype means theyre a lot weaker defensively,
@@ -408,6 +497,58 @@
 	max_damage = 20
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "advanced robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
+	max_damage = 75
+	brute_modifier = 0.5
+	burn_modifier = 0.5
+	is_emissive = TRUE
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

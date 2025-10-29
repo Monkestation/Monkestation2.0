@@ -4,6 +4,7 @@
 ///A lavaland geyser that spawns chems and can be mining scanned for points. Made to work with the plumbing pump to extract that sweet rare nectar
 /obj/structure/geyser
 	name = "geyser"
+	desc = "A geyser that contains some form of chemicals inside. A liquid pump can be used to extract it's chemicals." //monkestation addition
 	icon = 'icons/obj/lavaland/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
@@ -107,7 +108,7 @@
 /obj/structure/geyser/random
 	point_value = 500
 	true_name = "strange geyser"
-	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
+	discovery_message = "It's a strange geyser! Who knows what chemicals are inside?" //it doesnt //monkestation edit: more accurate description
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
@@ -121,6 +122,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	inhand_icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
@@ -168,14 +170,12 @@
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
-/obj/item/plunger/AltClick(mob/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
-
+/obj/item/plunger/click_alt(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
-	if(isnull(new_layer))
-		return
+	if(isnull(new_layer) || !user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	target_layer = GLOB.plumbing_layers[new_layer]
+	return CLICK_ACTION_SUCCESS
 
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced
@@ -183,6 +183,7 @@
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 	worn_icon_state = "reinforced_plunger"
+	inhand_icon_state = "reinforced_plunger"
 	reinforced = TRUE
 	plunge_mod = 0.5
 	layer_mode_sprite = "reinforced_plunger_layer"

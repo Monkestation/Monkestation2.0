@@ -39,7 +39,7 @@
 		dna_to_add = temp_mob.get_blood_dna_list()
 		qdel(temp_mob)
 	else
-		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
+		dna_to_add = list("UNKNOWN DNA" = random_human_blood_type()) //else, generate a random bloodtype for it.
 
 
 	for(var/i in 1 to gibtypes.len)
@@ -50,10 +50,13 @@
 
 				gib.add_blood_DNA(dna_to_add)
 
+// These might streak off into space and cause annoying flaky failures with mapping nearstation tests
+#ifndef UNIT_TESTS
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
 						gib.streak(directions, mapload)
+#endif
 
 	return INITIALIZE_HINT_QDEL
 
@@ -150,4 +153,15 @@
 	if(!gibdirections.len)
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
 	gibamounts[6] = pick(0, 1, 2)
+	return ..()
+
+/obj/effect/gibspawner/nuke
+	sound_to_play = 'sound/weapons/smash.ogg'
+	gibtypes = list(/obj/effect/decal/cleanable/nuke_debris, /obj/effect/decal/cleanable/nuke_debris/timer, /obj/effect/decal/cleanable/nuke_debris/slot)
+	gibamounts = list(1, 1, 1)
+	sparks = 1
+
+/obj/effect/gibspawner/nuke/Initialize(mapload)
+	if(!gibdirections.len)
+		gibdirections = list(list(NORTH, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(EAST, NORTHEAST, WEST))
 	return ..()

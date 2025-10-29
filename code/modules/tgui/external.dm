@@ -70,7 +70,7 @@
  * change static data.
  */
 /datum/proc/update_static_data_for_all_viewers()
-	for (var/datum/tgui/window as anything in SStgui.open_uis_by_src[REF(src)])
+	for (var/datum/tgui/window as anything in open_uis)
 		window.send_full_update()
 
 /**
@@ -213,9 +213,11 @@
 	if(window_id)
 		window = usr.client.tgui_windows[window_id]
 		if(!window)
+#ifdef EXTENDED_DEBUG_LOGGING
 			log_tgui(usr,
 				"Error: Couldn't find the window datum, force closing.",
 				context = window_id)
+#endif
 			SStgui.force_close_window(usr, window_id)
 			return TRUE
 

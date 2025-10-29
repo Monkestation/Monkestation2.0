@@ -50,7 +50,7 @@
 	l_pocket = /obj/item/switchblade
 	additional_radio = /obj/item/encryptionkey/heads/captain
 
-/datum/outfit/centcom/ert/commander/alert
+/datum/outfit/centcom/ert/commander/red
 	name = "ERT Commander - High Alert"
 
 	backpack_contents = list(
@@ -76,7 +76,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	additional_radio = /obj/item/encryptionkey/heads/hos
 
-/datum/outfit/centcom/ert/security/alert
+/datum/outfit/centcom/ert/security/red
 	name = "ERT Security - High Alert"
 
 	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
@@ -104,7 +104,7 @@
 	l_pocket = /obj/item/healthanalyzer/advanced
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
-/datum/outfit/centcom/ert/medic/alert
+/datum/outfit/centcom/ert/medic/red
 	name = "ERT Medic - High Alert"
 
 	backpack_contents = list(
@@ -133,7 +133,7 @@
 	l_pocket = /obj/item/rcd_ammo/large
 	additional_radio = /obj/item/encryptionkey/heads/ce
 
-/datum/outfit/centcom/ert/engineer/alert
+/datum/outfit/centcom/ert/engineer/red
 	name = "ERT Engineer - High Alert"
 
 	backpack_contents = list(
@@ -168,8 +168,7 @@
 		return
 
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.saved_identification = H.real_name
-	pda.saved_job = "CentCom Official"
+	pda.imprint_id(H.real_name, "CentCom Official")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -284,10 +283,8 @@
 	..()
 	if(visualsOnly)
 		return
-	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
+	H.dna.add_mutation(/datum/mutation/clumsy,  MUTATION_SOURCE_CLOWN_CLUMSINESS)
 
 /datum/outfit/centcom/centcom_intern
 	name = "CentCom Intern"
@@ -447,7 +444,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/melee/energy/sword/saber
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
 
 	skillchips = list(

@@ -208,8 +208,9 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
 	SLEEP_CHECK_DEATH(5, src)
 	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
-	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
-	animate(pixel_z = 0, time = 1)
+	var/pixel_shift = rand(5, 15)
+	animate(src, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
 		dizzy_target.set_dizzy_if_lower(12 SECONDS)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
@@ -311,25 +312,6 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	transformation_spell.Grant(user)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
-
-/obj/item/crusher_trophy/wendigo_horn
-	name = "wendigo horn"
-	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
-	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
-
-/obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
-
-/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
-
-/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
-	. = ..()
-	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/wendigo_skull
 	name = "wendigo skull"

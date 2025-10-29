@@ -27,9 +27,9 @@
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
-	desc = "This red and black Syndicate space suit is less encumbering than Nanotrasen variants, \
+	desc = "This red Syndicate space suit is less encumbering than Nanotrasen variants, \
 			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
-			sightings, however."
+			sightings, however." //monkestation edit
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
 
@@ -81,3 +81,10 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
 	cost = 16
+	cant_discount = TRUE
+
+/datum/uplink_item/suits/modsuit/Wraith
+	name = "MODsuit wraith cloaking module"
+	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power."
+	item = /obj/item/mod/module/stealth/wraith
+	cost = 2

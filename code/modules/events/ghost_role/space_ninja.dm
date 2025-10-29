@@ -8,6 +8,11 @@
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "A space ninja infiltrates the station."
+	track = EVENT_TRACK_ROLESET
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/space_ninja
 	minimum_required = 1
@@ -19,8 +24,8 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates(ROLE_NINJA, ROLE_NINJA)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_NINJA, role = ROLE_NINJA, alert_pic = /obj/item/energy_katana)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected_candidate = pick(candidates)
@@ -28,7 +33,7 @@
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/ninja = create_space_ninja(spawn_location)
-	ninja.key = key
+	ninja.PossessByPlayer(key)
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")

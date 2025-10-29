@@ -13,7 +13,7 @@
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/spirit_holding/Destroy(force, silent)
+/datum/component/spirit_holding/Destroy(force)
 	. = ..()
 	if(bound_spirit)
 		QDEL_NULL(bound_spirit)
@@ -57,7 +57,14 @@
 	attempting_awakening = TRUE
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
-	var/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as the spirit of [awakener.real_name]'s blade?",
+		check_jobban = ROLE_PAI,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
+		alert_pic = parent,
+		role_name_text = "possessed blade",
+	)
 	if(!LAZYLEN(candidates))
 		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
 		attempting_awakening = FALSE
@@ -68,12 +75,11 @@
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	bound_spirit.PossessByPlayer(chosen_spirit.ckey)
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")
-	bound_spirit.status_flags |= GODMODE
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
-	bound_spirit.update_atom_languages()
-	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
+	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
+	ADD_TRAIT(bound_spirit, TRAIT_GODMODE, REF(src))
 
 	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
@@ -104,7 +110,7 @@
 	SIGNAL_HANDLER
 	return COMSIG_BLOCK_RELAYMOVE
 
-/datum/component/spirit_holding/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+/datum/component/spirit_holding/proc/on_bible_smacked(datum/source, mob/living/user, ...)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
 

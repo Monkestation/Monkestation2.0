@@ -10,7 +10,7 @@
 @use '~tgui/styles/base.scss' with (
   $color-bg: #202020,
   $color-bg-section: color.adjust(#202020, $lightness: -5%),
-  $color-bg-grad-spread: 0%,
+  $color-bg-grad-spread: 0%
 );
 
 // Core styles
@@ -58,3 +58,6 @@
 
 // tgchat styles
 @include meta.load-css('./tgchat/chat-dark.scss');
+
+// Chat formats (color, size, font, etc)
+@include meta.load-css('./chat-format/chat-dark-theme.scss');

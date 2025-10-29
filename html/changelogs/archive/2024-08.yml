@@ -1,0 +1,416 @@
+2024-08-01:
+  Absolucy:
+  - bugfix: Harvesting plants will always properly drop on the floor in edge-case
+      scenarios, i.e mechcomp interactors.
+2024-08-02:
+  Absolucy:
+  - balance: RCD, RPD, RTD, and relevant upgrades are now printable by science.
+  - balance: The ATMOS holofan projector is now printable by science.
+  - balance: 'Surgical drapes, laser scalpel, mechanical pinches, searing tool are
+      nowprintable from the Robotics mechfab.
+
+      balance Alien surgical tools are now printable from robotics mechfab.'
+  - bugfix: DNA Infusions now transfer skillchips.
+  - qol: Roundstart station lockers are now anchored by default. Crates and such are
+      unaffected.
+  - bugfix: Organ regeneration/healing stuff no longer deletes your wings, if you
+      obtained any.
+  - bugfix: Fix bloodsucker abilities not working properly for Venture favorite vassals.
+  - bugfix: Abductors using sign language now have typing indicators like anyone else
+      would.
+  - bugfix: Fixed missing pipes in Xenobiology disposals on DeltaStation and BoxStation.
+  - bugfix: Xenobiology trash on MetaStation should now properly be ejected into space,
+      rather than 2 tiles away from the window.
+  - sound: Got rid of the sound effect that overlapped the moon heretic ascension
+      song when becoming a Lunatic.
+  - balance: Proto-kinetic shockwaves now have an unremovable explorer firing pin,
+      preventing them from being fired on the station.
+  Melbert:
+  - bugfix: Fix timestop being 1 tile too small again, and fixes a lot of other field
+      effects from being 1-small as well
+  flleeppyy:
+  - admin: '"Select Equipment" now has an option to do "Holy Effect"'
+2024-08-03:
+  Absolucy:
+  - balance: Heretics can now sacrifice any head of staff, regardless of if they're
+      a target or not, if they have the "sacrifice head of staff" objective, and have
+      not completed it.
+  KnigTheThrasher:
+  - bugfix: changed redtext character from "-" to "`"
+  - rscadd: You can now buy a nif repair kit in cargo for 200 credits (imports)
+  - rscadd: Added "redtext" text emphasis, use "-", it works like this (example text
+      before it, -your redtext here- ex.text after it), you gotta put "-" before your
+      redtext and after it.
+  NicoDeLuna:
+  - rscadd: Resprited Long and Messy Hair
+  flleeppyy:
+  - sound: added some more space ambience
+2024-08-04:
+  Absolucy:
+  - sound: 'Added 3 new volume mixer channels: squeaking/plushies, mob emotes, and
+      silicon emotes.'
+  - bugfix: Antag tokening for Florida Man as ghost no longer spawns a duplicate random
+      human.
+  KittyNoodle:
+  - balance: Changelings can now store up to 60 different dna strands!
+2024-08-05:
+  flleeppyy:
+  - bugfix: silicons with the anime trait and no cat ears/tail cannot scream like
+      a cat.
+2024-08-06:
+  Absolucy, AnturK:
+  - bugfix: Fixes void cloak not making suit store slot items unstrippable.
+  FlufflesTheDog, Absolucy:
+  - bugfix: Anomalies shouldn't spawn with frequencies that can't be selected on signalers
+      anymore.
+  Uristthedorf:
+  - balance: Prybar is now bulky.
+2024-08-07:
+  Absolucy:
+  - bugfix: Heretic sacrifices properly work again.
+  Odairu:
+  - balance: removes hivemind from NIFs it has no place in this realm
+2024-08-08:
+  Odairu:
+  - rscadd: mantisblade has 2 settings now, crowbar and knife
+2024-08-09:
+  Absolucy:
+  - bugfix: Fixed some conflicting sound channels on the volume mixer.
+  - server: Added structured logging to runtime errors.
+  CannibalHunter:
+  - balance: rebalanced the wheelchairs to be similar to as they were in monke 1.0!
+  ThePooba:
+  - bugfix: Krav Maga gloves now have a tooltip instead of the longest name in the
+      game for its abilities
+  - bugfix: Farting in blueshifts fridge now makes frozen farts (and every other maps
+      fridge)
+  - bugfix: Cleaner bots now clean trash and dead rats with acid (Make sure to turn
+      it on!)
+  - bugfix: Flour bag now displays correct recipes for dough and cake batter
+  - bugfix: Flushers no longer DELETE YOU if the trunk under it is broken
+2024-08-10:
+  Uristthedorf:
+  - rscadd: Experimental cloner can become corrupted due to emag, event or EMP, causing
+      it to produce evil clones that have a randomized objective.
+  - rscadd: Science circuit imprinter can make clonepods now.
+  - rscadd: New geneticist traitor kit to start a clone army.
+  - rscadd: Experimental cloners and other cloning equipment can be printed from science.
+      (So a geneticist with experimental cloner doesn't blare alarm bells when no
+      one remembers cargo ordering a cloner crate.)
+  ven1883:
+  - rscadd: Ports Tribal Claw, a lizard exclusive martial arts,
+  - bugfix: Fixes a bug in species.dm preventing species exclusive traitor items from
+      appearing,
+  - code_imp: Adds a Martial Arts module for coders.
+2024-08-13:
+  Absolucy:
+  - bugfix: Frogs now use the "squeak" mixer channel.
+  - bugfix: Immune system buildup now properly counts normal sleeping as, well, sleeping.
+  - balance: Being well fed will also increase immune system antigen development,
+      while starving or being overweight will reduce it.
+  - rscadd: The Quartermaster's locker now spawns with a single handheld cargo teleporter
+      at roundstart.
+  - qol: The "Dental Implant" surgery no longer forces itself to restart after implanting
+      one pill. Now implanting pills in the surgery has another step to either search
+      the patient's mouth for another tooth to implant, or cauterization to end the
+      surgery.
+  - qol: When "hear all messages" is on as a ghost, messages from within your view
+      range will be bolded.
+  - qol: Light Step now avoids messying up your shoes.
+  - bugfix: Cirno is now more accurate to the source material.
+  Absolucy, Aylong:
+  - qol: Chat notifications are now at the top.
+  BanementI:
+  - bugfix: If you place a headset on a non-Poly Parrot, you should be able to remove
+      it from the parrot as-expected now rather than having the parrot send it to
+      the shadow realm.
+  Bisar:
+  - rscadd: Ashwalkers are now able to craft seed meshes.
+  DragonLee66:
+  - rscadd: Asteroid Magnet and supplies to use it.
+  - rscadd: Material Analyzer and Artifact stickers
+  - rscadd: Asteroid Magnet and Blacksmith
+  - rscadd: An artifact sticker box that was missing
+  Flleeppyy, Punny:
+  - rscadd: the cyborg shaker in service borgs now have the ability to open the reaction
+      search menu
+  Gboster-0:
+  - qol: Delta SM is less complicated
+  KittyNoodle:
+  - rscadd: Adds one new color option for ethereals.
+  KnigTheThrasher:
+  - bugfix: Fixed Kilo perma
+  - bugfix: Fixed brig disposals (idk actually lol)
+  - rscadd: Added more stuff from nova to kilo
+  - rscadd: You can play buckshot roulette in a certain room now
+  - rscadd: Spent buckshot rounds and ammo boxes
+  - rscadd: Expanded kilo xenobio with more cages
+  - rscadd: Blueshield office
+  - rscadd: Added Cloner to blueshift genetics
+  - bugfix: Fixed maints in perma
+  - rscadd: Ghost critter spawners
+  - bugfix: Fixed evac sign being flipped the wrong way
+  Marabout2:
+  - rscadd: 'Added a blueshield office on Tramstation
+
+      :cl:'
+  - rscadd: 'Added a Blueshield office on boxstation
+
+      :cl:'
+  - rscadd: 'Added a blueshield office in Delta
+
+      ![image](https://github.com/user-attachments/assets/288e25bc-fd40-4f65-b732-ee2092d21d1b)
+
+      Ingame (lights shouldn''t be broken tho)
+
+      ![image](https://github.com/user-attachments/assets/2808a103-82ea-47cd-ab16-34b07b9eb6e9)
+
+      :cl:'
+  Meowosers:
+  - rscadd: Adds a Paramedic Arm Implant with rescue tools
+  - rscdel: Removes the Chemical Arm Implant due to lack of function and use
+  - qol: The Combat Cybernetics Implant has been renamed to the Officer Arm Implant.
+      You're welcome RND
+  - balance: The Officer Arm Implant is now less healing focused, and should be better
+      suited for combat
+  TheBronJameOffical:
+  - rscadd: Added the Techno Taoist Robe for the Chaplain for more drip.
+  ThePooba:
+  - rscadd: Added skeleton smite for admin
+  - admin: New "rattle me bones" smite (harmless)
+  Uristthedorf:
+  - rscadd: Added three new rituals to the maintenance sect.
+  - rscdel: Removes adapted eyes ritual from maintenance sect. (Replaced by shadow
+      person ascension.)
+  - balance: Maintenance Sect is now better.
+  - balance: Maintenance drugs addiction less punishing.
+  Xahtrin:
+  - rscadd: New ghost kitchens have opened their doors in the sector! The Burger Combo
+      and Fiesta crates are now available for delivery to the station.
+  ancient-engineer:
+  - rscadd: Added a blueshield office to IceBoxStation and Metastation
+  - balance: Ethereals can not crystallize when they are a bloodsucker and Sol has
+      risen
+  flleeppyy:
+  - sound: Pouring things makes sounds now
+  - sound: IPCs/Silicons drinking will now have a 1/15 chance of getting a rush of
+      enhanced flavor.
+2024-08-15:
+  ThePooba:
+  - bugfix: Nullrod no longer banes for 270 damage on EVERYTHING
+  - bugfix: Premium combat medical kit now comes with a Cyberlink for your hacked
+      surgery tool (nukeops)
+  - bugfix: the m-90GL now uses 5.56 instead of .223 which was not purchaseable (nukeops)
+  - bugfix: the bandana that was in the CQC kit was lost to time and has been replaced
+      with a skull bandana, an thermal eyepatch, and snake plushie (+2 tc cost increase)
+      (nukeops)
+  - bugfix: some bundles moved into weapon kits (nukeops)
+  - rscadd: Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)
+  flleeppyy:
+  - sound: change artist title for some tracks by "Chronoquest" -> "T-87 Sulfurhead"
+2024-08-16:
+  Absolucy:
+  - bugfix: Heretic mobs will not be summoned with AI enabled, and won't turn into
+      small animals instead of summoning a flesh stalker.
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted.
+  - bugfix: Fixed various runtime errors.
+  - bugfix: Broken cameras can no longer somehow report you pissing on the floor.
+  CannibalHunter:
+  - refactor: turned grilles into to types, window grilles and non-window grilles.
+  Kitsunemitsu:
+  - rscadd: Added Blueshield
+  Wisemonster:
+  - bugfix: Ghost critter spawn points are now anchored.
+2024-08-17:
+  Absolucy:
+  - bugfix: Fixed the positioning of the painting in the curator's office on Blueshift.
+2024-08-18:
+  Absolucy:
+  - bugfix: Fixed pouring stuff into beakers trying to play a list as a sound. Hopefully
+      this stops the crashes.
+  - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
+      overcharge.
+  - bugfix: Potential fix for crashes related to drinking sounds.
+2024-08-19:
+  MomoBerri:
+  - rscadd: new light subtypes for mappers
+2024-08-20:
+  Absolucy:
+  - bugfix: The Ashen Forge traitor faction can now actually roll.
+  - bugfix: The Soft-Spoken quirk properly makes you speak softly again.
+  Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3:
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  CannibalHunter:
+  - rscadd: Added new durrcell plushie to the monkeshop!
+2024-08-21:
+  Absolucy:
+  - bugfix: The "Space Adaptation Effect" symptom now actually works as intended.
+  - bugfix: Fixed some runtimes related to pathology symptoms.
+  - code_imp: Cleaned up the code of some pathology symptoms.
+  - qol: Grey Tide viruses will no longer affect airlocks that lead to space.
+  - bugfix: Fixed a runtime related to ghost hearing.
+  - bugfix: Fixed some dirt tiles at centcom that wasted init time with useless atmos
+      processing.
+  - rscadd: Curators will now spawn with some of the tapes they've had approved (if
+      any) in their cassette rack.
+  - qol: Bulk cassette crates will no longer contain duplicates tapes.
+  Absolucy, 13spacemen, Melbert:
+  - code_imp: Poll alerts support small border pictures in the chat message.
+  - code_imp: Poll alert alert picture and jump target do not have to be the same.
+  - qol: Slime intelligence potions ask the user for a reason, this will be shown
+      to ghosts.
+  - bugfix: Fixes polling for things causing said things to have their planes and
+      layers screwed up (causing random objects or mobs to appear above runechat and
+      blindness, for example)
+  Absolucy, Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
+  KnigTheThrasher:
+  - rscadd: Added wind turbines to lavaland mining base
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  RedBaronFlyer:
+  - qol: Janitorial has had a budget increase. All janitors are now equipped with
+      keyrings.
+  Wisemonster:
+  - rscdel: Removed the stage 2 hunger symptom
+  - bugfix: Fixed one of the bars in box station having flooring that can create chasms
+2024-08-22:
+  Absolucy:
+  - refactor: Implemented batch marking for replays. Basically, this should somewhat
+      reduce lag caused by the replay system in some situations.
+  - bugfix: Fixed messages getting bolded for everyone when ghosts are watching.
+  - bugfix: Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat.
+  TTNT789:
+  - bugfix: makes the rage chemical system not explode you repeatedly apon implantation
+2024-08-23:
+  DragonLee66:
+  - rscadd: gave the cryobeaker a different sprite
+2024-08-24:
+  Absolucy:
+  - bugfix: Role prompts now properly show the preview pics in the chat.
+  - bugfix: Fixed intelligence potions being broken.
+  - bugfix: Fixed blood brother gear choosing being broken.
+2024-08-25:
+  Absolucy:
+  - rscadd: Certain jobs, mostly most medical and the janitor, now have naturally
+      stronger immune systems.
+  - bugfix: Tide viruses now properly exclude external airlocks.
+  - qol: As part of an agreement with the Church of Carp'Sie, the windows and walls
+      for the aquarium on Blueshift-model stations has been reinforced.
+  - bugfix: Heavily optimized glowshrooms, resulting in far less lag during shroomlooses.
+  AlbertNanotracen:
+  - bugfix: Nanotrasen Cookery Command has ended the plague of staff complaining that
+      their tomato dishes are just complicated forms of soup by redefining "tomato
+      soup" to include a dash of cream.
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  - bugfix: ' Infinite spider eggs are no more.'
+  - bugfix: Removed duplicate and incorrect Yaki Imo recipe
+  - qol: "Swapped out the flour in \xC6losterrm\xE6sch with two dough slices, to avoid\
+      \ competing reactions while preparing or cooking"
+  - spellcheck: Chicken nugget will have a description in the craft menu, and fiesta
+      skewers will have a description in general
+  - bugfix: Spell burger now has only one recipe
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  - rscadd: Added 28 new food recipes!
+  - qol: 'Martian fried noodles now requires 2 grown peanuts instead of
+
+      salted peanut packet.'
+  - bugfix: Moussaka now only uses eggplants instead of eggplants and potatoes
+  - bugfix: Pita bread no longer burns on the griddle/oven
+  Tag114:
+  - bugfix: Fixes players being unable to switch back to the default title for Brig
+      Physician after selecting an alternate title.
+  ThePooba:
+  - rscadd: added multiple guns to traitor uplink under conspicious
+  Wisemonster:
+  - rscadd: Replaced the drone dispensers on blueshift and ouroboros with pre-loaded
+      variants
+  ven1883:
+  - bugfix: fixed cyberware quirks being incompatible with eachother
+  - bugfix: Bright Eyes now is incompatible with Body Purist
+2024-08-27:
+  Absolucy:
+  - bugfix: Etheral disco balls now lag the server much less
+  - bugfix: Fixed the Overwatch subsystem initialization being reported as erroring,
+      despite the fact it initialized just fine.
+  ThePooba:
+  - rscadd: Choke on this smite
+  V2LenKagamine:
+  - rscadd: New Bomb Vest, strap it to someone for a little trolling
+2024-08-28:
+  Absolucy:
+  - bugfix: Androids can no longer be transform stung by changelings.
+  - bugfix: Androids no longer suffer from liver failure.
+  - bugfix: Facehuggers no longer waste their lives trying to hug androids (who can't
+      host an embryo anyways.)
+  - bugfix: Cleaned up some more roundstart active turfs, leading to slightly better
+      init times.
+  - qol: The curator's PDA no longer disables ringer by default.
+  - rscadd: NT-Brand Auto Composters can now be built and deconstructed.
+  PotatoTomahto:
+  - bugfix: fixes holomap cursor and area hover text
+  Veth-s:
+  - rscadd: Malphy's canopics have been added to the game!
+2024-08-29:
+  Absolucy:
+  - bugfix: Railings can now actually be deconstructed.
+  DexeeXI:
+  - qol: admin mods now have anti rad built it. it's shrimple.
+  - bugfix: fixes the cyka blyat id cards.
+  Gboster-0:
+  - rscadd: New magnitude of power, Raynawatt for all your PTL exporting needs
+  PotatoTomahto:
+  - bugfix: Liquid pump actually works now.
+  V2LenKagamine:
+  - rscadd: Wumpa.
+  Veth-s:
+  - rscadd: Added malphy's canopics to the game.
+  Wisemonster:
+  - bugfix: Heart disease (contracted from the heart attack random event) now has
+      the correct badness level
+  - bugfix: Fixed the radiation leak event, super-matter surge event, and random artifact
+      event not triggering.
+2024-08-30:
+  Absolucy:
+  - bugfix: Fixed hydroponics trays not being able to go above 10% self-sustenance.
+  - bugfix: Fixed plants with >100 potency having small sprites when harvested.
+  RedBaronFlyer:
+  - qol: make the cart hold 2.5x more water
+  ThePooba:
+  - bugfix: now you can buy the worst gun in the game from your uplink for your henchmen
+2024-08-31:
+  Absolucy:
+  - bugfix: Ghost messages are no longer bolded for speakers on another z-level.
+  - rscadd: Added an "event groups" mechanic to event/storyteller logic.
+  - rscadd: Events in the same group will all have a shared cooldown, and some groups
+      have a set maximum amount of times they can run.
+  - rscadd: The more times events in a group have been ran, the cooldown will become
+      more biased towards the upper bound of the possible cooldown time with each
+      run.
+  - rscadd: As an example, the "Anomalies" event group has a cooldown between 10 to
+      25 minutes.
+  - sound: Spitting sounds now respect the volume mixer, and can't be heard from the
+      next room over.
+  SirNightKnight:
+  - rscadd: Nanotrasen has launched a new program to incentivize delivering mail.
+      Mail tokens are now found in every letter and can be returned to Central Command
+      for a decent bit of credits.
+  - qol: The supplying company has further genetically modified their tobacco seeds
+      to remove  nutriment for an easier smoking experience.
+  - rscadd: Nanotrasen has approved Assistants signing up as Test Subjects. Peace
+      to the Intern Union!
+  - bugfix: The smoking pipe and cobpipe don't default to an error texture when lit.
+  - bugfix: Adjusted the smoking pipe texture to look better.
+  Wisemonster:
+  - balance: Removed the access requirements from the maint shutters leading to Blueshifts
+      north-west and north-east upper maints.
+  - balance: Reduced the stage 1 hunger symptom nutrition drain from 25 to 10

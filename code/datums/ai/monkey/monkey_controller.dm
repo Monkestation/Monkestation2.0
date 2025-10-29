@@ -5,6 +5,7 @@ have ways of interacting with a specific mob and control it.
 ///OOK OOK OOK
 
 /datum/ai_controller/monkey
+	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/generic_resist,
@@ -64,7 +65,7 @@ have ways of interacting with a specific mob and control it.
 	living_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
-	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
@@ -76,7 +77,8 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_LIVING_TRY_SYRINGE_INJECT,
+		COMSIG_LIVING_TRY_SYRINGE_WITHDRAW,
 		COMSIG_CARBON_CUFF_ATTEMPTED,
 		COMSIG_MOB_MOVESPEED_UPDATED,
 	))
@@ -146,18 +148,24 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/L)
-	if(HAS_TRAIT(L, TRAIT_MONKEYFRIEND))
-		REMOVE_TRAIT(L, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/monkeyfriend_check, L), 60 SECONDS)
-	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, L, MONKEY_HATRED_AMOUNT)
+/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+	// just to be safe
+	if(QDELETED(living_mob))
+		return
+
+	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
+	if(HAS_TRAIT(living_mob, TRAIT_MONKEYFRIEND))
+		REMOVE_TRAIT(living_mob, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(monkeyfriend_check), living_mob), 60 SECONDS)
 
 /proc/monkeyfriend_check(mob/living/user)
 	var/obj/item/clothing/suit/costume/monkeysuit/S
 	var/obj/item/clothing/mask/gas/monkeymask/M
 	var/list/equipped = user.get_equipped_items(FALSE)
-	if(issimian(user))
-		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(TRAIT_MONKEYFRIEND in carbon_user?.dna?.species.inherent_traits)
+			ADD_TRAIT(user, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
 	if(((M in equipped) && (S in equipped)))
 		ADD_TRAIT(user, TRAIT_MONKEYFRIEND, CLOTHING_TRAIT)
 

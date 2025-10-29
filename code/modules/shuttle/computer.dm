@@ -118,11 +118,14 @@
 /obj/machinery/computer/shuttle/proc/get_valid_destinations()
 	var/list/destination_list = params2list(possible_destinations)
 	var/obj/docking_port/mobile/mobile_docking_port = SSshuttle.getShuttle(shuttleId)
+	var/obj/docking_port/stationary/current_destination = mobile_docking_port.destination
 	var/list/valid_destinations = list()
 	for(var/obj/docking_port/stationary/stationary_docking_port in SSshuttle.stationary_docking_ports)
 		if(!destination_list.Find(stationary_docking_port.port_destinations))
 			continue
 		if(!mobile_docking_port.check_dock(stationary_docking_port, silent = TRUE))
+			continue
+		if(stationary_docking_port == current_destination)
 			continue
 		var/list/location_data = list(
 			id = stationary_docking_port.shuttle_id,
@@ -157,8 +160,11 @@
 			validdest = TRUE //Found our destination, we can skip ahead now
 			break
 	if(!validdest) //Didn't find our destination in the list of valid destinations, something bad happening
-		log_admin("[user] attempted to href dock exploit on [src] with target location \"[dest_id]\"")
-		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[dest_id]\"")
+		if(!isnull(user.client))
+			log_admin("Warning: possible href exploit by [key_name(user)] - Attempted to dock [src] to illegal target location \"[url_encode(dest_id)]\"")
+			message_admins("Warning: possible href exploit by [key_name_admin(user)] [ADMIN_FLW(user)] - Attempted to dock [src] to illegal target location \"[url_encode(dest_id)]\"")
+		else
+			stack_trace("[user] ([user.type]) tried to send the shuttle [src] to the target location [dest_id], but the target location was not found in the list of valid destinations.")
 		return SHUTTLE_CONSOLE_DESTINVALID
 	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
 		if(DOCKING_SUCCESS)
@@ -168,7 +174,7 @@
 		else
 			return SHUTTLE_CONSOLE_ERROR
 
-/obj/machinery/computer/shuttle/ui_act(action, params)
+/obj/machinery/computer/shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -210,7 +216,7 @@
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, span_notice("Your request has been received by CentCom."))
-			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A HREF='?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
+			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='byond://?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A HREF='byond://?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

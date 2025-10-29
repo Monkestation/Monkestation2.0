@@ -25,6 +25,7 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/fullscreen/lootbox_overlay/main
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///have we already opened? prevents spam clicks
 	var/opened = FALSE
 	///are we a guarenteed roll for lootboxes.
@@ -37,6 +38,7 @@
 	if(opened)
 		return
 	opened = TRUE
+	mouse_over_pointer = MOUSE_INACTIVE_POINTER
 	playsound(usr, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
 	icon_state = "lootb2"
 	flick("lootb1", src)
@@ -84,8 +86,7 @@
 	maptext_y += 60
 	if(user.client)
 		message_admins("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
-		add_event_to_buffer(user,  data = "opened a lootbox and recieved [rolled_item.name]!", log_key = "META")
-		log_game("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
+		logger.Log(LOG_CATEGORY_META, "[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!", list("currency_left" = user.client.prefs.metacoins))
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")
 		to_chat(world, span_boldannounce("[user] has unboxed an [rolled_item.name]!"))

@@ -1,7 +1,7 @@
 /datum/round_event_control/summon_wizard_event
 	name = "Summon Wizard Event"
 	typepath = /datum/round_event/summon_wizard_event
-	weight = 8
+	weight = 0
 	category = EVENT_CATEGORY_WIZARD
 	description = "Trigger a random wizard event that meets its normal conditions."
 	track = EVENT_TRACK_MAJOR
@@ -18,7 +18,7 @@
 	for(var/datum/round_event_control/possible_event as anything in SSevents.control)
 		if(!possible_event.wizardevent || !possible_event.can_spawn_event(player_count, allow_magic = TRUE))
 			continue
-		possible_events[possible_event] = possible_event.weight
+		possible_events[possible_event] = possible_event.get_weight()
 
 	if(!length(possible_events))
 		kill()

@@ -37,6 +37,7 @@ SUBSYSTEM_DEF(persistence)
 	load_randomized_recipes()
 	load_custom_outfits()
 	load_delamination_counter()
+	load_tram_counter()
 	load_adventures()
 	return SS_INIT_SUCCESS
 
@@ -50,7 +51,10 @@ SUBSYSTEM_DEF(persistence)
 	save_randomized_recipes()
 	save_scars()
 	save_custom_outfits()
+	save_modular_persistence()
 	save_delamination_counter()
+	if(SStramprocess.can_fire)
+		save_tram_counter()
 	if(GLOB.interviews)
 		save_keys(GLOB.interviews.approved_ckeys)
 
@@ -75,7 +79,7 @@ SUBSYSTEM_DEF(persistence)
 	for(var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
 		var/run = 0
-		if(VM.map_name == SSmapping.config.map_name)
+		if(VM.map_name == SSmapping.current_map.map_name)
 			run++
 		for(var/name in SSpersistence.saved_maps)
 			if(VM.map_name == name)
@@ -92,7 +96,7 @@ SUBSYSTEM_DEF(persistence)
 		saved_maps += mapstosave
 	for(var/i = mapstosave; i > 1; i--)
 		saved_maps[i] = saved_maps[i-1]
-	saved_maps[1] = SSmapping.config.map_name
+	saved_maps[1] = SSmapping.current_map.map_name
 	var/json_file = file(FILE_RECENT_MAPS)
 	var/list/file_data = list()
 	file_data["data"] = saved_maps

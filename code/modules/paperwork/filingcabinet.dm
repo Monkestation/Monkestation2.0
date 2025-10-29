@@ -13,7 +13,7 @@
 /obj/structure/filingcabinet
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
@@ -57,7 +57,7 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!(user.istate & ISTATE_HARM))
+	else if(!(user.istate & ISTATE_HARM) || (P.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()
@@ -84,7 +84,7 @@
 
 	return data
 
-/obj/structure/filingcabinet/ui_act(action, params)
+/obj/structure/filingcabinet/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -105,7 +105,7 @@
 	return ..()
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	. = ITEM_INTERACT_BLOCKING
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
@@ -192,16 +192,15 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind_ref = target.mind_ref
-		if(mind_ref && ishuman(mind_ref.current))
-			addFile(mind_ref.current)
+		var/datum/mind/filed_mind = target.mind_ref?.resolve()
+		if(ishuman(filed_mind?.current))
+			addFile(filed_mind.current)
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/paper/employment_contract(src, employee.mind.name)
+	new /obj/item/paper/employment_contract(src, employee.mind.name, employee.mind.assigned_role)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
 	if(virgin)
 		fillCurrent()
 		virgin = FALSE
 	return ..()
-

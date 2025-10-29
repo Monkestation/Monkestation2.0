@@ -9,6 +9,8 @@
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 2
 	admin_setup = list(/datum/event_admin_setup/mass_hallucination)
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_MAGICAL)
 
 /datum/round_event/mass_hallucination
 	fakeable = FALSE
@@ -92,7 +94,10 @@
 		// Unless the mob is off the station z-level. It's unlikely anyone will notice.
 		if(hallucinating.z != 0 && !is_station_level(hallucinating.z) && !hallucinating.client)
 			continue
-
+		//monkestation edit start: Make TRAIT_MADNESS_IMMUNE exempt from hullications.
+		if(HAS_TRAIT(hallucinating, TRAIT_MADNESS_IMMUNE))
+			continue
+		//monkestation edit end:
 		// Not using the wrapper here because we already have a list / arglist
 		hallucinating._cause_hallucination(hallucination_args)
 

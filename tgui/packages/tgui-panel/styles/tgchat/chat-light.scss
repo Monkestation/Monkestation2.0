@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:map';
+@use 'sass:color';
+
 html,
 body {
   padding: 0;
@@ -191,11 +194,13 @@ a.popt {
   padding: 2px 0;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .filterMessages input {
 }
 
 .filterMessages label {
 }
+*/
 
 .icon-stack {
   height: 1em;
@@ -318,12 +323,14 @@ em {
   font-weight: bold;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .say,
 .emote,
 .infoplain,
 .oocplain,
 .warningplain {
 }
+*/
 
 .deadsay {
   color: #5c00e6;
@@ -390,6 +397,10 @@ em {
 
 .aiprivradio {
   color: #ff00ff;
+}
+
+.enteradio {
+  color: #5c8a87;
 }
 
 .redteamradio {
@@ -477,8 +488,31 @@ h2.alert {
 }
 
 .minorannounce {
+  color: #ff0000;
   font-weight: bold;
   font-size: 185%;
+}
+
+.minoralert {
+  color: #000000;
+  font-size: 125%;
+}
+
+.priorityannounce {
+  color: #000000;
+  font-weight: bold;
+  font-size: 225%;
+}
+
+.prioritytitle {
+  color: #0000ff;
+  font-weight: bold;
+  font-size: 185%;
+}
+
+.priorityalert {
+  color: #ff0000;
+  font-size: 140%;
 }
 
 .greenannounce {
@@ -623,6 +657,16 @@ h2.alert {
   font-size: 370%;
 }
 
+.velvet {
+  color: #21007f;
+}
+
+.progenitor {
+  color: #21007f;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .colossus {
   color: #7f282a;
   font-size: 310%;
@@ -641,6 +685,12 @@ h2.alert {
 
 .purple {
   color: #5e2d79;
+}
+
+.purplelarge {
+  color: #5e2d79;
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .holoparasite {
@@ -749,6 +799,11 @@ h2.alert {
 .command_headset {
   font-weight: bold;
   font-size: 160%;
+}
+
+.soapbox {
+  font-weight: bold;
+  font-size: 135%;
 }
 
 .small {
@@ -899,6 +954,15 @@ h2.alert {
   color: #298f85;
 }
 
+.upside_down {
+  display: inline;
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
 .connectionClosed,
 .fatalError {
   background: red;
@@ -939,18 +1003,250 @@ h2.alert {
   margin-left: 3em;
 }
 
-.examine_block {
-  background: #f2f7fa;
-  border: 1px solid #111a27;
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed;
 }
 
+.tooltip_alt {
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  background: #ffffff; // Chat background color
+
+  &:before {
+    background: #ffffff; // Chat background color
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 100%, 97.5%);
+  border-color: hsla(220, 75%, 25%, 0.5);
+
+  &.red_box {
+    background: hsl(0, 100%, 97.5%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 100%, 97.5%);
+    border-color: hsl(120, 100%, 33%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 100%, 97.5%);
+    border-color: hsla(225, 100%, 50%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 100%, 97.5%);
+    border-color: hsla(260, 100%, 50%, 0.5);
+  }
+}
+
+// Provides a horizontal bar with text in the middle
+// I got this off stackoverflow
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid hsl(215.5, 39.3%, 11%);
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+// Used to display images besides text
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 2.5em; // a css guru can probably dehardcode this later
+  height: auto;
+  margin-right: 12px;
+  margin-top: 6px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
+}
+
+$alert-stripe-colors: (
+  'default': #b3bfff,
+  'green': #adffad,
+  'blue': #b3bfff,
+  'pink': #ffb3df,
+  'yellow': #fff3b3,
+  'orange': #ffe2b3,
+  'red': #ffb3b3,
+  'purple': #fac2ff,
+  'grey': #e3e3e3,
+);
+
+$alert-stripe-alternate-colors: (
+  'default': #bdc8ff,
+  'green': #bdffbd,
+  'blue': #bdc8ff,
+  'pink': #ffc2e5,
+  'yellow': #fff5c2,
+  'orange': #ffe8c2,
+  'red': #ffc2c2,
+  'purple': #fbd1ff,
+  'grey': #ebebeb,
+);
+
+$alert-major-header-colors: (
+  'default': #003061,
+  'green': #005229,
+  'blue': #003061,
+  'pink': #800033,
+  'yellow': #754900,
+  'orange': #823208,
+  'red': #800029,
+  'purple': #450d8c,
+  'grey': #800033,
+);
+
+$alert-subheader-header-colors: (
+  'default': #6b0020,
+  'green': #6b0020,
+  'blue': #6b0020,
+  'pink': #002c85,
+  'yellow': #002c85,
+  'orange': #002c85,
+  'red': #002c85,
+  'purple': #002c85,
+  'grey': #002c85,
+);
+
+$border-width: 4;
+
+$border-width-px: $border-width * 1px;
+
+.major_announcement_title {
+  font-size: 175%;
+  padding: 0rem 0.5rem;
+  line-height: 100%;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.subheader_announcement_text {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0.25rem;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 125%;
+}
+
+.major_announcement_text {
+  color: #131313;
+  background-color: #eaeaea;
+  font-weight: bold;
+  font-size: 100%;
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.minor_announcement_title {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0;
+  line-height: 100%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 150%;
+}
+
+.minor_announcement_text {
+  background-color: #eaeaea;
+  color: #202020;
+  padding: 0.5rem 0.5rem;
+  text-align: left;
+  font-size: 100%;
+}
+
+.announcement_header {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: #ffffff;
+    padding: 0.5rem 0.5rem;
+    box-shadow: none;
+    font-weight: bold;
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-image: repeating-linear-gradient(
+      -45deg,
+      map.get($alert-stripe-alternate-colors, $color-name),
+      map.get($alert-stripe-alternate-colors, $color-name) 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+    border-image-slice: $border-width fill;
+    border-width: $border-width-px;
+    border-image-width: $border-width-px;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: repeat repeat;
+    border-style: solid;
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .subheader_announcement_text {
+    color: map.get($alert-subheader-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_text {
+    background-color: lighten(
+      map.get($alert-stripe-alternate-colors, $color-name),
+      5%
+    );
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_text {
+    background-color: lighten(
+      map.get($alert-stripe-alternate-colors, $color-name),
+      5%
+    );
+  }
+}
+
+// MONKESTATION ADDITION START PR#45 - Clock cult
 .brass {
   color: #be8700;
 }
@@ -1024,5 +1320,136 @@ h2.alert {
   }
   100% {
     color: #6e001a;
+  }
+}
+// MONKESTATION ADDITION END PR#45 - Clock cult
+
+.uncommonradio {
+  color: #1d4555;
+}
+
+// MONKESTATION
+
+.honk {
+  color: #ff69bf;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.looc {
+  color: #2e57d1;
+  font-weight: bold;
+}
+
+.death_message {
+  display: block;
+  color: white;
+  text-align: center;
+  background-color: black;
+  border: 2px solid rgb(240, 62, 225);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 20px;
+}
+
+// monkestation addition start: kbity
+.kbity {
+  background: linear-gradient(
+    90deg,
+    #ffc0cb,
+    #ffb6c1,
+    #e6a9ec,
+    #dda0dd,
+    #ffc0cb
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: kbity_gradient 3s linear infinite;
+}
+
+@keyframes kbity_gradient {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+// monkestation addition end: kbity
+
+$job-colors: (
+  // Command
+  'rawcommand': #7584ad,
+  'bridgeassistant': #7584ad,
+  'captain': #d8aa53,
+  'actingcaptain': #cfa962,
+  // Service
+  'rawservice': #6ec959,
+  'assistant': #a1a1a1,
+  'headofpersonnel': #526bf8,
+  'bartender': #71a073,
+  'botanist': #7cb86f,
+  'cook': #54ce75,
+  'chaplain': #8ab48c,
+  'curator': #88c999,
+  'janitor': #2da792,
+  'lawyer': #c07d7d,
+  'clown': #ff83d7,
+  'mime': #6e9b6e,
+  'explorer': #85d8b8,
+  'barber': #836f5f,
+  // Cargo
+  'rawcargo': #d8b999,
+  'quartermaster': #c79c52,
+  'cargotechnician': #d3a372,
+  'shaftminer': #ce957e,
+  // Engineering
+  'rawengineering': #daa32d,
+  'chiefengineer': #cfbb72,
+  'stationengineer': #be953d,
+  'atmospherictechnician': #d4a07d,
+  'signaltech': #e79b69,
+  // Medical
+  'rawmedical': #47b6d8,
+  'chiefmedicalofficer': #67b7f8,
+  'medicaldoctor': #6cb1c5,
+  'paramedic': #8fbeb4,
+  'chemist': #82bdce,
+  'virologist': #5ac5b0,
+  'psychiatrist': #5394a8,
+  // R&D
+  'rawscience': #ce6fce,
+  'researchdirector': #974ea9,
+  'scientist': #c772c7,
+  'roboticist': #ac71ba,
+  'geneticist': #83bbbf,
+  'xenobiologist': #ff6eff,
+  // Security
+  'rawsecurity': #c75c5c,
+  'headofsecurity': #be132d,
+  'warden': #dd3944,
+  'securityofficer': #c43a3a,
+  'detective': #b45c5c,
+  'brigphysician': #b16789,
+  'secass': #cc7e7e,
+  // CentCom
+  'rawcentcom': #55b835,
+  'centcom': #419b23,
+  'ert': #0070bb,
+  'blueshield': #3333ff,
+  // MISC - job
+  'vip': #d3be62,
+  'king': #dbbc33,
+  'prisoner': #8b644b,
+  'syndicate': #6e4141,
+  'notcentcom': #6e6cc7,
+  'unassigned': #585858,
+  'unknown': #313131
+);
+
+@each $job-name, $job-color in $job-colors {
+  .job__#{$job-name} {
+    color: $job-color;
   }
 }

@@ -9,9 +9,12 @@
 #define POLL_IGNORE_CARGORILLA "cargorilla"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_CONSTRUCT "construct"
+#define POLL_IGNORE_CORTICAL_BORER "cortical_borer" // MONKESTATION ADDITION -- CORTICAL_BORERS
+#define POLL_IGNORE_TERATOMA "teratoma" // MONKESTATION ADDITION -- TERATOMAS
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FIRE_SHARK "fire_shark"
 #define POLL_IGNORE_FUGITIVE "fugitive"
+#define POLL_IGNORE_GLITCH "glitch"
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_HERETIC_MONSTER "heretic_monster"
 #define POLL_IGNORE_HOLOPARASITE "holoparasite"
@@ -35,6 +38,8 @@
 #define POLL_IGNORE_SPECTRAL_BLADE "spectralblade"
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttledenizen"
 #define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
+#define POLL_IGNORE_BINGLE "bingle"
+#define POLL_IGNORE_DARKSPAWN_PSYCHE "darkspawn_psyche"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -47,9 +52,12 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_CONSTRUCT = "Construct",
+	POLL_IGNORE_CORTICAL_BORER = "Cortical Borer", // MONKESTATION ADDITION -- CORTICAL_BORERS
+	POLL_IGNORE_TERATOMA = "Teratoma", // MONKESTATION ADDITION -- TERATOMAS
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",
+	POLL_IGNORE_GLITCH = "Glitch",
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",
@@ -92,6 +100,8 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
 	POLL_IGNORE_BOTS = "Bots",
+	POLL_IGNORE_BINGLE = "Bingle",
+	POLL_IGNORE_DARKSPAWN_PSYCHE = "Darkspawn Psyche",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

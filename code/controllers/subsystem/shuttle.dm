@@ -198,8 +198,8 @@ SUBSYSTEM_DEF(shuttle)
 		if(!thing)
 			mobile_docking_ports.Remove(thing)
 			continue
-		var/obj/docking_port/mobile/P = thing
-		P.check()
+		var/obj/docking_port/mobile/port = thing
+		port.check()
 	for(var/thing in transit_docking_ports)
 		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
@@ -261,13 +261,27 @@ SUBSYSTEM_DEF(shuttle)
 		message_admins(msg)
 		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
 		emergency_no_recall = TRUE
-		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+		priority_announce(
+			text = "Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.",
+			title = "Emergency Shuttle Dispatched",
+			sound = ANNOUNCER_SHUTTLECALLED,
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "orange",
+		)
 		if(emergency.timeLeft(1) > emergency_call_time * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
+	if(isnull(lockout_timer))
+		CRASH("Emergency shuttle block was called, but missing a value for the lockout duration")
 	if(admin_emergency_no_recall)
-		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+		priority_announce(
+			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
+			title = "Uplink Interference",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
 		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
 		return
 	emergency_no_recall = TRUE
@@ -275,7 +289,13 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
 	if(admin_emergency_no_recall)
-		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+		priority_announce(
+			text= "Emergency shuttle uplink services are now back online.",
+			title = "Uplink Restored",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "green",
+		)
 		return
 	emergency_no_recall = FALSE
 
@@ -355,7 +375,7 @@ SUBSYSTEM_DEF(shuttle)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /// Call the emergency shuttle.
 /// If you are doing this on behalf of a player, use requestEvac instead.
@@ -366,7 +386,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	call_reason = trim(html_encode(call_reason))
 
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+	var/emergency_reason = "\n\nNature of emergency:\n[call_reason]"
 
 	emergency.request(
 		signal_origin = signal_origin,
@@ -503,15 +523,23 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.mode = SHUTTLE_STRANDED
 		emergency.timer = null
 		emergency.sound_played = FALSE
-		priority_announce("Hostile environment detected. \
-			Departure has been postponed indefinitely pending \
-			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+		priority_announce(
+			text = "Departure has been postponed indefinitely pending conflict resolution.",
+			title = "Hostile Environment Detected",
+			sound = 'sound/misc/notice1.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
 	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
-		priority_announce("Hostile environment resolved. \
-			You have 3 minutes to board the Emergency Shuttle.",
-			null, ANNOUNCER_SHUTTLEDOCK, "Priority")
+		priority_announce(
+			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
+			title = "Hostile Environment Resolved",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "green",
+		)
 
 //try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttle_id, dock_home, dock_away, timed)
@@ -604,7 +632,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/datum/turf_reservation/proposal = SSmapping.request_turf_block_reservation(
 		transit_width,
 		transit_height,
-		1,
+		z_size = 1, //if this is changed the turf uncontain code below has to be updated to support multiple zs
 		reservation_type = /datum/turf_reservation/transit,
 		turf_type_override = transit_path,
 	)
@@ -638,17 +666,22 @@ SUBSYSTEM_DEF(shuttle)
 	if(!midpoint)
 		qdel(proposal)
 		return FALSE
+
 	var/area/old_area = midpoint.loc
-	old_area.turfs_to_uncontain += proposal.reserved_turfs
-	var/area/shuttle/transit/A = new()
-	A.parallax_movedir = travel_dir
-	A.contents = proposal.reserved_turfs
-	A.contained_turfs = proposal.reserved_turfs
+	LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, bottomleft.z, list())
+	old_area.turfs_to_uncontain_by_zlevel[bottomleft.z] += proposal.reserved_turfs
+
+	var/area/shuttle/transit/new_area = new()
+	new_area.parallax_movedir = travel_dir
+	new_area.contents = proposal.reserved_turfs
+	LISTASSERTLEN(new_area.turfs_by_zlevel, bottomleft.z, list())
+	new_area.turfs_by_zlevel[bottomleft.z] = proposal.reserved_turfs
+
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
 	new_transit_dock.name = "Transit for [M.shuttle_id]/[M.name]"
 	new_transit_dock.owner = M
-	new_transit_dock.assigned_area = A
+	new_transit_dock.assigned_area = new_area
 
 	// Add 180, because ports point inwards, rather than outwards
 	new_transit_dock.setDir(angle2dir(dock_angle))
@@ -799,7 +832,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
 		C.update_hidden_docking_ports(remove_images, add_images)
 
-	QDEL_LIST(remove_images)
+	remove_images.Cut()
 
 /**
  * Loads a shuttle template and sends it to a given destination port, optionally replacing the existing shuttle
@@ -843,6 +876,7 @@ SUBSYSTEM_DEF(shuttle)
 	// truthy value means that it cannot dock for some reason
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
+
 	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
 		CRASH("Template shuttle [preview_shuttle] cannot dock at [dest_dock] ([result]).")
 
@@ -935,7 +969,7 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle = null
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1006,7 +1040,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return data
 
-/datum/controller/subsystem/shuttle/ui_act(action, params)
+/datum/controller/subsystem/shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

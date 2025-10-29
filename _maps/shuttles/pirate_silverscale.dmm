@@ -40,20 +40,16 @@
 	},
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ci" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "cE" = (
@@ -86,6 +82,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "dI" = (
@@ -158,10 +155,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "ht" = (
@@ -244,10 +239,8 @@
 /area/shuttle/pirate)
 "lu" = (
 /obj/item/storage/secure/safe/directional/north,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /turf/open/floor/carpet/royalblack,
@@ -310,6 +303,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "pk" = (
@@ -473,6 +467,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ae" = (
@@ -533,6 +528,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ch" = (
@@ -560,10 +556,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/pirate)
 "DP" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "DX" = (
@@ -872,10 +866,8 @@
 	anchored = 1
 	},
 /obj/structure/cable,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)

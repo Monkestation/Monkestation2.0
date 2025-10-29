@@ -1,4 +1,4 @@
-/datum/mutation/human/void
+/datum/mutation/void
 	name = "Void Magnet"
 	desc = "A rare genome that attracts odd forces not usually observed."
 	quality = MINOR_NEGATIVE //upsides and downsides
@@ -8,7 +8,7 @@
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/modify()
+/datum/mutation/void/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/void/cursed/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -60,7 +60,7 @@
 /datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	if(!isliving(source) || IS_IN_STASIS(source) || source.stat == DEAD || HAS_TRAIT(source, TRAIT_NO_TRANSFORM))
+	if(!isliving(source) || HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD || HAS_TRAIT(source, TRAIT_NO_TRANSFORM))
 		return
 
 	if(!is_valid_target(source))

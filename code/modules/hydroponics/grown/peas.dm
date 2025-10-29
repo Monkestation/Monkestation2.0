@@ -36,7 +36,7 @@
 	product = /obj/item/food/grown/laugh
 	maturation = 7
 	potency = 10
-	yield = 7
+	yield = 70
 	production = 5
 	growthstages = 3
 	icon_grow = "laughpeas-grow"
@@ -68,11 +68,8 @@
 	product = /obj/item/food/grown/peace
 	maturation = 20
 	potency = 75
-	yield = 1
+	yield = 10
 	production = 10
-	growthstages = 3
-	icon_grow = "worldpeas-grow"
-	icon_dead = "worldpeas-dead"
 	genes = list (/datum/plant_gene/trait/glow/blue)
 	reagents_add = list (/datum/reagent/pax = 0.1, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax.

@@ -5,6 +5,8 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -21,10 +23,8 @@
 		console = null
 	return ..()
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
-		return
-	if(isabductor(target))
+/obj/machinery/abductor/experiment/mouse_drop_receive(mob/target, mob/user, params)
+	if(!ishuman(target) || isabductor(target))
 		return
 	close_machine(target)
 
@@ -86,7 +86,7 @@
 		data["occupant_status"] = mob_occupant.stat
 	return data
 
-/obj/machinery/abductor/experiment/ui_act(action, list/params)
+/obj/machinery/abductor/experiment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -119,6 +119,9 @@
 /obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
+
+	if(!istype(H)) //We shouldn't be processing anything other than humans, and if we do we runtime.
+		return
 
 	var/datum/antagonist/abductor/user_abductor = user.mind.has_antag_datum(/datum/antagonist/abductor)
 	if(!user_abductor)

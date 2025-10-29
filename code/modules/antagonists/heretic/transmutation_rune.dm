@@ -101,6 +101,8 @@
 
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
+		if(istype(nearby_atom, /obj/item/organ/internal/brain/slime))
+			selected_atoms |= nearby_atom
 		// Go through all of our required atoms
 		for(var/req_type in requirements_list)
 			// We already have enough of this type, skip
@@ -157,6 +159,8 @@
 		loc.balloon_alert(user, "ritual failed, missing components!")
 		// Then let them know what they're missing
 		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		if (istype(ritual, /datum/heretic_knowledge/ultimate))
+			to_chat(user, span_hierophant_warning("Reminder, that sacrifices need to have a soul in order to complete the ritual."))
 		return FALSE
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.

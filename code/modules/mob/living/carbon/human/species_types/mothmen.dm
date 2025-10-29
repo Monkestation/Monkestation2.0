@@ -2,27 +2,21 @@
 	name = "\improper Mothman"
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
-	species_traits = list(
-		LIPS,
-		HAS_MARKINGS,
-	)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_TACKLING_WINGED_ATTACKER,
-		TRAIT_ANTENNAE,
+		TRAIT_HAS_MARKINGS,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_GREYSCALE_TOGGLE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_markings" = "None")
 	external_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
 	meat = /obj/item/food/meat/slab/human/mutant/moth
-	liked_food = VEGETABLES | DAIRY | CLOTH
-	disliked_food = FRUIT | GROSS | BUGS | GORE
-	toxic_food = MEAT | RAW | SEAFOOD
 	mutanttongue = /obj/item/organ/internal/tongue/moth
 	mutanteyes = /obj/item/organ/internal/eyes/moth
+	inert_mutation = /datum/mutation/wings // MONKESTATION ADDITION
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
+	death_sound = 'sound/voice/moth/moth_death.ogg'
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
 	bodypart_overrides = list(
@@ -65,13 +59,9 @@
 	if(istype(attacking_item, /obj/item/melee/flyswatter))
 		damage_mods += 10 // Yes, a 10x damage modifier
 
-
 /datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
 	randomize_external_organs(human_mob)
-
-/datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
-	return 'sound/voice/moth/scream_moth.ogg'
 
 /datum/species/moth/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
@@ -106,6 +96,12 @@
 			SPECIES_PERK_DESC = "Moths need an extra layer of flash protection to protect \
 				themselves, such as against security officers or when welding. Welding \
 				masks will work.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Insectoid Biology",
+			SPECIES_PERK_DESC = "Fly swatters will deal higher amounts of damage to a Moth.",
 		),
 	)
 

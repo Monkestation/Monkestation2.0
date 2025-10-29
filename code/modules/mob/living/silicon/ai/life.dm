@@ -31,7 +31,7 @@
 	if(!lacks_power())
 		var/area/home = get_area(src)
 		if(home.powered(AREA_USAGE_EQUIP))
-			home.use_power(500 * seconds_per_tick, AREA_USAGE_EQUIP)
+			home.apc?.terminal?.use_energy(500 WATTS * seconds_per_tick, channel = AREA_USAGE_EQUIP)
 
 		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 			ai_restore_power()
@@ -50,7 +50,7 @@
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 
 	var/old_health = health
@@ -66,7 +66,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/ai/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD)
@@ -140,7 +140,7 @@
 				sleep(5 SECONDS)
 				to_chat(src, span_notice("Receiving control information from APC."))
 				sleep(0.2 SECONDS)
-				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
+				to_chat(src, "<A HREF='byond://?src=[REF(src)];emergencyAPC=[TRUE]'>APC ready for connection.</A>")
 				apc_override = theAPC
 				apc_override.ui_interact(src)
 				setAiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)

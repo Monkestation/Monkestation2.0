@@ -30,7 +30,7 @@
 	if(isliving(parent))
 		host_mob = parent
 
-		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
+		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
 			return COMPONENT_INCOMPATIBLE
 
 		start_time = world.time
@@ -61,6 +61,7 @@
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 		RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(check_access))
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_shock))
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
@@ -110,7 +111,7 @@
 		adjust_nanites(null, amount) //just add to the nanite volume
 
 /datum/component/nanites/process(seconds_per_tick)
-	if(!IS_IN_STASIS(host_mob))
+	if(!HAS_TRAIT(host_mob, TRAIT_STASIS))
 		adjust_nanites(null, (regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0)) * seconds_per_tick)
 		add_research()
 		for(var/X in programs)
@@ -143,8 +144,10 @@
 				SNP.copy_programming(NP, copy_activation)
 				break
 	if(full_overwrite)
-		for(var/X in programs_to_remove)
-			qdel(X)
+		QDEL_LIST(programs_to_remove)
+		cloud_id = source.cloud_id
+		cloud_active = source.cloud_active
+		safety_threshold = source.safety_threshold
 	for(var/X in programs_to_add)
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())
@@ -248,8 +251,9 @@
 ///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
-	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
-	holder.pixel_y = I.Height() - world.icon_size
+	if(!holder) // what
+		return
+	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
 		return //bye icon
@@ -302,12 +306,18 @@
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
 
-/datum/component/nanites/proc/receive_signal(datum/source, code, source = "an unidentified source")
+/datum/component/nanites/proc/on_revive(datum/source, full_heal, admin_revive)
+	SIGNAL_HANDLER
+
+	for(var/datum/nanite_program/program in programs)
+		program.on_revive(full_heal, admin_revive)
+
+/datum/component/nanites/proc/receive_signal(datum/source, code, signal_source = "an unidentified source")
 	SIGNAL_HANDLER
 
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
-		NP.receive_signal(code, source)
+		NP.receive_signal(code, signal_source)
 
 /datum/component/nanites/proc/receive_comm_signal(datum/source, comm_code, comm_message, comm_source = "an unidentified source")
 	SIGNAL_HANDLER
@@ -320,7 +330,7 @@
 /datum/component/nanites/proc/check_viable_biotype()
 	SIGNAL_HANDLER
 
-	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob))
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)

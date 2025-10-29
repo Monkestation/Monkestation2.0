@@ -32,6 +32,10 @@
 	src.leniency_time = leniency_time
 	src.can_attack_callback = can_attack_callback
 
+/datum/component/combo_attacks/Destroy(force)
+	can_attack_callback = null
+	return ..()
+
 /datum/component/combo_attacks/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
@@ -80,14 +84,13 @@
 	if(deltimer && timerid)
 		deltimer(timerid)
 
-/datum/component/combo_attacks/proc/on_attack(datum/source, mob/living/target, mob/user, click_parameters)
+/datum/component/combo_attacks/proc/on_attack(datum/source, mob/living/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(can_attack_callback && !can_attack_callback.Invoke(user, target))
 		return NONE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return NONE
-	var/list/modifiers = params2list(click_parameters)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		input_list += RIGHT_ATTACK
 	if(LAZYACCESS(modifiers, LEFT_CLICK))

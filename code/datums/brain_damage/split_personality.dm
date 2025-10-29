@@ -11,6 +11,8 @@
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner_backseat
+	///The role to display when polling ghost
+	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
@@ -23,24 +25,35 @@
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/stranger_spell = new(src)
+	var/datum/action/personality_commune/stranger_spell = new(src)
 	stranger_spell.Grant(stranger_backseat)
 
 	owner_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/owner_spell = new(src)
+	var/datum/action/personality_commune/owner_spell = new(src)
 	owner_spell.Grant(owner_backseat)
 
-
+/// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s split personality?", ROLE_PAI, null, 7.5 SECONDS, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
-		stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
-	else
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
+		alert_pic = owner,
+		role_name_text = poll_role,
+	)
+	schism(chosen_one)
+
+/// Ghost poll has concluded
+/datum/brain_trauma/severe/split_personality/proc/schism(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	stranger_backseat.PossessByPlayer(ghost.key)
+	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 /datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
 	if(owner.stat == DEAD)
@@ -86,7 +99,7 @@
 	owner.computer_id = null
 	owner.lastKnownIP = null
 
-	new_backseat.ckey = owner.ckey
+	new_backseat.PossessByPlayer(owner.ckey)
 
 	new_backseat.name = owner.name
 
@@ -109,7 +122,7 @@
 	current_backseat.computer_id = null
 	current_backseat.lastKnownIP = null
 
-	owner.ckey = current_backseat.ckey
+	owner.PossessByPlayer(current_backseat.ckey)
 	owner.mind = current_backseat.mind
 
 	if(!owner.computer_id)
@@ -200,10 +213,9 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", null, null, 7.5 SECONDS, stranger_backseat)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
+	if(chosen_one)
+		stranger_backseat.PossessByPlayer(chosen_one.key)
 	else
 		qdel(src)
 

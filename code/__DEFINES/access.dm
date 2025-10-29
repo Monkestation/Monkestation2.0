@@ -34,6 +34,10 @@
 #define ACCESS_CAPTAIN "captain"
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
+/// Access for Blueshield to their office and locker, as well as access to the NT Representitive Office
+#define ACCESS_BLUESHIELD "blueshield" //monkestation edit
+/// Access for NT Rep to their office and locker, as well as access to the Blueshield Office
+#define ACCESS_NT_REPRESENTATVE "nt_rep" //monkestation edit
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
 #define ACCESS_SECURITY "security"
@@ -51,6 +55,8 @@
 #define ACCESS_HOS "hos"
 /// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
 #define ACCESS_DETECTIVE "detective"
+/// Access for the brig physician to get basic access to medical tools, but not all encompassing access to medical under normal manning.
+#define ACCESS_BRIG_PHYSICIAN "brig_physician" /// MONKESTATION EDIT
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
@@ -290,8 +296,9 @@
 	ACCESS_COURT, \
 	ACCESS_CREMATORIUM, \
 	ACCESS_DETECTIVE, \
-	ACCESS_ENGINE_EQUIP, \
 	ACCESS_ENGINEERING, \
+	ACCESS_ENGINE_EQUIP, \
+	ACCESS_EVA, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
 	ACCESS_GENETICS, \
 	ACCESS_HYDROPONICS, \
@@ -300,11 +307,11 @@
 	ACCESS_LAWYER, \
 	ACCESS_LIBRARY, \
 	ACCESS_MAINT_TUNNELS, \
-	ACCESS_MECH_MINING, \
-	ACCESS_MECH_MEDICAL, \
-	ACCESS_MECH_SECURITY, \
-	ACCESS_MECH_SCIENCE, \
 	ACCESS_MECH_ENGINE, \
+	ACCESS_MECH_MEDICAL, \
+	ACCESS_MECH_MINING, \
+	ACCESS_MECH_SCIENCE, \
+	ACCESS_MECH_SECURITY, \
 	ACCESS_MEDICAL, \
 	ACCESS_MINERAL_STOREROOM, \
 	ACCESS_MINING, \
@@ -313,6 +320,7 @@
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PERMABRIG, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -328,7 +336,8 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-)
+	ACCESS_BRIG_PHYSICIAN, \
+)  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
@@ -343,10 +352,12 @@
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TCOMMS, \
+	ACCESS_TCOMMS_ADMIN, \
 	ACCESS_TECH_STORAGE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
+// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
 
 /// Private head of staff offices, usually only granted to most cards by trimming. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_PRV_COMMAND)
 #define PRIVATE_COMMAND_ACCESS list( \
@@ -356,7 +367,10 @@
 	ACCESS_HOP, \
 	ACCESS_QM, \
 	ACCESS_RD, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep above
 
 /// Captains private rooms. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_CAPTAIN)
 #define CAPTAIN_ACCESS list( \
@@ -434,9 +448,11 @@
 	ACCESS_DETECTIVE, \
 	ACCESS_HOS, \
 	ACCESS_MECH_SECURITY, \
+	ACCESS_PERMABRIG, \
 	ACCESS_SECURITY, \
 	ACCESS_WEAPONS, \
-)
+) /* monkestation edit: add permabrig-only access */
+
 /// Name for the Medbay region.
 #define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
@@ -450,11 +466,15 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
+	ACCESS_BRIG_PHYSICIAN, \
 )
+//MONKESTATION ADDITION: Added brig physcian access to above
+
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
+	ACCESS_AI_UPLOAD, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -482,8 +502,11 @@
 	ACCESS_MECH_ENGINE, \
 	ACCESS_MINISAT, \
 	ACCESS_TCOMMS, \
+	ACCESS_TCOMMS_ADMIN, \
 	ACCESS_TECH_STORAGE, \
 )
+// MONKESTATION ADDITION -- NTSL -- added: ACCESS_TCOMMS_ADMIN up there
+
 /// Name for the Supply region.
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
@@ -514,11 +537,40 @@
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
+	ACCESS_BLUESHIELD, \
+	ACCESS_NT_REPRESENTATVE, \
 )
+// MONKESTATION ADDITION: Added blueshield and nt rep to command region above
+
 /// Name for the Centcom region.
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
+
+/// MONKESTATION ADDITION - Adds Charlie Station region, for the Charlie Station ID console.
+/// Name for the Charlie Station region.
+#define REGION_CHARLIE_STATION "Ancient Station"
+/// Used to seed the accesses_by_region list in SSid_access. A list of all ACCESS_AWAY regional accesses.
+#define REGION_ACCESS_CHARLIE_STATION list( \
+	ACCESS_AWAY_GENERAL, \
+	ACCESS_ROBOTICS, \
+	ACCESS_ORDNANCE, \
+	ACCESS_RESEARCH, \
+	ACCESS_AWAY_SCIENCE, \
+	ACCESS_AWAY_MAINTENANCE, \
+	ACCESS_AWAY_SUPPLY, \
+	ACCESS_AWAY_GENERIC1, \
+	ACCESS_AWAY_GENERIC2, \
+	ACCESS_AWAY_GENERIC3, \
+	ACCESS_AWAY_GENERIC4, \
+	ACCESS_AWAY_COMMAND, \
+	ACCESS_AWAY_MEDICAL, \
+	ACCESS_AWAY_SEC, \
+	ACCESS_AWAY_ENGINEERING, \
+	ACCESS_ENGINEERING, \
+	ACCESS_ENGINE_EQUIP, \
+)
+/// END OF ADDITION
 
 /**
  * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
@@ -526,6 +578,9 @@
  * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
  * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
  */
+
+///Monkestation Edit - adding non-head QM to the list so it may be properly painted. may require removal of the old head version.
+
 #define PDA_PAINTING_REGIONS list( \
 	/obj/item/modular_computer/pda = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/clown = list(REGION_GENERAL), \
@@ -558,8 +613,13 @@
 	/obj/item/modular_computer/pda/atmos = list(REGION_ENGINEERING), \
 	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/pda/quartermaster = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/pda/security/brig_physician = list(REGION_SECURITY), \
+	/obj/item/modular_computer/pda/psychologist = list(REGION_GENERAL), \
+	/obj/item/modular_computer/pda/blueshield  = list(REGION_COMMAND), \
+	/obj/item/modular_computer/pda/signal = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/pda/barber = list(REGION_GENERAL), \
 )
-
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \
 	REGION_COMMAND, \
@@ -579,3 +639,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"

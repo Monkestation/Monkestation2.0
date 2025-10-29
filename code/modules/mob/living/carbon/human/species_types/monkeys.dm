@@ -1,36 +1,31 @@
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
 
 /datum/species/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	id = SPECIES_MONKEY
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
-		/obj/item/organ/external/tail/simian = "Chimp"
+		/obj/item/organ/external/tail/monkey = "Monkey",
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/monkey
 	mutantbrain = /obj/item/organ/internal/brain/primate
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	species_traits = list(
-		NO_UNDERWEAR,
-		LIPS,
-		NOEYESPRITES,
-		NOBLOODOVERLAY,
-		NOTRANSSTING,
-		NOAUGMENTS,
-	)
 	inherent_traits = list(
-		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
+		//Non-Modular change: Gives Monkeys fur colors.
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT | BUGS
-	disliked_food = CLOTH
-	sexes = FALSE
+	inherent_factions = list(FACTION_MONKEY)
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
@@ -48,26 +43,39 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
+	// NON-MODULAR CHANGES BELOW
 
+	//Default eyes have the side portrait icons on the wrong side, this fixes that.
+	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
+	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.
+	///The reason we block the gene's activation is so you can't "deconvert" from being a monkey subtype.
+	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
-	var/randname = "monkey ([rand(1,999)])"
-
+	var/randname = pick(GLOB.random_monkey_names)
 	return randname
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	H.pass_flags |= PASSTABLE
-	H.butcher_results = knife_butcher_results
-	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-	H.dna.activate_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_on(human_who_gained_species, SPECIES_TRAIT)
+		human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
+	human_who_gained_species.update_mob_height()
 
-
-/datum/species/monkey/on_species_loss(mob/living/carbon/C)
+/datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
-	C.pass_flags = initial(C.pass_flags)
-	C.butcher_results = null
-	C.dna.remove_mutation(/datum/mutation/human/race)
+	if(give_monkey_species_effects)
+		passtable_off(C, SPECIES_TRAIT)
+		C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
+	C.update_mob_height()
+
+/datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return MONKEY_HEIGHT_DWARF
+	return MONKEY_HEIGHT_MEDIUM
+
+/datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	// If our hands are not blocked, dont try to bite them
@@ -78,10 +86,9 @@
 			return TRUE
 		return ..()
 
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
+	// calls parent if it's not attacking a mob, used for places like opening inventory while in crit.
+	if(!isliving(target))
+		return ..()
 	var/mob/living/carbon/victim = target
 	if(user.is_muzzled())
 		return TRUE // cannot bite them if we're muzzled
@@ -129,20 +136,10 @@
 	return TRUE
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// Check ID specifically so all subtypes aren't eligible on Monkey day.
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
-
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
 
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
@@ -195,7 +192,7 @@
 /obj/item/organ/internal/brain/primate //Ook Ook
 	name = "Primate Brain"
 	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE
@@ -249,3 +246,49 @@
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
+
+/datum/species/monkey/trained //like a regular monkey but evil with combat training
+	name = "Trained Monkey"
+	id = SPECIES_TRAINED_MONKEY
+	examine_limb_id = SPECIES_MONKEY
+	mutantbrain = /obj/item/organ/internal/brain/primate
+	mutanttongue = /obj/item/organ/internal/tongue/monkey/hindered
+	species_language_holder = /datum/language_holder/monkey/smart
+	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_GUN_NATURAL,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
+		TRAIT_HARD_SOLES,
+		TRAIT_MONKEYFRIEND,
+		//Non-Modular change: Gives Monkeys fur colors.
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
+	)
+	give_monkey_species_effects = FALSE
+	no_equip_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_FEET
+	var/datum/component/sign_language/signer
+
+/datum/species/monkey/trained/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
+		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
+	passtable_on(human_who_gained_species, SPECIES_TRAIT)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	for(var/datum/mutation/mutation as anything in human_who_gained_species.dna.mutations)
+		mutation.instability = 0
+	human_who_gained_species.dna.update_instability()
+	human_who_gained_species.dna.species.name = "Monkey"
+	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
+
+/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/human)
+	. = ..()
+
+	human.dna.remove_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
+
+	if(!QDELETED(signer))
+		QDEL_NULL(signer)

@@ -21,7 +21,7 @@
 	var/list/target_belongings = list()
 
 /datum/traitor_objective/target_player/kidnapping/common
-	progression_reward = list(2 MINUTES, 4 MINUTES)
+	progression_reward = list(10 MINUTES, 15 MINUTES)
 	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Cargo
@@ -47,6 +47,15 @@
 		/datum/job/janitor,
 		/datum/job/lawyer,
 		/datum/job/mime,
+		// barbers and spooktober
+		/datum/job/barber,
+		/datum/job/yellowclown,
+		/datum/job/skeleton,
+		/datum/job/candysalesman,
+		/datum/job/dietwizard,
+		/datum/job/ghost,
+		/datum/job/godzilla,
+		/datum/job/gorilla,
 	)
 	alive_bonus = 3
 
@@ -57,7 +66,7 @@
 	telecrystal_reward = 3 //go bully the assistants
 
 /datum/traitor_objective/target_player/kidnapping/uncommon //Hard to fish out targets
-	progression_reward = list(4 MINUTES, 8 MINUTES)
+	progression_reward = list(15 MINUTES, 20 MINUTES)
 	telecrystal_reward = list(3, 4)
 	given_contractor_rep = 2
 
@@ -67,13 +76,19 @@
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/paramedic,
+		// Science
+		/datum/job/xenobiologist,
 		// Service
 		/datum/job/cook,
+		// Security
+		/datum/job/security_assistant,
+		// Engineering
+		/datum/job/signal_technician,
 	)
 	alive_bonus = 4
 
 /datum/traitor_objective/target_player/kidnapping/rare
-	progression_reward = list(8 MINUTES, 12 MINUTES)
+	progression_reward = list(20 MINUTES, 25 MINUTES)
 	telecrystal_reward = list(4, 5)
 	given_contractor_rep = 3
 
@@ -83,21 +98,25 @@
 		/datum/job/chief_medical_officer,
 		/datum/job/head_of_personnel,
 		/datum/job/research_director,
+		/datum/job/nanotrasen_representative,
+		/datum/job/bridge_assistant,
 		// Security
 		/datum/job/detective,
 		/datum/job/security_officer,
 		/datum/job/warden,
+		/datum/job/brig_physician,
 	)
 	alive_bonus = 5
 
 /datum/traitor_objective/target_player/kidnapping/captain
-	progression_reward = list(12 MINUTES, 16 MINUTES)
+	progression_reward = list(25 MINUTES, 30 MINUTES)
 	telecrystal_reward = list(5, 6)
 	given_contractor_rep = 4
 
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
+		/datum/job/blueshield,
 	)
 	alive_bonus = 6
 
@@ -145,16 +164,17 @@
 	var/datum/mind/target_mind = pick(possible_targets)
 	target = target_mind.current
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
-	var/list/possible_areas = GLOB.the_station_areas.Copy()
-	for(var/area/possible_area as anything in possible_areas)
-		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors) \
-			|| ispath(possible_area, /area/station/science/ordnance))
-			possible_areas -= possible_area
+	var/static/list/forbidden_areas = typecacheof(list(/area/station/hallway, /area/station/security, /area/station/science/ordnance))
+	var/list/possible_areas = list()
+	for(var/area/possible_area as anything in GLOB.the_station_areas)
+		if(is_type_in_typecache(possible_area, forbidden_areas) || initial(possible_area.outdoors) || !GLOB.areas_by_type[possible_area])
+			continue
+		possible_areas |= GLOB.areas_by_type[possible_area]
 
 	dropoff_area = pick(possible_areas)
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
-	replace_in_name("%AREA%", initial(dropoff_area.name))
+	replace_in_name("%AREA%", dropoff_area.get_original_area_name())
 	replace_in_name("%TC%", alive_bonus)
 	var/base = pick_list(WANTED_FILE, "basemessage")
 	var/verb_string = pick_list(WANTED_FILE, "verb")
@@ -191,12 +211,12 @@
 			var/area/user_area = get_area(user)
 			var/area/target_area = get_area(target)
 
-			if(user_area.type != dropoff_area)
-				to_chat(user, span_warning("You must be in [initial(dropoff_area.name)] to call the extraction pod."))
+			if(user_area != dropoff_area)
+				to_chat(user, span_warning("You must be in [dropoff_area.get_original_area_name()] to call the extraction pod."))
 				return
 
-			if(target_area.type != dropoff_area)
-				to_chat(user, span_warning("[target.real_name] must be in [initial(dropoff_area.name)] for you to call the extraction pod."))
+			if(target_area != dropoff_area)
+				to_chat(user, span_warning("[target.real_name] must be in [dropoff_area.get_original_area_name()] for you to call the extraction pod."))
 				return
 
 			call_pod(user)
@@ -271,7 +291,7 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-	sent_mob.reagents?.add_reagent(/datum/reagent/medicine/omnizine, 20) //if people end up going with contractors too often(I doubt they will) we can port skyrats wounding stuff
+	sent_mob.apply_status_effect(/datum/status_effect/contractor_healing)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))
@@ -286,16 +306,13 @@
 			continue
 		possible_turfs += open_turf
 
-	if(!LAZYLEN(possible_turfs))
-		var/turf/new_turf = get_safe_random_station_turf()
-		if(!new_turf) //SOMEHOW
-			to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-				be able to handle our pod... You will die here instead.\"</i></span>")))
-			if (sent_mob.can_heartattack())
-				sent_mob.set_heartattack(TRUE)
-			return
-
-		possible_turfs += new_turf
+	var/turf/return_turf = get_safe_random_station_turf_equal_weight()
+	if(!return_turf) //SOMEHOW
+		to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
+			be able to handle our pod... You will die here instead.\"</i></span>")))
+		if (sent_mob.can_heartattack())
+			sent_mob.set_heartattack(TRUE)
+		return
 
 	var/obj/structure/closet/supplypod/return_pod = new()
 	return_pod.bluespace = TRUE
@@ -319,7 +336,7 @@
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
-	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
+	new /obj/effect/pod_landingzone(return_turf, return_pod)
 
 /// Returns a list of things that the provided mob has which we would rather that they do not have
 /datum/traitor_objective/target_player/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)
@@ -327,5 +344,31 @@
 	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
 		belongings += internal_bag.contents
 	return belongings
+
+/datum/status_effect/contractor_healing
+	id = "contractor_healing"
+	duration = 15 SECONDS
+	alert_type = null
+
+/datum/status_effect/contractor_healing/on_apply()
+	. = ..()
+	owner.add_homeostasis_level(id, owner.standard_body_temperature, 2.5 KELVIN)
+	owner.losebreath = 0
+
+/datum/status_effect/contractor_healing/on_remove()
+	. = ..()
+	owner.remove_homeostasis_level(id)
+
+/datum/status_effect/contractor_healing/tick(seconds_between_ticks)
+	var/needs_update = FALSE
+	var/base_healing = 1
+	if(owner.health <= owner.crit_threshold)
+		base_healing *= 2
+	needs_update += owner.adjustBruteLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-base_healing * seconds_between_ticks, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	needs_update += owner.adjustOxyLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 #undef CONTRACTOR_RANSOM_CUT

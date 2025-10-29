@@ -11,7 +11,7 @@
 /datum/uplink_item/bundles_tc/random
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
-	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
+	item = ABSTRACT_UPLINK_ITEM
 	cost = 0
 	cost_override_string = "Varies"
 
@@ -34,7 +34,6 @@
 	if(possible_items.len)
 		var/datum/uplink_item/uplink_item = pick(possible_items)
 		log_uplink("[key_name(user)] purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining")
-		add_event_to_buffer(user, data = "purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining", log_key = "UPLINK")
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(uplink_item.name))
 		handler.purchase_item(user, uplink_item)
 	handler.debug_mode = debug_mode //monkestation edit
@@ -47,18 +46,7 @@
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
 	purchase_log_vis = FALSE
-
-/datum/uplink_item/bundles_tc/telecrystal/five
-	name = "5 Raw Telecrystals"
-	desc = "Five telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/five
-	cost = 5
-
-/datum/uplink_item/bundles_tc/telecrystal/twenty
-	name = "20 Raw Telecrystals"
-	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/twenty
-	cost = 20
+	purchasable_from = NONE
 
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"

@@ -8,6 +8,14 @@
 
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
+	///our color palette
+	var/datum/color_palette/palette
+	///our palette key
+	var/palette_key
+	///our fallback key
+	var/fallback_key
+	///list of palette keys to colors used if the accessory says it needs multiple colors
+	var/list/color_keys
 
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
@@ -19,6 +27,9 @@
 /datum/bodypart_overlay/proc/get_secondary_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
 	. = get_image_inner(layer, limb)
+
+/datum/bodypart_overlay/proc/get_extended_overlay(layer, obj/item/bodypart/limb)
+	return
 
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)

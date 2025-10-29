@@ -3,6 +3,7 @@
 
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
+	construction_type = /obj/item/pipe/directional/scrubber
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
@@ -14,6 +15,7 @@
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///The mode of the scrubber (ATMOS_DIRECTION_SCRUBBING or ATMOS_DIRECTION_SIPHONING)
 	var/scrubbing = ATMOS_DIRECTION_SCRUBBING
@@ -86,30 +88,6 @@
 	. = ..()
 	disconnect_from_area(area_to_unregister)
 
-///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
-	if(!islist(filter_or_filters))
-		filter_or_filters = list(filter_or_filters)
-
-	for(var/gas_to_filter in filter_or_filters)
-		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
-
-		if(ispath(translated_gas, /datum/gas))
-			filter_types |= translated_gas
-			continue
-
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
-	return TRUE
-
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/remove_filters(filter_or_filters)
 	if(!islist(filter_or_filters))
@@ -122,16 +100,7 @@
 			filter_types -= translated_gas
 			continue
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas
-
-	if(isopenturf(our_turf))
-		turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 // WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
@@ -148,17 +117,7 @@
 			else
 				filter_types |= translated_gas
 
-	var/turf/open/our_turf = get_turf(src)
-
-	if(!isopenturf(our_turf))
-		return FALSE
-
-	var/datum/gas_mixture/turf_gas = our_turf.air
-
-	if(!turf_gas)
-		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	atmos_conditions_changed()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -185,17 +144,6 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/try_update_atmos_process()
-	var/turf/open/turf = get_turf(src)
-	if (!istype(turf))
-		return
-
-	var/datum/gas_mixture/turf_gas = turf.air
-	if (isnull(turf_gas))
-		return
-
-	check_atmos_process(turf, turf_gas, turf_gas.temperature)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(idle_power_usage)
@@ -218,14 +166,14 @@
 		investigate_log("was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
 
 	src.scrubbing = scrubbing
-	update_appearance(UPDATE_ICON)
-	try_update_atmos_process()
+	atmos_conditions_changed()
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
 	src.widenet = widenet
-	update_appearance(UPDATE_ICON)
 	update_power_usage()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
@@ -369,7 +317,7 @@
 		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the scrubber."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
@@ -405,11 +353,12 @@
 
 	if(welded)
 		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
+		balloon_alert(user, "welded!")
 		return
 
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
+	user.balloon_alert_to_viewers("plunging scrubber...", "plunging clogged scrubber...")
 	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		clogged = FALSE
 
 /**

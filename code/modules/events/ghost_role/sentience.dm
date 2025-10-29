@@ -28,6 +28,9 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	description = "An animal or robot becomes sentient!"
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_SPOOKY, TAG_MAGICAL)
+	dont_spawn_near_roundend = TRUE
 
 
 /datum/round_event/ghost_role/sentience
@@ -50,7 +53,12 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates
-	candidates = get_candidates(ROLE_SENTIENCE, ROLE_SENTIENCE)
+	candidates = SSpolling.poll_ghost_candidates(
+		"Would you like to be a random animal?",
+		role = ROLE_SENTIENCE,
+		alert_pic = /obj/item/slimepotion/slime/sentience,
+		role_name_text = role_name
+	)
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
@@ -74,19 +82,19 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 	if(!potential.len)
 		return WAITING_FOR_SOMETHING
-	if(!candidates.len)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/spawned_animals = 0
-	while(spawned_animals < animals && candidates.len && potential.len)
+	while(spawned_animals < animals && length(candidates) && potential.len)
 		var/mob/living/selected = popleft(potential)
 		var/mob/dead/observer/picked_candidate = pick_n_take(candidates)
 
 		spawned_animals++
 
-		selected.key = picked_candidate.key
+		selected.PossessByPlayer(picked_candidate.key)
 
-		selected.grant_all_languages(TRUE, FALSE, FALSE)
+		selected.grant_all_languages(UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_ATOM)
 
 		if (isanimal(selected))
 			var/mob/living/simple_animal/animal_selected = selected

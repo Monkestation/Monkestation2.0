@@ -1,17 +1,21 @@
 #define MINIMUM_BREAK_FORCE 10
 /mob/living/basic/chicken/stone
 	icon_suffix = "stone"
+	worn_slot_flags = null
 
 	breed_name = "Stone"
 	egg_type = /obj/item/food/egg/stone
-	mutation_list = list(/datum/mutation/ranching/chicken/cockatrice)
+	mutation_list = list(/datum/ranching_mutation/chicken/cockatrice)
 
 	book_desc = "These chickens are capable of replicating materials the eggs have been plated with. The downside, you need to break the eggs to get the materials. This will make chickens very sad and make some become hostile."
+	liked_foods = list(/obj/item/food/grown/cannabis = 3)
+
 /obj/item/food/egg/stone
 	name = "Rocky Egg"
 	icon_state = "stone"
 
 	layer_hen_type = /mob/living/basic/chicken/stone
+	turf_requirements = list(/turf/open/floor/fakebasalt)
 
 /obj/item/food/egg/stone/attackby(obj/item/attacked_item, mob/user, params)
 	. = ..()
@@ -25,6 +29,6 @@
 		new production_type.type(src.loc, 1)
 		for(var/mob/living/basic/chicken/viewer_chicken in view(3, src))
 			visible_message("<span class='notice'>[viewer_chicken] becomes upset from seeing an egg broken near them!</span>")
-			viewer_chicken.happiness -= 10
+			SEND_SIGNAL(viewer_chicken, COMSIG_HAPPINESS_ADJUST, -10, user)
 		qdel(src)
 #undef MINIMUM_BREAK_FORCE

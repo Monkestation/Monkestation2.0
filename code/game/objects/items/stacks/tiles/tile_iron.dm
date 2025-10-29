@@ -5,7 +5,7 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	mats_per_unit = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/iron
@@ -79,7 +79,6 @@
 		/obj/item/stack/tile/iron/showroomfloor,
 		/obj/item/stack/tile/iron/solarpanel,
 		/obj/item/stack/tile/iron/freezer,
-		/obj/item/stack/tile/iron/grimy,
 		/obj/item/stack/tile/iron/sepia,
 	)
 
@@ -117,7 +116,7 @@
 		)
 		use(4)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -133,7 +132,7 @@
 		)
 		use(2)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base
@@ -604,12 +603,15 @@
 	turf_type = /turf/open/floor/iron/freezer
 	merge_type = /obj/item/stack/tile/iron/freezer
 
+//MONKESTATION REMOVAL
+/*
 /obj/item/stack/tile/iron/grimy
 	name = "grimy floor tile"
 	singular_name = "grimy floor tile"
 	icon_state = "tile_grimy"
 	turf_type = /turf/open/floor/iron/grimy
 	merge_type = /obj/item/stack/tile/iron/grimy
+*/
 
 /obj/item/stack/tile/iron/sepia
 	name = "sepia floor tile"

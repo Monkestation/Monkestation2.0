@@ -34,12 +34,18 @@
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
 		wag(FALSE)
+
+	return ..()
+
+/obj/item/organ/external/tail/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
+
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
+
 
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
@@ -52,6 +58,9 @@
 	else
 		stop_wag()
 	owner.update_body_parts()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.update_mutant_bodyparts()
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag()
@@ -72,10 +81,10 @@
 	var/wagging = FALSE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
-	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
+	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
-	return GLOB.tails_list
+	return GLOB.tails_list_human
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -99,12 +108,18 @@
 	return GLOB.tails_list_human
 
 /obj/item/organ/external/tail/monkey
+	name = "monkey tail"
+	preference = "feature_monkey_tail"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
+
+	dna_block = null
 
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey
-	color_source = NONE
 	feature_key = "tail_monkey"
+
+/datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
+	return GLOB.tails_list_monkey
 
 /obj/item/organ/external/tail/lizard
 	name = "lizard tail"
@@ -131,18 +146,16 @@
 		paired_spines = null
 
 /obj/item/organ/external/tail/lizard/start_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = TRUE
+	return ..()
 
 /obj/item/organ/external/tail/lizard/stop_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = FALSE
+	return ..()
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard

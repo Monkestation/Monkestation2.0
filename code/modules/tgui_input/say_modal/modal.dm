@@ -31,11 +31,16 @@
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
+	/// monkestation addition
+	/// stores whichever channel the window was opened with
+	/// ideally this would instead be the window's selected channel but that will require a more involved change
+	var/initial_channel
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
+	winset(client, "tgui_say", "size=1,1;is-visible=0;")
 	window.subscribe(src, PROC_REF(on_message))
 	window.is_browser = TRUE
 
@@ -62,10 +67,13 @@
  */
 /datum/tgui_say/proc/load()
 	window_open = FALSE
-	winshow(client, "tgui_say", FALSE)
+
+	winset(client, "tgui_say", "pos=848,500;is-visible=0;")
+
 	window.send_message("props", list(
-		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
-		maxLength = max_length,
+		"lightMode" = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
+		"scale" = client.prefs?.read_preference(/datum/preference/toggle/ui_scale),
+		"maxLength" = max_length,
 	))
 	stop_thinking()
 	return TRUE
@@ -83,10 +91,11 @@
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
 	if(payload["channel"] != OOC_CHANNEL && (payload["channel"] != ADMIN_CHANNEL) && (payload["channel"] != MENTOR_CHANNEL))
+		// monkestation edit start
+		initial_channel = payload["channel"]
+		// monkestation edit end
 		start_thinking()
-	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators enabled.")
-	else
+	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
 	return TRUE
 
@@ -97,10 +106,11 @@
 /datum/tgui_say/proc/close()
 	window_open = FALSE
 	stop_thinking()
-	if(client.typing_indicators)
-		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators enabled.")
-	else
+	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators DISABLED.")
+	// monkestation edit start
+	initial_channel = null
+	// monkestation edit end
 
 /**
  * The equivalent of ui_act, this waits on messages from the window
@@ -117,10 +127,10 @@
 		close()
 		return TRUE
 	if (type == "thinking")
-		if(payload["mode"] == TRUE)
+		if(payload["visible"] == TRUE)
 			start_thinking()
 			return TRUE
-		if(payload["mode"] == FALSE)
+		if(payload["visible"] == FALSE)
 			stop_thinking()
 			return TRUE
 		return FALSE

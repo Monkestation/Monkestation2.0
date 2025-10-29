@@ -17,18 +17,20 @@ SUBSYSTEM_DEF(station_coloring)
 	var/list/green = list("#50b47c", "#59b25d", "#46955a", "#4ba17b")
 	//BLUE (Some of Medbay areas)
 	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
+	//ORANGE (engineering)
+	var/list/orange = list("#f3a852", "#f39d3a", "#c47010", "#f08913", "#fc8600")
 
 /datum/controller/subsystem/station_coloring/Initialize()
 	var/list/color_palette = list(
 		pick(red)          = typesof(/area/station/security),
 		pick(purple)       = typesof(/area/station/science),
-		pick(green)        = list(/area/station/medical/virology,
-		                        /area/station/service/hydroponics),
+		pick(green)        = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
 		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
+		pick(orange)	   = typesof(/area/station/engineering),
 	)
 
 	for(var/color in color_palette)
@@ -38,8 +40,9 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/proc/color_area_objects(list/possible_areas, color) // paint in areas
 	for(var/type in possible_areas)
-		for(var/obj/structure/window/W in GLOB.areas_by_type[type]) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
-			W.change_color(color)
+		for(var/obj/structure/window/window in GLOB.areas_by_type[type]) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
+			if(window.uses_color)
+				window.change_color(color)
 		if(wall_trims)
 			for(var/turf/closed/wall/wall in GLOB.areas_by_type[type])
 				if(wall.wall_trim)

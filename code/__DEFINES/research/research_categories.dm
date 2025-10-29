@@ -159,6 +159,7 @@
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR "/Janitorial Cyborgs"
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SECURITY "/Security Cyborgs"
 #define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING "/Mining Cyborgs"
+#define RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER "/Peacekeeper Cyborgs" //Monkestation addition
 
 #define RND_CATEGORY_MODSUITS "/MOD Suits"
 #define RND_SUBCATEGORY_MODUITS_CHASSIS "/Chassis"
@@ -178,6 +179,7 @@
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_1 "/Tier 1 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_2 "/Tier 2 Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_3 "/Tier 3 Cybernetic Organs"
+#define RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS "/Synthetic Organs" //Monkestation addition
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT "/Combat Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC "/Miscellaneous Cybernetic Organs"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT "/Cybernetic Combat Implants"
@@ -185,6 +187,8 @@
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS "/Cybernetic Implanting Tools"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY "/Cybernetic Utility Implants"
 #define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC "/Cybernetic Miscellaneous Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY "/Cybernetic Security Implants"
+#define RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS "/Cybernetic Advanced Limbs"
 
 // Limb Categories
 #define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"

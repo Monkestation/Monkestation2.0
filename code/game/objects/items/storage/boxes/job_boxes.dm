@@ -42,6 +42,9 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
+	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
+		new /obj/item/climbing_hook/emergency(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -62,6 +65,7 @@
 /obj/item/storage/box/survival/mining/PopulateContents()
 	..()
 	new /obj/item/crowbar/red(src)
+	new /obj/item/healthanalyzer/simple/miner(src)
 
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
@@ -123,7 +127,7 @@
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-/obj/item/storage/box/survival/security/radio/PopulateContents()
+/obj/item/storage/box/survival/security/PopulateContents() //monkestation edit
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
@@ -184,18 +188,19 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/bodypart/arm/left/robot) || istype(tool, /obj/item/bodypart/arm/right/robot))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		balloon_alert(user, "wheels added, honk!")
+			return FALSE
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return FALSE
+		qdel(tool)
+		loc.balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
+		return FALSE
 	else
 		return ..()
 
@@ -221,11 +226,23 @@
 	illustration = "heart"
 	foldable_result = null
 	mask_type = null
+	var/random_funny_internals = TRUE
+
+/obj/item/storage/box/survival/hug/PopulateContents()
+	if(!random_funny_internals)
+		return ..()
+	internal_type = pick(
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
+			)
+	return ..()
 
 //Mime survival box
 /obj/item/storage/box/survival/hug/black
 	icon_state = "hugbox_black"
 	illustration = "heart_black"
+	random_funny_internals = FALSE
 
 //Duplicated suicide/attack self procs, since the survival boxes are a subtype of box/survival
 /obj/item/storage/box/survival/hug/suicide_act(mob/living/user)
@@ -288,6 +305,7 @@
 	desc = "Contains spares of every science job skillchip."
 
 /obj/item/storage/box/skillchips/science/PopulateContents()
+	new/obj/item/skillchip/job/research_director(src)
 	new/obj/item/skillchip/job/roboticist(src)
 	new/obj/item/skillchip/job/roboticist(src)
 

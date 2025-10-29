@@ -30,8 +30,8 @@ type VariableButtonProps = {
   value: any;
 };
 
-const VariableItem = (props: VariableButtonProps, context) => {
-  const { act } = useBackend<Data>(context);
+const VariableItem = (props: VariableButtonProps) => {
+  const { act } = useBackend<Data>();
   const { label, variable, value } = props;
 
   return (
@@ -43,8 +43,8 @@ const VariableItem = (props: VariableButtonProps, context) => {
   );
 };
 
-export const MovablePhysicsTester = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const MovablePhysicsTester = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     target_name,
     physics_flags,
@@ -121,7 +121,8 @@ export const MovablePhysicsTester = (props, context) => {
                     width="100%"
                     height="100%"
                     color={!(physics_flags & 2) ? 'bad' : 'good'}
-                    onClick={() => act('pause')}>
+                    onClick={() => act('pause')}
+                  >
                     {!(physics_flags & 2) ? 'Paused' : 'Running'}
                   </Button>
                 </Stack.Item>
@@ -129,7 +130,8 @@ export const MovablePhysicsTester = (props, context) => {
                   <Button
                     width="100%"
                     height="100%"
-                    onClick={() => act('physics_chungus_deluxe')}>
+                    onClick={() => act('physics_chungus_deluxe')}
+                  >
                     PCD
                   </Button>
                 </Stack.Item>

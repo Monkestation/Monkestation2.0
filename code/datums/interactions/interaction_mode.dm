@@ -1,7 +1,7 @@
-GLOBAL_REAL_VAR(list/available_interaction_modes) = list(
+GLOBAL_REAL_VAR(list/available_interaction_modes = list(
 	IMODE_COMBAT_MODE = /datum/interaction_mode/combat_mode,
 	IMODE_INTENTS = /datum/interaction_mode/intents3
-)
+))
 
 /mob/proc/log_istate()
 	if(!istate)
@@ -16,6 +16,7 @@ GLOBAL_REAL_VAR(list/available_interaction_modes) = list(
 	if(istate & ISTATE_CONTROL)
 		. += "CONTROL"
 	return jointext(., ", ")
+
 /datum/interaction_mode
 	var/shift_to_open_context_menu = FALSE
 	var/client/owner
@@ -23,26 +24,28 @@ GLOBAL_REAL_VAR(list/available_interaction_modes) = list(
 
 /datum/interaction_mode/New(client/C)
 	owner = C
-	if (owner?.mob?.hud_used.has_interaction_ui)
+	if (owner?.mob?.hud_used?.has_interaction_ui)
 		owner.mob.hud_used.static_inventory += procure_hud(owner.mob, owner.mob.hud_used)
 
-/datum/interaction_mode/Destroy(force, ...)
+/datum/interaction_mode/Destroy(force)
 	owner = null
 	if (UI)
-		UI.hud.static_inventory -= UI
-		QDEL_NULL(UI)
+		UI.hud?.static_inventory -= UI
+		if(!QDELETED(UI))
+			qdel(UI)
+		UI = null
 	return ..()
 
 /datum/interaction_mode/proc/reload_hud(mob/M)
 	if (UI)
-		owner.mob.hud_used.static_inventory -= UI
-	if (M.hud_used.has_interaction_ui)
+		owner.mob.hud_used?.static_inventory -= UI
+	if (M.hud_used?.has_interaction_ui)
 		M.hud_used.static_inventory += procure_hud(owner.mob, owner.mob.hud_used)
 
 /datum/interaction_mode/proc/replace(datum/interaction_mode/IM)
 	IM = new IM (owner)
-	if (UI)
-		UI?.hud.static_inventory -= UI
+	if (!QDELETED(UI))
+		UI.hud?.static_inventory -= UI
 	owner.imode = IM
 	qdel(src)
 

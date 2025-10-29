@@ -64,6 +64,8 @@
 				/obj/item/seeds/poppy = 3,
 				/obj/item/seeds/rose = 3,
 				/obj/item/seeds/sunflower = 3,
+				/obj/item/seeds/harebell = 3,
+				/obj/item/seeds/poppy/lily = 3,
 			),
 		),
 
@@ -79,7 +81,7 @@
 				/obj/item/seeds/wheat/rice = 3,
 				/obj/item/seeds/tea = 3,
 				/obj/item/seeds/tobacco = 3,
-				/obj/item/seeds/tower = 3,
+				/obj/item/seeds/tree = 3,
 				/obj/item/seeds/wheat = 3,
 			),
 		),

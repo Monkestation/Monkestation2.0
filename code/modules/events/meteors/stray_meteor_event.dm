@@ -1,9 +1,9 @@
 /datum/round_event_control/stray_meteor
 	name = "Stray Meteor"
 	typepath = /datum/round_event/stray_meteor
-	weight = 15 //Number subject to change based on how often meteors actually collide with the station
+	weight = 18 //Number subject to change based on how often meteors actually collide with the station
 	min_players = 15
-	max_occurrences = 3
+	max_occurrences = 6
 	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "Throw a random meteor somewhere near the station."
@@ -11,6 +11,9 @@
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/listed_options/stray_meteor)
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_SPACE, TAG_EXTERNAL)
+	event_group = /datum/event_group/debris
 
 /datum/round_event/stray_meteor
 	announce_when = 1

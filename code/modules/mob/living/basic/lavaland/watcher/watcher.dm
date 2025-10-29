@@ -1,4 +1,4 @@
-/// A floating eyeball which keeps its distance and plays red light/green light with you.
+/// A floating eyeball which keeps its distance and sometimes makes you look away.
 /mob/living/basic/mining/watcher
 	name = "watcher"
 	desc = "A levitating, monocular creature held aloft by wing-like veins. A sharp spine of crystal protrudes from its body."
@@ -27,7 +27,7 @@
 	/// What kind of beams we got?
 	var/projectile_type = /obj/projectile/temp/watcher
 	/// Icon state for our eye overlay
-	var/eye_glow = "ice_glow"
+	var/eye_glow = "watcher_glow"
 	/// Sound to play when we shoot
 	var/shoot_sound = 'sound/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
@@ -59,11 +59,6 @@
 	)
 	update_appearance(UPDATE_OVERLAYS)
 
-	var/datum/action/cooldown/mob_cooldown/watcher_overwatch/overwatch = new(src)
-	overwatch.Grant(src)
-	overwatch.projectile_type = projectile_type
-	ai_controller.set_blackboard_key(BB_WATCHER_OVERWATCH, overwatch)
-
 	var/datum/action/cooldown/mob_cooldown/watcher_gaze/gaze = new gaze_attack(src)
 	gaze.Grant(src)
 	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, gaze)
@@ -71,7 +66,10 @@
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "watcher_emissive", src)
+	if (stat == DEAD)
+		return
+	. += emissive_appearance(icon, "watcher_emissive", src/*, effect_type = EMISSIVE_NO_BLOOM */)
+	. += emissive_appearance(icon, "watcher_emissive_bloom", src)
 
 /// I love eating diamonds yum
 /mob/living/basic/mining/watcher/proc/consume(atom/movable/thing)
@@ -100,6 +98,7 @@
 	icon_state = "watcher_icewing"
 	icon_living = "watcher_icewing"
 	icon_dead = "watcher_icewing_dead"
+	eye_glow = "ice_glow"
 	maxHealth = 130
 	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing

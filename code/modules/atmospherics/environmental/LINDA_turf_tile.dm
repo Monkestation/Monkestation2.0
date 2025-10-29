@@ -58,10 +58,7 @@
 	if(!blocks_air)
 		air = create_gas_mixture()
 		if(planetary_atmos)
-			if(!SSair.planetary[initial_gas_mix])
-				var/datum/gas_mixture/immutable/planetary/mix = new
-				mix.parse_string_immutable(initial_gas_mix)
-				SSair.planetary[initial_gas_mix] = mix
+			CACHE_PLANETARY_ATMOS(initial_gas_mix)
 	. = ..()
 
 /turf/open/Destroy()
@@ -271,7 +268,8 @@
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
-		if(!isopenturf(enemy_tile))
+		if(!istype(enemy_tile))
+			stack_trace("closed turf inside of adjacent turfs")
 			continue
 		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
 		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
@@ -302,7 +300,7 @@
 				our_excited_group = excited_group //update our cache
 		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air)) //Lets see if you're up for it
+		else if(our_air.compare(enemy_air, ARCHIVE)) //Lets see if you're up for it
 			SSair.add_to_active(enemy_tile) //Add yourself young man
 			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
@@ -330,7 +328,7 @@
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
 		LINDA_CYCLE_ARCHIVE(src)
-		if(our_air.compare(planetary_mix))
+		if(our_air.compare(planetary_mix, ARCHIVE))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
 				new_group.add_turf(src)
@@ -637,9 +635,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 /turf/open/finish_superconduction()
 	//Conduct with air on my tile if I have it
-	if(!blocks_air)
+	if(..((blocks_air ? temperature : air.temperature)) != FALSE && !blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
-	..((blocks_air ? temperature : air.temperature))
 
 ///Should we attempt to superconduct?
 /turf/proc/consider_superconductivity(starting)

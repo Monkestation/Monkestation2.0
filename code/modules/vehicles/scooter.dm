@@ -92,7 +92,8 @@
 
 	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
-	rider.stamina.adjust(-instability*6)
+	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
+	rider.stamina.adjust(-instability* 6 * tony_hawk)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.stamina.loss >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
@@ -105,11 +106,11 @@
 			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
+		if((!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat))) && tony_hawk != 0.5)
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
 		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
-		rider.Paralyze(8 SECONDS)
+		rider.Paralyze((8 * tony_hawk) SECONDS)
 		if(iscarbon(bumped_thing))
 			var/mob/living/carbon/victim = bumped_thing
 			var/grinding_mulitipler = 1
@@ -131,7 +132,8 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.stamina.adjust(-instability*0.3)
+	var/tony_hawk = HAS_TRAIT(skater, TRAIT_PRO_SKATER) ? 0.5 : 1
+	skater.stamina.adjust(-instability * 0.3 * tony_hawk)
 	if(skater.stamina.loss >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
@@ -139,7 +141,7 @@
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
 		visible_message(span_danger("[skater] loses [skater.p_their()] footing and slams on the ground!"))
-		skater.Paralyze(4 SECONDS)
+		skater.Paralyze((4 * tony_hawk) SECONDS)
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
@@ -147,21 +149,20 @@
 	var/turf/location = get_turf(src)
 
 	if(location)
-		if(prob(25))
+		if(prob(25 / tony_hawk)) //pro skaters are extra radical
 			location.hotspot_expose(1000,1000)
 			sparks.start() //the most radical way to start plasma fires
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
 			playsound(location, 'sound/items/trayhit2.ogg', 40)
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
-			victim.Paralyze(1.5 SECONDS)
-			skater.stamina.adjust(-instability)
+			victim.Paralyze((1.5 / tony_hawk) SECONDS)
+			skater.stamina.adjust(-instability * tony_hawk)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)
@@ -210,13 +211,13 @@
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stack/sheet/iron))
+/obj/item/scooter_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/stack/sheet/iron))
 		return ..()
-	if(!I.tool_start_check(user, amount=5))
+	if(!attacking_item.tool_start_check(user, amount=5))
 		return
 	to_chat(user, span_notice("You begin to add wheels to [src]."))
-	if(!I.use_tool(src, user, 80, volume=50, amount=5))
+	if(!attacking_item.use_tool(src, user, 80, volume=50, amount=5))
 		return
 	to_chat(user, span_notice("You finish making wheels for [src]."))
 	new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
@@ -233,13 +234,13 @@
 /obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stack/rods))
+/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/stack/rods))
 		return ..()
-	if(!I.tool_start_check(user, amount=2))
+	if(!attacking_item.tool_start_check(user, amount=2))
 		return
 	to_chat(user, span_notice("You begin making handlebars for [src]."))
-	if(!I.use_tool(src, user, 25, volume=50, amount=2))
+	if(!attacking_item.use_tool(src, user, 25, volume=50, amount=2))
 		return
 	to_chat(user, span_notice("You add the rods to [src], creating handlebars."))
 	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)
@@ -301,6 +302,9 @@
 ///Sets the shoes that the vehicle is associated with, called when the shoes are initialized
 /obj/vehicle/ridden/scooter/skateboard/wheelys/proc/link_shoes(newshoes)
 	shoes = newshoes
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/cheap
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 	name = "roller skates"

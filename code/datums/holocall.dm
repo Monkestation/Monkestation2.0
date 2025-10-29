@@ -1,4 +1,4 @@
-/mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
 	if(!H?.move_hologram(eye_user, destination))
@@ -24,7 +24,7 @@
 	var/list/dialed_holopads
 
 	///user's eye, once connected
-	var/mob/camera/ai_eye/remote/holo/eye
+	var/mob/eye/ai_eye/remote/holo/eye
 	///user's hologram, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram
 	///hangup action
@@ -34,10 +34,10 @@
 	///calls from a head of staff autoconnect, if the receiving pad is not secure.
 	var/head_call = FALSE
 
-//creates a holocall made by `caller` from `calling_pad` to `callees`
-/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
+//creates a holocall made by `caller_user` from `calling_pad` to `callees`
+/datum/holocall/New(mob/living/caller_user, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
 	call_start_time = world.time
-	user = caller
+	user = caller_user
 	calling_pad.outgoing_call = src
 	calling_holopad = calling_pad
 	head_call = elevated_access
@@ -223,7 +223,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -238,9 +238,9 @@
 	QDEL_NULL(record)
 	return ..()
 
-/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/holodisk))
-		var/obj/item/disk/holodisk/holodiskOriginal = W
+/obj/item/disk/holodisk/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/holodisk))
+		var/obj/item/disk/holodisk/holodiskOriginal = attacking_item
 		if (holodiskOriginal.record)
 			if (!record)
 				record = new

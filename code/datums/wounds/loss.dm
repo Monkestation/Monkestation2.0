@@ -11,6 +11,15 @@
 
 	threshold_minimum = WOUND_DISMEMBER_OUTRIGHT_THRESH // not actually used since dismembering is handled differently, but may as well assign it since we got it
 
+/datum/wound_pregen_data/loss/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types, datum/wound/old_wound, random_roll, duplicates_allowed, care_about_existing_wounds)
+	. = ..()
+	if(!. || limb.body_zone != BODY_ZONE_CHEST)
+		return
+	// Stupid way of preventing weird organ dupes with oozelings.
+	// Any extra implants/organs they have will be inside of their core when they die anyways.
+	if(isoozeling(limb.owner))
+		return FALSE
+
 /datum/wound/loss
 	name = "Dismemberment Wound"
 	desc = "oof ouch!!"
@@ -48,8 +57,9 @@
 	set_limb(dismembered_part)
 	second_wind()
 	log_wound(victim, src)
-	if(dismembered_part.can_bleed() && wounding_type != WOUND_BURN && victim.blood_volume)
+	if(dismembered_part.can_bleed() && wounding_type != WOUND_BURN)
 		victim.spray_blood(attack_direction, severity)
+		victim.blood_particles(amount = rand(3, 6), angle = 0, min_deviation = 0, max_deviation = 360)
 	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE, wounding_type = wounding_type)
 	qdel(src)
 	return TRUE

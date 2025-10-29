@@ -1,8 +1,7 @@
 
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
-#define NONSENSICAL_VALUE -99999
-/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE, l_color = NONSENSICAL_VALUE, l_on)
+/atom/proc/set_light(l_outer_range, l_inner_range, l_power, l_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE, l_color = NONSENSICAL_VALUE, l_on, update = TRUE)
 	if(!isnum(l_power) && !isnull(l_power))
 		return
 	if(l_outer_range > 0 && l_outer_range < MINIMUM_USEFUL_LIGHT_RANGE)
@@ -29,16 +28,15 @@
 	if(!isnull(l_on))
 		set_light_on(l_on)
 
-	update_light()
-
-#undef NONSENSICAL_VALUE
+	if(update)
+		update_light()
 
 /// Will update the light (duh).
 /// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if(light_system != STATIC_LIGHT)
+	if(light_system != COMPLEX_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 
 	if (!light_power || !light_outer_range || !light_on) // We won't emit light anyways, destroy the light source.
@@ -49,11 +47,10 @@
 		else
 			. = loc
 
-		if (light) // Update the light or create it if it does not exist.
+		if (!QDELETED(light)) // Update the light or create it if it does not exist.
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
-
 
 /**
  * Updates the atom's opacity value.
@@ -68,7 +65,6 @@
 	. = opacity
 	opacity = new_opacity
 
-
 /atom/movable/set_opacity(new_opacity)
 	. = ..()
 	if(isnull(.) || !isturf(loc))
@@ -79,35 +75,23 @@
 	else
 		RemoveElement(/datum/element/light_blocking)
 
-
 /turf/set_opacity(new_opacity)
 	. = ..()
 	if(isnull(.))
 		return
 	recalculate_directional_opacity()
 
-/atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	return
+/atom/proc/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj)
+	if(!duration)
+		stack_trace("Lighting FX obj created on \[[type]\] without a duration")
+	var/obj/effect/dummy/light_obj = new light_type(get_turf(src), range, power, color, duration)
+	return light_obj
 
+/mob/living/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj/moblight)
+	return mob_light(range, power, color, duration)
 
-/turf/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	if(!_duration)
-		stack_trace("Lighting FX obj created on a turf without a duration")
-	new /obj/effect/dummy/lighting_obj (src, _range, _power, _color, _duration)
-
-
-/obj/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	if(!_duration)
-		stack_trace("Lighting FX obj created on a obj without a duration")
-	new /obj/effect/dummy/lighting_obj (get_turf(src), _range, _power, _color, _duration)
-
-
-/mob/living/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
-	mob_light(_range, _power, _color, _duration)
-
-
-/mob/living/proc/mob_light(_range, _power, _color, _duration)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _range, _power, _color, _duration)
+/mob/living/proc/mob_light(range, power, color, duration, light_type = /obj/effect/dummy/lighting_obj/moblight)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new light_type(src, range, power, color, duration)
 	return mob_light_obj
 
 /// Setter for the light power of this atom.
@@ -151,6 +135,17 @@
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
+	if(!new_color) // monkestation edit: trying to trace down what's doing this.
+		var/color_desc
+		if(isnull(new_color))
+			color_desc = "null"
+		else if(istext(new_color))
+			color_desc = "blank string"
+		else
+			color_desc = "false value ([new_color])"
+		stack_trace("tried to set light color of [src] ([type]) to [color_desc]!")
+	else if(islist(new_color))
+		stack_trace("tried to set light color of [src] ([type]) to a list: [json_encode(new_color)]!")
 	if(new_color == light_color)
 		return
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)

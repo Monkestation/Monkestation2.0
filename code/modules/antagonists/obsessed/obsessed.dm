@@ -1,15 +1,18 @@
 /datum/antagonist/obsessed
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
-	antagpanel_category = "Other"
+	antagpanel_category = ANTAG_GROUP_CREW
 	job_rank = ROLE_OBSESSED
+	show_to_ghosts = TRUE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
-	count_against_dynamic_roll_chance = FALSE
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
+	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	antag_count_points = 3
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
@@ -26,7 +29,7 @@
 	C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
 
 /datum/antagonist/obsessed/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()
@@ -36,12 +39,13 @@
 
 /datum/antagonist/obsessed/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.hair_color = "#bb9966" // Brown
-	victim_dummy.hairstyle = "Messy"
-	victim_dummy.update_body_parts()
+	victim_dummy.set_haircolor("#bb9966", update = FALSE)
+	victim_dummy.set_hairstyle("Messy", update = TRUE)
 
 	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
-	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
+	blood_icon.Blend(COLOR_BLOOD, ICON_MULTIPLY)
+	obsessed_icon.Blend(blood_icon, ICON_OVERLAY)
 
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)
 
@@ -64,7 +68,7 @@
 	suit = /obj/item/clothing/suit/apron
 
 /datum/outfit/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 

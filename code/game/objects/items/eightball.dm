@@ -157,12 +157,12 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=[REF(src)];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK, header = "Magic eightball")
-
-/obj/item/toy/eightball/haunted/Topic(href, href_list)
-	if(href_list["interact"])
-		if(isobserver(usr))
-			interact(usr)
+	notify_ghosts(
+		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
+		source = src,
+		action = NOTIFY_PLAY,
+		header = "Magic eightball",
+	)
 
 /obj/item/toy/eightball/haunted/get_answer()
 	var/top_amount = 0
@@ -212,7 +212,7 @@
 		data["answers"] += list(L)
 	return data
 
-/obj/item/toy/eightball/haunted/ui_act(action, params)
+/obj/item/toy/eightball/haunted/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

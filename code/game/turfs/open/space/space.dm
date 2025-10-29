@@ -9,7 +9,6 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-	var/starlight_source_count = 0
 
 	var/destination_z
 	var/destination_x
@@ -108,9 +107,12 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 /turf/open/space/remove_air(amount)
 	return null
 
+/turf/open/space/proc/update_starlight()
+	SSstarlight.turfs_to_update |= src
+
 /// Updates starlight. Called when we're unsure of a turf's starlight state
 /// Returns TRUE if we succeed, FALSE otherwise
-/turf/open/space/proc/update_starlight()
+/turf/open/space/proc/immediate_update_starlight()
 	for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		// I've got a lot of cordons near spaceturfs, be good kids
 		if(isspaceturf(t) || istype(t, /turf/cordon))
@@ -121,8 +123,11 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	set_light(l_on = FALSE)
 	return FALSE
 
-/// Turns on the stars, if they aren't already
 /turf/open/space/proc/enable_starlight()
+	SSstarlight.turfs_to_enable |= src
+
+/// Turns on the stars, if they aren't already
+/turf/open/space/proc/immediate_enable_starlight()
 	if(space_lit)
 		set_light(l_color = GLOB.starlight_color, l_on = TRUE)
 
@@ -218,9 +223,9 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 		if(RCD_CATWALK)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
-				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 1)
-			else
 				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
+			else
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 4)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -250,6 +255,9 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	destination_y = dest_y
 	destination_z = dest_z
 
+/turf/open/space/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'
 	icon_state = MAP_SWITCH("pure_white", "invisible")
@@ -266,6 +274,13 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
+
+/turf/open/space/openspace/Destroy()
+	// Signals persist through destroy, GO HOME
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		UnregisterSignal(below, COMSIG_TURF_CHANGE)
+	return ..()
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE

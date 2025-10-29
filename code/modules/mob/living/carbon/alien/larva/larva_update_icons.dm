@@ -5,10 +5,11 @@
 
 /mob/living/carbon/alien/larva/update_icons()
 	var/state = 0
-	if(amount_grown > 80)
-		state = 2
-	else if(amount_grown > 50)
-		state = 1
+	if(!HAS_TRAIT(src, TRAIT_NEUTERED))
+		if(amount_grown > 80)
+			state = 2
+		else if(amount_grown > 50)
+			state = 1
 
 	if(stat == DEAD)
 		icon_state = "larva[state]_dead"
@@ -21,7 +22,7 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/perform_update_transform() //All this is handled in update_icons()
+/mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
 	. = ..()
 	update_icons()
 

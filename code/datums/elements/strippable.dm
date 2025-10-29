@@ -38,18 +38,34 @@
 
 	if (user == source)
 		return
-
 	if (over != user)
 		return
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		return
 
-	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
+	// Snowflake for cyborgs buckling people by dragging them onto them, unless in combat mode.
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/cyborg_user = user
 		if (!(cyborg_user.istate & ISTATE_HARM))
 			return
 
+	// Snowflake for xeno consumption code
+	if (isalienadult(user))
+		var/mob/living/carbon/alien/adult/alien = user
+		if (alien.grab_state == GRAB_AGGRESSIVE && alien.pulling == source)
+			return
+
+	if(HAS_TRAIT(user, TRAIT_CANT_STRIP)) // This is a monkestation addition and is used for mayhem in a bottle.
+		return
+
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
+
+	// Snowflake for mob scooping
+	if (isliving(source))
+		var/mob/living/mob = source
+		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))
+			return
 
 	var/datum/strip_menu/strip_menu
 
@@ -58,6 +74,7 @@
 		LAZYSET(strip_menus, source, strip_menu)
 
 	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item
@@ -266,8 +283,8 @@
 	source.log_message("had [item] put on them by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
-/proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item)))
+/proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay, hidden = FALSE)
+	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item), hidden = hidden))
 		return FALSE
 
 	return TRUE
@@ -339,7 +356,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
+		if (isnull(item) || HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP))
 			items[strippable_key] = result
 			continue
 
@@ -475,7 +492,7 @@
 		ui_status_only_living(user, owner),
 		ui_status_user_has_free_hands(user, owner),
 		ui_status_user_is_adjacent(user, owner, allow_tk = FALSE),
-		HAS_TRAIT(user, TRAIT_CAN_STRIP) ? UI_INTERACTIVE : UI_UPDATE,
+		HAS_TRAIT(user, TRAIT_CAN_STRIP) && !HAS_TRAIT(user, TRAIT_CANT_STRIP) ? UI_INTERACTIVE : UI_UPDATE, // monkestation edit
 		max(
 			ui_status_user_is_conscious_and_lying_down(user),
 			ui_status_user_is_abled(user, owner),

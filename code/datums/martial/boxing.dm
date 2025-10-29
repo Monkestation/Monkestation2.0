@@ -8,8 +8,11 @@
 	return TRUE
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
-	to_chat(attacker, span_warning("Can't grab while boxing!"))
-	return TRUE
+	if(defender.body_position == LYING_DOWN)
+		return
+	else
+		to_chat(attacker, span_warning("They need to be down first!"))
+		return TRUE
 
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 
@@ -20,7 +23,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
+	var/damage = 25
 	if(!damage)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s [atk_verb] misses [defender]!"), \
@@ -41,8 +44,8 @@
 
 	defender.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(attacker_human, defender, "punched (boxing) ")
-	if(defender.stamina.loss > 50 && istype(defender.mind?.martial_art, /datum/martial_art/boxing))
-		var/knockout_prob = defender.stamina.loss_as_percent + rand(-15,15)
+	if(defender.stamina.loss > 235 && istype(defender.mind?.martial_art, /datum/martial_art/boxing))
+		var/knockout_prob = 10 // 10% chance to win by knockout when they are around one hit from stam crit anyways
 		if((defender.stat != DEAD) && prob(knockout_prob))
 			defender.visible_message(span_danger("[attacker_human] knocks [defender] out with a haymaker!"), \
 							span_userdanger("You're knocked unconscious by [attacker_human]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker_human)

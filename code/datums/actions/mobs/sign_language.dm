@@ -24,13 +24,14 @@
 	if(!owner)
 		return
 
+	RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
+	RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
+
 	if (HAS_TRAIT(grant_to, TRAIT_MUTE))
-		RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
 		// Convenience. Mute Carbons can only speak with sign language.
 		if (!active)
 			Activate()
 	else
-		RegisterSignal(grant_to, SIGNAL_ADDTRAIT(TRAIT_MUTE), PROC_REF(on_muted))
 		// Convenience. Only display action if the Carbon isn't mute.
 		show_action()
 
@@ -48,11 +49,13 @@
 	active = TRUE
 	ADD_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You are now communicating with sign language."))
+	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/innate/sign_language/Deactivate()
 	active = FALSE
 	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You have stopped using sign language."))
+	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /// Shows the linked action to the owner Carbon.
 /datum/action/innate/sign_language/proc/show_action()
@@ -75,7 +78,6 @@
 /datum/action/innate/sign_language/proc/on_muted()
 	SIGNAL_HANDLER
 
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
 	hide_action()
 	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
 	if (!HAS_TRAIT(owner, TRAIT_SIGN_LANG))

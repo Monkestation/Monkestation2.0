@@ -9,12 +9,12 @@
 @use '../colors.scss' with (
   $primary: #ad2350,
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
   $color-bg: #2a314a,
   $color-bg-grad-spread: 6%,
-  $border-radius: 2px,
+  $border-radius: 2px
 );
 
 .theme-abductor {
@@ -30,6 +30,14 @@
       'color-selected': #465899,
       'color-caution': #be6209,
       'color-danger': #9a9d00
+    )
+  );
+  @include meta.load-css(
+    '../components/ImageButton.scss',
+    $with: (
+      'color-default': darken(colors.$primary, 20%),
+      'color-disabled': #363636,
+      'color-selected': #465899
     )
   );
   @include meta.load-css(

@@ -5,11 +5,15 @@
 	job_rank = ROLE_FUGITIVE
 	silent = TRUE //greet called by the event
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
+	antagpanel_category = ANTAG_GROUP_FUGITIVES
 	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "fugitive"
 	suicide_cry = "FOR FREEDOM!!"
 	preview_outfit = /datum/outfit/prisoner
 	count_against_dynamic_roll_chance = FALSE
+	antag_flags = parent_type::antag_flags
+	antag_count_points = 1 //barely anything
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"

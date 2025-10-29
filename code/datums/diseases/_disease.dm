@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
-	var/mob/living/carbon/affected_mob = null
+	var/mob/living/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	/// The probability of spreading through the air every second
 	var/infectivity = 41
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
-	var/slowdown = affected_mob.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(has_cure())
 		if(SPT_PROB(cure_chance, seconds_per_tick))
@@ -106,18 +106,14 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) || HAS_TRAIT(affected_mob, TRAIT_NOBREATH) || affected_mob.check_airborne_sterility())
+		return
+
+	if((affected_mob.stat == DEAD) && process_dead == FALSE) // Only create clouds if we process our dead.
 		return
 
 	affected_mob.spread_airborne_diseases()
-	/*
-	var/turf/T = affected_mob.loc
-	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
-			var/turf/V = get_turf(C)
-			if(disease_air_spread_walk(T, V))
-				C.AirborneContractDisease(src, force_spread)
-	*/
+
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
@@ -134,7 +130,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		return TRUE
 	return FALSE
 
-/datum/disease/proc/cure(add_resistance = TRUE)
+/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target) // monkestation edit: AAAAAAAAAAAAA
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
@@ -186,18 +182,29 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		"subID",
 		"uniqueID",
 		"childID",
-		"symptoms",
 		"stageprob",
 		"antigen",
 		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()
+	if(disease_flags & DISEASE_COPYSTAGE)
+		D.stage = stage
+
 	for(var/V in copy_vars)
 		var/val = vars[V]
 		if(islist(val))
 			var/list/L = val
 			val = L.Copy()
 		D.vars[V] = val
+
+	var/list/new_symptoms = list()
+	for(var/datum/symptom/symptom as anything in symptoms)
+		var/datum/symptom/copied_symptom = symptom.Copy()
+		new_symptoms += copied_symptom
+		SEND_SIGNAL(copied_symptom, COMSIG_SYMPTOM_ATTACH, D)
+
+	D.symptoms = new_symptoms
+
 	return D
 
 /datum/disease/proc/after_add()

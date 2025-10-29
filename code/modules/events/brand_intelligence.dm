@@ -1,3 +1,4 @@
+/* monkestation edit: overwritten in [code\modules\events\brand_intelligence.dm]
 /datum/round_event_control/brand_intelligence
 	name = "Brand Intelligence"
 	typepath = /datum/round_event/brand_intelligence
@@ -33,6 +34,7 @@
 	)
 
 /datum/round_event/brand_intelligence/setup()
+	// MONKE EDIT: fully overridden in <monkestation/code/modules/events/brand_intelligence.dm>
 	//select our origin machine (which will also be the type of vending machine affected.)
 	for(var/obj/machinery/vending/vendor in GLOB.machines)
 		if(!is_station_level(vendor.z))
@@ -92,3 +94,4 @@
 
 /datum/event_admin_setup/listed_options/brand_intelligence/apply_to_event(datum/round_event/brand_intelligence/event)
 	event.chosen_vendor_type = chosen
+*/

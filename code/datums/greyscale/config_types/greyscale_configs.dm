@@ -23,11 +23,6 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -296,10 +291,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
@@ -634,10 +649,9 @@
 	icon_file = 'icons/obj/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ties.json'
 
-/datum/greyscale_config/ties_worn
-	name = "Worn Ties"
+/datum/greyscale_config/ties/worn
+	name = "Ties (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
 
 /datum/greyscale_config/heck_suit
 	name = "H.E.C.K. Suit"
@@ -698,6 +712,38 @@
 	name = "Worn Sundress"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
+
+//MONKESTATION ADDITION START
+/datum/greyscale_config/ballgown
+	name = "Ballgown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown.json'
+
+/datum/greyscale_config/ballgown_worn
+	name = "Worn Ballgown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+
+/datum/greyscale_config/wlpinafore
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore.json'
+
+/datum/greyscale_config/wlpinafore_worn
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore_worn.json'
+
+/datum/greyscale_config/ribbondress
+	name = "Ribboned Gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress.json'
+
+/datum/greyscale_config/ribbondress_worn
+	name = "Ribboned Gown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
+//MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
 	name = "Beanie"
@@ -801,7 +847,7 @@
 
 /datum/greyscale_config/buckets
 	name = "Buckets"
-	icon_file = 'icons/obj/janitor.dmi'
+	icon_file = 'icons/obj/service/janitor.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buckets.json'
 
 /datum/greyscale_config/buckets_worn
@@ -1035,67 +1081,6 @@
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
 
-/datum/greyscale_config/simian
-	name = "simian Clothing"
-	icon_file = 'monkestation/icons/mob/gags/clothing/simian_fallbacks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under.json'
-
-/datum/greyscale_config/simian/under
-	name = "simian Under"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under.json'
-
-/datum/greyscale_config/simian/under_skirt
-	name = "simian Skirt"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under_skirt.json'
-
-/datum/greyscale_config/simian/shoes
-	name = "simian Shoes"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/shoes.json'
-
-/datum/greyscale_config/simian/gloves
-	name = "simian Gloves"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/gloves.json'
-
-/datum/greyscale_config/simian/glasses
-	name = "simian Glasses"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/glasses.json'
-
-/datum/greyscale_config/simian/coat
-	name = "simian Coat"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/coat.json'
-
-/datum/greyscale_config/simian/armor
-	name = "simian Armor"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/armor.json'
-
-/datum/greyscale_config/simian/backpack
-	name = "simian Backpack"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/backpack.json'
-
-/datum/greyscale_config/simian/spacesuit
-	name = "simian Spacesuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/spacesuit.json'
-
-/datum/greyscale_config/simian/cloak
-	name = "simian Cloak"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/cloak.json'
-
-/datum/greyscale_config/simian/tie
-	name = "simian Tie"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/tie.json'
-
-/datum/greyscale_config/simian/scarf
-	name = "simian Scarf"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/scarf.json'
-
-/datum/greyscale_config/simian/modcontrol
-	name = "simian Modsuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/modcontrol.json'
-
-/datum/greyscale_config/simian/hardsuit
-	name = "simian Hardsuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/hardsuit.json'
-
 /datum/greyscale_config/lizard
 	name = "lizard Clothing"
 	icon_file = 'monkestation/icons/mob/gags/clothing/lizard_fallbacks.dmi'
@@ -1140,6 +1125,16 @@
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
 
+/datum/greyscale_config/admincloak
+	name = "admincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloak.json'
+
+/datum/greyscale_config/admincloak_worn
+	name = "wadmincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloakworn.json'
+
 /datum/greyscale_config/fish_analyzer_inhand_left
 	name = "Held Fish Analyzer, Left"
 	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -1159,6 +1154,15 @@
 *	MASKS
 */
 
+/datum/greyscale_config/kitsune
+	name = "Kitsune mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/kitsune.json'
+
+/datum/greyscale_config/kitsune/worn
+	name = "Kitsune mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+
 // BANDANAS
 
 /datum/greyscale_config/bandana_worn/snouted
@@ -1177,6 +1181,36 @@
 *	SUITS
 */
 
+// JACKETS
+
+/datum/greyscale_config/tailcoat
+	name = "Tailcoat"
+	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat.json'
+
+/datum/greyscale_config/tailcoat_worn
+	name = "Worn Tailcoat"
+	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_worn.json'
+
+/datum/greyscale_config/tailcoat_worn/digitigrade
+	name = "Worn Tailcoat - Digitigrade"
+	icon_file = DIGITIGRADE_SUIT_FILE
+
+/datum/greyscale_config/tailcoat_bar
+	name = "Bartender's Tailcoat"
+	icon_file = 'monkestation/icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar.json'
+
+/datum/greyscale_config/tailcoat_bar_worn
+	name = "Worn Bartender's Tailcoat"
+	icon_file = 'monkestation/icons/mob/clothing/suit.dmi'
+	json_config = 'code/datums/greyscale/json_configs/tailcoat_bar_worn.json'
+
+/datum/greyscale_config/tailcoat_bar_worn/digitigrade
+	name = "Worn Bartender's Tailcoat - Digitigrade"
+	icon_file = DIGITIGRADE_SUIT_FILE
+
 // JUMPSUITS
 
 /datum/greyscale_config/jumpsuit_worn/digitigrade
@@ -1185,6 +1219,20 @@
 
 /datum/greyscale_config/jumpsuit_prison_worn/digitigrade
 	name = "Worn Prison Jumpsuit - Digitigrade"
+	icon_file = DIGITIGRADE_UNIFORM_FILE
+
+/datum/greyscale_config/bunnysuit
+	name = "Worn Bunny Suit"
+	icon_file = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bunnysuit.json'
+
+/datum/greyscale_config/bunnysuit_worn
+	name = "Worn Bunny Suit"
+	icon_file = 'monkestation/icons/mob/clothing/uniform.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bunnysuit_worn.json'
+
+/datum/greyscale_config/bunnysuit_worn/digitigrade
+	name = "Worn Bunny Suit - Digitigrade"
 	icon_file = DIGITIGRADE_UNIFORM_FILE
 
 /*
@@ -1200,3 +1248,112 @@
 /datum/greyscale_config/sneakers_orange_worn/digitigrade
 	name = "Worn Orange Sneakers - Digitigrade"
 	icon_file = DIGITIGRADE_SHOES_FILE
+
+/datum/greyscale_config/heels
+	name = "Heels"
+	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heels.json'
+
+/datum/greyscale_config/heels_worn
+	name = "Worn Heels"
+	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/heels_worn.json'
+
+/datum/greyscale_config/heels_worn/digitigrade
+	name = "Worn Heels - Digitigrade"
+	icon_file = DIGITIGRADE_SHOES_FILE
+
+/datum/greyscale_config/bowtie_collar
+	name = "Bowtie Collar"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bowtie_collar.json'
+
+/datum/greyscale_config/bowtie_collar_worn
+	name = "Worn Bowtie Collar"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bowtie_collar_worn.json'
+
+/datum/greyscale_config/playbunnyears
+	name = "Playbunny Ears"
+	icon_file = 'monkestation/icons/obj/clothing/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/playbunny_ears.json'
+
+/datum/greyscale_config/playbunnyears_worn
+	name = "Worn Playbunny Ears"
+	icon_file = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	json_config = 'code/datums/greyscale/json_configs/playbunny_ears_worn.json'
+
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
+
+/datum/greyscale_config/manipulator_hand
+	name = "Manipulator Hand"
+	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_hand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/manipulator_hand.json'
+
+/datum/greyscale_config/linjacket
+	name = "Tassled Jacket"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket.json'
+
+/datum/greyscale_config/linjacket_worn
+	name = "Worn Tassled Jacket"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
+
+/datum/greyscale_config/umbrella
+	name = "Umbrella"
+	icon_file = 'icons/obj/weapons/umbrellas.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella.json'
+
+/datum/greyscale_config/umbrella_inhand_left
+	name = "Held Umbrella, Left, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/umbrella_inhand_right
+	name = "Held Umbrella, Right, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/jester_hat
+	name = "jester_hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat.json'
+
+/datum/greyscale_config/jester_hat_worn
+	name = "jeste_hat"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat_worn.json'
+
+/datum/greyscale_config/jester2
+	name = "jester2"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester2.json'
+
+/datum/greyscale_config/jester2_worn
+	name = "jester2"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester2_worn.json'
+
+/datum/greyscale_config/jester
+	name = "jester"
+	icon_file = 'icons/obj/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester.json'
+
+/datum/greyscale_config/jester_worn
+	name = "jester"
+	icon_file = 'icons/mob/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_worn.json'
+
+/datum/greyscale_config/green_jester_shoes
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes.json'
+
+/datum/greyscale_config/green_jester_shoes_worn
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'

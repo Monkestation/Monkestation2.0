@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -56,6 +56,7 @@
 	paddles = new paddle_type(src)
 	update_power()
 	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
@@ -111,7 +112,7 @@
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
-	cell = locate(/obj/item/stock_parts/cell) in contents
+	cell = locate(/obj/item/stock_parts/power_store/cell) in contents
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
@@ -136,14 +137,6 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
-	if(ismob(loc))
-		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell || !cell_removable)
 		return FALSE
@@ -156,20 +149,20 @@
 	update_power()
 	return TRUE
 
-/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
+/obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item == paddles)
 		toggle_paddles()
-	else if(istype(W, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = W
+	else if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/C = attacking_item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
 			if(C.maxcharge < paddles.revivecost)
 				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			cell = W
+			cell = attacking_item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_power()
 	else
@@ -219,10 +212,6 @@
 	if(!(slot_flags & slot))
 		remove_paddles(user)
 		update_power()
-
-/obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot_flags & slot)
-		return TRUE
 
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
@@ -284,10 +273,6 @@
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
 
-/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBeltSlot())
-		return TRUE
-
 /obj/item/defibrillator/compact/loaded/Initialize(mapload)
 	. = ..()
 	cell = new(src)
@@ -312,11 +297,11 @@
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/infinite(src)
+	cell = new /obj/item/stock_parts/power_store/cell/infinite(src)
 	update_power()
 
-/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
+/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item == paddles)
 		toggle_paddles()
 		return
 
@@ -346,7 +331,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
 
-	var/revivecost = 1000
+	var/revivecost = STANDARD_CELL_CHARGE * 0.1
 	var/cooldown = FALSE
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
@@ -577,6 +562,12 @@
 	do_cancel()
 
 /obj/item/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
+	var/target_synthetic = (H.mob_biotypes & MOB_ROBOTIC) // SKYRAT EDIT ADDITION BEGIN - SYNTH REVIVAL
+	if (target_synthetic)
+		to_chat(user, span_boldwarning("[H] is a synthetic lifeform! This defibrillator probably isn't calibrated to revive [H.p_them()] properly and could have some serious consequences! \
+		[span_warning("You might want to [span_blue("surgically revive [H.p_them()]")]...")]"))
+		balloon_alert(user, "target is synthetic!") // immediately grabs their attention even if they dont see chat
+
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
@@ -592,6 +583,9 @@
 						playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 						do_cancel()
 						return
+			if(SEND_SIGNAL(H, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, user, src) & COMPONENT_DEFIB_STOP)
+				do_cancel()
+				return
 			if(H.stat == DEAD)
 				H.visible_message(span_warning("[H]'s body convulses a bit."))
 				playsound(src, SFX_BODYFALL, 50, TRUE)
@@ -650,6 +644,20 @@
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					user.add_mood_event("saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
+					if (target_synthetic)
+						user.visible_message(span_boldwarning("[src] fire a powerful jolt of electricity into [H]'s vulnerable circuitry!"))
+						to_chat(H, span_userdanger("[user]'s defibrillator fires a powerful jolt of electricity into your vulnerable circuitry, overloading it!"))
+						// You may ask, why not just call H.emp_act()?
+						// well my dear reader, that EMPs contents. I only want to EMP bodyparts and organs specifically
+						for (var/obj/item/bodypart/iterated_part as anything in H.bodyparts)
+							iterated_part.emp_act(EMP_LIGHT)
+						for (var/obj/item/organ/iterated_organ as anything in H.organs)
+							iterated_organ.emp_act(EMP_LIGHT)
+						var/obj/item/organ/internal/brain/brain_organ = H.get_organ_slot(ORGAN_SLOT_BRAIN)
+						if (istype(brain_organ))
+							var/datum/brain_trauma/trauma = brain_organ.gain_trauma_type(SYNTH_DEFIBBED_TRAUMA_SEVERITY, TRAUMA_LIMIT_BASIC)
+							if (!QDELETED(trauma))
+								addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_synth_defib_trauma), brain_organ, trauma), SYNTH_DEFIBBED_TRAUMA_DURATION)
 				do_success()
 				return
 			else if (!H.get_organ_by_type(/obj/item/organ/internal/heart))

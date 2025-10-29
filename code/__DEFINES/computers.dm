@@ -5,11 +5,16 @@
 
 #define CATEGORY_GOLEM "Golem"
 #define CATEGORY_MINING "Mining"
-#define CATEGORY_CONSUMABLES "Consumables"
-#define CATEGORY_TOYS_DRONE "Toys & Drones"
+#define CATEGORY_SURVIVAL "Survival"
+#define CATEGORY_CRUSHER "Crushers"
 #define CATEGORY_PKA "PKAs"
+#define CATEGORY_WASTE_WEAPON "Wasteland Weapons"
 #define CATEGORY_BEPIS "Bepis Tech"
+#define CATEGORY_EXTRA "Extra"
 #define CATEGORY_BITRUNNING_FLAIR "Misc"
 #define CATEGORY_BITRUNNING_TECH "Tech"
 #define CATEGORY_BITRUNNING_COMBAT_GEAR "Combat gear" // monkeystation addition: bitrunning tech split up
 #define CATEGORY_BITRUNNING_ABILITIES "Abilities" // monkeystation addition: bitrunning tech split up
+
+///Helper macro for record computers' preview views, used to ensure consistency in all use cases.
+#define USER_PREVIEW_ASSIGNED_VIEW(user_ckey) "preview_[user_ckey]_[REF(src)]_records"

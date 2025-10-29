@@ -14,6 +14,11 @@
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
 	preview_outfit = /datum/outfit/traitor
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
+	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	antag_count_points = 8 //gains more points the more objectives they complete, should also add this to things like heretics
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
 	var/give_secondary_objectives = TRUE
@@ -39,7 +44,8 @@
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
 
-	var/uplink_sale_count = 3
+	var/uplink_sales_min = 4
+	var/uplink_sales_max = 6
 
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
@@ -84,19 +90,22 @@
 			uplink_handler.has_objectives = FALSE
 //monkestation edit end
 
+		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
+		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
+
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost >= TRAITOR_DISCOUNT_MIN_PRICE)
 				if(!length(item.restricted_roles) && !length(item.restricted_species))
 					uplink_items += item
 					continue
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, 1, uplink_items)
+		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, 5, uplink_items) //monkestation edit: from 1 stock to 5
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -106,28 +115,28 @@
 
 	owner.teach_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(uplink_handler)
+	if(!isnull(uplink_handler))
 		uplink_handler.has_objectives = FALSE
+		uplink_handler.can_replace_objectives = null
+		uplink_handler.replace_objectives = null
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
 	var/string = "[to_display.name]"
 	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE || to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
-		string += " <a href='?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
-		string += " <a href='?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
+		string += " <a href='byond://?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
+		string += " <a href='byond://?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
 	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
-		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
-		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
-		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
+		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
 
 	if(to_display.skipped)
 		string += " - <b>Skipped</b>"
@@ -160,8 +169,12 @@
 		result += "[traitor_objective_to_html(objective)]<br>"
 	if(!length(uplink_handler.potential_objectives))
 		result += "EMPTY<br>"
-	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
+	result += "<a href='byond://?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
+
+/// Returns true if we're allowed to assign ourselves a new objective
+/datum/antagonist/traitor/proc/can_change_objectives()
+	return can_assign_self_objectives
 
 /// proc that generates the traitors replacement uplink code and radio frequency
 /datum/antagonist/traitor/proc/generate_replacement_codes()
@@ -194,7 +207,6 @@
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
-	objectives.Cut()
 	var/objective_count = 0
 
 	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
@@ -323,11 +335,9 @@
 	if(objectives.len) //If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				traitor_won = FALSE
+			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 		if(uplink_handler.final_objective)
 			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
@@ -382,6 +392,7 @@
 
 	uniform = /obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/hooded/ablative
+	head = /obj/item/clothing/head/hooded/ablative
 	gloves = /obj/item/clothing/gloves/color/yellow
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
@@ -400,12 +411,3 @@
 
 #undef FLAVOR_FACTION_SYNDICATE
 #undef FLAVOR_FACTION_NANOTRASEN
-
-/datum/antagonist/traitor/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
-	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.equipOutfit(/datum/outfit/job/assistant)
-		newmob.mind.make_traitor()
-	else
-		hosts_mind.make_traitor()

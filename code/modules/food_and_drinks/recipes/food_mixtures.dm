@@ -70,6 +70,14 @@
 	results = list(/datum/reagent/consumable/vanillapudding = 20)
 	required_reagents = list(/datum/reagent/consumable/vanilla = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)
 
+/datum/chemical_reaction/food/flan
+	results = list(/datum/reagent/consumable/flan = 20)
+	required_reagents = list(/datum/reagent/consumable/caramel = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)
+
+/datum/chemical_reaction/food/cherrypudding
+	results = list(/datum/reagent/consumable/cherrypudding = 20)
+	required_reagents = list(/datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)
+
 /datum/chemical_reaction/food/chocolate_bar
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
 
@@ -258,4 +266,23 @@
 /datum/chemical_reaction/food/vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	//reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/food/grounding_neutralise
+	results = list(/datum/reagent/consumable/salt = 2)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 2, /datum/reagent/consumable/grounding_solution = 1)  //Monkestation edit: no enriched
+	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
+	mix_sound = 'sound/weapons/taser.ogg'
+	//reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/martian_batter
+	results = list(/datum/reagent/consumable/martian_batter = 2)
+	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
+	mix_message = "A smooth batter forms."
+	//reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/vinegar
+	results = list(/datum/reagent/consumable/vinegar = 5)
+	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."

@@ -13,6 +13,8 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
+	max_integrity = 600 //Monkestation edit
+	damage_deflection = 75 // can't be damaged with most conventional weapons or tools Monkestation edit
 	rad_insulation = RAD_HEAVY_INSULATION
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
@@ -205,18 +207,17 @@
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
-/turf/closed/wall/r_wall/wall_singularity_pull(current_size)
-	if(current_size >= STAGE_FIVE)
-		if(prob(30))
-			dismantle_wall()
+/turf/closed/wall/r_wall/singularity_pull(datum/component/singularity, current_size)
+	if(current_size >= STAGE_FIVE && prob(30))
+		dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.canRturf)
+	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
 		return ..()
 
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(the_rcd.canRturf)
+	if(the_rcd.canRturf || passed_mode == RCD_WALLFRAME)
 		return ..()
 
 /turf/closed/wall/r_wall/rust_heretic_act()
@@ -228,8 +229,10 @@
 	return ..()
 
 /turf/closed/wall/r_wall/syndicate
-	name = "hull"
-	desc = "The armored hull of an ominous looking ship."
+	//MONKESTATION EDIT - Swapped original name and description into the hull subtype.
+	name = "reinforced plastitanium wall"
+	desc = "A reinforced, ominous wall made of an alloy of plasma and titanium, with plasteel reinforcement layered underneath. Good luck getting through this."
+	//END OF EDIT
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
@@ -259,3 +262,25 @@
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
+
+//MONKESTATION ADDITION - Hull subtype for syndicate r_walls
+/turf/closed/wall/r_wall/syndicate/hull
+	name = "hull"
+	desc = "The armored hull of an ominous looking ship."
+
+/turf/closed/wall/r_wall/syndicate/hull/nodiagonal
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle_nd"
+	base_icon_state = "plastitanium_wall"
+	smoothing_flags = SMOOTH_BITMASK
+
+/turf/closed/wall/r_wall/syndicate/hull/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	smoothing_flags = NONE
+
+/turf/closed/wall/r_wall/syndicate/hull/overspace
+	icon_state = "map-overspace"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	fixed_underlay = list("space" = TRUE)
+//END OF ADDITION

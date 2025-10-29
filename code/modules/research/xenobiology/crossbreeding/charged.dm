@@ -81,7 +81,7 @@ Charged extracts:
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
+	new /obj/item/stock_parts/power_store/cell/emproof/slime/hypercharged(user.drop_location()) // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
 	user.visible_message(span_notice("[src] sparks violently, and swells with electric power!"))
 	..()
 
@@ -170,7 +170,7 @@ Charged extracts:
 		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
 	var/list/choice_list = list()
-	for(var/datum/species/species_type as anything in subtypesof(/datum/species/jelly))
+	for(var/datum/species/species_type as anything in typesof(/datum/species/oozeling))
 		choice_list[initial(species_type.name)] = species_type
 	var/racechoice = tgui_input_list(human_user, "Choose your slime subspecies", "Slime Selection", sort_list(choice_list))
 	if(isnull(racechoice))
@@ -276,6 +276,6 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/S = new(get_turf(user))
-		S.random_colour()
+		var/mob/living/basic/slime/S = new(get_turf(user))
+		S.start_mutating(TRUE)
 	return ..()

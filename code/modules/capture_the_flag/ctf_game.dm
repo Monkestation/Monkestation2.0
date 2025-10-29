@@ -151,7 +151,7 @@
 	new_team_member.prefs.safe_transfer_prefs_to(player_mob, is_antag = TRUE)
 	if(player_mob.dna.species.outfit_important_for_life)
 		player_mob.set_species(/datum/species/human)
-	player_mob.ckey = new_team_member.ckey
+	player_mob.PossessByPlayer(new_team_member.ckey)
 	if(isnull(ctf_player_component))
 		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game, ammo_type)
 		ctf_game.add_player(team, player_mob.ckey, player_component)
@@ -500,17 +500,24 @@
 
 	var/ctf_enabled = FALSE
 	ctf_enabled = ctf_controller.toggle_ctf()
-	for(var/obj/machinery/power/emitter/emitter in ctf_area)
-		emitter.active = ctf_enabled
+	for(var/turf/ctf_turf as anything in get_area_turfs(ctf_area))
+		for(var/obj/machinery/power/emitter/emitter in ctf_turf)
+			emitter.active = ctf_enabled
 	if(user)
 		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)
 		message_admins("CTF has finished a round and automatically restarted.")
-		notify_ghosts("CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",
+			'sound/effects/ghost2.ogg',
+		)
 	else
 		message_admins("The players have spoken! Voting has enabled CTF!")
 	if(!automated)
-		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",'sound/effects/ghost2.ogg')
+		notify_ghosts(
+			"CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",
+			'sound/effects/ghost2.ogg',
+		)
 
 #undef CTF_LOADING_UNLOADED
 #undef CTF_LOADING_LOADING

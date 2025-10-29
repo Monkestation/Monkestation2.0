@@ -50,7 +50,10 @@
 		return
 	user.log_message("has proposed to name the station as \
 		[new_name]", LOG_GAME)
-
+	if(locate_brainrot(new_name))
+		priority_announce("[user] has tried submitting brainrot to Centcom and has been sent to hell.", "Portal To Hell")
+		user.mods_send_them_to_hell(1)
+		priority_announce("")
 	if(standard_station_regex.Find(new_name))
 		to_chat(user, span_notice("Your name has been automatically approved."))
 		rename_station(new_name, user.name, user.real_name, key_name(user))
@@ -59,7 +62,7 @@
 	to_chat(user, span_notice("Your name has been sent to your employers for approval."))
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, PROC_REF(rename_station), new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, span_adminnotice("<b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]"))
+	to_chat(GLOB.admins, span_adminnotice("<b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]"))
 	for(var/client/admin_client in GLOB.admins)
 		if(admin_client.prefs.toggles & SOUND_ADMINHELP)
 			window_flash(admin_client, ignorepref = TRUE)
@@ -109,6 +112,23 @@
 	desc = "A cunning device used to claim ownership of celestial bodies."
 	w_class = WEIGHT_CLASS_HUGE
 	force = 15
+
+/proc/locate_brainrot(string)
+	var/list/brainrot = list(
+		"rizz",
+		"skibbity",
+		"gooner",
+		"gooning",
+		"skibidi",
+		"gyatt",
+		"edging",
+		"edged",
+		"gronk",
+		"sigma",
+	)
+	for(var/rot in brainrot)
+		if(findtext(string, rot))
+			return TRUE
 
 /obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)

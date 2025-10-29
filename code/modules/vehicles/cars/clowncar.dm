@@ -9,10 +9,11 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 8
 	light_power = 2
 	light_on = FALSE
+	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
@@ -76,8 +77,8 @@
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
-		for(var/mob/voreman as anything in return_drivers())
-			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
+		for(var/mob/victim as anything in return_drivers())
+			victim.client.give_award(/datum/award/achievement/misc/round_and_full, victim)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.loc != src) || user.environment_smash >= ENVIRONMENT_SMASH_WALLS)
@@ -196,7 +197,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)

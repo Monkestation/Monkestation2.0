@@ -1,6 +1,6 @@
-/datum/disease/advanced/premade/cold
+/datum/disease/acute/premade/cold
 	name = "Common Cold"
-	form = "Virus"
+	form = "Viral Infection"
 	category = DISEASE_COLD
 
 	symptoms = list(
@@ -10,7 +10,7 @@
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	robustness = 45
-	
+
 	infectionchance = 70
 	infectionchance_base = 86
 	can_kill = list("Bacteria")

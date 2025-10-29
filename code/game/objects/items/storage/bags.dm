@@ -21,6 +21,7 @@
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/bag
 
 /obj/item/storage/bag/Initialize(mapload)
 	. = ..()
@@ -34,7 +35,7 @@
 /obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -124,6 +125,8 @@
 	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
 	var/mob/listeningTo
+	var/datum/component/connect_loc_behalf/connector
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_listener_turf_entered))
 	///Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
@@ -143,14 +146,25 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		qdel(connector)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
+	connector = AddComponent(/datum/component/connect_loc_behalf, user, loc_connections)
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
 	if(listeningTo)
+		QDEL_NULL(connector)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
+
+/obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [tool] into [src]. \
+			Perhaps you should break it down first, or find an ore box."))
+		return ITEM_INTERACT_BLOCKING
+
+	return NONE
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -200,6 +214,12 @@
 
 	spam_protection = FALSE
 
+/obj/item/storage/bag/ore/proc/on_listener_turf_entered(datum/source, atom/movable/thing, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	// isturf(old_loc) check is important, else we just immediately scoop anything we deposit on the floor right back up
+	if(listeningTo && isturf(old_loc) && is_type_in_typecache(thing, atom_storage.can_hold))
+		pickup_ores(listeningTo)
+
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
 
@@ -237,6 +257,7 @@
 		/obj/item/reagent_containers/honeycomb,
 		/obj/item/graft,
 		/obj/item/disk/plantgene,
+		/obj/item/paper,
 		))
 ////////
 
@@ -264,11 +285,10 @@
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
-/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
-	if(user.incapacitated())
-		return
+/obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
+	return CLICK_ACTION_SUCCESS
 
 // -----------------------------
 //        Sheet Snatcher
@@ -280,7 +300,7 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
-	worn_icon_state = "satchel"
+	worn_icon_state = "construction_bag" //monkestation edit
 
 	var/capacity = 300; //the number of sheets it can carry.
 
@@ -327,8 +347,9 @@
 	atom_storage.set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
-		/obj/item/storage/book,
-		))
+		/obj/item/book,
+		/obj/item/poster,
+	))
 
 /*
  * Trays - Agouri
@@ -345,7 +366,7 @@
 	throw_range = 5
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/storage/bag/tray/Initialize(mapload)
@@ -445,6 +466,7 @@
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -475,8 +497,12 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/weapon/virusdish,//Monkestation Addition
+		/obj/item/food/monkeycube/mouse,//Monkestation Addition
+		/obj/item/disk/disease,
 		))
 
 /*
@@ -496,6 +522,9 @@
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 25
 	atom_storage.set_holdable(list(
+//MONKESTATION EDIT START
+		/obj/item/autoslime,
+//MONKESTATION EDIT END
 		/obj/item/bodypart,
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
@@ -504,14 +533,15 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/syringe,
+//MONKESTATION EDIT START
+		/obj/item/slimecross,
+//MONKESTATION EDIT END
 		/obj/item/slime_extract,
 		/obj/item/swab,
+		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
-
-/*
- *  Construction bag (for engineering, holds stock parts and electronics)
- */
 
 /obj/item/storage/bag/construction
 	name = "construction bag"
@@ -520,26 +550,12 @@
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/construction/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 50
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list(
-		/obj/item/assembly,
-		/obj/item/circuitboard,
-		/obj/item/electronics,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_parts,
-		/obj/item/wallframe/camera,
-		))
+	storage_type = /datum/storage/bag/construction
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
@@ -556,5 +572,71 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
+
+/obj/item/storage/bag/rebar_quiver
+	name = "rebar quiver"
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
+	icon_state = "rebar_quiver"
+	worn_icon_state = "rebar_quiver"
+	inhand_icon_state = "rebar_quiver"
+	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
+	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/rebar_quiver
+
+/obj/item/storage/bag/rebar_quiver/syndicate
+	icon_state = "syndie_quiver_0"
+	worn_icon_state = "syndie_quiver_0"
+	inhand_icon_state = "holyquiver"
+	base_icon_state = "syndie_quiver"
+	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
+		Clearly a better design than a cut up oxygen tank..."
+	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	actions_types = list(/datum/action/item_action/reload_rebar)
+	storage_type = /datum/storage/bag/rebar_quiver/syndicate
+
+/obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
+	for(var/to_fill in 1 to 20)
+		new /obj/item/ammo_casing/rebar/syndie(src)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/update_icon_state()
+	. = ..()
+	switch(contents.len)
+		if(0)
+			icon_state = "[base_icon_state]" + "_0"
+		if(1 to 7)
+			icon_state = "[base_icon_state]" + "_1"
+		if(8 to 13)
+			icon_state = "[base_icon_state]" + "_2"
+		if(14 to 20)
+			icon_state = "[base_icon_state]" + "_3"
+
+/obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/reload_rebar))
+		reload_held_rebar(user)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
+	if(!contents.len)
+		user.balloon_alert(user, "no bolts left!")
+		return
+	var/obj/held_item = user.get_active_held_item()
+	if(!istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+		user.balloon_alert(user, "no held crossbow!")
+		return
+	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
+	if(length(held_crossbow.magazine.stored_ammo) >= held_crossbow.magazine.max_ammo)
+		user.balloon_alert(user, "no more room!")
+		return
+	if(!do_after(user, 1.2 SECONDS, user, IGNORE_USER_LOC_CHANGE))
+		return
+
+	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
+	held_crossbow.attackby(ammo_to_load, user)
 
 #undef ORE_BAG_BALOON_COOLDOWN

@@ -1,9 +1,11 @@
 #define BP_MAX_ROOM_SIZE 300
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/engineering/main, \
-															    /area/station/engineering/supermatter, \
-															    /area/station/engineering/atmospherics_engine, \
-															    /area/station/ai_monitored/turret_protected/ai))
+GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
+	/area/station/engineering/main,
+	/area/station/engineering/supermatter,
+	/area/station/engineering/atmospherics_engine,
+	/area/station/ai_monitored/turret_protected/ai,
+)))
 
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
@@ -86,6 +88,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	// Ignore these areas and dont let people expand them. They can expand into them though
 	var/static/list/blacklisted_areas = typecacheof(list(
 		/area/space,
+		/area/station/asteroid,
 		))
 
 	var/error = ""
@@ -145,7 +148,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
 	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
 	 */
-	var/area/affected_areas = list()
+	var/list/area/affected_areas = list()
 	for(var/turf/the_turf as anything in turfs)
 		var/area/old_area = the_turf.loc
 
@@ -158,7 +161,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		//inform atoms on the turf that their area has changed
 		for(var/atom/stuff as anything in the_turf)
 			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, oldA)
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
 			//register the stuff to its new area. special exception for apc as its not registered to this signal
 			if(istype(stuff, /obj/machinery/power/apc))
@@ -172,6 +175,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	if(!isarea(area_choice) && newA.static_lighting)
 		newA.create_area_lighting_objects()
 
+	newA.ambient_buzz = null //no
 	//convert map to list
 	var/list/area/area_list = list()
 	for(var/area_name in affected_areas)
@@ -191,6 +195,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		//no more turfs in this area. Time to clean up
 		if(!merged_area.has_contained_turfs())
 			qdel(merged_area)
+
+	//MONKESTATION ADDITION - force lighting update to fix lighting bugs in custom areas, this is a REALLY shitty solution please replace it at the earliest convenience
+	for(var/turf/unlit_turf as anything in turfs)
+		unlit_turf.ChangeTurf(unlit_turf.type)
+	//END OF ADDITION
 
 	return TRUE
 
@@ -270,13 +279,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	// Now their turfs
 	var/list/turfs = list()
 	for(var/area/pull_from as anything in areas_to_pull)
-		var/list/our_turfs = pull_from.get_contained_turfs()
-		if(target_z == 0)
-			turfs += our_turfs
+		if (target_z == 0)
+			for (var/list/zlevel_turfs as anything in pull_from.get_zlevel_turf_lists())
+				turfs += zlevel_turfs
 		else
-			for(var/turf/turf_in_area as anything in our_turfs)
-				if(target_z == turf_in_area.z)
-					turfs += turf_in_area
+			turfs += pull_from.get_turfs_by_zlevel(target_z)
 	return turfs
 
 

@@ -1,23 +1,10 @@
-/datum/uplink_item/bundles_tc/bulldog
-	name = "Bulldog bundle"
-	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g buckshot drums, and a pair of Thermal imaging goggles."
-	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	cost = 13 // normally 16
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/bundles_tc/c20r
-	name = "C-20r bundle"
-	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a suppressor at discount price."
-	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	cost = 14 // normally 16
-	purchasable_from = UPLINK_NUKE_OPS
-
+//Monkestation edit: Bulldog and c20r moved to uplink kits
 /datum/uplink_item/bundles_tc/cyber_implants
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
 	item = /obj/item/storage/box/cyber_implants
 	cost = 40
+	surplus = 30
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/medical
@@ -26,6 +13,7 @@
 			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 25 // normally 31
+	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/sniper
@@ -54,6 +42,16 @@
 			*NOT* for usage with Reinforcements, and does not brainwash the target!"
 	item = /obj/item/storage/box/syndie_kit/induction_kit
 	cost = 10
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/bundles_tc/cowboy
+	name = "Syndicate Outlaw Kit"
+	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
+	Now you can be just like 'em! \
+	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with a complimentary apple to tame. \
+	A lighter is also included, though you must supply your own smokes."
+	item = /obj/item/storage/box/syndie_kit/cowboy
+	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/rawketlawnchair
@@ -99,6 +97,7 @@
 	item = /obj/item/firing_pin/clown/ultra
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+	surplus = 80
 
 /datum/uplink_item/dangerous/clownopsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -107,6 +106,7 @@
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+	surplus = 80
 
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"
@@ -122,7 +122,7 @@
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			24-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/ballistic/automatic/c20r
-	cost = 13
+	cost = 10
 	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -269,13 +269,13 @@
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/ammo/a40mm
-	name = "40mm Grenade Box"
-	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. \
-			Your teammates will ask you to not shoot these down small hallways."
-	item = /obj/item/ammo_box/a40mm
-	cost = 6
-	purchasable_from = UPLINK_NUKE_OPS
+//MONKESTATION REMOVAL
+// /datum/uplink_item/ammo/a40mm
+// 	name = "40mm Grenade Box"
+// 	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. Your teammates will ask you to not shoot these down small hallways."
+// 	item = /obj/item/ammo_box/a40mm
+// 	cost = 6
+// 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/smg/bag
 	name = ".45 Ammo Duffel Bag"
@@ -432,16 +432,16 @@
 
 /datum/uplink_item/ammo/mech/bag
 	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer. Contains a Bluespace Comprression kit for easier logistics."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/mauler/bag
 	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
+	desc = "A duffel bag containing ammo for three full reloads of the LMG and SRM-8 missile laucher that are equipped on a standard Mauler exosuit. Contains two Bluespace Comprression kits for easier logistics."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	cost = 6
+	cost = 8
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/explosives/bombanana
@@ -525,6 +525,14 @@
 	surplus = 35
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/dangerous/syndicat
+	name = "Syndie cat grenade"
+	desc = "This grenade is filled with 3 trained angry cats in special syndicate modsuits. Upon activation, the Syndicate cats are awoken and unleashed unto unlucky bystanders."
+	item = /obj/item/grenade/spawnergrenade/cat/syndicate
+	cost = 20
+	surplus = 50
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
 /datum/uplink_item/explosives/pinata
 	name = "Weapons Grade Pinata Kit"
 	desc = "A pinata filled with both candy and explosives as well as two belts to carry them on, crack it open and see what you get!"
@@ -551,6 +559,7 @@
 	cost = 20
 	purchasable_from = UPLINK_CLOWN_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement
 	name = "Reinforcements"
@@ -558,16 +567,15 @@
 		They'll come equipped with a mere surplus SMG, so arming them is recommended."
 	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
-	refundable = TRUE
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
 			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	refundable = TRUE
 	cost = 65
 	restricted = TRUE
 
@@ -577,7 +585,6 @@
 			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
 			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 
@@ -587,7 +594,6 @@
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
 			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 
@@ -597,12 +603,14 @@
 			for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
 	cost = 80
+	surplus = 40
 
 /datum/uplink_item/support/honker
 	name = "Dark H.O.N.K."
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
 	item = /obj/vehicle/sealed/mecha/honker/dark/loaded
 	cost = 80
+	surplus = 60
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/support/mauler
@@ -611,6 +619,24 @@
 			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 140
+
+/datum/uplink_item/support/devitt
+	name = "Devitt Mk3 Light Tank"
+	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 80
+
+/datum/uplink_item/support/lighttankammo
+	name = "40mm cannon ammo"
+	desc = "5 crated shells for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankammo
+	cost = 2
+
+/datum/uplink_item/support/lighttankmgammo
+	name = "12.7x70mm tank mg ammo"
+	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankmg
+	cost = 1
 
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
@@ -725,7 +751,7 @@
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/anti_stun
+	item = /obj/item/storage/box/syndie_kit/anti_stun
 	cost = 12
 	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = UPLINK_NUKE_OPS
@@ -748,27 +774,19 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
 
+/datum/uplink_item/implants/fakemacro
+	name = "Macrorevival Implant"
+	desc = "An implant injected into the body, and later activated automatically upon death. \
+			Upon death, fakes the effects of a macrobomb before injecting a variety of medicines and restarting your heart. Only works once."
+	item = /obj/item/storage/box/syndie_kit/imp_fakemacro
+	cost = 16
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/reviver
+	item = /obj/item/storage/box/syndie_kit/reviver
 	cost = 8
-	surplus = 30 //monkestation edit: from 0 to 30
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/thermals
-	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/thermal_eyes
-	cost = 8
-	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/xray
-	name = "X-ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/xray_eyes
-	cost = 10
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -806,6 +824,7 @@
 	cost = 25
 	purchasable_from = UPLINK_CLOWN_OPS|UPLINK_NUKE_OPS
 	cant_discount = TRUE
+	surplus = 10 //very rare from lootboxes
 
 /datum/uplink_item/support/bomb_key
 	name = "Syndicate Ordnance Laboratory Access Card"
@@ -847,4 +866,83 @@
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+
+/datum/uplink_item/suits/cybersun_juggernaut_suit
+	name = "Cybersun Juggernaut Minigun Combo and Suit Access Card"
+	desc = "Developed by Cybersun for use in clearing heavy space bear infestations in asteroid belt operations.\
+	It now has a new purpose as the heavy operation suit of the Syndicate. By purchasing this you get a special Authorization Key to the only suit in storage at Firebase Balthazord."
+	item = /obj/item/keycard/syndicate_suit_storage
+	cost = 25
+	purchasable_from = UPLINK_NUKE_OPS
+	limited_stock = 1
+
+/datum/uplink_item/stealthy_tools/amogus_potion
+	name = "Mysterious potion"
+	desc = "A strange red potion that's said to turn you into a tiny red space man at 3AM, seems to work at any time though. \
+			Drinking this potion will turn you very small allowing you to be carried in backpacks by your fellow operatives, \
+			seems to not make goblins or monkeys any smaller though. No money refunds."
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	item = /obj/item/amogus_potion
+	cost = 7
+
+/datum/uplink_item/ammo/LMG
+	name = "6.5 FMJ Quarad drum"
+	desc = "A surplus 120 round drum of FMJ bullets for the Quarad"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/evil
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/LMG/incendiary
+	name = "6.5 Inferno Quarad drum"
+	desc = "A 120 round drum of Inferno bullets for the Quarad. They leave a trail of fire"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/LMG/pierce
+	name = "6.5 UDS Quarad drum"
+	desc = "No, NOT depleted uranium. 120 round drum of piercing and irradiating bullets for the Quarad"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/dangerous/Evil_Quarad
+	name = "Syndicate-Enhanced Light Suppression Weapon"
+	desc = "A heavily modified Quarad LMG, complete with bluespace barrel extender and retooled recoil reduction. Takes 120 round drums, good for suppressive fire."
+	item = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
+	cost = 16
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/implants/hardlight/max
+	name = "Commanding Hardlight Spear Implant"
+	desc = "An implant that allows you to summon and control seven hardlight spears. \
+	Additional implants will do nothing, you cannot improve on perfection. Side effects may include: Uncontrollable telepathy, formation of subconscious hiveminds, anamnesis, levitation, and hallucinations of music. \
+	Aetherofusion is not responsable for any damages this may cause."
+	purchasable_from = UPLINK_NUKE_OPS
+	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/max
+	cost = 35
+
+/datum/uplink_item/reinforcement/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 7
+	purchasable_from = UPLINK_CLOWN_OPS
+	restricted = TRUE
+	refundable = TRUE
+
+/datum/uplink_item/reinforcement/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	purchasable_from = UPLINK_CLOWN_OPS
+	restricted = TRUE
+	refundable = TRUE
 

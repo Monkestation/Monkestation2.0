@@ -48,7 +48,7 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5)
 	volume = 5
 	flags_1 = CONDUCT_1
@@ -66,7 +66,7 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
@@ -78,7 +78,7 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
-	custom_materials = list(/datum/material/silver=800)
+	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
 
@@ -91,7 +91,7 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4)
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -121,10 +121,10 @@
 	. += span_notice("Alt-click to toggle cup lid.")
 	return
 
-/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/coffee/click_alt(mob/user)
 	lid_open = !lid_open
 	update_icon_state()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
 	if(lid_open)
@@ -138,14 +138,14 @@
 	desc = "Careful, cold ice, do not chew."
 	custom_price = PAYCHECK_LOWER * 0.6
 	icon_state = "icecup"
-	list_reagents = list(/datum/reagent/consumable/ice = 30)
+	//list_reagents = list(/datum/reagent/consumable/ice = 30) Monkestation Removal: Ice was Instantly melting from vending machines
 	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
-	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/consumable/liquidgibs = 5)
+	//list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/consumable/liquidgibs = 5) Monkestation Removal: Ice was Instantly melting from vending machines
 
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -170,8 +170,17 @@
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
-	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
+	list_reagents = list(/datum/reagent/consumable/hot_coco = 20, /datum/reagent/consumable/sugar = 5)
 	drink_type = SUGAR
+	resistance_flags = FREEZE_PROOF
+	custom_price = PAYCHECK_CREW * 1.2
+
+/obj/item/reagent_containers/cup/glass/mug/britcup/bogril
+	name = "Bogril"
+	desc = "A piping hot meaty drink, reminiscent of broth."
+	icon_state = "britcup"
+	list_reagents = list(/datum/reagent/consumable/bogril = 20, /datum/reagent/consumable/nutriment/protein = 5)
+	drink_type = MEAT
 	resistance_flags = FREEZE_PROOF
 	custom_price = PAYCHECK_CREW * 1.2
 
@@ -212,7 +221,7 @@
 	icon_state = "smallbottle"
 	inhand_icon_state = null
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
+	custom_materials = list(/datum/material/plastic=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -227,8 +236,8 @@
 	custom_price = PAYCHECK_LOWER * 0.8
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
-	. = ..()
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
+	. = ..()
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()
@@ -247,11 +256,10 @@
 	else
 		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
 
-/obj/item/reagent_containers/cup/glass/waterbottle/AltClick(mob/user)
-	. = ..()
+/obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/living/user)
 	if(cap_lost)
 		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
 	if(cap_on || fumbled)
@@ -269,6 +277,7 @@
 		spillable = FALSE
 		to_chat(user, span_notice("You put the cap on [src]."))
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/waterbottle/is_refillable()
 	if(cap_on)
@@ -290,20 +299,18 @@
 
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/reagent_containers/cup/glass/waterbottle/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !(user.istate & ISTATE_HARM))))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
+	if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
 		var/obj/item/reagent_containers/cup/glass/waterbottle/other_bottle = target
 		if(other_bottle.cap_on)
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	return . | ..()
+	return ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -328,10 +335,17 @@
 	list_reagents = list()
 	cap_on = FALSE
 
+/obj/item/reagent_containers/cup/glass/waterbottle/protein
+
+	name = "UNGA protein drink"
+	desc = "Hey you! Yes you! Are you weak? Then drink UNGA protein!!"
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 30, /datum/reagent/consumable/nutriment/vitamin = 10,  /datum/reagent/consumable/nutriment = 10)
+	cap_on = TRUE
+
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
+	custom_materials = list(/datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 10
@@ -341,6 +355,8 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty
 	list_reagents = list()
 	cap_on = FALSE
+
+/obj/item/reagent_containers/cup/glass/waterbottle/protein
 
 // Admin spawn
 /obj/item/reagent_containers/cup/glass/waterbottle/relic
@@ -402,7 +418,7 @@
 	icon = 'icons/obj/drinks/colo.dmi'
 	icon_state = "colocup"
 	inhand_icon_state = "colocup"
-	custom_materials = list(/datum/material/plastic = 1000)
+	custom_materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 	possible_transfer_amounts = list(5, 10, 15, 20)
 	volume = 20
 	amount_per_transfer_from_this = 5
@@ -425,22 +441,93 @@
 // itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 // icon states.
 
+
 /obj/item/reagent_containers/cup/glass/shaker
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "shaker"
-	custom_materials = list(/datum/material/iron=1500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	interaction_flags_click = NEED_HANDS|FORBID_TELEKINESIS_REACH
+	/// Whether or not poured drinks should use custom names and descriptions
+	var/using_custom_drinks = FALSE
+	/// Name custom drinks will have
+	var/custom_drink_name = "Custom drink"
+	/// Description custom drinks will have
+	var/custom_drink_desc = "Mixed by your favourite bartender!"
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
+	register_context()
 	if(prob(10))
-		name = "\improper NanoTrasen 20th Anniversary Shaker"
-		desc += " It has an emblazoned NanoTrasen logo on it."
+		name = "\improper Nanotrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
+
+/obj/item/reagent_containers/cup/glass/shaker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[using_custom_drinks ? "Disable" : "Enable"] custom drinks"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to [using_custom_drinks ? "disable" : "enable"] custom drink naming")
+	if(using_custom_drinks)
+		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
+		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
+
+/obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/living/user)
+	if(using_custom_drinks)
+		using_custom_drinks = FALSE
+		disable_custom_drinks()
+		balloon_alert(user, "custom drinks disabled")
+		return CLICK_ACTION_BLOCKING
+
+	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
+	if(!new_name)
+		balloon_alert(user, "invalid drink name!")
+		using_custom_drinks = FALSE
+		return CLICK_ACTION_BLOCKING
+
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
+	if(!new_desc)
+		balloon_alert(user, "invalid drink description!")
+		using_custom_drinks = FALSE
+		return CLICK_ACTION_BLOCKING
+
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+
+	using_custom_drinks = TRUE
+	custom_drink_name = new_name
+	custom_drink_desc = new_desc
+
+	enable_custom_drinks()
+	balloon_alert(user, "now pouring custom drinks")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
+	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/disable_custom_drinks()
+	UnregisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO)
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/handle_transfer(atom/origin, atom/target)
+	SIGNAL_HANDLER
+	// Should only work on drinking/shot glasses
+	if(!istype(target, /obj/item/reagent_containers/cup/glass/drinkingglass))
+		return
+
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/target_glass = target
+	target_glass.name = custom_drink_name
+	target_glass.desc = custom_drink_desc
+	ADD_TRAIT(target_glass, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
@@ -448,15 +535,16 @@
 	custom_price = PAYCHECK_COMMAND * 2
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "flask"
-	custom_materials = list(/datum/material/iron=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
 	isGlass = FALSE
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/reagent_containers/cup/glass/flask/gold
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
-	custom_materials = list(/datum/material/gold=500)
+	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det
 	name = "detective's flask"

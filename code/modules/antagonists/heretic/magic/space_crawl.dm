@@ -1,3 +1,5 @@
+#define SPACE_PHASING "space-phasing"
+
 /**
  * ### Space Crawl
  *
@@ -16,6 +18,8 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	///List of traits that are added to the heretic while in space phase jaunt
+	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH)
 
 /datum/action/cooldown/spell/jaunt/space_crawl/Grant(mob/grant_to)
 	. = ..()
@@ -69,6 +73,11 @@
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(iscarbon(jaunter))
 		jaunter.drop_all_held_items()
+		// Sanity check to ensure we didn't lose our focus as a result.
+		if(!HAS_TRAIT(jaunter, TRAIT_ALLOW_HERETIC_CASTING))
+			REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
+			exit_jaunt(jaunter, our_turf)
+			return FALSE
 		// Give them some space hands to prevent them from doing things
 		var/obj/item/space_crawl/left_hand = new(jaunter)
 		var/obj/item/space_crawl/right_hand = new(jaunter)
@@ -77,6 +86,9 @@
 		jaunter.put_in_hands(left_hand)
 		jaunter.put_in_hands(right_hand)
 
+	jaunter.add_traits(jaunting_traits, SPACE_PHASING)
+	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
+	playsound(our_turf, 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	playsound(our_turf, 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	new /obj/effect/temp_visual/space_explosion(our_turf)
@@ -88,19 +100,20 @@
 /**
  * Attempts to Exit the passed space or misc turf.
  */
-/datum/action/cooldown/spell/jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/jaunter)
-	if(HAS_TRAIT_FROM(jaunter, TRAIT_NO_TRANSFORM, REF(src)))
+/datum/action/cooldown/spell/jaunt/space_crawl/proc/try_exit_jaunt(turf/our_turf, mob/living/jaunter, force = FALSE)
+	if(!force && HAS_TRAIT_FROM(jaunter, TRAIT_NO_TRANSFORM, REF(src)))
 		to_chat(jaunter, span_warning("You cannot exit yet!!"))
 		return FALSE
 
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
-
+	jaunter.remove_traits(jaunting_traits, SPACE_PHASING)
 	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 
 /datum/action/cooldown/spell/jaunt/space_crawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(unjaunter, list(SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING)))
 	playsound(get_turf(unjaunter), 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	new /obj/effect/temp_visual/space_explosion(get_turf(unjaunter))
 	if(iscarbon(unjaunter))
@@ -108,6 +121,12 @@
 			unjaunter.temporarilyRemoveItemFromInventory(space_hand, force = TRUE)
 			qdel(space_hand)
 	return ..()
+
+/// Signal proc for [SIGNAL_REMOVETRAIT] via [TRAIT_ALLOW_HERETIC_CASTING], losing our focus midcast will throw us out.
+/datum/action/cooldown/spell/jaunt/space_crawl/proc/on_focus_lost(mob/living/source)
+	SIGNAL_HANDLER
+	var/turf/our_turf = get_turf(source)
+	try_exit_jaunt(our_turf, source, TRUE)
 
 /// Spacecrawl "hands", prevent the user from holding items in spacecrawl
 /obj/item/space_crawl
@@ -119,3 +138,5 @@
 /obj/item/space_crawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+#undef SPACE_PHASING

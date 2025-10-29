@@ -14,6 +14,10 @@
 	name = "head of security's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the head of security."
 
+/obj/item/storage/bag/garment/warden
+	name = "warden's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the warden."
+
 /obj/item/storage/bag/garment/hop
 	name = "head of personnel's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the head of personnel."
@@ -61,6 +65,7 @@
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/head/nanner_crown(src)
+	new /obj/item/clothing/head/caphat/beret(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
 	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
@@ -82,29 +87,44 @@
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
 	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat/pimpcoat(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
 	new /obj/item/clothing/head/hats/hos/cap(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/neck/cloak/hos(src)
+	new /obj/item/clothing/head/helmet/sec(src) // monkestation addition
+
+/obj/item/storage/bag/garment/warden/PopulateContents()
+	new /obj/item/clothing/suit/armor/vest/warden(src)
+	new /obj/item/clothing/head/hats/warden(src)
+	new /obj/item/clothing/head/hats/warden/drill(src)
+	new /obj/item/clothing/head/beret/sec/navywarden(src)
+	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
+	new /obj/item/clothing/under/rank/security/warden/formal(src)
+	new /obj/item/clothing/under/rank/security/warden/skirt(src)
+	new /obj/item/clothing/gloves/krav_maga/sec(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/head/helmet/sec(src) // monkestation addition
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
 	new /obj/item/clothing/under/rank/rnd/research_director(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
 	new /obj/item/clothing/head/beret/science/rd(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/neck/cloak/rd(src)
-	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/shoes/laceup(src)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)

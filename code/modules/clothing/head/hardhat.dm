@@ -13,7 +13,7 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF
 
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 4
 	light_power = 0.8
 	light_on = FALSE
@@ -40,9 +40,6 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
 
-/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
-	toggle_helmet_light(user)
-
 /obj/item/clothing/head/utility/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on
 	if(on)
@@ -61,6 +58,15 @@
 /obj/item/clothing/head/utility/hardhat/proc/turn_off(mob/user)
 	set_light_on(FALSE)
 
+/obj/item/clothing/head/utility/hardhat/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(on)
+		toggle_helmet_light()
+		return TRUE
+
+/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
+	toggle_helmet_light(user)
+
 /obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = null
@@ -74,9 +80,9 @@
 	dog_fashion = null
 	name = "firefighter helmet"
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/utility/hardhat/red/upgraded
@@ -86,7 +92,7 @@
 	inhand_icon_state = null
 	light_outer_range = 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"
 
 /obj/item/clothing/head/utility/hardhat/white
@@ -94,9 +100,9 @@
 	inhand_icon_state = null
 	hat_type = "white"
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head
 
@@ -167,9 +173,9 @@
 	light_outer_range = 4 //Boss always takes the best stuff
 	hat_type = "white"
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 /obj/item/clothing/head/utility/hardhat/welding/dblue
@@ -185,9 +191,9 @@
 	name = "atmospheric firefighter helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation. Comes with a light and a welding visor."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = NONE
@@ -272,3 +278,31 @@
 
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
+
+/obj/item/clothing/head/utility/hardhat/jack
+	name = "carved square pumpkin"
+	desc = "A very square jack o' lantern, with nails included! Believed to ward off laight, but makes you feel as if your taking too long."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "hardhat0_jack"
+	inhand_icon_state = null
+	hat_type = "jack"
+	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	armor_type = /datum/armor/none
+	flags_cover = HEADCOVERSEYES
+	worn_y_offset = 1
+
+	light_system = null
+	light_outer_range = 0
+	light_power = 0
+
+/obj/item/clothing/head/utility/hardhat/jack/update_overlays()
+	. = ..()
+	if(light_on)
+		. += emissive_appearance(icon, "jack-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/head/utility/hardhat/jack/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(light_on && !isinhands)
+		. += emissive_appearance(icon_file, "jack-emissive", src, alpha = src.alpha)

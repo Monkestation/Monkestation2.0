@@ -9,8 +9,8 @@
 	icon_state = "setup_medium_med"
 	maxHealth = 300
 	health = 300
-	living_flags = 0
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	living_flags = NONE
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 /mob/living/circuit_drone/Initialize(mapload)

@@ -15,7 +15,7 @@
 	if(!.)
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	shield_uses = round(our_seed.potency / 20)
+	shield_uses = round(CAPPED_POTENCY(our_seed) / 20)
 	//deliver us from evil o melon god
 	our_plant.AddComponent(/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
@@ -76,24 +76,9 @@
 	return
 
 /// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-
-	if(!ismovable(target))
-		return
-
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-	if(isobj(target))
-		var/obj/object_target = target
-		if(!(object_target.obj_flags & CAN_BE_HIT))
-			return .
-
 	INVOKE_ASYNC(src, PROC_REF(after_attack_effect), source, target, user)
-	return .
 
 /*
  * Effects done when we hit people with our plant, AFTER the attack is done.
@@ -303,8 +288,8 @@
 		stop_backfire_effect()
 		return
 
-	our_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick)
-	if(SPT_PROB(5, seconds_per_tick))
+	our_mob.adjust_bodytemperature(0.5 KELVIN * seconds_per_tick)
+	if(!HAS_TRAIT(our_mob, TRAIT_RESISTHEAT) && SPT_PROB(5, seconds_per_tick))
 		to_chat(our_mob, span_warning("Your hand holding [our_plant] burns!"))
 
 /// Bluespace Tomato squashing on the user on backfire
@@ -432,7 +417,9 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/mob/living/spawned_mob = new killer_plant(our_plant.drop_location())
-	spawned_mob.maxHealth += round(our_seed.endurance * mob_health_multiplier)
+	var/health_mid_point = 150
+	var/health_max_value = 40
+	spawned_mob.maxHealth += qp_sigmoid(health_mid_point, health_max_value, our_seed.endurance)
 	spawned_mob.health = spawned_mob.maxHealth
 	if(ishostile(spawned_mob))
 		var/mob/living/simple_animal/hostile/spawned_simplemob = spawned_mob
@@ -441,11 +428,14 @@
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
 
 	if(isbasicmob(spawned_mob))
+		var/damage_mid_point = 100
+		var/damage_max_value = 14
+		var/mob_damage = qp_sigmoid(damage_mid_point, damage_max_value, our_seed.potency)
 		var/mob/living/basic/spawned_basicmob = spawned_mob
-		spawned_basicmob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
-		spawned_basicmob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
+		spawned_basicmob.melee_damage_lower += mob_damage
+		spawned_basicmob.melee_damage_upper += mob_damage
 		// basic mob speeds aren't exactly equivalent to simple animal's "move to delay" but this seems balanced enough.
-		var/calculated_speed = initial(spawned_basicmob.speed) - round((our_seed.production * mob_speed_multiplier), 0.01)
+		var/calculated_speed = initial(spawned_basicmob.speed) - round((min(our_seed.production, 25) * mob_speed_multiplier), 0.01)
 		spawned_basicmob.set_varspeed(calculated_speed)
 
 	our_plant.forceMove(our_plant.drop_location())
@@ -494,7 +484,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant))
 		grown_plant.max_volume = new_capcity
@@ -643,7 +632,7 @@
  * our_seed - the seed growing
  * grown_tray - the tray we were planted in
  */
-/datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+/datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, atom/movable/grown_tray)
 	SIGNAL_HANDLER
 
 	home_tray = WEAKREF(grown_tray)
@@ -654,10 +643,11 @@
  * our_seed - the seed growing
  * grown_tray - the tray, we're currently growing within
  */
-/datum/plant_gene/trait/gas_production/proc/try_release_gas(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+/datum/plant_gene/trait/gas_production/proc/try_release_gas(obj/item/seeds/our_seed, atom/movable/grown_tray)
 	SIGNAL_HANDLER
 
-	if(grown_tray.age < our_seed.maturation) // Start a little before it blooms
+	var/datum/component/growth_information/info = our_seed.GetComponent(/datum/component/growth_information)
+	if(info.growth_precent < 90)
 		return
 
 	START_PROCESSING(SSobj, src)
@@ -675,7 +665,7 @@
  */
 /datum/plant_gene/trait/gas_production/process(seconds_per_tick)
 	var/obj/item/seeds/seed = stinky_seed?.resolve()
-	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
+	var/atom/movable/tray = home_tray?.resolve()
 
 	// If our weakrefs don't resolve, or if our seed is /somehow/ not in the tray it was planted in, stop processing.
 	if(!seed || !tray || seed.loc != tray)

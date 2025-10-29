@@ -102,7 +102,7 @@
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
@@ -188,7 +188,7 @@
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")
-	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
 	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
@@ -206,6 +206,12 @@
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
+	notify_ghosts(
+		"[target] has just had their eyes snatched!",
+		source = target,
+		action = NOTIFY_ORBIT,
+		header = "Ouch!",
+	)
 	target.emote("scream")
 	if(prob(20))
 		target.emote("cry")

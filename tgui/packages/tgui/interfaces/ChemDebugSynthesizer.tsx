@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -12,8 +19,8 @@ type Data = {
   beakerContents: { name: string; volume: number }[];
 };
 
-export const ChemDebugSynthesizer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemDebugSynthesizer = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     amount,
     purity,
@@ -75,7 +82,8 @@ export const ChemDebugSynthesizer = (props, context) => {
                 onClick={() => act('makecup')}
               />
             )
-          }>
+          }
+        >
           {isBeakerLoaded ? (
             <>
               <Box>

@@ -8,7 +8,6 @@
 	///per round claims
 	var/list/job_rewards_per_round = list()
 
-
 /datum/preferences/proc/write_jobxp_preferences()
 	savefile.set_entry("job_xp_list", job_xp_list)
 	savefile.set_entry("job_rewards_claimed", job_rewards_claimed)
@@ -28,12 +27,19 @@
 
 	if(!length(job_xp_list))
 		build_jobxp_list(job_xp_list)
+	update_jobxp_list(job_xp_list)
+
 	if(!length(job_rewards_claimed))
 		build_jobxp_list(job_rewards_claimed)
+	update_jobxp_list(job_rewards_claimed, FALSE)
+
 	if(!length(job_rewards_per_round))
 		build_jobxp_list(job_rewards_per_round)
+	update_jobxp_list(job_rewards_per_round, FALSE)
+
 	if(!length(job_level_list))
 		build_jobxp_list(job_level_list)
+	update_jobxp_list(job_level_list)
 	//check_unclaimed_rewards()
 
 /datum/preferences/proc/rebuild_all_jobxp_lists()
@@ -45,38 +51,44 @@
 	if(!length(job_xp_list))
 		build_jobxp_list(job_xp_list)
 	if(!length(job_rewards_claimed))
-		build_jobxp_list(job_rewards_claimed)
+		build_jobxp_list(job_rewards_claimed, FALSE)
 	if(!length(job_rewards_per_round))
-		build_jobxp_list(job_rewards_per_round)
+		build_jobxp_list(job_rewards_per_round, FALSE)
 	if(!length(job_level_list))
 		build_jobxp_list(job_level_list)
 
 	save_preferences()
 
 
-/datum/preferences/proc/build_jobxp_list(list/empty_list)
+/datum/preferences/proc/build_jobxp_list(list/empty_list, should_zero = TRUE)
 	var/list/jobs = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	for(var/job_type in all_jobs)
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
+	for(var/job in jobs)
 		if(!length(SSjob.all_occupations))
 			SSjob.SetupOccupations()
 		empty_list += job
+		if(should_zero)
+			empty_list[job] = 0
 
-/datum/preferences/proc/update_jobxp_list(list/update_list)
+/datum/preferences/proc/update_jobxp_list(list/update_list, should_zero = TRUE)
 	var/list/jobs = list()
 	var/list/all_jobs = subtypesof(/datum/job)
 	for(var/job_type in all_jobs)
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
-		if(update_list[job])
+	for(var/job in jobs)
+		if(job in update_list)
+			if(!update_list[job])
+				update_list[job] = 0
 			continue
 		update_list += job
+		if(should_zero)
+			update_list[job] = 0
 
 /datum/preferences/proc/check_levelup(job)
 	if(!job)
@@ -90,7 +102,7 @@
 		job_level_list[job]++
 		level_up_reward(job)
 		for(var/datum/job_milestone/subtype as anything in subtypesof(/datum/job_milestone))
-			if(!initial(subtype.key_id) == job)
+			if(!(initial(subtype.key_id) == job))
 				continue
 			var/datum/job_milestone/subtype_created = new subtype
 			subtype_created.check_milestones(job_level_list[job], parent)
@@ -98,4 +110,16 @@
 /datum/preferences/proc/level_up_reward(job)
 	if(!job || !job_level_list[job])
 		return
-	adjust_metacoins(parent.ckey, 25*job_level_list[job], "You have leveled up!", TRUE, TRUE, FALSE)
+	adjust_metacoins(parent_ckey, 25 * job_level_list[job], "You have leveled up!")
+
+/datum/preferences/proc/return_xp_for_nextlevel()
+	var/list/jobs_with_xp = list()
+
+	var/list/all_jobs = subtypesof(/datum/job)
+	for(var/job_type in all_jobs)
+		var/datum/job/job = job_type
+		var/current_level = job_level_list[initial(job.title)]
+		var/xp_needed = (current_level ** 1.5) + 125
+		jobs_with_xp += initial(job.title)
+		jobs_with_xp[initial(job.title)] = xp_needed
+	return jobs_with_xp

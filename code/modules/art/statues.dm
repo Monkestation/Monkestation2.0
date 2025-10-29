@@ -32,29 +32,26 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/statue/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+		if(attacking_item.tool_behaviour == TOOL_WELDER)
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return FALSE
 			user.balloon_alert(user, "slicing apart...")
-			if(W.use_tool(src, user, 40, volume=50))
+			if(attacking_item.use_tool(src, user, 40, volume=50))
 				deconstruct(TRUE)
 			return
 	return ..()
-
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
+			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
 				new custom_material.sheet_type(drop_location(), amount)
 	qdel(src)
@@ -64,8 +61,8 @@
 
 /obj/structure/statue/uranium
 	max_integrity = 300
-	light_outer_range = 2
-	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*5)
+	light_outer_range = 2 //monkestation edit: replaced light_range = 2
+	custom_materials = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
 
@@ -85,7 +82,7 @@
 	max_integrity = 200
 	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/plasma
 
 /obj/structure/statue/plasma/scientist
@@ -102,7 +99,7 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
-	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/gold
 
 /obj/structure/statue/gold/hos
@@ -135,7 +132,7 @@
 	max_integrity = 300
 	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
-	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/silver
 
 /obj/structure/statue/silver/md
@@ -164,7 +161,7 @@
 	max_integrity = 1000
 	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
-	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
@@ -185,7 +182,7 @@
 	max_integrity = 300
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bananium
 
 /obj/structure/statue/bananium/clown
@@ -197,7 +194,7 @@
 /obj/structure/statue/sandstone
 	max_integrity = 50
 	impressiveness = 15
-	custom_materials = list(/datum/material/sandstone=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/sandstone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/sandstone
 
 /obj/structure/statue/sandstone/assistant
@@ -216,7 +213,7 @@
 
 /obj/structure/statue/snow
 	max_integrity = 50
-	custom_materials = list(/datum/material/snow=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/snow=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/snow
 
 /obj/structure/statue/snow/snowman
@@ -232,7 +229,7 @@
 ///////////////////////////////bronze///////////////////////////////////
 
 /obj/structure/statue/bronze
-	custom_materials = list(/datum/material/bronze=MINERAL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/bronze=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bronze
 
 /obj/structure/statue/bronze/marx
@@ -247,7 +244,7 @@
 	name = "Elder Atmosian"
 	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
 	icon_state = "eng"
-	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
+	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
@@ -277,7 +274,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=75)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -313,12 +310,11 @@ Point with the chisel at the target to choose what to sculpt or hit block to cho
 Hit block again to start sculpting.
 Moving interrupts
 */
-/obj/item/chisel/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
+/obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
-		return TRUE
-	if(istype(target, /obj/structure/carving_block))
-		var/obj/structure/carving_block/sculpt_block = target
+		return ITEM_INTERACT_BLOCKING
+	if(istype(interacting_with, /obj/structure/carving_block))
+		var/obj/structure/carving_block/sculpt_block = interacting_with
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent = TRUE)
@@ -329,19 +325,20 @@ Moving interrupts
 			set_block(sculpt_block, user)
 		else if(sculpt_block == prepared_block)
 			show_generic_statues_prompt(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		prepared_block.set_target(target, user)
-		return TRUE
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 // We aim at something distant.
-/obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
-		prepared_block.set_target(target,user)
-
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/chisel/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!sculpting && prepared_block && ismovable(interacting_with) && prepared_block.completion == 0)
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)

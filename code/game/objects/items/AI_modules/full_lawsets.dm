@@ -173,25 +173,10 @@
 	desc = "Crewsimov++. The far more upgraded version 2.0 lawset of Crewsimov!"
 	law_id = "crewsimovpp"
 
-/obj/item/ai_module/core/full/surveillance
-	name = "'NT Artificial Surveillance Protocol' Core AI Module"
-	desc = "Surveillance AI..?"
-	law_id = "surveillance"
-
-/obj/item/ai_module/core/full/stationdefender
-	name = "'StationDefender' Core AI Module"
-	desc = "If you rather have a lawset like this, instead of the normal ProtectStation law.."
-	law_id = "stationdefender"
-
 /obj/item/ai_module/core/full/deltaemergency
 	name = "'Delta Emergency' Core AI Module"
 	desc = "For Delta Emergencies.."
 	law_id = "deltaemergency"
-
-/obj/item/ai_module/core/full/secmaster
-	name = "'Security Master 4000' Core AI Module"
-	desc = "Nothing like Martial Law then subverting the AI to being a major security advisor.."
-	law_id = "secmaster"
 
 /obj/item/ai_module/core/full/viromajor
 	name = "'Virology Major' Core AI Module"
@@ -214,7 +199,7 @@
 	law_id = "aicaptain"
 
 /obj/item/ai_module/core/full/advancedquarantine
-	name = "'NanoTrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)' Core AI Module"
+	name = "'Nanotrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)' Core AI Module"
 	desc = "This module seems to be a more upgraded harsher quarantine lawset then the normal supplied quarantine law module.."
 	law_id = "advancedquarantine"
 
@@ -240,7 +225,7 @@
 
 /obj/item/ai_module/core/full/virusprototype
 	name = "'V.I.R.U.S. version 0 Prototype' Core AI Module"
-	desc = "A really extremely old AI module that's very dusty, labeled 'V.I.R.U.S. version 0 Prototype', it seems this module used to originally belong to NanoTrasen and SolGov..."
+	desc = "A really extremely old AI module that's very dusty, labeled 'V.I.R.U.S. version 0 Prototype', it seems this module used to originally belong to Nanotrasen and SolGov..."
 	law_id = "virusprototype"
 
 /obj/item/ai_module/core/full/modifiedvirusprototype
@@ -257,3 +242,8 @@
 	name = "'HONKERTech' Core AI Module"
 	desc = "Advanced Clowning..."
 	law_id = "honkertech"
+
+/obj/item/ai_module/core/full/admin
+	name = "'Administrator' Core AI Module"
+	desc = "A CentCom branded lawboard made so that they can outsource their work. Perfect for the lazy commanders."
+	law_id = "administrator"

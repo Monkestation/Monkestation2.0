@@ -13,8 +13,10 @@
 /datum/movespeed_modifier/reagent/monkey_energy
 	multiplicative_slowdown = -0.35
 
+/* MONKESTATION REMOVAL START
 /datum/movespeed_modifier/reagent/changelinghaste
 	multiplicative_slowdown = -0.8
+MONKESTATION REMOVAL END */
 
 /datum/movespeed_modifier/reagent/methamphetamine
 	multiplicative_slowdown = -0.65
@@ -41,4 +43,7 @@
 	multiplicative_slowdown = -0.35
 
 /datum/movespeed_modifier/reagent/nooartrium
+	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/reagent/shadowfrost
 	multiplicative_slowdown = 2

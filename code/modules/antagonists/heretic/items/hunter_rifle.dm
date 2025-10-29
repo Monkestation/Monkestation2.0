@@ -1,5 +1,5 @@
 /// The max range we can zoom in on people from.
-#define MAX_LIONHUNTER_RANGE 30
+#define MAX_LIONHUNTER_RANGE 60 // MONKESTATIN EDIT ORG: 30
 
 // The Lionhunter, a gun for heretics
 // The ammo it uses takes time to "charge" before firing,
@@ -11,8 +11,11 @@
 	icon_state = "moistprime"
 	inhand_icon_state = "moistprime"
 	worn_icon_state = "moistprime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+
+/obj/item/gun/ballistic/rifle/boltaction/lionhunter/give_manufacturer_examine()
+	return
 
 /obj/item/gun/ballistic/rifle/lionhunter/Initialize(mapload)
 	. = ..()

@@ -1,3 +1,4 @@
+/* monkestation removal: refactored in [monkestation\code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_knowledge.dm]
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
@@ -27,7 +28,7 @@
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
 
-/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
+/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
@@ -68,12 +69,20 @@
 		atoms += user
 		return TRUE
 
+
+	// monkestation edit: allow stamcrit targets to be sacrificed (bc they're incapable of putting up resistance)
+	// in addition, if you need to sac a head of staff, any of them will do.
+	var/datum/objective/major_sacrifice/sac_head = locate() in heretic_datum.objectives
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
-		// If the mob's not in soft crit or worse, or isn't one of the sacrifices, remove it from the list
-		if(sacrifice.stat < SOFT_CRIT || !(sacrifice in heretic_datum.sac_targets))
+		var/is_target = (sacrifice in heretic_datum.sac_targets)
+		var/sac_department_flag = (sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags)
+		var/is_needed_command = (sac_head && !sac_head.check_completion() && (sac_department_flag & DEPARTMENT_BITFLAG_COMMAND))
+		var/is_valid_state = (sacrifice.stat != CONSCIOUS || HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
+		if(!(is_target || is_needed_command) || !is_valid_state)
 			atoms -= sacrifice
+	// monkestation end
 
 	// Finally, return TRUE if we have a target in the list
 	if(locate(/mob/living/carbon/human) in atoms)
@@ -177,6 +186,13 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/obj/item/organ/internal/brain/slime/slime = locate() in selected_atoms
+
+	if(slime)
+		slime.rebuild_body()
+		slime.coredeath = FALSE
+		addtimer(CALLBACK(slime, TYPE_PROC_REF(/obj/item/organ/internal/brain/slime, enable_coredeath)), 20 SECONDS)
+
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
@@ -245,6 +261,7 @@
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost() // monke edit: try to grab their ghost
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -274,6 +291,8 @@
 	if(QDELETED(sac_target))
 		return
 
+	sac_target.grab_ghost() // monke edit: try to grab their ghost
+
 	// The target disconnected or something, we shouldn't bother sending them along.
 	if(!sac_target.client || !sac_target.mind)
 		disembowel_target(sac_target)
@@ -288,6 +307,7 @@
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
+	sac_target.grab_ghost() // monke edit: try to grab their ghost again before revival
 	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
@@ -377,7 +397,7 @@
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
 	else
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
+		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_LOBOTOMY) // monke edit: allow lobotomy to cure the phobia
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
@@ -507,3 +527,4 @@
 
 #undef SACRIFICE_SLEEP_DURATION
 #undef SACRIFICE_REALM_DURATION
+monkestation end */

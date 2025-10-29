@@ -10,6 +10,49 @@
 	/// Pollution of this turf
 	var/datum/pollution/pollution
 
+/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = null
+	var/broken = FALSE
+	var/burnt = FALSE
+
+
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/proc/broken_states()
+	return list()
+
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/proc/burnt_states()
+	return list()
+
+/turf/open/break_tile()
+	if(isnull(damaged_dmi) || broken)
+		return FALSE
+	broken = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/burn_tile()
+	if(isnull(damaged_dmi) || burnt)
+		return FALSE
+	burnt = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/update_overlays()
+	if(isnull(damaged_dmi))
+		return ..()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+	else if(burnt)
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
 	if(direction != DOWN)
@@ -74,11 +117,26 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
+/turf/open/indestructible/large
+	icon_state = "floor_large"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/white/smooth_large
+	icon_state = "white_large"
+
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
 /turf/open/indestructible/dark
 	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
+
+/turf/open/indestructible/dark/smooth_large
+	icon_state = "dark_large"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -182,6 +240,43 @@
 	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
+/turf/open/indestructible/meat
+	icon_state = "meat"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/indestructible/meat
+
+/turf/open/indestructible/vault
+	icon_state = "rockvault"
+
+/turf/open/indestructible/kitchen
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
+
+/turf/open/indestructible/bingle
+	desc = "The floor of a bingle pit, its blue and unbreakable."
+	icon = 'icons/turf/floors/bingle.dmi'
+	icon_state = "carpet_orange-0"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
+/turf/open/indestructible/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
@@ -200,20 +295,20 @@
 	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freeze_turf()
-	for(var/obj/I in contents)
-		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
-			I.AddElement(/datum/element/frozen)
+	for(var/obj/iced in contents)
+		if(!HAS_TRAIT(iced, TRAIT_FROZEN) && !(iced.resistance_flags & FREEZE_PROOF))
+			iced.AddElement(/datum/element/frozen)
 
-	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
-			L.apply_status_effect(/datum/status_effect/freon)
+	for(var/mob/living/freezer in src)
+		if(freezer.bodytemperature <= CELCIUS_TO_KELVIN(25 CELCIUS))
+			freezer.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE
 
 /turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 
-	for(var/mob/living/simple_animal/slime/M in src)
+	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
 	wash(CLEAN_WASH)

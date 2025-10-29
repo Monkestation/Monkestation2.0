@@ -65,7 +65,8 @@
 		finish_action(controller, FALSE, target_key)
 		return
 	var/mob/living/basic/living_pawn = controller.pawn
-	living_pawn.set_combat_mode(FALSE)
+	//living_pawn.set_combat_mode(FALSE)
+	living_pawn.istate &= ~ISTATE_HARM
 	living_pawn.melee_attack(target)
 	finish_action(controller, TRUE, target_key)
 
@@ -75,4 +76,6 @@
 	if(!succeeded)
 		return
 	var/mob/living/living_pawn = controller.pawn
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		return
 	living_pawn.istate = initial(living_pawn.istate)

@@ -10,7 +10,7 @@
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	///it does not make sense why any of these should be installed.
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING
+	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS  | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 200
 	max_matter = 200
 
@@ -49,6 +49,7 @@
 /obj/item/construction/plumbing/proc/set_plumbing_designs()
 	plumbing_design_types = list(
 		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
+		/obj/machinery/plumbing/synthesizer = 15,
 		/obj/machinery/plumbing/reaction_chamber/chem = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/growing_vat = 20,
@@ -101,12 +102,12 @@
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PlumbingService", name)
+		ui = new(user, src, "RapidPlumbingDevice", name)
 		ui.open()
 
 /obj/item/construction/plumbing/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/plumbing),
+		get_asset_datum(/datum/asset/spritesheet_batched/plumbing),
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
@@ -232,35 +233,46 @@
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
-/obj/item/construction/plumbing/pre_attack_secondary(obj/machinery/target, mob/user, params)
+/obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
+	for(var/obj/machinery/recipe as anything in plumbing_design_types)
+		if(interacting_with.type != recipe)
+			continue
+
+		var/obj/machinery/machine_target = interacting_with
+		if(machine_target.anchored)
+			balloon_alert(user, "unanchor first!")
+			return ITEM_INTERACT_BLOCKING
+		if(do_after(user, 2 SECONDS, target = interacting_with))
+			machine_target.deconstruct() //Let's not substract matter
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(!isopenturf(interacting_with))
+		return NONE
+	if(create_machine(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/construction/plumbing/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!istype(target, /obj/machinery/duct))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE
 
 	var/obj/machinery/duct/duct = target
 	if(duct.duct_layer && duct.duct_color)
 		current_color = GLOB.pipe_color_name[duct.duct_color]
 		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
 		balloon_alert(user, "using [current_color], layer [current_layer]")
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(target, /obj/machinery/plumbing))
-		var/obj/machinery/machine_target = target
-		if(machine_target.anchored)
-			balloon_alert(user, "anchor first!")
-			return
-		if(do_after(user, 20, target = target))
-			machine_target.deconstruct() //Let's not substract matter
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
-	else
-		create_machine(target, user)
-
-/obj/item/construction/plumbing/AltClick(mob/user)
+/obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
@@ -292,12 +304,16 @@
 /obj/item/construction/plumbing/research/set_plumbing_designs()
 	plumbing_design_types = list(
 		//category 1 synthesizers
+		/obj/machinery/plumbing/synthesizer = 15,
 		/obj/machinery/plumbing/reaction_chamber = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/disposer = 10,
 		/obj/machinery/plumbing/growing_vat = 20,
 
 		//category 2 Distributors
+		/obj/machinery/plumbing/ooze_sucker = 5,
+		/obj/machinery/plumbing/slime_grinder = 5,
+		/obj/machinery/plumbing/ooze_compressor = 20,
 		/obj/machinery/duct = 1,
 		/obj/machinery/plumbing/input = 5,
 		/obj/machinery/plumbing/filter = 5,

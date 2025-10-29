@@ -1,4 +1,4 @@
-/area/ruin/space/meateor
+/area/ruin/space/has_grav/meateor // MONKESTATION EDIT, /has_grav/
 	name = "\improper Organic Asteroid"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
@@ -44,6 +44,14 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	anchored = TRUE
 
+/obj/structure/meateor_fluff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
+
 /obj/structure/meateor_fluff/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)
@@ -70,8 +78,8 @@
 		/obj/item/organ/internal/alien/plasmavessel = 5,
 		/obj/item/organ/internal/heart/gland/chem = 5,
 		/obj/item/organ/internal/heart/gland/mindshock = 5,
-		/obj/item/organ/internal/heart/gland/spiderman = 5,
-		/obj/item/organ/internal/heart/gland/transform = 5,
+		// /obj/item/organ/internal/heart/gland/spiderman = 5, /* monkestation: removed */
+		// /obj/item/organ/internal/heart/gland/transform = 5, /* monkestation: removed */
 		/obj/item/organ/internal/heart/gland/slime = 4,
 		/obj/item/organ/internal/heart/gland/trauma = 4,
 		/obj/item/organ/internal/heart/carp = 3,
@@ -92,7 +100,7 @@
 	. = ..()
 	stored_organ = pick_weight(allowed_organs)
 
-/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (attacking_item.sharpness & SHARP_EDGED)
 		cut_open(user)
 		return
@@ -133,3 +141,30 @@
 	new /obj/effect/decal/cleanable/xenoblood(loc)
 	playsound(loc, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 	return ..()
+
+// MONKESTATION ADDITION
+/obj/item/organ/internal/eyes/changeling/thermals
+	name = "thermal eyes"
+	desc = "Eyes with hyperfocused heat receptors, granting them increased light and heat sensing power"
+	icon_state = "ling_thermal"
+	eye_color_left = COLOR_RED
+	eye_color_right = COLOR_RED
+	// We're gonna downshift green and blue a bit so darkness looks yellow
+	color_cutoffs = list(25, 8, 5)
+	sight_flags = SEE_MOBS
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/mob/living/basic/meteor_heart/meateor
+
+/mob/living/basic/meteor_heart/meateor/Initialize(mapload)
+	. = ..()
+	var/list/grantable_loot = grant_loot()
+	if(length(grantable_loot))
+		AddElement(/datum/element/death_drops, grantable_loot)
+
+/mob/living/basic/meteor_heart/meateor/proc/grant_loot()
+	var/static/list/droppable_loot = list(
+		/obj/item/organ/internal/eyes/changeling/thermals
+	)
+
+	return droppable_loot

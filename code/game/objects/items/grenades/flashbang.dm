@@ -40,12 +40,12 @@
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc) //Stop allahu akbarring rooms with this.
+	if(!distance || loc == living_mob || loc == living_mob.loc)
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
-		living_mob.soundbang_act(1, 200, 10, 15)
+		living_mob.soundbang_act(1, 200, 10, 10)
 	else
-		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
+		if(distance < 1) // MONKESTATION EDIT - No more adjacent guaranteed stun
 			living_mob.Paralyze(5)
 			living_mob.Knockdown(30)
 		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))

@@ -21,11 +21,13 @@
 	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
 	html = "[html]"
 	text = "[text]"
-
 	if(!target)
 		return
 	if(!html && !text)
-		CRASH("Empty or null string in to_chat proc call.")
+		if(istext(target))
+			CRASH("Passed text without target in to_chat proc call.")
+		else
+			CRASH("Empty or null string in to_chat proc call.")
 	if(target == world)
 		target = GLOB.clients
 
@@ -35,6 +37,16 @@
 	if(text) message["text"] = text
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
+
+#ifndef DISABLE_DEMOS
+	//Monkestation Edit: REPLAYS
+	if(!confidential)
+		if(html)
+			SSdemo.write_chat(target, html)
+		else
+			SSdemo.write_chat(target, message)
+	//Monkestation Edit: REPLAYS
+#endif
 
 	// send it immediately
 	SSchat.send_immediate(target, message)
@@ -60,8 +72,8 @@
 	trailing_newline = TRUE,
 	confidential = FALSE
 )
-	if(isnull(Master) || !SSchat?.initialized || !MC_RUNNING(SSchat.init_stage))
-		to_chat_immediate(target, html, type, text, avoid_highlighting)
+	if(isnull(Master) || !SSchat?.ready || !MC_RUNNING(SSchat.init_stage))
+		to_chat_immediate(target, html, type, text, avoid_highlighting, confidential = confidential)
 		return
 
 	// Useful where the integer 0 is the entire message. Use case is enabling to_chat(target, some_boolean) while preventing to_chat(target, "")
@@ -71,7 +83,10 @@
 	if(!target)
 		return
 	if(!html && !text)
-		CRASH("Empty or null string in to_chat proc call.")
+		if(istext(target))
+			CRASH("Passed text without target in to_chat proc call.")
+		else
+			CRASH("Empty or null string in to_chat proc call.")
 	if(target == world)
 		target = GLOB.clients
 
@@ -81,4 +96,13 @@
 	if(text) message["text"] = text
 	if(html) message["html"] = html
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
+
+#ifndef DISABLE_DEMOS
+	if(!confidential) //Monkestation Edit: REPLAYS
+		if(html)
+			SSdemo.write_chat(target, html)
+		else
+			SSdemo.write_chat(target, message) //Monkestation Edit: REPLAYS
+#endif
+
 	SSchat.queue(target, message)

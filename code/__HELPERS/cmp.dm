@@ -127,12 +127,6 @@
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
-	return sorttext(B?.saved_identification, A?.saved_identification)
-
-/proc/cmp_pdajob_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
-	return sorttext(B?.saved_job, A?.saved_job)
-
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
 
@@ -178,3 +172,10 @@
 /// Orders mobs by health
 /proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
 	return mob_b.health - mob_a.health
+
+/// Orders cameras by their `c_tag` ascending
+/proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
+	return sorttext(b.c_tag, a.c_tag)
+
+/proc/cmp_deathmatch_mods(datum/deathmatch_modifier/a, datum/deathmatch_modifier/b)
+	return sorttext(b.name, a.name)

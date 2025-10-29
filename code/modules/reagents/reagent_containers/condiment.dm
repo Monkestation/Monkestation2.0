@@ -9,7 +9,7 @@
 	name = "condiment bottle"
 	desc = "Just your average condiment bottle."
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "emptycondiment"
+	icon_state = "generic_condiment" // monkestation edit: ew should just be a generic bottle.
 	inhand_icon_state = "beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
@@ -66,34 +66,46 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
-/obj/item/reagent_containers/condiment/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
-			return
+/obj/item/reagent_containers/condiment/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		if(!interacting_with.reagents.total_volume)
+			to_chat(user, span_warning("[interacting_with] is empty!"))
+			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, span_warning("[src] is full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
+		var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [interacting_with]."))
+		return ITEM_INTERACT_SUCCESS
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
-	else if(target.is_drainable() || IS_EDIBLE(target))
+	else if(interacting_with.is_drainable() || IS_EDIBLE(interacting_with))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
-			return
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, span_warning("you can't add anymore to [target]!"))
-			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
+			return ITEM_INTERACT_BLOCKING
+		if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+			to_chat(user, span_warning("you can't add anymore to [interacting_with]!"))
+			return ITEM_INTERACT_BLOCKING
+		var/trans = src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You transfer [trans] units of the condiment to [interacting_with]."))
+
+		var/datum/reagent/main_reagent = reagents.get_master_reagent_id()
+		var/condiment_overlay = initial(main_reagent.condiment_overlay)
+		var/overlay_colored = initial(main_reagent.overlay_colored)
+		if(condiment_overlay && istype (interacting_with, /obj/item/food))
+			var/list/params_list = params2list(modifiers)
+			var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
+			I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
+			I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
+			if (overlay_colored)
+				I.color = mix_color_from_reagents(reagents.reagent_list)
+			interacting_with.overlays += I
+
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/reagent_containers/condiment/enzyme
 	name = "universal enzyme"
@@ -149,19 +161,19 @@
 	desc = "Salt. From dead crew, presumably."
 	return TOXLOSS
 
-/obj/item/reagent_containers/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(isturf(target))
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(isturf(interacting_with))
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
 			return
-		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
+		user.visible_message(span_notice("[user] shakes some salt onto [interacting_with]."), span_notice("You shake some salt onto [interacting_with]."))
 		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
-		new/obj/effect/decal/cleanable/food/salt(target)
-		return
+		new/obj/effect/decal/cleanable/food/salt(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/item/reagent_containers/condiment/peppermill
 	name = "pepper mill"
@@ -207,14 +219,19 @@
 	. = ..()
 	var/datum/chemical_reaction/recipe_dough = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/dough]
 	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/datum/chemical_reaction/recipe_cakebatter_vegan = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter/vegan]
 	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
 	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
 	var/cakebatter_flour_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/flour]
 	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_eggwhite_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggwhite]
 	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
+	var/cakebatter_soy_required = recipe_cakebatter_vegan.required_reagents[/datum/reagent/consumable/soymilk]
 	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
 	. += span_notice("[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.")
-	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.")
+	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk, [cakebatter_eggwhite_required] egg white, and [cakebatter_sugar_required] sugar makes cake dough.")
+	. += span_notice("Alternatively, a vegan cake is made with: [cakebatter_flour_required] flour, [cakebatter_soy_required] soy milk, and [cakebatter_sugar_required] sugar.")
+	. += span_notice("It can be flattened into pie dough and then cut into pastry base. Once baked, pastry base can be combined with sugar for donuts!")
 
 /obj/item/reagent_containers/condiment/soymilk
 	name = "soy milk"
@@ -273,6 +290,13 @@
 	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/cooking_oil
+	name = "cooking oil"
+	desc = "For all your deep-frying needs."
+	icon_state = "cooking_oil"
+	list_reagents = list(/datum/reagent/consumable/cooking_oil = 50)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/condiment/quality_oil
 	name = "quality oil"
 	desc = "For the fancy chef inside everyone."
@@ -317,6 +341,51 @@
 	list_reagents = list(/datum/reagent/consumable/ketchup = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/worcestershire
+	name = "worcestershire sauce"
+	desc = "A fermented sauce of legend from old England. Makes almost anything better."
+	icon_state = "worcestershire"
+	list_reagents = list(/datum/reagent/consumable/worcestershire = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/red_bay
+	name = "\improper Red Bay seasoning"
+	desc = "Mars' favourite seasoning."
+	icon_state = "red_bay"
+	list_reagents = list(/datum/reagent/consumable/red_bay = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/curry_powder
+	name = "curry powder"
+	desc = "It's this yellow magic that makes curry taste like curry."
+	icon_state = "curry_powder"
+	list_reagents = list(/datum/reagent/consumable/curry_powder = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/dashi_concentrate
+	name = "dashi concentrate"
+	desc = "A bottle of Amagi brand dashi concentrate. Simmer with water in a 1:8 ratio for a perfect dashi broth."
+	icon_state = "dashi_concentrate"
+	list_reagents = list(/datum/reagent/consumable/dashi_concentrate = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/coconut_milk
+	name = "coconut milk"
+	desc = "It's coconut milk. Toasty!"
+	icon_state = "coconut_milk"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/coconut_milk = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/grounding_solution
+	name = "grounding solution"
+	desc = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	icon_state = "grounding_solution"
+	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer
@@ -332,6 +401,19 @@
 	desc= "The amount of sugar thats already there wasn't enough for you?"
 	icon_state = "condi_chocolate"
 	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
+
+
+/obj/item/reagent_containers/condiment/hotsauce
+	name = "hotsauce bottle"
+	desc= "You can almost TASTE the stomach ulcers!"
+	icon_state = "hotsauce"
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 50)
+
+/obj/item/reagent_containers/condiment/coldsauce
+	name = "coldsauce bottle"
+	desc= "Leaves the tongue numb from its passage."
+	icon_state = "coldsauce"
+	list_reagents = list(/datum/reagent/consumable/frostoil = 50)
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
@@ -375,26 +457,34 @@
 /obj/item/reagent_containers/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
-/obj/item/reagent_containers/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/condiment/pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	//You can tear the bag open above food to put the condiments on it, obviously.
-	if(IS_EDIBLE(target))
+	if(IS_EDIBLE(interacting_with))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("You tear open [src], but there's nothing in it."))
 			qdel(src)
-			return
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, span_warning("You tear open [src], but [target] is stacked so high that it just drips off!") )
+			return ITEM_INTERACT_BLOCKING
+		if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+			to_chat(user, span_warning("You tear open [src], but [interacting_with] is stacked so high that it just drips off!") )
 			qdel(src)
-			return
+			return ITEM_INTERACT_BLOCKING
 		else
-			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
-			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+			to_chat(user, span_notice("You tear open [src] above [interacting_with] and the condiments drip onto it."))
+			var/datum/reagent/main_reagent = reagents.get_master_reagent_id()
+			var/condiment_overlay = initial(main_reagent.condiment_overlay)
+			var/overlay_colored = initial(main_reagent.overlay_colored)
+			if(condiment_overlay && istype (interacting_with, /obj/item/food))
+				var/list/params_list = params2list(modifiers)
+				var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
+				I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
+				I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
+				if (overlay_colored)
+					I.color = mix_color_from_reagents(reagents.reagent_list)
+				interacting_with.overlays += I
+			src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
-			return
-	return . | ..()
+			return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /// Handles reagents getting added to the condiment pack.
 /obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)

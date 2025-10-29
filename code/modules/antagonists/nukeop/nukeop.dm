@@ -8,6 +8,9 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
+	remove_from_manifest = TRUE
+	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -47,7 +50,7 @@
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
@@ -70,13 +73,26 @@
 		if(!nuke_team.team_discounts)
 			var/list/uplink_items = list()
 			for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag) && item.cost > 1)
+				if(!item.item || item.cant_discount || !(item.purchasable_from & uplink.uplink_handler.uplink_flag) || item.cost <= 1)
+					continue
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
 					uplink_items += item
+					continue
+				if((uplink.uplink_handler.assigned_role in item.restricted_roles) || (uplink.uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 			nuke_team.team_discounts = list()
 			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)
 			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)
 		uplink.uplink_handler.extra_purchasable += nuke_team.team_discounts
 
+	var/mob/living/datum_owner = owner.current
+	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
+	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
 	memorize_code()
 
 /datum/antagonist/nukeop/get_team()
@@ -103,10 +119,11 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team?.syndicate_name)
-		var/mob/living/carbon/human/H = owner.current
-		if(istype(H)) // Reinforcements get a real name
-			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
-			H.fully_replace_character_name(H.real_name,chosen_name)
+		var/mob/living/carbon/human/human_to_rename = owner.current
+		if(istype(human_to_rename)) // Reinforcements get a real name
+			var/first_name = owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+			var/chosen_name = "[first_name] [nuke_team.syndicate_name]"
+			human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 		else
 			var/number = 1
 			number = nuke_team.members.Find(owner)
@@ -256,15 +273,8 @@
 			H.put_in_hands(nuke_code_paper, TRUE)
 			H.update_icons()
 
-/datum/antagonist/nukeop/leader/give_alias()
-	title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	if(nuke_team?.syndicate_name)
-		owner.current.real_name = "[nuke_team.syndicate_name] [title]"
-	else
-		owner.current.real_name = "Syndicate [title]"
-
 /datum/antagonist/nukeop/leader/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
@@ -290,11 +300,12 @@
 	name = "[syndicate_name] Team"
 	for(var/I in members)
 		var/datum/mind/synd_mind = I
-		var/mob/living/carbon/human/H = synd_mind.current
-		if(!istype(H))
+		var/mob/living/carbon/human/human_to_rename = synd_mind.current
+		if(!istype(human_to_rename))
 			continue
-		var/chosen_name = H.dna.species.random_name(H.gender,0,syndicate_name)
-		H.fully_replace_character_name(H.real_name,chosen_name)
+		var/first_name = human_to_rename.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+		var/chosen_name = "[first_name] [syndicate_name]"
+		human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 
 /datum/antagonist/nukeop/leader/proc/ask_name()
 	var/randomname = pick(GLOB.last_names)
@@ -330,6 +341,71 @@
 		else
 			stack_trace("Station self-destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
+
+/datum/antagonist/nukeop/lone/junior
+	name = "Junior Lone Operative"
+	nukeop_outfit = /datum/outfit/syndicate/junior
+	preview_outfit = /datum/outfit/syndicate/junior
+
+/datum/antagonist/nukeop/lone/junior/memorize_code()
+	if(nuke_team && nuke_team.tracked_nuke)
+		antag_memory += "<B>[nuke_team.tracked_nuke]</B>"
+	var/code
+	var/obj/item/paper/fluff/nuke_code/nuke_code_paper = new
+	if(nuke_team?.memorized_code)
+		var/scrambled = FALSE
+		var/scramble_attempts = 0
+		code = "[nuke_team.memorized_code]"
+		while(!scrambled)
+			var/random_number = rand(0,9)
+			scramble_attempts++
+			if(findtext(code, "[random_number]"))
+				code = replacetext(code, "[random_number]", "#")
+				scrambled = TRUE
+			if(scramble_attempts >= 10)
+				scrambled = TRUE
+	else
+		code = "ERROR"
+	nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[code]</b>")
+	var/mob/living/carbon/human/H = owner.current
+	if(!istype(H))
+		nuke_code_paper.forceMove(get_turf(H))
+	else
+		H.equip_to_slot_or_del(nuke_code_paper, ITEM_SLOT_RPOCKET)
+
+	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [code]<br>"
+	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = code)
+	to_chat(owner, "The nuclear authorization code is: <B>[code]</B>")
+
+//might be best to move this to it's own file but not sure where that would make sense
+/obj/item/paper/fluff/nuke_code
+	name = "ATTENTION: Mission Instructions."
+	color = "#b94030"
+	desc = "Seems important."
+	default_raw_text = {"
+Greetings operative.
+
+<br>Your mission is to destroy the targeted Nanotrasen facility using it's own self destruct mechanism.
+<br>
+<br>Nanotrasen building codes usually place the self destruct terminal in the facility's high security vault.
+You will need a Nanotrasen nuclear authentication disk to get through the first security barrier of the terminal.
+The disk can be found on the captain or acting captain of the facility as they are are required to keep the disk on
+their person at all times.
+<B>Your pinpointer is set to track the disk to further aid in locating it.<B>
+<br>
+<br>The steps for activating the self destruct via the terminal are as follows:
+<br>
+<br> 1. Insert the nuclear authentication disk into the terminal.
+<br>
+<br> 2. Enter the five digit nuclear authorization code.
+<br>
+<br> 5. Set the timer by entering a time between 90 and 3600 seconds.
+<br>
+<br> 4. Arm the self destruct. Remove and take the disk to prevent disarmament of the self destruct mechanism.
+<br>
+<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE. AN OVERALL DIGIT MAY BE OMITTED.<B>
+<br>
+	"}
 
 /datum/antagonist/nukeop/reinforcement
 	show_in_antagpanel = FALSE
@@ -440,7 +516,7 @@
 
 	switch(get_result())
 		if(NUKE_RESULT_FLUKE)
-			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
+			parts += "<span class='redtext big'>Humiliating Syndicate Defeat!</span>"
 			parts += "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
 		if(NUKE_RESULT_NUKE_WIN)
 			parts += "<span class='greentext big'>Syndicate Major Victory!</span>"
@@ -511,18 +587,18 @@
 		while(!isturf(disk_loc))
 			if(ismob(disk_loc))
 				var/mob/M = disk_loc
-				disk_report += "carried by <a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a> "
+				disk_report += "carried by <a href='byond://?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a> "
 			if(isobj(disk_loc))
 				var/obj/O = disk_loc
 				disk_report += "in \a [O.name] "
 			disk_loc = disk_loc.loc
-		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
+		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
 	disk_report += "</table>"
 	var/common_part = ..()
 	var/challenge_report
 	var/obj/item/nuclear_challenge/war_button = war_button_ref?.resolve()
 	if(war_button)
-		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
+		challenge_report += "<b>War not declared.</b> <a href='byond://?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
 	return common_part + disk_report + challenge_report
 
 /// Returns whether or not syndicate operatives escaped.

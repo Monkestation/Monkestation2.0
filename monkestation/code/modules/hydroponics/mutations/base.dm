@@ -189,7 +189,7 @@
 	created_seed = /obj/item/seeds/sunflower/moonflower
 	required_endurance = list(30, 70)
 
-/datum/hydroponics/plant_mutation/nova_floor
+/datum/hydroponics/plant_mutation/nova_flower
 	mutates_from = list(/obj/item/seeds/sunflower)
 	created_product = /obj/item/grown/novaflower
 	created_seed = /obj/item/seeds/sunflower/novaflower
@@ -418,3 +418,10 @@
 	required_endurance = list(60, 70)
 	required_yield = list(5, 10)
 	required_lifespan = list(-INFINITY, 20)
+
+/datum/hydroponics/plant_mutation/honeydew
+	mutates_from = list(/obj/item/seeds/watermelon)
+	created_product = /obj/item/food/grown/honeydew
+	created_seed = /obj/item/seeds/watermelon/honeydew
+	required_yield = list(20, INFINITY)
+	required_lifespan = list(60, INFINITY)

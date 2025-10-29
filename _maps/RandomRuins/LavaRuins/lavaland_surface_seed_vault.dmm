@@ -385,7 +385,7 @@
 /area/ruin/powered/seedvault)
 "bc" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -423,7 +423,7 @@
 /area/ruin/powered/seedvault)
 "bg" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/trimline/green/line{
@@ -435,7 +435,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bh" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 6
 	},
@@ -452,11 +452,11 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/botanical_lexicon,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bj" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
 	},
@@ -474,7 +474,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -522,7 +522,7 @@
 /area/ruin/powered/seedvault)
 "bq" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -543,7 +543,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/generic/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -559,7 +559,7 @@
 /area/ruin/powered/seedvault)
 "bv" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
@@ -569,7 +569,7 @@
 /area/ruin/powered/seedvault)
 "bw" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
@@ -601,14 +601,14 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 "bB" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bC" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 9
 	},

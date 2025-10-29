@@ -43,8 +43,6 @@
 
 	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote = list()
@@ -91,10 +89,25 @@
 	///This damage is taken when atmos doesn't fit all the requirements above. Set to 0 to avoid adding the atmos_requirements element.
 	var/unsuitable_atmos_damage = 1
 
+//MONKESTATION EDIT START
+	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
+	var/list/weather_immunities
+//MONKESTATION EDIT END
+
+	//MONKESTATION EDIT START - These variables were changed as part of a temperature overhaul by
+	// Borbop, in #3301.
+	// WHEN PORTING THESE OVER:
+	// * `minimum_survivable_temperature` -> `bodytemp_cold_damage_limit`
+	// * `maximum_survivable_temperature` -> `bodytemp_heat_damage_limit`
+	// * If either one has a value of `0`, set it to `-1`.
+	/* //MONKESTATION EDIT ORIGINAL
 	///Minimal body temperature without receiving damage
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
+	*/
+	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
+	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -102,8 +115,6 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
-	create_overlay_index() //monkestation edit
-	populate_shift_list() //monkestation edit
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -111,21 +122,61 @@
 	if(!real_name)
 		real_name = name
 
+	// MONKESTATION ADDITION START
+	if(length(weather_immunities))
+		add_traits(weather_immunities, ROUNDSTART_TRAIT)
+	//MONKESTATION ADDITION END
+
+	/* MONKESTATION REMOVAL - This is totally valid to create a mob in nullspace, its not valid to move a client onto it, this seems weird.
 	if(!loc)
 		stack_trace("Basic mob being instantiated in nullspace")
+	*/
 
 	update_basic_mob_varspeed()
 
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-	if(unsuitable_atmos_damage != 0)
-		//String assoc list returns a cached list, so this is like a static list to pass into the element below.
-		habitable_atmos = string_assoc_list(habitable_atmos)
-		AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+	apply_atmos_requirements()
 
-	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
-		AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+/// Ensures this mob can take atmospheric damage if it's supposed to
+/mob/living/basic/proc/apply_atmos_requirements()
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
+		return
+	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
+	habitable_atmos = string_assoc_list(habitable_atmos)
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+
+/mob/living/basic/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
+		adjust_health(unsuitable_cold_damage * seconds_per_tick)
+
+	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
+		adjust_health(unsuitable_heat_damage * seconds_per_tick)
+
+/mob/living/basic/body_temperature_alerts()
+	if((bodytemperature < bodytemp_cold_damage_limit) && unsuitable_cold_damage)
+		switch(unsuitable_cold_damage)
+			if(1 to 5)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
+			if(5 to 10)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
+			if(10 to INFINITY)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
+		. = TRUE
+
+	if((bodytemperature > bodytemp_heat_damage_limit) && unsuitable_heat_damage)
+		switch(unsuitable_heat_damage)
+			if(1 to 5)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
+			if(5 to 10)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
+			if(10 to INFINITY)
+				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
+		. = TRUE
+
+	if(!.)
+		clear_alert(ALERT_TEMPERATURE)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -140,12 +191,13 @@
 /mob/living/basic/death(gibbed)
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0
 		look_dead()
 
-/mob/living/basic/gib()
+/mob/living/basic/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	if(butcher_results || guaranteed_butcher_results)
 		var/list/butcher_loot = list()
 		if(butcher_results)
@@ -170,7 +222,7 @@
 		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_DEAD)
 
-/mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -193,7 +245,7 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_TRAIT(user.mind, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
@@ -214,10 +266,18 @@
 	//monkestation edit
 
 /mob/living/basic/vv_edit_var(vname, vval)
+	switch(vname)
+		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
+			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+			. = TRUE
 	. = ..()
-	if(vname == NAMEOF(src, speed))
-		datum_flags |= DF_VAR_EDITED
-		set_varspeed(vval)
+
+	switch(vname)
+		if(NAMEOF(src, habitable_atmos), NAMEOF(src, unsuitable_atmos_damage))
+			apply_atmos_requirements()
+		if(NAMEOF(src, speed))
+			datum_flags |= DF_VAR_EDITED
+			set_varspeed(vval)
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
@@ -252,20 +312,17 @@
 /mob/living/basic/on_stamina_update()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
-/mob/living/basic/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
+/mob/living/basic/get_fire_overlay(stacks, on_fire)
+	var/fire_icon = "generic_fire"
+	if(!GLOB.fire_appearances[fire_icon])
+		GLOB.fire_appearances[fire_icon] = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			fire_icon,
+			-HIGHEST_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
 
-/mob/living/basic/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
-	if(on_fire && isnull(last_icon_state))
-		add_overlay(fire_overlay)
-		return fire_overlay
-	else if(!on_fire && !isnull(last_icon_state))
-		cut_overlay(fire_overlay)
-		return null
-	else if(on_fire && !isnull(last_icon_state))
-		return last_icon_state
-	return null
+	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
@@ -274,7 +331,7 @@
 
 /mob/living/basic/update_held_items()
 	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_REDUCED)
 		return
 	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/held in held_items)
@@ -283,8 +340,16 @@
 		held.screen_loc = ui_hand_position(index)
 		client.screen |= held
 
-/mob/living/basic/get_body_temp_heat_damage_limit()
-	return maximum_survivable_temperature
+/mob/living/basic/update_cached_insulation()
+	return
 
-/mob/living/basic/get_body_temp_cold_damage_limit()
-	return minimum_survivable_temperature
+/mob/living/basic/get_insulation(temperature)
+	return temperature_insulation
+
+//MONKESTATION EDIT START
+/mob/living/basic/proc/get_scream_sound()
+	return
+/mob/living/basic/proc/get_laugh_sound()
+	return
+//MONKESTATION EDIT STOP
+

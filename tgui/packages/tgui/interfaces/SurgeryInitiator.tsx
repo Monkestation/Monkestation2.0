@@ -3,7 +3,7 @@ import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
 import { BooleanLike } from 'common/react';
 import { Component } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, KeyListener, Stack } from '../components';
+import { Button, KeyListener, Section, Stack } from '../components';
 import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
 import { Window } from '../layouts';
 
@@ -50,7 +50,7 @@ class SurgeryInitiatorInner extends Component<
 
   findSelectedSurgeryAfter(after: number): number | undefined {
     const foundIndex = this.props.surgeries.findIndex(
-      (surgery, index) => index > after && !surgery.blocked
+      (surgery, index) => index > after && !surgery.blocked,
     );
 
     return foundIndex === -1 ? undefined : foundIndex;
@@ -68,7 +68,7 @@ class SurgeryInitiatorInner extends Component<
   }
 
   render() {
-    const { act } = useBackend<SurgeryInitiatorData>(this.context);
+    const { act } = useBackend<SurgeryInitiatorData>();
     const { selected_zone, surgeries, target_name } = this.props;
 
     return (
@@ -83,25 +83,28 @@ class SurgeryInitiatorInner extends Component<
             </Stack.Item>
 
             <Stack.Item width="95%">
-              <Stack vertical height="100%">
-                {surgeries.map((surgery, index) => (
-                  <Button
-                    onClick={() => {
-                      act('start_surgery', {
-                        surgery_name: surgery.name,
-                      });
-                    }}
-                    disabled={surgery.blocked}
-                    selected={index === this.state.selectedSurgeryIndex}
-                    tooltip={
-                      surgery.blocked ? 'Their body is covered!' : undefined
-                    }
-                    key={surgery.name}
-                    fluid>
-                    {surgery.name}
-                  </Button>
-                ))}
-              </Stack>
+              <Section fill scrollable>
+                <Stack vertical height="100%">
+                  {surgeries.map((surgery, index) => (
+                    <Button
+                      onClick={() => {
+                        act('start_surgery', {
+                          surgery_name: surgery.name,
+                        });
+                      }}
+                      disabled={surgery.blocked}
+                      selected={index === this.state.selectedSurgeryIndex}
+                      tooltip={
+                        surgery.blocked ? 'Their body is covered!' : undefined
+                      }
+                      key={surgery.name}
+                      fluid
+                    >
+                      {surgery.name}
+                    </Button>
+                  ))}
+                </Stack>
+              </Section>
             </Stack.Item>
           </Stack>
 
@@ -116,7 +119,7 @@ class SurgeryInitiatorInner extends Component<
                     return {
                       selectedSurgeryIndex:
                         this.findSelectedSurgeryAfter(
-                          state.selectedSurgeryIndex
+                          state.selectedSurgeryIndex,
                         ) ||
                         this.findSelectedSurgeryAfter(-1) ||
                         0,
@@ -129,10 +132,10 @@ class SurgeryInitiatorInner extends Component<
                     return {
                       selectedSurgeryIndex:
                         this.findSelectedSurgeryBefore(
-                          state.selectedSurgeryIndex - 1
+                          state.selectedSurgeryIndex - 1,
                         ) ??
                         this.findSelectedSurgeryBefore(
-                          this.props.surgeries.length - 1
+                          this.props.surgeries.length - 1,
                         ) ??
                         0,
                     };
@@ -156,8 +159,8 @@ class SurgeryInitiatorInner extends Component<
   }
 }
 
-export const SurgeryInitiator = (props, context) => {
-  const { data } = useBackend<SurgeryInitiatorData>(context);
+export const SurgeryInitiator = (props) => {
+  const { data } = useBackend<SurgeryInitiatorData>();
 
   return (
     <SurgeryInitiatorInner

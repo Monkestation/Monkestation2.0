@@ -26,13 +26,15 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		else
 			add_member(starting_members)
 
-/datum/team/Destroy(force, ...)
+/datum/team/Destroy(force)
 	GLOB.antagonist_teams -= src
 	members = null
 	objectives = null
 	return ..()
 
 /datum/team/proc/add_member(datum/mind/new_member)
+	if(!istype(new_member))
+		CRASH("Attempted to add non-mind ([new_member?.type]) as a team member!")
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
@@ -44,6 +46,11 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		new_objective.find_target(dupe_search_range = list(src))
 	new_objective.update_explanation_text()
 	objectives += new_objective
+	for(var/datum/mind/member as anything in members)
+		for(var/datum/antagonist/antag in member.antag_datums)
+			if(antag.get_team() == src)
+				antag.objectives |= new_objective
+				antag.update_static_data_for_all_viewers()
 
 //Display members/victory/failure/objectives for the team
 /datum/team/proc/roundend_report()
@@ -58,11 +65,9 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective as anything in objectives)
-			if(objective.check_completion())
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				win = FALSE
+			report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			objective_count++
 		if(win)
 			report += span_greentext("The [name] was successful!")

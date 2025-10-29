@@ -7,7 +7,7 @@
 	///Our very own dust
 	var/obj/effect/sprint_dust/dust = new(null)
 
-/datum/component/carbon_sprint/Destroy(force, silent)
+/datum/component/carbon_sprint/Destroy(force)
 	QDEL_NULL(dust)
 	return ..()
 
@@ -31,7 +31,7 @@
 			stopSprint()
 		return
 
-	if(sprint_key_down && !HAS_TRAIT(src, TRAIT_NO_SPRINT))
+	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT))
 		var/_step_size = (direct & (direct-1)) ? 1.4 : 1 //If we're moving diagonally, we're taking roughly 1.4x step size
 		if(!sprinting)
 			sprinting = TRUE
@@ -55,11 +55,12 @@
 					dust.appear("sprint_cloud_tiny", direct, get_turf(carbon_parent), 0.3 SECONDS)
 					last_dust = world.time
 				sustained_moves = 0
-		if(HAS_TRAIT(src, TRAIT_FREERUNNING))
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST/2)
+		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
+			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * 0.7) //0.5 * cost Means almost infinnite sprint due to regen
 		else
 			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST)
-
+		if(HAS_TRAIT(carbon_parent, TRAIT_EXERTION_OVERHEAT))
+			carbon_parent.adjust_bodytemperature((carbon_parent.bodytemp_heat_damage_limit - carbon_parent.standard_body_temperature) * 0.15)
 	else if(sprinting)
 		stopSprint()
 

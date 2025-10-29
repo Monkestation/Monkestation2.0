@@ -1,5 +1,6 @@
 /atom/movable/screen/buildmode
 	icon = 'icons/misc/buildmode.dmi'
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/buildmode/bd
 	// If we don't do this, we get occluded by item action buttons
 	plane = ABOVE_HUD_PLANE
@@ -33,7 +34,7 @@
 
 /atom/movable/screen/buildmode/help
 	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
+	screen_loc = "S"
 	name = "Buildmode Help"
 
 /atom/movable/screen/buildmode/help/Click(location, control, params)

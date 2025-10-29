@@ -9,7 +9,7 @@
 	name = "bladder"
 	desc = "This is where the pee is stored"
 
-	icon = 'monkestation/icons/obj/organs.dmi'
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "bladder"
 
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -50,7 +50,7 @@
 	stored_piss = min(stored_piss + amount, max_piss_storage)
 
 	if(COOLDOWN_FINISHED(src, piss_notification) && stored_piss == max_piss_storage)
-		to_chat(owner, span_warning("Your bladder if feeling full."))
+		to_chat(owner, span_warning("Your bladder is feeling full."))
 		COOLDOWN_START(src, piss_notification, 5 MINUTES)
 
 
@@ -79,6 +79,14 @@
 			valid_urinal = TRUE
 			break
 
+	var/list/ignored_mobs = list()
+	for(var/mob/anything in GLOB.player_list)
+		if(!anything.client)
+			continue
+		if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+			continue
+		ignored_mobs |= anything
+
 	var/obj/item/reagent_containers/held_container
 	if(owner.held_items[owner.active_hand_index] != null)
 		var/obj/item/listed_item = owner.held_items[owner.active_hand_index]
@@ -90,23 +98,28 @@
 			return
 
 	if(valid_toilet)
-		owner.visible_message(span_notice("[owner] pisses into the toilet."))
+		owner.visible_message(span_notice("[owner] pisses into the toilet."), ignored_mobs = ignored_mobs)
 		return
 
 	if(valid_urinal)
-		owner.visible_message(span_notice("[owner] carefully pisses into the urinal not spilling a drop."))
+		owner.visible_message(span_notice("[owner] carefully pisses into the urinal not spilling a drop."), ignored_mobs = ignored_mobs)
 		return
 
-	owner.visible_message(span_warning("[owner] pisses all over the floor!"))
+	owner.visible_message(span_warning("[owner] pisses all over the floor!"), ignored_mobs = ignored_mobs)
 	stored_piss -= per_piss_usage
 
 
-	var/obj/machinery/camera/located_camera = locate() in range(7, owner)
+	var/obj/machinery/camera/located_camera
+	for(var/obj/machinery/camera/camera in view(7, owner))
+		if(camera.can_use() && get_dist(owner, camera) <= camera.view_range)
+			located_camera = camera
+			break
 	if(located_camera)
-		var/datum/record/crew/records = find_record(owner.name)
-		var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in the [owner_turf.loc]", author = "Automated Criminal Detection Service")
-		records.crimes += new_crime
-		records.wanted_status = WANTED_ARREST
+		var/datum/record/crew/record = find_record(owner.name)
+		if(record)
+			var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in \the [owner_turf.loc]", author = "Automated Criminal Detection Service")
+			record.crimes += new_crime
+			record.wanted_status = WANTED_ARREST
 
 	var/obj/effect/decal/cleanable/piss_stain/stain = locate() in owner_turf
 	if(!(stain in owner_turf.contents) && !owner_turf.liquids)
@@ -119,7 +132,7 @@
 
 /obj/item/organ/internal/bladder/proc/attempt_piss_into(obj/item/reagent_containers/piss_holder)
 	var/space_left = piss_holder.volume - piss_holder.reagents.total_volume
-	if(!space_left)
+	if(!space_left && stored_piss < per_piss_usage)
 		return FALSE
 	piss_holder.reagents.add_reagent(pissin_reagent, piss_amount, reagtemp = piss_temperature)
 	return TRUE

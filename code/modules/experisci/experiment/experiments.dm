@@ -218,15 +218,13 @@
 	required_atoms = list(
 		/obj/machinery/autolathe = 1,
 		/obj/machinery/rnd/production/circuit_imprinter/department/science = 1,
-		/obj/machinery/monkey_recycler = 1,
-		/obj/machinery/processor/slime = 1,
 		/obj/machinery/processor = 2,
 		/obj/machinery/reagentgrinder = 2,
-		/obj/machinery/hydroponics = 2,
+		/obj/machinery/growing/tray = 2,
 		/obj/machinery/biogenerator = 3,
 		/obj/machinery/gibber = 3,
 		/obj/machinery/chem_master = 3,
-		/obj/machinery/atmospherics/components/unary/cryo_cell = 3,
+		/obj/machinery/cryo_cell = 3,
 		/obj/machinery/harvester = 5,
 		/obj/machinery/quantumpad = 5
 	)
@@ -295,7 +293,7 @@
 		/obj/machinery/chem_dispenser/drinks/beer = 1,
 		/obj/machinery/power/smes = 2
 	)
-	required_stock_part = /obj/item/stock_parts/cell/hyper
+	required_stock_part = /obj/item/stock_parts/power_store/cell/hyper
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser
 	name = "Ultra-high-power Micro-lasers Calibration"

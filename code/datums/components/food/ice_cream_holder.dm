@@ -56,7 +56,7 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(on_item_attack_obj))
+	RegisterSignal(owner, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack_obj))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
@@ -77,8 +77,7 @@
 
 /datum/component/ice_cream_holder/proc/on_update_name(atom/source, updates)
 	SIGNAL_HANDLER
-	var/obj/obj = source
-	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
+	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)
@@ -93,8 +92,7 @@
 
 /datum/component/ice_cream_holder/proc/on_update_desc(atom/source, updates)
 	SIGNAL_HANDLER
-	var/obj/obj = source
-	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
+	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)

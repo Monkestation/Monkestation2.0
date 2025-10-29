@@ -86,7 +86,14 @@
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types = required_wounding_types, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
+/datum/wound_pregen_data/proc/can_be_applied_to(
+	obj/item/bodypart/limb,
+	list/suggested_wounding_types = required_wounding_types,
+	datum/wound/old_wound,
+	random_roll = FALSE,
+	duplicates_allowed = src.duplicates_allowed,
+	care_about_existing_wounds = TRUE,
+)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
@@ -95,7 +102,7 @@
 	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
-	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))
+	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (HAS_TRAIT(limb.owner, TRAIT_GODMODE)))
 		return FALSE
 
 	if (!wounding_types_valid(suggested_wounding_types))
@@ -158,7 +165,7 @@
 	if (!length(suggested_wounding_types))
 		return FALSE
 
-	for (var/iter_wounding_type as anything in suggested_wounding_types)
+	for (var/iter_wounding_type in suggested_wounding_types)
 		if (!(iter_wounding_type in required_wounding_types))
 			if (match_all_wounding_types)
 				return FALSE
@@ -185,7 +192,7 @@
 
 	return new wound_path_to_generate
 
-/datum/wound_pregen_data/Destroy(force, ...)
+/datum/wound_pregen_data/Destroy(force)
 	var/error_message = "[src], a singleton wound pregen data instance, was destroyed! This should not happen!"
 	if (force)
 		error_message += " NOTE: This Destroy() was called with force == TRUE. This instance will be deleted and replaced with a new one."

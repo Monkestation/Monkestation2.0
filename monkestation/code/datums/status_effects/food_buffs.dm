@@ -1,7 +1,17 @@
 /datum/status_effect/food
+	id = STATUS_EFFECT_ID_ABSTRACT
 	duration = 10 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
+	show_duration = TRUE
 
+/datum/status_effect/food/on_creation(mob/living/new_owner, quality)
+	if(!isnull(quality) && quality != 1)
+		apply_quality(quality)
+	return ..()
+
+/datum/status_effect/food/proc/apply_quality(quality)
+	PROTECTED_PROC(TRUE)
+	return
 
 /datum/status_effect/food/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_GOURMAND))
@@ -11,12 +21,15 @@
 /datum/status_effect/food/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		user.applied_food_buffs --
+		user.applied_food_buffs--
 
 /datum/status_effect/food/stamina_increase
 	id = "t1_stamina"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t1
 	var/stam_increase = 10
+
+/datum/status_effect/food/stamina_increase/apply_quality(quality)
+	stam_increase *= 1 + (quality / 50)
 
 /atom/movable/screen/alert/status_effect/food/stamina_increase_t1
 	name = "Tiny Stamina Increase"
@@ -44,14 +57,15 @@
 	icon_state = "stam_t3"
 
 /datum/status_effect/food/stamina_increase/on_apply()
-	if(ishuman(owner))
-		owner.stamina.maximum += stam_increase
+	if(ishuman(owner) && !owner.stamina.set_maximum(owner.stamina.maximum + stam_increase))
+		stam_increase = 0 // Ensure we don't ADD more than we need to maximum upon removal
+		return FALSE
 	return ..()
 
 /datum/status_effect/food/stamina_increase/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
-		owner.stamina.maximum -= stam_increase
+		owner.stamina?.set_maximum(owner.stamina.maximum - stam_increase)
 
 
 /datum/status_effect/food/resistance
@@ -71,7 +85,7 @@
 	return ..()
 
 /datum/status_effect/food/resistance/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
 		for(var/obj/item/bodypart/limbs in user.bodyparts)
@@ -86,6 +100,9 @@
 	var/range = RANGE
 	var/duration_loss = DURATION_LOSS
 
+/datum/status_effect/food/fire_burps/apply_quality(quality)
+	range += round((quality / 40))
+
 /atom/movable/screen/alert/status_effect/food/fire_burps
 	name = "Firey Burps"
 	desc = "Lets you burp out a line of fire"
@@ -94,14 +111,14 @@
 /datum/status_effect/food/fire_burps/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, "food_buffs")
+		ADD_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/fire_burps/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, "food_buffs")
+		REMOVE_TRAIT(user, TRAIT_FOOD_FIRE_BURPS, TRAIT_STATUS_EFFECT(id))
 
 
 /datum/status_effect/food/fire_burps/proc/Burp()
@@ -175,7 +192,7 @@
 	return ..()
 
 /datum/status_effect/food/sweaty/on_remove()
-	.=..()
+	. = ..()
 	owner.metabolism_efficiency -= metabolism_increase
 
 
@@ -189,6 +206,9 @@
 	id = "t1_health"
 	alert_type = /atom/movable/screen/alert/status_effect/food/health_increase_t1
 	var/health_increase = 10
+
+/datum/status_effect/food/health_increase/apply_quality(quality)
+	health_increase *= (1 + (quality / 50))
 
 /atom/movable/screen/alert/status_effect/food/health_increase_t1
 	name = "Small Health Increase"
@@ -222,7 +242,7 @@
 	return ..()
 
 /datum/status_effect/food/health_increase/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
 		user.maxHealth -= health_increase
@@ -241,21 +261,22 @@
 /datum/status_effect/food/belly_slide/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, FOOD_SLIDE, "food_buffs")
+		ADD_TRAIT(user, TRAIT_FOOD_SLIDE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/belly_slide/on_remove()
-	.=..()
-	if(HAS_TRAIT(owner, FOOD_SLIDE))
-		REMOVE_TRAIT(owner, FOOD_SLIDE, "food_buffs")
-		if(owner.has_movespeed_modifier(/datum/movespeed_modifier/belly_slide))
-			owner.remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_FOOD_SLIDE, TRAIT_STATUS_EFFECT(id))
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/belly_slide)
 
 
 /datum/status_effect/food/stam_regen
 	id = "t1_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t1
 	var/regen_increase = 0.5
+
+/datum/status_effect/food/stam_regen/apply_quality(quality)
+	regen_increase *= (1 + (quality / 20))
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t1
 	name = "Small Stamina Regeneration Increase"
@@ -296,8 +317,6 @@
 		user.stamina.regen_rate += regen_increase
 
 
-
-
 /////JOB BUFFS
 
 /datum/status_effect/food/botanist
@@ -312,14 +331,14 @@
 /datum/status_effect/food/botanist/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, FOOD_JOB_BOTANIST, "food_buffs")
+		ADD_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/botanist/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, FOOD_JOB_BOTANIST, "food_buffs")
+		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_BOTANIST, TRAIT_STATUS_EFFECT(id))
 
 
 /datum/status_effect/food/miner
@@ -334,11 +353,11 @@
 /datum/status_effect/food/miner/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		ADD_TRAIT(user, FOOD_JOB_MINER, "food_buffs")
+		ADD_TRAIT(user, TRAIT_FOOD_JOB_MINER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/food/miner/on_remove()
-	.=..()
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
-		REMOVE_TRAIT(user, FOOD_JOB_MINER, "food_buffs")
+		REMOVE_TRAIT(user, TRAIT_FOOD_JOB_MINER, TRAIT_STATUS_EFFECT(id))

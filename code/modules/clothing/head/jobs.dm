@@ -12,19 +12,77 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	equip_delay_other = 10
-
 	dog_fashion = /datum/dog_fashion/head/chef
-	///the chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
+	/// The chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
 	var/mouse_control_probability = 20
+	/// Allowed time between movements
+	COOLDOWN_DECLARE(move_cooldown)
 
-/obj/item/clothing/head/utility/chefhat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/chefhat)
-
+/// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
 	mouse_control_probability = 100
+
+/obj/item/clothing/head/utility/chefhat/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/chefhat)
+
+/obj/item/clothing/head/utility/chefhat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	var/mob/living/basic/new_boss = get_mouse(arrived)
+	if(!new_boss)
+		return
+	RegisterSignal(new_boss, COMSIG_MOB_PRE_EMOTED, PROC_REF(on_mouse_emote))
+	RegisterSignal(new_boss, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_mouse_moving))
+	RegisterSignal(new_boss, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(on_mouse_moving))
+
+/obj/item/clothing/head/utility/chefhat/Exited(atom/movable/gone, direction)
+	. = ..()
+	var/mob/living/basic/old_boss = get_mouse(gone)
+	if(!old_boss)
+		return
+	UnregisterSignal(old_boss, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE))
+
+/// Returns a mob stored inside a mob container, if there is one
+/obj/item/clothing/head/utility/chefhat/proc/get_mouse(atom/possible_mouse)
+	if (!ispickedupmob(possible_mouse))
+		return
+	var/obj/item/clothing/head/mob_holder/mousey_holder = possible_mouse
+	return locate(/mob/living/basic) in mousey_holder.contents
+
+/// Relays emotes emoted by your boss to the hat wearer for full immersion
+/obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/wearer = loc
+	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+		return
+	if (!prob(mouse_control_probability))
+		return COMPONENT_CANT_EMOTE
+	INVOKE_ASYNC(wearer, TYPE_PROC_REF(/mob, emote), key, type_override, emote_message, FALSE)
+	return COMPONENT_CANT_EMOTE
+
+/// Relays movement made by the mouse in your hat to the wearer of the hat
+/obj/item/clothing/head/utility/chefhat/proc/on_mouse_moving(mob/living/source, atom/moved_to)
+	SIGNAL_HANDLER
+	if (!prob(mouse_control_probability) || !COOLDOWN_FINISHED(src, move_cooldown))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
+
+	var/mob/living/carbon/wearer = loc
+	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
+
+	var/move_direction = get_dir(wearer, moved_to)
+	if(!wearer.Process_Spacemove(move_direction))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Currently drifting in space
+	if(!has_gravity() || !isturf(wearer.loc))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not in a location where we can move
+
+	step_towards(wearer, moved_to)
+	var/move_delay = wearer.cached_multiplicative_slowdown
+	if (ISDIAGONALDIR(move_direction))
+		move_delay *= sqrt(2)
+	COOLDOWN_START(src, move_cooldown, move_delay)
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /obj/item/clothing/head/utility/chefhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
@@ -34,14 +92,6 @@
 	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return FIRELOSS
-
-/obj/item/clothing/head/utility/chefhat/relaymove(mob/living/user, direction)
-	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
-		return
-	var/mob/living/L = loc
-	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
-		return
-	step_towards(L, get_step(L, direction))
 
 //Captain
 /obj/item/clothing/head/hats/caphat
@@ -109,52 +159,116 @@
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
 	icon_state = "bishopmitre"
 
-//Detective
-/obj/item/clothing/head/fedora/det_hat
-	name = "detective's fedora"
-	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
+///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
+/obj/item/clothing/head/fedora/inspector_hat
+	name = "inspector's fedora"
+	desc = "There's only one man can try to stop an evil villian."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
-	var/candy_cooldown = 0
 	dog_fashion = /datum/dog_fashion/head/detective
-	///Path for the flask that spawns inside their hat roundstart
-	var/flask_path = /obj/item/reagent_containers/cup/glass/flask/det
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
+	///prefix our phrases must begin with
+	var/prefix = "go go gadget"
+	///an assoc list of phrase = item (like gun = revolver)
+	var/list/items_by_phrase = list()
+	///how many gadgets can we hold
+	var/max_items = 4
+	///items above this weight cannot be put in the hat
+	var/max_weight = WEIGHT_CLASS_NORMAL
 
-/datum/armor/fedora_det_hat
-	melee = 25
-	bullet = 5
-	laser = 25
-	energy = 35
-	fire = 30
-	acid = 50
-	wound = 5
-
-/obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
+/obj/item/clothing/head/fedora/inspector_hat/Initialize(mapload)
 	. = ..()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	QDEL_NULL(atom_storage)
 
-	create_storage(storage_type = /datum/storage/pockets/small/fedora/detective)
-
-	new flask_path(src)
-
-/obj/item/clothing/head/fedora/det_hat/examine(mob/user)
+/obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to take a candy corn.")
+	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
+	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
+	for(var/phrase in items_by_phrase)
+		var/obj/item/item = items_by_phrase[phrase]
+		. += span_notice("[icon2html(item, user)] You can remove [item] by saying <b>\"[prefix] [phrase]\"</b>!")
 
-/obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
+/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(loc != user || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(candy_cooldown < world.time)
-		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-		user.put_in_hands(CC)
-		to_chat(user, span_notice("You slip a candy corn from your hat."))
-		candy_cooldown = world.time+1200
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || speaker != wearer) //if we are worn
+		return FALSE
+
+	raw_message = htmlrendertext(raw_message)
+	var/prefix_index = findtext(raw_message, prefix)
+	if(prefix_index != 1)
+		return FALSE
+
+	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
+	var/obj/item/result = items_by_phrase[the_phrase]
+	if(!result)
+		return FALSE
+
+	if(wearer.put_in_active_hand(result))
+		wearer.visible_message(span_warning("[src] drops [result] into the hands of [wearer]!"))
 	else
-		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		balloon_alert(wearer, "cant put in hands!")
 
-/obj/item/clothing/head/fedora/det_hat/minor
-	flask_path = /obj/item/reagent_containers/cup/glass/flask/det/minor
+	return TRUE
+
+/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, params)
+	. = ..()
+
+	if(LAZYLEN(contents) >= max_items)
+		balloon_alert(user, "full!")
+		return
+	if(item.w_class > max_weight)
+		balloon_alert(user, "too big!")
+		return
+
+	var/input = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	if(!input)
+		return
+	if(input in items_by_phrase)
+		balloon_alert(user, "already used!")
+		return
+
+	if(item.loc != user || !user.transferItemToLoc(item, src))
+		return
+
+	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot in [src]."))
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	items_by_phrase[input] = item
+
+/obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
+	. = ..()
+	var/phrase = tgui_input_list(user, "What item do you want to remove by phrase?", "Item Removal", items_by_phrase)
+	if(!phrase)
+		return
+	user.put_in_inactive_hand(items_by_phrase[phrase])
+
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/living/user)
+	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
+	prefix = new_prefix
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
+	. = ..()
+	for(var/phrase in items_by_phrase)
+		var/obj/item/result = items_by_phrase[phrase]
+		if(gone == result)
+			items_by_phrase -= phrase
+			return
+
+/obj/item/clothing/head/fedora/inspector_hat/atom_destruction(damage_flag)
+	for(var/phrase in items_by_phrase)
+		var/obj/item/result = items_by_phrase[phrase]
+		result.forceMove(drop_location())
+	items_by_phrase = null
+	return ..()
+
+/obj/item/clothing/head/fedora/inspector_hat/Destroy()
+	QDEL_LIST_ASSOC(items_by_phrase)
+	return ..()
 
 //Mime
 /obj/item/clothing/head/beret

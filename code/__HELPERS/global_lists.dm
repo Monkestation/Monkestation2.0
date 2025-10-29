@@ -2,7 +2,7 @@
 /////Initial Building/////
 //////////////////////////
 
-/proc/make_datum_references_lists()
+/proc/init_sprite_accessories()
 	///roundstart hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.roundstart_hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list, roundstart = TRUE)
 	//hair - includes all locked hair
@@ -33,31 +33,51 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ethereal_horns, GLOB.ethereal_horns_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/ethereal, GLOB.ethereal_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/apid_antenna, GLOB.apid_antenna_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_screens, GLOB.ipc_screens_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_antennas, GLOB.ipc_antennas_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ipc_chassis, GLOB.ipc_chassis_list) //Monkestation Addition
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_nose, GLOB.goblin_nose_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/floran_leaves, GLOB.floran_leaves_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/apid_wings, GLOB.apid_wings_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_fluff, GLOB.satyr_fluff_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_tail, GLOB.satyr_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_horns, GLOB.satyr_horns_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wings, GLOB.arm_wings_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wingsopen, GLOB.arm_wingsopen_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_wings, GLOB.oni_wings_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list) //Monkestation Addition
 
-	//Species
+/// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
+/proc/init_species_list()
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
 	sort_list(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	//Surgeries
+/// Inits GLOB.surgeries
+/proc/init_surgeries()
+	var/surgeries = list()
 	for(var/path in subtypesof(/datum/surgery))
-		GLOB.surgeries_list += new path()
-	sort_list(GLOB.surgeries_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		surgeries += new path()
+	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
+	return surgeries
 
-	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+/proc/init_hair_gradients()
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path()
 		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
@@ -65,11 +85,14 @@
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
 			GLOB.facial_hair_gradients_list[gradient.name] = gradient
 
-	// Keybindings
+/// Legacy procs that really should be replaced with proper _INIT macros
+/proc/make_datum_reference_lists()
+	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
+	init_sprite_accessories()
+	init_species_list()
+	init_hair_gradients()
 	init_keybindings()
-
-	GLOB.emote_list = init_emote_list()
-
+	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
 
@@ -214,7 +237,7 @@
 /proc/init_subtypes_w_path_keys(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/path as anything in subtypesof(prototype))
+	for(var/path in subtypesof(prototype))
 		L[path] = new path()
 	return L
 

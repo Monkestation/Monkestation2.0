@@ -1,6 +1,3 @@
-/// This divisor controls how fast body temperature changes to match the environment
-#define BODYTEMP_DIVISOR 16
-
 /**
  * Handles the biological and general over-time processes of the mob.
  *
@@ -40,7 +37,7 @@
 	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
-	if(!IS_IN_STASIS(src))
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
 
 		if(stat != DEAD)
 			//Mutations and radiation
@@ -58,11 +55,18 @@
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events(seconds_per_tick, times_fired)
+			// Handle tempature alerts
+			body_temperature_alerts()
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
 			handle_environment(environment, seconds_per_tick, times_fired)
+			body_temperature_damage(environment, seconds_per_tick, times_fired)
+		if(stat <= SOFT_CRIT && !on_fire)
+			if(!ishuman(src))
+				return
+			temperature_homeostasis(seconds_per_tick, times_fired)
 
 		handle_gravity(seconds_per_tick, times_fired)
 
@@ -70,6 +74,11 @@
 
 	if(machine)
 		machine.check_eye(src)
+
+	if(living_flags & QUEUE_NUTRITION_UPDATE)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
 	if(stat != DEAD)
 		return 1
@@ -90,36 +99,65 @@
 /mob/living/proc/handle_random_events(seconds_per_tick, times_fired)
 	return
 
-// Base mob environment handler for body temperature
+/**
+ * Handle this mob's interactions with the environment
+ *
+ * By default handles body temperature normalization to the area's temperature,
+ * but also handles pressure for many mobs
+ *
+ * Arguments:
+ * * environment: The gas mixture of the area the mob is in, will never be null
+ * * seconds_per_tick: The amount of time that has elapsed since this last fired.
+ * * times_fired: The number of times SSmobs has fired
+ */
 /mob/living/proc/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/loc_temp = get_temperature(environment)
 	var/temp_delta = loc_temp - bodytemperature
+	if(temp_delta == 0)
+		return
+	if(temp_delta < 0 && on_fire)
+		return
 
-	if(ismovable(loc))
-		var/atom/movable/occupied_space = loc
-		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
+	var/thermal_protection = get_insulation(loc_temp)
+	var/protection_modifier = 1
+	if(bodytemperature > standard_body_temperature + 2 KELVIN)
+		protection_modifier = 0.7
 
-	if(temp_delta < 0) // it is cold here
-		if(!on_fire) // do not reduce body temp when on fire
-			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * seconds_per_tick, temp_delta))
-	else // this is a hot place
-		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * seconds_per_tick, temp_delta))
+	// Calculate the equilibrium temperature considering insulation
+	var/equilibrium_temp = get_insulated_equilibrium_temperature(loc_temp, thermal_protection * protection_modifier)
+
+	var/temp_change = (equilibrium_temp - bodytemperature) * temperature_normalization_speed * seconds_per_tick
+
+	// Cap increase and decrease
+	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
+	// Boost when returning to equilibrium (if we're not cold-blooded)
+	if(!HAS_TRAIT(src, TRAIT_COLD_BLOODED) && !ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
+		temp_change *= 2
+
+	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
+
+/mob/living/proc/get_insulated_equilibrium_temperature(environment_temp, insulation)
+	return environment_temp + (standard_body_temperature - environment_temp) * insulation
+
+/mob/living/silicon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	return // Not yet
 
 /**
  * Get the fullness of the mob
  *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
+ * Fullness is a representation of how much nutrition the mob has,
+ * including the nutrition of stuff yet to be digested (reagents in blood / stomach)
+ *
+ * * only_consumable - if TRUE, only consumable reagents are counted.
+ * Otherwise, all reagents contribute to fullness, despite not adding nutrition as they process.
+ *
+ * Returns a number representing fullness, scaled similarly to nutrition.
  */
-/mob/living/proc/get_fullness()
+/mob/living/proc/get_fullness(only_consumable)
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
-	for(var/bile in reagents.reagent_list)
-		var/datum/reagent/consumable/bits = bile
-		if(bits)
-			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
+		fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
@@ -132,7 +170,7 @@
  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+	return reagents?.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/proc/update_damage_hud()
 	return
@@ -153,5 +191,3 @@
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
-
-#undef BODYTEMP_DIVISOR

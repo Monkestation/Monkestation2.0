@@ -4,6 +4,7 @@
 	stage = 2
 	restricted = TRUE
 	badness = EFFECT_DANGER_ANNOYING
+	severity = 3
 	max_multiplier = 5
 	var/yawning = FALSE
 
@@ -36,7 +37,7 @@
 				if(M.check_airborne_sterility())
 					return
 				var/strength = 0
-				for (var/datum/disease/advanced/V  as anything in M.diseases)
+				for (var/datum/disease/acute/V  as anything in M.diseases)
 					strength += V.infectionchance
 				strength = round(strength/M.diseases.len)
 
@@ -57,7 +58,7 @@
 				if(M.check_airborne_sterility())
 					return
 				var/strength = 0
-				for (var/datum/disease/advanced/V  as anything in M.diseases)
+				for (var/datum/disease/acute/V  as anything in M.diseases)
 					strength += V.infectionchance
 				strength = round(strength/M.diseases.len)
 
@@ -80,6 +81,7 @@
 	stage = 2
 	restricted = TRUE
 	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
 
 	var/list/passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
@@ -174,24 +176,47 @@
 #undef STARLIGHT_CANNOT_HEAL
 #undef STARLIGHT_MAX_RANGE
 
-/datum/symptom/starlight/proc/Heal(mob/living/carbon/M, actual_power)
+/datum/symptom/starlight/proc/Heal(mob/living/M, actual_power)
 	var/heal_amt = actual_power
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-
-	if(!parts.len)
-		return
-
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
+	M.adjustToxLoss(-4 * heal_amt, updating_health = FALSE) //most effective on toxins
+	M.heal_overall_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC)
+	return TRUE
 
 /datum/symptom/starlight/proc/passive_message_condition(mob/living/M)
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
 		return TRUE
 	return FALSE
+
+/datum/symptom/toxolysis
+	name = "Toxolysis"
+	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	max_multiplier = 10
+	stage = 2
+	badness = EFFECT_DANGER_HELPFUL
+	severity = 0
+	var/food_conversion = FALSE
+
+/datum/symptom/toxolysis/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+	. = ..()
+	var/mob/living/M = mob
+	switch(round(multiplier))
+		if(9, 10)
+			food_conversion = TRUE
+			Heal(M, multiplier)
+		if(4, 5, 6, 7, 8)
+			Heal(M, multiplier)
+		else
+			multiplier = min(multiplier + 0.1, max_multiplier)
+	return
+
+/datum/symptom/toxolysis/proc/Heal(mob/living/M, actual_power)
+	for(var/datum/reagent/R in M.reagents?.reagent_list) //Not just toxins!
+		M.reagents.remove_reagent(R.type, actual_power)
+		if(food_conversion)
+			M.adjust_nutrition(0.3)
+		if(prob(2))
+			to_chat(M, span_notice("You feel a mild warmth as your blood purifies itself."))
+	return TRUE

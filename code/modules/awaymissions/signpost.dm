@@ -30,7 +30,7 @@
 		else
 			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 
-/obj/structure/signpost/attackby(obj/item/W, mob/user, params)
+/obj/structure/signpost/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_paw(mob/user, list/modifiers)
@@ -45,9 +45,6 @@
 /obj/structure/signpost/attack_robot(mob/user)
 	if (Adjacent(user))
 		return interact(user)
-
-/obj/structure/signpost/attack_slime(mob/user, list/modifiers)
-	return interact(user)
 
 /obj/structure/signpost/attack_animal(mob/user, list/modifiers)
 	return interact(user)
