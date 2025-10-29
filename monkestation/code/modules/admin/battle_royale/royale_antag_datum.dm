@@ -27,7 +27,7 @@
 
 /datum/antagonist/battle_royale/process(seconds_per_tick)
 	var/mob/living/current = owner.current
-	if(!current || current.stat == DEAD || (current.status_flags & GODMODE))
+	if(!current || current.stat == DEAD || HAS_TRAIT(current, TRAIT_GODMODE))
 		return
 
 	var/turf/current_turf = get_turf(current)

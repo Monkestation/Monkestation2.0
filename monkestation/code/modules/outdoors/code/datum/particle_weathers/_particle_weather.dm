@@ -212,21 +212,6 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	QDEL_LIST_ASSOC_VAL(current_wind_sounds)
 	return ..()
 
-	var/plane_type = "Default"
-	var/eclipse = FALSE
-
-/datum/particle_weather/New(plane_type)
-	. = ..()
-	if(plane_type)
-		src.plane_type = plane_type
-
-/datum/particle_weather/Destroy()
-	messaged_mobs = null
-	QDEL_LIST(weather_additional_ongoing_events)
-	QDEL_LIST_ASSOC_VAL(current_sounds)
-	QDEL_LIST_ASSOC_VAL(current_wind_sounds)
-	return ..()
-
 /datum/particle_weather/proc/severity_mod()
 	return severity / max_severity
 

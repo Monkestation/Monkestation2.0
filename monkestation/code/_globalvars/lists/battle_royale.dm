@@ -95,7 +95,6 @@ GLOBAL_LIST_INIT(royale_utility_loot, list(
 		/obj/item/book/granter/action/spell/charge = 1,
 		/obj/item/book/granter/action/spell/knock = 2,
 		/obj/item/book/granter/action/spell/summonitem = 2,
-		/obj/item/camera_bug = 1, //this might not even work at this point
 		/obj/item/card/emag/doorjack = 2,
 		/obj/item/card/emag = 3,
 		/obj/item/chameleon = 1,
@@ -210,7 +209,6 @@ GLOBAL_LIST_INIT(royale_rare_loot, list(
 		/obj/item/storage/box/syndicate/bundle_b = 3,
 		/obj/item/teleportation_scroll = 1,
 		/obj/item/warp_whistle = 1,
-		/obj/item/clothing/suit/space/hardsuit/security = 3,
 ))
 
 ///very rare loot, only spawned from super drops

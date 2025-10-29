@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		participants += ghost_player
 
-	participants = poll_candidates("[message]", poll_time = given_poll_time, group = participants)
+	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants)
 	if(!length(participants))
 		return FALSE
 
@@ -165,8 +165,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		var/mob/living/carbon/human/spawned_human = new(pod)
 		spawned_human.key = key
 		if(grace)
-			ADD_TRAIT(spawned_human, TRAIT_PACIFISM, BATTLE_ROYALE_TRAIT)
-			spawned_human.status_flags |= GODMODE
+			spawned_human.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), BATTLE_ROYALE_TRAIT)
 			var/datum/action/cooldown/spell/aoe/knock/knock_spell = new
 			knock_spell.Grant(spawned_human)
 			to_chat(spawned_human, span_notice("You have been given knock and pacifism for 1 minute."))
@@ -184,8 +183,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 ///Remove grace period buffs and effects
 /datum/battle_royale_controller/proc/remove_grace(mob/player)
-	player.status_flags &= ~GODMODE
-	REMOVE_TRAIT(player, TRAIT_PACIFISM, BATTLE_ROYALE_TRAIT)
+	player.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), BATTLE_ROYALE_TRAIT)
 	var/datum/action/cooldown/spell/aoe/knock/knock_spell = locate() in player.actions
 	if(knock_spell)
 		qdel(knock_spell)
@@ -395,8 +393,8 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		ui = new(user, src, "BattleRoyalePanel")
 		ui.open()
 
-/datum/battle_royale_controller/ui_state(mob/user)
-	return GLOB.fun_state
+///datum/battle_royale_controller/ui_state(mob/user)
+//	return GLOB.fun_state
 
 /datum/battle_royale_controller/ui_static_data(mob/user)
 
