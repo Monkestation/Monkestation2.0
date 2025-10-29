@@ -32305,7 +32305,6 @@
 /area/station/medical/pathology/isolation)
 "jfs" = (
 /obj/item/radio/intercom/directional/north,
-/obj/effect/landmark/secequipment,
 /obj/machinery/button/door/directional/east{
 	id = "brigprison";
 	name = "Prison Lockdown";
@@ -32313,6 +32312,7 @@
 	},
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/office)
 "jfw" = (
@@ -48536,7 +48536,6 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -50227,10 +50226,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nYI" = (
-/obj/effect/landmark/secequipment,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/office)
 "nYT" = (
@@ -79200,7 +79199,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},

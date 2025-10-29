@@ -9275,8 +9275,8 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security EVA"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "cJb" = (
@@ -46693,11 +46693,11 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security EVA"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/smooth,
 /area/station/security/processing)
 "omg" = (

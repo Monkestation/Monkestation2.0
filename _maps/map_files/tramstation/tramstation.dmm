@@ -23928,6 +23928,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/effect/spawner/random/contraband/cannabis,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "gwR" = (
@@ -36047,11 +36048,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"kkV" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "kld" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/light_switch/directional/south{
@@ -43517,7 +43513,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mzH" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -67525,11 +67520,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tYg" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/item/storage/secure/safe/directional/east,
-/obj/effect/spawner/random/contraband/cannabis,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "tYp" = (
@@ -75803,9 +75795,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "wtP" = (
-/obj/structure/closet{
-	name = "Evidence Closet 2"
-	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "wtQ" = (
@@ -166204,7 +166194,7 @@ sne
 lUo
 hgn
 hgn
-kkV
+hgn
 dEv
 bwg
 fXP

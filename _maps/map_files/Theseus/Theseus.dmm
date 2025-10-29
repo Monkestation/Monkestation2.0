@@ -5507,11 +5507,11 @@
 "bHk" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Equipment Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/office)
 "bHm" = (
@@ -16512,6 +16512,7 @@
 	name = "Brig Blast Door"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "eVF" = (
@@ -19058,6 +19059,14 @@
 	},
 /obj/item/poster/random_official,
 /obj/item/poster/random_official,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "fIH" = (
@@ -25487,11 +25496,11 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/port/aft)
 "hBU" = (
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hBV" = (
@@ -58991,7 +59000,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "rll" = (
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -59002,6 +59010,7 @@
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 3
 	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "rlo" = (
