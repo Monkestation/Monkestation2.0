@@ -389,6 +389,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return get_safe_random_station_turf(final_area_list)
 
+///Returns a list of all safe station turfs, useful for if you would need to do a bunch of calls of get_safe_station_turf()
+///care_about_dense_objects will make us iterate through EVERY OBJ IN EVERY VALID TURF, only set to true if absolutely needed
+/proc/get_safe_station_turfs(list/areas_to_pick_from = GLOB.the_station_areas, care_about_dense_objects = FALSE) as /list
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/area/turf_area as anything in areas_to_pick_from)
+		var/list/turf_list = get_area_turfs(turf_area)
+		for(var/turf/checked_turf in turf_list)
+			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
+				var/clear = TRUE
+				if(care_about_dense_objects)
+					for(var/obj/checked_object in checked_turf)
+						if(checked_object.density)
+							clear = FALSE
+							break
+				if(clear)
+					. += checked_turf
+	return .
+
 /**
  * Checks whether the target turf is in a valid state to accept a directional construction
  * such as windows or railings.
