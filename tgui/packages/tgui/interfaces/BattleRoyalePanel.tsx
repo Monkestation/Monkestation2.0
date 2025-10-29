@@ -1,5 +1,11 @@
 import { useBackend } from 'tgui/backend';
-import { Button, Collapsible, LabeledList, Section, Stack } from 'tgui/components';
+import {
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type BattleRoyalePanelContext = {
@@ -33,7 +39,7 @@ type royaledataset = {
 };
 
 export const BattleRoyalePanel = (props, context) => {
-  const { act, data } = useBackend<BattleRoyalePanelContext>(context);
+  const { act, data } = useBackend<BattleRoyalePanelContext>();
   const active_dataset = data.active_dataset || [];
   const prizes = data.prizes;
   const custom_datasets = data.custom_datasets || [];
@@ -51,41 +57,41 @@ export const BattleRoyalePanel = (props, context) => {
         <Section title="Currently active data">
           {active_dataset.length
             ? active_dataset.map((royaledataset) => (
-              <LabeledList key={royaledataset.active_time}>
-                <div>
-                  <LabeledList.Item label="Active Time">
-                    {royaledataset.active_time}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Common Weight">
-                    {royaledataset.common_weight}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Utility Weight">
-                    {royaledataset.utility_weight}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Rare Weight">
-                    {royaledataset.rare_weight}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Super Rare Weight">
-                    {royaledataset.super_rare_weight}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Misc Weight">
-                    {royaledataset.misc_weight}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Extra Loot Prob">
-                    {royaledataset.extra_loot_prob}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Rare Drop Prob">
-                    {royaledataset.rare_drop_prob}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Super Drop Prob">
-                    {royaledataset.super_drop_prob}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Pods Per Second">
-                    {royaledataset.pods_per_second}
-                  </LabeledList.Item>
-                </div>
-              </LabeledList>
-            ))
+                <LabeledList key={royaledataset.active_time}>
+                  <div>
+                    <LabeledList.Item label="Active Time">
+                      {royaledataset.active_time}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Common Weight">
+                      {royaledataset.common_weight}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Utility Weight">
+                      {royaledataset.utility_weight}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Rare Weight">
+                      {royaledataset.rare_weight}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Super Rare Weight">
+                      {royaledataset.super_rare_weight}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Misc Weight">
+                      {royaledataset.misc_weight}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Extra Loot Prob">
+                      {royaledataset.extra_loot_prob}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Rare Drop Prob">
+                      {royaledataset.rare_drop_prob}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Super Drop Prob">
+                      {royaledataset.super_drop_prob}
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Pods Per Second">
+                      {royaledataset.pods_per_second}
+                    </LabeledList.Item>
+                  </div>
+                </LabeledList>
+              ))
             : 'None'}
         </Section>
         <Section
@@ -95,7 +101,8 @@ export const BattleRoyalePanel = (props, context) => {
               content="Adjust prizes"
               onClick={() => act('adjust_prizes')}
             />
-          }>
+          }
+        >
           {prizes.map((prizelist) => (
             <LabeledList key={prizelist.coins}>
               <div>
@@ -138,51 +145,53 @@ export const BattleRoyalePanel = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          }>
+          }
+        >
           {custom_datasets.length
             ? custom_datasets.map((royaledataset) => (
-              <Collapsible
-                title={royaledataset.converted_time}
-                key={royaledataset.active_time}>
-                <LabeledList>
-                  <div>
-                    <LabeledList.Item label="Active Time">
-                      {royaledataset.active_time}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Common Weight">
-                      {royaledataset.common_weight}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Utility Weight">
-                      {royaledataset.utility_weight}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Rare Weight">
-                      {royaledataset.rare_weight}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Super Rare Weight">
-                      {royaledataset.super_rare_weight}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Misc Weight">
-                      {royaledataset.misc_weight}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Extra Loot Prob">
-                      {royaledataset.extra_loot_prob}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Rare Drop Prob">
-                      {royaledataset.rare_drop_prob}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Super Drop Prob">
-                      {royaledataset.super_drop_prob}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Pods Per Second">
-                      {royaledataset.pods_per_second}
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Final Time">
-                      {royaledataset.final_time}
-                    </LabeledList.Item>
-                  </div>
-                </LabeledList>
-              </Collapsible>
-            ))
+                <Collapsible
+                  title={royaledataset.converted_time}
+                  key={royaledataset.active_time}
+                >
+                  <LabeledList>
+                    <div>
+                      <LabeledList.Item label="Active Time">
+                        {royaledataset.active_time}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Common Weight">
+                        {royaledataset.common_weight}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Utility Weight">
+                        {royaledataset.utility_weight}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Rare Weight">
+                        {royaledataset.rare_weight}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Super Rare Weight">
+                        {royaledataset.super_rare_weight}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Misc Weight">
+                        {royaledataset.misc_weight}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Extra Loot Prob">
+                        {royaledataset.extra_loot_prob}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Rare Drop Prob">
+                        {royaledataset.rare_drop_prob}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Super Drop Prob">
+                        {royaledataset.super_drop_prob}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Pods Per Second">
+                        {royaledataset.pods_per_second}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Final Time">
+                        {royaledataset.final_time}
+                      </LabeledList.Item>
+                    </div>
+                  </LabeledList>
+                </Collapsible>
+              ))
             : 'None'}
         </Section>
       </Window.Content>
