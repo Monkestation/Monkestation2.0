@@ -21736,7 +21736,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "eho" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -27758,7 +27758,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "fnH" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/cable,
@@ -41256,7 +41256,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "hWC" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/stripes/white/line{
@@ -42309,6 +42309,9 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
 /area/station/science/research)
+"igO" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos/storage/gas)
 "igP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -44508,7 +44511,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "iEz" = (
 /obj/structure/window/green_glass_pane,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -64305,7 +64308,7 @@
 "mui" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "muk" = (
 /obj/machinery/smartfridge,
 /turf/open/floor/iron,
@@ -83207,7 +83210,7 @@
 "qdO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "qdV" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
@@ -95501,7 +95504,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "swC" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 4;
@@ -105799,7 +105802,7 @@
 "urM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "urN" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -118725,7 +118728,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "wME" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/bucket{
@@ -120392,7 +120395,7 @@
 "xdG" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
 /turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
+/area/station/engineering/atmos/storage/gas)
 "xdH" = (
 /obj/structure/rack/shelf,
 /obj/effect/turf_decal/bot,
@@ -160805,11 +160808,11 @@ qAu
 kFQ
 tHY
 wst
-sBt
+igO
 hWB
 mui
 wMy
-sBt
+igO
 qfd
 fSo
 qfd
@@ -161062,17 +161065,17 @@ qAu
 cKR
 tHY
 nIO
-sBt
+igO
 dSi
 kQh
 mRe
-sBt
+igO
 qfd
-sBt
-sBt
+igO
+igO
 iEy
-sBt
-sBt
+igO
+igO
 twj
 cqE
 qfd
@@ -161319,17 +161322,17 @@ qAu
 oxB
 tHY
 wst
-sBt
+igO
 eer
 xbl
 eer
-sBt
+igO
 qfd
-sBt
+igO
 vLj
 qhN
 vLj
-sBt
+igO
 tch
 cqE
 qfd
@@ -161576,17 +161579,17 @@ pUW
 lTC
 tHY
 wst
-sBt
+igO
 eer
 eer
 eer
-sBt
+igO
 qfd
-sBt
+igO
 nrB
 vLa
 vLj
-sBt
+igO
 tch
 cqE
 qfd
@@ -161836,14 +161839,14 @@ aZA
 urM
 urM
 urM
-sBt
-sBt
+igO
+igO
 fIA
-sBt
+igO
 vLj
 ryM
 vLj
-sBt
+igO
 ujw
 cqE
 qfd
@@ -162096,11 +162099,11 @@ wYy
 qfd
 qfd
 qfd
-sBt
-sBt
+igO
+igO
 fnE
-sBt
-sBt
+igO
+igO
 tch
 cqE
 qfd
@@ -162605,10 +162608,10 @@ dXH
 tHY
 fIA
 qxQ
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 fIA
 owp
 kZx
@@ -162862,19 +162865,19 @@ dXH
 tHY
 qfd
 tch
-sBt
+igO
 gJP
 odJ
-sBt
+igO
 qfd
 cqE
 qfd
 pnL
 fgR
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 iUk
 qfd
 dTf
@@ -163131,7 +163134,7 @@ dVD
 xdG
 pWL
 egM
-sBt
+igO
 ngB
 qfd
 pfq
@@ -163376,10 +163379,10 @@ dXH
 liN
 qfd
 tch
-sBt
+igO
 bJT
 jss
-sBt
+igO
 qfd
 cqE
 gXC
@@ -163633,10 +163636,10 @@ dXH
 liN
 qfd
 tch
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 fIA
 fCh
 kZx
@@ -163645,7 +163648,7 @@ dcu
 qdO
 pWL
 qug
-sBt
+igO
 jvL
 qfd
 dLw
@@ -163890,19 +163893,19 @@ dXH
 liN
 qfd
 tch
-sBt
+igO
 xBF
 ekm
-sBt
+igO
 qfd
 cqE
 qfd
 pnL
 qfd
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 jvL
 qfd
 iox
@@ -164404,19 +164407,19 @@ dXH
 liN
 qfd
 tch
-sBt
+igO
 eNx
 uZR
-sBt
+igO
 qfd
 cqE
 qfd
 pnL
 qfd
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 jvL
 qfd
 nBm
@@ -164661,10 +164664,10 @@ dXH
 tGf
 gSg
 tch
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 fIA
 cqE
 qfd
@@ -164673,7 +164676,7 @@ cqd
 xdG
 tCY
 oSz
-sBt
+igO
 jvL
 fgR
 sBt
@@ -164918,10 +164921,10 @@ qAu
 liN
 qfd
 tch
-sBt
+igO
 dtC
 sGo
-sBt
+igO
 qfd
 cqE
 gXC
@@ -165187,7 +165190,7 @@ dLt
 qdO
 tCY
 vGy
-sBt
+igO
 jvL
 qfd
 sBt
@@ -165432,19 +165435,19 @@ cWF
 jMt
 vOJ
 tch
-sBt
+igO
 bjM
 dyA
-sBt
+igO
 maA
 qfd
 qfd
 qfd
 fgR
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 jvL
 qfd
 fSo
@@ -165689,10 +165692,10 @@ qAu
 tHY
 fIA
 tch
-sBt
-sBt
-sBt
-sBt
+igO
+igO
+igO
+igO
 fIA
 qfd
 qfd
