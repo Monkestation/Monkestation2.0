@@ -46146,7 +46146,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
 "kzO" = (
