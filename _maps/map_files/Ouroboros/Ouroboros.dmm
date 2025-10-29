@@ -23410,6 +23410,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gWJ" = (
@@ -41832,6 +41833,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"mkE" = (
+/obj/structure/closet/radiation,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "mkK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43319,7 +43325,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "mGT" = (
@@ -60124,7 +60130,7 @@
 /area/station/security/brig/entrance)
 "rLd" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/dark,
 /area/station/security/corrections_officer)
 "rLh" = (
 /obj/structure/railing,
@@ -81506,11 +81512,10 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/research)
 "xZI" = (
-/obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos)
 "xZL" = (
@@ -110958,7 +110963,7 @@ vZz
 sgj
 sgj
 iGd
-sgj
+mkE
 soH
 gqa
 bLN

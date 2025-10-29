@@ -1,20 +1,24 @@
 /datum/action/cooldown/bloodsucker/targeted/trespass
 	name = "Trespass"
-	desc = "Become mist and advance two tiles in one direction. Useful for skipping past doors and barricades."
+	desc = "Become mist and advance past obstacles in one direction. Useful for skipping past doors and barricades."
 	button_icon_state = "power_tres"
 	power_explanation = "Trespass:\n\
-		Click anywhere from 1-2 tiles away from you to teleport.\n\
+		Click anywhere within 2 tiles from you to teleport.\n\
 		This power goes through all obstacles except Walls.\n\
-		Higher levels decrease the sound played from using the Power, and increase the speed of the transition."
+		Higher levels increase the range, decrease the sound played from using the Power, and increase the speed of the transition."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 10
-	sol_multiplier = 5
 	cooldown_time = 8 SECONDS
 	prefire_message = "Select a destination."
-	//target_range = 2
+	target_range = 2
 	var/turf/target_turf // We need to decide where we're going based on where we clicked. It's not actually the tile we clicked.
+
+/datum/action/cooldown/bloodsucker/targeted/trespass/upgrade_power()
+	. = ..()
+
+	target_range++
 
 /datum/action/cooldown/bloodsucker/targeted/trespass/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -23,7 +27,6 @@
 	if(HAS_TRAIT(user, TRAIT_NO_TRANSFORM) || !get_turf(user))
 		return FALSE
 	return TRUE
-
 
 /datum/action/cooldown/bloodsucker/targeted/trespass/CheckValidTarget(atom/target_atom)
 	. = ..()
@@ -44,14 +47,14 @@
 	// Are either tiles WALLS?
 	var/turf/from_turf = get_turf(owner)
 	var/this_dir // = get_dir(from_turf, target_turf)
-	for(var/i = 1 to 2)
+	for(var/i = 1 to target_range)
 		// Keep Prev Direction if we've reached final turf
 		if(from_turf != final_turf)
 			this_dir = get_dir(from_turf, final_turf) // Recalculate dir so we don't overshoot on a diagonal.
 		from_turf = get_step(from_turf, this_dir)
 		// ERROR! Wall!
 		if(iswallturf(from_turf))
-			var/wallwarning = (i == 1) ? "in the way" : "at your destination"
+			var/wallwarning = (i < target_range) ? "in the way" : "at your destination"
 			owner.balloon_alert(owner, "There is a wall [wallwarning].")
 			return FALSE
 	// Done
