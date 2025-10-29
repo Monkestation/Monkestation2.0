@@ -919,3 +919,6 @@
       count
   - balance: Player made clockwork doors now drain passive power when placed next
       to each other
+2025-10-29:
+  JohnFulpWillard:
+  - qol: You can close the minimap by opening the Escape menu.
