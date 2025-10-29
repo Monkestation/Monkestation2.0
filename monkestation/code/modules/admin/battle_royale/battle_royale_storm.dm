@@ -144,8 +144,8 @@
 	weather_traits = WEATHERTRAIT_NO_IMMUNITIES
 
 /particles/weather/rain/storm/royale
-	gradient               = list(0,"#4d00ff",1,"#8550ff",2,"#3900bd","loop")
-	color_change		   = generator("num",-5,5)
+	gradient = list(0,"#4d00ff",1,"#8550ff",2,"#3900bd","loop")
+	color_change = generator("num",-5,5)
 
 //actual logic is handled on the antag datum, this does mean that mobs without the datum wont die, however if any players lack the datum it will break things anyway
 /obj/effect/royale_storm_effect

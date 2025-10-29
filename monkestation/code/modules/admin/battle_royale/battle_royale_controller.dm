@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	while(sanity < 10 && length(GLOB.mob_living_list))
 		sanity++
 		for(var/mob/living/mob in GLOB.mob_living_list)
-			if(istype(mob, /mob/living/carbon/human/dummy))
+			if(istype(mob, /mob/living/carbon/human/dummy) || istype(mob, /mob/living/carbon/human/ghost))
 				continue
 			mob.dust(TRUE, FALSE, TRUE)
 			CHECK_TICK
@@ -186,7 +186,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		auth.implant(spawned_human)
 		players += spawned_human.mind?.add_antag_datum(/datum/antagonist/battle_royale)
 		new /obj/effect/pod_landingzone(spawn_turf, pod)
-		CHECK_TICK
 	return TRUE
 
 ///Remove grace period buffs and effects
@@ -309,7 +308,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			if(data_datum.active_time > highest_active_time)
 				highest_active_time = data_datum.active_time
 
-	max_duration = 0
 	var/data_datums_iterator = 0
 	for(var/i in 1 to highest_active_time)
 		if(new_data_datums[i])
@@ -337,7 +335,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	do_loot_drop(SUPER_RARE_LOOT_TABLE, 5 MINUTES, "We found a weird looking package in the back of our warehouse. \
 				We have no idea what is in it, but it is marked as incredibily dangerous and could be a superweapon.")
 
-#define MINIMUM_USEFUL_DROP_TIME 1 MINUTES
+#define MINIMUM_USEFUL_DROP_TIME 1.5 MINUTES
 ///Reduce the extra landing time of rare and super drops to make sure they wont land after royale end
 /datum/battle_royale_controller/proc/calculate_drop_time(input_delay = 0)
 	return max(0.4 SECONDS, min(max_duration - MINIMUM_USEFUL_DROP_TIME, active_for + input_delay) - active_for)
@@ -403,9 +401,10 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 ///datum/battle_royale_controller/ui_state(mob/user)
 //	return GLOB.fun_state
 
-/datum/battle_royale_controller/ui_static_data(mob/user)
+///datum/battle_royale_controller/ui_static_data(mob/user)
 
 /datum/battle_royale_controller/ui_data(mob/user)
+	message_admins("1")
 	var/list/data = list()
 	var/list/current_data_values = list()
 	var/list/prize_list = list()
