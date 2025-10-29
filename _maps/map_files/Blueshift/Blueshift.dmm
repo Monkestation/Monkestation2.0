@@ -820,6 +820,9 @@
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aiS" = (
@@ -1571,6 +1574,7 @@
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aqj" = (
@@ -4865,7 +4869,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/abandoned)
 "aXB" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aXD" = (
@@ -14535,6 +14539,12 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engineering/engine_aft_port)
+"cKt" = (
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "cKy" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -26260,6 +26270,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "eYV" = (
@@ -57060,6 +57071,7 @@
 	dir = 6
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kYN" = (
@@ -60702,6 +60714,7 @@
 	name = "Atmospherics"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "lIS" = (
@@ -65234,6 +65247,7 @@
 	dir = 1;
 	name = "Pure to Mix"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "mEi" = (
@@ -70988,6 +71002,7 @@
 	dir = 1;
 	name = "Unfiltered to Mix"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "nLl" = (
@@ -74027,6 +74042,7 @@
 	dir = 1;
 	name = "Air to Distro"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "ooN" = (
@@ -89032,6 +89048,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/barber)
+"rjr" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/disposal/incinerator)
 "rjs" = (
 /turf/open/floor/engine,
 /area/station/maintenance/department/science/xenobiology)
@@ -94886,6 +94906,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"srv" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/full,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "srx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
@@ -97960,6 +97987,7 @@
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "sVt" = (
@@ -104732,6 +104760,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "uit" = (
@@ -107627,6 +107656,7 @@
 	name = "Atmospherics Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "uJZ" = (
@@ -113553,7 +113583,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "vOJ" = (
-/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vOS" = (
@@ -115491,6 +115521,9 @@
 /obj/item/analyzer{
 	pixel_x = 3
 	},
+/obj/item/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/office)
 "whq" = (
@@ -160772,7 +160805,7 @@ rjS
 wqo
 lHd
 fSo
-luR
+srv
 sBt
 cUf
 aPt
@@ -162556,7 +162589,7 @@ wHI
 dXH
 tHY
 fIA
-tch
+cKt
 sBt
 sBt
 sBt
@@ -165125,7 +165158,7 @@ wHI
 cmy
 cEv
 tHY
-aXB
+qfd
 fqD
 swy
 oDV
@@ -165382,7 +165415,7 @@ wHI
 iDd
 qAu
 tHY
-vOJ
+qfd
 tch
 sBt
 bjM
@@ -165400,7 +165433,7 @@ sBt
 uxW
 qfd
 fSo
-qfd
+vOJ
 qRY
 wAS
 vLv
@@ -165915,8 +165948,8 @@ txl
 qfd
 qfd
 qfd
-qfd
-qfd
+aXB
+aXB
 fth
 hGY
 xPp
@@ -166945,7 +166978,7 @@ qfd
 qfd
 qfd
 fgR
-fth
+rjr
 vwS
 oFH
 vwS
@@ -167187,7 +167220,7 @@ qAu
 qAu
 yjO
 uJY
-qfd
+vOJ
 vJU
 qfd
 ptU
