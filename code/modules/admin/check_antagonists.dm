@@ -21,6 +21,7 @@
 			return "<font color=red>(DEAD)</font>"
 		else if(!owner.current.client)
 			return "(No client)"
+	return should_count_for_antag_cap() ? "([antag_count_points] points)" : null
 
 //Builds the common FLW PM TP commands part
 //Probably not going to be overwritten by anything but you never know
@@ -50,31 +51,30 @@
 
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
-	var/list/priority_sections = list()
 
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/datum/antagonist/antag in GLOB.antagonists)
+		if(!antag.owner)
 			continue
-		all_teams |= A.get_team()
-		all_antagonists += A
+		all_teams |= antag.get_team()
+		all_antagonists += antag
 
-	for(var/datum/team/T in all_teams)
-		for(var/datum/antagonist/X in all_antagonists)
-			if(X.get_team() == T)
-				all_antagonists -= X
-		sections += T.antag_listing_entry()
+	for(var/datum/team/antag_team in all_teams)
+		for(var/datum/antagonist/team_antag in all_antagonists)
+			if(team_antag.get_team() == antag_team)
+				all_antagonists -= team_antag
+		sections += antag_team.antag_listing_entry()
 
 	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
 
 	var/current_category
 	var/list/current_section = list()
-	for(var/i in 1 to all_antagonists.len)
+	for(var/i in 1 to length(all_antagonists))
 		var/datum/antagonist/current_antag = all_antagonists[i]
 		var/datum/antagonist/next_antag
-		if(i < all_antagonists.len)
+		if(i < length(all_antagonists))
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
@@ -87,8 +87,7 @@
 			sections += current_section.Join()
 			current_section.Cut()
 			current_category = null
-	var/list/all_sections = priority_sections + sections
-	return all_sections.Join("<br>")
+	return sections.Join("<br>")
 
 /datum/admins/proc/check_antagonists()
 	if(!SSticker.HasRoundStarted())

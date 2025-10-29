@@ -54,12 +54,7 @@ export const MultiNameInput = (props: {
         }
 
         return (
-          <Modal
-            style={{
-              margin: '0 auto',
-              width: '100%',
-            }}
-          >
+          <Modal ml={20}>
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
                 buttons={
@@ -225,7 +220,7 @@ export const NameInput = (props: {
                 <Button
                   as="span"
                   tooltip="Alternate Names"
-                  tooltipPosition="bottom"
+                  tooltipPosition="right"
                   style={{
                     background: 'rgba(0, 0, 0, 0.7)',
                     position: 'absolute',

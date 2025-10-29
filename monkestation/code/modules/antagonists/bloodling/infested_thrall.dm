@@ -10,6 +10,7 @@
 	genetic_points = 5
 	total_genetic_points = 5
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 5
 
 	// This thralls master
 	var/master = null

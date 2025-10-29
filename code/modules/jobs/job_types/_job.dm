@@ -134,8 +134,12 @@
 	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
 	var/job_req_donor = null //MONKESTATION EDIT
-	//donator bypass for holidays
+	///donator bypass for holidays
 	var/job_donor_bypass = null //MONKESTATION EDIT
+
+	//yes this could probably be a config but I dont really care
+	///How many points of antag capacity does this job give
+	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
 /datum/job/New()
 	. = ..()

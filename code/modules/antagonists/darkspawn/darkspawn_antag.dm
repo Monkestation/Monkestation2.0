@@ -12,6 +12,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	antag_moodlet = /datum/mood_event/sling
 	stinger_sound = 'sound/ambience/antag/darkspawn/darkspawn.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 20
 
 	//team used for all the darkspawns, thralls, and the objective
 	var/datum/team/darkspawn/team

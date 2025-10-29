@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/clown_operative_elite
 	preview_outfit_behind = /datum/outfit/clown_operative
 	nuke_icon_state = "bananiumbomb_base"
+	antag_count_points = 8
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))

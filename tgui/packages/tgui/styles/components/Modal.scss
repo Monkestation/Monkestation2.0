@@ -9,6 +9,10 @@ $background-color: base.$color-bg !default;
 
 .Modal {
   background-color: $background-color;
-  max-width: calc(100% - 1rem);
   padding: 1rem;
+  &__dimmer .Dimmer__inner {
+    // 1rem for window padding, 1rem like modal margin
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+  }
 }
