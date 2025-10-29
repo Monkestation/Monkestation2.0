@@ -86,8 +86,6 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
-	///Counter for displaying the hacked overlay to mobs within view
-	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -531,11 +529,6 @@
 		failure_timer--
 		force_update = TRUE
 		return
-
-	if((obj_flags & EMAGGED) || malfai)
-		hacked_flicker_counter = hacked_flicker_counter - 1
-		if(hacked_flicker_counter <= 0)
-			flicker_hacked_icon()
 
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
