@@ -4869,7 +4869,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/abandoned)
 "aXB" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aXD" = (
@@ -14539,12 +14539,6 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engineering/engine_aft_port)
-"cKt" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "cKy" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -26133,6 +26127,10 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
+"eWW" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "eXf" = (
 /obj/machinery/power/solar_control{
 	id = "forestarboard";
@@ -83026,6 +83024,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aux_eva)
+"qcy" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/disposal/incinerator)
 "qcz" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/airalarm/directional/east,
@@ -87444,6 +87446,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
+"qUf" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/full,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "qUm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen/interrogation{
@@ -88999,6 +89008,7 @@
 "rjc" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rje" = (
@@ -89048,10 +89058,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/barber)
-"rjr" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "rjs" = (
 /turf/open/floor/engine,
 /area/station/maintenance/department/science/xenobiology)
@@ -94618,6 +94624,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"soq" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos/hfr_room)
 "sot" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -94906,13 +94916,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
-"srv" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/red/full,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "srx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
@@ -113583,7 +113586,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "vOJ" = (
-/obj/effect/turf_decal/stripes/red/full,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vOS" = (
@@ -118135,6 +118140,7 @@
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "wGh" = (
@@ -160805,7 +160811,7 @@ rjS
 wqo
 lHd
 fSo
-srv
+qUf
 sBt
 cUf
 aPt
@@ -162589,7 +162595,7 @@ wHI
 dXH
 tHY
 fIA
-cKt
+vOJ
 sBt
 sBt
 sBt
@@ -165433,7 +165439,7 @@ sBt
 uxW
 qfd
 fSo
-vOJ
+aXB
 qRY
 wAS
 vLv
@@ -165948,8 +165954,8 @@ txl
 qfd
 qfd
 qfd
-aXB
-aXB
+eWW
+eWW
 fth
 hGY
 xPp
@@ -166978,7 +166984,7 @@ qfd
 qfd
 qfd
 fgR
-rjr
+qcy
 vwS
 oFH
 vwS
@@ -167220,7 +167226,7 @@ qAu
 qAu
 yjO
 uJY
-vOJ
+aXB
 vJU
 qfd
 ptU
@@ -167235,7 +167241,7 @@ vJU
 qfd
 qfd
 rjc
-aCz
+soq
 wGe
 vOZ
 ePc
