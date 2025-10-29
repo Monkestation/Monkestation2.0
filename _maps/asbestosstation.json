@@ -5,9 +5,14 @@
 	"map_file": "asbestosstation.dmm",
 	"space_ruin_levels": 2,
 	"shuttles": {
-		"cargo": "cargo_box",
+		"emergency": "emergency_delta",
 		"ferry": "ferry_fancy",
-		"whiteship": "whiteship_tram",
-		"emergency": "emergency_tram"
-	}
+		"cargo": "cargo_delta",
+		"whiteship": "whiteship_delta"
+	},
+	"traits": [
+		{
+			"Bombcap Multiplier": 1.4
+		}
+	]
 }
