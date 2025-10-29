@@ -2276,6 +2276,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"axl" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos/hfr_room)
 "axm" = (
 /obj/machinery/duct,
 /turf/open/floor/carpet/black,
@@ -4869,7 +4873,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/abandoned)
 "aXB" = (
-/obj/effect/turf_decal/stripes/red/full,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aXD" = (
@@ -26127,10 +26131,6 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
-"eWW" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "eXf" = (
 /obj/machinery/power/solar_control{
 	id = "forestarboard";
@@ -64520,6 +64520,13 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
+"mwH" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/full,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "mwI" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -83024,10 +83031,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aux_eva)
-"qcy" = (
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "qcz" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/airalarm/directional/east,
@@ -87446,13 +87449,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
-"qUf" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/red/full,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "qUm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen/interrogation{
@@ -94624,10 +94620,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"soq" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos/hfr_room)
 "sot" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -112990,6 +112982,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"vJh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_corner,
+/area/station/engineering/atmos/hfr_room)
 "vJi" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -113402,6 +113400,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"vMS" = (
+/obj/effect/turf_decal/stripes/red/full,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "vMU" = (
 /obj/structure/grille,
 /obj/structure/window/spawner/directional/south,
@@ -113586,11 +113588,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "vOJ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/disposal/incinerator)
 "vOS" = (
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic,
@@ -114139,13 +114139,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "vUT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
 	},
-/turf/open/floor/iron/smooth_edge{
-	dir = 1
-	},
-/area/station/engineering/atmos/hfr_room)
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "vUW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -160811,7 +160809,7 @@ rjS
 wqo
 lHd
 fSo
-qUf
+mwH
 sBt
 cUf
 aPt
@@ -162595,7 +162593,7 @@ wHI
 dXH
 tHY
 fIA
-vOJ
+vUT
 sBt
 sBt
 sBt
@@ -165439,7 +165437,7 @@ sBt
 uxW
 qfd
 fSo
-aXB
+vMS
 qRY
 wAS
 vLv
@@ -165954,8 +165952,8 @@ txl
 qfd
 qfd
 qfd
-eWW
-eWW
+aXB
+aXB
 fth
 hGY
 xPp
@@ -166984,7 +166982,7 @@ qfd
 qfd
 qfd
 fgR
-qcy
+vOJ
 vwS
 oFH
 vwS
@@ -167226,7 +167224,7 @@ qAu
 qAu
 yjO
 uJY
-aXB
+vMS
 vJU
 qfd
 ptU
@@ -167241,7 +167239,7 @@ vJU
 qfd
 qfd
 rjc
-soq
+axl
 wGe
 vOZ
 ePc
@@ -167748,7 +167746,7 @@ oxB
 pHL
 hhr
 hBg
-pzk
+vJh
 oux
 xeq
 xeq
@@ -168005,7 +168003,7 @@ cDM
 tHY
 tHY
 aCz
-vUT
+cIm
 ylh
 ylh
 ylh
