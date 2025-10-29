@@ -834,8 +834,12 @@
   Absolucy:
   - bugfix: Storytellers should now be the only thing firing events, rather than the
       legacy Events subsystem.
+  - bugfix: Fixed bloodsucker sucking not properly transfering reagents.
+  - bugfix: Fixed windows built on window sills being "finished" despite being unanchored.
   Greenpoison:
   - map: added/modified atmos map content for EVERY map currently in the pool.
+  JohnFulpWillard:
+  - qol: Plasmamen won't ignite with only one hand as long as they have gloves on.
   SirNightKnight:
   - bugfix: fixed neck strangling not strangling the victim.
   - rscdel: removed lung popping from breathing in not enough mols.
@@ -889,8 +893,32 @@
   - rscadd: Cyborgs can now interact with tendrils, elite fauna, vents, and necropolis's
       door.
   - bugfix: Baton inspects should reflect accurate number of hits to stun
+  - rscadd: New mining and engineering cyborg upgrade. Night vision Meson goggles.
+  - qol: Whenever a PKA upgrade becomes assessable in the cargo lathe, it becomes
+      assessable in robotics for miner cyborgs.
+  - qol: Blood drunk miner learned basic computer literacy hygiene during a sober
+      period, and carries one floppy disk rather than 4.
+  - code_imp: '"KA Mod Disk"''s have been swapped from a single research design to
+      support a list of research designs.'
+  - balance: Cyborg PKA's now have a capacity akin to regular PKA's, (80 -> 100)
+  - rscadd: Ported new medkit and medibot sprites from TG
+  - refactor: Refactored the medibot code to work more simliar to tg for the medibot
+  - rscadd: Carrier status is functional again for pathology, meaning the carrier/patient
+      0 no longer suffers from the effects of the disease! (Making them a useful cure
+      source)
+  - bugfix: Viral bonding serves a purpose, turning the infected into a carrier.
+  - bugfix: Known GNA disks being inserted into a disease splicer will no longer tell
+      you unknown GNA disk.
+  - bugfix: More uniform GNa disk names.
+  - bugfix: Medical huds now update on disease cure so a bird will no longer have
+      to slap themselfs.
+  - balance: Helpful symptoms now only trigger on the associated virus stage akin
+      to any other severity, rather than always.
   wraith-54321:
   - refactor: Antagonist cap is now based on a point system instead of pure integer
       count
   - balance: Player made clockwork doors now drain passive power when placed next
       to each other
+2025-10-29:
+  JohnFulpWillard:
+  - qol: You can close the minimap by opening the Escape menu.
