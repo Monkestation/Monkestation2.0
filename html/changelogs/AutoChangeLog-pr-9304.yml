@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - spellcheck: "fixed a typo in the NV Meson cyborg upgrade."
+  - spellcheck: "updated the description of the NV Meson cyborg upgrade to not use the advanced mop description."
