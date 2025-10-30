@@ -86,6 +86,8 @@ GLOBAL_LIST_INIT(royale_common_loot, list(
 		/obj/item/storage/toolbox/emergency = 3,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/tailclub = 3,
+		/obj/structure/mystery_box/guns = 3,
+		/obj/structure/mystery_box/tdome = 3,
 ))
 
 ///utility things, very common at the start with a steep weight decrease in the mid game
@@ -272,6 +274,7 @@ GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/storage/toolbox/haunted = 1,
 		list(/obj/item/stack/cannonball/the_big_one = 1, /obj/structure/cannon = 1, /obj/item/reagent_containers/cup/bucket/wooden = 1, /obj/structure/fermenting_barrel/gunpowder = 1) = 1,
 		/obj/vehicle/ridden/monkey_ball = 1,
+		/obj/structure/mystery_box = 3,
 ))
 
 ///things in this table have a chance to be spawned in addition to something from another table
