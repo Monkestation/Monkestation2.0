@@ -6090,6 +6090,7 @@
 /area/station/hallway/primary/upper)
 "bjM" = (
 /obj/effect/turf_decal/vg_decals/atmos/carbon_dioxide,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "bjO" = (
@@ -8741,6 +8742,7 @@
 /area/station/commons/storage/primary)
 "bJT" = (
 /obj/effect/turf_decal/vg_decals/atmos/nitrous_oxide,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "bJU" = (
@@ -9015,6 +9017,7 @@
 /area/station/common/wrestling/arena)
 "bLI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/storage/gas)
 "bLL" = (
@@ -14632,6 +14635,7 @@
 /obj/effect/turf_decal/vg_decals/atmos/nitrogen{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/storage/gas)
 "cLp" = (
@@ -17923,6 +17927,7 @@
 /area/station/commons/dorms/room7)
 "dtC" = (
 /obj/machinery/air_sensor/carbon_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "dtD" = (
@@ -18300,6 +18305,7 @@
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden/abandoned)
 "dyA" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "dyC" = (
@@ -18701,6 +18707,7 @@
 /area/station/commons/dorms)
 "dCk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/carbon_output,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "dCp" = (
@@ -20298,6 +20305,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/mix_output{
 	dir = 8
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos/storage/gas)
 "dSm" = (
@@ -21399,6 +21407,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "eer" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos/storage/gas)
 "ees" = (
@@ -21666,6 +21675,7 @@
 /area/station/command/heads_quarters/hop)
 "egM" = (
 /obj/machinery/atmospherics/miner/nitrogen,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/storage/gas)
 "egN" = (
@@ -22034,6 +22044,7 @@
 /area/station/security/checkpoint/escape)
 "ekm" = (
 /obj/machinery/atmospherics/miner/plasma,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "ekr" = (
@@ -25120,6 +25131,7 @@
 /area/station/service/barber)
 "eNx" = (
 /obj/effect/turf_decal/vg_decals/atmos/plasma,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "eNy" = (
@@ -34970,6 +34982,7 @@
 /area/station/common/gaskiosk)
 "gJP" = (
 /obj/machinery/air_sensor/nitrous_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "gJT" = (
@@ -44254,6 +44267,7 @@
 /area/station/service/library/private)
 "iBp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "iBr" = (
@@ -45912,15 +45926,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "iUk" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos/storage/gas)
 "iUs" = (
 /obj/structure/chair,
 /obj/machinery/status_display/evac/directional/north,
@@ -46638,6 +46645,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrous_input{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "jay" = (
@@ -48388,6 +48396,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "jss" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "jst" = (
@@ -56365,6 +56374,7 @@
 /area/station/medical/patients_rooms)
 "kQh" = (
 /obj/machinery/air_sensor/mix_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos/storage/gas)
 "kQl" = (
@@ -57982,6 +57992,7 @@
 "lgI" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "lgV" = (
@@ -66625,6 +66636,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/mix_input{
 	dir = 8
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos/storage/gas)
 "mRf" = (
@@ -67910,6 +67922,7 @@
 /area/station/engineering/supermatter/room)
 "nfj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrous_output,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "nfl" = (
@@ -69062,6 +69075,7 @@
 /area/station/science/robotics/mechbay)
 "nrB" = (
 /obj/machinery/air_sensor/air_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/storage/gas)
 "nrH" = (
@@ -70745,12 +70759,11 @@
 	},
 /area/station/commons/locker)
 "nIO" = (
-/obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/central)
 "nIV" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -72215,6 +72228,7 @@
 /obj/effect/turf_decal/vg_decals/atmos/oxygen{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos/storage/gas)
 "nXP" = (
@@ -72759,6 +72773,7 @@
 /area/station/service/abandoned_gambling_den)
 "odJ" = (
 /obj/machinery/atmospherics/miner/n2o,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
 "odL" = (
@@ -75582,6 +75597,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/carbon_input{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "oEb" = (
@@ -77040,6 +77056,7 @@
 /area/station/maintenance/fore/upper)
 "oSz" = (
 /obj/machinery/atmospherics/miner/oxygen,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos/storage/gas)
 "oSI" = (
@@ -79485,6 +79502,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "psI" = (
@@ -82511,6 +82529,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrogen_output{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/storage/gas)
 "pWU" = (
@@ -83232,9 +83251,9 @@
 /turf/closed/wall/rust,
 /area/station/medical/power_station)
 "qet" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
+/obj/structure/sign/poster/contraband/atmosia_independence/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "qev" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -83572,6 +83591,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 8
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/storage/gas)
 "qhR" = (
@@ -84828,6 +84848,7 @@
 /area/station/maintenance/starboard/fore)
 "qug" = (
 /obj/machinery/air_sensor/nitrogen_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos/storage/gas)
 "qum" = (
@@ -90669,6 +90690,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/air_input{
 	dir = 4
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/storage/gas)
 "ryU" = (
@@ -96482,6 +96504,7 @@
 /area/station/science/ordnance/testlab)
 "sGo" = (
 /obj/machinery/atmospherics/miner/carbon_dioxide,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/storage/gas)
 "sGr" = (
@@ -101541,6 +101564,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
 	dir = 1
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos/storage/gas)
 "tDi" = (
@@ -104226,10 +104250,9 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ueb" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/obj/structure/plaque/static_plaque/atmos,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central)
 "uef" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -109299,6 +109322,7 @@
 /turf/closed/wall,
 /area/station/cargo/warehouse)
 "uZR" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "uZU" = (
@@ -112678,6 +112702,7 @@
 /area/station/security/checkpoint/escape)
 "vGy" = (
 /obj/machinery/air_sensor/oxygen_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos/storage/gas)
 "vGH" = (
@@ -113159,6 +113184,7 @@
 /obj/effect/turf_decal/vg_decals/atmos/air{
 	dir = 8
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/storage/gas)
 "vLe" = (
@@ -113181,6 +113207,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "vLj" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/storage/gas)
 "vLk" = (
@@ -113195,9 +113222,6 @@
 /obj/machinery/duct,
 /turf/open/floor/carpet,
 /area/station/commons/dorms/vacantroom)
-"vLs" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos/storage/gas)
 "vLv" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/test_chambers)
@@ -120169,6 +120193,7 @@
 /obj/effect/turf_decal/vg_decals/atmos/mix{
 	dir = 8
 	},
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos/storage/gas)
 "xbm" = (
@@ -120556,6 +120581,7 @@
 /area/station/engineering/supermatter/room)
 "xfT" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos/storage/gas)
 "xga" = (
@@ -122646,6 +122672,7 @@
 /area/station/maintenance/abandon_arcade)
 "xBF" = (
 /obj/machinery/air_sensor/plasma_tank,
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos/storage/gas)
 "xBG" = (
@@ -126234,11 +126261,6 @@
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
-"yjO" = (
-/obj/effect/turf_decal/stripes/red/full,
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "yjY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,
@@ -160800,13 +160822,13 @@ iWN
 iWN
 qAu
 kFQ
-tHY
+ueb
 wst
-vLs
+iUk
 hWB
 mui
 wMy
-vLs
+iUk
 qfd
 fSo
 qfd
@@ -161058,18 +161080,18 @@ iWN
 qAu
 cKR
 tHY
-nIO
-vLs
+wst
+iUk
 dSi
 kQh
 mRe
-vLs
+iUk
 qfd
-vLs
-vLs
+iUk
+iUk
 iEy
-vLs
-vLs
+iUk
+iUk
 twj
 cqE
 qfd
@@ -161316,17 +161338,17 @@ qAu
 oxB
 tHY
 wst
-vLs
+iUk
 eer
 xbl
 eer
-vLs
+iUk
 qfd
-vLs
+iUk
 vLj
 qhN
 vLj
-vLs
+iUk
 tch
 cqE
 qfd
@@ -161573,17 +161595,17 @@ pUW
 lTC
 tHY
 wst
-vLs
+iUk
 eer
 eer
 eer
-vLs
+iUk
 qfd
-vLs
+iUk
 nrB
 vLa
 vLj
-vLs
+iUk
 tch
 cqE
 qfd
@@ -161833,14 +161855,14 @@ aZA
 urM
 urM
 urM
-vLs
-vLs
+iUk
+iUk
 fIA
-vLs
+iUk
 vLj
 ryM
 vLj
-vLs
+iUk
 ujw
 cqE
 qfd
@@ -162093,11 +162115,11 @@ wYy
 qfd
 qfd
 qfd
-vLs
-vLs
+iUk
+iUk
 fnE
-vLs
-vLs
+iUk
+iUk
 tch
 cqE
 qfd
@@ -162602,19 +162624,19 @@ dXH
 tHY
 fIA
 qxQ
-vLs
-vLs
-vLs
-vLs
+iUk
+iUk
+iUk
+iUk
 fIA
 owp
 kZx
 aop
 kZx
 kZx
-ueb
+kZx
 vza
-qfd
+xEd
 ngB
 ycW
 cgU
@@ -162859,20 +162881,20 @@ dXH
 tHY
 qfd
 tch
-vLs
+iUk
 gJP
 odJ
-vLs
+iUk
 qfd
 cqE
 qfd
 pnL
 fgR
-vLs
-vLs
-vLs
-vLs
 iUk
+iUk
+iUk
+iUk
+ngB
 qfd
 dTf
 vHY
@@ -163128,7 +163150,7 @@ dVD
 xdG
 pWL
 egM
-vLs
+iUk
 ngB
 qfd
 pfq
@@ -163373,10 +163395,10 @@ dXH
 liN
 qfd
 tch
-vLs
+iUk
 bJT
 jss
-vLs
+iUk
 qfd
 cqE
 gXC
@@ -163630,11 +163652,11 @@ dXH
 liN
 qfd
 tch
-vLs
-vLs
-vLs
-vLs
-fIA
+iUk
+iUk
+iUk
+iUk
+qfd
 fCh
 kZx
 nQt
@@ -163642,7 +163664,7 @@ dcu
 qdO
 pWL
 qug
-vLs
+iUk
 jvL
 qfd
 dLw
@@ -163887,19 +163909,19 @@ dXH
 liN
 qfd
 tch
-vLs
+iUk
 xBF
 ekm
-vLs
+iUk
 qfd
 cqE
 qfd
 pnL
 qfd
-vLs
-vLs
-vLs
-vLs
+iUk
+iUk
+iUk
+iUk
 jvL
 qfd
 iox
@@ -164142,7 +164164,7 @@ wHI
 qAu
 dXH
 tHY
-fIA
+qfd
 ssj
 swy
 psE
@@ -164401,19 +164423,19 @@ dXH
 liN
 qfd
 tch
-vLs
+iUk
 eNx
 uZR
-vLs
+iUk
 qfd
 cqE
 qfd
 pnL
 qfd
-vLs
-vLs
-vLs
-vLs
+iUk
+iUk
+iUk
+iUk
 jvL
 qfd
 nBm
@@ -164658,11 +164680,11 @@ dXH
 tGf
 gSg
 tch
-vLs
-vLs
-vLs
-vLs
-fIA
+iUk
+iUk
+iUk
+iUk
+qfd
 cqE
 qfd
 veC
@@ -164670,9 +164692,9 @@ cqd
 xdG
 tCY
 oSz
-vLs
+iUk
 jvL
-fgR
+qet
 sBt
 cdE
 qRY
@@ -164915,10 +164937,10 @@ qAu
 liN
 qfd
 tch
-vLs
+iUk
 dtC
 sGo
-vLs
+iUk
 qfd
 cqE
 gXC
@@ -165184,7 +165206,7 @@ dLt
 qdO
 tCY
 vGy
-vLs
+iUk
 jvL
 qfd
 sBt
@@ -165429,19 +165451,19 @@ cWF
 jMt
 vOJ
 tch
-vLs
+iUk
 bjM
 dyA
-vLs
+iUk
 maA
 qfd
 qfd
 qfd
 fgR
-vLs
-vLs
-vLs
-vLs
+iUk
+iUk
+iUk
+iUk
 jvL
 qfd
 fSo
@@ -165686,10 +165708,10 @@ qAu
 tHY
 fIA
 tch
-vLs
-vLs
-vLs
-vLs
+iUk
+iUk
+iUk
+iUk
 fIA
 qfd
 qfd
@@ -167232,7 +167254,7 @@ qAu
 qAu
 qAu
 uJY
-yjO
+vUT
 vJU
 qfd
 ptU
@@ -167491,9 +167513,9 @@ jjq
 tHY
 tHY
 lgI
-qet
 dyO
-tHY
+nIO
+gPt
 lTE
 tGf
 khw
