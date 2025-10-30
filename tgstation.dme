@@ -6688,6 +6688,7 @@
 #include "monkestation\code\modules\admin\battle_royale\battle_royale_data.dm"
 #include "monkestation\code\modules\admin\battle_royale\battle_royale_storm.dm"
 #include "monkestation\code\modules\admin\battle_royale\royale_antag_datum.dm"
+#include "monkestation\code\modules\admin\battle_royale\signup_tracker.dm"
 #include "monkestation\code\modules\admin\battle_royale\supplypod.dm"
 #include "monkestation\code\modules\admin\smites\choke_on_this.dm"
 #include "monkestation\code\modules\admin\smites\dagothkillsmite.dm"

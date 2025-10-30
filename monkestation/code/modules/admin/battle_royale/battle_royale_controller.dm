@@ -28,6 +28,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 						LOW_THREAT = 0)
 	///What is the expected time for the entire station to be covered in storms
 	var/max_duration = 20 MINUTES
+	var/obj/effect/battle_royale_signup/signup_tracker
 	///Assoc list of loot tables to use
 	var/static/list/loot_tables = list(COMMON_LOOT_TABLE = GLOB.royale_common_loot,
 									UTILITY_LOOT_TABLE = GLOB.royale_utility_loot,
@@ -111,6 +112,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		send_to_playing_players(span_boldannounce("Battle Royale: Force-starting game."))
 		SSticker.start_immediately = TRUE
 
+	set_observer_default_invisibility(INVISIBILITY_OBSERVER) //if the round has ended ghosts can make things annoying
 	send_to_playing_players(span_boldannounce("Battle Royale: Clearing world mobs."))
 	var/sanity = 0
 	while(sanity < 10 && length(GLOB.mob_living_list))
@@ -124,6 +126,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	send_setup_messages()
 
 /datum/battle_royale_controller/proc/send_setup_messages()
+	signup_tracker = new(locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), 1))
 	sound_to_playing_players('sound/misc/server-ready.ogg', 50, FALSE)
 	send_to_playing_players(span_greenannounce("Battle Royale: STARTING IN 30 SECONDS."))
 	send_to_playing_players(span_greenannounce("If you are on the main menu, observe immediately to sign up. (You will be prompted in 30 seconds.)"))
@@ -170,7 +173,9 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	if(!turf_override)
 		valid_turfs = get_safe_station_turfs()
 
-	for(var/mob/participant in participants)
+	for(var/mob/participant in signup_tracker.signed_up)
+		if(QDELETED(participant) || !participant.client)
+			continue
 		var/key = participant.key
 		var/turf/spawn_turf = turf_override || pick(valid_turfs) //could also make this pick from assistant spawns
 		var/obj/structure/closet/supplypod/centcompod/pod = new
@@ -190,6 +195,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		auth.implant(spawned_human)
 		players += spawned_human.mind?.add_antag_datum(/datum/antagonist/battle_royale)
 		new /obj/effect/pod_landingzone(spawn_turf, pod)
+	QDEL_NULL(signup_tracker)
 	return TRUE
 
 ///Remove grace period buffs and effects
