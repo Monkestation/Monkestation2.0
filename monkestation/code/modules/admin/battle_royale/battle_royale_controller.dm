@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 ///Start the royale
 /datum/battle_royale_controller/proc/start_royale()
-	if(!do_ghost_drop("Would you like to partake in BATTLE ROYALE?"))
+	if(!do_ghost_drop())
 		message_admins("No participants for battle royale, stopping royale.")
 		end_royale()
 		return
@@ -170,17 +170,20 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	if(current_data)
 		spawn_loot_pods(150)
 
-/datum/battle_royale_controller/proc/do_ghost_drop(message, turf/turf_override, given_poll_time = 10 SECONDS, grace = TRUE)
-	/*var/list/participants = list() //poll_ghost_candidates() requires station sentience to be enabled, so we have to manually do it
-	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
-		participants += ghost_player
+/datum/battle_royale_controller/proc/do_ghost_drop(poll_drop_message, turf/turf_override, given_poll_time = 10 SECONDS, grace = TRUE)
+	var/list/participants = list() //poll_ghost_candidates() requires station sentience to be enabled, so we have to manually do it
+	if(poll_drop_message)
+		for(var/mob/dead/observer/ghost_player in GLOB.player_list)
+			participants += ghost_player
 
-	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants, pain = TRUE)
-	if(!length(participants))
-		return FALSE*/
+		participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants, pain = TRUE)
+		if(!length(participants))
+			return FALSE
+	else
+		participants = signup_tracker.signed_up
 
 	players = list()
-	for(var/mob/participant in signup_tracker.signed_up)
+	for(var/mob/participant in participants)
 		if(QDELETED(participant) || !participant.client)
 			continue
 		var/key = participant.key
