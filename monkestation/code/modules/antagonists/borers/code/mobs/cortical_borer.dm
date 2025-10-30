@@ -484,6 +484,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
 	if(borer_organ)
 		borer_organ.Remove(human_host)
+
+	bodytemp_heat_damage_limit = initial(cortical_owner.bodytemp_heat_damage_limit) //reset body tempature
+	bodytemp_cold_damage_limit = initial(cortical_owner.bodytemp_cold_damage_limit)
 	forceMove(human_host.drop_location())
 	human_host = null
 
