@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		participants += ghost_player
 
-	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants)
+	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants, pain = TRUE)
 	if(!length(participants))
 		return FALSE
 
