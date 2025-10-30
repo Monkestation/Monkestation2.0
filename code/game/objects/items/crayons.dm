@@ -202,7 +202,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(color_transition_filter(paint_color, SATURATION_OVERRIDE), ADMIN_COLOUR_PRIORITY)
+	user.add_atom_colour(paint_color, ADMIN_COLOUR_PRIORITY)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -905,12 +905,12 @@
 	//	return FALSE TODO: Port atom color
 
 	var/saturation_mode = SATURATION_MULTIPLY
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		saturation_mode = SATURATION_OVERRIDE
+//	if (LAZYACCESS(modifiers, RIGHT_CLICK)) //we need https://github.com/tgstation/tgstation/pull/88201 for this
+//		saturation_mode = SATURATION_OVERRIDE
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
-			target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -956,7 +956,7 @@
 	else if (is_type_in_typecache(target, direct_color_types))
 		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else
-		target.add_atom_colour(color_transition_filter(paint_color, saturation_mode), WASHABLE_COLOUR_PRIORITY)
+		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 	if(isitem(target) && isliving(target.loc))
 		var/obj/item/target_item = target
