@@ -46283,13 +46283,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"ofT" = (
-/obj/machinery/camera{
-	c_tag = "Service Botany - Backroom";
-	dir = 9
-	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/fore)
 "ogc" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -244468,7 +244461,7 @@ tkV
 qwP
 kxX
 kKL
-ofT
+kKL
 kKL
 uDV
 ojD
