@@ -5,33 +5,44 @@
 	name = "KA Mod Disk"
 	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
-	var/modkit_design = /datum/design/unique_modkit
+	var/list/modkit_design = list()
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints += new modkit_design
+	for(var/design in modkit_design)
+		blueprints += new design
+
+/obj/item/disk/design_disk/modkit_disc/blood_drunk_group
+	name = "Bloodied Mod Disk"
+	modkit_design = list(
+		/datum/design/unique_modkit/offensive_turf_aoe,
+		/datum/design/unique_modkit/rapid_repeater,
+		/datum/design/unique_modkit/resonator_blast,
+		/datum/design/unique_modkit/bounty,
+	)
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
-	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+	modkit_design = list(/datum/design/unique_modkit/offensive_turf_aoe)
 
 /obj/item/disk/design_disk/modkit_disc/rapid_repeater
 	name = "Rapid Repeater Mod Disk"
-	modkit_design = /datum/design/unique_modkit/rapid_repeater
+	modkit_design = list(/datum/design/unique_modkit/rapid_repeater)
 
 /obj/item/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
-	modkit_design = /datum/design/unique_modkit/resonator_blast
+	modkit_design = list(/datum/design/unique_modkit/resonator_blast)
 
 /obj/item/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
-	modkit_design = /datum/design/unique_modkit/bounty
+	modkit_design = list(/datum/design/unique_modkit/bounty)
 
 /datum/design/unique_modkit
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe

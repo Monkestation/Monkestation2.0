@@ -46,7 +46,7 @@
 	rpg_title = "Star Duke"
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 3
 
 /datum/job/captain/get_captaincy_announcement(mob/living/captain)
 	return "Captain [captain.real_name] on deck!"

@@ -48,6 +48,10 @@
 	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
+/obj/item/borg/apparatus/attack_self_secondary(mob/living/silicon/robot/user)
+	if(!stored || !issilicon(user))
+		return ..()
+	stored.attack_self_secondary(user)
 
 //Alt click drops the stored item.
 /obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
@@ -250,6 +254,11 @@
 	cut_overlays()
 	organ.forceMove(get_turf(src))
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/borg/apparatus/organ_storage/monster
+	name = "core storage bag"
+	desc = "A container for holding and application of various monster organs."
+	storable = list(/obj/item/organ/internal/monster_core)
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator

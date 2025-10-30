@@ -1,4 +1,0 @@
-author: "call me evil McDonalds cause I'm hatin it"
-delete-after: True
-changes:
-  - bugfix: "IPCs autorevive when they heal tox and oxy damage too."

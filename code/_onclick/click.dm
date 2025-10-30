@@ -105,7 +105,7 @@
 			if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 				ShiftMiddleClickOn(A)
 				return
-			if(LAZYACCESS(modifiers, CTRL_CLICK))
+			if(istate & ISTATE_CONTROL)
 				CtrlShiftClickOn(A)
 				return
 			if(LAZYACCESS(modifiers, ALT_CLICK))
@@ -114,7 +114,7 @@
 			ShiftClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			if(LAZYACCESS(modifiers, CTRL_CLICK))
+			if(istate & ISTATE_CONTROL)
 				CtrlMiddleClickOn(A)
 			else
 				MiddleClickOn(A, params)
@@ -122,7 +122,7 @@
 		if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 			AltClickOn(A)
 			return
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(istate & ISTATE_CONTROL)
 			CtrlClickOn(A)
 			return
 	else if(LAZYACCESS(modifiers, ALT_CLICK)) // monke edit: ensure alt-secondary works
@@ -131,27 +131,26 @@
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
 			return
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(istate & ISTATE_CONTROL)
 			CtrlShiftClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK))
 			alt_shift_click_on(A)
 			return
-		ShiftClickOn(A)
-		return
+		// allow a shift right click to pass as a right click, rather than becoming a shift click... (context menu pref compatibility)
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(istate & ISTATE_CONTROL)
 			CtrlMiddleClickOn(A)
 		else
 			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(istate & ISTATE_SECONDARY)
 			AltClickSecondaryOn(A)
 		else
 			AltClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(istate & ISTATE_CONTROL)
 		CtrlClickOn(A)
 		return
 
