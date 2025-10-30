@@ -126,15 +126,22 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	send_setup_messages()
 
 /datum/battle_royale_controller/proc/send_setup_messages()
-	signup_tracker = new(locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), 1))
+	signup_tracker = new(locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), 1)) //needs to go SOMEWHERE
 	sound_to_playing_players('sound/misc/server-ready.ogg', 50, FALSE)
 	send_to_playing_players(span_greenannounce("Battle Royale: STARTING IN 30 SECONDS."))
 	send_to_playing_players(span_greenannounce("If you are on the main menu, observe immediately to sign up. (You will be prompted in 30 seconds.)"))
 	sleep(30 SECONDS)
+	notify_ghosts(
+		"SIGN UP FOR BATTLE ROYALE HERE!",
+		source = signup_tracker,
+		header = "BATTLE ROYALE",
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	)
 	power_restore()
-	send_to_playing_players(span_boldannounce("Battle Royale: STARTING IN 5 SECONDS."))
-	send_to_playing_players(span_greenannounce("Make sure to hit yes to the sign up message given to all observing players."))
-	sleep(5 SECONDS)
+	send_to_playing_players(span_boldannounce("Battle Royale: STARTING IN 30 SECONDS."))
+	send_to_playing_players(span_greenannounce("Make sure to use the sign up object."))
+	sleep(30 SECONDS)
 	send_to_playing_players(span_boldannounce("Battle Royale: Starting game."))
 	start_royale()
 
@@ -160,11 +167,11 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		spawn_loot_pods(150)
 
 /datum/battle_royale_controller/proc/do_ghost_drop(message, turf/turf_override, given_poll_time = 10 SECONDS, grace = TRUE)
-	var/list/participants = list() //poll_ghost_candidates() requires station sentience to be enabled, so we have to manually do it
+	/*var/list/participants = list() //poll_ghost_candidates() requires station sentience to be enabled, so we have to manually do it
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		participants += ghost_player
 
-	/*participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants, pain = TRUE)
+	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants, pain = TRUE)
 	if(!length(participants))
 		return FALSE*/
 
