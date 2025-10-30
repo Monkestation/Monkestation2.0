@@ -397,7 +397,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/area/turf_area as anything in areas_to_pick_from)
 		var/list/turf_list = get_area_turfs(turf_area)
 		for(var/turf/checked_turf in turf_list)
-			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
+			if(!checked_turf.density && (turf_area::area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
 				var/clear = TRUE
 				if(care_about_dense_objects)
 					for(var/obj/checked_object in checked_turf)
