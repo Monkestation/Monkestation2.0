@@ -163,24 +163,20 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 	participants = SSpolling.poll_candidates("[message]", poll_time = given_poll_time, group = participants)
 	if(!length(participants))
-		stack_trace("1")
 		return FALSE
 
-	stack_trace("6")
 	players = list()
 	var/list/valid_turfs
 	if(!turf_override)
 		valid_turfs = get_safe_station_turfs()
 
 	for(var/mob/participant in participants)
-		stack_trace("2")
 		var/key = participant.key
 		var/turf/spawn_turf = turf_override || pick(valid_turfs) //could also make this pick from assistant spawns
 		var/obj/structure/closet/supplypod/centcompod/pod = new
 		var/mob/living/carbon/human/spawned_human = new(pod)
 		spawned_human.key = key
 		if(grace)
-			stack_trace("3")
 			spawned_human.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), BATTLE_ROYALE_TRAIT)
 			var/datum/action/cooldown/spell/aoe/knock/knock_spell = new
 			knock_spell.Grant(spawned_human)
@@ -194,8 +190,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		auth.implant(spawned_human)
 		players += spawned_human.mind?.add_antag_datum(/datum/antagonist/battle_royale)
 		new /obj/effect/pod_landingzone(spawn_turf, pod)
-		stack_trace("4")
-	stack_trace("5")
 	return TRUE
 
 ///Remove grace period buffs and effects
