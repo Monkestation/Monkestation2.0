@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/list/hosts_abilities = list()
 
 	/// How much health we regen per second while in a host scales linearally
-	
+
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing
@@ -485,8 +485,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	if(borer_organ)
 		borer_organ.Remove(human_host)
 
-	bodytemp_heat_damage_limit = initial(cortical_owner.bodytemp_heat_damage_limit) //reset body tempature
-	bodytemp_cold_damage_limit = initial(cortical_owner.bodytemp_cold_damage_limit)
+	bodytemp_heat_damage_limit = initial(bodytemp_heat_damage_limit) //reset body tempature
+	bodytemp_cold_damage_limit = initial(bodytemp_cold_damage_limit)
 	forceMove(human_host.drop_location())
 	human_host = null
 
