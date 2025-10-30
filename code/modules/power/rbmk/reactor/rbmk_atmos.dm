@@ -1,50 +1,49 @@
 /*************************************************************
- * RBMK Atmos Module
- * - Handles internal coolant reservoir, ports, and gas exchange
- * - Provides telemetry sampling for reactor consoles
+ * RBMK Atmos Module (Enhanced Realism v2)
+ * - Handles coolant reservoir, inlet/outlet flow, and telemetry
+ * - Adds dynamic heat blending, coolant loss hazards, and safer cleanup
  *************************************************************/
 
 /*************************************************************
  * Initialization & Cleanup
  *************************************************************/
 
-/// Initialize internal coolant tank
-/proc/rbmk_init_coolant(obj/machinery/rbmk/reactor/R)
-	if(!R)
+/// Initialize internal coolant reservoir
+/proc/rbmk_init_coolant(obj/machinery/rbmk/reactor/reactor)
+	if(!reactor)
 		return
-	R.coolant_internal = new /datum/gas_mixture()
-	R.coolant_internal.volume = RBMK_COOLANT_VOLUME_MAX
+	reactor.coolant_internal = new /datum/gas_mixture()
+	reactor.coolant_internal.volume = RBMK_COOLANT_VOLUME_MAX
 
 /// Cleanup for linked atmos components
-/proc/rbmk_cleanup_atmos(obj/machinery/rbmk/reactor/R)
-	if(R.inlet)
-		qdel(R.inlet)
-	if(R.outlet)
-		qdel(R.outlet)
-	QDEL_NULL(R.coolant_internal)
+/proc/rbmk_cleanup_atmos(obj/machinery/rbmk/reactor/reactor)
+	if(reactor.inlet)
+		qdel(reactor.inlet)
+	if(reactor.outlet)
+		qdel(reactor.outlet)
+	QDEL_NULL(reactor.coolant_internal)
 
 /// Rebuild inlet/outlet ports around reactor center
-/proc/rbmk_relink_ports(obj/machinery/rbmk/reactor/R)
-	var/turf/center = get_turf(R)
+/proc/rbmk_relink_ports(obj/machinery/rbmk/reactor/reactor)
+	var/turf/center = get_turf(reactor)
 	if(!center)
 		return
 
-	// Delete old ports if they exist
-	if(R.inlet)  qdel(R.inlet)
-	if(R.outlet) qdel(R.outlet)
+	if(reactor.inlet)  qdel(reactor.inlet)
+	if(reactor.outlet) qdel(reactor.outlet)
 
 	// Inlet on west, outlet on east
 	var/turf/inlet_tile = get_step(center, WEST)
 	if(inlet_tile)
-		R.inlet = new /obj/machinery/atmospherics/components/unary/rbmk/inlet(inlet_tile)
-		R.inlet.parent_reactor = R
-		R.inlet.dir = WEST
+		reactor.inlet = new /obj/machinery/atmospherics/components/unary/rbmk/inlet(inlet_tile)
+		reactor.inlet.parent_reactor = reactor
+		reactor.inlet.dir = WEST
 
 	var/turf/outlet_tile = get_step(center, EAST)
 	if(outlet_tile)
-		R.outlet = new /obj/machinery/atmospherics/components/unary/rbmk/outlet(outlet_tile)
-		R.outlet.parent_reactor = R
-		R.outlet.dir = EAST
+		reactor.outlet = new /obj/machinery/atmospherics/components/unary/rbmk/outlet(outlet_tile)
+		reactor.outlet.parent_reactor = reactor
+		reactor.outlet.dir = EAST
 
 
 /*************************************************************
@@ -64,34 +63,23 @@
 	return outlet_open
 
 /// Set inlet flow rate (L/s)
-/obj/machinery/rbmk/reactor/proc/set_inlet_rate(val)
-	inlet_rate = clamp(val, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
+/obj/machinery/rbmk/reactor/proc/set_inlet_rate(rate)
+	inlet_rate = clamp(rate, RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
 	update_linked_consoles()
 	return inlet_rate
 
 /// Set outlet regulator target pressure (kPa)
-/obj/machinery/rbmk/reactor/proc/set_outlet_pressure(val)
-	outlet_target_pressure = clamp(val, 0, RBMK_OUTLET_PRESSURE_MAX)
+/obj/machinery/rbmk/reactor/proc/set_outlet_pressure(value)
+	outlet_target_pressure = clamp(value, 0, RBMK_OUTLET_PRESSURE_MAX)
 	update_linked_consoles()
 	return outlet_target_pressure
-
-/obj/machinery/rbmk/reactor/proc/get_flow_state()
-	return list(
-		"inlet_open" = inlet_open,
-		"outlet_open" = outlet_open,
-		"inlet_rate" = inlet_rate,
-		"inlet_min" = RBMK_INLET_RATE_MIN,
-		"inlet_max" = RBMK_INLET_RATE_MAX,
-		"outlet_target_pressure" = outlet_target_pressure,
-		"outlet_pressure_max" = RBMK_OUTLET_PRESSURE_MAX
-	)
 
 
 /*************************************************************
  * Pressure & Gas Accessors
  *************************************************************/
 
-/// Getters for inlet/outlet gas mixtures
+/// Return inlet and outlet gas mixtures
 /obj/machinery/rbmk/reactor/proc/get_inlet_mix()
 	if(inlet && inlet.airs && inlet.airs.len && inlet.airs[1])
 		return inlet.airs[1]
@@ -118,62 +106,60 @@
  * Coolant Sampling (Telemetry)
  *************************************************************/
 
-/// Updates reactor telemetry for consoles
-/proc/rbmk_sample_coolant(obj/machinery/rbmk/reactor/R)
-	var/datum/gas_mixture/mix = R.coolant_internal
+/// Updates coolant stats for console display
+/proc/rbmk_sample_coolant(obj/machinery/rbmk/reactor/reactor)
+	var/datum/gas_mixture/mix = reactor.coolant_internal
 	if(!mix)
 		return
 
-	var/press = mix.return_pressure()
-	var/temp  = mix.temperature
-	var/total = mix.total_moles()
+	var/pressure = mix.return_pressure()
+	var/temperature = mix.temperature
+	var/total_moles = mix.total_moles()
 
-	R.coolant_pressure_history += press
-	if(length(R.coolant_pressure_history) > 50)
-		R.coolant_pressure_history.Cut(1, 2)
+	reactor.coolant_pressure_history += pressure
+	if(length(reactor.coolant_pressure_history) > 60)
+		reactor.coolant_pressure_history.Cut(1, 2)
 
-	R.coolant_temperature_history += temp
-	if(length(R.coolant_temperature_history) > 50)
-		R.coolant_temperature_history.Cut(1, 2)
+	reactor.coolant_temperature_history += temperature
+	if(length(reactor.coolant_temperature_history) > 60)
+		reactor.coolant_temperature_history.Cut(1, 2)
 
-	R.coolant_total_moles_history += total
-	if(length(R.coolant_total_moles_history) > 50)
-		R.coolant_total_moles_history.Cut(1, 2)
+	reactor.coolant_total_moles_history += total_moles
+	if(length(reactor.coolant_total_moles_history) > 60)
+		reactor.coolant_total_moles_history.Cut(1, 2)
 
-	if(total <= 0)
-		// No gas present — decay last history points toward 0
-		for(var/gp in R.coolant_gas_hist)
-			var/list/L = R.coolant_gas_hist[gp]
-			L += 0
-			if(length(L) > 50)
-				L.Cut(1, 2)
+	if(total_moles <= 0)
+		for(var/gp in reactor.coolant_gas_hist)
+			var/list/gas_series = reactor.coolant_gas_hist[gp]
+			gas_series += 0
+			if(length(gas_series) > 60)
+				gas_series.Cut(1, 2)
 		return
 
-	// Update gas composition breakdown
+	// Gas composition breakdown for telemetry
 	for(var/gas_path in mix.gases)
 		var/moles = mix.gases[gas_path][MOLES]
-		var/percent = clamp((moles / total) * 100, 0, 100)
-		if(!(gas_path in R.coolant_gas_hist))
-			R.coolant_gas_hist[gas_path] = list()
-		var/list/series = R.coolant_gas_hist[gas_path]
+		var/percent = clamp((moles / total_moles) * 100, 0, 100)
+		if(!(gas_path in reactor.coolant_gas_hist))
+			reactor.coolant_gas_hist[gas_path] = list()
+		var/list/series = reactor.coolant_gas_hist[gas_path]
 		series += percent
-		if(length(series) > 50)
+		if(length(series) > 60)
 			series.Cut(1, 2)
 
-	// Backfill removed gases to 0%
-	for(var/existing_gas_path in R.coolant_gas_hist)
-		if(!(existing_gas_path in mix.gases))
-			var/list/series2 = R.coolant_gas_hist[existing_gas_path]
+	for(var/existing_path in reactor.coolant_gas_hist)
+		if(!(existing_path in mix.gases))
+			var/list/series2 = reactor.coolant_gas_hist[existing_path]
 			series2 += 0
-			if(length(series2) > 50)
+			if(length(series2) > 60)
 				series2.Cut(1, 2)
 
 
 /*************************************************************
- * Component Definitions
+ * Component Base — Common Behavior
  *************************************************************/
 
-/// Common base class for RBMK atmos components
+/// Base type for RBMK atmos components
 /obj/machinery/atmospherics/components/unary/rbmk/base
 	parent_type = /obj/machinery/atmospherics/components/unary
 	anchored = TRUE
@@ -181,7 +167,7 @@
 	hide = FALSE
 	showpipe = TRUE
 	shift_underlay_only = TRUE
-	layer = GAS_PUMP_LAYER
+	layer = OBJ_LAYER - 0.01
 	plane = GAME_PLANE
 	piping_layer = 3
 
@@ -199,18 +185,20 @@
 	return INITIALIZE_HINT_NORMAL
 
 /obj/machinery/atmospherics/components/unary/rbmk/base/Destroy()
+	QDEL_NULL(parent_reactor)
+	QDEL_NULL(airs)
 	return ..()
 
 
 /*************************************************************
  * Inlet Component — Pulls gas into reactor
+ * Includes dynamic heat blending based on flux intensity
  *************************************************************/
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet
 	parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
 	name = "RBMK Coolant Inlet"
 	dir = WEST
-	layer = OBJ_LAYER - 0.01
 
 /obj/machinery/atmospherics/components/unary/rbmk/inlet/process_atmos()
 	if(parent_reactor && parent_reactor.inlet_open)
@@ -219,6 +207,9 @@
 		if(in_mix && in_mix.total_moles() > 0)
 			var/datum/gas_mixture/moved = in_mix.remove_ratio(amt)
 			if(moved && moved.total_moles() > 0)
+				// Dynamic heat blending based on flux intensity
+				var/flux_factor = clamp(parent_reactor.flux / 400, 0.05, 1)
+				moved.temperature = (moved.temperature + (parent_reactor.temperature * flux_factor)) / (1 + flux_factor)
 				parent_reactor.coolant_internal.merge(moved)
 				update_parents()
 				SSair.add_to_active(src)
@@ -226,13 +217,13 @@
 
 /*************************************************************
  * Outlet Component — Releases excess pressure
+ * Includes density scaling, vent instability, and hazard feedback
  *************************************************************/
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet
 	parent_type = /obj/machinery/atmospherics/components/unary/rbmk/base
 	name = "RBMK Coolant Outlet"
 	dir = EAST
-	layer = OBJ_LAYER - 0.01
 
 /obj/machinery/atmospherics/components/unary/rbmk/outlet/process_atmos()
 	if(parent_reactor && parent_reactor.outlet_open && parent_reactor.coolant_internal.total_moles() > 0)
@@ -243,16 +234,21 @@
 				0,
 				1
 			)
+			excess_ratio *= clamp(current_pressure / 10000, 0.5, 2)
 			var/datum/gas_mixture/released = parent_reactor.coolant_internal.remove_ratio(excess_ratio)
 			if(released && released.total_moles() > 0)
-				// If connected to pipe network, push gas out
 				if(parents && length(parents) && airs[1])
 					airs[1].merge(released)
 					update_parents()
 					SSair.add_to_active(src)
 				else
-					// Leak directly into turf if disconnected
-					var/turf/T = get_turf(src)
-					if(T)
-						T.assume_air(released)
-						air_update_turf(T)
+					var/turf/vent_tile = get_turf(src)
+					if(vent_tile)
+						vent_tile.assume_air(released)
+						air_update_turf(vent_tile)
+						// Coolant loss hazard
+						if(released.total_moles() > (parent_reactor.coolant_internal.total_moles() * 0.1))
+							to_chat(parent_reactor, span_warning("⚠ Reactor coolant loss exceeding safe margin!"))
+							parent_reactor.instability += 10
+						// Instability bump from uncontrolled venting
+						parent_reactor.instability += clamp(released.total_moles() * 0.02, 0, 50)

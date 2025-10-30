@@ -1,65 +1,92 @@
 /************************************************************
  * Telecrystal Fuel Rod
- * - Charges inside the reactor to accumulate energy
- * - Unstable rewards when cracked open
+ * - Absorbs reactor heat and radiation to charge with unstable bluespace energy.
+ * - Fully charges under high stress, then passively boosts flux output.
  ************************************************************/
 
 /// Telecrystal Fuel Rod
 /obj/item/rbmk/fuel_rod/telecrystal
-    name = "Telecrystal Rod"
-    desc = "Charges inside the reactor and can be cracked open for unstable rewards."
-    icon = 'icons/obj/control_rod.dmi'
-    icon_state = "tc_empty"
+	name = "Telecrystal Fuel Rod"
+	desc = "A crystalline rod that absorbs heat and radiation to charge with unstable bluespace energy."
+	icon = 'icons/obj/fuel_rod.dmi'
+	icon_state = "tc_empty"
+	depleted_icon_state = "tc_full"
+	depleted_description = "A cracked, inert telecrystal rod."
 
-    fuel_amount = 0
-    heat_per_tick = 0
-    rad_output = 0
-    flux_output = 0
+	// Core behavior
+	fuel_amount = 1e9                       // effectively infinite
+	depletion_rate = 0
+	base_heat_output = 0
+	base_flux_output = 0
+	base_radiation_output = 0
 
-    var/usable = TRUE
+	rod_type = "telecrystal"
+	rod_color = "cyan"
 
-    rod_type = "telecrystal"
-    rod_color = "crimson"
+	// Charging parameters
+	charge_progress = 0
+	charge_max = 500
+	charged = FALSE
+	usable = TRUE
 
-    thermal_mult = 1
-    flux_mult = 1
+	// Passive modifiers
+	thermal_multiplier = 1.0
+	flux_multiplier = 1.05
+	radiation_multiplier = 1.0
+	active = TRUE
+
 
 /************************************************************
  * Telecrystal Rod Processing Logic
  ************************************************************/
 
-/obj/item/rbmk/fuel_rod/telecrystal/process_rod()
-    if(!usable || charged)
-        return list(
-            "flux"         = 0,
-            "heat"         = 0,
-            "radiation"    = 0,
-            "thermal_mult" = 1,
-            "flux_mult"    = 1
-        )
+/// Charges proportionally to core temperature and flux intensity
+/obj/item/rbmk/fuel_rod/telecrystal/process_rod(var/reactor_temperature = RBMK_AMBIENT_TEMP, var/reactor_flux = 0, var/core_feedback_factor = 1.0)
+	if (!active || !usable)
+		return list(
+			"heat" = 0,
+			"flux" = 0,
+			"radiation" = 0,
+			"thermal_mult" = 1.0,
+			"flux_mult" = 1.0
+		)
 
-    var/obj/machinery/rbmk/reactor/core = null
-    if(istype(loc, /obj/machinery/rbmk/reactor))
-        core = loc
+	// Fully charged rods stabilize and provide passive flux modulation
+	if (charged)
+		return list(
+			"heat" = 0,
+			"flux" = 0,
+			"radiation" = 0,
+			"flux_mult" = 1.1,
+			"thermal_mult" = 1.0
+		)
 
-    if(core && core.thermal_output >= 2000)
-        var/charge_rate = 1
-        if(core.thermal_output >= 10000)
-            charge_rate = 3
-        else if(core.thermal_output >= 5000)
-            charge_rate = 2
+	// --- Charging behavior ---
+	var/charge_rate = 0
+	if (reactor_temperature >= 10000)
+		charge_rate = 3
+	else if (reactor_temperature >= 5000)
+		charge_rate = 2
+	else if (reactor_temperature >= 2000)
+		charge_rate = 1
 
-        charge_progress += charge_rate
+	// Apply charge progression
+	if (charge_rate > 0)
+		charge_progress = min(charge_max, charge_progress + charge_rate)
 
-        if(charge_progress >= charge_max)
-            charged = TRUE
-            icon_state = "tc_full"
-            to_chat(core, span_warning("[src] hums violently as it finishes charging with bluespace energy!"))
+	// Completion check
+	if (charge_progress >= charge_max && !charged)
+		charged = TRUE
+		icon_state = "rod_tc_full"
+		// Optional: could send a subtle reactor console warning or chat notice here
 
-    return list(
-        "flux"         = 0,
-        "heat"         = 0,
-        "radiation"    = 0,
-        "thermal_mult" = 1,
-        "flux_mult"    = 1
-    )
+	// Emits mild flux proportional to charge buildup
+	var/flux_output = (charge_progress / charge_max) * 0.5
+
+	return list(
+		"heat" = 0,
+		"flux" = flux_output,
+		"radiation" = 0,
+		"thermal_mult" = thermal_multiplier,
+		"flux_mult" = flux_multiplier
+	)

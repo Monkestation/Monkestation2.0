@@ -1,244 +1,237 @@
 /*************************************************************
- * RBMK Process Logic
- * - Runs every tick while the reactor is active
- * - Handles rods, flux, heat, radiation, coolant interaction
+ * RBMK Process Logic (Rod-Driven Core Model)
+ * - Integrates rod-driven flux, heat, radiation, and coolant
+ * - Scales decay heat, handles realistic afterheat bleed
+ * - Stabilized for clean console telemetry and graph updates
  *************************************************************/
 
 /// Main process loop
 /obj/machinery/rbmk/reactor/process(delta_time)
-    // --- Repairable if cool enough ---
-    repairable = (temperature < (RBMK_MAX_TEMP * RBMK_REPAIRABLE_TEMP_RATIO))
+	if(reactor_integrity <= 0)
+		running = FALSE
+		return
 
-    // --- If not running, idle cooling ---
-    if(!running)
-        if(temperature > RBMK_AMBIENT_TEMP)
-            temperature = max(RBMK_AMBIENT_TEMP, temperature - RBMK_IDLE_COOL_RATE)
+	// --- Mark repairable state ---
+	repairable = (temperature < (RBMK_MAX_TEMP * RBMK_REPAIRABLE_TEMP_RATIO))
 
-            rbmk_sample_coolant(src)
-            if(coolant_internal)
-                pressure = coolant_internal.return_pressure()
-                rbmk_record_gas_snapshot()
-            update_reactor_icon()
-        else
-            icon_state = "reactor_off"
-            set_light(0)
+	/*************************************************************
+	 * Control Rod Auto-Shutdown
+	 * - Fully inserted rods automatically halt reaction
+	 *************************************************************/
+	if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+		if(running)
+			running = FALSE
+			scrammed = TRUE
+			to_chat(src, span_notice("Control rods fully inserted — reactor shutting down."))
+		rbmk_decay_process(src)
+		update_linked_consoles()
+		return
 
-        update_linked_consoles()
-        return
+	/*************************************************************
+	 * SCRAM / Cooldown Handling
+	 *************************************************************/
+	if(!running)
+		rbmk_decay_process(src)
+		update_linked_consoles()
+		return
 
-    // --- Reset per-tick values ---
-    radiation = 0
-    thermal_output = 0
-    flux = 0
-    var/has_active_rods = FALSE
-    var/thermal_mult = 1.0
-    var/flux_mult = 1.0
+	/*************************************************************
+	 * Reset core variables before computation
+	 *************************************************************/
+	flux = 0
+	radiation = 0
+	thermal_output = 0
 
-    /*************************************************************
-     * Internal Rod Data Processing
-     *************************************************************/
+	var/has_active_rods = FALSE
+	var/total_flux = 0
+	var/total_heat = 0
+	var/total_rads = 0
+	var/rod_reactivity = 0.0
 
-    var/new_normal_slots = list()
-    var/new_special_slots = list()
+	/*************************************************************
+	 * Process all active rods
+	 *************************************************************/
+	var/list/all_rods = normal_slots + special_slots
+	for(var/obj/item/rbmk/fuel_rod/fuelRod in all_rods)
+		if(!fuelRod || QDELETED(fuelRod))
+			continue
 
-    for(var/i in 1 to length(normal_slots))
-        var/rod_data = normal_slots[i]
-        if(!rod_data)
-            new_normal_slots += null
-            continue
-        var/result = rbmk_process_rod_data(rod_data)
-        if(result)
-            flux        += result["flux"]
-            radiation   += result["radiation"]
-            temperature += result["heat"]
-            if("thermal_mult" in result)
-                thermal_mult *= result["thermal_mult"]
-            if("flux_mult" in result)
-                flux_mult *= result["flux_mult"]
-            if(rod_data["fuel_amount"] > 0)
-                new_normal_slots += rod_data
-                has_active_rods = TRUE
-            else
-                new_normal_slots += null
-        else
-            new_normal_slots += null
+		var/list/result = fuelRod.process_rod(temperature, flux)
+		if(!result)
+			continue
 
-    for(var/i in 1 to length(special_slots))
-        var/rod_data = special_slots[i]
-        if(!rod_data)
-            new_special_slots += null
-            continue
-        var/result = rbmk_process_rod_data(rod_data)
-        if(result)
-            flux        += result["flux"]
-            radiation   += result["radiation"]
-            temperature += result["heat"]
-            if("thermal_mult" in result)
-                thermal_mult *= result["thermal_mult"]
-            if("flux_mult" in result)
-                flux_mult *= result["flux_mult"]
-            if(rod_data["fuel_amount"] > 0)
-                new_special_slots += rod_data
-                has_active_rods = TRUE
-            else
-                new_special_slots += null
-        else
-            new_special_slots += null
+		total_flux += result["flux"]
+		total_rads += result["radiation"]
+		total_heat += result["heat"]
 
-    normal_slots = new_normal_slots
-    special_slots = new_special_slots
+		rod_reactivity += (fuelRod.flux_multiplier + fuelRod.thermal_multiplier)
+		if(fuelRod.fuel_amount > 0)
+			has_active_rods = TRUE
 
-    /*************************************************************
-     * Special rod behaviors
-     *************************************************************/
+		// --- Special rod behaviors ---
+		if(fuelRod.rod_type == "telecrystal" && temperature >= 2000)
+			var/inc = (temperature >= 10000 ? 3 : temperature >= 5000 ? 2 : 1)
+			fuelRod.charge_progress += inc
+			if(fuelRod.charge_progress >= fuelRod.charge_max && !fuelRod.charged)
+				fuelRod.charged = TRUE
+				to_chat(src, span_warning("A telecrystal rod hums violently as it finishes charging with bluespace energy!"))
 
-    // Telecrystal rods charge if reactor is hot enough
-    for(var/rod_data in special_slots)
-        if(!rod_data) continue
-        if(rod_data["rod_type"] == "telecrystal")
-            if(thermal_output >= 2000)
-                var/prog = rod_data["charge_progress"]
-                var/maxp = rod_data["charge_max"]
-                var/rate = 1
-                if(thermal_output >= 10000)
-                    rate = 3
-                else if(thermal_output >= 5000)
-                    rate = 2
-                prog += rate
-                if(prog >= maxp && !rod_data["charged"])
-                    rod_data["charged"] = TRUE
-                    to_chat(src, span_warning("A telecrystal rod hums violently as it finishes charging with bluespace energy!"))
-                rod_data["charge_progress"] = prog
+		else if(fuelRod.rod_type == "supermatter" && prob(2))
+			trigger_meltdown("Supermatter destabilization within fuel rod array!")
 
-        else if(rod_data["rod_type"] == "supermatter" && prob(2))
-            trigger_meltdown("Supermatter destabilization!")
+	/*************************************************************
+	 * Reactor Core Scaling
+	 *************************************************************/
+	var/control_effect = (100 - control_rod_depth) / 100
+	var/reactivity_factor = clamp(rod_reactivity / max(1, length(all_rods)), 0.5, 2.5)
 
-    /*************************************************************
-     * Post-processing and cooling
-     *************************************************************/
+	flux        = clamp(total_flux * control_effect * reactivity_factor, 0, RBMK_MAX_FLUX)
+	radiation   = clamp(total_rads * control_effect * reactivity_factor, 0, RBMK_MAX_RADIATION)
+	temperature += (total_heat * control_effect * reactivity_factor)
 
-    // --- Apply control rod scaling ---
-    var/rod_effect = (100 - control_rod_depth) / 100
-    flux           = round((flux * flux_mult) * rod_effect)
-    thermal_output = round(((temperature * RBMK_HEAT_SCALING) * thermal_mult) * rod_effect)
-    radiation      = round(radiation * rod_effect)
+	// --- Power output & decay heat ---
+	var/generated_power = (flux + radiation + total_heat)
+	decay_heat = clamp(decay_heat + (generated_power * 0.0015), 0, 300)
+	thermal_output = (temperature * RBMK_HEAT_SCALING) * reactivity_factor
 
-    // --- Transfer heat to coolant ---
-    rbmk_coolant_exchange(src)
+	/*************************************************************
+	 * Coolant Energy Exchange
+	 *************************************************************/
+	rbmk_coolant_exchange(src)
+	rbmk_sample_coolant(src)
 
-    // --- Coolant loop integration ---
-    rbmk_sample_coolant(src)
-    if(coolant_internal)
-        pressure = coolant_internal.return_pressure()
-        rbmk_record_gas_snapshot()
+	if(coolant_internal)
+		pressure = clamp(coolant_internal.return_pressure(), 0, RBMK_PRESSURE_EXTREME)
+		rbmk_record_gas_snapshot()
 
-    // --- Natural decay ---
-    flux = max(0, flux - RBMK_FLUX_DECAY)
-    radiation = max(0, radiation - RBMK_RADIATION_DECAY)
+	/*************************************************************
+	 * Natural Flux / Rad Bleed
+	 *************************************************************/
+	flux = max(0, flux - RBMK_FLUX_DECAY)
+	radiation = max(0, radiation - RBMK_RADIATION_DECAY)
 
-    // --- Instability ---
-    update_instability()
+	/*************************************************************
+	 * System Integrity and Chaos Metrics
+	 *************************************************************/
+	update_instability()
+	update_reactor_integrity()
 
-    // --- Integrity ---
-    update_reactor_integrity()
+	/*************************************************************
+	 * Auto SCRAM Fail-safe
+	 *************************************************************/
+	if(!has_active_rods || temperature > RBMK_MAX_TEMP || reactor_integrity <= 0)
+		running = FALSE
+		scrammed = TRUE
+		to_chat(src, span_danger("⚠ Emergency SCRAM: reactor automatically shut down!"))
+		update_reactor_icon()
+		update_linked_consoles()
+		return
 
-    // --- Running state logic ---
-    if(!has_active_rods)
-        running = FALSE
-    else if(control_rod_depth < RBMK_CONTROL_ROD_MAX)
-        running = TRUE
-
-    // --- Visuals & consoles ---
-    update_reactor_icon()
-    update_linked_consoles()
+	/*************************************************************
+	 * Visuals and UI Sync
+	 *************************************************************/
+	update_reactor_icon()
+	update_linked_consoles()
 
 
 /*************************************************************
- * Helper: process individual rod data entries
+ * RBMK Decay / Cooldown Process
+ * - Handles realistic afterheat bleed post-shutdown
  *************************************************************/
 
-/// Processes a stored rod data entry
-/proc/rbmk_process_rod_data(list/rod_data)
-    if(!rod_data)
-        return null
+/// Afterheat simulation when reactor is scrammed
+/proc/rbmk_decay_process(obj/machinery/rbmk/reactor/reactor)
+	if(!reactor)
+		return
 
-    // Burn fuel unless infinite
-    if(rod_data["fuel_amount"] != INFINITY)
-        rod_data["fuel_amount"] -= 1
+	rbmk_sample_coolant(reactor)
+	if(reactor.coolant_internal)
+		reactor.pressure = reactor.coolant_internal.return_pressure()
+		reactor.rbmk_record_gas_snapshot()
 
-    if(rod_data["fuel_amount"] <= 0)
-        return null
+	if(reactor.decay_heat > 0)
+		var/transfer = reactor.decay_heat * 0.04
 
-    return list(
-        "flux"         = rod_data["flux_output"] * rod_data["flux_mult"],
-        "heat"         = rod_data["heat_per_tick"] * rod_data["thermal_mult"],
-        "radiation"    = rod_data["rad_output"] * rod_data["rad_mult"],
-        "thermal_mult" = rod_data["thermal_mult"],
-        "flux_mult"    = rod_data["flux_mult"]
-    )
+		if(reactor.coolant_internal)
+			reactor.coolant_internal.temperature += transfer * 0.6
+			reactor.temperature -= transfer * 0.3
+
+		reactor.flux = max(0, reactor.flux - (reactor.decay_heat * 0.04))
+		reactor.radiation = max(0, reactor.radiation - (reactor.decay_heat * 0.025))
+		reactor.temperature = max(RBMK_AMBIENT_TEMP, reactor.temperature - (reactor.decay_heat * 0.06))
+		reactor.decay_heat *= 0.985
+	else
+		if(reactor.temperature > RBMK_AMBIENT_TEMP)
+			reactor.temperature = max(RBMK_AMBIENT_TEMP, reactor.temperature - RBMK_IDLE_COOL_RATE)
+		else
+			reactor.icon_state = "reactor_off"
+
+	reactor.update_reactor_icon()
 
 
 /*************************************************************
- * Helper: record gas mix snapshot for console graphs
+ * Gas History Tracking (Graph Data)
  *************************************************************/
 
+/// Snapshot coolant gas composition for console graphs
 /obj/machinery/rbmk/reactor/proc/rbmk_record_gas_snapshot()
-    if(!coolant_internal)
-        return
-    var/datum/gas_mixture/mix = coolant_internal
-    var/total = mix.total_moles()
-    if(total <= 0)
-        return
-    var/list/snapshot = list()
-    for(var/gas_path in mix.gases)
-        var/moles = mix.gases[gas_path][MOLES]
-        var/percent = (moles / total) * 100
-        snapshot[gas_path] = percent
-    coolant_gas_hist += list(snapshot)
-    if(length(coolant_gas_hist) > 50)
-        coolant_gas_hist.Cut(1, 2)
+	if(!coolant_internal)
+		return
+
+	var/datum/gas_mixture/mix = coolant_internal
+	var/total = mix.total_moles()
+	if(total <= 0)
+		return
+
+	var/list/snapshot = list()
+	for(var/gas_path in mix.gases)
+		var/moles = mix.gases[gas_path][MOLES]
+		var/percent = (moles / total) * 100
+		snapshot[gas_path] = percent
+
+	coolant_gas_hist += list(snapshot)
+	if(length(coolant_gas_hist) > 60)
+		coolant_gas_hist.Cut(1, 2)
 
 
 /*************************************************************
- * RBMK Coolant Energy Exchange
- * - Moves thermal energy between core and coolant_internal
+ * RBMK Coolant Exchange (Nonlinear)
+ * - Handles heat transfer and pressure buildup
  *************************************************************/
 
-/// Reactor-to-coolant heat & pressure transfer
-/proc/rbmk_coolant_exchange(obj/machinery/rbmk/reactor/R)
-    if(!R || !R.coolant_internal)
-        return
+/// Handles nonlinear energy exchange between reactor and coolant
+/proc/rbmk_coolant_exchange(obj/machinery/rbmk/reactor/reactor)
+	if(!reactor || !reactor.coolant_internal)
+		return
 
-    var/datum/gas_mixture/mix = R.coolant_internal
-    var/temp_diff = R.temperature - mix.temperature
-    if(abs(temp_diff) < 0.5)
-        return
+	var/datum/gas_mixture/mix = reactor.coolant_internal
+	var/temp_diff = reactor.temperature - mix.temperature
+	if(abs(temp_diff) < 0.5)
+		return
 
-    // --- Gas-based efficiency curve ---
-    var/efficiency = 1.0
-    for(var/gas_path in mix.gases)
-        switch(gas_path)
-            if(/datum/gas/nitrogen)        efficiency += 0.10
-            if(/datum/gas/carbon_dioxide)  efficiency += 0.25
-            if(/datum/gas/oxygen)          efficiency -= 0.05
-            if(/datum/gas/plasma)          efficiency -= 0.40
+	var/efficiency = 1.0
+	for(var/gas_path in mix.gases)
+		switch(gas_path)
+			if(/datum/gas/nitrogen)        efficiency += 0.10
+			if(/datum/gas/carbon_dioxide)  efficiency += 0.25
+			if(/datum/gas/oxygen)          efficiency -= 0.05
+			if(/datum/gas/plasma)          efficiency -= 0.40
 
-    // --- Thermal transfer ---
-    var/transfer = temp_diff * 0.03 * efficiency
-    R.temperature -= transfer
-    mix.temperature += transfer * 0.5
+	var/transfer = (abs(temp_diff) ** 0.9) * 0.04 * efficiency * sign(temp_diff)
+	reactor.temperature -= transfer
+	mix.temperature += transfer * 0.55
 
-    // --- Pressure response ---
-    var/new_pressure = mix.return_pressure() + (transfer / 50)
-    if(new_pressure > RBMK_PRESSURE_CRITICAL)
-        R.instability += 5
-    R.pressure = clamp(new_pressure, 0, RBMK_PRESSURE_EXTREME)
+	// --- Dynamic pressure ---
+	var/new_pressure = mix.return_pressure() + (abs(transfer) / 40)
+	if(new_pressure > RBMK_PRESSURE_CRITICAL)
+		reactor.instability += 3
+	reactor.pressure = clamp(new_pressure, 0, RBMK_PRESSURE_EXTREME)
 
-    // --- Waste gas buildup ---
-    mix.assert_gases(/datum/gas/oxygen)
-    mix.gases[/datum/gas/oxygen][MOLES] += clamp(transfer / 2000, 0, 10)
+	// --- Oxygen byproduct buildup ---
+	mix.assert_gases(/datum/gas/oxygen)
+	mix.gases[/datum/gas/oxygen][MOLES] += clamp(abs(transfer) / 1800, 0, 10)
 
-    // --- History ---
-    R.coolant_pressure_history += R.pressure
-    if(length(R.coolant_pressure_history) > 50)
-        R.coolant_pressure_history.Cut(1, 2)
+	// --- Pressure history (for graphs) ---
+	reactor.coolant_pressure_history += reactor.pressure
+	if(length(reactor.coolant_pressure_history) > 60)
+		reactor.coolant_pressure_history.Cut(1, 2)

@@ -1,80 +1,82 @@
 /*************************************************************
- * RBMK Reactor Core (single 3×3 sprite)
- * - Handles rod storage, visuals, atmos ports, and console sync
- * - Processing logic handled in rbmk_process.dm
+ * RBMK Reactor Core (Rod-Driven Rewrite)
+ * - Rods drive reactivity and heat output
+ * - Coolant dynamically absorbs heat and builds pressure
+ * - Instability and integrity handled via modular procs
  *************************************************************/
 
-/// Reactor core
+/// Primary reactor definition
 /obj/machinery/rbmk/reactor
-    name = "RBMK Reactor Core"
-    desc = "A massive nuclear reactor core. Insert rods at your own risk."
-    icon = 'icons/obj/machines/rbmk.dmi'
-    icon_state = "reactor_off"
+	name = "RBMK Reactor Core"
+	desc = "A massive nuclear reactor core. Insert rods at your own risk."
+	icon = 'icons/obj/machines/rbmk.dmi'
+	icon_state = "reactor_off"
 
-    // --- Physical properties ---
-    anchored = TRUE
-    density = TRUE
-    mouse_opacity = 2
-    bound_width = 96
-    bound_height = 96
-    bound_x = -32
-    bound_y = -32
-    pixel_x = -32
-    pixel_y = -32
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_ICON
+	bound_width = 96
+	bound_height = 96
+	bound_x = -32
+	bound_y = -32
+	pixel_x = -32
+	pixel_y = -32
 
-    // --- Layering ---
-    layer = BELOW_OBJ_LAYER
-    plane = GAME_PLANE
+	layer = OBJ_LAYER + 0.01
+	plane = GAME_PLANE
 
-    // --- Atmos / port vars ---
-    var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
-    var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet = null
+	// --- Atmos / port vars ---
+	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
+	var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet = null
 
-    // --- Fuel slots (now hold data lists, not objects) ---
-    var/list/normal_slots = list()
-    var/list/special_slots = list()
-    var/max_normal_slots = 12
-    var/max_special_slots = 4
+	// --- Fuel rods ---
+	var/list/normal_slots = list()
+	var/list/special_slots = list()
+	var/max_normal_slots = 12
+	var/max_special_slots = 4
 
-    // --- State ---
-    var/temperature = 0
-    var/radiation = 0
-    var/thermal_output = 0
-    var/max_temp = RBMK_MAX_TEMP
-    var/running = FALSE
+	// --- Core state ---
+	var/temperature = 0
+	var/radiation = 0
+	var/thermal_output = 0
+	var/max_temp = RBMK_MAX_TEMP
+	var/running = FALSE
+	var/scrammed = FALSE
+	var/decay_heat = 0
 
-    // --- Control rods ---
-    var/control_rod_depth = 0
+	// --- Control & reactivity ---
+	var/control_rod_depth = 0
+	var/flux = 0
+	var/instability = 0
+	var/moderator_level = 0
+	var/list/moderator_history = list()
 
-    // --- Instability / flux ---
-    var/flux = 0
-    var/instability = 0
+	// --- Integrity ---
+	var/max_reactor_integrity = RBMK_MAX_INTEGRITY
+	var/reactor_integrity = RBMK_MAX_INTEGRITY
+	var/repairable = FALSE
 
-    // --- Moderator ---
-    var/moderator_level = 0
-    var/list/moderator_history = list()
+	// --- Coolant & pressure ---
+	var/datum/gas_mixture/coolant_internal
+	var/coolant_volume_max = RBMK_COOLANT_VOLUME_MAX
+	var/pressure = 0
+	var/inlet_open = FALSE
+	var/outlet_open = FALSE
+	var/inlet_rate = RBMK_INLET_RATE_MIN
+	var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_BASE
 
-    // --- Integrity ---
-    var/max_reactor_integrity = RBMK_MAX_INTEGRITY
-    var/reactor_integrity = RBMK_MAX_INTEGRITY
-    var/repairable = FALSE
+	// --- History / telemetry ---
+	var/list/coolant_pressure_history = list()
+	var/list/coolant_temperature_history = list()
+	var/list/coolant_total_moles_history = list()
+	var/list/coolant_gas_hist = list()
+	var/list/reactor_temperature_history = list()
 
-    // --- Coolant ---
-    var/datum/gas_mixture/coolant_internal
-    var/coolant_volume_max = RBMK_COOLANT_VOLUME_MAX
-    var/pressure = 0
+	// --- Tick telemetry ---
+	var/last_tick_flux = 0
+	var/last_tick_temp_gain = 0
+	var/last_tick_rod_count = 0
 
-    // --- Console / atmos vars ---
-    var/inlet_open = FALSE
-    var/outlet_open = FALSE
-    var/inlet_rate = RBMK_INLET_RATE_MIN
-    var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_BASE
-
-    // --- History / telemetry ---
-    var/list/coolant_pressure_history = list()
-    var/list/coolant_temperature_history = list()
-    var/list/coolant_total_moles_history = list()
-    var/list/coolant_gas_hist = list()
 
 /*************************************************************
  * Lifecycle
@@ -82,126 +84,178 @@
 
 /// Initialize
 /obj/machinery/rbmk/reactor/Initialize(mapload)
-    . = ..()
-    pixel_x = -32
-    pixel_y = -32
+	. = ..()
+	pixel_x = -32
+	pixel_y = -32
 
-    var/turf/T = get_turf(src)
-    var/datum/gas_mixture/env = T ? T.return_air() : null
-    temperature = env ? env.temperature : (T0C + 20)
+	var/turf/current_turf = get_turf(src)
+	var/datum/gas_mixture/environment = current_turf ? current_turf.return_air() : null
+	temperature = environment ? environment.temperature : (T0C + 20)
+	if(temperature < RBMK_AMBIENT_TEMP)
+		temperature = RBMK_AMBIENT_TEMP
 
-    // Init empty slots
-    normal_slots = list()
-    special_slots = list()
-    for(var/i in 1 to max_normal_slots)
-        normal_slots[i] = null
-    for(var/j in 1 to max_special_slots)
-        special_slots[j] = null
+	normal_slots = list()
+	special_slots = list()
 
-    rbmk_init_coolant(src)
-    START_PROCESSING(SSmachines, src)
-    rbmk_relink_ports(src)
+	rbmk_init_coolant(src)
+	START_PROCESSING(SSmachines, src)
+	rbmk_relink_ports(src)
 
 /// Cleanup
 /obj/machinery/rbmk/reactor/Destroy()
-    STOP_PROCESSING(SSmachines, src)
-    rbmk_cleanup_atmos(src)
-    return ..()
+	STOP_PROCESSING(SSmachines, src)
+	rbmk_cleanup_atmos(src)
+	return ..()
+
 
 /*************************************************************
- * Interaction — click handling
+ * Reactor Processing
  *************************************************************/
 
-/// Click with hand — if holding a rod, insert it
+/// Main reactor tick
+/obj/machinery/rbmk/reactor/process()
+	// --- Halt if destroyed ---
+	if(reactor_integrity <= 0)
+		return
+
+	// --- Auto shutoff if rods fully inserted ---
+	if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
+		if(running)
+			running = FALSE
+			scrammed = TRUE
+			to_chat(src, span_notice("Control rods fully inserted — reactor shutting down."))
+			update_reactor_icon()
+			update_linked_consoles()
+		return
+
+	// --- Skip non-running state (handled by decay logic elsewhere) ---
+	if(!running)
+		return
+
+	// --- Base reactivity calc ---
+	var/total_reactivity = 0
+	var/reactive_rod_count = 0
+
+	for(var/obj/item/rbmk/fuel_rod/fuelRod in (normal_slots + special_slots))
+		if(!fuelRod || !fuelRod.active)
+			continue
+		reactive_rod_count++
+		total_reactivity += (fuelRod.fuel_power * fuelRod.flux_multiplier * fuelRod.thermal_multiplier)
+
+	if(reactive_rod_count == 0)
+		running = FALSE
+		scrammed = TRUE
+		return
+
+	last_tick_rod_count = reactive_rod_count
+
+	// --- Control rod damping ---
+	var/control_factor = 1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX)
+	control_factor = clamp(control_factor, 0, 1)
+
+	total_reactivity *= control_factor
+
+	// --- Reactivity → heat & flux ---
+	var/temperature_gain = total_reactivity * RBMK_TEMP_GAIN_PER_TICK
+	var/flux_gain = total_reactivity * RBMK_FLUX_GAIN
+
+	temperature += temperature_gain
+	flux += flux_gain
+
+	last_tick_flux = flux_gain
+	last_tick_temp_gain = temperature_gain
+
+	// --- Coolant absorption ---
+	if(coolant_internal)
+		var/absorption_rate = inlet_open ? inlet_rate / 100 : 0
+		var/heat_absorbed = min(temperature * RBMK_HEAT_SCALING * absorption_rate, temperature)
+		temperature -= heat_absorbed
+		pressure += heat_absorbed * 0.5
+		if(outlet_open)
+			pressure = max(pressure - (outlet_target_pressure / 150), 0)
+
+	// --- Radiation ---
+	radiation = (temperature * RBMK_RADIATION_TEMP_MULT) + (flux * RBMK_RADIATION_FLUX_MULT)
+
+	// --- Instability + Integrity ---
+	update_instability()
+	update_reactor_integrity()
+
+	// --- Passive decay ---
+	flux = max(flux - RBMK_FLUX_DECAY, 0)
+	radiation = max(radiation - RBMK_RADIATION_DECAY, 0)
+
+	// --- Telemetry ---
+	coolant_pressure_history += pressure
+	reactor_temperature_history += temperature
+	if(length(coolant_pressure_history) > 30)
+		coolant_pressure_history.Cut(1, length(coolant_pressure_history) - 30)
+
+	update_linked_consoles()
+
+
+/*************************************************************
+ * Rod Insertion / Removal
+ *************************************************************/
+
+/// Insert rods
+/obj/machinery/rbmk/reactor/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/rbmk/fuel_rod))
+		var/obj/item/rbmk/fuel_rod/fuelRod = item
+		var/list/target_list
+		var/slot_type
+
+		if(fuelRod.rod_type in list("plasma", "telecrystal", "supermatter"))
+			target_list = special_slots
+			slot_type = "special"
+			if(length(special_slots) >= max_special_slots)
+				to_chat(user, span_warning("All special rod slots are occupied!"))
+				return TRUE
+		else
+			target_list = normal_slots
+			slot_type = "normal"
+			if(length(normal_slots) >= max_normal_slots)
+				to_chat(user, span_warning("All normal rod slots are occupied!"))
+				return TRUE
+
+		if(!user.transferItemToLoc(fuelRod, src))
+			return TRUE
+
+		target_list += fuelRod
+		to_chat(user, span_notice("You insert [fuelRod.name] into a [slot_type] slot of the reactor."))
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+
+		running = TRUE
+		scrammed = FALSE
+		update_icon()
+		update_linked_consoles()
+		return TRUE
+	return ..()
+
+/// Remove rods
 /obj/machinery/rbmk/reactor/attack_hand(mob/user)
-    if(QDELETED(user))
-        return
-    var/obj/item/I = user.get_active_held_item()
-    if(istype(I, /obj/item/rbmk/fuel_rod))
-        world.log << "🧪 attack_hand(): Holding [I.type]"
-        if(try_insert_rod(I, user))
-            playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-            play_center_click(user)
-            return
-    else
-        world.log << "❌ attack_hand(): [I] is not a /obj/item/rbmk/fuel_rod"
+	var/obj/item/rbmk/fuel_rod/fuelRod
+	if(length(special_slots))
+		fuelRod = special_slots[length(special_slots)]
+		special_slots -= fuelRod
+	else if(length(normal_slots))
+		fuelRod = normal_slots[length(normal_slots)]
+		normal_slots -= fuelRod
+	else
+		to_chat(user, span_notice("No rods installed."))
+		return
 
-/*************************************************************
- * Visual click helper
- *************************************************************/
+	fuelRod.forceMove(get_turf(src))
+	to_chat(user, span_notice("You remove [fuelRod.name] from the reactor."))
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
-/// Plays a centered attack animation on the reactor
-/obj/machinery/rbmk/reactor/proc/play_center_click(mob/user)
-    if(!user) return
-    var/turf/T = get_turf(src)
-    if(!T) return
-    var/turf/center = locate(T.x + 1, T.y + 1, T.z)
-    if(center)
-        user.do_attack_animation(center)
+	if(!length(normal_slots) && !length(special_slots))
+		running = FALSE
+		scrammed = TRUE
 
-/*************************************************************
- * Rod Handling (debug + qdel)
- *************************************************************/
+	update_icon()
+	update_linked_consoles()
 
-/// Inserts a rod and stores its data internally
-/obj/machinery/rbmk/reactor/proc/try_insert_rod(obj/item/rbmk/fuel_rod/R, mob/user)
-    if(!R)
-        world.log << "❌ No rod reference!"
-        return FALSE
-
-    world.log << "⚙️ try_insert_rod() called with [R] ([R.type])"
-    if(QDELETED(R))
-        world.log << "❌ Rod already deleted!"
-        return FALSE
-
-    // Ensure slots exist
-    if(!length(normal_slots))
-        normal_slots = list()
-        for(var/i in 1 to max_normal_slots)
-            normal_slots[i] = null
-    if(!length(special_slots))
-        special_slots = list()
-        for(var/j in 1 to max_special_slots)
-            special_slots[j] = null
-
-    // Choose slot type
-    var/list/target_slots
-    var/slot_type = "normal"
-    if(R.rod_type in list("plasma", "telecrystal", "supermatter"))
-        target_slots = special_slots
-        slot_type = "special"
-    else
-        target_slots = normal_slots
-
-    world.log << "➡ Target slot type: [slot_type] ([length(target_slots)] slots)"
-
-    // Try insertion
-    for(var/i in 1 to length(target_slots))
-        if(!target_slots[i])
-            world.log << "✅ Found empty slot #[i], inserting..."
-            var/list/rod_data = list(
-                "fuel_amount"   = R.fuel_amount,
-                "heat_per_tick" = R.heat_per_tick,
-                "rad_output"    = R.rad_output,
-                "flux_output"   = R.flux_output,
-                "thermal_mult"  = R.thermal_mult,
-                "flux_mult"     = R.flux_mult,
-                "rad_mult"      = R.rad_mult,
-                "rod_type"      = R.rod_type,
-                "rod_color"     = R.rod_color
-            )
-
-            target_slots[i] = rod_data
-            qdel(R)
-            to_chat(user, span_notice("You insert a [rod_data["rod_type"]] fuel rod into the [slot_type] reactor slot."))
-            world.log << "✅ qdel called successfully for [R.type] (slot #[i])"
-            running = TRUE
-            update_linked_consoles()
-            return TRUE
-
-    to_chat(user, span_warning("No available [slot_type] rod slots in the reactor!"))
-    world.log << "❌ No available [slot_type] slots for [R.type]"
-    return FALSE
 
 /*************************************************************
  * Console Sync
@@ -209,7 +263,7 @@
 
 /// Update linked consoles
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
-    for(var/obj/machinery/computer/rbmk_console/C in range(7, src))
-        if(C.linked_reactor == src)
-            C.update_icon()
-            SStgui.update_uis(C)
+	for(var/obj/machinery/computer/rbmk_console/console in range(7, src))
+		if(console.linked_reactor == src)
+			console.update_icon()
+			SStgui.update_uis(console)

@@ -1,48 +1,76 @@
 /************************************************************
  * Bananium Fuel Rod
- * - Ridiculous and silly, but still a functional moderator.
- * - Produces minor heat and radiation; acts as a weak stabilizer.
+ * - A ridiculous but functional moderator.
+ * - Produces small amounts of heat and radiation.
+ * - Slightly dampens reactor flux and overall reactivity.
  ************************************************************/
 
 /// Bananium Fuel Rod
 /obj/item/rbmk/fuel_rod/bananium
-    name = "Bananium Fuel Rod"
-    desc = "Ridiculous and silly, but somehow still a functional moderator."
-    icon = 'icons/obj/control_rod.dmi'
-    icon_state = "bananium"
+	name = "Bananium Fuel Rod"
+	desc = "Ridiculous and silly, yet somehow still a functional reactor moderator."
+	icon = 'icons/obj/fuel_rod.dmi'
+	icon_state = "bananium"
+	depleted_icon_state = "bananium_used"
+	depleted_description = "A hollowed-out bananium rod, still faintly smells like potassium."
 
-    fuel_amount = 600
-    heat_per_tick = 2
-    rad_output = 3
-    flux_output = 1
-    active = TRUE
+	// Core parameters
+	fuel_amount = 600
+	base_heat_output = 2
+	base_flux_output = 1
+	base_radiation_output = 3
+	depletion_rate = 0.5
+	reactivity_sensitivity = 0.0015      // gentle reactor response
 
-    rod_type = "bananium"
-    rod_color = "yellow"
+	// Stabilizing modifiers
+	thermal_multiplier = 0.8             // reduces total heat buildup
+	flux_multiplier = 0.9                // absorbs some neutron activity
+	radiation_multiplier = 1.0
 
-    thermal_mult = 0.8  // goofy but stabilizing
-    flux_mult = 1.0
-    rad_mult = 1.0
+	rod_type = "bananium"
+	rod_color = "yellow"
+
+	active = TRUE
+
 
 /************************************************************
  * Bananium Rod Processing Logic
  ************************************************************/
 
-/// Slowly burns, offering mild output and silly moderation
-/obj/item/rbmk/fuel_rod/bananium/process_rod()
-    if(fuel_amount <= 0)
-        if(active)
-            active = FALSE
-            icon_state = depleted_icon_state
-            desc = depleted_desc
-        return list()
+/// Burns slowly, lightly reacts to the reactor environment, and stabilizes the core
+/obj/item/rbmk/fuel_rod/bananium/process_rod(var/reactor_temperature = RBMK_AMBIENT_TEMP, var/reactor_flux = 0, var/core_feedback_factor = 1.0)
+	// Handle depletion
+	if (fuel_amount <= 0)
+		if (active)
+			active = FALSE
+			icon_state = depleted_icon_state
+			desc = depleted_description
+		return list(
+			"heat" = 0,
+			"flux" = 0,
+			"radiation" = 0,
+			"thermal_mult" = 1.0,
+			"flux_mult" = 1.0
+		)
 
-    fuel_amount -= 1
+	// Gradual fuel burn
+	fuel_amount = max(0, fuel_amount - depletion_rate)
 
-    return list(
-        "flux"         = flux_output * flux_mult,      // weak neutron moderation
-        "heat"         = heat_per_tick * thermal_mult, // banana heat
-        "radiation"    = rad_output * rad_mult,        // mild radiation
-        "thermal_mult" = thermal_mult,                 // slightly stabilizing
-        "flux_mult"    = flux_mult
-    )
+	// --- Reactivity model ---
+	var/temperature_factor = 1 + ((reactor_temperature - RBMK_AMBIENT_TEMP) * reactivity_sensitivity)
+	var/flux_factor = 1 + (reactor_flux * 0.005)
+	var/reactivity_factor = clamp(core_feedback_factor * temperature_factor * flux_factor, 0.8, 1.5)
+	core_feedback_last = reactivity_factor
+
+	// --- Output calculation ---
+	var/heat_output = base_heat_output * reactivity_factor * thermal_multiplier
+	var/flux_output = base_flux_output * (1 / reactivity_factor) * flux_multiplier  // acts as a weak moderator
+	var/radiation_output = base_radiation_output * sqrt(reactivity_factor) * radiation_multiplier
+
+	return list(
+		"heat" = heat_output,
+		"flux" = flux_output,
+		"radiation" = radiation_output,
+		"thermal_mult" = thermal_multiplier,
+		"flux_mult" = flux_multiplier
+	)
