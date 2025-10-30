@@ -582,7 +582,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 /area/ocean/generated_above
 	icon_state = "ocean_gen_above"
 	map_generator = /datum/map_generator/ocean_generator
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
