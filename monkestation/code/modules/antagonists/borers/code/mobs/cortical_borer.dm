@@ -233,6 +233,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/list/hosts_abilities = list()
 
 	/// How much health we regen per second while in a host scales linearally
+	var/health_regen = 0.15
 
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
