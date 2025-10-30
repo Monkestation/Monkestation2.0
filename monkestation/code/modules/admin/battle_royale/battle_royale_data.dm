@@ -17,7 +17,7 @@
 	var/rare_drop_prob = 0
 	///What does this set the prob of doing a super drop to
 	var/super_drop_prob = 0
-	///How many tiles per second does this make the barrier move, can be less then 1
+	///How many loot pods do we spawn per second, can be less then 1
 	var/pods_per_second = 0
 
 //Used for admin custom royale data sets
@@ -60,23 +60,23 @@
 	common_weight = 12
 	utility_weight = 6
 	rare_weight = 3
+	super_drop_prob = 0.5
 
-/datum/battle_royale_data/normal/ten_minutes
-	active_time = 10 MINUTES
+/datum/battle_royale_data/normal/nine_minutes
+	active_time = 9 MINUTES
 	common_weight = 10
 	utility_weight = 4
 	rare_weight = 3
-	super_drop_prob = 0.5
+	super_drop_prob = 1
 
-/datum/battle_royale_data/normal/fifteen_minutes
-	active_time = 15 MINUTES
+/datum/battle_royale_data/normal/eleven_minutes
+	active_time = 11 MINUTES
 	common_weight = 5
 	rare_weight = 8
 	super_rare_weight = 2
 	extra_loot_prob = 15
 	rare_drop_prob = 6
 	super_drop_prob = 4
-	pods_per_second = 0.2
 
 //premade set which lasts at most 10 minutes
 /datum/battle_royale_data/fast

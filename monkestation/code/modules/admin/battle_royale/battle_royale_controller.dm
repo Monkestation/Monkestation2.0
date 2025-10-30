@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 						MEDIUM_THREAT = 0,
 						LOW_THREAT = 0)
 	///What is the expected time for the entire station to be covered in storms
-	var/max_duration = 20 MINUTES
+	var/max_duration = 15 MINUTES
 	///A ref to our signup tracker, cant just use a poll because it breaks at numbers this high
 	var/obj/effect/battle_royale_signup/signup_tracker
 	///The list of turfs valid for us to spawn players and loot on
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		max_duration = 10 MINUTES
 
 	if(storm_controller.start_consuming_delay == -1) //have to use an exact value check as admins can set the delay to 0
-		storm_controller.start_consuming_delay = (fast ? 2 MINUTES : 5 MINUTES)
+		storm_controller.start_consuming_delay = (fast ? 2 MINUTES : 3.5 MINUTES)
 
 	send_to_playing_players(span_ratvar("Battle Royale will begin soon..."))
 	GLOB.enter_allowed = FALSE
@@ -195,8 +195,8 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			spawned_human.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), BATTLE_ROYALE_TRAIT)
 			var/datum/action/cooldown/spell/aoe/knock/knock_spell = new
 			knock_spell.Grant(spawned_human)
-			to_chat(spawned_human, span_notice("You have been given knock and pacifism for 1 minute."))
-			addtimer(CALLBACK(src, PROC_REF(remove_grace), spawned_human), 1 MINUTES)
+			to_chat(spawned_human, span_notice("You have been given knock and pacifism for 1 minute 30 seconds."))
+			addtimer(CALLBACK(src, PROC_REF(remove_grace), spawned_human, knock_spell), 1.5 MINUTES)
 
 		spawned_human.equipOutfit(/datum/outfit/job/assistant)
 		spawned_human.setMaxHealth(PLAYER_HEALTH_VALUE)
@@ -209,10 +209,11 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	return TRUE
 
 ///Remove grace period buffs and effects
-/datum/battle_royale_controller/proc/remove_grace(mob/player)
+/datum/battle_royale_controller/proc/remove_grace(mob/player, datum/action/cooldown/spell/aoe/knock/spell)
 	player.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), BATTLE_ROYALE_TRAIT)
-	var/datum/action/cooldown/spell/aoe/knock/knock_spell = locate() in player.actions
+	var/datum/action/cooldown/spell/aoe/knock/knock_spell = spell || locate(/datum/action/cooldown/spell/aoe/knock) in player.actions
 	if(knock_spell)
+		knock_spell.Remove(player)
 		qdel(knock_spell)
 	to_chat(player, span_greenannounce("You are no longer a pacifist. Be the last spessmens standing."))
 
@@ -476,7 +477,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 			var/second_input = tgui_alert(usr, "Would you like to use custom datasets?", "Battle Royale", list("Yes", "No"))
 			if(second_input != "Yes")
-				second_input = tgui_alert(usr, "What preset would you like to use?", "Battle Royale", list("Normal(20 min max duration)", "Fast(10 min max duration)"))
+				second_input = tgui_alert(usr, "What preset would you like to use?", "Battle Royale", list("Normal(15 min max duration)", "Fast(10 min max duration)"))
 
 			input = tgui_alert(usr, "Are you sure want to start a battle royale?", "Battle Royale", list("Im sure", "No"))
 			if(input != "Im sure")
