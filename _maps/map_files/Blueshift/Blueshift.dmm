@@ -8556,9 +8556,9 @@
 /turf/open/floor/iron/shuttle/arrivals/airless,
 /area/space/nearstation)
 "bHF" = (
-/obj/structure/sign/poster/contraband/atmosia_independence/directional/south,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/obj/structure/holosign/barrier/atmos,
+/turf/closed/wall/r_wall,
+/area/station/engineering/atmos/storage)
 "bHU" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/structure/cable,
@@ -21731,6 +21731,7 @@
 "ehn" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "eho" = (
@@ -27753,6 +27754,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "fnH" = (
@@ -36593,6 +36595,10 @@
 /obj/item/toy/plush/moth,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"hbQ" = (
+/obj/structure/sign/poster/contraband/atmosia_independence/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "hbS" = (
 /obj/item/trash/pistachios,
 /obj/effect/decal/cleanable/dirt,
@@ -41247,6 +41253,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible{
 	dir = 4
 	},
+/obj/structure/holosign/barrier/atmos,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage)
 "hWC" = (
@@ -44498,6 +44505,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "iEz" = (
@@ -50436,6 +50444,12 @@
 /obj/effect/landmark/start/chemist,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"jMt" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/central)
 "jMu" = (
 /obj/structure/table,
 /obj/item/weldingtool/largetank{
@@ -64280,6 +64294,7 @@
 /area/station/medical/virology)
 "mui" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "muk" = (
@@ -70722,12 +70737,6 @@
 	dir = 4
 	},
 /area/station/commons/locker)
-"nIO" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "nIV" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -83179,6 +83188,7 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "qdO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/structure/holosign/barrier/atmos,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage)
 "qdV" = (
@@ -83208,10 +83218,6 @@
 "qem" = (
 /turf/closed/wall/rust,
 /area/station/medical/power_station)
-"qet" = (
-/obj/structure/plaque/static_plaque/atmos,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/central)
 "qev" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/cable,
@@ -95473,6 +95479,7 @@
 "swy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "swC" = (
@@ -104196,9 +104203,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
-"ueb" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos/storage)
 "uef" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
@@ -105763,6 +105767,7 @@
 /area/station/service/barber)
 "urM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/holosign/barrier/atmos,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage)
 "urN" = (
@@ -113561,6 +113566,10 @@
 /obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"vOJ" = (
+/obj/structure/plaque/static_plaque/atmos,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central)
 "vOS" = (
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic,
@@ -118682,6 +118691,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
+/obj/structure/holosign/barrier/atmos,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage)
 "wME" = (
@@ -120349,6 +120359,7 @@
 /area/station/maintenance/department/engineering/engine_aft_starboard)
 "xdG" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
+/obj/structure/holosign/barrier/atmos,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/storage)
 "xdH" = (
@@ -160499,7 +160510,7 @@ iWN
 aMe
 qAu
 wot
-qet
+vOJ
 kYI
 cBx
 pNw
@@ -160758,11 +160769,11 @@ qAu
 kFQ
 tHY
 wst
-ueb
+bHF
 hWB
 mui
 wMy
-ueb
+bHF
 qfd
 fSo
 qfd
@@ -161015,17 +161026,17 @@ qAu
 cKR
 tHY
 wst
-ueb
+bHF
 dSi
 kQh
 mRe
-ueb
+bHF
 qfd
-ueb
-ueb
+bHF
+bHF
 iEy
-ueb
-ueb
+bHF
+bHF
 twj
 cqE
 qfd
@@ -161272,17 +161283,17 @@ qAu
 oxB
 tHY
 wst
-ueb
+bHF
 eer
 xbl
 eer
-ueb
+bHF
 qfd
-ueb
+bHF
 vLj
 qhN
 vLj
-ueb
+bHF
 tch
 cqE
 qfd
@@ -161529,17 +161540,17 @@ pUW
 lTC
 tHY
 wst
-ueb
+bHF
 eer
 eer
 eer
-ueb
+bHF
 qfd
-ueb
+bHF
 nrB
 vLa
 vLj
-ueb
+bHF
 tch
 cqE
 qfd
@@ -161789,14 +161800,14 @@ aZA
 urM
 urM
 urM
-ueb
-ueb
+bHF
+bHF
 fIA
-ueb
+bHF
 vLj
 ryM
 vLj
-ueb
+bHF
 ujw
 cqE
 qfd
@@ -162049,11 +162060,11 @@ wYy
 qfd
 qfd
 qfd
-ueb
-ueb
+bHF
+bHF
 fnE
-ueb
-ueb
+bHF
+bHF
 tch
 cqE
 qfd
@@ -162558,10 +162569,10 @@ dXH
 tHY
 fIA
 qxQ
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 fIA
 owp
 kZx
@@ -162815,19 +162826,19 @@ dXH
 tHY
 qfd
 tch
-ueb
+bHF
 gJP
 odJ
-ueb
+bHF
 qfd
 cqE
 qfd
 pnL
 fgR
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 ngB
 qfd
 dTf
@@ -163084,7 +163095,7 @@ dVD
 xdG
 pWL
 egM
-ueb
+bHF
 ngB
 qfd
 pfq
@@ -163329,10 +163340,10 @@ dXH
 liN
 qfd
 tch
-ueb
+bHF
 bJT
 jss
-ueb
+bHF
 qfd
 cqE
 gXC
@@ -163586,10 +163597,10 @@ dXH
 liN
 qfd
 tch
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 qfd
 fCh
 kZx
@@ -163598,7 +163609,7 @@ dcu
 qdO
 pWL
 qug
-ueb
+bHF
 jvL
 qfd
 dLw
@@ -163843,19 +163854,19 @@ dXH
 liN
 qfd
 tch
-ueb
+bHF
 xBF
 ekm
-ueb
+bHF
 qfd
 cqE
 qfd
 pnL
 qfd
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 jvL
 qfd
 iox
@@ -164357,19 +164368,19 @@ dXH
 liN
 qfd
 tch
-ueb
+bHF
 eNx
 uZR
-ueb
+bHF
 qfd
 cqE
 qfd
 pnL
 qfd
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 jvL
 qfd
 nBm
@@ -164614,10 +164625,10 @@ dXH
 tGf
 gSg
 tch
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 qfd
 cqE
 qfd
@@ -164626,9 +164637,9 @@ cqd
 xdG
 tCY
 oSz
-ueb
-jvL
 bHF
+jvL
+hbQ
 sBt
 cdE
 qRY
@@ -164871,10 +164882,10 @@ qAu
 liN
 qfd
 tch
-ueb
+bHF
 dtC
 sGo
-ueb
+bHF
 qfd
 cqE
 gXC
@@ -165140,7 +165151,7 @@ dLt
 qdO
 tCY
 vGy
-ueb
+bHF
 jvL
 qfd
 sBt
@@ -165385,19 +165396,19 @@ qAu
 tHY
 maA
 tch
-ueb
+bHF
 bjM
 dyA
-ueb
+bHF
 maA
 qfd
 qfd
 qfd
 fgR
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 jvL
 qfd
 fSo
@@ -165642,10 +165653,10 @@ qAu
 tHY
 fIA
 tch
-ueb
-ueb
-ueb
-ueb
+bHF
+bHF
+bHF
+bHF
 fIA
 qfd
 qfd
@@ -167448,7 +167459,7 @@ tHY
 tHY
 lgI
 dyO
-nIO
+jMt
 gPt
 lTE
 tGf
