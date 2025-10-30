@@ -2028,6 +2028,7 @@
 /datum/design/module/mod_stomper
 	name = "Stomper Module"
 	id = "mod_stomper"
+	desc = /obj/item/mod/module/stomper::desc
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,

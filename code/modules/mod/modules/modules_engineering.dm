@@ -239,7 +239,10 @@
 
 /obj/item/mod/module/stomper
 	name = "MOD stomper module"
-	// todo: write an actual desc
+	desc = "A repurposed magnetic stability module with its electromagnets replaced by powerful springs fitted into the suit's boots, allowing users to \
+        jump much higher than normal outdoors for the purposes of portable hotspot movement. \
+        Long ago these used to bounce you whilst you walked reducing your movement potential, \
+        however after countless complains from engineering staff and months of development it was fixed."
 	icon_state = "stomper"
 	module_type = MODULE_USABLE
 	complexity = 2
