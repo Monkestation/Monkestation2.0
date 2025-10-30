@@ -77,9 +77,10 @@
 	if(!current_ring)
 		return
 
-	for(var/to_consume as anything in rings_to_consume["[current_ring]"])
+	for(var/turf/to_consume as anything in rings_to_consume["[current_ring]"])
 		var/obj/effect/royale_storm_effect/storm_effect = new(to_consume)
 		storms[to_consume] = storm_effect
+		royale_controller.spawnable_turfs -= to_consume //might be faster to just do this on the list of turfs instead
 
 	rings_to_consume -= "[current_ring]"
 	timerid = addtimer(CALLBACK(src, PROC_REF(consume_ring)), ring_advance_delay, TIMER_STOPPABLE)

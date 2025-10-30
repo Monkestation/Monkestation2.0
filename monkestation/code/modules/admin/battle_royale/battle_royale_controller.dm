@@ -28,7 +28,10 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 						LOW_THREAT = 0)
 	///What is the expected time for the entire station to be covered in storms
 	var/max_duration = 20 MINUTES
+	///A ref to our signup tracker, cant just use a poll because it breaks at numbers this high
 	var/obj/effect/battle_royale_signup/signup_tracker
+	///The list of turfs valid for us to spawn players and loot on
+	var/list/spawnable_turfs = list()
 	///Assoc list of loot tables to use
 	var/static/list/loot_tables = list(COMMON_LOOT_TABLE = GLOB.royale_common_loot,
 									UTILITY_LOOT_TABLE = GLOB.royale_utility_loot,
@@ -123,6 +126,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			mob.dust(TRUE, FALSE, TRUE)
 			CHECK_TICK
 
+	spawnable_turfs = get_safe_station_turfs()
 	send_setup_messages()
 
 /datum/battle_royale_controller/proc/send_setup_messages()
@@ -176,15 +180,11 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		return FALSE*/
 
 	players = list()
-	var/list/valid_turfs
-	if(!turf_override)
-		valid_turfs = get_safe_station_turfs()
-
 	for(var/mob/participant in signup_tracker.signed_up)
 		if(QDELETED(participant) || !participant.client)
 			continue
 		var/key = participant.key
-		var/turf/spawn_turf = turf_override || pick(valid_turfs) //could also make this pick from assistant spawns
+		var/turf/spawn_turf = turf_override || pick(spawnable_turfs) //could also make this pick from assistant spawns
 		var/obj/structure/closet/supplypod/centcompod/pod = new
 		var/mob/living/carbon/human/spawned_human = new(pod)
 		spawned_human.key = key
@@ -362,10 +362,6 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	if(!current_data)
 		return
 
-	var/list/turf_list = GLOB.station_turfs.Copy() - storm_controller.storms
-	if(!length(turf_list))
-		return
-
 	if(!table)
 		table = pick_weight(list(COMMON_LOOT_TABLE = current_data.common_weight,
 								UTILITY_LOOT_TABLE = current_data.utility_weight,
@@ -379,14 +375,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		picked_loot = add_loot_items(pick_weight(GLOB.royale_extra_loot), picked_loot)
 
 	var/drop_time = calculate_drop_time(delay)
-	var/turf/targeted_turf
-	shuffle_inplace(turf_list)
-	for(var/turf/possible_turf in turf_list)
-		if(isclosedturf(possible_turf))
-			continue
-		targeted_turf = possible_turf
-		break
-
+	var/turf/targeted_turf = pick(spawnable_turfs)
 	podspawn(list("target" = targeted_turf,
 				"style" = ((table == MISC_LOOT_TABLE) ? STYLE_HONK : STYLE_BOX),
 				"path" = /obj/structure/closet/supplypod/battle_royale,
@@ -394,7 +383,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 				"delays" = list(POD_TRANSIT = 1, POD_FALLING = drop_time, POD_OPENING = 1 SECONDS, POD_LEAVING = 3 SECONDS)))
 
 	if(announcement)
-		priority_announce("[announcement] \nExpected Drop Location: [get_area(targeted_turf)]\n ETA: [drop_time/10] Seconds.", "High Command Supply Control",
+		priority_announce("[announcement] \nExpected Drop Location: [get_area(targeted_turf)]\n ETA: [drop_time/10] seconds.", "High Command Supply Control",
 						SSstation.announcer.get_rand_alert_sound())
 
 /datum/battle_royale_controller/proc/add_loot_items(input_loot, list/input_list = list())

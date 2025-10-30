@@ -60,8 +60,7 @@ SUBSYSTEM_DEF(polling)
 	amount_to_pick = 0,
 	chat_text_border_icon,
 	announce_chosen = TRUE,
-	show_candidate_amount = TRUE,
-	pain = FALSE
+	show_candidate_amount = TRUE
 )
 	if(length(group) == 0)
 		return
@@ -199,27 +198,18 @@ SUBSYSTEM_DEF(polling)
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, poll_alert_button)
-	if(pain)
-		stack_trace("1")
+
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
 	if(!(amount_to_pick > 0))
-		if(pain)
-			stack_trace("2")
 		return new_poll.signed_up
 	for(var/pick in 1 to amount_to_pick)
-		if(pain)
-			stack_trace("3")
 		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)
 	if(announce_chosen)
 		new_poll.announce_chosen(group)
 	if(new_poll.chosen_candidates.len == 1)
-		if(pain)
-			stack_trace("4")
 		var/chosen_one = pick(new_poll.chosen_candidates)
 		return chosen_one
-	if(pain)
-		stack_trace("5")
 	return new_poll.chosen_candidates
 
 /datum/controller/subsystem/polling/proc/poll_ghost_candidates(
