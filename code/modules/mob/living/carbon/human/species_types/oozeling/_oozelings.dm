@@ -24,6 +24,7 @@
 		TRAIT_EASYDISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
+		TRAIT_FOOD_ABSORPTION,
 	)
 
 	meat = /obj/item/food/meat/slab/human/mutant/slime

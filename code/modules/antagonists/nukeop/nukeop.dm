@@ -10,6 +10,7 @@
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
 	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.

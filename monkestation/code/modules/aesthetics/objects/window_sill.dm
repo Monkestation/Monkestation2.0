@@ -88,8 +88,13 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 		balloon_alert(user, "need at least 2 of \the [stack]!")
 		return
 	balloon_alert_to_viewers("built [window_type::name]")
-	var/obj/structure/WD = new window_type(our_turf)
-	WD.set_anchored(ispath(window_type, /obj/structure/grille) ? TRUE : FALSE)
+	var/obj/structure/built = new window_type(our_turf)
+	if(istype(built, /obj/structure/grille))
+		built.set_anchored(TRUE)
+	else if(istype(built, /obj/structure/window))
+		var/obj/structure/window/built_window = built
+		built_window.set_anchored(FALSE)
+		built_window.state = WINDOW_OUT_OF_FRAME
 
 //merges adjacent full-tile windows into one
 /obj/structure/window_sill/update_overlays(updates=ALL)

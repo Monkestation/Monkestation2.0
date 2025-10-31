@@ -70,9 +70,9 @@
 
 	if(color_cycle)
 		if(!hsv)
-			hsv = RGBtoHSV(rgb(255, 0, 0))
+			hsv = rgb2hsv(rgb(255, 0, 0))
 		hsv = RotateHue(hsv, world.time - rest_time * 15)
-		targeted_image.color = HSVtoRGB(hsv)
+		targeted_image.color = hsv2rgb(hsv)
 
 	if(!isnull(dir_override))
 		targeted_image.setDir(dir_override)
