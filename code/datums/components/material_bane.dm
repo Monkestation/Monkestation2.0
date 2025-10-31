@@ -173,8 +173,7 @@
 
 	if(is_this_bane(hitting))
 		on_bane_bonk()
-		if(!(datum_flags & DF_ISPROCESSING))
-			START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SSfastprocess, src)
 
 /datum/component/material_bane/proc/check_for_bane_start(datum/source, obj/item/maybebane)
 	SIGNAL_HANDLER
