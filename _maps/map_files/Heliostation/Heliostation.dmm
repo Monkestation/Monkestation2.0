@@ -50194,6 +50194,7 @@
 /area/station/science/robotics/lab)
 "mfv" = (
 /obj/structure/table/reinforced,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mfJ" = (
@@ -65868,6 +65869,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
+"rYi" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/wood/large,
+/area/station/service/abandoned_gambling_den)
 "rYj" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -101743,7 +101750,7 @@ mSK
 oZh
 dsm
 wCR
-wCR
+rYi
 wCR
 mSK
 xHN

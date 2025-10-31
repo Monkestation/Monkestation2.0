@@ -1465,6 +1465,12 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
+"atn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/iron/showroomfloor,
+/area/station/commons/toilet/restrooms)
 "atB" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -32176,6 +32182,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "jRF" = (
@@ -101196,7 +101203,7 @@ utj
 hTw
 xWt
 mIh
-sPY
+atn
 kZW
 osy
 dAd
