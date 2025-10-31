@@ -34,8 +34,8 @@
 	return ..()
 
 /datum/component/material_bane/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(check_for_bane_start))
-	RegisterSignal(parent, COMSIG_ATOM_HITBY, PROC_REF(check_for_bane_start))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(weapon_hit_check))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY, PROC_REF(thrown_hit_check))
 	RegisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(check_for_bane_start))
 	RegisterSignal(parent, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(check_for_bane_start))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_ADDED, PROC_REF(check_for_bane_start))
@@ -161,6 +161,19 @@
 			return TRUE
 	return FALSE
 
+/datum/component/material_bane/proc/weapon_hit_check(mob/living/oughed, obj/item/weapon, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
+	if(is_this_bane(weapon))
+		on_bane_bonk()
+			START_PROCESSING(SSfastprocess, src)
+
+/datum/component/material_bane/proc/thrown_hit_check(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+
+	if(is_this_bane(hitting))
+		on_bane_bonk()
+		START_PROCESSING(SSfastprocess, src)
 
 /datum/component/material_bane/proc/check_for_bane_start(datum/source, obj/item/maybebane)
 	SIGNAL_HANDLER
