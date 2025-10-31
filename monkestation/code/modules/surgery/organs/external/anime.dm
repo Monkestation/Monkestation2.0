@@ -110,7 +110,10 @@
 	if(!sprite_datum.is_emissive)
 		return
 	layer = bitflag_to_layer(layer)
-	. = emissive_appearance_copy(get_image(layer, limb), limb)
+	var/mutable_appearance/halo_emissive_overlay = emissive_appearance_copy(get_image(layer, limb), limb)
+	halo_emissive_overlay.pixel_y = 0
+	halo_emissive_overlay.pixel_z = -16
+	return halo_emissive_overlay
 
 /datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.head?.flags_inv & HIDEEARS)
