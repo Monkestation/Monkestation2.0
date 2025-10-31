@@ -1,30 +1,36 @@
 /*************************************************************
- * RBMK Instability Module (Rod-Driven Revision)
+ * RBMK Instability Module (Stable-Core Revision)
  * - Converts flux, heat, and radiation into chaotic instability
- * - Weighted by live fuel rod multipliers and core synergy
+ * - Uses logarithmic scaling for smoother buildup
+ * - Supports passive self-stabilization from coolant and rods
  *************************************************************/
 
 /// Updates overall instability based on reactor state and rods
 /obj/machinery/rbmk/reactor/proc/update_instability()
-	// --- Early out ---
-	if (!running)
+	if(!running)
 		return instability
 
 	/*************************************************************
-	 * Normalize Key Reactor Factors
+	 * Normalized Ratios (bounded for safety)
 	 *************************************************************/
-	var/flux_ratio = flux / RBMK_SAFE_FLUX
-	var/temperature_ratio = temperature / max_temp
-	var/radiation_ratio = radiation / RBMK_SAFE_RADIATION
+	var/flux_ratio        = clamp(flux / RBMK_SAFE_FLUX, 0, 4)
+	var/temperature_ratio = clamp(temperature / max_temp, 0, 2)
+	var/radiation_ratio   = clamp(radiation / RBMK_SAFE_RADIATION, 0, 3)
 
-	// Weighted baseline — flux dominates, then temperature, then radiation
-	var/calculated_instability = (flux_ratio * RBMK_FLUX_WEIGHT + temperature_ratio * RBMK_TEMP_WEIGHT + radiation_ratio * RBMK_RAD_WEIGHT) * 100
+	/*************************************************************
+	 * Base Instability Curve
+	 * - Logarithmic weighting gives smooth ramp at low values
+	 * - Flux dominates, temperature secondary, radiation minor
+	 *************************************************************/
+	var/base_flux_component = log(1 + flux_ratio * 2) * 45
+	var/base_temp_component = log(1 + temperature_ratio * 2) * 30
+	var/base_rad_component  = log(1 + radiation_ratio * 1.5) * 15
 
+	var/calculated_instability = base_flux_component + base_temp_component + base_rad_component
 
 	/*************************************************************
 	 * Rod Activity Influence
-	 * - Each active rod contributes a base instability pulse
-	 * - Multiplied by its own flux/thermal multipliers
+	 * - Adds small chaos based on total rod reactivity
 	 *************************************************************/
 	var/total_rod_influence = 0.0
 	var/active_rod_count = 0
@@ -38,38 +44,46 @@
 
 	if(active_rod_count > 0)
 		total_rod_influence /= active_rod_count
-		calculated_instability += total_rod_influence * 50 // modest baseline addition
+		calculated_instability += total_rod_influence * 35 // less extreme than before
 
 	/*************************************************************
-	 * Synergy Spike: High Flux + High Temperature
-	 * - Creates instability surges during runaway conditions
+	 * Synergy Spike
+	 * - True runaway only when both flux and temperature are excessive
 	 *************************************************************/
 	if(flux > RBMK_SYNERGY_FLUX_THRESHOLD && temperature > (max_temp * RBMK_SYNERGY_TEMP_RATIO))
-		calculated_instability *= RBMK_SYNERGY_MULT
+		var/surge_strength = ((flux / RBMK_SYNERGY_FLUX_THRESHOLD) + (temperature / max_temp)) / 2
+		calculated_instability *= 1 + (surge_strength * 0.4) // softer than before, scales dynamically
 
 	/*************************************************************
-	 * Radiation "Kicker"
-	 * - Pushes instability upward when radiation exceeds limits
+	 * Radiation “Kicker”
+	 * - Only contributes significant effect when truly over limit
 	 *************************************************************/
-	if(radiation > RBMK_RADIATION_KICKER_THRESHOLD)
-		calculated_instability += RBMK_RADIATION_KICKER_BONUS
+	if(radiation > (RBMK_RADIATION_KICKER_THRESHOLD * 1.25))
+		var/kick_strength = (radiation / RBMK_RADIATION_KICKER_THRESHOLD) - 1
+		calculated_instability += (kick_strength * 25)
 
 	/*************************************************************
 	 * Control Rod Dampening
-	 * - Deep insertion smooths instability buildup
+	 * - Deep insertion strongly suppresses chaos buildup
 	 *************************************************************/
-	var/control_rod_effectiveness = 1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX)
-	if(control_rod_effectiveness < 0)
-		control_rod_effectiveness = 0
-	calculated_instability *= (0.5 + control_rod_effectiveness * 0.5)
+	var/rod_insertion_ratio = clamp(control_rod_depth / RBMK_CONTROL_ROD_MAX, 0, 1)
+	var/rod_dampen_factor = 0.4 + (1 - rod_insertion_ratio) * 0.6 // 0.4 fully inserted, 1 fully withdrawn
+	calculated_instability *= rod_dampen_factor
 
 	/*************************************************************
-	 * Passive Stabilization via Coolant Pressure
-	 * - High coolant pressure slightly reduces instability
+	 * Coolant Stabilization
+	 * - Pressure and coolant performance smooth the noise
 	 *************************************************************/
 	if(pressure > RBMK_PRESSURE_WARNING)
-		var/pressure_ratio = min(pressure / RBMK_PRESSURE_CRITICAL, 2)
-		calculated_instability /= (1 + (pressure_ratio * 0.15))
+		var/pressure_ratio = clamp(pressure / RBMK_PRESSURE_CRITICAL, 0, 2)
+		calculated_instability /= (1 + (pressure_ratio * 0.2))
+
+	/*************************************************************
+	 * Mild Recovery if Conditions Improve
+	 * - Prevents “stuck” high instability when reactor stabilizes
+	 *************************************************************/
+	if(flux < RBMK_SAFE_FLUX && temperature < (max_temp * 0.7))
+		calculated_instability = max(calculated_instability - 5, 0)
 
 	/*************************************************************
 	 * Clamp and Apply

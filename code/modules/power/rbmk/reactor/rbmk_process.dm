@@ -80,22 +80,28 @@
 			trigger_meltdown("Supermatter destabilization within fuel rod array!")
 
 	/*************************************************************
-	 * Reactor Core Scaling
+	 * Reactor Core Scaling (Smooth Reactivity Curve)
+	 * - Gradual power increase up to ~70% rod lift
+	 * - Explosive growth only near full withdrawal
 	 *************************************************************/
-	var/control_effect = (100 - control_rod_depth) / 100
-	var/reactivity_factor = clamp(rod_reactivity / max(1, length(all_rods)), 0.5, 2.5)
+	var/rod_ratio = clamp(control_rod_depth / RBMK_CONTROL_ROD_MAX, 0, 1)
 
+	// Nonlinear reactivity curve — flat early, sharp near full withdrawal
+	var/control_effect = (1 - rod_ratio) ** 2.4
+	var/reactivity_factor = clamp(rod_reactivity / max(1, length(all_rods)), 0.8, 1.6)
+
+	// Apply smoothed scaling
 	flux        = clamp(total_flux * control_effect * reactivity_factor, 0, RBMK_MAX_FLUX)
 	radiation   = clamp(total_rads * control_effect * reactivity_factor, 0, RBMK_MAX_RADIATION)
-	temperature += (total_heat * control_effect * reactivity_factor)
+	temperature += (total_heat * control_effect * reactivity_factor * 0.3)
 
 	// --- Power output & decay heat ---
 	var/generated_power = (flux + radiation + total_heat)
-	decay_heat = clamp(decay_heat + (generated_power * 0.0015), 0, 300)
+	decay_heat = clamp(decay_heat + (generated_power * 0.0012), 0, 300)
 	thermal_output = (temperature * RBMK_HEAT_SCALING) * reactivity_factor
 
 	/*************************************************************
-	 * Coolant Energy Exchange
+	 * Coolant Energy Exchange (Thermal Transfer Model)
 	 *************************************************************/
 	rbmk_coolant_exchange(src)
 	rbmk_sample_coolant(src)
@@ -119,10 +125,10 @@
 	/*************************************************************
 	 * Auto SCRAM Fail-safe
 	 *************************************************************/
-	if(!has_active_rods || temperature > RBMK_MAX_TEMP || reactor_integrity <= 0)
+	if(!has_active_rods || temperature > (RBMK_MAX_TEMP * 1.35) || reactor_integrity <= 0)
 		running = FALSE
 		scrammed = TRUE
-		to_chat(src, span_danger("⚠ Emergency SCRAM: reactor automatically shut down!"))
+		to_chat(src, span_danger("⚠ Emergency SCRAM: core exceeded safe temperature limits!"))
 		update_reactor_icon()
 		update_linked_consoles()
 		return
@@ -195,43 +201,61 @@
 
 
 /*************************************************************
- * RBMK Coolant Exchange (Nonlinear)
- * - Handles heat transfer and pressure buildup
+ * RBMK Coolant Exchange (Thermal Transfer Model)
+ * - Transfers heat into gas loop for turbines
+ * - Coolant absorbs thermal energy proportional to reactivity
+ * - Prevents overcooling and maintains steady generation curve
  *************************************************************/
 
-/// Handles nonlinear energy exchange between reactor and coolant
+/// Handles nonlinear energy transfer from core to coolant
 /proc/rbmk_coolant_exchange(obj/machinery/rbmk/reactor/reactor)
 	if(!reactor || !reactor.coolant_internal)
 		return
 
 	var/datum/gas_mixture/mix = reactor.coolant_internal
 	var/temp_diff = reactor.temperature - mix.temperature
-	if(abs(temp_diff) < 0.5)
+
+	// Only transfer heat if core is actually hotter
+	if(temp_diff <= 0)
 		return
 
-	var/efficiency = 1.0
-	for(var/gas_path in mix.gases)
-		switch(gas_path)
-			if(/datum/gas/nitrogen)        efficiency += 0.10
-			if(/datum/gas/carbon_dioxide)  efficiency += 0.25
-			if(/datum/gas/oxygen)          efficiency -= 0.05
-			if(/datum/gas/plasma)          efficiency -= 0.40
+	/*************************************************************
+	 * Dynamic Transfer Rate (balances realism and power output)
+	 *************************************************************/
+	var/reactivity_scale = clamp((reactor.flux / 100) + 0.5, 0.8, 1.8)
+	var/base_eff = 0.0016  // base transfer efficiency per tick
+	var/flow_mod = log(1 + reactor.inlet_rate / 40) + 1
 
-	var/transfer = (abs(temp_diff) ** 0.9) * 0.04 * efficiency * sign(temp_diff)
-	reactor.temperature -= transfer
-	mix.temperature += transfer * 0.55
+	// Total heat transferred from reactor to coolant
+	var/transfer = temp_diff * base_eff * reactivity_scale * flow_mod
 
-	// --- Dynamic pressure ---
-	var/new_pressure = mix.return_pressure() + (abs(transfer) / 40)
-	if(new_pressure > RBMK_PRESSURE_CRITICAL)
-		reactor.instability += 3
+	// Limit transfer to prevent “instant freezing”
+	transfer = clamp(transfer, 0, reactor.temperature * 0.15)
+
+	// Apply heating and cooling
+	mix.temperature += transfer * 0.8
+	reactor.temperature -= transfer * 0.2
+
+	/*************************************************************
+	 * Pressure Feedback (for realism and console telemetry)
+	 *************************************************************/
+	var/new_pressure = mix.return_pressure() + (transfer / 25)
 	reactor.pressure = clamp(new_pressure, 0, RBMK_PRESSURE_EXTREME)
 
-	// --- Oxygen byproduct buildup ---
-	mix.assert_gases(/datum/gas/oxygen)
-	mix.gases[/datum/gas/oxygen][MOLES] += clamp(abs(transfer) / 1800, 0, 10)
+	// Instability when overpressured
+	if(reactor.pressure > RBMK_PRESSURE_CRITICAL)
+		reactor.instability += ((reactor.pressure - RBMK_PRESSURE_CRITICAL) / 300)
 
-	// --- Pressure history (for graphs) ---
+	/*************************************************************
+	 * Minor Gas Byproducts
+	 *************************************************************/
+	mix.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide)
+	mix.gases[/datum/gas/oxygen][MOLES] += clamp(transfer / 7000, 0, 10)
+	mix.gases[/datum/gas/carbon_dioxide][MOLES] += clamp(transfer / 9000, 0, 6)
+
+	/*************************************************************
+	 * Pressure History (for Console Graph)
+	 *************************************************************/
 	reactor.coolant_pressure_history += reactor.pressure
 	if(length(reactor.coolant_pressure_history) > 60)
 		reactor.coolant_pressure_history.Cut(1, 2)

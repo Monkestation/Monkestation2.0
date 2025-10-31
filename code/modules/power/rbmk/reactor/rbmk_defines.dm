@@ -1,7 +1,7 @@
 /*************************************************************
  * RBMK Reactor Defines (Simplified Balance Revision)
  * - Focused on core reactor logic and icon states only
- * - All lighting and color logic removed
+ * - All lighting, glow, and fancy color logic removed
  *************************************************************/
 
 /*************************************************************
@@ -15,6 +15,7 @@
 #define RBMK_TEMP_VERYHOT          4500
 #define RBMK_TEMP_OVERHEAT         8500
 
+
 /*************************************************************
  * Instability & Integrity Overlays
  *************************************************************/
@@ -25,6 +26,7 @@
 #define RBMK_DAMAGE_OVERLAY_2       70
 #define RBMK_DAMAGE_OVERLAY_3       50
 #define RBMK_DAMAGE_OVERLAY_4       25
+
 
 /*************************************************************
  * Reactor Safety Baselines
@@ -49,6 +51,7 @@
 
 #define RBMK_INSTABILITY_MAX        500
 
+
 /*************************************************************
  * Control Rods / Cooling / Decay
  *************************************************************/
@@ -57,23 +60,24 @@
 #define RBMK_REPAIRABLE_TEMP_RATIO  0.7
 #define RBMK_AMBIENT_TEMP           293
 #define RBMK_IDLE_COOL_RATE         0.6
-#define RBMK_HEAT_SCALING           0.0022
+#define RBMK_HEAT_SCALING           0.0028        // slightly increased absorption
 #define RBMK_FLUX_DECAY             0.2
 #define RBMK_RADIATION_DECAY        0.2
+
 
 /*************************************************************
  * Integrity Stress Thresholds
  *************************************************************/
 
-// Temperature stress (now ramps slower)
-#define RBMK_TEMP_STRESS_THRESHOLD       5000
-#define RBMK_TEMP_STRESS_DIVISOR         5000
+// Temperature stress (gentle until near max)
+#define RBMK_TEMP_STRESS_THRESHOLD       5500
+#define RBMK_TEMP_STRESS_DIVISOR         6000
 #define RBMK_TEMP_NEAR_MAX_RATIO         0.9
 #define RBMK_TEMP_NEAR_MAX_DIVISOR       1000
 
-// Flux stress (more forgiving)
-#define RBMK_FLUX_STRESS_THRESHOLD       200
-#define RBMK_FLUX_STRESS_DIVISOR         1600
+// Flux stress (softer progression)
+#define RBMK_FLUX_STRESS_THRESHOLD       250
+#define RBMK_FLUX_STRESS_DIVISOR         2000
 #define RBMK_FLUX_HIGH_THRESHOLD         400
 #define RBMK_FLUX_HIGH_DIVISOR           800
 
@@ -93,6 +97,7 @@
 #define RBMK_REPAIRABLE_FLUX_LIMIT       90
 #define RBMK_REPAIRABLE_PRESSURE_LIMIT   600
 
+
 /*************************************************************
  * Meltdown Behavior & Effects
  *************************************************************/
@@ -104,35 +109,38 @@
 #define RBMK_MELTDOWN_EXPLOSIONS    TRUE
 #define RBMK_MELTDOWN_ALARMS        TRUE
 
+// Radiation and damage ranges
 #define RBMK_MELTDOWN_RAD_RANGE     20
 #define RBMK_MELTDOWN_RAD_THRESHOLD 0.05
 #define RBMK_MELTDOWN_DEV_RANGE     6
-#define RBMK_MELTDOWN_HEAVY_RANGE   12
-#define RBMK_MELTDOWN_LIGHT_RANGE   20
-#define RBMK_MELTDOWN_FLASH_RANGE   25
+#define RBMK_MELTDOWN_HEAVY_RANGE   10
+#define RBMK_MELTDOWN_LIGHT_RANGE   15
+#define RBMK_MELTDOWN_FLASH_RANGE   18
+
 
 /*************************************************************
  * Core Reactor Limits & Constants
  *************************************************************/
 
-#define RBMK_MAX_TEMP             10000
+#define RBMK_MAX_TEMP             12000          // slightly raised max temp
 #define RBMK_MAX_RADIATION        600
 #define RBMK_MAX_INSTABILITY      500
-#define RBMK_MAX_FLUX             600
+#define RBMK_MAX_FLUX             400
 #define RBMK_MAX_MODERATOR        100
 #define RBMK_MAX_INTEGRITY        100
 
 // Physics multipliers — balance heat vs. control rod depth
 #define RBMK_TEMP_GAIN_PER_TICK   24
-#define RBMK_TEMP_LOSS_PER_DEPTH  0.25
+#define RBMK_TEMP_LOSS_PER_DEPTH  0.35
 #define RBMK_RADIATION_TEMP_MULT  0.012
 #define RBMK_RADIATION_FLUX_MULT  1.8
 #define RBMK_FLUX_GAIN            2.2
 #define RBMK_FLUX_MODERATOR_MULT  0.04
-#define RBMK_INSTABILITY_GAIN     1.1
-#define RBMK_INSTABILITY_FLUX_MULT 0.12
+#define RBMK_INSTABILITY_GAIN     0.9
+#define RBMK_INSTABILITY_FLUX_MULT 0.1
 #define RBMK_MODERATOR_DECAY      0.25
 #define RBMK_MODERATOR_RECOVERY   0.05
+
 
 /*************************************************************
  * Coolant System
@@ -143,4 +151,4 @@
 #define RBMK_INLET_RATE_MIN       1
 #define RBMK_INLET_RATE_MAX       250
 #define RBMK_OUTLET_PRESSURE_BASE 101.3
-#define RBMK_OUTLET_PRESSURE_MAX  2500
+#define RBMK_OUTLET_PRESSURE_MAX  500

@@ -13,6 +13,8 @@
     icon_state = "empty"
     anchored = FALSE
     w_class = WEIGHT_CLASS_NORMAL
+    layer = OBJ_LAYER + 0.1
+    plane = DEFAULT_PLANE
 
     /*************************************************************
      * Core variables

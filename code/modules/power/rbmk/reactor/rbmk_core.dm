@@ -1,8 +1,9 @@
 /*************************************************************
- * RBMK Reactor Core (Rod-Driven Rewrite)
+ * RBMK Reactor Core (Stable-Core Rod-Driven Model)
  * - Rods drive reactivity and heat output
  * - Coolant dynamically absorbs heat and builds pressure
  * - Instability and integrity handled via modular procs
+ * - Fully compatible with graph and telemetry systems
  *************************************************************/
 
 /// Primary reactor definition
@@ -114,11 +115,11 @@
 
 /// Main reactor tick
 /obj/machinery/rbmk/reactor/process()
-	// --- Halt if destroyed ---
+	// --- Skip destroyed cores ---
 	if(reactor_integrity <= 0)
 		return
 
-	// --- Auto shutoff if rods fully inserted ---
+	// --- Fully inserted rods = shutdown ---
 	if(control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		if(running)
 			running = FALSE
@@ -128,34 +129,37 @@
 			update_linked_consoles()
 		return
 
-	// --- Skip non-running state (handled by decay logic elsewhere) ---
+	// --- Skip idle state ---
 	if(!running)
 		return
 
-	// --- Base reactivity calc ---
+	/*************************************************************
+	 * Reactivity Phase
+	 *************************************************************/
 	var/total_reactivity = 0
-	var/reactive_rod_count = 0
+	var/active_rods = 0
 
 	for(var/obj/item/rbmk/fuel_rod/fuelRod in (normal_slots + special_slots))
 		if(!fuelRod || !fuelRod.active)
 			continue
-		reactive_rod_count++
+
+		active_rods++
 		total_reactivity += (fuelRod.fuel_power * fuelRod.flux_multiplier * fuelRod.thermal_multiplier)
 
-	if(reactive_rod_count == 0)
+	if(active_rods == 0)
 		running = FALSE
 		scrammed = TRUE
 		return
 
-	last_tick_rod_count = reactive_rod_count
+	last_tick_rod_count = active_rods
 
 	// --- Control rod damping ---
-	var/control_factor = 1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX)
-	control_factor = clamp(control_factor, 0, 1)
-
+	var/control_factor = clamp(1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX), 0, 1)
 	total_reactivity *= control_factor
 
-	// --- Reactivity → heat & flux ---
+	/*************************************************************
+	 * Heat / Flux Production
+	 *************************************************************/
 	var/temperature_gain = total_reactivity * RBMK_TEMP_GAIN_PER_TICK
 	var/flux_gain = total_reactivity * RBMK_FLUX_GAIN
 
@@ -165,31 +169,40 @@
 	last_tick_flux = flux_gain
 	last_tick_temp_gain = temperature_gain
 
-	// --- Coolant absorption ---
+	/*************************************************************
+	 * Coolant Interaction
+	 *************************************************************/
 	if(coolant_internal)
 		var/absorption_rate = inlet_open ? inlet_rate / 100 : 0
 		var/heat_absorbed = min(temperature * RBMK_HEAT_SCALING * absorption_rate, temperature)
 		temperature -= heat_absorbed
-		pressure += heat_absorbed * 0.5
+		pressure += heat_absorbed * 0.4 // reduced for stability
+
 		if(outlet_open)
-			pressure = max(pressure - (outlet_target_pressure / 150), 0)
+			pressure = max(pressure - (outlet_target_pressure / 125), 0)
 
 	// --- Radiation ---
 	radiation = (temperature * RBMK_RADIATION_TEMP_MULT) + (flux * RBMK_RADIATION_FLUX_MULT)
 
-	// --- Instability + Integrity ---
+	/*************************************************************
+	 * Stability & Integrity Updates
+	 *************************************************************/
 	update_instability()
 	update_reactor_integrity()
 
-	// --- Passive decay ---
+	/*************************************************************
+	 * Passive Decay
+	 *************************************************************/
 	flux = max(flux - RBMK_FLUX_DECAY, 0)
 	radiation = max(radiation - RBMK_RADIATION_DECAY, 0)
 
-	// --- Telemetry ---
+	/*************************************************************
+	 * Telemetry Collection
+	 *************************************************************/
 	coolant_pressure_history += pressure
 	reactor_temperature_history += temperature
-	if(length(coolant_pressure_history) > 30)
-		coolant_pressure_history.Cut(1, length(coolant_pressure_history) - 30)
+	if(length(coolant_pressure_history) > 60)
+		coolant_pressure_history.Cut(1, 2)
 
 	update_linked_consoles()
 
