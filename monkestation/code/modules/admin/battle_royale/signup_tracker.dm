@@ -3,8 +3,8 @@
 	desc = "Click to sign up for battle royale."
 	icon = 'icons/effects/128x128.dmi'
 	icon_state = "meatball_man"
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -32
+	pixel_y = -32
 	plane = GAME_PLANE_UPPER
 	///List of people currently signed up
 	var/list/signed_up = list()
