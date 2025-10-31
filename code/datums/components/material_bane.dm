@@ -166,8 +166,7 @@
 
 	if(is_this_bane(weapon))
 		on_bane_bonk()
-		if(!(datum_flags & DF_ISPROCESSING))
-			START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SSfastprocess, src)
 
 /datum/component/material_bane/proc/thrown_hit_check(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
