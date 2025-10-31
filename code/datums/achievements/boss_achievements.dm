@@ -55,12 +55,6 @@
 	database_id = BOSS_MEDAL_LEGION
 	icon_state = "legion"
 
-/datum/award/achievement/boss/swarmer_beacon_kill
-	name = "Swarm Beacon Killer"
-	desc = "GET THEM OFF OF ME!"
-	database_id = BOSS_MEDAL_SWARMERS
-	icon_state = "swarmer"
-
 /datum/award/achievement/boss/wendigo_kill
 	name = "Wendigo Killer"
 	desc = "You've now ruined years of mythical storytelling."
@@ -108,12 +102,6 @@
 	desc = "We were many... now we are none."
 	database_id = BOSS_MEDAL_LEGION_CRUSHER
 	icon_state = "legion"
-
-/datum/award/achievement/boss/swarmer_beacon_crusher
-	name = "Swarm Beacon Crusher"
-	desc = "GET THEM OFF OF ME!"
-	database_id = BOSS_MEDAL_SWARMERS_CRUSHER
-	icon_state = "swarmer"
 
 /datum/award/achievement/boss/wendigo_crusher
 	name = "Wendigo Crusher"
