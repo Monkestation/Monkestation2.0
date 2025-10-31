@@ -167,6 +167,7 @@
 	if(is_this_bane(weapon))
 		on_bane_bonk()
 			START_PROCESSING(SSfastprocess, src)
+	return
 
 /datum/component/material_bane/proc/thrown_hit_check(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -174,9 +175,11 @@
 	if(is_this_bane(hitting))
 		on_bane_bonk()
 		START_PROCESSING(SSfastprocess, src)
+	return
 
 /datum/component/material_bane/proc/check_for_bane_start(datum/source, obj/item/maybebane)
 	SIGNAL_HANDLER
 
 	if(is_this_bane(maybebane))
 		START_PROCESSING(SSfastprocess, src)
+	return
