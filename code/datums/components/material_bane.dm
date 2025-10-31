@@ -161,19 +161,6 @@
 			return TRUE
 	return FALSE
 
-/datum/component/material_bane/proc/weapon_hit_check(mob/living/oughed, obj/item/weapon, mob/user, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-
-	if(is_this_bane(weapon))
-		on_bane_bonk()
-			START_PROCESSING(SSfastprocess, src)
-
-/datum/component/material_bane/proc/thrown_hit_check(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	SIGNAL_HANDLER
-
-	if(is_this_bane(hitting))
-		on_bane_bonk()
-		START_PROCESSING(SSfastprocess, src)
 
 /datum/component/material_bane/proc/check_for_bane_start(datum/source, obj/item/maybebane)
 	SIGNAL_HANDLER
