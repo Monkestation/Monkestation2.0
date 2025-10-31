@@ -36,9 +36,9 @@
 /datum/component/material_bane/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(weapon_hit_check))
 	RegisterSignal(parent, COMSIG_ATOM_HITBY, PROC_REF(thrown_hit_check))
-	RegisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(check_pickup))
-	RegisterSignal(parent, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(check_clothing))
-	RegisterSignal(parent, COMSIG_CARBON_EMBED_ADDED, PROC_REF(check_embeds))
+	RegisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(check_for_bane_start))
+	RegisterSignal(parent, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(check_for_bane_start))
+	RegisterSignal(parent, COMSIG_CARBON_EMBED_ADDED, PROC_REF(check_for_bane_start))
 
 /datum/component/material_bane/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATOM_AFTER_ATTACKEDBY, COMSIG_ATOM_HITBY, COMSIG_LIVING_PICKED_UP_ITEM, COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_CARBON_EMBED_ADDED))
@@ -166,7 +166,7 @@
 
 	if(is_this_bane(weapon))
 		on_bane_bonk()
-		START_PROCESSING(SSfastprocess, src)
+			START_PROCESSING(SSfastprocess, src)
 
 /datum/component/material_bane/proc/thrown_hit_check(obj/item/hit, atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -176,21 +176,7 @@
 		if(!(datum_flags & DF_ISPROCESSING))
 			START_PROCESSING(SSfastprocess, src)
 
-/datum/component/material_bane/proc/check_pickup(datum/source, obj/item/maybebane)
-	SIGNAL_HANDLER
-
-	if(is_this_bane(maybebane))
-		if(!(datum_flags & DF_ISPROCESSING))
-			START_PROCESSING(SSfastprocess, src)
-
-/datum/component/material_bane/proc/check_clothing(mob/living/carbon/human/our_guy, obj/item/maybebane, slot)
-	SIGNAL_HANDLER
-
-	if(is_this_bane(maybebane))
-		if(!(datum_flags & DF_ISPROCESSING))
-			START_PROCESSING(SSfastprocess, src)
-
-/datum/component/material_bane/proc/check_embeds(mob/living/carbon/our_guy, obj/item/maybebane, obj/item/bodypart/the_limb)
+/datum/component/material_bane/proc/check_for_bane_start(datum/source, obj/item/maybebane)
 	SIGNAL_HANDLER
 
 	if(is_this_bane(maybebane))
