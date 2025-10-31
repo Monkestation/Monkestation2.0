@@ -150,8 +150,8 @@ const AbilitySection = (props: any) => {
   return (
     <Section
       fill
-      overflowY="auto"
       title="Abilities"
+      style={{ overflowY: 'auto' }}
       buttons={
         <Button
           icon="info"
@@ -198,7 +198,11 @@ const AbilitySection = (props: any) => {
 
 const DisadvantageInfo = () => {
   return (
-    <Section overflowY="auto" fill title="How i didnt kill my host 101">
+    <Section
+      fill
+      title="How i didnt kill my host 101"
+      style={{ overflowY: 'auto' }}
+    >
       <Stack vertical fill>
         <Stack.Item>
           <Stack vertical>
@@ -248,9 +252,9 @@ const DisadvantageInfo = () => {
 const BasicChemistry = () => {
   return (
     <Section
-      overflowY="auto"
       fill
       title="What does the eldritch essence do again?"
+      style={{ overflowY: 'auto' }}
     >
       <Stack vertical fill>
         <Stack.Item>
