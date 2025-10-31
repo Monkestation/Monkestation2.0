@@ -408,8 +408,8 @@
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 
 		if(!get_step(src, direction)?.has_gravity())
-			var/throw_distance = sqrt(pressure_difference)/2
-			var/throw_speed = sqrt(pressure_difference)/4
+			var/throw_distance = sqrt(pressure_difference)/4
+			var/throw_speed = sqrt(pressure_difference)/8
 			if(throw_speed <= 1)
 				return
 			var/turf/target = get_ranged_target_turf(src, direction, throw_distance)
