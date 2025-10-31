@@ -406,10 +406,11 @@
 	name = "Voice Obfuscator Gas Mask"
 	result = /obj/item/clothing/mask/gas/voiceconcealer
 	reqs = list(
-		/obj/item/clothing/mask/gas = 1,
+		/obj/item/clothing/mask/gas/sechailer = 1,
 		/obj/item/assembly/voice = 1,
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stack/sheet/plastic = 1,
+		/obj/item/stack/sheet/plastic = 5, //its uhh, to make a fake gas mask over the modifier hailer! yeah...
 	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 8 SECONDS
 	category = CAT_CLOTHING
