@@ -194,5 +194,4 @@
 	SIGNAL_HANDLER
 
 	if(is_this_bane(maybebane))
-		if(!(datum_flags & DF_ISPROCESSING))
-			START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SSfastprocess, src)
