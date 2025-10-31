@@ -34,8 +34,8 @@
 	return ..()
 
 /datum/component/material_bane/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(weapon_hit_check))
-	RegisterSignal(parent, COMSIG_ATOM_HITBY, PROC_REF(thrown_hit_check))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(check_for_bane_start))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY, PROC_REF(check_for_bane_start))
 	RegisterSignal(parent, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(check_for_bane_start))
 	RegisterSignal(parent, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(check_for_bane_start))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_ADDED, PROC_REF(check_for_bane_start))
