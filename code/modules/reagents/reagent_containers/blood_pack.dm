@@ -72,8 +72,8 @@
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = /datum/blood_type/crew/ethereal
 
-/obj/item/reagent_containers/blood/skrell
-	blood_type = /datum/blood_type/crew/skrell
+/obj/item/reagent_containers/blood/spider
+	blood_type = /datum/blood_type/crew/spider
 
 /obj/item/reagent_containers/blood/snail
 	blood_type = /datum/blood_type/snail
