@@ -83,5 +83,15 @@
 		var/lootspawn = pick_weight(GLOB.good_maintenance_loot)
 		while(islist(lootspawn))
 			lootspawn = pick_weight(lootspawn)
+		// if we get the anything gift, reroll the gift.
+		//var/attempts = 0 (Theoretical infinite loop. Probably don't need to worry about this?)
+		while(lootspawn == /obj/item/a_gift/anything/wiz_name)// && attempts < 20)
+			lootspawn = pick_weight(GLOB.good_maintenance_loot)
+			while(islist(lootspawn))
+				lootspawn = pick_weight(lootspawn)
+			//attempts += 1
+	//	if(lootspawn == /obj/item/a_gift/anything/wiz_name)
+	//		continue
+
 		new lootspawn(altar_turf)
 	return TRUE
