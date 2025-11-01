@@ -502,6 +502,35 @@
 	var/mob/our_mob = home?.our_hud?.mymob
 	hide_plane(our_mob)
 
+/atom/movable/screen/plane_master/cpu_debug
+	name = "CPU Debug"
+	documentation = "Debug CPU visualization/control maptext (and related junk)."
+	plane = CPU_DEBUG_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+#ifdef BLOCKS_PLANE_OFFSETTING // testmerge compatibility
+	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
+#else
+	allows_offsetting = FALSE
+#endif
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/cpu_debug/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	update_visibility(mymob)
+
+/atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
+	if(viewer.client?.displaying_cpu_debug)
+		if(force_hidden == FALSE)
+			return
+		unhide_plane(viewer)
+	else
+		if(force_hidden == TRUE)
+			return
+		hide_plane(viewer)
+
 /atom/movable/screen/plane_master/weather
 	name = "Weather"
 	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
