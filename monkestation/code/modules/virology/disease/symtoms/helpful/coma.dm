@@ -62,6 +62,7 @@
 	if(QDELETED(victim) || !active_coma)
 		return
 	active_coma = FALSE
+	sleep(8 SECONDS) // The previous step sets active coma to FALSE so it won't call uncoma any more from reaching 0.
 	victim.cure_fakedeath("regenerative_coma")
 
 /datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
