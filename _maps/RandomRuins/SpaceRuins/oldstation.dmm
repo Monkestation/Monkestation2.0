@@ -4116,8 +4116,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/borg{
-	dir = 4
+/obj/machinery/computer/upload/ai{
+	dir = 4;
+	signal = 0
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -5286,8 +5287,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/machinery/computer/upload/ai{
-	dir = 4
+/obj/machinery/computer/upload/borg{
+	dir = 4;
+	signal = 0
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -6737,7 +6739,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/damagereport,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	signal = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "Ih" = (
