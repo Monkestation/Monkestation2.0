@@ -65,8 +65,8 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(3, 4)
 
-	progression_minimum = 15 MINUTES
-	progression_maximum = 30 MINUTES
+	progression_minimum = 1000000 MINUTES
+	progression_maximum = 1000000 MINUTES
 
 	applicable_jobs = list(
 		JOB_STATION_ENGINEER = /obj/machinery/telecomms/hub,
@@ -81,8 +81,8 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	progression_reward = list(2 MINUTES, 4 MINUTES)
 	telecrystal_reward = 0 // Only from completing the bonus objective
 
-	progression_minimum = 0 MINUTES
-	progression_maximum = 10 MINUTES
+	progression_minimum = 1000000 MINUTES
+	progression_maximum = 1000000 MINUTES
 
 	maximum_allowed = 2
 	applicable_jobs = list(

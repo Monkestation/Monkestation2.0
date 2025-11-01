@@ -13,8 +13,8 @@
 	abstract_type = /datum/traitor_objective/destroy_item
 
 /datum/traitor_objective/destroy_item/low_risk
-	progression_minimum = 10 MINUTES
-	progression_maximum = 35 MINUTES
+	progression_minimum = 10000000 MINUTES
+	progression_maximum = 10000000 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = 1
 
@@ -26,8 +26,8 @@
 	)
 
 /datum/traitor_objective/destroy_item/very_risky
-	progression_minimum = 40 MINUTES
-	progression_reward = 15 MINUTES
+	progression_minimum = 10000000 MINUTES
+	progression_reward = 100000000 MINUTES
 	telecrystal_reward = list(6, 9)
 
 	possible_items = list(
@@ -40,8 +40,8 @@
 		We believe this luxury item is important for crew morale. \
 		Destruction of this item will help our recruitment efforts."
 
-	progression_minimum = 0 MINUTES
-	progression_maximum = 10 MINUTES
+	progression_minimum = 100000000 MINUTES
+	progression_maximum = 100000000 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
