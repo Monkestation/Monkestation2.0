@@ -33,8 +33,6 @@
 #define TRAIT_ROBOT_CAN_BLEED "robots_can_bleed"
 /// Tough feets for the satyrs.
 #define TRAIT_HARD_SOLES "hard_soles" //Taken from Skyrat
-/// The mob's nanites are sending a monitoring signal visible on diag HUD.
-#define TRAIT_NANITE_MONITORING "nanite_monitoring"
 /// This mob can vault over climable structures.
 #define TRAIT_VAULTING "vaulting"
 /// Ethereals with this trait will not suffer negative effects from overcharge.
