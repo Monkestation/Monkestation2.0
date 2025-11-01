@@ -7560,7 +7560,8 @@
 /area/centcom/central_command_areas/admin)
 "aum" = (
 /obj/machinery/computer/communications{
-	dir = 1
+	dir = 1;
+	signal = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -16195,7 +16196,9 @@
 /turf/open/floor/wood/large,
 /area/centcom/tdome/observation)
 "aRp" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	signal = 0
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
 "aRq" = (
@@ -20983,7 +20986,8 @@
 /area/centcom/central_command_areas/evacuation)
 "dro" = (
 /obj/machinery/computer/communications{
-	dir = 8
+	dir = 8;
+	signal = 0
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/herringbone,
@@ -22321,7 +22325,9 @@
 /turf/open/misc/dirt/jungle/dark/arena,
 /area/centcom/central_command_areas/admin)
 "fXF" = (
-/obj/machinery/computer/upload/ai,
+/obj/machinery/computer/upload/ai{
+	signal = 0
+	},
 /turf/open/floor/circuit/green/anim,
 /area/centcom/central_command_areas/admin)
 "fXH" = (
@@ -22912,7 +22918,9 @@
 	id = "donutstealthisid";
 	req_access = "cent_captain"
 	},
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	signal = 0
+	},
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
 "gPN" = (
@@ -27898,7 +27906,8 @@
 /area/centcom/central_command_areas/adminroom)
 "ptP" = (
 /obj/machinery/computer/communications/syndicate{
-	dir = 8
+	dir = 8;
+	signal = 0
 	},
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/rust,

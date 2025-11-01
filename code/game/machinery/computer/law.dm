@@ -4,10 +4,13 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
 	time_to_unscrew = 6 SECONDS
+	/// To clean up gps signals from central without touching offices
+	var/signal = TRUE
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps, "Encrypted Upload")
+	if(signal)
+		AddComponent(/datum/component/gps, "Encrypted Upload")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
