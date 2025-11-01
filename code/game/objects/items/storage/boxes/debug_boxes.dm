@@ -140,9 +140,9 @@
 	icon_state = "automaticbox"
 	desc = "Holds a lot of automatic ballistics"
 
-/obj/item/storage/box/debugbox/guns/automatic/PopulateContents()
+/obj/item/storage/box/debugbox/guns/automatic/PopulateContents() //remove CTF laser subtypes so its not literally OFF THE SCREEN
 	var/list/blacklisted_guns = typecacheof(blacklist)
-	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/automatic)) // Might still be too big
+	for(var/obj/item/gun as anything in (typesof(/obj/item/gun/ballistic/automatic) - (subtypesof(/obj/item/gun/ballistic/automatic/laser/ctf) - /obj/item/gun/ballistic/automatic/laser/ctf/marksman)))
 		if(is_type_in_typecache(gun, blacklisted_guns))
 			continue
 		new gun(src)

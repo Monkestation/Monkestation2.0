@@ -240,6 +240,7 @@
 		/obj/structure/cable = FALSE,
 		/obj/machinery/power/smes = FALSE,
 		/obj/item/mcobject/teleporter = FALSE,
+		/obj/machinery/the_singularitygen = FALSE,
 	))
 
 	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.

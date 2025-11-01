@@ -13,6 +13,7 @@
 	embed_falloff_tile = -5
 	wound_falloff_tile = -2
 	shrapnel_type = /obj/item/ammo_casing/rebar
+	accuracy_falloff = 7
 
 /obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
 

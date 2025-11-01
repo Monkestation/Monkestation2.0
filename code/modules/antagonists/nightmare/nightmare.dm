@@ -8,6 +8,7 @@
 	ui_name = "AntagInfoNightmare"
 	suicide_cry = "FOR THE DARKNESS!!"
 	preview_outfit = /datum/outfit/nightmare
+	antag_count_points = 8
 
 /datum/antagonist/nightmare/greet()
 	. = ..()

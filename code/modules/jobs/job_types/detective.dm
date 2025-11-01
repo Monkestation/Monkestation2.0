@@ -44,6 +44,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "objection"
+	antag_capacity_points = 3
 
 
 /datum/outfit/job/detective

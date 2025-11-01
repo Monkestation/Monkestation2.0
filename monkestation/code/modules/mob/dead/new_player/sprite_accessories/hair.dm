@@ -131,6 +131,11 @@
     name = "Alchemist"
     icon_state = "alchemist"
 
+/datum/sprite_accessory/hair/mayrain
+    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+    name = "May Rain"
+    icon_state = "hair_mayrain"
+
 /datum/sprite_accessory/hair/elegantbun
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Elegant Bun"

@@ -1288,6 +1288,22 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_nvgmeson
+	name = "Nightvision Meson Sight"
+	id = "borg_upgrade_nvmeson"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/nvmeson
+	materials = list( // Same as regular NVG mesons
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/plasma = SMALL_MATERIAL_AMOUNT*3.5,
+		/datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	construction_time = 120
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
+	)
 
 /datum/design/mmi
 	name = "Man-Machine Interface"
@@ -2024,3 +2040,18 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 // MONKE END - changed/added lots of department_flags
+
+/datum/design/module/mod_stomper
+	name = "Stomper Module"
+	id = "mod_stomper"
+	desc = /obj/item/mod/module/stomper::desc
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25,
+	)
+	build_path = /obj/item/mod/module/stomper
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
