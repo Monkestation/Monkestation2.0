@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		return
 
 	if(mob.immune_system)
-		if(prob(10 - (robustness * 0.01))) //100 robustness don't auto cure
+		if(prob(10 - (robustness * 0.1))) //100 robustness don't auto cure
 			mob.immune_system.NaturalImmune()
 
 	if(!mob.immune_system.CanInfect(src))
