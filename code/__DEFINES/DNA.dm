@@ -160,6 +160,7 @@
 #define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
 #define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 #define ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM "anime_bottom"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HALO "anime_halo"
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
 #define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 #define ORGAN_SLOT_EXTERNAL_FEATHERS "feathers"

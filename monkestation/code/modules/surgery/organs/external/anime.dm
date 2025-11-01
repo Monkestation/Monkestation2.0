@@ -81,3 +81,41 @@
 	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return ..()
+
+/obj/item/organ/external/anime_halo
+	name = "anime halo projector"
+	desc = "A holoprojector fitted for a persons head."
+	icon_state = "antennae"
+
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EXTERNAL_ANIME_HALO
+	organ_flags = ORGAN_ROBOTIC
+
+	preference = "feature_anime_halo"
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/anime_halo
+
+/datum/bodypart_overlay/mutant/anime_halo
+	color_source = ORGAN_COLOR_ANIME_HALO
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	feature_key = "anime_halo"
+
+/datum/bodypart_overlay/mutant/anime_halo/get_global_feature_list()
+	return GLOB.anime_halo_list
+
+/datum/bodypart_overlay/mutant/anime_halo/get_base_icon_state()
+	return sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/anime_halo/get_emissive_overlay(layer, obj/item/bodypart/limb)
+	if(!sprite_datum.is_emissive)
+		return
+	layer = bitflag_to_layer(layer)
+	var/mutable_appearance/halo_emissive_overlay = emissive_appearance_copy(get_image(layer, limb), limb)
+	halo_emissive_overlay.pixel_y = 0
+	halo_emissive_overlay.pixel_z = -16
+	return halo_emissive_overlay
+
+/datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.head?.flags_inv & HIDEEARS)
+		return FALSE
+	return ..()

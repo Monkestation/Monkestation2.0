@@ -114,8 +114,10 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list)
 	if(!length(GLOB.anime_middle_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list)
-	if(!length(GLOB.anime_top_list))
+	if(!length(GLOB.anime_bottom_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list)
+	if(!length(GLOB.anime_halo_list))
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_halo, GLOB.anime_halo_list)
 	if(!length(GLOB.arachnid_appendages_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list)
 	if(!length(GLOB.arachnid_chelicerae_list))
@@ -179,6 +181,7 @@
 		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list), //Monkestation Addition
 		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list), //Monkestation Addition
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]", //Monkestation Addition
+		"animehalocolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 		"goblin_ears" = pick(GLOB.goblin_ears_list), //Monkestation Addition
 		"goblin_nose" = pick(GLOB.goblin_nose_list), //Monkestation Addition
 		"floran_leaves" = pick(GLOB.floran_leaves_list), //Monkestation Addition

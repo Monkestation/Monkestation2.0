@@ -6,8 +6,10 @@
 #define ORGAN_COLOR_HAIR (1<<2)
 ///uses the parents anime color
 #define ORGAN_COLOR_ANIME (1<<3)
+///uses the parents anime halo color
+#define ORGAN_COLOR_ANIME_HALO (1<<4)
 ///uses the parents mutcolor secondary
-#define ORGAN_COLOR_MUTSECONDARY (1<<4)
+#define ORGAN_COLOR_MUTSECONDARY (1<<5)
 
 ///Tail wagging
 #define WAG_ABLE (1<<0)

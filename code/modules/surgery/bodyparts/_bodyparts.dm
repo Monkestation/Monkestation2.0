@@ -1123,6 +1123,8 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
+					if(overlay.get_emissive_overlay(external_layer, src))
+						. += overlay.get_emissive_overlay(external_layer, src)
 					if(overlay.get_secondary_overlay(external_layer, src))
 						. += overlay.get_secondary_overlay(external_layer, src)
 					if(overlay.get_extended_overlay(external_layer, src))

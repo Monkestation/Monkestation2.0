@@ -61,6 +61,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/external/anime_head,
 	/obj/item/organ/external/anime_middle,
 	/obj/item/organ/external/anime_bottom,
+	/obj/item/organ/external/anime_halo,
 	/obj/item/organ/internal/tongue/fly,
 	/obj/item/organ/internal/stomach/fly,
 	/obj/item/organ/internal/legion_tumour,

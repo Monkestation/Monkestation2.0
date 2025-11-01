@@ -41,6 +41,7 @@
 			/obj/item/organ/external/anime_bottom,
 			/obj/item/organ/external/anime_head,
 			/obj/item/organ/external/anime_middle,
+			/obj/item/organ/external/anime_halo,
 			/obj/item/organ/external/floran_leaves,
 			/obj/item/organ/external/wings,
 			/obj/item/organ/external/wings/functional,
