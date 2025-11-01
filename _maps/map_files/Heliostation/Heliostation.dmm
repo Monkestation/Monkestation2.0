@@ -2780,7 +2780,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "seceva";
 	name = "EVA Shutters";
-	req_access = list("armory")
+	req_access = list("brig")
 	},
 /obj/machinery/door/poddoor/shutters/window{
 	dir = 1;

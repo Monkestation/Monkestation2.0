@@ -36164,7 +36164,7 @@
 	name = "Security E.V.A. Storage"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "mAr" = (

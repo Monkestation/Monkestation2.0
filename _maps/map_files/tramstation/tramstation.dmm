@@ -7947,9 +7947,8 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "buQ" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/machinery/status_display/evac/directional/east,
-/obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "buW" = (
@@ -23923,11 +23922,11 @@
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "gwQ" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /obj/structure/closet{
 	name = "Evidence Closet 4"
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "gwR" = (
@@ -26510,7 +26509,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "hmZ" = (
-/obj/structure/sign/poster/official/space_cops/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
@@ -36048,11 +36046,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"kkV" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "kld" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/light_switch/directional/south{
@@ -36838,10 +36831,9 @@
 /turf/open/space/openspace,
 /area/space)
 "kzg" = (
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "kzq" = (
@@ -43518,7 +43510,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mzH" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -48255,7 +48246,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "nZS" = (
-/obj/structure/closet/l3closet/security,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/clock/directional/north,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "nZW" = (
@@ -50687,10 +50681,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "oQr" = (
-/obj/effect/landmark/secequipment,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/bot,
-/obj/structure/sign/clock/directional/north,
+/obj/structure/sign/poster/official/space_cops/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "oQs" = (
@@ -63647,8 +63638,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "sOq" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/status_display/ai/directional/west,
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "sOr" = (
@@ -67526,11 +67517,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tYg" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/item/storage/secure/safe/directional/east,
-/obj/effect/spawner/random/contraband/cannabis,
+/obj/structure/closet{
+	name = "Evidence Closet 3"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "tYp" = (
@@ -72176,6 +72166,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
+"vpk" = (
+/obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/lockers)
 "vpo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio{
@@ -75804,8 +75800,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "wtP" = (
+/obj/effect/spawner/random/contraband/cannabis,
 /obj/structure/closet{
-	name = "Evidence Closet 2"
+	name = "Evidence Closet 4"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -166205,7 +166202,7 @@ sne
 lUo
 hgn
 hgn
-kkV
+hgn
 dEv
 bwg
 fXP
@@ -168249,7 +168246,7 @@ jhd
 aaa
 aaa
 aaa
-aaa
+tag
 tag
 rmB
 mAT
@@ -168506,13 +168503,13 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
 sOq
 aRk
+buQ
 kzg
-nZS
 hHf
+idF
 auR
 auW
 uYd
@@ -168763,8 +168760,8 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
+oQr
 hmZ
 peO
 jwT
@@ -169020,9 +169017,9 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
-oQr
+nZS
+mJw
 mJw
 mJw
 idF
@@ -169277,9 +169274,9 @@ jhd
 jhd
 aaa
 aaa
-aaa
 tag
 auG
+idF
 idF
 idF
 idF
@@ -169534,9 +169531,9 @@ jhd
 jhd
 jhd
 aaa
-aaa
 tag
-buQ
+vpk
+aJk
 aJk
 aJk
 aJk
@@ -169791,7 +169788,7 @@ jhd
 jhd
 jhd
 aaa
-aaa
+tag
 tag
 tag
 tag
