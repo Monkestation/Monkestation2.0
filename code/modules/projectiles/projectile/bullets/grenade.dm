@@ -288,8 +288,9 @@
 	desc = "OH SHIT!!!"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bolter"
-	damage = 100
+	damage = 50
 	range = 25
+	fauna_mod = 2
 
 /obj/projectile/bullet/a40mm/kinetic/payload(atom/target)
 	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/kineticshrapnel(drop_location())
