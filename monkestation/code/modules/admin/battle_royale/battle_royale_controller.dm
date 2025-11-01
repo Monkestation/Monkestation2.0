@@ -353,7 +353,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	do_loot_drop(RARE_LOOT_TABLE, 15 SECONDS, "Incoming extended supply materials.")
 
 /datum/battle_royale_controller/proc/spawn_super_drop()
-	do_loot_drop(SUPER_RARE_LOOT_TABLE, 5 MINUTES, "We found a weird looking package in the back of our warehouse. \
+	do_loot_drop(SUPER_RARE_LOOT_TABLE, 4 MINUTES, "We found a weird looking package in the back of our warehouse. \
 				We have no idea what is in it, but it is marked as incredibily dangerous and could be a superweapon.")
 
 #define MINIMUM_USEFUL_DROP_TIME 1.5 MINUTES

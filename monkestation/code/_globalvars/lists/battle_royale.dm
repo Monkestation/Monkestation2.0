@@ -144,6 +144,8 @@ GLOBAL_LIST_INIT(royale_utility_loot, list(
 		/obj/item/storage/box/syndie_kit/imp_storage = 2,
 		/obj/item/storage/box/syndie_kit/syndicate_teleporter = 2,
 		/obj/item/syndie_glue = 2,
+		/obj/item/warp_whistle = 1, //this will probably just put you in the storm if you dont get it early but you know
+		/obj/structure/mirror/magic = 1, //lets you set your species
 ))
 
 ///rare loot, annouced drops will pick from here, also gets more common the longer the royale lasts
@@ -210,22 +212,21 @@ GLOBAL_LIST_INIT(royale_rare_loot, list(
 		/obj/item/storage/box/syndicate/bundle_a = 3,
 		/obj/item/storage/box/syndicate/bundle_b = 3,
 		/obj/item/teleportation_scroll = 1,
-		/obj/item/warp_whistle = 1,
+		list(/obj/item/pneumatic_cannon/pie/selfcharge = 1, /obj/item/syndie_glue = 1) = 1,
 ))
 
 ///very rare loot, only spawned from super drops
 GLOBAL_LIST_INIT(royale_super_rare_loot, list(
 		/obj/item/chainsaw/doomslayer = 1, //very strong melee that blocks all ranged attacks
-		/obj/item/antag_spawner/contract = 1, //gives you your own wizard apprentice
+		(/obj/item/antag_spawner/contract = 1, /obj/item/slimepotion/spaceproof = 2) = 1, //gives you your own wizard apprentice(also space proofing for their robe)
 		/obj/item/energy_katana = 1, //gamer katana
 		/obj/item/melee/baseball_bat/homerun = 1, //nearly 1 shots if charged
 		/obj/item/gun/energy/pulse = 1,
 		/obj/item/gun/energy/marksman_revolver = 1,
 		list(/obj/item/minigunpack = 1, /obj/item/slimepotion/spaceproof = 2) = 1, //laser minigun and spaceproofing so you can use it safely
-		/obj/item/mod/control/pre_equipped/enchanted = 1, //wizard MODsuit
-		list(/obj/item/pneumatic_cannon/pie/selfcharge = 1, /obj/item/syndie_glue = 1) = 1,
+		list(/obj/item/mod/control/pre_equipped/enchanted = 1, /obj/item/wizard_armour_charge = 1) = 1, //wizard MODsuit and an armor charge for it, might need to take the charge out
 		/obj/item/storage/belt/wands/full = 1,
-		list(/obj/item/uplink/nuclear = 1, /obj/item/stack/telecrystal/five = 2) = 1,
+		list(/obj/item/uplink/nuclear = 1, /obj/item/stack/telecrystal/twenty = 2) = 1,
 		list(/obj/vehicle/sealed/mecha/gygax/dark/loaded = 1, /obj/item/card/id/advanced/chameleon = 1) = 1,
 		/obj/item/highfrequencyblade = 1,
 ))
@@ -274,7 +275,9 @@ GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/storage/toolbox/haunted = 1,
 		list(/obj/item/stack/cannonball/the_big_one = 1, /obj/structure/cannon = 1, /obj/item/reagent_containers/cup/bucket/wooden = 1, /obj/structure/fermenting_barrel/gunpowder = 1) = 1,
 		/obj/vehicle/ridden/monkey_ball = 1,
+		/obj/structure/healingfountain = 1,
 		/obj/structure/mystery_box = 3,
+		/obj/structure/pinata/syndie = 1,
 ))
 
 ///things in this table have a chance to be spawned in addition to something from another table
