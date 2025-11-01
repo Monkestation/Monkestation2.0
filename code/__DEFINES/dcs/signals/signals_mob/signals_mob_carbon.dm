@@ -84,6 +84,8 @@
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
+///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
+#define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)

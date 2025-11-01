@@ -120,6 +120,10 @@
 		else
 			holder.held_mob.material_stats.apply_traits_from(holder.material_stats)
 		holder.held_mob.name = "[stored_material.material_stats.material_name] plated [holder.held_mob.name]"
+	else
+		if(isstack(stored_material))
+			var/obj/item/stack/stack_to_fake_mat_of = stored_material
+			plating_item.AddComponent(/datum/component/bane_inducing, list(stack_to_fake_mat_of.material_type))
 
 	QDEL_NULL(stored_material)
 	plating_item = null
