@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(royale_rare_loot, list(
 ///very rare loot, only spawned from super drops
 GLOBAL_LIST_INIT(royale_super_rare_loot, list(
 		/obj/item/chainsaw/doomslayer = 1, //very strong melee that blocks all ranged attacks
-		(/obj/item/antag_spawner/contract = 1, /obj/item/slimepotion/spaceproof = 2) = 1, //gives you your own wizard apprentice(also space proofing for their robe)
+		list(/obj/item/antag_spawner/contract = 1, /obj/item/slimepotion/spaceproof = 2) = 1, //gives you your own wizard apprentice(also space proofing for their robe)
 		/obj/item/energy_katana = 1, //gamer katana
 		/obj/item/melee/baseball_bat/homerun = 1, //nearly 1 shots if charged
 		/obj/item/gun/energy/pulse = 1,
