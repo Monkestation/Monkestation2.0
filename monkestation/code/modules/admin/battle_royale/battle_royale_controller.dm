@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		storm_controller.end_storm()
 		storm_controller.stop_storm()
 	SSticker.force_ending = TRUE
-	if(winner && !QDELETED(winner))
+	if(!QDELETED(winner))
 		winner.revive(ADMIN_HEAL_ALL)
 		send_to_playing_players(span_ratvar("VICTORY ROYALE!"))
 		send_to_playing_players(span_ratvar("[key_name(winner)] is the winner!"))
