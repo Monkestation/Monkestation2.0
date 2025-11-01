@@ -126,7 +126,13 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			mob.dust(TRUE, FALSE, TRUE)
 			CHECK_TICK
 
-	spawnable_turfs = get_safe_station_turfs()
+	spawnable_turfs = list()
+	for(var/area/station_area as anything in GLOB.the_station_areas)
+		if(station_area::area_flags & VALID_TERRITORY)
+			continue
+
+		spawnable_turfs += get_area_turfs(station_area)
+
 	send_setup_messages()
 
 /datum/battle_royale_controller/proc/send_setup_messages()
@@ -170,6 +176,16 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	if(current_data)
 		spawn_loot_pods(150)
 
+///Filter through our spawnable_turfs until we get one we can actually spawn on
+/datum/battle_royale_controller/proc/get_actually_spawnable_turf()
+	var/sanity = 1000
+	while(sanity > 0)
+		sanity--
+		var/turf/picked_turf = pick(spawnable_turfs)
+		if(is_safe_turf(picked_turf, dense_atoms = TRUE))
+			return picked_turf
+		spawnable_turfs -= picked_turf
+
 /datum/battle_royale_controller/proc/do_ghost_drop(poll_drop_message, turf/turf_override, given_poll_time = 10 SECONDS, grace = TRUE)
 	var/list/participants = list() //poll_ghost_candidates() requires station sentience to be enabled, so we have to manually do it
 	if(poll_drop_message)
@@ -187,7 +203,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		if(QDELETED(participant) || !participant.client)
 			continue
 		var/key = participant.key
-		var/turf/spawn_turf = turf_override || pick(spawnable_turfs) //could also make this pick from assistant spawns
+		var/turf/spawn_turf = turf_override || get_actually_spawnable_turf() || pick(spawnable_turfs) //could also make this pick from assistant spawns
 		var/obj/structure/closet/supplypod/centcompod/pod = new
 		var/mob/living/carbon/human/spawned_human = new(pod)
 		spawned_human.key = key
@@ -379,7 +395,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		picked_loot = add_loot_items(pick_weight(GLOB.royale_extra_loot), picked_loot)
 
 	var/drop_time = calculate_drop_time(delay)
-	var/turf/targeted_turf = pick(spawnable_turfs)
+	var/turf/targeted_turf = get_actually_spawnable_turf()
 	podspawn(list("target" = targeted_turf,
 				"style" = ((table == MISC_LOOT_TABLE) ? STYLE_HONK : STYLE_BOX),
 				"path" = /obj/structure/closet/supplypod/battle_royale,

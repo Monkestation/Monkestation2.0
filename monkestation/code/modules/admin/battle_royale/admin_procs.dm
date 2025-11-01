@@ -1,10 +1,4 @@
 ADMIN_VERB(battle_royale_easy_setup, R_FUN, FALSE, "Easy Set Up Battle Royale", "Quick way to set up a battle royale.", ADMIN_CATEGORY_FUN)
-	user?.holder?.battle_royale_easy_setup()
-
-/datum/admins/proc/battle_royale_easy_setup()
-	if(!check_rights(R_FUN))
-		return
-
 	if(!GLOB.battle_royale_controller)
 		GLOB.battle_royale_controller = new
 

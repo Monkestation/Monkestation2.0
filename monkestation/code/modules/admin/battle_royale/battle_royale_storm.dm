@@ -62,7 +62,7 @@
 
 ///calculate how long inbetween each consume to get the desired game length
 /datum/royale_storm_controller/proc/calculate_advance_time()
-	if(!royale_controller || !royale_controller.max_duration)
+	if(!royale_controller?.max_duration)
 		message_admins("No set royale_controller[royale_controller ? ".max_duration" : ""] for a royale storm controller.")
 		return
 

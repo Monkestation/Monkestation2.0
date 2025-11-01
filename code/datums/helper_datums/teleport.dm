@@ -106,6 +106,7 @@
 			zlevels = list(zlevel)
 		else
 			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
@@ -116,6 +117,7 @@
 
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
 			return random_location
+
 // Safe Location finder in maintenance (used in slasher)
 /proc/find_safe_turf_in_maintenance(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
 	if(!zlevels)
@@ -138,14 +140,15 @@
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))
 			return random_location
 	return null // Return null if no safe maintenance turf found
+
 /// Checks if a given turf is a "safe" location
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return
+
 	var/turf/open/floor/floor_turf = random_location
 	var/area/destination_area = floor_turf.loc
-
 	if(no_teleport && (destination_area.area_flags & NOTELEPORT))
 		return
 
