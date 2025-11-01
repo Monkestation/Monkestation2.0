@@ -70,9 +70,8 @@
 
 ///consume an area with a storm
 /datum/royale_storm_controller/proc/consume_ring()
-	if(current_ring && !rings_to_consume["[current_ring]"])
-		while(current_ring && !rings_to_consume["[current_ring]"])
-			current_ring--
+	while(current_ring && !rings_to_consume["[current_ring]"])
+		current_ring--
 
 	if(!current_ring)
 		return
