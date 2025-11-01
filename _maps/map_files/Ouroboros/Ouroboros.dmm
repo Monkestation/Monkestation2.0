@@ -21489,6 +21489,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"gsj" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/light/warm/directional/west,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/atmos)
 "gsm" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 8
@@ -23397,22 +23404,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"gWE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/reagent_dispensers/foamtank,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "gWJ" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -39028,6 +39019,22 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"lum" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/foamtank,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "lux" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -41833,11 +41840,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
-"mkE" = (
-/obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "mkK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43318,16 +43320,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/small,
 /area/station/security/bitden)
-"mGK" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/bot,
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/suit_storage_unit/atmos,
-/turf/open/floor/iron,
-/area/station/engineering/atmos/storage)
 "mGT" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/medical)
@@ -44429,6 +44421,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
+"mWu" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/dark,
+/area/station/security/corrections_officer)
 "mWA" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /obj/structure/sign/poster/random/directional/east,
@@ -58078,6 +58074,16 @@
 	dir = 1
 	},
 /area/station/hallway/primary/port)
+"rca" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/bot,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/suit_storage_unit/atmos,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/storage)
 "rcb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
@@ -60128,10 +60134,6 @@
 	dir = 4
 	},
 /area/station/security/brig/entrance)
-"rLd" = (
-/obj/machinery/smartfridge/food,
-/turf/open/floor/iron/dark,
-/area/station/security/corrections_officer)
 "rLh" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/white,
@@ -65514,6 +65516,23 @@
 	dir = 8
 	},
 /area/station/engineering/supermatter/room)
+"tmN" = (
+/obj/item/toy/figure/curator{
+	pixel_y = 29
+	},
+/obj/item/reagent_containers/cup/glass/trophy{
+	desc = "Coming to the competition already covered in 'Ectoplasm' definitely helped.";
+	name = "Ghosthunting 1st prize";
+	pixel_x = 8;
+	pixel_y = 36
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/cult,
+/area/station/service/library/private)
 "tmT" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -75448,23 +75467,6 @@
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/execution/education)
-"whc" = (
-/obj/item/toy/figure/curator{
-	pixel_y = 29
-	},
-/obj/item/reagent_containers/cup/glass/trophy{
-	desc = "Coming to the competition already covered in 'Ectoplasm' definitely helped.";
-	name = "Ghosthunting 1st prize";
-	pixel_x = 8;
-	pixel_y = 36
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/cult,
-/area/station/service/library/private)
 "whe" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/turf_decal/tile/blue{
@@ -80055,6 +80057,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/upper)
+"xBO" = (
+/obj/structure/closet/radiation,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "xBP" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Gas to Cold Loop";
@@ -81511,13 +81518,6 @@
 /obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/dark/small,
 /area/station/science/research)
-"xZI" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/light/warm/directional/west,
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/atmos)
 "xZL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -109675,7 +109675,7 @@ soH
 soH
 soH
 bqn
-gWE
+lum
 pGx
 bBr
 cSk
@@ -110494,7 +110494,7 @@ neZ
 eDb
 kHn
 nRh
-whc
+tmN
 bSz
 plk
 bCk
@@ -110963,7 +110963,7 @@ vZz
 sgj
 sgj
 iGd
-mkE
+xBO
 soH
 gqa
 bLN
@@ -111735,7 +111735,7 @@ sgj
 hRA
 lSf
 wmW
-xZI
+gsj
 oZA
 bRy
 qhs
@@ -112511,7 +112511,7 @@ phq
 nPr
 iCA
 bIy
-mGK
+rca
 muu
 iCA
 djm
@@ -126138,7 +126138,7 @@ uSh
 rtl
 cSd
 ley
-rLd
+mWu
 joA
 pLW
 xyg
