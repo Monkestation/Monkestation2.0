@@ -1,0 +1,11 @@
+2025-11-01:
+  Absolucy:
+  - bugfix: The plushie cannon/shotgun now actually properly works without having
+      to whack yourself with it.
+  JohnFulpWillard:
+  - refactor: Cortical borer's UI is now better, text now fits and icons aren't blurry
+      anymore.
+  SirNightKnight:
+  - rscadd: ghosts now use the character's hair color directly.
+  notghosti:
+  - map: Icebox maintence bar backroom/dorms no longer has a camera inside the wall

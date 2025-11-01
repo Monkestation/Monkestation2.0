@@ -48,7 +48,7 @@
 	export_categories |= EXPORT_CONTRABAND
 
 	for(var/atom/movable/AM in contents_self)
-		if(iscameramob(AM))
+		if(iseyemob(AM))
 			continue
 		if(AM.anchored)
 			continue

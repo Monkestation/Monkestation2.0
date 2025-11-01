@@ -40,7 +40,7 @@
 
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	user.visible_message(span_warning("[user] is compressing [target_item] with [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-	if(!do_after(user, 4 SECONDS, target_item, interaction_key = "[type]") && charges > 0 && target_item.w_class > WEIGHT_CLASS_TINY)
+	if(!do_after(user, 4 SECONDS, target_item, interaction_key = "[type]", hidden = TRUE) && charges > 0 && target_item.w_class > WEIGHT_CLASS_TINY)
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)

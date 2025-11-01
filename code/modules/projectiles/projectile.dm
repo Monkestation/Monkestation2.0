@@ -223,7 +223,7 @@
 
 	var/static/list/projectile_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	/// How much accuracy is lost for each tile travelled
-	var/accuracy_falloff = 7
+	var/accuracy_falloff = 0
 	/// How much accuracy before falloff starts to matter. Formula is range - falloff * tiles travelled
 	var/accurate_range = 100
 	/// If true directly targeted turfs can be hit
@@ -631,7 +631,7 @@
 	if(!isliving(target))
 		if(isturf(target)) // non dense turfs
 			return can_hit_turfs && direct_target
-		if(target.layer < hit_threshhold)
+		if(target.layer < hit_threshhold && !HAS_TRAIT(target, TRAIT_PROJECTILE_SINK))
 			return FALSE
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE

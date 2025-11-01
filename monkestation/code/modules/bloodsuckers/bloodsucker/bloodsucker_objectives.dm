@@ -85,14 +85,14 @@
 /// Space_Station_13_areas.dm  <--- all the areas
 
 //////////////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/objective/bloodsucker/survive
 	name = "bloodsuckersurvive"
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
 
 /datum/objective/bloodsucker/survive/check_completion()
 	return ..() || (!QDELETED(owner.current) && !bloodsucker_datum?.final_death)
-
+*/
 // WIN CONDITIONS?
 // Handled by parent
 
@@ -220,15 +220,20 @@
 
 // EXPLANATION
 /datum/objective/bloodsucker/tremere_power/update_explanation_text()
-	explanation_text = "Upgrade a Blood Magic power to the maximum level, remember that Vassalizing gives more Ranks!"
+	explanation_text = "Upgrade a Blood Magic power to at least level [TREMERE_OBJECTIVE_POWER_LEVEL], remember that Vassalizing gives more Ranks!"
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/tremere_power/check_completion()
+	var/found = FALSE //done like this because we want to check all powers, not just return on the first found
 	for(var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_powers in bloodsucker_datum?.powers)
 		if(tremere_powers.level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
-			return TRUE
-	return FALSE
-
+			found = TRUE
+	//the next line is JUST for the dominate power, which is an offshoot of a nontremere power
+	var/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/domin = locate(/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate) in bloodsucker_datum?.powers
+	if(domin)
+		if(domin.level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
+			found = TRUE
+	return found
 //////////////////////////////////////////////////////////////////////////////////////
 
 /// Convert a crewmate - Ventrue Clan objective

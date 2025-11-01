@@ -10,6 +10,8 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 	keyboard_change_icon = FALSE
 	light_color = LIGHT_COLOR_LAVENDER
 	circuit = /obj/item/circuitboard/computer/slime_market
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	var/obj/machinery/slime_market_pad/market_pad
 	var/obj/machinery/slime_extract_requestor/request_pad
 	var/stored_credits = 0

@@ -18,10 +18,9 @@
 	///fire count
 	var/fire_count = 1
 
-/obj/item/plushie_launcher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/plushie_launcher/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!plushie_path)
-		return
+		return NONE
 	for(var/num = 1 to fire_count)
 		var/obj/item = new plushie_path(get_turf(src))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(item, get_turf(target) && target)
@@ -37,6 +36,10 @@
 				bounce_callback = CALLBACK(src, PROC_REF(bounce_sound), item), \
 			)
 		playsound(get_turf(src), fire_sound, 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/plushie_launcher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/plushie_launcher/proc/bounce_sound(obj/item/item)
 	playsound(get_turf(item), bounce_sound, 50, TRUE)

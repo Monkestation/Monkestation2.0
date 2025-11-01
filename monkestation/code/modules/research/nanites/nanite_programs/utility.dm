@@ -303,7 +303,7 @@
 	for(var/mob/living/L in oview(5, host_mob))
 		if(!prob(25))
 			continue
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(L))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
@@ -327,7 +327,7 @@
 /datum/nanite_program/nanite_sting/on_trigger(comm_message)
 	var/list/mob/living/target_hosts = list()
 	for(var/mob/living/L in oview(1, host_mob))
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob) || issilicon(L))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
@@ -456,3 +456,124 @@
 /datum/action/innate/nanite_button/Activate()
 	program.press()
 	playsound(owner, SFX_BUTTON_CLICK, vol = 20, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
+
+/datum/nanite_program/nanite_injector
+	name = "Nanomechanical Injection System"
+	desc = "While active, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
+	use_rate = 0.5
+	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
+	var/obj/item/nanite_injection_tentacle/pokey
+	COOLDOWN_DECLARE(nospammy)
+
+/datum/nanite_program/nanite_injector/enable_passive_effect()
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, nospammy))
+		return
+	if(pokey)
+		QDEL_NULL(pokey)
+	if(!host_mob)
+		return
+	COOLDOWN_START(src, nospammy, 0.5 SECONDS)
+	pokey = new(host_mob)
+	host_mob.dropItemToGround(host_mob.get_active_held_item())
+	if(!host_mob.put_in_hands(pokey))
+		to_chat(host_mob, span_warning("Your nanites fail to form an injector."))
+		QDEL_NULL(pokey)
+		return
+	host_mob.visible_message(span_notice("A tendril of silvery dust forms around [host_mob]'s arm."), span_notice("A nanomechanical injection tendril forms around your arm."))
+
+/datum/nanite_program/nanite_injector/disable_passive_effect()
+	. = ..()
+	if(pokey)
+		host_mob.visible_message(span_notice("The mass of metal around [host_mob]'s arm dissolves."), span_notice("Your injection device dissipates."))
+		QDEL_NULL(pokey)
+
+/obj/item/nanite_injection_tentacle
+	name = "nanomechanical mass"
+	desc = "This condensed tendril of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users. It can even be used as a substitute implantation device, though the process is both slow and exceedingly painful."
+	icon = 'icons/obj/weapons/changeling_items.dmi'
+	icon_state = "tentacle"
+	inhand_icon_state = "tentacle"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE
+	color = COLOR_SILVER
+
+/obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/guy_we_are_stabbing = interacting_with
+	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
+		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
+	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
+		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
+		return ITEM_INTERACT_BLOCKING
+	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
+	guy_we_are_stabbing.visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
+	to_chat(guy_we_are_stabbing, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
+	var/success = FALSE
+	if(none_mod == 1)
+		if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			success = TRUE
+	else
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
+		guy_we_are_stabbing.emote("scream")
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/guy_to_deal_pain_to = guy_we_are_stabbing
+				guy_to_deal_pain_to.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/human_to_impale = guy_we_are_stabbing
+				human_to_impale.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
+			return
+		success = TRUE
+
+
+	if(success)
+		nanos.consume_nanites(200)
+		if(none_mod != 1)
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
+		if(guy_we_are_stabbing.GetComponent(/datum/component/nanites))
+			var/datum/component/nanites/theirnanos = guy_we_are_stabbing.GetComponent(/datum/component/nanites)
+			theirnanos.consume_nanites(-150)
+		else
+			guy_we_are_stabbing.AddComponent(/datum/component/nanites, 150)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			to_chat(guy_we_are_stabbing, span_userdanger("...Why can I feel my blood? WHY CAN I FEEL M-")) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing
+				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
+			guy_we_are_stabbing.emote("scream")
+			to_chat(guy_we_are_stabbing, span_reallybig(span_robot("Integration complete.")))
+			SEND_SOUND(guy_we_are_stabbing, sound('sound/machines/chime.ogg', volume = 150))
+			to_chat(guy_we_are_stabbing, span_robot("Integration-Shock should begin to recede in approximately FIFTEEN seconds."))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
+
+/obj/item/nanite_injection_tentacle/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)

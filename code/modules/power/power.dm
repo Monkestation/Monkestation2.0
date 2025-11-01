@@ -24,6 +24,7 @@
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
+	extra_reward += /obj/item/stack/scrap/electronics
 	if(isturf(loc))
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
@@ -281,6 +282,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(machine_stat & BROKEN)
+		update_appearance()
 		return
 	var/initial_stat = machine_stat
 	if(powered(power_channel))

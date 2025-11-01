@@ -5,13 +5,13 @@
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
-	///What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
+	/// What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
 	var/stage = 0
 	/// Are we bursting out of the poor sucker who's the xeno mom?
 	var/bursting = FALSE
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
-// If the embryo is neutered, it cannot evolve into a drone, and then eventually into a queen.
+	/// If the embryo is neutered, it cannot evolve into a drone, and then eventually into a queen.
 	var/neutered = FALSE
 
 /obj/item/organ/internal/body_egg/alien_embryo/Initialize(mapload)

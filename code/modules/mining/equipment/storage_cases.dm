@@ -442,6 +442,8 @@
 	name = "PK-Shockwave Box"
 	desc = "A box containing a PK-Shockwave and the Shockwave modkit. Designed to create large blasts of powerful kinetic energy for clearing large amounts of rock, or fauna"
 	icon_state = "cyber_implants"
+	icon_preview = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave::icon
+	icon_state_preview = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave::icon_state
 
 /obj/item/storage/box/shockwave/Initialize(mapload)
 	. = ..()

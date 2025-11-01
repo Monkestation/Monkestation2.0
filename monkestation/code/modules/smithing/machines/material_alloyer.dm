@@ -9,8 +9,8 @@
 	max_integrity = 200
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 1500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/material_alloyer
 	light_outer_range = 3

@@ -473,6 +473,10 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "clap|applaud"
 	emote_name = "clap"
 
+/datum/voice_of_god_command/emote/superfart
+	trigger = "shit\\s*yourself|fart|shart"
+	emote_name = "superfart"
+
 #undef COOLDOWN_STUN
 #undef COOLDOWN_DAMAGE
 #undef COOLDOWN_MEME

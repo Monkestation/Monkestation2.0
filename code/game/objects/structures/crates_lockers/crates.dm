@@ -10,8 +10,8 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	//One third chance of ashing things inside
-	ash_chance = 33
+	//One quarter chance of ashing things inside.
+	ash_chance = 25
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
@@ -309,6 +309,7 @@
 	name = "budgeted meteor satellites"
 	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
 	icon_state = "engi_secure_crate"
+	base_icon_state = "engi_secure_crate"
 	secure = TRUE
 	locked = TRUE
 

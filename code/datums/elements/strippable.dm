@@ -43,10 +43,16 @@
 	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
-	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
+	// Snowflake for cyborgs buckling people by dragging them onto them, unless in combat mode.
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/cyborg_user = user
 		if (!(cyborg_user.istate & ISTATE_HARM))
+			return
+
+	// Snowflake for xeno consumption code
+	if (isalienadult(user))
+		var/mob/living/carbon/alien/adult/alien = user
+		if (alien.grab_state == GRAB_AGGRESSIVE && alien.pulling == source)
 			return
 
 	if(HAS_TRAIT(user, TRAIT_CANT_STRIP)) // This is a monkestation addition and is used for mayhem in a bottle.
@@ -54,6 +60,12 @@
 
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
+
+	// Snowflake for mob scooping
+	if (isliving(source))
+		var/mob/living/mob = source
+		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))
+			return
 
 	var/datum/strip_menu/strip_menu
 
@@ -271,8 +283,8 @@
 	source.log_message("had [item] put on them by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
-/proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
-	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item)))
+/proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay, hidden = FALSE)
+	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item), hidden = hidden))
 		return FALSE
 
 	return TRUE

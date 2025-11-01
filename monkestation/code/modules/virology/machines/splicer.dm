@@ -6,6 +6,8 @@
 	name = "disease splicer"
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "splicer"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.6
+	light_color = "#00FF00"
 
 	icon_keyboard = null
 	icon_screen = null
@@ -21,10 +23,6 @@
 
 	///the slot we are set to grab from
 	var/target_slot = 1
-	idle_power_usage = 100
-	active_power_usage = 600
-
-	light_color = "#00FF00"
 
 /obj/machinery/computer/diseasesplicer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!isvirusdish(tool) && !istype(tool, /obj/item/disk/disease))
@@ -47,6 +45,7 @@
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."),
 						span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
+		analysed = disk.analyzed
 		var/image/disk_icon = image(icon, src, "splicer_disk")
 		flick_overlay_global(disk_icon, GLOB.clients, 2 SECONDS)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
@@ -127,7 +126,8 @@
 			flick_overlay_global(print, GLOB.clients, 2 SECONDS)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
 			if(analysed)
-				d.name = "\improper [memorybank.name] GNA disk (Stage: [memorybank.stage])"
+				d.name = "\improper [memorybank.name] GNA disk"
+				d.analyzed = TRUE
 			else
 				d.name = "unknown GNA disk (Stage: [memorybank.stage])"
 			d.effect = memorybank

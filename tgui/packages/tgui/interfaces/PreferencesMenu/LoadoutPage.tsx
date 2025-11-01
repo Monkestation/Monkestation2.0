@@ -1,14 +1,6 @@
 // @ts-nocheck
 import { useBackend, useSharedState, useLocalState } from '../../backend';
-import {
-  Box,
-  Button,
-  Section,
-  Stack,
-  FitText,
-  Tabs,
-  Table,
-} from '../../components';
+import { Box, Button, Section, Stack, Tabs, Table } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
 import { NameInput } from './names';
@@ -17,7 +9,6 @@ const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
 
 const CLOTHING_SELECTION_CELL_SIZE = 64;
-const CLOTHING_SELECTION_WIDTH = 6.3;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 const CharacterControls = (props: {
@@ -76,29 +67,23 @@ export const LoadoutManager = (props) => {
       <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
-            <Stack fill>
+            <Stack>
               <Stack.Item>
                 <CharacterControls
                   handleRotate={() => {
                     act('rotate');
                   }}
-                  handleStore={() => {
-                    act('open_store');
-                  }}
                 />
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  width={`${CLOTHING_CELL_SIZE * 2}px`}
                   height="37px"
                   fontSize="22px"
                   icon="fa-solid fa-coins"
                   align="center"
                   tooltip="This is your total Monkecoin amount."
                 >
-                  <FitText maxFontSize={22} maxWidth={CLOTHING_CELL_SIZE * 1}>
-                    {total_coins}
-                  </FitText>
+                  {total_coins}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -119,29 +104,11 @@ export const LoadoutManager = (props) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item width={`${CLOTHING_CELL_SIZE * 16 + 15}px`}>
+      <Stack.Item>
         <Stack fill vertical>
           <Stack.Item>
-            <Section
-              title="Loadout Categories"
-              align="center"
-              buttons={
-                <Button
-                  icon="info"
-                  align="center"
-                  content="Tutorial"
-                  onClick={() => act('toggle_tutorial')}
-                />
-              }
-            >
-              <Button
-                icon="check-double"
-                color="good"
-                content="Confirm"
-                tooltip="Confirm loadout and exit UI."
-                onClick={() => act('close_ui', { revert: 0 })}
-              />
-              <Tabs>
+            <Section title="Loadout Categories" align="center">
+              <Tabs style={{ 'flex-wrap': 'wrap' }}>
                 {loadout_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}
@@ -167,7 +134,6 @@ export const LoadoutManager = (props) => {
                     align="center"
                     content="Clear All Items"
                     tooltip="Clears ALL selected items from all categories."
-                    width={10}
                     onClick={() => act('clear_all_items')}
                   />
                 }

@@ -69,6 +69,8 @@
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 /// Applied when blight is cured. Prevents getting blight again while present.
 #define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
+/// Caused by temporary deafness, makes everyone sounds like they are whispering
+#define TRAIT_HARD_OF_HEARING "hard_of_hearing"
 
 // Traits related to food
 /// Trait for Fire Burps

@@ -121,7 +121,22 @@
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
-	make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
+//monkestation edit start
+	if(is_banned_from(user.ckey, list(ROLE_CULTIST)))
+		return
+
+	var/mob/living/basic/drone/created_drone = new /mob/living/basic/construct/harvester(get_turf(src))
+	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+	if(user.mind)
+		user.mind.transfer_to(created_drone, TRUE)
+	else if(isobserver(user))
+		created_drone.PossessByPlayer(user.key)
+		created_drone.mind_initialize()
+	else
+		qdel(created_drone)
+		return
+	created_drone.mind.add_antag_datum(/datum/antagonist/cult)
+//monkestation edit end
 
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()
