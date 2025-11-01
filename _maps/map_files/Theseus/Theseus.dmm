@@ -32604,7 +32604,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "jEJ" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 6
 	},
@@ -64746,11 +64745,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "sTP" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/structure/table,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/side,
 /area/station/science/circuits)
 "sTR" = (
@@ -70887,10 +70888,6 @@
 /obj/item/computer_disk{
 	pixel_x = -5;
 	pixel_y = 8
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 10;
-	pixel_x = 6
 	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 10;

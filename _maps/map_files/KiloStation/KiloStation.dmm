@@ -633,7 +633,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/nanite_program_hub,
+/obj/structure/table,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "ags" = (
@@ -1105,7 +1106,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "anr" = (
@@ -42112,10 +42112,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 9
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 8;
 	pixel_y = 9

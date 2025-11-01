@@ -5740,7 +5740,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "bOH" = (
@@ -14172,6 +14171,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/structure/table/glass,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "eBD" = (
@@ -34424,7 +34424,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "laY" = (
@@ -38838,6 +38837,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"mvQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/station/science/auxlab)
 "mvS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -47509,7 +47514,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/table/glass,
-/obj/item/storage/box/disks_nanite,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "poh" = (
@@ -52060,6 +52065,11 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"qNP" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/white,
+/area/station/science/auxlab)
 "qNW" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -62114,7 +62124,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/evac/directional/east,
-/obj/machinery/nanite_program_hub,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "ubE" = (
@@ -72769,7 +72779,6 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
-/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "xqS" = (
@@ -113145,9 +113154,9 @@ fGh
 bLy
 pnY
 uKz
-uKz
+qNP
 khO
-hhs
+mvQ
 hhs
 iIB
 dUx
