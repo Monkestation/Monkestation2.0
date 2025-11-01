@@ -2,7 +2,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 #define KEYCARD_RED_ALERT "Red Alert"
 #define KEYCARD_EMERGENCY_MAINTENANCE_ACCESS "Emergency Maintenance Access"
-#define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
 #define KEYCARD_PIN_UNRESTRICT "Unrestrict Permit Firing Pins"
 
 #define ACCESS_GRANTING_COOLDOWN (30 SECONDS)
@@ -51,7 +50,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	data["red_alert"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) ? 1 : 0
 	data["can_set_alert"] = SSsecurity_level.current_security_level?.can_crew_change_alert
 	data["emergency_maint"] = GLOB.emergency_access
-	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
@@ -87,10 +85,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 		if("pin_unrestrict")
 			if(!event_source)
 				sendEvent(KEYCARD_PIN_UNRESTRICT)
-				. = TRUE
-		if("bsa_unlock")
-			if(!event_source)
-				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
 		if("give_janitor_access")
 			var/mob/living/living_user = usr
@@ -162,8 +156,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 				SSsecurity_level.set_level(SEC_LEVEL_RED)
 		if(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 			make_maint_all_access()
-		if(KEYCARD_BSA_UNLOCK)
-			toggle_bluespace_artillery()
 		if(KEYCARD_PIN_UNRESTRICT)
 			toggle_permit_pins()
 
@@ -192,13 +184,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	GLOB.emergency_access = FALSE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "disabled"))
 
-/proc/toggle_bluespace_artillery()
-	GLOB.bsa_unlock = !GLOB.bsa_unlock
-	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
-	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("bluespace artillery", GLOB.bsa_unlock? "unlocked" : "locked"))
-
 #undef ACCESS_GRANTING_COOLDOWN
 #undef KEYCARD_RED_ALERT
 #undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
-#undef KEYCARD_BSA_UNLOCK
 #undef KEYCARD_PIN_UNRESTRICT
