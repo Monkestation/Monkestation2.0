@@ -1,11 +1,11 @@
 /datum/job/security_assistant
 	title = JOB_SECURITY_ASSISTANT
-	description = "Fine people for trivial things. Be a glorified hall monitor."
+	description = "Fine people for trivial things. Be a glorified hall monitor. Hilariously fail at trying to arrest people. (Note: This role is not recommended for learning to play security. Play officer instead.)"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the Head of Security, the Warden, and any proper security officers"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -43,6 +43,18 @@
 		"Assistant Officer",
 		"Professional Snitch"
 	)
+
+/datum/job/security_assistant/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(give_stormtrooper_aim))
+
+/datum/job/security_assistant/proc/give_stormtrooper_aim(datum/source, mob/living/carbon/human/crewmember, rank)
+	SIGNAL_HANDLER
+	if(rank != title)
+		return
+
+	ADD_TRAIT(crewmember, TRAIT_POOR_AIM, JOB_TRAIT)
+	to_chat(crewmember, span_warning("As Security Assistant, you were the rejected from the academy for your poor marksmanship. You have a hard time firing guns with any degree of accuracy."))
 
 /datum/outfit/job/security_assistant
 	name = "Security Assistant"
