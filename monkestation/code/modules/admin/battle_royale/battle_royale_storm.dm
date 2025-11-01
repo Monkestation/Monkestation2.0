@@ -89,6 +89,7 @@
 	send_to_playing_players(span_userdanger("The storm has been halted by centcom!"))
 	if(timerid)
 		deltimer(timerid)
+		timerid = null
 
 ///ends the storm.
 /datum/royale_storm_controller/proc/end_storm()
