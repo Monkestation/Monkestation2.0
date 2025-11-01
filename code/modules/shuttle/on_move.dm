@@ -314,7 +314,7 @@ All ShuttleMove procs go here
 	var/knockdown = movement_force["KNOCKDOWN"]
 	if(knockdown)
 		// Only apply the "no drop" version when the emergency shuttle is docking (endgame)
-		if(SSshuttle?.emergency && SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+		if(SSshuttle?.emergency?.mode == SHUTTLE_ENDGAME)
 			var/datum/status_effect/incapacitating/knockdown/knockdown_effect = Knockdown(knockdown)
 			if(knockdown_effect)
 				knockdown_effect.prevent_drop = TRUE
