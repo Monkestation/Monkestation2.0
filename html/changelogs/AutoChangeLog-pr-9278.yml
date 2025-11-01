@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - bugfix: "Robustness now actually notably affects the natural immune response that a pathogen causes. Pro tip, 100 x 0.01 != 10"
