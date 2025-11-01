@@ -161,14 +161,12 @@
 		var/datum/antagonist/antagonist_type = initial(ruleset.antag_datum)
 		if (isnull(antagonist_type))
 			continue
-		// antag_flag is guaranteed to be unique by unit tests.
 		antagonists[initial(ruleset.antag_flag)] = antagonist_type
 
 	var/list/generated_icons = list()
 
 	for (var/antag_flag in antagonists)
 		var/datum/antagonist/antagonist_type = antagonists[antag_flag]
-		// antag_flag is guaranteed to be unique by unit tests.
 		var/spritesheet_key = serialize_antag_name(antag_flag)
 
 		if (!isnull(generated_icons[antagonist_type]))
@@ -181,9 +179,6 @@
 			continue
 
 		qdel(antagonist)
-		// preview_icons are not scaled at this stage INTENTIONALLY.
-		// If an icon is not prepared to be scaled to that size, it looks really ugly, and this
-		// makes it harder to figure out what size it *actually* is.
 		generated_icons[antagonist_type] = preview_icon
 		antag_icons[spritesheet_key] = preview_icon
 
