@@ -19,6 +19,11 @@
 	var/hide_person_time = 3 SECONDS
 	var/hide_item_time = 1 SECONDS
 
+	//Dealing with the trash piles ability to inject reagents into the user while digging.
+	var/chance_to_inject = 20 // percentage chance to inject the searching user with a random reagent while digging
+	var/injection_upper_limit = 20 // maximum units of reagent to inject
+	var/injection_lower_limit = 5 // minimum units of reagent to inject
+
 	/// Associative list of ckeys to TRUE if they have searched it.
 	var/list/searched_by_ckeys = list()
 	/// Associative list of ckeys to how many more pieces of trash they can throw out while digging.
@@ -105,6 +110,13 @@
 		return
 
 	var/content_length = length(contents)
+	if(rand(1,100) <= chance_to_inject)
+		var/list/list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(injection_lower_limit,injection_upper_limit)) //the random reagents in question
+		if(user && user.reagents)
+			user.reagents.add_reagent_list(list_reagents)
+			// small feedback so players notice something happened
+			balloon_alert(user, "You feel a tiny prick!")
+
 	if(content_length) //Something hidden inside (mob/item)
 		var/atom/movable/hidden = contents[content_length] // Get the most recent hidden thing
 		if(isliving(hidden))
