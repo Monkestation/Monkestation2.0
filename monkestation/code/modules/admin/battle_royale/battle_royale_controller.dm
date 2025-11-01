@@ -60,8 +60,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 /datum/battle_royale_controller/process(seconds_per_tick)
 	if(!active)
 		message_admins("Battle royale controller attempting to process while inactive, stopping proccessing.")
-		STOP_PROCESSING(SSprocessing, src)
-		return
+		return PROCESS_KILL
 
 	if(!current_data)
 		message_admins("Battle royale controller attempting to process without set current_data, stopping processing.")
