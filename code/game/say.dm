@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 		else if(visible_name)
 			namepart = "[human_speaker.get_visible_name()]"
-		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN))
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN) && !HAS_TRAIT(human_speaker, TRAIT_ANONYMOUS))
 			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
 			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
