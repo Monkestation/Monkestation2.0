@@ -20,11 +20,11 @@
 	var/hide_item_time = 1 SECONDS
 
 	//Dealing with the trash piles ability to inject reagents into the user while digging.
-	var/chance_to_inject = 100 // percentage chance to inject the searching user with a random reagent while digging
+	var/chance_to_inject = 20 // percentage chance to inject the searching user with a random reagent while digging
 	var/injection_upper_limit = 20 // maximum units of reagent to inject
 	var/injection_lower_limit = 5 // minimum units of reagent to inject
 
-	var/chance_to_be_gift = 100 //percent chance this trash pile will just spawn a mystery gift at the final stage of looting
+	var/chance_to_be_gift = 1 //percent chance this trash pile will just spawn a mystery gift at the final stage of looting
 
 	/// Associative list of ckeys to TRUE if they have searched it.
 	var/list/searched_by_ckeys = list()
