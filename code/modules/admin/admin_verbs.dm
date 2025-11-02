@@ -40,7 +40,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, FALSE, "AGhost", "Become a ghost without DNR.",
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Inisimin", "Toggles ghost-like invisibility. (Don't abuse this)", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Invisimin", "Toggles ghost-like invisibility. (Don't abuse this)", ADMIN_CATEGORY_GAME)
 	if(initial(user.mob.invisibility) == INVISIBILITY_OBSERVER)
 		to_chat(user.mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
 		return

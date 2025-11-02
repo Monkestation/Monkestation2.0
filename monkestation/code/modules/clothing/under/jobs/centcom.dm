@@ -6,3 +6,12 @@
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+
+/obj/item/clothing/under/rank/centcom/ccofficerturtleneck //admin spawn object
+	name = "centcom officer's turtleneck"
+	desc = "for those who wants to show off their blings casually."
+	icon_state = "ccofficer_turtleneck"
+	inhand_icon_state = "dg_suit"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	can_adjust = TRUE
