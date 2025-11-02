@@ -249,6 +249,7 @@ Regenerative extracts:
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
+	dummy.copy_voice_from(target)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/mob/living/carbon/carbon_dummy = dummy

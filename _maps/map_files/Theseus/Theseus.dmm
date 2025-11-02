@@ -15527,6 +15527,7 @@
 "eDB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weldingtool/empty,
+/obj/effect/spawner/random/loafer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/lesser)
 "eDD" = (
@@ -31303,6 +31304,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/disposalpipe/segment,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "jkT" = (

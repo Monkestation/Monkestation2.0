@@ -919,3 +919,58 @@
       count
   - balance: Player made clockwork doors now drain passive power when placed next
       to each other
+2025-10-29:
+  JohnFulpWillard:
+  - qol: You can close the minimap by opening the Escape menu.
+2025-10-30:
+  Absolucy:
+  - bugfix: Fixed some mining fauna, i.e demonic watchers or lavaland elites, not
+      being considered "mining mobs" for the cursed katana and such.
+  - bugfix: Slimeperson splitting (and some other things) now properly copy the voice
+      of the original.
+  - map: All maps should have a chance to have a loafer somewhere in maints now.
+  - bugfix: Fixed the admin plane debugger.
+  - balance: Darkspawn Extinguish will now remove the Bioluminescence gene from glowshrooms.
+  JohnFulpWillard:
+  - bugfix: Spraycans work again.
+  LemonInTheDark, Ghommie, SmartKar, 13spacemen, JohnFulpWillard:
+  - rscadd: You can now draw an outline of corpses using crayon/chalk.
+  - qol: You can now draw 4 things on a tile at once using crayon/chalk.
+  SirNightKnight:
+  - qol: added a toggle for automatically hailing pointed targets with sechailers.
+  - bugfix: fixes toggleable import helmet sprites not working properly
+  Snack-Max:
+  - rscadd: Added new Centcom Turtleneck
+  TheColorCyan:
+  - rscadd: (JohnFulpWillard) autopsy surgery and scanner
+  - balance: ' (JohnFulpWillard) Dissected bodies now have faster surgery speed.'
+  - qol: (necromanceranne) Autopsies have become the surgery needed to complete the
+      dissection experiments. As a result, the dissection surgery has been removed
+      as it is now redundant.
+  Tractor-Maam:
+  - spellcheck: fixed a typo in the NV Meson cyborg upgrade.
+  - spellcheck: updated the description of the NV Meson cyborg upgrade to not use
+      the advanced mop description.
+  - balance: The BSA can only fire once every 5 seconds.
+  - bugfix: cyborgs dont get a law update when the AI exits their shell anymore.
+  notghosti:
+  - balance: Unique AI weight 0 -> 5
+  - rscadd: Node drones are now ash storm immune
+  - sound: Cyborg PKA melees now have a blade sound effect attached.
+  - code_imp: Removes the redundant flickering proc
+  - balance: Undoes the major stealth buff to malfunctioning ai that passively gives
+      points to the malfunctioning ai
+2025-10-31:
+  Absolucy, SirNightKnight:
+  - rscadd: Added the MOD Stomper Module, the modsuit version of stomper boots.
+  SirNightKnight:
+  - balance: damage deflection is taken into account before thrown damage ramp up.
+  eukalipdus:
+  - balance: Plasmamen's helmet works to seal you for internals.
+  notghosti:
+  - rscdel: Removed the swarmer and goat achievements which are impossible to get
+      as their associated mobs do not exist
+  - rscadd: Singularity generators are now immune to being zapped. Enjoy your 100
+      tesla death cube I suppose
+  wraith-54321:
+  - balance: Default projectile falloff is now 0

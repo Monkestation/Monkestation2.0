@@ -66679,6 +66679,7 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/structure/window/spawner/directional/south,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/white,
 /area/station/medical/morgue)
 "mSe" = (

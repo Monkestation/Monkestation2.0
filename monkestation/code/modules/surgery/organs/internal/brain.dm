@@ -246,11 +246,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		stored_language_holder = new slime_language_holder.type
 		stored_language_holder.copy_languages(slime_language_holder)
 
-	var/datum/atom_voice/slime_voice = slime.get_voice()
-	if(slime_voice)
-		if(!voice)
-			voice = new
-		voice.copy_from(slime_voice)
+	if(slime.voice)
+		copy_voice_from(slime)
 
 ///////
 /// CORE EJECTION PROC
@@ -481,9 +478,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		new_body.get_language_holder()?.copy_languages(stored_language_holder)
 		QDEL_NULL(stored_language_holder)
 	if(voice)
-		if(!new_body.voice)
-			new_body.voice = new
-		new_body.voice.copy_from(voice)
+		new_body.copy_voice_from(src)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"

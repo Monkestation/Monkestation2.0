@@ -131,6 +131,13 @@
 		target.extinguish_mob()
 		if(target.bodytemperature > target.standard_body_temperature)
 			target.bodytemperature = target.standard_body_temperature
+	else if(istype(victim, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/glowshroom = victim
+		var/datum/plant_gene/trait/glow/glow_trait = locate() in glowshroom.myseed?.genes
+		if(glow_trait && !istype(glow_trait, /datum/plant_gene/trait/glow/shadow))
+			glowshroom.myseed.genes -= glow_trait
+			qdel(glow_trait)
+			glowshroom.set_light(0)
 	else if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()
