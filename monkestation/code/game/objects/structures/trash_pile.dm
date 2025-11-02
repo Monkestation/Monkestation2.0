@@ -110,12 +110,12 @@
 		return
 
 	var/content_length = length(contents)
+	//20% chance to get injected with random reagent while digging
 	if(rand(1,100) <= chance_to_inject)
-		var/list/list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(injection_lower_limit,injection_upper_limit)) //the random reagents in question
+		var/list/list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(injection_lower_limit,injection_upper_limit))
 		if(user && user.reagents)
 			user.reagents.add_reagent_list(list_reagents)
-			// small feedback so players notice something happened
-			balloon_alert(user, "You feel a tiny prick!")
+			to_chat(user, span_warning("You feel a tiny prick!"))
 
 	if(content_length) //Something hidden inside (mob/item)
 		var/atom/movable/hidden = contents[content_length] // Get the most recent hidden thing
