@@ -62,7 +62,7 @@
 		vote_on_poll_handler(poll, href_list)
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
-/mob/dead/new_player/proc/make_me_an_observer()
+/mob/dead/new_player/proc/make_me_an_observer(force = FALSE)
 	if(QDELETED(src) || !src.client)
 		ready = PLAYER_NOT_READY
 		return FALSE
@@ -70,6 +70,9 @@
 	if(interview_safety(src, "attempting to observe"))
 		qdel(client)
 		return FALSE
+
+	if(force)
+		return create_observer_body()
 
 	var/less_input_message
 	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
@@ -80,25 +83,31 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
+	return create_observer_body()
+
+/mob/dead/new_player/proc/create_observer_body()
 	var/mob/dead/observer/observer = new()
 	spawning = TRUE
-
 	observer.started_as_observer = TRUE
-	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+	var/obj/effect/landmark/observer_start/obs_start = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, span_notice("Now teleporting."))
-	if (O)
-		observer.forceMove(O.loc)
+
+	if(obs_start)
+		observer.forceMove(obs_start.loc)
 	else
 		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
+
 	observer.PossessByPlayer(key)
 	observer.client = client
 	observer.set_ghost_appearance()
+
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.read_preference(/datum/preference/name/real_name)
 		observer.name = observer.real_name
 		observer.client.init_verbs()
 		observer.persistent_client.time_of_death = world.time
+
 	observer.update_appearance()
 	observer.update_media_source()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
