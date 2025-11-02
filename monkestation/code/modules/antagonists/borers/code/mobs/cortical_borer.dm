@@ -36,10 +36,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 //so that we know if a mob has a borer (only humans should have one, but in case)
 /mob/proc/has_borer() as /mob/living/basic/cortical_borer
-	for(var/check_content in contents)
-		if(iscorticalborer(check_content))
-			return check_content
-	return null
+	return locate(/mob/living/basic/cortical_borer) in src
 
 //this allows borers to slide under/through a door
 /obj/machinery/door/Bumped(atom/movable/AM)
