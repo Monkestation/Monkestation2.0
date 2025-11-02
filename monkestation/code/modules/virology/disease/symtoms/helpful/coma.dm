@@ -62,8 +62,7 @@
 	if(QDELETED(victim) || !active_coma)
 		return
 	active_coma = FALSE
-	sleep(8 SECONDS) // The previous step sets active coma to FALSE so it won't call uncoma any more from reaching 0.
-	victim.cure_fakedeath("regenerative_coma")
+	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 8 SECONDS)
 
 /datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
