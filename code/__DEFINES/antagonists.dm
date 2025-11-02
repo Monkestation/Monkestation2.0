@@ -368,8 +368,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 #define FREEDOM_IMPLANT_CHARGES 4
 
-#define MALF_MAX_PP 400
-
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1
 /// Changeling abilities with DNA cost = this are not obtainable by changelings - either used for secret unlockable or abstract abilities
