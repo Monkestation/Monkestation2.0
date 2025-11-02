@@ -520,17 +520,9 @@
 			power_source = cell
 			shock_damage = cell_damage
 		drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
-	else if(PN && (PN?.netexcess < 250 MW))
+	else if(PN && (PN?.netexcess >= 150 MW))
 		tesla_zap(victim, 7, PN.netexcess)
 		drained_hp = PN.netexcess * 0.01
-	else
-		var/obj/item/organ/internal/brain/carbon_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/turf/turf = get_turf(victim)
-		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
-		carbon_brain.forceMove(turf)
-		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
-		victim.dust()
-		drained_hp = PN.netexcess * 0.1
 
 	log_combat(source, victim, "electrocuted")
 
