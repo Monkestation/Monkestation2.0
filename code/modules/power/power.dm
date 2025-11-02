@@ -524,10 +524,8 @@
 		tesla_zap(victim, 7, PN.netexcess)
 		drained_hp = PN.netexcess * 0.01
 	else
-		var/obj/item/organ/internal/brain/carbon_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
-		var/turf/turf = get_turf(victim)
 		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
-		victim.death(cause_of_death = "electrocution")
+		victim.death(FALSE, "electrocution")
 		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
 		victim.dust()
 		drained_hp = PN.netexcess * 0.1
