@@ -20,9 +20,11 @@
 	var/hide_item_time = 1 SECONDS
 
 	//Dealing with the trash piles ability to inject reagents into the user while digging.
-	var/chance_to_inject = 20 // percentage chance to inject the searching user with a random reagent while digging
+	var/chance_to_inject = 100 // percentage chance to inject the searching user with a random reagent while digging
 	var/injection_upper_limit = 20 // maximum units of reagent to inject
 	var/injection_lower_limit = 5 // minimum units of reagent to inject
+
+	var/chance_to_be_gift = 100 //percent chance this trash pile will just spawn a mystery gift at the final stage of looting
 
 	/// Associative list of ckeys to TRUE if they have searched it.
 	var/list/searched_by_ckeys = list()
@@ -111,30 +113,40 @@
 
 	var/content_length = length(contents)
 	//20% chance to get injected with random reagent while digging
+	var/pricked = FALSE //prevents alert stacking
 	if(rand(1,100) <= chance_to_inject)
 		var/list/list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(injection_lower_limit,injection_upper_limit))
 		if(user && user.reagents)
 			user.reagents.add_reagent_list(list_reagents)
-			to_chat(user, span_warning("You feel a tiny prick!"))
+			balloon_alert(user, "You get stuck by a needle!")
+			pricked = TRUE
 
 	if(content_length) //Something hidden inside (mob/item)
 		var/atom/movable/hidden = contents[content_length] // Get the most recent hidden thing
 		if(isliving(hidden))
-			balloon_alert(user, "someone is inside!")
+			if(!pricked)
+				balloon_alert(user, "someone is inside!")
 			eject_mob(hidden)
 		else
-			balloon_alert(user, "found something!")
+			if(!pricked)
+				balloon_alert(user, "found something!")
 			hidden.forceMove(drop_location())
 		return
 	if(searched_by_ckeys[user.ckey])
 		balloon_alert(user, "empty...")
 		return
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
+
+	//chance to just be a mystery gift
+	if(rand(1,100) <= chance_to_be_gift)
+		item_to_spawn = /obj/item/a_gift/anything/wiz_name
+
 	var/obj/item/spawned_item = new item_to_spawn(drop_location())
-	if(!QDELETED(spawned_item))
+	if(!QDELETED(spawned_item) && !pricked)
 		balloon_alert(user, "found [spawned_item]!")
 	else
-		balloon_alert(user, "found nothing...")
+		if(!pricked)
+			balloon_alert(user, "found nothing...")
 	searched_by_ckeys[user.ckey] = TRUE
 
 /obj/structure/trash_pile/attackby(obj/item/attacking_item, mob/living/user, params)
