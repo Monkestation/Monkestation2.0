@@ -29,10 +29,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 /// Is the given part of the willing host list.
 /mob/proc/is_willing_host(mob/infected)
-	for(var/mind_check in GLOB.willing_hosts)
-		if(mind_check == infected.mind)
-			return TRUE
-	return FALSE
+	return (infected?.mind in GLOB.willing_hosts)
 
 //so that we know if a mob has a borer (only humans should have one, but in case)
 /mob/proc/has_borer() as /mob/living/basic/cortical_borer
