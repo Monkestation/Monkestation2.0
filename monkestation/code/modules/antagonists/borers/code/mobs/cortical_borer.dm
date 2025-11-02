@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	for(var/check_content in contents)
 		if(iscorticalborer(check_content))
 			return check_content
-	return FALSE
+	return null
 
 //this allows borers to slide under/through a door
 /obj/machinery/door/Bumped(atom/movable/AM)
