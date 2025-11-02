@@ -520,9 +520,17 @@
 			power_source = cell
 			shock_damage = cell_damage
 		drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
-	else if(PN && (PN?.netexcess >= 150 MW))
+	else if(PN && (PN?.netexcess < 250 MW))
 		tesla_zap(victim, 7, PN.netexcess)
 		drained_hp = PN.netexcess * 0.01
+	else
+		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
+
+		victim.visible_message(span_danger("\The [victim] starts to glow wildly!"),
+			span_userdanger("Sparks fly in all directions, Electricity courses through you, and as your body stiffens up, your last thought is \"Oh, fuck.\""),
+			span_hear("You hear an unimaginably loud ringing and crackling."))
+
+		victim.gib()
 
 	log_combat(source, victim, "electrocuted")
 
