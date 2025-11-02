@@ -37,6 +37,7 @@
 		/datum/stock_part/manipulator = 1,
 		)
 
+/*
 /obj/item/circuitboard/machine/assembler
 	name = "Assembler"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -44,3 +45,4 @@
 	req_components = list(
 		/datum/stock_part/manipulator = 1,
 		)
+*/

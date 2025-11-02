@@ -1,7 +1,7 @@
 /obj/machinery/assembler
 	name = "assembler"
 	desc = "Produces a set recipe when given the materials, some say a small cargo technican is stuck inside making these things."
-	circuit = /obj/item/circuitboard/machine/assembler
+	/* circuit = /obj/item/circuitboard/machine/assembler */
 
 	var/speed_multiplier = 1
 	var/datum/crafting_recipe/chosen_recipe
@@ -15,7 +15,9 @@
 
 /obj/machinery/assembler/Initialize(mapload)
 	. = ..()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, atom_destruction), MELEE), 1)
 
+/*
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -25,6 +27,7 @@
 
 	if(!length(legal_crafting_recipes))
 		create_recipes()
+*/
 
 /obj/machinery/assembler/RefreshParts()
 	. = ..()
