@@ -118,9 +118,7 @@
 		return
 	COOLDOWN_START(src, extra_effects_cooldown, 1 SECOND)
 
-	var/mob/living/basic/cortical_borer/brain_pest = owner.has_borer()
-	if(istype(brain_pest))
-		brain_pest.leave_host()
+	owner.has_borer()?.leave_host()
 
 	if(!iscarbon(owner))
 		return

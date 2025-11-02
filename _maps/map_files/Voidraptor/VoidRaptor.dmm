@@ -34397,6 +34397,7 @@
 	},
 /obj/item/pen,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "jEV" = (
@@ -59582,6 +59583,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/break_room)
 "qAJ" = (
+/obj/effect/spawner/random/loafer,
 /turf/open/floor/light,
 /area/station/common/night_club)
 "qAN" = (

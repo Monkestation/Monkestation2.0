@@ -29,17 +29,11 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 /// Is the given part of the willing host list.
 /mob/proc/is_willing_host(mob/infected)
-	for(var/mind_check in GLOB.willing_hosts)
-		if(mind_check == infected.mind)
-			return TRUE
-	return FALSE
+	return (infected?.mind in GLOB.willing_hosts)
 
 //so that we know if a mob has a borer (only humans should have one, but in case)
-/mob/proc/has_borer()
-	for(var/check_content in contents)
-		if(iscorticalborer(check_content))
-			return check_content
-	return FALSE
+/mob/proc/has_borer() as /mob/living/basic/cortical_borer
+	return locate(/mob/living/basic/cortical_borer) in src
 
 //this allows borers to slide under/through a door
 /obj/machinery/door/Bumped(atom/movable/AM)
@@ -55,9 +49,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 //so if a person is debrained, the borer is removed
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/target, special = 0, no_id_transfer = FALSE)
 	. = ..()
-	var/mob/living/basic/cortical_borer/cb_inside = target.has_borer()
-	if(cb_inside)
-		cb_inside.leave_host()
+	target.has_borer()?.leave_host()
 
 //borers also create an organ, so you dont need to debrain someone
 /obj/item/organ/internal/borer_body
@@ -81,7 +73,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /obj/item/organ/internal/borer_body/Insert(mob/living/carbon/carbon_target, special, drop_if_replaced)
 	. = ..()
 	for(var/datum/borer_focus/body_focus as anything in borer.body_focuses)
-		body_focus.on_add()
+		body_focus.on_add(carbon_target, borer)
 	carbon_target.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	if(carbon_target.is_willing_host(carbon_target))
 		carbon_target.add_mood_event("borer", /datum/mood_event/has_borer)
@@ -103,9 +95,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /obj/item/organ/internal/borer_body/Remove(mob/living/carbon/carbon_target, special)
 	. = ..()
 	var/mob/living/basic/cortical_borer/cb_inside = carbon_target.has_borer()
-	for(var/datum/borer_focus/body_focus as anything in cb_inside.body_focuses)
-		body_focus.on_remove()
 	if(cb_inside)
+		for(var/datum/borer_focus/body_focus as anything in cb_inside.body_focuses)
+			body_focus.on_remove(carbon_target, borer)
 		cb_inside.leave_host()
 	carbon_target.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	qdel(src)

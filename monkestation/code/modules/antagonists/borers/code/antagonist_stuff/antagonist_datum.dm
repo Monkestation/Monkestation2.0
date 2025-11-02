@@ -125,7 +125,8 @@
 		if(ability.sugar_restricted)
 			ability_data["ability_explanation"] += "-We cannot use this ability when our host is under the effect of a highly dangerous chemical known as \"sugar\". "
 */
-		ability_data["ability_icon"] = initial(ability.button_icon_state)
+		ability_data["ability_icon"] = initial(ability.button_icon)
+		ability_data["ability_icon_state"] = initial(ability.button_icon_state)
 
 		data["ability"] += list(ability_data)
 
