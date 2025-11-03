@@ -9,3 +9,10 @@
   - rscadd: ghosts now use the character's hair color directly.
   notghosti:
   - map: Icebox maintence bar backroom/dorms no longer has a camera inside the wall
+2025-11-02:
+  Absolucy:
+  - bugfix: Fixed some runtimes with cortical borers with focuses entering/exiting
+      a host.
+  throwawayuseless:
+  - bugfix: Robustness now actually notably affects the natural immune response that
+      a pathogen causes. Pro tip, 100 x 0.01 != 10
