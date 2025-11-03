@@ -1619,7 +1619,7 @@
 	assembly.update_name()
 	assembly.update_appearance()
 
-/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
+/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user, should_del = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
@@ -1650,7 +1650,8 @@
 				ae = electronics
 				electronics = null
 				ae.forceMove(drop_location())
-	qdel(src)
+	if(should_del)
+		qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

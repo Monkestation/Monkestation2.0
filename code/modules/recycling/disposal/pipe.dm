@@ -21,6 +21,7 @@
 	var/obj/structure/disposalconstruct/stored
 	/// Should we create a pipe on destroy?
 	var/spawn_pipe = TRUE
+	var/construct_type = /obj/structure/disposalconstruct
 
 /datum/armor/structure_disposalpipe
 	melee = 25
@@ -172,7 +173,7 @@
 		if(disassembled)
 			if(spawn_pipe)
 				if(isnull(stored)) // Don't have something? Make one now
-					stored = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
+					stored = new construct_type(src, null, SOUTH, FALSE, src)
 				stored.forceMove(loc)
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)

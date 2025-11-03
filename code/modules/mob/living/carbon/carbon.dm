@@ -485,6 +485,10 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
+	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
+		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
+			revive(FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/on_stamina_update()
@@ -790,6 +794,8 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))

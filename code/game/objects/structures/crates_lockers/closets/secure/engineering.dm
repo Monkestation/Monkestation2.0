@@ -20,6 +20,9 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
+
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
 	. = ..()
 
@@ -77,6 +80,9 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/storage/bag/construction(src)
+
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics

@@ -104,6 +104,18 @@
 	scan_and_confirm(user)
 	return TRUE
 
+/obj/structure/ore_vent/attack_robot(mob/living/user)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!Adjacent(user))
+		return TRUE
+	if(tapped)
+		balloon_alert_to_viewers("vent tapped!")
+		return TRUE
+	scan_and_confirm(user)
+	return TRUE
+
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
