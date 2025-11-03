@@ -8671,7 +8671,6 @@
 #include "monkestation\code\modules\spells\spell_types\conjure_item\summon_mjollnir.dm"
 #include "monkestation\code\modules\spells\spell_types\pointed\fire_ball.dm"
 #include "monkestation\code\modules\spells\spell_types\pointed\smite.dm"
-#include "monkestation\code\modules\spells\spell_types\shapeshift\_shapeshift.dm"
 #include "monkestation\code\modules\spells\spell_types\touch\_touch.dm"
 #include "monkestation\code\modules\store\admin\admin_coin_modification.dm"
 #include "monkestation\code\modules\store\atm\_atm.dm"

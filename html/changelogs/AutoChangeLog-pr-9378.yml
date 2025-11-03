@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "Tesla zaps are now covered by the \"Machinery\" category in the volume mixer."
+  - sound: "Tesla zaps now have slightly higher volume falloff over distance."
+  - code_imp: "Slightly improved some tesla-related code."
