@@ -740,7 +740,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 					enter_queue = TRUE
 					break
 			if(!enter_queue)
-				SS.hibernating = TRUE
+				SS.hibernation_state = SS_IS_HIBERNATING
 				SS.update_nextfire()
 				continue
 		SS.enqueue()

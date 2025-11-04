@@ -347,6 +347,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Keep this rare.
 #define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
+#define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /* #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed" */
 /// Lets the user succumb even if they got NODEATH
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
@@ -669,6 +670,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Prevents mobs from being chosen by the Random Human-level Intelligence event.
 #define TRAIT_NO_RANDOM_SENTIENCE "no random sentience"
+
+/// Makes user able to absorb food through any exposed body part.
+#define TRAIT_FOOD_ABSORPTION "food_absorbtion"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions

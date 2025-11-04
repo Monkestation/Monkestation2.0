@@ -8384,9 +8384,9 @@
 /turf/open/openspace,
 /area/station/maintenance/starboard/greater)
 "eiv" = (
-/obj/structure/tank_dispenser,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/south,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "eiy" = (
@@ -8709,6 +8709,11 @@
 "erH" = (
 /turf/closed/wall,
 /area/station/hallway/primary/central)
+"esj" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "esn" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -10030,6 +10035,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "eTG" = (
@@ -23497,9 +23503,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "lmR" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 9
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -23510,7 +23513,11 @@
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
 "lmX" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lmZ" = (
@@ -30654,13 +30661,6 @@
 /obj/item/gun/energy/laser,
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
-"oIE" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "oIZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -31291,11 +31291,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
-"oYE" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "oYO" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -33560,11 +33555,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/diagonal,
 /area/station/security/brig/entrance)
-"qeF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/green/visible,
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "qeN" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
@@ -35445,7 +35435,11 @@
 /turf/open/floor/iron/diagonal,
 /area/station/commons/lounge)
 "rax" = (
-/obj/machinery/atmospherics/components/binary/pump,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/structure/tank_dispenser,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "raZ" = (
@@ -49089,6 +49083,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/east,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "xvl" = (
@@ -49758,7 +49753,7 @@
 "xOn" = (
 /obj/machinery/smartfridge,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xOy" = (
 /obj/machinery/door/window/left/directional/south{
@@ -89108,7 +89103,7 @@ ykv
 ykv
 kcE
 cEL
-cdR
+esj
 dOm
 sjO
 iGY
@@ -129141,8 +129136,8 @@ nva
 nva
 nva
 nva
-lmX
-oYE
+nva
+qwY
 jIh
 nCT
 nva
@@ -129654,9 +129649,9 @@ nva
 nva
 nva
 nva
-lmX
-rax
-qeF
+nva
+nva
+qwY
 jIh
 nCT
 nva
@@ -129911,16 +129906,16 @@ nva
 nva
 nva
 nva
-lmX
-rax
+nva
+nva
 lmR
 jwf
 dBE
 nva
 vqe
 knR
-oIE
-oIE
+nva
+nva
 dhO
 dhO
 nva
@@ -130681,7 +130676,7 @@ dZW
 hSi
 cnR
 hSi
-dxI
+lmX
 xve
 sKC
 ckm
@@ -131208,7 +131203,7 @@ fbA
 dTm
 dTm
 qJk
-rKh
+rax
 nva
 nva
 qwY
