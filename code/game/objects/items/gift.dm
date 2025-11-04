@@ -150,27 +150,16 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 			/obj/item/clothing/ears/earmuffs/debug,
 			/obj/item/disk/tech_disk/debug,
-			/obj/item/gun/magic/wand/resurrection/debug,
-			/obj/item/gun/magic/wand/death/debug,
 			/obj/item/gun/magic/wand/safety/debug,
-			/obj/item/multitool/field_debug,
 			/obj/item/card/id/advanced/debug,
 			/obj/item/mod/control/pre_equipped/debug,
 			/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
 			/obj/item/reagent_containers/cup/bottle/disease_debug,
-			/obj/item/debug/human_spawner,
-			/obj/item/debug/omnitool,
-			/obj/item/debug/omnitool/item_spawner,
 			/obj/item/pinpointer/area_pinpointer/debug,
 			/obj/item/flashlight/emp/debug,
 			/obj/item/gps/visible_debug,
 			/obj/item/airlock_painter/decal/debug,
 			/obj/item/autosurgeon/organ/nif/debug,
-
-			//DEBUG UPLINKS!!!!!
-		//	/obj/item/uplink/debug, // the normal traitor debug uplink STAYS IN.
-			/obj/item/uplink/nuclear/debug,
-			///DEBUG UPINKS!!!!!!
 
 			/obj/item/melee/skateboard/hoverboard/admin,
 			/obj/item/mod/control/pre_equipped/administrative,
@@ -181,10 +170,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/mining_scanner/admin,
 			/obj/item/kinetic_crusher/adminpilebunker,
 			/obj/item/camera/spooky/badmin,
-			/obj/item/debug/artifact_activator,
-			/obj/item/storage/box/debugbox,
-			/obj/item/pinpointer/area_pinpointer/debug,
-			/obj/item/gps/visible_debug,
 			/obj/item/storage/box/fish_debug,
 			)
 		for(var/blocked_item in blocked_items)
