@@ -410,6 +410,7 @@
 		/obj/item/assembly/voice = 1,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/plastic = 1,
+	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 8 SECONDS
 	category = CAT_CLOTHING
