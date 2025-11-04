@@ -56,7 +56,8 @@ SUBSYSTEM_DEF(minor_mapping)
 		var/turf/turf = pick_n_take(noisy_turfs)
 		if(!isfloorturf(turf) || turf.underfloor_accessibility != UNDERFLOOR_HIDDEN)
 			continue
-		if(is_type_in_list(get_area(turf), blacklisted_area_types))
+		var/area/turf_area = get_area(turf)
+		if(!turf_area || is_type_in_list(turf_area, blacklisted_area_types) || !(turf_area.type in GLOB.the_station_areas))
 			continue
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
