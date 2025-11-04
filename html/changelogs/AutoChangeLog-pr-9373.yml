@@ -1,0 +1,4 @@
+author: "Vect0r2"
+delete-after: True
+changes:
+  - bugfix: "Assemblers don't fuck shit up"
