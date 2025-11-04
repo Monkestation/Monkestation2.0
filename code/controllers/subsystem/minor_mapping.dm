@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 		SEND_SIGNAL(flat_satchel, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
 		satchel_amount--
-		testing("Placed satchel at [AREACOORD(turf)]")
+		log_game("Placed satchel at [AREACOORD(turf)]") // log_game for now so i can keep an eye on how evenly they are being distributed. should prolly be a blackbox thing but im lazy.
 
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
