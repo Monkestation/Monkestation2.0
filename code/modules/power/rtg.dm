@@ -23,7 +23,7 @@
 
 /obj/machinery/power/rtg/process()
 	..()
-	add_avail(power_gen)
+a	add_avail(power_to_energy(power_gen))
 
 /obj/machinery/power/rtg/RefreshParts()
 	. = ..()
