@@ -17,10 +17,10 @@
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_COMMAND
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
-	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM) // finally upgraded
+	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM) //monkestation edit - No longer upgraded :(
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
