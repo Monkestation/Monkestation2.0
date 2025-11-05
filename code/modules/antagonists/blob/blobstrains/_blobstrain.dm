@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/resource_delay = 0
 	/// For blob-mobs and extinguishing-based effects
 	var/fire_based = FALSE
-	var/mob/eye/blob/overmind
+	var/mob/eye/blob/overmind //NEED TO CONVERT THIS TO THE TEAM
 	/// The amount of health regenned on core_process
 	var/base_core_regen = BLOB_CORE_HP_REGEN
 	/// The amount of points gained on core_process
@@ -82,21 +82,25 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range += core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range += core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
-		N.claim_range += node_range_bonus
-		N.pulse_range += node_range_bonus
-		N.expand_range += node_range_bonus
-		N.strong_reinforce_range += node_strong_reinforcement_range_bonus
-		N.reflector_reinforce_range += node_reflector_reinforcement_range_bonus
+	var/list/looked_through = overmind.antag_team.all_blobs_by_type[/obj/structure/blob/special/node]
+	if(looked_through)
+		for(var/obj/structure/blob/special/node/blob_node in looked_through)
+			blob_node.claim_range += node_range_bonus
+			blob_node.pulse_range += node_range_bonus
+			blob_node.expand_range += node_range_bonus
+			blob_node.strong_reinforce_range += node_strong_reinforcement_range_bonus
+			blob_node.reflector_reinforce_range += node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
-		F.max_spores += factory_spore_bonus
+	looked_through = overmind.antag_team.all_blobs_by_type[/obj/structure/blob/special/factory]
+	if(looked_through)
+		for(var/obj/structure/blob/special/factory/blob_factory in looked_through)
+			blob_factory.max_spores += factory_spore_bonus
 
-	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
-		B.modify_max_integrity(B.max_integrity * max_structure_health_multiplier)
-		B.update_appearance()
+	for(var/obj/structure/blob/struc as anything in overmind.antag_team.all_blobs)
+		struc.modify_max_integrity(struc.max_integrity * max_structure_health_multiplier)
+		struc.update_appearance()
 
-	for(var/mob/living/blob_mob as anything in overmind.blob_mobs)
+	for(var/mob/living/blob_mob as anything in overmind.antag_team.blob_mobs)
 		blob_mob.maxHealth *= max_mob_health_multiplier
 		blob_mob.health *= max_mob_health_multiplier
 		blob_mob.update_icons() //If it's getting a new strain, tell it what it does!
@@ -110,19 +114,23 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
-		N.claim_range -= node_range_bonus
-		N.expand_range -= node_range_bonus
-		N.strong_reinforce_range -= node_strong_reinforcement_range_bonus
-		N.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus
+	var/list/looked_through = overmind.antag_team.all_blobs_by_type[/obj/structure/blob/special/node]
+	if(looked_through)
+		for(var/obj/structure/blob/special/node/blob_node in looked_through)
+			blob_node.claim_range -= node_range_bonus
+			blob_node.expand_range -= node_range_bonus
+			blob_node.strong_reinforce_range -= node_strong_reinforcement_range_bonus
+			blob_node.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
-		F.max_spores -= factory_spore_bonus
+	looked_through = overmind.antag_team.all_blobs_by_type[/obj/structure/blob/special/factory]
+	if(looked_through)
+		for(var/obj/structure/blob/special/factory/blob_factory in looked_through)
+			blob_factory.max_spores -= factory_spore_bonus
 
-	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
-		B.modify_max_integrity(B.max_integrity / max_structure_health_multiplier)
+	for(var/obj/structure/blob/struc in overmind.antag_team.all_blobs)
+		struc.modify_max_integrity(struc.max_integrity / max_structure_health_multiplier)
 
-	for(var/mob/living/blob_mob as anything in overmind.blob_mobs)
+	for(var/mob/living/blob_mob in overmind.antag_team.blob_mobs)
 		blob_mob.maxHealth /= max_mob_health_multiplier
 		blob_mob.health /= max_mob_health_multiplier
 
@@ -166,4 +174,4 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/examine(mob/user)
-	return list("<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+	return list("<b>Progress to Critical Mass:</b> [span_notice("[length(overmind.antag_team.blobs_legit)]/[overmind.antag_team.blobwincount].")]")

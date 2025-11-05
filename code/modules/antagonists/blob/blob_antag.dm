@@ -13,15 +13,15 @@
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
 	var/starting_points_human_blob = OVERMIND_STARTING_POINTS
+	/// Ref to our team
+	var/datum/team/blob/blob_team
 
 /datum/antagonist/blob/roundend_report()
 	var/basic_report = ..()
 	//Display max blobpoints for blebs that lost
-	if(isovermind(owner.current)) //embarrasing if not
-		var/mob/eye/blob/overmind = owner.current
-		if(!overmind.victory_in_progress) //if it won this doesn't really matter
-			var/point_report = "<br><b>[owner.name]</b> took over [overmind.highest_tile_count] tiles at the height of its growth."
-			return basic_report+point_report
+	if(blob_team && !blob_team.victory_in_progress) //if it won this doesn't really matter
+		var/point_report = "<br><b>[owner.name]</b> took over [blob_team.highest_tile_count] tiles at the height of its growth."
+		return basic_report+point_report
 	return basic_report
 
 /datum/antagonist/blob/greet()
@@ -67,8 +67,8 @@
 
 	if(!isovermind(user))
 		return data
-	var/mob/eye/blob/blob = user
-	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
+
+	var/datum/blobstrain/reagent/blobstrain = blob_team.blobstrain
 
 	if(!blobstrain)
 		return data
@@ -145,9 +145,7 @@
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		var/mob/eye/blob/blob_cam = owner.current
-		if(istype(blob_cam))
-			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
+		. += "(Progress: [length(blob_team.blobs_legit)]/[blob_team.blobwincount])"
 
 /// A subtype of blob meant to represent the infective version.
 /datum/antagonist/blob/infection

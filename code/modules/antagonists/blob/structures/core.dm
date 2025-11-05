@@ -1,11 +1,3 @@
-#define BLOB_CORE_MAX_HP 400
-#define BLOB_CORE_HP_REGEN 2 // Bases health regeneration rate every process(), can be added on by strains
-#define BLOB_CORE_CLAIM_RANGE 12 // Range in which blob tiles are 'claimed' (converted from dead to alive, rarely useful)
-#define BLOB_CORE_PULSE_RANGE 4 // The radius up to which the core activates structures, and up to which structures can be built
-#define BLOB_CORE_EXPAND_RANGE 3 // Radius of automatic expansion
-#define BLOB_CORE_STRONG_REINFORCE_RANGE 1 // The radius of tiles surrounding the core that get upgraded
-#define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
-
 /obj/structure/blob/special/core
 	name = "blob core"
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
@@ -36,7 +28,7 @@
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
-		overmind.blobstrain.on_gain()
+		overmind.antag_team.blobstrain.on_gain()
 		update_appearance()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 	AddElement(/datum/element/blocks_explosives)
@@ -57,7 +49,7 @@
 	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob")
 	if(overmind)
-		blob_overlay.color = overmind.blobstrain.color
+		blob_overlay.color = overmind.antag_team.blobstrain.color
 	. += blob_overlay
 	. += mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay")
 
@@ -80,7 +72,7 @@
 	if(!overmind)
 		qdel(src)
 
-	overmind.blobstrain.core_process()
+	overmind.antag_team.blobstrain.core_process()
 	overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
 	reinforce_area(seconds_per_tick)
@@ -89,11 +81,3 @@
 	if(overmind && is_station_level(new_turf?.z))
 		overmind.forceMove(get_turf(src))
 	return ..()
-
-#undef BLOB_CORE_MAX_HP
-#undef BLOB_CORE_HP_REGEN
-#undef BLOB_CORE_CLAIM_RANGE
-#undef BLOB_CORE_PULSE_RANGE
-#undef BLOB_CORE_EXPAND_RANGE
-#undef BLOB_CORE_STRONG_REINFORCE_RANGE
-#undef BLOB_CORE_REFLECTOR_REINFORCE_RANGE

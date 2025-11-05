@@ -27,6 +27,14 @@
 
 // Structure properties
 
+#define BLOB_CORE_MAX_HP 400
+#define BLOB_CORE_HP_REGEN 2 // Bases health regeneration rate every process(), can be added on by strains
+#define BLOB_CORE_CLAIM_RANGE 12 // Range in which blob tiles are 'claimed' (converted from dead to alive, rarely useful)
+#define BLOB_CORE_PULSE_RANGE 4 // The radius up to which the core activates structures, and up to which structures can be built
+#define BLOB_CORE_EXPAND_RANGE 3 // Radius of automatic expansion
+#define BLOB_CORE_STRONG_REINFORCE_RANGE 1 // The radius of tiles surrounding the core that get upgraded
+#define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
+
 #define BLOB_NODE_MAX_HP 200
 #define BLOB_NODE_HP_REGEN 3
 #define BLOB_NODE_MIN_DISTANCE 5 // Minimum distance between nodes

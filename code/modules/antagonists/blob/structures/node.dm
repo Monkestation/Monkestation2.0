@@ -35,22 +35,19 @@
 	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob")
 	if(overmind)
-		blob_overlay.color = overmind.blobstrain.color
+		blob_overlay.color = overmind.antag_team.blobstrain.color
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED))
-			blob_overlay.color = BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
+			blob_overlay.color = BlendRGB(overmind.antag_team.blobstrain.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 	. += blob_overlay
 	. += mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_node_overlay")
 
 /obj/structure/blob/special/node/creation_action()
-	if(overmind)
-		overmind.node_blobs += src
+	. = ..()
 
 /obj/structure/blob/special/node/Destroy()
 	GLOB.blob_nodes -= src
 	STOP_PROCESSING(SSobj, src)
-	if(overmind)
-		overmind.node_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/node/process(seconds_per_tick)

@@ -27,7 +27,7 @@
 	overmind.register_new_minion(parent)
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
 	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_properties_changed))
-	overmind_properties_changed(overmind, overmind.blobstrain)
+	overmind_properties_changed(overmind, overmind.antag_team.blobstrain)
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
@@ -62,7 +62,7 @@
 
 /datum/component/blob_minion/UnregisterFromParent()
 	if (!isnull(overmind))
-		overmind.blob_mobs -= parent
+		overmind.antag_team.blob_mobs -= parent
 	var/mob/living/living_parent = parent
 	living_parent.pass_flags &= ~PASSBLOB
 	living_parent.faction -= ROLE_BLOB
@@ -95,14 +95,14 @@
 	if(isnull(overmind))
 		minion.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 		return
-	minion.add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
+	minion.add_atom_colour(overmind.antag_team.blobstrain.color, FIXED_COLOUR_PRIORITY)
 
 /// When our icon is updated, update our colour too
 /datum/component/blob_minion/proc/on_update_status_tab(mob/living/minion, list/status_items)
 	SIGNAL_HANDLER
 	if (isnull(overmind))
 		return
-	status_items += "Blobs to Win: [length(overmind.blobs_legit)]/[overmind.blobwincount]"
+	status_items += "Blobs to Win: [length(overmind.antag_team.blobs_legit)]/[overmind.antag_team.blobwincount]"
 
 /// If we feel the gentle caress of a blob, we feel better
 /datum/component/blob_minion/proc/on_blob_touched(mob/living/minion)
@@ -111,7 +111,7 @@
 		return COMPONENT_CANCEL_BLOB_ACT // Don't hurt us in order to heal us
 	for(var/i in 1 to 2)
 		var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(parent)) // hello yes you are being healed
-		heal_effect.color = isnull(overmind) ? COLOR_BLACK : overmind.blobstrain.complementary_color
+		heal_effect.color = isnull(overmind) ? COLOR_BLACK : overmind.antag_team.blobstrain.complementary_color
 	minion.heal_overall_damage(minion.maxHealth * BLOBMOB_HEALING_MULTIPLIER)
 	return COMPONENT_CANCEL_BLOB_ACT
 

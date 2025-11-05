@@ -16,12 +16,9 @@
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
 
 /obj/structure/blob/special/resource/creation_action()
-	if(overmind)
-		overmind.resource_blobs += src
+	. = ..()
 
 /obj/structure/blob/special/resource/Destroy()
-	if(overmind)
-		overmind.resource_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/resource/Be_Pulsed()
@@ -31,7 +28,7 @@
 	flick("blob_resource_glow", src)
 	if(overmind)
 		overmind.add_points(BLOB_RESOURCE_GATHER_AMOUNT)
-		balloon_alert(overmind, "+[BLOB_RESOURCE_GATHER_AMOUNT] resource\s")
-		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY + overmind.resource_blobs.len * BLOB_RESOURCE_GATHER_ADDED_DELAY //4 seconds plus a quarter second for each resource blob the overmind has
+		balloon_alert(overmind, "+[BLOB_RESOURCE_GATHER_AMOUNT] resource\s") //4 seconds plus a quarter second for each resource blob the overmind has
+		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY + length(overmind.antag_team.all_blobs_by_type[src.type]) * BLOB_RESOURCE_GATHER_ADDED_DELAY
 	else
 		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY

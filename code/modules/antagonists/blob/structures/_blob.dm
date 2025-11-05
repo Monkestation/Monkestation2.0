@@ -42,7 +42,12 @@
 	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
-		overmind.all_blobs += src
+		overmind.antag_team.all_blobs += src
+		var/list/typed_blobs = overmind.antag_team.all_blobs_by_type[src.type]
+		if(!typed_blobs)
+			overmind.antag_team.all_blobs_by_type[src.type] = list(src)
+		else
+			typed_blobs += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
@@ -76,8 +81,9 @@
 		atmosblock = FALSE
 		air_update_turf(TRUE, FALSE)
 	if(overmind)
-		overmind.all_blobs -= src
-		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+		overmind.antag_team.all_blobs -= src
+		overmind.antag_team.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+		overmind.antag_team.all_blobs_by_type[src.type] -= src
 		overmind = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
@@ -109,10 +115,10 @@
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()
 	if(overmind)
-		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.antag_team.blobstrain.color, FIXED_COLOUR_PRIORITY)
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED))
-			add_atom_colour(BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob
+			add_atom_colour(BlendRGB(overmind.antag_team.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -132,7 +138,7 @@
 		if(!thing.can_blob_attack())
 			continue
 		if(isliving(thing) && overmind && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.blobstrain.attack_living(thing)
+			overmind.antag_team.blobstrain.attack_living(thing)
 			continue // Don't smack them twice though
 		thing.blob_act(src)
 	if(iswallturf(loc))
@@ -144,12 +150,12 @@
 	var/area/my_area = get_area(src)
 	if(controller)
 		var/mob/eye/blob/BO = controller
-		O.color = BO.blobstrain.color
+		O.color = BO.antag_team.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
 			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 		O.alpha = 200
 	else if(overmind)
-		O.color = overmind.blobstrain.color
+		O.color = overmind.antag_team.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
 			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 	if(A)
@@ -185,7 +191,7 @@
 		if(!A.can_blob_attack())
 			continue
 		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.blobstrain.attack_living(A)
+			overmind.antag_team.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
 		A.blob_act(src) //also hit everything in the turf
 
@@ -197,12 +203,12 @@
 			B.forceMove(T)
 			var/area/Ablob = get_area(B)
 			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
-				overmind.blobs_legit += B
+				overmind.antag_team.blobs_legit += B
 			else if(controller)
 				B.balloon_alert(overmind, "off-station, won't count!")
 			B.update_appearance()
 			if(B.overmind && expand_reaction)
-				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
+				B.overmind.antag_team.blobstrain.expand_reaction(src, B, T, controller)
 			return B
 		else
 			blob_attack_animation(T, controller)
@@ -219,13 +225,13 @@
 		return
 	if(severity > 0)
 		if(overmind)
-			overmind.blobstrain.emp_reaction(src, severity)
+			overmind.antag_team.blobstrain.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/zap_act(power, zap_flags)
 	if(overmind)
-		if(overmind.blobstrain.tesla_reaction(src, power))
+		if(overmind.antag_team.blobstrain.tesla_reaction(src, power))
 			take_damage(power * 0.0025, BURN, ENERGY)
 	else
 		take_damage(power * 0.0025, BURN, ENERGY)
@@ -235,7 +241,7 @@
 /obj/structure/blob/extinguish()
 	. = ..()
 	if(overmind)
-		overmind.blobstrain.extinguish_reaction(src)
+		overmind.antag_team.blobstrain.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
 	return 15
@@ -246,7 +252,7 @@
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[length(overmind.antag_team.blobs_legit)]/[overmind.antag_team.blobwincount].")]")
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
 			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
@@ -258,9 +264,9 @@
 	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
-		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font>[span_notice(".")]</b>",
-		"<b>Material Effects:</b> [span_notice("[overmind.blobstrain.analyzerdescdamage]")]",
-		"<b>Material Properties:</b> [span_notice("[overmind.blobstrain.analyzerdesceffect || "N/A"]")]")
+		. += list("<b>Material: <font color=\"[overmind.antag_team.blobstrain.color]\">[overmind.antag_team.blobstrain.name]</font>[span_notice(".")]</b>",
+		"<b>Material Effects:</b> [span_notice("[overmind.antag_team.blobstrain.analyzerdescdamage]")]",
+		"<b>Material Properties:</b> [span_notice("[overmind.antag_team.blobstrain.analyzerdesceffect || "N/A"]")]")
 	else
 		. += "<b>No Material Detected!</b>"
 
@@ -301,7 +307,7 @@
 		armor_protection = get_armor_rating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
-		damage_amount = overmind.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
+		damage_amount = overmind.antag_team.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -311,7 +317,7 @@
 
 /obj/structure/blob/atom_destruction(damage_flag)
 	if(overmind)
-		overmind.blobstrain.death_reaction(src, damage_flag)
+		overmind.antag_team.blobstrain.death_reaction(src, damage_flag)
 	..()
 
 /obj/structure/blob/proc/change_to(type, controller)
@@ -330,14 +336,14 @@
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hud_users[user])
 		. += "<b>Your HUD displays an extensive report...</b><br>"
 		if(overmind)
-			. += overmind.blobstrain.examine(user)
+			. += overmind.antag_team.blobstrain.examine(user)
 		else
 			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
 		. += chemeffectreport(user)
 		. += typereport(user)
 	else
 		if((user == overmind || isobserver(user)) && overmind)
-			. += overmind.blobstrain.examine(user)
+			. += overmind.antag_team.blobstrain.examine(user)
 		. += "It seems to be made of [get_chem_name()]."
 
 /obj/structure/blob/proc/scannerreport()
@@ -345,7 +351,7 @@
 
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
-		return overmind.blobstrain.name
+		return overmind.antag_team.blobstrain.name
 	return "some kind of organic tissue"
 
 /obj/structure/blob/normal

@@ -3018,6 +3018,7 @@
 #include "code\modules\antagonists\battlecruiser\battlecruiser.dm"
 #include "code\modules\antagonists\blob\blob_antag.dm"
 #include "code\modules\antagonists\blob\blob_minion.dm"
+#include "code\modules\antagonists\blob\blob_team.dm"
 #include "code\modules\antagonists\blob\lesser_overmind.dm"
 #include "code\modules\antagonists\blob\overmind.dm"
 #include "code\modules\antagonists\blob\powers.dm"

@@ -31,17 +31,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/max_blob_points = OVERMIND_MAX_POINTS_DEFAULT
 	///Used for tracking the attacking/expanding cooldown
 	var/last_attack = 0
-	///What strain do we have
-	var/datum/blobstrain/reagent/blobstrain
-	///List of our minion mobs
-	var/list/blob_mobs = list()
-	///A list of all blob structures
-	var/list/all_blobs = list()
-	///Assoc list of all blob structures keyed to their type
-	var/alist/all_blobs_by_type = alist()
-	var/list/resource_blobs = list()
-	var/list/factory_blobs = list()
-	var/list/node_blobs = list()
 	///How many free rerolls do we have left
 	var/free_strain_rerolls = OVERMIND_STARTING_REROLLS
 	///Time since we last rerolled, used to give free rerolls
@@ -54,30 +43,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/manualplace_min_time = OVERMIND_STARTING_MIN_PLACE_TIME
 	///Amount of time you have before your core will be force played in a random spot
 	var/autoplace_max_time = OVERMIND_STARTING_AUTO_PLACE_TIME
-	///List of blob structures in valid areas, might be able to make this be a simple counter instead
-	var/list/blobs_legit = list()
-	///The highest amount of tiles we got before round end
-	var/highest_tile_count = 0
-	///How many tiles we need to win
-	var/blobwincount = OVERMIND_WIN_CONDITION_AMOUNT
-	///Are we winning, son?
-	var/victory_in_progress = FALSE
 	///Are we currently rerolling
 	var/rerolling = FALSE
-	///What size should we announce this overmind at
-	var/announcement_size = OVERMIND_ANNOUNCEMENT_MIN_SIZE // Announce the biohazard when this size is reached
-	///When should we announce this blob
-	var/announcement_time
-	///Have we been announced yet
-	var/has_announced = FALSE
 
-	/// The list of strains the blob can reroll for.
+	///Ref to our team
+	var/datum/team/blob/antag_team
+	///The list of strains the blob can reroll for.
 	var/list/strain_choices
 
-/mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
+/mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS, datum/team/blob/blob_team)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
 	blob_points = starting_points
+	antag_team = blob_team || new /datum/team/blob(src)
+	antag_team.add_member(mind)
 	manualplace_min_time += world.time
 	autoplace_max_time += world.time
 	GLOB.overminds += src
@@ -87,7 +66,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	last_attack = world.time
 	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
 	set_strain(BS)
-	color = blobstrain.complementary_color
+	color = antag_team.blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_appearance()
 	SSshuttle.registerHostileEnvironment(src)
@@ -122,20 +101,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		return FALSE
 
 	var/had_strain = FALSE
-	if (istype(blobstrain))
-		blobstrain.on_lose()
-		qdel(blobstrain)
+	if (istype(antag_team.blobstrain))
+		antag_team.blobstrain.on_lose()
+		qdel(antag_team.blobstrain)
 		had_strain = TRUE
 
-	blobstrain = new new_strain(src)
-	blobstrain.on_gain()
+	antag_team.blobstrain = new new_strain(src)
+	antag_team.blobstrain.on_gain()
 
 	if (had_strain)
-		to_chat(src, span_notice("Your strain is now: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!"))
-		to_chat(src, span_notice("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.description]"))
-		if(blobstrain.effectdesc)
-			to_chat(src, span_notice("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]"))
-	SEND_SIGNAL(src, COMSIG_BLOB_SELECTED_STRAIN, blobstrain)
+		to_chat(src, span_notice("Your strain is now: <b><font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</b></font>!"))
+		to_chat(src, span_notice("The <b><font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</b></font> strain [antag_team.blobstrain.description]"))
+		if(antag_team.blobstrain.effectdesc)
+			to_chat(src, span_notice("The <b><font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</b></font> strain [antag_team.blobstrain.effectdesc]"))
+	SEND_SIGNAL(src, COMSIG_BLOB_SELECTED_STRAIN, antag_team.blobstrain)
 
 /mob/eye/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
 	if(placed) // The blob can't expand vertically (yet)
@@ -168,8 +147,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
 			qdel(src)
-	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
-		victory_in_progress = TRUE
+	else if(!antag_team.victory_in_progress && (length(antag_team.blobs_legit) >= antag_team.blobwincount))
+		antag_team.victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
@@ -179,12 +158,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
 
-	if(!victory_in_progress && highest_tile_count < blobs_legit.len)
-		highest_tile_count = blobs_legit.len
+	if(!antag_team.victory_in_progress)
+		antag_team.highest_tile_count = max(antag_team.highest_tile_count, length(antag_team.blobs_legit))
 
-	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
+	if(antag_team?.announcement_time && (world.time >= antag_team.announcement_time || length(antag_team.blobs_legit) >= antag_team.announcement_size) && !antag_team.has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
-		has_announced = TRUE
+		antag_team.has_announced = TRUE
 
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
@@ -198,14 +177,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /// Add something to our list of mobs and wait for it to die
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
-	blob_mobs |= minion
+	antag_team.blob_mobs |= minion
 	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
 		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
 
 /// When a spore (or zombie) dies then we do this
 /mob/eye/blob/proc/on_minion_death(mob/living/spore)
 	SIGNAL_HANDLER
-	blobstrain.on_sporedeath(spore)
+	antag_team.blobstrain.on_sporedeath(spore)
 
 /mob/eye/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
@@ -236,7 +215,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			if(!(check_area.area_flags & BLOBS_ALLOWED))
 				continue
-			check_area.color = blobstrain.color
+			check_area.color = antag_team.blobstrain.color
 			check_area.name = "blob"
 			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			check_area.icon_state = "blob_shield"
@@ -254,19 +233,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSticker.force_ending = FORCE_END_ROUND
 
 /mob/eye/blob/Destroy()
-	QDEL_NULL(blobstrain)
+	QDEL_NULL(antag_team.blobstrain)
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
+	for(var/obj/structure/blob/blob_structure as anything in antag_team.all_blobs)
 		blob_structure.overmind = null
-	all_blobs = null
-	resource_blobs = null
-	factory_blobs = null
-	node_blobs = null
-	blob_mobs = null
+
 	GLOB.overminds -= src
 	QDEL_LIST_ASSOC_VAL(strain_choices)
 
@@ -289,15 +264,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/eye/blob/examine(mob/user)
 	. = ..()
-	if(blobstrain)
-		. += "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
+	if(antag_team.blobstrain)
+		. += "Its strain is <font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</font>."
 
 /mob/eye/blob/update_health_hud()
 	if(!blob_core)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
 	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
-	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
+	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in antag_team.blob_mobs)
 		var/datum/hud/using_hud = blobbernaut.hud_used
 		if(!using_hud?.blobpwrdisplay)
 			continue
@@ -333,7 +308,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	src.log_talk(message, LOG_SAY)
 
 	var/message_a = say_quote(message)
-	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
+	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</font>)</b> [message_a]"))
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
@@ -344,7 +319,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		. += "Core Health: [blob_core.get_integrity()]"
 		. += "Power Stored: [blob_points]/[max_blob_points]"
-		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
+		. += "Blobs to Win: [length(antag_team.blobs_legit)]/[antag_team.blobwincount]"
 	if(free_strain_rerolls)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)

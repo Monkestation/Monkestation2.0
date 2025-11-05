@@ -28,14 +28,11 @@
 	return "Will produce a blob spore every few seconds."
 
 /obj/structure/blob/special/factory/creation_action()
-	if(overmind)
-		overmind.factory_blobs += src
+	. = ..()
 
 /obj/structure/blob/special/factory/Destroy()
 	spores_and_zombies = null
 	blobbernaut = null
-	if(overmind)
-		overmind.factory_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/factory/Be_Pulsed()

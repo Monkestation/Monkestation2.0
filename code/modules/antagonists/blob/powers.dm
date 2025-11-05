@@ -39,13 +39,13 @@
 	else
 		var/obj/structure/blob/special/core/core = new(get_turf(src), src, 1)
 		core.overmind = src
-		blobs_legit += src
+		antag_team.blobs_legit += src
 		blob_core = core
 		core.update_appearance()
 
 	update_health_hud()
 	placed = TRUE
-	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
+	antag_team?.announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
 
 	return TRUE
 
@@ -195,7 +195,7 @@
 		return
 
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as a [blobstrain.name] blobbernaut?",
+		"Do you want to play as a [antag_team.blobstrain.name] blobbernaut?",
 		check_jobban = ROLE_BLOB,
 		role = ROLE_BLOB,
 		poll_time = 5 SECONDS,
@@ -213,15 +213,15 @@
 	assume_direct_control(blobber)
 	factory.assign_blobbernaut(blobber)
 	var/mob/dead/observer/player = pick(candidates)
-	blobber.assign_key(player.key, blobstrain)
+	blobber.assign_key(player.key, antag_team.blobstrain)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
 /// When one of our boys attacked something, we sometimes want to perform extra effects
-/mob/eye/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success)
+/mob/eye/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success) //move this over to the team
 	SIGNAL_HANDLER
 	if (!success)
 		return
-	blobstrain.blobbernaut_attack(target, blobbynaut)
+	antag_team.blobstrain.blobbernaut_attack(target, blobbynaut)
 
 /** Moves the core */
 /mob/eye/blob/proc/relocate_core()
@@ -300,7 +300,7 @@
 			continue
 		if(player.stat != DEAD)
 			attack_success = TRUE
-		blobstrain.attack_living(player, possible_blobs)
+		antag_team.blobstrain.attack_living(player, possible_blobs)
 
 	var/obj/structure/blob/blob = locate() in tile
 
@@ -352,7 +352,7 @@
 	var/list/surrounding_turfs = TURF_NEIGHBORS(tile)
 	if(!length(surrounding_turfs))
 		return FALSE
-	for(var/mob/living/basic/blob_mob as anything in blob_mobs)
+	for(var/mob/living/basic/blob_mob as anything in antag_team.blob_mobs)
 		if(!isturf(blob_mob.loc) || get_dist(blob_mob, tile) > 35 || blob_mob.key)
 			continue
 		blob_mob.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
@@ -371,7 +371,7 @@
 	if (!strain_choices)
 		strain_choices = list()
 
-		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
+		var/list/new_strains = GLOB.valid_blobstrains.Copy() - antag_team.blobstrain.type
 		for (var/unused in 1 to BLOB_POWER_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
