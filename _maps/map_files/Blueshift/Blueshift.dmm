@@ -38001,7 +38001,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/computer/piratepad_control{
+/obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -98750,6 +98750,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "tbH" = (

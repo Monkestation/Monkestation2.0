@@ -6654,6 +6654,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/security/prison)
+"csh" = (
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/carpet/red,
+/area/station/cargo/quartermaster)
 "cst" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -21229,7 +21233,9 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "hAx" = (
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/modular_computer/preset/id{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "hAE" = (
@@ -35987,6 +35993,7 @@
 "mxO" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "mxQ" = (
@@ -88577,7 +88584,7 @@ qIK
 suJ
 bor
 iLV
-cjJ
+csh
 lud
 hAx
 kQP

@@ -3105,6 +3105,7 @@
 	fax_name = "Quartermaster's Office";
 	name = "Quartermaster's Fax Machine"
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "bFg" = (
@@ -10218,10 +10219,8 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "eYo" = (
-/obj/machinery/computer/security/qm{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/table,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "eYF" = (
@@ -12014,6 +12013,7 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fSr" = (
@@ -13088,10 +13088,10 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "grs" = (
-/obj/machinery/computer/cargo{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/modular_computer/preset/id{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "grz" = (
@@ -16958,6 +16958,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "ifV" = (
@@ -28857,13 +28858,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
-"nJe" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "nJs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30377,10 +30371,10 @@
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "oym" = (
-/obj/structure/filingcabinet,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "oyH" = (
@@ -35924,6 +35918,9 @@
 	can_send_announcements = 1;
 	pixel_x = -30
 	},
+/obj/machinery/computer/security/qm{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "rjD" = (
@@ -37365,8 +37362,10 @@
 /turf/open/floor/iron/diagonal,
 /area/station/service/bar)
 "rTi" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "rTk" = (
@@ -39162,9 +39161,14 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "sHG" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/table,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/clipboard,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "sHI" = (
@@ -46120,6 +46124,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "vZw" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/spawner/random/trash/bin,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "vZE" = (
@@ -48712,6 +48717,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "xlQ" = (
@@ -49116,6 +49124,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/filingcabinet,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "xwe" = (
@@ -65947,7 +65956,7 @@ ukL
 ukL
 fSq
 vMA
-nJe
+sNf
 mSu
 fdO
 dga

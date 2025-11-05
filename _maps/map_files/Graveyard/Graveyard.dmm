@@ -24375,6 +24375,7 @@
 /area/station/science/research)
 "jyB" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jyF" = (
@@ -60669,6 +60670,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "xCf" = (

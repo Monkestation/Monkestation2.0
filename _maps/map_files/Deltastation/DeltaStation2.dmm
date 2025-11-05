@@ -26474,7 +26474,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/photocopier,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "gkT" = (
@@ -50842,9 +50842,6 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "lRI" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -50856,6 +50853,9 @@
 	id = "qmroom";
 	name = "Privacy Control";
 	pixel_y = -6
+	},
+/obj/machinery/computer/cargo{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -76097,6 +76097,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"rWI" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/photocopier,
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "rWK" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -80277,6 +80284,9 @@
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/modular_computer/preset/id{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -147719,7 +147729,7 @@ awl
 ivt
 krp
 haq
-iWR
+rWI
 jmp
 cQo
 gkP

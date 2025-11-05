@@ -58596,6 +58596,7 @@
 	id = "qm_warehouse";
 	pixel_x = -6
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "rfU" = (
@@ -68624,6 +68625,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tWo" = (
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "tWp" = (
