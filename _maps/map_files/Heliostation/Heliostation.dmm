@@ -56076,13 +56076,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/requests_console/directional/south{
-	department = "Telecomms Admin";
-	name = "Telecomms Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "onb" = (
@@ -57320,13 +57313,13 @@
 /obj/item/pen{
 	pixel_x = 6
 	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/requests_console/directional/west{
 	department = "Telecomms Admin";
 	name = "Telecomms Requests Console"
 	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "oLf" = (
