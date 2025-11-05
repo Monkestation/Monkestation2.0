@@ -40016,7 +40016,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = -6;
 	pixel_y = 4
 	},

@@ -26251,7 +26251,7 @@
 /obj/item/paper_bin{
 	pixel_x = -6
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 8;
 	pixel_y = 12
 	},

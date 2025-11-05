@@ -9450,7 +9450,7 @@
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 5;
 	pixel_y = 4
 	},

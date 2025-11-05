@@ -72472,7 +72472,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/stamp/granted{
 	pixel_y = 4;

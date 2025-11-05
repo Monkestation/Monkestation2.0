@@ -77609,7 +77609,7 @@
 /obj/item/stamp/denied{
 	pixel_y = 6
 	},
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "oYT" = (

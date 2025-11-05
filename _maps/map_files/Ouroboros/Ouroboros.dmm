@@ -4038,7 +4038,7 @@
 	pixel_y = 12;
 	pixel_x = 5
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_y = 5
 	},
 /obj/item/stamp{

@@ -27894,7 +27894,7 @@
 "nmy" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding/wood,
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = -9
 	},
 /turf/open/floor/carpet,
