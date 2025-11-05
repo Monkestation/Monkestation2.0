@@ -1,6 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscdel: "AI Overflow is disabled"
-  - balance: "AI Triumvirate weight is bumped to 2 (from 1) to compensate for this change."
-  - bugfix: "AI Triumvirate will allow for 3 latejoin ai's"

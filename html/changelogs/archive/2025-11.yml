@@ -37,8 +37,27 @@
   - code_imp: Simplified tripping and knockdown consistency across files.
   EssentialTomato:
   - rscadd: Added halos to the anime implants.
+  MilkForever:
+  - rscadd: Arachnids now have the Sericulture ability, allowing them to produce silk
+      at the cost of hunger.
+  - rscadd: Added Silk. Silk can be used to make silk walls, furniture, floor tiles,
+      clothing and spider structures. Two pieces of silk can be refined into cloth.
+  - qol: Spider blood (AKA Arachnid blood) can now spawn in blood bags in blood freezers.
+      It can also be made in the wall med-stations that use biomass.
+  - rscdel: Removed Skrell blood, Skrell don't even exist.
+  RandomDudeFromTheRim:
+  - map: added in 2 missing walls
+  Snack-Max:
+  - rscadd: Edited Toggled Utility Jumpsuit sprites to show department colors.
   Tractor-Maam:
   - rscadd: Added the Voice Obfuscator Gas Mask, a crafting item that makes you sound
       unknown.
   - code_imp: Added TRAIT_ANONYMOUS to hide names/jobs only because TRAIT_UNKNOWN
       extends too far for this use case.
+  Vect0r2:
+  - bugfix: Assemblers don't fuck shit up
+  notghosti:
+  - rscdel: AI Overflow is disabled
+  - balance: AI Triumvirate weight is bumped to 2 (from 1) to compensate for this
+      change.
+  - bugfix: AI Triumvirate will allow for 3 latejoin ai's
