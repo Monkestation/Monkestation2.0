@@ -570,24 +570,27 @@
 /datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
 	id = "time_dilation"
 	duration = 60 SECONDS
-	alert_type = /obj/screen/alert/status_effect/time_dilation
+	alert_type = /atom/movable/screen/alert/status_effect/time_dilation
 
 /datum/status_effect/time_dilation/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] is moving jerkily and unpredictably!")
 
 /datum/status_effect/time_dilation/on_apply()
-	owner.add_movespeed_modifier(/datum/status_effect/time_dilation)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
 	owner.next_move_modifier *= 0.5 // For the duration of this you move and attack faster
 	owner.ignore_slowdown(id)
 	return TRUE
 
 /datum/status_effect/time_dilation/on_remove()
-	owner.remove_movespeed_modifier(/datum/status_effect/time_dilation)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
 	owner.next_move_modifier *= 2
 	owner.unignore_slowdown(id)
 
-/obj/screen/alert/status_effect/time_dilation
+/atom/movable/screen/alert/status_effect/time_dilation
 	name = "Time Dilation"
 	desc = "Your actions are twice as fast, and the delay between them is halved."
 	icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	icon_state = "time_dilation"
+
+/datum/movespeed_modifier/time_dilation
+	multiplicative_slowdown = -0.5
