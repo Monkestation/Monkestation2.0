@@ -16384,6 +16384,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/holosign_creator/robot_seat/bar,
+/obj/machinery/barsign/directional/north,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "byC" = (
@@ -33529,13 +33530,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
-"fPW" = (
-/obj/machinery/barsign{
-	pixel_y = -30
-	},
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "fPZ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -113808,7 +113802,7 @@ btd
 bwl
 bwl
 bwl
-fPW
+caP
 bxd
 byA
 bAp
