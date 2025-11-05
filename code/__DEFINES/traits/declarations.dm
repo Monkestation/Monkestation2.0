@@ -398,6 +398,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEB_WEAVER "web_weaver"
 /// Can navigate the web without getting stuck
 #define TRAIT_WEB_SURFER "web_surfer"
+/// Can navigate ONLY the arachnid web without getting stuck
+#define TRAIT_ARACHNID_WEB_SURFER "arachnid_web_surfer"
 /// A web is being spun on this turf presently
 #define TRAIT_SPINNING_WEB_TURF "spinning_web_turf"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
@@ -604,6 +606,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
+
+/// The person with this trait always appears as 'unknown', but doesnt obscure the examine.
+#define TRAIT_ANONYMOUS "anonymous"
 
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"

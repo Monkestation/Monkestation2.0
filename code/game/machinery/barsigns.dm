@@ -153,7 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
 
-	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
 			balloon_alert(user, "open the panel first!")
 			return TRUE
