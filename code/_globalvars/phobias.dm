@@ -396,7 +396,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/radio/headset/heads,
 		/obj/item/melee/baton/telescopic,
 		/obj/item/stamp/centcom,
-		/obj/item/stamp/head,
 		/obj/item/toy/figure/captain,
 		/obj/item/toy/figure/ce,
 		/obj/item/toy/figure/cmo,
