@@ -20295,6 +20295,7 @@
 /area/centcom/syndicate_mothership/firebase_trident)
 "cjJ" = (
 /obj/machinery/light/floor/has_bulb,
+/obj/machinery/recharge_station/fullupgrade,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "cjY" = (
@@ -22543,6 +22544,7 @@
 /obj/structure/sign/warning/no_smoking{
 	pixel_y = 28
 	},
+/obj/machinery/recharge_station/fullupgrade,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "gqw" = (
