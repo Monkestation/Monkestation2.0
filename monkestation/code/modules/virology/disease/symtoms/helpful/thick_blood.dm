@@ -21,4 +21,5 @@
 
 /datum/symptom/thick_blood/deactivate(mob/living/carbon/mob)
 	REMOVE_TRAIT(mob, TRAIT_COAGULATING, DISEASE_TRAIT)
-	victim.physiology?.bleed_mod /= passive_bleed_modifier
+	if(ishuman(mob))
+		victim.physiology?.bleed_mod /= passive_bleed_modifier
