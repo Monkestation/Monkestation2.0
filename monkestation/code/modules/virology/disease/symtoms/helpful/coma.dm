@@ -86,3 +86,4 @@
 	if((victim.getBruteLoss() + victim.getFireLoss()) > 30)
 		return TRUE
 	return FALSE
+#undef COMA_COOLDOWN
