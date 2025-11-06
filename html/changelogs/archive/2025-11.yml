@@ -37,8 +37,58 @@
   - code_imp: Simplified tripping and knockdown consistency across files.
   EssentialTomato:
   - rscadd: Added halos to the anime implants.
+  MilkForever:
+  - rscadd: Arachnids now have the Sericulture ability, allowing them to produce silk
+      at the cost of hunger.
+  - rscadd: Added Silk. Silk can be used to make silk walls, furniture, floor tiles,
+      clothing and spider structures. Two pieces of silk can be refined into cloth.
+  - qol: Spider blood (AKA Arachnid blood) can now spawn in blood bags in blood freezers.
+      It can also be made in the wall med-stations that use biomass.
+  - rscdel: Removed Skrell blood, Skrell don't even exist.
+  RandomDudeFromTheRim:
+  - map: added in 2 missing walls
+  Snack-Max:
+  - rscadd: Edited Toggled Utility Jumpsuit sprites to show department colors.
   Tractor-Maam:
   - rscadd: Added the Voice Obfuscator Gas Mask, a crafting item that makes you sound
       unknown.
   - code_imp: Added TRAIT_ANONYMOUS to hide names/jobs only because TRAIT_UNKNOWN
       extends too far for this use case.
+  Vect0r2:
+  - bugfix: Assemblers don't fuck shit up
+  notghosti:
+  - rscdel: AI Overflow is disabled
+  - balance: AI Triumvirate weight is bumped to 2 (from 1) to compensate for this
+      change.
+  - bugfix: AI Triumvirate will allow for 3 latejoin ai's
+2025-11-05:
+  Absolucy:
+  - rscadd: Anvils are now falling hazards, as in, if you drop it onto someone on
+      a lower floor, it hurts them. A lot.
+  Absolucy, JohnFulpWillard:
+  - refactor: Blueprints now use TGUI.
+  - qol: Blueprints can now be used while lying down.
+  "Fwog\u2122":
+  - rscadd: 'New Negative Quirk: Material Allergy! Ever wanted to be horribly burnt
+      at the touch of silver, or gold, or just for shits n giggles plastic or something?
+      Now you can! I don''t know why you wanted that. That''s a weird want. You''re
+      weird. Weirdo.'
+  JohnFulpWillard:
+  - bugfix: You can use regenerative cores/rush glands/brimdust sacs while resting.
+  - bugfix: Using the setting to hide your preference from the roundend report will
+      now also hide your ckey if you got an achievement.
+  Tractor-Maam:
+  - balance: Reverted the Voice Obfuscator Gas Mask recipe to its old version. Antags,
+      please test this and give feedback!
+  notghosti:
+  - map: Adds recharge stations to central command
+  - map: CC and oldstation will produce overall less GPS signals
+  - code_imp: Added a variable for communication and uploads for them to not produce
+      a gps signal
+  - rscadd: Health analyzers will now provide information about diseases once they
+      have been analyzed with a disease analyzer.
+  - balance: Anaphylaxis (Allergy attacks) will always be considered analyzed, albeit
+      not in the database.
+  - balance: Blacklisted food allergies from oozelings, as the disease would self
+      cure and be free points as they are toxin lovers.
+  - code_imp: Viral code now has a origin, more for additional logging purposes.

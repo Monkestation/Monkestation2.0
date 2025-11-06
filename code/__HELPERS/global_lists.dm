@@ -145,6 +145,7 @@
 		/obj/item/stack/sheet/cardboard = GLOB.cardboard_recipes,
 		/obj/item/stack/sheet/bronze = GLOB.bronze_recipes,
 		/obj/item/stack/sheet/plastic = GLOB.plastic_recipes,
+		/obj/item/stack/sheet/silk = GLOB.silk_recipes,
 		/obj/item/stack/ore/glass = GLOB.sand_recipes,
 		/obj/item/stack/rods = GLOB.rod_recipes,
 		/obj/item/stack/sheet/runed_metal = GLOB.runed_metal_recipes,
