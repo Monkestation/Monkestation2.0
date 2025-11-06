@@ -61,8 +61,8 @@
 /datum/symptom/coma/proc/uncoma(mob/living/victim)
 	if(QDELETED(victim) || !active_coma)
 		return
+	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 10 SECONDS)
 	active_coma = FALSE
-	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 8 SECONDS)
 
 /datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
