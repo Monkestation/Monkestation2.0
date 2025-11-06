@@ -449,13 +449,7 @@
 	icon_living = "bananadola"
 	icon_dead = "bananadola"
 	icon_gib = null
-	basic_mob_flags = DEL_ON_DEATH
+	basic_mob_flags = FLIP_ON_DEATH
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Milthy")
-
-/mob/living/basic/pet/bananadola/death(gibbed)
-	. = ..()
-	playsound(src, 'sound/items/party_horn.ogg', 50)
-	new /obj/effect/decal/cleanable/confetti(get_turf(src))
-	new /obj/item/grown/bananapeel(get_turf(src))
