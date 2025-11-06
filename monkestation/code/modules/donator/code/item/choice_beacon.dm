@@ -145,3 +145,8 @@
 	name ="Cyber Husky"
 	default_name = "Cyber Husky"
 	donator_pet = /mob/living/basic/pet/cyber_husky
+
+/obj/item/choice_beacon/pet/donator/bananadola
+	name ="bananadola"
+	default_name = "bananadola"
+	donator_pet = /mob/living/basic/pet/bananadola
