@@ -456,5 +456,6 @@
 
 /mob/living/basic/pet/bananadola/death(gibbed)
 	. = ..()
+	playsound(src, 'sound/items/party_horn.ogg', 50)
 	new /obj/effect/decal/cleanable/confetti(get_turf(src))
 	new /obj/item/grown/bananapeel(get_turf(src))
