@@ -9,7 +9,7 @@
 
 /datum/symptom/thick_blood/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	ADD_TRAIT(mob, TRAIT_COAGULATING, DISEASE_TRAIT)
-	victem.physiology?.bleed_mod *= passive_bleed_modifier
+	victim.physiology?.bleed_mod *= passive_bleed_modifier
 
 /datum/symptom/thick_blood/activate(mob/living/carbon/mob)
 	var/mob/living/carbon/human/victim = mob
@@ -20,4 +20,4 @@
 
 /datum/symptom/thick_blood/deactivate(mob/living/carbon/mob)
 	REMOVE_TRAIT(mob, TRAIT_COAGULATING, DISEASE_TRAIT)
-	victem.physiology?.bleed_mod /= passive_bleed_modifier
+	victim.physiology?.bleed_mod /= passive_bleed_modifier
