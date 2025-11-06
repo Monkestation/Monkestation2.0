@@ -443,7 +443,7 @@
 
 /mob/living/basic/pet/bananadola
 	name = "bananadola"
-	desc = "Beloved pet of the Bananotrasen CEO, an <span class='clown'>abomination</span> of genetic horror. Tastes good fried."
+	desc = "Beloved pet of the Bananotrasen CEO, an abomination of genetic horror. Tastes good fried."
 	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
 	icon_state = "bananadola"
 	icon_living = "bananadola"
@@ -457,5 +457,5 @@
 /mob/living/basic/pet/bananadola/death(gibbed)
 	. = ..()
 	playsound(src, 'sound/items/party_horn.ogg', 50)
-	new /obj/effect/decal/cleanable/confetti(get_turf(src))
-	new /obj/item/grown/bananapeel(get_turf(src))
+	new /obj/effect/decal/cleanable/confetti(src)
+	new /obj/item/grown/bananapeel(src)

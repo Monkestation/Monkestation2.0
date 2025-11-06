@@ -1053,7 +1053,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/pocket_items/donator/eris_romch
+/datum/loadout_item/pocket_items/donator/bananadola
 	name = "Pet Delivery Beacon - Bananadola"
 	item_path = /obj/item/choice_beacon/pet/donator/bananadola
 	ckeywhitelist = list("Milthy")
