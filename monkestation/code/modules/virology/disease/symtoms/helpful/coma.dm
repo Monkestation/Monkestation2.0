@@ -1,6 +1,7 @@
+#define COMA_COOLDOWN (5 MINUTES) // Half a reviver that defibs you.
 /datum/symptom/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. Waking them up some time later."
 	max_multiplier = 12
 	max_chance = 100
 	stage = 3
@@ -10,13 +11,19 @@
 	var/passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/added_to_mob = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
+	COOLDOWN_DECLARE(last_coma)
 
-/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/coma/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
 	if(!added_to_mob && max_multiplier >= 9)
 		added_to_mob = TRUE
 		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
+/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+	. = ..()
+
+	if (!COOLDOWN_FINISHED(src, last_coma))
+		return
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)
 		return
@@ -49,7 +56,7 @@
 	if((victim.getBruteLoss() + victim.getFireLoss()) >= 80 && !active_coma)
 		to_chat(victim, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), victim), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(coma), victim), 8 SECONDS)
 	return FALSE
 
 /datum/symptom/coma/proc/coma(mob/living/victim)
@@ -61,8 +68,9 @@
 /datum/symptom/coma/proc/uncoma(mob/living/victim)
 	if(QDELETED(victim) || !active_coma)
 		return
-	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 10 SECONDS)
+	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 15 SECONDS)
 	active_coma = FALSE
+	COOLDOWN_START(src, last_coma, COMA_COOLDOWN)
 
 /datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
