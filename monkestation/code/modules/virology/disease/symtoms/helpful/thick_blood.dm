@@ -6,7 +6,6 @@
 	severity = 0
 	/// While active we reduce all bleeding by this factor
 	var/passive_bleed_modifier = 0.7
-	var/added_to_mob = FALSE
 
 /datum/symptom/thick_blood/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	ADD_TRAIT(mob, TRAIT_COAGULATING, DISEASE_TRAIT)
