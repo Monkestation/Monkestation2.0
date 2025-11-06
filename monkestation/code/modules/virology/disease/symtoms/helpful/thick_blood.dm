@@ -14,6 +14,7 @@
 		victim.physiology?.bleed_mod *= passive_bleed_modifier
 
 /datum/symptom/thick_blood/activate(mob/living/carbon/mob)
+	var/mob/living/carbon/human/victim = mob
 	if (ishuman(victim))
 		if(victim.is_bleeding())
 			victim.restore_blood()
@@ -21,5 +22,6 @@
 
 /datum/symptom/thick_blood/deactivate(mob/living/carbon/mob)
 	REMOVE_TRAIT(mob, TRAIT_COAGULATING, DISEASE_TRAIT)
+	var/mob/living/carbon/human/victim = mob
 	if(ishuman(mob))
 		victim.physiology?.bleed_mod /= passive_bleed_modifier
