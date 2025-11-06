@@ -13,15 +13,11 @@
 	var/active_coma = FALSE //to prevent multiple coma procs
 	COOLDOWN_DECLARE(last_coma)
 
-/datum/symptom/coma/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
 	if(!added_to_mob && max_multiplier >= 9)
 		added_to_mob = TRUE
 		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
-
-/datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
-	. = ..()
-
 	if (!COOLDOWN_FINISHED(src, last_coma))
 		return
 	var/effectiveness = CanHeal(mob)
