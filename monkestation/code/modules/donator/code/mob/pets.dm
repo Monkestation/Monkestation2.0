@@ -456,4 +456,5 @@
 
 /mob/living/basic/pet/bananadola/death(gibbed)
 	. = ..()
-	new /obj/item/grown/bananapeel(loc)
+	new /obj/effect/decal/cleanable/confetti(get_turf(src))
+	new /obj/item/grown/bananapeel(get_turf(src))
