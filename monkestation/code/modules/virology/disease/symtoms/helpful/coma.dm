@@ -1,7 +1,7 @@
 #define COMA_COOLDOWN (5 MINUTES) // Half a reviver that defibs you.
 /datum/symptom/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. Waking them up some time later."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. Waking the host up some time later."
 	max_multiplier = 12
 	max_chance = 100
 	stage = 3
