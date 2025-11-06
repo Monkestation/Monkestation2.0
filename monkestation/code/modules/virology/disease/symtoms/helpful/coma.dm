@@ -12,6 +12,7 @@
 	var/added_to_mob = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 	COOLDOWN_DECLARE(last_coma)
+	var/cooldown_alert = FALSE // To give some mechanical signal that it's back online
 
 /datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
@@ -19,7 +20,12 @@
 		added_to_mob = TRUE
 		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 	if (!COOLDOWN_FINISHED(src, last_coma))
+		cooldown_alert = FALSE
 		return
+	if(!cooldown_alert)
+		cooldown_alert = FALSE
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "yawn")
+		to_chat(victim, span_warning("You can't help the urge to yawn."))
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)
 		return
