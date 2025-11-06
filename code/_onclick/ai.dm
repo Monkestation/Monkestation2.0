@@ -52,8 +52,9 @@
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
 			return
-		ShiftClickOn(A)
-		return
+		if(!LAZYACCESS(modifiers, RIGHT_CLICK)) // shift right click = right click, not shift click (context menu pref compatibility)
+			ShiftClickOn(A)
+			return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		ai_base_click_alt(A)
 		return

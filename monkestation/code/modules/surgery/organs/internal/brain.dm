@@ -130,7 +130,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
 	else
 		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
+	if(mind?.dnr)
+		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
+	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
@@ -244,11 +246,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		stored_language_holder = new slime_language_holder.type
 		stored_language_holder.copy_languages(slime_language_holder)
 
-	var/datum/atom_voice/slime_voice = slime.get_voice()
-	if(slime_voice)
-		if(!voice)
-			voice = new
-		voice.copy_from(slime_voice)
+	if(slime.voice)
+		copy_voice_from(slime)
 
 ///////
 /// CORE EJECTION PROC
@@ -325,6 +324,11 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
 	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+		if(mind?.dnr)
+			to_chat(user, span_warning("The soul of [src] has departed..."))
+			user.balloon_alert(user, "core's soul has departed...")
+			return FALSE
+
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 			user.balloon_alert(user, "too little plasma!")
 			return FALSE
@@ -342,6 +346,11 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return FALSE
+
+		if(mind?.dnr)
+			to_chat(user, span_warning("The soul of [src] has departed..."))
+			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE
 
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100) // minor exploit but might as well patch it
@@ -469,9 +478,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		new_body.get_language_holder()?.copy_languages(stored_language_holder)
 		QDEL_NULL(stored_language_holder)
 	if(voice)
-		if(!new_body.voice)
-			new_body.voice = new
-		new_body.voice.copy_from(voice)
+		new_body.copy_voice_from(src)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"

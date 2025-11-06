@@ -345,6 +345,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes it impossible for someone to be converted by cult/revs/etc.
 #define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
+#define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /* #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed" */
 /// Lets the user succumb even if they got NODEATH
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
@@ -604,6 +605,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
 
+/// The person with this trait always appears as 'unknown', but doesnt obscure the examine.
+#define TRAIT_ANONYMOUS "anonymous"
+
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 
@@ -664,6 +668,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 /* #define TRAIT_DRUNKEN_BRAWLER "drunken brawler" */
+
+/// Makes user able to absorb food through any exposed body part.
+#define TRAIT_FOOD_ABSORPTION "food_absorbtion"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
