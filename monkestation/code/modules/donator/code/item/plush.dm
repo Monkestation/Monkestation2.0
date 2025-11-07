@@ -194,7 +194,7 @@
 	icon_state = "ai_plush"
 
 /obj/item/toy/plush/monkey
-	name = "monkey plush"
-	desc = "A plushie of a monkey in a jacket!"
+	name = "chimpson plush"
+	desc = "Chimp of many titles, most notably 'Annoying'."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "monkey_plushie"
