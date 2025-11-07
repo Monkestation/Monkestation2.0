@@ -46,13 +46,7 @@
 /datum/dynamic_ruleset/midround/monsterhunter/ready(forced = FALSE)
 	if(required_candidates > length(living_players))
 		return FALSE
-	var/count = 0
-	for(var/datum/antagonist/monster as anything in GLOB.antagonists)
-		if(QDELETED(monster.owner) || QDELETED(monster.owner.current) || monster.owner.current.stat == DEAD)
-			continue
-		if(is_type_in_typecache(monster, GLOB.monster_hunter_prey_antags))
-			count++
-
+	var/count = length(get_all_monster_hunter_prey())
 	if(MINIMUM_MONSTERS_REQUIRED > count)
 		message_admins("[name] ruleset has attempted to run, but there were not enough monsters!")
 		log_game("DYNAMIC: [name] ruleset has attempted to run, but there were not enough monsters!")

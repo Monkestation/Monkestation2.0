@@ -415,3 +415,21 @@
 	qdel(src)
 	return TRUE
 
+// you can pass a mob OR mind to this
+/proc/is_monster_hunter_prey(victim)
+	var/datum/mind/victim_mind = get_mind(victim, include_last = TRUE)
+	if(!istype(victim_mind))
+		return FALSE
+	var/list/prey = list()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MONSTER_HUNTER_QUERY, prey)
+	return (victim_mind in prey)
+
+/proc/get_all_monster_hunter_prey(include_dead = FALSE)
+	. = list()
+	var/list/prey = list()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MONSTER_HUNTER_QUERY, prey)
+	for(var/datum/mind/monster as anything in prey)
+		var/mob/living/current = monster.current
+		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
+			continue
+		. += monster

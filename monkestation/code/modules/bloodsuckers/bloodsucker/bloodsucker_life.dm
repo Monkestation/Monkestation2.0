@@ -81,6 +81,7 @@
 	total_blood_drank += blood_taken
 	if(target.mind && !IS_VASSAL(target)) // Checks if the target has a mind and is not a vassal
 		blood_level_gain += blood_taken
+		total_blood_level_gain += blood_taken
 	return blood_taken
 
 /**

@@ -7,6 +7,7 @@
 	chemical_cost = 10
 
 	req_human = TRUE
+	weird = TRUE
 	//// is ability active (we are invisible)?
 	var/is_active = FALSE
 	/// How much we slow chemical regeneration while active, in chems per second
