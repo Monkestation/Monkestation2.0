@@ -294,7 +294,7 @@
 		discovered = TRUE
 		generate_description(user)
 		balloon_alert_to_viewers("vent scanned!")
-		addComponent(/datum/component/gps, name)
+		AddComponent(/datum/component/gps, name)
 		return
 	if(!discovered)
 		balloon_alert(user, "scanning...")
