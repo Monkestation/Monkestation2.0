@@ -325,6 +325,9 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 
+/mob/living/simple_animal/hostile/megafauna/wendigo/noportal/create_portal()
+	return
+
 #undef WENDIGO_ENRAGED
 #undef WENDIGO_CIRCLE_SHOTCOUNT
 #undef WENDIGO_CIRCLE_REPEATCOUNT
