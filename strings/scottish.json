@@ -1,9 +1,5 @@
 {
 	"scottish": {
-		"girl": "lassie",
-		"boy": "laddie",
-		"man": "lad",
-		"woman": "lass",
 		"don't": "dinnae",
 		"dont": "dinnae",
 		"i'm": "A'm",
@@ -137,6 +133,10 @@
 		"not": "nae",
 		"dad": "da",
 		"mom": "maw",
-		"hey": "oi"
+		"hey": "oi",
+		"girl": "lassie",
+		"boy": "laddie",
+		"man": "lad",
+		"woman": "lass"
 	}
 }
