@@ -1,8 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "The AI, and peacekeeper cyborgs with an upgrade, have a nanite remote."
-  - balance: "Suppression nanites have been nerfed so AI can't get you too hard with the nanite remote."
-  - qol: "Nanite Programming UI has been reoriented to make it significantly easier."
-  - map: "Removes deprecated nanite programming hub and nanite programmer."
-  - map: "Adds bottle of nanite purging toxin to nanite labs."

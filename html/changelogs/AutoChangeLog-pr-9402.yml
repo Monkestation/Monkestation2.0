@@ -1,8 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "darkspawn time dilation ability now actually works"
-  - bugfix: "darkspawn encroach ability now fully protects you from light"
-  - bugfix: "you no longer always know deluxe donk pocket secret recipes"
-  - bugfix: "fixed crafting recipe books that taught you cooking recipes runtiming and not working"
-  - bugfix: "fixed being able to bypass headgear to drink with click-drag"
