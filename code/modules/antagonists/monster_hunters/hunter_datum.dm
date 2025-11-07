@@ -416,7 +416,7 @@
 	return TRUE
 
 // you can pass a mob OR mind to this
-/proc/is_monster_hunter_prey(victim, recurse = FALSE)
+/proc/is_monster_hunter_prey(victim)
 	var/static/list/antag_datums_to_check
 	if(!antag_datums_to_check)
 		antag_datums_to_check = typecacheof(list(
