@@ -4649,6 +4649,7 @@
 #include "code\modules\mining\equipment\resonator.dm"
 #include "code\modules\mining\equipment\storage_cases.dm"
 #include "code\modules\mining\equipment\survival_pod.dm"
+#include "code\modules\mining\equipment\vent_pointer.dm"
 #include "code\modules\mining\equipment\wormhole_jaunter.dm"
 #include "code\modules\mining\equipment\kinetic_crusher\kinetic_crusher_trophies.dm"
 #include "code\modules\mining\equipment\kinetic_crusher\trophies_fauna.dm"
