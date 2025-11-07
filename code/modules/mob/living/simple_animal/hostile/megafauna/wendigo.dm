@@ -274,6 +274,10 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	if(!true_spawn)
 		return ..()
 
+	create_portal()
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/create_portal()
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
