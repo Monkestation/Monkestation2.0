@@ -501,7 +501,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 
 /obj/item/clothing/mask/gas/voiceconcealer
-	desc = "A modified hailer mask that has had the soundbank replaced with a microphone, and then covered with a fake plastic shell with the appearance of a gas mask. Great for concealing your identity as long as you make sure to hide every other identifying feature."
+	desc = "A face-covering mask that has been significantly modified near the mouth to block off the users voice whilst repeating it through a speaker. Great for concealing your identity as long as you make sure to hide every other identifying feature."
 	clothing_traits = list(TRAIT_ANONYMOUS)
 
 /obj/item/clothing/mask/gas/voiceconcealer/equipped(mob/living/user, slot)

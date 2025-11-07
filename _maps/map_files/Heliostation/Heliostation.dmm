@@ -2780,7 +2780,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "seceva";
 	name = "EVA Shutters";
-	req_access = list("armory")
+	req_access = list("brig")
 	},
 /obj/machinery/door/poddoor/shutters/window{
 	dir = 1;
@@ -16384,6 +16384,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/item/holosign_creator/robot_seat/bar,
+/obj/machinery/barsign/directional/north,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "byC" = (
@@ -19711,9 +19712,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "bWX" = (
-/obj/item/storage/box/disks_nanite,
 /obj/structure/rack,
 /obj/machinery/light/directional/north,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
 "bXb" = (
@@ -33529,13 +33531,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
-"fPW" = (
-/obj/machinery/barsign{
-	pixel_y = -30
-	},
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "fPZ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -36178,10 +36173,6 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"gSY" = (
-/obj/machinery/nanite_programmer,
-/turf/open/floor/iron/dark/herringbone,
-/area/station/science/circuits)
 "gTf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49724,7 +49715,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "lWb" = (
-/obj/machinery/nanite_program_hub,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/circuits)
@@ -56076,13 +56066,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/requests_console/directional/south{
-	department = "Telecomms Admin";
-	name = "Telecomms Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "onb" = (
@@ -57320,13 +57303,13 @@
 /obj/item/pen{
 	pixel_x = 6
 	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/requests_console/directional/west{
 	department = "Telecomms Admin";
 	name = "Telecomms Requests Console"
 	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "oLf" = (
@@ -113815,7 +113798,7 @@ btd
 bwl
 bwl
 bwl
-fPW
+caP
 bxd
 byA
 bAp
@@ -126945,7 +126928,7 @@ wKH
 uHo
 oMA
 caq
-gSY
+fbi
 dqn
 fbi
 aLu

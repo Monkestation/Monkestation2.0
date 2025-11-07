@@ -21,12 +21,17 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 /datum/request_manager
 	/// Associative list of ckey -> list of requests
-	var/list/requests = list()
+	var/alist/requests
 	/// List where requests can be accessed by ID
-	var/list/requests_by_id = list()
+	var/alist/requests_by_id
+
+/datum/request_manager/New()
+	. = ..()
+	requests = alist()
+	requests_by_id = alist()
 
 /datum/request_manager/Destroy(force)
-	QDEL_LIST(requests)
+	QDEL_LIST_ASSOC_VAL(requests)
 	return ..()
 
 /**
@@ -133,7 +138,6 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
-	requests_by_id.len++
 	requests_by_id[request.id] = request
 
 /datum/request_manager/mentor/request_for_client(client/C, type, message, additional_info)
@@ -141,7 +145,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
-	requests_by_id["[request.id]"] = request
+	requests_by_id[request.id] = request
 
 /datum/request_manager/ui_interact(mob/user, datum/tgui/ui = null)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -266,8 +270,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	. = list(
 		"requests" = list()
 	)
-	for (var/ckey in requests)
-		for (var/datum/request/request as anything in requests[ckey])
+	for (var/ckey, ckey_requests in requests)
+		for (var/datum/request/request as anything in ckey_requests)
 			var/list/data = list(
 				"id" = request.id,
 				"req_type" = request.req_type,

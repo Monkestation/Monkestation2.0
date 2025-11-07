@@ -191,6 +191,10 @@
 	embedding = list("embed_chance" = 65)
 	staketime = 60
 
+/obj/item/stake/hardened/silver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 //////////////////////
 //     ARCHIVES     //
 //////////////////////

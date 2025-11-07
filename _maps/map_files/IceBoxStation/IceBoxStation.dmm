@@ -9280,8 +9280,8 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security EVA"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "cJb" = (
@@ -12893,14 +12893,7 @@
 "dOK" = (
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -5;
-	pixel_y = 5
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 0;
 	pixel_y = 18
@@ -24531,10 +24524,6 @@
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
 /area/station/service/chapel)
-"hzg" = (
-/obj/machinery/nanite_programmer,
-/turf/open/floor/iron,
-/area/station/science/explab)
 "hzz" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -37109,7 +37098,6 @@
 /area/station/medical/medbay/aft)
 "lqL" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "lqU" = (
@@ -46692,11 +46680,11 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security EVA"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/smooth,
 /area/station/security/processing)
 "omg" = (
@@ -56321,6 +56309,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
+"rkg" = (
+/obj/item/storage/box/disks_nanite,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/science/explab)
 "rki" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/east,
@@ -256603,7 +256596,7 @@ cyL
 yeC
 yeC
 yeC
-yeC
+rkg
 dOK
 bgx
 puh
@@ -257115,7 +257108,7 @@ cSw
 pwK
 yeC
 lqL
-hzg
+yeC
 nBN
 xPI
 jZY

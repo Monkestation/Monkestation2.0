@@ -242,7 +242,6 @@
 		"syringe",
 		"xlarge_beaker",
 		"tube",
-		"synth_eyes",
 		"synth_tongue",
 		"synth_liver",
 		"synth_lungs",

@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Messenger will no longer kick you out of your PDA app into messenger."

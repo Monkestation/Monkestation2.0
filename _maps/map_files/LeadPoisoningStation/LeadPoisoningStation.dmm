@@ -7437,10 +7437,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 1
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "dIO" = (
@@ -10090,7 +10087,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/medical/cryo)
 "eUz" = (
-/obj/machinery/nanite_program_hub,
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -13046,7 +13042,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "gqx" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
@@ -24676,11 +24671,8 @@
 	pixel_x = -9;
 	pixel_y = 9
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 9
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "lOL" = (
@@ -39730,7 +39722,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/brig)
 "sWy" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
@@ -41858,7 +41849,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "tYX" = (
-/obj/machinery/nanite_programmer,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/ordnance/office)
