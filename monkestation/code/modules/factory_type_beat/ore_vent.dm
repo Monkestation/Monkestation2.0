@@ -248,6 +248,8 @@
  * Also gives xp and mining points to all nearby miners in equal measure.
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
 	COOLDOWN_RESET(src, wave_cooldown)
 	remove_shared_particles(/particles/smoke/ash)
@@ -262,18 +264,18 @@
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
 		icon_state = initial(icon_state)
 		update_appearance(UPDATE_ICON_STATE)
-		return FALSE //Bad end, try again.
+		node = null
+		return //Bad end, try again.
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
 		if(miner.stat <= SOFT_CRIT)
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
-		if(!user_id_card)
-			continue
-		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
-		user_id_card.registered_account.mining_points += point_reward_val
-		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+		if(user_id_card.registered_account)
+			user_id_card.registered_account.mining_points += point_reward_val
+			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.pre_escape() //Visually show the drone is done and flies away.
+	node = null
 	add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**
@@ -306,7 +308,7 @@
 			balloon_alert(user, "vent scanned!")
 			AddComponent(/datum/component/gps, name)
 			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
-			if(!isnull(user_id_card))
+			if(user_id_card.registered_account)
 				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
 				user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 			generate_description(user)
