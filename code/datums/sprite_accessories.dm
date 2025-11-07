@@ -947,6 +947,10 @@
 	name = "Beard (Broken Man)"
 	icon_state = "facial_brokenman"
 
+/datum/sprite_accessory/facial_hair/unbrokenman
+	name = "Beard (Unbroken Man)"
+	icon_state = "facial_unbrokenman"
+
 /datum/sprite_accessory/facial_hair/chinstrap
 	name = "Beard (Chinstrap)"
 	icon_state = "facial_chin"
