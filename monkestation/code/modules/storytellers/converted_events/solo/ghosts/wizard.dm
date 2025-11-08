@@ -26,6 +26,7 @@
 	min_players = 35
 	max_occurrences = 1
 	prompted_picking = TRUE
+	earliest_start = 60 MINUTES
 
 /datum/round_event_control/antagonist/solo/from_ghosts/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
