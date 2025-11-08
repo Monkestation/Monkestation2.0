@@ -83,7 +83,7 @@
 	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP)
 
 /datum/keybinding/living/pixel_shift
-	hotkey_keys = list("B")
+	hotkey_keys = list("N")
 	name = "pixel_shift"
 	full_name = "Pixel Shift"
 	description = "Shift your characters offset."

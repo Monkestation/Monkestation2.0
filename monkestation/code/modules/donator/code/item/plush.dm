@@ -192,3 +192,9 @@
 	desc = "Computer! Turn off that noise!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "ai_plush"
+
+/obj/item/toy/plush/monkey
+	name = "monkey plush"
+	desc = "A plushie of a monkey in a jacket!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "monkey_plushie"

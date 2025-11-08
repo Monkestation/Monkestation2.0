@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
+	base_icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
 
@@ -13,13 +14,18 @@
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEHAIR
+	flags_inv = HIDEHAIR|HIDEEARS
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
 	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
+
+	///Does this have a helmet strap?
+	var/has_helmet_strap = FALSE
+	///Is the helmet strap buckled?
+	var/helmet_strap_buckled = TRUE
 
 /datum/armor/head_helmet
 	melee = 35
@@ -33,9 +39,40 @@
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD, TRUE)
+
+/obj/item/clothing/head/helmet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
+	if(!has_helmet_strap)
+		return
+	if(helmet_strap_buckled)
+		var/mutable_appearance/helmet_strap_overlay = mutable_appearance('icons/mob/clothing/head/helmet.dmi', "helmet_strap", offset_spokesman = src, offset_const = -1)
+		. += helmet_strap_overlay
+
+/obj/item/clothing/head/helmet/item_ctrl_click(mob/user)
+	if(!has_helmet_strap)
+		return CLICK_ACTION_BLOCKING
+	var/mob/living/carbon/human/wearer = get(loc, /mob/living)
+	if(!istype(wearer))
+		return CLICK_ACTION_BLOCKING
+	helmet_strap_buckled = !helmet_strap_buckled
+	playsound(src, 'sound/items/equip/toolbelt_equip.ogg', 10, TRUE, -3)
+	balloon_alert(user, "[helmet_strap_buckled ? "chin strap buckled" : "chin strap unbuckled"]")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/sec
+	var/flipped_visor = FALSE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = SFX_VISOR_UP
+	visor_toggle_down_sound = SFX_VISOR_DOWN
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
+	desc_controls = "CTRL-Click to toggle the chinstrap, Alt-Click to flip the visor."
+	has_helmet_strap = TRUE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -65,6 +102,24 @@
 
 	return ..()
 
+/obj/item/clothing/head/helmet/sec/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if(flipped_visor)
+		flags_cover &= ~HEADCOVERSEYES
+		flags_inv &= ~HIDEEYES
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+	else
+		flags_cover |= HEADCOVERSEYES
+		flags_inv |= HIDEEYES
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+	user.update_worn_glasses()
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
 //MONKESTATION EDIT START
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
@@ -73,12 +128,23 @@
 	worn_icon = 'monkestation/icons/mob/head.dmi'
 	lefthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/inhands/equipment/helmet_righthand.dmi'
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 //MONKESTATION EDIT STOP
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
 	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "helmet_press"
+	base_icon_state = "helmet_press"
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/obj/item/clothing/head/helmet/press/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -89,9 +155,15 @@
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
+	base_icon_state = "helmetalt"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES|HIDEMASK
 
 /datum/armor/helmet_alt
 	melee = 15
@@ -117,6 +189,9 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /datum/armor/helmet_marine
 	melee = 50
@@ -157,6 +232,7 @@
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
 	tint = 2
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
@@ -171,59 +247,9 @@
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
-
-/obj/item/clothing/head/helmet/toggleable
-	dog_fashion = null
-	///chat message when the visor is toggled down.
-	var/toggle_message
-	///chat message when the visor is toggled up.
-	var/alt_toggle_message
-
-/obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(user.incapacitated() || !try_toggle())
-		return
-	up = !up
-	flags_1 ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	flags_cover ^= visor_flags_cover
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
-	to_chat(user, span_notice("[up ? alt_toggle_message : toggle_message] \the [src]."))
-
-	user.update_worn_head()
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.head_update(src, forced = TRUE)
-
-///Attempt to toggle the visor. Returns true if it does the thing.
-/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
-	return TRUE
-
-/obj/item/clothing/head/helmet/toggleable/riot
-	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
-	icon_state = "riot"
-	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
-	armor_type = /datum/armor/toggleable_riot
-	flags_inv = HIDEEARS|HIDEFACE
-	strip_delay = 80
-	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEFACE
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-
-/datum/armor/toggleable_riot
-	melee = 50
-	bullet = 10
-	laser = 10
-	energy = 10
-	fire = 80
-	acid = 80
-	wound = 15
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /obj/item/clothing/head/helmet/balloon
 	name = "balloon helmet"
@@ -240,60 +266,23 @@
 	fire = 60
 	acid = 50
 
-/obj/item/clothing/head/helmet/toggleable/justice
-	name = "helmet of justice"
-	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
-	icon_state = "justice"
-	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights on"
-	alt_toggle_message = "You turn on the lights on"
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	///Cooldown for toggling the visor.
-	COOLDOWN_DECLARE(visor_toggle_cooldown)
-	///Looping sound datum for the siren helmet
-	var/datum/looping_sound/siren/weewooloop
-
-/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
-	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
-		return FALSE
-	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
-	return TRUE
-
-/obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
-	. = ..()
-	weewooloop = new(src, FALSE, FALSE)
-
-/obj/item/clothing/head/helmet/toggleable/justice/Destroy()
-	QDEL_NULL(weewooloop)
-	return ..()
-
-/obj/item/clothing/head/helmet/toggleable/justice/attack_self(mob/user)
-	. = ..()
-	if(up)
-		weewooloop.start()
-	else
-		weewooloop.stop()
-
-/obj/item/clothing/head/helmet/toggleable/justice/escape
-	name = "alarm helmet"
-	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
-	icon_state = "justice2"
-
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
 	icon_state = "swatsyndie"
 	inhand_icon_state = "swatsyndie_helmet"
 	armor_type = /datum/armor/helmet_swat
-
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEHAIR //monkestation edit
 	dog_fashion = null
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -310,6 +299,7 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
+	base_icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
 	clothing_flags = PLASMAMAN_HELMET_EXEMPT | SNUG_FIT //monkestation edit
 
@@ -317,6 +307,8 @@
 
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | PEPPERPROOF //monkestation edit
+	desc_controls = "CTRL-Click to toggle the chinstrap."
+	has_helmet_strap = TRUE
 
 /obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload) //monkestation edit
 	. = ..()
@@ -586,3 +578,96 @@
 	fire = 100
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/toggleable
+	dog_fashion = null
+
+/obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
+	adjust_visor(user)
+
+///Attempt to toggle the visor. Returns true if it does the thing.
+/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/update_icon_state()
+	. = ..()
+	base_icon_state = "[initial(base_icon_state)]"
+	var/datum/component/seclite_attachable/light = GetComponent(/datum/component/seclite_attachable)
+	if(up)
+		base_icon_state += "up"
+	light?.on_update_icon_state(src)
+	if(!light)
+		icon_state = base_icon_state
+
+/obj/item/clothing/head/helmet/toggleable/riot
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against close range attacks."
+	icon_state = "riot"
+	base_icon_state = "riot"
+	inhand_icon_state = "riot_helmet"
+	toggle_message = "You pull the visor down on"
+	alt_toggle_message = "You push the visor up on"
+	armor_type = /datum/armor/toggleable_riot
+	strip_delay = 80
+	actions_types = list(/datum/action/item_action/toggle)
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	desc_controls = "CTRL-Click to toggle the chinstrap."
+
+/datum/armor/toggleable_riot
+	melee = 50
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 80
+	acid = 80
+	wound = 15
+
+/obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
+/obj/item/clothing/head/helmet/toggleable/justice
+	name = "helmet of justice"
+	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
+	icon_state = "justice"
+	base_icon_state = "justice"
+	inhand_icon_state = "justice_helmet"
+	toggle_message = "You turn off the lights on"
+	alt_toggle_message = "You turn on the lights on"
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	///Cooldown for toggling the visor.
+	COOLDOWN_DECLARE(visor_toggle_cooldown)
+	///Looping sound datum for the siren helmet
+	var/datum/looping_sound/siren/weewooloop
+
+/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
+	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
+		return FALSE
+	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
+	. = ..()
+	weewooloop = new(src, FALSE, FALSE)
+
+/obj/item/clothing/head/helmet/toggleable/justice/Destroy()
+	QDEL_NULL(weewooloop)
+	return ..()
+
+/obj/item/clothing/head/helmet/toggleable/justice/attack_self(mob/user)
+	. = ..()
+	if(up)
+		weewooloop.start()
+	else
+		weewooloop.stop()
+
+/obj/item/clothing/head/helmet/toggleable/justice/escape
+	name = "alarm helmet"
+	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
+	icon_state = "justice2"
+	base_icon_state = "justice2"

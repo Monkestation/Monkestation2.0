@@ -406,6 +406,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				var/damage_multiplier = collided.maxHealth * 0.01
 				if(lift_master_datum.ignored_smashthroughs[collided.type])
 					continue
+				var/should_increment_count = ismob(collided) && collided.client // check this BEFORE we do any damage
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
@@ -421,6 +422,11 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
 				log_combat(src, collided, "collided with")
 
+				//increment the hit counter signs
+				if(should_increment_count)
+					SSpersistence.tram_hits_this_round++
+					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
+
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue
 				if(!throw_target)
@@ -433,11 +439,6 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
-
-				//increment the hit counter signs
-				if(ismob(collided) && collided.client)
-					SSpersistence.tram_hits_this_round++
-					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)

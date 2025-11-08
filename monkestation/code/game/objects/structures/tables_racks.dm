@@ -14,3 +14,11 @@
 	framestackamount = 0
 	smoothing_groups = SMOOTH_GROUP_SANDSTONE_TABLES
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_TABLES
+
+/obj/structure/table/silk
+	name = "silk table"
+	desc = "Really stable. Do not set on fire."
+	icon = 'monkestation/icons/obj/smooth_structures/silk_table.dmi'
+	buildstack = /obj/item/stack/sheet/silk
+	resistance_flags = FLAMMABLE
+	max_integrity = 50

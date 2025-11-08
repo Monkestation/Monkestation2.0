@@ -189,8 +189,10 @@
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 
+/*
 	if((istype(calculation_point.loc, /area/station) && heat > 4500) || heat > (SUBCALL_HEATCOST * subcalls))
 		message_admins(message)
+*/
 	log_hotspot(message)
 
 #undef SUBCALL_HEATCOST

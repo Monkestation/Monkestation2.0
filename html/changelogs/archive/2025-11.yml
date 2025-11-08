@@ -1,0 +1,149 @@
+2025-11-01:
+  Absolucy:
+  - bugfix: The plushie cannon/shotgun now actually properly works without having
+      to whack yourself with it.
+  JohnFulpWillard:
+  - refactor: Cortical borer's UI is now better, text now fits and icons aren't blurry
+      anymore.
+  SirNightKnight:
+  - rscadd: ghosts now use the character's hair color directly.
+  notghosti:
+  - map: Icebox maintence bar backroom/dorms no longer has a camera inside the wall
+2025-11-02:
+  Absolucy:
+  - bugfix: Fixed some runtimes with cortical borers with focuses entering/exiting
+      a host.
+  throwawayuseless:
+  - bugfix: Robustness now actually notably affects the natural immune response that
+      a pathogen causes. Pro tip, 100 x 0.01 != 10
+2025-11-04:
+  Absolucy:
+  - sound: Tesla zaps are now covered by the "Machinery" category in the volume mixer.
+  - sound: Tesla zaps now have slightly higher volume falloff over distance.
+  - code_imp: Slightly improved some tesla-related code.
+  - qol: The Shapeshift spell also copies your voice now
+  - sound: Rupees are no longer painfully loud.
+  EatsTheGrapes:
+  - bugfix: Non-dynamic antagonist roles (like Slasher, Florida Man, etc.) now respect
+      antag bans in the preferences menu.
+  - refactor: Integrated non-dynamic antagonist list into middleware to remove redundant
+      code paths.
+  - code_imp: Cleaned up preference middleware structure for consistency.
+  - sound: Added original track "Less Impossible" by Elluvion to the jukebox under
+      the Electronic genre.
+  - balance: Players no longer drop items when the emergency shuttle docks.
+  - refactor: Knockdown logic now uses proper handling and shares structure between
+      status and debuff systems.
+  - code_imp: Simplified tripping and knockdown consistency across files.
+  EssentialTomato:
+  - rscadd: Added halos to the anime implants.
+  MilkForever:
+  - rscadd: Arachnids now have the Sericulture ability, allowing them to produce silk
+      at the cost of hunger.
+  - rscadd: Added Silk. Silk can be used to make silk walls, furniture, floor tiles,
+      clothing and spider structures. Two pieces of silk can be refined into cloth.
+  - qol: Spider blood (AKA Arachnid blood) can now spawn in blood bags in blood freezers.
+      It can also be made in the wall med-stations that use biomass.
+  - rscdel: Removed Skrell blood, Skrell don't even exist.
+  RandomDudeFromTheRim:
+  - map: added in 2 missing walls
+  Snack-Max:
+  - rscadd: Edited Toggled Utility Jumpsuit sprites to show department colors.
+  Tractor-Maam:
+  - rscadd: Added the Voice Obfuscator Gas Mask, a crafting item that makes you sound
+      unknown.
+  - code_imp: Added TRAIT_ANONYMOUS to hide names/jobs only because TRAIT_UNKNOWN
+      extends too far for this use case.
+  Vect0r2:
+  - bugfix: Assemblers don't fuck shit up
+  notghosti:
+  - rscdel: AI Overflow is disabled
+  - balance: AI Triumvirate weight is bumped to 2 (from 1) to compensate for this
+      change.
+  - bugfix: AI Triumvirate will allow for 3 latejoin ai's
+2025-11-05:
+  Absolucy:
+  - rscadd: Anvils are now falling hazards, as in, if you drop it onto someone on
+      a lower floor, it hurts them. A lot.
+  Absolucy, JohnFulpWillard:
+  - refactor: Blueprints now use TGUI.
+  - qol: Blueprints can now be used while lying down.
+  "Fwog\u2122":
+  - rscadd: 'New Negative Quirk: Material Allergy! Ever wanted to be horribly burnt
+      at the touch of silver, or gold, or just for shits n giggles plastic or something?
+      Now you can! I don''t know why you wanted that. That''s a weird want. You''re
+      weird. Weirdo.'
+  JohnFulpWillard:
+  - bugfix: You can use regenerative cores/rush glands/brimdust sacs while resting.
+  - bugfix: Using the setting to hide your preference from the roundend report will
+      now also hide your ckey if you got an achievement.
+  Tractor-Maam:
+  - balance: Reverted the Voice Obfuscator Gas Mask recipe to its old version. Antags,
+      please test this and give feedback!
+  notghosti:
+  - map: Adds recharge stations to central command
+  - map: CC and oldstation will produce overall less GPS signals
+  - code_imp: Added a variable for communication and uploads for them to not produce
+      a gps signal
+  - rscadd: Health analyzers will now provide information about diseases once they
+      have been analyzed with a disease analyzer.
+  - balance: Anaphylaxis (Allergy attacks) will always be considered analyzed, albeit
+      not in the database.
+  - balance: Blacklisted food allergies from oozelings, as the disease would self
+      cure and be free points as they are toxin lovers.
+  - code_imp: Viral code now has a origin, more for additional logging purposes.
+2025-11-07:
+  Infernal-0:
+  - image: Nukes a few pixels that shouldn't be there from the security helmet. if
+      you have a nose that is.
+  - map: Security EVA suits are no longer sealed away behind armory access.
+  - map: Fixes the blueshift brig to have working lockers and flashers.
+  - map: Opens a lot of the shutters on box station.
+  - map: Removes the empty suit storage from paramedic EVA on blueshift, replacing
+      it with a cyborg recharger.
+  - map: Adds rechargers to the theseus security office and replaces a missing window.
+  LemonInTheDark, Flleeppyy:
+  - bugfix: Fixed a timing issue with SS_KEEP_TIMING subsystems, which impacts exactly
+      SSticker. TLDR is roundstart will now actually take the time it says it does,
+      instead of 75% of it.
+  - config: The roundstart delay config is now accurate, so you may want to decrease
+      it to not overlengthen lobby time. IDK you decide.
+  SirNightKnight:
+  - map: added AM's office to CentCom.
+  - image: adds the unbroken man beard.
+  TheColorCyan:
+  - bugfix: darkspawn time dilation ability now actually works
+  - bugfix: darkspawn encroach ability now fully protects you from light
+  - bugfix: you no longer always know deluxe donk pocket secret recipes
+  - bugfix: fixed crafting recipe books that taught you cooking recipes runtiming
+      and not working
+  - bugfix: fixed being able to bypass headgear to drink with click-drag
+  Uristthedorf:
+  - rscadd: The AI, and peacekeeper cyborgs with an upgrade, have a nanite remote.
+  - balance: Suppression nanites have been nerfed so AI can't get you too hard with
+      the nanite remote.
+  - qol: Nanite Programming UI has been reoriented to make it significantly easier.
+  - map: Removes deprecated nanite programming hub and nanite programmer.
+  - map: Adds bottle of nanite purging toxin to nanite labs.
+  ancient-engineer, CannibalHunter:
+  - rscadd: Bananotrasen Super Hat, donator item for Milthy
+  - rscadd: Bananadola, donator item for Milthy
+  - rscadd: Monkey Plushie, donator item for Milthy (Sprite made by Cannibal Hunter)
+  - rscadd: "Milthy's donator alternative title names: \u201CBananotrasen Representative\u201D\
+      \ Assistant, \"Head of Convicts\" Prisoner, \u201CGristled PI\u201D Detective"
+  necromanceranne:
+  - bugfix: Grasp of Lock can no longer yank down your jumpsuit unless it is capable
+      of being adjusted.
+  notghosti:
+  - admin: Build mode Help button is existent again.
+  - rscdel: Optical sensors can no longer be printed.
+  - map: Heliostation telecommunications only has one request console,
+  - map: Heliostation bar sign will now rename the bar.
+  - bugfix: Examine on disease incubators are now functional
+2025-11-08:
+  Wernerses:
+  - balance: Botany batteries have their effectiveness reduced to around 1/5, while
+      still being able to eventually grow enough to have significant play later in
+      shifts, albeit requiring more care and attention to the plants stats.
+  notghosti:
+  - bugfix: Messenger will no longer kick you out of your PDA app into messenger.

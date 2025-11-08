@@ -130,7 +130,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
 	else
 		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
+	if(mind?.dnr)
+		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
+	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
@@ -157,7 +159,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(gps_active)
 		user.visible_message(
 			span_warning("[user] crunches something deep in [src]! It gradually stops glowing."),
-			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissapates and items start to come out."),
+			span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissipates and items start to come out."),
 			span_notice("You hear a wet crunching sound."),
 		)
 		gps_active = FALSE
@@ -179,6 +181,38 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	core_ejected = FALSE
 	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+
+/obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
+	if(!istype(stake))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return ITEM_INTERACT_BLOCKING
+	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
+	user.balloon_alert_to_viewers("staking core...")
+	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert_to_viewers("staked core!")
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
+	if(bloodsucker_datum)
+		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+		user.visible_message(
+			span_danger("[user] drives \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
+			span_danger("You drive \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
+			span_hear("You hear a wet, crackling sound."),
+		)
+		to_chat(brainmob, span_userdanger("Your soul escapes your melting core as the abyss welcomes you to your Final Death."))
+		drop_items_to_ground(drop_location())
+		bloodsucker_datum.final_death(skip_destruction = TRUE)
+		qdel(src)
+	else
+		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)
+		user.visible_message(
+			span_danger("[user] drives \the [stake] into [src], making a loud crunching sound!"),
+			span_danger("You drive \the [stake] into [src], making a loud crunching sound!"),
+			span_hear("You hear a loud crunching sound."),
+		)
+		set_organ_damage(maxHealth) // you're stabbing it with a stake.
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
 	if(isoozeling(owner))
@@ -212,11 +246,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		stored_language_holder = new slime_language_holder.type
 		stored_language_holder.copy_languages(slime_language_holder)
 
-	var/datum/atom_voice/slime_voice = slime.get_voice()
-	if(slime_voice)
-		if(!voice)
-			voice = new
-		voice.copy_from(slime_voice)
+	if(slime.voice)
+		copy_voice_from(slime)
 
 ///////
 /// CORE EJECTION PROC
@@ -266,7 +297,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
@@ -293,6 +324,11 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
 	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+		if(mind?.dnr)
+			to_chat(user, span_warning("The soul of [src] has departed..."))
+			user.balloon_alert(user, "core's soul has departed...")
+			return FALSE
+
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 			user.balloon_alert(user, "too little plasma!")
 			return FALSE
@@ -310,6 +346,11 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return FALSE
+
+		if(mind?.dnr)
+			to_chat(user, span_warning("The soul of [src] has departed..."))
+			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE
 
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100) // minor exploit but might as well patch it
@@ -397,8 +438,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			item.forceMove(turf)
 	stored_items.Cut()
 
-/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE) as /mob/living/carbon/human
-	RETURN_TYPE(/mob/living/carbon/human)
+/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE, revival_policy = POLICY_REVIVAL) as /mob/living/carbon/human
 	if(rebuilt)
 		return owner
 
@@ -438,9 +478,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		new_body.get_language_holder()?.copy_languages(stored_language_holder)
 		QDEL_NULL(stored_language_holder)
 	if(voice)
-		if(!new_body.voice)
-			new_body.voice = new
-		new_body.voice.copy_from(voice)
+		new_body.copy_voice_from(src)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
@@ -488,6 +526,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	transfer_observers_to(new_body)
 
 	drop_items_to_ground(new_body.drop_location())
+
+	var/policy = get_policy(revival_policy)
+	if(policy)
+		to_chat(new_body, policy, avoid_highlighting = TRUE)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)

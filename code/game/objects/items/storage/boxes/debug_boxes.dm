@@ -72,6 +72,15 @@
 	name = "box of every gun"
 	icon_state = "gunbox"
 	desc = "One must peer within in order to obtain what they truly desire."
+	var/list/blacklist = list(
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/gun/energy/e_gun/lawbringer,
+		/obj/item/gun/ballistic/automatic/pistol/suppressed,
+		/obj/item/gun/magic/staff/chaos/true_wabbajack,
+		/obj/item/gun/magic/artifact,
+		/obj/item/gun/energy/pulse/prize,
+	)
 
 /obj/item/storage/box/debugbox/guns/PopulateContents()
 	for(var/obj/box as anything in subtypesof(/obj/item/storage/box/debugbox/guns))
@@ -84,7 +93,10 @@
 	desc = "Holds a lot of shotguns"
 
 /obj/item/storage/box/debugbox/guns/shotgun/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/shotgun))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/revolver
@@ -93,7 +105,10 @@
 	desc = "Holds a lot of revolvers"
 
 /obj/item/storage/box/debugbox/guns/revolver/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/revolver))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/rifle
@@ -102,7 +117,10 @@
 	desc = "Holds a lot of rifles"
 
 /obj/item/storage/box/debugbox/guns/rifle/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/rifle))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/bow
@@ -111,7 +129,10 @@
 	desc = "Holds a lot of bows"
 
 /obj/item/storage/box/debugbox/guns/bow/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/bow))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/automatic
@@ -119,8 +140,11 @@
 	icon_state = "automaticbox"
 	desc = "Holds a lot of automatic ballistics"
 
-/obj/item/storage/box/debugbox/guns/automatic/PopulateContents()
-	for(var/obj/item/gun as anything in typesof(/obj/item/gun/ballistic/automatic)) // Might still be too big
+/obj/item/storage/box/debugbox/guns/automatic/PopulateContents() //remove CTF laser subtypes so its not literally OFF THE SCREEN
+	var/list/blacklisted_guns = typecacheof(blacklist)
+	for(var/obj/item/gun as anything in (typesof(/obj/item/gun/ballistic/automatic) - (subtypesof(/obj/item/gun/ballistic/automatic/laser/ctf) - /obj/item/gun/ballistic/automatic/laser/ctf/marksman)))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/miscballistics // Misc Ballistic guns
@@ -129,8 +153,11 @@
 	desc = "An assortment of random ballistics"
 
 /obj/item/storage/box/debugbox/guns/miscballistics/PopulateContents() // Misc Ballistic guns
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	var/list/remaining_guns = typesof(/obj/item/gun/ballistic) - typesof(/obj/item/gun/ballistic/shotgun) - typesof(/obj/item/gun/ballistic/revolver) - typesof(/obj/item/gun/ballistic/rifle) - typesof(/obj/item/gun/ballistic/bow) - typesof(/obj/item/gun/ballistic/automatic)
 	for(var/obj/item/gun as anything in remaining_guns)
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 //---- Boxes of energy
@@ -140,7 +167,10 @@
 	desc = "Holds \"recharge\" type weapons"
 
 /obj/item/storage/box/debugbox/guns/recharge/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/energy/recharge))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/laser
@@ -149,7 +179,10 @@
 	desc = "Holds laser guns"
 
 /obj/item/storage/box/debugbox/guns/laser/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/energy/laser))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/e_gun
@@ -158,7 +191,10 @@
 	desc = "Holds eguns"
 
 /obj/item/storage/box/debugbox/guns/e_gun/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/energy/e_gun))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 /obj/item/storage/box/debugbox/guns/miscenergy // Misc energy guns
@@ -167,9 +203,12 @@
 	desc = "An assortment of random energy weapons"
 
 /obj/item/storage/box/debugbox/guns/miscenergy/PopulateContents() // Misc energy guns
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	var/list/remaining_guns = typesof(/obj/item/gun/energy) - typesof(/obj/item/gun/energy/recharge) - typesof(/obj/item/gun/energy/laser) - typesof(/obj/item/gun/energy/e_gun)
 	remaining_guns =- /obj/item/gun/energy/pulse/prize // Remove prize pulse rifle so debug outfit doesnt notify ghosts
 	for(var/obj/item/gun as anything in remaining_guns)
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 //---- Boxes of magic
@@ -179,7 +218,10 @@
 	desc = "A magical box filled with whimsy and joy"
 
 /obj/item/storage/box/debugbox/guns/magic/PopulateContents()
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	for(var/obj/item/gun as anything in typesof(/obj/item/gun/magic))
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)
 
 //---- Unsorted guns
@@ -189,6 +231,9 @@
 	desc = "Holds every other gun that isnt in any organized subtype"
 
 /obj/item/storage/box/debugbox/guns/miscguns/PopulateContents() // Misc uncategorized guns
+	var/list/blacklisted_guns = typecacheof(blacklist)
 	var/list/remaining_guns = typesof(/obj/item/gun) - typesof(/obj/item/gun/ballistic) - typesof(/obj/item/gun/energy) - typesof(/obj/item/gun/magic)
 	for(var/obj/item/gun as anything in remaining_guns)
+		if(is_type_in_typecache(gun, blacklisted_guns))
+			continue
 		new gun(src)

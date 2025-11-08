@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/cup/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
-	if(!isliving(over))
+	if(!canconsume(over, user))
 		return
 
 	if(!isliving(usr) && !check_rights(R_FUN)) // monkestation edit: a bug? nah, its a feature!

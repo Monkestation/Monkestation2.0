@@ -680,12 +680,12 @@
 	var/obj/item/stock_parts/power_store/cell/potato/pocell = new /obj/item/stock_parts/power_store/cell/potato(user.loc)
 	pocell.icon = our_plant.icon // Just in case the plant icons get spread out in different files eventually, this trait won't cause error sprites (also yay downstreams)
 	pocell.icon_state = our_plant.icon_state
-	pocell.maxcharge = our_seed.potency * 0.02 * STANDARD_CELL_CHARGE
+	pocell.maxcharge = our_seed.potency * 0.005 * STANDARD_CELL_CHARGE
 
 	// The secret of potato supercells!
 	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
 	if(electrical_gene) // Like the good old days
-		pocell.maxcharge *= (electrical_gene.rate * 1000)
+		pocell.maxcharge *= (electrical_gene.rate * 750)
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
 	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [display_energy(pocell.maxcharge)], and you should not swallow it."

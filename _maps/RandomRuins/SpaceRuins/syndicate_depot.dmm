@@ -1943,7 +1943,7 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "uV" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "uW" = (
 /obj/structure/cable,

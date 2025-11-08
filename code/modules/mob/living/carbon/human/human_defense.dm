@@ -125,6 +125,13 @@
 
 	return FAILED_BLOCK
 
+/mob/living/carbon/human/grab(mob/living/target)
+	if(ishuman(target))
+		// this grab will handle human-on-human martial arts stuff
+		var/mob/living/carbon/human/Htarget = target
+		return dna.species.grab(src, Htarget, mind?.martial_art)
+	. = ..()
+
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)

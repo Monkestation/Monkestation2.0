@@ -272,7 +272,7 @@
 		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 20)
 
 	if(plant_yield >= yield_linearity_breakpoint)
-		harvest_amount = qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield)
+		harvest_amount = floor(qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield))
 		if(!seedless)
 			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
 
