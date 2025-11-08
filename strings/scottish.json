@@ -147,7 +147,6 @@
 		"guard": "waird",
 		"knight": "krighter",
 		"sir": "herr",
-		"king": "uzbad",
 		"queen": "uzbada",
 		"arrange": "aerande",
 		"beware": "bewaur",
@@ -624,6 +623,7 @@
 		"uses ": "uises ",
 		"way": "weyg",
 		"whole": "hail",
+		"king": "uzbad",
 		"each": "eak"
 	}
 }
