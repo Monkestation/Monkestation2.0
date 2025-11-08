@@ -118,7 +118,6 @@
 		"were": "waer",
 		"wont": "winna",
 		"whose": "whase",
-		"thing": "thott",
 		"much": "muckle",
 		"enough": "eneuf",
 		"else": "ense",
@@ -564,8 +563,8 @@
 		"no": "nae",
 		"to": "ta",
 		"the": [
-			"th' ",
-			"deh "
+			"th'",
+			"deh"
 		],
 		"rat": "raki",
 		"rats" : "rakie",
