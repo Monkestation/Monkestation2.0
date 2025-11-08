@@ -132,7 +132,11 @@
 	var/heavy_burn_msg = "peeling away"
 
 	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
-	var/list/damage_examines = list(BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT, BURN = DEFAULT_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/list/damage_examines = list(
+		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
+		BURN = DEFAULT_BURN_EXAMINE_TEXT,
+		CLONE = DEFAULT_CLONE_EXAMINE_TEXT,
+	)
 
 	// Wounds related variables
 	/// The wounds currently afflicting this body part
@@ -473,9 +477,24 @@
 		else
 			heal_damage(0, 1)
 
-//Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
-//Damage will not exceed max_damage using this proc
-//Cannot apply negative damage
+/**
+ * #receive_damage
+ *
+ * called when a bodypart is taking damage
+ * Damage will not exceed max_damage using this proc, and negative damage cannot be used to heal
+ * Returns TRUE if damage icon states changes
+ * Args:
+ * brute - The amount of brute damage dealt.
+ * burn - The amount of burn damage dealt.
+ * blocked - The amount of damage blocked by armor.
+ * update_health - Whether to update the owner's health from receiving the hit.
+ * required_bodytype - A bodytype flag requirement to get this damage (ex: BODYTYPE_ORGANIC)
+ * wound_bonus - Additional bonus chance to get a wound.
+ * bare_wound_bonus - Additional bonus chance to get a wound if the bodypart is naked.
+ * sharpness - Flag on whether the attack is edged or pointy
+ * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
+ * damage_source - The source of damage, typically a weapon.
+ */
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 	var/area/target_area = get_area(src.owner)
@@ -559,7 +578,7 @@
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
-			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction)
+			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus, damage_source)
@@ -1104,6 +1123,8 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
+					if(overlay.get_emissive_overlay(external_layer, src))
+						. += overlay.get_emissive_overlay(external_layer, src)
 					if(overlay.get_secondary_overlay(external_layer, src))
 						. += overlay.get_secondary_overlay(external_layer, src)
 					if(overlay.get_extended_overlay(external_layer, src))

@@ -26,6 +26,7 @@
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	light_outer_range = 4
 	basic_mob_flags = DEL_ON_DEATH
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
