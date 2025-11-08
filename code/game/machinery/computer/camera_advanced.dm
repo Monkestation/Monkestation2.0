@@ -26,9 +26,6 @@
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
 
-	///the net it's looking at
-	var/datum/cameranet/camnet
-
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/camera_advanced/Initialize(mapload)
@@ -55,14 +52,11 @@
 	if(move_down_action)
 		actions += new move_down_action(src)
 
-	camnet = GLOB.cameranet
-
 /obj/machinery/computer/camera_advanced/Destroy()
 	unset_machine()
 	QDEL_NULL(eyeobj)
 	QDEL_LIST(actions)
 	current_user = null
-	camnet = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/process()
@@ -176,10 +170,10 @@
 		else
 			camera_location = myturf
 	else
-		if((!consider_zlock || (myturf.z in z_lock)) && camnet.checkTurfVis(myturf))
+		if((!consider_zlock || (myturf.z in z_lock)) && SScameras.is_visible_by_cameras(myturf))
 			camera_location = myturf
 		else
-			for(var/obj/machinery/camera/C as anything in camnet.cameras)
+			for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 				if(!C.can_use() || consider_zlock && !(C.z in z_lock))
 					continue
 				var/list/network_overlap = networks & C.network
@@ -222,7 +216,7 @@
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
-	var/list/cameras_by_tag = origin.camnet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
+	var/list/cameras_by_tag = SScameras.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)

@@ -119,7 +119,7 @@
 	if(!T)
 		return FALSE
 	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
+		if(isAI(user) && !SScameras.is_visible_by_cameras(T))
 			return FALSE
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
@@ -217,7 +217,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((ai_user && SScameras.is_visible_by_cameras(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
