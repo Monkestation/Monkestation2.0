@@ -1,0 +1,5 @@
+author: "ancient-engineer"
+delete-after: True
+changes:
+  - rscadd: "Changed Milthy's plushie name from 'monkey plush' to 'chimpson plush'"
+  - rscadd: "Changed Milthy's plushie description"

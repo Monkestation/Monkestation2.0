@@ -38,9 +38,14 @@
 /**
  * ## BLOOD STUFF
  */
+
+///Adds value to the bloodsucker's current blood volume, making sure not to exceed the maximum. Triggers overfeed healing if exceeding.
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
-	bloodsucker_blood_volume = clamp(bloodsucker_blood_volume + value, 0, max_blood_volume * 2)
-	blood_over_cap = max(bloodsucker_blood_volume - max_blood_volume, 0) // Gets how much blood we have over the cap.
+	bloodsucker_blood_volume += value
+	if (bloodsucker_blood_volume > max_blood_volume)
+		var/extra_blood = max_blood_volume - bloodsucker_blood_volume
+		bloodsucker_blood_volume = max_blood_volume
+		OverfeedHealing(extra_blood)
 
 /datum/antagonist/bloodsucker/proc/AddHumanityLost(value)
 	if(humanity_lost >= 500)
@@ -67,19 +72,15 @@
 	if(!ishuman(target)) // Penalty for Non-Human Blood
 		blood_taken /= 2
 	//if (!iscarbon(target)) // Penalty for Animals (they're junk food)
-	// Apply to Volume
+	// Apply to Volume and do overfeed healing if we are over the cap.
 	AddBloodVolume(blood_taken)
-	OverfeedHealing(blood_taken)
 	// Reagents (NOT Blood!)
 	if(target.reagents?.total_volume)
-		target.reagents.trans_to(owner.current, INGEST, 1) // Run transfer of 1 unit of reagent from them to me.
+		target.reagents.trans_to(owner.current, amount = 1, methods = INGEST) // Run transfer of 1 unit of reagent from them to me.
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', vol = 40, vary = TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	total_blood_drank += blood_taken
-	if(target.mind) // Checks if the target has a mind
-		if(IS_VASSAL(target)) // Checks if the target is a vassal
-			blood_level_gain += blood_taken / 4
-		else
-			blood_level_gain += blood_taken
+	if(target.mind && !IS_VASSAL(target)) // Checks if the target has a mind and is not a vassal
+		blood_level_gain += blood_taken
 	return blood_taken
 
 /**
@@ -94,7 +95,7 @@
 	// Don't heal if I'm staked or on Masquerade (+ not in a Coffin). Masqueraded Bloodsuckers in a Coffin however, will heal.
 	if(owner.current.am_staked())
 		return FALSE
-	if(!in_torpor && (HAS_TRAIT(owner.current, TRAIT_MASQUERADE) || owner.current.has_status_effect(/datum/status_effect/bloodsucker_sol)))
+	if(!in_torpor && HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
 		return FALSE
 	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
@@ -109,8 +110,6 @@
 	var/bruteheal = min(user.getBruteLoss_nonProsthetic(), actual_regen) // BRUTE: Always Heal
 	var/fireheal = 0 // BURN: Heal in Coffin while Fakedeath, or when damage above maxhealth (you can never fully heal fire)
 	// Checks if you're in a coffin here, additionally checks for Torpor right below it.
-	if (blood_over_cap > 0)
-		costMult += round(blood_over_cap / 1000, 0.1) // effectively 1 (normal) + 0.1 for every 100 blood you are over cap
 	if(in_torpor)
 		if(in_coffin)
 			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, bloodsucker_spam_healing)))
@@ -138,16 +137,16 @@
 // Manages healing if we are exceeding blood cap
 /datum/antagonist/bloodsucker/proc/OverfeedHealing(drunk_blood)
 	var/mob/living/carbon/user = owner.current
-	if(blood_over_cap > 0) //Checks if you are over your blood cap
-		var/overbruteheal = user.getBruteLoss_nonProsthetic()
-		var/overfireheal = user.getFireLoss_nonProsthetic()
-		var/heal_amount = drunk_blood / 3
-		if(overbruteheal > 0 && heal_amount > 0)
-			user.adjustBruteLoss(-heal_amount, forced=TRUE) // Heal BRUTE / BURN in random portions throughout the body; prioritising BRUTE.
-			heal_amount = (heal_amount - overbruteheal) // Removes the amount of BRUTE we've healed from the heal amount
-		else if(overfireheal > 0 && heal_amount > 0)
-			heal_amount /= 1.5 // Burn should be more difficult to heal
-			user.adjustFireLoss(-heal_amount, forced=TRUE)
+
+	var/overbruteheal = user.getBruteLoss_nonProsthetic()
+	var/overfireheal = user.getFireLoss_nonProsthetic()
+	var/heal_amount = drunk_blood / 3
+	if(overbruteheal > 0 && heal_amount > 0)
+		user.adjustBruteLoss(-heal_amount, forced=TRUE) // Heal BRUTE / BURN in random portions throughout the body; prioritising BRUTE.
+		heal_amount = (heal_amount - overbruteheal) // Removes the amount of BRUTE we've healed from the heal amount
+	else if(overfireheal > 0 && heal_amount > 0)
+		heal_amount /= 1.5 // Burn should be more difficult to heal
+		user.adjustFireLoss(-heal_amount, forced=TRUE)
 
 /datum/antagonist/bloodsucker/proc/check_limbs(costMult = 1)
 	var/limb_regen_cost = 50 * -costMult
@@ -188,13 +187,12 @@
 
 	for(var/obj/item/organ/organ as anything in bloodsuckeruser.organs)
 		organ.set_organ_damage(0)
-	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC) // i think vampires ARE magic, so, yeah
+	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE
 	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
 	if(current_eyes)
-		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
 		current_eyes.color_cutoffs = list(25, 8, 5)
 		current_eyes.sight_flags |= SEE_MOBS
@@ -272,11 +270,8 @@
 		additional_regen = 0.3
 	else if(bloodsucker_blood_volume < BS_BLOOD_VOLUME_MAX_REGEN)
 		additional_regen = 0.4
-	else if(bloodsucker_blood_volume < max_blood_volume)
+	else if(bloodsucker_blood_volume <= max_blood_volume)
 		additional_regen = 0.5
-	else if(bloodsucker_blood_volume > max_blood_volume)
-		additional_regen = 1 + round((blood_over_cap / 1000) * 2, 0.1)
-		AddBloodVolume(-1 - blood_over_cap / 100)
 
 /// Makes your blood_volume look like your bloodsucker blood, unless you're Masquerading.
 /datum/antagonist/bloodsucker/proc/update_blood()
@@ -296,56 +291,57 @@
 	owner.current.blood_volume = bloodsucker_blood_volume
 
 /// Gibs the Bloodsucker, roundremoving them.
-/datum/antagonist/bloodsucker/proc/final_death()
+/datum/antagonist/bloodsucker/proc/final_death(skip_destruction = FALSE)
+	var/mob/living/body = owner.current
 	// If we have no body, end here.
-	if(QDELETED(owner.current))
+	if(QDELETED(body))
 		return
-	UnregisterSignal(owner.current, list(
+	UnregisterSignal(body, list(
 		COMSIG_LIVING_LIFE,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 	))
-	UnregisterSignal(SSsol, list(
-		COMSIG_SOL_RANKUP_BLOODSUCKERS,
-		COMSIG_SOL_NEAR_START,
-		COMSIG_SOL_END,
-		COMSIG_SOL_RISE_TICK,
-		COMSIG_SOL_WARNING_GIVEN,
-	))
+	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
+
 	final_death = TRUE
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
-	if(!iscarbon(owner.current))
-		owner.current.gib(TRUE, FALSE, FALSE)
-		return
-	// Drop anything in us and play a tune
-	var/mob/living/carbon/user = owner.current
-	owner.current.drop_all_held_items()
-	owner.current.unequip_everything()
-	user.remove_all_embedded_objects()
-	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+	if(!skip_destruction)
+		if(iscarbon(body))
+			// Drop anything in us and play a tune
+			var/mob/living/carbon/carbon_body = body
+			carbon_body.drop_all_held_items()
+			carbon_body.unequip_everything()
+			carbon_body.remove_all_embedded_objects()
+			playsound(carbon_body, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
+		else
+			body.gib(TRUE, FALSE, FALSE)
 
 	if(SEND_SIGNAL(src, COMSIG_BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
+		return
+	if(skip_destruction || QDELETED(body))
 		return
 
 	// Elders get dusted, Fledglings get gibbed.
 	if(bloodsucker_level >= 4)
-		user.visible_message(
-			span_warning("[user]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains."),
+		body.visible_message(
+			span_warning("[body]'s skin crackles and dries, [body.p_their()] skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains."),
 			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
-			span_hear("You hear a dry, crackling sound."))
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-		return
-	user.visible_message(
-		span_warning("[user]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),
-		span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
-		span_hear("<span class='italics'>You hear a wet, bursting sound."))
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+			span_hear("You hear a dry, crackling sound.")
+		)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, dust)), 5 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	else
+		body.visible_message(
+			span_warning("[body]'s skin bursts forth in a spray of gore and detritus. A horrible cry echoes from what is now a wet pile of decaying meat."),
+			span_userdanger("Your soul escapes your withering body as the abyss welcomes you to your Final Death."),
+			span_hear("You hear a wet, bursting sound.")
+		)
+		addtimer(CALLBACK(body, TYPE_PROC_REF(/mob/living, gib), TRUE, FALSE, FALSE), 2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
-	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE)
+	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)
 
 #undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

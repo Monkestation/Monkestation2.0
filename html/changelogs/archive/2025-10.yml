@@ -537,3 +537,440 @@
   - map: Heliostation Gravity generator has proper camera coverage
   - map: Heliostation Library no longer has a floating camera
   - map: Heliostation Brig air control is now a actual checkpoint for air
+2025-10-15:
+  Absolucy:
+  - bugfix: Darkspawn can no longer use Silver Tongue to recall a shuttle when admins
+      have disabled recalling.
+  - admin: Darkspawn recalling the shuttle with Silver Tongue is now logged.
+  - qol: Soulscythe spirits now have night vision.
+  - qol: Soulscythe spirits now inherit all of their master's factions.
+  - qol: Soulscythe's blood regeneration is now based on delta time, so they will
+      still regenerate blood at normal speeds when the server is lagging.
+  JohnFulpWillard:
+  - balance: You can now wear gloves with only one hand.
+  Lawlolawl:
+  - bugfix: Fixed relocking of privately bought cargo crates (including miner purchases).
+      Only the correct bank account can unlock/lock the crate now. Previously, mining
+      crates were stuck locked permanently after relocking.
+  notghosti:
+  - map: Boxstation AI boards are now accessible via RD access.
+  - rscadd: Borers can now access "Lookup Reactions" panel in their chemical injector
+  - rscadd: Added a unique neutered borer ability, Dissect Corpse.
+  - rscadd: Borers names are now their first and second names, while their whole government
+      ID is their real names
+  - rscdel: Neutered borers no longer have access to willing host, nor will progress
+      learn blood chemicals objectives.
+  - qol: Borer basic chemical guide is expanded on some,
+  - qol: Borer learn focus explanation actually explains the induvial upgrades.
+  - qol: Borer messages will now be capitalized automatically.
+  - balance: Neutered borers now have unique growth objectives, that of dissection
+      and learning blood chemicals which are indivualized.
+  - balance: Neutered borers will have red text visuals and hud elements rather than
+      purple.
+  - bugfix: PAI's leaving modular computers (Such as your pda) Will now update the
+      sprite to not include the PAI card in it.
+  - map: Heliostation supermatter will no longer depower
+2025-10-16:
+  Absolucy:
+  - qol: Shaft Miners now have external airlock access on Icebox and any other planetary
+      maps.
+  - qol: Flashes now apply a heavy screen blur by default, instead of rapidly brightening/darkening
+      the screen in a way potentially dangerous to some players.
+  - qol: If you wish to return to the old white or black screen flash tho, you can
+      change it with the "Screen Flash Visuals" setting under Gameplay in Game Preferences.
+  JupiterJaeden:
+  - balance: Removed the RNG slip from liquid spills. Makes it so you only slip if
+      you sprint. Does not affect the regular/guaranteed slips like sprayed water,
+      space lube, etc.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  TheColorCyan:
+  - bugfix: fixed restrain psi trap requiring you to step on it twice to activate
+  - bugfix: warlock extinguish spell now actually extinguishes lights
+  - bugfix: extinguish spell now also extinguishes the owner
+  notghosti:
+  - bugfix: silicons can depower airlocks via their UI again
+2025-10-17:
+  Absolucy:
+  - bugfix: Fixed pocket protector storage not being removed.
+  - bugfix: '"Secret" testmerges are now actually excluded from the changelog and
+      in-game revision info. (they aren''t really that secret anyways but whatever)'
+  - bugfix: Fixed being able to turn unanchored ooze suckers on.
+  - bugfix: Fixed the achievements for muting Poly or giving Poly loudmode as signal
+      technician.
+  - bugfix: Fixed admins not being able to flip tables.
+  - code_imp: Maps can now configure station traits to ban from rolling on that specific
+      map.
+  notghosti:
+  - bugfix: Mobs will be alerted of temperature while not on fire.
+  - bugfix: Anomalies have had their contained flag fixed, and are no longer rouging
+      the great wilds of space, but somehow always the syndicate depo despite moving
+      randomly.
+2025-10-19:
+  Absolucy:
+  - bugfix: Fixed godslayer armor healing triggering if you're unconscious but fully
+      healthy.
+  - bugfix: Reviving an oozeling core now properly shows them the revival policy/blackout
+      message.
+  Absolucy, ThePooba:
+  - rscadd: Added stomper boots, used to stomp hotspots on the Oshan station.
+  - bugfix: Hopefully fixed some wacky angle calculations with stomping hotspots.
+  BobDABuilder9001:
+  - balance: made lock heretics consecrated use charges, changed its crafting recipe
+      and made it a small item
+  Tractor-Maam:
+  - code_imp: the AIs doomsday will now always take 27.2 seconds to send the alert
+      to the station once armed, instead of 3 seconds of random delay from that number.
+  notghosti:
+  - rscadd: A motivational shock wire to cyborgs
+  - map: Guarantees a blue space beacon at each teleporter
+2025-10-20:
+  ThePooba:
+  - bugfix: fixed admin suit dropping items
+2025-10-21:
+  '@Krysonism, @Imaginos16, @MTandi, @san7890':
+  - image: updated smart fridge sprites for all variants
+  - bugfix: smart fridges no longer overlap with walls, but they can be welded down
+      to a floor and mapspawn welded
+  Absolucy:
+  - balance: The cursed katana is now far more effective against fauna - both dealing
+      more damage and having a far higher block chance.
+  - rscadd: Quantum Pad boards and Quantum Keycards can now be printed by the cargo
+      techfab, so they can do interesting setups with deliveries or mining.
+  - rscadd: Engineering can now print Quantum Keycards, because it was silly that
+      they could print Quantum Pad boards but not the keycards.
+  - bugfix: Fixed an oversight that could lead to tram incidents not being counted,
+      especially with oozelings.
+  - bugfix: Beepsky no longer gets mad if you're holding a Spatial Rift Nullifier
+  - balance: The Darkspawn Extinguish spell now also extinguishes the air, putting
+      out fires and purging plasma.
+  - qol: You can now use the RCD to place plating over ocean tiles.
+  Absolucy, Bilbo367:
+  - bugfix: destructive analyzers can now get screwdrivered instead of put it in.
+  - bugfix: destructive analyzer now accepts alien wire cutters, and emags.
+  Cmpwarrior:
+  - rscadd: Adds a new AI core design based off Fracktail from Super Paper Mario
+  LettuceGuardian:
+  - rscadd: Wardens get a megaphone and bandolier in their locker.
+  SyncIt21:
+  - bugfix: runtime with smart fridge tooltip
+  notghosti:
+  - bugfix: Motion sensitive cameras no longer detect observers and eye mobs entering
+      a ai monitored area.
+  - rscadd: Adds wormtongue, tsundere, disc joky, tsundere, and milf to ai law boards
+      and spawners
+2025-10-22:
+  notghosti:
+  - balance: Darkspawn thrall will not resist conversion if buckle cuffed to a table.
+2025-10-23:
+  Greenpoison:
+  - config: Increased time to become dept heads.
+  Infernal-0:
+  - qol: Personal photo albums, from the photographer quirk, are now indestructible
+  JupiterJaeden:
+  - balance: Sol is GONE, but you still get free levels every 10 mins - the cap on
+      free levels has been increased from 3 to 6.
+  - balance: All clans (except tremere, unchanged) now get every vampire ability at
+      level 1 roundstart, but only level up 1 ability at a time.
+  - balance: Vampires no longer have hardcrit immunity.
+  - balance: Vampires no longer have extra flash vulnerability (like mothpeople).
+  - qol: Vampires no longer go mute and deaf when in frenzy.
+  - balance: The bonus to max blood volume and regeneration per level has been nerfed.
+  - bugfix: Bloodsucker abilities are now fixed to actually take blood to activate
+      again (this was broken for idk how long)
+  - balance: The bloodsucker maximum blood volume is now the actual bloodsucker maximum
+      blood volume, instead of letting you have up to double the listed max blood.
+      Extra blood drank still counts towards blood thickening.
+  - balance: The amount of blood required to level up from drinking from sentient
+      mobs (blood thickening) starts higher by default but increases a bit less per
+      level. It also no longer increases when you receive free levels, but rather
+      only when you actually use blood thickening to level up. You also no longer
+      get ANY blood thickening from drinking from vassals (previously was 1/4 the
+      regular amount).
+  - balance: Ventrue has had its initial max level increased from 3 to 4 (you now
+      advance to level 4 before having to spend levels on your favorite vassal). In
+      addition, ventrue's favorite vassal follows the same power scaling as their
+      master (you don't level up every power every rank, you just get 1 power per
+      rank). However, after the ventrue vassal has fully turned into a vampire, both
+      them and their master can rank up normally by drinking blood again.
+  - balance: Ventrue can no longer spend a flat amount of blood to level up their
+      vassal, and instead just follows the normal blood thickening scaling.
+  - balance: Ventrue vampires can now drink from mindless mobs in a pinch, but take
+      a severe mood penalty.
+  - qol: You can level up multiple times inside a coffin without having to open and
+      re-shut it.
+  - balance: 'Buffs/changes vanishing act: Vanishing act is now an ability every vampire
+      gets when they make a lair, and you can use it instantly at any time, but it
+      has a 5 min cooldown. Similar to heretic blade breaks, but way more counterable.
+      You also still drop all your shit if someone sees you in a lit area. Being full
+      stunned, silver cuffed, or bluespace grounded will all still prevent vanishing
+      act.'
+  - balance: 'Buffs trespass: Higher levels now increase the range of trespass, +1
+      per level.'
+  - balance: Buffs predatory lunge - the "spinning" telegraphing effect has been reduced
+      to 1s, and is gone at level 3 instead of 4. The ability now has a range that
+      starts at 4 tiles and increases every level.
+  - bugfix: Fixes predatory lunge not working before level 4 unless you were adjacent
+      to the target.
+  - balance: 'Changes cloak of darkness: only makes you unable to sprint rather than
+      forcing walking. You also can now start your cloak even if others can see you.
+      However, similar to the current behavior of tremere''s obfuscate, if you attack
+      or get attacked while in cloak, your cloak will break.'
+  - balance: 'Changes fortitude: Removes fortitude forcing to walk, however: you are
+      still unable to sprint, and the ability is a limited duration, starting at 10s
+      with a 30s cooldown. Higher levels increase the duration and reduce the cooldown.
+      Level 4 is still full stun immunity, for the duration of the ability. Also,
+      activating/ending fortitude gives chat messages and an icon above your head
+      to everyone around you, as the old tell (force walking) is now gone.'
+  - balance: 'Buffs mesmerize: mesmerize now silences the target on lvl 1 instead
+      of 2.'
+  - balance: 'Nerfs brawn slightly: brawn now requires level 2 to break restraints
+      and no longer lets you break doors at level 4.'
+  - bugfix: Brawn now respects pacifism when attacking someone.
+  - qol: Feed now requires you to be pulling someone, and automatically ends when
+      you stop pulling someone.
+  - balance: Feed is now a lot more obvious to other players around when you start
+      it, displaying an icon above your head and playing a sound. (don't feed in the
+      public halls you sickos!)
+  - balance: The time it takes to feed by default is much faster, and still gets a
+      bit faster every level (although now linearly instead of exponentially), but
+      also now can't go below 2 seconds.
+  - balance: '"Immortal Haste" has been renamed to "Sweeping Dash" and nerfed to have
+      a range- the range starts at 2 tiles and increases 1 per level. The knockdown
+      still increases with every level as well.'
+  - balance: Revenge and favorite vassals can now both be deconverted by mindshield.
+  - balance: Vampires get "Escape on the escape shuttle alive and not in custody"
+      objective instead of just survive, and also their random vassalization objective
+      is no longer optional.
+  - balance: Vampires can no longer cure deep-rooted/permanent traumas by sleeping
+      in a coffin/entering torpor, making them both paxxable and lobotomizable.
+  - balance: Tremere's Thaumaturgy blood shield has had its block chance reduced from
+      75% to 50%.
+  - balance: Tremere's Thaumaturgy now has higher level requirements to unlock each
+      of its abilities, and also can no longer break airlocks at any level.
+  - balance: Tremere's Obfuscation now makes you fully revealed when you are hit instead
+      of 100 alpha still.
+  - qol: Tremere's temporary vassals made by dominate now have hard of hearing and
+      soft spoken instead of being fully mute and deaf (they can still hear and speak
+      totally normally with lvl 4 dominate)
+  - spellcheck: Fixed a number of typos in vampire ability descriptions and code comments,
+      as well as updating many ability descriptions.
+  - qol: You now enter torpor if you have any missing limbs in a coffin, even if you
+      are otherwise healthy.
+  - bugfix: Fixes bluespace grounding implants not affecting slasher jaunts.
+  Killermankey:
+  - balance: Upped vendozers speed, hp, and armor. Much more worth making now
+  - balance: lowered the wood cost and removed the oven from vendozer craft. Alot
+      less rng now
+  Snack-Max:
+  - rscadd: Representative's Turtleneck and Skirtleneck
+  ThatGuy-GEWP:
+  - bugfix: Inspect menu is now Shift+RightClick, and can be changed back in settings,
+      or to right-click only.
+  TheColorCyan:
+  - rscadd: Oozeling perks now mention their ability to consume and regrow limbs
+  - rscadd: Oozeling perks now mention that they have soft landing
+  notghosti:
+  - rscdel: Removed brig access from BlueShield ID's (this is security officer equipment/holding
+      cells, not access to the brig)
+  - balance: Heatsinks are no longer a secret insanely powerful pair of lungs.
+  - bugfix: IPC's spawn with lungs
+  - map: Brig cells on thesues is now connected to holding monitors, and thus will
+      unlock
+  - spellcheck: Inisimin is now spelt invisimin
+2025-10-25:
+  Absolucy:
+  - bugfix: Fixed unwelding loafers deleting them.
+  - bugfix: Oozeling cores can now properly be staked.
+  JohnFulpWillard:
+  - bugfix: Character settings' alternate names menu now looks properly.
+  - bugfix: You can now always change your operative name rather than having an empty
+      box if nukies is disabled in your prefs.
+  - qol: Character settings menu is now slightly less wide.
+  JupiterJaeden:
+  - qol: Updates the citationinator to print a way more official-looking ticket, as
+      well as moving it to the default section of the SecTech vendor and reducing
+      its price.
+  notghosti:
+  - balance: Updates all subtypes of `/obj/item/clothing/under/dress` clothing cover
+      flags to be more to what one would expect
+2025-10-26:
+  EatsTheGrapes:
+  - bugfix: Added checks to prevent infinite plant growth and harvesting loops in
+      hydroponics.
+  - balance: Implemented a short cooldown and growth clamp to prevent reagent-based
+      runaway loops.
+  - code_imp: Cleaned up process logic indentation and ensured growth resets properly
+      after harvest.
+  ThatGuy-GEWP:
+  - bugfix: LOOC's Default is now i
+  - bugfix: Rest's Default is now U again
+  - balance: Pixel-shift's Default has been moved from B to N
+  notghosti:
+  - map: Theseus fore hallway has had it south side split into aft hallway
+  - map: Reconnects drone bay to power network on thesues
+  - map: Gives AI sat Foyer a APC on thesues
+  - map: Fixes thesues satelitte power net
+2025-10-27:
+  Absolucy:
+  - bugfix: The Glass Jaw quirk now properly works again.
+  - bugfix: Bronze chairs now spin automatically once more.
+  - image: (Capsandi) New BSA impact animation.
+  - admin: (TheVekter) Made logging for BSA targeting and firing easier to find for
+      admins.
+  - qol: Trying to pour plasma on a DNR oozeling core will just tell you that their
+      soul has departed.
+  Snack-Max:
+  - rscadd: Added new May Rain hairstyle
+  call me evil McDonalds cause I'm hatin it:
+  - bugfix: IPCs autorevive when they heal tox and oxy damage too.
+2025-10-28:
+  Absolucy:
+  - bugfix: Storytellers should now be the only thing firing events, rather than the
+      legacy Events subsystem.
+  - bugfix: Fixed bloodsucker sucking not properly transfering reagents.
+  - bugfix: Fixed windows built on window sills being "finished" despite being unanchored.
+  Greenpoison:
+  - map: added/modified atmos map content for EVERY map currently in the pool.
+  JohnFulpWillard:
+  - qol: Plasmamen won't ignite with only one hand as long as they have gloves on.
+  SirNightKnight:
+  - bugfix: fixed neck strangling not strangling the victim.
+  - rscdel: removed lung popping from breathing in not enough mols.
+  SirNightKnight, SmartKar, panvxv, grungussuss:
+  - bugfix: fixed riot helmets not hiding hair.
+  - bugfix: fixed helmets not rendering ear slots correctly.
+  - bugfix: fixed the sec backpack's antenna being covered.
+  - bugfix: fixed modskin applicators not working.
+  - sound: added helmet handling sounds.
+  - image: resprited security helmets to be more consistent and so it's easier to
+      tell when a seclite is attached.
+  - image: added a purely stylish face shield to bulletproof helmets  to better diffrentiate
+      them.
+  - qol: you can now attech seclites to riot helmets.
+  - rscadd: you can toggle sec helmet visors with alt-click.
+  - rscadd: you can now toggle the chinstrap on nanotrasen swat and security helmets
+      with ctrl-click.
+  Tractor-Maam:
+  - rscadd: The AI will always receive their lawset on roundstart/login.
+  - spellcheck: fixed a typo in admin logging for admin spawned birthdays.
+  Trobby:
+  - bugfix: Shift right click now counts as a right click rather than a shift click.
+      Rejoice, right click for context menu enjoyers!
+  - qol: Cyborgs can now do right click inhand actions on their module items (like
+      decreasing the transfer amount on beakers)
+  - qol: Telekinesis users can now right click their TK grab inhand to do a right
+      click inhand action on the grabbed item
+  - rscadd: Intents now fully emulate ctrl clicking on grab intent and right clicking
+      on disarm intent
+  - rscadd: When using intents, you can now use right click to shove people while
+      not specifically on disarm intent
+  - rscadd: Grab intent and disarm intent are now considered combat intents (equivalent
+      to having combat mode turned on), blocking people from passing through you
+  - bugfix: Indirectly fixed certain martial arts (combos and attacks) not registering
+      while on grab intent or disarm intent. If you use intents and don't want to
+      use your martial art when shoving or grabbing, stay on help intent!
+  - bugfix: Fixed grabs not registering your martial arts when using ctrl clicks,
+      including combos
+  - bugfix: Fixed AI secretly having combat mode
+  - rscdel: You can no longer scope in when telekinetically using a gun with a scope
+  - code_imp: A lot of things now listen to what your interaction mode says rather
+      than checking your raw mouse input. This should not be super noticable, but
+      things might break anyways...
+  Uristthedorf:
+  - rscadd: Oozelings can eat without a head
+  - balance: Oozelings can now be decapitated as easily as they lose limbs.
+  notghosti:
+  - rscadd: Mining cyborgs are given a organ storage bag for monster cores.
+  - rscadd: Mining cyborgs are given a crude knife onto their PKA so they can gut
+      fauna
+  - rscadd: Cyborgs can now interact with tendrils, elite fauna, vents, and necropolis's
+      door.
+  - bugfix: Baton inspects should reflect accurate number of hits to stun
+  - rscadd: New mining and engineering cyborg upgrade. Night vision Meson goggles.
+  - qol: Whenever a PKA upgrade becomes assessable in the cargo lathe, it becomes
+      assessable in robotics for miner cyborgs.
+  - qol: Blood drunk miner learned basic computer literacy hygiene during a sober
+      period, and carries one floppy disk rather than 4.
+  - code_imp: '"KA Mod Disk"''s have been swapped from a single research design to
+      support a list of research designs.'
+  - balance: Cyborg PKA's now have a capacity akin to regular PKA's, (80 -> 100)
+  - rscadd: Ported new medkit and medibot sprites from TG
+  - refactor: Refactored the medibot code to work more simliar to tg for the medibot
+  - rscadd: Carrier status is functional again for pathology, meaning the carrier/patient
+      0 no longer suffers from the effects of the disease! (Making them a useful cure
+      source)
+  - bugfix: Viral bonding serves a purpose, turning the infected into a carrier.
+  - bugfix: Known GNA disks being inserted into a disease splicer will no longer tell
+      you unknown GNA disk.
+  - bugfix: More uniform GNa disk names.
+  - bugfix: Medical huds now update on disease cure so a bird will no longer have
+      to slap themselfs.
+  - balance: Helpful symptoms now only trigger on the associated virus stage akin
+      to any other severity, rather than always.
+  wraith-54321:
+  - refactor: Antagonist cap is now based on a point system instead of pure integer
+      count
+  - balance: Player made clockwork doors now drain passive power when placed next
+      to each other
+2025-10-29:
+  JohnFulpWillard:
+  - qol: You can close the minimap by opening the Escape menu.
+2025-10-30:
+  Absolucy:
+  - bugfix: Fixed some mining fauna, i.e demonic watchers or lavaland elites, not
+      being considered "mining mobs" for the cursed katana and such.
+  - bugfix: Slimeperson splitting (and some other things) now properly copy the voice
+      of the original.
+  - map: All maps should have a chance to have a loafer somewhere in maints now.
+  - bugfix: Fixed the admin plane debugger.
+  - balance: Darkspawn Extinguish will now remove the Bioluminescence gene from glowshrooms.
+  JohnFulpWillard:
+  - bugfix: Spraycans work again.
+  LemonInTheDark, Ghommie, SmartKar, 13spacemen, JohnFulpWillard:
+  - rscadd: You can now draw an outline of corpses using crayon/chalk.
+  - qol: You can now draw 4 things on a tile at once using crayon/chalk.
+  SirNightKnight:
+  - qol: added a toggle for automatically hailing pointed targets with sechailers.
+  - bugfix: fixes toggleable import helmet sprites not working properly
+  Snack-Max:
+  - rscadd: Added new Centcom Turtleneck
+  TheColorCyan:
+  - rscadd: (JohnFulpWillard) autopsy surgery and scanner
+  - balance: ' (JohnFulpWillard) Dissected bodies now have faster surgery speed.'
+  - qol: (necromanceranne) Autopsies have become the surgery needed to complete the
+      dissection experiments. As a result, the dissection surgery has been removed
+      as it is now redundant.
+  Tractor-Maam:
+  - spellcheck: fixed a typo in the NV Meson cyborg upgrade.
+  - spellcheck: updated the description of the NV Meson cyborg upgrade to not use
+      the advanced mop description.
+  - balance: The BSA can only fire once every 5 seconds.
+  - bugfix: cyborgs dont get a law update when the AI exits their shell anymore.
+  notghosti:
+  - balance: Unique AI weight 0 -> 5
+  - rscadd: Node drones are now ash storm immune
+  - sound: Cyborg PKA melees now have a blade sound effect attached.
+  - code_imp: Removes the redundant flickering proc
+  - balance: Undoes the major stealth buff to malfunctioning ai that passively gives
+      points to the malfunctioning ai
+2025-10-31:
+  Absolucy, SirNightKnight:
+  - rscadd: Added the MOD Stomper Module, the modsuit version of stomper boots.
+  SirNightKnight:
+  - balance: damage deflection is taken into account before thrown damage ramp up.
+  eukalipdus:
+  - balance: Plasmamen's helmet works to seal you for internals.
+  notghosti:
+  - rscdel: Removed the swarmer and goat achievements which are impossible to get
+      as their associated mobs do not exist
+  - rscadd: Singularity generators are now immune to being zapped. Enjoy your 100
+      tesla death cube I suppose
+  wraith-54321:
+  - balance: Default projectile falloff is now 0

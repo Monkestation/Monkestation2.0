@@ -23410,6 +23410,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gWJ" = (
@@ -26842,14 +26843,6 @@
 "hWY" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 14
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -8;
-	pixel_y = 5
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = -7;
 	pixel_y = 19
@@ -26866,6 +26859,7 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "hWZ" = (
@@ -41832,6 +41826,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
+"mkE" = (
+/obj/structure/closet/radiation,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "mkK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43319,7 +43318,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/vending/wardrobe/atmos_wardrobe,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "mGT" = (
@@ -45956,7 +45955,6 @@
 /area/space)
 "nsV" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "nsY" = (
@@ -58270,7 +58268,6 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -60124,7 +60121,7 @@
 /area/station/security/brig/entrance)
 "rLd" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/dark,
 /area/station/security/corrections_officer)
 "rLh" = (
 /obj/structure/railing,
@@ -66997,6 +66994,7 @@
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 12
 	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/multitool{
 	pixel_x = -4;
 	pixel_y = 2
@@ -70560,7 +70558,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/nanite_program_hub,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "uOw" = (
@@ -81506,11 +81504,10 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/research)
 "xZI" = (
-/obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos)
 "xZL" = (
@@ -110958,7 +110955,7 @@ vZz
 sgj
 sgj
 iGd
-sgj
+mkE
 soH
 gqa
 bLN

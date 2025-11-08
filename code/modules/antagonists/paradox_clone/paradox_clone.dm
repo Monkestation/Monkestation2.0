@@ -7,6 +7,7 @@
 	show_to_ghosts = TRUE
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
+	antag_count_points = 3 //low threat
 
 	///Weakref to the mind of the original, the clone's target.
 	var/datum/weakref/original_ref

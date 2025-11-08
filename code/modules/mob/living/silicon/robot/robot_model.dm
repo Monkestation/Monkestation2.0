@@ -385,7 +385,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -719,6 +719,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon,
+		/obj/item/borg/apparatus/organ_storage/monster,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(

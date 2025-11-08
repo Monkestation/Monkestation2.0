@@ -83,8 +83,7 @@
 	animate_holder.animates_self = FALSE
 	adjust_animate_steps()
 
-	if(processes && source_object.loc)
-		START_PROCESSING(SSactualfastprocess, src)
+	update_processing()
 	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
 	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
 	RegisterSignal(source_object, COMSIG_MOVABLE_MOVED, PROC_REF(update_processing))
@@ -117,7 +116,7 @@
 
 /datum/component/particle_spewer/proc/update_processing()
 	SIGNAL_HANDLER
-	if(QDELETED(src) || QDELETED(source_object) || !processes || !get_turf(source_object) || paused)
+	if(paused || QDELETED(src) || QDELETED(source_object) || !processes || !get_turf(source_object) || istype(source_object.loc, /obj/machinery/ore_silo) || istype(source_object.loc, /obj/machinery/rnd/production) || istype(source_object.loc, /obj/machinery/mecha_part_fabricator)) // we do not need the ore silo to sparkle constantly
 		STOP_PROCESSING(SSactualfastprocess, src)
 	else
 		START_PROCESSING(SSactualfastprocess, src)

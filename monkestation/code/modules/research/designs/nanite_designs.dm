@@ -407,11 +407,11 @@
 	program_type = /datum/nanite_program/sleepy
 	category = list("Suppression Nanites")
 
-/datum/design/nanites/paralyzing
-	name = "Paralysis"
-	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
-	id = "paralyzing_nanites"
-	program_type = /datum/nanite_program/paralyzing
+/datum/design/nanites/slow
+	name = "Muscle Impairment"
+	desc = "The nanites force muscle contraction, slowing the host down."
+	id = "slowing_nanites"
+	program_type = /datum/nanite_program/slow
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/fake_death
@@ -429,8 +429,8 @@
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/blinding
-	name = "Blindness"
-	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
+	name = "Optical Disruption"
+	desc = "The nanites suppress the host's ocular nerves, making them nearsighted and making it harder to aim guns."
 	id = "blinding_nanites"
 	program_type = /datum/nanite_program/blinding
 	category = list("Suppression Nanites")
