@@ -485,5 +485,5 @@ ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns pla
 /client/verb/map_vote_tally_count()
 	set name = "Show Map Vote Tallies"
 	set desc = "View the current map vote tally counts."
-	set category = "Server"
+	set category = "OOC"
 	to_chat(mob, SSmap_vote.tally_printout)
