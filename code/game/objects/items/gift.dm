@@ -148,16 +148,11 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			//Shaved down to exclude the non-game-breaking ones
 
 
-			/obj/item/clothing/ears/earmuffs/debug,
-			/obj/item/disk/tech_disk/debug,
-			/obj/item/gun/magic/wand/safety/debug,
-			/obj/item/card/id/advanced/debug,
 			/obj/item/mod/control/pre_equipped/debug,
 			/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
 			/obj/item/reagent_containers/cup/bottle/disease_debug,
 			/obj/item/pinpointer/area_pinpointer/debug,
 			/obj/item/flashlight/emp/debug,
-			/obj/item/gps/visible_debug,
 			/obj/item/airlock_painter/decal/debug,
 			/obj/item/autosurgeon/organ/nif/debug,
 
