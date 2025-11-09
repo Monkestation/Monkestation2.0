@@ -242,8 +242,8 @@
 			power_format_multi_output = 1 QW
 
 /obj/machinery/power/transmission_laser/process()
-	max_grid_load = terminal.surplus()
-	input_available = terminal.surplus()
+	max_grid_load = power_to_energy(terminal.surplus())
+	input_available = power_to_energy(terminal.surplus())
 	if((machine_stat & BROKEN) || !turned_on)
 		return
 
