@@ -416,7 +416,6 @@
 		"hope": "houpe",
 		"horrible": "gruesome",
 		"hungry": "hungert",
-		"import": "inbring",
 		"jar": "jaur",
 		"kept": "keepit",
 		"kitchen": "keetchin",
@@ -624,6 +623,8 @@
 		"way": "weyg",
 		"whole": "hail",
 		"king": "uzbad",
+		"imports" : "imprings",
+		"import": "inbring",
 		"each": "eak"
 	}
 }
