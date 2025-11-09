@@ -87,6 +87,7 @@ const ALTTITLES = {
   'Off-Duty Staff': BASEICONS['Assistant'],
   'Off-Duty Crew': BASEICONS['Assistant'],
   'Test Subject': BASEICONS['Assistant'],
+  'Bananotrasen Representative': BASEICONS['Assistant'],
   // Atmospheric Technician - fan
   'Life Support Technician': BASEICONS['Atmospheric Technician'],
   'Emergency Fire Technician': BASEICONS['Atmospheric Technician'],
@@ -190,7 +191,8 @@ const ALTTITLES = {
   'Private Investigator': BASEICONS['Detective'],
   'Forensic Scientist': BASEICONS['Detective'],
   'Paranormal Investigator': BASEICONS['Detective'],
-  'Inspector': BASEICONS['Detective'],
+  Inspector: BASEICONS['Detective'],
+  'Gristled PI': BASEICONS['Detective'],
   // Geneticist - dna
   'Mutation Researcher': BASEICONS['Geneticist'],
   // Head of Personnel - dog
@@ -243,6 +245,7 @@ const ALTTITLES = {
   Felon: BASEICONS['Prisoner'],
   Inmate: BASEICONS['Prisoner'],
   Gamer: BASEICONS['Prisoner'],
+  'Head of Convicts': BASEICONS['Prisoner'],
   // Psychologist - brain
   Psychiatrist: BASEICONS['Psychologist'],
   Therapist: BASEICONS['Psychologist'],
