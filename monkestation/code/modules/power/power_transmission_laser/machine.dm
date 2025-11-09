@@ -351,7 +351,7 @@
 	var/mw_power = (output_number * power_format_multi_output) / (1 MW)
 	switch(mw_power)
 		if(0 to 25)
-			victim.adjustFireLoss(-mw_power * 15)
+			victim.adjustFireLoss(mw_power * 15)
 			return
 		if(26 to 50)
 			victim.gib(FALSE)
