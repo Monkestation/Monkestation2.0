@@ -284,7 +284,6 @@
 		"evening": "ewenin'",
 		"tomorrow": "th'morra",
 		"today": "th'dae",
-		"mage": "magiker",
 		"magic": "magik",
 		"ability": "abeelitie",
 		"fuck": "fuhk",
@@ -626,6 +625,8 @@
 		"imports" : "imprings",
 		"import": "inbring",
 		"doing" : "doin",
+		"mage": "magiker",
+		"mages": "magikers",
 		"each": "eak"
 	}
 }
