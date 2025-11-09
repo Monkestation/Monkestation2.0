@@ -28,7 +28,7 @@
 		JOB_CYBORG,
 	)
 	min_players = 10 //no required enemies due to instead needing enemy antags
-	weight = 20
+	weight = 25
 	maximum_antags = 1
 	prompted_picking = TRUE
 	max_occurrences = 1
