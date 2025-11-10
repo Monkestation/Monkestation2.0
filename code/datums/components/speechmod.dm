@@ -68,7 +68,7 @@
 		if(islist(replacement))
 			replacement = pick(replacement)
 
-		message = replacetext(message, to_replace, replacement)
+		message = replacetext_char(message, to_replace, replacement)
 
 	if(length(word_replacements))
 		var/list/words = splittext_char(message, " ")
