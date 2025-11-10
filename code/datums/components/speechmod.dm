@@ -71,7 +71,7 @@
 
 	if(length(word_replacements))
 		var/list/words = splittext_char(message, " ")
-		for(var/i in 1 to words.len)
+		for(var/i in 1 to length(words))
 			for(var/word_to_replace, word_replacement in word_replacements)
 				if(islist(word_replacement))
 					word_replacement = pick(word_replacement)
