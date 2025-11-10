@@ -62,8 +62,7 @@
 	if(!isnull(should_modify_speech) && !should_modify_speech.Invoke(source, speech_args))
 		return
 
-	for(var/to_replace in replacements)
-		var/replacement = replacements[to_replace]
+	for(var/to_replace, replacement in replacements)
 		// Values can be lists to be picked randomly from
 		if(islist(replacement))
 			replacement = pick(replacement)
