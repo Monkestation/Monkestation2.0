@@ -71,7 +71,7 @@
 		message = replacetext(message, to_replace, replacement)
 
 	if(length(word_replacements))
-		var/list/words = splittext(message, " ")
+		var/list/words = splittext_char(message, " ")
 		for(var/i in 1 to words.len)
 			for(var/word_to_replace in word_replacements)
 				var/word_replacement = word_replacements[word_to_replace]
