@@ -51,6 +51,7 @@ GLOBAL_LIST_EMPTY(tails_list_monkey)
 GLOBAL_LIST_EMPTY(anime_top_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(anime_middle_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(anime_bottom_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(anime_halo_list)
 GLOBAL_LIST_EMPTY(arachnid_appendages_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_chelicerae_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(goblin_ears_list) //Monkestation Addition
@@ -196,8 +197,6 @@ GLOBAL_LIST_INIT(backpacklist, list(
 #define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT "Implant"
 
-	//Female Uniforms
-GLOBAL_LIST_EMPTY(female_clothing_icons)
 	//Auto-generated 'fallback' clothing icons
 GLOBAL_LIST_EMPTY(fallback_clothing_icons)
 

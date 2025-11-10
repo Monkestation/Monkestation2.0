@@ -34901,10 +34901,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal)
-"hMr" = (
-/obj/machinery/nanite_program_hub,
-/turf/open/floor/iron/dark,
-/area/station/science/lab)
 "hMt" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -38821,6 +38817,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
+"lkJ" = (
+/obj/effect/spawner/random/loafer,
+/turf/open/floor/engine,
+/area/station/service/abandoned_gambling_den/gaming)
 "lkK" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -40127,18 +40127,12 @@
 /area/station/hallway/primary/fore)
 "mrt" = (
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 3;
-	pixel_x = -6
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -6;
-	pixel_y = 9
-	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "mrv" = (
@@ -50067,6 +50061,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/west,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ulV" = (
@@ -52431,10 +52426,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"war" = (
-/obj/machinery/nanite_programmer,
-/turf/open/floor/iron/dark,
-/area/station/science/lab)
 "was" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
@@ -75517,7 +75508,7 @@ bGL
 wXr
 bJe
 bKj
-bLv
+lkJ
 bMB
 tDS
 bOz
@@ -97335,7 +97326,7 @@ nBL
 cCt
 vfp
 wlK
-war
+bwa
 bwa
 fkH
 bAF
@@ -97849,7 +97840,7 @@ bqw
 cCt
 vfp
 wlK
-hMr
+bwa
 efu
 bzh
 bAF

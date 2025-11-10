@@ -19,6 +19,8 @@
 	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
 	///The type of husk for building an iconstate
 	var/husk_type = "humanoid"
+	///The color to multiply the greyscaled husk sprites by. Can be null. Old husk sprite chest color is #A6A6A6
+	var/husk_color = "#A6A6A6"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	/// The mob that "owns" this limb
@@ -130,7 +132,11 @@
 	var/heavy_burn_msg = "peeling away"
 
 	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
-	var/list/damage_examines = list(BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT, BURN = DEFAULT_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	var/list/damage_examines = list(
+		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
+		BURN = DEFAULT_BURN_EXAMINE_TEXT,
+		CLONE = DEFAULT_CLONE_EXAMINE_TEXT,
+	)
 
 	// Wounds related variables
 	/// The wounds currently afflicting this body part
@@ -471,9 +477,24 @@
 		else
 			heal_damage(0, 1)
 
-//Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
-//Damage will not exceed max_damage using this proc
-//Cannot apply negative damage
+/**
+ * #receive_damage
+ *
+ * called when a bodypart is taking damage
+ * Damage will not exceed max_damage using this proc, and negative damage cannot be used to heal
+ * Returns TRUE if damage icon states changes
+ * Args:
+ * brute - The amount of brute damage dealt.
+ * burn - The amount of burn damage dealt.
+ * blocked - The amount of damage blocked by armor.
+ * update_health - Whether to update the owner's health from receiving the hit.
+ * required_bodytype - A bodytype flag requirement to get this damage (ex: BODYTYPE_ORGANIC)
+ * wound_bonus - Additional bonus chance to get a wound.
+ * bare_wound_bonus - Additional bonus chance to get a wound if the bodypart is naked.
+ * sharpness - Flag on whether the attack is edged or pointy
+ * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
+ * damage_source - The source of damage, typically a weapon.
+ */
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
 	SHOULD_CALL_PARENT(TRUE)
 	var/area/target_area = get_area(src.owner)
@@ -557,7 +578,7 @@
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
-			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction)
+			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus, damage_source)
@@ -1017,16 +1038,6 @@
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
-	// Handles making bodyparts look husked
-	if(is_husked)
-		limb.icon = icon_husk
-		limb.icon_state = "[husk_type]_husk_[body_zone]"
-		icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate. //MONKESTATION EDIT - Refactored to `icon_exists_or_scream`.
-		. += limb
-		if(aux_zone) //Hand shit
-			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
-			. += aux
-
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
 		limb.icon = icon_invisible
@@ -1034,39 +1045,42 @@
 		. += limb
 		return .
 
-	// Normal non-husk handling
-	if(!is_husked)
-		// This is the MEAT of limb icon code
-		limb.icon = icon_greyscale
-		if(!should_draw_greyscale || !icon_greyscale)
-			limb.icon = icon_static
+	// This is the MEAT of limb icon code
+	limb.icon = icon_greyscale
+	if(!should_draw_greyscale || !icon_greyscale)
+		limb.icon = icon_static
 
-		if(is_dimorphic) //Does this type of limb have sexual dimorphism?
-			limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
-		else
-			limb.icon_state = "[limb_id]_[body_zone]"
+	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
+		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
+	else
+		limb.icon_state = "[limb_id]_[body_zone]"
 
-		icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
+	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-		. += limb
+	. += limb
 
-		if(aux_zone) //Hand shit
-			aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
-			. += aux
+	if(aux_zone) //Hand shit
+		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
+		. += aux
 
-		draw_color = variable_color
-		if(should_draw_greyscale) //Should the limb be colored outside of a forced color?
-			draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
+	draw_color = variable_color
+	if(should_draw_greyscale) //Should the limb be colored outside of a forced color?
+		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
 
-		if(draw_color)
-			limb.color = "[draw_color]"
-			if(aux_zone)
-				aux.color = "[draw_color]"
+	if(is_husked)
+		huskify_image(thing_to_husk = limb)
+		if(aux)
+			huskify_image(thing_to_husk = aux)
+		draw_color = husk_color
+	if(draw_color)
+		limb.color = "[draw_color]"
+		if(aux_zone)
+			aux.color = "[draw_color]"
 
-		//EMISSIVE CODE START
-		// For some reason this was applied as an overlay on the aux image and limb image before.
-		// I am very sure that this is unnecessary, and i need to treat it as part of the return list
-		// to be able to mask it proper in case this limb is a leg.
+	//EMISSIVE CODE START
+	// For some reason this was applied as an overlay on the aux image and limb image before.
+	// I am very sure that this is unnecessary, and i need to treat it as part of the return list
+	// to be able to mask it proper in case this limb is a leg.
 	if(!is_husked)
 		var/atom/location = loc || owner || src
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -1109,6 +1123,8 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
+					if(overlay.get_emissive_overlay(external_layer, src))
+						. += overlay.get_emissive_overlay(external_layer, src)
 					if(overlay.get_secondary_overlay(external_layer, src))
 						. += overlay.get_secondary_overlay(external_layer, src)
 					if(overlay.get_extended_overlay(external_layer, src))
@@ -1116,6 +1132,17 @@
 							. += item
 
 	return .
+
+/obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
+	var/icon/husk_icon = new(thing_to_husk.icon)
+	husk_icon.ColorTone(HUSK_COLOR_TONE)
+	thing_to_husk.icon = husk_icon
+	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
+	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
+	husk_blood.blend_mode = BLEND_INSET_OVERLAY
+	husk_blood.appearance_flags |= RESET_COLOR
+	husk_blood.dir = thing_to_husk.dir
+	thing_to_husk.add_overlay(husk_blood)
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
