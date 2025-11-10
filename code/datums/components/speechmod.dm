@@ -78,8 +78,7 @@
 				if(lowertext(word_to_replace) == lowertext(words[i]))
 					words[i] = replacetext_char(words[i], word_to_replace, word_replacement)
 
-		var/new_message = words.Join(" ")
-		message = new_message
+		message = jointext(words, " ")
 
 	message = trim(message)
 	if (prob(end_string_chance))
