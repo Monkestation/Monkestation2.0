@@ -9,12 +9,21 @@
 	layer = SIGIL_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
+	/// Time to take per invocation of rune.
+	var/invoke_time = BASE_INVOKE_TIME
+	/// Number of times this rune has been cast
+	var/times_invoked = 0
+	/// What colour you glow while channeling
+	var/spell_colour = "#de3aff48"
+	/// Whether this rune is eligible for ritual progression
+	var/is_grand_rune = FALSE
 
 /obj/effect/heretic_rune/Initialize(mapload)
 	. = ..()
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
+	announce_rune()
 
 /obj/effect/heretic_rune/examine(mob/user)
 	. = ..()
@@ -23,6 +32,8 @@
 
 	. += span_notice("Allows you to transmute objects by invoking the rune after collecting the prerequisites overhead.")
 	. += span_notice("You can use your <i>Mansus Grasp</i> on the rune to remove it.")
+	if(is_grand_rune != FALSE)
+		. += span_notice("This rune is eligible for ritual progression!")
 
 /obj/effect/heretic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -41,6 +52,12 @@
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(try_rituals), user)
 	return TRUE
+
+/obj/effect/heretic_rune/proc/announce_rune(mob/living/creator)
+	var/area/created_area = get_area(src)
+	if (creator.ritual_progression >= 7)
+		priority_announce("Major anomalous fluctuations to local spacetime detected in: [created_area.name].", "Anomaly Alert")
+		return
 
 /**
  * Attempt to begin a ritual, giving them an input list to chose from.
@@ -168,6 +185,19 @@
 	// Do the animations and associated feedback.
 	flick("[icon_state]_active", src)
 	playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
+
+	///No doing the progression ritual if you are in the wrong place
+	if(ritual = /datum/heretic_knowledge/ritual_lore)
+		if(is_grand_rune = FALSE)
+			to_chat(user, span_hierophant_warning("This rune is not in an eligible location to progress your grand ritual."))
+			return FALSE
+		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
+		if(!str)
+			to_chat(user, span_warning("Invalid input!"))
+			return FALSE
+		if(str != user.magic_words)
+			to_chat(user, span_warning("Wrong words!"))
+			return FALSE
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
