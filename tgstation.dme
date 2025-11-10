@@ -6095,6 +6095,7 @@
 #include "code\modules\vehicles\magicbroom.dm"
 #include "code\modules\vehicles\motorized_wheelchair.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"
+#include "code\modules\vehicles\red_key.dm"
 #include "code\modules\vehicles\ridden.dm"
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\sealed.dm"
