@@ -3181,7 +3181,7 @@
 /area/station/hallway/primary/central/aft)
 "bcQ" = (
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "bcR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -5904,7 +5904,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "bVz" = (
 /obj/machinery/corral_corner{
 	mapping_id = "5"
@@ -10580,7 +10580,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "duB" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -12437,7 +12437,7 @@
 	pixel_x = -7
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "dYV" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -28869,7 +28869,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "jrf" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
@@ -30549,7 +30549,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "jVs" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -32435,7 +32435,7 @@
 	dir = 10
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "kBt" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/red/line{
@@ -34328,7 +34328,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "lav" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot{
@@ -34376,7 +34376,7 @@
 "lbc" = (
 /obj/effect/landmark/start/quartermaster,
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "lbi" = (
 /obj/effect/turf_decal/trimline/brown/corner,
 /obj/machinery/navbeacon{
@@ -35987,7 +35987,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "lBD" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/tile/dark_blue{
@@ -38468,7 +38468,7 @@
 	},
 /obj/machinery/digital_clock/directional/east,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "mtd" = (
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 8
@@ -38508,7 +38508,7 @@
 /obj/item/bedsheet/qm,
 /obj/effect/landmark/start/quartermaster,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "mue" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38523,7 +38523,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "mug" = (
 /obj/structure/cable,
 /obj/machinery/computer/crew{
@@ -39588,7 +39588,7 @@
 	},
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/dark/textured,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "mNF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50155,7 +50155,7 @@
 /area/station/security/brig)
 "qaa" = (
 /turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "qak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52443,7 +52443,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "qNR" = (
 /obj/effect/landmark/start/atmospheric_technician,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55046,7 +55046,7 @@
 "rDU" = (
 /obj/structure/noticeboard/qm,
 /turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "rEe" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
@@ -56424,7 +56424,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sfQ" = (
 /obj/item/bikehorn,
 /obj/machinery/disposal/delivery_chute{
@@ -57503,11 +57503,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "swK" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -58559,7 +58556,7 @@
 /obj/machinery/newscaster/directional/south,
 /obj/structure/dresser,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sMt" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured,
@@ -59380,7 +59377,7 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "sZD" = (
 /turf/open/floor/iron/stairs{
 	dir = 1
@@ -60915,7 +60912,7 @@
 "tzM" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "tzU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -63640,7 +63637,7 @@
 "utM" = (
 /obj/structure/drain,
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "utN" = (
 /obj/machinery/door/airlock/bathroom{
 	name = "Toilet";
@@ -63980,7 +63977,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "uAJ" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -64203,7 +64200,7 @@
 	},
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "uDt" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners{
 	color = "#009dc4"
@@ -64865,7 +64862,7 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "uNH" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -65364,7 +65361,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "uVj" = (
 /obj/structure/chair{
 	dir = 8;
@@ -65829,7 +65826,7 @@
 /obj/effect/turf_decal/siding/wood/end,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "vda" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68139,7 +68136,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/orange,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "vOG" = (
 /obj/machinery/corral_corner{
 	mapping_id = "1"
@@ -69181,7 +69178,7 @@
 	},
 /obj/machinery/keycard_auth/directional/north,
 /turf/open/floor/wood/large,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "weZ" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/port)
