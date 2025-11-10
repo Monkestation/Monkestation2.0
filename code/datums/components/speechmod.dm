@@ -78,7 +78,7 @@
 				if(islist(word_replacement))
 					word_replacement = pick(word_replacement)
 				if(lowertext(word_to_replace) == lowertext(words[i]))
-					words[i] = replacetext(words[i], word_to_replace, word_replacement)
+					words[i] = replacetext_char(words[i], word_to_replace, word_replacement)
 
 		var/new_message = words.Join(" ")
 		message = new_message
