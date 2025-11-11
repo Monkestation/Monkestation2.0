@@ -327,6 +327,6 @@
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
-/obj/item/storage/box/survival/syndie/PopulateContents()
+/obj/item/storage/box/survival/operative/PopulateContents()
 	..()
 	new /obj/item/tool_parcel(src)
