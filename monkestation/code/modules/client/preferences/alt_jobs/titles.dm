@@ -389,6 +389,13 @@
 		"Builder",
 	)
 
+/datum/job/machinist
+	alt_titles = list(
+		"Machinist",
+		"Technical Machining Specialist",
+		"Manufacturing Technician",
+	)
+
 /datum/job/virologist
 	alt_titles = list(
 		"Pathologist",
