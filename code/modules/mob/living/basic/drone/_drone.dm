@@ -346,7 +346,7 @@
 /mob/living/basic/drone/proc/check_yellow_alert()
 	SIGNAL_HANDLER
 	if(initial(shy) == TRUE)
-		set_shy(SSsecurity_level.current_security_level != SEC_LEVEL_YELLOW)
+		set_shy((SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_YELLOW))
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy
