@@ -89,16 +89,15 @@
 			if(BOULDER_SIZE_LARGE)
 				wave_timers = WAVE_DURATION_LARGE
 		var/remaining_fraction = (time_remaining / wave_timers)
-		if(remaining_fraction <= 0.3)
-			. += "node_progress_4"
-			return
-		if(remaining_fraction <= 0.55)
-			. += "node_progress_3"
-			return
-		if(remaining_fraction <= 0.80)
-			. += "node_progress_2"
-			return
-		. += "node_progress_1"
+		switch(remaining_fraction)
+			if(0 to 0.3)
+				. += "node_progress_4"
+			if(0.3 to 0.55)
+				. += "node_progress_3"
+			if(0.55 to 0.80)
+				. += "node_progress_2"
+			else
+				. += "node_progress_1"
 		return
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
@@ -134,8 +133,7 @@
 
 
 /mob/living/basic/node_drone/proc/pre_escape(success = TRUE)
-	if(buckled)
-		buckled.unbuckle_mob(src)
+	buckled?.unbuckle_mob(src)
 	if(attached_vent)
 		attached_vent = null
 	if(!escaping)
