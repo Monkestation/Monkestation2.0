@@ -205,8 +205,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// How much health you gain per level
 	var/health_per_level = 2.5
-	/// How much health regen you gain per level
-	var/health_regen_per_level = 0.015
+	/// How much health regen you gain per level. Before further upgrades brings borers up to 170 seconds to full heal at level 100, limit is 208 seconds
+	var/health_regen_per_level = 0.012
 
 	/// How much more chemical storage you gain per level
 	var/chem_storage_per_level = 20
@@ -232,9 +232,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	/// What the host gains or loses with the borer
 	var/list/hosts_abilities = list()
 
-	/// How much health we regen per second while in a host scales linearally
-	var/health_regen = 0.15
-
+	/// How much health we regen per second while in a host. Starts at a 60 seconds to fully to heal. A complete organ manipulation surgery takes 19.8 seconds to compelte with perfect timing to remove a borer
+	var/health_regen = 0.415
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing

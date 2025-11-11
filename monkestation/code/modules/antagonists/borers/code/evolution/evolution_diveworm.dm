@@ -2,7 +2,7 @@
 	evo_type = BORER_EVOLUTION_DIVEWORM
 
 // T1
-/datum/borer_evolution/diveworm/health_per_level
+/datum/borer_evolution/diveworm/health_per_level //100 hp per 20 levels, By level 100, 275 health and 300 seconds to heal, limit is 385 seconds.
 	name = "Health Increase"
 	desc = "Increase the amount of health per level-up you gain."
 	gain_text = "Over time, some of the more aggressive worms became harder to dissect post-mortem. Their skin membrane has become up to thrice as thick."
@@ -13,6 +13,7 @@
 /datum/borer_evolution/diveworm/health_per_level/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.health_per_level += 2.5
+	cortical_owner.health_regen_per_level += 0.01 // Helps flatten the curves
 	cortical_owner.recalculate_stats()
 
 // T2 + T1 path
@@ -64,13 +65,13 @@
 	. = ..()
 	cortical_owner.potential_chemicals |= added_chemicals
 
-/datum/borer_evolution/diveworm/health_per_level/t2
+/datum/borer_evolution/diveworm/health_per_level/t2 //100 hp per 13 1/3  levels, By level 100 775 hp and 427 seconds to fully heal. Limit is 536 seconds
 	name = "Health Increase II"
 	tier = -1
 	unlocked_evolutions = list(/datum/borer_evolution/diveworm/health_per_level/t3)
 	evo_cost = 2
 
-/datum/borer_evolution/diveworm/health_per_level/t3
+/datum/borer_evolution/diveworm/health_per_level/t3 //100 hp per 10 levels, By level 100 1025 hp and 536 seconds to fully heal. Limit is 667 seconds.
 	name = "Health Increase III"
 	tier = -1
 	unlocked_evolutions = list()
