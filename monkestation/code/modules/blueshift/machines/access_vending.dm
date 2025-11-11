@@ -5,8 +5,8 @@
 	name = "access-based vending machine"
 	/// Internal variable to store our access list
 	var/list/access_lists
-	/// Should we auto build our product list? 0 means no
-	var/auto_build_products = 0
+	/// Boolean on whether we should we auto build our product list.
+	var/auto_build_products = FALSE
 
 /**
  * This is where you generate the list to store what items each access grants.
