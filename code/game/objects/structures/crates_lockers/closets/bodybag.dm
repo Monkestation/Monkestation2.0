@@ -257,7 +257,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
-		return
+		return FALSE
 	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)
@@ -351,7 +351,6 @@
 /obj/structure/closet/body_bag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured during transport."
-	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag"
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
@@ -360,7 +359,7 @@
 	breakout_time = 8 MINUTES
 	sinch_time = 20 SECONDS
 
-/obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/refresh_air()
 	air_contents = null
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C
