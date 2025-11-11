@@ -1,3 +1,7 @@
+#define TIME_BETWEEN_HITS (3 SECONDS)
+#define ANIMATION_DURATION (2.5 SECONDS)
+#define DAMAGE_PER_HIT 55
+
 /obj/vehicle/ridden/red_key
 	name = "red key"
 	desc = "IT'S THE POLICE, OPEN UP! Requires two officers and allows you to bust down doors to enter unwilling departments."
@@ -16,6 +20,9 @@
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
 	)
 
+	///Callback we use to reset pixel shifting for the "ramming" animation players go through.
+	var/datum/callback/undo_shift_callback
+
 /datum/armor/red_key
 	melee = 10
 	laser = 10
@@ -26,8 +33,6 @@
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/red_key)
 
-#define DAMAGE_PER_HIT 55
-
 /obj/vehicle/ridden/red_key/Bump(atom/bumped)
 	. = ..()
 	if(!istype(bumped, /obj/machinery/door))
@@ -36,17 +41,18 @@
 	for(var/mob/living/current_occupant as anything in current_occupants)
 		if(isnull(current_occupant.ckey))
 			return
+	var/mob/living/driver = return_drivers()[1]
 	if(length(current_occupants) < max_occupants)
+		driver.balloon_alert(driver, "needs second person!")
 		return
 
 	var/obj/machinery/door/opening_door = bumped
-	var/mob/living/driver = return_drivers()[1]
 	if(opening_door.allowed(driver) && !opening_door.locked) //you're opening it anyways.
 		return
 
 	playsound(src, 'sound/effects/bang.ogg', 30, vary = TRUE)
 	if(!has_gravity())
-		visible_message("[driver] drives head first into [src], being sent back by the lack of gravity!")
+		visible_message(span_warning("[driver] drives head first into [src], being sent back by the lack of gravity!"))
 		var/user_throwtarget = get_step(driver, get_dir(bumped, driver))
 		driver.throw_at(user_throwtarget, 1, 1, force = MOVE_FORCE_STRONG)
 		unbuckle_all_mobs()
@@ -54,15 +60,63 @@
 
 	//save turf for after
 	var/turf/bumped_loc = bumped.loc
-	while(!QDELETED(bumped) && driver.Adjacent(bumped))
-		if(!do_after(driver, rand(2 SECONDS, 4 SECONDS), opening_door, timed_action_flags = IGNORE_HELD_ITEM, icon = 'icons/obj/vehicles.dmi', iconstate = "redkey"))
+	while(!QDELETED(bumped) && !QDELETED(driver) && driver.Adjacent(bumped))
+		move_away_from_door(bumped, current_occupants)
+		if(!do_after(
+			driver,
+			TIME_BETWEEN_HITS,
+			opening_door,
+			timed_action_flags = IGNORE_HELD_ITEM,
+			extra_checks = CALLBACK(src, PROC_REF(occupants_are_same), current_occupants),
+			icon = 'icons/obj/vehicles.dmi',
+			iconstate = "redkey",
+		))
+			undo_shift_callback?.Invoke(current_occupants)
 			return
 		playsound(src, 'sound/weapons/blastcannon.ogg', 20, vary = TRUE)
 		opening_door.take_damage(DAMAGE_PER_HIT)
 		opening_door.Shake(3, 3, 2 SECONDS)
+		undo_shift_callback?.Invoke(current_occupants)
 
+	undo_shift_callback?.Invoke(current_occupants)
 	var/obj/structure/door_assembly/after_assembly = locate() in bumped_loc
 	if(after_assembly)
 		after_assembly.deconstruct(TRUE)
 
+/obj/vehicle/ridden/red_key/proc/occupants_are_same(list/compared_occupants)
+	return return_occupants() == compared_occupants
+
+/obj/vehicle/ridden/red_key/proc/move_away_from_door(atom/door_moving_away_from, list/current_occupants)
+	var/list/things_to_move = list(src) + current_occupants
+	var/direction_to_move_towards = get_dir(door_moving_away_from, return_drivers()[1])
+	switch(direction_to_move_towards)
+		if(NORTH)
+			for(var/atom/movable/moved as anything in things_to_move)
+				animate(moved, pixel_y = moved.pixel_y + 12, ANIMATION_DURATION, LINEAR_EASING)
+			undo_shift_callback = CALLBACK(src, PROC_REF(set_pixel_shift), -12, 0)
+		if(SOUTH)
+			for(var/atom/movable/moved as anything in things_to_move)
+				animate(moved, pixel_y = moved.pixel_y - 12, ANIMATION_DURATION, LINEAR_EASING)
+			undo_shift_callback = CALLBACK(src, PROC_REF(set_pixel_shift), 12, 0)
+		if(EAST)
+			for(var/atom/movable/moved as anything in things_to_move)
+				animate(moved, pixel_x = moved.pixel_x + 12, ANIMATION_DURATION, LINEAR_EASING)
+			undo_shift_callback = CALLBACK(src, PROC_REF(set_pixel_shift), 0, -12)
+		if(WEST)
+			for(var/atom/movable/moved as anything in things_to_move)
+				animate(moved, pixel_x = moved.pixel_x - 12, ANIMATION_DURATION, LINEAR_EASING)
+			undo_shift_callback = CALLBACK(src, PROC_REF(set_pixel_shift), 0, 12)
+	return TRUE
+
+/obj/vehicle/ridden/red_key/proc/set_pixel_shift(y_amount = 0, x_amount = 0, list/current_occupants)
+	var/list/things_to_move = list(src) + current_occupants
+	for(var/atom/movable/moved as anything in things_to_move)
+		animate(moved, flags = ANIMATION_END_NOW)
+		if(y_amount)
+			moved.pixel_y = moved.pixel_y + y_amount
+		if(x_amount)
+			moved.pixel_x = moved.pixel_x + x_amount
+
+#undef TIME_BETWEEN_HITS
+#undef ANIMATION_DURATION
 #undef DAMAGE_PER_HIT
