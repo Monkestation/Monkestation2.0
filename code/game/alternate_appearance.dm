@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	if (istype(M, /mob/living/basic/construct/wraith))
 		return TRUE
-	if(isrevenant(M) || IS_WIZARD(M) || IS_CLOCK(M)) //monkestation edit: adds IS_CLOCK check
+	if(isrevenant(M) || IS_WIZARD(M) || IS_CLOCK(M) || IS_HERETIC(M))
 		return TRUE
 	return FALSE
 
