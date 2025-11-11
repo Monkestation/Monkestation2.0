@@ -533,8 +533,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
 
-	if(mind)
-		SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
