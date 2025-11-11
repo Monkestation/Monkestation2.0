@@ -257,6 +257,7 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(sinched)
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+		return
 	return ..()
 
 /obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)
@@ -317,7 +318,10 @@
 /obj/structure/closet/body_bag/environmental/prisoner/attack_hand_secondary(mob/user, modifiers)
 	if(!user.can_perform_action(src) || !isturf(loc))
 		return
-	togglelock(user)
+	if(user.istate & ISTATE_HARM)
+		togglelock(user)
+	else
+		..() //Return the rest of the attack chain, which is to fold the device
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
