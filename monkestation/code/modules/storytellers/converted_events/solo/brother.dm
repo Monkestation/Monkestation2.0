@@ -47,6 +47,11 @@
 		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
 
+/datum/round_event_control/antagonist/solo/brother/get_antag_amount()
+	. = ..()
+	if(prob(90)) // 3-brother teams only happen around 10% of the time
+		return FLOOR(., 2)
+
 /datum/round_event/antagonist/solo/brother/start()
 	if(length(setup_minds) < 2) // if we somehow only got one BB chosen, despite the fact we asked for 2, fuck it, they just get to be a traitor, and we'll throw the storyteller a bone
 		var/datum/mind/lonely_sap = setup_minds[1]
