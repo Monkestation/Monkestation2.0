@@ -13,7 +13,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/broken_flooring/LateInitialize()
+/obj/structure/broken_flooring/LateInitialize(mapload_arg)
 	. = ..()
 	var/turf/turf = get_turf(src)
 	if(!isplatingturf(turf)) // Render as trash if not on plating

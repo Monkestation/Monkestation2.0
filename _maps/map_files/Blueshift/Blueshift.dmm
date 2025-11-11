@@ -38010,7 +38010,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/computer/piratepad_control{
+/obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -77624,7 +77624,7 @@
 /obj/item/stamp/denied{
 	pixel_y = 6
 	},
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "oYT" = (
@@ -98786,6 +98786,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "tbH" = (

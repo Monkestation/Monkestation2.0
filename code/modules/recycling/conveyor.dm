@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/conveyor/LateInitialize()
+/obj/machinery/conveyor/LateInitialize(mapload_arg)
 	. = ..()
 	build_neighbors()
 

@@ -31,7 +31,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/shipbreaker/LateInitialize()
+/obj/machinery/computer/shipbreaker/LateInitialize(mapload_arg)
 	linked = GLOB.areas_by_type[mapped_start_area]
 	if(!linked)
 		return

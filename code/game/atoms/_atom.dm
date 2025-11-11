@@ -271,7 +271,7 @@
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
  * code has been run
  */
-/atom/proc/LateInitialize()
+/atom/proc/LateInitialize(mapload_arg)
 	set waitfor = FALSE
 /**
  * Top level of the destroy chain for most atoms

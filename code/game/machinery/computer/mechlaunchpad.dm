@@ -34,7 +34,7 @@
 	SIGNAL_HANDLER
 	connected_mechpad = null
 
-/obj/machinery/computer/mechpad/LateInitialize()
+/obj/machinery/computer/mechpad/LateInitialize(mapload_arg)
 	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
 		if(pad == connected_mechpad)
 			continue

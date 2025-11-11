@@ -10549,6 +10549,12 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/folder/yellow,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "dct" = (
@@ -11535,6 +11541,14 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/structure/filingcabinet,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+/obj/item/toy/figure/qm,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "dsj" = (
@@ -11791,6 +11805,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "dxg" = (
@@ -13849,7 +13864,7 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -43697,11 +43712,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "nuI" = (
@@ -43850,15 +43861,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/filingcabinet,
-/obj/item/toy/figure/qm,
-/obj/item/reagent_containers/cup/glass/bottle/whiskey,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 8;
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "nxM" = (
@@ -45610,11 +45614,16 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/item/clipboard,
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/item/folder/yellow,
+/obj/item/pen/red,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/coin/silver,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "nUW" = (
@@ -50083,7 +50092,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "ppy" = (
@@ -53341,20 +53349,14 @@
 /obj/machinery/status_display/supply{
 	pixel_x = -32
 	},
-/obj/item/coin/silver,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
-/obj/item/pen/red,
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "qpr" = (

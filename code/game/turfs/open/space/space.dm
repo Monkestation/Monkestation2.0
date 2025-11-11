@@ -271,7 +271,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/space/openspace/LateInitialize()
+/turf/open/space/openspace/LateInitialize(mapload_arg)
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 

@@ -189,7 +189,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/tram/LateInitialize()
+/obj/item/assembly/control/tram/LateInitialize(mapload_arg)
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
 	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])

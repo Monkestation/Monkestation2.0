@@ -45,7 +45,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/bingle_hole/LateInitialize()
+/obj/structure/bingle_hole/LateInitialize(mapload_arg)
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_BINGLE_PIT)
 	log_game("Bingle Pit Template loaded.")
 

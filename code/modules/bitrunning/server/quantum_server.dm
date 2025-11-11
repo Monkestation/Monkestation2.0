@@ -58,7 +58,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/LateInitialize(mapload_arg)
 	. = ..()
 
 	radio = new(src)
