@@ -2429,11 +2429,6 @@
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"bUc" = (
-/obj/machinery/nanite_program_hub,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/station/science/circuits)
 "bUj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -7827,7 +7822,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "glZ" = (
-/obj/structure/cable,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "High-Risk Modules";
@@ -13344,7 +13338,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "lab" = (
-/obj/structure/cable,
 /obj/structure/table/wood/fancy/blue,
 /obj/machinery/door/window/left/directional/west{
 	req_access = list("rd");
@@ -21287,7 +21280,6 @@
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
-/obj/structure/cable,
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
@@ -21472,8 +21464,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ryV" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/storage/box/mousetraps{
 	pixel_x = -3;
@@ -21932,11 +21922,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/water/sewage,
 /area/station/maintenance/fore/greater)
-"rOj" = (
-/obj/machinery/nanite_programmer,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/station/science/circuits)
 "rOA" = (
 /obj/machinery/computer/rdconsole{
 	dir = 8
@@ -23826,7 +23811,6 @@
 "txx" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/water/sewage,
 /area/station/maintenance/port/lesser)
@@ -62832,9 +62816,9 @@ hPt
 iXA
 eVM
 qRu
-sdp
-sdp
-sdp
+xmN
+xmN
+xmN
 rDJ
 rDJ
 rDJ
@@ -63089,9 +63073,9 @@ nBa
 iXA
 vrH
 qRu
-rDJ
-rDJ
-sdp
+nxI
+nxI
+xmN
 rDJ
 rDJ
 rDJ
@@ -63346,9 +63330,9 @@ rLC
 fPr
 wdH
 qRu
-rDJ
-rDJ
-nzE
+nxI
+nxI
+dSz
 xCK
 xCK
 xCK
@@ -63603,9 +63587,9 @@ fSz
 fSz
 qRu
 qRu
-rDJ
-rDJ
-sdp
+nxI
+nxI
+xmN
 xCK
 xCK
 xCK
@@ -64112,7 +64096,7 @@ nxI
 nxI
 nxI
 nxI
-nxI
+aho
 nxI
 nxI
 nxI
@@ -66425,7 +66409,7 @@ nxI
 oGH
 oGH
 oGH
-aho
+nxI
 oGH
 oGH
 oGH
@@ -81650,8 +81634,8 @@ jRY
 pxv
 hfS
 mTb
-bUc
-rOj
+ocw
+ocw
 lcO
 nrc
 nrc
