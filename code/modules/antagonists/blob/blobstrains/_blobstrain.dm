@@ -1,8 +1,11 @@
 GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/blobstrain/reagent, /datum/blobstrain/multiplex))
 
 /datum/blobstrain
+	/// The name of this strain
 	var/name
-	var/description
+	/// The description for this strain
+	var/description //where is this used
+	/// The color applied to our tiles
 	var/color = COLOR_BLACK
 	/// The color that stuff like healing effects and the overmind camera gets
 	var/complementary_color = COLOR_BLACK
@@ -22,13 +25,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/message_living = null
 	/// Stores world.time to figure out when to next give resources
 	var/resource_delay = 0
-	/// For blob-mobs and extinguishing-based effects
-	var/fire_based = FALSE
 	var/mob/eye/blob/overmind //NEED TO CONVERT THIS TO THE TEAM
-	/// The amount of health regenned on core_process
-	var/base_core_regen = BLOB_CORE_HP_REGEN
-	/// The amount of points gained on core_process
-	var/point_rate = BLOB_BASE_POINT_RATE
 
 	// Various vars that strains can buff the blob with
 	/// HP regen bonus added by strain
@@ -137,12 +134,12 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 
-/datum/blobstrain/proc/send_message(mob/living/M)
+/datum/blobstrain/proc/send_message(mob/living/sent_to)
 	var/totalmessage = message
-	if(message_living && !issilicon(M))
+	if(message_living && !issilicon(sent_to))
 		totalmessage += message_living
 	totalmessage += "!"
-	to_chat(M, span_userdanger("[totalmessage]"))
+	to_chat(sent_to, span_userdanger("[totalmessage]"))
 
 /datum/blobstrain/proc/core_process()
 	if(resource_delay <= world.time)
@@ -150,8 +147,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.add_points(point_rate+point_rate_bonus)
 	overmind.blob_core.repair_damage(base_core_regen + core_regen_bonus)
 
-/datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
-	send_message(L)
+/datum/blobstrain/proc/attack_living(mob/living/attacked, list/nearby_blobs) // When the blob attacks people
+	send_message(attacked)
 
 /datum/blobstrain/proc/blobbernaut_attack(mob/living/L, blobbernaut) // When this blob's blobbernaut attacks people
 
@@ -166,7 +163,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/tesla_reaction(obj/structure/blob/B, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
 	return TRUE //return 0 to ignore damage
-
+//should refactor this to use signals
 /datum/blobstrain/proc/extinguish_reaction(obj/structure/blob/B, coefficient = 1) //when the blob is hit with water, do this
 	return
 
@@ -174,4 +171,4 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/examine(mob/user)
-	return list("<b>Progress to Critical Mass:</b> [span_notice("[length(overmind.antag_team.blobs_legit)]/[overmind.antag_team.blobwincount].")]")
+	return list("<b>Progress to Critical Mass:</b> [span_notice("[overmind.antag_team.blobs_legit]/[overmind.antag_team.blobwincount].")]")

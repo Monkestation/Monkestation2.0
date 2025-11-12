@@ -145,7 +145,7 @@
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		. += "(Progress: [length(blob_team.blobs_legit)]/[blob_team.blobwincount])"
+		. += "(Progress: [blob_team.blobs_legit]/[blob_team.blobwincount])"
 
 /// A subtype of blob meant to represent the infective version.
 /datum/antagonist/blob/infection

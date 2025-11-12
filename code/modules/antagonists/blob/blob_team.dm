@@ -20,12 +20,16 @@
 	var/list/all_blobs = list()
 	///Assoc list of all blob structures keyed to their type
 	var/alist/all_blobs_by_type = alist()
-	///List of blob structures in valid areas, might be able to make this be a simple counter instead
-	var/list/blobs_legit = list()
+	///Count of blob structures in valid areas
+	var/blobs_legit = 0
 	///Ref to our main overmind
 	var/mob/eye/blob/main_overmind
+	/// The amount of points gained on blobstrain.core_process()
+	var/point_rate = BLOB_BASE_POINT_RATE
+	/// The amount of health regenned on core_process
+	var/base_core_regen = BLOB_CORE_HP_REGEN
 
-/datum/team/blob/New(starting_members)
+/datum/team/blob/New(datum/starting_members)
 	. = ..()
-	if(starting_members && (astype(starting_members, /mob/eye/blob)?.type == /mob/eye/blob)) //cursed
-		main_overmind = starting_members
+	if(istype(starting_members) && starting_members.type == /mob/eye/blob)
+		main_overmind = starting_membersz

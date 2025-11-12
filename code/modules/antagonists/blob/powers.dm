@@ -39,7 +39,7 @@
 	else
 		var/obj/structure/blob/special/core/core = new(get_turf(src), src, 1)
 		core.overmind = src
-		antag_team.blobs_legit += src
+		antag_team.blobs_legit++
 		blob_core = core
 		core.update_appearance()
 

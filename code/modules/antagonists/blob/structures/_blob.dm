@@ -29,6 +29,8 @@
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
+	/// is this tile valid for winning
+	var/legit = FALSE
 	var/mob/eye/blob/overmind
 
 
@@ -82,7 +84,8 @@
 		air_update_turf(TRUE, FALSE)
 	if(overmind)
 		overmind.antag_team.all_blobs -= src
-		overmind.antag_team.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+		if(legit)
+			overmind.antag_team.blobs_legit--
 		overmind.antag_team.all_blobs_by_type[src.type] -= src
 		overmind = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
@@ -252,7 +255,7 @@
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[length(overmind.antag_team.blobs_legit)]/[overmind.antag_team.blobwincount].")]")
+			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.antag_team.blobs_legit]/[overmind.antag_team.blobwincount].")]")
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
 			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")

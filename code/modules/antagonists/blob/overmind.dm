@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
 			qdel(src)
-	else if(!antag_team.victory_in_progress && (length(antag_team.blobs_legit) >= antag_team.blobwincount))
+	else if(!antag_team.victory_in_progress && (antag_team.blobs_legit >= antag_team.blobwincount))
 		antag_team.victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
@@ -159,9 +159,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		free_strain_rerolls = 1
 
 	if(!antag_team.victory_in_progress)
-		antag_team.highest_tile_count = max(antag_team.highest_tile_count, length(antag_team.blobs_legit))
+		antag_team.highest_tile_count = max(antag_team.highest_tile_count, antag_team.blobs_legit)
 
-	if(antag_team?.announcement_time && (world.time >= antag_team.announcement_time || length(antag_team.blobs_legit) >= antag_team.announcement_size) && !antag_team.has_announced)
+	if(antag_team?.announcement_time && (world.time >= antag_team.announcement_time || antag_team.blobs_legit >= antag_team.announcement_size) && !antag_team.has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 		antag_team.has_announced = TRUE
 
@@ -319,7 +319,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		. += "Core Health: [blob_core.get_integrity()]"
 		. += "Power Stored: [blob_points]/[max_blob_points]"
-		. += "Blobs to Win: [length(antag_team.blobs_legit)]/[antag_team.blobwincount]"
+		. += "Blobs to Win: [antag_team.blobs_legit]/[antag_team.blobwincount]"
 	if(free_strain_rerolls)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
