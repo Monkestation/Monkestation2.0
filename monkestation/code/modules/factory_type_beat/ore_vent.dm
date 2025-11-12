@@ -73,7 +73,8 @@
 	if(mapload)
 		generate_description()
 	register_context()
-	SSore_generation.possible_vents += src
+	if(!unique_vent)
+		SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
