@@ -39,12 +39,6 @@
 		def_zone = hitting.body_zone
 	if(damage < 5 || damagetype != BRUTE || def_zone != BODY_ZONE_HEAD || wound_bonus == CANT_WOUND)
 		return
-	// if you have decent head melee protection or a thick helmet, you're protected (code stolen from groin kicking)
-	if(ishuman(source))
-		var/mob/living/carbon/human/human_source = source
-		for(var/obj/item/clothing/clothing in human_source.get_clothing_on_part(BODY_ZONE_HEAD))
-			if((clothing.clothing_flags & THICKMATERIAL) || clothing.get_armor_rating(MELEE) >= 15)
-				return
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
 	if(prob(CEILING(damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))
 		//don't display the message if little mac is already KO'd
