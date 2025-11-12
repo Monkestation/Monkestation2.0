@@ -187,7 +187,11 @@ class StorageProxy implements StorageBackend {
               setTimeout(() => {
                 const hub = new HubStorageBackend();
 
-                for (const setting of ['panel-settings', 'chat-state', 'chat-messages']) {
+                for (const setting of [
+                  'panel-settings',
+                  'chat-state',
+                  'chat-messages',
+                ]) {
                   hub
                     .get(setting)
                     .then((settings) => iframe.set(setting, settings));
@@ -218,7 +222,9 @@ class StorageProxy implements StorageBackend {
             document.addEventListener('byondstorageupdated', listener);
           });
         }
-        return new HubStorageBackend();
+        if (testHubStorage()) {
+          return new HubStorageBackend();
+        }
       }
       console.warn(
         'No supported storage backend found. Using in-memory storage.',
