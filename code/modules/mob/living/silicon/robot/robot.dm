@@ -626,9 +626,12 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(sight_mode & BORGMESON)
+	if(sight_mode & (BORGMESON|BORGNVMESON))
 		new_sight |= SEE_TURFS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
+		if(sight_mode & BORGNVMESON)
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(10, 30, 10))
+		else
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
 
 	if(sight_mode & BORGMATERIAL)
 		new_sight |= SEE_OBJS

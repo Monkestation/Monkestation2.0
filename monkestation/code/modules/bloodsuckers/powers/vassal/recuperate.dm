@@ -56,14 +56,12 @@
 			part.generic_bleedstacks--
 
 /datum/action/cooldown/bloodsucker/recuperate/ContinueActive(mob/living/user, mob/living/target)
-	if(QDELETED(user))
-		return FALSE
 	if(user.stat >= DEAD)
 		return FALSE
 	if(user.incapacitated())
 		owner.balloon_alert(owner, "too exhausted...")
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/action/cooldown/bloodsucker/recuperate/DeactivatePower()
 	owner?.balloon_alert(owner, "recuperate turned off.")

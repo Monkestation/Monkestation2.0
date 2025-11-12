@@ -153,7 +153,7 @@
 			if(dish_datum == null)
 				return TRUE
 
-			dish_datum.dish.examine(usr)
+			usr.examinate(dish_datum.dish)
 			return TRUE
 
 		if("flushdish")

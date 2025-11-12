@@ -49,7 +49,7 @@
 		silo_materials = AddComponent(/datum/component/remote_materials, "bouldertech", mapload, force_connect = TRUE)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bouldertech/LateInitialize()
+/obj/machinery/bouldertech/LateInitialize(mapload_arg)
 	. = ..()
 	if(!holds_minerals)
 		return

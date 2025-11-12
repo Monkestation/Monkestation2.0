@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 //monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 6,
-		//Sorry Lucy, I stole your gifts. ~MCP.
+		/obj/item/a_gift/anything/wiz_name = 4,
 		/obj/item/implanter/dust = 3,
 		/obj/item/vending_refill/sovietsoda = 3,
 		/obj/item/vending_refill/donksnackvendor = 3,
@@ -404,7 +404,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
 		/obj/item/organ/internal/butt/atomic = 1,
-		/obj/item/a_gift/anything/wiz_name = 1, //Here's your
 	))
 
 

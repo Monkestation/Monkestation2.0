@@ -11,6 +11,7 @@
 	suicide_cry = "FOR NAR'SIE!!"
 	preview_outfit = /datum/outfit/cultist
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 3 //conversion antag, very low cost per member
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new

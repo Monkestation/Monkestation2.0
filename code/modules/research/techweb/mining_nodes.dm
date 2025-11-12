@@ -5,9 +5,6 @@
 	description = "Better than Efficiency V."
 	prereq_ids = list("basic_plasma")
 	design_ids = list(
-		"borg_upgrade_cooldownmod",
-		"borg_upgrade_damagemod",
-		"borg_upgrade_rangemod",
 		"cargoexpress",
 		"b_smelter",
 		"b_refinery",

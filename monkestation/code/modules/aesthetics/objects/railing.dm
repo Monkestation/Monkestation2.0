@@ -18,7 +18,7 @@
 		material_flags = NONE
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/railing/LateInitialize()
+/obj/structure/railing/LateInitialize(mapload_arg)
 	. = ..()
 	if(anchored)
 		update_icon()

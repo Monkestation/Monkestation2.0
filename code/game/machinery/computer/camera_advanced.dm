@@ -264,9 +264,8 @@
 /datum/action/innate/camera_off/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
-	console.remove_eye_control(owner)
+
+	astype(owner.remote_control, /mob/eye/ai_eye/remote)?.origin.remove_eye_control(owner)
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"

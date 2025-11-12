@@ -11,7 +11,7 @@
 
 		if(1 GW)
 			message = "The onboard PTL has successfully exported 1 Gigawatt worth of power"
-			flavor_text = "Using the exported power we managed to save a station whose supermatter engine has delamianted, good work!"
+			flavor_text = "Using the exported power we managed to save a station whose supermatter engine has delaminated, good work!"
 
 		if(1 TW)
 			message = "The onboard PTL has successfully exported 1 Terawatt worth of power"

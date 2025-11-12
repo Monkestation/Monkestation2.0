@@ -14,7 +14,7 @@
 #define OBFUSCATION_ANYWHERE_LEVEL 6
 
 #define OBFUSCATION_HIDDEN_ALPHA 22
-#define OBFUSCATION_REVEALED_ALPHA 100
+#define OBFUSCATION_REVEALED_ALPHA 255
 #define OBFUSCATION_RECLOAK_TIME (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation
@@ -24,7 +24,6 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = TREMERE_CAN_BUY
 	bloodcost = 10
-	sol_multiplier = 4
 	constant_bloodcost = 2
 	cooldown_time = 12 SECONDS
 	target_range = 2
@@ -106,6 +105,7 @@
 		recloak_timer = null
 	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	animate(owner, alpha = 255, time = 2 SECONDS)
+	owner.RemoveElement(/datum/element/relay_attackers)
 	owner.RemoveElement(/datum/element/digitalcamo)
 	revealed = FALSE
 

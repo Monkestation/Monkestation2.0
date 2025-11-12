@@ -114,3 +114,7 @@
 /datum/orderable_item/mining/magnetic
 	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
 	cost_per_order = 250
+
+/datum/orderable_item/mining/ventpointer
+	item_path = /obj/item/pinpointer/vent
+	cost_per_order = 1150

@@ -268,6 +268,11 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
+//Hibernation states
+#define SS_NOT_HIBERNATING 0
+#define SS_WAKING_UP 1
+#define SS_IS_HIBERNATING 2
+
 //SSticker.current_state values
 /// Game is loading
 #define GAME_STATE_STARTUP 0
@@ -353,8 +358,11 @@
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)
 
-// The change in the world's time from the subsystem's last fire in seconds.
+/// The change in the world's time from the subsystem's last fire in seconds.
 #define DELTA_WORLD_TIME(ss) ((world.time - ss.last_fire) * 0.1)
+
+/// Same as DELTA_WORLD_TIME but we ignore time spent hibernating
+#define DELTA_WORLD_TIME_WITHOUT_HIBERNATION(ss) ss.hibernation_state ? ss.wait : DELTA_WORLD_TIME(ss)
 
 /// The timer key used to know how long subsystem initialization takes
 #define SS_INIT_TIMER_KEY "ss_init"

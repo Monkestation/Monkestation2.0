@@ -34,7 +34,6 @@
 	var/datum/component/team_monitor/monitor
 
 /datum/antagonist/assault_operative/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED)
 	QDEL_NULL(monitor)
 	return ..()
 
@@ -64,7 +63,6 @@
 
 /datum/antagonist/assault_operative/on_gain()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED, PROC_REF(on_goldeneye_key_created))
 	equip_operative()
 	forge_objectives()
 	if(send_to_spawnpoint)
@@ -199,10 +197,6 @@
 	disky.Shift(NORTH, 6)
 	final_icon.Blend(disky, ICON_UNDERLAY)
 	return finish_preview_icon(final_icon)
-
-/datum/antagonist/assault_operative/proc/on_goldeneye_key_created(datum/source, obj/item/goldeneye_key/key)
-	SIGNAL_HANDLER
-	monitor?.add_to_tracking_network(key.beacon)
 
 /**
  * ASSAULT OPERATIVE TEAM DATUM
