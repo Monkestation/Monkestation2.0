@@ -73,6 +73,7 @@
 /obj/item/storage/box/matches
 	name = "matchbox"
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
+	desc_controls = "Right-Click the matchbox to take out a match. Right-Click the matchbox with a match to strike the match."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	inhand_icon_state = "zippo"
@@ -89,23 +90,34 @@
 
 /obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 10
+	atom_storage.max_slots = 14
 	atom_storage.set_holdable(list(/obj/item/match))
+	register_context()
 
 /obj/item/storage/box/matches/PopulateContents()
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 14)
 		new /obj/item/match(src)
 
-/obj/item/storage/box/matches/item_interaction(mob/living/user, obj/item/match/match, list/modifiers)
-	if(!SHOULD_SKIP_INTERACTION(src, match, user)) // You have to harm intent to light a match
-		return NONE
+/obj/item/storage/box/matches/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_RMB] = "Remove match"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/box/matches/item_interaction_secondary(mob/living/user, obj/item/match/match, list/modifiers)
+	. = ..()
 	if(istype(match))
 		match.matchignite()
 		return ITEM_INTERACT_SUCCESS
-	return NONE
 
-/obj/item/storage/box/matches/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	return NONE
+/obj/item/storage/box/matches/attack_hand_secondary(mob/user, list/modifiers)
+	quick_remove_item(/obj/item/match, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/storage/box/matches/proc/quick_remove_item(obj/item/grabbies, mob/user)
+	var/obj/item/finger = locate(grabbies) in contents
+	if(finger)
+		atom_storage.remove_single(user, finger, drop_location())
+		user.put_in_hands(finger)
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()

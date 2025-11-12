@@ -22,9 +22,7 @@
 
 /datum/pollution/Destroy()
 	if(managed_overlay)
-		my_turf?.vis_contents -= managed_overlay
-		if(LAZYLEN(managed_overlay.vis_locs) == 0)
-			qdel(managed_overlay)
+		qdel(managed_overlay)
 		managed_overlay = null
 	SET_UNACTIVE_POLLUTION(src)
 	UNREGISTER_POLLUTION(src)
@@ -170,23 +168,17 @@
 		total_share_pollutants[type] /= sharing_len
 	total_share_amount /= sharing_len
 	var/new_heights = calculate_height(total_share_amount)
-	var/obj/effect/abstract/pollution/new_overlay = get_overlay(total_share_pollutants, total_share_amount)
 	for(var/turf/open/open_turf in sharing_turfs)
 		if(isspaceturf(open_turf))
 			continue
 
 		assert_pollution(open_turf)
 		var/datum/pollution/cached_pollution = open_turf.pollution
-		if(cached_pollution.managed_overlay)
-			cached_pollution.my_turf.vis_contents -= cached_pollution.managed_overlay
-
-		if(!QDELETED(new_overlay))
-			cached_pollution.managed_overlay = new_overlay
-			cached_pollution.my_turf.vis_contents += new_overlay
 
 		cached_pollution.pollutants = total_share_pollutants.Copy()
 		cached_pollution.total_amount = total_share_amount
 		cached_pollution.height = new_heights
+		cached_pollution.handle_overlay()
 		SET_ACTIVE_POLLUTION(cached_pollution)
 
 	for(var/turf/open/open_turf in potential_activers)
@@ -210,12 +202,10 @@
 
 /datum/pollution/proc/handle_overlay()
 	if(managed_overlay)
-		my_turf.vis_contents -= managed_overlay
-		if(LAZYLEN(managed_overlay.vis_locs) == 0)
-			qdel(managed_overlay)
+		qdel(managed_overlay)
 	managed_overlay = get_overlay(pollutants, total_amount)
 	if(managed_overlay)
-		my_turf.vis_contents += managed_overlay
+		managed_overlay.forceMove(my_turf)
 
 ///Probably the most costly thing happening here
 /datum/pollution/proc/get_overlay(list/pollutant_list, total_amount)
