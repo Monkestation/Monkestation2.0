@@ -27,7 +27,7 @@
 	matchignite()
 
 /obj/item/match/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return !istype(storage_holder, /obj/item/storage//matches)
+	return !istype(storage_holder, /obj/item/storage/box/matches)
 
 /obj/item/match/proc/matchignite()
 	if(lit || burnt)
@@ -158,15 +158,14 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	var/slots = 4
 	w_class = WEIGHT_CLASS_SMALL
-	foldable_result = null
 
-/obj/item/storage/pipe/Initialize(mapload)
+/obj/item/storage/pipebox/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = slots
 	atom_storage.set_holdable(list(/obj/item/storage/bag/tobaccopouch, /obj/item/storage/box/matches, /obj/item/clothing/mask/cigarette/pipe, /obj/item/lighter))
 
-/obj/item/storage/pipe/PopulateContents()
+/obj/item/storage/pipebox/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/storage/bag/tobaccopouch = 2,
 		/obj/item/clothing/mask/cigarette/pipe = 1,
@@ -174,9 +173,9 @@
 	if(prob(40))
 		new /obj/item/lighter(src)
 	else
-		new /obj/item/storage//matches(src)
+		new /obj/item/storage/box/matches(src)
 
-/obj/item/storage/pipe/fancy
+/obj/item/storage/pipebox/fancy
 	name = "fancy pipebox"
 	desc = "A very fancy wooden pipebox with gold engravings for holding everything you need to smoke a pipe in style."
 	icon = 'icons/obj/cigarettes.dmi'
@@ -184,11 +183,11 @@
 	slots = 6
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
 
-/obj/item/storage/pipe/fancy/PopulateContents()
+/obj/item/storage/pipebox/fancy/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/storage/bag/tobaccopouch = 2,
 		/obj/item/storage/bag/tobaccopouch/space = 1,
 		/obj/item/clothing/mask/cigarette/pipe = 1,
 		/obj/item/lighter/commemorative = 1,
-		/obj/item/storage//matches = 1,
+		/obj/item/storage/box/matches = 1,
 	),src)
