@@ -176,3 +176,40 @@
   - bugfix: Ethereals charge rates have been increased/decreased. Some safer activites
       should include apc's, lights, and rechargers not instantly overcharging, and
       ethereal cores instantly draining players. Numbers are rough still
+2025-11-11:
+  Absolucy:
+  - rscdel: Oozelings will no longer be selected as random morgue corpses.
+  - bugfix: You should be able to perform head surgeries on oozelings now without
+      straight up taking their head off.
+  Iajret:
+  - rscadd: added ventpointer that points toward nearby ore vents and can be bought
+      with mining points
+  - balance: scanned ore vents can now be found with GPS
+  JohnFulpWillard:
+  - bugfix: Blast helmet no longer disappears when you toggle it.
+  - bugfix: Command outfitting station vending machines now load icons again.
+  - balance: QM can now modify people's access to Cargo
+  - rscadd: Traitors can get a secondary objective to sabotage the Cargo techfab again.
+  - balance: QM gets paid the same as crew.
+  - bugfix: QM is no longer considered "Command" to conspiracy theorists.
+  - bugfix: Much security equipment was re-added to the list of things you're scared
+      of if you have a phobia of security.
+  - spellcheck: QM's headset no longer calls them their own slave.
+  TheColorCyan:
+  - rscadd: heretic living heart will now show a tracker pointing to the target for
+      3 seconds
+  - bugfix: '(MrMelbert) Furious Steel now tracks consumed knives better: Using all
+      three knives to block no longer results in a 0 second cooldown, firing a single
+      knife no longer results in a 60 second cooldown.'
+  - bugfix: (EnterTheJake) Heretic Carving Knife runes are no longer triggered by
+      hovering projectiles.
+  - bugfix: space phase can be casted on ocean tiles same way they can be casted on
+      most planetary turfs
+  - qol: heretics can now see blessed tiles
+  Tractor-Maam:
+  - bugfix: fixed mentor manager again
+  flleeppyy:
+  - rscadd: init cost debug.
+  notghosti:
+  - bugfix: Assault operatives will now only receive one tracking beacon when a keycard
+      is extracted
