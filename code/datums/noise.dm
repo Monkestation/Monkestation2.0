@@ -151,7 +151,9 @@
 
 	return total
 
-/datum/noise_generator/proc/poisson_disk_sampling(min_x, max_x, min_y, max_y, min_radius, max_attempts = 30)
+#define CHECK_TICK_IF_NEEDED if(check_tick) { CHECK_TICK };
+
+/datum/noise_generator/proc/poisson_disk_sampling(min_x, max_x, min_y, max_y, min_radius, max_attempts = 30, check_tick = FALSE)
 	var/list/points = list()
 	var/list/active = list()
 	var/cell_size = min_radius / 1.414 // sqrt(2)
@@ -193,11 +195,13 @@
 					var/check_y = new_gy + dy
 
 					if(check_x < 0 || check_x >= grid_width || check_y < 0 || check_y >= grid_height)
+						CHECK_TICK_IF_NEEDED
 						continue
 
 					var/grid_idx = check_y * grid_width + check_x + 1
 					var/list/neighbor = grid[grid_idx]
 					if(!neighbor)
+						CHECK_TICK_IF_NEEDED
 						continue
 
 					var/dist_x = new_x - neighbor[1]
@@ -207,7 +211,9 @@
 					if(dist < min_radius)
 						valid = FALSE
 						break
+					CHECK_TICK_IF_NEEDED
 
+				CHECK_TICK_IF_NEEDED
 				if(!valid)
 					break
 
@@ -222,7 +228,11 @@
 		if(!found)
 			active.Cut(rand_idx, rand_idx + 1)
 
+		CHECK_TICK_IF_NEEDED
+
 	return points
+
+#undef CHECK_TICK_IF_NEEDED
 
 /datum/noise_generator/proc/generate_voronoi_cells(min_x, max_x, min_y, max_y, num_cells)
 	var/list/cells = list()
