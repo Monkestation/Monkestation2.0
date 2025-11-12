@@ -52,12 +52,13 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	var/list/noisy_turfs = noise_turfs_from_zs(SSmapping.levels_by_trait(ZTRAIT_STATION), 6)
 
+	var/list/station_areas = GLOB.the_station_areas
 	while(length(noisy_turfs) && satchel_amount > 0)
 		var/turf/turf = pick_n_take(noisy_turfs)
 		if(!isfloorturf(turf) || turf.underfloor_accessibility != UNDERFLOOR_HIDDEN)
 			continue
 		var/area/turf_area = get_area(turf)
-		if(!turf_area || is_type_in_list(turf_area, blacklisted_area_types) || !(turf_area.type in GLOB.the_station_areas))
+		if(!turf_area || is_type_in_list(turf_area, blacklisted_area_types) || !(turf_area.type in station_areas))
 			continue
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
