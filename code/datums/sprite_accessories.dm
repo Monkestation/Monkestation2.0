@@ -1814,6 +1814,10 @@ MONKESTATION EDIT
 	name = "Plated"
 	icon_state = "plated"
 
+/datum/sprite_accessory/tails/lizard/large
+	name = "Large"
+	icon_state = "large"
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'

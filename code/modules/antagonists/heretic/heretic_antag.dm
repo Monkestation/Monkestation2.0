@@ -86,6 +86,10 @@
 		PATH_KNOCK = COLOR_YELLOW,
 		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
+	/// Our monitor used for living heart
+	var/datum/component/team_monitor/heretic_monitor
+	/// Frequency of the monitor
+	var/monitor_key = "heretic_key"
 
 /* monkestation removal: sacrifice refactor
 /datum/antagonist/heretic/Destroy()
@@ -232,6 +236,9 @@ monkestation end */
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
+	monitor_key = "heretic_monitor_[our_mob.ckey]"
+	heretic_monitor = our_mob.AddComponent(/datum/component/team_monitor, monitor_key)
+	heretic_monitor.show_hud(our_mob)
 
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
@@ -248,6 +255,8 @@ monkestation end */
 		COMSIG_USER_ITEM_INTERACTION,
 		COMSIG_LIVING_POST_FULLY_HEAL,
 	))
+	heretic_monitor?.hide_hud(our_mob)
+	QDEL_NULL(heretic_monitor)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()

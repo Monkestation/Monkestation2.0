@@ -246,7 +246,7 @@
 	if(SSshuttle.initialized)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/docking_port/stationary/LateInitialize()
+/obj/docking_port/stationary/LateInitialize(mapload_arg)
 	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 /obj/docking_port/stationary/unregister()

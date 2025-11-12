@@ -22144,7 +22144,7 @@
 "cvU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cvV" = (
 /obj/machinery/door/poddoor{
 	id = "cargoload";
@@ -22199,7 +22199,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cwU" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2";
@@ -22286,7 +22286,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cxv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -22357,7 +22357,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cyj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -22499,7 +22499,7 @@
 	req_one_access = list("qm")
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "czk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -22510,7 +22510,7 @@
 	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "czo" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
@@ -23942,7 +23942,7 @@
 "cKE" = (
 /obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "cKF" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -30565,7 +30565,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "eEo" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -36592,7 +36592,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "hbK" = (
 /obj/structure/table/reinforced,
 /obj/structure/desk_bell{
@@ -38286,7 +38286,7 @@
 "hDw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "hDy" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 4
@@ -39810,7 +39810,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "ijN" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar,
@@ -40007,7 +40007,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = -6;
 	pixel_y = 4
 	},
@@ -40031,7 +40031,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "inl" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/firecloset,
@@ -43015,7 +43015,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "jqq" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/door/firedoor,
@@ -46157,7 +46157,7 @@
 /obj/item/kirbyplants/random,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "kAc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -49954,7 +49954,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "lZK" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple{
 	dir = 10
@@ -52455,7 +52455,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "mXV" = (
 /obj/structure/closet/mini_fridge,
 /obj/item/food/meat/slab,
@@ -54555,7 +54555,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "nKg" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_x = -32
@@ -59187,7 +59187,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "puT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60378,7 +60378,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "pTN" = (
 /obj/structure/urinal/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -64355,7 +64355,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "rrX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -69379,7 +69379,7 @@
 /area/station/engineering/atmos/hfr_room)
 "tpF" = (
 /turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "tpI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71970,7 +71970,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/quartermaster,
 /turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
+/area/station/cargo/quartermaster)
 "upe" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{

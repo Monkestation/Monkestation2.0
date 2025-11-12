@@ -42,8 +42,6 @@ SUBSYSTEM_DEF(job)
 	 * Assumed Captain is always the highest in the chain of command.
 	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
 	 */
-	// Monkestation Edit Start: QM IS NOT A HEAD! removed this line 		JOB_QUARTERMASTER = 7,
-
 	var/list/chain_of_command = list(
 		JOB_CAPTAIN = 1,
 		JOB_HEAD_OF_PERSONNEL = 2,
@@ -51,8 +49,9 @@ SUBSYSTEM_DEF(job)
 		JOB_CHIEF_ENGINEER = 4,
 		JOB_CHIEF_MEDICAL_OFFICER = 5,
 		JOB_HEAD_OF_SECURITY = 6,
+		JOB_QUARTERMASTER = 7,
+		JOB_WARDEN = 8,
 	)
-	// Monkestation Edit End
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE

@@ -31,7 +31,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/floor/glass/LateInitialize()
+/turf/open/floor/glass/LateInitialize(mapload_arg)
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 	setup_glow()

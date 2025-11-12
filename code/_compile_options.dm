@@ -92,7 +92,7 @@
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
-/// If this is uncommented, will profile mapload atom initializations
+/// If this is uncommented, will profile mapload atom initializations, available via debug verb "Display Init Costs"
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
 /// If this is uncommented, Dreamluau will be fully disabled.

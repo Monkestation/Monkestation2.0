@@ -304,8 +304,8 @@
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
 // The standard charge all other Ethereal charge defines are scaled against.
-#define STANDARD_ETHEREAL_CHARGE (1 * STANDARD_CELL_CHARGE)
-// Charge levels for Ethereals, in joules.
+#define STANDARD_ETHEREAL_CHARGE (1000)
+// Charge levels for Ethereals
 #define ETHEREAL_CHARGE_NONE 0
 #define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_ETHEREAL_CHARGE)
 #define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_ETHEREAL_CHARGE)
@@ -313,6 +313,7 @@
 #define ETHEREAL_CHARGE_FULL (2 * STANDARD_ETHEREAL_CHARGE)
 #define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_ETHEREAL_CHARGE)
 #define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_ETHEREAL_CHARGE)
+
 
 //Monkestation Addition: Ethereal Blood Charge
 #define ETHEREAL_BLOOD_CHARGE_NONE 0
