@@ -2114,12 +2114,10 @@
 /turf/open/floor/wood/tile,
 /area/station/commons/lounge)
 "aKY" = (
-/obj/effect/spawner/random/vending/colavend,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/dark/textured,
 /area/station/science/lobby)
 "aLr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2764,8 +2762,8 @@
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den/gaming)
 "aWq" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "aWy" = (
@@ -33620,8 +33618,8 @@
 /turf/open/floor/plating,
 /area/station/security/brig)
 "kRS" = (
-/obj/machinery/computer/nanite_cloud_controller,
 /obj/effect/turf_decal/bot,
+/obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "kRV" = (
@@ -33754,20 +33752,8 @@
 /area/station/medical/pharmacy)
 "kTr" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/table,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/storage/box/nanitecontrol{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "kTt" = (
@@ -50585,8 +50571,20 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "qiJ" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/item/storage/box/disks_nanite{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/storage/box/nanitecontrol{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote,
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "qiN" = (
@@ -52444,6 +52442,10 @@
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
+	},
+/obj/item/stamp/qm{
+	pixel_x = -6;
+	pixel_y = 9
 	},
 /turf/open/floor/wood/large,
 /area/station/cargo/quartermaster)
@@ -64186,9 +64188,6 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
-	pixel_x = -4
-	},
 /obj/item/stamp{
 	pixel_x = 7;
 	pixel_y = 9
@@ -67239,6 +67238,7 @@
 	dir = 8
 	},
 /obj/item/surgery_tray,
+/obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "vAr" = (
@@ -70792,11 +70792,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
-"wHC" = (
-/obj/machinery/vending/mechcomp,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/science/lobby)
 "wHZ" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -71298,8 +71293,10 @@
 /area/station/maintenance/starboard/lesser)
 "wQQ" = (
 /obj/structure/drain,
-/obj/machinery/nanite_chamber,
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "wQW" = (
@@ -74426,10 +74423,8 @@
 "xNg" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/machinery/computer/nanite_chamber_control{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "xNq" = (
@@ -114998,7 +114993,7 @@ pad
 kAo
 lfh
 lfh
-wHC
+lfh
 jRD
 cmR
 cmR
