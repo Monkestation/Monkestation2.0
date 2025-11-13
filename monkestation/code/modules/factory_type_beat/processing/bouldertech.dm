@@ -36,7 +36,7 @@
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
 	///our export side
-	var/export_side = EAST
+	var/export_side = SOUTH
 	///do we allow boulders
 	var/allows_boulders = TRUE
 	var/next_allowed_process = 0

@@ -109,7 +109,7 @@
 	update_boulder_count()
 
 /obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
+	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		if(oxygen_input)
 			oxygen_input.disconnect()
 			QDEL_NULL(oxygen_input)
