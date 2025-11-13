@@ -155,7 +155,7 @@
 		var/obj/item/restraints/cuffs = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		buckle_cd = cuffs.breakouttime
 
-	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), 
+	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"),
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
@@ -163,7 +163,7 @@
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
-	
+
 	if(QDELETED(src) || isnull(buckled))
 		return
 
@@ -485,6 +485,10 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
+	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
+		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
+			revive(FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/on_stamina_update()
@@ -790,6 +794,8 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
@@ -818,7 +824,7 @@
 	update_worn_handcuffs()
 	update_hud_handcuffed()
 
-/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(excess_healing)
 		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood

@@ -947,6 +947,10 @@
 	name = "Beard (Broken Man)"
 	icon_state = "facial_brokenman"
 
+/datum/sprite_accessory/facial_hair/unbrokenman
+	name = "Beard (Unbroken Man)"
+	icon_state = "facial_unbrokenman"
+
 /datum/sprite_accessory/facial_hair/chinstrap
 	name = "Beard (Chinstrap)"
 	icon_state = "facial_chin"
@@ -1809,6 +1813,10 @@ MONKESTATION EDIT
 /datum/sprite_accessory/tails/lizard/plated	//MONKESTATION EDIT: New tail
 	name = "Plated"
 	icon_state = "plated"
+
+/datum/sprite_accessory/tails/lizard/large
+	name = "Large"
+	icon_state = "large"
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"

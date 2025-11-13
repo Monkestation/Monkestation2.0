@@ -35,3 +35,29 @@
 /turf/open/floor/sandy_dirt/break_tile()
 	. = ..()
 	icon_state = "sand_damaged"
+
+/obj/item/stack/tile/silk
+	name = "silk floor tile"
+	singular_name = "silk floor tile"
+	desc = "Soft and luxurious."
+	icon = 'monkestation/icons/obj/tiles.dmi'
+	icon_state = "tile_silk"
+	inhand_icon_state = "tile"
+	turf_type = /turf/open/floor/silk
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/silk
+	force = 0
+	throwforce = 0
+
+/turf/open/floor/silk
+	name = "silk floor"
+	desc = "Soft and luxurious."
+	icon = 'monkestation/icons/turf/floors.dmi'
+	icon_state = "silk"
+	floor_tile = /obj/item/stack/tile/silk
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_CARPET
+	barefootstep = FOOTSTEP_CARPET_BAREFOOT
+	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE

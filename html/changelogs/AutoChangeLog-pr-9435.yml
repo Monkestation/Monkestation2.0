@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "Added new mechanics or"
+  - refactor: "refactored the swedish quirk to be a subtype of a parent along with scottish."

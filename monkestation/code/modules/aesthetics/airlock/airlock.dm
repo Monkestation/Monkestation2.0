@@ -201,7 +201,7 @@
 					floorlight.pixel_y = 0
 			. += floorlight
 
-/obj/machinery/door/LateInitialize()
+/obj/machinery/door/LateInitialize(mapload_arg)
 	. = ..()
 	// Automatically align the direction of the airlock
 	auto_dir_align()

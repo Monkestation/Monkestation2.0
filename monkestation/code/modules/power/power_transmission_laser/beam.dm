@@ -19,6 +19,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/effect/transmission_beam/Destroy(force)
 	host?.laser_effects -= src
@@ -27,7 +28,7 @@
 
 /obj/effect/transmission_beam/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "ptl_beam", src)
+	. += emissive_appearance(icon, "ptl_beam_e", src)
 
 /obj/effect/transmission_beam/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

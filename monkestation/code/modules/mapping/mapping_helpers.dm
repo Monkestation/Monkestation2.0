@@ -18,7 +18,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/area_lighting_helper/LateInitialize()
+/obj/effect/area_lighting_helper/LateInitialize(mapload_arg)
 	var/area/our_area = get_area(src)
 	our_area?.set_base_lighting(set_color, set_alpha)
 	qdel(src)
@@ -43,7 +43,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/area_power_helper/LateInitialize()
+/obj/effect/area_power_helper/LateInitialize(mapload_arg)
 	var/area/our_area = get_area(src)
 	our_area?.requires_power = set_state
 	qdel(src)

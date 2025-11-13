@@ -26,7 +26,7 @@
 /datum/station_trait/unique_ai
 	name = "Unique AI"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 0
+	weight = 5
 	show_in_report = TRUE
 	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
 		access to your set of alternative upload modules because we know you're already thinking about meddling with this experiment."
@@ -35,7 +35,7 @@
 /datum/station_trait/unique_ai/on_round_start()
 	. = ..()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
-		ai.show_laws()
+		to_chat(ai, span_boldnotice("You have been loaded with a unique lawset."), MESSAGE_TYPE_INFO)
 
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
@@ -223,7 +223,7 @@
 	. = ..()
 	if(birthday_override_ckey)
 		if(!check_valid_override())
-			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has been selected instead.")
 
 	if(!birthday_person)
 		var/list/birthday_options = list()
@@ -438,7 +438,7 @@
 	name = "AI Triumvirate"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 1
+	weight = 2 // Since were gibbing overflow
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
 
 /datum/station_trait/triple_ai/New()
@@ -454,6 +454,7 @@
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
+		ai_datum.total_positions = 3
 	if(!pure)
 		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 			secondary_ai_spawn.latejoin_active = TRUE

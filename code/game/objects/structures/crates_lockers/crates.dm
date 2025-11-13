@@ -10,8 +10,8 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	//One third chance of ashing things inside
-	ash_chance = 33
+	//One quarter chance of ashing things inside.
+	ash_chance = 25
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
@@ -270,6 +270,7 @@
 	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
+	new /obj/item/reagent_containers/blood/spider(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

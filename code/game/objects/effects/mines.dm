@@ -195,6 +195,10 @@
 	name = "honkblaster 1000"
 	var/sound = 'sound/items/bikehorn.ogg'
 
+/obj/effect/mine/sound/spooky
+	name = "the rattler"
+	sound = 'monkestation/sound/misc/spinal_laugh.ogg'
+
 /obj/effect/mine/sound/mineEffect(mob/victim)
 	playsound(loc, sound, 100, TRUE)
 

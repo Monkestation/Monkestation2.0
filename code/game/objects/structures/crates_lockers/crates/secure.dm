@@ -127,7 +127,7 @@
 						locked = !locked
 						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
 										span_notice("You unlock [src]'s privacy lock."))
-						privacy_lock = FALSE
+						// privacy_lock = FALSE // temporary fix while closets are being fixed
 						update_appearance()
 					else if(!silent)
 						to_chat(user, span_warning("Bank account does not match with buyer!"))
@@ -137,4 +137,4 @@
 				to_chat(user, span_warning("No ID detected!"))
 		else if(!silent)
 			to_chat(user, span_warning("[src] is broken!"))
-	else ..()
+	else ..() // calls /obj/structure/closet/proc/togglelock()

@@ -401,6 +401,13 @@
 		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
+/mob/living/silicon/robot/proc/motivate()
+	// :3
+	if(!wires?.is_cut(WIRE_MOTIVATIONAL))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "scream")
+		playsound(src, "goon/sounds/sparks/electric_shock_short.ogg", 50, 1)
+		emp_act(EMP_HEAVY)
+		logevent("System motivational shock applied!")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -619,9 +626,12 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(sight_mode & BORGMESON)
+	if(sight_mode & (BORGMESON|BORGNVMESON))
 		new_sight |= SEE_TURFS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
+		if(sight_mode & BORGNVMESON)
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(10, 30, 10))
+		else
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
 
 	if(sight_mode & BORGMATERIAL)
 		new_sight |= SEE_OBJS
@@ -663,7 +673,7 @@
 	update_health_hud()
 	update_icons() //Updates eye_light overlay
 
-/mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return

@@ -176,7 +176,7 @@
 /obj/item/storage/medkit/brute,
 /obj/structure/table/wood,
 /obj/item/storage/medkit/brute,
-/obj/item/areaeditor/blueprints{
+/obj/item/blueprints/golem{
 	desc = "Use to build new structures in the wastes.";
 	name = "land claim"
 	},

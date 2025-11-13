@@ -320,6 +320,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	set_light_on(TRUE)
 	if(!(flags_1 & INITIALIZED_1))
@@ -374,6 +375,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	set_light_on(FALSE)
 	if(ismob(loc))
@@ -904,12 +906,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
+		if(fancy)
+			playsound(src.loc , 'sound/items/lighter/zippo_on.ogg', 100, 1)
+		else
+			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg', 100, 1)
 	else
 		hitsound = SFX_SWING_HIT
 		force = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
+		if(fancy)
+			playsound(src.loc , 'sound/items/lighter/zippo_off.ogg', 100, 1)
+		else
+			playsound(src.loc , 'sound/items/lighter/lighter_off.ogg', 100, 1)
 	set_light_on(lit)
 	update_appearance()
 

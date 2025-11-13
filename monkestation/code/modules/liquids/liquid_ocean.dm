@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(initalized_ocean_areas, list())
+GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 /area/ocean
 	name = "Ocean"
 
@@ -106,6 +106,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
 	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
+	RegisterSignal(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, PROC_REF(rebuild_adjacent))
 	if(!static_overlay)
 		static_overlay = new(null, ocean_reagents)
 
@@ -121,42 +122,73 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 
 /turf/open/floor/plating/ocean/Destroy()
-	. = ..()
-	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS))
 	SSliquids.active_ocean_turfs -= src
 	SSliquids.ocean_turfs -= src
-	for(var/turf/open/floor/plating/ocean/listed_ocean in ocean_turfs)
-		listed_ocean.rebuild_adjacent()
+	for(var/turf/open/floor/plating/ocean/adjacent_ocean in orange(1, src))
+		adjacent_ocean.rebuild_adjacent()
+	return ..()
+
+/turf/open/floor/plating/ocean/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+		if(RCD_CATWALK)
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
+			else
+				return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 4)
+	return FALSE
+
+/turf/open/floor/plating/ocean/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, span_notice("You build a floor."))
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+		if(RCD_CATWALK)
+			to_chat(user, span_notice("You build a catwalk."))
+			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+			if(lattice)
+				qdel(lattice)
+			new /obj/structure/lattice/catwalk(src)
+			return TRUE
+	return FALSE
 
 /turf/open/floor/plating/ocean/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		if (R.get_amount() < 2)
+		var/obj/item/stack/rods/rods = C
+		if (rods.get_amount() < 2)
 			to_chat(user, span_warning("You need two rods to make a [catwalk ? "catwalk" : "plating"]!"))
 			return
+		to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
+		if(!do_after(user, 3 SECONDS, target = src))
+			return
+		if(!rods.use(2))
+			return
+		if(catwalk)
+			to_chat(user, span_notice("You build a catwalk over \the [src]."))
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			new /obj/structure/lattice/catwalk(src)
 		else
-			to_chat(user, span_notice("You begin constructing a [catwalk ? "catwalk" : "plating"]..."))
-			if(do_after(user, 3 SECONDS, target = src))
-				if (R.get_amount() >= 2 && !catwalk)
-					PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-					R.use(2)
-					to_chat(user, span_notice("You reinforce the [src]."))
-				else if(R.get_amount() >= 2 && catwalk)
-					new /obj/structure/lattice/catwalk(src)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-					R.use(2)
-					to_chat(user, span_notice("You build a catwalk over the [src]."))
+			to_chat(user, span_notice("You reinforce \the [src]."))
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
-	if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
+	else if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
 		if(do_after(user, 3 SECONDS, target = src))
 			qdel(C)
 			new /obj/structure/trench_ladder(src)
 
-	if(istype(C, /obj/item/mining_charge) && !catwalk)
+	else if(istype(C, /obj/item/mining_charge) && !catwalk)
 		to_chat(user, span_notice("You begin laying down a breaching charge..."))
 		if(do_after(user, 1.5 SECONDS, target = src))
 			var/obj/item/mining_charge/boom = C
@@ -181,66 +213,36 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 /turf/open/floor/plating/ocean/proc/assume_self()
 	if(!atmos_adjacent_turfs)
+		// i don't trust this to not do some weird shit, we're unregistering this signal for now
+		UnregisterSignal(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 		immediate_calculate_adjacent_turfs()
-	for(var/direction in GLOB.cardinals)
-		var/turf/directional_turf = get_step(src, direction)
-		if(istype(directional_turf, /turf/open/floor/plating/ocean))
-			ocean_turfs |= directional_turf
-		else
-			if(isclosedturf(directional_turf))
-				RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction), TRUE)
-				continue
-			else if(!(directional_turf in atmos_adjacent_turfs))
-				var/obj/machinery/door/found_door = locate(/obj/machinery/door) in directional_turf
-				if(found_door)
-					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, PROC_REF(door_opened))
-				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
-				continue
-			else
-				open_turfs.Add(direction)
+		RegisterSignal(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, PROC_REF(rebuild_adjacent))
 
-	if(length(open_turfs))
-		SSliquids.active_ocean_turfs |= src
+	rebuild_adjacent()
 	SSliquids.unvalidated_oceans -= src
-
-/turf/open/floor/plating/ocean/proc/door_opened(datum/source)
-	SIGNAL_HANDLER
-
-	var/obj/machinery/door/found_door = source
-	var/turf/turf = get_turf(found_door)
-
-	if(turf.can_atmos_pass())
-		turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
 
 /turf/open/floor/plating/ocean/proc/process_turf()
 	for(var/direction in open_turfs)
 		var/turf/directional_turf = get_step(src, direction)
-		if(isspaceturf(directional_turf) || istype(directional_turf, /turf/open/floor/plating/ocean))
-			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction), TRUE)
+		if(!isopenturf(directional_turf) || isoceanturf(directional_turf) || isspaceturf(directional_turf) || !TURFS_CAN_SHARE(src, directional_turf))
 			open_turfs -= direction
-			if(!open_turfs.len)
-				SSliquids.active_ocean_turfs -= src
-			return
-		else if(!(directional_turf in atmos_adjacent_turfs))
-			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
-			open_turfs -= direction
-			if(!open_turfs.len)
-				SSliquids.active_ocean_turfs -= src
-			return
-
-		directional_turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
+		else
+			directional_turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
+	if(!length(open_turfs))
+		SSliquids.active_ocean_turfs -= src
 
 /turf/open/floor/plating/ocean/proc/rebuild_adjacent()
-	ocean_turfs = list()
-	open_turfs = list()
+	SIGNAL_HANDLER
+	ocean_turfs.len = 0
+	open_turfs.len = 0
 	for(var/direction in GLOB.cardinals)
 		var/turf/directional_turf = get_step(src, direction)
-		if(istype(directional_turf, /turf/open/floor/plating/ocean))
-			ocean_turfs |= directional_turf
-		else
-			open_turfs.Add(direction)
+		if(isoceanturf(directional_turf) && !QDELING(directional_turf))
+			ocean_turfs += directional_turf
+		else if(isopenturf(directional_turf) && TURFS_CAN_SHARE(src, directional_turf))
+			open_turfs += direction
 
-	if(open_turfs.len)
+	if(length(open_turfs))
 		SSliquids.active_ocean_turfs |= src
 	else if(src in SSliquids.active_ocean_turfs)
 		SSliquids.active_ocean_turfs -= src
@@ -335,33 +337,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 
-/turf/open/floor/plating/ocean/proc/add_turf_direction(datum/source)
-	SIGNAL_HANDLER
-	var/turf/direction_turf = source
-
-	if(istype(direction_turf, /turf/open/floor/plating/ocean) || istype(direction_turf, /turf/closed/mineral/random/ocean))
-		return
-
-	open_turfs.Add(get_dir(src, direction_turf))
-
-	if(!(src in SSliquids.active_ocean_turfs))
-		SSliquids.active_ocean_turfs |= src
-
-/turf/open/floor/plating/ocean/proc/add_turf_direction_non_closed(datum/source)
-	SIGNAL_HANDLER
-	var/turf/direction_turf = source
-
-	if(!(direction_turf in atmos_adjacent_turfs))
-		return
-
-	open_turfs.Add(get_dir(src, direction_turf))
-
-	if(!(src in SSliquids.active_ocean_turfs))
-		SSliquids.active_ocean_turfs |= src
-
-
-GLOBAL_LIST_INIT(scrollable_turfs, list())
-GLOBAL_LIST_INIT(the_lever, list())
+GLOBAL_LIST_EMPTY(scrollable_turfs)
+GLOBAL_LIST_EMPTY(the_lever)
 /turf/open/floor/plating/ocean/false_movement
 	icon = 'goon/icons/turf/ocean.dmi'
 	icon_state = "sand"
@@ -372,21 +349,18 @@ GLOBAL_LIST_INIT(the_lever, list())
 /turf/open/floor/plating/ocean/false_movement/Initialize()
 	. = ..()
 	GLOB.scrollable_turfs += src
-	if(GLOB.the_lever.len)
-		for(var/obj/machinery/movement_lever/lever as anything in GLOB.the_lever)
-			set_scroll(lever.lever_on)
-			break
+	var/obj/machinery/movement_lever/lever = locate() in GLOB.the_lever
+	if(lever)
+		set_scroll(lever.lever_on)
 
 /turf/open/floor/plating/ocean/false_movement/Destroy()
-	. = ..()
 	GLOB.scrollable_turfs -= src
-
+	return ..()
 
 /turf/open/floor/plating/ocean/false_movement/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(moving)
-		if(!HAS_TRAIT(arrived, TRAIT_HYPERSPACED) && !HAS_TRAIT(arrived, TRAIT_FREE_HYPERSPACE_MOVEMENT))
-			arrived.AddComponent(/datum/component/shuttle_cling/water, dir, old_loc)
+	if(moving && !HAS_TRAIT(arrived, TRAIT_HYPERSPACED) && !HAS_TRAIT(arrived, TRAIT_FREE_HYPERSPACE_MOVEMENT))
+		arrived.AddComponent(/datum/component/shuttle_cling/water, dir, old_loc)
 
 /turf/open/floor/plating/ocean/false_movement/proc/set_scroll(is_scrolling)
 	if(is_scrolling)
@@ -395,7 +369,6 @@ GLOBAL_LIST_INIT(the_lever, list())
 	else
 		icon_state = "sand"
 		moving = FALSE
-
 
 /obj/machinery/movement_lever
 	name = "braking lever"
@@ -411,8 +384,8 @@ GLOBAL_LIST_INIT(the_lever, list())
 	GLOB.the_lever += src
 
 /obj/machinery/movement_lever/Destroy()
-	. = ..()
 	GLOB.the_lever -= src
+	return ..()
 
 /obj/machinery/movement_lever/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -650,17 +623,20 @@ GLOBAL_LIST_INIT(the_lever, list())
 /turf/open/floor/plating/ocean/pit/wall
 	icon_state = "pit_wall"
 
+#ifndef UNIT_TESTS
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(is_safe())
+	if((arrived.movement_type & (FLYING|FLOATING)) || isprojectile(arrived) || iseffect(arrived) || is_safe() || !arrived.has_gravity())
 		return
-	if(arrived.movement_type & FLYING)
+	var/list/trench_levels = SSmapping.levels_by_trait(ZTRAIT_OSHAN_MINING)
+	if(!length(trench_levels))
 		return
-	if(isprojectile(arrived))
+	var/turf/turf = locate(src.x, src.y, trench_levels[1])
+	if(!turf)
 		return
-	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
-	visible_message("[arrived] falls helplessly into \the [src]")
+	visible_message(span_warning("[arrived] falls helplessly into \the [src]!"))
 	arrived.forceMove(turf)
+#endif
 
 /turf/open/floor/plating/ocean/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't drop things

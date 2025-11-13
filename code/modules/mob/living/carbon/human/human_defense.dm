@@ -125,6 +125,13 @@
 
 	return FAILED_BLOCK
 
+/mob/living/carbon/human/grab(mob/living/target)
+	if(ishuman(target))
+		// this grab will handle human-on-human martial arts stuff
+		var/mob/living/carbon/human/Htarget = target
+		return dna.species.grab(src, Htarget, mind?.martial_art)
+	. = ..()
+
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
@@ -687,6 +694,11 @@
 		for(var/D in damaged)
 			damaged_message += D
 		combined_msg += span_info("Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.")
+
+	if (HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and you cannot hear anything.")
+	else if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and everything sounds quiet.")
 
 	if(quirks.len)
 		combined_msg += span_notice("You have these quirks: [get_quirk_string(FALSE, CAT_QUIRK_ALL)].")

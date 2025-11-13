@@ -3,7 +3,7 @@
 	desc = "Empowers a clockwork wall's stabilization lattice, improving its resilience."
 	tip = "Empowers a clockwork wall's stabilization lattice, improving its resilience."
 	button_icon_state = "empower_wall"
-	power_cost = 100
+	power_cost = STANDARD_CELL_CHARGE * 0.1
 	invocation_time = 3 SECONDS
 	invocation_text = list("Strengthen our resolve...", "So we may never fall!")
 	slab_overlay = "hateful_manacles"

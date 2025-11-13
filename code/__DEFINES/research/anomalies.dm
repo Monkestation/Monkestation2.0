@@ -9,9 +9,9 @@
 #define MAX_CORES_DIMENSIONAL 8
 
 ///Defines for the different types of explosion a flux anomaly can have
-#define FLUX_NO_EXPLOSION 0
-#define FLUX_EXPLOSIVE 1
-#define FLUX_LOW_EXPLOSIVE 2
+#define FLUX_NO_EMP 0
+#define FLUX_EMP 1
+#define FLUX_LIGHT_EMP 2
 
 /// Chance of anomalies moving every process tick
 #define ANOMALY_MOVECHANCE 45
@@ -61,6 +61,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/external/anime_head,
 	/obj/item/organ/external/anime_middle,
 	/obj/item/organ/external/anime_bottom,
+	/obj/item/organ/external/anime_halo,
 	/obj/item/organ/internal/tongue/fly,
 	/obj/item/organ/internal/stomach/fly,
 	/obj/item/organ/internal/legion_tumour,

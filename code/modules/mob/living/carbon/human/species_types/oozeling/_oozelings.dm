@@ -24,6 +24,7 @@
 		TRAIT_EASYDISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
+		TRAIT_FOOD_ABSORPTION,
 	)
 
 	meat = /obj/item/food/meat/slab/human/mutant/slime
@@ -302,6 +303,18 @@
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Fire Resilience",
 			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "user-shield",
+			SPECIES_PERK_NAME = "Soft Landing",
+			SPECIES_PERK_DESC = "[plural_form] body allows them to safely land on the ground after a long fall.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "hand",
+			SPECIES_PERK_NAME = "Limb Manipulation",
+			SPECIES_PERK_DESC = "[plural_form] are able to consume and regrow their limbs at will, if they have enough blood to do so.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,

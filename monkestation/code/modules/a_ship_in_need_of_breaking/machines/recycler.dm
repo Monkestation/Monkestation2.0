@@ -17,7 +17,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/shipbreaker/LateInitialize()
+/obj/machinery/shipbreaker/LateInitialize(mapload_arg)
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))

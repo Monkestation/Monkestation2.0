@@ -1001,3 +1001,61 @@
 	item_path = /obj/item/clothing/head/costume/flower_wreath_blue
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+// bullke
+/datum/loadout_item/under/miscellaneous/invicible_invisible
+	name = "Invicible's Super Suit"
+	item_path = /obj/item/clothing/under/costume/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/invicible_invisible
+	name = "Invicible's Mask"
+	item_path = /obj/item/clothing/mask/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/gloves/invicible_invisible
+	name = "Invicible's Gloves"
+	item_path = /obj/item/clothing/gloves/fingerless/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/invicible_invisible
+	name = "Invicible's Boots"
+	item_path =/obj/item/clothing/shoes/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// MrBagHead
+/datum/loadout_item/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	item_path = /obj/item/clothing/mask/mrbaghead
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Milthy
+/datum/loadout_item/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	item_path = /obj/item/clothing/suit/monkey_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/bananotrasen_super_hat
+	name = "Bananotrasen Super Hat"
+	item_path = /obj/item/clothing/head/hats/bananotrasen_super_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/monkey_plush
+	name = "Monkey Plush"
+	item_path = /obj/item/toy/plush/monkey
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/bananadola
+	name = "Pet Delivery Beacon - Bananadola"
+	item_path = /obj/item/choice_beacon/pet/donator/bananadola
+	ckeywhitelist = list("Milthy")
+	donator_only = TRUE
+	requires_purchase = FALSE

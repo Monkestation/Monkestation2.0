@@ -8,6 +8,7 @@
 	suicide_cry = "FOR ME MATEYS!!"
 	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
+	antag_count_points = 5 //mid level team antag
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()

@@ -270,6 +270,7 @@
 
 /// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
 
 /// from /obj/item/use: (used, ...)
 #define COMSIG_ITEM_USED "item_used"
