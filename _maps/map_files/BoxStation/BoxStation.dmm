@@ -10787,6 +10787,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/maintenance/department/science)
 "dvO" = (
@@ -27565,6 +27568,15 @@
 	dir = 4
 	},
 /area/station/cargo/storage)
+"iOU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "iOV" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
@@ -32749,6 +32761,17 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"kyi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 2
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/commons/fitness)
 "kyu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -42384,6 +42407,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/science)
 "nBX" = (
@@ -88574,10 +88600,10 @@ byj
 bgY
 bdG
 qpx
-iHO
+iOU
 qpx
 dyv
-qmK
+kyi
 iaB
 iaB
 iaB
