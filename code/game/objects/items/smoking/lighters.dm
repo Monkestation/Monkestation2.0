@@ -270,10 +270,10 @@
 
 /obj/item/lighter/process(seconds_per_tick)
 	if(lit)
+		open_flame(heat)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
 			use(used = fuel_usage_rate)
-	open_flame(heat)
 
 /// Uses fuel from the lighter.
 /obj/item/lighter/use(used = 0)
