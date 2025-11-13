@@ -390,19 +390,19 @@
 			strain_choices[initial(strain.name)] = choice
 
 	var/strain_result = show_radial_menu(src, src, strain_choices, radius = BLOB_REROLL_RADIUS, tooltips = TRUE)
-	if (isnull(strain_result))
+	if(isnull(strain_result))
 		return
 
-	if (!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
+	if(!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
 		return
 
-	for (var/_other_strain in GLOB.valid_blobstrains)
+	for(var/_other_strain in GLOB.valid_blobstrains)
 		var/datum/blobstrain/other_strain = _other_strain
-		if (initial(other_strain.name) == strain_result)
-			set_strain(other_strain)
+		if(initial(other_strain.name) == strain_result)
+			antag_team.set_team_strain(other_strain)
 
-			if (free_strain_rerolls)
-				free_strain_rerolls -= 1
+			if(free_strain_rerolls)
+				free_strain_rerolls--
 
 			last_reroll_time = world.time
 			strain_choices = null

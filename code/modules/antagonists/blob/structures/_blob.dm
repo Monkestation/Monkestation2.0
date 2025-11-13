@@ -31,23 +31,23 @@
 	var/atmosblock = FALSE
 	/// is this tile valid for winning
 	var/legit = FALSE
-	var/mob/eye/blob/overmind
-
+	/// ref to the team that we belong to
+	var/datum/team/blob/blob_team
 
 /datum/armor/structure_blob
 	fire = 80
 	acid = 70
 	laser = 50
 
-/obj/structure/blob/Initialize(mapload, owner_overmind)
+/obj/structure/blob/Initialize(mapload, datum/team/blob/owning_team)
 	. = ..()
 	register_context()
-	if(owner_overmind)
-		overmind = owner_overmind
-		overmind.antag_team.all_blobs += src
-		var/list/typed_blobs = overmind.antag_team.all_blobs_by_type[src.type]
+	if(owning_team)
+		blob_team = owning_team
+		blob_team.all_blob_tiles += src
+		var/list/typed_blobs = blob_team.all_blobs_by_type[src.type]
 		if(!typed_blobs)
-			overmind.antag_team.all_blobs_by_type[src.type] = list(src)
+			blob_team.all_blobs_by_type[src.type] = list(src)
 		else
 			typed_blobs += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
@@ -82,12 +82,12 @@
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(TRUE, FALSE)
-	if(overmind)
-		overmind.antag_team.all_blobs -= src
+	if(blob_team)
+		blob_team.all_blob_tiles -= src
 		if(legit)
-			overmind.antag_team.blobs_legit--
-		overmind.antag_team.all_blobs_by_type[src.type] -= src
-		overmind = null
+			blob_team.blobs_legit--
+		blob_team.all_blobs_by_type[src.type] -= src
+		blob_team = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()
@@ -117,15 +117,15 @@
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()
-	if(overmind)
-		add_atom_colour(overmind.antag_team.blobstrain.color, FIXED_COLOUR_PRIORITY)
+	if(blob_team)
+		add_atom_colour(blob_team.blobstrain.color, FIXED_COLOUR_PRIORITY)
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED))
-			add_atom_colour(BlendRGB(overmind.antag_team.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob
+			add_atom_colour(BlendRGB(blob_team.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob, could probably cache this
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/obj/structure/blob/proc/Be_Pulsed()
+/obj/structure/blob/proc/be_pulsed()
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
@@ -136,34 +136,29 @@
 		return TRUE//we did it, we were pulsed!
 	return FALSE //oh no we failed
 
-/obj/structure/blob/proc/ConsumeTile()
+/obj/structure/blob/proc/consume_tile()
 	for(var/atom/thing in loc)
 		if(!thing.can_blob_attack())
 			continue
-		if(isliving(thing) && overmind && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.antag_team.blobstrain.attack_living(thing)
+		if(isliving(thing) && blob_team && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
+			blob_team.blobstrain.attack_living(thing)
 			continue // Don't smack them twice though
 		thing.blob_act(src)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
-/obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
-	O.setDir(dir)
+/obj/structure/blob/proc/blob_attack_animation(atom/attacked) //visually attacks an atom
+	var/obj/effect/temp_visual/blob/attack_visual = new /obj/effect/temp_visual/blob(src.loc)
+	attack_visual.setDir(dir)
 	var/area/my_area = get_area(src)
-	if(controller)
-		var/mob/eye/blob/BO = controller
-		O.color = BO.antag_team.blobstrain.color
+	if(blob_team)
+		attack_visual.color = blob_team.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
-			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
-		O.alpha = 200
-	else if(overmind)
-		O.color = overmind.antag_team.blobstrain.color
-		if(!(my_area.area_flags & BLOBS_ALLOWED))
-			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
-	if(A)
-		O.do_attack_animation(A) //visually attack the whatever
-	return O //just in case you want to do something to the animation.
+			attack_visual.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
+		attack_visual.alpha = 200
+	if(attacked)
+		attack_visual.do_attack_animation(attacked) //visually attack the whatever
+	return attack_visual //just in case you want to do something to the animation.
 
 /obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)

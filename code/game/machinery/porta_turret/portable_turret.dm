@@ -513,7 +513,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					if(assess_perp(occupant) >= 4)
 						targets += mech
 
-	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && GLOB.blobs.len && (mode == TURRET_LETHAL))
+	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && length(GLOB.blobs) && (mode == TURRET_LETHAL))
 		for(var/obj/structure/blob/B in view(scan_range, base))
 			targets += B
 

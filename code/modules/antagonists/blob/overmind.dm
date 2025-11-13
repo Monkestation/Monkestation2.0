@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	lighting_cutoff_blue = 20
 	hud_type = /datum/hud/blob_overmind
 	///Ref to our core structure
-	var/obj/structure/blob/special/core/blob_core = null
+	var/obj/structure/blob/special/blob_core
 	///How many points do we have, used for building and attacking
 	var/blob_points = 0
 	///The maximum amount of points we can have
@@ -64,8 +64,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
-	set_strain(BS)
 	color = antag_team.blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_appearance()
@@ -73,6 +71,27 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+
+/mob/eye/blob/Destroy()
+	QDEL_NULL(antag_team.blobstrain)
+	for(var/BL in GLOB.blobs)
+		var/obj/structure/blob/B = BL
+		if(B && B.overmind == src)
+			B.overmind = null
+			B.update_appearance() //reset anything that was ours
+	for(var/obj/structure/blob/blob_structure in antag_team.all_blob_tiles) //MOVE THIS OVER TO THE TEAM
+		blob_structure.overmind = null
+		blob_structure.update_appearance()
+
+	GLOB.overminds -= src
+	QDEL_LIST_ASSOC_VAL(strain_choices)
+	antag_team?.remove_member(mind)
+
+	SSshuttle.clearHostileEnvironment(src)
+	STOP_PROCESSING(SSobj, src)
+	GLOB.blob_telepathy_mobs -= src
+
+	return ..()
 
 /mob/eye/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -96,20 +115,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
 
-/mob/eye/blob/proc/set_strain(datum/blobstrain/new_strain)
-	if (!ispath(new_strain))
-		return FALSE
-
-	var/had_strain = FALSE
-	if (istype(antag_team.blobstrain))
-		antag_team.blobstrain.on_lose()
-		qdel(antag_team.blobstrain)
-		had_strain = TRUE
-
-	antag_team.blobstrain = new new_strain(src)
-	antag_team.blobstrain.on_gain()
-
-	if (had_strain)
+/mob/eye/blob/proc/update_strain(had_strain = FALSE)
+	if(had_strain)
 		to_chat(src, span_notice("Your strain is now: <b><font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</b></font>!"))
 		to_chat(src, span_notice("The <b><font color=\"[antag_team.blobstrain.color]\">[antag_team.blobstrain.name]</b></font> strain [antag_team.blobstrain.description]"))
 		if(antag_team.blobstrain.effectdesc)
@@ -231,25 +238,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = FORCE_END_ROUND
-
-/mob/eye/blob/Destroy()
-	QDEL_NULL(antag_team.blobstrain)
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == src)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure as anything in antag_team.all_blobs)
-		blob_structure.overmind = null
-
-	GLOB.overminds -= src
-	QDEL_LIST_ASSOC_VAL(strain_choices)
-
-	SSshuttle.clearHostileEnvironment(src)
-	STOP_PROCESSING(SSobj, src)
-	GLOB.blob_telepathy_mobs -= src
-
-	return ..()
 
 /mob/eye/blob/Login()
 	. = ..()

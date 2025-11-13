@@ -68,11 +68,11 @@
 
 /obj/structure/blob/special/core/process(seconds_per_tick)
 	if(QDELETED(src))
-		return
+		return PROCESS_KILL
 	if(!overmind)
 		qdel(src)
+		return PROCESS_KILL
 
-	overmind.antag_team.blobstrain.core_process()
 	overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
 	reinforce_area(seconds_per_tick)
