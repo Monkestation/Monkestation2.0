@@ -124,6 +124,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/proc/update_particle_position(obj/effect/abstract/particle_holder/to_edit, new_dir = loc.dir)
 	var/new_x = 0
+	var/human_height_offset
 	var/new_layer = initial(to_edit.layer)
 	if(new_dir & NORTH)
 		new_x = 4
@@ -134,7 +135,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new_x = 8
 	else if(new_dir & WEST)
 		new_x = -8
-	to_edit.set_particle_position(new_x, 8, 0)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/our_smoker = loc
+		human_height_offset = HUMAN_HEIGHT_MEDIUM - our_smoker.mob_height
+	to_edit.set_particle_position(new_x, 8 - human_height_offset, 0)
 	to_edit.layer = new_layer
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/living/user)
@@ -324,6 +328,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /// Called when a mob gets smoke blown in their face.
 /obj/item/clothing/mask/cigarette/proc/smoke_in_face(mob/living/getting_smoked)
 	getting_smoked.add_mood_event("smoke_bm", /datum/mood_event/smoke_in_face)
+	if(iscarbon(getting_smoked))
+		var/mob/living/carbon/carbon_smoked = getting_smoked
+		if(carbon_smoked.internal != null || carbon_smoked.has_smoke_protection()) //doesnt get upset if they have smoke protection
+			return
+
 	if(prob(20) && !HAS_TRAIT(getting_smoked, TRAIT_SMOKER))
 		getting_smoked.emote("cough")
 
@@ -649,8 +658,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/cigbutt/cigarbutt
 	throw_speed = 0.5
 	smoketime = 10 MINUTES
-	chem_volume = 40
-	list_reagents = list(/datum/reagent/drug/nicotine = 20)
+	chem_volume = 45
+	list_reagents = list(/datum/reagent/drug/nicotine = 15)
 	choke_time_max = 40 SECONDS
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -661,7 +670,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 20 MINUTES
 	chem_volume = 60
-	list_reagents = list(/datum/reagent/drug/nicotine = 40)
+	list_reagents = list(/datum/reagent/drug/nicotine = 30)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/cigar/havana
@@ -671,8 +680,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 30 MINUTES
-	chem_volume = 80
-	list_reagents = list(/datum/reagent/drug/nicotine = 60)
+	chem_volume = 75
+	list_reagents = list(/datum/reagent/drug/nicotine = 45)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/cigbutt
@@ -754,7 +763,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	update_name()
 	if(to_smoke.reagents)
 		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transfered_by = user)
-	smoketime = round(reagents.total_volume/1.75) MINUTES
+	smoketime = round(reagents.total_volume/1.5) MINUTES
 	qdel(to_smoke)
 
 
@@ -773,6 +782,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/update_particle_position(obj/effect/abstract/particle_holder/to_edit, new_dir = loc.dir)
 	var/new_x = 0
 	var/new_layer = initial(to_edit.layer)
+	var/human_height_offset
 	if(new_dir & NORTH)
 		new_x = 6
 		new_layer = BELOW_MOB_LAYER
@@ -782,7 +792,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new_x = 8
 	else if(new_dir & WEST)
 		new_x = -8
-	to_edit.set_particle_position(new_x, 8, 0)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/our_smoker = loc
+		human_height_offset = HUMAN_HEIGHT_MEDIUM - our_smoker.mob_height
+	to_edit.set_particle_position(new_x, 8 - human_height_offset, 0)
 	to_edit.layer = new_layer
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
