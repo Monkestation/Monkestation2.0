@@ -213,14 +213,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = BURN
 	force = 4
-	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
+	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma) >= 2.5) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
 
-	if(reagents?.has_reagent(/datum/reagent/flash_powder))
+	if(reagents?.has_reagent(/datum/reagent/flash_powder) >= 1)
 		if(!isliving(loc))
 			loc.visible_message(span_hear("\The [src] burns up!"))
 			qdel(src)
@@ -233,7 +233,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 
-	if(reagents?.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
+	if(reagents?.get_reagent_amount(/datum/reagent/fuel) >= 5) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents?.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start(src)
@@ -949,7 +949,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		vaper.adjust_fire_stacks(2)
 		vaper.ignite_mob()
 
-	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
+	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma) >= 2.5) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start(src)
