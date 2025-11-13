@@ -75,10 +75,9 @@
 		"spider": "hisser",
 		"isn't": "be'nae",
 		"aren't": "be'nae",
-		"ain't": "be'nae",
 		"isnt": "benae",
 		"arent": "benae",
-		"aint": "benae",
+		"monkey": "monkeigh",
 		"zombie": "rotter",
 		"zomb": "rotter",
 		"clown": "honki",
@@ -627,7 +626,8 @@
 		"doing" : "doin",
 		"mage": "magiker",
 		"mages": "magikers",
-		"each": "eak"
+		"ain't": "be'nae",
+		"aint": "benae"
 	}
 }
 
