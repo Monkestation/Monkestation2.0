@@ -25,28 +25,6 @@
 	var/oxygen_moles = 0
 	var/obj/machinery/portable_atmospherics/purification_input/oxygen_input
 
-/obj/machinery/bouldertech/purification_chamber/click_alt(mob/living/user)
-	if(oxygen_input)
-		oxygen_input.disconnect()
-		QDEL_NULL(oxygen_input)
-
-	var/side = tgui_input_list(user, "Choose a side to try and deploy the tank on", "[name]", list("North", "South"))
-	if(!side)
-		return CLICK_ACTION_BLOCKING
-
-	var/direction = NORTH
-	if(side == "South")
-		direction = SOUTH
-
-	if(!(locate(/obj/machinery/atmospherics/components/unary/portables_connector) in get_step(src, direction)))
-		return CLICK_ACTION_BLOCKING
-
-	oxygen_input = new(get_step(src, direction))
-	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in oxygen_input.loc
-	if(!oxygen_input.connect(possible_port))
-		QDEL_NULL(oxygen_input)
-	return CLICK_ACTION_SUCCESS
-
 /obj/machinery/bouldertech/purification_chamber/process()
 	if(!anchored)
 		return PROCESS_KILL
@@ -131,6 +109,28 @@
 	update_boulder_count()
 
 /obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
+		if(oxygen_input)
+			oxygen_input.disconnect()
+			QDEL_NULL(oxygen_input)
+
+		var/side = tgui_input_list(user, "Choose a side to try and deploy the tank on", "[name]", list("North", "South"))
+		if(!side)
+			return CLICK_ACTION_BLOCKING
+
+		var/direction = NORTH
+		if(side == "South")
+			direction = SOUTH
+
+		if(!(locate(/obj/machinery/atmospherics/components/unary/portables_connector) in get_step(src, direction)))
+			return CLICK_ACTION_BLOCKING
+
+		oxygen_input = new(get_step(src, direction))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in oxygen_input.loc
+		if(!oxygen_input.connect(possible_port))
+			QDEL_NULL(oxygen_input)
+		return CLICK_ACTION_SUCCESS
+
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/shards/my_dust = attacking_item
 		update_boulder_count()
