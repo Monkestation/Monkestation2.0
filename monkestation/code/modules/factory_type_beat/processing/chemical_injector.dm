@@ -131,7 +131,7 @@
 		dust.custom_materials += material
 		dust.custom_materials[material] = quantity
 		dust.set_colors()
-		dust.forceMove(get_step(src, export_side))
+		dust.forceMove(get_step(src, dir))
 
 	crystal_inside = FALSE
 	reagents.remove_all(brine_per_use)
@@ -191,7 +191,7 @@
 			dust.custom_materials += material
 			dust.custom_materials[material] = quantity
 			dust.set_colors()
-			dust.forceMove(get_step(src, export_side))
+			dust.forceMove(get_step(src, dir))
 
 	reagents.remove_all(brine_per_use)
 	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder drop the artifact before deletion.

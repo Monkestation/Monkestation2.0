@@ -81,7 +81,7 @@
 		dust.custom_materials += material
 		dust.custom_materials[material] = quantity
 		dust.set_colors()
-		dust.forceMove(get_step(src, export_side))
+		dust.forceMove(get_step(src, dir))
 
 	qdel(shard)
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -96,7 +96,7 @@
 			dust.custom_materials += material
 			dust.custom_materials[material] = quantity
 			dust.set_colors()
-			dust.forceMove(get_step(src, export_side))
+			dust.forceMove(get_step(src, dir))
 
 	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder, drop the artifact before deletion.
 		var/obj/item/boulder/artifact/artboulder = boulder

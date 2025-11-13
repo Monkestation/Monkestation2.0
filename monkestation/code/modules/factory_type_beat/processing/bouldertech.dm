@@ -35,8 +35,6 @@
 	var/holds_mining_points = FALSE
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
-	///our export side
-	var/export_side = SOUTH
 	///do we allow boulders
 	var/allows_boulders = TRUE
 	var/next_allowed_process = 0
@@ -47,7 +45,7 @@
 	register_context()
 	if(holds_minerals)
 		silo_materials = AddComponent(/datum/component/remote_materials, "bouldertech", mapload, force_connect = TRUE)
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bouldertech/LateInitialize(mapload_arg)
 	. = ..()
@@ -203,8 +201,8 @@
 	. = ..()
 	if(holds_mining_points)
 		. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
-	if(export_side)
-		. += span_notice("The machine export vent is facing <b>[dir2text(export_side)]</b>")
+	if(dir)
+		. += span_notice("The machine export vent is facing <b>[dir2text(dir)]</b>")
 	if(panel_open)
 		. += span_warning("The maintenance panel is open.")
 
@@ -355,9 +353,6 @@
 		if(is_type_in_list(material, processable_materials))
 			return TRUE
 	return FALSE
-
-/obj/machinery/bouldertech/proc/AfterRotation()
-	export_side = dir
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon

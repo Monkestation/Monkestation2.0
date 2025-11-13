@@ -83,10 +83,10 @@
 			dust.custom_materials += material
 			dust.custom_materials[material] = quantity
 			dust.set_colors()
-			dust.forceMove(get_step(src, export_side))
+			dust.forceMove(get_step(src, dir))
 	if(prob(15))
 		var/obj/item/processing/amalgam/trash = new(get_turf(src))
-		trash.forceMove(get_step(src, export_side))
+		trash.forceMove(get_step(src, dir))
 
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
