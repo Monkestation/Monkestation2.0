@@ -207,9 +207,9 @@
 
 /datum/component/plumbing/chemical_injector_brine
 	demand_connects = SOUTH
-	demand_color = COLOR_YELLOW
+	demand_color = COLOR_GREEN
 
-	ducting_layer = SECOND_DUCT_LAYER
+	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/chemical_injector_brine/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/brine, dir = dir)
