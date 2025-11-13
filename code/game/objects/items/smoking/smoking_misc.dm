@@ -159,7 +159,7 @@
 // Pipe Box //
 //////////////
 /obj/item/storage/pipebox
-	name = "pipebox"
+	name = "pipe box"
 	desc = "A fancy wooden pipebox for holding everything you need to smoke a pipe."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "pipebox"
@@ -184,7 +184,7 @@
 		new /obj/item/storage/box/matches(src)
 
 /obj/item/storage/pipebox/fancy
-	name = "fancy pipebox"
+	name = "fancy pipe box"
 	desc = "A very fancy wooden pipebox with gold engravings for holding everything you need to smoke a pipe in style."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "pipebox_fancy"
