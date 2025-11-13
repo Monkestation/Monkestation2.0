@@ -649,8 +649,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/cigbutt/cigarbutt
 	throw_speed = 0.5
 	smoketime = 10 MINUTES
-	chem_volume = 30
-	list_reagents = list(/datum/reagent/drug/nicotine = 15)
+	chem_volume = 40
+	list_reagents = list(/datum/reagent/drug/nicotine = 20)
 	choke_time_max = 40 SECONDS
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -660,8 +660,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 20 MINUTES
-	chem_volume = 40
-	list_reagents = list(/datum/reagent/drug/nicotine = 25)
+	chem_volume = 60
+	list_reagents = list(/datum/reagent/drug/nicotine = 40)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/cigar/havana
@@ -671,8 +671,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 30 MINUTES
-	chem_volume = 50
-	list_reagents = list(/datum/reagent/drug/nicotine = 35)
+	chem_volume = 80
+	list_reagents = list(/datum/reagent/drug/nicotine = 60)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/cigbutt
@@ -754,7 +754,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	update_name()
 	if(to_smoke.reagents)
 		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transfered_by = user)
-	smoketime = round(reagents.total_volume/2) MINUTES
+	smoketime = round(reagents.total_volume/1.75) MINUTES
 	qdel(to_smoke)
 
 

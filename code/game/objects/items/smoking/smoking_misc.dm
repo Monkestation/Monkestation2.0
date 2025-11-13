@@ -119,7 +119,7 @@
 ///////////////////
 /obj/item/storage/bag/tobaccopouch
 	name = "tobacco pouch"
-	desc = "A pouch containing dried tobacco leaves."
+	desc = "A pouch containing dried tobacco leaves. Sourced from Frank's Hydrofarms."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "tobaccopouch"
 	w_class = WEIGHT_CLASS_TINY
@@ -139,13 +139,21 @@
 		))
 
 /obj/item/storage/bag/tobaccopouch/PopulateContents()
-	for(var/i in 1 to 10)
-		var/obj/item/food/grown/tobacco/leaf = new spawn_type(src)
-		ADD_TRAIT(leaf, TRAIT_DRIED, ELEMENT_TRAIT(type))
-		leaf.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY) //give them the tan just like from the drying rack
+	if(spawn_type)
+		for(var/i in 1 to 10)
+			var/obj/item/food/grown/tobacco/leaf = new spawn_type(src)
+			ADD_TRAIT(leaf, TRAIT_DRIED, ELEMENT_TRAIT(type))
+			leaf.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY) //give them the tan just like from the drying rack
 
 /obj/item/storage/bag/tobaccopouch/space
+	name = "space tobacco pouch"
+	desc = "A pouch containing dried space tobacco leaves. Sourced from Frank's Hydrofarms."
+	color = "#40b8ddff"
 	spawn_type =/obj/item/food/grown/tobacco/space
+
+/obj/item/storage/bag/tobaccopouch/empty
+	spawn_type = null
+	desc = "A pouch for holding dried tobacco leaves."
 
 //////////////
 // Pipe Box //
@@ -186,8 +194,8 @@
 /obj/item/storage/pipebox/fancy/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/storage/bag/tobaccopouch = 2,
-		/obj/item/storage/bag/tobaccopouch/space = 1,
 		/obj/item/clothing/mask/cigarette/pipe = 1,
-		/obj/item/lighter/commemorative = 1,
 		/obj/item/storage/box/matches = 1,
+		/obj/item/storage/bag/tobaccopouch/space = 1,
+		/obj/item/lighter/commemorative = 1,
 	),src)
