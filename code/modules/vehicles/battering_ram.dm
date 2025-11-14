@@ -2,13 +2,13 @@
 #define ANIMATION_DURATION (2.5 SECONDS)
 #define DAMAGE_PER_HIT 55
 
-/obj/vehicle/ridden/red_key
-	name = "red key"
-	desc = "IT'S THE POLICE, OPEN UP! Requires two officers and allows you to bust down doors to enter unwilling departments."
+/obj/vehicle/ridden/battering_ram
+	name = "big red key"
+	desc = "IT'S THE POLICE, OPEN UP! With two officers you will bust down doors to enter unwilling departments by simply walking into them."
 	icon = 'icons/obj/red_key.dmi'
 	icon_state = "key"
 	max_integrity = 60
-	armor_type = /datum/armor/red_key
+	armor_type = /datum/armor/battering_ram
 	density = FALSE
 	max_drivers = 1
 	max_occupants = 2
@@ -23,17 +23,17 @@
 	///Callback we use to reset pixel shifting for the "ramming" animation players go through.
 	var/datum/callback/undo_shift_callback
 
-/datum/armor/red_key
+/datum/armor/battering_ram
 	melee = 10
 	laser = 10
 	fire = 60
 	acid = 60
 
-/obj/vehicle/ridden/red_key/Initialize(mapload)
+/obj/vehicle/ridden/battering_ram/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/red_key)
 
-/obj/vehicle/ridden/red_key/Bump(atom/bumped)
+/obj/vehicle/ridden/battering_ram/Bump(atom/bumped)
 	. = ..()
 	if(!istype(bumped, /obj/machinery/door))
 		return
@@ -83,10 +83,10 @@
 	if(after_assembly)
 		after_assembly.deconstruct(TRUE)
 
-/obj/vehicle/ridden/red_key/proc/occupants_are_same(list/compared_occupants)
+/obj/vehicle/ridden/battering_ram/proc/occupants_are_same(list/compared_occupants)
 	return return_occupants() == compared_occupants
 
-/obj/vehicle/ridden/red_key/proc/move_away_from_door(atom/door_moving_away_from, list/current_occupants)
+/obj/vehicle/ridden/battering_ram/proc/move_away_from_door(atom/door_moving_away_from, list/current_occupants)
 	var/list/things_to_move = list(src) + current_occupants
 	var/direction_to_move_towards = get_dir(door_moving_away_from, return_drivers()[1])
 	switch(direction_to_move_towards)
@@ -108,7 +108,7 @@
 			undo_shift_callback = CALLBACK(src, PROC_REF(set_pixel_shift), 0, 12)
 	return TRUE
 
-/obj/vehicle/ridden/red_key/proc/set_pixel_shift(y_amount = 0, x_amount = 0, list/current_occupants)
+/obj/vehicle/ridden/battering_ram/proc/set_pixel_shift(y_amount = 0, x_amount = 0, list/current_occupants)
 	var/list/things_to_move = list(src) + current_occupants
 	for(var/atom/movable/moved as anything in things_to_move)
 		animate(moved, flags = ANIMATION_END_NOW)
