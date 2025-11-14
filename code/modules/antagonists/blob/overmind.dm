@@ -73,11 +73,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	GLOB.blob_telepathy_mobs |= src
 
 /mob/eye/blob/Destroy()
+	antag_team?.remove_member(mind)
 	if(antag_team.main_overmind == src)
 		antag_team.main_overmind_death()
 	GLOB.overminds -= src
 	QDEL_LIST_ASSOC_VAL(strain_choices)
-	antag_team?.remove_member(mind)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
 	return ..()
@@ -161,27 +161,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 		antag_team.has_announced = TRUE
 
-/// Create a blob spore and link it to us
-/mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
-	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
-	assume_direct_control(spore)
-	return spore
-
-/// Give our new minion the properties of a minion
-/mob/eye/blob/proc/assume_direct_control(mob/living/minion)
-	minion.AddComponent(/datum/component/blob_minion, src)
-
-/// Add something to our list of mobs and wait for it to die
-/mob/eye/blob/proc/register_new_minion(mob/living/minion)
-	antag_team.blob_mobs |= minion
-	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
-		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
-
-/// When a spore (or zombie) dies then we do this
-/mob/eye/blob/proc/on_minion_death(mob/living/spore)
-	SIGNAL_HANDLER
-	antag_team.blobstrain.on_sporedeath(spore)
-
 /mob/eye/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(10 SECONDS)
@@ -202,7 +181,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()
-			create_spore(guy_turf, spore_type = /mob/living/basic/blob_minion/spore)
+			antag_team.create_spore(guy_turf, spore_type = /mob/living/basic/blob_minion/spore)
 		else
 			live_guy.fully_heal()
 

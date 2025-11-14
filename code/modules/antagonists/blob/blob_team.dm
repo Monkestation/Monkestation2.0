@@ -62,9 +62,13 @@
 
 /datum/team/blob/process(seconds_per_tick)
 	if(resource_delay <= world.time)
-		resource_delay = world.time + 10 // 1 second
-		for(var/mob/eye/blob/overmind in overminds)
-			overmind.add_points(point_rate + blobstrain.point_rate_bonus)
+		var/amount_to_give = blobstrain?.core_process() || 0 //make sure amount_to_give is always a num
+		resource_delay = world.time + (1 SECOND)
+		main_overmind?.add_points(amount_to_give)
+		if(length(overminds) > 1)
+			amount_to_give = ceil(amount_to_give / 2)
+			for(var/mob/eye/blob/overmind in overminds - main_overmind)
+				overmind.add_points(amount_to_give)
 	main_overmind?.blob_core?.repair_damage(base_core_regen + blobstrain.core_regen_bonus)
 
 ///Set our strain and update all our overminds and tiles
@@ -83,11 +87,37 @@
 	for(var/mob/eye/blob/overmind in overminds)
 		overmind.update_strain(old_strain)
 
+///Called when our main overmind dies
 /datum/team/blob/proc/main_overmind_death()
 	QDEL_NULL(blobstrain)
+	STOP_PROCESSING(SSprocessing, src)
 	SSshuttle.clearHostileEnvironment(main_overmind)
-	for(var/obj/structure/blob/blob_structure in all_blob_tiles) //MOVE THIS OVER TO THE TEAM
+	for(var/obj/structure/blob/blob_structure in all_blob_tiles)
 		blob_structure.blob_team = null
 		blob_structure.update_appearance()
 
+	for(var/overmind in overminds)
+		qdel(overmind)
+
 	main_overmind = null
+
+/// Create a blob spore and link it to us
+/datum/team/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
+	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
+	make_minion(spore)
+	return spore
+
+/// Give our new minion the properties of a minion
+/datum/team/blob/proc/make_minion(mob/living/minion)
+	minion.AddComponent(/datum/component/blob_minion, src)
+
+/// Add something to our list of mobs and wait for it to die
+/datum/team/blob/proc/register_new_minion(mob/living/minion)
+	blob_mobs |= minion
+	if(!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
+		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
+
+/// When a spore (or zombie) dies then we do this
+/datum/team/blob/proc/on_minion_death(mob/living/spore)
+	SIGNAL_HANDLER
+	blobstrain.on_sporedeath(spore)

@@ -11,8 +11,8 @@
 	if(ispath(reagent))
 		reagent = new reagent()
 
-/datum/blobstrain/reagent/attack_living(mob/living/attacked)
-	reagent.expose_mob(attacked, VAPOR, amount_injected, TRUE, (attacked.getarmor(null, BIO) * 0.01))
+/datum/blobstrain/reagent/attack_living(mob/living/attacked, list/nearby_blobs, mob/eye/blob/attacker)
+	reagent.expose_mob(attacked, VAPOR, amount_injected, TRUE, (attacked.getarmor(null, BIO) * 0.01), attacker)
 	send_message(attacked)
 
 /datum/blobstrain/reagent/blobbernaut_attack(mob/living/attacked)

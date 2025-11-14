@@ -209,7 +209,7 @@
 		return FALSE
 
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
-	assume_direct_control(blobber)
+	antag_team.make_minion(blobber)
 	factory.assign_blobbernaut(blobber)
 	var/mob/dead/observer/player = pick(candidates)
 	blobber.assign_key(player.key, antag_team.blobstrain)

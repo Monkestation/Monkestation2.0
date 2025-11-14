@@ -7,6 +7,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	var/description //where is this used
 	/// The color applied to our tiles
 	var/color = COLOR_BLACK
+	/// Used for blobs on invalid turfs
+	var/cached_faded_color
 	/// The color that stuff like healing effects and the overmind camera gets
 	var/complementary_color = COLOR_BLACK
 	/// A short description of the power and its effects
@@ -61,6 +63,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	if(!istype(new_team))
 		stack_trace("blobstrain created without team")
 	blob_team = new_team
+	cached_faded_color = BlendRGB(color, COLOR_WHITE, 0.5)
 
 /datum/blobstrain/Destroy()
 	blob_team = null
@@ -141,6 +144,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 
 /datum/blobstrain/proc/apply_loss_effects(mob/eye/blob/overmind)
 	return
+
+///Called every process() tick of our team, returns how many points to give our main_overmind, lesser overminds will be given half of that(rounded up)
+/datum/blobstrain/proc/core_process()
+	return blob_team.point_rate + point_rate_bonus
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 	return

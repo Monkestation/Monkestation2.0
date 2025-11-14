@@ -3,7 +3,7 @@
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
 	name = "Debris Devourer"
-	description = "will launch accumulated debris into targets. Does very low brute damage without debris-launching."
+	description = "will launch accumulated debris into targets. Does very low brute damage without debris-launching." //I think this does 0 damage without launching
 	analyzerdescdamage = "Does very low brute damage and may grab onto melee weapons."
 	analyzerdesceffect = "Devours loose items left on the station, and releases them when attacking or attacked."
 	color = "#8B1000"
