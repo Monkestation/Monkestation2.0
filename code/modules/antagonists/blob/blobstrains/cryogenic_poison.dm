@@ -22,6 +22,7 @@
 	if(exposed_mob.reagents)
 		exposed_mob.reagents.add_reagent(/datum/reagent/consumable/frostoil, 0.3*reac_volume)
 		exposed_mob.reagents.add_reagent(/datum/reagent/consumable/ice, 0.3*reac_volume)
+		exposed_mob.reagents.add_reagent(/datum/reagent/water, 0.5*reac_volume) // to make oozelings not fucking immune
 		exposed_mob.reagents.add_reagent(/datum/reagent/blob/cryogenic_poison, 0.3*reac_volume)
 	exposed_mob.apply_damage(0.2*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 
