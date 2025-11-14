@@ -734,7 +734,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		if(user)
 			to_chat(user, span_notice("Your [name] goes out."))
-	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1, 0, SILENCED_SOUND_EXTRARANGE)
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	how_long_have_we_been_smokin = 0
 	update_appearance(UPDATE_ICON)
 	set_light_on(FALSE)
