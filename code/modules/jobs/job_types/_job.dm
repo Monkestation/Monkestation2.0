@@ -359,6 +359,8 @@
 		info += related_policy
 	if(supervisors)
 		info += "As the [title] you answer directly to [supervisors]. Special circumstances may change this."
+		if(title == JOB_PRISONER)
+			info += "Remember, you are not an antagonist unless explicitly assigned or converted to be one."
 	if(radio_info)
 		info += radio_info
 	if(req_admin_notify)
