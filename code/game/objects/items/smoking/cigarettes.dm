@@ -734,11 +734,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		if(user)
 			to_chat(user, span_notice("Your [name] goes out."))
-		packeditem = null
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1, 0, SILENCED_SOUND_EXTRARANGE)
+	how_long_have_we_been_smokin = 0
 	update_appearance(UPDATE_ICON)
 	set_light_on(FALSE)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
+	QDEL_NULL(mob_smoke)
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/thing, mob/user, params)
 	if(lit)
