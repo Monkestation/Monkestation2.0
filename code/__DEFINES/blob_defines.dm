@@ -34,7 +34,7 @@
 #define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
 
 #define BLOB_NODE_MAX_HP 200
-#define BLOB_NODE_HP_REGEN 10
+#define BLOB_NODE_HP_REGEN 6
 #define BLOB_NODE_MIN_DISTANCE 5 // Minimum distance between nodes
 #define BLOB_NODE_CLAIM_RANGE 10
 #define BLOB_NODE_PULSE_RANGE 4 // The radius up to which the core activates structures, and up to which structures can be built
