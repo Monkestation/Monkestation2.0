@@ -31,7 +31,7 @@
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/food/grown/tobacco/space
 	possible_mutations = list()
-	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.1, /datum/reagent/drug/nicotine = 0.1, /datum/reagent/oxygen = 0.1)  ///datum/reagent/consumable/nutriment = 0.03 Thy shall not get fat from smoking
+	reagents_add = list(/datum/reagent/medicine/salbutamol = 0.02, /datum/reagent/drug/nicotine = 0.1, /datum/reagent/oxygen = 0.1)  ///datum/reagent/consumable/nutriment = 0.03 Thy shall not get fat from smoking
 	rarity = 20
 
 /obj/item/food/grown/tobacco/space
