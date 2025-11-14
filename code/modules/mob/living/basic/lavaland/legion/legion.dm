@@ -83,7 +83,11 @@
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
-	consumed.fully_heal(HEAL_DAMAGE)
+	if(HAS_TRAIT(consumed, TRAIT_REVIVES_BY_HEALING)) // if they revive by healing, only heal them back up to 0 hp
+		if(consumed.health < 0)
+			consumed.heal_ordered_damage(abs(consumed.health), list(BRUTE, BURN, TOX, OXY, CLONE))
+	else
+		consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
 	consumed.forceMove(src)
