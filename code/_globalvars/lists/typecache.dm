@@ -39,3 +39,12 @@ GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
 	/obj/machinery/portable_atmospherics/canister,
 	/obj/structure/reagent_dispensers,
 )))
+
+/// A typecache of centcom areas, with specific areas that are subtypes of /area/centcom but are used by actual antags excluded.
+GLOBAL_LIST_INIT(typecache_centcom_areas, zebra_typecacheof(list(
+	/area/centcom = TRUE,
+	/area/centcom/abductor_ship = FALSE,
+	/area/centcom/heretic_sacrifice = FALSE,
+	/area/centcom/syndicate_mothership = FALSE,
+	/area/centcom/wizard_station = FALSE,
+)))
