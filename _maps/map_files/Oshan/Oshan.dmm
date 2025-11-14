@@ -3335,6 +3335,15 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/dorms)
+"bfl" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "bfm" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/broken_flooring/side/directional/north,
@@ -14485,7 +14494,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/yes_smoking/circle/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "eFZ" = (
@@ -30235,6 +30243,9 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
+/obj/item/taperecorder{
+	pixel_x = -9
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "jQc" = (
@@ -37223,6 +37234,7 @@
 	dir = 9
 	},
 /obj/structure/bodycontainer/morgue,
+/obj/structure/sign/warning/yes_smoking/circle/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
 "lWg" = (
@@ -38145,9 +38157,6 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "moq" = (
-/obj/machinery/door/airlock/security{
-	name = "Warden's Office"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -38159,6 +38168,9 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /obj/effect/landmark/navigate_destination,
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
 "mor" = (
@@ -39979,9 +39991,6 @@
 /area/station/security/brig)
 "mUa" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/security{
-	name = "Brig"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39996,6 +40005,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/effect/landmark/navigate_destination,
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "mUc" = (
@@ -57347,7 +57359,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "sut" = (
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 1
 	},
@@ -57360,6 +57371,8 @@
 	name = "Evidence Storage"
 	},
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/white/textured,
 /area/station/security/evidence)
 "sux" = (
@@ -69248,12 +69261,6 @@
 /obj/effect/turf_decal/trimline/dark/filled/line,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/abandoned_gambling_den)
-"wgJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/upper)
 "wgK" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -102888,10 +102895,10 @@ oGj
 cYN
 bfx
 yjE
-wgJ
+uTA
 tnL
 fJT
-yaj
+bfl
 eFX
 pdZ
 pdZ
