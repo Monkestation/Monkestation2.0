@@ -11,8 +11,6 @@
 	pulse_range = BLOB_NODE_PULSE_RANGE
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
-	ignore_syncmesh_share = TRUE
-
 
 /datum/armor/special_node
 	fire = 65

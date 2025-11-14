@@ -56,7 +56,7 @@
 
 #define BLOB_REGULAR_MAX_HP 25
 #define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile
-#define BLOB_REGULAR_HP_REGEN 1 // Health regenerated when pulsed by a node/core
+#define BLOB_REGULAR_HP_REGEN 2 // Health regenerated when pulsed by a node/core
 
 #define BLOB_STRONG_MAX_HP 150
 #define BLOB_STRONG_HP_REGEN 2

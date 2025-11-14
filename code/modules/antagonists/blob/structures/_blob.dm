@@ -11,28 +11,27 @@
 	pass_flags_self = PASSBLOB
 	can_atmos_pass = ATMOS_PASS_PROC
 	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
-	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
 	armor_type = /datum/armor/structure_blob
+	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = 0
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
-	/// We got pulsed when?
-	COOLDOWN_DECLARE(pulse_timestamp)
-	/// we got healed when?
-	COOLDOWN_DECLARE(heal_timestamp)
 	/// Multiplies brute damage by this
 	var/brute_resist = BLOB_BRUTE_RESIST
 	/// Multiplies burn damage by this
 	var/fire_resist = BLOB_FIRE_RESIST
-	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
-	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
 	/// is this tile valid for winning
 	var/legit = FALSE
 	/// ref to the team that we belong to
 	var/datum/team/blob/blob_team
+
+	/// We got pulsed when?
+	COOLDOWN_DECLARE(pulse_timestamp)
+	/// we got healed when?
+	COOLDOWN_DECLARE(heal_timestamp)
 
 /datum/armor/structure_blob
 	fire = 80
@@ -41,6 +40,12 @@
 
 /obj/structure/blob/Initialize(mapload, datum/team/blob/owning_team)
 	. = ..()
+	if(owning_team && !istype(owning_team))
+		if(istype(owning_team, /mob/eye/blob))
+			owning_team = astype(owning_team, /mob/eye/blob).antag_team
+		else
+			stack_trace("Blob tile\[[src]\] passed an invalid owning_team\[[owning_team], [owning_team.type\].")
+
 	register_context()
 	if(owning_team)
 		blob_team = owning_team
@@ -55,7 +60,7 @@
 	update_appearance()
 	if(atmosblock)
 		air_update_turf(TRUE, TRUE)
-	ConsumeTile()
+	consume_tile()
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
 		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
 
@@ -127,7 +132,7 @@
 
 /obj/structure/blob/proc/be_pulsed()
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
-		ConsumeTile()
+		consume_tile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
 			atom_integrity = min(max_integrity, atom_integrity+health_regen)
 			COOLDOWN_START(src, heal_timestamp, 20)
@@ -154,67 +159,65 @@
 	if(blob_team)
 		attack_visual.color = blob_team.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
-			attack_visual.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
+			attack_visual.color = BlendRGB(attack_visual.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 		attack_visual.alpha = 200
 	if(attacked)
 		attack_visual.do_attack_animation(attacked) //visually attack the whatever
 	return attack_visual //just in case you want to do something to the animation.
 
-/obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
-	if(!T)
-		var/list/dirs = list(1,2,4,8)
+/obj/structure/blob/proc/expand(turf/target, mob/controller = null, expand_reaction = TRUE, datum/team/blob/owner)
+	if(!target) //refactor this handling
+		var/list/dirs = GLOB.cardinals.Copy()
 		for(var/i = 1 to 4)
-			var/dirn = pick(dirs)
-			dirs.Remove(dirn)
-			T = get_step(src, dirn)
-			if(!(locate(/obj/structure/blob) in T))
+			target = get_step(src, pick_n_take(dirs))
+			if(!(locate(/obj/structure/blob) in target)) //might want to cache what tiles have blobs on them for general handling
 				break
 			else
-				T = null
-	if(!T)
+				target = null
+	if(!target)
 		return
 	var/make_blob = TRUE //can we make a blob?
 
-	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
+	if(isspaceturf(target) && !(locate(/obj/structure/lattice) in target) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
-	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
-	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
+	consume_tile() //hit the tile we're in, making sure there are no border objects blocking us
+	if(!target.CanPass(src, get_dir(target, src))) //is the target turf impassable
 		make_blob = FALSE
-		T.blob_act(src) //hit the turf if it is
-	for(var/atom/A in T)
-		if(!A.CanPass(src, get_dir(T, src))) //is anything in the turf impassable
+		target.blob_act(src) //hit the turf if it is
+	for(var/atom/inside in target)
+		if(!inside.CanPass(src, get_dir(target, src))) //is anything in the turf impassable
 			make_blob = FALSE
-		if(!A.can_blob_attack())
+		if(!inside.can_blob_attack())
 			continue
-		if(isliving(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
-			overmind.antag_team.blobstrain.attack_living(A)
+		if(isliving(inside) && blob_team && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
+			blob_team.blobstrain.attack_living(inside)
 			continue // Don't smack them twice though
-		A.blob_act(src) //also hit everything in the turf
+		inside.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
-		B.set_density(TRUE)
-		if(T.Enter(B)) //NOW we can attempt to move into the tile
-			B.set_density(initial(B.density))
-			B.forceMove(T)
-			var/area/Ablob = get_area(B)
-			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
-				overmind.antag_team.blobs_legit += B
+		var/obj/structure/blob/new_tile = new /obj/structure/blob/normal(src.loc, (controller || blob_team)) //MAYBE CHANGE THIS TO JUST SPAWN ON THE TARGET
+		new_tile.set_density(TRUE)
+		if(target.Enter(new_tile)) //NOW we can attempt to move into the tile
+			new_tile.set_density(initial(new_tile.density))
+			new_tile.forceMove(target)
+			if(astype(get_step(new_tile, 0)?.loc, /area).area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
+				blob_team.blobs_legit++
+				new_tile.legit = TRUE
 			else if(controller)
-				B.balloon_alert(overmind, "off-station, won't count!")
-			B.update_appearance()
-			if(B.overmind && expand_reaction)
-				B.overmind.antag_team.blobstrain.expand_reaction(src, B, T, controller)
-			return B
+				new_tile.balloon_alert(controller, "off-station, won't count!")
+			new_tile.update_appearance()
+			if(new_tile.overmind && expand_reaction)
+				blob_team.blobstrain.expand_reaction(src, new_tile, target, controller)
+			return new_tile
 		else
-			blob_attack_animation(T, controller)
-			T.blob_act(src) //if we can't move in hit the turf again
-			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
+			blob_attack_animation(target, controller)
+			target.blob_act(src) //if we can't move in hit the turf again
+			qdel(new_tile) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return
 	else
-		blob_attack_animation(T, controller) //if we can't, animate that we attacked
+		blob_attack_animation(target, controller) //if we can't, animate that we attacked
 	return
 
 /obj/structure/blob/emp_act(severity)
@@ -222,15 +225,13 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(severity > 0)
-		if(overmind)
-			overmind.antag_team.blobstrain.emp_reaction(src, severity)
+		blob_team?.blobstrain.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/zap_act(power, zap_flags)
-	if(overmind)
-		if(overmind.antag_team.blobstrain.tesla_reaction(src, power))
-			take_damage(power * 0.0025, BURN, ENERGY)
+	if(blob_team?.blobstrain.tesla_reaction(src, power))
+		take_damage(power * 0.0025, BURN, ENERGY)
 	else
 		take_damage(power * 0.0025, BURN, ENERGY)
 	power -= power * 0.0025 //You don't get to do it for free
@@ -238,8 +239,7 @@
 
 /obj/structure/blob/extinguish()
 	. = ..()
-	if(overmind)
-		overmind.antag_team.blobstrain.extinguish_reaction(src)
+	blob_team.blobstrain.extinguish_reaction(src)
 
 /obj/structure/blob/hulk_damage()
 	return 15
@@ -249,8 +249,8 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.antag_team.blobs_legit]/[overmind.antag_team.blobwincount].")]")
+		if(blob_team)
+			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[blob_team.blobs_legit]/[blob_team.blobwincount].")]")
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
 			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
@@ -261,10 +261,10 @@
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)
 	. = list()
-	if(overmind)
-		. += list("<b>Material: <font color=\"[overmind.antag_team.blobstrain.color]\">[overmind.antag_team.blobstrain.name]</font>[span_notice(".")]</b>",
-		"<b>Material Effects:</b> [span_notice("[overmind.antag_team.blobstrain.analyzerdescdamage]")]",
-		"<b>Material Properties:</b> [span_notice("[overmind.antag_team.blobstrain.analyzerdesceffect || "N/A"]")]")
+	if(blob_team)
+		. += list("<b>Material: <font color=\"[blob_team.blobstrain.color]\">[blob_team.blobstrain.name]</font>[span_notice(".")]</b>",
+		"<b>Material Effects:</b> [span_notice("[blob_team.blobstrain.analyzerdescdamage]")]",
+		"<b>Material Properties:</b> [span_notice("[blob_team.blobstrain.analyzerdesceffect || "N/A"]")]")
 	else
 		. += "<b>No Material Detected!</b>"
 
@@ -304,8 +304,8 @@
 	if(damage_flag)
 		armor_protection = get_armor_rating(damage_flag)
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
-	if(overmind && damage_flag)
-		damage_amount = overmind.antag_team.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
+	if(blob_team && damage_flag)
+		damage_amount = blob_team.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -314,43 +314,40 @@
 		update_appearance()
 
 /obj/structure/blob/atom_destruction(damage_flag)
-	if(overmind)
-		overmind.antag_team.blobstrain.death_reaction(src, damage_flag)
-	..()
+	blob_team?.blobstrain.death_reaction(src, damage_flag)
+	return ..()
 
-/obj/structure/blob/proc/change_to(type, controller)
-	if(!ispath(type))
+/obj/structure/blob/proc/change_to(passed_type, controller) //needs to be passed the team
+	if(!ispath(passed_type))
 		CRASH("change_to(): invalid type for blob")
-	var/obj/structure/blob/B = new type(src.loc, controller)
-	B.creation_action()
-	B.update_appearance()
-	B.setDir(dir)
+	var/obj/structure/blob/changed_to = new passed_type(src.loc, controller)
+	changed_to.creation_action()
+	changed_to.update_appearance()
+	changed_to.setDir(dir)
 	qdel(src)
-	return B
+	return changed_to
 
 /obj/structure/blob/examine(mob/user)
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hud_users[user])
 		. += "<b>Your HUD displays an extensive report...</b><br>"
-		if(overmind)
-			. += overmind.antag_team.blobstrain.examine(user)
+		if(blob_team)
+			. += blob_team.blobstrain.examine(user)
 		else
 			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
 		. += chemeffectreport(user)
 		. += typereport(user)
 	else
-		if((user == overmind || isobserver(user)) && overmind)
-			. += overmind.antag_team.blobstrain.examine(user)
+		if(blob_team && (isovermind(user) || isobserver(user)))
+			. += blob_team.blobstrain.examine(user)
 		. += "It seems to be made of [get_chem_name()]."
 
 /obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
 
 /obj/structure/blob/proc/get_chem_name()
-	if(overmind)
-		return overmind.antag_team.blobstrain.name
-	return "some kind of organic tissue"
+	return blob_team?.blobstrain.name || "some kind of organic tissue"
 
 /obj/structure/blob/normal
 	name = "normal blob"
@@ -372,13 +369,13 @@
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(atom_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
+	name = "[(atom_integrity <= 15) ? "fragile " : (blob_team ? null : "dead ")][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()
 	if(atom_integrity <= 15)
 		desc = "A thin lattice of slightly twitching tendrils."
-	else if(overmind)
+	else if(blob_team)
 		desc = "A thick wall of writhing tendrils."
 	else
 		desc = "A thick wall of lifeless tendrils."
@@ -389,7 +386,7 @@
 	/// - [] TODO: Move this elsewhere
 	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
-	else if (overmind)
+	else if (blob_team)
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
 		brute_resist = BLOB_BRUTE_RESIST * 0.5

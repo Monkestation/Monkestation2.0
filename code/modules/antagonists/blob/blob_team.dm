@@ -41,6 +41,7 @@
 	set_team_strain(pick(GLOB.valid_blobstrains))
 	if(istype(starting_members) && starting_members.type == /mob/eye/blob)
 		main_overmind = starting_members
+		SSshuttle.registerHostileEnvironment(main_overmind)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/team/blob/Destroy(force)
@@ -59,6 +60,14 @@
 	if(istype(member.current, /mob/eye/blob)) //pure -= without the type check may be cheaper, idk
 		overminds -= member.current
 
+/datum/team/blob/process(seconds_per_tick)
+	if(resource_delay <= world.time)
+		resource_delay = world.time + 10 // 1 second
+		for(var/mob/eye/blob/overmind in overminds)
+			overmind.add_points(point_rate + blobstrain.point_rate_bonus)
+	main_overmind?.blob_core?.repair_damage(base_core_regen + blobstrain.core_regen_bonus)
+
+///Set our strain and update all our overminds and tiles
 /datum/team/blob/proc/set_team_strain(datum/blobstrain/new_strain)
 	if(!ispath(new_strain))
 		return FALSE
@@ -74,9 +83,11 @@
 	for(var/mob/eye/blob/overmind in overminds)
 		overmind.update_strain(old_strain)
 
-/datum/team/blob/process(seconds_per_tick)
-	if(resource_delay <= world.time)
-		resource_delay = world.time + 10 // 1 second
-		for(var/mob/eye/blob/overmind in overminds)
-			overmind.add_points(point_rate + blobstrain.point_rate_bonus)
-	main_overmind?.blob_core?.repair_damage(base_core_regen + blobstrain.core_regen_bonus)
+/datum/team/blob/proc/main_overmind_death()
+	QDEL_NULL(blobstrain)
+	SSshuttle.clearHostileEnvironment(main_overmind)
+	for(var/obj/structure/blob/blob_structure in all_blob_tiles) //MOVE THIS OVER TO THE TEAM
+		blob_structure.blob_team = null
+		blob_structure.update_appearance()
+
+	main_overmind = null

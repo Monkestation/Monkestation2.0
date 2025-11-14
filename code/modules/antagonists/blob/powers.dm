@@ -37,8 +37,7 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/special/core/core = new(get_turf(src), src, 1)
-		core.overmind = src
+		var/obj/structure/blob/special/core/core = new(get_turf(src), antag_team, TRUE)
 		antag_team.blobs_legit++
 		blob_core = core
 		core.update_appearance()

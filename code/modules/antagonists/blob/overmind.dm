@@ -67,30 +67,19 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	color = antag_team.blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_appearance()
-	SSshuttle.registerHostileEnvironment(src)
+
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
 
 /mob/eye/blob/Destroy()
-	QDEL_NULL(antag_team.blobstrain)
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == src)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure in antag_team.all_blob_tiles) //MOVE THIS OVER TO THE TEAM
-		blob_structure.overmind = null
-		blob_structure.update_appearance()
-
+	if(antag_team.main_overmind == src)
+		antag_team.main_overmind_death()
 	GLOB.overminds -= src
 	QDEL_LIST_ASSOC_VAL(strain_choices)
 	antag_team?.remove_member(mind)
-
-	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
-
 	return ..()
 
 /mob/eye/blob/proc/validate_location()

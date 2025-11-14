@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 /datum/blobstrain/proc/death_reaction(obj/structure/blob/dying, damage_flag, coefficient = 1) //when a blob tile dies, do this
 	return
 
-/datum/blobstrain/proc/expand_reaction(obj/structure/blob/expanding, obj/structure/blob/new_blob, turf/target_turf, mob/eye/blob/owner, coefficient = 1) //when the blob expands, do this
+/datum/blobstrain/proc/expand_reaction(obj/structure/blob/expanding, obj/structure/blob/new_blob, turf/target_turf, mob/eye/blob/controller) //when the blob expands, do this
 	return
 
 /datum/blobstrain/proc/tesla_reaction(obj/structure/blob/zapped, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
