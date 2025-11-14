@@ -80,6 +80,7 @@
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
 	name = consumed.real_name
+	copy_voice_from(consumed)
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
