@@ -200,6 +200,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
+/obj/structure/ore_box,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "by" = (
@@ -667,7 +668,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/item/paper/fluff/stations/lavaland/orm_notice,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "et" = (
@@ -3670,7 +3670,8 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/structure/closet/wardrobe/miner,
+/obj/structure/table,
+/obj/item/paper/fluff/stations/lavaland/orm_notice,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
@@ -4739,10 +4740,10 @@
 /area/lavaland/surface/outdoors)
 "Ac" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
+/obj/structure/closet/wardrobe/miner,
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "Ae" = (
@@ -8088,6 +8089,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/structure/ore_box,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/mine/production)
 "UZ" = (
