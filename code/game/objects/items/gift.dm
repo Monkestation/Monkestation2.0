@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	qdel(src)
 
-	if(isitem(contains_type))
+	if(ispath(contains_type, /obj/item))
 		var/atom/I = new contains_type(get_turf(M))
 		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
 			M.put_in_hands(I)
