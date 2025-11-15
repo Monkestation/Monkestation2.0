@@ -103,9 +103,8 @@
 	. = ..()
 	if(blob_team)
 		add_atom_colour(blob_team.blobstrain.color, FIXED_COLOUR_PRIORITY)
-		var/area/A = get_area(src)
-		if(!(A.area_flags & BLOBS_ALLOWED))
-			add_atom_colour(BlendRGB(blob_team.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob, could probably cache this
+		if(!legit)
+			add_atom_colour(blob_team.blobstrain.cached_faded_color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
