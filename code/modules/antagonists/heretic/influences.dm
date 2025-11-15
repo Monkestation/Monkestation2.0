@@ -48,6 +48,7 @@
 			/area/station/science/ordnance/bomb,
 			/area/station/science/ordnance/burnchamber,
 			/area/station/science/ordnance/freezerchamber,
+			/area/station/science/xenobiology/cell,
 			/area/station/solars,
 		))
 
