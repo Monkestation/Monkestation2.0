@@ -48,7 +48,7 @@ export const OreRedemptionMachine = (props) => {
                       <LabeledList.Item label="Name">
                         {user?.name || 'No Name Detected'}
                       </LabeledList.Item>
-                      <LabeledList.Item label="Balance">
+                      <LabeledList.Item label="Point Balance">
                         {user?.cash || 'No Balance Detected'}
                       </LabeledList.Item>
                     </LabeledList>
