@@ -515,8 +515,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
 		return FALSE
 	// don't count admins mucking around on centcom or whatever
-	var/area/antag_area = get_area(antag_mob)
-	if(is_type_in_typecache(antag_area, GLOB.typecache_centcom_areas))
+	if(is_centcom_area(antag_mob))
 		return FALSE
 	return TRUE
 

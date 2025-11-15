@@ -140,8 +140,7 @@
 						drones++
 						continue
 					if(is_centcom_level(checked_mob.z))
-						var/area/mob_area = get_area(checked_mob)
-						if(is_type_in_typecache(mob_area, GLOB.typecache_centcom_areas))
+						if(is_centcom_area(checked_mob))
 							living_skipped++
 							continue
 					living_players++

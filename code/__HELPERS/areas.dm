@@ -347,3 +347,20 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
 				machine.name = replacetext(machine.name, oldtitle, title)
+
+/// Checks to see if the given area is a proper centcom area.
+/// Some antag-related areas are /area/centcom, which are likely not intended by whatever is checking for centcom areas,
+/// so this excludes said areas.
+/proc/is_centcom_area(area/area)
+	var/static/list/blacklist_typecache
+	if(isnull(blacklist_typecache))
+		blacklist_typecache = typecacheof(list(
+			/area/centcom/abductor_ship,
+			/area/centcom/heretic_sacrifice,
+			/area/centcom/syndicate_mothership,
+			/area/centcom/wizard_station,
+		))
+
+	area = get_area(area)
+	return istype(area, /area/centcom) && !is_type_in_typecache(area, blacklist_typecache)
+
