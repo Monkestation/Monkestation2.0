@@ -283,6 +283,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
 		antag_hud.apply_to_new_mob(owner.current)
 
+	if(remove_from_manifest)
+		owner.remove_from_manifest()
+		ADD_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
+
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
@@ -333,6 +337,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	UnregisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED)
 	get_team()?.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
+
+	REMOVE_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
+	if(remove_from_manifest && !HAS_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST))
+		owner?.add_to_manifest()
 
 	// Remove HUDs that they should no longer see
 	if(owner.current)

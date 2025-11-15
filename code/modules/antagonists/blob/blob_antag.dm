@@ -31,8 +31,21 @@
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
 
 /datum/antagonist/blob/on_gain()
+	if(!isovermind(parent))
+		blob_team = new /datum/team/blob(owner)
+	else
+		blob_team = astype(owner.current, /mob/eye/blob)?.antag_team
 	create_objectives()
-	. = ..()
+	return ..()
+
+/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
+	if(isovermind(owner.current))
+		if(!blob_team)
+			blob_team = astype(owner.current, /mob/eye/blob)?.antag_team
+		return FALSE
+	if(!pop_action)
+		pop_action = new
+	pop_action.Grant(owner.current)
 
 /datum/antagonist/blob/remove_innate_effects()
 	QDEL_NULL(pop_action)
@@ -47,13 +60,6 @@
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
-
-/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
-	if(isovermind(owner.current))
-		return FALSE
-	if(!pop_action)
-		pop_action = new
-	pop_action.Grant(owner.current)
 
 /datum/antagonist/blob/proc/create_objectives()
 	var/datum/objective/blob_takeover/main = new
@@ -126,7 +132,7 @@
 		placement_override = BLOB_RANDOM_PLACEMENT
 		to_chat(owner, span_warning("Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!"))
 
-	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob, blobtag.blob_team)
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
