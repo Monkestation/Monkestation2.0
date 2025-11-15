@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/strain_choices
 
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS, datum/team/blob/blob_team)
-	antag_team = blob_team || new /datum/team/blob(src)
+	antag_team = blob_team || new /datum/team/blob()
 	mind_initialize() //this adds our antag datum, which requires
 	antag_team.add_member(mind) //this must be called right after init however needs mind to be initialized
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)

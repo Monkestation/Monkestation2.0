@@ -36,7 +36,7 @@
 	///List of all our overminds
 	var/list/overminds = list()
 
-/datum/team/blob/New(datum/starting_members)
+/datum/team/blob/New(starting_members)
 	. = ..()
 	set_team_strain(pick(GLOB.valid_blobstrains))
 	START_PROCESSING(SSprocessing, src)
@@ -52,7 +52,7 @@
 		overminds += added_blob
 		added_blob.update_strain()
 		if(!main_overmind && new_member.current.type == /mob/eye/blob)
-			main_overmind = starting_members
+			main_overmind = new_member
 			SSshuttle.registerHostileEnvironment(main_overmind)
 
 /datum/team/blob/remove_member(datum/mind/member)
