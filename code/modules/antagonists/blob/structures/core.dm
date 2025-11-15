@@ -20,13 +20,13 @@
 	acid = 90
 
 /obj/structure/blob/special/core/Initialize(mapload, datum/team/blob/owning_team)
-	. = ..()
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(owning_team)
 		SSpoints_of_interest.make_point_of_interest(src)
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 	AddElement(/datum/element/blocks_explosives)
+	return ..()
 
 /obj/structure/blob/special/core/Destroy()
 	GLOB.blob_cores -= src

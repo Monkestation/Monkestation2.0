@@ -55,20 +55,20 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
 	blob_points = starting_points
+	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	name = new_name
+	real_name = new_name
 	antag_team = blob_team || new /datum/team/blob(src)
+	. = ..()
 	antag_team.add_member(mind)
 	manualplace_min_time += world.time
 	autoplace_max_time += world.time
 	GLOB.overminds += src
-	var/new_name = "[initial(name)] ([rand(1, 999)])"
-	name = new_name
-	real_name = new_name
 	last_attack = world.time
 	color = antag_team.blobstrain.complementary_color
 	if(blob_core)
 		blob_core.update_appearance()
 
-	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
 
