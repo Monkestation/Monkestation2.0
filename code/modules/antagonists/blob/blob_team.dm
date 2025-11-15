@@ -51,8 +51,8 @@
 		var/mob/eye/blob/added_blob = new_member.current
 		overminds += added_blob
 		added_blob.update_strain()
-		if(!main_overmind && new_member.current.type == /mob/eye/blob)
-			main_overmind = new_member
+		if(!main_overmind && added_blob.type == /mob/eye/blob)
+			main_overmind = added_blob
 			SSshuttle.registerHostileEnvironment(main_overmind)
 
 /datum/team/blob/remove_member(datum/mind/member)

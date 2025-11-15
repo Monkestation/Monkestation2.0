@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	return ..()
 
 /datum/blobstrain/proc/on_gain()
-	if(blob_team.main_overmind.blob_core) //only apply core buffs to the main core
+	if(blob_team.main_overmind?.blob_core) //only apply core buffs to the main core
 		var/obj/structure/blob/special/main_core = blob_team.main_overmind.blob_core
 		main_core.claim_range += core_range_bonus
 		main_core.pulse_range += core_range_bonus
