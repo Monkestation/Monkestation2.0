@@ -3,6 +3,8 @@
 /datum/component/speechmod
 	/// Assoc list for strings/regexes and their replacements. Should be lowercase, as case will be automatically changed
 	var/list/replacements = list()
+	/// Assoc list for strings/regexes and their replacements. This is specifically for one time replacement of words.
+	var/list/word_replacements = list()
 	/// String added to the end of the message
 	var/end_string = ""
 	/// Chance for the end string to be applied
@@ -16,11 +18,12 @@
 	/// Any additional checks that we should do before applying the speech modification
 	var/datum/callback/should_modify_speech = null
 
-/datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
+/datum/component/speechmod/Initialize(replacements = list(), word_replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
 	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation))
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacements = replacements
+	src.word_replacements = word_replacements
 	src.end_string = end_string
 	src.end_string_chance = end_string_chance
 	src.slots = slots
@@ -59,13 +62,24 @@
 	if(!isnull(should_modify_speech) && !should_modify_speech.Invoke(source, speech_args))
 		return
 
-	for (var/to_replace in replacements)
-		var/replacement = replacements[to_replace]
+	for(var/to_replace, replacement in replacements)
 		// Values can be lists to be picked randomly from
-		if (islist(replacement))
+		if(islist(replacement))
 			replacement = pick(replacement)
 
-		message = replacetextEx(message, to_replace, replacement)
+		message = replacetext_char(message, to_replace, replacement)
+
+	if(length(word_replacements))
+		var/list/words = splittext_char(message, " ")
+		for(var/i in 1 to length(words))
+			for(var/word_to_replace, word_replacement in word_replacements)
+				if(islist(word_replacement))
+					word_replacement = pick(word_replacement)
+				if(lowertext(word_to_replace) == lowertext(words[i]))
+					words[i] = replacetext_char(words[i], word_to_replace, word_replacement)
+
+		message = jointext(words, " ")
+
 	message = trim(message)
 	if (prob(end_string_chance))
 		message += islist(end_string) ? pick(end_string) : end_string
