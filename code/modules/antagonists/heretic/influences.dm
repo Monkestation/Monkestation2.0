@@ -64,9 +64,16 @@
 			if(!length(chosen_group))
 				turf_groups.Cut(idx, idx + 1)
 
+			// gotta make sure we're an open, floor turf
 			if(chosen_location.density || isgroundlessturf(chosen_location))
 				continue
 
+			// make sure it's got at least 3x3 open space
+			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
+				if(!isopenturf(nearby_turf))
+					continue main_loop
+
+			// ensure there's no dense objects on the turf
 			for(var/obj/checked_object in chosen_location)
 				if(checked_object.density)
 					continue main_loop
