@@ -247,3 +247,14 @@
   - rscadd: Added new mechanics or
   - refactor: refactored the swedish quirk to be a subtype of a parent along with
       scottish.
+2025-11-14:
+  Absolucy:
+  - rscadd: You can now buy an Astral Carpet Crate from a hacked cargo console for
+      2000 credits, containing carpets with a beautifully convincing star pattern.
+  SirNightKnight:
+  - bugfix: fixed some inconsistency with the riot helmet worn sprite.
+2025-11-15:
+  SirNightKnight:
+  - bugfix: fixed carboard jamming on interact
+  notghosti:
+  - bugfix: NODE Drones no longer freeze to death on Icebox
