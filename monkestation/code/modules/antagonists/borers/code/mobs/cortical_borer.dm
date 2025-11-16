@@ -197,8 +197,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// How much health you gain per level
 	var/health_per_level = 2.5
-	/// How much health regen you gain per level
-	var/health_regen_per_level = 0.002
+	/// How much health regen you gain per level. Before further upgrades brings borers up to 170 seconds to full heal at level 100, limit is 208 seconds
+	var/health_regen_per_level = 0.012
 
 	/// How much more chemical storage you gain per level
 	var/chem_storage_per_level = 20
@@ -224,8 +224,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	/// What the host gains or loses with the borer
 	var/list/hosts_abilities = list()
 
-	/// How much health we regen per second while in a host (scales with max health) CODER NOTE: The value was 10.02 before. Assuming the first health_regen_per_level should be added to this. (0.002 as of now, so 0.102 instead of 0.1)
-	var/health_regen = 0.102
+	/// How much health we regen per second while in a host. Starts at a 60 seconds to fully to heal. A complete organ manipulation surgery takes 19.8 seconds to compelte with perfect timing to remove a borer
+	var/health_regen = 0.415
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	//this is regenerating health
 	if(health < maxHealth)
 		if(!(upgrade_flags & BORER_STEALTH_MODE))
-			adjustBruteLoss(maxHealth * -health_regen * seconds_per_tick)
+			adjustBruteLoss(-health_regen * seconds_per_tick)
 
 	//this is so they can evolve
 	mature()
@@ -476,6 +476,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
 	if(borer_organ)
 		borer_organ.Remove(human_host)
+
+	bodytemp_heat_damage_limit = initial(bodytemp_heat_damage_limit) //reset body tempature
+	bodytemp_cold_damage_limit = initial(bodytemp_cold_damage_limit)
 	forceMove(human_host.drop_location())
 	human_host = null
 
