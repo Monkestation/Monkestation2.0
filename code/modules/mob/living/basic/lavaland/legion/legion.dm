@@ -64,8 +64,10 @@
 
 /mob/living/basic/mining/legion/death(gibbed)
 	if (isnull(stored_mob))
-		for(var/obj/item/organ/internal/brain/slime in contents) // If oozeling brain in contents eject instead of corpse.
+		var/obj/item/organ/internal/brain/slime = locate() in contents
+		if(slime) // If oozeling brain in contents eject instead of corpse.
 			slime.forceMove(get_turf(slime))
+			REMOVE_TRAIT(slime, TRAIT_NO_ORGAN_DECAY, REF(src))
 			return ..()
 		new corpse_type(loc)
 	return ..()
@@ -80,10 +82,15 @@
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
 	name = consumed.real_name
+	copy_voice_from(consumed)
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
-	consumed.fully_heal(HEAL_DAMAGE)
+	if(HAS_TRAIT(consumed, TRAIT_REVIVES_BY_HEALING)) // if they revive by healing, only heal them back up to 0 hp
+		if(consumed.health < 0)
+			consumed.heal_ordered_damage(abs(consumed.health), list(BRUTE, BURN, TOX, OXY, CLONE))
+	else
+		consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
 	consumed.forceMove(src)
