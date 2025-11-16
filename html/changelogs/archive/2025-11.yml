@@ -258,3 +258,28 @@
   - bugfix: fixed carboard jamming on interact
   notghosti:
   - bugfix: NODE Drones no longer freeze to death on Icebox
+2025-11-16:
+  Absolucy:
+  - bugfix: Fixed the Voltaic Combat Cyberheart killing oozelings.
+  Loiosh42:
+  - balance: Sprint speed somewhat reduced
+  - balance: Debilitation stacks now increase stamina drain from sprinting more
+  kuricityy:
+  - bugfix: Recalls all Syndicate Renoster shotguns for a faulty internal magazine
+      size, as well as being loaded with non lethal rounds. The Syndicate has replaced
+      said faulty internal magazines with proper 8 round magazines loaded with lethal
+      buckshot. The Syndicate apologizes for the inconvenience.
+  notghosti:
+  - rscadd: boulder smelter and refinery are printable from a protolathe
+  - map: Lavaland now starts with a single starter resource vent.
+  - map: Lavaland public and regular mining now have an alternative exit to the eastern
+      area.
+  - map: Mining lavaland now has a wardrobe on base
+  - bugfix: Starter mining node's well no longer defies light
+  - qol: Boulder tech now deposits it's ore on the side the machine is facing. Instead
+      of just east
+  - qol: Boulder tech now has examine text for which direction it's facing.
+  - bugfix: Purification chambers now can be multitooled to set the external oxygen
+      tank
+  - bugfix: Purifaction chambers, crushers, enrichment chambers no longer disappear
+      into nonexistence upon being screwdrivered
