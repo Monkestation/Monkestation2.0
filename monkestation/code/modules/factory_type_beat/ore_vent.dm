@@ -73,7 +73,8 @@
 	if(mapload)
 		generate_description()
 	register_context()
-	SSore_generation.possible_vents += src
+	if(!unique_vent)
+		SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
@@ -83,7 +84,7 @@
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
-		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, ABOVE_MOB_LAYER))
+		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED_DEFAULT, PROC_REF(anti_cheese))
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
