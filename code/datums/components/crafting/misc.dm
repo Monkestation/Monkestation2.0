@@ -52,3 +52,13 @@
 	reqs = list(/obj/item/stack/sheet/plastic = 10)
 	tool_behaviors = list(TOOL_WELDER)
 	category = CAT_MISC
+
+/datum/crafting_recipe/sciencevog
+	name = "Compulsive Linguisynthesizer"
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/organ/internal/tongue = 1,
+		/obj/item/assembly/signaler/anomaly/hallucination = 1,
+	)
+	result = /obj/item/organ/internal/vocal_cords/colossus/science
+	category = CAT_MISC
