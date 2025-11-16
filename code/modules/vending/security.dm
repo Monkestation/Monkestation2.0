@@ -27,6 +27,8 @@
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/storage/fancy/donut_box = 4,
 		/obj/item/melee/flyswatter = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice = 2,
+		/obj/item/clothing/head/helmet/toggleable/justice/escape = 2,
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
