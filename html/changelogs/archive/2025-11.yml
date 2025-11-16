@@ -213,3 +213,59 @@
   notghosti:
   - bugfix: Assault operatives will now only receive one tracking beacon when a keycard
       is extracted
+2025-11-12:
+  Absolucy:
+  - bugfix: You can once again use the Archive of the Kindred to analyze a bloodsucker
+      from across the room as curator, instead of only while directly next to the,
+  - qol: You shouldn't get knocked out by head surgery if you have Glass Jaw.
+  - balance: Slightly reduced the weight of Monster Hunters spawning from 25 to 20.
+  - balance: Whether a "monster" is considered valid prey for a Monster Hunter is
+      now dependent on more than just their existence.
+  - balance: Heretics are valid prey if they have sacrificed anyone, created any minions
+      (ghouls, prophets, sharks, etc), or if they've reached around 75% of their knowledge
+      objective.
+  - balance: Bloodsuckers are valid prey if they have broke the masquerade, made any
+      vassals, or if they've drank at least 250 blood from sentient beings.
+  - balance: Changelings are valid prey if they have absorbed anyone, made any teratomas,
+      or if they've used certain powers (armblade, tentacle, shield, armor, shrieks,
+      transform sting, blind sting, or defib grasp)
+  - balance: 3-person BB teams are now only possible around 10% of the time, as intended.
+  - qol: Roundstart smugglers satchels should be more uniformly distributed now, and
+      hopefully not next to each other quite as often.
+  TheColorCyan:
+  - balance: dance of the brand (blade heretic's riposte) now blocks attacks
+2025-11-13:
+  Absolucy:
+  - qol: You no longer need to awkwardly insert two half-stacks at a time into construction
+      bags.
+  - qol: Construction bags can now hold floor tiles, neon linings, and ducts.
+  - bugfix: Legions (as in the megafauna) will no longer smash the necropolis chests
+      they drop.
+  Absolucy, ItsTisme:
+  - bugfix: Being revived inside a legion now sets you free.
+  SirNightKnight:
+  - rscadd: Added new mechanics or
+  - refactor: refactored the swedish quirk to be a subtype of a parent along with
+      scottish.
+2025-11-14:
+  Absolucy:
+  - rscadd: You can now buy an Astral Carpet Crate from a hacked cargo console for
+      2000 credits, containing carpets with a beautifully convincing star pattern.
+  SirNightKnight:
+  - bugfix: fixed some inconsistency with the riot helmet worn sprite.
+2025-11-15:
+  SirNightKnight:
+  - bugfix: fixed carboard jamming on interact
+  notghosti:
+  - bugfix: NODE Drones no longer freeze to death on Icebox
+2025-11-16:
+  Loiosh42:
+  - balance: Sprint speed somewhat reduced
+  - balance: Debilitation stacks now increase stamina drain from sprinting more
+  notghosti:
+  - rscadd: boulder smelter and refinery are printable from a protolathe
+  - map: Lavaland now starts with a single starter resource vent.
+  - map: Lavaland public and regular mining now have an alternative exit to the eastern
+      area.
+  - map: Mining lavaland now has a wardrobe on base
+  - bugfix: Starter mining node's well no longer defies light

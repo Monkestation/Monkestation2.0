@@ -221,9 +221,13 @@ monkestation end */
 
 	GLOB.reality_smash_track.add_tracked_mind(owner)
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
+
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current, src)
@@ -713,6 +717,17 @@ monkestation end */
 		return HERETIC_NO_LIVING_HEART
 
 	return HERETIC_HAS_LIVING_HEART
+
+/datum/antagonist/heretic/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(total_sacrifices > 0 || LAZYLEN(monsters_summoned))
+		prey += owner
+		return
+	var/datum/objective/heretic_research/research_objective = locate() in objectives
+	if(research_objective)
+		var/min_research = max(round(research_objective.target_amount * 0.75, 1), 20)
+		if(length(researched_knowledge) >= min_research)
+			prey += owner
 
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
