@@ -260,6 +260,9 @@ ADMIN_VERB(set_dynex_scale, R_FUN, FALSE, "Set DynEx Scale", "Set the scale mult
 ADMIN_VERB(atmos_control, R_DEBUG | R_SERVER, FALSE, "Atmos Control Panel", "Open the atmospherics control panel.", ADMIN_CATEGORY_DEBUG)
 	SSair.ui_interact(user.mob)
 
+ADMIN_VERB(cpu_control, R_DEBUG, FALSE, "Toggle Cpu Controls", "Enables performance debug view", ADMIN_CATEGORY_DEBUG)
+	GLOB.cpu_tracker.toggle_cpu_debug(user)
+
 ADMIN_VERB(reload_cards, R_DEBUG, FALSE, "Reload Cards", "Reload all TCG cards.", ADMIN_CATEGORY_DEBUG)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded.") //MONKE EDIT
