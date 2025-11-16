@@ -391,7 +391,7 @@
 						if(order.charge_on_purchase)
 							reciever_message += " [price] credits have been charged to your bank account"
 						paying_for_this.bank_card_talk(reciever_message)
-						SSeconomy.track_purchase(paying_for_this, price, order.pack.name)
+						SSeconomy.add_audit_entry(paying_for_this, price, order.pack.name)
 						var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 						cargo.adjust_money(price - order.pack.get_cost()) //Cargo gets the handling fee
 

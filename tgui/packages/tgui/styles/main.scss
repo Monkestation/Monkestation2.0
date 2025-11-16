@@ -52,6 +52,7 @@
 @include meta.load-css('./components/ColorSelectBox.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/Accounting.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/ColorPicker.scss');
