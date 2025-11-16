@@ -1254,6 +1254,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"atd" = (
+/obj/machinery/button/door/directional/north{
+	id = "qmprivacy";
+	pixel_x = 6
+	},
+/obj/machinery/button/door/directional/north{
+	id = "qm_warehouse";
+	pixel_x = -6
+	},
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "atl" = (
 /obj/machinery/growing,
 /obj/effect/turf_decal/bot,
@@ -11683,34 +11695,6 @@
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
-"dyf" = (
-/obj/item/radio/intercom/directional/south,
-/obj/machinery/computer/security/telescreen/vault{
-	dir = 8;
-	pixel_x = 26
-	},
-/obj/structure/table/wood,
-/obj/item/clipboard{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/stamp{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/item/stamp/denied{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/stamp/qm{
-	pixel_x = 7;
-	pixel_y = -1
-	},
-/obj/item/paper/carbon,
-/obj/item/paper/carbon,
-/obj/item/pen/fountain,
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "dym" = (
 /obj/machinery/light{
 	dir = 8;
@@ -19284,14 +19268,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"fLw" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet/green,
-/area/station/service/library/upper)
 "fLx" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -7
@@ -23309,6 +23285,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
+"gUr" = (
+/obj/machinery/modular_computer/preset/id,
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "gUJ" = (
 /obj/structure/rack,
 /obj/item/soap{
@@ -30921,6 +30901,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"jeX" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/green,
+/area/station/service/library/upper)
 "jfg" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/food/grown/pumpkin{
@@ -31775,6 +31763,34 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"jta" = (
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/computer/security/telescreen/vault{
+	dir = 8;
+	pixel_x = 26
+	},
+/obj/structure/table/wood,
+/obj/item/clipboard{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/stamp/denied{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/stamp/qm{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/paper/carbon,
+/obj/item/paper/carbon,
+/obj/item/pen/fountain,
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "jtq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -58595,18 +58611,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"rfI" = (
-/obj/machinery/button/door/directional/north{
-	id = "qmprivacy";
-	pixel_x = 6
-	},
-/obj/machinery/button/door/directional/north{
-	id = "qm_warehouse";
-	pixel_x = -6
-	},
-/obj/machinery/pdapainter/supply,
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "rfU" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/cobweb,
@@ -68634,10 +68638,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"tWo" = (
-/obj/machinery/modular_computer/preset/id,
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "tWp" = (
 /turf/closed/wall/r_wall,
 /area/station/science/robotics/mechbay)
@@ -89214,7 +89214,7 @@ iEZ
 rtj
 iRD
 xme
-fLw
+jeX
 saq
 byd
 pXO
@@ -130989,7 +130989,7 @@ sCU
 qFs
 usg
 gxq
-rfI
+atd
 xpn
 wWV
 sGP
@@ -131246,7 +131246,7 @@ tzz
 glq
 iZJ
 rld
-tWo
+gUr
 mtF
 nDX
 def
@@ -131763,7 +131763,7 @@ rld
 rld
 nrr
 uJS
-dyf
+jta
 gxq
 sFT
 mRi
