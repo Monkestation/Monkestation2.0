@@ -236,7 +236,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	explosive_resistance = 20
+	explosive_resistance = 4 //best that crew can get, but naval-grade ones are reinforced
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
@@ -263,10 +263,11 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//MONKESTATION ADDITION - Hull subtype for syndicate r_walls
+//MONKESTATION ADDITION - Hull subtype for syndicate r_walls, has improved explosion resistance
 /turf/closed/wall/r_wall/syndicate/hull
 	name = "hull"
 	desc = "The armored hull of an ominous looking ship."
+	explosive_resistance = 20
 
 /turf/closed/wall/r_wall/syndicate/hull/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
