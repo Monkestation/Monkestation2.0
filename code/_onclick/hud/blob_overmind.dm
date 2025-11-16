@@ -1,4 +1,4 @@
-
+//should refactor this to be actions(?)
 /atom/movable/screen/blob
 	icon = 'icons/hud/blob.dmi'
 	mouse_over_pointer = MOUSE_HAND_POINTER
@@ -174,16 +174,19 @@
 	using.screen_loc = ui_zonesel
 	static_inventory += using
 
+	using = new /atom/movable/screen/blob/node_blob(null, src)
+	using.screen_loc = ui_hand_position(2)
+	static_inventory += using
+
+	if(istype(owner, /mob/eye/blob/lesser))
+		return
+
 	using = new /atom/movable/screen/blob/blobbernaut(null, src)
 	using.screen_loc = ui_belt
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/resource_blob(null, src)
 	using.screen_loc = ui_back
-	static_inventory += using
-
-	using = new /atom/movable/screen/blob/node_blob(null, src)
-	using.screen_loc = ui_hand_position(2)
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/factory_blob(null, src)

@@ -28,17 +28,14 @@
 	return "Will produce a blob spore every few seconds."
 
 /obj/structure/blob/special/factory/creation_action()
-	if(overmind)
-		overmind.factory_blobs += src
+	. = ..()
 
 /obj/structure/blob/special/factory/Destroy()
 	spores_and_zombies = null
 	blobbernaut = null
-	if(overmind)
-		overmind.factory_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/factory/Be_Pulsed()
+/obj/structure/blob/special/factory/be_pulsed()
 	. = ..()
 	if(blobbernaut)
 		return
@@ -47,7 +44,7 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+	var/mob/living/basic/blob_minion/created_spore = blob_team ? blob_team.create_spore(loc) : new(loc)
 	register_mob(created_spore)
 	RegisterSignal(created_spore, COMSIG_BLOB_ZOMBIFIED, PROC_REF(on_zombie_created))
 

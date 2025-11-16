@@ -1,7 +1,9 @@
 // Overmind defines
 
 #define OVERMIND_MAX_POINTS_DEFAULT 100 // Max point storage
-#define OVERMIND_STARTING_POINTS 60 // Points granted upon start
+///Mamimum amount of points a lesser overmind can have
+#define OVERMIND_LESSER_MAX_POINTS_DEFAULT 60
+#define OVERMIND_STARTING_POINTS 80 // Points granted upon start
 #define OVERMIND_STARTING_REROLLS 1 // Free strain rerolls at the start
 #define OVERMIND_STARTING_MIN_PLACE_TIME (1 MINUTES) // Minimum time before the core can be placed
 #define OVERMIND_STARTING_AUTO_PLACE_TIME (6 MINUTES) // After this time, randomly place the core somewhere viable
@@ -20,8 +22,6 @@
 #define BLOB_FIRE_RESIST 1 // Burn damage taken gets multiplied by this value
 #define BLOB_EXPAND_CHANCE_MULTIPLIER 1 // Increase this value to make blobs naturally expand faster
 #define BLOB_REINFORCE_CHANCE 2.5 // The seconds_per_tick chance for cores/nodes to reinforce their surroundings
-#define BLOB_REAGENTATK_VOL 25 // Amount of strain-reagents that get injected when the blob attacks: main source of blob damage
-
 
 // Structure properties
 
@@ -56,7 +56,7 @@
 
 #define BLOB_REGULAR_MAX_HP 25
 #define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile
-#define BLOB_REGULAR_HP_REGEN 1 // Health regenerated when pulsed by a node/core
+#define BLOB_REGULAR_HP_REGEN 2 // Health regenerated when pulsed by a node/core
 
 #define BLOB_STRONG_MAX_HP 150
 #define BLOB_STRONG_HP_REGEN 2
@@ -100,7 +100,6 @@
 #define BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER 20
 #define BLOBMOB_BLOBBERNAUT_DMG_LOWER 4 // Damage dealt with active overmind (most damage comes from strain chems)
 #define BLOBMOB_BLOBBERNAUT_DMG_UPPER 4
-#define BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL 20 // Amounts of strain reagents applied on attack -- basically the main damage stat
 #define BLOBMOB_BLOBBERNAUT_DMG_OBJ 60 // Damage dealth to objects/machines
 #define BLOBMOB_BLOBBERNAUT_HEALING_CORE 0.05 // Percentage multiplier HP restored on Life() when within 2 tiles of the blob core
 #define BLOBMOB_BLOBBERNAUT_HEALING_NODE 0.0125 // Same, but for a nearby node
