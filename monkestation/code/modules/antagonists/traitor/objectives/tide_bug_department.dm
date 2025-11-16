@@ -8,7 +8,7 @@
 	description = "Use the button below to materialize the T1de virus bug within your hand, where you'll then be able to place it in %AREA%. \
 				   One minute after the bug is placed it will randomly open, bolt, and or electrify all airlocks in the department, \
 				   if the bug is destroyed before this, the objective will fail."
-	progression_minimum = 10 MINUTES
+	progression_minimum = 1000000 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(2, 3)
 
@@ -27,7 +27,7 @@
 	var/list/affected_areas
 
 /datum/traitor_objective/tide_bug_department/high_risk_department
-	progression_minimum = 30 MINUTES
+	progression_minimum = 1000000 MINUTES
 	progression_reward = list(15 MINUTES, 20 MINUTES)
 	telecrystal_reward = list(3, 4)
 	valid_departments = list(/datum/job_department/command = /area/station/command,
