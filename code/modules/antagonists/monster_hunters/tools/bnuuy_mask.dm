@@ -20,9 +20,20 @@
 	paradox = new
 	wonderland = new
 
+/obj/item/clothing/mask/cursed_rabbit/Destroy()
+	QDEL_NULL(paradox)
+	QDEL_NULL(wonderland)
+	return ..()
+
 /obj/item/clothing/mask/cursed_rabbit/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(!ishuman(user) || !(slot & ITEM_SLOT_MASK) || !IS_MONSTERHUNTER(user))
+	if(!ishuman(user) || !(slot & ITEM_SLOT_MASK))
+		return
+	if(!IS_MONSTERHUNTER(user)) // Bad idea.
+		user.dropItemToGround(src)
+		to_chat(user, span_userdanger("\The [src] falls out of your hands and onto the floor as you catch a fleeting glimpse of an incomprehensible world beyond this one."))
+		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 75, 150)
+		user.set_hallucinations_if_lower(5 MINUTES)
 		return
 	paradox?.Grant(user)
 	wonderland?.Grant(user)

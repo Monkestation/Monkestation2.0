@@ -58,6 +58,9 @@
 	if(!target.mind)
 		to_chat(user, span_warning("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind..."))
 		return FALSE
+	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
+		to_chat(user, span_warning("[target] doesn't respond to the brainwashing, as if [target.p_their()] mind was completely hardened against any form of influence."))
+		return FALSE
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		to_chat(user, span_boldwarning("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")) // monke edit: make mindshields a bit more obvious.
 		return FALSE

@@ -26,8 +26,8 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	track = EVENT_TRACK_OBJECTIVES
 
 /datum/round_event/wonderlandapocalypse/announce(fake)
-	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_DELTA)
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
+		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 	priority_announce(
 		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
 		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
@@ -38,7 +38,9 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 
 /datum/round_event/wonderlandapocalypse/start()
 	GLOB.wonderland_apocalypse = TRUE
-	SSshuttle.emergency_no_recall = TRUE
+	SSshuttle.admin_emergency_no_recall = TRUE
+	if(!EMERGENCY_AT_LEAST_DOCKED)
+		SSshuttle.emergency.request()
 	for(var/i = 1 to 16)
 		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf_equal_weight(), null, FALSE)
 	for(var/i = 1 to 4)
@@ -75,16 +77,21 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	immortal = TRUE
 	relocations_left = -1
 
-/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan)
-	INVOKE_ASYNC(src, PROC_REF(prepare_area), /datum/dimension_theme/wonderland)
-	return ..()
-
 /obj/effect/anomaly/dimensional/wonderland/relocate()
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
 	var/turf/new_turf = placer.findValidTurf(new_area)
 	src.forceMove(new_turf)
 	prepare_area(new_theme_path = /datum/dimension_theme/wonderland)
+
+/obj/effect/anomaly/dimensional/wonderland/rift
+	lifespan = 90 SECONDS
+	immortal = FALSE
+	relocations_left = 0
+
+// no detonation effect
+/obj/effect/anomaly/dimensional/wonderland/rift/detonate()
+	return
 
 /obj/structure/wonderland_rift
 	name = "Wonderland Door"

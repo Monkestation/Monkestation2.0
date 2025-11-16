@@ -4,8 +4,8 @@
 	icon = 'monkestation/icons/mob/red_rabbit.dmi'
 	icon_state = "red_rabbit"
 
-	health = 500
-	maxHealth = 500
+	health = 2500
+	maxHealth = 2500
 	speed = 5
 	unsuitable_atmos_damage = NONE
 	attack_verb_continuous = "claws"
@@ -30,6 +30,10 @@
 	base_pixel_x = -16
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = INFINITY
+	unsuitable_atmos_damage = 0
+
 	ai_controller = /datum/ai_controller/basic_controller/red_rabbit
 	basic_mob_flags = DEL_ON_DEATH
 
@@ -45,6 +49,7 @@
 /mob/living/basic/red_rabbit/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL)
+	AddComponent(/datum/component/glitching_state)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	hole_power = new
 	rabbit_power = new
@@ -54,3 +59,10 @@
 	hole_power.Grant(src)
 	rabbit_power.Grant(src)
 	spear_power.Grant(src)
+
+/mob/living/basic/red_rabbit/Destroy()
+	QDEL_NULL(hole_power)
+	QDEL_NULL(rabbit_power)
+	QDEL_NULL(cards_power)
+	QDEL_NULL(spear_power)
+	return ..()
