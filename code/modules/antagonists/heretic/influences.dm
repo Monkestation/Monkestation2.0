@@ -56,7 +56,7 @@
 	for(var/heretic_number in 1 to length(tracked_heretics))
 		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
 
-	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache, check_tick = TRUE)
+	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache)
 	main_loop:
 		while((length(smashes) + num_drained) < how_many_can_we_make && length(turf_groups))
 			var/idx = rand(1, length(turf_groups))
