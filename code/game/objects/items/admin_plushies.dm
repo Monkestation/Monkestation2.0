@@ -286,7 +286,24 @@
 /obj/item/toy/plush/admin/veth
 	name = "veth"
 	desc = "It's Veth! Suprisingly not upside down!"
-	icon_state = "veth"
+	icon_state = "veth-2-mask"
+	pet_message = "Veth purrs gently."
+	gender = FEMALE
+	squeak_override = list('sound/effects/slosh.ogg' = 1)
+
+/obj/item/toy/plush/admin/veth/click_alt(mob/living/user)
+	switch(icon_state)
+		if("veth-2-mask")
+			icon_state = "veth-2-nomask"
+			return
+		if("veth-2-nomask")
+			icon_state = "veth"
+			return
+		if("veth")
+			icon_state = "veth-2-mask"
+			return
+	update_appearance()
+
 /datum/loadout_item/plushies/veth
 	name = "Veth Plush"
 	item_path = /obj/item/toy/plush/admin/veth
@@ -586,4 +603,95 @@
 /datum/store_item/plushies/birdion
 	name = "Birdion Plush"
 	item_path = /obj/item/toy/plush/admin/birdion
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/vex
+	name = "\"Snuggle with Standards\" Collectable Plush"
+	desc = "Strangely, you feel like hitting someone with a rock."
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
+	icon_state = "drag"
+	inhand_icon_state = "drag"
+	pet_message = "Vex glares at you. That bitch."
+	gender = FEMALE
+
+/obj/item/toy/plush/admin/vex/click_alt(mob/living/user)
+	switch(icon_state)
+		if("drag")
+			icon_state = "drag-alt"
+			return
+		if("drag-alt")
+			icon_state = "drag2"
+			return
+		if("drag2")
+			icon_state = "drag2-alt"
+			return
+		if("drag2-alt")
+			icon_state = "drag"
+			return
+	update_appearance()
+
+/datum/loadout_item/plushies/vex
+	name = "\"Snuggle with Standards\" Collectable Plush"
+	item_path = /obj/item/toy/plush/admin/vex
+
+/datum/store_item/plushies/vex
+	name = "\"Snuggle with Standards\" Collectable Plush"
+	item_path = /obj/item/toy/plush/admin/vex
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/aster
+	name = "Aster"
+	desc = "Eugh, this asshole?"
+	icon_state = "aster"
+	squeak_override = list(
+		'monkestation/sound/items/aster1.ogg' = 1,
+		'monkestation/sound/items/aster2.ogg' = 1,
+		'monkestation/sound/items/aster3.ogg' = 1,
+		'monkestation/sound/items/aster4.ogg' = 1,
+		'monkestation/sound/items/aster5.ogg' = 1,
+		'monkestation/sound/items/aster6.ogg' = 1,
+		'monkestation/sound/items/aster7.ogg' = 1,
+		'monkestation/sound/items/aster8.ogg' = 1,
+	)
+	gender = MALE
+
+/datum/loadout_item/plushies/aster
+	name = "Aster Plush"
+	item_path = /obj/item/toy/plush/admin/aster
+
+/datum/store_item/plushies/aster
+	name = "Aster Plush"
+	item_path = /obj/item/toy/plush/admin/aster
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/gebor
+	name = "G.E.B.O.R."
+	desc = "One day, a changeling \"Accidentally\" got pushed into a plushie machine, and this happened to be the result!"
+	icon_state = "gebor"
+	squeak_override = list('monkestation/sound/items/gebor.ogg' = 1)
+	gender = FEMALE
+
+/datum/loadout_item/plushies/gebor
+	name = "Gebor Plush"
+	item_path = /obj/item/toy/plush/admin/gebor
+
+/datum/store_item/plushies/gebor
+	name = "Gebor Plush"
+	item_path = /obj/item/toy/plush/admin/gebor
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/plutella
+	name = "Plutella Plush"
+	desc = "A very adorable moff.. Hes also a goober."
+	icon_state = "plutella"
+	gender = NEUTER
+
+/datum/loadout_item/plushies/plutella
+	name = "Plutella Plush"
+	item_path = /obj/item/toy/plush/admin/plutella
+
+/datum/store_item/plushies/plutella
+	name = "Plutella Plush"
+	item_path = /obj/item/toy/plush/admin/plutella
 	item_cost = 7500
