@@ -183,7 +183,6 @@ export const CargoCatalog = (props) => {
   const { self_paid, app_cost } = data;
 
   const supplies = Object.values(data.supplies);
-  const { amount_by_name = [], max_order } = data;
 
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
     'supply',
@@ -290,7 +289,6 @@ export const CargoCatalog = (props) => {
                       fluid
                       tooltip={pack.desc}
                       tooltipPosition="left"
-                      disabled={(amount_by_name[pack.name] || 0) >= max_order}
                       onClick={() =>
                         act('add', {
                           id: pack.id,
@@ -427,7 +425,7 @@ const CartHeader = (props) => {
 
 const CargoCart = (props) => {
   const { act, data } = useBackend();
-  const { requestonly, away, docked, location, can_send, max_order } = data;
+  const { requestonly, away, docked, location, can_send } = data;
   const cart = data.cart || [];
   return (
     <Section fill>
@@ -445,7 +443,7 @@ const CargoCart = (props) => {
                   <RestrictedInput
                     width="40px"
                     minValue={0}
-                    maxValue={max_order}
+                    maxValue={50}
                     value={entry.amount}
                     onEnter={(e, value) =>
                       act('modify', {
@@ -460,7 +458,6 @@ const CargoCart = (props) => {
                 {!!can_send && !!entry.can_be_cancelled && (
                   <Button
                     icon="plus"
-                    disabled={amount_by_name[entry.object] >= max_order}
                     onClick={() =>
                       act('add_by_name', { order_name: entry.object })
                     }
@@ -491,7 +488,7 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                lineHeight: '28px',
+                'line-height': '28px',
                 padding: '0 12px',
               }}
               content="Confirm the order"
