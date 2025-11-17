@@ -1,9 +1,8 @@
 /datum/antagonist/wishgranter
 	name = "\improper Wishgranter Avatar"
-	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	antagpanel_category = "Avatar of the Wishgranter"
+	antagpanel_category = "Avatar of the Wish Granter"
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
 	antag_hud_name = "wishgranter"
 	suicide_cry = "HAHAHAHAHA!!"
@@ -43,7 +42,9 @@
 
 /datum/antagonist/wishgranter/greet()
 	. = ..()
-	to_chat(owner, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
+	to_chat(owner, span_boldwarning("Your head pounds for a moment, feeling as if something incomprehensible from beyond this reality smiles at you..."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner, span_boldnotice("You are the [span_hypnophrase("avatar of the Wish Granter")], and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you."), type = MESSAGE_TYPE_INFO)
+	to_chat(owner, span_userdanger("Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!"), type = MESSAGE_TYPE_INFO)
 	owner.announce_objectives()
 
 /datum/antagonist/wishgranter/apply_innate_effects(mob/living/mob_override)
