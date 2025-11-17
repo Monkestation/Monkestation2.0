@@ -258,7 +258,7 @@
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal = 1,
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
-	)d
+	)
 	access_lists["[ACCESS_CARGO]"] = list(
 		/obj/item/clothing/head/beret/cargo/qm = 1,
 		/obj/item/clothing/head/beret/cargo/qm/alt = 1,
