@@ -1,5 +1,6 @@
+@ -1,567 +0,0 @@
+import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
-
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -8,9 +9,9 @@ import {
   Flex,
   Icon,
   Input,
+  RestrictedInput,
   LabeledList,
   NoticeBox,
-  RestrictedInput,
   Section,
   Stack,
   Table,
@@ -30,11 +31,10 @@ export const Cargo = (props) => {
 };
 
 export const CargoContent = (props) => {
-  const { data } = useBackend();
+  const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 'catalog');
   const { cart = [], requests = [], requestonly } = data;
   const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
-
   return (
     <Box>
       <CargoStatus />
@@ -54,6 +54,13 @@ export const CargoContent = (props) => {
             onClick={() => setTab('requests')}
           >
             Requests ({requests.length})
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="clipboard-list"
+            selected={tab === 'company_import_window'}
+            onClick={() => act('company_import_window')}
+          >
+            Company Imports
           </Tabs.Tab>
           {!requestonly && (
             <>
@@ -99,7 +106,6 @@ const CargoStatus = (props) => {
     requestonly,
     can_send,
   } = data;
-
   return (
     <Section
       title={department}
@@ -158,17 +164,16 @@ const CargoStatus = (props) => {
 const searchForSupplies = (supplies, search) => {
   search = search.toLowerCase();
 
-  const queriedSupplies = sortBy(
+  return flow([
+    (categories) => categories.flatMap((category) => category.packs),
     filter(
-      supplies.flatMap((category) => category.packs),
       (pack) =>
         pack.name?.toLowerCase().includes(search.toLowerCase()) ||
         pack.desc?.toLowerCase().includes(search.toLowerCase()),
     ),
-    (pack) => pack.name,
-  );
-
-  return queriedSupplies.slice(0, 25);
+    sortBy((pack) => pack.name),
+    (packs) => packs.slice(0, 25),
+  ])(supplies);
 };
 
 export const CargoCatalog = (props) => {
@@ -239,6 +244,13 @@ export const CargoCatalog = (props) => {
                       }
                       setSearchText(value);
                     }}
+                    onChange={(e, value) => {
+                      // Allow edge cases like the X button to work
+                      const onInput = e.target?.props?.onInput;
+                      if (onInput) {
+                        onInput(e, value);
+                      }
+                    }}
                   />
                 </Stack.Item>
               </Stack>
@@ -282,6 +294,7 @@ export const CargoCatalog = (props) => {
                       onClick={() =>
                         act('add', {
                           id: pack.id,
+                          amount: 1,
                         })
                       }
                     >
@@ -414,15 +427,7 @@ const CartHeader = (props) => {
 
 const CargoCart = (props) => {
   const { act, data } = useBackend();
-  const {
-    requestonly,
-    away,
-    docked,
-    location,
-    can_send,
-    amount_by_name,
-    max_order,
-  } = data;
+  const { requestonly, away, docked, location, can_send, max_order } = data;
   const cart = data.cart || [];
   return (
     <Section fill>
