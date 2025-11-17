@@ -133,7 +133,7 @@
 		return
 	if(id_card.registered_account == buyer_account || (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
 		if(iscarbon(user))
-		add_fingerprint(user)
+			add_fingerprint(user)
 		locked = !locked
 		user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
 						span_notice("You unlock [src]'s privacy lock."))
