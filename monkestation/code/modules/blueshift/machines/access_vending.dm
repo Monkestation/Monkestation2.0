@@ -7,7 +7,7 @@
 	 * Internal variable to store our access list.
 	 * Done on `build_access_list`, where you set access_list[ACCESS] to a list of items
 	 * that access can purchase. You can also set it as `TRUE`, allowing it to buy any product
-	 * put into the products panel.
+	 * put into the products panel unless behind another access_lists.
 	 */
 	var/list/access_lists
 	/// Boolean on whether we should we auto build our product list.
