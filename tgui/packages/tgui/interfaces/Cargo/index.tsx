@@ -1,5 +1,5 @@
 import { Button, Section, Stack, Tabs } from '../../components';
-import { toTitleCase } from '../../string';
+import { toTitleCase } from 'common/string';
 
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';

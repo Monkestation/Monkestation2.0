@@ -71,6 +71,9 @@ SUBSYSTEM_DEF(economy)
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
 
+	/// Monkestation edit - The mail crate we last generated. Used for Oshan.
+	var/obj/structure/closet/crate/mail/economy/mail_crate
+
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)

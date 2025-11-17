@@ -519,7 +519,7 @@
 				var/list/current_buyer_orders = goodies_by_buyer[order.paying_account] // so we can access the length a few lines down
 				if(!order.pack.goody)
 					price *= 1.1 //TODO make this customizable by the quartermaster
-				else if(LAZYLEN(current_buyer_orders) == 5)
+				else if(LAZYLEN(current_buyer_orders) == CARGO_MAX_ORDER_OSHAN)
 					price += 700
 					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing 700 credit S&H fee.")
 			else
@@ -550,11 +550,11 @@
 		var/distance = get_dist(spawning_turf, picked_point)
 		new_atom.throw_at(picked_point, distance + 4, 2)
 	if(prob(25))
-		var/obj/structure/closet/crate/mail/economy/mail_crate = new()
+		if(!SSeconomy.mail_crate)
+			SSeconomy.mail_crate = new()
 		var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
 		var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 		var/distance = get_dist(spawning_turf, picked_point)
-
-		mail_crate.forceMove(spawning_turf)
-		mail_crate.throw_at(picked_point, distance + 4, 2)
+		SSeconomy.mail_crate.forceMove(spawning_turf)
+		SSeconomy.mail_crate.throw_at(picked_point, distance + 4, 2)
 	currently_sending = FALSE

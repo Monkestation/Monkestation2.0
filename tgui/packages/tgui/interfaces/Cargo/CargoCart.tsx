@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Button,
   Icon,
@@ -10,7 +9,7 @@ import {
 } from '../../components';
 import { formatMoney } from '../../format';
 
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import type { CargoData } from './types';
 
 export function CargoCart(props) {
@@ -59,7 +58,7 @@ function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
   const { can_send, cart = [], max_order } = data;
 
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useSharedState('valid', 'isValid');
 
   if (cart.length === 0) {
     return <NoticeBox>Nothing in cart</NoticeBox>;

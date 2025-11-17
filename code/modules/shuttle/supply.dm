@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
 			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
-				new item.purchase_path(grocery_crate)
+				new item.item_path(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
 	if(!SSshuttle.shopping_list.len)
@@ -173,6 +173,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!empty_turfs.len)
 			break
 
+/* Monkestation removal - Galactic Market hasn't been added.
 		//adjust galactic material market based on the ordered quantities
 		var/datum/supply_pack/custom/minerals/sheets = astype(spawning_order.pack)
 		if(!isnull(sheets))
@@ -186,7 +187,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					continue
 				//some of the orders were adjusted(quantity changed or cancelled) according to the market
 				paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) had the following orders adjusted<br>[orders_adjusted.Join("<br>")]<br>.")
-
+*/
 		price = spawning_order.get_final_cost()
 
 		// department orders EARN money for cargo, not the other way around
@@ -221,7 +222,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(spawning_order.charge_on_purchase)
 				receiver_message += " [price] credits have been charged to your bank account"
 			paying_for_this.bank_card_talk(receiver_message)
-			SSeconomy.add_audit_entry(paying_for_this, price, spawning_order.pack.name)
+			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
 		value += pack_cost
@@ -329,7 +330,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += shuttle_floor
 
-	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+	var/obj/structure/closet/crate/mail/economy/new_create = new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		SSeconomy.mail_crate = new_create
 
 /// Takes a supply pack, returns the amount we currently have on order (or OVER_ORDER_LIMIT if we are over the hardcap on orders of this type)
 /obj/docking_port/mobile/supply/proc/get_order_count(datum/supply_pack/ordering)

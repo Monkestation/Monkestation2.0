@@ -1,5 +1,5 @@
-import { sortBy } from 'es-toolkit';
-import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
+import { sortBy } from 'common/collections';
+import { type Dispatch, type SetStateAction, useMemo } from 'react';
 import {
   BlockQuote,
   Button,
@@ -14,7 +14,7 @@ import {
 import { formatMoney } from '../../format';
 
 import { useBackend, useSharedState } from '../../backend';
-import { SearchBar } from '../common/SearchBar';
+import { SearchBar } from '../Fabrication/SearchBar';
 import { searchForSupplies } from './helpers';
 import type { CargoData, Supply, SupplyCategory } from './types';
 
@@ -27,7 +27,7 @@ export function CargoCatalog(props: Props) {
   const { express } = props;
 
   const supplies = Object.values(data.supplies);
-  const [showContents, setShowContents] = useState('');
+  const [showContents, setShowContents] = useSharedState('tab', 'catalog');
   const [searchText, setSearchText] = useSharedState('search_text', '');
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
     'supply',

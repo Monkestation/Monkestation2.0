@@ -1,5 +1,5 @@
-import { filter } from 'es-toolkit/compat';
-import { flow } from '../../fp';
+import { filter } from 'common/collections';
+import { flow } from 'common/fp';
 
 import type { Supply, SupplyCategory } from './types';
 

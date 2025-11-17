@@ -1,6 +1,6 @@
 import { Button, NoticeBox, Section, Table } from '../../components';
 import { formatMoney } from '../../format';
-import { decodeHtmlEntities } from '../../string';
+import { decodeHtmlEntities } from 'common/string';
 
 import { useBackend } from '../../backend';
 import type { CargoData } from './types';
