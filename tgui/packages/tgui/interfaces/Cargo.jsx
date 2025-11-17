@@ -1,4 +1,3 @@
-@ -1,567 +0,0 @@
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
@@ -351,7 +350,7 @@ const CargoRequests = (props) => {
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
-              {(!requestonly || can_send) && can_approve_requests && (
+              {!!(!requestonly || can_send) && can_approve_requests && (
                 <Table.Cell collapsing>
                   <Button
                     icon="check"

@@ -34,6 +34,9 @@
 	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 
+	/// Monkestation - are we currently_sending to an ocean point?
+	var/currently_sending = FALSE
+
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
 		return FALSE
@@ -127,11 +130,9 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
-			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -147,27 +148,26 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
-			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
+			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
 	data["cart"] = list()
 	for(var/item_id in cart_list)
 		data["cart"] += cart_list[item_id]
 
+
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
 		var/datum/supply_pack/pack = order.pack
-		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id,
-			"account" = order.paying_account?.account_holder || "Cargo Department"
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
-	data["amount_by_name"] = amount_by_name
 
 	return data
 
@@ -178,6 +178,7 @@
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/user = ui.user
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -186,12 +187,15 @@
 			if(SSshuttle.supply_blocked)
 				computer.say(blockade_warning)
 				return
+			if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+				oshan_deliver(params)
+				return TRUE
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
-				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+				user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				usr.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
@@ -210,8 +214,8 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				computer.say("The supply shuttle has been loaned to CentCom.")
-				usr.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				usr.log_message("accepted a shuttle loan event.", LOG_GAME)
+				user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -223,17 +227,17 @@
 
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
-			var/ckey = usr.ckey
+			var/ckey = user.ckey
 			var/mob/living/carbon/human/hwoman
-			if(ishuman(usr))
-				hwoman = usr
+			if(ishuman(user))
+				hwoman = user
 				rank = hwoman.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
-				name = usr.real_name
+			else if(issilicon(user))
+				name = user.real_name
 				rank = "Silicon"
 
-			// Our account that we want to end up paying with. Defaults to the cargo budget!
-			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			// Our account that we want to end up paying with.
+			var/datum/bank_account/account
 			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
 			var/obj/item/card/id/id_card_customer = computer.computer_id_slot?.GetID()
 			if(!id_card_customer)
@@ -254,20 +258,20 @@
 					return
 
 			var/reason = ""
+			var/datum/bank_account/personal_department
 			if((requestonly && !self_paid) || !(computer.computer_id_slot?.GetID()))
-				reason = tgui_input_text(usr, "Reason", name, max_length = MAX_MESSAGE_LEN)
+				reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
 			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
-				var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
+				personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 				if(!(personal_department.account_holder == "Cargo Budget"))
-					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
-					if(!choice)
+					var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
+					if(!dept_choice)
 						return
-					if(choice != "Cargo Budget")
-						account = personal_department
-					name = id_card_customer.registered_account?.account_holder
+					if(dept_choice == "Cargo Budget")
+						personal_department = null
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -279,9 +283,8 @@
 				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 
-			if(!requestonly && !self_paid && ishuman(usr) && !account)
-				var/obj/item/card/id/id_card = computer.computer_id_slot?.GetID()
-				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
+			if(!self_paid)
+				account = personal_department
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
@@ -343,3 +346,56 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
+
+/datum/computer_file/program/budgetorders/proc/oshan_deliver(list/params)
+	currently_sending = TRUE
+	var/list/goodies_by_buyer = list()
+	for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
+		var/price = order.pack.get_cost()
+		if(order.applied_coupon)
+			price *= (1 - order.applied_coupon.discount_pct_off)
+		var/datum/bank_account/paying_for_this = order.paying_account
+		if(!order.department_destination && order.charge_on_purchase)
+			if(order.paying_account) //Someone paid out of pocket
+				var/list/current_buyer_orders = goodies_by_buyer[order.paying_account] // so we can access the length a few lines down
+				if(!order.pack.goody)
+					price *= 1.1 //TODO make this customizable by the quartermaster
+				else if(LAZYLEN(current_buyer_orders) == CARGO_MAX_ORDER_OSHAN)
+					price += 700
+					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing 700 credit S&H fee.")
+			else
+				if(order.paying_account != ACCOUNT_CAR)
+					var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+					cargo.adjust_money(order.pack.get_cost() * 0.1) // give some back for actually getting the crates
+			if(paying_for_this)
+				if(!paying_for_this.adjust_money(-price, "Cargo: [order.pack.name]"))
+					if(order.paying_account)
+						paying_for_this.bank_card_talk("Cargo order #[order.id] rejected due to lack of funds. Credits required: [price]")
+					continue
+		if(order.paying_account)
+			paying_for_this = order.paying_account
+			if(order.pack.goody)
+				LAZYADD(goodies_by_buyer[order.paying_account], order)
+			var/reciever_message = "Cargo order #[order.id] has been launched towards cargo."
+			if(order.charge_on_purchase)
+				reciever_message += " [price] credits have been charged to your bank account"
+			paying_for_this.bank_card_talk(reciever_message)
+			SSeconomy.track_purchase(paying_for_this, price, order.pack.name)
+			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			cargo.adjust_money(price - order.pack.get_cost()) //Cargo gets the handling fee
+		sleep(3 SECONDS)
+		var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
+		var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+		var/obj/structure/closet/crate/new_atom = order.generate(spawning_turf)
+		SSshuttle.shopping_list -= order
+		var/distance = get_dist(spawning_turf, picked_point)
+		new_atom.throw_at(picked_point, distance + 4, 2)
+	if(prob(25))
+		if(!SSeconomy.mail_crate)
+			SSeconomy.mail_crate = new()
+		var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
+		var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+		var/distance = get_dist(spawning_turf, picked_point)
+		SSeconomy.mail_crate.forceMove(spawning_turf)
+		SSeconomy.mail_crate.throw_at(picked_point, distance + 4, 2)
+	currently_sending = FALSE

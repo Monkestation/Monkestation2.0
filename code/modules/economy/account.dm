@@ -144,12 +144,12 @@
 		var/reason_to = "Transfer: From [from.account_holder]"
 		var/reason_from = "Transfer: To [account_holder]"
 
-		if(IS_DEPARTMENTAL_CARD(from))
+		if(IS_DEPARTMENTAL_ACCOUNT(from))
 			reason_to = "Nanotrasen: Salary"
 			reason_from = ""
 
 		if(transfer_reason)
-			reason_to = IS_DEPARTMENTAL_CARD(src) ? "" : transfer_reason
+			reason_to = IS_DEPARTMENTAL_ACCOUNT(src) ? "" : transfer_reason
 			reason_from = transfer_reason
 
 		adjust_money(amount, reason_to)

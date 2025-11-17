@@ -40,15 +40,6 @@
 	/// Monkestation - are we currently_sending to an ocean point?
 	var/currently_sending = FALSE
 
-/obj/machinery/computer/cargo/request
-	name = "supply request console"
-	desc = "Used to request supplies from cargo."
-	icon_screen = "request"
-	circuit = /obj/item/circuitboard/computer/cargo/request
-	can_send = FALSE
-	can_approve_requests = FALSE
-	requestonly = TRUE
-
 /obj/machinery/computer/cargo/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
@@ -57,6 +48,14 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/computer/cargo/request
+	name = "supply request console"
+	desc = "Used to request supplies from cargo."
+	icon_screen = "request"
+	circuit = /obj/item/circuitboard/computer/cargo/request
+	can_send = FALSE
+	can_approve_requests = FALSE
+	requestonly = TRUE
 
 /obj/machinery/computer/cargo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/trade_chip))
@@ -135,7 +134,7 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !!order.paying_account?.add_to_accounts, //number of orders purchased privatly
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
 			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
@@ -285,7 +284,7 @@
 				if(!dept_choice)
 					return
 				if(dept_choice == "Cargo Budget")
-					personal_department = SSeconomy.get_dep_account(cargo_account)
+					personal_department = null
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -383,31 +382,30 @@
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
 				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
-				return TRUE
-			//create the paper from the SSshuttle.shopping_list
-			if(length(SSshuttle.shopping_list))
-				var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
-				requisition_paper.name = "requisition form - [station_time_timestamp()]"
-				var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
-				requisition_text += "<hr/>"
-				requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
-				for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
-					requisition_text += "<b>[order.pack.name]</b></br>"
-					requisition_text += "- Order ID: [order.id]</br>"
-					var/restrictions = SSid_access.get_access_desc(order.pack.access)
-					if(restrictions)
-						requisition_text += "- Access Restrictions: [restrictions]</br>"
-					requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
-					var/paying_account = order.paying_account
-					if(paying_account)
-						requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
-					var/reason = order.reason
-					if(reason)
-						requisition_text += "- Reason Given: [reason]</br>"
-					requisition_text += "</br></br>"
-				requisition_paper.add_raw_text(requisition_text)
-				requisition_paper.color = "#9ef5ff"
-				requisition_paper.update_appearance()
+			else
+				//create the paper from the SSshuttle.shopping_list
+				if(length(SSshuttle.shopping_list))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
+					requisition_paper.name = "requisition form - [station_time_timestamp()]"
+					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
+					requisition_text += "<hr/>"
+					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
+					for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
+						requisition_text += "<b>[order.pack.name]</b></br>"
+						requisition_text += "- Order ID: [order.id]</br>"
+						var/restrictions = SSid_access.get_access_desc(order.pack.access)
+						if(restrictions)
+							requisition_text += "- Access Restrictions: [restrictions]</br>"
+						requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
+						requisition_text += "- Paid by: [order.paying_account?.account_holder || "Cargo"]<br/>"
+						var/reason = order.reason
+						if(reason)
+							requisition_text += "- Reason Given: [reason]</br>"
+						requisition_text += "</br></br>"
+					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.color = "#9ef5ff"
+					requisition_paper.update_appearance()
+
 			ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 			say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 			SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)

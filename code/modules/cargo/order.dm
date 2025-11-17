@@ -113,8 +113,7 @@
 	requisition_text += "Item: [pack.name]<br/>"
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"
-	if(paying_account)
-		requisition_text += "Paid by: [paying_account.account_holder]<br/>"
+	requisition_text += "Paid by: [paying_account?.account_holder || "Cargo"]<br/>"
 	requisition_text += "Rank: [orderer_rank]<br/>"
 	requisition_text += "Comment: [reason]<br/>"
 
@@ -131,8 +130,8 @@
 
 	var/manifest_text = "<h2>[command_name()] Shipping Manifest</h2>"
 	manifest_text += "<hr/>"
+	manifest_text += "Paid for by [owner]<br/>"
 	if(owner && !(owner == "Cargo"))
-		manifest_text += "Direct purchase from [owner]<br/>"
 		manifest_paper.name += " - Purchased by [owner]"
 	manifest_text += "Order[packname?"":"s"]: [id]<br/>"
 	manifest_text += "Destination: [station_name]<br/>"
