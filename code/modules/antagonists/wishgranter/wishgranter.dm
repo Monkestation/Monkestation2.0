@@ -70,8 +70,14 @@
 
 /datum/antagonist/wishgranter/proc/add_wishgranter_overlay(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
-	overlays += mutable_appearance('icons/effects/effects.dmi', "wg_aura")
-	overlays += emissive_appearance('icons/effects/effects.dmi', "wg_aura_e", source)
+	var/mutable_appearance/aura = mutable_appearance('icons/effects/effects.dmi', "wg_aura")
+	var/mutable_appearance/aura_e = emissive_appearance('icons/effects/effects.dmi', "wg_aura_e", source)
+	if(ishuman(source))
+		var/mob/living/carbon/human/human_source = source
+		human_source.apply_height_filters(aura)
+		human_source.apply_height_filters(aura_e)
+	overlays += aura
+	overlays += aura_e
 
 /datum/antagonist/wishgranter/proc/on_examine(mob/living/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
