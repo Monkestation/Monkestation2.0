@@ -35,8 +35,9 @@
 /obj/machinery/vending/access/allow_purchase(mob/living/user, product_path)
 	if(obj_flags & EMAGGED || !onstation)
 		return TRUE
-	. = FALSE
 	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+	if(isnull(user_id))
+		return FALSE
 	var/list/access = user_id.access
 	for(var/acc in access)
 		acc = "[acc]" // U G L Y
@@ -48,6 +49,7 @@
 
 		if(product_path in (access_lists[acc]))
 			return TRUE
+	return FALSE
 
 /// Debug version to verify access checking is working and functional
 /obj/machinery/vending/access/debug
@@ -184,6 +186,62 @@
 		/obj/item/clothing/neck/mantle/hosmantle = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
+
+	access_lists["[ACCESS_QM]"] = list(
+		/obj/item/radio/headset/heads/qm = 1,
+	)
+
+	access_lists["[ACCESS_COMMAND]"] = list(
+		/obj/item/clothing/head/hats/imperial = 5,
+		/obj/item/clothing/head/hats/imperial/grey = 5,
+		/obj/item/clothing/head/hats/imperial/white = 2,
+		/obj/item/clothing/head/hats/imperial/red = 5,
+		/obj/item/clothing/head/hats/imperial/helmet = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/grey = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
+	)
+
+/obj/machinery/vending/access/wardrobe_cargo
+	name = "CargoDrobe"
+	desc = "A highly advanced vending machine for buying cargo related clothing for free."
+	icon_state = "cargodrobe"
+	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
+	vend_reply = "Thank you for using the CargoDrobe!"
+	auto_build_products = TRUE
+
+	panel_type = "panel19"
+	light_mask = "wardrobe-light-mask"
+	products = list(
+		/obj/item/storage/bag/mail = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
+		/obj/item/clothing/under/rank/cargo/tech = 3,
+		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
+		/obj/item/clothing/shoes/sneakers/black = 3,
+		/obj/item/clothing/gloves/fingerless = 3,
+		/obj/item/clothing/head/beret/cargo = 3,
+		/obj/item/clothing/mask/bandana/striped/cargo = 3,
+		/obj/item/clothing/head/soft = 3,
+		/obj/item/radio/headset/headset_cargo = 3,
+	)
+	premium = list(
+		/obj/item/clothing/under/rank/cargo/miner = 3,
+		/obj/item/clothing/head/costume/mailman = 1,
+		/obj/item/clothing/under/misc/mailman = 1,
+	)
+	contraband = list(
+		/obj/item/clothing/under/wonka = 1,
+		/obj/item/clothing/head/wonka = 1,
+		/obj/item/cane = 1,
+	)
+	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
+	payment_department = ACCOUNT_CAR
+
+/obj/item/vending_refill/wardrobe/cargo_wardrobe
+	machine_name = "CargoDrobe"
+
+/obj/machinery/vending/access/wardrobe_cargo/build_access_list(list/access_lists)
 	access_lists["[ACCESS_QM]"] = list(
 		/obj/item/clothing/head/beret/cargo/qm = 1,
 		/obj/item/clothing/head/beret/cargo/qm/alt = 1,
@@ -200,17 +258,21 @@
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal = 1,
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
+	)d
+	access_lists["[ACCESS_CARGO]"] = list(
+		/obj/item/clothing/head/beret/cargo/qm = 1,
+		/obj/item/clothing/head/beret/cargo/qm/alt = 1,
+		/obj/item/clothing/neck/cloak/qm = 1,
+		/obj/item/clothing/neck/mantle/qm = 1,
+		/obj/item/clothing/under/rank/cargo/qm = 1,
+		/obj/item/clothing/under/rank/cargo/qm/skirt = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/gorka = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/turtleneck = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/turtleneck/skirt = 1,
+		/obj/item/clothing/suit/brownfurrich = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/casual = 1,
+		/obj/item/clothing/suit/toggle/jacket/supply/head = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/formal = 1,
+		/obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt = 1,
+		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-
-	access_lists["[ACCESS_COMMAND]"] = list(
-		/obj/item/clothing/head/hats/imperial = 5,
-		/obj/item/clothing/head/hats/imperial/grey = 5,
-		/obj/item/clothing/head/hats/imperial/white = 2,
-		/obj/item/clothing/head/hats/imperial/red = 5,
-		/obj/item/clothing/head/hats/imperial/helmet = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/grey = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
-	)
-
