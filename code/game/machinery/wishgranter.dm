@@ -37,6 +37,8 @@
 		insisting = 0
 
 		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has become the Wishgranter Avatar!")
+		deadchat_broadcast(span_bold(" has become the Wishgranter Avatar!"), span_name("[user.real_name]"), follow_target = user, message_type = DEADCHAT_ANNOUNCEMENT)
 
 		to_chat(user, span_warning("You have a very bad feeling about this."))
 
