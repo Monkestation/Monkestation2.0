@@ -345,9 +345,10 @@
 
 /mob/living/basic/drone/proc/check_yellow_alert()
 	SIGNAL_HANDLER
-	if((SSsecurity_level?.get_current_level_as_number() == SEC_LEVEL_YELLOW) && (GLOB.drone_machine_blacklist_enabled))
-		GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
-	else if (!(GLOB.drone_machine_blacklist_enabled))
+	if(SSsecurity_level?.get_current_level_as_number() == SEC_LEVEL_YELLOW)
+		if(GLOB.drone_machine_blacklist_enabled)
+			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
+	else if (GLOB.drone_machine_blacklist_enabled == FALSE)
 		GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
