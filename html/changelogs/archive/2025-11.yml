@@ -297,6 +297,12 @@
 2025-11-18:
   Absolucy:
   - qol: The Eye of God's rebuke glow effect is yellow once more.
+  - admin: Darkspawn thralls now show up in the admin Check Antagonists panel.
+  - bugfix: Oozeling darkspawn thralls are no longer instantly deconverted upon being
+      revived.
+  - balance: Bolts of nothingness (from a warlock darkspawn's staff) now just deal
+      brute damage against simple/basic mobs.
+  - balance: Bolts of nothingness now pause stamina regeneration when they hit.
   JohnFulpWillard:
   - bugfix: HoP now has shipping access.
   - bugfix: Removed a Citrus from Theseus (there were 2)
@@ -308,9 +314,15 @@
   - bugfix: Fixed an edge case where Nightmares can't spawn on Pubbystation (and potentially
       Heliostation).
   - bugfix: Medbeams are no longer considered guns (for beepsky and honorbound Chaplains).
+  SirNightKnight:
+  - rscadd: added justice helmets to the sectech contraband section
   notghosti:
   - balance: Explorer masks have pepper spray protection
   - balance: Skittish will only lock a locker if you could lock the locker in the
       first place
   - balance: Warlocks staff is no longer considered lethally chambered
   - balance: Cracking a boulder will attempt to mine a new boulder in range.
+  - map: Icebox cargo now has a expanded warehouse, with a Ripley and a cargo loader
+      modsuit. And there's now a starting vent.
+  - balance: Halves the rate of antagonist tokens
+  - bugfix: Satchel + backpack will apply slowdown
