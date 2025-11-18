@@ -445,3 +445,15 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(nearby_turf.blueprint_data)
 			blueprint_data_returned += nearby_turf.blueprint_data
 	return blueprint_data_returned
+
+/proc/noise_turfs_from_zs(z_levels, radius)
+	. = list()
+	if(!islist(z_levels))
+		z_levels = list(z_levels)
+	var/datum/noise_generator/noise = new
+	for(var/z in z_levels)
+		var/list/points = noise.poisson_disk_sampling(1, world.maxx, 1, world.maxy, radius)
+		for(var/list/point as anything in points)
+			var/turf/turf = locate(point[1], point[2], z)
+			if(turf)
+				. += turf
