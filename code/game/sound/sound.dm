@@ -201,6 +201,30 @@
 			var/mob/M = m
 			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S)
 
+/proc/play_soundtrack_music(var/datum/soundtrack_song/song, list/hearers = null, volume = 80, ignore_prefs = FALSE, play_to_lobby = FALSE, allow_deaf = TRUE, only_station = FALSE)
+	var/sound/S = sound(initial(song.file), volume=volume, wait=0, channel=CHANNEL_AMBIENT_MUSIC)
+	. = S
+	if(!hearers)
+		hearers = GLOB.player_list
+	for(var/mob/M as() in hearers)
+
+		if (!ismob(M))
+			continue
+		if (!ignore_prefs && !(M.client?.prefs?.toggles & SOUND_AMBIENCE))
+			continue
+		if (!play_to_lobby && isnewplayer(M))
+			continue
+		if (!allow_deaf && !M.can_hear())
+			continue
+		if (only_station && !is_station_level(M.z))
+			continue
+		SEND_SOUND(M, S)
+	GLOB.soundtrack_this_round |= song
+
+/proc/stop_soundtrack_music()
+	for(var/mob/M as() in GLOB.player_list)
+		M?.stop_sound_channel(CHANNEL_AMBIENT_MUSIC)
+
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music_done) //wait for SSticker init to set the login music // monkestation edit: fix-lobby-music
