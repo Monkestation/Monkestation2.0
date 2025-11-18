@@ -61089,9 +61089,9 @@
 /area/station/hallway/secondary/entry)
 "otJ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/flasher/portable,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/west,
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "otU" = (
@@ -95547,7 +95547,19 @@
 	pixel_x = 3
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/closet/secure_closet/armory_kiboko,
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 6;
+	pixel_y = -7
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wBF" = (

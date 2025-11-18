@@ -207,7 +207,7 @@
 
 /// Generic proc that is called when the projectile should 'detonate', being either on impact or when the range runs out
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
-playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	explosion(target, flash_range = 1, adminlog = FALSE, explosion_cause = src)
 	do_sparks(rand(3, 5), FALSE, src)
 

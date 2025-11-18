@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
-	select_name = "kill" /obj/projectile/beam/laser/sidearm
+	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/sidearm
 	projectile_type = /obj/projectile/beam/laser/sidearm
