@@ -201,18 +201,10 @@
 		new /datum/pollution(to_assert)
 
 /datum/pollution/proc/handle_overlay()
-	if(managed_overlay)
-		qdel(managed_overlay)
-	managed_overlay = get_overlay(pollutants, total_amount)
-	if(managed_overlay)
-		managed_overlay.forceMove(my_turf)
-
-///Probably the most costly thing happening here
-/datum/pollution/proc/get_overlay(list/pollutant_list, total_amount)
 	var/datum/pollutant/pollutant
 	var/total_thickness
-	if(length(pollutant_list) == 1)
-		pollutant = SSpollution.singletons[pollutant_list[1]]
+	if(length(pollutants) == 1)
+		pollutant = SSpollution.singletons[pollutants[1]]
 		if(!(pollutant.pollutant_flags & POLLUTANT_APPEARANCE))
 			return
 		total_thickness = total_amount * pollutant.thickness
@@ -220,11 +212,11 @@
 		var/list/pollutant_cache = SSpollution.singletons
 		var/datum/pollutant/iterated_pollutant
 		var/calc_thickness
-		for(var/pollutant_type in pollutant_list)
+		for(var/pollutant_type in pollutants)
 			iterated_pollutant = pollutant_cache[pollutant_type]
 			if(!(iterated_pollutant.pollutant_flags & POLLUTANT_APPEARANCE))
 				continue
-			calc_thickness = pollutant_list[pollutant_type] * iterated_pollutant.thickness
+			calc_thickness = pollutants[pollutant_type] * iterated_pollutant.thickness
 			if(!pollutant || calc_thickness > total_thickness)
 				pollutant = iterated_pollutant
 				total_thickness = calc_thickness
@@ -232,10 +224,11 @@
 	if(!total_thickness || total_thickness < POLLUTANT_APPEARANCE_THICKNESS_THRESHOLD)
 		return
 
-	var/obj/effect/abstract/pollution/overlay = new
-	overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
-	overlay.color = pollutant.color
-	return overlay
+	if(!managed_overlay)
+		managed_overlay = new/obj/effect/abstract/pollution(my_turf)
+
+	managed_overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
+	managed_overlay.color = pollutant.color
 
 ///Atmos adjacency has been updated on this turf, see if it affects any of our pollutants
 /turf/proc/update_adjacent_pollutants()
