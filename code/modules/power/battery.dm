@@ -1,9 +1,10 @@
 /obj/item/stock_parts/power_store/battery
 	name = "megacell"
 	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard power cell."
-	icon = 'icons/obj/machines/cell_charger.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "cellbig"
 	cell_size_prefix = "cellbig"
+	connector_type = "cellbig-standard"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

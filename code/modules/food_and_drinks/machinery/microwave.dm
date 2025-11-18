@@ -31,6 +31,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_OFFLINE
 	interaction_flags_click = ALLOW_SILICON_REACH
 	var/held_state = "microwave_standard"
 	/// Is its function wire cut?
@@ -43,8 +44,6 @@
 	/// How dirty is it?
 	var/dirty = 0
 	var/dirty_anim_playing = FALSE
-	var/dont_eject_after_done = FALSE
-	var/can_eject = TRUE
 	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
 	/// Microwave door position
@@ -115,7 +114,7 @@
 	return ..()
 
 /obj/machinery/microwave/on_deconstruction()
-	eject(force = TRUE)
+	eject()
 	return ..()
 
 /obj/machinery/microwave/Destroy()
@@ -123,8 +122,8 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	remove_shared_particles(/particles/smoke)
-	if(!isnull(cell))
-		QDEL_NULL(cell)
+	if(cell)
+		cell = null
 	return ..()
 
 /obj/machinery/microwave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -399,7 +398,7 @@
 	return ..()
 
 /obj/machinery/microwave/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(operating)
+	if(operating || panel_open)
 		return NONE
 
 	if(item.item_flags & ABSTRACT)
@@ -440,7 +439,7 @@
 		return NONE
 
 	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
-		balloon_alert(user, "max 1 device!")
+		balloon_alert(user, "max one device!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(item.w_class <= WEIGHT_CLASS_NORMAL && !(user.istate & ISTATE_HARM) && isnull(item.atom_storage))
@@ -527,11 +526,11 @@
 
 // Shamelessly copied from code\modules\recycling\disposal\bin.dm
 /obj/machinery/microwave/relaymove(mob/living/user, direction)
-	eject(force=TRUE)
+	eject()
 
 // Shamelessly copied from code\modules\recycling\disposal\bin.dm
 /obj/machinery/microwave/container_resist_act(mob/living/user)
-	eject(force=TRUE)
+	eject()
 
 /obj/machinery/microwave/mouse_drop_receive(obj/item/tool, mob/user, params)
 	if(isliving(tool))
@@ -606,9 +605,6 @@
 
 	switch(choice)
 		if("eject")
-			if(!can_eject)
-				balloon_alert(user, "the lock is stuck!")
-				return
 			eject()
 		if("cook")
 			vampire_charging_enabled = FALSE
@@ -628,15 +624,13 @@
 	update_appearance()
 	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
-/obj/machinery/microwave/proc/eject(force)
-	if (!can_eject && !force)
-		return
+/obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
-	for(var/obj/item/item_ingredient as anything in ingredients)
-		item_ingredient.forceMove(drop_loc)
-		item_ingredient.dropped() //Mob holders can be on the ground if we don't do this
 	for(var/atom/movable/movable_ingredient as anything in ingredients)
 		movable_ingredient.forceMove(drop_loc)
+		if(isitem(movable_ingredient))
+			var/obj/item/item_ingredient = movable_ingredient
+			item_ingredient.dropped() //Mob holders can be on the ground if we don't do this
 	open(autoclose = 1.4 SECONDS)
 
 /obj/machinery/microwave/proc/start_cycle(mob/user)
@@ -796,7 +790,7 @@
 
 	if((machine_stat & NOPOWER) && operating)
 		pre_fail()
-		eject(force = TRUE)
+		eject()
 
 /**
  * Called when the cook_loop is done successfully, no dirty mess or whatever
@@ -813,21 +807,14 @@
 
 	var/cursed_chef = cooker && HAS_TRAIT(cooker, TRAIT_CURSED)
 	var/metal_amount = 0
-	var/shouldnt_open = FALSE
-	var/dont_eject = FALSE
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
 		if(sigreturn & COMPONENT_MICROWAVE_SUCCESS)
-			var/should_dirty = !(sigreturn & COMPONENT_MICROWAVE_DONTDIRTY)
 			if(isstack(cooked_item))
 				var/obj/item/stack/cooked_stack = cooked_item
-				if(should_dirty) dirty += cooked_stack.amount
+				dirty += cooked_stack.amount
 			else
-				if(should_dirty) dirty++
-		if(sigreturn & COMPONENT_MICROWAVE_DONTEJECT)
-			dont_eject = TRUE
-		if(sigreturn & COMPONENT_MICROWAVE_DONTOPEN)
-			shouldnt_open = TRUE
+				dirty++
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
@@ -841,10 +828,8 @@
 		broken = REALLY_BROKEN
 		if(prob(max(metal_amount / 2, 33)))
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
-	else if(!dont_eject)
-		dump_inventory_contents()
 
-	after_finish_loop(dontopen = shouldnt_open)
+	after_finish_loop()
 
 /obj/machinery/microwave/proc/pre_fail()
 	broken = REALLY_BROKEN
@@ -864,14 +849,11 @@
 
 	after_finish_loop()
 
-/obj/machinery/microwave/proc/after_finish_loop(dontopen)
+/obj/machinery/microwave/proc/after_finish_loop()
 	set_light(l_on = FALSE)
 	soundloop.stop()
-	if(!dontopen)
-		eject()
-		open(autoclose = 2 SECONDS)
-	else
-		update_appearance()
+	eject()
+	open(autoclose = 2 SECONDS)
 
 /obj/machinery/microwave/proc/open(autoclose = 2 SECONDS)
 	open = TRUE
@@ -906,6 +888,9 @@
 	charge_loop(vampire_charge_amount, cooker = cooker)
 
 /obj/machinery/microwave/proc/charge(mob/cooker)
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+
 	if(!vampire_charging_capable)
 		balloon_alert(cooker, "needs upgrade!")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -917,6 +902,11 @@
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		return
+
+	if(cell_powered && !cell?.charge)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		balloon_alert(cooker, "no power draw!")
 		return
 
 	// We should only be charging PDAs
@@ -942,7 +932,12 @@
 		pre_fail()
 		return
 
-	if(!vampire_charge_amount || !length(ingredients) || isnull(cell) || !cell.charge || vampire_charge_amount < 25)
+	if(cell_powered && !cell?.charge)
+		vampire_cell = null
+		charge_loop_finish(cooker)
+		return
+
+	if(!vampire_charge_amount || !length(ingredients) || vampire_charge_amount < 25)
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return
@@ -966,7 +961,7 @@
 	. = ..()
 	if((machine_stat & NOPOWER) && operating)
 		pre_fail()
-		eject(force = TRUE)
+		eject()
 
 /**
  * Called when the charge_loop is done successfully, no dirty mess or whatever

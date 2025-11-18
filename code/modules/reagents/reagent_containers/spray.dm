@@ -16,8 +16,8 @@
 	throw_range = 7
 	var/stream_mode = FALSE //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
-	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
-	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
+	var/spray_range = 1 //the range of tiles the sprayer will reach when in spray mode.
+	var/stream_range = 3 //the range of tiles the sprayer will reach when in stream mode.
 	var/can_fill_from_container = TRUE
 	/// Are we able to toggle between stream and spray modes, which change the distance and amount sprayed?
 	var/can_toggle_range = TRUE
@@ -115,10 +115,11 @@
 	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
 /obj/item/reagent_containers/spray/item_ctrl_click(mob/user)
-	toggle_stream_mode(user)
+	if(loc == user)
+		toggle_stream_mode(user)
 
 /obj/item/reagent_containers/spray/proc/toggle_stream_mode(mob/user)
-	if(stream_range == spray_range || !stream_range || !spray_range || possible_transfer_amounts.len > 2 || !can_toggle_range)
+	if(!stream_range || !spray_range || possible_transfer_amounts.len > 2 || !can_toggle_range)
 		return
 	stream_mode = !stream_mode
 	if(stream_mode)
@@ -126,7 +127,7 @@
 	else
 		current_range = spray_range
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	balloon_alert(user, "nozzle setting: [stream_mode ? "\"stream\"":"\"spray\""]")
+	balloon_alert(user, "nozzle setting [stream_mode ? "stream":"spray"]")
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
 /obj/item/reagent_containers/spray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -423,8 +424,8 @@
 	inhand_icon_state = "sprayer_sus"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	spray_range = 4
-	stream_range = 2
+	spray_range = 2
+	stream_range = 4
 	volume = 100
 	custom_premium_price = PAYCHECK_COMMAND * 2
 
