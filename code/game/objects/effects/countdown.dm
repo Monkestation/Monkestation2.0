@@ -98,7 +98,10 @@
 	if(!istype(N))
 		return
 	else if(N.timing)
-		return round(N.get_time_left(), 1)
+		var/time = round(N.get_time_left(), 1)
+		if(time = 90)
+			play_soundtrack_music(/datum/soundtrack_song/bee/countdown, only_station = TRUE)
+		return time
 
 //MONKESTATION EDIT START
 /obj/effect/countdown/nukedisk

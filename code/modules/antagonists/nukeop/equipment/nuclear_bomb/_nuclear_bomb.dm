@@ -491,7 +491,7 @@ GLOBAL_VAR(station_nuke_source)
 	detonation_timer = world.time + (timer_set * 10)
 	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
 		nuke_pointer.switch_mode_to(TRACK_INFILTRATOR)
-	if(timer_set == 900)
+	if(timer_set == 90)
 		countdown_music = play_soundtrack_music(/datum/soundtrack_song/bee/countdown, only_station = TRUE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
