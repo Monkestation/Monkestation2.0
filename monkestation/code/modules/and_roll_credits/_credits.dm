@@ -18,14 +18,6 @@
 
 	var/count = 0
 
-	if(GLOB.soundtrack_this_round.len)
-			GLOB.end_titles += "<center><h1>Music Credits</h1>"
-			for(var/song_path in GLOB.soundtrack_this_round)
-				var/datum/soundtrack_song/song = song_path
-				GLOB.end_titles += "<center><h2>[sanitize(initial(song.artist))] - \"[sanitize(initial(song.title))]\" ([sanitize(initial(song.album))])</h2>"
-			GLOB.end_titles += "<br>"
-			GLOB.end_titles += "<br>"
-
 	for(var/credit in SScredits.credit_order)
 		if(istype(credit, /obj/effect/title_card_object)) //huge image sleep
 			sleep(CREDIT_SPAWN_SPEED * 3.3)

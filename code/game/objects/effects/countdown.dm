@@ -99,7 +99,7 @@
 		return
 	else if(N.timing)
 		var/time = round(N.get_time_left(), 1)
-		if(time = 90)
+		if(time == 90)
 			play_soundtrack_music(/datum/soundtrack_song/bee/countdown, only_station = TRUE)
 		return time
 

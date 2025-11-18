@@ -202,15 +202,13 @@
 			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S)
 
 /proc/play_soundtrack_music(var/datum/soundtrack_song/song, list/hearers = null, volume = 80, ignore_prefs = FALSE, play_to_lobby = FALSE, allow_deaf = TRUE, only_station = FALSE)
-	var/sound/S = sound(initial(song.file), volume=volume, wait=0, channel=CHANNEL_AMBIENT_MUSIC)
+	var/sound/S = sound(initial(song.file), volume=volume, wait=0, channel=CHANNEL_AMBIENCE)
 	. = S
 	if(!hearers)
 		hearers = GLOB.player_list
 	for(var/mob/M as() in hearers)
 
 		if (!ismob(M))
-			continue
-		if (!ignore_prefs && !(M.client?.prefs?.toggles & SOUND_AMBIENCE))
 			continue
 		if (!play_to_lobby && isnewplayer(M))
 			continue
@@ -223,7 +221,7 @@
 
 /proc/stop_soundtrack_music()
 	for(var/mob/M as() in GLOB.player_list)
-		M?.stop_sound_channel(CHANNEL_AMBIENT_MUSIC)
+		M?.stop_sound_channel(CHANNEL_AMBIENCE)
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
