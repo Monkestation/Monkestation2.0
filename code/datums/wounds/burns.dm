@@ -12,7 +12,7 @@
 
 /datum/wound/burn/wound_injury(datum/wound/old_wound, attack_direction)
 	if(!old_wound && limb.current_gauze && (wound_flags & ACCEPTS_GAUZE))
-		qdel(limb.remove_gauze())
+		limb.remove_gauze()
 		// oops your existing gauze got burned, need a new one now
 		var/obj/effect/decal/cleanable/ash/ash = new(limb.drop_location())
 		ash.desc += " It looks like it used to be some kind of bandage."
@@ -26,7 +26,7 @@
 
 	default_scar_file = FLESH_SCAR_FILE
 
-	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
+	treatable_by = list(/obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal) // sterilizer and alcohol will require reagent treatments, coming soon
 
 	// Flesh damage vars
 	/// How much damage to our flesh we currently have. Once both this and infestation reach 0, the wound is considered healed
@@ -232,16 +232,13 @@
 */
 
 /// if someone is using ointment or mesh on our burns
-/datum/wound/burn/flesh/proc/ointmentmesh(obj/item/stack/medical/I, mob/user)
+/datum/wound/burn/flesh/proc/treat_burn_flesh_wound(obj/item/stack/medical/I, mob/user)
 	user.visible_message(span_notice("[user] begins applying [I] to [victim]'s [limb.plaintext_zone]..."), span_notice("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
 	if (I.amount <= 0)
 		return TRUE
-	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!I.try_heal(victim, user, TRUE))
 		return TRUE
-
-	limb.heal_damage(I.heal_brute, I.heal_burn)
 	user.visible_message(span_green("[user] applies [I] to [victim]."), span_green("You apply [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
-	I.use(1)
 	sanitization += I.sanitization
 	flesh_healing += I.flesh_regeneration
 
@@ -266,14 +263,14 @@
 	return TRUE
 
 /datum/wound/burn/flesh/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical/ointment))
-		return ointmentmesh(I, user)
-	else if(istype(I, /obj/item/stack/medical/mesh))
-		var/obj/item/stack/medical/mesh/mesh_check = I
-		if(!mesh_check.is_open)
-			to_chat(user, span_warning("You need to open [mesh_check] first."))
-			return
-		return ointmentmesh(mesh_check, user)
+	if(istype(I, /obj/item/stack/medical))
+		var/obj/item/stack/medical/medical_item = I
+		if(istype(I, /obj/item/stack/medical/mesh))
+			var/obj/item/stack/medical/mesh/mesh_check = I
+			if(!mesh_check.is_open)
+				to_chat(user, span_warning("You need to open [mesh_check] first."))
+				return
+		return treat_burn_flesh_wound(medical_item, user)
 	else if(istype(I, /obj/item/flashlight/pen/paramedic))
 		return uv(I, user)
 
@@ -347,7 +344,7 @@
 	damage_multiplier_penalty = 1.2
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
+	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
@@ -378,7 +375,7 @@
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/flesh/critical
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
+	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"

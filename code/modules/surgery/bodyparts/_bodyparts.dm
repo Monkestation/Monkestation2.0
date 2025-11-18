@@ -161,7 +161,7 @@
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/current_gauze
+	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
@@ -602,6 +602,10 @@
 	if(burn)
 		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
+
+	// gauze on the limb will be knocked off based on damage taken
+	if(!forced) //probaby got hit by something
+		check_gauze_removal(burn, brute)
 
 	if(owner)
 		if(can_be_disabled)
