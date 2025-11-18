@@ -8268,7 +8268,6 @@
 #include "monkestation\code\modules\ocean_content\fluff\barrier.dm"
 #include "monkestation\code\modules\ocean_content\fluff\base_turf_editor.dm"
 #include "monkestation\code\modules\ocean_content\fluff\breaching_charge.dm"
-#include "monkestation\code\modules\ocean_content\fluff\cargo_driver.dm"
 #include "monkestation\code\modules\ocean_content\fluff\industrial_pipes.dm"
 #include "monkestation\code\modules\ocean_content\fluff\industrial_power_cables.dm"
 #include "monkestation\code\modules\ocean_content\fluff\launching.dm"
