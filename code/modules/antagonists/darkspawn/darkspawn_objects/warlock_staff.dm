@@ -108,6 +108,7 @@
 /obj/item/ammo_casing/magic/darkspawn
 	projectile_type = /obj/projectile/magic/darkspawn
 	firing_effect_type = null
+	harmful = FALSE
 
 /obj/projectile/magic/darkspawn
 	name = "bolt of nothingness"
