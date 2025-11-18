@@ -83,4 +83,4 @@
 
 /datum/antagonist/wishgranter/proc/on_examine(mob/living/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_hierophant("You have a really bad feeling about [source.p_them()]...")
+	examine_text += span_hierophant("The power of a forgotten god flows through [source.p_them()]!")
