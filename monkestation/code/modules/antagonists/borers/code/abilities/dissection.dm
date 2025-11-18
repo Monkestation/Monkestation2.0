@@ -36,6 +36,7 @@
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	cortical_owner.human_host.add_traits(list(TRAIT_BORER_DISSECTION))
 	cortical_owner.dissections++
+	var/turf/borer_turf = get_turf(cortical_owner)
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "Grey Matter Analzyed")
 	StartCooldown()
