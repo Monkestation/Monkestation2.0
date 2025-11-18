@@ -350,6 +350,10 @@
 	else if (!(GLOB.drone_machine_blacklist_enabled))
 		GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 
+/mob/living/basic/drone/proc/set_shy(new_shy)
+	shy = new_shy
+	shy_update()
+
 /mob/living/basic/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 
