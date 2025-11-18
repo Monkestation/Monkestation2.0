@@ -59,10 +59,6 @@
 	else
 		type_rolled = 1
 
-	// lazy way of halving antag token odds
-	if(prob(50) && ISINRANGE(type_rolled, 2, 15))
-		type_rolled = 16
-
 	var/type_string
 	switch(type_rolled)
 		if(1)
