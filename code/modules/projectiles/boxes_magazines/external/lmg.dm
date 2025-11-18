@@ -87,31 +87,31 @@
 
 /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	name = "\improper 6.5mm FMJ drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm FMJ rounds."
+	desc = "A hefty 160 round drum of 6.5mm FMJ rounds."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/evil
-	max_ammo = 120
+	max_ammo = 160
 
 /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
 	name = "\improper 6.5mm UDS drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm Uranium Discarding Sabot rounds. No, NOT depleted uranium. Prepare for your enemies to be irradiated."
+	desc = "A hefty 160 round drum of 6.5mm Uranium Discarding Sabot rounds. No, NOT depleted uranium. Prepare for your enemies to be irradiated."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumPevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce/evil
-	max_ammo = 120
+	max_ammo = 160
 
 /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
 	name = "\improper 6.5mm Inferno drum magazine"
-	desc = "A hefty 120 round drum of 6.5mm inferno rounds. They leave a trail of fire as they fly."
+	desc = "A hefty 160 round drum of 6.5mm inferno rounds. They leave a trail of fire as they fly."
 
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "c65xeno_drumIevil"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary/evil
-	max_ammo = 120
+	max_ammo = 160
 

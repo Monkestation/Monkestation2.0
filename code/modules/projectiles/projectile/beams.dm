@@ -174,10 +174,12 @@
 	impact_type = /obj/effect/projectile/impact/disabler
 	debilitating = TRUE
 	debilitate_mult = 3
+	speed = 0.65 //Just slightly faster than lasers
 
 /obj/projectile/beam/disabler/weak
 	stamina = 15
 	debilitate_mult = 0.5
+	speed = 0.8
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
