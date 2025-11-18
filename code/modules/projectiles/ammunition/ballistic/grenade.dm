@@ -17,8 +17,8 @@
 // Grenades that can be given a range to detonate at by their firing gun
 
 /obj/item/ammo_casing/c980grenade
-	name = ".980 Tydhouer practice grenade"
-	desc = "A large grenade shell that will detonate at a range given to it by the gun that fires it. Practice shells disintegrate into harmless sparks."
+	name = ".980 Tydhouer flashbang grenade"
+	desc = "A large grenade shell that will detonate at a range given to it by the gun that fires it. These shells act like a short-range flashbang."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "980_solid"
 	caliber = CALIBER_980TYDHOUER

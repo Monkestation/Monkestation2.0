@@ -38,7 +38,7 @@
 	item_type = /obj/item/storage/toolbox/guncase/skyrat/empty
 	cost = PAYCHECK_COMMAND * 2
 
-/*
+
 
 // Boxes of non-shotgun ammo
 
@@ -49,18 +49,22 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/peacekeeper_lethal
 	item_type = /obj/item/ammo_box/c9mm
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/peacekeeper_hp
 	item_type = /obj/item/ammo_box/c9mm/hp
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_lethal
 	item_type = /obj/item/ammo_box/c10mm
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_hp
 	item_type = /obj/item/ammo_box/c10mm/hp
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_lethal
 	item_type = /obj/item/ammo_box/c310_cargo_box
@@ -90,6 +94,7 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol35_ripper
 	item_type = /obj/item/ammo_box/c35sol/ripper
 	cost =PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol40
 	item_type = /obj/item/ammo_box/c40sol
@@ -101,6 +106,7 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol40_flame
 	item_type = /obj/item/ammo_box/c40sol/incendiary
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol40_pierce
 	item_type = /obj/item/ammo_box/c40sol/pierce
@@ -116,6 +122,7 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/trappiste585_hollowpoint
 	item_type = /obj/item/ammo_box/c585trappiste/hollowpoint
 	cost = PAYCHECK_CREW * 2
+	contraband = TRUE
 
 // Revolver speedloaders
 
@@ -129,6 +136,7 @@
 
 /datum/armament_entry/company_import/vitezstvi/speedloader/detective_dumdum
 	item_type = /obj/item/ammo_box/c38/dumdum
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/speedloader/detective_bouncy
 	item_type = /obj/item/ammo_box/c38/match
@@ -142,10 +150,10 @@
 /datum/armament_entry/company_import/vitezstvi/shot_shells/slugs
 	item_type = /obj/item/ammo_box/advanced/s12gauge
 
-/* unbalancable for imports without being bloat, maybe we could find a better place for them?
- /datum/armament_entry/company_import/vitezstvi/shot_shells/AP_slugs
+/datum/armament_entry/company_import/vitezstvi/shot_shells/AP_slugs
 	item_type = /obj/item/ammo_box/advanced/s12gauge/apds
-*/
+	cost = PAYCHECK_COMMAND * 4
+
 /datum/armament_entry/company_import/vitezstvi/shot_shells/buckshot
 	item_type = /obj/item/ammo_box/advanced/s12gauge/buckshot
 
@@ -169,13 +177,16 @@
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/flechettes
 	item_type = /obj/item/ammo_box/advanced/s12gauge/flechette
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/hornet_nest
 	item_type = /obj/item/ammo_box/advanced/s12gauge/beehive
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/stardust
 	item_type = /obj/item/ammo_box/advanced/s12gauge/antitide
 	cost = PAYCHECK_COMMAND
+	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/confetti
 	item_type = /obj/item/ammo_box/advanced/s12gauge/honkshot
@@ -196,6 +207,7 @@
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/riot
 	item_type = /obj/item/ammo_box/c980grenade/riot
 
+/*
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/shrapnel
 	item_type = /obj/item/ammo_box/c980grenade/shrapnel
 	contraband = TRUE

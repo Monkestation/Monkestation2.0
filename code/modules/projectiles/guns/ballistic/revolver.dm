@@ -321,9 +321,14 @@
 	suppressor_x_offset = 3
 	w_class = WEIGHT_CLASS_SMALL
 	can_suppress = TRUE
+	fire_delay = 0.6 SECONDS
+	projectile_wound_bonus = 15
+	projectile_damage_multiplier = 1.35
 
 /obj/item/gun/ballistic/revolver/sol/evil
 	pin = /obj/item/firing_pin/implant/pindicate
+	desc = "A small revolver with a comically short barrel and cylinder space for eight .35 Sol Short rounds. This one is painted in black and has a hair trigger."
+	fire_delay = 0.3 SECONDS
 
 /obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
@@ -358,7 +363,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
 	suppressor_x_offset = 5
 	can_suppress = TRUE
-	fire_delay = 1 SECONDS
+	fire_delay = 0.8 SECONDS
 	recoil = 3
 	wield_recoil = 1
 
@@ -391,10 +396,10 @@
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
-	fire_delay = 0.6 SECONDS
+	fire_delay = 0.5 SECONDS
 	recoil = 2
 	wield_recoil = 0.8
-	projectile_damage_multiplier = 1.3
+	projectile_damage_multiplier = 1.1
 
 /obj/item/gun/ballistic/revolver/takbok/blueshield/give_manufacturer_examine()
 	RemoveElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)

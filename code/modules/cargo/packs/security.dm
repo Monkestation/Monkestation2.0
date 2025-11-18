@@ -55,7 +55,7 @@
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/energy/laser = 3)
 	crate_name = "laser crate"
@@ -216,16 +216,16 @@
 	name = "Energy Guns Crate"
 	desc = "Contains two Energy Guns, capable of firing both nonlethal and lethal \
 		blasts of light."
-	cost = CARGO_CRATE_VALUE * 18
+	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/e_gun = 2)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laser_carbine
 	name = "Laser Carbine Crate"
-	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
+	desc = "Contains two laser carbines, capable of rapidly firing weak lasers."
 	cost = CARGO_CRATE_VALUE * 9
-	contains = list(/obj/item/gun/energy/laser/carbine = 3)
+	contains = list(/obj/item/gun/energy/laser/carbine = 2)
 	crate_name = "laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
@@ -331,6 +331,107 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/armory/rifle
+	name = "Sol Autorifle Crate"
+	desc = "For when the enemy only somewhat requires flesh to be displaced by lead. \
+		Contains 2 Carwo-Cawil Autorifles and a single magazine for each"
+	cost = CARGO_CRATE_VALUE * 17.5
+	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle = 2,
+					/obj/item/ammo_box/magazine/c40sol_rifle/standard = 2)
+	crate_name = "autorifle crate"
+
+/datum/supply_pack/security/armory/marksman
+	name = "Sol Marksman Crate"
+	desc = "For accurate lead application. \
+		Contains a single Cawil Marksman rifle and 3 spare magazines."
+	cost = CARGO_CRATE_VALUE * 8
+	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle/marksman/no_mag = 1,
+					/obj/item/ammo_box/magazine/c40sol_rifle = 3)
+	crate_name = "marksman rifle crate"
+
+/datum/supply_pack/security/armory/battlerifle
+	name = "Lanca Heavy Rifle Crate"
+	desc = "For when they are just too far away to use a shotgun. \
+		Contains 2 Lanca marksman rifles and a spare magazine for each."
+	cost = CARGO_CRATE_VALUE * 17.5
+	contains = list(/obj/item/gun/ballistic/automatic/lanca = 2,
+					/obj/item/ammo_box/magazine/lanca = 2)
+	crate_name = "battle rifle crate"
+	contraband = TRUE
+
+/datum/supply_pack/security/armory/lasrifle
+	name = "Heavy Laser Crate"
+	desc = "Contains 2 heavy laser rifles to replace the ones that YOU LOST"
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/sindano = 2)
+	crate_name = "smg crate"
+
+/datum/supply_pack/security/armory/sindano
+	name = "Sindano Submachinegun Crate"
+	desc = "Two entirely proprietary Sindano kits, chambered in .35 Sol Short. Each kit contains three empty magazines and a box each of incapacitator and lethal rounds."
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/sindano = 2,
+	)
+	crate_name = "Sindano Submachinegun Crate"
+
+/datum/supply_pack/security/armory/renoster
+	name = "Renoster Riot Shotgun Crate"
+	desc = "Three Renoster 12ga riot shotguns, with matching bandoliers for each."
+	cost = CARGO_CRATE_VALUE * 17.5
+	contains = list(
+		/obj/item/gun/ballistic/shotgun/riot/sol = 3,
+		/obj/item/storage/belt/bandolier = 3,
+	)
+	crate_name = "Renoster Riot Shotgun Crate"
+
+/datum/supply_pack/security/armory/kiboko
+	name = "Kiboko Grenade Launcher Crate"
+	desc = "Contains a single Kiboko grenade launcher for replacing the one found in the armory, alongside the equipment that comes with it."
+	cost = CARGO_CRATE_VALUE * 30
+	contains = list(
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magless = 1,
+		/obj/item/ammo_box/c980grenade = 2,
+		/obj/item/ammo_box/c980grenade/smoke = 1,
+		/obj/item/ammo_box/c980grenade/riot = 1,
+	)
+	crate_name = "Kiboko Grenade Launcher Crate"
+
+/datum/supply_pack/security/armory/short_mod_laser
+	name = "Modular Laser Carbine Crate"
+	desc = "Five 'Hoshi' modular laser carbines, compact energy weapons that can be rapidly reconfigured into different firing modes."
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(
+		/obj/item/gun/energy/modular_laser_rifle/carbine,
+		/obj/item/gun/energy/modular_laser_rifle/carbine,
+		/obj/item/gun/energy/modular_laser_rifle/carbine,
+		/obj/item/gun/energy/modular_laser_rifle/carbine,
+		/obj/item/gun/energy/modular_laser_rifle/carbine,
+	)
+	crate_name = "\improper Modular Laser Carbine Crate"
+
+/datum/supply_pack/security/armory/big_mod_laser
+	name = "Modular Laser Rifle Crate"
+	desc = "Three 'Hyeseong' modular laser rifles, bulky energy weapons that can be rapidly reconfigured into different firing modes."
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(
+		/obj/item/gun/energy/modular_laser_rifle,
+		/obj/item/gun/energy/modular_laser_rifle,
+		/obj/item/gun/energy/modular_laser_rifle,
+	)
+	crate_name = "\improper Modular Laser Rifle Crate"
+
+/datum/supply_pack/security/armory/bobr
+	name = "Tactical Bóbr Crate"
+	desc = "Two Bóbr shotgun revolvers, with matching Tutel ballistic shields and ammo for each."
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(
+		/obj/item/gun/ballistic/revolver/shotgun_revolver = 2,
+		/obj/item/ammo_box/tacshield/tutel/ = 2,
+		/obj/item/ammo_box/advanced/s12gauge = 2,
+	)
+	crate_name = "Tactical Bóbr Crate"
 
 /datum/supply_pack/security/armory/antitank
 	name = "Disposable Anti-Tank Rocket Crate"

@@ -7194,7 +7194,6 @@
 #include "monkestation\code\modules\blueshift\biogenerator\clothing.dm"
 #include "monkestation\code\modules\blueshift\biogenerator\equipment.dm"
 #include "monkestation\code\modules\blueshift\biogenerator\resources.dm"
-#include "monkestation\code\modules\blueshift\cargo\armory.dm"
 #include "monkestation\code\modules\blueshift\cargo\company_import.dm"
 #include "monkestation\code\modules\blueshift\cargo\deforest.dm"
 #include "monkestation\code\modules\blueshift\cargo\flatpacks.dm"

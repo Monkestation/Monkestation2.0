@@ -36,7 +36,7 @@
 	weapon_weight = WEAPON_HEAVY
 	actions_types = list(/datum/action/item_action/toggle_personality)
 	fire_sound_volume = 50
-	recoil = 0.25 // This isn't enough to mean ANYTHING aside from it jolting your screen the tiniest amount
+	recoil = 0
 	/// What datums of weapon modes can we use?
 	var/list/weapon_mode_options = list(
 		/datum/laser_weapon_mode,

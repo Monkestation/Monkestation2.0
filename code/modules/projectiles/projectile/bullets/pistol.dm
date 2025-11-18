@@ -7,10 +7,11 @@
 
 /obj/projectile/bullet/c9mm/ap
 	name = "9mm armor-piercing bullet"
-	damage = 27
+	damage = 25
 	armour_penetration = 75
 	embedding = null
 	shrapnel_type = null
+	speed = 0.3
 
 /obj/projectile/bullet/c9mm/hp
 	name = "9mm hollow-point bullet"
@@ -21,6 +22,7 @@
 	name = "9mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+	speed = 0.5
 
 
 // 10mm
@@ -33,6 +35,7 @@
 	name = "10mm armor-piercing bullet"
 	damage = 35
 	armour_penetration = 60
+	speed = 0.3
 
 /obj/projectile/bullet/c10mm/hp
 	name = "10mm hollow-point bullet"
@@ -43,14 +46,15 @@
 	name = "10mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
+	speed = 0.5
 
 
 ///.35 sol short, weak crew pistol/smg round
 
-/obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here
+/obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here. Slightly better than .35 auto 'cause CASELESS
 	name = ".35 Sol Short bullet"
 	damage = 15
-	wound_bonus = -5 // Normal bullets are 20
+	wound_bonus = -15
 	bare_wound_bonus = 5
 	embed_falloff_tile = -4
 
@@ -96,22 +100,23 @@
 
 /obj/projectile/bullet/c35sol/pierce // What it says on the tin, AP rounds
 	name = ".35 Sol Short armor piercing bullet"
-	damage = 13
+	damage = 11
 	bare_wound_bonus = -30
-	armour_penetration = 30
+	armour_penetration = 50
+	speed = 0.3
 
 
 ///.585 Trappiste, heavy crew pistol/smg round
 
 /obj/projectile/bullet/c585trappiste
 	name = ".585 Trappiste bullet"
-	damage = 25
+	damage = 305
 	wound_bonus = -10
 
 /obj/projectile/bullet/c585trappiste/incapacitator
 	name = ".585 Trappiste flathead bullet"
 	damage = 9
-	stamina = 35
+	stamina = 50
 	wound_bonus = -20
 	weak_against_armour = TRUE
 	shrapnel_type = null
@@ -120,7 +125,7 @@
 
 /obj/projectile/bullet/c585trappiste/hollowpoint
 	name = ".585 Trappiste hollowhead bullet"
-	damage = 25
+	damage = 30
 	weak_against_armour = TRUE
 	wound_bonus = 10
 	bare_wound_bonus = 20
@@ -130,14 +135,25 @@
 
 /obj/projectile/bullet/c35
 	name = ".35 Auto bullet"
-	damage = 20
-	wound_bonus = -5
+	damage = 15
+	wound_bonus = -10
+	var/biotype_damage_multiplier = 1.5 ///22.5 damage vs mobs, just under 1-shot vs carp
+	var/biotype_we_look_for = MOB_HUMANOID
+
+/obj/projectile/bullet/c35/on_hit(atom/target, blocked, pierce_hit)
+	var/mob/living/target_mob = target
+	if(isliving(target))
+		if(!((target_mob.mob_biotypes & biotype_we_look_for) || ishuman(target_mob) || issilicon(target_mob)))
+			damage *= biotype_damage_multiplier
+	return ..()
 
 /obj/projectile/bullet/c35/rubber
 	name = ".35 Auto rubber bullet"
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
-	damage = 4
-	stamina = 50 // Turns out 35 stamina damage is not good enough.
+	damage = 3
+	stamina = 40 // ~6 shots to drop
 	sharpness = NONE
 	embedding = null
+	debilitating = TRUE
+	debilitate_mult = 1

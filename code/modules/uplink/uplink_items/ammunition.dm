@@ -39,7 +39,7 @@
 			These rounds are more damaging but ineffective against armour."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/hp
-	cost = 3
+	cost = 2
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/pistolfire
@@ -64,7 +64,7 @@
 			For when you really need a lot of things dead."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/a357
-	cost = 4
+	cost = 2
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
