@@ -11,6 +11,7 @@
 	/// List of traits given to the avatar's body.
 	var/static/list/given_traits = list(
 		TRAIT_FEARLESS,
+		TRAIT_NOFLASH, // do something besides flashbang spam
 		TRAIT_NO_PAIN_EFFECTS, // i'm just HER
 		TRAIT_PUSHIMMUNE,
 		TRAIT_RESISTCOLD,
