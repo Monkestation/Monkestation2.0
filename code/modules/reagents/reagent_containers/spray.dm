@@ -124,7 +124,7 @@
 	if(stream_mode)
 		current_range = stream_range
 	else
-		current_range = spray_range\
+		current_range = spray_range
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	balloon_alert(user, "nozzle setting: [stream_mode ? "\"stream\"":"\"spray\""]")
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
