@@ -572,11 +572,13 @@
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
 		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
-		ACCESS_VAULT,
+		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		ACCESS_MECH_MINING,
 		ACCESS_QM,
+		ACCESS_SHIPPING,
+		ACCESS_VAULT,
 		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
