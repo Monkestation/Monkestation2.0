@@ -5,7 +5,7 @@
 
 /obj/item/ammo_casing/energy/lasergun/sidearm
 	projectile_type = /obj/projectile/beam/laser/sidearm
-	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hellfire
