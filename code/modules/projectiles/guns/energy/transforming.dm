@@ -198,7 +198,7 @@
 
 /obj/item/gun/energy/modular_laser_rifle/equipped(mob/user, slot, initial)
 	. = ..()
-	if(user.cleint)
+	if(user.client)
 		tracked_soulcatcher = AddComponent(/datum/component/soulcatcher/modular_laser)
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE))
 		speak_up("worn")
