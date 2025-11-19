@@ -289,3 +289,8 @@
 /datum/sprite_accessory/anime_halo/crowned
 	name = "Crowned halo"
 	icon_state = "crowned"
+
+/datum/sprite_accessory/anime_halo/goldenring
+	name = "Golden ring"
+	icon_state = "goldenring"
+	color_src = null
