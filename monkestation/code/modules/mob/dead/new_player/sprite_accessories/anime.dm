@@ -294,3 +294,7 @@
 	name = "Golden ring"
 	icon_state = "goldenring"
 	color_src = null
+
+/datum/sprite_accessory/anime_halo/neonring
+	name = "Neon ring"
+	icon_state = "neonring"
