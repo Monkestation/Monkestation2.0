@@ -1111,7 +1111,7 @@
 	if(trajectory)
 		QDEL_NULL(trajectory)
 	. = ..()
-	LAZYNULL(impacted)
+	impacted?.len = 0
 
 /obj/projectile/proc/cleanup_beam_segments()
 	QDEL_LIST_ASSOC(beam_segments)
