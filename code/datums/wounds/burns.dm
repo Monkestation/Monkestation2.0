@@ -88,7 +88,7 @@
 
 	// virus resistant so infections take longer
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
-		infestation += infestation_rate * 0.25 * seconds_per_tick
+		infestation += infestation_rate * 0.1 * seconds_per_tick
 	else
 		infestation += infestation_rate * seconds_per_tick
 
