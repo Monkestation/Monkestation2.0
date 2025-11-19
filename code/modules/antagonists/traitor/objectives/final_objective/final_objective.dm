@@ -10,8 +10,6 @@
 //		/datum/traitor_objective/ultimate/wizard = 1, //monkestation edit
 	)
 	weight = 100
-	/// what pop we need to generate
-	var/pop_lock = 35
 
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
@@ -19,6 +17,9 @@
 	needs_reward = FALSE
 
 	var/progression_points_in_objectives = 20 MINUTES
+
+	/// what pop we need to generate
+	var/pop_lock = 35
 
 /// Determines if this final objective can be taken. Should be put into every final objective's generate function.
 /datum/traitor_objective/ultimate/can_generate_objective(generating_for, list/possible_duplicates)
