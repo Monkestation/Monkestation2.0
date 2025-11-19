@@ -45,7 +45,7 @@
 	var/obj/item/storage/backpack/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
 	var/obj/item/storage/backpack/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
 	if(istype(back_item) && istype(belt_item))
-		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
+		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, TRUE, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
 	else
 		user.update_movespeed()
 /*

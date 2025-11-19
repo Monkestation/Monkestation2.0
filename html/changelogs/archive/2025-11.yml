@@ -258,3 +258,75 @@
   - bugfix: fixed carboard jamming on interact
   notghosti:
   - bugfix: NODE Drones no longer freeze to death on Icebox
+2025-11-16:
+  Absolucy:
+  - bugfix: Fixed the Voltaic Combat Cyberheart killing oozelings.
+  Absolucy, hry-gh:
+  - bugfix: you should experience less stutters every 10 seconds
+  - server: server operators can now configure an alternative storage domain for clientside
+      data storage, read the example configuration for more
+  Loiosh42:
+  - balance: Sprint speed somewhat reduced
+  - balance: Debilitation stacks now increase stamina drain from sprinting more
+  kuricityy:
+  - bugfix: Recalls all Syndicate Renoster shotguns for a faulty internal magazine
+      size, as well as being loaded with non lethal rounds. The Syndicate has replaced
+      said faulty internal magazines with proper 8 round magazines loaded with lethal
+      buckshot. The Syndicate apologizes for the inconvenience.
+  notghosti:
+  - rscadd: boulder smelter and refinery are printable from a protolathe
+  - map: Lavaland now starts with a single starter resource vent.
+  - map: Lavaland public and regular mining now have an alternative exit to the eastern
+      area.
+  - map: Mining lavaland now has a wardrobe on base
+  - bugfix: Starter mining node's well no longer defies light
+  - qol: Boulder tech now deposits it's ore on the side the machine is facing. Instead
+      of just east
+  - qol: Boulder tech now has examine text for which direction it's facing.
+  - bugfix: Purification chambers now can be multitooled to set the external oxygen
+      tank
+  - bugfix: Purifaction chambers, crushers, enrichment chambers no longer disappear
+      into nonexistence upon being screwdrivered
+2025-11-17:
+  SirNightKnight, JohnFulpWillard:
+  - qol: internal tanks gives a progress bar when you toggle them, allowing you to
+      see how much you've consumed so far.
+  imedial and Sakaniko:
+  - rscadd: Silicons can now view their laws from the status panel in the top right.
+  - bugfix: Fixed uncategorized Malfunction Modules for Malf AI.
+2025-11-18:
+  Absolucy:
+  - qol: The Eye of God's rebuke glow effect is yellow once more.
+  - admin: Darkspawn thralls now show up in the admin Check Antagonists panel.
+  - bugfix: Oozeling darkspawn thralls are no longer instantly deconverted upon being
+      revived.
+  - balance: Bolts of nothingness (from a warlock darkspawn's staff) now just deal
+      brute damage against simple/basic mobs.
+  - balance: Bolts of nothingness now pause stamina regeneration when they hit.
+  JohnFulpWillard:
+  - bugfix: HoP now has shipping access.
+  - bugfix: Removed a Citrus from Theseus (there were 2)
+  - bugfix: Medbots, cleanbots, and hygienebots are no longer affected by temperatures.
+  - bugfix: Bank Machines (in the Vault) now properly yell when unauthorized and don't
+      when authorized.
+  - balance: Speaking of, they also now only speak in Supply chat when authorized,
+      rather than alert the whole station.
+  - bugfix: Fixed an edge case where Nightmares can't spawn on Pubbystation (and potentially
+      Heliostation).
+  - bugfix: Medbeams are no longer considered guns (for beepsky and honorbound Chaplains).
+  SirNightKnight:
+  - rscadd: added justice helmets to the sectech contraband section
+  notghosti:
+  - balance: Explorer masks have pepper spray protection
+  - balance: Skittish will only lock a locker if you could lock the locker in the
+      first place
+  - balance: Warlocks staff is no longer considered lethally chambered
+  - balance: Cracking a boulder will attempt to mine a new boulder in range.
+  - map: Icebox cargo now has a expanded warehouse, with a Ripley and a cargo loader
+      modsuit. And there's now a starting vent.
+  - balance: Halves the rate of antagonist tokens
+  - bugfix: Satchel + backpack will apply slowdown
+2025-11-19:
+  Absolucy:
+  - qol: Oozelings will no longer lose blood from low nutrition if they are actively
+      eating something with nutriment.
