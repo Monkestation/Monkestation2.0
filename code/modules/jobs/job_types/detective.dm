@@ -130,3 +130,7 @@
 				equipped_badge.badge_string = "Lieutenant \Roman[number_yefreitor]-yefreitor"
 			else
 				equipped_badge.badge_string = "Lieutenant"
+
+#undef DETECTIVE_PROMOTION_OFFICER
+#undef DETECTIVE_PROMOTION_SEARGEANT
+#undef DETECTIVE_PROMOTION_LIEUTENANT

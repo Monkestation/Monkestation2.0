@@ -1,3 +1,4 @@
+///Prevents spam-printing badges.
 #define PRINT_DELAY (3 MINUTES)
 
 /datum/computer_file/program/cargo_union
@@ -7,7 +8,7 @@
 	extended_desc = "The official Supply Employees Union (SEU) employee tracker and badge printer/recycler."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-//	run_access = list(ACCESS_QM)
+	run_access = list(ACCESS_QM)
 	size = 6
 	tgui_id = "NtosCargoUnion"
 	program_icon = "id-badge"
@@ -24,7 +25,7 @@
 	var/mob/user = ui.user
 	switch(action)
 		if("add_member")
-			var/member_name = tgui_input_text(user, "What is the new member's name?", "New Union Personnel")
+			var/member_name = tgui_input_text(user, "What is the new member's name?", "New Union Personnel", max_length = MAX_NAME_LEN)
 			if(isnull(member_name) || !istext(member_name))
 				return TRUE
 			GLOB.cargo_union_employees += member_name
