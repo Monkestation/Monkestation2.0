@@ -132,6 +132,8 @@
 
 	var/hasExpanded = FALSE
 	var/obj/item/hat
+	///Any badge attached to the borg.
+	var/obj/item/clothing/accessory/badge/worn_badge
 	var/hat_offset = -3
 
 	///What types of mobs are allowed to ride/buckle to this mob
