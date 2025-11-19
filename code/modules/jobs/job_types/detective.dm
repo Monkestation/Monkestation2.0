@@ -5,8 +5,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
-	total_positions = 100//2 /// Monkestation edit : Adding some substance to the detective role
-	spawn_positions = 100//2 /// Monkestation edit : Adding some substance to the detective role
+	total_positions = 2 /// Monkestation edit : Adding some substance to the detective role
+	spawn_positions = 2 /// Monkestation edit : Adding some substance to the detective role
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
 	exp_requirements = 300
