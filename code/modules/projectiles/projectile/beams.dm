@@ -40,7 +40,7 @@
 	projectile_piercing = PASSGRILLE
 	wound_bonus = -60
 	bare_wound_bonus = 0
-	armour_penetration = 10
+	armour_penetration = 20
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"

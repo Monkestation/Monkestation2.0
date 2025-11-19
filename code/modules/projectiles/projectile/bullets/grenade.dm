@@ -219,7 +219,7 @@
 				do_sparks(rand(1, 9), FALSE, nearby_turf)
 			for(var/mob/living/stunned_living in nearby_turf.contents)
 				stunned_living.Paralyze(1 SECONDS)
-				stunned_living.Knockdown(6 SECONDS)
+				stunned_living.Knockdown(3 SECONDS)
 				stunned_living.soundbang_act(1, 200, 10, 15)
 
 

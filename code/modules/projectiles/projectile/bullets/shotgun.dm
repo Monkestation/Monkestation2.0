@@ -37,7 +37,7 @@
 			projectile_piercing = NONE
 
 			if(damage > 10) // Lets just be safe with this one
-				damage -= 7
+				damage -= 5
 			armour_penetration -= 25
 
 	return ..()
@@ -50,6 +50,8 @@
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
+	debilitating = TRUE
+	debilitate_mult = 3
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -80,7 +82,7 @@
 /obj/projectile/bullet/pellet/shotgun_rubbershot ///6 pellets
 	name = "rubber shot pellet"
 	damage = 2 //monkestation edit 3 to 2
-	stamina = 15 //monkestation edit
+	stamina = 17 //monkestation edit
 	sharpness = NONE
 	embedding = null
 	tile_dropoff_s = 0 //monkestation edit
@@ -105,7 +107,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum ///4 pellets
 	name = "magnum blockshot pellet"
 	damage = 13
-	wound_bonus = 7
+	wound_bonus = -13
 	armour_penetration = 30
 	speed = 1.4
 

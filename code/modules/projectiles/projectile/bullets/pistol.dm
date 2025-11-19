@@ -110,7 +110,7 @@
 
 /obj/projectile/bullet/c585trappiste
 	name = ".585 Trappiste bullet"
-	damage = 305
+	damage = 25
 	wound_bonus = -10
 
 /obj/projectile/bullet/c585trappiste/incapacitator

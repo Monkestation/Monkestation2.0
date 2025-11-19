@@ -46,7 +46,7 @@
 /obj/item/stock_parts/power_store/cell/quickcharge
 	name = "Fast-charging energy cell"
 	maxcharge = STANDARD_CELL_CHARGE * 3
-	chargerate =  STANDARD_CELL_RATE * 2
+	chargerate =  STANDARD_CELL_RATE
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
