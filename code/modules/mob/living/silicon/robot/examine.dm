@@ -6,8 +6,6 @@
 	var/model_name = model ? "\improper [model.name]" : "\improper Default"
 	. += "\nIt is currently \a \"[span_bold("[model_name]")]\"-type cyborg.\n"
 
-	if(worn_badge)
-
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		. += "It is holding [icon2html(act_module, user)] \a [act_module]."
@@ -37,6 +35,9 @@
 
 	if(cell && cell.charge <= 0)
 		. += span_warning("Its battery indicator is blinking red!")
+
+	if(worn_badge)
+		. += "It is decorated with [icon2html(worn_badge, user)] \a [worn_badge]."
 
 	switch(stat)
 		if(CONSCIOUS)
