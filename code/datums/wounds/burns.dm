@@ -86,7 +86,12 @@
 		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * seconds_per_tick), 0)
 		return
 
-	infestation += infestation_rate * seconds_per_tick
+	// virus resistant so infections take longer
+	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+		infestation += infestation_rate * 0.25 * seconds_per_tick
+	else
+		infestation += infestation_rate * seconds_per_tick
+
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
 			return
