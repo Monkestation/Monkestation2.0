@@ -10,6 +10,8 @@
 //		/datum/traitor_objective/ultimate/wizard = 1, //monkestation edit
 	)
 	weight = 100
+	/// what pop we need to generate
+	var/pop_lock = 35
 
 /datum/traitor_objective/ultimate
 	abstract_type = /datum/traitor_objective/ultimate
@@ -20,6 +22,8 @@
 
 /// Determines if this final objective can be taken. Should be put into every final objective's generate function.
 /datum/traitor_objective/ultimate/can_generate_objective(generating_for, list/possible_duplicates)
+	if(SSgamemode.get_correct_popcount() < pop_lock)
+		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_points_in_objectives)
 		return FALSE
 	if(SStraitor.get_taken_count(type) > 0) // Prevents multiple people from ever getting the same final objective.
