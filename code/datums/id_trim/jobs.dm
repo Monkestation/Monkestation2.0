@@ -202,6 +202,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
 
@@ -268,12 +269,12 @@
 		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
 
@@ -1104,6 +1105,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
 

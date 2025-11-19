@@ -976,6 +976,9 @@
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
 
+/obj/item/stack/tile/fakespace/sixty
+	amount = 60
+
 /obj/item/stack/tile/fakepit
 	name = "fake pits"
 	singular_name = "fake pit"
