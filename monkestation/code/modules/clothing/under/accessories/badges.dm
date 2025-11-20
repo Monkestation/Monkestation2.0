@@ -125,19 +125,19 @@
 
 /obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob, new_description)
 	. = ..()
-	desc = intiial(desc)
-	if(HAS_TRAIT(named_mob, TRAIT_CLOWN_ENJOYER) || HAS_TRAIT(named_mob, TRAIT_CLUMSY))
-		desc  += " It is backed by the Clown College of Law."
-	else if(HAS_TRAIT(named_mob, TRAIT_MIME_FAN) || HAS_TRAIT(named_mob, TRAIT_MIMING))
-		desc  += " It is backed by the Barreau de l'espace du Québec."
-	else if(HAS_TRAIT(named_mob, TRAIT_EVIL))
-		desc  += " It is not backed by any Bar Association."
-	else if(named_mob.mind?.holy_role)
+	desc = initial(desc)
+	if(named_mob.mind?.holy_role)
 		desc  += " It is backed by the Apostolic Penitentiary."
 	else if(isipc(named_mob))
 		desc  += " It is not backed by any bar, but endorsed by an LLM-based megacorporation."
 	else if(named_mob.has_quirk(/datum/quirk/fluffy_tongue))
 		desc  += " It is backed by Committee for Prosecutorial Excellence."
+	else if(HAS_TRAIT(named_mob, TRAIT_CLOWN_ENJOYER) || HAS_TRAIT(named_mob, TRAIT_CLUMSY))
+		desc  += " It is backed by the Clown College of Law."
+	else if(HAS_TRAIT(named_mob, TRAIT_MIME_FAN) || HAS_TRAIT(named_mob, TRAIT_MIMING))
+		desc  += " It is backed by the Barreau de l'espace du Québec."
+	else if(HAS_TRAIT(named_mob, TRAIT_EVIL))
+		desc  += " It is not backed by any Bar Association."
 	else if(HAS_TRAIT(named_mob, TRAIT_HEAVY_DRINKER))
 		desc  += " It is backed by the Bar."
 	else
