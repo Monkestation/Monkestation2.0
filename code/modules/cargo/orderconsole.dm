@@ -403,9 +403,10 @@
 					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 
-			ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-			say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
-			SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
+				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
+				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
+
 			return TRUE
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
