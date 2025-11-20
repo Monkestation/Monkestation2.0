@@ -16,7 +16,7 @@
 /datum/symptom/lantern/activate(mob/living/mob)
 	if(!moblight)
 		moblight = new(mob)
-	if(ismouse(mob))
+	if(ismouse(mob) || !mob.reagents)
 		moblight.set_light_range(multiplier)
 		moblight.set_light_power(multiplier / 3)
 		moblight.set_light_color(color)

@@ -1,4 +1,5 @@
 Plants to look over again
+
 - Blumpkin
 - Towercaps
 - Sweet Potato
@@ -7,21 +8,22 @@ Plants to look over again
 - Astra Tea
 
 Plants we need done
- - Aloe
- - Cocoabeans
- - Cucumber
- - Gatfruit
- - Grasses
- - Herbs
- - Corta Nut
- - Kronkus
- - Mushrooms
- - Olive
- - Plum
- - Rainbow Bunch
- - Replica Pod
- - White Beet
- - Red Beet
- - Lily
- - Trumpet
- - Harebell
+
+- Aloe
+- Cocoabeans
+- Cucumber
+- Gatfruit
+- Grasses
+- Herbs
+- Corta Nut
+- Kronkus
+- Mushrooms
+- Olive
+- Plum
+- Rainbow Bunch
+- Replica Pod
+- White Beet
+- Red Beet
+- Lily
+- Trumpet
+- Harebell

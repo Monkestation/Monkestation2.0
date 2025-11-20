@@ -23,7 +23,7 @@
 
 /datum/action/cooldown/spell/pointed/apetra_vulnera/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	
+
 	if(IS_HERETIC_OR_MONSTER(cast_on))
 		return FALSE
 
@@ -44,7 +44,7 @@
 		a_limb_got_damaged = TRUE
 		var/datum/wound/slash/crit_wound = new wound_type()
 		crit_wound.apply_wound(bodypart)
-	
+
 	if(!a_limb_got_damaged)
 		var/datum/wound/slash/crit_wound = new wound_type()
 		crit_wound.apply_wound(pick(cast_on.bodyparts))
@@ -53,7 +53,10 @@
 		span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),
 		span_danger("Your scratches and bruises are torn open by some horrible unholy force!")
 	)
-	
+
 	new /obj/effect/temp_visual/cleave(get_turf(cast_on))
+
+	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
+	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
 
 	return TRUE

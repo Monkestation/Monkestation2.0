@@ -5,9 +5,10 @@
 ///Sends a message in adminchat with the chosen notfication sound
 #define SEND_NOTFIED_ADMIN_MESSAGE(sound, message) SEND_ADMINS_NOTFICATION_SOUND(sound); SEND_ADMINCHAT_MESSAGE(message)
 
-#define POLICY_DEATH			"Death"
-#define POLICY_REVIVAL			"Revival"
-#define POLICY_REVIVAL_CLONER	"Revival via Cloning"
+#define POLICY_DEATH				"Death"
+#define POLICY_REVIVAL				"Revival"
+#define POLICY_REVIVAL_CLONER		"Revival via Cloning"
+#define POLICY_ANTAGONISTIC_REVIVAL	"Revival via Antagonistic Method"
 
 #define AHELP_CLOSETYPE_CLOSE 0
 #define AHELP_CLOSETYPE_REJECT 1
@@ -23,3 +24,10 @@
 #define DEFAULT_COMMANDREPORT_SOUND "default_commandreport"
 #define DEFAULT_ALERT_SOUND "default_alert"
 #define CUSTOM_ALERT_SOUND "custom_alert"
+
+// Mentor Permissions
+/// R_NONE assumed from code\__DEFINES\admin.dm, No need to redefine R_NONE again.
+#define R_MENTOR (1<<0)
+#define R_HEADMENTOR (1<<1)
+#define R_AUTOMENTOR (1<<2)
+#define R_MENTOR_EVERYTHING (R_AUTOMENTOR<<1)-1 //the sum of all other rank permissions, used for +EVERYTHING set to the highest bitflag if you add more

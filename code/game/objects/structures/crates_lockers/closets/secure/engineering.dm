@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/eng(src)
 	new /obj/item/storage/bag/garment/engineering_chief (src)
 	new /obj/item/computer_disk/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
@@ -19,12 +20,15 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
+
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
 	. = ..()
 
-	// Traitor steal objective
-	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/gun/ballistic/SRN_rocketlauncher(src)
+	// Traitor steal objective
+	new /obj/item/blueprints(src)
 	new /obj/item/pipe_dispenser(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
@@ -76,6 +80,9 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/storage/bag/construction(src)
+
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
 
 
 /obj/structure/closet/secure_closet/atmospherics

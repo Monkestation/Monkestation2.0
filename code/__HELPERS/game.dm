@@ -211,7 +211,7 @@
 	return active_players
 
 ///Uses stripped down and bastardized code from respawn character
-/proc/make_body(mob/dead/observer/ghost_player)
+/proc/make_body(mob/dead/observer/ghost_player, apply_prefs = TRUE)
 	if(!ghost_player || !ghost_player.key)
 		return
 
@@ -219,7 +219,9 @@
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+	if(apply_prefs)
+		ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
+
 	new_character.dna.update_dna_identity()
 	new_character.PossessByPlayer(ghost_player.key)
 
@@ -267,8 +269,16 @@
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	var/obj/machinery/announcement_system/announcer
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.arrival_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	announcer = pick(available_machines)
+	announcer.announce(AUTO_ANNOUNCE_ARRIVAL, character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)
@@ -336,4 +346,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, custom_boxed_message("purple_box", span_purple("<span class='oocplain'><b>[source]: </b>[message]</span>")))
+	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")))

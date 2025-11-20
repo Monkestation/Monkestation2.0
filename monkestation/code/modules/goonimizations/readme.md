@@ -1,6 +1,7 @@
 ## Title: <!--Title of your addition-->
 
 <!-- uppercase, underscore_connected name of your module, that you use to mark files-->
+
 MODULE ID: GOONIMIZATIONS
 
 ### Description:
@@ -10,13 +11,14 @@ This module adds changes i saw requested in the gooncord.
 <!-- Here, try to describe what your PR does, what features it provides and any other directly useful information -->
 
 ### TG Proc/File Changes:
-	code\datums\keybinding\_keybindings.dm
+
+    code\datums\keybinding\_keybindings.dm
+
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
 
 ### Defines:
 
 <!-- If you needed to add any defines, mention the files you added those defines in -->
-
 
 ### Master file additions
 
@@ -32,6 +34,7 @@ This module adds changes i saw requested in the gooncord.
 
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Orignal Coders -->
-Code by Dwasint
-<!-- Orignal Coders -->
 
+Code by Dwasint
+
+<!-- Orignal Coders -->

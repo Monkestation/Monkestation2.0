@@ -3,8 +3,7 @@
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
-	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_ROBOTIC | ORGAN_PROMINENT
 	beating = TRUE
 	/// Shows name of the gland as well as a description of what it does upon examination by abductor scientists and observers.
 	var/abductor_hint = "baseline placebo referencer"
@@ -89,6 +88,8 @@
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	hud.remove_atom_from_hud(gland_owner)
 	clear_mind_control()
+	if(IS_ABDUCTEE(gland_owner))
+		gland_owner.mind.remove_antag_datum(/datum/antagonist/abductee)
 
 /obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/gland_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()

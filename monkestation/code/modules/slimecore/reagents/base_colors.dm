@@ -83,7 +83,7 @@
 	adder.rainbow_effect()
 
 /datum/reagent/slime_ooze/rainbow/remove_from_member(obj/effect/abstract/liquid_turf/remover)
-	remover.remove_rainbow_effect()
+	remover?.remove_rainbow_effect()
 
 /datum/reagent/slime_ooze/oil
 	name = "Oil Slime Ooze"

@@ -9,7 +9,7 @@ import {
   MOUSE_BUTTON_LEFT,
   TIME_UNTIL_PORT_RELEASE_WORKS,
 } from './constants';
-import { Connections } from './Connections';
+import { Connections } from '../common/Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { DisplayComponent } from './DisplayComponent';
 import { VariableMenu } from './VariableMenu';

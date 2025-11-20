@@ -24,7 +24,7 @@
 
 	notify_ghosts(
 		"[user] has purchased a BADASS Syndicate Balloon!",
-		source = src,
+		source = .,
 		action = NOTIFY_ORBIT,
 		header = "What are they THINKING?",
 	)
@@ -108,3 +108,9 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/nutcracking_shoes
+	name = "Combat Boots (Toe Reinforcement)"
+	desc = "This pair of top notch combat boots comes fit with a reinforced toe in which is slotted a tiny kinetic penetrator made from tungsten composite. Wearing 'em lets you kick people in the groin with MAXIMUM pain."
+	item = /obj/item/clothing/shoes/combat/nutcracker
+	cost = 8

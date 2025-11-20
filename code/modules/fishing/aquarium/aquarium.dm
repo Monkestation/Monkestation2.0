@@ -117,16 +117,15 @@
 	. = ..()
 	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
-/obj/structure/aquarium/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return ..()
+/obj/structure/aquarium/click_alt(mob/user)
 	panel_open = !panel_open
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/aquarium/attackby(obj/item/item, mob/living/user, params)
 	if(broken)
@@ -232,7 +231,7 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

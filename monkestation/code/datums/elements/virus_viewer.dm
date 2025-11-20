@@ -1,4 +1,5 @@
 /datum/element/virus_viewer
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/virus_viewer/Attach(mob/user)
 	. = ..()

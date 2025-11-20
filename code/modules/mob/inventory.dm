@@ -209,6 +209,12 @@
 	if(QDELETED(I))
 		return FALSE
 
+	// try to put it in a borg apparatus
+	if(istype(src, /mob/living/silicon/robot))
+		for(var/obj/item/borg/apparatus/apparatus in src)
+			if(apparatus.put_in_apparatus(I, src))
+				return TRUE
+
 	// If the item is a stack and we're already holding a stack then merge
 	if (isstack(I))
 		var/obj/item/stack/item_stack = I
@@ -218,13 +224,13 @@
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && active_stack.can_merge(item_stack))
+			if (istype(active_stack) && active_stack.can_merge(item_stack, inhand = TRUE))
 				if (item_stack.merge(active_stack))
 					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s."))
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack))
+				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack, inhand = TRUE))
 					if (item_stack.merge(inactive_stack))
 						to_chat(usr, span_notice("Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s."))
 						return TRUE
@@ -252,10 +258,10 @@
 /mob/proc/is_holding_items()
 	return !!locate(/obj/item) in held_items
 
-/mob/proc/drop_all_held_items()
+/mob/proc/drop_all_held_items(force = FALSE)
 	. = FALSE
 	for(var/obj/item/I in held_items)
-		. |= dropItemToGround(I)
+		. |= dropItemToGround(I, force)
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
@@ -304,6 +310,24 @@
 		var/turf/drop = drop_location()
 		I.launch_item(drop)
 
+/// Unequips and transfers an item to a given turf, if possible.
+/mob/proc/transfer_item_to_turf(
+	obj/item/to_transfer,
+	turf/new_loc,
+	x_offset = 0,
+	y_offset = 0,
+	force = FALSE,
+	silent = FALSE,
+	drop_item_inventory = TRUE,
+)
+	if(!doUnEquip(to_transfer, force, new_loc, no_move = FALSE, invdrop = drop_item_inventory, silent = silent))
+		return FALSE
+	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
+		return FALSE
+	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	to_transfer.do_drop_animation(src)
+	return TRUE
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
@@ -355,38 +379,21 @@
  * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
  *
  * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
+ * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
  */
 
-/mob/living/proc/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
+/mob/living/proc/get_equipped_items(include_flags = NONE)
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
 			items += item_contents
-	items -= held_items
-	return items
-
-/**
- * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
- *
- * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
- */
-
-/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
-	var/list/items = ..()
-	if(!include_pockets)
-		items -= list(l_store, r_store, s_store)
-	if(include_accessories && w_uniform)
-		var/obj/item/clothing/under/worn_under = w_uniform
-		items += worn_under.attached_accessories
+	if (!(include_flags & INCLUDE_HELD))
+		items -= held_items
 	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
-	items |= get_equipped_items(include_pockets = TRUE)
+	items |= get_equipped_items(INCLUDE_POCKETS)
 	for(var/I in items)
 		dropItemToGround(I)
 	drop_all_held_items()
@@ -423,26 +430,35 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M)
-	if(M.equip_to_appropriate_slot(src))
-		M.update_held_items()
+/obj/item/proc/equip_to_best_slot(mob/equipper)
+	var/should_prioritize_storage = !isclothing(src) && !(slot_flags & ITEM_SLOT_ON_BODY)
+
+	// if it's not clothing / something that fits into a slot, then prioritize active storage first
+	if(should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper))
+			return TRUE
+
+	if(equipper.equip_to_appropriate_slot(src))
+		equipper.update_held_items()
 		return TRUE
 	else
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage?.attempt_insert(src, M))
-		return TRUE
+	// if it IS clothing / something that fits into a slot, prioritize inv slots first, then active storage.
+	if(!should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper))
+			return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
+	var/list/obj/item/possible = list(equipper.get_inactive_held_item(), equipper.get_item_by_slot(ITEM_SLOT_BELT), equipper.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), equipper.get_item_by_slot(ITEM_SLOT_BACK))
 	for(var/i in possible)
 		if(!i)
 			continue
 		var/obj/item/I = i
-		if(I.atom_storage?.attempt_insert(src, M))
+		if(I.atom_storage?.attempt_insert(src, equipper))
 			return TRUE
 
-	to_chat(M, span_warning("You are unable to equip that!"))
+	to_chat(equipper, span_warning("You are unable to equip that!"))
 	return FALSE
 
 
@@ -511,14 +527,12 @@
 	..() //Don't redraw hands until we have organs for them
 
 //GetAllContents that is reasonable and not stupid
-/mob/living/carbon/proc/get_all_gear()
-	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
+/mob/living/proc/get_all_gear(accessories = TRUE, recursive = TRUE)
+	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD | (accessories ? INCLUDE_ACCESSORIES : NONE))
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
-	while(i < length(processing_list) )
+	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
-		if(A.atom_storage)
-			var/list/item_stuff = list()
-			A.atom_storage.return_inv(item_stuff)
-			processing_list += item_stuff
+		if(A.atom_storage && recursive)
+			processing_list += A.atom_storage.return_inv()
 	return processing_list

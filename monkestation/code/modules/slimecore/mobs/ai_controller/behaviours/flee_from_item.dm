@@ -41,9 +41,9 @@
 
 			var/mob/living/carbon/human/human = pot_target
 			for(var/obj/item/item as anything in human.held_items)
-				if(!item)
+				if(QDELETED(item))
 					continue
-				if(item.type != scared_item_path)
+				if(!istype(item, scared_item_path))
 					continue
 				filtered_targets += pot_target
 				break

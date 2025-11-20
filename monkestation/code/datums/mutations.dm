@@ -1,9 +1,9 @@
-/datum/mutation/human
+/datum/mutation
 	/// This mutation cannot appear in random DNA disks.
 	/// This is separate from the `locked` var so that otherwise locked mutations can appear in them.
 	var/random_locked = FALSE
 
-/datum/mutation/human/proc/valid_chromosome_types()
+/datum/mutation/proc/valid_chromosome_types()
 	. = list()
 	if(can_chromosome == CHROMOSOME_NEVER)
 		return
@@ -17,17 +17,17 @@
 	if(energy_coeff != -1)
 		. += /obj/item/chromosome/energy
 
-/datum/mutation/human/bad_dna
+/datum/mutation/bad_dna
 	random_locked = TRUE
 
-/datum/mutation/human/race
+/datum/mutation/race
 	random_locked = TRUE
 
-/datum/mutation/human/chameleon/changeling
+/datum/mutation/chameleon/changeling
 	random_locked = TRUE
 
-/datum/mutation/human/xray
+/datum/mutation/xray
 	random_locked = TRUE
 
-/datum/mutation/human/laser_eyes
+/datum/mutation/laser_eyes
 	random_locked = TRUE

@@ -17,7 +17,7 @@
 	slot_flags = NONE
 	light_system = OVERLAY_LIGHT
 	light_color = COLOR_SOFT_RED
-//	light_range = 1 //Monkestation removal
+	light_outer_range = 1
 	light_power = 0.3
 	light_on = FALSE
 	/// Is camera streaming
@@ -92,6 +92,7 @@
 	internal_camera.network = camera_networks
 	internal_camera.c_tag = "LIVE: [broadcast_name]"
 	wielder.apply_status_effect(/datum/status_effect/streamer, internal_camera, CALLBACK(src, PROC_REF(ensure_still_active)))
+	wielder.log_message("started a Spess.tv stream named \"[broadcast_name]\" at [loc_name(wielder)]", LOG_GAME)
 	start_broadcasting_network(camera_networks, "[broadcast_name] is now LIVE!")
 
 	// INTERNAL RADIO
@@ -126,17 +127,17 @@
 		return FALSE
 	return TRUE
 
-/obj/item/broadcast_camera/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return
+/obj/item/broadcast_camera/click_alt(mob/user)
 	active_microphone = !active_microphone
 
 	/// Text popup for letting the user know that the microphone has changed state
-	balloon_alert(user, "turned [active_microphone ? "on" : "off"] the microphone.")
+	balloon_alert(user, "microphone [active_microphone ? "" : "de"]activated")
 
 	///If the radio exists as an object, set its state accordingly
 	if(active)
 		set_microphone_state()
+
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/broadcast_camera/proc/set_microphone_state()
 	internal_radio.set_broadcasting(active_microphone)

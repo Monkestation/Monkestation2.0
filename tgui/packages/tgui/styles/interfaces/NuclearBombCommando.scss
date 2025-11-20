@@ -1,0 +1,62 @@
+@use 'sass:color';
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-danger: colors.bg(colors.$red) !default;
+$color-caution: colors.bg(colors.$yellow) !default;
+
+$background-beige: #e8e4c9;
+
+.NuclearBombCommando__displayBox {
+  background-color: #002003;
+  border: 0.167em inset $background-beige;
+  color: #03e017;
+  font-size: 2em;
+  font-family: monospace;
+  padding: 0.25em;
+}
+
+.NuclearBombCommando__Button {
+  outline-width: 0.25rem !important;
+  border-width: 0.65rem !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.NuclearBombCommando__Button--keypad {
+  background-color: $background-beige;
+  border-color: $background-beige;
+  &:hover {
+    background-color: color.adjust(
+      $background-beige,
+      $lightness: 15%
+    ) !important;
+    border-color: color.adjust($background-beige, $lightness: 15%) !important;
+  }
+}
+
+.NuclearBombCommando__Button--1 {
+  background-color: #d3cfb7 !important;
+  border-color: #d3cfb7 !important;
+  color: #a9a692 !important;
+}
+
+.NuclearBombCommando__Button--E {
+  background-color: $color-caution !important;
+  border-color: $color-caution !important;
+  &:hover {
+    background-color: color.adjust($color-caution, $lightness: 15%) !important;
+    border-color: color.adjust($color-caution, $lightness: 15%) !important;
+  }
+}
+
+.NuclearBombCommando__Button--C {
+  background-color: $color-danger !important;
+  border-color: $color-danger !important;
+  &:hover {
+    background-color: color.adjust($color-danger, $lightness: 15%) !important;
+    border-color: color.adjust($color-danger, $lightness: 15%) !important;
+  }
+}

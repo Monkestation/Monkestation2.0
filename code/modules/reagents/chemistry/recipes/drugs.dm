@@ -156,3 +156,8 @@
 		var/obj/item/food/drug/saturnx/new_glob = new(location)
 		new_glob.pixel_x = rand(-6, 6)
 		new_glob.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/positronic_excitation_salts
+	results = list(/datum/reagent/drug/methamphetamine/robo = 1)
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 1, /datum/reagent/dinitrogen_plasmide = 1)
+	reaction_tags = REACTION_TAG_DRUG | REACTION_TAG_EASY

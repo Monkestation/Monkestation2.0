@@ -19,28 +19,34 @@ export const SlimePenController = (_) => {
   return (
     <Window width={450} height={(tabIndex === 1 && 412) || 600}>
       <Window.Content>
-        <Tabs style={{ 'border-radius': '5px' }}>
-          <Tabs.Tab
-            key={1}
-            selected={tabIndex === 1}
-            icon="flask"
-            onClick={() => setTabIndex(1)}
-          >
-            Slime Data
-          </Tabs.Tab>
-          <Tabs.Tab
-            key={2}
-            selected={tabIndex === 2}
-            icon="flask"
-            onClick={() => setTabIndex(2)}
-          >
-            Corral Data
-          </Tabs.Tab>
-        </Tabs>
-        <Section fill scrollable>
-          {tabIndex === 1 && <SlimeData />}
-          {tabIndex === 2 && <StoreViewer />}
-        </Section>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Tabs style={{ 'border-radius': '5px' }}>
+              <Tabs.Tab
+                key={1}
+                selected={tabIndex === 1}
+                icon="flask"
+                onClick={() => setTabIndex(1)}
+              >
+                Slime Data
+              </Tabs.Tab>
+              <Tabs.Tab
+                key={2}
+                selected={tabIndex === 2}
+                icon="flask"
+                onClick={() => setTabIndex(2)}
+              >
+                Corral Data
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill scrollable height="100%">
+              {tabIndex === 1 && <SlimeData />}
+              {tabIndex === 2 && <StoreViewer />}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

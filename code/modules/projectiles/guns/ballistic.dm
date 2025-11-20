@@ -5,7 +5,7 @@
 	name = "projectile gun"
 	icon_state = "debug"
 	w_class = WEIGHT_CLASS_NORMAL
-
+	recoil = 1
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
@@ -95,7 +95,6 @@
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
-	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
@@ -127,7 +126,19 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
+	///Recoil quantity when the gun is wielded
 	var/wield_recoil = 0
+
+	/// Does this gun have mag and nomag on mob variance?
+	var/alt_icons = FALSE
+	/// What the icon state is for the on-back guns
+	var/alt_icon_state
+	/// How long it takes to reload a magazine.
+	var/reload_time = 2 SECONDS
+	/// if this gun has a penalty for reloading with an ammo_box type
+	var/box_reload_penalty = TRUE
+	/// reload penalty inflicted by using an ammo box instead of an individual cartridge, if not outright exchanging the magazine
+	var/box_reload_delay = CLICK_CD_MELEE
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -147,6 +158,15 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 	register_context()
+	if(alt_icons)
+		AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/gun/ballistic/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
 /obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -161,9 +181,12 @@
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
 
 /obj/item/gun/ballistic/fire_sounds()
-	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
+	var/max_ammo = magazine?.max_ammo || initial(spawn_magazine_type.max_ammo)
+	var/current_ammo = get_ammo()
+	var/frequency_to_use = sin((90 / max_ammo) * current_ammo)
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
-	var/play_click = round(sqrt(magazine?.max_ammo * 2)) > get_ammo()
+	var/play_click = round(sqrt(max_ammo * 2)) > current_ammo
+
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
@@ -248,6 +271,22 @@
 			capacity_number = 20
 	if(capacity_number)
 		. += "[icon_state]_mag_[capacity_number]"
+	if(alt_icons)
+		if(!magazine)
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]_nomag"
+				worn_icon_state = "[alt_icon_state]_nomag"
+			else
+				inhand_icon_state = "[initial(icon_state)]_nomag"
+				worn_icon_state = "[initial(icon_state)]_nomag"
+		else
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]"
+				worn_icon_state = "[alt_icon_state]"
+			else
+				inhand_icon_state = "[initial(icon_state)]"
+				worn_icon_state = "[initial(icon_state)]"
+
 
 
 /obj/item/gun/ballistic/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -413,7 +452,7 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && chambered?.loaded_projectile && can_misfire && misfire_probability > 0)
+	if(can_misfire && magazine && chambered?.loaded_projectile && misfire_probability > 0)  //monke edit : moved can_misfire from the third spot to the first to cancel some runtime issues
 		if(prob(misfire_probability))
 			if(blow_up(user))
 				to_chat(user, span_userdanger("[src] misfires!"))
@@ -431,7 +470,7 @@
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
-	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -439,21 +478,22 @@
 		return
 	if(isitem(suppressed))
 		var/obj/item/I = suppressed
-		w_class -= I.w_class
+		update_weight_class(w_class - I.w_class)
 	return ..()
 
-/obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
+/obj/item/gun/ballistic/click_alt(mob/user)
+	if(unique_reskin && !current_skin)
 		reskin_obj(user)
-		return
-	if(loc == user)
-		if(suppressed && can_unsuppress)
-			var/obj/item/suppressor/S = suppressed
-			if(!user.is_holding(src))
-				return ..()
-			balloon_alert(user, "[S.name] removed")
-			user.put_in_hands(S)
-			clear_suppressor()
+		return CLICK_ACTION_SUCCESS
+	if(!suppressed || !can_unsuppress)
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/suppressor/S = suppressed
+	if(!user.is_holding(src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "[S.name] removed")
+	user.put_in_hands(S)
+	clear_suppressor()
+	return CLICK_ACTION_SUCCESS
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()
@@ -622,7 +662,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 30, target = src))
+	if(do_after(user, 3 SECONDS, target = src))
 		if(sawn_off)
 			return
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
@@ -652,7 +692,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to cleaning [src]."), span_notice("You begin to clean the internals of [src]."))
 
-	if(do_after(user, 100, target = src))
+	if(do_after(user, 10 SECONDS, target = src))
 		var/original_misfire_value = initial(misfire_probability)
 		if(misfire_probability > original_misfire_value)
 			misfire_probability = original_misfire_value
@@ -731,3 +771,46 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/suppressor/standard
+	desc = "A small-arms suppressor for maximum espionage."
+
+///Blueshift code!
+/obj/item/gun/ballistic/proc/on_wield()
+	SIGNAL_HANDLER
+
+	recoil = wield_recoil
+	spread = spread * 0.75
+
+/obj/item/gun/ballistic/proc/on_unwield()
+	SIGNAL_HANDLER
+
+	recoil = initial(recoil)
+	spread = initial(spread)
+
+/obj/item/gun/ballistic/proc/handle_magazine(mob/user, obj/item/ammo_box/magazine/inserting_magazine)
+	if(magazine) // If we already have a magazine inserted, we're going to begin tactically reloading it.
+		if(reload_time && !HAS_TRAIT(user, TRAIT_INSTANT_RELOAD)) // Check if we have a reload time to tactical reloading, or if we have the instant reload trait.
+			to_chat(user, span_notice("You start to insert the magazine into [src]!"))
+			if(!do_after(user, reload_time, src, IGNORE_USER_LOC_CHANGE)) // We are allowed to move while reloading.
+				to_chat(user, span_danger("You fail to insert the magazine into [src]!"))
+				return TRUE
+		eject_magazine(user, FALSE, inserting_magazine) // We eject the magazine then insert the new one, while putting the old one in hands.
+	else
+		insert_magazine(user, inserting_magazine) // Otherwise, just insert it.
+
+	return TRUE
+
+/obj/item/gun/ballistic/proc/handle_box_reload(mob/user, obj/item/ammo_box/ammobox, num_loaded)
+	var/box_load = FALSE // if you're reloading with an ammo box, inflicts a cooldown
+	if(istype(ammobox, /obj/item/ammo_box) && box_reload_penalty)
+		box_load = TRUE
+		user.changeNext_move(box_reload_delay) // cooldown to simulate having to fumble for another round
+		balloon_alert(user, "reload encumbered!")
+	to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into [src][box_load ?  ", but it takes some extra effort" : ""]."))
+
+/obj/effect/temp_visual/dir_setting/firing_effect
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE

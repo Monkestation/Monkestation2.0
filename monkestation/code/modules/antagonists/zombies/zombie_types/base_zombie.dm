@@ -25,7 +25,7 @@
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	for(var/zone as anything in bodypart_overlay_icon_states)
+	for(var/zone in bodypart_overlay_icon_states)
 		var/obj/item/bodypart/bodypart = C.get_bodypart(zone)
 		if(!bodypart)
 			continue

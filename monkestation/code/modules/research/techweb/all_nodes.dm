@@ -5,6 +5,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk", "clonepod_experimental")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /////////////////////////Nanites/////////////////////////
 /datum/techweb_node/nanite_base
@@ -21,8 +22,6 @@
 		"nanite_cloud_control",
 		"nanite_comm_remote",
 		"nanite_disk",
-		"nanite_program_hub",
-		"nanite_programmer",
 		"nanite_remote",
 		"nanite_scanner",
 		"public_nanite_chamber",
@@ -31,6 +30,7 @@
 		"repairing_nanites",
 		"repeater_nanites",
 		"sensor_nanite_volume",
+		"cyborg_remote",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
@@ -62,7 +62,6 @@
 		"emp_nanites",
 		"hardening_nanites",
 		"refractive_nanites",
-		"shock_nanites",
 		"temperature_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
@@ -98,9 +97,8 @@
 		"brainheal_nanites",
 		"good_mood_nanites",
 		"nervous_nanites",
-		"paralyzing_nanites",
+		"slowing_nanites",
 		"selfscan_nanites",
-		"stun_nanites",
 		"word_filter_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
@@ -116,7 +114,6 @@
 		"mindshield_nanites",
 		"mute_nanites",
 		"pacifying_nanites",
-		"sleep_nanites",
 		"speech_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
@@ -130,10 +127,11 @@
 		"aggressive_nanites",
 		"brainheal_plus_nanites",
 		"defib_nanites",
-		"fakedeath_nanites",
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
 		"oxygen_rush_nanites",
+		"injector_nanites",
+		"gravity_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 3000)
 
@@ -148,6 +146,7 @@
 		"nanite_sting_nanites",
 		"pyro_nanites",
 		"viral_nanites",
+		"stun_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 2500)
 
@@ -160,6 +159,9 @@
 		"mindcontrol_nanites",
 		"mitosis_nanites",
 		"spreading_nanites",
+		"sleep_nanites",
+		"fakedeath_nanites",
+		"shock_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 4000)
 
@@ -199,6 +201,7 @@
 		"mag_autorifle_ic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/linked_surgery
 	id = "linked_surgery"
@@ -206,9 +209,10 @@
 	description = "A bluespace implant which a holder can read surgical programs from their server with."
 	prereq_ids = list("exp_surgery", "micro_bluespace")
 	design_ids = list("linked_surgery")
-	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
+	required_items_to_unlock = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/serverlink = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/linked_surgery/New()
 	..()
@@ -231,6 +235,7 @@
 		"ipc_antennae",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"
@@ -252,7 +257,7 @@
 		"mod_springlock",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/springlock,
 	)
 
@@ -268,7 +273,7 @@
 		"mod_rave",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/visor/rave,
 	)
 
@@ -284,7 +289,7 @@
 		"mod_tanner",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/tanner,
 	)
 
@@ -300,7 +305,7 @@
 		"mod_balloon",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/balloon,
 	)
 
@@ -316,7 +321,7 @@
 		"mod_paper_dispenser",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/paper_dispenser,
 	)
 
@@ -332,7 +337,7 @@
 		"mod_stamp",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/stamp,
 	)
 
@@ -348,7 +353,7 @@
 		"mod_atrocinator",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/atrocinator,
 	)
 
@@ -375,7 +380,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
 
-/datum/techweb_node/explosive_weapons
+/datum/techweb_node/chemical_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/ai_basic

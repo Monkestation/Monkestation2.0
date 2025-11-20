@@ -187,10 +187,10 @@
 		else if(istype(sacrifice_candidate, /obj/item/organ/internal/brain/slime))
 			var/obj/item/organ/internal/brain/slime/core = sacrifice_candidate
 			sacrifice = core.rebuild_body(nugget = FALSE)
-			if(!sacrifice && core.brainmob)
-				sacrifice = core.brainmob
-				selected_atoms -= core
-				break
+			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+			selected_atoms -= core
+			selected_atoms += sacrifice
+			break
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
 	if(!heretic_datum.can_sacrifice(sacrifice))
@@ -205,7 +205,7 @@
 
 	if(sacrifice.mind)
 		sac_department_flag |= sacrifice.mind.assigned_role?.departments_bitflags
-	if(istype(sacrifice, /mob/living/carbon/human) && sacrifice.last_mind) // If mob even has a last mind. Oozling issue.
+	if(istype(sacrifice, /mob/living/carbon/human) && sacrifice.last_mind) // If mob even has a last mind. Oozeling issue.
 		sac_department_flag |= sacrifice.last_mind.assigned_role?.departments_bitflags
 
 	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
@@ -217,20 +217,10 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
-	if(!istype(sacrifice, /mob/living/carbon/human))
-		notify_ghosts(	// Sorry for copy paste. Trying to keep consistency
-			"[heretic_mind.name] has sacrificed [sacrifice] to the Mansus!",
-			source = sacrifice,
-			action = NOTIFY_ORBIT,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
-			header = "Oozling core Sacrificed to Mansus.",
-			)
-		log_combat(heretic_mind.current, sacrifice, "sacrificed")
-	else
-		sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
 
-		if(!begin_sacrifice(sacrifice))
-			disembowel_target(sacrifice)
+	if(!begin_sacrifice(sacrifice))
+		disembowel_target(sacrifice)
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)

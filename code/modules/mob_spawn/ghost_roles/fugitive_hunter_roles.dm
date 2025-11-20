@@ -7,6 +7,7 @@
 	show_flavor = FALSE
 	var/back_story = "error"
 	loadout_enabled = FALSE
+	dont_be_a_shit = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/Initialize(mapload)
 	. = ..()

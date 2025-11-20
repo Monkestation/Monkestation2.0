@@ -26,3 +26,4 @@
 		return
 	create_stats_from_material(material_type, FALSE, TRUE)
 	material_stats.material_bitflags |= MATERIAL_STACK
+	material_stats.update_should_process()

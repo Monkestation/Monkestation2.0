@@ -14,6 +14,14 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
 
+/obj/item/bodypart/head/monkey/Initialize(mapload)
+	worn_head_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_HEAD,
+		offset_y = list("north" = 1, "south" = 1, "east" = 1, "west" = 1)
+	)
+	return ..()
+
 /obj/item/bodypart/chest/monkey
 	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	icon_greyscale = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
@@ -30,6 +38,14 @@
 	dmg_overlay_type = SPECIES_MONKEY
 	palette = /datum/color_palette/generic_colors
 	palette_key = "fur_color"
+
+/obj/item/bodypart/chest/monkey/Initialize(mapload)
+	worn_belt_offset = new(
+		attached_part = src,
+		feature_key = OFFSET_BELT,
+		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1)
+	)
+	return ..()
 
 /obj/item/bodypart/arm/left/monkey
 	icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'

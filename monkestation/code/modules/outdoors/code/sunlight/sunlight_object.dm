@@ -36,7 +36,8 @@ Sunlight System
 /atom/movable/outdoor_effect
 	name = ""
 	mouse_opacity = 0
-	anchored = 1
+	anchored = TRUE
+	move_resist = INFINITY
 
 	/* misc vars */
 	var/mutable_appearance/sunlight_overlay
@@ -59,7 +60,11 @@ Sunlight System
 
 	return ..()
 
+/atom/movable/outdoor_effect/singularity_pull(obj/singularity/singularity, current_size)
+	return
 
+/atom/movable/outdoor_effect/singularity_act()
+	return
 
 /atom/movable/outdoor_effect/Initialize(mapload)
 	. = ..()

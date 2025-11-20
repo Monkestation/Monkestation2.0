@@ -444,6 +444,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/plushies/ellie_valentine
+	name = "Ellie plush"
+	item_path = /obj/item/toy/plush/ellie_valentine
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //ThePooba
 /datum/loadout_item/mask/poob_mask
 	name = "Yellow gas mask"
@@ -725,6 +731,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/scrubs_donator_greyscale
+	name = "Greyscale Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/plushies/donator_xsi
 	name = "XSI Plush"
 	item_path = /obj/item/toy/plush/donator_xsi
@@ -857,8 +869,8 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/head/ironhammer_commander_hat
-	name = "Grand Clown King Crown"
-	item_path = /obj/item/clothing/head/costume/clown_king_crown
+	name = "Ironhammer Commander Hat"
+	item_path = /obj/item/clothing/head/costume/ironhammer_commander_hat
 	donator_only = TRUE
 	requires_purchase = FALSE
 
@@ -885,5 +897,165 @@
 /datum/loadout_item/suit/star_father_suit
 	name = "Star Father Suit"
 	item_path = /obj/item/clothing/suit/star_father_suit
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Helixsix
+/datum/loadout_item/suit/peacejacket
+	name = "Peace Jacket"
+	item_path = /obj/item/clothing/suit/peacejacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//SethDiedAgain
+/datum/loadout_item/suit/old_lab_coat
+	name = "Lab \"Coat\""
+	item_path = /obj/item/clothing/suit/old_lab_coat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//AdamCoal
+/datum/loadout_item/pocket_items/donator/cyber_husky
+	name = "Pet Delivery Beacon - Cyber Huskey"
+	item_path = /obj/item/choice_beacon/pet/donator/cyber_husky
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("AdamCoal")
+
+/datum/loadout_item/glasses/security_aviators
+	name = "Security Aviators"
+	item_path = /obj/item/clothing/glasses/hud/security/aviators
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_SECURITY_ASSISTANT, JOB_HEAD_OF_SECURITY, JOB_WARDEN)
+
+/datum/loadout_item/glasses/health_aviators
+	name = "Medical Aviators"
+	item_path = /obj/item/clothing/glasses/hud/health/aviators
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+
+/datum/loadout_item/glasses/diagnostic_aviators
+	name = "Diagnostic Aviators"
+	item_path = /obj/item/clothing/glasses/hud/diagnostic/aviators
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+
+/datum/loadout_item/glasses/meson_Aviators
+	name = "Meson Aviators"
+	item_path = /obj/item/clothing/glasses/meson/aviators
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+
+/datum/loadout_item/glasses/science_aviators
+	name = "Science Aviators"
+	item_path = /obj/item/clothing/glasses/hud/science/aviators
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_CHEMIST, JOB_SCIENTIST, JOB_BARTENDER)
+
+/datum/loadout_item/suit/robo_trenchcoat
+	name = "Robotics trench Coat"
+	item_path = /obj/item/clothing/suit/robo_trenchcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/ai
+	name = "Artificial Intelligence Plush"
+	item_path = /obj/item/toy/plush/ai
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_husky
+	ckeywhitelist = list("AdamCoal")
+	name = "Cyber Husky"
+	item_path = /obj/item/effect_granter/donator/cyber_husky
+	requires_purchase = FALSE
+
+//hunterowl17
+/datum/loadout_item/mask/hunter_owl
+	name = "Hunter Owl Mask"
+	item_path = /obj/item/clothing/mask/gas/owl_mask/hunter_owl
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//TheBoneZone66
+/datum/loadout_item/mask/gaster
+	name = "Gaster Mask"
+	item_path = /obj/item/clothing/mask/gas/gaster
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//SomeDogo
+/datum/loadout_item/head/flower_wreath_blue
+	name = "Pink Flower Wreath"
+	item_path = /obj/item/clothing/head/costume/flower_wreath_pink
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/flower_wreath_pink
+	name = "Blue Flower Wreath"
+	item_path = /obj/item/clothing/head/costume/flower_wreath_blue
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// bullke
+/datum/loadout_item/under/miscellaneous/invicible_invisible
+	name = "Invicible's Super Suit"
+	item_path = /obj/item/clothing/under/costume/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/invicible_invisible
+	name = "Invicible's Mask"
+	item_path = /obj/item/clothing/mask/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/gloves/invicible_invisible
+	name = "Invicible's Gloves"
+	item_path = /obj/item/clothing/gloves/fingerless/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/invicible_invisible
+	name = "Invicible's Boots"
+	item_path =/obj/item/clothing/shoes/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// MrBagHead
+/datum/loadout_item/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	item_path = /obj/item/clothing/mask/mrbaghead
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Milthy
+/datum/loadout_item/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	item_path = /obj/item/clothing/suit/monkey_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/bananotrasen_super_hat
+	name = "Bananotrasen Super Hat"
+	item_path = /obj/item/clothing/head/hats/bananotrasen_super_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/monkey_plush
+	name = "Monkey Plush"
+	item_path = /obj/item/toy/plush/monkey
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/bananadola
+	name = "Pet Delivery Beacon - Bananadola"
+	item_path = /obj/item/choice_beacon/pet/donator/bananadola
+	ckeywhitelist = list("Milthy")
 	donator_only = TRUE
 	requires_purchase = FALSE

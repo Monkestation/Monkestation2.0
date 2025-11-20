@@ -23,6 +23,7 @@
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
 		/obj/item/dice,

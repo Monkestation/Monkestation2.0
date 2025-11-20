@@ -61,6 +61,9 @@
 #define COMSIG_SPELL_TOUCH_HAND_HIT "spell_touch_hand_cast"
 
 // Jaunt Spells
+/// Sent from datum/action/cooldown/spell/jaunt/before_cast, before the mob enters jaunting as a pre-check: (datum/action/cooldown/spell/spell)
+#define COMSIG_MOB_PRE_JAUNT "spell_mob_pre_jaunt"
+	#define COMPONENT_BLOCK_JAUNT (1<<0)
 /// Sent from datum/action/cooldown/spell/jaunt/enter_jaunt, to the mob jaunting: (obj/effect/dummy/phased_mob/jaunt, datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_ENTER_JAUNT "spell_mob_enter_jaunt"
 /// Set from /obj/effect/dummy/phased_mob after the mob is ejected from its contents: (obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
@@ -106,3 +109,8 @@
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
+
+/// Sent from /datum/action/cooldown/spell/proc/can_cast_spell(), to the mind of the mob casting the spell: (datum/mind, resource_flag, resource_amount)
+#define COMSIG_MIND_CHECK_ANTAG_RESOURCE "check_antag_resource"
+/// Sent from /datum/action/cooldown/spell/proc/consume_resource(), to the mind of the mob casting the spell: (datum/mind, list/resource_costs)
+#define COMSIG_MIND_SPEND_ANTAG_RESOURCE "spend_antag_resource"

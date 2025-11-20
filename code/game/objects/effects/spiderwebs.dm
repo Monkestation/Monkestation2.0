@@ -35,6 +35,8 @@
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
+	///Whether or not the web comes from an arachnid
+	var/arachnid = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -59,6 +61,8 @@
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(genetic)
+		return
+	if(arachnid)
 		return
 	if(sealed)
 		return FALSE
@@ -174,11 +178,11 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isspider(mover))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(!isnull(mover.pulledby) && isspider(mover.pulledby))
+	if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE

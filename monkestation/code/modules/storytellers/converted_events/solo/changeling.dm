@@ -2,6 +2,7 @@
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
+	repeated_mode_adjust = TRUE // apparently these roll too often despite their weight, maybe this will help?
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
@@ -17,6 +18,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	restricted_roles = list(
 		JOB_AI,

@@ -15,6 +15,7 @@
 	var/obj/structure/alien/resin/flower_bud/flower_bud
 	/// Used to determine when to notify ghosts
 	var/ready = FALSE
+	dont_be_a_shit = FALSE
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/Destroy()
 	if(flower_bud) // anti harddel checks

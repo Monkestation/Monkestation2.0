@@ -41,8 +41,8 @@
 
 
 /datum/religion_rites/burning_sacrifice
-	name = "Burning Offering"
-	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
+	name = "Cleansed Offering"
+	desc = "Sacrifice a buckled husked corpse for favor, the more burn damage the corpse has the more favor you will receive."
 	ritual_length = 20 SECONDS
 	ritual_invocations = list("Burning body ...",
 	"... cleansed by the flame ...",
@@ -70,8 +70,8 @@
 		if(chosen_sacrifice.stat != DEAD)
 			to_chat(user, span_warning("You can only sacrifice dead bodies, this one is still alive!"))
 			return FALSE
-		if(!chosen_sacrifice.on_fire)
-			to_chat(user, span_warning("This corpse needs to be on fire to be sacrificed!"))
+		if(!(HAS_TRAIT(chosen_sacrifice, TRAIT_HUSK)))
+			to_chat(user, span_warning("This corpse needs to be cleansed by the flame to be sacrificed!"))
 			return FALSE
 		return ..()
 
@@ -81,8 +81,8 @@
 		to_chat(user, span_warning("The right sacrifice is no longer on the altar!"))
 		chosen_sacrifice = null
 		return FALSE
-	if(!chosen_sacrifice.on_fire)
-		to_chat(user, span_warning("The sacrifice is no longer on fire, it needs to burn until the end of the rite!"))
+	if(!(HAS_TRAIT(chosen_sacrifice, TRAIT_HUSK)))
+		to_chat(user, span_warning("The sacrifice is no longer cleansed by the flame, it needs to be husked!"))
 		chosen_sacrifice = null
 		return FALSE
 	if(chosen_sacrifice.stat != DEAD)

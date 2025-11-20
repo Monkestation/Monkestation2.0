@@ -34,9 +34,11 @@
 	. = ..()
 	icon_state = contained_spraycan ? "spraycan_gun_filled" : icon_uncapped
 
-/obj/item/toy/crayon/spraycan/gun/AltClick(mob/user)
-	if(contained_spraycan)
-		unload_spraycan()
+/obj/item/toy/crayon/spraycan/gun/click_alt(mob/user)
+	if(!contained_spraycan)
+		return NONE
+	unload_spraycan()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/crayon/spraycan/gun/refill()
 	if(!charges)

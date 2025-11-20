@@ -17,13 +17,10 @@
 	var/HUD_trait = null
 	/// Whether the HUD implant is on or off
 	var/toggled_on = TRUE
-	encode_info = AUGMENT_NT_LOWLEVEL
 	//For toggling a trait related hud.
 	var/HUD_trait_toggle = null
 
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
-	if(!check_compatibility())
-		return
 
 	if(toggled_on)
 		if(HUD_type)
@@ -78,7 +75,6 @@
 	icon_state = "eye_implant_security"
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 	HUD_trait = TRAIT_SECURITY_HUD
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
 	name = "diagnostic HUD implant"
@@ -91,7 +87,6 @@
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
 	icon_state = "eye_implant_syndicate"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/eyes/hud/pathology //Patho goggles dont use actual huds so we have to use HUD_trait_toggle
 	name = "Pathology HUD implant"
@@ -110,7 +105,6 @@
 	desc = "These cybernetic eye implants will allows you to see the exact chemical regrants and what they break down into."
 	icon_state = "eye_implant_science"
 	slot = ORGAN_SLOT_HUD
-	encode_info = AUGMENT_NO_REQ
 
 /obj/item/organ/internal/cyberimp/eyes/fakehud/science/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -118,7 +112,7 @@
 		return
 	ADD_TRAIT(eye_owner, TRAIT_REAGENT_SCANNER, ORGAN_TRAIT)
 	ADD_TRAIT(eye_owner, TRAIT_RESEARCH_SCANNER, ORGAN_TRAIT)
-	
+
 /obj/item/organ/internal/cyberimp/eyes/fakehud/science/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
 	REMOVE_TRAIT(eye_owner, TRAIT_REAGENT_SCANNER, ORGAN_TRAIT)

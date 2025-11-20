@@ -4,7 +4,7 @@
 
 	breed_name = "Selkie"
 	egg_type = /obj/item/food/egg/silkie
-	mutation_list = list(/datum/mutation/ranching/chicken/pigeon, /datum/mutation/ranching/chicken/cotton_candy)
+	mutation_list = list(/datum/ranching_mutation/chicken/pigeon, /datum/ranching_mutation/chicken/cotton_candy)
 
 	book_desc = "These behave identically to White Chickens."
 /obj/item/food/egg/silkie

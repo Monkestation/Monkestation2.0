@@ -181,3 +181,111 @@
 	name = "Plug"
 	icon_state = "plug"
 	hasinner = TRUE
+
+/datum/sprite_accessory/anime_halo
+	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
+	color_src = ANIME_HALO_COLOR
+	is_emissive = TRUE
+	dimension_x = 32
+	center = TRUE
+	dimension_y = 64
+
+/datum/sprite_accessory/anime_halo/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/anime_halo/gabriel
+	name = "Messenger's halo"
+	icon_state = "gabriel"
+
+/datum/sprite_accessory/anime_halo/threespike
+	name = "Triple starred halo"
+	icon_state = "threespike"
+
+/datum/sprite_accessory/anime_halo/brokenspike
+	name = "Prophet's halo"
+	icon_state = "brokenspike"
+
+/datum/sprite_accessory/anime_halo/arrows
+	name = "Wayfinder's halo"
+	icon_state = "arrows"
+
+/datum/sprite_accessory/anime_halo/circles
+	name = "Orbiting halo"
+	icon_state = "circles"
+
+/datum/sprite_accessory/anime_halo/thorns
+	name = "Judge's halo"
+	icon_state = "thorns"
+
+/datum/sprite_accessory/anime_halo/cross
+	name = "Faithful halo"
+	icon_state = "cross"
+
+/datum/sprite_accessory/anime_halo/plus
+	name = "Unfaithful halo"
+	icon_state = "crossalt"
+
+/datum/sprite_accessory/anime_halo/moon
+	name = "Lunar halo"
+	icon_state = "moon"
+
+/datum/sprite_accessory/anime_halo/crown
+	name = "Lauded halo"
+	icon_state = "crown"
+
+/datum/sprite_accessory/anime_halo/shiroinv
+	name = "Focused halo"
+	icon_state = "shiroinv"
+
+/datum/sprite_accessory/anime_halo/shiroko
+	name = "Headstrong halo"
+	icon_state = "shiroko"
+
+/datum/sprite_accessory/anime_halo/wings
+	name = "Elevated's halo"
+	icon_state = "wings"
+
+/datum/sprite_accessory/anime_halo/star
+	name = "Bright halo"
+	icon_state = "star"
+
+/datum/sprite_accessory/anime_halo/squares
+	name = "Logistician's halo"
+	icon_state = "squares"
+
+/datum/sprite_accessory/anime_halo/spikes
+	name = "Intrepid halo"
+	icon_state = "spikes"
+
+/datum/sprite_accessory/anime_halo/reticle
+	name = "Marksman's halo"
+	icon_state = "reticle"
+
+/datum/sprite_accessory/anime_halo/polygon
+	name = "Pragmatic's halo"
+	icon_state = "polygon"
+
+/datum/sprite_accessory/anime_halo/offset
+	name = "Mercurial halo"
+	icon_state = "offset"
+
+/datum/sprite_accessory/anime_halo/nanotrasen
+	name = "Corpo halo"
+	icon_state = "nanotrasen"
+
+/datum/sprite_accessory/anime_halo/corpomedic
+	name = "Corpo medic halo"
+	icon_state = "corpomedic"
+
+/datum/sprite_accessory/anime_halo/traumaresponse
+	name = "Trauma response halo"
+	icon_state = "traumaresponse"
+
+/datum/sprite_accessory/anime_halo/aesculapian
+	name = "Aesculapian halo"
+	icon_state = "aesculapian"
+
+/datum/sprite_accessory/anime_halo/crowned
+	name = "Crowned halo"
+	icon_state = "crowned"

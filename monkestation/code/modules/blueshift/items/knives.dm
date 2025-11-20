@@ -34,16 +34,15 @@
 		/obj/item/knife/bowie,
 		))
 
-/obj/item/storage/belt/bowie_sheath/AltClick(mob/user)
-	if(length(contents))
-		var/obj/item/knife = contents[1]
-		user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))
-		user.put_in_hands(knife)
-		update_appearance()
-		return TRUE
-	else
+/obj/item/storage/belt/bowie_sheath/click_alt(mob/user)
+	if(!length(contents))
 		to_chat(user, span_warning("[src] is empty!"))
-		return FALSE
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/knife = contents[1]
+	user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))
+	user.put_in_hands(knife)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/bowie_sheath/update_icon_state()
 	icon_state = initial(icon_state)

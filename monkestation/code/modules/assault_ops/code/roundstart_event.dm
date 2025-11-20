@@ -1,10 +1,11 @@
 /datum/round_event_control/antagonist/solo/assault_operative
 	name = "Roundstart Assault Operatives"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_ASSAULT_OPERATIVE
 	antag_datum = /datum/antagonist/assault_operative
 	typepath = /datum/round_event/antagonist/solo/assault_operative
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -36,7 +37,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 4
+	weight = 3
 	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/assault_operative

@@ -31,6 +31,8 @@
 	buffer = 5000
 	reagent_flags = NO_REACT
 
+	subsystem_type = /datum/controller/subsystem/processing/xenobio
+
 	var/compressing = FALSE
 	var/repeat_recipe = FALSE
 
@@ -222,7 +224,7 @@
 	else if(change_recipe(user, TRUE))
 		reagents.clear_reagents()
 
-/obj/machinery/plumbing/ooze_compressor/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_compressor/click_ctrl(mob/user)
 	if(anchored && can_interact(user))
 		repeat_recipe = !repeat_recipe
 		balloon_alert_to_viewers("[repeat_recipe ? "enabled" : "disabled"] repeating")

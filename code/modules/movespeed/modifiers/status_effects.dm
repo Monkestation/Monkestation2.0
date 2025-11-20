@@ -1,5 +1,5 @@
 /datum/movespeed_modifier/status_effect/bloodchill
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 2
 
 /datum/movespeed_modifier/status_effect/bonechill
 	multiplicative_slowdown = 3

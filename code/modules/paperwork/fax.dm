@@ -130,7 +130,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Open and close the wire panel.
@@ -149,16 +149,16 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return
 	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
 	if (!new_fax_name)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (new_fax_name != fax_name)
 		if (fax_name_exist(new_fax_name))
 			// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
 			if (syndicate_network != TRUE && !(obj_flags & EMAGGED))
 				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 		user.log_message("renamed [fax_name] (fax machine) to [new_fax_name].", LOG_GAME)
 		fax_name = new_fax_name
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fax/attackby(obj/item/item, mob/user, params)
 	if (jammed && clear_jam(item, user))
@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/ui_data(mob/user)
 	var/list/data = list()
 	//Record a list of all existing faxes.
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if(FAX.fax_id == fax_id) //skip yourself
 			continue
 		var/list/fax_data = list()
@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	data["special_faxes"] = special_networks_data
 	return data
 
-/obj/machinery/fax/ui_act(action, list/params)
+/obj/machinery/fax/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -338,7 +338,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * id - The network ID of the fax machine you want to send the item to.
  */
 /obj/machinery/fax/proc/send(obj/item/loaded, id)
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if (FAX.fax_id != id)
 			continue
 		if (FAX.jammed)
@@ -470,7 +470,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * new_fax_name - The text of the name to be checked for a match.
  */
 /obj/machinery/fax/proc/fax_name_exist(new_fax_name)
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if (FAX.fax_name == new_fax_name)
 			return TRUE
 	return FALSE

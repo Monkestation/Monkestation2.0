@@ -30,7 +30,6 @@
 
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
-		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
@@ -102,10 +101,6 @@
 	if(A)
 		A.Remove(C)
 		QDEL_NULL(A)
-	var/obj/item/organ/internal/lungs/L = C.get_organ_slot("lungs") //Hacky and bad. Will be rewritten entirely in KapuCarbons anyway.
-	if(L)
-		L.Remove(C)
-		QDEL_NULL(L)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
@@ -215,7 +210,7 @@
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
 	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
-		switch_to_screen(booting_ipc, "Console")
+		switch_to_screen(booting_ipc, saved_screen)
 		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
@@ -242,9 +237,14 @@
 			return
 		bodypart.limb_id = chassis_of_choice.icon_state
 		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
-		bodypart.update_limb()
+		bodypart.should_draw_greyscale = bodypart::should_draw_greyscale
+		bodypart.palette = bodypart::palette
+		bodypart.palette_key = bodypart::palette_key
 		if(chassis_of_choice.palette_key == MUTANT_COLOR)
 			bodypart.should_draw_greyscale = TRUE
+			bodypart.palette = chassis_of_choice.palette
+			bodypart.palette_key = chassis_of_choice.palette_key
+		bodypart.update_limb()
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
 	SIGNAL_HANDLER
@@ -434,3 +434,16 @@
 		)
 
 	return to_add
+
+/datum/species/ipc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/ipc, seconds_per_tick, times_fired)
+	if(chem?.synthetic_boozepwr)
+		var/booze_power = chem.synthetic_boozepwr
+		if(ipc.nutrition < NUTRITION_LEVEL_FULL)
+			ipc.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
+		if(HAS_TRAIT(ipc, TRAIT_ALCOHOL_TOLERANCE))
+			booze_power *= 0.7
+		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
+			booze_power *= 2
+		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
+		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
+	return ..()

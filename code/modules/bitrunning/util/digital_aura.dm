@@ -23,7 +23,7 @@
 /// Returns a list of overlays to be used for the digital effect
 /atom/proc/get_digital_overlays()
 	var/base_icon
-	var/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	if(!length(dimensions))
 		return
 

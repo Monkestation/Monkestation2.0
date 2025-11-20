@@ -232,6 +232,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 *	HALLOWEEN
 */
 
+/datum/loadout_item/head/jack
+	name = "Carved Square Pumpkin"
+	item_path = /obj/item/clothing/head/utility/hardhat/jack
+	requires_purchase = FALSE
+
 /datum/loadout_item/head/xenos
 	name = "Xenos Helmet"
 	item_path = /obj/item/clothing/head/costume/xenos
@@ -245,8 +250,8 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	item_path = /obj/item/clothing/head/syndicatefake
 
 /datum/loadout_item/head/glatiator
-	name = "Gladiator Helmet"
-	item_path = /obj/item/clothing/head/helmet/gladiator
+	name = "Gladiator Helmet Replica"
+	item_path = /obj/item/clothing/head/helmet/gladiator/cheap
 
 /datum/loadout_item/head/griffin
 	name = "Griffon Head"
@@ -685,6 +690,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/jester
 	name = "Jester hat"
 	item_path = /obj/item/clothing/head/costume/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/jester2
+	name = "Alternate Jester Hat"
+	item_path = /obj/item/clothing/head/costume/jester2
 	restricted_roles = list(JOB_CLOWN)
 	requires_purchase = FALSE
 

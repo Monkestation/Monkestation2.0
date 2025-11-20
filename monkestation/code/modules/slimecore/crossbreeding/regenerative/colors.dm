@@ -34,3 +34,5 @@
 	extra_traits = list(TRAIT_NOCRITOVERLAY, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
 	pain_amount = 80 //wow having my wounds closed up in seconds really fucking HURTS
 
+/datum/status_effect/regenerative_extract/rainbow/apply_alert_effect(alert_color)
+	linked_alert.rainbow_effect()

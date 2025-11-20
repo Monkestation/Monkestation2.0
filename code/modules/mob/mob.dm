@@ -30,6 +30,8 @@
 	else if(ckey)
 		stack_trace("Mob without client but with associated ckey has been deleted.")
 
+	persistent_client?.set_mob(null)
+
 	unset_machine()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
@@ -103,11 +105,8 @@
 		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
@@ -767,12 +766,12 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated())
+	if(incapacitated(IGNORE_SOFTCRIT))
 		return
 
-	var/obj/item/I = get_active_held_item()
-	if(I)
-		I.attack_self(src)
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		held_item.attack_self(src)
 		update_held_items()
 		return
 
@@ -843,6 +842,7 @@
 	set hidden = TRUE
 	set category = null
 	return
+
 /**
  * Topic call back for any mob
  *
@@ -856,20 +856,6 @@
 		unset_machine()
 		src << browse(null, t1)
 
-/**
- * Controls if a mouse drop succeeds (return null if it doesnt)
- */
-/mob/MouseDrop(mob/M)
-	. = ..()
-	if(M != usr)
-		return
-	if(usr == src)
-		return
-	if(!Adjacent(usr))
-		return
-	if(isAI(M))
-		return
-
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
 	return FALSE
@@ -878,6 +864,7 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
+	return .
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -1008,15 +995,64 @@
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
 
-	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
-	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
+	// A list of all things which are providing anti-magic to us
+	var/list/antimagic_sources = list()
+	var/is_magic_blocked = FALSE
 
-	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, antimagic_sources) & COMPONENT_MAGIC_BLOCKED)
+		is_magic_blocked = TRUE
+	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		is_magic_blocked = TRUE
 
+	if(is_magic_blocked && charge_cost > 0 && !HAS_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC))
+		on_block_magic_effects(casted_magic_flags, antimagic_sources)
+
 	return is_magic_blocked
+
+/// Called whenever a magic effect with a charge cost is blocked and we haven't recently blocked magic.
+/mob/proc/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	return
+
+/mob/living/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	ADD_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT), 6 SECONDS)
+
+	var/mutable_appearance/antimagic_effect
+	var/antimagic_color
+	var/atom/antimagic_source = length(antimagic_sources) ? pick(antimagic_sources) : src
+
+	if(magic_flags & MAGIC_RESISTANCE)
+		visible_message(
+			span_warning("[src] pulses red as [ismob(antimagic_source) ? p_they() : antimagic_source] absorbs magic energy!"),
+			span_userdanger("An intense magical aura pulses around [ismob(antimagic_source) ? "you" : antimagic_source] as it dissipates into the air!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
+		playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
+		visible_message(
+			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
+			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
+		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+
+	else if(magic_flags & MAGIC_RESISTANCE_MIND)
+		visible_message(
+			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
+			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
+		)
+		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_color = LIGHT_COLOR_DARK_BLUE
+		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+
+	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
+	add_overlay(antimagic_effect)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
@@ -1057,7 +1093,7 @@
 	if (Adjacent(A))
 		return TRUE
 	var/datum/dna/mob_dna = has_dna()
-	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
+	if(mob_dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
 
 	//range check
@@ -1086,6 +1122,13 @@
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+ * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
+ * * BYPASS_ADJACENCY - The target does not have to be adjacent
+ * * SILENT_ADJACENCY - Adjacency is required but errors are not printed
+* * NOT_INSIDE_TARGET - The target maybe adjacent but the mob should not be inside the target
+ *
+ * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
+ * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
 /mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
@@ -1212,13 +1255,6 @@
 		return
 	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
 		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
-	for(var/atom/movable/screen/plane_master/additive_lighting/light as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE_ADDITIVE))
-		if(!client)
-			return
-		if(!client.prefs.read_preference(/datum/preference/toggle/bloom))
-			light.alpha = 0
-		else
-			light.alpha = 140
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
@@ -1345,48 +1381,41 @@
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
-		if(!check_rights(NONE))
-			return
-		usr.client.VUAP_selected_mob = src
-		usr.client.selectedPlayerCkey = src.ckey
-		usr.client.holder.vuap_open()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_spell, src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
-		if(!check_rights(NONE))
-			return
-		usr.client.remove_spell(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/remove_spell, src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
-		if(!check_rights(NONE))
-			return
-		usr.client.give_disease(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, src)
+
 	if(href_list[VV_HK_GIB])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_gib(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/gib_them, src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_admin_drop_everything(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/drop_everything, src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_assume_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_assume_direct_control, src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
-		if(!check_rights(NONE))
-			return
-		usr.client.cmd_give_direct_control(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_give_direct_control, src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
@@ -1409,12 +1438,11 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu()
+/mob/verb/open_language_menu_verb()
 	set name = "Open Language Menu"
 	set category = "IC"
 
-	var/datum/language_holder/H = get_language_holder()
-	H.open_language_menu(usr)
+	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks

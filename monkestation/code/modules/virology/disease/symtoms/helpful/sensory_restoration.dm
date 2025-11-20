@@ -1,6 +1,6 @@
 /datum/symptom/sensory_restoration
 	name = "Sensory Restoration"
-	desc = "The virus adjusts how light is absorbed in the eyes, leading to enhanced vision at high strength."
+	desc = "The disease adjusts how light is absorbed in the eyes, leading to enhanced vision at high strength."
 	stage = 3
 	max_multiplier = 3
 	badness = EFFECT_DANGER_HELPFUL

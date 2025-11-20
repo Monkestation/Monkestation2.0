@@ -55,7 +55,7 @@
 				for(var/turf/T as anything in get_turfs_by_zlevel(area_zlevel))
 					T.cut_overlay(lighting_effects[z_offsets[T.z] + 1])
 	cut_overlay(lighting_effects[1])
-	QDEL_LIST(lighting_effects)
+	lighting_effects.Cut()
 	area_has_base_lighting = FALSE
 
 /area/proc/add_base_lighting()

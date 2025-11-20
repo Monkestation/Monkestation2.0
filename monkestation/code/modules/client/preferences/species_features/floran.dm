@@ -6,11 +6,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/floran_leaves/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.floran_leaves_list,
-		"floran_leaves",
-		list("ADJ"),
-	)
+	return assoc_to_keys_features(GLOB.floran_leaves_list)
+
+/datum/preference/choiced/floran_leaves/icon_for(value)
+	var/datum/sprite_accessory/floran_leaves = GLOB.floran_leaves_list[value]
+	if(floran_leaves.icon_state == null || floran_leaves.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(floran_leaves.icon, "m_floran_leaves_[floran_leaves.icon_state]_ADJ")
+	return final_icon
+
 /datum/preference/numeric/hiss_length
 	savefile_key = "hiss_length"
 	savefile_identifier = PREFERENCE_CHARACTER

@@ -33,8 +33,6 @@
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
-	/// If true, adds side path points according to value. Only main branch powers that split into sidepaths should have this.
-	var/adds_sidepath_points = 0
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
 	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
@@ -65,8 +63,6 @@
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
-	// Usually zero
-	our_heretic.side_path_points += adds_sidepath_points
 	on_gain(user, our_heretic)
 
 /**
@@ -672,9 +668,8 @@
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
-	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_boldnotice("[name] completed!"))
-	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)

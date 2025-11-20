@@ -151,17 +151,17 @@
 
 /obj/item/food/grown/on_grind()
 	. = ..()
-	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	if(grind_results?.len)
-		for(var/i in 1 to grind_results.len)
+	if(reagents && length(grind_results))
+		var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		for(var/i in 1 to length(grind_results))
 			grind_results[grind_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
 /obj/item/food/grown/on_juice()
-	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	if(juice_results?.len)
-		for(var/i in 1 to juice_results.len)
+	if(reagents && length(juice_results))
+		var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		for(var/i in 1 to length(juice_results))
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)

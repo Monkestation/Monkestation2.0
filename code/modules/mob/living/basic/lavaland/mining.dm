@@ -3,7 +3,7 @@
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	mob_size = MOB_SIZE_LARGE
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
 	bodytemp_cold_damage_limit = -1
@@ -18,11 +18,14 @@
 	var/crusher_loot
 	/// What is the chance the mob drops it if all their health was taken by crusher attacks
 	var/crusher_drop_chance = 25
+	/// Does this mob count for mining mob kills counter?
+	var/kill_count = TRUE
 
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	if (kill_count)
+		AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\

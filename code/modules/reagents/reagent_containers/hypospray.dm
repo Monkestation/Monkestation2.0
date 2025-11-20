@@ -81,8 +81,46 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
+/obj/item/reagent_containers/hypospray/combat/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!interacting_with.reagents)
+		return
+
+	. |= SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(reagents.total_volume >= reagents.maximum_volume)
+		to_chat(user, span_notice("[src] is full."))
+		return
+
+	if(reagents.total_volume >= reagents.maximum_volume)
+		to_chat(user, span_notice("[src] is full."))
+		return
+
+	if(isliving(interacting_with)) // Combat hypo can only draw chems
+		return
+
+	if(!interacting_with.reagents.total_volume)
+		to_chat(user, span_warning("[interacting_with] is empty!"))
+		return
+
+	if(!interacting_with.is_drawable(user))
+		to_chat(user, span_warning("You cannot directly remove reagents from [interacting_with]!"))
+		return
+
+	var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	interacting_with.update_appearance()
+
 /obj/item/reagent_containers/hypospray/combat/empty
 	list_reagents = null
+
+/obj/item/reagent_containers/hypospray/combat/anti_tox
+	name = "anti-toxin injector"
+	desc = "A modified air-needle autoinjector, used by support operatives to quickly purge patients of toxins."
+	amount_per_transfer_from_this = 10
+	icon_state = "combat_hypo_tox"
+	volume = 100
+	possible_transfer_amounts = list(5,10)
+	list_reagents = list(/datum/reagent/medicine/c2/seiver = 50, /datum/reagent/medicine/c2/multiver = 50)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
 	name = "experimental combat stimulant injector"
@@ -271,7 +309,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
@@ -344,3 +382,182 @@
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/mutadone = 15)
+
+/obj/item/reagent_containers/hypospray/medipen/penthrite
+	name = "penthrite autoinjector"
+	desc = "Experimental heart medication."
+	icon_state = "atropen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "atropen"
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/temperature //not a survival subtype, because a low pressure seal on a medipen as harmless as this is pointless
+	name = "Temperature Stabilization Injector"
+	desc = "A three use medipen with the only purpose being to stabilize body temperature. Handy if you plan to be lit on fire or fight a watcher."
+	icon_state = "morphen"
+	base_icon_state = "morphen"
+	amount_per_transfer_from_this = 10
+	volume = 30
+	list_reagents = list(/datum/reagent/medicine/leporazine = 30)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/penthrite
+	name = "Rapid Penthrite Injector"
+	desc = "An expensive single use injector containing penthrite, allowing your body to keep functioning even with wounds that would make someone collapse. Seems to only be rapid in a low pressure enviorment as well... thats misleading. <b> WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. </b>"
+	icon_state = "atropen"
+	base_icon_state = "atropen"
+	amount_per_transfer_from_this = 15
+	volume = 15
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 15)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/speed
+	name = "Rush Injector"
+	desc = "An experimental medipen containing some mysterious chemical cocktail that allows the user to move incredibly fast for a very short period of time. Takes a second to kick in. <b> SIDE EFFECTS OF USING MANY STIMS IN A SHORT PERIOD UNKNOWN </b>"
+	icon_state = "gorillapen"
+	base_icon_state = "gorillapen"
+	amount_per_transfer_from_this = 4.5
+	volume = 4.5
+	list_reagents = list(/datum/reagent/consumable/monkey_energy = 1, /datum/reagent/drug/methamphetamine/borer_version = 1.5, /datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/cocaine = 1)
+
+/obj/item/reagent_containers/hypospray/medipen/magnet
+	name = "Magnetization Injector"
+	desc = "A single use medipen that gives a long lasting magnetization effect, causing you to pull in ores laying on the ground. <b> WARNING : CONTENTS MAY BE LIGHTLY ALCOHOLIC IN NATURE </b>"
+	icon_state = "invispen"
+	base_icon_state = "invispen"
+	amount_per_transfer_from_this = 20
+	volume = 20
+	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 20)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
+	name = "luxury oozeling medipen"
+	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozeling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZELING LIFE </b>"
+	icon_state = "luxpen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "luxpen"
+	volume = 90
+	amount_per_transfer_from_this = 90
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly = 10 ,/datum/reagent/toxin/plasma = 10, /datum/reagent/toxin = 10,/datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/synthcare
+	name = "Small Synthetic Care Pen"
+	desc = "A single use applicator made to care for synthetic parts, be it a single prosthetic or an IPC. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS CAN PROVE HAZARDOUS TO SYNTHETICS. DOES NOT WORK ON CYBORGS. DO NOT MIX WITH ADVANCED NANITE SLURRY.</b>"
+	icon_state = "syndipen"
+	base_icon_state = "syndipen"
+	amount_per_transfer_from_this = 9
+	volume = 9
+	list_reagents = list(/datum/reagent/medicine/nanite_slurry = 9)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/synthcare
+	name = "Advanced Synthetic Care Pen"
+	desc = "A single use applicator made to rapidly fix urgent damage to synthetic parts on the go in low pressure enviorments and provide a small speed boost. Contains chemicals that are safe but otherwise worthless for organics. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS IS GURANTEED TO BE LETHAL TO SYNTHETICS. DOES NOT WORK ON CYBORGS. UNDER NO CIRCUMSTANCES IS THIS TO BE MIXED WITH BASIC NANITE SLURRY (FOUND IN THE SMALL SYNTHETIC CARE PEN)</b>"
+	icon_state = "nanite_hypo"
+	base_icon_state = "nanite_hypo"
+	amount_per_transfer_from_this = 10.5
+	volume = 10.5
+	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine/robo = 1.5)
+/obj/item/reagent_containers/hypospray/medipen/advanced
+	name = "advanced stimulant autoinjector"
+	desc = "Contains a very large amount of an incredibly powerful stimulant, vastly increasing your movement speed and reducing stuns by a very large amount for around five minutes. Do not take if pregnant. Has a two use system."
+	icon_state = "syndipendouble"
+	inhand_icon_state = "tbpen"
+	base_icon_state = "syndipendouble"
+	volume = 100
+	amount_per_transfer_from_this = 50
+	possible_transfer_amounts = list(50)
+	list_reagents = list(/datum/reagent/medicine/stimulants = 100)
+	var/stripe_style = null
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/update_overlays()
+	. = ..()
+	if(stripe_style)
+		. += "[stripe_style]"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/update_icon_state()
+	. = ..()
+	if(reagents.total_volume >= volume)
+		icon_state = base_icon_state
+		return
+	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? 1 : 0]"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/oxandrolone
+	name = "advanced oxandrolone autoinjector"
+	desc = "An autoinjector containing oxandrolone, used to treat severe burns. Has a two use system."
+	volume = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 20)
+	stripe_style = "oxa"
+	inhand_icon_state = "oxapen"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/salacid
+	name = "advanced salicylic acid autoinjector"
+	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage. Has a two use system."
+	volume = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 20)
+	stripe_style = "sala"
+	inhand_icon_state = "salacid"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/morphine
+	name = "advanced morphine autoinjector"
+	desc = "An autoinjector containing morphine, used as a strong painkiller. Has a two use system."
+	volume = 30
+	amount_per_transfer_from_this = 15
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 30)
+	stripe_style = "morphine"
+	inhand_icon_state = "morphen"
+
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/salbutamol
+	name = "advanced salbutamol autoinjector"
+	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly. Has a two use system."
+	volume = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 20)
+	stripe_style = "sal"
+	inhand_icon_state = "salpen"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/penacid
+	name = "advanced pentetic autoinjector"
+	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins. Has a two use system."
+	volume = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 20)
+	stripe_style = "acid"
+	inhand_icon_state = "penacid"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/epinephrine
+	name = "advanced epinephrine autoinjector"
+	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body, and stop the production of histamine during an allergic reaction. Has a two use system."
+	volume = 50
+	amount_per_transfer_from_this = 25
+	possible_transfer_amounts = list(25)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 20, /datum/reagent/toxin/formaldehyde = 5, /datum/reagent/medicine/atropine = 20, /datum/reagent/medicine/coagulant = 5)
+	stripe_style = "epi"
+	inhand_icon_state = "medipen"
+
+/obj/item/reagent_containers/hypospray/medipen/advanced/blood_loss
+	name = "advanced hypovolemic-response autoinjector"
+	desc = "An autoinjector designed to stabilize and rapidly reverse severe bloodloss. Has a two use system."
+	volume = 100
+	amount_per_transfer_from_this = 50
+	possible_transfer_amounts = list(50)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 10, /datum/reagent/iron = 20, /datum/reagent/medicine/salglu_solution = 60)
+	stripe_style = "blood"
+	inhand_icon_state = "stimpen"
+
+/obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	name = "positronic neural dampener autoinjector"
+	desc = "An autoinjector that can be used to dampen the stimulus response capabilties and pain senses of robots and positronics. One dose for analgesia, two for anesthesia. May cause slight decrease in motor function after injection."
+	icon_state = "invispen"
+	base_icon_state = "invispen"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	list_reagents = list(/datum/reagent/medicine/painkiller/robopiates = 7.5, /datum/reagent/dinitrogen_plasmide = 2.5)

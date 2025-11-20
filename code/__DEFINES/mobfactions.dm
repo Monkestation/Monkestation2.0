@@ -87,8 +87,10 @@
 #define FACTION_TAMED "tamed"
 ///Creates associated with plague doctor
 #define FACTION_PLAGUE "plague"
-
-// Antagonist factions
+/// Bingles
+#define FACTION_BINGLE "bingle"
+/// Darkspawn
+#define FACTION_DARKSPAWN "darkspawn"
 
 /// Cultists and their constructs
 #define FACTION_CULT "cult"

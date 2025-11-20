@@ -76,7 +76,7 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max)
+		var/amount = round(min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max), CHEMICAL_VOLUME_ROUNDING)
 
 		if(amount <= 0)
 			continue
@@ -157,7 +157,7 @@
 		human.adjust_nutrition(-1 * hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition
-	if(nutrition > NUTRITION_LEVEL_FULL)
+	if(nutrition > NUTRITION_LEVEL_FULL && !HAS_TRAIT(human, TRAIT_NOFAT))
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
 			human.overeatduration = min(human.overeatduration + (1 SECONDS * seconds_per_tick), 20 MINUTES)
 	else
@@ -293,7 +293,7 @@
 	name = "basic cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.035 // not as good at digestion
@@ -316,6 +316,21 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
+/obj/item/organ/internal/stomach/cybernetic/surplus
+	name = "surplus prosthetic stomach"
+	desc = "A mechanical plastic oval that utilizes sulfuric acid instead of stomach acid. \
+		Very fragile, with painfully slow metabolism.\
+		Offers no protection against EMPs."
+	icon_state = "stomach-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	emp_vulnerability = 100
+	metabolism_efficiency = 0.025
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/stomach/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -324,7 +339,7 @@
 		owner.vomit(stun = FALSE)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 // Lizard stomach to Let Them Eat Rat
 /obj/item/organ/internal/stomach/lizard

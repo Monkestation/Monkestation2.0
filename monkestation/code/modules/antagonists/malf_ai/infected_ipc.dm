@@ -125,7 +125,7 @@
 	desc = "Patient's firmware integrity check is failing, malicious code present. Patient's allegiance may be compromised."
 	scan_desc = "malicious programming"
 	can_gain = TRUE
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	var/datum/mind/master_ai
 	var/datum/antagonist/infected_ipc/antagonist
@@ -142,7 +142,7 @@
 	owner.mind.remove_antag_datum(/datum/antagonist/infected_ipc)
 
 //AI MODULE
-/datum/ai_module/utility/override_directive
+/datum/ai_module/malf/utility/override_directive
 	name = "Positronic Chassis Hacking"
 	description = "Instill a directive upon a single IPC to follow your whims and protect you, \
 	Requires target to be incapacitated and non-mindshielded to use. \

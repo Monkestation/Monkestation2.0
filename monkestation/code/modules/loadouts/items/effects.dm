@@ -2,6 +2,7 @@ GLOBAL_LIST_INIT(loadout_effects, generate_loadout_items(/datum/loadout_item/eff
 
 /datum/loadout_item/effects
 	category = LOADOUT_ITEM_MISC
+	preload = FALSE
 
 /datum/loadout_item/effects/post_equip_item(datum/preferences/preference_source, mob/living/carbon/human/equipper, visuals_only)
 	var/obj/item/effect_granter/new_item = new item_path(equipper.loc)

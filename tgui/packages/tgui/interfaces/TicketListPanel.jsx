@@ -3,12 +3,12 @@ import { Section, Collapsible, Button, Tabs, Flex } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 
-export const TicketListPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TicketListPanel = (props) => {
+  const { act, data } = useBackend();
 
   const FILTERS = ['ALL', 'MY TICKETS', 'UNCLAIMED'];
 
-  const [filterType, setFilterType] = useLocalState(context, FILTERS[0]);
+  const [filterType, setFilterType] = useLocalState('filterType', FILTERS[0]);
 
   return (
     <Window
@@ -36,13 +36,11 @@ export const TicketListPanel = (props, context) => {
   );
 };
 
-export const TicketListView = (props, context) => {
+export const TicketListView = (props) => {
   const { data, filter_type } = props;
-  const { act } = useBackend(context);
 
   const open_count = data.active_tickets.length;
   const closed_count = data.closed_tickets.length;
-  const total_count = open_count + closed_count;
 
   const filterTicket = function (ticket) {
     if (filter_type === 'ALL') return true;
@@ -116,9 +114,9 @@ export const TicketListView = (props, context) => {
   );
 };
 
-export const TicketSummary = (props, context) => {
+export const TicketSummary = (props) => {
   const { ticket, user } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
   const buttons = [
     [

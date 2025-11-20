@@ -3,7 +3,7 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -29,6 +29,7 @@
 	hidden = TRUE
 
 /datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
+		. = ..()
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_bio
@@ -45,7 +46,7 @@
 		"alien_scalpel",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -70,6 +71,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_4_POINTS)
 	hidden = TRUE
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/alien_engi
 	id = "alien_engi"
@@ -86,7 +88,7 @@
 		"alien_wrench",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/circuitboard/machine/abductor,
 		/obj/item/crowbar/abductor,
@@ -101,3 +103,4 @@
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)

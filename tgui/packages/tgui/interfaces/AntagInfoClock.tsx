@@ -6,11 +6,12 @@ import { Objective, ObjectivePrintout } from './common/Objectives';
 type Info = {
   antag_name: string;
   objectives: Objective[];
+  marked_areas: string[];
 };
 
 export const AntagInfoClock = (props) => {
   const {
-    data: { antag_name, objectives },
+    data: { antag_name, objectives, marked_areas },
   } = useBackend<Info>();
   return (
     <Window width={620} height={250} theme="clockwork">
@@ -28,6 +29,7 @@ export const AntagInfoClock = (props) => {
                 objectives={objectives}
               />
             </Stack.Item>
+            <Stack.Item>{'Our marked areas are: ' + marked_areas}</Stack.Item>
           </Stack>
         </Section>
       </Window.Content>

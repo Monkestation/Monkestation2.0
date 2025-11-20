@@ -27,11 +27,15 @@
 /datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, 0)
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick)
 	var/remove_amount = 1 * REM * seconds_per_tick;
 	for(var/thing in affected_mob.reagents.reagent_list)
 		var/datum/reagent/reagent = thing
 		if(reagent != src)
-			affected_mob.reagents.remove_reagent(reagent.type, remove_amount)
+			if(reagent.synthetic_boozepwr)
+				affected_mob.reagents.remove_reagent(reagent.type, remove_amount * 15) //much faster than antihol cause it metabolizes much faster than antihol
+			else
+				affected_mob.reagents.remove_reagent(reagent.type, remove_amount)
 	..()
 	return TRUE
 
@@ -86,8 +90,43 @@
 		affected_mob.vomit(vomit_type = /obj/effect/decal/cleanable/chem_pile)
 	return TRUE
 
+/datum/reagent/medicine/nanite_slurry/strong
+	name = "Super Nanite Slurry"
+	description = "A localized swarm of advanced nanomachines specialized in repairing mechanical parts rapidly. While concentrated amounts will safely purge from an organic host, in a synthetic host the friction will cause them to overheat and melt violently."
+	overdose_threshold = 10
+	/// How much brute and burn individually is healed per tick
+	healing = 5
+	/// How much body temperature is increased by per overdose cycle on robotic bodyparts.
+	temperature_change = 100
+
+/datum/reagent/medicine/nanite_slurry/strong/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick)
+	var/heal_amount = healing * REM * seconds_per_tick
+	affected_mob.heal_bodypart_damage(heal_amount, heal_amount, required_bodytype = BODYTYPE_ROBOTIC)
+	return ..()
+
+/datum/reagent/medicine/nanite_slurry/strong/overdose_start(mob/living/affected_mob)
+	if(affected_mob.mob_biotypes & MOB_ROBOTIC)
+		to_chat(affected_mob, span_danger("The nanomachines inside you are overheating due to the high concentration, you have mere moments to live!"))
+	else
+		to_chat(affected_mob, span_danger("Your stomach lurches as concentrations of nanites begin disposing of themselves."))
+
+/datum/reagent/medicine/nanite_slurry/strong/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) // Mostly to treat a synthetic being EMP'd
+	if(affected_mob.mob_biotypes & MOB_ROBOTIC)
+		affected_mob.adjust_bodytemperature(temperature_change * REM * seconds_per_tick) // Overheats
+		affected_mob.take_bodypart_damage(burn = (healing * REM * seconds_per_tick) * 1.5) // Burns up
+		return ..()
+	affected_mob.reagents.remove_reagent(type, NANITE_SLURRY_ORGANIC_PURGE_RATE) //gets removed from organics very fast
+	if(prob(NANITE_SLURRY_ORGANIC_VOMIT_CHANCE))
+		affected_mob.vomit(vomit_type = /obj/effect/decal/cleanable/chem_pile)
+	return TRUE
+
 #undef NANITE_SLURRY_ORGANIC_PURGE_RATE
 #undef NANITE_SLURRY_ORGANIC_VOMIT_CHANCE
+
+/datum/chemical_reaction/reagent_explosion/nanite_mismatch //these nanite types are not compatible with each other! do not mix!!!
+	required_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 1, /datum/reagent/medicine/nanite_slurry = 1)
+	strengthdiv = 3
+	modifier = 3
 
 
 /datum/reagent/medicine/taste_suppressor

@@ -30,6 +30,7 @@
 		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
+		/obj/effect/constructing_effect,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -46,7 +47,9 @@
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
-	parent.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/chasm)
+	var/turf/turf_parent = parent
+	if(!istype(turf_parent.loc, /area/deathmatch/fullbright)) // there are so so so many explosives in deathmatch and i dont think anyone is going to fish in the *death*match arena
+		parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
 	storage = null
@@ -106,23 +109,17 @@
 		return CHASM_NOT_DROPPING
 	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
 		return CHASM_REGISTER_SIGNALS
+	for(var/atom/thing_to_check as anything in parent)
+		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
+			return CHASM_NOT_DROPPING
+
+	if(!ismob(dropped_thing))
+		return CHASM_DROPPING
 
 	//Flies right over the chasm
-	if(ismob(dropped_thing))
-		var/mob/M = dropped_thing
-		if(M.buckled) //middle statement to prevent infinite loops just in case!
-			var/mob/buckled_to = M.buckled
-			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
-				return CHASM_REGISTER_SIGNALS
-		if(ishuman(dropped_thing))
-			var/mob/living/carbon/human/victim = dropped_thing
-			if(istype(victim.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/jaunter = victim.belt
-				var/turf/chasm = get_turf(victim)
-				var/fall_into_chasm = jaunter.chasm_react(victim)
-				if(!fall_into_chasm)
-					chasm.visible_message(span_boldwarning("[victim] falls into the [chasm]!")) //To freak out any bystanders
-				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
+	var/mob/victim = dropped_thing
+	if(victim.buckled && droppable(victim.buckled) != CHASM_DROPPING)
+		return CHASM_REGISTER_SIGNALS
 	return CHASM_DROPPING
 
 #undef CHASM_NOT_DROPPING
@@ -135,12 +132,21 @@
 	if(!dropped_thing || !falling_ref?.resolve())
 		falling_atoms -= falling_ref
 		return
+
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
 	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
 	if(falling_atoms[falling_ref] > 1)
 		return // We're already handling this
+
+	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
+		return
+
+	// Free (if possible) and drop all buckled mobs separately, so drivers can escape their doomed vehicle if they're not glued to it
+	for(var/mob/living/buckled as anything in dropped_thing.buckled_mobs)
+		dropped_thing.unbuckle_mob(buckled)
+		drop_stuff(buckled)
 
 	if(below_turf)
 		if(HAS_TRAIT(dropped_thing, TRAIT_CHASM_DESTROYED))
@@ -244,7 +250,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if(isliving(arrived))
+	if(isliving(arrived) || is_oozeling_core(arrived))
 		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
 		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
 			qdel(arrived)
@@ -254,7 +260,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if(isliving(gone))
+	if(isliving(gone) || is_oozeling_core(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
 
@@ -263,8 +269,9 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	var/old_cat = get_chasm_category(old_turf)
 	var/new_cat = get_chasm_category(new_turf)
 	var/list/mobs = list()
-	for(var/mob/fallen in src)
-		mobs += fallen
+	for(var/fallen in src)
+		if(ismob(fallen) || is_oozeling_core(fallen))
+			mobs += fallen
 	LAZYREMOVE(GLOB.chasm_fallen_mobs[old_cat], mobs)
 	LAZYADD(GLOB.chasm_fallen_mobs[new_cat], mobs)
 

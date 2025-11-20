@@ -64,6 +64,12 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 /*
 *	MISC
 */
+
+/datum/store_item/mask/griddle_toast
+	name = "Griddle Toast"
+	item_path = /obj/item/food/griddle_toast
+	item_cost = 2500
+
 /datum/store_item/mask/fake_mustache
 	name = "Fake Moustache"
 	item_path = /obj/item/clothing/mask/fakemoustache

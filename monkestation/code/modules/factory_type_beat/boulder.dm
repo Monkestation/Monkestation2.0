@@ -80,6 +80,8 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
@@ -91,9 +93,13 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
 		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(weapon, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -144,7 +150,7 @@
 			process_speed = override_speed_multiplier
 		else
 			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
-		playsound(src, 'sound/effects/rocktap1.ogg', 50)
+		playsound(src, 'sound/effects/rocktap1.ogg', 50, ignore_walls = FALSE)
 		if(!continued)
 			to_chat(user, span_notice("You scrape away at \the [src]... speed is [process_speed]."))
 	else
@@ -159,7 +165,7 @@
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
-		playsound(src, 'sound/effects/rock_break.ogg', 50)
+		playsound(src, 'sound/effects/rock_break.ogg', 50, ignore_walls = FALSE)
 		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return
@@ -202,7 +208,7 @@
 	var/list/quips = list("Clang!", "Crack!", "Bang!", "Clunk!", "Clank!")
 	if(length(contents))
 		visible_message(span_notice("[pick(quips)] Something falls out of \the [src]!"))
-		playsound(loc, 'sound/effects/picaxe1.ogg', 60, FALSE)
+		playsound(loc, 'sound/effects/picaxe1.ogg', 60, FALSE, ignore_walls = FALSE)
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)

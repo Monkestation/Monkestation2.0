@@ -1,9 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ae" = (
-/obj/machinery/light_switch/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/cult,
-/area/station/commons/lounge)
 "ak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -20,6 +15,11 @@
 /area/station/commons/lounge)
 "cT" = (
 /obj/machinery/vending/cigarette,
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"dh" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "em" = (
@@ -73,6 +73,10 @@
 /obj/structure/chair/wood{
 	dir = 8
 	},
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"gF" = (
+/obj/machinery/light/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "ja" = (
@@ -204,10 +208,6 @@
 "DC" = (
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/jukebox,
-/turf/open/floor/cult,
-/area/station/commons/lounge)
-"DJ" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "DZ" = (
@@ -403,15 +403,15 @@ Gh
 Bl
 ue
 Bl
-DJ
+Bl
+gF
 wp
 gA
 wp
-ae
+dh
+Bl
 Bl
 wM
-Bl
-Bl
 AZ
 Bl
 Bl
@@ -424,8 +424,8 @@ ue
 ue
 ue
 ue
-Dy
 ue
+Dy
 ue
 ue
 ue

@@ -5,13 +5,21 @@ SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
 	wait = 1 SECONDS
 	priority = FIRE_PRIORITY_GLOWSHROOMS
-	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 	var/enable_spreading = TRUE
 	var/list/obj/structure/glowshroom/glowshrooms = list()
 	var/list/obj/structure/glowshroom/currentrun_spread = list()
 	var/list/obj/structure/glowshroom/currentrun_decay = list()
+
+/datum/controller/subsystem/glowshrooms/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, glowshrooms),
+		NAMEOF(src, currentrun_spread),
+		NAMEOF(src, currentrun_decay),
+	)
 
 /datum/controller/subsystem/glowshrooms/Recover()
 	glowshrooms = SSglowshrooms.glowshrooms.Copy()

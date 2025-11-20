@@ -6,7 +6,7 @@
 	breed_name_male = "Henkster"
 
 	egg_type = /obj/item/food/egg/clown
-	mutation_list = list(/datum/mutation/ranching/chicken/mime, /datum/mutation/ranching/chicken/clown_sad)
+	mutation_list = list(/datum/ranching_mutation/chicken/mime, /datum/ranching_mutation/chicken/clown_sad)
 	minimum_living_happiness = -2000
 	liked_foods = list(/obj/item/food/grown/banana  = 3)
 

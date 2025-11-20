@@ -5,17 +5,16 @@
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
 			"Pensive" = "pensive",
 			"Angry" = "angry",
-			"Pleading" = "pleading"
+			"Pleading" = "pleading",
+			"Epic" = "epicface",
+			"Smile" = "smile"
 	)
-
-/obj/item/clothing/mask/joy/Initialize(mapload)
-	. = ..()
-	register_context()
 
 /obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -25,7 +24,6 @@
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -49,6 +47,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	adjusted_flags = ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	greyscale_config = /datum/greyscale_config/kitsune
@@ -66,6 +67,10 @@
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+
+/obj/item/clothing/mask/kitsune/click_alt(mob/living/user)
+	weldingvisortoggle(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/joy/manhunt
 	name = "smiley mask"

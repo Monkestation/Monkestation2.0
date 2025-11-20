@@ -2,7 +2,7 @@
 	name = "ectoplasm anomaly"
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
-	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
+	anomaly_core = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
 
 	///Blocks the anomaly from updating ghost count. Used in case an admin wants to rig the anomaly to be a certain size or intensity.
@@ -12,7 +12,7 @@
 	///The actual number of ghosts orbiting the anomaly.
 	var/ghosts_orbiting = 0
 
-/obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/ectoplasm/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	AddComponent(/datum/component/deadchat_control/cardinal_movement, _deadchat_mode = ANARCHY_MODE, _inputs = list(), _input_cooldown = 7 SECONDS)

@@ -137,13 +137,14 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	for(var/atom/movable/AM in container.contents - manifest_paper)
-		if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
+		else
+			for(var/atom/movable/AM in container.contents - manifest_paper)
 				manifest_text += "<li>[AM.name]</li>"
-			else
-				continue
-		manifest_text += "<li>[AM.name]</li>"
+				if(prob(50))
+					manifest_text += "<li>[AM.name]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 

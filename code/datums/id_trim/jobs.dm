@@ -102,6 +102,32 @@
 		access |= list(
 			ACCESS_MAINT_TUNNELS)
 
+/datum/id_trim/job/bridge_assistant
+	assignment = "Bridge Assistant"
+	trim_state = "trim_assistant"
+	sechud_icon_state = SECHUD_BRIDGEASSISTANT
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_COMMAND_BLUE
+	minimal_access = list(
+		ACCESS_COMMAND,
+		ACCESS_SECURITY, //console
+		ACCESS_MEDICAL, //console AGAIN
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_TELEPORTER,
+	)
+	extra_access = list(ACCESS_RC_ANNOUNCE,)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+	)
+	job = /datum/job/bridge_assistant
+
+/datum/id_trim/job/bridge_assistant/chat_span()
+	return "job__bridgeassistant"
+
 /datum/id_trim/job/atmospheric_technician
 	assignment = "Atmospheric Technician"
 	trim_state = "trim_atmospherictechnician"
@@ -176,6 +202,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
 
@@ -242,12 +269,12 @@
 		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
 
@@ -545,11 +572,13 @@
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
 		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
-		ACCESS_VAULT,
+		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		ACCESS_MECH_MINING,
 		ACCESS_QM,
+		ACCESS_SHIPPING,
+		ACCESS_VAULT,
 		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
@@ -1078,8 +1107,14 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
+
+/datum/id_trim/job/shaft_miner/refresh_trim_access()
+	. = ..()
+	if(. && SSmapping.is_planetary())
+		access |= list(ACCESS_EXTERNAL_AIRLOCKS)
 
 /// ID card obtained from the mining Disney dollar points vending machine.
 /datum/id_trim/job/shaft_miner/spare

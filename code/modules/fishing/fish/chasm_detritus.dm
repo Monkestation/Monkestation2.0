@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/proc/get_chasm_contents(turf/fishing_spot)
 	. = list()
 	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
-		for (var/thing as anything in storage.contents)
+		for (var/thing in storage.contents)
 			. += thing
 
 /// Variant of the chasm detritus that allows for an easier time at fishing out
@@ -71,13 +71,15 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/restricted
 	/// What type do we check for in the contents of the `/obj/effect/abstract/chasm_storage`
 	/// contained in the `GLOB.chasm_storage` global list in `find_chasm_contents()`.
+	///
+	/// This can also be a list of typepaths.
 	var/chasm_storage_restricted_type = /obj
 
 /datum/chasm_detritus/restricted/get_chasm_contents(turf/fishing_spot)
 	. = list()
 	for(var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
-		for (var/thing as anything in storage.contents)
-			if(!istype(thing, chasm_storage_restricted_type))
+		for (var/thing in storage.contents)
+			if(!(islist(chasm_storage_restricted_type) ? is_type_in_list(thing, chasm_storage_restricted_type) : istype(thing, chasm_storage_restricted_type)))
 				continue
 			. += thing
 
@@ -88,7 +90,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /datum/chasm_detritus/restricted/bodies
 	default_contents_chance = 12.5
 	default_contents_key = BODIES_ONLY
-	chasm_storage_restricted_type = /mob
+	chasm_storage_restricted_type = list(/mob, /obj/item/organ/internal/brain/slime)
 
 /// This also includes all mobs fallen into chasms, regardless of distance
 /datum/chasm_detritus/restricted/bodies/get_chasm_contents(turf/fishing_spot)
@@ -99,9 +101,9 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /// The first sentient body found in the list of contents is returned, otherwise
 /// if none are sentient choose randomly.
 /datum/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
-	for(var/mob/fallen_mob as anything in chasm_stuff)
-		if(fallen_mob.mind)
-			return fallen_mob
+	for(var/thing in chasm_stuff)
+		if(astype(thing, /mob)?.mind || astype(thing, /obj/item/organ/internal/brain/slime)?.mind)
+			return thing
 	return ..()
 
 #undef NORMAL_CONTENTS

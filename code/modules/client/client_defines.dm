@@ -45,8 +45,6 @@
 	var/datum/click_intercept = null
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
-	///Used for admin AI interaction
-	var/AI_Interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
@@ -74,7 +72,7 @@
 	var/datum/preferences/prefs = null
 	/// Player interaction mode, set by preferences.
 	var/datum/interaction_mode/imode
-	///Cache for the prefence value of [/datum/preference/toggle/context_menu_requires_shift]
+	///Cache for the prefence value of [/datum/preference/choice/context_menu_requires_shift]
 	var/context_menu_requires_shift = FALSE
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
@@ -202,11 +200,10 @@
 	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
-	///Our object window datum. It stores info about and handles behavior for the object tab
-	var/datum/object_window_info/obj_window
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
+	var/atom/movable/screen/parallax_home/parallax_rock
 	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
 	var/turf/previous_turf
@@ -216,8 +213,8 @@
 	var/parallax_movedir = 0
 	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
-	/// Timer for the area directional animation
-	var/parallax_animate_timer
+	/// Timers for the area directional animation, one for each layer
+	var/list/parallax_animate_timers
 	/// Do we want to do parallax animations at all?
 	/// Exists to prevent laptop fires
 	var/do_parallax_animations = TRUE
@@ -274,6 +271,12 @@
 
 	/// Does this client have typing indicators enabled?
 	var/typing_indicators = FALSE
+
+	/// Loot panel for the client
+	var/datum/lootpanel/loot_panel
+
+	///Which ambient sound this client is currently being provided.
+	var/current_ambient_sound
 
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling

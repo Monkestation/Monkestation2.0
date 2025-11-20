@@ -41,7 +41,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
  */
 /atom/movable/screen/map_view/proc/display_to(mob/show_to, datum/tgui_window/window)
 	if(window && !window.visible)
-		RegisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
+		RegisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible), override = TRUE)
 	else
 		display_to_client(show_to.client)
 

@@ -50,7 +50,7 @@
 	user.playsound_local(get_turf(user), 'monkestation/sound/voice/robotic/crime.ogg',100,0, use_reverb = TRUE)
 	sleep(2 SECOND)
 
-/obj/item/clothing/head/hats/tophat/syndicate/MouseDrop(atom/over_object)
+/obj/item/clothing/head/hats/tophat/syndicate/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(primed)
 		to_chat(usr, span_userdanger("You hesitate remembering the faint click you heard..."))
 		return

@@ -26,16 +26,15 @@
 		if(!isethereal(affected)) //ethereals have weird custom hair color handling
 			switch(hair_color)
 				if("pink")
-					affected.hair_color = "#e983d8"
+					affected.set_haircolor("#e983d8", update = TRUE)
 				if("red")
-					affected.hair_color = "#E01631"
+					affected.set_haircolor("#E01631", update = TRUE)
 				if("green")
-					affected.hair_color = "#008000"
+					affected.set_haircolor("#008000", update = TRUE)
 				if("blue")
-					affected.hair_color = "#0000FF"
+					affected.set_haircolor("#0000FF", update = TRUE)
 				if("purple")
-					affected.hair_color = "#800080"
-			affected.update_body()
+					affected.set_haircolor("#800080", update = TRUE)
 
 		if(multiplier)
 			if(multiplier >= 1.5)
@@ -102,4 +101,4 @@
 		if(affected.w_uniform && istype(affected.w_uniform, /obj/item/clothing/under/costume/schoolgirl))
 			REMOVE_TRAIT(affected.w_uniform, TRAIT_NODROP, REF(src))
 
-		affected.hair_color = old_haircolor
+		affected.set_haircolor(old_haircolor, update = TRUE)

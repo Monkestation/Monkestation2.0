@@ -1,7 +1,7 @@
 //monkestation edits: The whole thing.
 /datum/techweb_node/augmentation
 	id = "augmentation"
-	display_name = "Advanced prosthetics"
+	display_name = "Advanced Prosthetics"
 	description = "Designs for some one of the most enhanced prosthetic set's on the market. They harden in response to physical trauma."
 	prereq_ids = list("ipc_parts")
 	design_ids = list(

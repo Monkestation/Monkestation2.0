@@ -132,14 +132,13 @@
 
 /datum/status_effect/slime_clone/on_apply()
 	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		C.update_name_tag(C.real_name) // monkestation edit: name tags
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	clone = new typepath(owner.drop_location())
+	if(iscarbon(owner) && iscarbon(clone))
+		var/mob/living/carbon/carbon_owner = owner
+		var/mob/living/carbon/carbon_clone = clone
+		carbon_clone.real_name = carbon_owner.real_name
+		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		carbon_clone.updateappearance(mutcolor_update = TRUE)
 	if(owner.mind)
 		originalmind = owner.mind
 		owner.mind.transfer_to(clone)
@@ -187,7 +186,7 @@
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
@@ -195,8 +194,7 @@
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
-	if(prob(50))
-		owner.adjustFireLoss(2)
+	owner.adjust_bodytemperature(-20 KELVIN)
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -462,9 +460,6 @@
 	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
-	if(!QDELETED(linked_extract))
-		linked_extract.linked_effect = null
-		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
@@ -576,11 +571,11 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
 		to_chat(owner, span_notice("[linked_extract] discharges some energy into a device you have."))
 	return ..()
@@ -683,14 +678,13 @@
 
 /datum/status_effect/bluespacestabilization
 	id = "stabilizedbluespacecooldown"
-	duration = 1200
+	duration = 2 MINUTES
 	alert_type = null
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
 	colour = "bluespace"
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
-	var/healthcheck
 
 /datum/status_effect/stabilized/bluespace/tick()
 	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
@@ -701,8 +695,8 @@
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
 
-	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
+	if(owner.stat >= SOFT_CRIT)
+		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
@@ -713,7 +707,6 @@
 			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
-	healthcheck = owner.health
 	return ..()
 
 /datum/status_effect/stabilized/sepia
@@ -740,36 +733,43 @@
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
-	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		C.update_name_tag(C.real_name) // monkestation edit: name tags
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	create_clone()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
 
-/datum/status_effect/stabilized/cerulean/tick()
-	if(owner.stat == DEAD)
-		if(clone && clone.stat != DEAD)
-			owner.visible_message(span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
-				span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere."))
-			if(owner.mind)
-				owner.mind.transfer_to(clone)
-			clone = null
-			qdel(linked_extract)
-		if(!clone || clone.stat == DEAD)
-			to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
-			qdel(linked_extract)
-	..()
-
 /datum/status_effect/stabilized/cerulean/on_remove()
-	if(clone)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	if(!QDELETED(clone))
 		clone.visible_message(span_warning("[clone] dissolves into a puddle of goo!"))
 		clone.unequip_everything()
 		qdel(clone)
+	clone = null
+	return ..()
+
+/datum/status_effect/stabilized/cerulean/proc/create_clone()
+	var/typepath = owner.type
+	clone = new typepath(owner.drop_location())
+	if(iscarbon(owner) && iscarbon(clone))
+		var/mob/living/carbon/carbon_owner = owner
+		var/mob/living/carbon/carbon_clone = clone
+		carbon_clone.real_name = carbon_owner.real_name
+		carbon_clone.copy_voice_from(carbon_owner)
+		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		carbon_clone.updateappearance(mutcolor_update = TRUE)
+
+/datum/status_effect/stabilized/cerulean/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	if(QDELETED(clone) || clone.stat == DEAD)
+		to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
+		qdel(linked_extract)
+		return
+	owner.visible_message(
+		span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
+		span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.")
+	)
+	owner.mind?.transfer_to(clone)
+	clone = null
+	QDEL_NULL(linked_extract)
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -815,7 +815,7 @@
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
 		originalname = H.real_name
-		H.dna.copy_dna(originalDNA)
+		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
 	return ..()
 
@@ -829,11 +829,11 @@
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		originalDNA.transfer_identity(H)
-		H.real_name = originalname
-		H.update_name_tag(originalname) // monkestation edit: name tags
-		H.updateappearance(mutcolor_update=1)
+		var/mob/living/carbon/human/human = owner
+		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
+		human.real_name = originalname
+		human.updateappearance(mutcolor_update = TRUE)
+	originalDNA = null
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
@@ -928,10 +928,17 @@
 	id = "stabilizedoil"
 	colour = "oil"
 
-/datum/status_effect/stabilized/oil/tick()
-	if(owner.stat == DEAD)
-		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
+/datum/status_effect/stabilized/oil/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
+
+/datum/status_effect/stabilized/oil/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	return ..()
+
+/datum/status_effect/stabilized/oil/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 
 /datum/status_effect/stabilized/oil/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] smell[owner.p_s()] of sulfur and oil!")
@@ -1054,7 +1061,6 @@
 		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
-			familiar.update_atom_languages()
 			familiar.PossessByPlayer(linked.saved_mind.key)
 	else
 		if(familiar.mind)
@@ -1076,20 +1082,59 @@
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 5
 
+/// Cooldown ID for stable rainbow activations.
+#define COOLDOWN_STABLE_RAINBOW "stable_rainbow_cooldown"
+
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
 	colour = "rainbow"
+	var/trigger_after_cooldown = FALSE
 
-/* monkestation edit: replaced in [monkestation\code\modules\slimecore\crossbreeding\stabilized.dm]
+/datum/status_effect/stabilized/rainbow/on_apply()
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_critical))
+	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
+	return TRUE
+
+/datum/status_effect/stabilized/rainbow/on_remove()
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_LIVING_HEALTH_UPDATE))
+
 /datum/status_effect/stabilized/rainbow/tick()
-	if(owner.health <= 0)
-		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
-		if(istype(X))
-			if(X.regencore)
-				X.regencore.afterattack(owner,owner,TRUE)
-				X.regencore = null
-				owner.visible_message(span_warning("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
-				qdel(src)
-				qdel(linked_extract)
-	return ..()
-*/
+	. = ..()
+	// if we entered crit during cooldown, we'll keep trying to activate so that it'll take effect the moment the cooldown expires
+	if(trigger_after_cooldown)
+		if(owner.health <= owner.crit_threshold)
+			activate()
+		else
+			trigger_after_cooldown = FALSE
+
+/datum/status_effect/stabilized/rainbow/proc/on_enter_critical(datum/source)
+	SIGNAL_HANDLER
+	activate()
+
+/datum/status_effect/stabilized/rainbow/proc/on_health_update(datum/source)
+	SIGNAL_HANDLER
+	if(owner.health <= owner.hardcrit_threshold)
+		activate()
+
+/datum/status_effect/stabilized/rainbow/proc/activate()
+	var/obj/item/slimecross/stabilized/rainbow/extract = linked_extract
+	if(QDELETED(src) || !istype(extract) || QDELING(extract) || QDELETED(extract.regencore))
+		return
+	if(TIMER_COOLDOWN_RUNNING(owner, COOLDOWN_STABLE_RAINBOW))
+		trigger_after_cooldown = TRUE
+		return
+	trigger_after_cooldown = FALSE
+	// bypasses cooldowns, but also removes any existing regen effects
+	owner.remove_status_effect(/datum/status_effect/regenerative_extract)
+	owner.remove_status_effect(/datum/status_effect/slime_regen_cooldown)
+	owner.visible_message(span_hypnophrase("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
+	playsound(owner, 'sound/effects/splat.ogg', vol = 40, vary = TRUE)
+	extract.regencore.core_effect_before(owner, owner)
+	extract.regencore.apply_effect(owner)
+	extract.regencore.core_effect(owner, owner)
+	QDEL_NULL(extract.regencore)
+	QDEL_NULL(linked_extract)
+	TIMER_COOLDOWN_START(owner, COOLDOWN_STABLE_RAINBOW, 1.5 MINUTES)
+	qdel(src)
+
+#undef COOLDOWN_STABLE_RAINBOW

@@ -308,7 +308,6 @@
 		"Floran" = /datum/species/floran,
 		"Fly" = /datum/species/fly,
 		"Arachnid" = /datum/species/arachnid,
-		"Jelly" = /datum/species/jelly,
 		"Oozeling" = /datum/species/oozeling,
 		"IPC" = /datum/species/ipc,
 		"Monkey" = /datum/species/monkey,
@@ -319,6 +318,14 @@
 		"Satyr" = /datum/species/satyr,
 		"Zombie" = /datum/species/zombie,
 		"Shadow" = /datum/species/shadow,
+		"Oni" = /datum/species/oni,
+		"Android" = /datum/species/android,
+		"Dullahan" = /datum/species/dullahan,
+		"Abductor" = /datum/species/abductor,
+		"Mushroomperson" = /datum/species/mush,
+		"Skeleton" = /datum/species/skeleton,
+		"Vampire" = /datum/species/vampire,
+		"Snailperson" = /datum/species/snail,
 	)
 
 /datum/nanite_program/sensor/species/register_extra_settings()

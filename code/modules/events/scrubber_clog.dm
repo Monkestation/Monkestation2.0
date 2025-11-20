@@ -6,6 +6,9 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a scrubber."
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_ALIEN, TAG_MAGICAL)
+	event_group = /datum/event_group/guests
 
 /datum/round_event/scrubber_clog
 	announce_when = 10
@@ -25,8 +28,9 @@
 	///Used for tracking if the clog signal should be sent.
 	var/clogged = TRUE
 
-/datum/round_event/scrubber_clog/announce()
-	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)].", "Custodial Notification")
+/datum/round_event/scrubber_clog/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area].", "Custodial Notification")
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
@@ -81,7 +85,7 @@
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
 	var/list/scrubber_list = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(scrubber)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			scrubber_list += scrubber
@@ -91,7 +95,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(scrubber)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			return TRUE //make sure we have a valid scrubber to spawn from.
@@ -156,8 +160,9 @@
 	)
 	return pick(mob_list)
 
-/datum/round_event/scrubber_clog/major/announce()
-	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)] area.", "Infestation Alert")
+/datum/round_event/scrubber_clog/major/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area] area.", "Infestation Alert")
 
 /datum/round_event_control/scrubber_clog/critical
 	name = "Scrubber Clog: Critical"
@@ -169,6 +174,8 @@
 	description = "Really dangerous mobs climb out of a scrubber."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 6
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -177,8 +184,9 @@
 	. = ..()
 	spawn_delay = rand(15,25)
 
-/datum/round_event/scrubber_clog/critical/announce()
-	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(scrubber)] ventilation network.", "Security Alert")
+/datum/round_event/scrubber_clog/critical/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Potentially hazardous lifesigns detected in the [event_area] ventilation network.", "Security Alert")
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
@@ -206,8 +214,9 @@
 	end_when = rand(600, 720)
 	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
-/datum/round_event/scrubber_clog/strange/announce()
-	priority_announce("Unusual lifesign readings detected in the [get_area_name(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+/datum/round_event/scrubber_clog/strange/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Unusual lifesign readings detected in the [event_area] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(
@@ -216,6 +225,7 @@
 		/mob/living/basic/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
-		/mob/living/basic/slugcat //Monkestation edit. Let the slugs come out of the pipes!
+		/mob/living/basic/slugcat, //Monkestation edit. Let the slugs come out of the pipes!
+		/mob/living/basic/beetmin
 	)
 	return pick(mob_list)

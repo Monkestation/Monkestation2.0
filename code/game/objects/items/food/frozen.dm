@@ -219,7 +219,7 @@
 		/datum/reagent/water = 11,
 	)
 	tastes = list("ice" = 1, "water" = 1, "pineapples" = 5)
-	foodtypes = PINEAPPLE //Pineapple to allow all that like pineapple to enjoy
+	foodtypes = FRUIT | PINEAPPLE
 
 /obj/item/food/snowcones/mime
 	name = "mime snowcone"
@@ -421,3 +421,14 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/popsicle/meatsicle
+	name = "Meatsicle"
+	desc = "A horrific abomination of raw meat, glazed with sugar on a stick, then frozen."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/sugar = 4,
+	)
+	overlay_state = "meatsicle"
+	foodtypes = RAW | MEAT | SUGAR

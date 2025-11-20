@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
  */
 PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	name = "Blood Drying"
-	flags = SS_NO_INIT | SS_BACKGROUND
+	flags = SS_NO_INIT | SS_BACKGROUND | SS_HIBERNATE
 	priority = 10
 	wait = 4 SECONDS
 
@@ -235,10 +235,9 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 /datum/blood_type/crew/lizard/silver/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat)
 	blood.add_filter("silver_glint", 3, list("type" = "outline", "color" = "#c9c9c963", "size" = 1.5))
 
-/datum/blood_type/crew/skrell
+/datum/blood_type/crew/spider
 	name = "S"
-	color = "#009696" // Did you know octopi have blood blood, thanks to hemocyanin rather than hemoglobin? It binds to copper instead of Iron
-	restoration_chem = /datum/reagent/copper
+	color = COLOR_CARP_TURQUOISE
 
 /datum/blood_type/crew/ethereal
 	name = "LE"
@@ -252,7 +251,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	if(!new_splat)
 		return
 	blood.can_dry = FALSE
-	RegisterSignals(blood, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACKBY_SECONDARY), PROC_REF(on_cleaned))
+	RegisterSignals(blood, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACKBY_SECONDARY), PROC_REF(on_cleaned), override = TRUE)
 
 /datum/blood_type/crew/ethereal/proc/on_cleaned(obj/effect/decal/cleanable/source, mob/living/user, obj/item/tool, ...)
 	SIGNAL_HANDLER
@@ -330,7 +329,3 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 /datum/blood_type/crew/bloodsucker
 	name = "B++"
 	reagent_type = /datum/reagent/blood/bloodsucker
-
-/datum/blood_type/spider
-	name = "S"
-	color = COLOR_CARP_TURQUOISE

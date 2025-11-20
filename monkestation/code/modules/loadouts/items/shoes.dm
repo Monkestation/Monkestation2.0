@@ -69,14 +69,17 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/brown_cowboy_boots
 	name = "Brown Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy
+	preload = FALSE // causes problems due to rare snake in boot
 
 /datum/loadout_item/shoes/black_cowboy_boots
 	name = "Black Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/black
+	preload = FALSE
 
 /datum/loadout_item/shoes/white_cowboy_boots
 	name = "White Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/white
+	preload = FALSE
 
 
 /*
@@ -167,6 +170,12 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 
 /datum/loadout_item/shoes/jester
 	name = "Jester Shoes"
+	item_path = /obj/item/clothing/shoes/clown_shoes/green_jester_shoes
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/jester
+	name = "Clown's Jester Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	restricted_roles = list(JOB_CLOWN)
 
@@ -297,8 +306,8 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
 
 /datum/loadout_item/shoes/wheelys
-	name = "Wheely-Heels"
-	item_path = /obj/item/clothing/shoes/wheelys
+	name = "Cheap Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys/cheap
 
 /*
 *	SEASONAL

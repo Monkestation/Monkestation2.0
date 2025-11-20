@@ -25,19 +25,6 @@
 	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
 	var/demolition_mod = 1
 
-	var/current_skin //Has the item been reskinned?
-	var/list/unique_reskin //List of options to reskin.
-	///If set to true, we can reskin this item as much as we want.
-	var/infinite_reskin = FALSE
-
-	// Access levels, used in modules\jobs\access.dm
-	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
-	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
-	var/list/req_access
-	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
-	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
-	var/list/req_one_access
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
@@ -48,6 +35,8 @@
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
+
+	var/cover_amount = 0 ///Chance for a projectile to hit the object instead of whoever is buckled to it. Might use this for more later.
 
 	uses_integrity = TRUE
 
@@ -148,7 +137,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/mob/living/carbon/human/H = usr
 		if(!(usr in nearby))
 			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
+				if(H.dna.check_mutation(/datum/mutation/telekinesis))
 					is_in_use = TRUE
 					ui_interact(usr)
 	if (is_in_use)
@@ -230,9 +219,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/vv_do_topic(list/href_list)
 	if(!(. = ..()))
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))
@@ -279,55 +268,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || infinite_reskin))
-		. += span_notice("Alt-click it to reskin it.")
-
-/obj/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-
-/**
- * Reskins object based on a user's choice
- *
- * Arguments:
- * * M The mob choosing a reskin option
- */
-/obj/proc/reskin_obj(mob/M)
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-	icon_state = unique_reskin[pick]
-	to_chat(M, "[src] is now skinned as '[pick].'")
-
-/**
- * Checks if we are allowed to interact with a radial menu for reskins
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(!infinite_reskin && current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -419,3 +359,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
 		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod

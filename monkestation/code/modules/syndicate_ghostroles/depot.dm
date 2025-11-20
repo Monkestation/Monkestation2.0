@@ -5,7 +5,7 @@
 	prompt_name = "a syndicate depot worker"
 	you_are_text = "You are a depot worker, employed at a Syndicate depot."
 	flavour_text = "Produce and move supplies for Syndicate bases in the region, as well as ensure they are safely evacuated should they be lost. Do not let the base fall into enemy hands!"
-	important_text = "DO NOT abandon the base or approach active Nanotrasen installations. Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. However, you may freely explore your surrounding within your current space quadrant (Z-Level), and may fly to other Syndicate bases in space to deliver and move supplies with the permission of the Quartermaster."
+	important_text = "DO NOT abandon the base or approach active Nanotrasen installations. Do not interfere with Nanotrasen operations outside of self-defence, and do not directly interfere with the station without express approval of Syndicate Command. However, you may freely explore your surrounding within your current space quadrant (Z-Level), and may fly to other Syndicate bases in space to deliver and move supplies with the permission of the Quartermaster."
 	outfit = /datum/outfit/syndicate_empty/depot
 	spawner_job_path = /datum/job/lavaland_syndicate/space
 
@@ -23,7 +23,7 @@
 	prompt_name = "a syndicate depot guard"
 	you_are_text = "You are a security guard, employed at a Syndicate depot."
 	flavour_text = "Protect the depot from enemy forces and prevent its destruction at all costs."
-	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You are here to protect it, and cannot perform deliveries."
+	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Do not interfere with Nanotrasen operations outside of self-defence, and do not directly interfere with the station without express approval of Syndicate Command. You are here to protect the depot, and cannot perform deliveries except in an emergency."
 	outfit = /datum/outfit/syndicate_empty/depot/guard
 
 /datum/outfit/syndicate_empty/depot/guard
@@ -41,7 +41,7 @@
 	prompt_name = "a syndicate depot quartermaster"
 	you_are_text = "You are a Quartermaster, in charge of a Syndicate depot."
 	flavour_text = "Operate the depot to ensure it continues to safely ship supplies for the Coalition's outposts in nearby space. Protect it to the last, and do not let the base fall into enemy hands!"
-	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You can, however, authorise depot workers to perform deliveries outside the local quadrant (Z-level) to other space outposts (but not go yourself), and may freely explore the local quadrant (Z-level) alongside them."
+	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Do not interfere with Nanotrasen operations outside of self-defence, and do not directly interfere with the station without express approval of Syndicate Command. You can, however, authorise depot workers to perform deliveries outside the local quadrant (Z-level) to other space outposts (but not go yourself), and may freely explore the local quadrant (Z-level) alongside them."
 	outfit = /datum/outfit/syndicate_empty/depot/quartermaster
 
 /datum/outfit/syndicate_empty/depot/quartermaster
@@ -118,9 +118,9 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = COLOR_SOFT_RED
-	mapped_start_area = /area/shipbreak/syndicate_depot
+	mapped_start_area = /area/space/shipbreak/syndicate_depot
 
-/area/shipbreak/syndicate_depot
+/area/space/shipbreak/syndicate_depot
 	name = "Syndicate Depot Shipbreaking Zone"
 
 /obj/item/storage/toolbox/syndicate/shipbreaking
@@ -194,22 +194,22 @@
 
 
 
-/obj/machinery/syndicate_blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/syndicate_blackbox))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+/obj/machinery/syndicate_blackbox_recorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/syndicate_blackbox))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
 		resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		var/area/A = get_area(loc)
 		var/message = "Storage device re-connected in [initial(A.name)]."
 		radio.talk_into(src, message, radio_channel)
-		stored = I
+		stored = attacking_item
 		update_appearance()
 		return
-	if(istype(I, /obj/item/blackbox))
+	if(istype(attacking_item, /obj/item/blackbox))
 		user.visible_message(span_notice("[src] buzzes; seems like this type of black-box isn't compatible with the recorder."))
 		playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
 		return
@@ -219,7 +219,7 @@
 	. = ..()
 	if(stored)
 		balloon_alert(user, "removing blackbox...")
-		if(do_after(user, 60, target = src))
+		if(do_after(user, 6 SECONDS, target = src, hidden = TRUE))
 			stored.forceMove(drop_location())
 			if(Adjacent(user))
 				user.put_in_hands(stored)

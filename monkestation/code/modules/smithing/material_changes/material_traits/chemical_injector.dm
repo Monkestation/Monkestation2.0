@@ -1,6 +1,7 @@
 /datum/material_trait/chemical_injector
 	name = "Chemical Injector"
 	desc = "Based on the materials liquid flow injects chemicals into the wearer and those hit (scales with liquid flow), douse the item with atleast 100 units of a reagent."
+	trait_flags = MT_PROCESSES
 	///the reagent we are doused in
 	var/datum/reagent/doused_reagent
 	///have we doused

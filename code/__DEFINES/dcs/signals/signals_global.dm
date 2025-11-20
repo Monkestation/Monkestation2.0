@@ -95,3 +95,9 @@
 
 #define COMSIG_GLOB_WEATHER_EFFECT "!weather_effect_update"
 //monkestation edit end
+
+/// Global signal sent when darkspawns ascend: (No arguments)
+#define COMSIG_DARKSPAWN_ASCENSION "!darkspawn_ascension"
+
+/// Global signal sent whenever checking to see if there's valid monster hunter targets: (list/prey)
+#define COMSIG_GLOB_MONSTER_HUNTER_QUERY "!monster_hunter_query"

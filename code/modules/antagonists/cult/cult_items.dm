@@ -141,8 +141,8 @@ Striking a noncultist, however, will tear their flesh."}
 		return FALSE
 
 /obj/item/restraints/legcuffs/bola/cult
-	name = "\improper Nar'Sien bola"
-	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
+	name = "\improper Nar'Sian bola"
+	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sian cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	inhand_icon_state = "bola_cult"
 	breakouttime = 6 SECONDS
@@ -297,8 +297,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened
-	name = "\improper Nar'Sien hardened armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened armor"
+	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_armor"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
@@ -322,8 +322,8 @@ Striking a noncultist, however, will tear their flesh."}
 	acid = 100
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sian hardened helmet"
+	desc = "A heavily-armored helmet worn by warriors of the Nar'Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
 	armor_type = /datum/armor/cult_hoodie_hardened
@@ -613,9 +613,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -632,49 +632,49 @@ Striking a noncultist, however, will tear their flesh."}
 	on = TRUE
 	var/charges = 5
 
-/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
-	if(!proximity)
-		return
-	if(!IS_CULTIST(user))
-		to_chat(user, "That doesn't seem to do anything useful.")
-		return
+/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/team/cult/cult_team = cult?.get_team()
+	if(isnull(cult_team))
+		to_chat(user, span_warning("That doesn't seem to do anything useful."))
+		return ITEM_INTERACT_BLOCKING
 
-	if(!isitem(A))
-		..()
-		to_chat(user, span_warning("\The [src] can only transport items!"))
-		return
+	if(!isitem(interacting_with))
+		to_chat(user, span_warning("[src] can only transport items!"))
+		return ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	var/list/mob/living/cultists = list()
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		if(cult_mind == user.mind)
+			continue
+		if(cult_mind.current?.stat != DEAD)
+			cultists |= cult_mind.current
 
-	var/list/cultists = list()
-	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
-		if(M.current && M.current.stat != DEAD)
-			cultists |= M.current
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-		return
+	if(QDELETED(src) || loc != user || user.incapacitated())
+		return ITEM_INTERACT_BLOCKING
 	if(isnull(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-		log_game("[key_name(user)]'s Void torch failed - no target.")
-		return
+		to_chat(user, span_cult_italic("You require a destination!"))
+		return ITEM_INTERACT_BLOCKING
 	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target died.")
-		return
-	if(!IS_CULTIST(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target was deconverted.")
-		return
-	if(A in user.get_all_contents())
-		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-		return
-	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
-	user.log_message("teleported [A] to [cultist_to_receive] with \the [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(A)
+		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!(cultist_to_receive.mind in cult_team.members))
+		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!isturf(interacting_with.loc))
+		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
+		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
+	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
+	cultist_to_receive.put_in_hands(interacting_with)
 	charges--
-	to_chat(user, "\The [src] now has [charges] charge\s.")
-	if(charges == 0)
+	to_chat(user, span_notice("[src] now has [charges] charge\s."))
+	if(charges <= 0)
 		qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
@@ -867,31 +867,33 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
-/obj/item/blood_beam/afterattack(atom/A, mob/living/user, proximity_flag, clickparams)
-	. = ..()
+/obj/item/blood_beam/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/blood_beam/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(firing || charging)
-		return
-	if(ishuman(user))
-		angle = get_angle(user, A)
-	else
-		qdel(src)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+	if(!ishuman(user))
+		return ITEM_INTERACT_BLOCKING
+	angle = get_angle(user, interacting_with)
 	charging = TRUE
 	INVOKE_ASYNC(src, PROC_REF(charge), user)
 	if(do_after(user, 9 SECONDS, target = user))
 		firing = TRUE
 		ADD_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
-		INVOKE_ASYNC(src, PROC_REF(pewpew), user, clickparams)
+		var/params = list2params(modifiers)
+		INVOKE_ASYNC(src, PROC_REF(pewpew), user, params)
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 9 SECONDS, target = user))
 			user.Paralyze(40)
-			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
+			to_chat(user, span_cult_italic("You have exhausted the power of this spell!"))
 		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
 		firing = FALSE
 		if(N)
 			qdel(N)
 		qdel(src)
 	charging = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
@@ -962,7 +964,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/shield/mirror
 	name = "mirror shield"
-	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
+	desc = "An infamous shield used by Nar'Sian sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
 	icon_state = "mirror_shield" // eshield1 for expanded
 	inhand_icon_state = "mirror_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -1023,7 +1025,7 @@ Striking a noncultist, however, will tear their flesh."}
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
-		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
+		to_chat(holder, span_cult_italic("The shield's illusions are back at full strength!"))
 
 /obj/item/shield/mirror/IsReflect()
 	if(prob(block_chance))

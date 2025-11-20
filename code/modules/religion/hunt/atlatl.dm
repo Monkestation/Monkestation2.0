@@ -41,7 +41,6 @@
 		update_appearance()
 
 /obj/item/gun/ballistic/atlatl/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!chambered)
 		return
 	. = ..() //fires, removing the spear

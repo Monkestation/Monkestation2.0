@@ -15,7 +15,6 @@
 	max_integrity = 75
 	armor_type = /datum/armor/clockwork_ocular_warden
 	passive_consumption = 3
-	minimum_power = SHOOT_POWER_USE
 	can_unwrench = FALSE
 	anchored = TRUE
 	/// Cooldown between firing
@@ -49,7 +48,7 @@
 	if(!length(valid_targets))
 		return
 
-	if(!use_power(SHOOT_POWER_USE))
+	if(!use_energy(SHOOT_POWER_USE))
 		return
 
 	playsound(src, 'sound/machines/clockcult/ocularwarden_target.ogg', 60, TRUE)

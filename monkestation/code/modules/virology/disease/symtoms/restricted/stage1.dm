@@ -32,7 +32,7 @@
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if(iscarbon(affected_mob))
-			for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
 			for(var/obj/item/I in affected_mob.held_items)
 				affected_mob.dropItemToGround(I)
@@ -50,7 +50,6 @@
 			given_antag?.antag_flags |= FLAG_ANTAG_CAP_IGNORE // ensure they don't count against storyteller cap
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
-		new_mob.update_name_tag()
 		qdel(affected_mob)
 
 /datum/symptom/transformation/proc/replace_banned_player(mob/living/new_mob, mob/living/affected_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
@@ -193,4 +192,5 @@
 			if(prob(12))
 				to_chat(mob, span_danger("You try to scream, but nothing comes out!"))
 				mob.set_silence_if_lower(5 SECONDS)
+				mob.set_emote_mute_if_lower(5 SECONDS)
 	multiplier_tweak(0.1)

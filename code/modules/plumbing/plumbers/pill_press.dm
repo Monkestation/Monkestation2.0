@@ -29,7 +29,7 @@
 	. = ..()
 
 	if(!packaging_types)
-		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/chemmaster)
+		var/datum/asset/spritesheet_batched/chemmaster/assets = get_asset_datum(/datum/asset/spritesheet_batched/chemmaster)
 
 		var/list/types = list(
 			CAT_PILLS = GLOB.chem_master_containers[CAT_PILLS],
@@ -97,11 +97,11 @@
 			stored_products -= AM
 			AM.forceMove(drop_location())
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/chemmaster)
+		get_asset_datum(/datum/asset/spritesheet_batched/chemmaster)
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
@@ -129,7 +129,7 @@
 
 	return data
 
-/obj/machinery/plumbing/pill_press/ui_act(action, params)
+/obj/machinery/plumbing/pill_press/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

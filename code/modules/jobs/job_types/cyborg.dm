@@ -20,6 +20,7 @@
 		)
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS
+	antag_capacity_points = 2 //2 due to valid hunting tendencies of borgs, fine turning down to 1
 
 /datum/job/cyborg/get_latejoin_spawn_point()
 	var/turf/open/picked_turf = get_random_open_turf_in_area()

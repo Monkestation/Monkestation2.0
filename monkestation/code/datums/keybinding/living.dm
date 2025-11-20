@@ -83,7 +83,7 @@
 	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP)
 
 /datum/keybinding/living/pixel_shift
-	hotkey_keys = list("B")
+	hotkey_keys = list("N")
 	name = "pixel_shift"
 	full_name = "Pixel Shift"
 	description = "Shift your characters offset."
@@ -115,4 +115,4 @@
 	var/mob/mob = user.mob
 	var/obj/item/item = mob?.get_active_held_item()
 	if(item?.GetComponent(/datum/component/two_handed)) // does our active item have a two_handed component? if so let's ctrl click it!
-		item.CtrlClick(mob)
+		mob.base_click_ctrl(item)

@@ -134,8 +134,12 @@
 	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
 	var/job_req_donor = null //MONKESTATION EDIT
-	//donator bypass for holidays
+	///donator bypass for holidays
 	var/job_donor_bypass = null //MONKESTATION EDIT
+
+	//yes this could probably be a config but I dont really care
+	///How many points of antag capacity does this job give
+	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
 /datum/job/New()
 	. = ..()
@@ -152,6 +156,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
+
+	if(faction == FACTION_STATION)
+		ADD_TRAIT(spawned.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
 
 	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
@@ -216,9 +223,22 @@
 /datum/job/proc/special_config_check()
 	return FALSE
 
-/mob/living/proc/on_job_equipping(datum/job/equipping)
+/mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	return
 
+/mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
+	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	var/obj/item/hat_to_use = null
+
+	// We want the last hat in the list to match the behaviour of humanoid loadouts
+	for (var/datum/loadout_item/head/item in loadout_datums)
+		if (ispath(item.item_path, /obj/item))
+			var/obj/item/hat = new item.item_path()
+			if (hat.slot_flags & ITEM_SLOT_HEAD)
+				hat_to_use = hat
+
+	if (hat_to_use)
+		place_on_head(hat_to_use)
 
 #define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
@@ -248,10 +268,20 @@
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 	equip_outfit_and_loadout(equipping.outfit, used_pref, visual_only, equipping)
 
-/datum/job/proc/announce_head(mob/living/carbon/human/H, channels, job_title) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
-	if(H && GLOB.announcement_systems.len)
-		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, job_title, channels), 1))
+/datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+	if(!human)
+		return
+	var/obj/machinery/announcement_system/system
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.newhead_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	system = pick(available_machines)
+	//timer because these should come after the captain announcement
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(system, TYPE_PROC_REF(/obj/machinery/announcement_system, announce), AUTO_ANNOUNCE_NEWHEAD, human.real_name, human.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
@@ -556,8 +586,7 @@
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob)
 	else
-		spawn_instance = new spawn_type(player_client.mob.loc)
-		spawn_point.JoinPlayerHere(spawn_instance, TRUE)
+		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -677,3 +706,34 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+///Returns a string that will be used for the contents of an employment contract.
+/datum/job/proc/employment_contract_contents(employee_name)
+	SHOULD_CALL_PARENT(FALSE)
+
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as SLAVE), \
+	and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).\
+	<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, \
+	who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, \
+	in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, \
+	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"
+
+/// Returns a large (due to cropping) icon of this job's sechud icon state.
+/datum/job/proc/get_lobby_icon() as /icon
+	var/datum/outfit/job_outfit = outfit
+	if(!job_outfit || !job_outfit::id_trim)
+	#ifdef TESTING
+		log_job_debug("[src.type] has no job outfit but either doesn't overwrite get_lobby_icon() or has no SecHUD icon.")
+	#endif
+		return
+	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon_state = job_trim::sechud_icon_state
+	if(!icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon state.")
+
+	return uni_icon('icons/mob/huds/hud.dmi', icon_state)

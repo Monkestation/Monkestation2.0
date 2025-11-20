@@ -11,7 +11,7 @@
 		return FALSE
 
 	for(var/datum/traitor_objective/objective in handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_INACTIVE)
+		if(objective.objective_state != OBJECTIVE_STATE_INVALID)
 			return FALSE
 
 	return TRUE
@@ -86,3 +86,12 @@
 /datum/uplink_item/bundles_tc/random/proc/check_ignore_locked(datum/uplink_handler/handler)
 	return (length(handler.locked_entries) == (length(subtypesof(/datum/uplink_item)) - 1)) && !(src.type in handler.locked_entries)
 
+
+/datum/uplink_item/bundles_tc/syndicate_mini_kit
+	name = "Syndicate Mini-Kit"
+	desc = "A small, budget-friendly kit for new operatives. Contains a selection of basic tools. \
+			The Syndicate provides only one Mini-Kit per agent."
+	item = /obj/item/storage/box/syndie_kit/mini_kit
+	cost = 10
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

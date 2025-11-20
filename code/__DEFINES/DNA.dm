@@ -15,32 +15,47 @@
 #define NEGATIVE 2
 #define MINOR_NEGATIVE 4
 
-
-//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
-/// A mutation that can be activated and deactived by completing a sequence
-#define MUT_NORMAL 1
-/// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
-#define MUT_EXTRA 2
-/// Cannot be interacted with by players through normal means. I.E. wizards mutate
-#define MUT_OTHER 3
+//Mutation sources. As long as there is at least one, the mutation will stay up after a remove_mutation call
+///Source for mutations that have been activated by completing a sequence or using an activator
+#define MUTATION_SOURCE_ACTIVATED "activated"
+///Source for mutations that have been added via mutators
+#define MUTATION_SOURCE_MUTATOR "mutator"
+///From timed dna injectors.
+#define MUTATION_SOURCE_TIMED_INJECTOR "timed_injector"
+///From mob/living/carbon/human/proc/crewlike_monkify()
+#define MUTATION_SOURCE_CREW_MONKEY "crew_monkey"
+#define MUTATION_SOURCE_MEDIEVAL_CTF "medieval_ctf"
+#define MUTATION_SOURCE_DNA_VAULT "dna_vault"
+///From the /datum/action/cooldown/spell/apply_mutations spell
+#define MUTATION_SOURCE_SPELL "spell"
+///From the heart eater component
+#define MUTATION_SOURCE_HEART_EATER "heart_eater"
+#define MUTATION_SOURCE_RAT_HEART "rat_heart"
+#define MUTATION_SOURCE_CLOWN_CLUMSINESS "clown_clumsiness"
+#define MUTATION_SOURCE_CHANGELING "changeling"
+#define MUTATION_SOURCE_GHOST_ROLE "ghost_role"
+#define MUTATION_SOURCE_WISHGRANTER "wishgranter"
+#define MUTATION_SOURCE_VV "vv"
+#define MUTATION_SOURCE_MANNITOIL "mannitoil"
+#define MUTATION_SOURCE_MAINT_ADAPT "maint_adapt"
+#define MUTATION_SOURCE_BURDENED_TRAUMA "burdened_trauma"
+#define MUTATION_SOURCE_GENE_SYMPTOM "gene_symptom"
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_GENDER_BLOCK 1
+#define DNA_SKIN_TONE_BLOCK 2
+#define DNA_EYE_COLOR_LEFT_BLOCK 3
 #define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 6
-#define DNA_GENDER_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_HAIRSTYLE_BLOCK 7
-#define DNA_SKIN_TONE_BLOCK 3
-#define DNA_UNI_IDENTITY_BLOCKS 7
+#define DNA_HAIRSTYLE_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 6
+#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
 
-/// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 20
+#define DNA_UNI_IDENTITY_BLOCKS 8
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -63,9 +78,19 @@
 #define DNA_AVIAN_TAIL_BLOCK 19 // NON-MODULE CHANGE
 #define DNA_FEATHER_COLOR_BLOCK 20 // NON-MODULE CHANGE
 
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 20
+
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
+
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one makes it so the SE is copied too.
+#define COPY_DNA_SE (1<<0)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the species.
+#define COPY_DNA_SPECIES (1<<1)
+///flag for the transfer_flag argument from dna/proc/copy_dna(). This one copies the mutations.
+#define COPY_DNA_MUTATIONS (1<<2)
 
 #define CLONER_FRESH_CLONE "fresh"
 #define CLONER_MATURE_CLONE "mature"
@@ -87,6 +112,7 @@
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
+#define ORGAN_SLOT_BORER_ORGAN "borer_organ"
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
@@ -112,6 +138,7 @@
 #define ORGAN_SLOT_TONGUE "tongue"
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
+#define ORGAN_SLOT_BRAIN_TUMOR "brain_tumor"
 #define ORGAN_SLOT_BUTT "butt"
 #define ORGAN_SLOT_BLADDER "bladder"
 #define ORGAN_SLOT_LINK "cyber_link"
@@ -119,6 +146,7 @@
 #define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_SPINAL "spinal_implant"
 #define ORGAN_SLOT_BRAIN_NIF "nif"
+#define ORGAN_SLOT_GLAND "silk_gland"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -133,6 +161,7 @@
 #define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
 #define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 #define ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM "anime_bottom"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HALO "anime_halo"
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
 #define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 #define ORGAN_SLOT_EXTERNAL_FEATHERS "feathers"
@@ -155,6 +184,8 @@
 #define CHROMOSOME_NEVER 0
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
+
+#define MUTATION_COEFFICIENT_UNMODIFIABLE -1
 
 //used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
 #define G_MALE 1
@@ -189,6 +220,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_TONGUE,
 	ORGAN_SLOT_VOICE,
 	ORGAN_SLOT_ADAMANTINE_RESONATOR,
+	ORGAN_SLOT_BORER_ORGAN,
 	ORGAN_SLOT_HEART_AID,
 	ORGAN_SLOT_BRAIN_ANTIDROP,
 	ORGAN_SLOT_BRAIN_ANTISTUN,
@@ -199,7 +231,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
+	ORGAN_SLOT_XENO_EGGSAC,
+	ORGAN_SLOT_GLAND,))
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"

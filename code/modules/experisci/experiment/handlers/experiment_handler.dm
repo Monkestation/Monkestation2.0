@@ -92,16 +92,12 @@
 /**
  * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
  */
-/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
+/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
-	if (!proximity_flag)
+	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-	if ((selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || config_flags & EXPERIMENT_CONFIG_SILENT_FAIL)
-		return .
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
-	return .
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -164,15 +160,13 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
-/// Hooks on a successful dissection experiment
-/datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
+/// Hooks on a successful autopsy experiment
+/datum/component/experiment_handler/proc/try_run_autopsy_experiment(obj/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
-	else
-		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
-		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
+		source.say("New unique autopsy successfully catalogued.")
 
 /**
  * Announces a message to all experiment handlers
@@ -389,7 +383,7 @@
 			)
 			.["experiments"] += list(data)
 
-/datum/component/experiment_handler/ui_act(action, params)
+/datum/component/experiment_handler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

@@ -45,7 +45,7 @@
 	new /obj/effect/temp_visual/teleport_abductor(place)
 	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
 
-/obj/machinery/abductor/pad/proc/doPadToLoc(place)  
+/obj/machinery/abductor/pad/proc/doPadToLoc(place)
 	flick("alien-pad", src)
 // Monkestation Edit Start
 	for(var/atom/movable/target in get_turf(src))
@@ -62,7 +62,7 @@
 	name = "Huh"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "teleport"
-	duration = 80
+	duration = 8 SECONDS
 
 /obj/effect/temp_visual/teleport_abductor/Initialize(mapload)
 	. = ..()

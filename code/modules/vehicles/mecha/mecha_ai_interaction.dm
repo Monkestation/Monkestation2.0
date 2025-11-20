@@ -33,7 +33,7 @@
 	//Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
-			if(!construction_state) //Mech must be in maint mode to allow carding.
+			if(!(mecha_flags & PANEL_OPEN)) //Mech must be in maint mode to allow carding.
 				to_chat(user, span_warning("[name] must have maintenance protocols active in order to allow a transfer."))
 				return
 			var/list/ai_pilots = list()
@@ -99,7 +99,7 @@
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.eyeobj?.forceMove(src)
-	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/camera/ai_eye, update_visibility))
+	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/eye/ai_eye, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\

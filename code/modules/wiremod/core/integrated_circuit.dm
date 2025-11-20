@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	var/label_max_length = 24
 
 	/// The power of the integrated circuit
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 	/// The shell that this circuitboard is attached to. Used by components.
 	var/atom/movable/shell
@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
-	set_cell(new /obj/item/stock_parts/cell/high(src))
+	set_cell(new /obj/item/stock_parts/power_store/cell/high(src))
 
 /obj/item/integrated_circuit/Destroy()
 	for(var/obj/item/circuit_component/to_delete in attached_components)
@@ -152,32 +152,32 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
 	locked = new_value
 
-/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
+/obj/item/integrated_circuit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(I, /obj/item/circuit_component))
-		add_component_manually(I, user)
+	if(istype(attacking_item, /obj/item/circuit_component))
+		add_component_manually(attacking_item, user)
 		return
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "there already is a cell inside!")
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		set_cell(I)
-		I.add_fingerprint(user)
+		set_cell(attacking_item)
+		attacking_item.add_fingerprint(user)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
 
-	if(isidcard(I))
-		balloon_alert(user, "owner id set for [I]")
-		owner_id = WEAKREF(I)
+	if(isidcard(attacking_item))
+		balloon_alert(user, "owner id set for [attacking_item]")
+		owner_id = WEAKREF(attacking_item)
 		return
 
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!cell)
 			return
-		I.play_tool_sound(src)
+		attacking_item.play_tool_sound(src)
 		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 		cell.forceMove(drop_location())
 		set_cell(null)
@@ -236,14 +236,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * * to_check - The component to check.
  **/
 /obj/item/integrated_circuit/proc/is_duplicate(obj/item/circuit_component/to_check)
-	for(var/component as anything in attached_components)
+	for(var/component in attached_components)
 		if(component == to_check)
 			continue
 		if(istype(component, to_check.type))
 			return TRUE
 		if(istype(component, /obj/item/circuit_component/module))
 			var/obj/item/circuit_component/module/module = component
-			for(var/module_component as anything in module.internal_circuit.attached_components)
+			for(var/module_component in module.internal_circuit.attached_components)
 				if(module_component == to_check)
 					continue
 				if(istype(module_component, to_check.type))

@@ -73,7 +73,7 @@
 		to_chat(owner, "<span class='bold'>[trauma.obsession.name] has no idea how much danger they're in and you're the only person that can be there for them.</span>")
 		to_chat(owner, "<span class='bold'>Nobody else can be trusted, they are all liars and will use deceit to stab you and [trauma.obsession.name] in the back as soon as they can.</span>")
 	to_chat(owner, "<span class='boldannounce'>This role does NOT enable you to otherwise surpass what's deemed creepy behavior per the rules.</span>")//ironic if you know the history of the antag
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	owner.announce_objectives()
 
 
@@ -87,3 +87,18 @@
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
 		explanation_text = "Free Objective"
+
+/datum/antagonist/obsessed/antag_token(datum/mind/hosts_mind, mob/spender)
+	if(isliving(spender) && hosts_mind)
+		var/mob/living/carbon/C = hosts_mind.current
+		if(!istype(C))
+			message_admins("Tokener isn't a carbon mob, aborting...")
+			CRASH("Obsessed antag token was spent on a noncarbon.")
+		if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
+			message_admins("Tokener doesn't have a brain for a brain trauma, aborting...")
+			CRASH("Couldn't find a brain trauma for obsessed antag token")
+		C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	if(isobserver(spender))
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		new_mob.equipOutfit(/datum/outfit/job/assistant)
+		new_mob.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP

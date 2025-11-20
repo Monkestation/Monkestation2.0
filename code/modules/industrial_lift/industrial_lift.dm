@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		lift_master_datum = new lift_master_type(src)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/LateInitialize()
+/obj/structure/industrial_lift/LateInitialize(mapload_arg)
 	//after everything is initialized the lift master can order everything
 	lift_master_datum.order_platforms_by_z_level()
 
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/new_lift_contents)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/industrial_lift, /mob/camera))
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/industrial_lift, /mob/eye))
 	if(is_type_in_typecache(new_lift_contents, blacklisted_types) || new_lift_contents.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_lift_contents in lift_load)
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 			overlays += other_lift
 
-	//now we vore all the other lifts connected to us on our z level
+	//now we devour all the other lifts connected to us on our z level
 	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
 		if(other_lift == src || other_lift.z != z)
 			continue
@@ -406,6 +406,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				var/damage_multiplier = collided.maxHealth * 0.01
 				if(lift_master_datum.ignored_smashthroughs[collided.type])
 					continue
+				var/should_increment_count = ismob(collided) && collided.client // check this BEFORE we do any damage
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
@@ -421,6 +422,11 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
 				log_combat(src, collided, "collided with")
 
+				//increment the hit counter signs
+				if(should_increment_count)
+					SSpersistence.tram_hits_this_round++
+					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
+
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue
 				if(!throw_target)
@@ -433,11 +439,6 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
-
-				//increment the hit counter signs
-				if(ismob(collided) && collided.client)
-					SSpersistence.tram_hits_this_round++
-					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -552,7 +553,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		var/list/atom/movable/foreign_contents_in_loc = list()
 
 		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
-			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable))
+			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable) && !istype(foreign_movable, /obj/effect/landmark/tram))
 				foreign_contents_in_loc += foreign_movable
 				continue
 
@@ -705,7 +706,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 	return open_lift_radial(user)
 
-/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 

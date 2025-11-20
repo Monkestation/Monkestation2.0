@@ -719,11 +719,6 @@
 	if(welding_upgraded)
 		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
 
-/obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
-	. = ..()
-	if(. && (slot & ITEM_SLOT_HEAD))
-		return FALSE
-
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
 		to_chat(user, span_warning("You can't seem to slip those on your eyes from the top of your head!"))
@@ -882,6 +877,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "cross"
 
+/obj/item/clothing/neck/cross/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for gamerguy14948
 /obj/item/storage/belt/fannypack/occult
 	name = "trinket belt"
@@ -1036,6 +1035,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "fishpendant"
 
+/obj/item/clothing/neck/fishpendant/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for Weredoggo
 /obj/item/hairbrush/tactical
 	name = "tactical hairbrush"
@@ -1143,6 +1146,10 @@
 /obj/item/clothing/accessory/hypno_watch/examine()
 	. = ..()
 	. += span_boldwarning("Who knows what it could be used for?")
+
+/obj/item/clothing/accessory/hypno_watch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/gold) //maaaaan i hate that i have to do this
 
 // Donation reward for BoisterousBeebz
 

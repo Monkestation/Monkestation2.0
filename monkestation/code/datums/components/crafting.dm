@@ -20,7 +20,7 @@
 	result = /obj/item/ph_meter
 	reqs = list(
 		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/pen = 1,

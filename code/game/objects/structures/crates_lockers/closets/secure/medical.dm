@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/muzzle/breath(src)
+		new /obj/item/clothing/mask/breath/muzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -75,6 +75,7 @@
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/med(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/computer_disk/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
@@ -82,15 +83,14 @@
 	new /obj/item/defibrillator/compact/loaded(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/autosurgeon/medical_hud(src)
-	new /obj/item/autosurgeon/organ/cyberlink_nt_low(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
-//	new /obj/item/extrapolator(src) //MONKESTATION EDIT: extrapolators are not useful! missed this single case! -Dexee, 04/13/24
-
+	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
+	
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 

@@ -291,7 +291,7 @@
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/obj/item/bodypart/body_part as anything in bodyparts)
-			if(body_part.get_modified_bleed_rate())
+			if(body_part.cached_bleed_rate)
 				bleeding_limbs += body_part
 			if(body_part.grasped_by)
 				grasped_limbs += body_part
@@ -330,6 +330,9 @@
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
+	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+		msg += "[t_His] whole body is covered in sigils!\n"
+
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 
@@ -350,6 +353,11 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
+				else if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING))
+					if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises.\n"
+					else
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>.\n"
 				if (bodytemperature > bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)
@@ -385,7 +393,9 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 		if(get_organ_by_type(/obj/item/organ/internal/brain))
 			var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
-			if(!key && !brain.temporary_sleep)
+			if(HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
+				msg += "[span_deadsay("[t_He] [t_has] a vacant expression on their face, as if staring a thousand yards ahead. Maybe [t_He] will snap out of it soon.")]\n"
+			else if(!key && !brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] temporarly disconnected from their mind. Recovery is likely.")]\n"
@@ -415,9 +425,20 @@
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")
 
+	if((isobserver(user) || isrevenant(user)) && user.invisibility <= see_invisible)
+		. += span_revennotice("[t_He] can see you!<br>")
+
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))
 		. += trait_exam
+
+	if(isliving(user))
+		var/mob/living/morbid_weirdo = user
+		if(HAS_MIND_TRAIT(morbid_weirdo, TRAIT_MORBID))
+			if(HAS_TRAIT(src, TRAIT_DISSECTED))
+				msg += "[span_notice("[t_He] appears to have been dissected. Useless for examination... <b><i>for now.</i></b>")]\n"
+			if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
+				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
@@ -426,9 +447,9 @@
 			. += "<span class='deptradio'>Rank:</span> [target_record.rank]\n<a href='byond://?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='byond://?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 			var/cyberimp_detect
-			for(var/obj/item/organ/internal/cyberimp/CI in organs)
-				if(CI.status == ORGAN_ROBOTIC && !(CI.organ_flags & ORGAN_HIDDEN))
-					cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
+			for(var/obj/item/organ/internal/cyberimp/cyberimp in organs)
+				if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
+					cyberimp_detect += "[!cyberimp_detect ? "[cyberimp.get_examine_string(user)]" : ", [cyberimp.get_examine_string(user)]"]"
 			if(cyberimp_detect)
 				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
 				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"

@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(species_clothing_fallback_cache)
 		fallback_greyscale_colors = color_list.Join("")
 
 	// Finally, render with GAGs
-	var/icon/final_icon = SSgreyscale.GetColoredIconByType(get_custom_worn_config_fallback(item_slot, item), fallback_greyscale_colors)
+	var/icon/final_icon = icon(SSgreyscale.GetColoredIconByType(get_custom_worn_config_fallback(item_slot, item), fallback_greyscale_colors))
 	// Duplicate to the specific icon_state and set.
 	final_icon.Insert(final_icon, icon_state = human_icon_state) // include the expected icon_state
 	// Cache the clean copy.

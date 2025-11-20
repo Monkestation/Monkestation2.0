@@ -9,6 +9,7 @@ import {
 export const sound_ambience: FeatureToggle = {
   name: 'Enable ambience',
   category: 'SOUND',
+  description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
   component: CheckboxInput,
 };
 
@@ -63,6 +64,7 @@ export const sound_midi: FeatureToggle = {
 export const sound_ship_ambience: FeatureToggle = {
   name: 'Enable ship ambience',
   category: 'SOUND',
+  description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
   component: CheckboxInput,
 };
 
@@ -89,5 +91,18 @@ export const hearmusic: FeatureToggle = {
   category: 'SOUND',
   description:
     'When enabled, hear music played in-game by the cassette player.',
+  component: CheckboxInput,
+};
+
+export const sound_elevator: FeatureToggle = {
+  name: 'Enable elevator music',
+  category: 'SOUND',
+  component: CheckboxInput,
+};
+
+export const sound_ai_radio: FeatureToggle = {
+  name: 'Enable AI Radio Sounds',
+  category: 'SOUND',
+  description: 'When enabled, hear blips whenever AIs speak over the radio.',
   component: CheckboxInput,
 };

@@ -3,7 +3,7 @@
 	desc = "Creates a tinkerer's cache, a powerful forge capable of crafting elite equipment."
 	tip = "Use the cache to create more powerful equipment at the cost of power and time."
 	button_icon_state = "Tinkerer's Cache"
-	power_cost = 500
+	power_cost = STANDARD_CELL_CHARGE * 0.35
 	invocation_time = 1 MINUTES
 	invocation_text = list("Guide my hand and we shall create greatness.")
 	summoned_structure = /obj/structure/destructible/clockwork/gear_base/powered/tinkerers_cache

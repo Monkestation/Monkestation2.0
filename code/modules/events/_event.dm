@@ -7,6 +7,7 @@
 	var/description //The description of the event
 	var/typepath //The typepath of the event datum /datum/round_event
 
+	/// You should use `get_weight()` if you're just checking / getting the weight.
 	var/weight = 10 //The weight this event has in the random-selection process.
 									//Higher weights are more likely to be picked.
 									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
@@ -60,6 +61,10 @@
 	var/list/allowed_storytellers
 	/// If TRUE, then this event will not roll if the emergency shuttle is past the point of no recall.
 	var/dont_spawn_near_roundend = FALSE
+	/// If the weight of this event should be reduced based on the previous rounds (see REPEATED_MODE_ADJUST in game_options.txt)
+	var/repeated_mode_adjust = FALSE
+	/// Whether repeated_mode_adjust weight changes have been logged already.
+	var/logged_repeated_mode_adjust = FALSE
 	// monkestation end
 
 /datum/round_event_control/New()
@@ -78,6 +83,42 @@
 	QDEL_LIST(admin_setup)
 	return ..()
 // monkestation end
+
+/datum/round_event_control/proc/should_adjust_count(list/round)
+	if(!repeated_mode_adjust)
+		return FALSE
+
+	if(type in round)
+		return TRUE
+	if(shared_occurence_type)
+		for(var/datum/round_event_control/event_type as anything in round)
+			if(event_type::shared_occurence_type == shared_occurence_type)
+				return TRUE
+	return FALSE
+
+/// Gets the weight of this event, adjusted for repeated_mode_adjust
+/datum/round_event_control/proc/get_weight()
+	if(!repeated_mode_adjust)
+		return weight
+	. = weight
+	var/list/adjust_amounts = CONFIG_GET(number_list/repeated_mode_adjust)
+	var/adjustment = 0
+	var/list/recent_storyteller_events = SSgamemode.recent_storyteller_events
+	for(var/rounds_ago = 1 to min(length(recent_storyteller_events), length(adjust_amounts)))
+		var/list/round = recent_storyteller_events[rounds_ago]
+		if(!round)
+			continue
+		if(!islist(round))
+			round = list(round)
+		if(should_adjust_count(round))
+			adjustment += adjust_amounts[rounds_ago]
+	if(adjustment)
+		var/old_weight = .
+		. *= ((100 - adjustment) / 100)
+		if(!logged_repeated_mode_adjust)
+			log_storyteller("weight of [src] adjusted from [old_weight] to [.] by repeated_mode_adjust")
+			logged_repeated_mode_adjust = TRUE
+
 
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
@@ -100,8 +141,13 @@
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 // monkestation start: event groups and storyteller stuff
-	if(SSgamemode.current_storyteller?.disable_distribution || SSgamemode.halted_storyteller)
+	if(SSgamemode.halted_storyteller)
 		return FALSE
+	if(SSgamemode.current_storyteller)
+		if(SSgamemode.current_storyteller.disable_distribution)
+			return FALSE
+		if(!SSgamemode.current_storyteller.can_run_event(src))
+			return FALSE
 	if(dont_spawn_near_roundend && EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return FALSE
 	if(event_group && !GLOB.event_groups[event_group].can_run())
@@ -113,7 +159,7 @@
 		return FALSE
 	if(earliest_start >= (world.time - SSticker.round_start_time))
 		return FALSE
-	if(!allow_magic && wizardevent != SSevents.wizardmode)
+	if(!allow_magic && wizardevent != SSgamemode.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -370,6 +416,9 @@ Runs the event
 			log_admin_private("[key_name(usr)] forced scheduled event [src.name].")
 			SSgamemode.forced_next_events[src.track] = src
 		if("fire")
+			if(roundstart && istype(src, /datum/round_event_control/antagonist/solo) && SSticker.HasRoundStarted())
+				if(tgui_alert(usr, "[src] is a ROUNDSTART event, it will most likely not prompt players! Are you sure you want to fire this event?", buttons = list("Yes", "No"), ui_state = ADMIN_STATE(R_ADMIN)) != "Yes")
+					return
 			if(length(src.admin_setup))
 				for(var/datum/event_admin_setup/admin_setup_datum in src.admin_setup)
 					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)

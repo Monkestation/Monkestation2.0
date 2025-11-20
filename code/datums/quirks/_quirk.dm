@@ -40,6 +40,8 @@
 	/// A list of traits that should stop this quirk from processing.
 	/// Signals for adding and removing this trait will automatically be added to `process_update_signals`.
 	var/list/no_process_traits
+	// List of species that cannot choose this quirk
+	var/list/species_blacklist
 
 /datum/quirk/New()
 	. = ..()
@@ -194,6 +196,14 @@
 /datum/quirk/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	update_process()
+
+/// If a quirk is able to be selected for the mob's species
+/datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(LAZYLEN(species_blacklist) && (mob_species.id in species_blacklist))
+		return FALSE
+	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
+		return FALSE
+	return TRUE
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk

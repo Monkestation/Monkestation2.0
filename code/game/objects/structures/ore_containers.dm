@@ -29,7 +29,7 @@
 			"id" = REF(ore_item),
 			"name" = ore_item.name,
 			"amount" = ore_item.amount,
-			"icon" = text_ref(ore_item::icon),
+			"icon" = ore_item::icon,
 			"icon_state" = ore_item::icon_state,
 		))
 	return list("ores" = ores)

@@ -22,12 +22,12 @@
 		mutation_weights = initialize_mutation_weights()
 
 	var/mutation_type = pick_weight_recursive(mutation_weights)
-	var/datum/mutation/human/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
+	var/datum/mutation/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
 	roll_for_chromosome(mutation)?.apply(mutation)
 	mutations += mutation
 
 /// Randomly returns a valid initialized chromosome or null.
-/obj/item/disk/data/random/proc/roll_for_chromosome(datum/mutation/human/mutation) as /obj/item/chromosome
+/obj/item/disk/data/random/proc/roll_for_chromosome(datum/mutation/mutation) as /obj/item/chromosome
 	RETURN_TYPE(/obj/item/chromosome)
 	var/chromosome_type
 	var/list/valid_chromosomes = mutation.valid_chromosome_types() - /obj/item/chromosome/stabilizer
@@ -45,7 +45,7 @@
 	var/list/good = list()
 	var/list/neutral = list()
 	var/list/bad = list()
-	for(var/datum/mutation/human/mutation as anything in GLOB.all_mutations)
+	for(var/datum/mutation/mutation as anything in GLOB.all_mutations)
 		if(mutation::random_locked)
 			continue
 		var/weight = isnull(mutation::species_allowed) ? 2 : 3

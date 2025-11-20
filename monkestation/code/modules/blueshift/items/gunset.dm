@@ -48,11 +48,6 @@
 		new extra_to_spawn (src)
 	new /obj/item/storage/fancy/a40mm_box (src)
 
-/obj/item/storage/toolbox/guncase/rocketlauncher
-	name = "rocket launcher gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/rocketlauncher
-	extra_to_spawn = /obj/item/ammo_box/rocket
-
 /obj/item/storage/toolbox/guncase/rocketlauncher/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
@@ -117,9 +112,10 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/storage/toolbox/guncase/skyrat/AltClick(mob/user)
+/obj/item/storage/toolbox/guncase/skyrat/click_alt(mob/user)
 	opened = !opened
 	update_icon()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/toolbox/guncase/skyrat/attack_self(mob/user)
 	. = ..()
@@ -215,14 +211,26 @@
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag = 1,
-		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 3,
-		/obj/item/ammo_box/c980grenade/shrapnel = 2,
+		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 4,
+		/obj/item/ammo_box/c980grenade/shrapnel = 1,
 		/obj/item/ammo_box/c980grenade/smoke = 1,
-		/obj/item/ammo_box/c980grenade/riot = 2,
+		/obj/item/ammo_box/c980grenade/riot = 3,
 		/obj/item/clothing/mask/gas/sechailer/swat = 1,
 	), src)
 
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom
+	name = "\improper Wylom heavy rifle gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom
+	extra_to_spawn = /obj/item/ammo_box/magazine/wylom
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom/PopulateContents()
+	new weapon_to_spawn (src)
+
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wylom = 3,
+	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko
 	name = "heavy equipment locker"
@@ -235,6 +243,7 @@
 	generate_items_inside(list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
 		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom = 1, //REPLACE WITH IGNIFIST/20mm WHEN THE PR IS DONE
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil
@@ -336,3 +345,48 @@
 
 	weapon_to_spawn = /obj/item/gun/ballistic/revolver/takbok
 	extra_to_spawn = /obj/item/ammo_box/c585trappiste
+
+// Moar gunsets
+/obj/item/storage/toolbox/guncase/skyrat/pistol
+	name = "'Makarov pistol' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol
+	extra_to_spawn = /obj/item/ammo_box/magazine/m9mm
+
+/obj/item/storage/toolbox/guncase/skyrat/pistol/aps
+	name = "'Stechkin APS machine pistol' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/aps
+	extra_to_spawn = /obj/item/ammo_box/magazine/m9mm_aps
+
+
+/obj/item/storage/toolbox/guncase/skyrat/c20r
+	name = "'C-20r SMG' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
+	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
+
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase
+	name = "\improper Quarad light machinegun storage case"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg
+	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum
+	var/extra_to_spawn2 = /obj/item/ammo_box/magazine/c65xeno_drum/pierce
+	var/extra_to_spawn3 = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary
+	var/extra_to_spawn4 = /obj/item/clothing/head/helmet/toggleable/riot
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new extra_to_spawn2 (src)
+	new extra_to_spawn3 (src)
+	new extra_to_spawn4 (src)
+
+/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase/evil   ///Currently unavailable, exists for easy testing and admeming
+	name = "\improper EVIL Quarad light machinegun storage case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
+	extra_to_spawn = /obj/item/ammo_box/magazine/c65xeno_drum/evil
+	extra_to_spawn2 = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
+	extra_to_spawn3 = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
+

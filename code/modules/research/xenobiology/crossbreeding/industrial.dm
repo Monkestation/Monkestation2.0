@@ -17,15 +17,16 @@ Industrial extracts:
 	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	spawned.layer = min(spawned.layer, layer - 0.1)
 
 /obj/item/slimecross/industrial/Initialize(mapload)
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
-	START_PROCESSING(SSobj,src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/industrial/Destroy()
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/slimecross/industrial/process()
@@ -53,7 +54,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
-	effect_desc = "Produces monkey cubes."
+	effect_desc = "Produces biocubes."
 	itempath = /obj/item/stack/biomass
 	itemamount = 5
 
@@ -85,12 +86,13 @@ Industrial extracts:
 	colour = "yellow"
 	effect_desc = "Produces high capacity power cells, which are not fully charged on creation."
 	plasmarequired = 5
-	itempath = /obj/item/stock_parts/cell/high
+	itempath = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/slimecross/industrial/yellow/do_after_spawn(obj/item/spawned)
-	var/obj/item/stock_parts/cell/high/C = spawned
-	if(istype(C))
-		C.charge = rand(0,C.maxcharge/2)
+	. = ..()
+	var/obj/item/stock_parts/power_store/cell/high/cell = spawned
+	if(istype(cell))
+		cell.charge = rand(0, cell.maxcharge / 2)
 
 /obj/item/slimecross/industrial/darkpurple
 	colour = "dark purple"
@@ -105,6 +107,7 @@ Industrial extracts:
 	itempath = /obj/item/slimepotion/fireproof
 
 /obj/item/slimecross/industrial/darkblue/do_after_spawn(obj/item/spawned)
+	. = ..()
 	var/obj/item/slimepotion/fireproof/potion = spawned
 	if(istype(potion))
 		potion.uses = 1
@@ -120,6 +123,7 @@ Industrial extracts:
 	..()
 
 /obj/item/slimecross/industrial/silver/do_after_spawn(obj/item/spawned)
+	. = ..()
 	ADD_TRAIT(spawned, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 
 /obj/item/slimecross/industrial/bluespace

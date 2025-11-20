@@ -145,6 +145,9 @@
 /datum/crafting_recipe/food/reaction/soup/corn_chowder
 	reaction = /datum/chemical_reaction/food/soup/corn_chowder
 
+/datum/crafting_recipe/food/reaction/soup/saimin
+	reaction = /datum/chemical_reaction/food/soup/saimin
+
 // Other
 
 /datum/crafting_recipe/food/wishsoup

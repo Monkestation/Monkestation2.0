@@ -10,12 +10,10 @@
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
-		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
@@ -94,10 +92,16 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
 		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/r10mm,
 		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m35,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
+		/obj/item/ammo_box/magazine/c35sol_pistol,
+		/obj/item/ammo_box/magazine/c585trappiste_pistol,
+		/obj/item/ammo_box/magazine/whispering_jester_45_magazine,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/ballistic/modular/mk_58,
 		/obj/item/ammo_box/c38, // Revolver speedloaders.
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a762,
@@ -197,20 +201,20 @@
 	atom_storage.silent = TRUE
 
 // MONKESTATION ADDITION START
-/obj/item/storage/belt/holster/chameleon/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/storage/belt/holster/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_action.hidden)
 		chameleon_action.hidden = FALSE
 		actions += chameleon_action
 		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon holster ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon holster ([name]) with [attacking_item]")
 	else
 		chameleon_action.hidden = TRUE
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon holster ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the chameleon holster ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 

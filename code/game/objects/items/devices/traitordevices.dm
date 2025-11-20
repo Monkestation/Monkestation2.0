@@ -150,7 +150,7 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -214,26 +214,34 @@ effective or pretty fucking useless.
 				target = round(target)
 				wavelength = clamp(target, 0, 120)
 
-/obj/item/shadowcloak
+/obj/item/storage/belt/military/assault/cloak
 	name = "cloaker belt"
-	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	desc = "Makes you invisible for short periods of time. Recharges in darkness while active."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utility"
-	inhand_icon_state = "utility"
+	icon_state = "cloak"
+	inhand_icon_state = "security"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
-	worn_icon_state = "utility"
+	worn_icon_state = "assault"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_continuous = list("whips", "lashes", "disciplines")
-	attack_verb_simple = list("whip", "lash", "discipline")
 
+	COOLDOWN_DECLARE(stealth_cooldown)
 	var/mob/living/carbon/human/user = null
 	var/charge = 300
 	var/max_charge = 300
 	var/on = FALSE
 	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/shadowcloak/ui_action_click(mob/user)
+/obj/item/storage/belt/military/assault/cloak/update_overlays()
+	. = ..()
+	. +=  mutable_appearance(icon, "cloak_meter", alpha = (charge / max_charge) * 255)
+
+/obj/item/storage/belt/military/assault/cloak/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+	atom_storage.max_slots = 4
+
+/obj/item/storage/belt/military/assault/cloak/ui_action_click(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
@@ -243,36 +251,69 @@ effective or pretty fucking useless.
 
 	return
 
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
+/obj/item/storage/belt/military/assault/cloak/item_action_slot_check(slot, mob/user)
 	if(slot & ITEM_SLOT_BELT)
 		return 1
 
-/obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
+/obj/item/storage/belt/military/assault/cloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
 		return
-
+	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return
 	to_chat(user, span_notice("You activate [src]."))
+	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(user, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignals(user, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	src.user = user
+	animate(user,alpha = 25,time = 1.5 SECONDS)
 	START_PROCESSING(SSobj, src)
+	playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
 	on = TRUE
 
-/obj/item/shadowcloak/proc/Deactivate()
-	to_chat(user, span_notice("You deactivate [src]."))
+/obj/item/storage/belt/military/assault/cloak/proc/Deactivate(display_message)
 	STOP_PROCESSING(SSobj, src)
 	if(user)
-		user.alpha = initial(user.alpha)
-
+		animate(user, alpha =  initial(user.alpha), time = 1.5 SECONDS)
+		if(display_message)
+			to_chat(user, span_notice("You deactivate [src]."))
+	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
+	UnregisterSignal(user, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
 	on = FALSE
 	user = null
 
-/obj/item/shadowcloak/dropped(mob/user)
+/obj/item/storage/belt/military/assault/cloak/proc/unstealth(datum/source)
+	SIGNAL_HANDLER
+
+	COOLDOWN_START(src, stealth_cooldown, 30 SECONDS)
+	to_chat(user, span_warning("[src] gets discharged from contact!"))
+	do_sparks(2, TRUE, src)
+	Deactivate(display_message = FALSE)
+
+/obj/item/storage/belt/military/assault/cloak/proc/on_unarmed_attack(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	unstealth(source)
+
+/obj/item/storage/belt/military/assault/cloak/proc/on_bullet_act(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	if(!projectile.is_hostile_projectile())
+		return
+	unstealth(source)
+
+/obj/item/storage/belt/military/assault/cloak/dropped(mob/user)
 	..()
 	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
-/obj/item/shadowcloak/process(seconds_per_tick)
+/obj/item/storage/belt/military/assault/cloak/process(seconds_per_tick)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
+		do_sparks(2, TRUE, src)
+		Deactivate(display_message = FALSE)
 		return
 
 	var/turf/T = get_turf(src)
@@ -280,12 +321,15 @@ effective or pretty fucking useless.
 		var/lumcount = T.get_lumcount()
 
 		if(lumcount > 0.3)
-			charge = max(0, charge - 12.5 * seconds_per_tick)//Quick decrease in light
+			charge = clamp(charge - 10, 0, max_charge)//Quick decrease in light
 
 		else
-			charge = min(max_charge, charge + 25 * seconds_per_tick) //Charge in the dark
-
-		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
+			charge = clamp(charge + 20, 0, max_charge)//Charge in the dark
+	if(charge == 0)
+		balloon_alert(user, "out of charge!")
+		do_sparks(2, TRUE, src)
+		Deactivate(display_message = FALSE)
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
 /proc/is_within_radio_jammer_range(atom/source)
@@ -346,23 +390,23 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/jammer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(.)
-		return
-
-	if (!(target in view(disruptor_range, user)))
+/obj/item/jammer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	target.balloon_alert(user, "radio distrupted!")
-	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [target]."))
-	disable_radios_on(target)
+	interacting_with.balloon_alert(user, "radio distrupted!")
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	disable_radios_on(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/jammer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
 	var/list/target_contents = target.get_all_contents() + target
 	for (var/obj/item/radio/radio in target_contents)
-		if(ignore_syndie && radio.syndie)
+		if((ignore_syndie && radio.syndie) || radio.ignores_radio_jammers)
 			continue
 		radio.set_broadcasting(FALSE)
 	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
@@ -376,6 +420,8 @@ effective or pretty fucking useless.
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
+	//type of turret we spawn
+	var/turret_type = /obj/machinery/porta_turret/syndicate/toolbox
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -385,46 +431,52 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/wrench/combat))
-		return ..()
-
+/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/wrench/combat))
+		return NONE
 	if(!(user.istate & ISTATE_HARM))
-		return
-
-	if(!attacking_item.toolspeed)
-		return
-
+		return NONE
+	if(!tool.toolspeed)
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructed!")
-	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_danger("[user] bashes [src] with [tool]!"),
+		span_danger("You bash [src] with [tool]!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+	)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
 
+/obj/item/storage/toolbox/emergency/turret/nukie
+	turret_type = /obj/machinery/porta_turret/syndicate/toolbox/nukie
+
 /obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list(ROLE_SYNDICATE)
+
+/obj/item/storage/toolbox/emergency/turret/nukie/explosives/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/c4/x4(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	icon_state = "toolbox_off"
 	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
-	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
-
-/obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
+	//render the frame underneath?
+	var/frame = TRUE
 	max_integrity = 100
 	shot_delay = 0.5 SECONDS
 	stun_projectile = /obj/projectile/bullet/toolbox_turret
@@ -433,6 +485,11 @@ effective or pretty fucking useless.
 	ignore_faction = TRUE
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	if(frame)
+		underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -456,9 +513,12 @@ effective or pretty fucking useless.
 	if(!attacking_item.toolspeed)
 		return
 
+	if(!attacking_item.toolspeed)
+		return
+
 	if((user.istate & ISTATE_HARM))
 		balloon_alert(user, "deconstructing...")
-		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20, extra_checks = CALLBACK(attacking_item, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 			return
 
 		deconstruct(TRUE)
@@ -472,7 +532,7 @@ effective or pretty fucking useless.
 
 		balloon_alert(user, "repairing...")
 		while(atom_integrity != max_integrity)
-			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20, extra_checks = CALLBACK(attacking_item, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 				return
 
 			repair_damage(10)
@@ -509,3 +569,153 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 0.6
+
+/obj/machinery/porta_turret/syndicate/toolbox/nukie
+	name = "9mm turret"
+	icon_state = "syndie_off"
+	base_icon_state = "syndie"
+	//render the frame underneath?
+	frame = FALSE
+	max_integrity = 100
+	shot_delay = 1.5 SECONDS
+	stun_projectile = /obj/projectile/bullet/c9mm/nukie_turret
+	stun_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
+	lethal_projectile = /obj/projectile/bullet/c9mm/nukie_turret
+	lethal_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
+	var/activating
+	COOLDOWN_DECLARE(acquire_target_cooldown)
+
+/obj/projectile/bullet/c9mm/nukie_turret
+	name = "9mm bullet"
+	projectile_phasing = PASSMACHINE
+
+/obj/machinery/porta_turret/syndicate/toolbox/nukie/tryToShootAt(list/atom/movable/targets)
+	if(targets.len > 0)
+		var/atom/movable/M = pick(targets)
+		targets -= M
+		if(COOLDOWN_FINISHED(src, acquire_target_cooldown))
+			activating = TRUE
+			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
+			playsound(src, 'sound/machines/beep.ogg', 75, FALSE)
+			sleep(0.25 SECONDS)
+			playsound(src, 'sound/machines/beep.ogg', 75, TRUE)
+			sleep(1.25 SECONDS)
+			target(M) //warning shot?
+			activating = FALSE
+			return
+		if(!activating)
+			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
+			target(M)
+			return
+
+/obj/item/missile_targeter
+	name = "missile targeter"
+	desc = "A one time use targeter for calling a missile to bomb the designated target. Radius from epicenter: 12 meters."
+	desc_controls = "Alt-Click the device to fire the missile."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "missile_targeter_0"
+	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/used = FALSE
+	var/target_mode_on = FALSE
+	var/targeting = FALSE //are we currently targetting
+	var/missile_firing = FALSE
+	var/obj/effect/abstract/targetting_laser/target_laser
+	var/turf/designated_target
+
+
+/obj/item/missile_targeter/proc/check_usability(mob/user)
+	if(used)
+		balloon_alert(user, "out of charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/missile_targeter/attack_self(mob/user)
+	if(!(check_usability(user)))
+		return
+	toggle_targetting_mode(user)
+
+/obj/item/missile_targeter/proc/toggle_targetting_mode(mob/user)
+	target_mode_on = !target_mode_on
+	balloon_alert(user, "targetting [target_mode_on ? "on" : "off"]")
+	update_icon_state()
+
+/obj/item/missile_targeter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/missile_targeter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!(check_usability(user)))
+		return ITEM_INTERACT_BLOCKING
+	if(!target_mode_on)
+		balloon_alert(user, "targeting mode off!")
+		return ITEM_INTERACT_BLOCKING
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/targeted_turf = get_turf(interacting_with)
+	if(targeted_turf.density)
+		balloon_alert(user, "target has to be in the open!")
+		return ITEM_INTERACT_BLOCKING
+	if(targeted_turf == designated_target)
+		balloon_alert(user, "already being targeted!")
+		return ITEM_INTERACT_BLOCKING
+	if(targeting)
+		balloon_alert(user, "already targetting!")
+		return ITEM_INTERACT_BLOCKING
+
+	targeting = TRUE
+
+	if(!do_after(user, 3 SECONDS, target = interacting_with))
+		targeting = FALSE
+		return ITEM_INTERACT_BLOCKING
+	designated_target = targeted_turf
+	if(target_laser)
+		qdel(target_laser)
+	target_laser = new /obj/effect/abstract/targetting_laser(designated_target)
+	playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
+	targeting = FALSE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/missile_targeter/update_icon_state()
+	. = ..()
+	if(missile_firing)
+		icon_state = "missile_targeter_2"
+		return
+	if(used)
+		icon_state = "missile_targeter_3"
+		return
+	if(target_mode_on)
+		icon_state = "missile_targeter_1"
+		return
+	icon_state = "missile_targeter_0"
+
+/obj/item/missile_targeter/click_alt(mob/living/user)
+	if(!(check_usability(user)))
+		return
+	if(!designated_target)
+		balloon_alert(user, "no target designated!")
+		return
+
+	missile_firing = TRUE
+	update_icon_state()
+	if(target_laser)
+		qdel(target_laser)
+	var/obj/structure/closet/supplypod/syndicate_missile/new_missile = new()
+	new /obj/effect/pod_landingzone(designated_target, new_missile)
+	used = TRUE
+	to_chat(user, span_userdanger("The [name] vibrates and lets out an ominous alarm."))
+	playsound(src, 'sound/machines/warning-buzzer.ogg', 30, TRUE)
+	var/area/our_area = get_area(designated_target)
+	if(is_station_level(designated_target.z))
+		minor_announce("MISSILE ON COLLISION COURSE. COLLISION POINT: [our_area.get_original_area_name()]. ETA: 10 SECONDS.", "Priority Alert", sound_override = 'sound/misc/missile_warn.ogg', should_play_sound = TRUE, color_override = "red")
+	sleep(10 SECONDS)
+	missile_firing = FALSE
+	update_icon_state()
+
+/obj/effect/abstract/targetting_laser
+	icon_state = "impact_laser"
+	light_outer_range = 2
+	light_power = 1
+	light_color = COLOR_SOFT_RED

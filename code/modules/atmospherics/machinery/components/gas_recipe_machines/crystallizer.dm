@@ -41,6 +41,12 @@
 	internal = new
 	register_context()
 
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction()
+	var/turf/local_turf = get_turf(loc)
+	if(internal.total_moles())
+		local_turf.assume_air(internal)
+	return ..()
+
 /obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
@@ -53,48 +59,16 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", attacking_item))
 			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
+	if(default_change_direction_wrench(user, attacking_item))
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return FALSE
-	set_init_directions()
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	var/obj/machinery/atmospherics/node2 = nodes[2]
-	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node1.disconnect(src)
-		nodes[1] = null
-	if(node2)
-		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node2.disconnect(src)
-		nodes[2] = null
-
-	if(parents[1])
-		nullify_pipenet(parents[1])
-	if(parents[2])
-		nullify_pipenet(parents[2])
-
-	atmos_init()
-	node1 = nodes[1]
-	if(node1)
-		node1.atmos_init()
-		node1.add_member(src)
-	node2 = nodes[2]
-	if(node2)
-		node2.atmos_init()
-		node2.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
+/obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
@@ -115,7 +89,7 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/living/user)
 	if(!can_interact(user))
 		return
 	if(panel_open)
@@ -327,7 +301,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

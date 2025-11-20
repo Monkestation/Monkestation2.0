@@ -30,7 +30,7 @@
 	if(isliving(parent))
 		host_mob = parent
 
-		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
+		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
 			return COMPONENT_INCOMPATIBLE
 
 		start_time = world.time
@@ -144,8 +144,10 @@
 				SNP.copy_programming(NP, copy_activation)
 				break
 	if(full_overwrite)
-		for(var/X in programs_to_remove)
-			qdel(X)
+		QDEL_LIST(programs_to_remove)
+		cloud_id = source.cloud_id
+		cloud_active = source.cloud_active
+		safety_threshold = source.safety_threshold
 	for(var/X in programs_to_add)
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())
@@ -249,6 +251,8 @@
 ///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
+	if(!holder) // what
+		return
 	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
@@ -326,7 +330,7 @@
 /datum/component/nanites/proc/check_viable_biotype()
 	SIGNAL_HANDLER
 
-	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob))
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)

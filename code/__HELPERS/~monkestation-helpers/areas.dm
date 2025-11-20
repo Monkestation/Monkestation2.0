@@ -7,7 +7,7 @@
 		/area/misc,
 		/area/ocean,
 		/area/ruin,
-		/area/shipbreak,
+		/area/space/shipbreak,
 		/area/shuttle,
 		/area/space,
 		/area/station/asteroid,
@@ -15,6 +15,7 @@
 	var/static/list/outdoor_areas = typecacheof(list(
 		/area/forestplanet,
 		/area/icemoon,
+		/area/ocean,
 	))
 	if(!isarea(area))
 		if(ispath(area, /area))

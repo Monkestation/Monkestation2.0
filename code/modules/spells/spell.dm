@@ -88,6 +88,11 @@
 	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
+	/// An associative list of all resource costs
+	var/list/resource_costs
+	/// Boolean, if true, resource costs will be ignored
+	var/bypass_cost = FALSE
+
 /datum/action/cooldown/spell/Grant(mob/grant_to)
 	// If our spell is mind-bound, we only wanna grant it to our mind
 	if(istype(target, /datum/mind))
@@ -103,7 +108,7 @@
 	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
@@ -119,6 +124,7 @@
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
 		SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
@@ -171,6 +177,15 @@
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
 		return FALSE
+
+	//used for darkspawn spells
+	if(owner.mind && !bypass_cost && LAZYLEN(resource_costs))
+		for(var/i in resource_costs)
+			var/has_cost = SEND_SIGNAL(owner.mind, COMSIG_MIND_CHECK_ANTAG_RESOURCE, i, resource_costs[i])
+			if(!has_cost)
+				if(feedback)
+					to_chat(owner, span_warning("You don't have enough [i]!"))
+				return FALSE
 
 	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
@@ -274,6 +289,7 @@
 	if(!(precast_result & SPELL_NO_IMMEDIATE_COOLDOWN))
 		// The entire spell is done, start the actual cooldown at its set duration
 		StartCooldown()
+		consume_resource()
 
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
@@ -341,6 +357,12 @@
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
+
+/// Called after the effect happens, whether that's after the button press or after hitting someone with a touch ability
+/datum/action/cooldown/spell/proc/consume_resource() //to-do: rework vampire blood use into using this proc
+	if(!bypass_cost && LAZYLEN(resource_costs) && owner?.mind)
+		SEND_SIGNAL(owner.mind, COMSIG_MIND_SPEND_ANTAG_RESOURCE, resource_costs)
+
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()

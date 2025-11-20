@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
 	///The overlay datum that actually draws stuff on the limb
@@ -345,6 +345,11 @@
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEANTENNAE))
+		return TRUE
+	return FALSE
+
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
 	name = "podperson hair"
@@ -371,6 +376,10 @@
 	var/color_swapped_layer = EXTERNAL_FRONT
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255
+	color_source = ORGAN_COLOR_OVERRIDE
+	palette = /datum/color_palette/generic_colors
+	palette_key = "pod_color"
+
 
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list

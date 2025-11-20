@@ -6,6 +6,7 @@
 /datum/config_entry/string/replay_link
 	default = "http://localhost"
 
+#ifndef DISABLE_DEMOS
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1
@@ -557,3 +558,4 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= destroyed
 	if(initialized)
 		del_list[ref(destroyed)] = TRUE
+#endif

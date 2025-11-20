@@ -30,7 +30,7 @@
 	var/bulb_falloff = LIGHTING_DEFAULT_FALLOFF_CURVE
 
 	///Default colour of the light.
-	var/bulb_colour = "#f3fffac4"
+	var/bulb_colour = LIGHT_COLOR_DEFAULT
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?
@@ -42,7 +42,7 @@
 	///Count of number of times switched on/off, this is used to calculate the probability the light burns out
 	var/switchcount = 0
 	///Cell reference
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// If TRUE, then cell is null, but one is pretending to exist.
 	/// This is to defer emergency cell creation unless necessary, as it is very expensive.
 	var/has_mock_cell = TRUE
@@ -125,7 +125,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/light/LateInitialize()
+/obj/machinery/light/LateInitialize(mapload_arg)
 	. = ..()
 	switch(fitting)
 		if("tube")
@@ -314,11 +314,11 @@
 		if(is_full_charge() && !reagents)
 			return PROCESS_KILL
 		if(cell)
-			cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
+			charge_cell(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick, cell = cell) //Recharge emergency power automatically while not using it
 	if(reagents) //with most reagents coming out at 300, and with most meaningful reactions coming at 370+, this rate gives a few seconds of time to place it in and get out of dodge regardless of input.
 		reagents.adjust_thermal_energy(8 * reagents.total_volume * SPECIFIC_HEAT_DEFAULT * seconds_per_tick)
 		reagents.handle_reactions()
-	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
+	if(low_power_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE * seconds_per_tick))
 		update(FALSE) //Disables emergency mode and sets the color to normal
 
 /obj/machinery/light/proc/burn_out()
@@ -336,7 +336,7 @@
 
 /obj/machinery/light/get_cell()
 	if (has_mock_cell)
-		cell = new /obj/item/stock_parts/cell/emergency_light(src)
+		cell = new /obj/item/stock_parts/power_store/cell/emergency_light(src)
 		has_mock_cell = FALSE
 
 	return cell
@@ -448,7 +448,7 @@
 		new /obj/item/stack/cable_coil(loc, 1, "red")
 	transfer_fingerprints_to(new_light)
 
-	var/obj/item/stock_parts/cell/real_cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell/real_cell = get_cell()
 	if(!QDELETED(real_cell))
 		new_light.cell = real_cell
 		real_cell.forceMove(new_light)
@@ -510,8 +510,8 @@
 /obj/machinery/light/proc/use_emergency_power(power_usage_amount = LIGHT_EMERGENCY_POWER_USE)
 	if(!has_emergency_power(power_usage_amount))
 		return FALSE
-	var/obj/item/stock_parts/cell/real_cell = get_cell()
-	if(real_cell.charge > 300) //it's meant to handle 120 W, ya doofus
+	var/obj/item/stock_parts/power_store/cell/real_cell = get_cell()
+	if(real_cell.charge > 2.5 * /obj/item/stock_parts/power_store/cell/emergency_light::maxcharge) //it's meant to handle 120 W, ya doofus
 		visible_message(span_warning("[src] short-circuits from too powerful of a power cell!"))
 		burn_out()
 		return FALSE
@@ -603,7 +603,7 @@
 
 		if(protected || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			to_chat(user, span_notice("You remove the light [fitting]."))
-		else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
+		else if(istype(user) && user.dna.check_mutation(/datum/mutation/telekinesis))
 			to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 		else
 			var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
@@ -720,6 +720,11 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	break_light_tube()
+	return TRUE
+
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
@@ -740,3 +745,4 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 	fire_brightness = 2
+	power_consumption_rate = 10

@@ -246,7 +246,7 @@
 	if(SSshuttle.initialized)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/docking_port/stationary/LateInitialize()
+/obj/docking_port/stationary/LateInitialize(mapload_arg)
 	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 /obj/docking_port/stationary/unregister()
@@ -665,7 +665,7 @@
 		return SHUTTLE_DHEIGHT_TOO_LARGE
 
 	if(height-dheight > stationary_dock.height-stationary_dock.dheight)
-		return SHUTTLE_HEIGHT_TOO_LARGE
+		return "[SHUTTLE_HEIGHT_TOO_LARGE] [stationary_dock.dheight] vs [dheight] + [height]"
 
 	//check the dock isn't occupied
 	var/currently_docked = stationary_dock.get_docked()

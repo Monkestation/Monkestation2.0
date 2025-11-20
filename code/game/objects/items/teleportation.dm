@@ -24,7 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
-	var/tracking_range = 20
+	var/tracking_range = 200
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -110,10 +110,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/list/active_portal_pairs
+	///List of portal pairs created by this hand tele
+	var/list/active_portal_pairs = list()
+	///Maximum concurrent active portal pairs allowed
 	var/max_portal_pairs = 3
 
 	/**
@@ -134,24 +136,23 @@
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
-	if(try_dispel_portal(target, user))
-		return TRUE
-	return ..()
-
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
-		playsound(loc, "sound/effects/portal_close.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(user, span_notice("You dispel [target] with [src]!"))
+		var/obj/effect/portal/portal = target
+		portal.expire()
 		return TRUE
 	return FALSE
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user)
-	try_dispel_portal(target, user)
-	. = ..()
+/obj/item/hand_tele/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(try_dispel_portal(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hand_tele/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_tele/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/portal_location = last_portal_location
 
 	if (isweakref(portal_location))
@@ -160,19 +161,20 @@
 
 	if (isnull(portal_location))
 		to_chat(user, span_warning("[src] flashes briefly. No target is locked in."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	try_create_portal_to(user, portal_location)
+	return ITEM_INTERACT_SUCCESS
 
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/hand_tele/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/hand_tele/attack_self(mob/user)
 	if (!can_teleport_notifies(user))
 		return
 
 	var/list/locations = list()
-	for(var/obj/machinery/computer/teleporter/computer in GLOB.machines)
+	for(var/obj/machinery/computer/teleporter/computer as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/teleporter))
 		var/atom/target = computer.target_ref?.resolve()
 		if(!target)
 			computer.target_ref = null
@@ -207,7 +209,7 @@
 			if (about_to_replace_location)
 				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
+		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target), override = TRUE)
 
 		last_portal_location = WEAKREF(teleport_location)
 
@@ -254,7 +256,7 @@
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
-	playsound(loc, pick("sound/effects/portal_open_1.ogg", "sound/effects/portal_open_2.ogg", "sound/effects/portal_open_3.ogg" ), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
@@ -262,6 +264,9 @@
 	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
+	if(QDELETED(portal1) || QDELETED(portal2)) //in the event that something managed to delete the portal objects, i.e. something teleported them
+		to_chat(user, span_notice("[src] vibrates, but no portal seems to appear. Maybe you should try something else."))
+		return
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)
@@ -271,6 +276,9 @@
 
 	return TRUE
 
+///Checks for whether creating a portal in our area is allowed or not,
+///returning FALSE when in a NOTELEPORT area, an away mission or when the user is not on a turf.
+///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
 	var/area/current_area = current_location.loc
@@ -280,6 +288,7 @@
 
 	return TRUE
 
+///Clears last teleport location when the teleporter providing our target location changes its target
 /obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
@@ -287,6 +296,7 @@
 		last_portal_location = null
 		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
 
+///Removes a destroyed portal from active_portal_pairs list
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
 
@@ -427,9 +437,9 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		make_bloods(current_location, destination, user)
-		playsound(current_location, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	var/area/current_area = get_area(current_location)
@@ -464,9 +474,9 @@
 		balloon_alert(user, "emergency teleport triggered!")
 		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
 			make_bloods(mobloc, emergency_destination, user)
-		playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -476,9 +486,9 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, "sound/magic/disintegrate.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else

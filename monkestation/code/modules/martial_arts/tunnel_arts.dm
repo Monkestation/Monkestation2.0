@@ -30,7 +30,6 @@
 
 /datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
-	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY))
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
 
@@ -192,7 +191,7 @@
 	if(!(khan_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
 	var/datum/dna/dna = khan_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return FALSE
 	if(!isturf(khan_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE

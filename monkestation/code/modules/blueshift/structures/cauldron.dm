@@ -114,7 +114,7 @@
 	for(var/atom/movable/ingredient as anything in ingredients)
 		var/image/ingredient_overlay = image(ingredient, src)
 
-		var/list/icon_dimensions = get_icon_dimensions(ingredient.icon)
+		var/alist/icon_dimensions = get_icon_dimensions(ingredient.icon)
 		ingredient_overlay.transform = ingredient_overlay.transform.Scale(
 			CAULDRON_INGREDIENT_OVERLAY_SIZE / icon_dimensions["width"],
 			CAULDRON_INGREDIENT_OVERLAY_SIZE / icon_dimensions["height"],
@@ -157,17 +157,18 @@
 	return ..()
 
 /obj/machinery/cauldron/wrench_act(mob/living/user, obj/item/tool)
-	if(default_unfasten_wrench(user, tool))
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		update_appearance()
-	return
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/cauldron/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(drop_location(), 5) // Made with stone instead of iron so that it doesn't outbalance microwaves on station
 	deconstruct(TRUE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cauldron/attackby(obj/item/item, mob/living/user, params)
 	if(operating)

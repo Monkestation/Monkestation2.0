@@ -1,12 +1,18 @@
 SUBSYSTEM_DEF(polling)
 	name = "Polling"
-	flags = SS_BACKGROUND | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	wait = 1 SECONDS
 	runlevels = RUNLEVEL_GAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
 	var/total_polls = 0
+
+/datum/controller/subsystem/polling/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, currently_polling),
+	)
 
 /datum/controller/subsystem/polling/fire()
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..

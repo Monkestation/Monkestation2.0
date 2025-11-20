@@ -12,8 +12,8 @@
 	icon_state = "station_map"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 16
-	active_power_usage = 128
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.16
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/station_map
 	light_color = HOLOMAP_HOLOFIER
 
@@ -29,6 +29,7 @@
 
 	/// The various images and icons for the map are stored in here, as well as the actual big map itself.
 	var/datum/station_holomap/holomap_datum
+	var/bonus_parts = /obj/item/stock_parts/micro_laser
 
 /obj/machinery/station_map/Initialize()
 	. = ..()
@@ -37,7 +38,7 @@
 	SSholomaps.station_holomaps += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/station_map/LateInitialize()
+/obj/machinery/station_map/LateInitialize(mapload_arg)
 	. = ..()
 	if(SSholomaps.initialized)
 		setup_holomap()
@@ -86,7 +87,8 @@
 	holomap_datum.base_map.loc = user_hud.holomap  // Put the image on the holomap hud
 	holomap_datum.base_map.alpha = 0 // Set to transparent so we can fade in
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_position)
+	RegisterSignal(user, COMSIG_MOB_KEYDOWN, PROC_REF(keydown))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_position))
 
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_open.ogg', 125)
 	animate(holomap_datum.base_map, alpha = 255, time = 5, easing = LINEAR_EASING)
@@ -119,6 +121,12 @@
 	if((machine_stat & (NOPOWER | BROKEN)) || !anchored)
 		close_map()
 
+/obj/machinery/station_map/proc/keydown(mob/source, key)
+	SIGNAL_HANDLER
+
+	if(key == ESCAPE_KEY)
+		INVOKE_ASYNC(src, PROC_REF(close_map))
+
 /obj/machinery/station_map/proc/check_position()
 	SIGNAL_HANDLER
 
@@ -129,7 +137,7 @@
 	if(!watching_mob)
 		return
 
-	UnregisterSignal(watching_mob, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(watching_mob, list(COMSIG_MOB_KEYDOWN, COMSIG_MOVABLE_MOVED))
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_close.ogg', 125)
 	icon_state = initial(icon_state)
 	if(watching_mob?.client)
@@ -278,6 +286,7 @@
 	name = "\improper engineering station map"
 	icon_state = "station_map_engi"
 	circuit = /obj/item/circuitboard/machine/station_map/engineering
+	bonus_parts = /obj/item/stock_parts/subspace/analyzer
 
 /obj/machinery/station_map/engineering/Initialize(mapload)
 	. = ..()
@@ -324,6 +333,40 @@
 	name = "Station Map"
 	build_path = /obj/machinery/station_map/directional/north
 	req_components = list(/obj/item/stock_parts/scanning_module = 3, /obj/item/stock_parts/micro_laser = 4)
+	var/static/list/map_names_paths = list(
+		/obj/machinery/station_map/directional/north = "Station",
+		/obj/machinery/station_map/engineering/directional/north = "Station Engineering",
+		/obj/machinery/station_map/strategic = "Station Strategic",
+	)
+
+/obj/item/circuitboard/machine/station_map/screwdriver_act(mob/living/user, obj/item/tool)
+	var/static/list/display_map_names_paths
+	if(!display_map_names_paths)
+		display_map_names_paths = list()
+		for(var/path in map_names_paths)
+			display_map_names_paths[map_names_paths[path]] = path
+	var/choice = tgui_input_list(user, "Choose a new map type", "Select an Item", sort_list(display_map_names_paths))
+	if(isnull(choice))
+		return
+	if(isnull(display_map_names_paths[choice]))
+		return
+	set_type(display_map_names_paths[choice])
+	return TRUE
+
+/obj/item/circuitboard/machine/station_map/proc/set_type(obj/machinery/station_map/typepath)
+	build_path = typepath
+	name = "[map_names_paths[build_path]] Map"
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 3,
+		/obj/item/stock_parts/micro_laser = 3,
+		initial(typepath.bonus_parts) = 1,)
+
+/obj/item/circuitboard/machine/station_map/apply_default_parts(obj/machinery/machine)
+	for(var/typepath in map_names_paths)
+		if(istype(machine, typepath))
+			set_type(typepath)
+			break
+	return ..()
 
 /obj/item/circuitboard/machine/station_map/engineering
 	name = "Engineering Station Map"
@@ -371,6 +414,32 @@
 	icon_state = "strat_holomap"
 	pixel_x = -16
 	pixel_y = -16
+
+/obj/machinery/station_map/syndicate
+	name = "recon holomap"
+	desc = "A virtual map of the target station."
+
+/obj/machinery/station_map/syndicate/Initialize()
+	. = ..()
+	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
+	current_z_level = tracked_z_level
+
+/obj/machinery/station_map/syndicate/directional/north
+	dir = NORTH
+	pixel_y = 32
+
+/obj/machinery/station_map/syndicate/directional/south
+	dir = SOUTH
+	pixel_y = -32
+
+/obj/machinery/station_map/syndicate/directional/west
+	dir = WEST
+	pixel_x = -32
+
+/obj/machinery/station_map/syndicate/directional/east
+	dir = EAST
+	pixel_x = 32
+
 
 #undef HOLOMAP_LOW_LIGHT
 #undef HOLOMAP_HIGH_LIGHT

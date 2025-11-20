@@ -28,6 +28,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	harvest_organs()
 	return ..()
 
+/mob/living/carbon/human/dummy/update_cached_insulation()
+	return
+
+/mob/living/carbon/human/dummy/get_insulation(temperature)
+	return temperature_insulation
+
+/mob/living/carbon/human/dummy/med_hud_set_health()
+	return
+
+/mob/living/carbon/human/dummy/med_hud_set_status()
+	return
+
 /*
 	MONKESTATION EDIT START
 	This causes a problem with tall players as some of their overlays will go outside of the 32x32 range which the mob's icon is restricted to
@@ -141,6 +153,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["anime_top"] = get_consistent_feature_entry(GLOB.anime_top_list) //Monkestation Addition
 	target.dna.features["anime_middle"] = get_consistent_feature_entry(GLOB.anime_middle_list) //Monkestation Addition
 	target.dna.features["anime_bottom"] = get_consistent_feature_entry(GLOB.anime_bottom_list) //Monkestation Addition
+	target.dna.features["anime_halo"] = get_consistent_feature_entry(GLOB.anime_halo_list)
 	target.dna.features["arachnid_appendages"] = get_consistent_feature_entry(GLOB.arachnid_appendages_list) //Monkestation Addition
 	target.dna.features["arachnid_chelicerae"] = get_consistent_feature_entry(GLOB.arachnid_chelicerae_list) //Monkestation Addition
 	target.dna.features["goblin_ears"] = get_consistent_feature_entry(GLOB.goblin_ears_list) //Monkestation Addition
@@ -207,7 +220,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+		carbon_target.dna.copy_dna(copycat.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
@@ -242,9 +255,10 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /mob/living/carbon/human/dummy/extra_tall
 	bound_height = 64
-
+	// this prevents the top of tall characters from being cut off.
+	appearance_flags = parent_type::appearance_flags & ~TILE_BOUND
 	var/list/extra_bodyparts = list()
 
 /mob/living/carbon/human/dummy/extra_tall/Destroy()
-	. = ..()
-	extra_bodyparts = null
+	extra_bodyparts.Cut()
+	return ..()

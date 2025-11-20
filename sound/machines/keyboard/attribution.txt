@@ -1,0 +1,1 @@
+Keystroke 1,2,3,4 and keypress 1,2,3,4 ported from https://github.com/yogstation13/Yogstation/pull/19625 which ported them from bee which ported them from shiptest. Made by Rye-rice

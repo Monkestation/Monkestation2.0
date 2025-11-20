@@ -8,10 +8,10 @@
 	roundend_category = "vassals"
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
 	antag_hud_name = "vassal"
 	show_in_roundend = FALSE
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	antag_count_points = 2
 
 	/// The Master Bloodsucker's antag datum.
 	var/datum/antagonist/bloodsucker/master
@@ -21,6 +21,8 @@
 	var/special_type = FALSE
 	///Description of what this Vassal does.
 	var/vassal_description
+	/// A link to our team monitor, used to track our master.
+	var/datum/component/team_monitor/monitor
 
 /datum/antagonist/vassal/antag_panel_data()
 	return "Master : [master.owner.name]"
@@ -28,10 +30,29 @@
 /datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 	current_mob.clear_mood_event("vampcandle")
 	add_team_hud(current_mob)
-	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+	setup_monitor(current_mob)
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+
+/datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+	QDEL_NULL(monitor)
+	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+	UnregisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+
+/datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/vassal/proc/setup_monitor(mob/target)
+	QDEL_NULL(monitor)
+	if(QDELETED(master?.owner?.current) || QDELETED(master.tracker))
+		return
+	monitor = target.AddComponent(/datum/component/team_monitor, REF(master))
+	monitor.add_to_tracking_network(master.tracker.tracking_beacon)
+	monitor.show_hud(target)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
@@ -55,19 +76,14 @@
 		antag_hud.show_to(target)
 		hud.show_to(antag_hud.target)
 
-/datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
-
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_PASSED
 
 /// This is called when the antagonist is successfully mindshielded.
 /datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	target.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
 	owner.remove_antag_datum(/datum/antagonist/vassal)
-	owner.current.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
 	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/vassal/proc/on_examine(datum/source, mob/examiner, examine_text)
@@ -77,8 +93,8 @@
 		examine_text += vassal_examine
 
 /datum/antagonist/vassal/on_gain()
+	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	/// Enslave them to their Master
 	if(!master || !istype(master, master))
 		return
@@ -96,29 +112,42 @@
 	vassal_objective.owner = owner
 	objectives += vassal_objective
 	/// Give Vampire Language & Hud
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
+	owner.current.get_language_holder().omnitongue = TRUE
 	owner.current.grant_language(/datum/language/vampiric)
 	return ..()
 
 /datum/antagonist/vassal/on_removal()
-	UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
-	if(!QDELETED(master?.owner))
+	if(!QDELETED(master))
 		if(special_type && master.special_vassals[special_type])
-			master.special_vassals[special_type] -= src
+			master.special_vassals.Remove(special_type)
 		master.vassals -= src
 		owner.enslaved_to = null
-	//Remove ALL Traits, as long as its from BLOODSUCKER_TRAIT's source.
-	for(var/allstatus_traits in owner.current._status_traits)
-		REMOVE_TRAIT(owner.current, allstatus_traits, BLOODSUCKER_TRAIT)
-	//Remove Recuperate Power
-	while(length(powers))
-		var/datum/action/cooldown/bloodsucker/power = pick(powers)
-		powers -= power
-		power.Remove(owner.current)
-	//Remove Language & Hud
-	owner.current.remove_language(/datum/language/vampiric)
+
+	var/datum/antagonist/bloodsucker/converted_bloodsucker_datum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+	//If this vassal has become a bloodsucker through ventrue conversion, we do not remove these things - but we do remove a couple other things instead
+	if (!converted_bloodsucker_datum)
+		REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
+		if(owner.current)
+			UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
+			REMOVE_TRAITS_IN(owner.current, BLOODSUCKER_TRAIT)
+
+		//Remove Language & Hud
+		owner.current?.remove_language(/datum/language/vampiric)
+		//Remove Vassal Powers
+		QDEL_LIST(powers)
+	else
+		var/datum/action/cooldown/bloodsucker/recuperate/recuperate_power = locate(/datum/action/cooldown/bloodsucker/recuperate) in converted_bloodsucker_datum.powers
+		if (recuperate_power)
+			converted_bloodsucker_datum.RemovePower(recuperate_power)
+
+		var/datum/action/cooldown/bloodsucker/distress/distress_power = locate(/datum/action/cooldown/bloodsucker/distress) in converted_bloodsucker_datum.powers
+		if (distress_power)
+			converted_bloodsucker_datum.RemovePower(distress_power)
+
+	// remove the monitor
+	QDEL_NULL(monitor)
+
 	return ..()
 
 /datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -153,6 +182,12 @@
 	/// Message told to your (former) Master.
 	if(master && master.owner)
 		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
+
+/datum/antagonist/vassal/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vassal/admin_add(datum/mind/new_owner, mob/admin)
 	var/list/datum/mind/possible_vampires = list()

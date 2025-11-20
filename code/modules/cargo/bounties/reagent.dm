@@ -89,6 +89,7 @@
 		/datum/reagent/consumable/ethanol/bacchus_blessing,\
 		/datum/reagent/consumable/ethanol/bastion_bourbon,\
 		/datum/reagent/consumable/ethanol/booger,\
+		/datum/reagent/consumable/ethanol/honeybee_mead,\
 		/datum/reagent/consumable/ethanol/hippies_delight,\
 		/datum/reagent/consumable/ethanol/drunkenblumpkin,\
 		/datum/reagent/consumable/ethanol/fetching_fizz,\

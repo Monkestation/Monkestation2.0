@@ -410,3 +410,23 @@
 	results = list(/datum/reagent/toxin/radiomagnetic_disruptor = 2)
 	required_reagents = list(/datum/reagent/thermite = 1, /datum/reagent/uranium/radium = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/morbital
+	results = list(/datum/reagent/toxin/morbital = 5)
+	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 1, /datum/reagent/medicine/c2/probital = 1, /datum/reagent/blood = 1)
+	mix_message = "<span class='danger'>The mixture suddenly becomes deep blood red and smells a bit like an wet dog.</span>"
+	is_cold_recipe = FALSE
+	required_temp = 100
+	optimal_temp = 450
+	overheat_temp = 900
+	optimal_ph_min = 5
+	optimal_ph_max = 9
+	determin_ph_range = 3
+	temp_exponent_factor = 0.5
+	ph_exponent_factor = 1
+	thermic_constant = -400
+	H_ion_release = -0.4
+	rate_up_lim = 15
+	purity_min = 0.4
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER

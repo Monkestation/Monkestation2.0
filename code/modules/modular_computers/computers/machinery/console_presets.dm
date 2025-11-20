@@ -53,6 +53,15 @@
 		/datum/computer_file/program/crew_manifest,
 	)
 
+/obj/machinery/modular_computer/preset/representative
+	name = "nanotrasen representative console"
+	desc = "A stationary computer. This one comes preloaded with command programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/nt_rep_comments,
+	)
+
 /obj/machinery/modular_computer/preset/id/centcom
 	desc = "A stationary computer. This one comes preloaded with CentCom identification modification programs."
 
@@ -117,7 +126,7 @@
 	name = "department chatroom console"
 	desc = "A stationary computer. This one comes preloaded with a chatroom for incoming cargo requests. You may moderate it from this computer."
 
-/obj/machinery/modular_computer/preset/cargochat/cargo/LateInitialize()
+/obj/machinery/modular_computer/preset/cargochat/cargo/LateInitialize(mapload_arg)
 	. = ..()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
 	chatprogram.username = "cargo_requests_operator"

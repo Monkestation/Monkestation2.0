@@ -168,9 +168,13 @@
 
 ///Clears the affected_turfs lazylist, removing from its contents the effects of being near the light.
 /datum/component/overlay_lighting/proc/clean_old_turfs()
+#ifndef DISABLE_DEMOS
 	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 	for(var/turf/lit_turf as anything in affected_turfs)
+#ifndef DISABLE_DEMOS
 		marked_turfs?[lit_turf] = TRUE
+#endif
 		lit_turf.dynamic_lumcount -= lum_power
 	affected_turfs = null
 
@@ -180,10 +184,14 @@
 	if(!current_holder)
 		return
 	. = list()
+#ifndef DISABLE_DEMOS
 	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
 		lit_turf.dynamic_lumcount += lum_power
+#ifndef DISABLE_DEMOS
 		marked_turfs?[lit_turf] = TRUE
+#endif
 		. += lit_turf
 	if(length(.))
 		affected_turfs = .
@@ -355,7 +363,7 @@
 		turn_off()
 	range = clamp(CEILING(new_range, 0.5), 1, 6)
 	var/pixel_bounds = ((range - 1) * 64) + 32
-	lumcount_range = CEILING(range, 1)
+	lumcount_range = CEILING(range -1, 1) //yog change -- added a -1 to range -- makes the visual fit the lumcount range more closely for darkspawn gameplay
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= visible_mask
 	visible_mask.icon = light_overlays["[pixel_bounds]"]

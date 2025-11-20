@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 
 /datum/dream/heretic/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
-	. += "You wander through the forest of Mansus"
+	. += "You wander through the forest of The Mansus"
 	. += "There is a " + pick("pond", "well", "lake", "puddle", "stream", "spring", "brook", "marsh")
 
 	dreamer.add_mood_event("mansus_dream_fatigue", /datum/mood_event/mansus_dream_fatigue)
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	. += "You feel exhausted"
 
 /datum/mood_event/mansus_dream_fatigue
-	description = "I must recover before I can dream of Mansus again."
+	description = "I must recover before I can dream of The Mansus again."
 	mood_change = -2
 	timeout = 5 MINUTES
 

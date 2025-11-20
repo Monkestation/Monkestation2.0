@@ -62,10 +62,9 @@ export type MaterialIconProps = {
   materialName: string;
 
   /**
-   * The amount of material. One sheet is 2,000 units. By default, the icon
-   * attempts to render a full stack (200,000 units).
+   * The number of sheets of the material.
    */
-  amount?: number;
+  sheets?: number;
 };
 
 /**
@@ -73,7 +72,7 @@ export type MaterialIconProps = {
  * material.
  */
 export const MaterialIcon = (props: MaterialIconProps) => {
-  const { materialName, amount } = props;
+  const { materialName, sheets = 0 } = props;
   const icons = MATERIAL_ICONS[materialName];
 
   if (!icons) {
@@ -82,10 +81,7 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 
   let activeIdx = 0;
 
-  while (
-    icons[activeIdx + 1] &&
-    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000
-  ) {
+  while (icons[activeIdx + 1] && icons[activeIdx + 1][0] <= sheets) {
     activeIdx += 1;
   }
 

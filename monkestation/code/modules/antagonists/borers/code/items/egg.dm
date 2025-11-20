@@ -32,6 +32,7 @@
 	var/generation = 0
 	///the egg that is attached to this mob spawn
 	var/obj/item/borer_egg/host_egg = /obj/item/borer_egg
+	dont_be_a_shit = FALSE
 
 /obj/effect/mob_spawn/ghost_role/borer_egg/Destroy()
 	host_egg = null

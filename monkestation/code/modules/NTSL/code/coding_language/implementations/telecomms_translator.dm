@@ -224,7 +224,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		msg = "*beep*"
 	signal.data["message"] = msg
 
-
 	signal.frequency = script_signal.get_clean_property("freq", signal.frequency)
 
 	var/setname = script_signal.get_clean_property("source", signal.data["name"])
@@ -237,10 +236,10 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	signal.levels = script_signal.get_clean_property("sector", signal.levels)
 	signal.data["job"] = script_signal.get_clean_property("job", signal.data["job"])
 	signal.data["reject"] = !(script_signal.get_clean_property("pass")) // set reject to the opposite of $pass
-	signal.virt.verb_say = script_signal.get_clean_property("say")
-	signal.virt.verb_ask = script_signal.get_clean_property("ask")
-	signal.virt.verb_yell = script_signal.get_clean_property("yell")
-	signal.virt.verb_exclaim = script_signal.get_clean_property("exclaim")
+	signal.virt.verb_say = script_signal.get_clean_property("say", signal.virt.verb_say)
+	signal.virt.verb_ask = script_signal.get_clean_property("ask", signal.virt.verb_ask)
+	signal.virt.verb_yell = script_signal.get_clean_property("yell", signal.virt.verb_yell)
+	signal.virt.verb_exclaim = script_signal.get_clean_property("exclaim", signal.virt.verb_exclaim)
 	var/newlang = LangBit2Datum(script_signal.get_clean_property("language"))
 	if(newlang != oldlang)// makes sure that we only clean out unallowed languages when a translation is taking place otherwise we run an unnecessary proc to filter newlang on foreign untranslated languages.
 		if(!(LAZYFIND(GLOB.allowed_translations, oldlang))) // cleans out any unallowed translations by making sure the new language is on the allowed translation list. Tcomms powergaming is dead! - Hopek
@@ -339,7 +338,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	if(istext(address))
 		var/obj/machinery/telecomms/server/S = interp.Compiler.Holder
 
-		if(params.len == 1) // Getting the value
+		if(length(params) == 1) // Getting the value
 			return S.memory[address]
 		else if(value == null) // setting it to null? You must be trying to remove it! Since altoids added this fancy ass memory thing might as well
 			S.memory -= address
@@ -420,7 +419,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/exclaim = script_signal.get_clean_property("exclaim")
 	var/language = script_signal.get_clean_property("language")
 
-
 	var/obj/machinery/telecomms/server/S = interp.Compiler.Holder
 	var/obj/item/radio/server/hradio = S.server_radio
 
@@ -487,7 +485,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	newsign.data["vmessage"] = message
 	newsign.data["vname"] = source
 	newsign.data["vmask"] = 0
-
 
 	var/pass = S.relay_information(newsign, /obj/machinery/telecomms/hub)
 	if(!pass) // If we're not sending this to the hub (i.e. we're running a basic tcomms or something)

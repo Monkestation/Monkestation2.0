@@ -9,6 +9,8 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
+	stinger_sound = 'sound/ambience/antag/ops.ogg'
+	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -48,7 +50,7 @@
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
@@ -71,13 +73,26 @@
 		if(!nuke_team.team_discounts)
 			var/list/uplink_items = list()
 			for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag) && item.cost > 1)
+				if(!item.item || item.cant_discount || !(item.purchasable_from & uplink.uplink_handler.uplink_flag) || item.cost <= 1)
+					continue
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
 					uplink_items += item
+					continue
+				if((uplink.uplink_handler.assigned_role in item.restricted_roles) || (uplink.uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 			nuke_team.team_discounts = list()
 			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)
 			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)
 		uplink.uplink_handler.extra_purchasable += nuke_team.team_discounts
 
+	var/mob/living/datum_owner = owner.current
+	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
+	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
 	memorize_code()
 
 /datum/antagonist/nukeop/get_team()
@@ -259,7 +274,7 @@
 			H.update_icons()
 
 /datum/antagonist/nukeop/leader/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
@@ -357,18 +372,10 @@
 		nuke_code_paper.forceMove(get_turf(H))
 	else
 		H.equip_to_slot_or_del(nuke_code_paper, ITEM_SLOT_RPOCKET)
-	var/mob/living/datum_owner = owner.current
 
 	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [code]<br>"
 	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = code)
 	to_chat(owner, "The nuclear authorization code is: <B>[code]</B>")
-
-	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
-	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
-	datum_owner.add_mob_memory(/datum/memory/key/codewords)
-	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
 
 //might be best to move this to it's own file but not sure where that would make sense
 /obj/item/paper/fluff/nuke_code

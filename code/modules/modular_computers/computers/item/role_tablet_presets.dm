@@ -5,6 +5,7 @@
 /obj/item/modular_computer/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	max_capacity = parent_type::max_capacity * 2
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -388,6 +389,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /* monkestation removal: don't force ringer off by default

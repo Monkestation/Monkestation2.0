@@ -16,6 +16,7 @@ Slimecrossing Armor
 	armor_type = /datum/armor/mask_nobreath
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/mask_nobreath
 	bio = 50
@@ -38,10 +39,6 @@ Slimecrossing Armor
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
-
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
 
 /obj/structure/light_prism
 	name = "light prism"
@@ -111,22 +108,10 @@ Slimecrossing Armor
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src == carbon_user.head)
-			to_chat(user, span_warning("You feel at peace. <b style='color:pink'>Why would you want anything else?</b>"))
-			return TRUE
-	return FALSE
-
-/obj/item/clothing/head/peaceflower/attack_hand(mob/user, list/modifiers)
-	if(at_peace_check(user))
-		return
-	return ..()
-
-/obj/item/clothing/head/peaceflower/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	if(at_peace_check(usr))
-		return
+/obj/item/clothing/head/peaceflower/can_mob_unequip(mob/user)
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_warning("You feel at peace. <b style='color:pink'>Why would you want anything else?</b>"))
+		return FALSE
 	return ..()
 
 /obj/item/clothing/suit/armor/heavy/adamantine

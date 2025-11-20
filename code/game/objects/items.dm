@@ -121,6 +121,8 @@
 	var/list/datum/action/actions
 	///list of paths of action datums to give to the item on New().
 	var/list/actions_types
+	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
+	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	///This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -139,6 +141,8 @@
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
+	///flat armour pen, like the way old armour pen worked. Applied AFTER percentage pen
+	var/armour_ignorance = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
 	/// The click cooldown given after attacking. Lower numbers means faster attacks
@@ -178,6 +182,11 @@
 	var/heat = 0
 	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
 	var/sharpness = NONE
+
+	/// A list of statistics used when a weapon hits someone, swing speed = multiplier for melee attack cd, encumbrance = slowdown, encumbrance_time = slowdown length, reach = reach, embed chance = chance for applicable weapons to embed on hit, damage_low/high = range of damage the weapon takes on hitting a mob
+	//var/list/weapon_stats = list(SWING_SPEED = 1, ENCUMBRANCE = 0, ENCUMBRANCE_TIME = 0, REACH = 1, DAMAGE_LOW = 0, DAMAGE_HIGH = 0)
+	///just swingpseed for now
+	var/swing_speed = 1
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = null
@@ -228,10 +237,19 @@
 	var/override_notes = FALSE
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
-	/// Does this use the advanced reskinning setup?
-	var/uses_advanced_reskins = FALSE
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
+
+	/// Has the item been reskinned?
+	var/current_skin
+	/// List of options to reskin.
+	var/list/unique_reskin
+	/// If reskins change base icon state as well
+	var/unique_reskin_changes_base_icon_state = FALSE
+	/// If reskins change inhands as well
+	var/unique_reskin_changes_inhand = FALSE
+	/// Does this use the advanced reskinning setup?
+	var/uses_advanced_reskins = FALSE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -263,11 +281,11 @@
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
-	add_weapon_description()
-
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
+
+	setup_reskinning()
 
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
@@ -282,6 +300,32 @@
 		remove_item_action(action)
 
 	return ..()
+
+
+/obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!unique_reskin)
+		return
+
+	if(current_skin && !(item_flags  & INFINITE_RESKIN))
+		return
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/click_ctrl(mob/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//If the item is on the ground & not anchored we allow the player to drag it
+	. = item_ctrl_click(user)
+	if(. & CLICK_ACTION_ANY)
+		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
+
+/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/obj/item/proc/item_ctrl_click(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)
@@ -406,6 +450,10 @@
 	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
+	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
+		add_weapon_description()
+		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
+
 	. = ..()
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
@@ -434,7 +482,7 @@
 	///Separator between the items on the list
 	var/sep = ""
 	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_boost_check(src)
+	var/list/boostable_nodes = techweb_item_unlock_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
@@ -594,7 +642,7 @@
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user && outside_storage)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!can_mob_unequip(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	. = FALSE
@@ -606,7 +654,9 @@
 		user.dropItemToGround(src)
 		return TRUE
 
-/obj/item/proc/allow_attack_hand_drop(mob/user)
+/// Called when a mob is manually attempting to unequip the item
+/// Returning FALSE will prevent the unequip from happening
+/obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
 
 /obj/item/attack_paw(mob/user, list/modifiers)
@@ -634,9 +684,6 @@
 		if(!R.low_power_mode) //can't equip modules with an empty cell.
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
-
-/obj/item/proc/GetDeconstructableContents()
-	return get_all_contents() - src
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -667,11 +714,13 @@
 	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(user && iscarbon(user))
+	if(iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_DROPPED, src)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
-	user?.update_equipment_speed_mods()
+	if(user)
+		user.update_cached_insulation()
+		user.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -681,6 +730,7 @@
 	if(iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_PICKED_UP, src)
 	item_flags |= IN_INVENTORY
+	user.update_cached_insulation()
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -740,6 +790,7 @@
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE, mixer_channel = equip_mixer_channel) // monkestation: sound mixer
 		else if(slot & ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = pickup_mixer_channel) // monkestation: sound mixer
+	user.update_cached_insulation()
 	user.update_equipment_speed_mods()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
@@ -756,8 +807,14 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
 		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
+		return FALSE
+	if(!isnull(action_slots))
+		return (slot & action_slots)
+	else if (slot_flags)
+		return (slot & slot_flags)
 	return TRUE
 
 /**
@@ -815,8 +872,7 @@
 
 /obj/item/on_exit_storage(datum/storage/master_storage)
 	. = ..()
-	var/atom/location = master_storage.real_location?.resolve()
-	do_drop_animation(location)
+	do_drop_animation(master_storage.parent)
 
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(QDELETED(hit_atom))
@@ -1020,8 +1076,11 @@
 			else
 				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = ..()
+
 	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
@@ -1112,7 +1171,10 @@
 
 /// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc. Returns TRUE on success, FALSE on failure.
 /obj/item/proc/use(used)
-	return !used
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_USED, args) & BLOCK_ITEM_USE)
+		return FALSE
+	return TRUE
 
 /// Plays item's usesound, if any.
 /obj/item/proc/play_tool_sound(atom/target, volume=50)
@@ -1349,7 +1411,7 @@
 		mob_loc.regenerate_icons()
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
-/obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
@@ -1381,79 +1443,18 @@
 /obj/item/clothing/glasses	//Code to let you switch the side your eyepatch is on! Woo! Just an explanation, this is added to the base glasses so it works on eyepatch-huds too
 	var/can_switch_eye = FALSE	//Having this default to false means that its easy to make sure this doesnt apply to any pre-existing items
 
-/obj/item/reskin_obj(mob/M)
-	if(!uses_advanced_reskins)
-		return ..()
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	/// Is the obj a glasses icon with swappable item states?
-	var/is_swappable = FALSE
-	/// if the item are glasses, this variable stores the item.
-	var/obj/item/clothing/glasses/reskinned_glasses
-
-	if(istype(src, /obj/item/clothing/glasses)) // TODO - Remove this mess about glasses, it shouldn't be necessary anymore.
-		reskinned_glasses = src
-		if(reskinned_glasses.can_switch_eye)
-			is_swappable = TRUE
-
-	var/list/items = list()
-
-
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = unique_reskin[reskin_option][RESKIN_ICON] ? unique_reskin[reskin_option][RESKIN_ICON] : icon, icon_state = "[unique_reskin[reskin_option][RESKIN_ICON_STATE]]")
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-
-	if(unique_reskin[pick][RESKIN_ICON])
-		icon = unique_reskin[pick][RESKIN_ICON]
-
-	if(unique_reskin[pick][RESKIN_ICON_STATE])
-		if(is_swappable)
-			base_icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
-			icon_state = base_icon_state
-		else
-			icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
-
-	if(unique_reskin[pick][RESKIN_WORN_ICON])
-		worn_icon = unique_reskin[pick][RESKIN_WORN_ICON]
-
-	if(unique_reskin[pick][RESKIN_WORN_ICON_STATE])
-		worn_icon_state = unique_reskin[pick][RESKIN_WORN_ICON_STATE]
-
-	if(unique_reskin[pick][RESKIN_INHAND_L])
-		lefthand_file = unique_reskin[pick][RESKIN_INHAND_L]
-	if(unique_reskin[pick][RESKIN_INHAND_R])
-		righthand_file = unique_reskin[pick][RESKIN_INHAND_R]
-	if(unique_reskin[pick][RESKIN_INHAND_STATE])
-		inhand_icon_state = unique_reskin[pick][RESKIN_INHAND_STATE]
-	if(unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS])
-		supports_variations_flags = unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS]
-	if(ishuman(M))
-		var/mob/living/carbon/human/wearer = M
-		wearer.regenerate_icons() // update that mf
-	to_chat(M, "[src] is now skinned as '[pick].'")
-	post_reskin(M)
-	return TRUE
-
-/// Automatically called after a reskin, for any extra variable changes.
-/obj/item/proc/post_reskin(mob/our_mob)
-	return
-
 /// Special stuff you want to do when an outfit equips this item.
 /obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
 
-/// Whether or not this item can be put into a storage item through attackby
-/obj/item/proc/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/**
+ * Called before this item is placed into a storage container
+ * via the item clicking on the target atom
+ *
+ * Returning FALSE will prevent the item from being stored
+ */
+/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return TRUE
 
 /obj/item/proc/do_pickup_animation(atom/target, turf/source)
@@ -1704,3 +1705,42 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/**
+ * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us
+ * For example an object can have different `tool_behaviours` (e.g borg omni tool) but will return an internal reference of that tool to attack for us
+ * You can use it for general purpose polymorphism if you need a proxy atom to interact in a specific way
+ * with a target on behalf on this atom
+ *
+ * Currently used only in the object melee attack chain but can be used anywhere else or even moved up to the atom level if required
+ */
+/obj/item/proc/get_proxy_attacker_for(atom/target, mob/user)
+	RETURN_TYPE(/obj/item)
+
+	return src
+
+/**
+ * Used to update the weight class of the item in a way that other atoms can react to the change.
+ *
+ * Arguments:
+ * * new_w_class - The new weight class of the item.
+ *
+ * Returns:
+ * * TRUE if weight class was successfully updated
+ * * FALSE otherwise
+ */
+/obj/item/proc/update_weight_class(new_w_class)
+	if(w_class == new_w_class)
+		return FALSE
+
+	var/old_w_class = w_class
+	w_class = new_w_class
+	SEND_SIGNAL(src, COMSIG_ITEM_WEIGHT_CLASS_CHANGED, old_w_class, new_w_class)
+	if(!isnull(loc))
+		SEND_SIGNAL(loc, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, src, old_w_class, new_w_class)
+	return TRUE
+
+/obj/item/dump_harddel_info()
+	var/list/wardrobe_stock = SSwardrobe?.preloaded_stock?[type]
+	if(wardrobe_stock && (src in wardrobe_stock[WARDROBE_STOCK_CONTENTS]))
+		return "Stocked in SSwardrobe"

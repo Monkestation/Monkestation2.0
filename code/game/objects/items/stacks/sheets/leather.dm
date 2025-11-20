@@ -285,11 +285,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 //Step one - dehairing.
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
-	if(W.get_sharpness())
+/obj/item/stack/sheet/animalhide/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice("You cut the hair from this [src.singular_name]."))
 			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
 			use(1)
@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
-	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
+	desc = "The scaly skin of a space carp. It looks quite beautiful when detached from the foul creature who once wore it."
 	singular_name = "carp scale"
 	icon_state = "sheet-carp"
 	inhand_icon_state = null

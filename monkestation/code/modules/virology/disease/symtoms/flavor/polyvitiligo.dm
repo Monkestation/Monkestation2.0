@@ -7,7 +7,7 @@
 	severity = 1
 
 /datum/symptom/polyvitiligo/activate(mob/living/carbon/mob)
-	if(!iscarbon(mob))
+	if(!iscarbon(mob) || !mob.reagents)
 		return
 	switch(round(multiplier, 1))
 		if(5)

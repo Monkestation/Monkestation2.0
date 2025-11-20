@@ -35,7 +35,7 @@
 /datum/station_trait/unique_ai/on_round_start()
 	. = ..()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
-		ai.show_laws()
+		to_chat(ai, span_boldnotice("You have been loaded with a unique lawset."), MESSAGE_TYPE_INFO)
 
 /datum/station_trait/ian_adventure
 	name = "Ian's Adventure"
@@ -223,7 +223,7 @@
 	. = ..()
 	if(birthday_override_ckey)
 		if(!check_valid_override())
-			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has be selected instead.")
+			message_admins("Attempted to make [birthday_override_ckey] the birthday person but they are not a valid station role. A random birthday person has been selected instead.")
 
 	if(!birthday_person)
 		var/list/birthday_options = list()
@@ -297,7 +297,7 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"
@@ -326,8 +326,8 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
 
-/datum/station_trait/scarves
-	name = "Scarves"
+/datum/station_trait/scryers
+	name = "Scryers"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
@@ -346,8 +346,13 @@
 	var/obj/item/silly_little_scarf = humanspawned.wear_neck
 	if(silly_little_scarf)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
-		silly_little_scarf.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(silly_little_scarf, list(ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET), qdel_on_fail = FALSE)
+		silly_little_scarf.forceMove(humanspawned.drop_location())
+		var/static/list/slots = list(
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		)
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = spawned.name
@@ -433,7 +438,7 @@
 	name = "AI Triumvirate"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 1
+	weight = 2 // Since were gibbing overflow
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
 
 /datum/station_trait/triple_ai/New()
@@ -449,6 +454,7 @@
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
+		ai_datum.total_positions = 3
 	if(!pure)
 		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
 			secondary_ai_spawn.latejoin_active = TRUE

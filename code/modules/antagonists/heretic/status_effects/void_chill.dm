@@ -19,13 +19,15 @@
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
+	if(!.)
+		return
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
 	set_stacks(new_stacks)
 	stacks_overlay = mutable_appearance('icons/effects/effects.dmi', "void_chill_oh_fuck", ABOVE_MOB_LAYER)
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/Destroy()
-	QDEL_NULL(stacks_overlay)
+	stacks_overlay = null
 	return ..()
 
 /datum/status_effect/void_chill/on_apply()
@@ -38,6 +40,7 @@
 /datum/status_effect/void_chill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
+	owner.bodytemperature = BODYTEMP_NORMAL
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 
@@ -51,7 +54,7 @@
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
 	else
-		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_between_ticks)
+		owner.adjust_bodytemperature(-5 KELVIN * stacks * seconds_between_ticks)
 	if (stacks == 0)
 		owner.remove_status_effect(/datum/status_effect/void_chill)
 

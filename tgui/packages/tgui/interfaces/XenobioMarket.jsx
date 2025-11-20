@@ -12,40 +12,46 @@ export const XenobioMarket = (_) => {
   return (
     <Window width={900} height={(tabIndex === 1 && 412) || 600}>
       <Window.Content>
-        <Tabs style={{ 'border-radius': '5px' }}>
-          <Tabs.Tab
-            key={1}
-            selected={tabIndex === 1}
-            icon="flask"
-            onClick={() => setTabIndex(1)}
-          >
-            Slime Market
-          </Tabs.Tab>
-          <Tabs.Tab
-            key={2}
-            selected={tabIndex === 2}
-            icon="flask"
-            onClick={() => setTabIndex(2)}
-          >
-            Active Requests
-          </Tabs.Tab>
-          <Tabs.Tab
-            key={3}
-            selected={tabIndex === 3}
-            icon="sack-dollar"
-            onClick={() => setTabIndex(3)}
-          >
-            View Shop
-          </Tabs.Tab>
-          <Button icon={'sack-dollar'} color="green">
-            {points}
-          </Button>
-        </Tabs>
-        <Section fill scrollable>
-          {tabIndex === 1 && <SlimeMarket />}
-          {tabIndex === 2 && <RequestViewer />}
-          {tabIndex === 3 && <StoreViewer />}
-        </Section>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Tabs style={{ 'border-radius': '5px' }}>
+              <Tabs.Tab
+                key={1}
+                selected={tabIndex === 1}
+                icon="flask"
+                onClick={() => setTabIndex(1)}
+              >
+                Slime Market
+              </Tabs.Tab>
+              <Tabs.Tab
+                key={2}
+                selected={tabIndex === 2}
+                icon="flask"
+                onClick={() => setTabIndex(2)}
+              >
+                Active Requests
+              </Tabs.Tab>
+              <Tabs.Tab
+                key={3}
+                selected={tabIndex === 3}
+                icon="sack-dollar"
+                onClick={() => setTabIndex(3)}
+              >
+                View Shop
+              </Tabs.Tab>
+              <Button icon={'sack-dollar'} color="green">
+                {points || '0'}
+              </Button>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill scrollable height="100%">
+              {tabIndex === 1 && <SlimeMarket />}
+              {tabIndex === 2 && <RequestViewer />}
+              {tabIndex === 3 && <StoreViewer />}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -70,6 +76,9 @@ const SlimeMarket = (_) => {
                           'xenobio_market32x32',
                           slime_price.icon,
                         ])}
+                        style={{
+                          'image-rendering': 'pixelated',
+                        }}
                       />
                     </Stack.Item>
                     <Stack.Item mt="10px">
@@ -99,6 +108,7 @@ const RequestViewer = (_) => {
               <Box
                 style={{
                   transform: 'scale(2)',
+                  'image-rendering': 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', request.icon])}
               />
@@ -132,6 +142,7 @@ const StoreViewer = (_) => {
               <Box
                 style={{
                   transform: 'scale(2)',
+                  'image-rendering': 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', item.icon_state])}
               />

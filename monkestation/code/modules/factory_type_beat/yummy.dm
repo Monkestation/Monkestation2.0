@@ -1,7 +1,6 @@
 /obj/item/organ/internal/cyberimp/chest/gyro
 	name = "Gyrotron-3000"
 	desc = "Blood sweat and tears went into this bad boy."
-	encode_info = AUGMENT_NO_REQ
 	icon_state = "sandy"
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 

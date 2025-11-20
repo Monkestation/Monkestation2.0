@@ -164,8 +164,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		owner.mob.mind_initialize()
 	in_queue.antag_token(owner.mob.mind, owner.mob) //might not be in queue
 
-	qdel(in_queue)
-	in_queue = null
+	QDEL_NULL(in_queue)
 	in_queued_tier = null
 	queued_donor = FALSE
 	if(antag_timeout)
@@ -179,7 +178,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	to_chat(owner, span_boldwarning("Your request to play as [in_queue] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been denied.")
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
-	in_queue = null
+	QDEL_NULL(in_queue)
 	in_queued_tier = null
 	queued_donor = FALSE
 	if(antag_timeout)
@@ -244,3 +243,18 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	event_timeout = null
+
+/datum/meta_token_holder/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name in list(
+		NAMEOF(src, total_low_threat_tokens),
+		NAMEOF(src, total_medium_threat_tokens),
+		NAMEOF(src, total_high_threat_tokens),
+		NAMEOF(src, event_tokens),
+		NAMEOF(src, event_token_month),
+		NAMEOF(src, donator_token),
+		NAMEOF(src, token_month),
+	))
+		convert_tokens_to_list()

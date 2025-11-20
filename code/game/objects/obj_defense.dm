@@ -7,6 +7,9 @@
 
 /obj/proc/hit_by_damage(atom/movable/hitting_us, datum/thrownthing/throwingdatum)
 	var/base_dam = hitting_us.throwforce
+	if(hitting_us.throwforce < damage_deflection) //yea no damage deflection was thrown out the window affecting a ton of stuff
+		take_damage(base_dam, BRUTE, MELEE, TRUE, get_dir(src, hitting_us), 0)
+		return
 	if(isliving(hitting_us))
 		var/mob/living/living_mob = hitting_us
 		var/speed_bonus = throwingdatum.speed - living_mob.throw_speed
@@ -52,7 +55,7 @@
 		if(has_grille && prob(66))
 			continue
 
-		defenestrated.apply_damage(10, BRUTE, part, blocked = min(90, defenestrated.getarmor(part, MELEE)), sharpness = SHARP_POINTY, wound_bonus = 4, bare_wound_bonus = 8, attacking_item = (length(shards) ? shards[1] : "glass"))
+		defenestrated.apply_damage(10, BRUTE, part, blocked = min(90, defenestrated.getarmor(part, MELEE)), sharpness = SHARP_POINTY, wound_bonus = 4, bare_wound_bonus = 8, attacking_item = (length(shards) ? shards[1] : null))
 		if(prob(25 * length(shards)) && shards[1].tryEmbed(part, TRUE))
 			shards -= shards[1]
 

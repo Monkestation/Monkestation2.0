@@ -32,6 +32,10 @@
 ///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
+///Skips over a bunch of types that are "unlikely" to have any hanging refs,
+///MASSIVELY speeding up finding references.
+//#define FAST_REFERENCE_TRACKING
+
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -65,6 +69,8 @@
 #define REFERENCE_TRACKING
 // actually look for refs
 #define GC_FAILURE_HARD_LOOKUP
+// use fast reftracking
+#define FAST_REFERENCE_TRACKING
 #endif // REFERENCE_DOING_IT_LIVE
 
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
@@ -80,13 +86,13 @@
 // #define TIMER_DEBUG
 
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
-//#define DO_NOT_DEFER_ASSETS
+// #define DO_NOT_DEFER_ASSETS
 
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
-/// If this is uncommented, will profile mapload atom initializations
+/// If this is uncommented, will profile mapload atom initializations, available via debug verb "Display Init Costs"
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
 /// If this is uncommented, Dreamluau will be fully disabled.
@@ -95,11 +101,20 @@
 /// If this is uncommented, /proc/icon_exists will attempt to load an initial cache from icon_exists_cache.json
 // #define PRELOAD_ICON_EXISTS_CACHE
 
+/// If this is uncommented, additional logging (such as more in-depth tgui logging) will be enabled.alist
+/// These logs prolly don't matter during production.
+// #define EXTENDED_DEBUG_LOGGING
+
 // OpenDream currently doesn't support byondapi, so automatically disable it on OD,
 // unless CIBUILDING is defined - we still want to lint dreamluau-related code.
 // Get rid of this whenever it does have support.
 #ifdef OPENDREAM_REAL
 #define DISABLE_DREAMLUAU
+#endif
+
+//#define DISABLE_DEMOS
+#ifdef UNIT_TESTS
+#define DISABLE_DEMOS
 #endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick

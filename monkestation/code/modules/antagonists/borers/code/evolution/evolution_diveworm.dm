@@ -15,17 +15,29 @@
 	cortical_owner.health_per_level += 2.5
 	cortical_owner.recalculate_stats()
 
-// T2
+// T2 + T1 path
 /datum/borer_evolution/diveworm/host_speed
 	name = "Boring Speed"
 	desc = "Decrease the time it takes to enter a host when you are not hiding."
 	gain_text = "Once or twice, I would blink, and see the non-host monkeys be grappling with a worm that was cross the room just moments before."
 	tier = 2
-	unlocked_evolutions = list(/datum/borer_evolution/diveworm/expanded_chemicals)
+	unlocked_evolutions = list(
+		/datum/borer_evolution/diveworm/expanded_chemicals,
+		/datum/borer_evolution/diveworm/dissection,
+	)
 
 /datum/borer_evolution/diveworm/host_speed/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.upgrade_flags |= BORER_FAST_BORING
+
+
+/datum/borer_evolution/diveworm/dissection
+	name = "Dissect Corspe"
+	desc = "Gain the ability to probes a corspe's brain to further oneself."
+	gain_text = "After applying extreme radiation exposure to a sample of the eggs, the bed of worm's host never produced any more eggs. However, the sanitation team noted these same worms festering around a dead host that was to be removed."
+	tier = -1
+	added_action = /datum/action/cooldown/borer/dissection
+	neutered_only = TRUE
 
 // T3 + T1 path
 /datum/borer_evolution/diveworm/expanded_chemicals

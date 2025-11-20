@@ -20,7 +20,7 @@
 
 /mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
-		var/atom/movable/screen/splash/S = new(null, client, TRUE, TRUE)
+		var/atom/movable/screen/splash/S = new(null, null, client, TRUE, TRUE)
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
@@ -207,10 +207,10 @@
 		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
 			if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 225
 		for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
 			if(character.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 225
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2

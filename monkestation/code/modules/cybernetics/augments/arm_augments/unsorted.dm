@@ -18,7 +18,7 @@
 	///The amount of damage dealt by the empowered attack.
 	var/punch_damage = 5
 	///Biotypes we apply an additional amount of damage too
-	var/biotype_bonus_targets = MOB_BEAST | MOB_EPIC
+	var/biotype_bonus_targets = MOB_BEAST | MOB_EPIC | MOB_MINING
 	///Extra damage dealt to our targeted mobs
 	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
@@ -84,7 +84,7 @@
 	if(!isliving(target))
 		return NONE
 	var/datum/dna/dna = source.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return NONE
 	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		return NONE
@@ -106,7 +106,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
+		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
 			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
@@ -171,7 +171,6 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#750137"
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 	var/atom/movable/screen/cybernetics/ammo_counter/counter_ref
 	var/obj/item/gun/our_gun
@@ -188,16 +187,11 @@
 	our_gun = null
 	update_hud_elements()
 
-/obj/item/organ/internal/cyberimp/arm/ammo_counter/update_implants()
-	update_hud_elements()
-
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/proc/update_hud_elements()
 	SIGNAL_HANDLER
 	if(!owner || !owner?.hud_used)
 		return
 
-	if(!check_compatibility())
-		return
 
 	var/datum/hud/H = owner.hud_used
 
@@ -266,7 +260,6 @@
 
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/syndicate
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/cooler
 	name = "sub-dermal cooling implant"
@@ -275,12 +268,9 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/cooler/on_life()
 	. = ..()
-	if(!check_compatibility())
-		return
 	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
 	if(amt == 0)
 		return
@@ -297,12 +287,9 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/heater/on_life()
 	. = ..()
-	if(!check_compatibility())
-		return
 	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
 	if(amt == 0)
 		return

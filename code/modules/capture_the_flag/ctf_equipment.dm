@@ -162,6 +162,9 @@
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 
+/obj/item/gun/energy/laser/instakill/give_manufacturer_examine()
+	return
+
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
 
@@ -171,7 +174,7 @@
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill
-	e_cost = 0
+	e_cost = 0 // Not possible to use the macro
 	select_name = "DESTROY"
 
 /obj/projectile/beam/instakill

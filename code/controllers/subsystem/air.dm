@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(air)
 	var/list/reaction_handbook
 	var/list/gas_handbook
 
-
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
@@ -838,7 +837,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		currentrun -= machine
 
 /datum/controller/subsystem/air/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/controller/subsystem/air/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -894,7 +893,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 			if(!target)
 				return
 			usr.forceMove(target)
-			usr.update_parallax_contents()
 		if("toggle-freeze")
 			can_fire = !can_fire
 			return TRUE

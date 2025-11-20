@@ -1,5 +1,5 @@
 /datum/export/material
-	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 2000cm3 as of April 2016.
+	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 100cm3 as of May 2023.
 	message = "cm3 of developer's tears. Please, report this on github"
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
 	var/material_id = null
@@ -16,7 +16,7 @@
 		return 0
 
 	var/obj/item/I = O
-	var/list/mat_comp = I.get_material_composition(BREAKDOWN_FLAGS_EXPORT)
+	var/list/mat_comp = I.get_material_composition()
 	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
 	if(isnull(mat_comp[mat_ref]))
 		return 0

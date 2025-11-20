@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
@@ -134,6 +134,7 @@ monkestation end */
 /datum/status_effect/eldritch/void/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	owner.apply_status_effect(/datum/status_effect/void_chill, 2)
 	owner.adjust_silence(10 SECONDS)
+	owner.adjust_emote_mute(10 SECONDS)
 	return ..()
 
 // MARK OF BLADES

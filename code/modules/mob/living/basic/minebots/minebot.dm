@@ -48,13 +48,7 @@
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/ore),\
-		tame_chance = 100,\
-		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
-	)
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 100, bonus_tame_chance = 5)
 
 	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_light/toggle_light_action = new(src)
 	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision/toggle_meson_vision_action = new(src)
@@ -124,11 +118,10 @@
 	set_combat_mode(!(istate & ISTATE_HARM))
 	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 
-/mob/living/basic/mining_drone/RangedAttack(atom/target)
+/mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)
 	if(!(istate & ISTATE_HARM))
 		return
-	stored_gun.afterattack(target, src)
-
+	stored_gun.try_fire_gun(target, src, list2params(modifiers))
 
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()

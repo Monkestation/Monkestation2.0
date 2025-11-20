@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNIQUE_AREA (1<<8)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
+/// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF (1<<11)
@@ -159,6 +159,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GHOSTS_DURING_ROUND (1<<19)
 /// This area does not allow virtual entities to enter.
 #define VIRTUAL_SAFE_AREA (1<<20)
+/// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<21)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

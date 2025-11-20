@@ -54,6 +54,13 @@ SUBSYSTEM_DEF(ticker)
 	/// What is going to be reported to other stations at end of round?
 	var/news_report
 
+	///The status of the NT Rep, updated when one joins or the round ends.
+	var/nanotrasen_rep_status = NT_REP_STATUS_DOESNT_EXIST
+	///The score, out of 5, that the NT rep has given the station. 0 if they died.
+	var/nanotrasen_rep_score = 0
+	///A comment the rep has given, if any.
+	var/nanotrasen_rep_comments
+
 
 	var/roundend_check_paused = FALSE
 
@@ -75,11 +82,14 @@ SUBSYSTEM_DEF(ticker)
 	var/reboot_timer = null
 
 	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
-	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
+	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY, DEPARTMENT_BITFLAG_SILICON)
 	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
 	var/list/jobs_to_reward = list(JOB_JANITOR,)
 
 	var/list/popcount
+
+	/// A lazylist of roundstart splashes, so they can be faded out AFTER antags are initialized.
+	var/list/roundstart_splashes
 
 	/// (monkestation addition) The station integrity at roundend.
 	var/roundend_station_integrity
@@ -197,6 +207,7 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
+			SStitle.update_init_text()
 			// MONKESTATION EDIT START - lobby notices
 			if (length(config.lobby_notices))
 				config.ShowLobbyNotices(world)
@@ -226,6 +237,7 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
+				SStitle.update_init_text()
 
 			if(timeLeft <= 0)
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
@@ -344,9 +356,13 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	SSgamemode.current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
-	SSgamemode.current_storyteller.round_started = TRUE
+	if(!CONFIG_GET(flag/disable_storyteller))
+		SSgamemode.current_storyteller.round_started = TRUE
+		if(!SSgamemode.halted_storyteller)
+			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
+	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
+
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
@@ -378,6 +394,8 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score) * 2] hardcore random points if you greentext this round!"))
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
+
+	SStitle.update_init_text()
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -527,11 +545,10 @@ SUBSYSTEM_DEF(ticker)
 	var/mob/living = player.transfer_character()
 	if(!living)
 		return
-	qdel(player)
 	ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 	if(living.client)
-		var/atom/movable/screen/splash/splash = new(null, living.client, TRUE)
-		splash.Fade(TRUE)
+		var/atom/movable/screen/splash/splash = new(null, null, living.client, TRUE)
+		LAZYADD(roundstart_splashes, splash)
 		living.client?.init_verbs()
 	. = living
 	var/datum/persistent_client/persistent_client = living.persistent_client
@@ -539,10 +556,10 @@ SUBSYSTEM_DEF(ticker)
 		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
 			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 225
 		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
 			if(living.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 225
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
@@ -588,6 +605,11 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(next_in_line, span_danger("No response received. You have been removed from the line."))
 			queued_players -= next_in_line
 			queue_delay = 0
+
+/datum/controller/subsystem/ticker/proc/fade_all_splashes()
+	for(var/atom/movable/screen/splash/splash in roundstart_splashes)
+		splash.Fade(TRUE)
+	LAZYNULL(roundstart_splashes)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -707,7 +729,7 @@ SUBSYSTEM_DEF(ticker)
 		if(STATION_NUKED)
 			// There was a blob on board, guess it was nuked to stop it
 			if(length(GLOB.overminds))
-				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
 					if(overmind.max_count < overmind.announcement_size)
 						continue
 
@@ -807,6 +829,7 @@ SUBSYSTEM_DEF(ticker)
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
 	update_everything_flag_in_db()
+	save_mentor_data() //MONKE EDIT
 	if(!round_end_sound)
 		round_end_sound = choose_round_end_song()
 	///The reference to the end of round sound that we have chosen.

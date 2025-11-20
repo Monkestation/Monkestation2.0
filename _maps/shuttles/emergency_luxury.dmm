@@ -198,6 +198,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "jH" = (
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jJ" = (
@@ -616,9 +617,7 @@
 /area/shuttle/escape/luxury)
 "Av" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
@@ -832,10 +831,7 @@
 /area/shuttle/escape/luxury)
 "In" = (
 /obj/effect/spawner/random/maintenance/eight,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/oil,
@@ -1134,10 +1130,6 @@
 /area/shuttle/escape)
 "UK" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "UX" = (
@@ -1409,7 +1401,7 @@ bY
 CQ
 "}
 (8,1,1) = {"
-jy
+JV
 jH
 XU
 Nm
@@ -1431,7 +1423,7 @@ oX
 CQ
 "}
 (9,1,1) = {"
-JV
+jy
 UK
 Br
 wP

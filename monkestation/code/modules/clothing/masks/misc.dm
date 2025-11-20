@@ -12,12 +12,11 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsuneblack/attack_self(mob/user)
-    adjustmask(user)
+	adjustmask(user)
 
-/obj/item/clothing/mask/kitsuneblack/AltClick(mob/user)
-    . = ..()
-    adjustmask(user)
-    return TRUE
+/obj/item/clothing/mask/kitsuneblack/click_alt(mob/user)
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/kitsunewhite
 	name = "White Kitsune Mask"
@@ -33,12 +32,11 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/clothing/mask/kitsunewhite/attack_self(mob/user)
-    adjustmask(user)
+	adjustmask(user)
 
-/obj/item/clothing/mask/kitsunewhite/AltClick(mob/user)
-    . = ..()
-    adjustmask(user)
-    return TRUE
+/obj/item/clothing/mask/kitsunewhite/click_alt(mob/user)
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/ookmask
 	name = "Paper Monkey Mask"
@@ -78,9 +76,9 @@
 		else
 			qdel(src)
 
-/obj/item/clothing/mask/breath/sec_bandana/AltClick(mob/user)
+/obj/item/clothing/mask/breath/sec_bandana/click_alt(mob/user)
 	suit.RemoveMask()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/sec_bandana/medical
 	icon_state = "sec_bandana_medical"
@@ -145,10 +143,10 @@
 	icon_state = "atp_mask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 //	inhand_icon_state = "gas_alt"
-	modifies_speech = TRUE
 	COOLDOWN_DECLARE(spamcheck)
 
-/obj/item/clothing/mask/gas/atp/handle_speech(datum/source, list/speech_args)
+/obj/item/clothing/mask/gas/atp/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	if(COOLDOWN_FINISHED(src, spamcheck))
 		var/speaksound = pick('monkestation/sound/items/atp_speak1.ogg', 'monkestation/sound/items/atp_speak2.ogg', 'monkestation/sound/items/atp_speak3.ogg', 'monkestation/sound/items/atp_speak4.ogg', 'monkestation/sound/items/atp_speak5.ogg')
 		playsound(src, speaksound, 35, FALSE, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, ignore_walls = FALSE, use_reverb = FALSE)
@@ -159,6 +157,7 @@
 	if(slot & ITEM_SLOT_MASK)
 		RegisterSignal(equipee, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_removed))
 		RegisterSignal(equipee, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
+		RegisterSignal(equipee, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 		if(istype(equipee))
 			equipee.bubble_icon = "atp"
 
@@ -166,7 +165,7 @@
 	SIGNAL_HANDLER
 	if(dropped_item != src)
 		return
-	UnregisterSignal(wearer, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_LIVING_DEATH))
+	UnregisterSignal(wearer, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_LIVING_DEATH, COMSIG_MOB_SAY))
 	if(istype(wearer))
 		wearer.bubble_icon = initial(wearer.bubble_icon)
 

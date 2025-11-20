@@ -2,9 +2,10 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
+import { decodeHtmlEntities } from 'common/string';
 
-export const TicketPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TicketPanel = (props) => {
+  const { act, data } = useBackend();
 
   const buttons = [
     [
@@ -170,11 +171,11 @@ export const TicketPanel = (props, context) => {
   );
 };
 
-export const TicketMessages = (props, context) => {
+export const TicketMessages = (props) => {
   const { ticket, title } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
-  const [message, setMessage] = useLocalState(context, '');
+  const [message, setMessage] = useLocalState('message', '');
 
   return (
     <Section lineHeight={1.25} title={title}>
@@ -182,7 +183,8 @@ export const TicketMessages = (props, context) => {
         (entry) =>
           (
             <Box key={entry.time} m="2px">
-              {entry.time} - <b>{entry.ckey}</b> - {entry.text}
+              {entry.time} - <b>{entry.ckey}</b> -{' '}
+              {decodeHtmlEntities(entry.text)}
             </Box>
           ) || '',
       )}

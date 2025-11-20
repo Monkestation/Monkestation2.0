@@ -9,6 +9,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	door_anim_time = 0 // no animation
+	paint_jobs = null
 
 /obj/structure/closet/secure_closet/bar/PopulateContents()
 	..()
@@ -18,4 +19,4 @@
 	new /obj/item/roulette_wheel_beacon(src)
 	new /obj/item/storage/fancy/candle_box(src)
 	new /obj/item/storage/fancy/candle_box(src)
-	new /obj/item/jukebox_beacon(src) //monkestation edit
+	new /obj/item/generic_beacon/jukebox(src) //monkestation edit

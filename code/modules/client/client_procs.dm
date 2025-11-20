@@ -2,7 +2,7 @@
 	//SECURITY//
 	////////////
 #define UPLOAD_LIMIT 524288 //Restricts client uploads to the server to 0.5MB
-#define UPLOAD_LIMIT_ADMIN 2621440 //Restricts admin client uploads to the server to 2.5MB
+#define UPLOAD_LIMIT_ADMIN 16777216 //Restricts admin client uploads to the server to 16MB
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
@@ -108,9 +108,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
 		return
+
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
@@ -135,6 +137,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -156,6 +165,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return FALSE
 	return TRUE
+
+/client/proc/is_localhost()
+	var/static/localhost_addresses = list(
+		"127.0.0.1",
+		"::1",
+		null,
+	)
+	return address in localhost_addresses
+
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -234,6 +252,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
+	if(address in SSoverwatch?.cached_asn_bans)
+		log_access("Overwatch: [ckey] denied due to cached ASN ban ([address])")
+		return null
+
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
@@ -241,14 +263,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		reconnecting = TRUE
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
 	else
 		persistent_client = new(ckey)
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
+	persistent_client.set_client(src)
 
-	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -270,27 +289,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(src.ckey in GLOB.interviews.cooldown_ckeys)
 		qdel(src)
 
-	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
-	//Admin Authorisation
-	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
-	if (!isnull(admin_datum))
-		admin_datum.associate(src)
-		connecting_admin = TRUE
-	else if(GLOB.deadmins[ckey])
-		add_verb(src, /client/proc/readmin)
-		connecting_admin = TRUE
-	if(CONFIG_GET(flag/autoadmin))
-		if(!GLOB.admin_datums[ckey])
-			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
-			if (autoadmin_ranks.len == 0)
-				to_chat(world, "Autoadmin rank not found")
-			else
-				new /datum/admins(autoadmin_ranks, ckey)
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
-		var/localhost_addresses = list("127.0.0.1", "::1")
-		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(list(localhost_rank), ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -353,10 +351,41 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					log_admin_private("[message_type]: Connecting player [key_name(src)] has the same [matches] as [joined_player_ckey](no longer logged in)[in_round].")
 
 	. = ..() //calls mob.Login()
-	if (length(GLOB.stickybanadminexemptions))
-		GLOB.stickybanadminexemptions -= ckey
-		if (!length(GLOB.stickybanadminexemptions))
-			restore_stickybans()
+
+	// Admin Verbs need the client's mob to exist. Must be after ..()
+	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
+	//Admin Authorization
+	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
+	if (!isnull(admin_datum))
+		admin_datum.associate(src)
+		connecting_admin = TRUE
+	else if(GLOB.deadmins[ckey])
+		add_verb(src, /client/proc/readmin)
+		connecting_admin = TRUE
+	if(CONFIG_GET(flag/autoadmin))
+		if(!GLOB.admin_datums[ckey])
+			var/list/autoadmin_ranks = ranks_from_rank_name(CONFIG_GET(string/autoadmin_rank))
+			if (autoadmin_ranks.len == 0)
+				to_chat(world, "Autoadmin rank not found")
+			else
+				new /datum/admins(autoadmin_ranks, ckey)
+
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		new /datum/admins(list(localhost_rank), ckey, 1, 1)
+
+	//MONKE EDIT START
+	// Mentor Verbs need the client's mob to exist. Must be after ..() and admin_datum setups. A lot of checks require admins to load first.
+	//var/connecting_mentor = FALSE //because de-mentored mentors connecting should be treated like mentors. Might not be needed as of 3/31/25
+	//Mentor Authorization
+	var/datum/mentors/mentor_datum = GLOB.mentor_datums[ckey]
+	if (!isnull(mentor_datum))
+		mentor_datum.associate(src)
+	//	connecting_mentor = TRUE
+	else if(GLOB.dementors[ckey])
+		add_verb(src, /client/proc/rementor)
+	//	connecting_mentor = TRUE
+	//MONKE EDIT END
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
@@ -547,18 +576,20 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref()
+	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		interviewee = TRUE
 		register_for_interview()
 
 	if (!interviewee)
 		initialize_menus()
+
+	loot_panel = new(src)
 
 	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 	view_size.resetFormat()
@@ -583,7 +614,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		// Yes this is the same as what's found in qdel(). Yes it does need to be here
 		// Get off my back
 		SEND_SIGNAL(src, COMSIG_QDELETING, TRUE)
-		Destroy() //Clean up signals and timers.
+		UNLINT(Destroy()) //Clean up signals and timers.
 	return ..()
 
 /client/Destroy()
@@ -597,15 +628,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client?.client = null
+	persistent_client?.set_client(null)
+
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
 	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	QDEL_LAZYLIST(credits)
-	if(obj_window)
-		QDEL_NULL(obj_window)
 	if(holder)
 		holder.owner = null
 		GLOB.admins -= src
@@ -620,6 +650,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
+	QDEL_NULL(loot_panel)
+	QDEL_NULL(xp_menu)
+	QDEL_NULL(parallax_rock)
+	QDEL_LIST(parallax_layers_cached)
+	parallax_layers = null
 	seen_messages = null
 	Master.UpdateTickRate()
 	if(cam_screen)
@@ -765,6 +800,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid,:byond_version,:byond_build)
 		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id, "byond_version" = byond_version, "byond_build" = byond_build))
 
+// Same thing as above but manual, mostly just for isBanned so we can track connections.
+// Since byond_Version and byond_builds are strings, we can just put data in there without having to add another column to the table.
+/proc/log_client_to_db_connection_log_manual(ckey, address, computer_id, byond_version, byond_build)
+	if(!SSdbcore.shutting_down)
+		SSdbcore.FireAndForget({"
+			INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`,`byond_version`,`byond_build`)
+			VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid,:byond_version,:byond_build)
+		"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id, "byond_version" = byond_version, "byond_build" = byond_build))
+
+
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
@@ -856,8 +901,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 
@@ -990,8 +1034,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 #if (PRELOAD_RSC == 0)
 /client/proc/preload_vox()
-	for (var/name in GLOB.vox_sounds)
-		var/file = GLOB.vox_sounds[name]
+	for (var/file in GLOB.all_vox_sounds)
 		Export("##action=load_rsc", file)
 		stoplag()
 #endif
@@ -1070,7 +1113,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 				if(MENTOR_CHANNEL)
-					if(mentor_datum)
+					if(mentor_datum?.check_for_rights(R_MENTOR))
 						var/msay = tgui_say_create_open_command(MENTOR_CHANNEL)
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[msay]")
 					else
@@ -1103,8 +1146,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
-	if(prefs && prefs.chat_toggles & CHAT_PULLR)
-		to_chat(src, announcement)
+	if(prefs?.chat_toggles & CHAT_PULLR)
+		to_chat(src, announcement, type = MESSAGE_TYPE_OOC)
 
 ///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
 /client/proc/give_award(achievement_type, mob/user, value = 1)
@@ -1187,13 +1230,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
 /client/proc/set_right_click_menu_mode()
-	var/rclick_type
-	if(mob?.rclick_always_context_menu)
-		rclick_type = RIGHTCLICK_BOTH
-	else
-		rclick_type = context_menu_requires_shift
 
-	switch(rclick_type)
+	// still hard-coded to shift, but should be changed in the future for custom inspect keybindings
+	switch(context_menu_requires_shift)
 		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
 			winset(src, "mapwindow.map", "right-click=false")
 			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
@@ -1207,8 +1246,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
 			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
 
-/client/proc/update_ambience_pref()
-	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+/client/proc/update_ambience_pref(value)
+	if(value)
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
@@ -1250,13 +1289,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /// Attempts to make the client orbit the given object, for administrative purposes.
 /// If they are not an observer, will try to aghost them.
 /client/proc/admin_follow(atom/movable/target)
-	var/can_ghost = TRUE
-
-	if (!isobserver(mob))
-		can_ghost = admin_ghost()
-
-	if(!can_ghost)
-		return FALSE
+	if(!isobserver(mob))
+		SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/admin_ghost)
+		if(!isobserver(mob))
+			return
 
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)

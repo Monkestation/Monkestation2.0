@@ -586,7 +586,7 @@
 		breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
 	if (nitrium_pp > 10)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 2 - existing))
 
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/internal/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
@@ -663,21 +663,6 @@
 			// Less blood so breaths give you less oxygen
 			breather.adjustOxyLoss(-1 * min(5, BLOOD_VOLUME_NORMAL / breather.blood_volume))
 
-	// We're in a low / high pressure environment, can't breathe, but trying to, so this hurts the lungs
-	// Unless it's cybernetic then it just doesn't care. Handwave magic whatever
-	else if(!skip_breath && (owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
-		if(lung_pop_tick > 5)
-			lung_pop_tick = 0
-			if(!failed && num_moles < 0.02)
-				// Lungs are poppin
-				to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
-				breather.failed_last_breath = TRUE
-				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
-				apply_organ_damage(35)
-
-		failed_last_breath_checker = TRUE
-		if(num_moles < 0.02)
-			lung_pop_tick++
 	// Robot, don't care lol
 	else if((owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
 		// Can't breathe!
@@ -794,7 +779,7 @@
 	var/oxyloss = suffocator.getOxyLoss()
 	if(oxyloss >= 50)
 		// Suffocating = brain damage
-		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organtype = ORGAN_ORGANIC)
+		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organ_flag = ORGAN_ORGANIC)
 	// If mob is at critical health, check if they can be damaged further.
 	if(suffocator.stat >= SOFT_CRIT && HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
 		return
@@ -894,7 +879,7 @@
 
 	QDEL_IN(holder, breath_particle.lifespan)
 
-/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organtype)
+/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!.)
 		return
@@ -972,6 +957,34 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/oni
+	name = "oni lungs"
+	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
+	icon_state = "lungs-ashwalker"
+	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
+
+	cold_level_warning_threshold = 275
+	cold_level_hazard_threshold = 225
+	cold_level_danger_threshold = 145
+
+	heat_level_warning_threshold = 400
+	heat_level_hazard_threshold = 570
+	heat_level_danger_threshold = 800
+
+/datum/action/cooldown/mob_cooldown/fire_breath/oni
+	name = "Oni Breath"
+	button_icon = 'icons/obj/wizard.dmi'
+	button_icon_state = "fireball"
+	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
+	cooldown_time = 1 MINUTES
+	fire_range = 3
+	fire_sound = 'sound/magic/fireball.ogg'
+	fire_delay = 1.5 DECISECONDS
+	fire_temperature = DRAKE_FIRE_TEMP
+	fire_volume = DRAKE_FIRE_EXPOSURE
+	fire_damage = 10
+	mech_damage = 25
+
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
@@ -985,7 +998,7 @@
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -1012,6 +1025,19 @@
 	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-133.15 CELCIUS)
 	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-173.15 CELCIUS)
 
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -1020,7 +1046,7 @@
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 
 /obj/item/organ/internal/lungs/lavaland

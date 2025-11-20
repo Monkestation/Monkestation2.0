@@ -2,7 +2,7 @@
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
-	clonable = FALSE
+	trauma_flags = NONE
 
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
@@ -132,7 +132,7 @@
 		"slides out of a fold in spacetime")
 
 	to_chat(user, span_notice("You try to align with the bluespace stream..."))
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, 2 SECONDS, target = src, hidden = TRUE))
 		return
 
 	var/turf/source_turf = get_turf(src)
@@ -357,7 +357,7 @@ monkestation end */
 	scan_desc = "criminal mind"
 	gain_text = span_warning("Justice is coming for you.")
 	lose_text = span_notice("You were absolved for your crimes.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// A ref to our fake beepsky image that we chase the owner with
 	var/obj/effect/client_image_holder/securitron/beepsky
 
@@ -458,12 +458,7 @@ monkestation end */
 	QDEL_NULL(owner.ai_controller)
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
 	if(isnull(owner.ai_controller))
@@ -473,12 +468,7 @@ monkestation end */
 	if(!SPT_PROB(3, seconds_per_tick))
 		return
 
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.grant_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
@@ -489,12 +479,7 @@ monkestation end */
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
-	//MONKESTATION EDIT START - tgstation#76612 has yet not been ported
-	/* //MONKESTATION EDIT ORIGINAL
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	*/
-	owner.remove_language(/datum/language/monkey, TRUE, FALSE, TRAUMA_TRAIT)
-	//MONKESTATION EDIT END
 	to_chat(owner, span_green("The urge subsides."))
 
 	//MONKESTATION ADDITION START - Adds a log when primal instincts is turned off.
@@ -504,3 +489,169 @@ monkestation end */
 		color = "orange",
 	)
 	//MONKESTATION ADDITION END
+
+/datum/brain_trauma/special/axedoration
+	name = "Axe Delusions"
+	desc = "Patient feels an immense sense of duty towards protecting an axe and has hallucinations regarding it."
+	scan_desc = "object attachment"
+	gain_text = span_notice("You feel like protecting the fire axe is one of your greatest duties.")
+	lose_text = span_warning("You feel like you lost your sense of duty.")
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+	var/static/list/talk_lines = list(
+		"I'm proud of you.",
+		"I believe in you!",
+		"Do I bother you?",
+		"Praise me!",
+		"Fires burn.",
+		"We made it!",
+		"Mother, my body disgusts me.",
+		"There's a gap where we meet, where I end and you begin.",
+		"Humble yourself.",
+	)
+	var/static/list/hurt_lines = list(
+		"Ow!",
+		"Ouch!",
+		"Ack!",
+		"It burns!",
+		"Stop!",
+		"Arghh!",
+		"Please!",
+		"End it!",
+		"Cease!",
+		"Ah!",
+	)
+
+/datum/brain_trauma/special/axedoration/on_life(seconds_per_tick, times_fired)
+	if(owner.stat != CONSCIOUS)
+		return
+
+	if(!GLOB.bridge_axe)
+		if(SPT_PROB(0.5, seconds_per_tick))
+			to_chat(owner, span_warning("I've failed my duty..."))
+			owner.set_jitter_if_lower(5 SECONDS)
+			owner.set_stutter_if_lower(5 SECONDS)
+			if(SPT_PROB(20, seconds_per_tick))
+				owner.vomit()
+		return
+
+	var/atom/axe_location = get_axe_location()
+	if(!SPT_PROB(1.5, seconds_per_tick))
+		return
+	if(isliving(axe_location))
+		var/mob/living/axe_holder = axe_location
+		if(axe_holder == owner)
+			talk_tuah(pick(talk_lines))
+			return
+		var/datum/job/holder_job = axe_holder.mind?.assigned_role
+		if(holder_job && (/datum/job_department/command in holder_job.departments_list))
+			to_chat(owner, span_notice("I hope the axe is in good hands..."))
+			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+			return
+		to_chat(owner, span_warning("You start having a bad feeling..."))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
+		return
+
+	if(!isarea(axe_location))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
+		return
+
+	if(istype(axe_location, /area/station/command))
+		to_chat(owner, span_notice("You feel a sense of relief..."))
+		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
+			return
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+		return
+
+	to_chat(owner, span_warning("You start having a bad feeling..."))
+	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
+
+/datum/brain_trauma/special/axedoration/on_gain()
+	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
+	RegisterSignal(owner, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_unequip))
+	if(!GLOB.bridge_axe)
+		axe_gone()
+		return ..()
+	RegisterSignal(GLOB.bridge_axe, COMSIG_QDELETING, PROC_REF(axe_gone))
+	if(istype(get_axe_location(), /area/station/command) && istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
+	else if(owner.is_holding(GLOB.bridge_axe))
+		on_equip(owner, GLOB.bridge_axe)
+	else
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+	RegisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_axe_attack))
+	return ..()
+
+
+/datum/brain_trauma/special/axedoration/on_lose()
+	owner.clear_mood_event("fireaxe")
+	UnregisterSignal(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_ATOM_EXAMINE))
+	if(GLOB.bridge_axe)
+		UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
+	return ..()
+
+/datum/brain_trauma/special/axedoration/proc/axe_gone(source)
+	SIGNAL_HANDLER
+	to_chat(owner, span_danger("You feel a great disturbance in the force."))
+	owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
+	owner.set_jitter_if_lower(15 SECONDS)
+	owner.set_stutter_if_lower(15 SECONDS)
+
+/datum/brain_trauma/special/axedoration/proc/on_equip(source, obj/item/picked_up, slot)
+	SIGNAL_HANDLER
+	if(!istype(picked_up, /obj/item/fireaxe))
+		return
+	owner.set_jitter_if_lower(3 SECONDS)
+	if(picked_up == GLOB.bridge_axe)
+		to_chat(owner, span_hypnophrase("I have it. It's time to put it back."))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_held)
+		return
+	ADD_TRAIT(picked_up, TRAIT_NODROP, type)
+	to_chat(owner, span_warning("...This is not the one I'm looking after."))
+	owner.Immobilize(2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(throw_faker), picked_up), 2 SECONDS)
+
+/datum/brain_trauma/special/axedoration/proc/throw_faker(obj/item/faker)
+	REMOVE_TRAIT(faker, TRAIT_NODROP, type)
+	var/held_index = owner.get_held_index_of_item(faker)
+	if(!held_index)
+		return
+	to_chat(owner, span_warning("Be gone with you."))
+	owner.swap_hand(held_index)
+	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, faker.throw_range)
+	owner.throw_item(target_turf)
+
+/datum/brain_trauma/special/axedoration/proc/on_unequip(datum/source, obj/item/dropped_item, force, new_location)
+	SIGNAL_HANDLER
+	if(dropped_item != GLOB.bridge_axe)
+		return
+	if(get_axe_location() == owner)
+		return
+	if(istype(new_location, /obj/structure/fireaxecabinet))
+		if(istype(get_area(new_location), /area/station/command))
+			to_chat(owner, span_nicegreen("Ah! Back where it belongs!"))
+			owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "smile")
+			return
+		to_chat(owner, span_warning("Leaving it outside of command? Am I sure about that?"))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+		return
+	to_chat(owner, span_warning("Should I really leave it here?"))
+	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+
+/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, click_parameters)
+	SIGNAL_HANDLER
+	if(user != owner)
+		return
+	talk_tuah(pick(hurt_lines))
+
+/datum/brain_trauma/special/axedoration/proc/talk_tuah(sent_message = "Hello World.")
+	owner.Hear(null, GLOB.bridge_axe, owner.get_selected_language(), sent_message)
+
+/datum/brain_trauma/special/axedoration/proc/get_axe_location()
+	if(!GLOB.bridge_axe)
+		return
+	var/atom/axe_loc = GLOB.bridge_axe.loc
+	while(!ismob(axe_loc) && !isarea(axe_loc) && !isnull(axe_loc))
+		axe_loc = axe_loc.loc
+	return axe_loc

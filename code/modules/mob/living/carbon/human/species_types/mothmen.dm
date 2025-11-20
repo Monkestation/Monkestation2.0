@@ -4,8 +4,8 @@
 	id = SPECIES_MOTH
 	inherent_traits = list(
 		TRAIT_HAS_MARKINGS,
-		TRAIT_TACKLING_WINGED_ATTACKER,
-		TRAIT_ANTENNAE,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_GREYSCALE_TOGGLE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_markings" = "None")
@@ -13,7 +13,7 @@
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/internal/tongue/moth
 	mutanteyes = /obj/item/organ/internal/eyes/moth
-	inert_mutation = /datum/mutation/human/wings // MONKESTATION ADDITION
+	inert_mutation = /datum/mutation/wings // MONKESTATION ADDITION
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
 	death_sound = 'sound/voice/moth/moth_death.ogg'

@@ -86,7 +86,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -106,7 +106,7 @@
 	tether.firer = mod.wearer
 	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/projectile/tether
 	name = "tether"
@@ -124,7 +124,7 @@
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
 		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
-	..()
+	return ..()
 
 /obj/projectile/tether/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -187,7 +187,7 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
@@ -202,7 +202,7 @@
 	if(!.)
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Mister - Sprays water over an area.
 /obj/item/mod/module/mister
@@ -236,3 +236,32 @@
 /obj/item/extinguisher/mini/nozzle/mod
 	name = "MOD atmospheric mister"
 	desc = "An atmospheric resin mister with three modes, mounted as a module."
+
+/obj/item/mod/module/stomper
+	name = "MOD stomper module"
+	desc = "A repurposed magnetic stability module with its electromagnets replaced by powerful springs fitted into the suit's boots, allowing users to \
+		jump much higher than normal outdoors for the purposes of portable hotspot movement. \
+		Long ago these used to bounce you whilst you walked reducing your movement potential, \
+		however after countless complains from engineering staff and months of development it was fixed."
+	icon_state = "stomper"
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/stomper)
+	cooldown_time = 1 SECONDS
+
+/obj/item/mod/module/stomper/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/user = mod.wearer
+	var/turf/user_turf = get_turf(user)
+	if(!user_turf || !SSmapping.level_trait(user_turf.z, ZTRAIT_OSHAN))
+		user.balloon_alert(user, "must be in ocean!")
+		return
+	user.balloon_alert(user, "stomped")
+	user.visible_message(span_notice("[user] stomps down on \the [user_turf] with \the [src]!"))
+	SShotspots.stomp(user_turf)
+	// animate them jumping
+	animate(user, pixel_z = user.pixel_z + 4, time = 0.1 SECONDS)
+	animate(pixel_z = user.pixel_z - 4, time = 0.1 SECONDS)

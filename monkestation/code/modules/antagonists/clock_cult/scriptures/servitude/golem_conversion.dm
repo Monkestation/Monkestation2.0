@@ -4,12 +4,20 @@
 	desc = "Ascend your form to that of a clockwork golem, giving them innate armor, environmental immunity, and faster invoking for most scriptures."
 	tip = "Can only be used by humaniod servants."
 	button_icon_state = "Spatial Warp"
-	power_cost = 300
+	power_cost = STANDARD_CELL_CHARGE * 0.5
 	invocation_time = 15 SECONDS
 	invocation_text = list("My form is weak...", "It must ascend...", "To that of clockwork.")
 	cogs_required = 3
 	category = SPELLTYPE_SERVITUDE
-	unique_locked = TRUE //unlocked after 3 anchoring crystals have been placed
+	unique_locked = TRUE //unlocked after 2 extra anchoring crystals have been placed
+
+/datum/scripture/transform_to_golem/New()
+	. = ..()
+	RegisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED, PROC_REF(on_crystal_charged))
+
+/datum/scripture/transform_to_golem/Destroy(force)
+	UnregisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED)
+	return ..()
 
 /datum/scripture/transform_to_golem/check_special_requirements(mob/user)
 	. = ..()
@@ -30,3 +38,7 @@
 	human_servant.set_species(/datum/species/golem/clockwork)
 	human_servant.update_body(TRUE)
 	human_servant.update_mutations_overlay()
+
+/datum/scripture/transform_to_golem/proc/on_crystal_charged()
+	if(SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON + 2)
+		unique_unlock(TRUE)

@@ -13,6 +13,8 @@
 	suicide_cry = "FOR THE HIVE!!"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Consume the station's most valuable genomes."
+	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/ling_alert.ogg'
 	/// Whether to give this changeling objectives or not
 	var/give_objectives = TRUE
 	/// Weather we assign objectives which compete with other lings
@@ -60,6 +62,10 @@
 	var/mimicing = ""
 	/// Whether we can currently respec in the cellular emporium.
 	var/can_respec = FALSE
+
+	/// If this changeling has used a "weird" power at least once.
+	/// Only used for monster hunter targeting.
+	var/used_weird_power = FALSE
 
 	/// The currently active changeling sting.
 	var/datum/action/changeling/sting/chosen_sting
@@ -129,8 +135,9 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.get_language_holder().omnitongue = TRUE
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	return ..()
 
 /datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
@@ -209,6 +216,7 @@
 		QDEL_NULL(lingstingdisplay)
 
 /datum/antagonist/changeling/on_removal()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	remove_changeling_powers(include_innate = TRUE)
 	if(!iscarbon(owner.current))
 		return
@@ -424,7 +432,7 @@
  * Changeling's ability to re-adapt all of their learned powers.
  */
 /datum/antagonist/changeling/proc/readapt()
-	if(!ishuman(owner.current) || ismonkey(owner.current))
+	if(!ishuman(owner.current) || ismonkeybasic(owner.current))
 		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
 		return FALSE
 
@@ -499,7 +507,7 @@
 		if(verbose)
 			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return FALSE
-	if(!ishuman(target) || ismonkey(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+	if(!ishuman(target) || ismonkeybasic(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
 			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return FALSE
@@ -731,7 +739,7 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner.current
-	first_profile.dna.transfer_identity(carbon_owner, transfer_SE = TRUE)
+	first_profile.dna.copy_dna(carbon_owner.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	carbon_owner.real_name = first_profile.name
 	carbon_owner.updateappearance(mutcolor_update = TRUE)
 	carbon_owner.domutcheck()
@@ -768,11 +776,10 @@
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 
-	chosen_dna.transfer_identity(user, TRUE)
+	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
-		if(IS_ORGANIC_LIMB(limb))
-			limb.update_limb(is_creating = TRUE)
+		limb.update_limb(is_creating = TRUE)
 
 	user.updateappearance(mutcolor_update = TRUE)
 	user.domutcheck()
@@ -863,6 +870,11 @@
 
 	user.regenerate_icons()
 	current_profile = chosen_profile
+
+/datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(births > 0 || true_absorbs > 0 || used_weird_power)
+		prey += owner
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile

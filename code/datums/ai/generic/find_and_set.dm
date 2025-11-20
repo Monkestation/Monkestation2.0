@@ -40,7 +40,7 @@
 /datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/food_candidates = list()
-	for(var/held_candidate as anything in living_pawn.held_items)
+	for(var/held_candidate in living_pawn.held_items)
 		if(!held_candidate || !IsEdible(held_candidate))
 			continue
 		food_candidates += held_candidate
@@ -95,7 +95,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/nearby_items = list()
-	for (var/obj/new_friend as anything in oview(search_range, controller.pawn))
+	for (var/obj/new_friend in oview(search_range, controller.pawn))
 		if (!isitem(new_friend) && !isstructure(new_friend))
 			continue
 		if (is_type_in_list(new_friend, GLOB.animatable_blacklist))

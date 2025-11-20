@@ -36,7 +36,7 @@
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 10
@@ -158,11 +158,6 @@
 		if (is_species(human_victim, /datum/species/golem/sand))
 			. = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
-	visible_message(span_colossus("[src] disintegrates [victim]!"))
-	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
-	victim.dust()
-
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
 	desc = "A shimmering forcefield protecting the colossus."
@@ -184,12 +179,16 @@
 	name = "death bolt"
 	icon_state = "chronobolt"
 	damage = 25
-	armour_penetration = 50
+	armour_penetration = 85
 	speed = 2
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
+
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
@@ -271,8 +270,8 @@
 		return
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
-/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature())
+/obj/machinery/anomalous_crystal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
@@ -498,7 +497,7 @@
 			if(to_revive.stat != DEAD)
 				continue
 			to_revive.set_species(/datum/species/shadow, TRUE)
-			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			//Free revives, but significantly limits your options for reviving except via the crystal
 			//except JK who cares about BADDNA anymore. this even heals suicides.
 			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)
@@ -574,6 +573,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	paint_jobs = null
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

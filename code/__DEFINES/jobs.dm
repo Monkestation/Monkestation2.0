@@ -43,7 +43,7 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
-#define JOB_BLUESHIELD "Blueshield" //Monke edit
+#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -91,6 +91,11 @@
 #define JOB_FLORIST "Florist"
 #define JOB_SPRING_CLEANER "Spring Cleaner"
 #define JOB_BIRD_WATCHER "Bird Watcher"
+//Summer Donator Jobs
+#define JOB_GRILLER "Grill Master"
+#define JOB_HOTDOG "Hotdog Dude"
+#define JOB_GYM_BRO "Gym Bro"
+#define JOB_TOURIST "Tourist"
 //Spooktober
 #define JOB_SPOOKTOBER_GHOST "Ghost"
 #define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
@@ -132,6 +137,7 @@
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE 2.25 //monkestation edit: nanotrasen representative
 #define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
+#define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 2.75 // modularisation is dead but monke addition still
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -200,11 +206,13 @@
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
 #define DEPARTMENT_BITFLAG_SPRING (1<<11)
 #define DEPARTMENT_SPRING "Spring"
+#define DEPARTMENT_BITFLAG_SUMMER (1<<12)
+#define DEPARTMENT_SUMMER "Summer"
 
-#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<13)
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
-#define DEPARTMENT_BITFLAG_LATE (1<<12)
+#define DEPARTMENT_BITFLAG_LATE (1<<14)
 #define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
@@ -241,5 +249,5 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
-#define SUPERVISOR_QM "the Quartermaster"
+#define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel" //monkestation edit: Those under QM is also under HoP
 #define SUPERVISOR_RD "the Research Director"

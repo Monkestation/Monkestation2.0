@@ -344,15 +344,18 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/AltClick(mob/user)
-	. = ..()
-	if(get_dist(get_turf(src), get_turf(user)) <= 1)
-		to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
-		user.reset_perspective(parentSphere)
-		var/datum/action/peephole_cancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
+/turf/closed/indestructible/hoteldoor/click_alt(mob/living/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
+		return CLICK_ACTION_BLOCKING
+
+	to_chat(user, span_notice("You peek through the door's bluespace peephole..."))
+	user.reset_perspective(parentSphere)
+	var/datum/action/peephole_cancel/PHC = new
+	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+	PHC.Grant(user)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom, check_eye))
+	return CLICK_ACTION_SUCCESS
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
@@ -507,14 +510,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertsanalyzer"
 	worn_icon_state = "analyzer"
 
-/obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(istype(target, /obj/item/hilbertshotel))
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if(!proximity)
+/obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/hilbertshotel))
+		if(!Adjacent(interacting_with))
 			to_chat(user, span_warning("It's to far away to scan!"))
-			return .
-		var/obj/item/hilbertshotel/sphere = target
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/hilbertshotel/sphere = interacting_with
 		if(sphere.activeRooms.len)
 			to_chat(user, "Currently Occupied Rooms:")
 			for(var/roomnumber in sphere.activeRooms)
@@ -527,24 +528,29 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				to_chat(user, roomnumber)
 		else
 			to_chat(user, "No vacated rooms.")
-		return .
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/effect/landmark/lift_id/hilbert
 	specific_lift_id = HILBERT_TRAM
 
-/obj/effect/landmark/tram/hilbert/left
+/obj/effect/landmark/tram/nav/hilbert
+	name = HILBERT_TRAM
+	specific_lift_id = TRAM_NAV_BEACONS
+
+/obj/effect/landmark/tram/platform/hilbert/left
 	name = "Port"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
-/obj/effect/landmark/tram/hilbert/middle
+/obj/effect/landmark/tram/platform/hilbert/middle
 	name = "Central"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
-/obj/effect/landmark/tram/hilbert/right
+/obj/effect/landmark/tram/platform/hilbert/right
 	name = "Starboard"
 	specific_lift_id = HILBERT_TRAM
 	platform_code = HILBERT_STARBOARD

@@ -12,7 +12,8 @@
 	alternate_worn_layer = ABOVE_HEAD_LAYER // monkestation edit
 	var/gas_type = /datum/gas/oxygen
 	var/on = FALSE
-	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
+	/// If the jetpack will have a speedboost in space/nograv or not
+	var/full_speed = TRUE
 	var/stabilize = FALSE
 	var/thrust_callback
 	var/can_be_emped = TRUE //monkestation addition: improvised jetpack doesn't have any electronics to emp
@@ -46,10 +47,6 @@
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion \
 	)
-
-/obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot & slot_flags)
-		return TRUE
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -116,11 +113,11 @@
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
-	if(!ismob(loc))
+	var/mob/user = get(loc, /mob/living)
+	if(isnull(user))
 		return FALSE
-	var/mob/user = loc
 
-	if((num < 0.005 || air_contents.total_moles() < num))
+	if((num < 0.005 || air_contents?.total_moles() < num))
 		turn_off(user)
 		return FALSE
 

@@ -1,7 +1,8 @@
 /mob/living/basic/pet/dog/bullterrier/walter
 	name = "Walter"
 	real_name = "Walter"
-	desc = "It's Walter, he bites criminals just as well as he bites toddlers."
+	desc = "Nar'sie and Ratvar are nothing compared to the might of this monstertruck loving dog."
+	unique_pet = TRUE
 
 /mob/living/basic/pet/dog/bullterrier/walter/saulter
 	name = "Saulter Goodman"
@@ -12,7 +13,6 @@
 	icon_living = "saulter"
 	icon_dead = "saulter_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/saulter/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -24,13 +24,12 @@
 /mob/living/basic/pet/dog/bullterrier/walter/negative
 	name = "Negative Walter"
 	real_name = "Negative Walter"
-	desc = "Nar'sie and rat'var are a lot compared to the might of this skcurtretsnom despising god."
+	desc = "Nar'sie and Ratvar are a lot compared to the might of this skcurtretsnom despising god."
 	icon = 'monkestation/icons/mob/walterverse.dmi'
 	icon_state = "negative"
 	icon_living = "negative"
 	icon_dead = "negative_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/negative/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -48,7 +47,6 @@
 	icon_living = "syndie"
 	icon_dead = "syndie_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/syndicate/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -66,7 +64,6 @@
 	icon_living = "doom"
 	icon_dead = "doom_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/doom/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -87,7 +84,6 @@
 	bodytemp_cold_damage_limit = -1
 	bodytemp_heat_damage_limit = 1500
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/space/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -105,7 +101,6 @@
 	icon_living = "sus"
 	icon_dead = "sus_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 /mob/living/basic/pet/dog/bullterrier/walter/sus/Initialize(mapload)
 	. = ..()
@@ -127,7 +122,6 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/clown/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -139,13 +133,12 @@
 /mob/living/basic/pet/dog/bullterrier/walter/french
 	name = "French Walter"
 	real_name = "French Walter"
-	desc = "Nar'sie et rat'var ne sont rien comparés à la puissance de ce chien qui aime les monstertrucks."
+	desc = "Nar'sie et ratvar ne sont rien comparés à la puissance de ce chien qui aime les monstertrucks."
 	icon = 'monkestation/icons/mob/walterverse.dmi'
 	icon_state = "french"
 	icon_living = "french"
 	icon_dead = "french_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/french/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -159,7 +152,6 @@
 	real_name = "Bri'ish Wal'ah"
 	desc = "Nar'sie and like ra''var are naw'hin' compared 'o 'he migh' of 'hiz mons'er'ruck lovin' dog."
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/british/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -177,7 +169,6 @@
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 ///Updates dog speech and emotes for each walter
 /mob/living/basic/pet/dog/bullterrier/walter/wizard/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
@@ -189,9 +180,8 @@
 /mob/living/basic/pet/dog/bullterrier/walter/smallter
 	name = "Smallter"
 	real_name = "Smallter"
-	desc = "Nar'sie and rat'var are nothing compared to the might of this tiny dog."
+	desc = "Nar'sie and Ratvar are nothing compared to the might of this tiny dog."
 	gold_core_spawnable = FRIENDLY_SPAWN
-	unique_pet = TRUE
 
 /mob/living/basic/pet/dog/bullterrier/walter/smallter/Initialize(mapload)
 	. = ..()

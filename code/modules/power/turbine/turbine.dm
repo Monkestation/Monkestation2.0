@@ -49,7 +49,7 @@
 
 	update_appearance()
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/LateInitialize(mapload_arg)
 	. = ..()
 	activate_parts()
 
@@ -116,10 +116,10 @@
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		balloon_alert(user, "turn it off!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
@@ -130,7 +130,7 @@
 	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -146,16 +146,16 @@
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "panel is closed!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!installed_part)
 		balloon_alert(user, "no rotor installed!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(active)
 		balloon_alert(user, "[src] is on!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.put_in_hands(installed_part)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Allow easy enabling of each machine for connection to the main controller
@@ -333,6 +333,7 @@
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "core_rotor"
+	can_change_cable_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/turbine_rotor
 
@@ -398,10 +399,25 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/power/turbine/core_rotor/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		. += span_notice("[EXAMINE_HINT("Screw")] open its panel to change cable layer.")
+
+/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
+	//allow cable layer changing
+	if(panel_open)
+		return ..()
+
 	//failed checks
 	if(!activate_parts(user))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
@@ -410,9 +426,14 @@
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
+	//allow cable layer changing
+	if(panel_open)
+		return ..()
+
+	//works same as regular left click
 	return multitool_act(user, tool)
 
 /// convinience proc for balloon alert which returns if viewer is null

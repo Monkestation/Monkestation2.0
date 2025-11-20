@@ -262,7 +262,7 @@
 	required_container = /obj/item/slime_extract/yellow
 
 /datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
+	new /obj/item/stock_parts/power_store/cell/emproof/slime(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimeglow
@@ -456,7 +456,7 @@
 	required_container = /obj/item/slime_extract/cerulean
 
 /datum/chemical_reaction/slime/slime_territory/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/areaeditor/blueprints/slime(get_turf(holder.my_atom))
+	new /obj/item/blueprints/slime(get_turf(holder.my_atom))
 	..()
 
 //Sepia

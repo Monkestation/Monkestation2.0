@@ -660,7 +660,7 @@
 	name = "Honk-E-Clown";
 	desc = "This clown looks pretty tough, better stay on his good side...";
 	limb_destroyer = 1;
-	maxHealth = "300"
+	maxHealth = 300
 	},
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
@@ -1573,7 +1573,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "DJ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -1913,7 +1913,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jm" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},

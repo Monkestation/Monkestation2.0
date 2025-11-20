@@ -4,6 +4,9 @@
 	savefile_key = "sound_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
+	client.update_ambience_pref(value)
+
 /// Controls hearing announcement sounds
 /datum/preference/toggle/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -86,3 +89,26 @@
 	savefile_key = "hearmusic"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = TRUE
+
+/// Controls hearing elevator music
+/datum/preference/toggle/sound_elevator
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_elevator"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/sound_vox
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	default_value = TRUE
+	savefile_key = "sound_vox"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/sound_vox/apply_to_client_updated(client/client, value)
+	. = ..()
+	if (!value)
+		client.mob?.stop_sound_channel(CHANNEL_VOX)
+
+/datum/preference/toggle/sound_ai_radio
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	default_value = TRUE
+	savefile_key = "sound_ai_radio"
+	savefile_identifier = PREFERENCE_PLAYER

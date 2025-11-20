@@ -67,7 +67,7 @@
 		victim.losebreath += 1
 	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!pillow_trophy && istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
 		user.transferItemToLoc(attacking_item, src)
@@ -86,21 +86,23 @@
 	. = ..()
 	. += span_notice("Alt-click to remove the tag!")
 
-/obj/item/pillow/AltClick(mob/user)
-	. = ..()
+/obj/item/pillow/click_alt(mob/user)
+	if(!user.can_hold_items(src))
+		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
-		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
+		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pillow/update_appearance(updates)
 	. = ..()

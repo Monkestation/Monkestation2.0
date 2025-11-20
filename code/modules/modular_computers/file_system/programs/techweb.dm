@@ -1,15 +1,15 @@
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "research"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
-	transfer_access = list(ACCESS_RESEARCH)
+	run_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
+	download_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
@@ -36,7 +36,7 @@
 
 /datum/computer_file/program/science/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 // heavy data from this proc should be moved to static data when possible
@@ -163,7 +163,7 @@
 
 	// Build design cache
 	var/design_cache = list()
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design

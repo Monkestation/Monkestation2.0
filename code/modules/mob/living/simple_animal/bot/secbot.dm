@@ -13,7 +13,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 
-	maints_access_required = list(ACCESS_SECURITY)
+	req_one_access = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/stock_parts/cell/potato(Tsec)
+	new /obj/item/stock_parts/power_store/cell/potato(Tsec)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	return ..()
@@ -146,6 +146,16 @@
 	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
+		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
+		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
+		return TRUE
+
+/mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
+	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
+
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
@@ -171,9 +181,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/secbot/ui_act(action, params)
+/mob/living/simple_animal/bot/secbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -206,6 +217,8 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
+	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
+		final |= JUDGE_CHILLOUT
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
@@ -324,7 +337,7 @@
 	// monkestation start: check shields and baton resistance, deal stamina damage
 	if(ishuman(current_target))
 		var/mob/living/carbon/human/human_target = current_target
-		if(human_target.check_shields(src, 0, "\the [name]", MELEE_ATTACK))
+		if(human_target.check_block(src, 0, "\the [name]", MELEE_ATTACK))
 			return
 	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
 		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
@@ -522,7 +535,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	..()
+	. = ..()
 	if(!isalien(target))
 		target = user
 		mode = BOT_HUNT

@@ -160,3 +160,10 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "theclown_clownpet"
 	animal_transformation = /mob/living/basic/pet/theclown_clownpet
+
+//adamcoal
+/obj/item/effect_granter/donator/cyber_husky
+	name = "cyber husky"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	animal_transformation = /mob/living/basic/pet/cyber_husky

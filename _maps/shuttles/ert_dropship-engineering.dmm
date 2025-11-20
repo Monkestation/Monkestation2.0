@@ -142,7 +142,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
-/obj/vehicle/sealed/mecha/working/ripley/mk2/engineering,
+/obj/vehicle/sealed/mecha/ripley/mk2/engineering,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/ert/powered)
 "s" = (

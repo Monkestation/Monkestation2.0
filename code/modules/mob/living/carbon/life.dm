@@ -88,6 +88,10 @@
 		else if(HAS_TRAIT(src, TRAIT_LABOURED_BREATHING))
 			losebreath += (1 / next_breath)
 
+	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(((pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING)) && !HAS_TRAIT(src, TRAIT_ASSISTED_BREATHING))
+		losebreath ++  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
+
 	if(losebreath < 1)
 		var/pre_sig_return = SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired)
 		if(pre_sig_return & BREATHE_BLOCK_BREATH)
@@ -121,7 +125,8 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
-		breath_airborne_diseases()
+		if(!HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
+			breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 
@@ -291,7 +296,6 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
-					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
@@ -301,9 +305,6 @@
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timeout)
-			dna.remove_mutation(HM.type)
 
 /**
  * Handles calling metabolization for dead people.
@@ -462,7 +463,7 @@
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!heart || IS_ROBOTIC_ORGAN(heart))
 		return FALSE
 	return TRUE
 

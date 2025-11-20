@@ -21,15 +21,14 @@
 	///Did we add a non approved song to an approved tape if so remove the cassette's approved status
 	var/broke_approval = FALSE
 
-/obj/item/device/cassette_deck/AltClick(mob/user)
-	if(recieve || send)
-		eject_tape(user)
-		return
-	return ..()
+/obj/item/device/cassette_deck/click_alt(mob/user)
+	eject_tape(user)
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/device/cassette_deck/CtrlClick(mob/user)
+/obj/item/device/cassette_deck/item_ctrl_click(mob/user)
 	to_chat(user,"You click a button and change the Cassette Deck to [removal ? "splicing" : "removal"] mode")
 	removal = !removal
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/device/cassette_deck/attackby(obj/item/cassette, mob/user)
 	if(!istype(cassette, /obj/item/device/cassette_tape))

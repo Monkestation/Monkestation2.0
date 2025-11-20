@@ -531,8 +531,8 @@ wZ
 fW
 Py
 Py
-QT
-Fc
+Py
+ZK
 "}
 (16,1,1) = {"
 Xx
@@ -544,8 +544,8 @@ DE
 fW
 Py
 ya
-Py
-ZK
+QT
+Fc
 "}
 (17,1,1) = {"
 Xx
@@ -558,7 +558,7 @@ fW
 Py
 Py
 Py
-Fc
+ZK
 "}
 (18,1,1) = {"
 Xx
@@ -597,7 +597,7 @@ fW
 Py
 Py
 Py
-ZK
+Fc
 "}
 (21,1,1) = {"
 Fc

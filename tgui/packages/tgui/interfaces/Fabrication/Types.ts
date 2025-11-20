@@ -21,19 +21,9 @@ export type Material = {
   ref: string;
 
   /**
-   * The amount of material; 2,000 units is one sheet.
+   * The amount of material; 100 units is one sheet.
    */
   amount: number;
-
-  /**
-   * The number of sheets.
-   */
-  sheets: number;
-
-  /**
-   * Whether the material can be removed.
-   */
-  removable: BooleanLike;
 
   /**
    * The color of the material.
@@ -74,20 +64,10 @@ export type Design = {
 
   /**
    * The icon used to represent this design, generated in
-   * /datum/asset/spritesheet/research_designs. **The image within may not be
+   * /datum/asset/spritesheet_batched/research_designs. **The image within may not be
    * 32x32.**
    */
   icon: string;
-
-  /**
-   * The amount of time, in seconds, that this design takes to print.
-   */
-  constructionTime: number;
-
-  /**
-   * The maximum number of items than can be printed
-   */
-  maxmult: number;
 };
 
 /**
@@ -98,6 +78,11 @@ export type FabricatorData = {
    * The materials available to the fabricator, via ore silo or local storage.
    */
   materials: Material[];
+
+  /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
 
   /**
    * The name of the fabricator, as displayed on the title bar.

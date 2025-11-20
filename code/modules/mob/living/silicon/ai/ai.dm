@@ -21,6 +21,7 @@
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
 	istate = ISTATE_HARM|ISTATE_BLOCKING //so we always get pushed instead of trying to swap
+	forced_interaction_mode = /datum/interaction_mode/no_interaction/nopassthrough //a nothingburger interact mode, which forces the istate above for the rest of time
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -43,17 +44,14 @@
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
-	///Weakref to the bot the ai's commanding right now
-	var/datum/weakref/bot_ref
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
-	var/list/datum/ai_module/current_modules = list()
+	var/list/datum/ai_module/malf/current_modules = list()
 	var/can_dominate_mechs = FALSE
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
-	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
@@ -71,13 +69,12 @@
 	var/can_shunt = TRUE
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = FALSE //Waypoint mode is for selecting a turf via clicking.
 	var/call_bot_cooldown = 0 //time of next call bot command
 	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/ai_eye/eyeobj
+	var/mob/eye/ai_eye/eyeobj
 	var/sprint = 10
 	var/last_moved = 0
 	var/acceleration = TRUE
@@ -99,7 +96,6 @@
 	var/list/cam_hotkeys = new/list(9)
 	var/atom/cam_prev
 
-	var/datum/robot_control/robot_control
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 	///remember AI's last location
@@ -116,6 +112,21 @@
 
 	///Command report cooldown
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
+
+	var/jobtitles = TRUE
+
+	///This action opens menu to modify the settings.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	///This action actually uses the remote.
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
+
+	/* ROBOT CONTROL */
+	/// UI for robot controls
+	VAR_FINAL/datum/robot_control/robot_control
+	/// Weakref to the bot the AI is currently commanding
+	VAR_FINAL/datum/weakref/bot_ref
+	/// If TRUE, the AI will send it's [var/bot_ref][commanded bot] to the next clicked atom
+	VAR_FINAL/setting_waypoint = FALSE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -180,6 +191,11 @@
 
 	deploy_action.Grant(src)
 
+	nanite_remote = new
+	nanite_menu = new(nanite_remote)
+	nanite_menu.Grant(src)
+	nanite_remote.Grant(src)
+
 	if(isturf(loc))
 		add_verb(src, list(
 			/mob/living/silicon/ai/proc/ai_network_change,
@@ -199,9 +215,15 @@
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED, TRAIT_SILICON_EMOTES_ALLOWED), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas, camera_view = TRUE)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
@@ -239,6 +261,8 @@
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
+	QDEL_NULL(nanite_menu)
+	QDEL_NULL(nanite_remote)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -253,7 +277,7 @@
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
 	QDEL_NULL(modules_action)
-	for(var/datum/ai_module/AM in current_modules)
+	for(var/datum/ai_module/malf/AM in current_modules)
 		for(var/datum/action/A in actions)
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
@@ -535,11 +559,6 @@
 		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
 		alert_control.ui_interact(src)
-#ifdef AI_VOX
-	if(href_list["say_word"])
-		play_vox_word(href_list["say_word"], null, src)
-		return
-#endif
 	if(href_list["show_tablet_note"])
 		if(last_tablet_note_seen)
 			src << browse(last_tablet_note_seen, "window=show_tablet")
@@ -945,7 +964,7 @@
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	if(!(HAS_TRAIT(speaker, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))) //don't fetch the speaker's job in case they have something that conseals their identity completely
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -1036,7 +1055,7 @@
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
-/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
 		return
@@ -1060,7 +1079,7 @@
 
 	malf_picker.processing_time += 10
 	var/area/apcarea = apc.area
-	var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
+	var/datum/ai_module/malf/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/malf/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
 		doom_n_boom.hacked_command_areas += apcarea
 		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
@@ -1157,7 +1176,7 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
+/mob/living/silicon/ai/proc/camera_visibility(mob/eye/ai_eye/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
@@ -1223,4 +1242,12 @@
 		return ai_voicechanger.say_name
 	return
 
+/mob/living/silicon/ai/verb/jobtitles()
+	set category = "AI Commands"
+	set name = "Toggle Jobtitle Display"
+
+	if(incapacitated())
+		return
+	jobtitles = !jobtitles
+	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
 #undef CALL_BOT_COOLDOWN

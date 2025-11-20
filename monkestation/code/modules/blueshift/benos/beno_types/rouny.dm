@@ -25,6 +25,7 @@
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_quick)
 
+
 /mob/living/carbon/alien/adult/nova/runner/Destroy()
 	QDEL_NULL(evade_ability)
 	return ..()

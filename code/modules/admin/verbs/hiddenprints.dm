@@ -1,7 +1,4 @@
-/client/proc/cmd_show_hiddenprints(atom/victim)
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_show_hiddenprints, R_ADMIN, FALSE, "Show Hiddenprints", atom/victim)
 	var/interface = "A log of every player who has touched [victim], sorted by last touch.<br><br><ol>"
 	var/victim_hiddenprints = GET_ATOM_HIDDENPRINTS(victim)
 
@@ -20,7 +17,7 @@
 
 	interface += "</ol>"
 
-	var/datum/browser/hiddenprint_view = new(usr, "view_hiddenprints_[REF(victim)]", "[victim]'s hiddenprints", 450, 760)
+	var/datum/browser/hiddenprint_view = new(user.mob, "view_hiddenprints_[REF(victim)]", "[victim]'s hiddenprints", 450, 760)
 	hiddenprint_view.set_content(interface)
 	hiddenprint_view.open()
 

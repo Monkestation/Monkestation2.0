@@ -20,9 +20,11 @@
 
 	order_categories = list(
 		CATEGORY_MINING,
-		CATEGORY_CONSUMABLES,
-		CATEGORY_TOYS_DRONE,
+		CATEGORY_SURVIVAL,
+		CATEGORY_CRUSHER,
 		CATEGORY_PKA,
+		CATEGORY_WASTE_WEAPON,
+		CATEGORY_EXTRA,
 	)
 	blackbox_key = "mining"
 
@@ -63,7 +65,7 @@
 /obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
 	return FLOOR(id_card.registered_account.mining_points, 1)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -156,7 +158,7 @@
 	. = ..()
 	. += span_notice("There's [points] point\s on the card.")
 
-/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isidcard(attacking_item))
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item

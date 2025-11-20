@@ -25,6 +25,11 @@
 
 	return ..()
 
+/datum/action/cooldown/spell/jaunt/PreActivate(atom/target)
+	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
+		return FALSE
+	. = ..()
+
 /datum/action/cooldown/spell/jaunt/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_FEEDBACK // Don't do the feedback until after we're jaunting
 
@@ -68,6 +73,8 @@
 	// Don't do the feedback until we have runechat hidden.
 	// Otherwise the text will follow the jaunt holder, which reveals where our caster is travelling.
 	spell_feedback()
+	// 6 secs should be long enough for the invocation runechat to fade out
+	addtimer(TRAIT_CALLBACK_REMOVE(jaunter, TRAIT_RUNECHAT_HIDDEN, REF(src)), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)

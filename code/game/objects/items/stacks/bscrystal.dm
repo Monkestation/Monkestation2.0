@@ -2,7 +2,7 @@
 /obj/item/stack/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
@@ -34,7 +34,7 @@
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)
 	use(1)
 
@@ -46,7 +46,7 @@
 		visible_message(span_notice("[src] fizzles and disappears upon impact!"))
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)

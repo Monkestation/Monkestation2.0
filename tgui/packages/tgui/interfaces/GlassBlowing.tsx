@@ -42,7 +42,7 @@ type RemainingSteps = {
   jacks: number;
 };
 
-export const GlassBlowing = (_: any, context: any) => {
+export const GlassBlowing = () => {
   const { act, data } = useBackend<GlassData>();
   const { glass, inUse } = data;
 

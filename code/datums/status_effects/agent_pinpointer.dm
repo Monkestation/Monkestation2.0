@@ -33,14 +33,14 @@
 
 ///Show the distance and direction of a scanned target
 /datum/status_effect/agent_pinpointer/proc/point_to_target()
-	if(!scan_target)
+	if(QDELETED(scan_target))
 		linked_alert.icon_state = "pinonnull"
 		return
 
 	var/turf/here = get_turf(owner)
 	var/turf/there = get_turf(scan_target)
 
-	if(here.z != there.z)
+	if(isnull(here) || isnull(there) || here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
 	if(get_dist_euclidean(here,there) <= minimum_range + rand(0, range_fuzz_factor))

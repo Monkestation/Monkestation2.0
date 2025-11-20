@@ -39,10 +39,18 @@
 	apid.set_species(/datum/species/apid)
 	apid.equipOutfit(/datum/outfit/job/botanist)
 	test_screenshot("[/datum/species/apid]", get_flat_icon_for_all_directions(apid))
+
+	var/mob/living/carbon/human/oni = allocate(/mob/living/carbon/human/dummy/consistent)
+	oni.dna.features["oni_horns"] = "Oni"
+	oni.dna.features["oni_wings"] = "Normal"
+	oni.dna.features["oni_tail"] = "Spade"
+	oni.set_species(/datum/species/oni)
+	oni.equipOutfit(/datum/outfit/job/atmos)
+	test_screenshot("[/datum/species/oni]", get_flat_icon_for_all_directions(oni))
 	//MONKESTATION ADDITION END
 
 	// The rest of the species
-	for (var/datum/species/species_type as anything in subtypesof(/datum/species) - typesof(/datum/species/moth) - /datum/species/lizard - /datum/species/apid)
+	for (var/datum/species/species_type as anything in subtypesof(/datum/species) - typesof(/datum/species/moth) - /datum/species/lizard - /datum/species/apid - /datum/species/oni)
 		test_screenshot("[species_type]", get_flat_icon_for_all_directions(make_dummy(species_type, /datum/outfit/job/assistant/consistent)))
 
 /datum/unit_test/screenshot_humanoids/proc/make_dummy(species, job_outfit)

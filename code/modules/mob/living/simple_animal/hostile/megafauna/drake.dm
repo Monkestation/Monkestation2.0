@@ -46,7 +46,7 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
@@ -100,7 +100,7 @@
 	QDEL_NULL(lava_swoop)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -188,7 +188,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
 	if(!swooping)
 		return ..()
 
@@ -296,8 +296,9 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	playsound(T, SFX_EXPLOSION, 80, TRUE)
-	new /obj/effect/hotspot(T)
+	var/obj/effect/hotspot/hotspot = new(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
+	QDEL_IN(hotspot, 1 SECONDS)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue

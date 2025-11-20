@@ -10,6 +10,9 @@
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
+	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 15 //might want to make this higher
 	///the name of the antag flavor this traitor has.
 	var/employer
 	///assoc list of strings set up after employer is given
@@ -39,8 +42,7 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
+	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	return ..()
 
@@ -189,7 +191,7 @@
 				"name" = category,
 				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
 			for(var/module in malf_ai.malf_picker.possible_modules[category])
-				var/datum/ai_module/mod = malf_ai.malf_picker.possible_modules[category][module]
+				var/datum/ai_module/malf/mod = malf_ai.malf_picker.possible_modules[category][module]
 				// monkestation start: add icons
 				var/list/item_data = list(
 					"name" = mod.name,
@@ -198,7 +200,7 @@
 				)
 				if(!mod.upgrade)
 					var/datum/action/power_type = mod.power_type
-					item_data["icon"] = text_ref(power_type::button_icon)
+					item_data["icon"] = power_type::button_icon
 					item_data["icon_state"] = power_type::button_icon_state
 				cat["items"] += list(item_data)
 				// monkestation end
@@ -206,7 +208,7 @@
 
 	return data
 
-/datum/antagonist/malf_ai/ui_act(action, list/params)
+/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -221,7 +223,7 @@
 			for(var/category in malf_ai.malf_picker.possible_modules)
 				buyable_items += malf_ai.malf_picker.possible_modules[category]
 			for(var/key in buyable_items)
-				var/datum/ai_module/valid_mod = buyable_items[key]
+				var/datum/ai_module/malf/valid_mod = buyable_items[key]
 				if(valid_mod.name == item_name)
 					malf_ai.malf_picker.purchase_module(malf_ai, valid_mod)
 					return TRUE

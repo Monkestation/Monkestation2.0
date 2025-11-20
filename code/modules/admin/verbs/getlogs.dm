@@ -1,17 +1,8 @@
-//This proc allows download of past server logs saved within the data/logs/ folder.
-/client/proc/getserverlogs()
-	set name = "Get Server Logs"
-	set desc = "View/retrieve logfiles."
-	set category = "Admin.Logging"
+ADMIN_VERB(get_server_logs, R_ADMIN, FALSE, "Get Server Logs", "View or retrieve logfiles.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs()
 
-	browseserverlogs()
-
-/client/proc/getcurrentlogs()
-	set name = "Get Current Logs"
-	set desc = "View/retrieve logfiles for the current round."
-	set category = "Admin.Logging"
-
-	browseserverlogs(current = TRUE)
+ADMIN_VERB(get_current_logs, R_ADMIN, FALSE, "Get Current Logs", "View or retrieve logfiles for the current round.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs(current=TRUE)
 
 /* monkestation edit: replaced in [monkestation\code\modules\admin\verbs\getlogs.dm]
 /client/proc/browseserverlogs(current=FALSE)

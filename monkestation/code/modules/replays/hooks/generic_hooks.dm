@@ -1,3 +1,4 @@
+#ifndef DISABLE_DEMOS
 /atom
 	var/image/demo_last_appearance
 
@@ -63,3 +64,4 @@
 
 /obj/structure/disposalholder
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+#endif

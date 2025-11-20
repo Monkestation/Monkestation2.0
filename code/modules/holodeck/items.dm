@@ -93,7 +93,7 @@
 	to_chat(user, span_warning("You are too primitive to use this device!"))
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/W, mob/user, params)
+/obj/machinery/readybutton/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	to_chat(user, span_warning("The device is a solid button, there's nothing you can do with it!"))
 
 /obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
@@ -148,8 +148,8 @@
 
 /obj/machinery/conveyor/holodeck
 
-/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(!user.transferItemToLoc(I, drop_location()))
+/obj/machinery/conveyor/holodeck/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!user.transferItemToLoc(attacking_item, drop_location()))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma

@@ -52,7 +52,7 @@
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
 	source.balloon_alert_to_viewers("repacking...")
-	if(!do_after(user, 3 SECONDS, target = source))
+	if(!do_after(user, repacking_time, target = source))
 		return
 
 	playsound(source, 'sound/items/ratchet.ogg', 50, TRUE)
@@ -63,12 +63,7 @@
 		new_pack.after_set()
 	else
 		new item_to_pack_into(source.drop_location())
-
-	if(istype(source, /obj))
-		var/obj/source_object = source
-		source_object.deconstruct(TRUE)
-	else
-		qdel(source)
+	qdel(source)
 
 /// Adds screen context for hovering over the repackable items with your mouse
 /datum/element/repackable/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)

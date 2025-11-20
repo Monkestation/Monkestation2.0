@@ -133,7 +133,9 @@
 	// Clip message
 	var/maxlen = owned_by.prefs.read_preference(/datum/preference/numeric/max_chat_length)
 	if (length_char(text) > maxlen)
-		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
+		var/decoded_text = html_decode(text) // decode to prevent escaped characters from inflating the message length
+		if (length_char(decoded_text) > maxlen)
+			text = html_encode(copytext_char(decoded_text, 1, maxlen + 1)) + "..." // BYOND index moment
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
@@ -357,12 +359,6 @@
 	// monkestation end
 	else
 		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
-
-// Tweak these defines to change the available color ranges
-#define CM_COLOR_SAT_MIN 0.6
-#define CM_COLOR_SAT_MAX 0.7
-#define CM_COLOR_LUM_MIN 0.65
-#define CM_COLOR_LUM_MAX 0.75
 
 /**
  * Gets a color for a name, will return the same color for a given string consistently within a round.atom

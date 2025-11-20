@@ -19,6 +19,10 @@
 /obj/effect/light_emitter/singularity_act()
 	return
 
+/obj/effect/light_emitter/fake_outdoors
+	light_color = COLOR_LIGHT_YELLOW
+	set_cap = 1
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
@@ -62,7 +66,10 @@
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/survivalcapsule(src)
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		new /obj/item/survivalcapsule/bathroom(src)
+	else
+		new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
 	new /obj/item/fishing_hook/rescue(src) //Monkestation Edit
 
@@ -92,6 +99,13 @@
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
+
+	if(isliving(user))
+		var/mob/living/living_user = user
+		for(var/obj/item/implant/exile/exile_implant in living_user.implants)
+			to_chat(living_user, span_warning("A warning flashes across the screen, and the shuttle controls lock in response to your exile implant."))
+			return
+
 	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
@@ -134,3 +148,4 @@
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
 	icon_state = "miningcar"
+	base_icon_state = "miningcar"

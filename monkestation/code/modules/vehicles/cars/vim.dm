@@ -21,7 +21,7 @@
 /obj/vehicle/sealed/car/vim/return_analyzable_air()
 	return tank?.return_analyzable_air()
 
-/obj/vehicle/sealed/car/vim/attackby(obj/item/attacking_item, mob/user, params)
+/obj/vehicle/sealed/car/vim/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((user.istate & ISTATE_HARM) || !istype(attacking_item, /obj/item/tank/internals))
 		return ..()
 	if(!QDELETED(tank))

@@ -1,7 +1,11 @@
-/obj/item/clothing/head/costume/jester/alt
-	name = "yellow jester hat"
+/obj/item/clothing/head/costume/jester2
+	name = "alternate jester hat"
 	desc = "It's more a hood really."
 	icon_state = "jester2"
+	greyscale_config = /datum/greyscale_config/jester2
+	greyscale_config_worn = /datum/greyscale_config/jester2_worn
+	greyscale_colors = "#FDEA1B#FF0000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/wizard/magician
 	name = "magician's top hat"

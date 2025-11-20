@@ -53,7 +53,7 @@
 		return
 
 	interval = round(clamp(num, 0.5, 60) SECONDS, world.tick_lag)
-	to_chat(user, "You set [src]'s interval to [DisplayTimeText(interval)].")
+	to_chat(user, span_notice("You set [src]'s interval to [DisplayTimeText(interval)]."))
 	return TRUE
 
 /obj/item/mcobject/messaging/ticker/proc/set_loops(mob/user, obj/item/tool)
@@ -69,7 +69,7 @@
 		return
 
 	total_loops = clamp(num, -1, 100)
-	to_chat(user, "You set [src]'s loop count to [total_loops == -1 ? "infinite" : "[total_loops]"].")
+	to_chat(user, span_notice("You set [src]'s loop count to [total_loops == -1 ? "infinite" : "[total_loops]"]."))
 	return TRUE
 
 /obj/item/mcobject/messaging/ticker/proc/start_ticker(datum/mcmessage/input)

@@ -7,6 +7,10 @@
 	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
 	var/resource_delay = 0
+	armor_type = /datum/armor/structure_blob/resource
+
+/datum/armor/structure_blob/resource
+	laser = 25
 
 /obj/structure/blob/special/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."

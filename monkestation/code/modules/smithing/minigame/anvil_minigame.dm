@@ -170,6 +170,10 @@
 	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were plus (smithlevel *5)-15.
 	//So missing nothing, a level 3 smith will make a qual 100 item.
 	var/smithlevel = user.mind.get_skill_level(/datum/skill/smithing)
+	if(host_anvil.always_perfect)
+		failed_notes = 0
+		off_time = 0
+		success = 100
 	success = max(smithlevel * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2)) +((smithlevel * 5) - 15)))
 	UnregisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY)
 	STOP_PROCESSING(SSfishing, src)

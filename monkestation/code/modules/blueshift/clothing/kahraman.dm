@@ -167,7 +167,7 @@
 
 /obj/item/mod/control/pre_equipped/frontier_colonist
 	theme = /datum/mod_theme/frontier_colonist
-	applied_cell = /obj/item/stock_parts/cell/high
+	applied_cell = /obj/item/stock_parts/power_store/cell/high
 	applied_modules = list(
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/magboot,
@@ -271,6 +271,24 @@
 		stripes to denote that someone wearing it might be able to provide medical assistance."
 	icon_state = "jacket_med"
 	worn_icon_state = "jacket_med"
+
+/obj/item/clothing/suit/jacket/frontier_colonist/unarmored
+	name = "unarmored frontier trenchcoat"
+	desc = "A knee length coat with a water-resistant exterior and relatively comfortable interior."
+	armor_type = /datum/armor/none
+
+
+/obj/item/clothing/suit/jacket/frontier_colonist/short/unarmored
+	name = "unarmored frontier jacket"
+	desc = "A short coat with a water-resistant exterior and relatively comfortable interior."
+	armor_type = /datum/armor/none
+
+/obj/item/clothing/suit/jacket/frontier_colonist/medical/unarmored
+	name = "unarmored frontier medical jacket"
+	desc = "A short coat with a water-resistant exterior and relatively comfortable interior. \
+		This one is colored a bright red and covered in white \
+		stripes to denote that someone wearing it might be able to provide medical assistance."
+	armor_type = /datum/armor/none
 
 // Flak Jacket
 

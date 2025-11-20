@@ -1,19 +1,32 @@
 /datum/player_panel_veth/ //required for tgui component
 	var/title = "Veth's Ultimate Player Panel"
 
-/datum/admins/proc/player_panel_veth() //proc for verb in game tab
+ADMIN_VERB(player_panel_veth, R_ADMIN, FALSE,"Player Panel Veth", "Updated Player Panel with TGUI. Currently in testing.", ADMIN_CATEGORY_GAME)
+	var/datum/player_panel_veth/tgui = new(user.mob)
+	tgui.ui_interact(user.mob)
+	to_chat(user, span_interface("VUAP has been opened!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
+	BLACKBOX_LOG_ADMIN_VERB("VUAP")
 
-	set name = "Player Panel Veth"
-	set category = "Admin.Game"
-	set desc = "Updated Player Panel with TGUI. Currently in testing."
-
-	if(!check_rights(R_ADMIN))
-		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
+ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
+	if(!target)
+		to_chat(user, span_warning("Could not find desired target mob!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 		return
-	var/datum/player_panel_veth/tgui = new(usr)
-	tgui.ui_interact(usr)
-	to_chat(src, span_interface("VUAP has been opened!"), confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "VUAP")
+	if(!length(target.ckey) || target.ckey[1] == "@")
+		var/mob/player = target
+		var/datum/mind/player_mind = get_mind(player, include_last = TRUE)
+		var/player_mind_ckey = ckey(player_mind.key)
+		user.selectedPlayerCkey = player_mind_ckey
+		user.VUAP_selected_mob = target
+		var/datum/vuap_personal/tgui = new(user.mob)
+		tgui.ui_interact(user.mob)
+		tgui_alert(user, "WARNING! This mob has no associated Mind! Most actions will not work. Last ckey to control this mob is [player_mind_ckey].", "No Mind!")
+
+	else
+		user.selectedPlayerCkey = target.ckey
+		user.VUAP_selected_mob = target
+		var/datum/vuap_personal/tgui = new(user.mob)
+		tgui.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("VUAP_personal")
 
 /datum/player_panel_veth/proc/player_ui_data(mob/player)
 #ifndef TESTING
@@ -72,39 +85,38 @@
 			ui.send_update()
 			return
 		if("oldPP")
-			usr.client.holder.player_panel_new()
-			SSblackbox.record_feedback("tally", "VUAP", 1, "OldPP")
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/playerpanel) //logs/rightscheck inside the proc
 			return
 		if("checkPlayers")
-			usr.client.check_players() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_players) //logs/rightscheck inside the proc
 			return
 		if("checkAntags")
-			usr.client.check_antagonists() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists) //logs/rightscheck inside the proc
 			return
 		if("faxPanel")
-			usr.client.fax_panel() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/fax_panel) //logs/rightscheck inside the proc TODO double check args
 			return
 		if("gamePanel")
-			usr.client.game_panel() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/game_panel) //logs/rightscheck inside the proc
 			return
 		if("comboHUD")
-			usr.client.toggle_combo_hud() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/combo_hud) //logs/rightscheck inside the proc
 			return
 		if("adminVOX")
-			usr.client.AdminVOX() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/AdminVOX)  //logs/rightscheck inside the proc
 			return
 		if("generateCode")
-			usr.client.generate_code() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/generate_code) //logs/rightscheck inside the proc
 			return
 		if("viewOpfors")
-			usr.client.view_opfors() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/view_opfors)  //logs/rightscheck inside the proc
 			return
 		if("openAdditionalPanel") //logs/rightscheck inside the proc
-			usr.client.selectedPlayerCkey = params["selectedPlayerCkey"]
-			usr.client.holder.vuap_open()
+			var/mob/target = selected_mob
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, target)
 			return
 		if("createCommandReport")
-			usr.client.cmd_admin_create_centcom_report() //logs/rightscheck inside the proc
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/create_command_report) //logs/rightscheck inside the proc
 			return
 		if("logs")
 			usr.client.holder.Topic(null, list(
@@ -125,7 +137,7 @@
 			))
 			return
 		if("adminaiinteract") //loggin inside the proc
-			usr.client.toggle_AI_interact()
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/toggle_ai_interact)
 
 /datum/player_panel_veth/ui_interact(mob/user, datum/tgui/ui)
 
@@ -137,31 +149,13 @@
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
 	///This is used to hold the ckey of the selected player for moving to and from the player panel and vuap
 	var/selectedPlayerCkey = ""
 	///this is used to hold the mob of the selected player in case the ckey can't be found (this enables pp'ing soulless mobs)
 	var/VUAP_selected_mob = null
-
-/datum/admins/proc/vuap_open_context(mob/r_clicked_mob in GLOB.mob_list) //this is the proc for the right click menu
-	set category = null
-	set name = "Open New Player Panel"
-	if(!check_rights(R_ADMIN))
-		return
-	if(!length(r_clicked_mob.ckey) || r_clicked_mob.ckey[1] == "@")
-		var/mob/player = r_clicked_mob
-		var/datum/mind/player_mind = get_mind(player, include_last = TRUE)
-		var/player_mind_ckey = ckey(player_mind.key)
-		usr.client.VUAP_selected_mob = r_clicked_mob
-		usr.client.holder.vuap_open()
-		tgui_alert(usr, "WARNING! This mob has no associated Mind! Most actions will not work. Last ckey to control this mob is [player_mind_ckey].", "No Mind!")
-
-	else
-		usr.client.selectedPlayerCkey = r_clicked_mob.ckey
-		usr.client.holder.vuap_open()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "VUAP")
 
 /datum/vuap_personal
 
@@ -324,8 +318,11 @@ love, veth
 		if("ban")
 			if(!check_rights(R_BAN))
 				return
-			usr.client.ban_panel()
-			SSblackbox.record_feedback("tally", "VUAP", 1, "Ban")
+			usr.client.holder.Topic(null, list(
+				"newbankey" = selected_mob.ckey,
+				"newbanip" = selected_mob.lastKnownIP,
+				"newbancid" = selected_mob.client.computer_id,
+				"admin_token" = usr.client.holder.href_token,))
 			return
 		if("prison")
 			usr.client.holder.Topic(null, list(
@@ -502,18 +499,18 @@ love, veth
 			to_chat(usr, "Adminhealed  [selected_mob.ckey].", confidential = TRUE)
 			return
 		if("giveDisease")
-			usr.client.give_disease(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_disease, selected_mob)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "GiveDisease")
 			return
 		if("cureAllDiseases")
-			if (istype(selected_mob, /mob/living))
+			if(istype(selected_mob, /mob/living))
 				var/mob/living/L = selected_mob
 				L.fully_heal(HEAL_NEGATIVE_DISEASES)
 			to_chat(usr, "Cured all negative diseases on [selected_mob.ckey].", confidential = TRUE)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "CureAllDiseases")
 			return
 		if("diseasePanel") //rights check inside the proc
-			usr.client.diseases_panel(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/diseases_panel)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "DiseasePanel")
 			return
 		if("modifytraits")
@@ -620,14 +617,4 @@ love, veth
 			return
 
 /datum/vuap_personal/ui_state(mob/user)
-	return GLOB.admin_state
-
-/datum/admins/proc/vuap_open()
-	if(!check_rights(R_ADMIN))
-		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
-		return
-	var/datum/vuap_personal/tgui = new(usr)
-	tgui.ui_interact(usr)
-	SSblackbox.record_feedback("tally", "VUAP", 1, "VUAP_open")
-
-
+	return ADMIN_STATE(R_ADMIN)

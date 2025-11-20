@@ -1,8 +1,8 @@
-/datum/mutation/human/hulk
+/datum/mutation/hulk
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/hulk/modify()
+/datum/mutation/hulk/setup()
 	. = ..()
 	if(isnull(owner))
 		return
@@ -21,7 +21,7 @@
 
 	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
 
-/datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/hulk/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return

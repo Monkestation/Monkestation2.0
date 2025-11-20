@@ -80,7 +80,7 @@ GLOBAL_LIST(antag_token_config)
 	var/static/list/event_list
 	if(!event_list)
 		event_list = list()
-		for(var/event as anything in SStwitch.twitch_events_by_type)
+		for(var/event in SStwitch.twitch_events_by_type)
 			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
 			if(!event_instance.token_cost)
 				continue

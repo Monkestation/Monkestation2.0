@@ -2,7 +2,6 @@
 
 GLOBAL_LIST_INIT(clockwork_slabs, list())
 
-
 /obj/item/clockwork
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	/// Extra info to give clock cultists, added via the /datum/element/clockwork_description element
@@ -10,13 +9,11 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	/// Does this item get the clockwork_pickup element
 	var/has_pickup_element = TRUE
 
-
 /obj/item/clockwork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_description, clockwork_desc)
 	if(has_pickup_element)
 		AddElement(/datum/element/clockwork_pickup)
-
 
 /obj/item/clockwork/clockwork_slab
 	name = "Clockwork Slab"
@@ -136,7 +133,6 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 		quickbound.Grant(binder)
 
 // UI things below
-
 /obj/item/clockwork/clockwork_slab/attack_self(mob/living/user)
 	if(!IS_CLOCK(user))
 		to_chat(user, span_warning("As you try and fiddle with \the [src] you feel a shock course through you!"))
@@ -169,8 +165,8 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	data["cogs"] = cogs
 	data["vitality"] = GLOB.clock_vitality
 	data["max_vitality"] = MAX_CLOCK_VITALITY
-	data["power"] = GLOB.clock_power
-	data["max_power"] = GLOB.max_clock_power
+	data["power"] = SSthe_ark.clock_power
+	data["max_power"] = SSthe_ark.max_clock_power
 	data["scriptures"] = list()
 
 	//2 scriptures accessible at the same time will cause issues
@@ -215,7 +211,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 					living_user.balloon_alert(living_user, "failed to invoke!")
 					return FALSE
 
-				if(owned_scripture.power_cost > GLOB.clock_power)
+				if(owned_scripture.power_cost > SSthe_ark.clock_power)
 					living_user.balloon_alert(living_user, "[owned_scripture.power_cost]W required!")
 					return FALSE
 

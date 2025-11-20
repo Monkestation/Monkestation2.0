@@ -116,18 +116,34 @@
 /atom/movable/screen/lobby/button/character_setup
 	screen_loc = "TOP:-87,CENTER:+100"
 	icon = 'icons/hud/lobby/character_setup.dmi'
-	icon_state = "character_setup"
+	icon_state = "character_setup_disabled"
 	base_icon_state = "character_setup"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		flick("[base_icon_state]_enabled", src)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
 
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_CHARACTERS)
+
+/atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
+	SIGNAL_HANDLER
+	flick("[base_icon_state]_enabled", src)
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
@@ -234,7 +250,7 @@
 		relevant_cap = max(hard_popcap, extreme_popcap)
 
 	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
+	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || is_mentor(new_player.client)))
 		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
 	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
 		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
@@ -332,7 +348,13 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("https://discord.monkestation.com")
+	var/discordurl = CONFIG_GET(string/discordurl)
+	if (!discordurl)
+		to_chat(hud.mymob, span_warning("The server does not have a Discord link configured!"))
+		return
+
+	to_chat(hud.mymob, span_notice("Opening <a href='[discordurl]'>[discordurl]</a> in your browser... If it doesn't work, try copying and pasting it into your browser."))
+	hud.mymob.client << link(discordurl)
 
 /atom/movable/screen/lobby/button/twitch
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -350,35 +372,63 @@
 
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "settings"
+	icon_state = "settings_disabled"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-126,CENTER:-10"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/settings/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
 
 /atom/movable/screen/lobby/button/settings/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_SETTINGS)
+
+/atom/movable/screen/lobby/button/settings/proc/enable_settings()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/volume
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "volume"
+	icon_state = "volume_disabled"
 	base_icon_state = "volume"
 	screen_loc = "TOP:-126,CENTER:-34"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/volume/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
 
 /atom/movable/screen/lobby/button/volume/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	if(!preferences.pref_mixer)
-		preferences.pref_mixer = new
-	preferences.pref_mixer.open_ui(hud.mymob)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_PREFERENCES_VOLUME)
+
+/atom/movable/screen/lobby/button/volume/proc/enable_volume()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/changelog.dmi'
@@ -653,14 +703,9 @@
 	if(!overflow_job)
 		disabled = TRUE
 		return
-	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)
+	var/icon/job_icon = get_job_hud_icon(overflow_job)?.scale(16, 16)?.to_icon()
 	if(!job_icon)
 		return
-	var/icon/resized_icon = resize_icon(job_icon, 16, 16)
-	if(!resized_icon)
-		stack_trace("Failed to upscale icon for [overflow_job], upscaling using BYOND!")
-		job_icon.Scale(16, 16)
-		resized_icon = job_icon
-	job_overlay = mutable_appearance(resized_icon)
+	job_overlay = mutable_appearance(job_icon)
 	job_overlay.pixel_x = 8
 	job_overlay.pixel_y = 18

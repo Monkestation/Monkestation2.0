@@ -15,7 +15,7 @@
 	if (others_count >= multiplier)
 		to_chat(mob, span_notice("A friendly sensation is satisfied with how many are near you - for now."))
 		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -multiplier)
-		mob.reagents.add_reagent(/datum/reagent/drug/happiness, multiplier) // ADDICTED TO HAVING FRIENDS
+		mob.reagents?.add_reagent(/datum/reagent/drug/happiness, multiplier) // ADDICTED TO HAVING FRIENDS
 		if (multiplier < max_multiplier)
 			multiplier += 0.15 // The virus gets greedier
 	else

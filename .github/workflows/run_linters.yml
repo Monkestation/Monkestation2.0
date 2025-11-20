@@ -35,11 +35,11 @@ jobs:
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
-#      - name: Restore Cutter cache
-#        uses: actions/cache@v4
-#        with:
-#          path: tools/icon_cutter/cache
-#          key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
+      #      - name: Restore Cutter cache
+      #        uses: actions/cache@v4
+      #        with:
+      #          path: tools/icon_cutter/cache
+      #          key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4.2.0
         with:
@@ -60,6 +60,9 @@ jobs:
       - name: Give Linters A Go
         id: linter-setup
         run: ":"
+      - name: Ensure genesis_call.dme is unchanged
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: bash tools/ci/check_genesis.sh
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh
@@ -86,9 +89,9 @@ jobs:
         run: |
           tools/bootstrap/python -m mapmerge2.dmm_test
           tools/bootstrap/python -m tools.maplint.source
-#      - name: Check Cutter
-#        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-#        run: tools/bootstrap/python -m tools.icon_cutter.check
+      #      - name: Check Cutter
+      #        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+      #        run: tools/bootstrap/python -m tools.icon_cutter.check
       - name: Run DMI Tests
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m dmi.test

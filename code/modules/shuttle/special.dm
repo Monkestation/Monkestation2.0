@@ -62,7 +62,7 @@
 		active = FALSE
 	update_appearance()
 
-/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
@@ -177,7 +177,6 @@
 
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
-	default_storage = null
 	flavortext = \
 	"\n<big><span class='warning'>LAW EXPLANATION FOR BAR DRONES</span></big>\n"+\
 	"<span class='notice'>As a bar drone your goal is to provide a fun interactive experience for other players visiting the bar*. </span>\n"+\
@@ -281,7 +280,7 @@
 /obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
+/obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

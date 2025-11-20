@@ -31,6 +31,7 @@
 	. = ..()
 	atom_storage.max_slots = 3 //smol
 	transform = transform.Scale(1.25, 1)
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/clothing/suit/space/fragile, /obj/item/clothing/head/helmet/space/fragile))
 
 //
 //   NOW FOR CRATES

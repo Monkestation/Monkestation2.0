@@ -7,36 +7,34 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 
 	this is the setup, it handles announcing crew and other settings for the mode and then creating the datum singleton
 */
-/client/proc/anon_names()
-	set category = "Admin.Events"
-	set name = "Setup Anonymous Names"
-
+ADMIN_VERB(anon_names, R_FUN, FALSE, "Setup Anonymous Names", "Make all players have random names/alias.", ADMIN_CATEGORY_EVENTS)
 	if(GLOB.current_anonymous_theme)
-		var/response = tgui_alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
+		var/response = tgui_alert(user, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
 		if(response != "Disable Anon Names")
 			return
-		message_admins(span_adminnotice("[key_name_admin(usr)] has disabled anonymous names."))
+		message_admins(span_adminnotice("[key_name_admin(user)] has disabled anonymous names."))
 		QDEL_NULL(GLOB.current_anonymous_theme)
 		return
 	var/list/input_list = list("Cancel")
 	for(var/_theme in typesof(/datum/anonymous_theme))
 		var/datum/anonymous_theme/theme = _theme
 		input_list[initial(theme.name)] = theme
-	var/result = input(usr, "Choose an anonymous theme","going dark") as null|anything in input_list
-	if(!usr || !result || result == "Cancel")
+	var/result = input(user, "Choose an anonymous theme","going dark") as null|anything in input_list
+	if(!user || !result || result == "Cancel")
 		return
 	var/datum/anonymous_theme/chosen_theme = input_list[result]
 	var/extras_enabled = "No"
 	var/alert_players = "No"
 	if(SSticker.current_state > GAME_STATE_PREGAME) //before anonnames is done, for asking a sleep
 		if(initial(chosen_theme.extras_enabled))
-			extras_enabled = tgui_alert(usr, extras_enabled, "extras", list("Yes", "No"))
-		alert_players = tgui_alert(usr, "Alert crew? These are IC Themed FROM centcom.", "announcement", list("Yes", "No"))
+			extras_enabled = tgui_alert(user, extras_enabled, "extras", list("Yes", "No"))
+		alert_players = tgui_alert(user, "Alert crew? These are IC Themed FROM centcom.", "announcement", list("Yes", "No"))
 	//turns "Yes" and "No" into TRUE and FALSE
 	extras_enabled = extras_enabled == "Yes"
 	alert_players = alert_players == "Yes"
 	GLOB.current_anonymous_theme = new chosen_theme(extras_enabled, alert_players)
-	message_admins(span_adminnotice("[key_name_admin(usr)] has enabled anonymous names. THEME: [GLOB.current_anonymous_theme]."))
+	message_admins(span_adminnotice("[key_name_admin(user)] has enabled anonymous names. THEME: [GLOB.current_anonymous_theme]."))
+	BLACKBOX_LOG_ADMIN_VERB("Anonymous Names")
 
 /* Datum singleton initialized by the client proc to hold the naming generation */
 /datum/anonymous_theme

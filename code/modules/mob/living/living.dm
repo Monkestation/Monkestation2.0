@@ -16,7 +16,6 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	voice_type = pick(voice_type2sound) //monkestation edit
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
 
@@ -43,6 +42,7 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
@@ -132,14 +132,8 @@
 		if(has_status_effect(SUGAR_RUSH))
 			M.throw_at(throw_target_mob, 20, 3, force = 0)
 
-	var/they_can_move = TRUE
-	var/theyre_blocking = FALSE
-
 	if(isliving(M))
 		var/mob/living/L = M
-		theyre_blocking = L.istate & ISTATE_BLOCKING
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
-
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && HAS_TRAIT(L, TRAIT_RESTRAINED))
 			if(!(world.time % 5))
@@ -158,22 +152,7 @@
 		return TRUE
 
 	if(!M.buckled && !M.has_buckled_mobs())
-		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(!they_can_move) //we have to physically move them
-			if(!too_strong)
-				mob_swap = TRUE
-		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
-				mob_swap = TRUE
-			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) &&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !theyre_blocking) &&\
-				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !(istate & ISTATE_HARM))
-			)
-				mob_swap = TRUE
-		if(mob_swap)
+		if(can_mobswap_with(M))
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
 				return TRUE
@@ -225,6 +204,46 @@
 		if(!isclothing(M))
 			if(prob(I.block_chance*2))
 				return
+
+/mob/living/proc/can_mobswap_with(mob/other)
+	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
+		return FALSE
+
+	var/they_can_move = TRUE
+	var/their_combat_mode = FALSE
+
+	if(isliving(other))
+		var/mob/living/other_living = other
+		their_combat_mode = other_living.istate & ISTATE_BLOCKING
+		they_can_move = other_living.mobility_flags & MOBILITY_MOVE
+
+	var/too_strong = other.move_resist > move_force
+
+	// They cannot move, see if we can push through them
+	if (!they_can_move)
+		return !too_strong
+
+	// We are pulling them and can move through
+	if (other.pulledby == src && !too_strong)
+		return TRUE
+
+	// If we're in combat mode and not restrained we don't try to pass through people
+	if ((istate & ISTATE_HARM) && !HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return FALSE
+
+	// Nor can we pass through non-restrained people in combat mode (or if they're restrained but still too strong for us)
+	if (their_combat_mode && (!HAS_TRAIT(other, TRAIT_RESTRAINED) || too_strong))
+		return FALSE
+
+	if (isnull(other.client) || isnull(client))
+		return TRUE
+
+	// If both of us are trying to move in the same direction, let the fastest one through first
+	if (client.intended_direction == other.client.intended_direction)
+		return cached_multiplicative_slowdown < other.cached_multiplicative_slowdown
+
+	// Else, sure, let us pass
+	return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()
@@ -526,18 +545,20 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if((flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby))
-		return FALSE
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby?.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+		return TRUE
+
+	if(flags & IGNORE_SOFTCRIT)
+		if((stat <= SOFT_CRIT) && !(HAS_TRAIT_NOT_FROM(src, TRAIT_INCAPACITATED, STAT_TRAIT)))
+			return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
-	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
-		return TRUE
-	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
-		return TRUE
-	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
-		return TRUE
 	return FALSE
 
 /mob/living/canUseStorage()
@@ -723,13 +744,13 @@
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
-	var/list/ret = list()
-	ret |= contents //add our contents
-	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
-		iter_atom.atom_storage?.return_inv(ret)
-	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
-		ret |= F.contents
-	return ret
+	. = list()
+	. |= contents //add our contents
+	for(var/atom/iter_atom as anything in .) //iterate storage objects
+		if(iter_atom.atom_storage)
+			. |= iter_atom.atom_storage.return_inv()
+	for(var/obj/item/folder/folder in .) //very snowflakey-ly iterate folders
+		. |= folder.contents
 
 /**
  * Returns whether or not the mob can be injected. Should not perform any side effects.
@@ -824,7 +845,7 @@
  * * force_grab_ghost - We grab the ghost of the mob on revive. If TRUE, we force grab the ghost (includes suiciders). If FALSE, we do not. See [/mob/grab_ghost].
  *
  */
-/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(excess_healing)
 		adjustOxyLoss(-excess_healing, FALSE)
 		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
@@ -1005,7 +1026,7 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	if(active_storage && !((active_storage.parent?.resolve() in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent?.resolve(),view_only = TRUE)))
+	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.hide_contents(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
@@ -1305,37 +1326,55 @@
 /mob/living/can_hold_items(obj/item/I)
 	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
-/mob/living/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
+
+	if(stat == DEAD)
+		to_chat(src, span_warning("You are not conscious enough for this action!"))
+		return FALSE
+
+	if(incapacitated(action_bitflags))
+		to_chat(src, span_warning("You are incapacitated at the moment!"))
+		return FALSE
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, span_warning("You don't have the mobility for this!"))
 		return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			to_chat(src, span_warning("You hands are blocked for this action!"))
+			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
-			to_chat(src, span_warning("You don't have the physical ability to do this!"))
+			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src))
-		if(issilicon(src) && !ispAI(src))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
+		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
-			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-				to_chat(src, span_warning("You are too far away!"))
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
+
+	if((action_bitflags & NEED_VENTCRAWL) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+		to_chat(src, span_warning("You wouldn't fit!"))
+		return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
@@ -1385,7 +1424,7 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+	if(stat == DEAD || HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || HAS_TRAIT(src, TRAIT_SPECIESLOCK))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
@@ -1562,8 +1601,6 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
-	new_mob.update_name_tag(real_name) // monkestation edit: name tags
-
 	// Transfer mind to the new mob (also handles actions and observers and stuff)
 	if(mind)
 		mind.transfer_to(new_mob)
@@ -1776,31 +1813,33 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	//Check the amount of clients exists on the Z level we're leaving from,
-	//this excludes us as we haven't added ourselves to the new z level yet.
+	//this excludes us because at this point we are not registered to any z level.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
 	//No one is left after we're gone, shut off inactive ones
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(AI_STATUS_OFF)
 
-	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
-	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
+	if(new_z)
+		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
+		var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
+
+		//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
+		SSmobs.clients_by_zlevel[new_z] += src
+
+		if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
+			for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
+				//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
+				//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
+				controller.set_ai_status(controller.get_expected_ai_status())
 
 	registered_z = new_z
-	//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
-	SSmobs.clients_by_zlevel[registered_z] += src
-
-	if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
-		for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
-			//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
-			//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
-			controller.set_ai_status(controller.get_expected_ai_status())
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
 	var/mob/living/U = user
 	if(isliving(dropping))
 		var/mob/living/M = dropping
@@ -2132,6 +2171,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
@@ -2147,6 +2187,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
+
 
 
 ///Reports the event of the change in value of the buckled variable.

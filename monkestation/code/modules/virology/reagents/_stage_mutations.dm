@@ -2,7 +2,7 @@
 	disease.log += "<br />[ROUND_TIME()] Effect Mutation (Mutagenic Agar)"
 	for(var/datum/symptom/listed as anything in symptoms)
 		disease.effectmutate(isliving(parent), listed)
-		if(istype(parent, /obj/item/weapon/virusdish))
+		if(isvirusdish(parent))
 			var/obj/item/weapon/virusdish/dish = parent
 			dish.analysed = FALSE
 			dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED
@@ -17,7 +17,7 @@
 		if((listed.chance == listed.max_chance) && prob(5))
 			listed.max_chance = min(listed.max_chance++, 100)
 		listed.chance = min(listed.chance + rand(2, 3), listed.max_chance)
-		if(istype(parent, /obj/item/weapon/virusdish))
+		if(isvirusdish(parent))
 			var/obj/item/weapon/virusdish/dish = parent
 			dish.analysed = FALSE
 			dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED

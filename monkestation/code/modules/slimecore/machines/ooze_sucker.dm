@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	category = "Distribution"
 	reagent_flags = NO_REACT
 
+	subsystem_type = /datum/controller/subsystem/processing/xenobio
+
 	/// Pump is turned on by engineer, etc.
 	var/turned_on = FALSE
 
@@ -51,23 +53,21 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/plumbing/ooze_sucker/LateInitialize()
+/obj/machinery/plumbing/ooze_sucker/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/plumbing/ooze_sucker/Destroy()
-	GLOB.ooze_suckers -= src
-	return ..()
-
-/obj/machinery/plumbing/ooze_sucker/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
-	for(var/obj/machinery/slime_pen_controller/main in GLOB.machines)
+	for(var/obj/machinery/slime_pen_controller/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 		if(main.mapping_id != mapping_id)
 			continue
 		linked_controller = main
 		main.linked_sucker = src
 		return
+
+/obj/machinery/plumbing/ooze_sucker/Destroy()
+	GLOB.ooze_suckers -= src
+	return ..()
 
 /obj/machinery/plumbing/ooze_sucker/examine(mob/user)
 	. = ..()
@@ -171,14 +171,15 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	// Determine what tiles should be pumped. We grab from a 3x3 area,
 	// but overall try to pump the same volume regardless of number of affected tiles
 	var/turf/local_turf = get_turf(src)
-	var/list/turf/candidate_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
-	candidate_turfs += local_turf
-
 	var/list/turf/affected_turfs = list()
 
-	for(var/turf/candidate as anything in candidate_turfs)
-		if(isturf(candidate))
-			affected_turfs += candidate
+	for(var/turf/candidate as anything in RANGE_TURFS(1, local_turf))
+		// don't bother considering turfs that don't even have slime ooze
+		if(!candidate.liquids?.liquid_group?.total_reagent_volume)
+			continue
+		if(!candidate.liquids.liquid_group.reagents?.has_reagent(/datum/reagent/slime_ooze, check_subtypes = TRUE))
+			continue
+		affected_turfs += candidate
 
 	if(!length(affected_turfs))
 		return
@@ -187,8 +188,13 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	var/multiplier = 1 / length(affected_turfs)
 
 	// We're good, actually pump.
-	for(var/turf/affected_turf as anything in affected_turfs)
-		pump_turf(affected_turf, seconds_per_tick, multiplier)
+	if(processes >= processes_required)
+		processes = 0
+		drained_last_process = FALSE
+		for(var/turf/affected_turf as anything in affected_turfs)
+			pump_turf(affected_turf, seconds_per_tick, multiplier)
+	else
+		processes++
 	update_power_usage()
 
 /obj/machinery/plumbing/ooze_sucker/proc/update_power_usage()
@@ -202,18 +208,13 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/plumbing/ooze_sucker/proc/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
-	if(processes < processes_required)
-		processes++
-		return
-	processes = 0
-	drained_last_process = FALSE
-
-	if(!affected_turf.liquids || !affected_turf.liquids.liquid_group)
+	var/datum/liquid_group/targeted_group = affected_turf?.liquids?.liquid_group
+	if(QDELETED(targeted_group))
 		return
 
-	var/target_value = seconds_per_tick * (drain_flat + (affected_turf.liquids.liquid_group.total_reagent_volume * drain_percent)) * multiplier
+	var/target_value = round(seconds_per_tick * (drain_flat + (targeted_group.total_reagent_volume * drain_percent)) * multiplier, CHEMICAL_VOLUME_ROUNDING)
 	//Free space handling
-	var/free_space = reagents.maximum_volume - reagents.total_volume
+	var/free_space = round(reagents.maximum_volume - reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 	if(target_value > free_space && (SUCKER_UPGRADE_DISPOSER in upgrades))
 		if (SUCKER_UPGRADE_BALANCER in upgrades)
 			reagents.remove_reagent(reagents.get_master_reagent_id(), target_value - free_space)
@@ -222,13 +223,12 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	else if(target_value > free_space)
 		target_value = free_space
 
-	var/datum/liquid_group/targeted_group = affected_turf.liquids.liquid_group
 	if(!targeted_group.reagents_per_turf)
 		return
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
-/obj/machinery/plumbing/ooze_sucker/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_sucker/click_ctrl(mob/user)
 	if(!can_interact(user) || !length(upgrade_disks))
 		return ..()
 
@@ -257,17 +257,17 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	toggle_state()
-	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	if(anchored)
+		toggle_state()
+		balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	else
+		balloon_alert(user, "unanchored!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/sucker_upgrade
 	name = "ooze sucker upgrade disk"

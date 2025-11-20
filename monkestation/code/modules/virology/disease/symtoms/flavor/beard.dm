@@ -22,6 +22,5 @@
 				if(multiplier >= 4)
 					beard_name = "Beard (Dwarf)"
 				if(beard_name != "" && victim.facial_hairstyle != beard_name)
-					victim.facial_hairstyle = beard_name
+					victim.set_facial_hairstyle(beard_name, update = TRUE)
 					to_chat(victim, span_warning("Your chin itches."))
-					victim.update_body_parts()

@@ -117,7 +117,7 @@
 #define BODYTEMP_FIRE_TEMP_SOFTCAP 600 KELVIN
 
 /// Amount of heating applied per fire stack per tick while on fire
-#define HEAT_PER_FIRE_STACK 0.075 KELVIN
+#define HEAT_PER_FIRE_STACK 0.2 KELVIN
 /// Amount of direct damage applied per fire stack per tick while on fire
 #define BURN_DAMAGE_PER_FIRE_STACK 0.1
 

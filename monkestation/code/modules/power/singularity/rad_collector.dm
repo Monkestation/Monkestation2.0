@@ -33,6 +33,7 @@
 	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	rad_insulation = RAD_EXTREME_INSULATION
+	can_change_cable_layer = TRUE
 	///Stores the loaded tank instance
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	///The amount of energy that is currently inside the machine before being converted to electricity
@@ -48,7 +49,7 @@
 	//Multiplier for tanks and gases insidee
 	var/power_coeff = 1
 
-/obj/machinery/power/rad_collector/anchored/Initialize(mapload) 
+/obj/machinery/power/rad_collector/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 
@@ -58,6 +59,12 @@
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
+
+/obj/machinery/power/rad_collector/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
@@ -192,7 +199,7 @@
 	// Therefore, its units are joules per SSmachines.wait * 0.1 seconds.
 	// So joules = stored_energy * SSmachines.wait * 0.1
 	var/joules = stored_energy * SSmachines.wait * 0.1
-	. += span_notice("[src]'s display states that it has stored <b>[display_joules(joules)]</b>, and is processing <b>[display_power(RAD_COLLECTOR_OUTPUT)]</b>.")
+	. += span_notice("[src]'s display states that it has stored <b>[display_power(joules)]</b>, and is processing <b>[display_power(RAD_COLLECTOR_OUTPUT)]</b>.")
 
 /obj/machinery/power/rad_collector/atom_break(damage_flag)
 	. = ..()

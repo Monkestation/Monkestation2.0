@@ -61,6 +61,9 @@
 /datum/component/shuttle_cling/proc/update_state()
 	SIGNAL_HANDLER
 
+	if(QDELETED(src))
+		return
+
 	if(!is_on_hyperspace(parent))
 		qdel(src)
 		return

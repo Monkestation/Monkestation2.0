@@ -8,7 +8,7 @@
 	max_multiplier = 7
 
 /datum/symptom/drunk/activate(mob/living/mob)
-	if(ismouse(mob))
+	if(ismouse(mob) || !mob.reagents)
 		return
 	to_chat(mob, span_notice("You feel like you had one hell of a party!"))
 	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/vermouth) < multiplier*5)

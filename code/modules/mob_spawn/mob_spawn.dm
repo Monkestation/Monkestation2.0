@@ -136,6 +136,9 @@
 	///This is critical non-policy information about the ghost role. Shown in the spawner menu and after spawning last.
 	var/important_text = ""
 
+	///Trigger "don't be a shit" reminder - should only be disabled for ghostroles that are antagonists.
+	var/dont_be_a_shit = TRUE
+
 	///Show these on spawn? Usually used for hardcoded special flavor
 	var/show_flavor = TRUE
 
@@ -303,6 +306,8 @@
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
+		if(dont_be_a_shit != FALSE)
+			output_message += "\n[span_adminhelp("DO NOT DIRECTLY INTERFERE WITH OR SABOTAGE THE ROUND ON THE MAIN STATION IN ANY WAY WITHOUT PROVOCATION OR DIRECT ADMIN APPROVAL OR YOU WILL BE BANNED.")]"
 		to_chat(spawned_mob, output_message)
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!

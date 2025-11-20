@@ -53,7 +53,7 @@
 		var/words_list = splittext(trim(word_list.value), " ")
 
 		for(var/word in words_list)
-			play_vox_word(word, only_listener = owner)
+			play_vox_word_legacy(word, only_listener = owner)
 	else
 		for(var/word in word_list.value)
-			play_vox_word(word, only_listener = owner)
+			play_vox_word_legacy(word, only_listener = owner)

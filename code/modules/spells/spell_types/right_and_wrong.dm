@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/wand/fireball,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
-	/* /obj/item/gun/magic/staff/babel, [monkestation removal: this is admin only now] */	
+	/* /obj/item/gun/magic/staff/babel, [monkestation removal: this is admin only now] */
 	/obj/item/scrying,
 	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
@@ -224,12 +224,15 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
  */
 /proc/summon_events(mob/user)
 	// Already in wiz-mode? Speed er up
-	if(SSevents.wizardmode)
+	if(SSgamemode.wizardmode)
+		/*
 		SSevents.frequency_upper -= 1 MINUTES //The upper bound falls a minute each time, making the AVERAGE time between events lessen
 		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
 			SSevents.frequency_upper = SSevents.frequency_lower
 
 		SSevents.reschedule()
+		*/
+		SSgamemode.event_frequency_multiplier += 0.5
 		if(user)
 			to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] intensified summon events!")
@@ -237,14 +240,18 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		else
 			log_game("Summon Events was intensified!")
 
-		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
+		message_admins("Summon Events intensifies, event frequency multiplier is now [SSgamemode.event_frequency_multiplier]x.")
 
 	// Not in wiz-mode?  Get this show on the road
 	else
+		/*
 		SSevents.frequency_lower = 1 MINUTES //1 minute lower bound
 		SSevents.frequency_upper = 5 MINUTES //5 minutes upper bound
 		SSevents.toggleWizardmode()
 		SSevents.reschedule()
+		*/
+		SSgamemode.toggleWizardmode()
+		SSgamemode.event_frequency_multiplier++
 		if(user)
 			to_chat(user, span_warning("You have cast summon events!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] summoned events!")
@@ -252,6 +259,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		else
 			message_admins("Summon Events was triggered!")
 			log_game("Summon Events was triggered!")
+
 
 #undef SPECIALIST_MAGIC_PROB
 

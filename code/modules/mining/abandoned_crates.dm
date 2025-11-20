@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
@@ -12,6 +13,8 @@
 	var/qdel_on_open = FALSE
 	var/spawned_loot = FALSE
 	tamperproof = 90
+	/// What value did our loot roll (for debugging)
+	var/loot_rolled
 
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
 	divable = FALSE
@@ -59,10 +62,9 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+/obj/structure/closet/crate/secure/loot/click_alt(mob/living/user)
+	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -126,14 +128,14 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/secure/loot/after_open(mob/living/user, force)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
-	switch(loot)
+	loot_rolled = rand(1,101) //101 different crates with varying chances of spawning
+	switch(loot_rolled)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
 			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
@@ -163,7 +165,7 @@
 		if(41 to 45)
 			new /obj/item/modular_computer/pda/clear(src)
 		if(46 to 50)
-			new /obj/item/storage/box/syndie_kit/chameleon/broken
+			new /obj/item/storage/box/syndie_kit/chameleon/broken(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/melee/baton(src)
 		if(53 to 54)
@@ -247,4 +249,6 @@
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)
 			new /obj/item/melee/skateboard/hoverboard(src)
+		if(101)
+			new /mob/living/carbon/human/species/monkey/wide(src)
 	spawned_loot = TRUE

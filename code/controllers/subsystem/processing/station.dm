@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(station)
 	name = "Station"
 	init_order = INIT_ORDER_STATION
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 5 SECONDS
 
@@ -49,12 +49,19 @@ PROCESSING_SUBSYSTEM_DEF(station)
 				message_admins(message)
 				continue
 
+			if (station_trait_path in SSmapping.current_map?.banned_station_traits)
+				var/message = "[station_trait_path] was requested in the future station traits, but the current map ([SSmapping.current_map.map_name]) forbids it!"
+				log_game(message)
+				message_admins(message)
+				continue
+
 			setup_trait(station_trait_path)
 
 		return
 
-	for(var/i in subtypesof(/datum/station_trait))
-		var/datum/station_trait/trait_typepath = i
+	for(var/datum/station_trait/trait_typepath as anything in subtypesof(/datum/station_trait))
+		if(trait_typepath in SSmapping.current_map?.banned_station_traits)
+			continue
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))
@@ -81,9 +88,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
 		selectable_traits_by_types[trait_sign] -= trait_type
-		if(istype(trait_type, /datum/station_trait/late_arrivals) && SSmapping.current_map.map_name == "Oshan Station")
-			amount++
-			continue
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.

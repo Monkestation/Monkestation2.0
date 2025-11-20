@@ -32,9 +32,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
+	language ||= get_selected_language()
 	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
+
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -77,7 +77,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+	var/list/hearers = get_hearers_in_view(range, source)
+	get_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
+	for(var/atom/movable/hearing_movable as anything in hearers)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
@@ -92,17 +94,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]" // MONKESTATION ADDITION -- NTSL
+	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]"
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	if(face_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
-	else if(visible_name && ishuman(speaker))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/human_speaker = speaker
-		namepart = "[human_speaker.get_visible_name()]"
+		if(face_name)
+			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+		else if(visible_name)
+			namepart = "[human_speaker.get_visible_name()]"
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN) && !HAS_TRAIT(human_speaker, TRAIT_ANONYMOUS))
+			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
+			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
-//	var/endspanpart = "</span>" // MONKESTATION EDIT OLD -- NTSL
-	var/endspanpart = "</span></a>" // MONKESTATION EDIT NEW
+	var/endspanpart = "</span></a>"
 
 	//Message
 	var/messagepart
@@ -118,9 +122,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
-// MONKESTATION EDIT OLD -- NTSL down there
-//	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
-// MONKESTATION EDIT NEW -- NTSL down there
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, realnamepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -185,12 +186,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 		*/
 		var/datum/language/dialect = GLOB.language_datum_instances[/datum/language/common]
-		return dialect.scramble(raw_message)
+		return dialect.scramble_sentence(raw_message, get_partially_understood_languages())
 		// monkestation edit end
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 

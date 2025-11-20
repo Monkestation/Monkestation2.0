@@ -84,7 +84,7 @@
 
 			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
+	if(check_block(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration, P.damage_type))
 		P.on_hit(src, 100, def_zone, piercing_hit)
 		return BULLET_ACT_HIT
 
@@ -103,105 +103,46 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
+	. = ..()
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
+
 	var/block_chance_modifier = round(damage / -3)
+	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
+		// Things that are supposed to be worn, being held = cannot block
+		if(isclothing(worn_thing))
+			if(worn_thing in held_items)
+				continue
+		// Things that are supposed to be held, being worn = cannot block
+		else
+			if(!(worn_thing in held_items))
+				continue
 
-	for(var/obj/item/I in held_items)
-		if(!isclothing(I))
-			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-				return TRUE
-	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(wear_neck)
-		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(head)
-		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-			return TRUE
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_CHECK_SHIELDS, AM, damage, attack_text, attack_type, armour_penetration) & SHIELD_BLOCK)
-		return TRUE
-	return FALSE
+		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
+		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
+			return SUCCESSFUL_BLOCK
 
-/mob/living/carbon/human/proc/check_block()
-	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !incapacitated(IGNORE_GRAB))
-			return TRUE
-	return FALSE
+	return FAILED_BLOCK
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna?.species)
-		var/spec_return = dna.species.spec_hitby(AM, src)
-		if(spec_return)
-			return spec_return
-	var/obj/item/I
-	var/throwpower = 30
-	if(isitem(AM))
-		I = AM
-		throwpower = I.throwforce
-		if(I.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-			return ..()
-	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
-		hitpush = FALSE
-		skipcatch = TRUE
-		blocked = TRUE
-
-	return ..()
+/mob/living/carbon/human/grab(mob/living/target)
+	if(ishuman(target))
+		// this grab will handle human-on-human martial arts stuff
+		var/mob/living/carbon/human/Htarget = target
+		return dna.species.grab(src, Htarget, mind?.martial_art)
+	. = ..()
 
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
 	..()
 
-
-/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
-	if(!I || !user)
-		return FALSE
-
-	var/obj/item/bodypart/affecting
-	if(user == src)
-		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
-	else
-		var/zone_hit_chance = 80
-		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
-			zone_hit_chance += 10
-		affecting = get_bodypart(get_random_valid_zone(user.zone_selected, zone_hit_chance))
-	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
-
-	//MONKESTATION ADDITION START
-	if(affecting)
-		if(I.force && I.damtype != STAMINA && affecting.bodytype & BODYTYPE_ROBOTIC) // Robotic bodyparts spark when hit, but only when it does real damage
-			if(I.force >= 5)
-				do_sparks(1, FALSE, loc)
-	//MONKESTATION ADDITION END
-
-	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	I.disease_contact(src, check_zone(user.zone_selected))
-	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[initial(I.name)]"))
-	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
-	if(I.pain_damage)
-		cause_pain(target_area, I.pain_damage, I.damtype)
-
-	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, src)
-
-
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
 	var/hulk_verb = pick("smash","pummel")
-	if(check_shields(user, 15, "the [hulk_verb]ing", attack_type = UNARMED_ATTACK))
-		return
-	if(check_block()) //everybody is kung fu fighting
+	if(check_block(user, 15, "the [hulk_verb]ing", attack_type = UNARMED_ATTACK))
 		return
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
@@ -272,8 +213,8 @@
 			var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 			var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 			if(!damage)
-				return
-			if(check_shields(user, damage, "the [user.name]"))
+				return FALSE
+			if(check_block(user, damage, "the [user.name]"))
 				return FALSE
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
@@ -281,11 +222,6 @@
 
 /*
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(check_shields(user, 0, "the [user.name]"))
-		visible_message(span_danger("[user] attempts to touch [src]!"), \
-						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
-		to_chat(user, span_warning("You attempt to touch [src]!"))
-		return FALSE
 	. = ..()
 	if(!.)
 		return
@@ -345,28 +281,13 @@
 	var/damage = rand(L.melee_damage_lower, L.melee_damage_upper)
 	if(!damage)
 		return
-	if(check_shields(L, damage, "the [L.name]"))
+	if(check_block(L, damage, "the [L.name]"))
 		return FALSE
-	if(stat != DEAD)
+	if(stat != DEAD && !HAS_TRAIT(L, TRAIT_NEUTERED)) //neutered larva can't grow by biting
 		L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(L.zone_selected))
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
-
-/mob/living/carbon/human/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	if(check_shields(user, damage, "the [user.name]", MELEE_ATTACK, user.armour_penetration))
-		return FALSE
-	var/dam_zone = dismembering_strike(user, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-	if(!dam_zone) //Dismemberment successful
-		return TRUE
-	var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(dam_zone))
-	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
-	var/attack_direction = get_dir(user, src)
-	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
 	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
@@ -494,24 +415,6 @@
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	electrocution_animation(40)
 
-/mob/living/carbon/human/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_CONTENTS)
-		return
-	var/informed = FALSE
-	for(var/obj/item/bodypart/L as anything in src.bodyparts)
-		if(!IS_ORGANIC_LIMB(L))
-			if(!informed)
-				to_chat(src, span_userdanger("You feel a sharp pain as your robotic limbs overload."))
-				informed = TRUE
-			switch(severity)
-				if(1)
-					L.receive_damage(0,10)
-					Paralyze(200)
-				if(2)
-					L.receive_damage(0,5)
-					Paralyze(100)
-
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
@@ -632,8 +535,8 @@
 			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
-				facial_hairstyle = "Shaved"
-				hairstyle = "Bald"
+				set_facial_hairstyle("Shaved", update = FALSE)
+				set_hairstyle("Bald", update = FALSE)
 				update_body_parts()
 				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
@@ -698,7 +601,7 @@
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
 		for(var/obj/item/bodypart/part as anything in bodyparts)
-			if(part.get_modified_bleed_rate())
+			if(part.cached_bleed_rate)
 				bleeding_limbs += part
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
@@ -791,6 +694,11 @@
 		for(var/D in damaged)
 			damaged_message += D
 		combined_msg += span_info("Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.")
+
+	if (HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and you cannot hear anything.")
+	else if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and everything sounds quiet.")
 
 	if(quirks.len)
 		combined_msg += span_notice("You have these quirks: [get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
@@ -923,7 +831,7 @@
 		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
 			return 0
 		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.2 * fire_handler.stacks * seconds_per_tick)
+			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
 
 	. = ..()
 	if(. && !HAS_TRAIT(src, TRAIT_RESISTHEAT))

@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			else
 				relevant_cap = max(hard_popcap, extreme_popcap)
 
-			if(length(SSticker.queued_players) && !(owner.persistent_client?.patreon?.is_donator() || is_admin(owner.client) || owner.client?.is_mentor()))
+			if(length(SSticker.queued_players) && !(owner.persistent_client?.patreon?.is_donator() || is_admin(owner.client) || is_mentor(owner.client)))
 				if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE

@@ -78,36 +78,37 @@ Burning extracts:
 
 /obj/item/slimecross/burning/metal
 	colour = "metal"
-	effect_desc = "Instantly destroys walls around you."
+	effect_desc = "Instantly ignites adjacent walls as if thermite were applied to them."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
-//monkestation edit start
 	var/turf/our_turf = get_turf(src)
 	if(GLOB.clock_ark && on_reebe(our_turf) && get_dist(our_turf, GLOB.clock_ark) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
 		balloon_alert(user, "a near by energy source is stopping \the [src] from activating!")
 		return FALSE
-//monkestation edit end
-	for(var/turf/closed/wall/W in range(1, our_turf)) //monkestation edit: replaces get_turf(src) with our_turf
-		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
-	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
+	for(var/turf/closed/wall/wall in RANGE_TURFS(1, our_turf))
+		var/datum/component/thermite/thermite = wall.AddComponent(/datum/component/thermite)
+		thermite.thermite_melt(user)
+		playsound(wall, 'sound/effects/break_stone.ogg', vol = 50, vary = TRUE)
+	user.visible_message(span_danger("[src] pulses violently, beginning to melt the walls around it!"))
 	..()
 
 /obj/item/slimecross/burning/yellow
 	colour = "yellow"
-	effect_desc = "Electrocutes people near you."
+	effect_desc = "Shocks nearby people with a burst of energy, heavily disorienting them for a short while."
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
-	user.visible_message(span_danger("[src] explodes into an electrical field!"))
+	user.visible_message(span_danger("[src] explodes into an energy field, shocking others nearby!"))
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
-	for(var/mob/living/M in range(4,get_turf(user)))
-		if(M != user)
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				C.electrocute_act(25,src)
-			else
-				M.adjustFireLoss(25)
-			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
+	// nothing here should deal actual damage - it's just painful and disorienting
+	for(var/mob/living/victim in range(4, get_turf(user)) - user)
+		victim.cause_pain(BODY_ZONES_ALL, 10, BURN)
+		victim.set_confusion_if_lower(10 SECONDS)
+		victim.set_eye_blur_if_lower(10 SECONDS)
+		ADD_TRAIT(victim, TRAIT_POOR_AIM, type)
+		addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_POOR_AIM, type), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		to_chat(victim, span_userdanger("You feel a sharp, painful pulse of energy throughout your body!"))
+		user.Beam(victim, icon_state = "sm_arc", time = 0.5 SECONDS)
+		log_combat(user, victim, "disoriented (burning yellow extract)")
 	..()
 
 /obj/item/slimecross/burning/darkpurple
@@ -291,7 +292,7 @@ Burning extracts:
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	//transform.cast(user) // monkestation removal: embrace the choice (it was broken anyway for whatever reason)
+	transform.Activate(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

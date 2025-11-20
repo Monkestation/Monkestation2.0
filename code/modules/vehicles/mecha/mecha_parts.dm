@@ -12,9 +12,9 @@
 /obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
 		to_chat(user, span_warning("\The [src] is stuck to your hand, you cannot put it in \the [M]!"))
-		return FALSE
+		return ITEM_INTERACT_FAILURE
 	user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	return
@@ -251,9 +251,9 @@
 	name = "\improper Phazon chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
-/obj/item/mecha_parts/chassis/phazon/attackby(obj/item/I, mob/user, params)
+/obj/item/mecha_parts/chassis/phazon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
+	if(istype(attacking_item, /obj/item/assembly/signaler/anomaly) && !istype(attacking_item, /obj/item/assembly/signaler/anomaly/bluespace))
 		to_chat(user, "The anomaly core socket only accepts bluespace anomaly cores!")
 
 /obj/item/mecha_parts/part/phazon_torso
@@ -331,6 +331,45 @@
 	name="Savannah-Ivanov armor"
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
+
+
+// The Vendozer, Needed a spot to put the parts, doesnt have a mech buildup. Has intermediary parts.
+
+/obj/item/mecha_parts/part/vendozer_fl
+	name="\improper Vendozer Front left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fl"
+
+/obj/item/mecha_parts/part/vendozer_fr
+	name="\improper Vendozer Front right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fr"
+
+/obj/item/mecha_parts/part/vendozer_br
+	name="\improper Vendozer Back right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_br"
+
+/obj/item/mecha_parts/part/vendozer_bl
+	name="\improper Vendozer Back left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_bl"
+
+/obj/item/mecha_parts/part/vendozer_ck
+	name="\improper Oven Cockpit"
+	desc="A armored box with an oven as its top, Multiple pipeguns are sticking out and theres cameras everywhere, why would someone build this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_ck"
+
+/obj/item/mecha_parts/part/vendozer_eg
+	name="\improper Giant Turbine Engine"
+	desc="The Atmospherics turbine ripped from its mountings and modified, Who needs something like this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_eg"
 
 ///////// Circuitboards
 

@@ -148,7 +148,7 @@
 	if(!length(failures))
 		return
 
-	var/list/offset_to_add = get_icon_dimensions(source.icon)
+	var/alist/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] - 10
 	var/obj/effect/overlay/hatch_overlays/hatch = new(null, failures, clicker)
 	hatch.pixel_y = y_position
@@ -190,7 +190,7 @@
 /obj/effect/overlay/hatch_overlays/Destroy(force)
 	. = ..()
 	stored_client?.images -= image
-	QDEL_NULL(image)
+	image = null
 	stored_client = null
 
 /obj/effect/overlay/hatch_overlays/update_overlays()

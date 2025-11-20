@@ -9,7 +9,7 @@
 
 /datum/symptom/bee_vomit/activate(mob/living/mob)
 	if(!ismouse(mob))
-		if ((mob.reagents.get_reagent_amount(/datum/reagent/consumable/sugar) < 5 + multiplier * 0.5) && prob(multiplier * 8)) //honey quickly decays into sugar
+		if ((mob.reagents?.get_reagent_amount(/datum/reagent/consumable/sugar) < 5 + multiplier * 0.5) && prob(multiplier * 8)) //honey quickly decays into sugar
 			mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
 			if(prob(25))
 				to_chat(mob, span_notice("You taste someting sweet"))

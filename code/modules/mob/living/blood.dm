@@ -1,4 +1,5 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003 // Conversion between internal drunk power and common blood alcohol content
 
 /****************************************************
 				BLOOD SYSTEM
@@ -92,8 +93,7 @@
 	var/temp_bleed = 0
 	//Bleeding out
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
-		temp_bleed += iter_bleed_rate * seconds_per_tick
+		temp_bleed += iter_part.cached_bleed_rate * seconds_per_tick
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
 			iter_part.adjustBleedStacks(-1, 0)
@@ -128,7 +128,7 @@
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/iter_bodypart = X
-		bleed_amt += iter_bodypart.get_modified_bleed_rate()
+		bleed_amt += iter_bodypart.cached_bleed_rate
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()
@@ -143,7 +143,7 @@
  * * forced-
  */
 /mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(!client || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!client || HAS_TRAIT(src, TRAIT_NOBLOOD) || HAS_TRAIT(src, TRAIT_NO_BLEED_WARN))
 		return
 	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !forced)
 		return
@@ -290,10 +290,10 @@
 	return GLOB.blood_types[/datum/blood_type/xenomorph]
 
 /mob/living/carbon/human/get_blood_type()
-	if(!has_dna() || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
+	if(!dna || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
-	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
-		return GLOB.blood_types[/datum/blood_type/clown]
+	/*if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
+		return GLOB.blood_types[/datum/blood_type/clown]*/
 	if(dna.species.exotic_bloodtype)
 		return GLOB.blood_types[dna.species.exotic_bloodtype]
 	return GLOB.blood_types[dna.human_blood_type]
@@ -326,6 +326,14 @@
 	our_splatter.add_mob_blood(src)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
 
 /**
  * Helper proc for throwing blood particles around, similar to the spray_blood proc.

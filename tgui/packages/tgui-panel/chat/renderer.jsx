@@ -23,12 +23,15 @@ import { render } from 'inferno';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 import { Tooltip } from '../../tgui/components';
+import { selectSettings } from '../settings/selectors';
+import { globalStore } from 'tgui/backend';
 
 const logger = createLogger('chatRenderer');
 
 // We consider this as the smallest possible scroll offset
 // that is still trackable.
-const SCROLL_TRACKING_TOLERANCE = 24;
+// -- Now an experimental configurable option
+// const SCROLL_TRACKING_TOLERANCE = 24;
 
 // List of injectable component names to the actual type
 export const TGUI_CHAT_COMPONENTS = {
@@ -75,6 +78,15 @@ const createReconnectedNode = () => {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
   return node;
+};
+
+// Removes job formatting
+const stripColoredNames = (inputHtml) => {
+  const spanRegex = new RegExp(
+    '(<span[\\w| |\t|=]*[\'|"][\\w| ]*)(?:job__[a-z]+)([\'|"]>)',
+    'gi',
+  );
+  return inputHtml.replace(spanRegex, '$1$2');
 };
 
 const handleImageError = (e) => {
@@ -138,7 +150,8 @@ class ChatRenderer {
       const height = node.scrollHeight;
       const bottom = node.scrollTop + node.offsetHeight;
       const scrollTracking =
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE ||
+        Math.abs(height - bottom) <
+          selectSettings(globalStore.getState()).scrollTrackingTolerance ||
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
@@ -280,6 +293,14 @@ class ChatRenderer {
     });
   }
 
+  setColoredNames(newValue) {
+    if (newValue === this.coloredNames) {
+      return;
+    }
+    this.coloredNames = newValue;
+    this.rebuildChat();
+  }
+
   scrollToBottom() {
     this.tryFindScrollable();
     // scrollHeight is always bigger than scrollTop and is
@@ -392,7 +413,9 @@ class ChatRenderer {
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.innerHTML = this.coloredNames
+            ? message.html
+            : stripColoredNames(message.html);
         } else {
           logger.error('Error: message is missing text payload', message);
         }

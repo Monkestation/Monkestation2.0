@@ -5,8 +5,8 @@
 	greyscale_colors = "#FF9F23"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/pizza
-	value_per_unit = 0.05
-	beauty_modifier = 0.1
+	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 200 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 0.7
 	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'

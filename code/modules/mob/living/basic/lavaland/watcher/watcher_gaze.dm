@@ -27,7 +27,7 @@
 	show_indicator_overlay("eye_open")
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
-	if (do_after(owner, delay = wait_delay, target = owner))
+	if (do_after(owner, delay = wait_delay, target = owner, hidden = TRUE))
 		trigger_effect()
 	else
 		deltimer(stage_timer)

@@ -32,6 +32,8 @@
 	#define COMPONENT_NO_ATTACH (1<<0)
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special)
+#define COMSIG_BODYPART_ATTACHED "bodypart_attached"
 ///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
@@ -82,6 +84,8 @@
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
+///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
+#define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -141,9 +145,7 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
-	#define SHIELD_BLOCK (1<<0)
+
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
@@ -164,3 +166,8 @@
 
 #define COMSIG_CARBON_PRE_SPRINT "carbon_pre_sprint"
 	#define INTERRUPT_SPRINT (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"

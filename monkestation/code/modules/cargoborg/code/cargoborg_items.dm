@@ -32,15 +32,15 @@
 		. += "Its integrated paper synthetizer seems to still be on cooldown."
 
 
-/obj/item/clipboard/cyborg/AltClick(mob/user)
+/obj/item/clipboard/cyborg/click_alt(mob/user)
 	if(!iscyborg(user))
 		to_chat(user, span_warning("You do not seem to understand how to use [src]."))
-		return
+		return CLICK_ACTION_BLOCKING
 	var/mob/living/silicon/robot/cyborg_user = user
 	// Not enough charge? Tough luck.
 	if(cyborg_user?.cell.charge < paper_charge_cost)
 		to_chat(user, span_warning("Your internal cell doesn't have enough charge left to use [src]'s integrated printer."))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Check for cooldown to avoid paper spamming
 	if(COOLDOWN_FINISHED(src, printer_cooldown))
 		// If there's not too much paper already, let's go
@@ -60,7 +60,7 @@
 			to_chat(user, span_warning("[src]'s integrated printer refuses to print more paper, as [src] already contains enough paper."))
 	else
 		to_chat(user, span_warning("[src]'s integrated printer refuses to print more paper, its bluespace paper synthetizer not having finished recovering from its last synthesis."))
-
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/hand_labeler/cyborg
 	name = "integrated hand labeler"
@@ -74,7 +74,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi' // Just some temporary sprites because I don't have any unique one yet
 	icon_state = "mecha_clamp"
 	/// How much power does it draw per operation?
-	var/charge_cost = 20
+	var/charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	/// How many items can it hold at once in its internal storage?
 	var/storage_capacity = 5
 	/// Does it require the items it takes in to be wrapped in paper wrap? Can have unforeseen consequences, change to FALSE at your own risks.
@@ -316,7 +316,7 @@
 	id = "borg_upgrade_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/better_clamp
-	materials = list(/datum/material/titanium = 2000 * 2, /datum/material/gold = 1000, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 12 SECONDS
 	category = list(RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_CARGO)
 
@@ -445,7 +445,7 @@
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(10))
+		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
 			to_chat(user, span_warning("Not enough power."))
 			return FALSE
 		shoot(target, user, click_params)

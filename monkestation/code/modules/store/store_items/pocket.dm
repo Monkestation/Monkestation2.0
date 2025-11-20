@@ -12,8 +12,8 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_path = /obj/item/storage/box/gum/nicotine
 
 /datum/store_item/pocket/gum_pack_hp
-	name = "Pack of HP+ Gum"
-	item_path = /obj/item/storage/box/gum/happiness
+	name = "Pack of Diet HP+ Gum"
+	item_path = /obj/item/storage/box/gum/happiness/diet
 
 /*
 *	LIPSTICK

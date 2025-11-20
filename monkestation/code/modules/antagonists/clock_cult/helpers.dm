@@ -1,6 +1,7 @@
 ///check if an atom is on the reebe z level, will also return FALSE if the atom has no z level
 /proc/on_reebe(atom/checked_atom)
-	if(!checked_atom.z || !is_reebe_level(checked_atom.z))
+	var/turf/checked_turf = get_turf(checked_atom)
+	if(!checked_turf?.z || !is_reebe_level(checked_turf.z))
 		return FALSE
 	return TRUE
 
@@ -24,11 +25,18 @@
 	do_sparks(3, TRUE, servant)
 	do_sparks(3, TRUE, target_turf)
 	do_teleport(servant, target_turf, 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
+	to_chat(servant, "You warp to [get_area(target_turf)].")
+	if(!IS_CLOCK(servant) || !on_reebe(servant))
+		servant.apply_status_effect(/datum/status_effect/clock_warp_sickness, 15 SECONDS)
+
 	if(ishuman(servant)) //looks weird on non-humanoids
 		new /obj/effect/temp_visual/ratvar/warp(target_turf)
-	to_chat(servant, "You warp to [get_area(target_turf)].")
+
 	if(istype(pulled))
 		do_teleport(pulled, target_turf, 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
 		if(!IS_CLOCK(pulled))
 			pulled.Paralyze(3 SECONDS)
 			to_chat(pulled, span_warning("You feel sick and confused."))
+			pulled.apply_status_effect(/datum/status_effect/clock_warp_sickness, 15 SECONDS)
+		else if(!on_reebe(pulled))
+			pulled.apply_status_effect(/datum/status_effect/clock_warp_sickness, 15 SECONDS)

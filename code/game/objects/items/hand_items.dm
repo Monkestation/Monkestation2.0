@@ -143,7 +143,7 @@
 		affix_desc = "on [target.p_their()] sensitive antennae"
 		affix_desc_target = "on your highly sensitive antennae"
 		brutal_noogie = TRUE
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(user.dna?.check_mutation(/datum/mutation/hulk))
 		prefix_desc = "sickeningly brutal"
 		brutal_noogie = TRUE
 
@@ -178,7 +178,7 @@
 	var/damage = rand(1, 5)
 	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
 		damage += rand(3,7)
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(user.dna?.check_mutation(/datum/mutation/hulk))
 		damage += rand(3,7)
 
 	if(damage >= 5)
@@ -493,9 +493,10 @@
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hand_item/kisser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -513,6 +514,7 @@
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -566,6 +568,10 @@
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 	var/silent_blown = FALSE
+
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer && !silent_blown)

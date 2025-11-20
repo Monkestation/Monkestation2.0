@@ -20,6 +20,7 @@
 	var/list/seenby = list()
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
+	var/datum/cameranet/camnet
 
 	var/changed = FALSE
 	var/x = 0
@@ -28,7 +29,7 @@
 	var/upper_z
 
 /// Add an AI eye to the chunk, then update if changed.
-/datum/camerachunk/proc/add(mob/camera/ai_eye/eye)
+/datum/camerachunk/proc/add(mob/eye/ai_eye/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
@@ -39,7 +40,7 @@
 		client.images += active_static_images
 
 /// Remove an AI eye from the chunk
-/datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/eye/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
@@ -89,8 +90,8 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
-		var/client/client = client_eye.ai?.client || client_eye.client
+	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
+		var/client/client = client_eye.GetViewerClient()
 		if(!client)
 			continue
 
@@ -119,8 +120,8 @@
 
 	changed = FALSE
 
-	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
-		var/client/client = client_eye.ai?.client || client_eye.client
+	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
+		var/client/client = client_eye.GetViewerClient()
 		if(!client)
 			continue
 
@@ -128,9 +129,10 @@
 
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
-/datum/camerachunk/New(x, y, lower_z)
+/datum/camerachunk/New(x, y, lower_z, cameranet)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
+	camnet = cameranet
 
 	src.x = x
 	src.y = y
@@ -141,11 +143,11 @@
 	for(var/z_level in lower_z to upper_z)
 		var/list/local_cameras = list()
 		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(camera.can_use())
+			if(camera.can_use() && (!camnet.networks || LAZYLEN(camera.network & camnet.networks)))
 				local_cameras += camera
 
 		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(sillycone.builtInCamera?.can_use())
+			if(sillycone.builtInCamera?.can_use() && (!camnet.networks || LAZYLEN(sillycone.builtInCamera.network & camnet.networks)))
 				local_cameras += sillycone.builtInCamera
 
 		for(var/obj/vehicle/sealed/mecha/mech in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))

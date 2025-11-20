@@ -7,7 +7,7 @@
 	var/turf/bottom_left
 
 ///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/shipbreak
+	var/area/mapped_start_area = /area/space/shipbreak
 
 ///the currently used map template
 	var/datum/map_template/shipbreaker/template
@@ -16,7 +16,7 @@
 	var/ship_type = /datum/map_template/shipbreaker
 
 ///links the shipbreaker zone to the computer
-	var/area/shipbreak/linked
+	var/area/space/shipbreak/linked
 ///cool variablw
 	var/spawn_area_clear = TRUE
 
@@ -31,7 +31,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/shipbreaker/LateInitialize()
+/obj/machinery/computer/shipbreaker/LateInitialize(mapload_arg)
 	linked = GLOB.areas_by_type[mapped_start_area]
 	if(!linked)
 		return
@@ -113,7 +113,7 @@
 	for(var/turf/turf in linked)
 		if(!isgroundlessturf(turf))
 			turf_count++
-			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health))
+			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health), override = TRUE)
 	total_turf = turf_count
 	ship_part = (100 / turf_count)
 	ship_health = 100

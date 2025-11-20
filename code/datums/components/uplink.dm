@@ -59,7 +59,7 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, PROC_REF(implanting))
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, PROC_REF(old_implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, PROC_REF(new_implant))
-	else if(istype(parent, /obj/item/modular_computer/pda))
+	else if(istype(parent, /obj/item/modular_computer))
 		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
 		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(check_detonate))
 	else if(istype(parent, /obj/item/radio))
@@ -234,14 +234,14 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
 			stock_list -= item
 		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
-			"icon" = text_ref(actual_item.icon),
+			"icon" = actual_item.icon,
 			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
@@ -256,7 +256,7 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/item as anything in stock_list)
+	for(var/item in stock_list)
 		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
@@ -491,7 +491,7 @@
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
 	var/obj/item/P = parent
-	if(istype(parent,/obj/item/modular_computer/pda))
+	if(istype(parent,/obj/item/modular_computer))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], [RADIO_TOKEN_UPLINK] channel)."
@@ -501,7 +501,7 @@
 /datum/component/uplink/proc/generate_code()
 	var/returnable_code = ""
 
-	if(istype(parent, /obj/item/modular_computer/pda))
+	if(istype(parent, /obj/item/modular_computer))
 		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 	else if(istype(parent, /obj/item/radio))

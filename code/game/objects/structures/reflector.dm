@@ -79,7 +79,7 @@
 	P.decayedRange = max(P.decayedRange--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(admin)
 		return FALSE
 	return ..()
@@ -88,12 +88,12 @@
 	can_rotate = !can_rotate
 	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
 	tool.play_tool_sound(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		to_chat(user, span_warning("Unweld [src] from the floor first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return
@@ -102,7 +102,7 @@
 	if(buildstackamount)
 		new buildstacktype(drop_location(), buildstackamount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount=0))
@@ -130,16 +130,16 @@
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You cut [src] free from the floor."))
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/reflector/attackby(obj/item/W, mob/user, params)
+/obj/structure/reflector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(admin)
 		return
 	//Finishing the frame
-	else if(istype(W, /obj/item/stack/sheet))
+	else if(istype(attacking_item, /obj/item/stack/sheet))
 		if(finished)
 			return
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/stack/sheet/S = attacking_item
 		if(istype(S, /obj/item/stack/sheet/glass))
 			if(S.use(5))
 				new /obj/structure/reflector/single(drop_location())
@@ -297,6 +297,13 @@
 		ui = new(user, src, "Reflector")
 		ui.open()
 
+/obj/structure/reflector/attack_robot(mob/user)
+	ui_interact(user)
+	return
+
+/obj/structure/reflector/ui_state(mob/user)
+	return GLOB.physical_state //Prevents borgs from adjusting this at range
+
 /obj/structure/reflector/ui_data(mob/user)
 	var/list/data = list()
 	data["rotation_angle"] = rotation_angle
@@ -304,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

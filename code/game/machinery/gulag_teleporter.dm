@@ -53,15 +53,15 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	toggle_open()
 
-/obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
-	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
+/obj/machinery/gulag_teleporter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",attacking_item))
 		update_appearance()
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(attacking_item))
 		return
 
 	return ..()
@@ -169,7 +169,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(target)
 		target.wanted_status = WANTED_PRISONER
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"

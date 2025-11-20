@@ -1,13 +1,13 @@
-#define EFFECT_TIME (6.5 SECONDS)
+#define EFFECT_TIME (7 SECONDS)
 
 // Clock cult's version of the "bullshit stun hand"
 
 /datum/scripture/slab/kindle
 	name = "Kindle"
 	desc = "Stuns and mutes a target from a short range."
-	tip = "Best paired with hateful manacels for conversion, they are stunned for 6.5 seconds and muted for 13."
+	tip = "Best paired with hateful manacels for conversion, they are stunned for 7 seconds and muted for 14."
 	button_icon_state = "Kindle"
-	power_cost = 125
+	power_cost = STANDARD_CELL_CHARGE * 0.125
 	invocation_time = 2 SECONDS
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"
@@ -90,10 +90,11 @@
 
 		carbon_hit.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/slurring/clock)
 
-		carbon_hit.adjust_silence(EFFECT_TIME * 2) //enough time to cuff and remove their radio, or just go back to reebe where their comms wont work
-		carbon_hit.AdjustKnockdown(EFFECT_TIME * (has_mindshield ? 1 : 1.5))
+		carbon_hit.adjust_silence(EFFECT_TIME * (has_mindshield ? 1 : 2)) //enough time to cuff and remove their radio
+		carbon_hit.adjust_emote_mute(EFFECT_TIME * (has_mindshield ? 1 : 2))
+		carbon_hit.AdjustKnockdown(EFFECT_TIME * (has_mindshield ? 0.5 : 1.5))
 		//pretty much 0 stun if your on reebe, still good for knockdown though, also only a 1 second stun on mindshielded people
-		carbon_hit.Stun((has_mindshield ? 1 SECONDS : EFFECT_TIME) * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1))
+		carbon_hit.Stun((has_mindshield ? 0.5 SECONDS : EFFECT_TIME) * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1))
 
 	if(hit_mob.client)
 		var/client_color = hit_mob.client.color

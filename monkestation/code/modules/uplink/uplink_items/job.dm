@@ -55,7 +55,6 @@
 	var/atom/A = target
 	if(!proximity)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!istype(A, /obj/machinery/clonepod/experimental))
 		return
 	to_chat(user, "You upload the directive to the experimental cloner.")
@@ -141,6 +140,7 @@
 	surplus = 0
 	item = /obj/item/chromosome/stabilizer
 	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/synchronizer_chromosome
 	name = "Synchronizer Chromosome"
@@ -150,6 +150,7 @@
 	surplus = 0
 	item = /obj/item/chromosome/synchronizer
 	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/power_chromosome
 	name = "Power Chromosome"
@@ -159,6 +160,7 @@
 	surplus = 0
 	item = /obj/item/chromosome/power
 	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/energy_chromosome
 	name = "Energetic Chromosome"
@@ -168,3 +170,4 @@
 	surplus = 0
 	item = /obj/item/chromosome/energy
 	restricted_roles = list(JOB_GENETICIST)
+	illegal_tech = FALSE

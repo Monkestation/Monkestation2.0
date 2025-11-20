@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(store_plushies, generate_store_items(/datum/store_item/plushies
 /datum/store_item/plushies/lizard_greyscale
 	item_cost = 7500
 	name = "Lizard Plushie"
-	item_path = /obj/item/toy/plush/lizard_plushie
+	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/store_item/plushies/moth
 	item_cost = 7500

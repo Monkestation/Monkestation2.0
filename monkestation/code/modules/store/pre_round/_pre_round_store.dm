@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 				"path" = store_item_type,
 				"name" = store_item.name,
 				"cost" = store_item.item_cost,
-				"icon" = text_ref(item_path::icon),
+				"icon" = item_path::icon,
 				"icon_state" = item_path::icon_state,
 			)
 		)

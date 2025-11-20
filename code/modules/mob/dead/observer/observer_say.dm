@@ -33,9 +33,9 @@
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		switch(message_mods[RADIO_EXTENSION])
 			if(MODE_ADMIN)
-				client.cmd_admin_say(message)
+				SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/cmd_admin_say, message)
 			if(MODE_DEADMIN)
-				client.dsay(message)
+				SSadmin_verbs.dynamic_invoke_verb(src, /datum/admin_verb/dsay, message)
 			if(MODE_PUPPET)
 				if(!mind.current.say(message))
 					to_chat(src, span_warning("Your linked body was unable to speak!"))
@@ -64,7 +64,7 @@
 		create_chat_message(speaker, message_language, raw_message, spans)
 	// monkestation start: bold messages for ghosts when they're nearby
 	var/list/our_spans = spans
-	if((client?.prefs.chat_toggles & CHAT_GHOSTEARS) && in_view_range(src, to_follow, TRUE))
+	if((client?.prefs.chat_toggles & CHAT_GHOSTEARS) && CAN_THEY_SEE(src, to_follow))
 		our_spans = spans.Copy()
 		our_spans |= SPAN_BOLD
 	// monkestation end

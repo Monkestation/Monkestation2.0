@@ -224,7 +224,8 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
-		to_chat(affected_mob, span_danger("Your insides are burning!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+			to_chat(affected_mob, span_danger("Your insides are burning!"))
 		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
@@ -604,7 +605,7 @@
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
+	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine. When used in a dead body, will prevent organ decay."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#B4004B"
@@ -1115,7 +1116,7 @@
 	toxpwr = 0
 	ph = 3.1
 	taste_description = "bone hurting"
-	overdose_threshold = 50
+	overdose_threshold = 35
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
@@ -1139,13 +1140,61 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
 		if(BP)
-			playsound(affected_mob, get_sfx(SFX_DESECRATION), 50, TRUE, -1)
+			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
 			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			affected_mob.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			BP.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))
+			BP.receive_damage(20, wound_bonus = rand(30, 130))
 		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(affected_mob, span_warning("A phantom limb hurts!"))
 			affected_mob.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
+	return ..()
+
+/datum/reagent/toxin/morbital //its morbin time
+	name = "Morbital"
+	description = "A strange blood red substance that makes your skin crawl."
+	silent_toxin = TRUE //no point spamming them even more.
+	color = "#ff0000a2" //RGBA: 170, 170, 170, 77
+	creation_purity = REAGENT_STANDARD_PURITY
+	purity = REAGENT_STANDARD_PURITY
+	toxpwr = 0
+	ph = 3.1
+	taste_description = "cringe"
+	overdose_threshold = 5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/transform = 1
+
+/datum/reagent/toxin/morbital/on_mob_add(mob/living/carbon/affected_mob)
+	affected_mob.say("IT'S MORBIN TIME!!!", forced = /datum/reagent/toxin/morbital)
+	return ..()
+
+/datum/reagent/toxin/morbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.stamina.adjust(-10 * REM * seconds_per_tick, 0)
+	if(SPT_PROB(10, seconds_per_tick))
+		switch(rand(1, 3))
+			if(1)
+				affected_mob.say(pick("I'M GONNA MORB!!!", "ITS MORBIN TIME!", "ITS OVER, ANTI-MORB!!!", "TIME TO GET MORBED, SCARLET!", "IM A TRUE WEREWOLF!"), forced = /datum/reagent/toxin/morbital)
+			if(2)
+				affected_mob.manual_emote(pick("morbs", "looks like [affected_mob.p_their()] blood hurts.", "grimaces, as though [affected_mob.p_their()] blood hurts."))
+			if(3)
+				to_chat(affected_mob, span_warning("Your blood hurts!"))
+	return ..()
+
+/datum/reagent/toxin/morbital/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(SPT_PROB(2, seconds_per_tick) && iscarbon(affected_mob)) //big oof
+		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
+		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
+		if(BP)
+			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
+			affected_mob.visible_message(span_warning("[affected_mob]'s blood hurts too much!!"), span_danger("Your blood hurts too much!!"))
+			affected_mob.say("Morbin aint easy...", forced = /datum/reagent/toxin/morbital)
+			BP.receive_damage(brute = 1)
+		else //SUCH A LUST FOR REVENGE!!!
+			to_chat(affected_mob, span_warning("A phantom limb hurts!"))
+			affected_mob.say("I SOLD ONE MORBILLION TICKETS!", forced = /datum/reagent/toxin/morbital)
+		if(volume >= 250 && transform == 1)
+			affected_mob.set_species(/datum/species/vampire)
+			affected_mob.say("NOW WE'RE MORBIN", forced = /datum/reagent/toxin/morbital)
+			transform = 0
 	return ..()
 
 /datum/reagent/toxin/bungotoxin

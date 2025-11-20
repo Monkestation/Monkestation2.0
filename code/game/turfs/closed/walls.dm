@@ -52,11 +52,10 @@
 	wound = 0
 //Monkestation edit end
 
-
-/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
-	..()
-	if(carbon_mob != user)
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(dropping != user || !iscarbon(dropping))
 		return
+	var/mob/living/carbon/carbon_mob = dropping
 	if(carbon_mob.is_leaning == TRUE)
 		return
 	if(carbon_mob.pulledby)
@@ -193,7 +192,7 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A)) //if we are actually in the shipbreaking zone...
 		new scrap_type(src, sheet_amount)
 	else
@@ -202,7 +201,7 @@
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A))
 		new scrap_type(src, sheet_amount)
 	else
@@ -268,7 +267,7 @@
  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
 	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
-	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	var/datum/mutation/hulk/smasher = locate(/datum/mutation/hulk) in hulkman.dna.mutations
 	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
 		return
 	smasher.break_an_arm(arm)
@@ -282,7 +281,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, params) //monkestation edit
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //monkestation edit
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -298,7 +297,7 @@
 	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
 		return
 
-	return ..() || (attacking_item.attack_atom(src, user))
+	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
 	if(!(user.istate & ISTATE_HARM)) //monkestation edit
@@ -306,12 +305,20 @@
 
 	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is intact!"))
-			return TRUE
-
 		if(!W.tool_start_check(user, amount=0))
 			to_chat(user, span_warning("You need more fuel to repair [src]!"))
+			return TRUE
+
+		if(atom_integrity >= max_integrity)
+			if(LAZYLEN(dent_decals))
+				to_chat(user, span_notice("You begin fixing dents on the wall..."))
+				if(W.use_tool(src, user, 0, volume=100))
+					if(iswallturf(src))
+						to_chat(user, span_notice("You fix some dents on the wall."))
+						cut_overlay(dent_decals)
+						dent_decals.Cut()
+			else
+				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
 
 		to_chat(user, span_notice("You begin repairing [src]..."))

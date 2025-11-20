@@ -372,6 +372,8 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/target_turf, difference)
+	if(!TURFS_CAN_SHARE(src, target_turf))
+		return
 	SSair.high_pressure_delta |= src
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, target_turf)
@@ -635,9 +637,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 /turf/open/finish_superconduction()
 	//Conduct with air on my tile if I have it
-	if(!blocks_air)
+	if(..((blocks_air ? temperature : air.temperature)) != FALSE && !blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
-	..((blocks_air ? temperature : air.temperature))
 
 ///Should we attempt to superconduct?
 /turf/proc/consider_superconductivity(starting)

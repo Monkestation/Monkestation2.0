@@ -2,8 +2,9 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
+	interaction_flags_click = ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
@@ -96,7 +97,7 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	/// Time of death
+	///The mob's latest time-of-death, as a station timestamp instead of world.time
 	var/tod = null
 
 	/// Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
@@ -251,7 +252,7 @@
 	/// Note that more of this = more nutrition is consumed every life tick.
 	var/temperature_homeostasis_speed = 0.5
 	/// Protection (insulation) from temperature changes, max 1
-	var/temperature_insulation = 0
+	var/temperature_insulation = 0.15
 
 	/// Whether we currently have temp alerts, minor optimization
 	VAR_PRIVATE/temp_alerts = FALSE

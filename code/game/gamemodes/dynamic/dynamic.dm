@@ -434,7 +434,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					vars[variable] = configuration["Dynamic"][variable]
 
 	setup_parameters()
-	setup_hijacking()
 	setup_shown_threat()
 	setup_rulesets()
 
@@ -607,8 +606,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.persistent)
 			current_rules += rule
 		new_snapshot(rule)
+		rule.forget_startup()
 		return TRUE
 	rule.clean_up() // Refund threat, delete teams and so on.
+	rule.forget_startup()
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -656,9 +657,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				executed_rules += new_rule
 				if (new_rule.persistent)
 					current_rules += new_rule
+				new_rule.forget_startup()
 				return TRUE
 		else if (forced)
 			log_dynamic("The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	new_rule.forget_startup()
 	return FALSE
 
 /datum/game_mode/dynamic/process()

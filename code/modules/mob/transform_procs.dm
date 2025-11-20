@@ -17,7 +17,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -27,14 +27,13 @@
 
 /mob/living/carbon/proc/finish_monkeyize()
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a monkey."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
-	name = "monkey"
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
+	fully_replace_character_name(null, pick(GLOB.random_monkey_names))
 	regenerate_icons()
-	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
 	return src
@@ -55,7 +54,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -65,11 +64,11 @@
 
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a human."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	invisibility = 0
 	set_species(species)
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	regenerate_icons()
 	return src
@@ -215,7 +214,6 @@
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.PossessByPlayer(key)
-	update_atom_languages()
 
 	to_chat(new_xeno, span_boldnotice("You are now an alien."))
 	qdel(src)
@@ -253,7 +251,7 @@
 	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
+	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
 	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
@@ -288,7 +286,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(include_pockets = TRUE)
+	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)

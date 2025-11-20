@@ -4,14 +4,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
-/mob/living/silicon/robot/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+/mob/living/silicon/robot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = attacking_item
 		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, span_notice("You start fixing yourself..."))
-				if(!do_after(user, 50, target = src))
+				if(!do_after(user, 5 SECONDS, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
@@ -22,42 +22,42 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("The wires seem fine, there's no need to fix them."))
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, span_warning("Close the cover first!"))
 		else if(cell)
 			to_chat(user, span_warning("There is a power cell already installed!"))
 		else
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			cell = W
+			cell = attacking_item
 			to_chat(user, span_notice("You insert the power cell."))
 		update_icons()
 		diag_hud_set_borgcell()
 		return
 
-	if(is_wire_tool(W))
+	if(is_wire_tool(attacking_item))
 		if (wiresexposed)
 			wires.interact(user)
 		else
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if((W.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
 		if(user == src)
-			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
+			to_chat(user,  span_notice("You can't seem to manage to place [attacking_item] on your head by yourself!") )
 			return
 		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
 			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
 			return
-		to_chat(user, span_notice("You begin to place [W] on [src]'s head..."))
-		to_chat(src, span_notice("[user] is placing [W] on your head..."))
-		if(do_after(user, 30, target = src))
-			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
-				place_on_head(W)
+		to_chat(user, span_notice("You begin to place [attacking_item] on [src]'s head..."))
+		to_chat(src, span_notice("[user] is placing [attacking_item] on your head..."))
+		if(do_after(user, 3 SECONDS, target = src))
+			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
+				place_on_head(attacking_item)
 		return
 
-	if(istype(W, /obj/item/defibrillator) && !(user.istate & ISTATE_HARM))
+	if(istype(attacking_item, /obj/item/defibrillator) && !(user.istate & ISTATE_HARM))
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
 			return
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(stat == DEAD)
 			to_chat(user, span_warning("This defibrillator unit will not function on a deceased cyborg!"))
 			return
-		var/obj/item/defibrillator/D = W
+		var/obj/item/defibrillator/D = attacking_item
 		if(!(D.slot_flags & ITEM_SLOT_BACK)) //belt defibs need not apply
 			to_chat(user, span_warning("This defibrillator unit doesn't seem to fit correctly!"))
 			return
@@ -81,8 +81,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		add_to_upgrades(B, user)
 		return
 
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
+	if(istype(attacking_item, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = attacking_item
 		if(!opened)
 			to_chat(user, span_warning("You need access to the robot's insides to do that!"))
 			return
@@ -104,14 +104,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
-	if(istype(W, /obj/item/encryptionkey) && opened)
+	if(istype(attacking_item, /obj/item/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
-			radio.attackby(W,user)//GTFO, you have your own procs
+			radio.attackby(attacking_item,user)//GTFO, you have your own procs
 		else
 			to_chat(user, span_warning("Unable to locate a radio!"))
 		return
 
-	if (W.GetID()) // trying to unlock the interface with an ID card
+	if (attacking_item.GetID()) // trying to unlock the interface with an ID card
 		if(opened)
 			to_chat(user, span_warning("You must close the cover to swipe an ID card!"))
 		else
@@ -128,8 +128,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				to_chat(user, span_danger("Access denied."))
 		return
 
-	if(istype(W, /obj/item/borg/upgrade))
-		var/obj/item/borg/upgrade/U = W
+	if(istype(attacking_item, /obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/U = attacking_item
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
 			return
@@ -145,43 +145,41 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		add_to_upgrades(U, user)
 		return
 
-	if(istype(W, /obj/item/toner))
+	if(istype(attacking_item, /obj/item/toner))
 		if(toner >= tonermax)
 			to_chat(user, span_warning("The toner level of [src] is at its highest level possible!"))
 			return
-		if(!user.temporarilyRemoveItemFromInventory(W))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
 		toner = tonermax
-		qdel(W)
+		qdel(attacking_item)
 		to_chat(user, span_notice("You fill the toner level of [src] to its max capacity."))
 		return
 
-	if(istype(W, /obj/item/flashlight))
+	if(istype(attacking_item, /obj/item/flashlight))
 		if(!opened)
 			to_chat(user, span_warning("You need to open the panel to repair the headlamp!"))
 			return
 		if(lamp_functional)
 			to_chat(user, span_warning("The headlamp is already functional!"))
 			return
-		if(!user.temporarilyRemoveItemFromInventory(W))
-			to_chat(user, span_warning("[W] seems to be stuck to your hand. You'll have to find a different light."))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
+			to_chat(user, span_warning("[attacking_item] seems to be stuck to your hand. You'll have to find a different light."))
 			return
 		lamp_functional = TRUE
-		qdel(W)
+		qdel(attacking_item)
 		to_chat(user, span_notice("You replace the headlamp bulbs."))
 		return
 
-	if(istype(W, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
+	if(istype(attacking_item, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_disk/floppy = W
+		var/obj/item/computer_disk/floppy = attacking_item
 		floppy.forceMove(modularInterface)
 		modularInterface.inserted_disk = floppy
 		return
 
-	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -339,7 +337,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit start
 	if(IS_CLOCK(src)) //cant emag clock borgs
-		to_chat(src, span_brass("The light of Rat'var protects you from subversion!"))
+		to_chat(src, span_brass("The light of Ratvar protects you from subversion!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were a clockwork borg.")
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit end

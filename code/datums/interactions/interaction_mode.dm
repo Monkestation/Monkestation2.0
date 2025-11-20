@@ -16,6 +16,7 @@ GLOBAL_REAL_VAR(list/available_interaction_modes = list(
 	if(istate & ISTATE_CONTROL)
 		. += "CONTROL"
 	return jointext(., ", ")
+
 /datum/interaction_mode
 	var/shift_to_open_context_menu = FALSE
 	var/client/owner
@@ -28,9 +29,11 @@ GLOBAL_REAL_VAR(list/available_interaction_modes = list(
 
 /datum/interaction_mode/Destroy(force)
 	owner = null
-	if (!QDELETED(UI))
+	if (UI)
 		UI.hud?.static_inventory -= UI
-		QDEL_NULL(UI)
+		if(!QDELETED(UI))
+			qdel(UI)
+		UI = null
 	return ..()
 
 /datum/interaction_mode/proc/reload_hud(mob/M)

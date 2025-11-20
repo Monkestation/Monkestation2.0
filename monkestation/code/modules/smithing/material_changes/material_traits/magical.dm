@@ -1,7 +1,7 @@
 /datum/material_trait/magical
 	name = "Magical"
 	desc = "Makes this item magical."
-	trait_flags = MATERIAL_NO_STACK_ADD
+	trait_flags = MT_NO_STACK_ADD
 	value_bonus = 50
 
 /datum/material_trait/magical/on_trait_add(atom/movable/parent)

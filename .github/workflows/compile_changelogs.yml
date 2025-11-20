@@ -2,7 +2,7 @@ name: Compile changelogs
 
 on:
   schedule:
-  - cron: "0 0 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -25,14 +25,13 @@ jobs:
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: "Install deps"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
           python -m pip install --upgrade pip
           python -m pip install pyyaml
-          sudo apt-get install  dos2unix
 
       - name: "Checkout"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
@@ -49,8 +48,8 @@ jobs:
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          git config --local user.name "tgstation-ci[bot]"
-          git config --local user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
+          git config --local user.name "ChiefMonkengineer"
+          git config --local user.email "219590222+ChiefMonkengineer@users.noreply.github.com"
           git pull origin master
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true

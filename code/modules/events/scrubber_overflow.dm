@@ -7,6 +7,9 @@
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "The scrubbers release a tide of mostly harmless froth."
 	admin_setup = list(/datum/event_admin_setup/listed_options/scrubber_overflow)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
+	event_group = /datum/event_group/scrubber_overflow
 
 /datum/round_event/scrubber_overflow
 	announce_when = 1
@@ -70,7 +73,7 @@
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "[command_name()] Engineering Division")
 
 /datum/round_event/scrubber_overflow/setup()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(!scrubber_turf)
 			continue
@@ -90,7 +93,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))
 		var/turf/scrubber_turf = get_turf(temp_vent)
 		if(!scrubber_turf)
 			continue

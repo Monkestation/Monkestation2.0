@@ -1,3 +1,6 @@
+/// List of bank accounts playing the lottery with amount of tickets sold.
+GLOBAL_LIST_EMPTY_TYPED(lottery_ticket_owners, /datum/bank_account)
+
 /obj/machinery/atm
 	name = "ATM"
 	desc = "You can withdraw or deposit Monkecoins in here, also acts as a terminal for flash sale items."
@@ -14,8 +17,6 @@
 	var/static/datum/store_item/flash_sale_datum
 	///the current size of the lottery prize pool
 	var/static/lottery_pool = 500
-	///list of bank accounts playing the lottery with amount of tickets sold
-	var/static/list/ticket_owners = list()
 	///static variable to check if a lottery is running
 	var/static/lottery_running = FALSE
 
@@ -101,15 +102,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	return TRUE
 
 /obj/machinery/atm/proc/poll_lottery_winner()
-	if(length(ticket_owners))
-		var/datum/bank_account/winning_account = pick_weight(ticket_owners)
+	if(length(GLOB.lottery_ticket_owners))
+		var/datum/bank_account/winning_account = pick_weight(GLOB.lottery_ticket_owners)
 		winning_account.account_balance += lottery_pool
 		priority_announce("[winning_account.account_holder] has just won the station lottery winning a total of [lottery_pool] credits! The next lottery will begin in 20 minutes!", "Nanotrasen Gambling Society")
 		lottery_pool = 0
 	else
 		priority_announce("No one has won the lottery with a prize pool of [lottery_pool] credits, the next lottery will happen in 20 minutes.", "Nanotrasen Gambling Society")
 	lottery_pool += 500
-	ticket_owners = list()
+	GLOB.lottery_ticket_owners.Cut()
 	lottery_running = FALSE
 	if(!lottery_running)
 		lottery_running = TRUE
@@ -134,7 +135,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 			return
 
 		id_card.registered_account.account_balance -= tickets_bought * 100
-		ticket_owners[id_card.registered_account] += tickets_bought
+		GLOB.lottery_ticket_owners[id_card.registered_account] += tickets_bought
 		lottery_pool += tickets_bought * 100
 
 /obj/machinery/atm/proc/buy_flash_sale()

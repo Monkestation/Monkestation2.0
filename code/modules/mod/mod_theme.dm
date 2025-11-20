@@ -322,16 +322,6 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	allowed_suit_storage = list(
-		/obj/item/resonator,
-		/obj/item/mining_scanner,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/pickaxe,
-		/obj/item/kinetic_crusher,
-		/obj/item/stack/ore/plasma,
-		/obj/item/storage/bag/ore,
-		/obj/item/gun/energy/recharge/kinetic_accelerator,
-	)
 	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
@@ -386,8 +376,12 @@
 		),
 	)
 
+/datum/mod_theme/loader/New()
+	.=..()
+	allowed_suit_storage = GLOB.mining_suit_allowed
+
 /datum/armor/mod_theme_mining
-	melee = 15
+	melee = 20
 	bullet = 5
 	laser = 5
 	energy = 5
@@ -482,6 +476,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/chemistry,
@@ -578,6 +573,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/chemistry,
@@ -1133,13 +1129,13 @@
 				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
-				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT|HIDEANTENNAE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				CAN_OVERSLOT = TRUE,
 			),
 			CHESTPLATE_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT|HIDEMUTWINGS,
 				CAN_OVERSLOT = TRUE,
 			),
 			GAUNTLETS_FLAGS = list(
@@ -1202,6 +1198,7 @@
 		/obj/item/sensor_device,
 		/obj/item/shield/energy,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/storage/bag/bio,
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/pill_bottle,

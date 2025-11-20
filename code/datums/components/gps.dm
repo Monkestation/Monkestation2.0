@@ -95,10 +95,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	SIGNAL_HANDLER
 
 	toggletracking(user)
+	return COMPONENT_CANCEL_CLICK_ALT
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
-	if(!user.can_perform_action(parent))
+	if(!user.can_perform_action(parent, ALLOW_RESTING))
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, span_warning("It's busted!"))

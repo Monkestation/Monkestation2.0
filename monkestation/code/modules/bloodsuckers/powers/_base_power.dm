@@ -33,36 +33,34 @@
 	/// If the Power is currently active, differs from action cooldown because of how powers are handled.
 	var/active = FALSE
 	///Can increase to yield new abilities - Each Power ranks up each Rank
-	var/level_current = 0
+	var/level_current = 1
 	///The cost to ACTIVATE this Power
 	var/bloodcost = 0
 	///The cost to MAINTAIN this Power - Only used for Constant Cost Powers
 	var/constant_bloodcost = 0
-	/// A multiplier for the bloodcost during sol.
-	var/sol_multiplier
 
 	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
 	var/stupid_looping_timer_id
 
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	update_desc()
+	desc = get_power_desc()
 
 /datum/action/cooldown/bloodsucker/Destroy()
+	SHOULD_CALL_PARENT(TRUE)
+	if(active)
+		DeactivatePower()
 	bloodsuckerdatum_power = null
 	return ..()
 
-/datum/action/cooldown/bloodsucker/proc/update_desc(rebuild = TRUE)
-	desc = initial(desc)
-	if(bloodcost > 0)
-		desc += "<br><br><b>COST:</b> [bloodcost] Blood"
-	if(constant_bloodcost > 0)
-		desc += "<br><br><b>CONSTANT COST:</b><i> [name] costs [constant_bloodcost] Blood maintain active.</i>"
-	if(power_flags & BP_AM_SINGLEUSE)
-		desc += "<br><br><b>SINGLE USE:</br><i> [name] can only be used once per night.</i>"
-	if(rebuild)
-		build_all_button_icons(UPDATE_BUTTON_NAME)
+/// Gets the activation cost of the ability. If constant is TRUE, returns the upkeep cost instead.
+/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE)
+	if (constant)
+		return constant_bloodcost
+	else
+		return bloodcost
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -103,6 +101,7 @@
 	if(!COOLDOWN_FINISHED(src, next_use_time))
 		owner.balloon_alert(owner, "power unavailable!")
 		return FALSE
+	var/bloodcost = get_blood_cost()
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD) && living_owner.blood_volume < bloodcost)
@@ -118,9 +117,26 @@
 		return FALSE
 	return TRUE
 
-///Called when the Power is upgraded.
 /datum/action/cooldown/bloodsucker/proc/upgrade_power()
+	SHOULD_CALL_PARENT(TRUE)
+	if(active)
+		DeactivatePower()
+	if(level_current == -1) // -1 means it doesn't rank up ever
+		return FALSE
 	level_current++
+	on_power_upgrade()
+	return TRUE
+
+/datum/action/cooldown/bloodsucker/proc/on_power_upgrade()
+	SHOULD_CALL_PARENT(TRUE)
+	desc = get_power_desc()
+
+	if(purchase_flags & TREMERE_CAN_BUY && level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
+		background_icon_state = "tremere_power_gold_off"
+		active_background_icon_state = "tremere_power_gold_on"
+		base_background_icon_state = "tremere_power_gold_off"
+
+	build_all_button_icons(ALL)
 
 ///Checks if the Power is available to use.
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
@@ -148,23 +164,26 @@
 	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
+	// Silver cuffed?
+	if(!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
+		user.balloon_alert(user, "The silver cuffs on your wrists prevent you from using your powers!")
+		return FALSE
+	var/bloodcost = get_blood_cost()
+	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0)
 		var/can_upkeep = bloodsuckerdatum_power ? (bloodsuckerdatum_power.bloodsucker_blood_volume > 0) : (HAS_TRAIT(user, TRAIT_NOBLOOD) || (user.blood_volume > (bloodcost + BLOOD_VOLUME_OKAY)))
 		if(!can_upkeep)
 			to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 			return FALSE
-	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
-		to_chat(user, span_warning("You can't use [src] during Sol!"))
-		return FALSE
 	return TRUE
 
 /// NOTE: With this formula, you'll hit half cooldown at level 8 for that power.
-/datum/action/cooldown/bloodsucker/StartCooldown()
+/datum/action/cooldown/bloodsucker/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	// Calculate Cooldown (by power's level)
 	if(power_flags & BP_AM_STATIC_COOLDOWN)
 		cooldown_time = initial(cooldown_time)
-	else
+	else if (!(power_flags & BP_AM_CUSTOM_COOLDOWN))
 		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
 	. = ..()
@@ -177,7 +196,16 @@
 /datum/action/cooldown/bloodsucker/is_action_active()
 	return active
 
-/datum/action/cooldown/bloodsucker/proc/pay_cost()
+/datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
+	var/bloodcost
+
+	if (cost_override)
+		bloodcost = cost_override
+	else
+		bloodcost = get_blood_cost()
+
+	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
+
 	// Non-bloodsuckers will pay in other ways.
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
@@ -191,24 +219,25 @@
 	bloodsuckerdatum_power.update_hud()
 
 /datum/action/cooldown/bloodsucker/proc/ActivatePower(trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	active = TRUE
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
 
-	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons()
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()
 	if(!active) //Already inactive? Return
-		return
+		return FALSE
 	if(power_flags & BP_AM_TOGGLE)
 		STOP_PROCESSING(SSprocessing, src)
 	if(power_flags & BP_AM_SINGLEUSE)
 		remove_after_use()
-		return
+		return TRUE
 	active = FALSE
 	StartCooldown()
 	build_all_button_icons()
+	return TRUE
 
 ///Used by powers that are continuously active (That have BP_AM_TOGGLE flag)
 /datum/action/cooldown/bloodsucker/process(seconds_per_tick)
@@ -221,6 +250,7 @@
 		return
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+		var/constant_bloodcost = get_blood_cost(constant = TRUE)
 		if(bloodsuckerdatum_power)
 			bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost)
 		else
@@ -231,10 +261,24 @@
 
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(QDELETED(user))
 		return FALSE
-	if(!constant_bloodcost > 0 || bloodsuckerdatum_power.bloodsucker_blood_volume > 0)
+	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
+		return FALSE
+
+	var/constant_bloodcost = get_blood_cost(constant = TRUE)
+	if(constant_bloodcost <= 0)
 		return TRUE
+	if((power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+		return TRUE
+	if(bloodsuckerdatum_power)
+		if(bloodsuckerdatum_power.bloodsucker_blood_volume >= constant_bloodcost)
+			return TRUE
+	else if(user.blood_volume >= max(constant_bloodcost, BLOOD_VOLUME_OKAY))
+		return TRUE
+	return FALSE
 
 /// Used to unlearn Single-Use Powers
 /datum/action/cooldown/bloodsucker/proc/remove_after_use()
@@ -248,4 +292,39 @@
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/cooldown/bloodsucker/proc/html_power_explanation()
-	return replacetext_char(html_encode(trimtext(power_explanation)), "\n", "<br>")
+	var/list/explanation = get_power_explanation()
+	explanation = explanation.Join("\n ")
+	return replacetext_char(html_encode(trimtext(explanation)), "\n", "<br>")
+
+/datum/action/cooldown/bloodsucker/proc/get_power_explanation()
+	SHOULD_CALL_PARENT(TRUE)
+	. = list()
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
+		. += "(Inherent Power) [name]:"
+	else
+		. += "LEVEL: [level_current] [name]:"
+
+	. += get_power_explanation_extended()
+
+/datum/action/cooldown/bloodsucker/proc/get_power_explanation_extended()
+	return power_explanation
+
+/datum/action/cooldown/bloodsucker/proc/get_power_desc()
+	SHOULD_CALL_PARENT(TRUE)
+	var/new_desc = ""
+	if(purchase_flags & BLOODSUCKER_DEFAULT_POWER)
+		new_desc += "<br><b>(Inherent Power)</b>"
+	else
+		new_desc += "<br><b>LEVEL:</b> [level_current]"
+	if(bloodcost > 0)
+		new_desc += "<br><br><b>COST:</b> [bloodcost] Blood"
+	if(constant_bloodcost > 0)
+		new_desc += "<br><br><b>CONSTANT COST:</b><i> [name] costs [constant_bloodcost] blood per second to keep it active.</i>"
+	if(power_flags & BP_AM_SINGLEUSE)
+		new_desc += "<br><br><br>SINGLE USE:</br><i> [name] can only be used once per night.</i>"
+	new_desc += "<br><br><b>DESCRIPTION:</b> [get_power_desc_extended()]"
+	new_desc += "<br>"
+	return new_desc
+
+/datum/action/cooldown/bloodsucker/proc/get_power_desc_extended()
+	return initial(desc)

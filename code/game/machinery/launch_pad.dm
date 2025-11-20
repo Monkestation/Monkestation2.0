@@ -7,7 +7,10 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
+
+	/// The beam icon
 	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
@@ -66,25 +69,25 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
-/obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
-	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
-			update_indicator()
-			return
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!stationary || !panel_open)
+		return ITEM_INTERACT_BLOCKING
 
-		if(panel_open)
-			if(I.tool_behaviour == TOOL_MULTITOOL)
-				if(!multitool_check_buffer(user, I))
-					return
-				var/obj/item/multitool/M = I
-				M.set_buffer(src)
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
-				return 1
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
-		if(default_deconstruction_crowbar(I))
-			return
+/obj/machinery/launchpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!stationary)
+		return ..()
 
-	return ..()
+	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", attacking_item))
+		update_indicator()
+		return
+
+	if(default_deconstruction_crowbar(attacking_item))
+		return
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -189,7 +192,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
@@ -204,7 +207,7 @@
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+		if(!istype(ROI) || isdead(ROI) || iseyemob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
 			continue//don't teleport these
 		var/on_chair = ""
 		if(ROI.anchored)// if it's anchored, don't teleport
@@ -284,25 +287,24 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr)
-		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/machinery/launchpad/briefcase/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(over_object == user)
+		if(!briefcase)
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 30, target = usr))
-			usr.put_in_hands(briefcase)
+		user.visible_message(span_notice("[user] starts closing [src]..."), span_notice("You start closing [src]..."))
+		if(do_after(user, 3 SECONDS, target = user))
+			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src)) //do not attempt to link when already linked
+/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/launch = item
+		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
-		L.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [L]."))
+		launch.pad = WEAKREF(src)
+		to_chat(user, span_notice("You link [src] to [launch]."))
 	else
 		return ..()
 
@@ -329,27 +331,27 @@
 		return
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 30, target = user))
+	if(do_after(user, 3 SECONDS, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage?.close_all() // monke edit: fix runtime
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
-			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
-	else
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
 		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE
@@ -378,7 +380,7 @@
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	data["has_pad"] = our_pad ? TRUE : FALSE
 	if(our_pad)
 		data["pad_closed"] = our_pad.closed
@@ -401,14 +403,15 @@
 		return
 	pad.doteleport(user, sending)
 
-/obj/item/launchpad_remote/ui_act(action, params)
+/obj/item/launchpad_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	if(!our_pad)
 		pad = null
 		return TRUE
+	var/mob/user = ui.user
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])
@@ -431,15 +434,15 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
-				our_pad = null
+			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+				pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 		if("pull")
 			sending = FALSE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 
 #undef BEAM_FADE_TIME

@@ -14,7 +14,7 @@
 	desc = "Phase through doors and windows like a classic horror monster, but you cannot pass through walls."
 	button_icon_state = "incorporealize"
 	check_flags = AB_CHECK_CONSCIOUS
-	cooldown_time = 120 SECONDS
+	cooldown_time = 100 SECONDS
 
 	/// Sound played when entering the jaunt
 	var/enter_sound = 'monkestation/sound/effects/slasher_jauntstart.ogg'
@@ -32,6 +32,11 @@
 	var/obj/effect/jaunt_out_type = /obj/effect/temp_visual/slasher_jaunt/out
 	/// List of valid exit points
 	var/list/exit_point_list
+
+/datum/action/cooldown/slasher/envelope_darkness/PreActivate(atom/target)
+	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
+		return FALSE
+	return ..()
 
 /datum/action/cooldown/slasher/envelope_darkness/Activate(atom/target)
 	if(!owner || !target)
@@ -102,7 +107,6 @@
 /datum/action/cooldown/slasher/envelope_darkness/proc/start_jaunt(mob/living/jaunter, obj/effect/dummy/phased_mob/slasher_jaunt/holder)
 	if(QDELETED(jaunter) || QDELETED(holder) || QDELETED(src))
 		return
-
 	LAZYINITLIST(exit_point_list)
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_exit_point))
 	addtimer(CALLBACK(src, PROC_REF(stop_jaunt), jaunter, holder, get_turf(holder)), jaunt_duration)
@@ -143,7 +147,6 @@
 		playsound(found_exit, exit_sound, 50, TRUE)
 
 	ADD_TRAIT(jaunter, TRAIT_IMMOBILIZED, REF(src))
-
 	if(2.5 SECONDS - jaunt_in_time <= 0)
 		do_jaunt_in(jaunter, holder, found_exit)
 	else

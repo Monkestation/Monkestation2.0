@@ -23,11 +23,6 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -1307,3 +1302,58 @@
 	name = "Worn Tassled Jacket"
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
+
+/datum/greyscale_config/umbrella
+	name = "Umbrella"
+	icon_file = 'icons/obj/weapons/umbrellas.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella.json'
+
+/datum/greyscale_config/umbrella_inhand_left
+	name = "Held Umbrella, Left, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/umbrella_inhand_right
+	name = "Held Umbrella, Right, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/jester_hat
+	name = "jester_hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat.json'
+
+/datum/greyscale_config/jester_hat_worn
+	name = "jeste_hat"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat_worn.json'
+
+/datum/greyscale_config/jester2
+	name = "jester2"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester2.json'
+
+/datum/greyscale_config/jester2_worn
+	name = "jester2"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester2_worn.json'
+
+/datum/greyscale_config/jester
+	name = "jester"
+	icon_file = 'icons/obj/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester.json'
+
+/datum/greyscale_config/jester_worn
+	name = "jester"
+	icon_file = 'icons/mob/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_worn.json'
+
+/datum/greyscale_config/green_jester_shoes
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes.json'
+
+/datum/greyscale_config/green_jester_shoes_worn
+	name = "green_jester_shoes"
+	icon_file = 'monkestation/icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/green_jester_shoes_worn.json'

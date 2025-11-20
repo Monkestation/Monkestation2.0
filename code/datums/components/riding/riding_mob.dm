@@ -424,6 +424,9 @@
 /datum/component/riding/creature/goliath
 	vehicle_move_delay = 4
 
+/datum/component/riding/creature/goliath/deathmatch
+	keytype = null
+
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
 	var/mob/living/basic/mining/goliath/goliath = parent

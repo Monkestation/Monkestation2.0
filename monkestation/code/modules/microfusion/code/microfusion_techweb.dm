@@ -3,6 +3,7 @@
 	starting_node = TRUE
 	display_name = "Basic Microfusion Technology"
 	description = "Basic microfusion technology allowing for basic microfusion designs."
+	prereq_ids = list("base")
 	design_ids = list(
 		"basic_microfusion_cell",
 	)
@@ -63,7 +64,7 @@
 		"advanced_microfusion",
 		"bluespace_power",
 		"beam_weapons",
-		"explosive_weapons",
+		"chemical_weapons",
 	)
 	design_ids = list(
 		"bluespace_microfusion_cell",

@@ -18,28 +18,6 @@
 #define TOOL_HAMMER "hammer"
 #define TOOL_BLOWROD "blowrod"
 
-// Prefix values.
-#define QUECTO * 1e-30
-#define RONTO * 1e-27
-#define YOCTO * 1e-24
-#define ZEPTO * 1e-21
-#define ATTO * 1e-18
-#define FEMPTO * 1e-15
-#define PICO * 1e-12
-#define NANO * 1e-9
-#define MICRO * 1e-6
-#define MILLI * 1e-3
-#define KILO * 1e3
-#define MEGA * 1e6
-#define GIGA * 1e9
-#define TERA * 1e12
-#define PETA * 1e15
-#define EXA * 1e18
-#define ZETTA * 1e21
-#define YOTTA * 1e24
-#define RONNA * 1e27
-#define QUETTA * 1e30
-
 /// Category for clothing in the organics printer
 #define RND_CATEGORY_AKHTER_CLOTHING "Clothing"
 /// Category for equipment like belts and bags in the organics printer
@@ -87,21 +65,6 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 /// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
 #define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
 
-// Converts cable layer to its human readable name
-GLOBAL_LIST_INIT(cable_layer_to_name, list(
-	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
-	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
-	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
-))
-
-// Converts cable color name to its layer
-GLOBAL_LIST_INIT(cable_name_to_layer, list(
-	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
-	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
-	CABLE_LAYER_3_NAME = CABLE_LAYER_3
-))
-
-
 // Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
 #define HANDCUFFS_TYPE_WEAK 0
 // Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
@@ -114,11 +77,10 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 #define ACCOUNT_CMD "CMD"
 #define ACCOUNT_CMD_NAME "Command Budget"
 
-#define PLAYTIME_GREEN 6000 // 100 hours
+#define ACCOUNT_CC "CC"
+#define ACCOUNT_CC_NAME "Central Command Budget"
 
-/// Macro to turn a number of laser shots into an energy cost, based on the above define
-/// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
-#define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
+#define PLAYTIME_GREEN 6000 // 100 hours
 
 /// Trait source for xeno innate abilities
 #define TRAIT_XENO_INNATE "xeno_innate"

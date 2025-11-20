@@ -56,3 +56,14 @@
 		/obj/item/stack/cable_coil = 5,
 	)
 	category = CAT_TOOLS
+
+/datum/crafting_recipe/lantern/pineapple
+	name = "Pineapp-o'-lantern"
+	result = /obj/item/flashlight/lantern/pineapple
+	time = 2 SECONDS
+	reqs = list (
+		/obj/item/food/grown/pineapple = 1,
+		/obj/item/flashlight = 1
+		//Doesn't require a lantern like the original version, which adds a cool bit of utility to the recipe because it's not longer super limited.
+	)
+	category = CAT_TOOLS

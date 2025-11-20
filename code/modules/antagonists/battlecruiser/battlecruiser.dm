@@ -20,6 +20,8 @@
 	antag_hud_name = "battlecruiser_crew"
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_BATTLECRUISER_CREW
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	stinger_sound = 'sound/ambience/antag/ops.ogg'
 	/// Team to place the crewmember on.
 	var/datum/team/battlecruiser/battlecruiser_team
 
@@ -27,7 +29,7 @@
 	return battlecruiser_team
 
 /datum/antagonist/battlecruiser/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [name]!"))
 	owner.announce_objectives()
 

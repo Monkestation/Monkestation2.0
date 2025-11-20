@@ -108,6 +108,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/eightball
 	name = "Magic Eightball"
 	item_path = /obj/item/toy/eightball
+	preload = FALSE // rarely gets qdeled during init due to 1% chance to become haunted
 
 /datum/loadout_item/toys/toykatana
 	name = "Toy Katana"
@@ -121,3 +122,11 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/walkman
 	name = "Walkman"
 	item_path = /obj/item/device/walkman
+
+/datum/loadout_item/toys/monkey_pen
+	name = "Monkey Pen"
+	item_path = /obj/item/pen/monkey
+
+/datum/loadout_item/toys/banana_pen
+	name = "Banana Pen"
+	item_path = /obj/item/pen/banana

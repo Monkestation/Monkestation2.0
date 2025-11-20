@@ -1,8 +1,8 @@
-/datum/mutation/human/geladikinesis
+/datum/mutation/geladikinesis
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/geladikinesis/modify()
+/datum/mutation/geladikinesis/setup()
 	. = ..()
 	if(!.)
 		return
@@ -24,10 +24,10 @@
 	if(isnull(created.loc))
 		created.forceMove(get_turf(cast_on))
 
-/datum/mutation/human/cryokinesis
+/datum/mutation/cryokinesis
 	power_coeff = 1
 
-/datum/mutation/human/cryokinesis/modify()
+/datum/mutation/cryokinesis/setup()
 	. = ..()
 	if(!.)
 		return

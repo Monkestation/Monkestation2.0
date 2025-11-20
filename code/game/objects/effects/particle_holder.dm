@@ -29,7 +29,7 @@
 	on_move(loc, null, NORTH)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
-	QDEL_NULL(particles)
+	particles = null
 	return ..()
 
 /// Non movables don't delete contents on destroy, so we gotta do this
@@ -57,4 +57,4 @@
 
 /// Sets the particles position to the passed coordinates
 /obj/effect/abstract/particle_holder/proc/set_particle_position(x = 0, y = 0, z = 0)
-	particles.position = list(x, y, z)
+		particles.position = list(x, y, z)

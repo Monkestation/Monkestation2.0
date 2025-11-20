@@ -237,6 +237,8 @@
 	message_param = "barks at %t!"
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	return ..() && HAS_TRAIT(user, TRAIT_ANIME)
@@ -285,6 +287,8 @@
 	message_mime = "squeals silently!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/squeal/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/lizard/squeal.ogg' //This is from Bay
@@ -310,12 +314,6 @@
 	key_third_person = "squints"
 	message = "squints."
 	message_param = "squints at %t."
-
-/datum/emote/living/nodnod
-	key = "nodnod"
-	key_third_person = "nodnods"
-	message = "nodnods."
-	message_param = "nodnods at %t."
 
 //The code from 'Start' to 'End' was ported from Russ-station, with permission.
 //All credit to 'bitch fish'
@@ -492,7 +490,54 @@
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 	audio_cooldown = 2 SECONDS
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'
+
+/datum/emote/living/breathein
+	key = "breathein"
+	key_third_person = "breathes in."
+	message = "breathes in."
+	message_mime = "exageratedly breathes in."
+	message_param = "breathes in at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+
+/datum/emote/living/breathein/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/breathein.ogg'
+
+/datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
+	return ..() && IS_SLASHER(user)
+
+/datum/emote/living/breatheout
+	key = "breatheout"
+	key_third_person = "breathes out."
+	message = "breathes out."
+	message_mime = "exageratedly breathes out."
+	message_param = "breathes out at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+
+/datum/emote/living/breatheout/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/breatheout.ogg'
+
+/datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
+	return ..() && IS_SLASHER(user)
 //End
+
+/datum/emote/living/alert
+	key = "!"
+	name = "Alert"
+	cooldown = 5 SECONDS
+	audio_cooldown = 10 SECONDS //no free *chime
+	emote_type = EMOTE_VISIBLE
+	sound = 'sound/machines/chime.ogg'
+	empty_message_intentional = TRUE
+
+/datum/emote/living/alert/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	user.do_alert_animation()

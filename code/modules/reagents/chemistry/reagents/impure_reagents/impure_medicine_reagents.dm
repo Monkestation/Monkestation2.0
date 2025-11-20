@@ -283,7 +283,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 	owner.adjust_bodytemperature(0.5 KELVIN * creation_purity * REM * seconds_per_tick) //hot hot
 
 /datum/reagent/inverse/healing/tirimol
@@ -473,7 +473,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
 	affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
@@ -537,7 +537,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
 	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -595,20 +595,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!affected_carbon.dna)
 		return
 	var/list/speech_options = list(
-		/datum/mutation/human/swedish,
-		/datum/mutation/human/unintelligible,
-		/datum/mutation/human/stoner,
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/wacky,
-		/datum/mutation/human/piglatin,
-		/datum/mutation/human/nervousness,
-		/datum/mutation/human/mute,
+		/datum/mutation/swedish,
+		/datum/mutation/unintelligible,
+		/datum/mutation/stoner,
+		/datum/mutation/medieval,
+		/datum/mutation/wacky,
+		/datum/mutation/piglatin,
+		/datum/mutation/nervousness,
+		/datum/mutation/mute,
 		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
-		if(affected_carbon.dna.get_mutation(option))
+		if(affected_carbon.dna.get_mutation(option, MUTATION_SOURCE_MANNITOIL))
 			continue
-		affected_carbon.dna.add_mutation(option)
+		affected_carbon.dna.add_mutation(option, MUTATION_SOURCE_MANNITOIL)
 		speech_option = option
 		return
 
@@ -617,7 +617,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon = affected_mob
-	carbon.dna?.remove_mutation(speech_option)
+	carbon.dna?.remove_mutation(speech_option, MUTATION_SOURCE_MANNITOIL)
 
 /datum/reagent/inverse/neurine
 	name = "Neruwhine"

@@ -24,9 +24,9 @@
 	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
 	wine_power = 30
 
-/obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
-	if(I.get_sharpness())
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
+/obj/item/food/grown/carrot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
+		to_chat(user, span_notice("You sharpen the carrot into a shiv with [attacking_item]."))
 		var/obj/item/knife/shiv/carrot/Shiv = new /obj/item/knife/shiv/carrot
 		remove_item_from_storage(user)
 		qdel(src)

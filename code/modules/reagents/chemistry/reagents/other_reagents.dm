@@ -354,6 +354,7 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	turf_exposure = TRUE
 	metabolized_traits = list(TRAIT_HOLY)
+	process_flags = ORGANIC | SYNTHETIC
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -422,8 +423,10 @@
 	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
-	if(!data)
+	if(!islist(data))
 		data = list("misc" = 0)
+	else if(!IS_SAFE_NUM(data["misc"]))
+		data["misc"] = 0
 
 	data["misc"] += seconds_per_tick SECONDS * REM
 	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
@@ -669,32 +672,17 @@
 						exposed_human.skin_tone = "caucasian1"
 
 			if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS)) //take current alien color and darken it slightly
-				var/newcolor = ""
-				var/datum/color_palette/generic_colors/located = exposed_human.dna.color_palettes[/datum/color_palette/generic_colors]
-				var/string = located.return_color(MUTANT_COLOR)
-				var/len = length(string)
-				var/char = ""
-				var/ascii = 0
-				for(var/i=1, i <= len, i += length(char))
-					char = string[i]
-					ascii = text2ascii(char)
-					switch(ascii)
-						if(48)
-							newcolor += "0"
-						if(49 to 57)
-							newcolor += ascii2text(ascii-1) //numbers 1 to 9
-						if(97)
-							newcolor += "9"
-						if(98 to 102)
-							newcolor += ascii2text(ascii-1) //letters b to f lowercase
-						if(65)
-							newcolor += "9"
-						if(66 to 70)
-							newcolor += ascii2text(ascii+31) //letters B to F - translates to lowercase
-						else
-							break
-				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
-					located.mutant_color = newcolor
+				var/list/existing_color = rgb2num(exposed_human.dna.features["mcolor"])
+				var/list/darkened_color = list()
+				// Reduces each part of the color by 16
+				for(var/channel in existing_color)
+					darkened_color += max(channel - 17, 0)
+
+				var/new_color = rgb(darkened_color[1], darkened_color[2], darkened_color[3])
+				var/list/new_hsv = rgb2hsv(new_color)
+				// Can't get too dark now
+				if(new_hsv[3] >= 50)
+					exposed_human.dna.features["mcolor"] = new_color
 			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
@@ -706,14 +694,15 @@
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/affected_human = affected_mob
-		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
-			affected_human.hairstyle = "Spiky"
-		affected_human.facial_hairstyle = "Shaved"
-		affected_human.facial_hair_color = "#000000"
-		affected_human.hair_color = "#000000"
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
 			head.head_flags |= HEAD_HAIR //No hair? No problem!
+		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+		affected_human.set_facial_haircolor("#000000", update = FALSE)
+		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
+			affected_human.set_hairstyle("Spiky", update = FALSE)
+		affected_human.set_haircolor("#000000", update = FALSE)
 		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
 		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
@@ -783,7 +772,7 @@
 	name = "Mutation Toxin"
 	description = "A corruptive toxin."
 	color = "#13BC5E" // rgb: 19, 188, 94
-	race = /datum/species/jelly/slime
+	race = /datum/species/oozeling/slime
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/lizard
@@ -822,14 +811,14 @@
 	name = "Imperfect Mutation Toxin"
 	description = "A jellyfying toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/jelly
+	race = /datum/species/oozeling
 	taste_description = "grandma's gelatin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
+	if(isoozeling(affected_mob))
 		to_chat(affected_mob, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
+		var/species_type = pick(subtypesof(/datum/species/oozeling))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		return TRUE
@@ -916,6 +905,14 @@
 	race = /datum/species/plasmaman
 	taste_description = "plasma"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/mutationtoxin/oni
+	name = "Oni Mutation Toxin"
+	description = "A demonic toxin."
+	color = "#F11514" // RGB: 241, 21, 20
+	race = /datum/species/oni
+	taste_description = "hellfire"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
 
 #undef MUT_MSG_IMMEDIATE
 #undef MUT_MSG_EXTENDED
@@ -1336,6 +1333,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
 	liquid_fire_power = 25
+	synthetic_boozepwr = 25
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1837,6 +1835,7 @@
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/oil
 	liquid_fire_power = 15
+	synthetic_boozepwr = 0
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -2126,6 +2125,8 @@
 	reagent_state = LIQUID
 	color = "#E7EA91"
 	taste_description = "acid"
+	process_flags = ORGANIC | SYNTHETIC
+	synthetic_boozepwr = 50
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2144,8 +2145,10 @@
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#AF14B7"
+	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "acid"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	synthetic_boozepwr = 90
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -2206,9 +2209,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = pick(potential_colors)
-	exposed_human.facial_hair_color = pick(potential_colors)
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_haircolor(pick(potential_colors), update = FALSE)
+	exposed_human.set_haircolor(pick(potential_colors), update = TRUE)
 
 /datum/reagent/barbers_aid
 	name = "Barber's Aid"
@@ -2228,9 +2230,8 @@
 	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.roundstart_hairstyles_list)
 	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
-	exposed_human.hairstyle = picked_hair
-	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
+	exposed_human.set_hairstyle(picked_hair, update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2248,9 +2249,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
-	exposed_human.hairstyle = "Very Long Hair"
-	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
+	exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2288,9 +2288,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
-	exposed_human.hairstyle = "Bald"
-	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Shaved", update = FALSE)
+	exposed_human.set_hairstyle("Bald", update = TRUE)
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
@@ -2727,7 +2726,7 @@
 		return
 
 	var/metal_amount = 0
-	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	var/list/materials_to_transmute = A.get_material_composition()
 	for(var/metal_key in materials_to_transmute) //list with what they're made of
 		metal_amount += materials_to_transmute[metal_key]
 
@@ -2737,7 +2736,6 @@
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
-	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"
@@ -2832,6 +2830,7 @@
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
+		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else
@@ -2840,6 +2839,7 @@
 		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
+		drinker.fully_heal(HEAL_POSTIVE_DISEASES)
 	..()
 	return TRUE
 

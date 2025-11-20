@@ -206,7 +206,7 @@
 /area/shuttle/ert/powered/deathsquad)
 "I" = (
 /obj/effect/turf_decal/delivery/red,
-/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/elite,
+/obj/vehicle/sealed/mecha/ripley/deathripley/real/elite,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/ert/powered/deathsquad)
 "K" = (

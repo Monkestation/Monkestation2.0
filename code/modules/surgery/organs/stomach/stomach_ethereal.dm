@@ -61,10 +61,10 @@
 		return
 	var/mob/living/carbon/human/human = owner
 	if(!repairs)
-		adjust_charge(amount / 3.5)
+		adjust_charge(amount / 80)
 		return
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - amount / 3.5)
-		adjust_charge(amount / 3.5)
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - amount / 80)
+		adjust_charge(amount / 80)
 		return
 	if(owner.blood_volume > 700) //prevents reduction of charge of overcharged ethereals
 		return
@@ -97,7 +97,7 @@
 	var/word = pick("like you can't breathe","your lungs locking up","extremely lethargic")
 	var/blood_volume = ethereal.blood_volume
 	if(HAS_TRAIT(ethereal, TRAIT_ETHEREAL_NO_OVERCHARGE))
-		blood_volume = min(blood_volume, ETHEREAL_BLOOD_CHARGE_FULL)
+		blood_volume = ETHEREAL_BLOOD_CHARGE_ALMOSTFULL
 	switch(blood_volume)
 		if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
 			ethereal.add_mood_event("charge", /datum/mood_event/decharged)

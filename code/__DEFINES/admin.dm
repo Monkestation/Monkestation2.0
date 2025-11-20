@@ -23,6 +23,8 @@
 #define BANTYPE_ANY_JOB 9
 
 //Admin Permissions
+/// Used for signifying that all admins can use this regardless of actual permissions
+#define R_NONE NONE
 #define R_BUILD (1<<0)
 #define R_ADMIN (1<<1)
 #define R_BAN (1<<2)
@@ -38,13 +40,15 @@
 #define R_SPAWN (1<<12)
 #define R_AUTOADMIN (1<<13)
 #define R_DBRANKS (1<<14)
+#define R_ADVANCEDCALL (1<<15)
 
 #define R_DEFAULT R_AUTOADMIN
 
-#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_EVERYTHING (1<<16)-1 //the sum of all other rank permissions, used for +EVERYTHING MONKE EDIT
 
 #define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
+#define ADMIN_STLTHFLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)];stealth=1'>STLTH-FLW</a>)"
 #define ADMIN_DEMO(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminopendemo=[REF(user)]'>REPLAY</a>)" //Monkestation Edit: REPLAYS
 #define ADMIN_PP(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayeropts=[REF(user)]'>PP</a>)"
 #define ADMIN_VV(atom) "(<a href='byond://?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(atom)]'>VV</a>)"
@@ -58,6 +62,7 @@
 #define ADMIN_SMITE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminsmite=[REF(user)]'>SMITE</a>)"
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
+#define ADMIN_STEALTHLOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)] [ADMIN_STLTHFLW(user)]"
 #define ADMIN_SET_SD_CODE "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];set_selfdestruct_code=1'>SETCODE</a>)"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)] [ADMIN_INDIVIDUALLOG(user)] [ADMIN_SMITE(user)]"
 #define ADMIN_FULLMONTY(user) "[key_name_admin(user)] [ADMIN_FULLMONTY_NONAME(user)]"
@@ -117,9 +122,6 @@
 ///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
 
-#define STICKYBAN_DB_CACHE_TIME (10 SECONDS)
-#define STICKYBAN_ROGUE_CHECK_TIME 5
-
 /// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.
 #define POLICY_POLYMORPH "Polymorph"
 /// Reference index for policy.json to locate any policy text that is shown as a header in the OOC > Show Policy verb.
@@ -169,6 +171,14 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define INTERVIEW_DENIED "interview_denied"
 /// State when an interview has had no action on it yet
 #define INTERVIEW_PENDING "interview_pending"
+
+/// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)
+
+/// MONKE EDIT Used in the logging uses of mentor verbs. Similar to admin.
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_MENTOR_VERB(the_verb) SSblackbox.record_feedback("tally", "mentor_verb", 1, the_verb)
 
 //Monke edit for port servers
 #define MRP2_PORT		3122

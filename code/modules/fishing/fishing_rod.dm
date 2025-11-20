@@ -27,7 +27,7 @@
 	var/obj/item/fishing_hook/hook
 
 	/// Currently hooked item for item reeling
-	var/obj/item/currently_hooked_item
+	var/atom/movable/currently_hooked
 
 	/// Fishing line visual for the hooked item
 	var/datum/beam/fishing_line/fishing_line
@@ -41,6 +41,9 @@
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
+	///Prevents spamming the line casting, without affecting the player's click cooldown.
+	COOLDOWN_DECLARE(casting_cd)
+
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -49,7 +52,7 @@
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
-		if(currently_hooked_item)
+		if(currently_hooked)
 			context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		context[SCREENTIP_CONTEXT_RMB] = "Modify"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -57,7 +60,7 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	if(currently_hooked_item)
+	if(currently_hooked)
 		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
@@ -123,28 +126,20 @@
 	update_icon()
 
 /obj/item/fishing_rod/interact(mob/user)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		reel(user)
 
 /obj/item/fishing_rod/proc/reel(mob/user)
 	//Could use sound here for feedback
-	if(do_after(user, 1 SECONDS, currently_hooked_item))
+	if(do_after(user, 1 SECONDS, currently_hooked))
 		// Should probably respect and used force move later
-		step_towards(currently_hooked_item, get_turf(src))
-		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
+		step_towards(currently_hooked, get_turf(src))
+		if(get_dist(currently_hooked,get_turf(src)) < 1)
 			QDEL_NULL(fishing_line)
 
 /obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	ui_interact(user)
-
-/obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
-	. = ..()
-	/// Reel in if able
-	if(currently_hooked_item)
-		reel(user)
-		return TRUE
-	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
@@ -168,7 +163,7 @@
 		var/mob/user = loc
 		user.update_held_items()
 	fishing_line = null
-	currently_hooked_item = null
+	currently_hooked = null
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
@@ -176,11 +171,11 @@
 
 /// Hooks the item
 /obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		return
 	if(!can_be_hooked(target_atom))
 		return
-	currently_hooked_item = target_atom
+	currently_hooked = target_atom
 	create_fishing_line(target_atom)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
@@ -198,25 +193,39 @@
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
-/obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	//this prevent trying to use telekinesis to fish (which would be broken anyway)
+	if(!user.contains(src) || ((user.istate & ISTATE_HARM) && !isturf(interacting_with)) ||HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return ..()
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-	/// Reel in if able
-	if(currently_hooked_item)
+/obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Reel in if able
+	if(currently_hooked)
 		reel(user)
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	cast_line(target, user, proximity_flag)
+	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
+	cast_line(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return .
-
-///Called by afterattack(). If the line to whatever that is is clear and we're not already busy, try fishing in it
-/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user, proximity_flag)
-	if(casting || currently_hooked_item || proximity_flag || !CheckToolReach(user, target, cast_range))
+/// If the line to whatever that is is clear and we're not already busy, try fishing in it
+/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
+	if(casting || currently_hooked)
 		return
-	/// Annoyingly pre attack is only called in melee
-	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return
+	if(!CheckToolReach(user, target, cast_range))
+		balloon_alert(user, "cannot reach there!")
+		return
+	if(!COOLDOWN_FINISHED(src, casting_cd))
+		return
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = cast_range
@@ -290,7 +299,7 @@
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
 
-/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(slot_check(attacking_item,ROD_SLOT_LINE))
 		use_slot(ROD_SLOT_LINE, user, attacking_item)
 		SStgui.update_uis(src)
@@ -345,7 +354,7 @@
 				return FALSE
 	return TRUE
 
-/obj/item/fishing_rod/ui_act(action, list/params)
+/obj/item/fishing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

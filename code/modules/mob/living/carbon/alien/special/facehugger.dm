@@ -27,7 +27,7 @@
 	item_flags = XENOMORPH_HOLDABLE
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
-
+	var/neutered = FALSE // if the facehugger is able to create a queen
 	var/sterile = FALSE
 	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
@@ -81,6 +81,8 @@
 			. += span_boldannounce("[src] seems to be active!")
 	if (sterile)
 		. += span_boldannounce("It looks like the proboscis has been removed.")
+	if (neutered)
+		. += span_boldannounce("It looks like the proboscis is full of a green fluid.")
 
 /obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 300)
@@ -160,7 +162,8 @@
 	if(blocking_item)
 		target.visible_message(span_danger("[src] smashes against [target]'s [blocking_item]!"), \
 							span_userdanger("[src] smashes against your [blocking_item]!"))
-		Die()
+		if(!neutered)
+			Die()
 		return FALSE
 
 	if(target.wear_mask)
@@ -178,21 +181,20 @@
 	if(!valid_to_attach(M))
 		return
 	// early returns and validity checks done: attach.
-	attached++
-	//ensure we detach once we no longer need to be attached
-	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 
-
-	if(!sterile)
+	if(!sterile && !neutered)
+		//ensure we detach once we no longer need to be attached
+		attached++
+		addtimer(CALLBACK(src, PROC_REF(detach), M), MAX_IMPREGNATION_TIME)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
-
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
-/obj/item/clothing/mask/facehugger/proc/detach()
+/obj/item/clothing/mask/facehugger/proc/detach(mob/living/victim)
 	attached = 0
+	victim.dropItemToGround(src)
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
@@ -213,7 +215,10 @@
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+			if(neutered)
+				new /obj/item/organ/internal/body_egg/alien_embryo/neutered(target)
+			else
+				new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.
@@ -232,7 +237,7 @@
 	worn_icon_state = "[base_icon_state]"
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
-	if(stat == DEAD || stat == UNCONSCIOUS)
+	if(stat == DEAD || stat == UNCONSCIOUS || neutered)
 		return
 
 	stat = UNCONSCIOUS
@@ -252,6 +257,14 @@
 
 	visible_message(span_danger("[src] curls up into a ball!"))
 
+/obj/item/clothing/mask/facehugger/can_mob_unequip(mob/user)
+	if(!real || sterile || stat == DEAD || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		return ..()
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		return FALSE
+	return ..()
+
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
 		return FALSE
@@ -269,8 +282,8 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
-	sterile = TRUE
+	desc = "The Research Director's pet, a facehugger. Its tail falls limp behind it, and its proboscis is full of a glowing green fluid. It acts sluggish, as if its tired."
+	neutered = TRUE
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"

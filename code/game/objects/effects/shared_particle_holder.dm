@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(shared_particles)
 	particles = new particle_path()
 
 /obj/effect/abstract/shared_particle_holder/Destroy(force)
-	QDEL_NULL(particles)
+	particles = null
 	return ..()
 
 /* Adds (or creates and adds) a shared particle holder

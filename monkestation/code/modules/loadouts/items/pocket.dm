@@ -37,14 +37,11 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 		equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
 		id_card.forceMove(wallet)
 
-		if(equipper.back)
-			var/list/backpack_stuff = list()
-			equipper.back.atom_storage?.return_inv(backpack_stuff, FALSE)
-			for(var/obj/item/thing in backpack_stuff)
-				if(wallet.contents.len >= 3)
-					break
-				if(thing.w_class <= WEIGHT_CLASS_SMALL)
-					wallet.atom_storage.attempt_insert(src, thing, equipper, TRUE, FALSE)
+		for(var/obj/item/thing in equipper.back?.atom_storage?.return_inv(FALSE))
+			if(length(wallet.contents) >= 3)
+				break
+			if(thing.w_class <= WEIGHT_CLASS_SMALL)
+				wallet.atom_storage.attempt_insert(src, thing, equipper, TRUE, FALSE)
 	else
 		if(!equipper.equip_to_slot_if_possible(wallet, slot = ITEM_SLOT_BACKPACK, initial = TRUE))
 			wallet.forceMove(equipper.drop_location())
@@ -63,8 +60,8 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 	item_path = /obj/item/storage/box/gum/nicotine
 
 /datum/loadout_item/pocket_items/gum_pack_hp
-	name = "Pack of HP+ Gum"
-	item_path = /obj/item/storage/box/gum/happiness
+	name = "Pack of Diet HP+ Gum"
+	item_path = /obj/item/storage/box/gum/happiness/diet
 
 /*
 *	LIPSTICK

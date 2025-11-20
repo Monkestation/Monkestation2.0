@@ -12,6 +12,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_RESISTLOWPRESSURE,
 	)
@@ -25,10 +26,7 @@
 	mutantbutt = /obj/item/organ/internal/butt/plasma
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
-	payday_modifier = 0.75
 	breathid = "plas"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	species_cookie = /obj/item/reagent_containers/condiment/milk
@@ -85,7 +83,7 @@
 	var/can_burn = FALSE
 	if(!isclothing(H.w_uniform) || !(H.w_uniform.clothing_flags & PLASMAMAN_PREVENT_IGNITION))
 		can_burn = TRUE
-	else if(!isclothing(H.gloves))
+	else if(!isclothing(H.gloves)) //If you dont have the other glove then the suit isnt really sealed is it?
 		can_burn = TRUE
 	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE

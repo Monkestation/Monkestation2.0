@@ -90,7 +90,7 @@
 	speaking = FALSE
 	times_spoken_to++
 
-/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+/obj/structure/speaking_tile/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_paw(mob/user, list/modifiers)
@@ -144,7 +144,7 @@
 		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	..()
 
 /obj/effect/landmark/error

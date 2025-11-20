@@ -36,7 +36,7 @@
 			frying_burnt = TRUE
 			visible_message(span_warning("[src] emits an acrid smell!"))
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/deepfryer/proc/start_fry(obj/item/frying_item, mob/user)
 	to_chat(user, span_notice("You put [frying_item] into [src]."))

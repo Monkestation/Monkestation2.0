@@ -2,8 +2,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -45,13 +44,8 @@
 	implant_color = null
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
-	if(!check_compatibility())
-		active = FALSE
-		return
-
 	active = !active
 
 	if(active)
@@ -107,7 +101,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
 	name = "contraband anti-drop implant"
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun
@@ -124,10 +117,10 @@
 		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
 		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_DAZE,
 	)
 
 	var/stun_cap_amount = 40
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_remove(mob/living/carbon/implant_owner)
 	. = ..()
@@ -139,8 +132,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
-	if(!check_compatibility())
-		return
 
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -165,7 +156,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
 	name = "contraband CNS rebooter implant"
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 //[[[[MOUTH]]]]
@@ -178,7 +168,6 @@
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
-	encode_info = AUGMENT_NO_REQ
 	organ_traits = list(TRAIT_ASSISTED_BREATHING)
 
 /obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)

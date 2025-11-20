@@ -13,6 +13,8 @@
 	var/map_dir = "_maps/templates/lazy_templates"
 	/// The filename (without extension) of the map to load
 	var/map_name
+	/// place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
+	var/place_on_top = FALSE
 
 /datum/lazy_template/New()
 	reservations = list()
@@ -81,6 +83,7 @@
 			bottom_left.z,
 			z_upper = z_idx,
 			z_lower = z_idx,
+			place_on_top = place_on_top,
 		)
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf
@@ -116,3 +119,7 @@
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
 	map_name = "abductor_ships"
+
+/datum/lazy_template/bingle_pit
+	key = LAZY_TEMPLATE_KEY_BINGLE_PIT
+	map_name = "bingle_pit"

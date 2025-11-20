@@ -6,7 +6,7 @@
 
 	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
-	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer for coloring things")
+	examine_discovered = span_warning("It appears to be some sort of chemical aerolyzer for coloring things")
 
 	var/list/valid_chemicals = list(
 		/datum/reagent/colorful_reagent,
@@ -47,7 +47,7 @@
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/spewium,
 	)
-	examine_discovered = span_danger("It appears to be some sort of checmical aerolyzer for harming things!")
+	examine_discovered = span_danger("It appears to be some sort of chemical aerolyzer for harming things!")
 
 /datum/artifact_effect/smoke/flesh
 	type_name = "Smoke Machine (Synthflesh) Effect"
@@ -56,14 +56,14 @@
 	valid_chemicals = list(
 		/datum/reagent/medicine/c2/synthflesh
 	)
-	examine_discovered = span_info("It appears to be some sort of checmical aerolyzer for healing things!")
+	examine_discovered = span_info("It appears to be some sort of chemical aerolyzer for healing things!")
 
 /datum/artifact_effect/smoke/exotic
 	type_name = "Smoke Machine (Exotic) Effect"
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out exotic smoke!"
 
-	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer for... not sure actually.")
+	examine_discovered = span_warning("It appears to be some sort of chemical aerolyzer for... not sure actually.")
 	valid_chemicals = list(
 		/datum/reagent/wittel,
 		/datum/reagent/medicine/omnizine/protozine,

@@ -135,7 +135,7 @@
  */
 /datum/record/locked
 	/// Mob's dna
-	var/datum/dna/dna_ref
+	var/datum/dna/locked_dna
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -153,11 +153,11 @@
 	trim = "Unassigned",
 	datum/mind/mind_ref,
 	/// Locked specific
-	datum/dna/dna_ref,
+	datum/dna/locked_dna,
 )
 	. = ..()
-	src.dna_ref = dna_ref
-	species_type = dna_ref.species.type
+	src.locked_dna = locked_dna
+	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
 

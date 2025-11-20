@@ -1,4 +1,4 @@
-#define COOLDOWN_NO_DISPLAY_TIME (180 SECONDS)
+#define COOLDOWN_NO_DISPLAY_TIME (999 SECONDS)
 
 /// Preset for an action that has a cooldown.
 /datum/action/cooldown
@@ -119,7 +119,7 @@
 		return
 	build_all_button_icons()
 	if(next_use_time > world.time)
-		START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SScooldown_actions, src)
 	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(handle_melee_attack))
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Grant(granted_to)
@@ -167,12 +167,15 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
+	var/cooldown_multiplier = (owner && HAS_TRAIT(owner, TRAIT_FAST_COOLDOWNS)) ? 0.66 : 1
 	if(isnum(override_cooldown_time))
-		next_use_time = world.time + override_cooldown_time
+		next_use_time = world.time + (override_cooldown_time * cooldown_multiplier)
 	else
-		next_use_time = world.time + cooldown_time
+		next_use_time = world.time + (cooldown_time * cooldown_multiplier)
+	if(next_use_time == world.time)
+		return
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SScooldown_actions, src)
 
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
@@ -186,6 +189,31 @@
 			shared_ability.StartCooldownSelf(override_cooldown_time)
 		else
 			shared_ability.StartCooldownSelf(cooldown_time)
+
+/// Resets the cooldown of this ability
+/datum/action/cooldown/proc/ResetCooldown()
+	next_use_time = world.time
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables this cooldown action
+/datum/action/cooldown/proc/enable()
+	action_disabled = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Disables this cooldown action
+/datum/action/cooldown/proc/disable()
+	action_disabled = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables all cooldown actions
+/datum/action/cooldown/proc/enable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.enable()
+
+/// Disables all cooldown actions
+/datum/action/cooldown/proc/disable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.disable()
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -268,7 +296,7 @@
 /datum/action/cooldown/process()
 	if(QDELETED(owner) || (next_use_time - world.time) <= 0)
 		build_all_button_icons(UPDATE_BUTTON_STATUS)
-		STOP_PROCESSING(SSfastprocess, src)
+		STOP_PROCESSING(SScooldown_actions, src)
 		return
 
 	build_all_button_icons(UPDATE_BUTTON_STATUS)

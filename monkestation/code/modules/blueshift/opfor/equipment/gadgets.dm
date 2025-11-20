@@ -155,7 +155,7 @@
 		Perfect for running someone over in the name of a tram malfunction!"
 
 /datum/opposing_force_equipment/gadget_stealth/cloakerbelt
-	item_type = /obj/item/shadowcloak
+	item_type = /obj/item/storage/belt/military/assault/cloak
 	description = "A belt that allows its wearer to temporarily turn invisible. Only recharges in dark areas. Use wisely."
 
 /datum/opposing_force_equipment/gadget_stealth/projector

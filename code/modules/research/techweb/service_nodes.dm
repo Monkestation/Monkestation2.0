@@ -17,6 +17,8 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
+
 /datum/techweb_node/comptech
 	id = "comptech"
 	display_name = "Computer Consoles"
@@ -36,6 +38,7 @@
 		"security_photobooth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"
@@ -47,6 +50,7 @@
 		"bounty_pad_control",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"
@@ -62,6 +66,7 @@
 		"vendor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
@@ -75,6 +80,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/physical/arcade_winner = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 // Kitchen root node
 /datum/techweb_node/bio_process
@@ -105,6 +111,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = TECHWEB_TIER_2_POINTS) //Big discount to reinforce doing it.
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 // Fishing root node
 /datum/techweb_node/fishing
@@ -119,3 +126,4 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)

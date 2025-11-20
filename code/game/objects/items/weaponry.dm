@@ -149,7 +149,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 20
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 35
+	armour_penetration = 60
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -369,7 +369,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/shard))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
 		user.balloon_alert(user, "crafting spear...")
@@ -415,7 +415,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
 	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
-	armour_penetration = 40
+	armour_penetration = 75
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
@@ -821,26 +821,26 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
-/obj/item/melee/baseball_bat/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
+/obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	// we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(src, target_mob)
-	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
+	var/relative_direction = get_cardinal_dir(src, target)
+	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	. = ..()
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/target = target_mob
-		target.stamina.adjust(-force * 2)
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.stamina.adjust(-force * 2)
 
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
-		if(!QDELETED(target_mob))
-			target_mob.throw_at(throw_target, rand(8,10), 14, user)
+		if(!QDELETED(target))
+			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
-	else if(!QDELETED(target_mob) && !target_mob.anchored)
+	else if(!QDELETED(target) && !target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
@@ -961,15 +961,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib()
@@ -1099,24 +1095,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
+	return FALSE
 
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || HAS_TRAIT(src, TRAIT_PACIFISM))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+/obj/item/highfrequencyblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-	return AFTERATTACK_PROCESSED_ITEM
+		return . // Default attack
+	if(isliving(A) && HAS_TRAIT(src, TRAIT_PACIFISM))
+		return . // Default attack (ultimately nothing)
+
+	return slash(A, user, params)
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
@@ -1151,14 +1141,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_target.gib()
 			log_combat(user, living_target, "gibbed", src)
+		return TRUE
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+		return TRUE
 	else if(iswallturf(target) && prob(force*damage_mod*0.5))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+		return TRUE
 	else if(ismineralturf(target) && prob(force*damage_mod))
 		var/turf/closed/mineral/mineral_target = target
 		mineral_target.gets_drilled()
+		return TRUE
+	return FALSE
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"

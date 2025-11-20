@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 
 /datum/store_manager/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/loadout_store),
+		get_asset_datum(/datum/asset/spritesheet_batched/loadout_store),
 	)
 
 /// Select [path] item to [category_slot] slot.
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 			"job_restricted" = null,
 		)
 		if((item_type::icon_preview && item_type::icon_state_preview) || !(item_type::greyscale_config && item_type::greyscale_colors))
-			formatted_item["icon"] = text_ref(item_type::icon_preview || item_type::icon)
+			formatted_item["icon"] = item_type::icon_preview || item_type::icon
 			formatted_item["icon_state"] = item_type::icon_state_preview || item_type::icon_state
 		else
 			formatted_item["icon"] = sanitize_css_class_name("[item_type]")

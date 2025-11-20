@@ -21,3 +21,12 @@
 	var/list/access = list()
 	/// Accesses that this trim unlocks on a card that require wildcard slots to apply. If a card cannot accept all a trim's wildcard accesses, the card is incompatible with the trim.
 	var/list/wildcard_access = list()
+
+/datum/id_trim/proc/chat_span()
+	if(sechud_icon_state == SECHUD_UNKNOWN)
+		return "job__unassigned"
+	var/trimmed_hud_state = copytext(sechud_icon_state, 4) // after the "hud" letters
+	if(trimmed_hud_state)
+		return "job__[trimmed_hud_state]"
+	else
+		return "job__unknown"
