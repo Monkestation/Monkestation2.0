@@ -1,11 +1,9 @@
 /datum/antagonist/bloodsucker/proc/setup_tracker(mob/living/body)
+	if (tracker?.tracking_beacon)
+		cleanup_beacon()
 	if (tracker)
 		cleanup_tracker()
 	tracker = new(body, REF(src))
-
-/datum/antagonist/bloodsucker/proc/setup_beacon()
-	if (tracker.tracking_beacon)
-		cleanup_beacon()
 	tracker.make_beacon(REF(src))
 
 /datum/antagonist/bloodsucker/proc/cleanup_beacon()
