@@ -1069,7 +1069,6 @@
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
 	access_required = null
-	edit_jobs = TRUE
 	badge_string = "Lieutenant"
 
 	icon = 'monkestation/icons/donator/obj/custom.dmi'

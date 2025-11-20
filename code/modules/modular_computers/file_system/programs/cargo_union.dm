@@ -29,8 +29,7 @@
 			if(isnull(member_name) || !istext(member_name))
 				return TRUE
 			GLOB.cargo_union_employees += member_name
-			var/mob/person = findname(member_name)
-			print_new_badge(user, person.last_name(), cooldown_affected = FALSE)
+			print_new_badge(user, member_name, cooldown_affected = FALSE)
 			return TRUE
 		if("remove_member")
 			var/removed_member = params["member_name"]
@@ -42,8 +41,7 @@
 			var/lost_badge_member = params["member_name"]
 			if(!(lost_badge_member in GLOB.cargo_union_employees))
 				return TRUE
-			var/mob/person = findname(lost_badge_member)
-			print_new_badge(user, person.last_name())
+			print_new_badge(user, lost_badge_member)
 			return TRUE
 
 /datum/computer_file/program/cargo_union/application_attackby(obj/item/attacking_item, mob/living/user)

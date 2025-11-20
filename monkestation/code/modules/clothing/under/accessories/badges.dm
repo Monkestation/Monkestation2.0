@@ -17,37 +17,46 @@
 
 	///The access needed to change the stored name, not needed if no name is given.
 	var/access_required = ACCESS_CARGO
-	///Boolean on whether the badge string can be edited.
-	var/edit_jobs = FALSE
 	///The REAL name of the person who imprinted their details onto the badge.
 	var/stored_name
 	///The job title the badge holds.
 	var/badge_string
 
 /obj/item/clothing/accessory/badge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/card/id))
-		return NONE
+	. = ..()
+	if(.)
+		return .
 
-	var/obj/item/card/id/id_card = tool
-	if(isnull(stored_name) || (access_required && (access_required in id_card.access)) || (obj_flags & EMAGGED))
+	if(istype(tool, /obj/item/card/id))
+		var/obj/item/card/id/id_card = tool
+		if(!allowed(user))
+			user.balloon_alert(user, "no access!")
+			return ITEM_INTERACT_BLOCKING
 		user.balloon_alert(user, "details imprinted")
-		set_identity(user.last_name(), id_card.assignment)
+		set_identity(user, id_card.assignment)
 		return ITEM_INTERACT_SUCCESS
 
-	user.balloon_alert(user, "no access!")
-	return ITEM_INTERACT_BLOCKING
+	if(IS_WRITING_UTENSIL(tool))
+		if(!allowed(user))
+			user.balloon_alert(user, "no access!")
+			return ITEM_INTERACT_BLOCKING
+		var/new_badge_string = tgui_input_text(user, "Enter badge job title", "New job", max_length = MAX_LABEL_LEN)
+		if(isnull(new_badge_string) || !istext(new_badge_string))
+			return ITEM_INTERACT_BLOCKING
+		badge_string = new_badge_string
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/clothing/accessory/badge/interact(mob/user)
 	. = ..()
 	user.point_at(src)
 	user.balloon_alert_to_viewers("[stored_name]: [badge_string]")
 
-/obj/item/clothing/accessory/badge/attack(mob/living/target, mob/living/user, params)
-	if(!isliving(target))
-		return
-	user.visible_message(span_danger("[user] invades [target]'s personal space, thrusting [src] into their face insistently."),
-		span_danger("You invade [target]'s personal space, thrusting [src] into their face insistently."))
-	user.do_attack_animation(target)
+/obj/item/clothing/accessory/badge/allowed(mob/accessor)
+	if(isnull(stored_name) || obj_flags & EMAGGED)
+		return TRUE
+	return ..()
 
 /obj/item/clothing/accessory/badge/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -56,19 +65,26 @@
 	balloon_alert(user, "access restriction disabled")
 	return TRUE
 
+/obj/item/clothing/accessory/badge/attack(mob/living/target, mob/living/user, params)
+	if(!isliving(target))
+		return
+	user.visible_message(span_danger("[user] invades [target]'s personal space, thrusting [src] into their face insistently."),
+		span_danger("You invade [target]'s personal space, thrusting [src] into their face insistently."))
+	user.do_attack_animation(target)
+
 ///Sets the badge's identity to the name and description given to us.
-/obj/item/clothing/accessory/badge/proc/set_identity(new_name, new_description)
-	stored_name = new_name
+/obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
+	if(!ismob(named_mob))
+		named_mob = findname(named_mob)
+	stored_name = named_mob.last_name()
 	name = "[initial(name)] ([stored_name])"
-	if(new_description && edit_jobs)
-		badge_string = new_description
 
 /**
  * SUBTYPES
  * Used by:
  * - Detective
- * - Lawyer
  * - Cargo
+ * - Lawyer
  */
 /obj/item/clothing/accessory/badge/detective
 	name = "detective's badge"
@@ -77,7 +93,7 @@
 	access_required = ACCESS_DETECTIVE
 	badge_string = JOB_DETECTIVE
 
-/obj/item/clothing/accessory/badge/detective/set_identity(new_name, new_description)
+/obj/item/clothing/accessory/badge/detective/set_identity(mob/living/named_mob, new_description)
 	. = ..()
 	desc = initial(desc) + " Labeled '[badge_string]'."
 
@@ -106,6 +122,29 @@
 	icon_state = "lawyerbadge"
 	access_required = ACCESS_LAWYER
 	badge_string = "Attorney-At-Law"
+
+/obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob, new_description)
+	. = ..()
+	desc = intiial(desc)
+	if(HAS_TRAIT(named_mob, TRAIT_CLOWN_ENJOYER) || HAS_TRAIT(named_mob, TRAIT_CLUMSY))
+		desc  += " It is backed by the Clown College of Law."
+	else if(HAS_TRAIT(named_mob, TRAIT_MIME_FAN) || HAS_TRAIT(named_mob, TRAIT_MIMING))
+		desc  += " It is backed by the Barreau de l'espace du Québec."
+	else if(HAS_TRAIT(named_mob, TRAIT_EVIL))
+		desc  += " It is not backed by any Bar Association."
+	else if(named_mob.mind?.holy_role)
+		desc  += " It is backed by the Apostolic Penitentiary."
+	else if(isipc(named_mob))
+		desc  += " It is not backed by any bar, but endorsed by an LLM-based megacorporation."
+	else if(named_mob.has_quirk(/datum/quirk/fluffy_tongue))
+		desc  += " It is backed by Committee for Prosecutorial Excellence."
+	else if(HAS_TRAIT(named_mob, TRAIT_HEAVY_DRINKER))
+		desc  += " It is backed by the Bar."
+	else
+		desc  += " It is backed by the Nanotrasen Bar Association."
+
+	if(named_mob.age < AGE_MINOR)
+		desc  += " It is labelled as 'Unpaid Intern'."
 
 /obj/item/clothing/accessory/badge/lawyer/interact(mob/user)
 	. = ..()
