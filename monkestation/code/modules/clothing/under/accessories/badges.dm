@@ -28,12 +28,11 @@
 		return .
 
 	if(istype(tool, /obj/item/card/id))
-		var/obj/item/card/id/id_card = tool
 		if(!allowed(user))
 			user.balloon_alert(user, "no access!")
 			return ITEM_INTERACT_BLOCKING
 		user.balloon_alert(user, "details imprinted")
-		set_identity(user, id_card.assignment)
+		set_identity(user)
 		return ITEM_INTERACT_SUCCESS
 
 	if(IS_WRITING_UTENSIL(tool))
@@ -93,7 +92,7 @@
 	access_required = ACCESS_DETECTIVE
 	badge_string = JOB_DETECTIVE
 
-/obj/item/clothing/accessory/badge/detective/set_identity(mob/living/named_mob, new_description)
+/obj/item/clothing/accessory/badge/detective/set_identity(mob/living/named_mob)
 	. = ..()
 	desc = initial(desc) + " Labeled '[badge_string]'."
 
@@ -123,27 +122,47 @@
 	access_required = ACCESS_LAWYER
 	badge_string = "Attorney-At-Law"
 
-/obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob, new_description)
+	///The mob we're gonna copy over when we get first examined. This is like the `virgin` var of filingcabinets,
+	///this is necessary beacuse we don't know quirks/holy role/traits on initialize.
+	var/mob/living/to_copy
+
+/obj/item/clothing/accessory/badge/lawyer/Initialize(mapload)
+	. = ..()
+	to_copy = recursive_loc_check(src, /mob/living)
+
+/obj/item/clothing/accessory/badge/lawyer/Destroy(force)
+	to_copy = null
+	return ..()
+
+/obj/item/clothing/accessory/badge/lawyer/examine(mob/user)
+	if(isnull(to_copy))
+		return ..()
+	if(!QDELETED(to_copy))
+		set_identity(to_copy)
+	to_copy = null
+	return ..()
+
+/obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob)
 	. = ..()
 	desc = initial(desc)
 	if(named_mob.mind?.holy_role)
 		desc  += " It is backed by the Apostolic Penitentiary."
 	else if(isipc(named_mob))
-		desc  += " It is not backed by any bar, but endorsed by an LLM-based megacorporation."
+		desc  += " It is not backed by any bar, but endorsed by an [span_red("LLM-based megacorporation")]."
 	else if(named_mob.has_quirk(/datum/quirk/fluffy_tongue))
-		desc  += " It is backed by Committee for Prosecutorial Excellence."
+		desc  += " It is backed by the [span_red("Committee for Prosecutorial Excellence")]."
 	else if(HAS_TRAIT(named_mob, TRAIT_CLOWN_ENJOYER) || HAS_TRAIT(named_mob, TRAIT_CLUMSY))
-		desc  += " It is backed by the Clown College of Law."
+		desc  += " It is backed by the [span_red("Clown College of Law")]."
 	else if(HAS_TRAIT(named_mob, TRAIT_MIME_FAN) || HAS_TRAIT(named_mob, TRAIT_MIMING))
-		desc  += " It is backed by the Barreau de l'espace du Québec."
+		desc  += " It is backed by the [span_red("Barreau de l'espace du Québec")]."
 	else if(HAS_TRAIT(named_mob, TRAIT_EVIL))
-		desc  += " It is not backed by any Bar Association."
+		desc  += " It is not backed by [span_red("any Bar Association")]."
 	else if(HAS_TRAIT(named_mob, TRAIT_HEAVY_DRINKER))
-		desc  += " It is backed by the Bar."
+		desc  += " It is backed by the [span_red("Bar")]."
 	else
-		desc  += " It is backed by the Nanotrasen Bar Association."
+		desc  += " It is backed by the [span_red("Nanotrasen Bar Association")]."
 
-	if(named_mob.age < AGE_MINOR)
+	if(astype(named_mob, /mob/living/carbon/human)?.age < AGE_MINOR)
 		desc  += " It is labelled as 'Unpaid Intern'."
 
 /obj/item/clothing/accessory/badge/lawyer/interact(mob/user)
