@@ -6572,7 +6572,6 @@
 #include "monkestation\code\game\objects\items\cursed_rune.dm"
 #include "monkestation\code\game\objects\items\dna_injector.dm"
 #include "monkestation\code\game\objects\items\door_charge.dm"
-#include "monkestation\code\game\objects\items\emags.dm"
 #include "monkestation\code\game\objects\items\explosive_flash.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
 #include "monkestation\code\game\objects\items\holosign_creator.dm"
