@@ -31,7 +31,7 @@
 	var/obj/item/card/id/id_card = tool
 	if(isnull(stored_name) || (access_required && (access_required in id_card.access)) || (obj_flags & EMAGGED))
 		user.balloon_alert(user, "details imprinted")
-		set_identity(user.real_name, id_card.assignment)
+		set_identity(user.last_name(), id_card.assignment)
 		return ITEM_INTERACT_SUCCESS
 
 	user.balloon_alert(user, "no access!")
@@ -67,18 +67,19 @@
  * SUBTYPES
  * Used by:
  * - Detective
+ * - Lawyer
  * - Cargo
  */
 /obj/item/clothing/accessory/badge/detective
 	name = "detective's badge"
-	desc = "An immaculately polished silver security badge on leather. Labeled 'Detective.'"
+	desc = "An immaculately polished silver security badge on leather."
 	icon_state = "detective-silver"
 	access_required = ACCESS_DETECTIVE
 	badge_string = JOB_DETECTIVE
 
 /obj/item/clothing/accessory/badge/detective/set_identity(new_name, new_description)
 	. = ..()
-	desc = "An immaculately polished silver security badge on leather. Labeled '[badge_string]'."
+	desc = initial(desc) + " Labeled '[badge_string]'."
 
 /obj/item/clothing/accessory/badge/detective/gold
 	name = "detective's badge"
@@ -96,3 +97,31 @@
 	desc = "A badge designating the user as part of the 'Cargo Workers Union', presidential level."
 	icon_state = "cargo-gold"
 	badge_string = "Union President"
+
+/obj/item/clothing/accessory/badge/lawyer
+	name = "attorney's badge"
+	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
+	icon = 'icons/obj/clothing/accessories.dmi'
+	worn_icon = 'icons/mob/clothing/accessories.dmi'
+	icon_state = "lawyerbadge"
+	access_required = ACCESS_LAWYER
+	badge_string = "Attorney-At-Law"
+
+/obj/item/clothing/accessory/badge/lawyer/interact(mob/user)
+	. = ..()
+	if(prob(1))
+		user.say("The testimony contradicts the evidence!", forced = "[src]")
+
+/obj/item/clothing/accessory/badge/lawyer/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
+	user.bubble_icon = "lawyer"
+
+/obj/item/clothing/accessory/badge/lawyer/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+	user.bubble_icon = initial(user.bubble_icon)
+
+/obj/item/clothing/accessory/badge/lawyer/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+
+	ASYNC
+		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")

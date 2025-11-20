@@ -214,7 +214,7 @@
 		if(jumpsuit_attached)
 			var/obj/item/clothing/accessory/worn_accessory = SSwardrobe.provide_type(accessory, H)
 			jumpsuit_attached.attach_accessory(worn_accessory)
-			astype(worn_accessory, /obj/item/clothing/accessory/badge)?.set_identity(H.real_name)
+			astype(worn_accessory, /obj/item/clothing/accessory/badge)?.set_identity(H.last_name())
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
