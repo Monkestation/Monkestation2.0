@@ -179,6 +179,7 @@
 	ensure_brain_nonvital(current_mob)
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
+	setup_beacon()
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -199,7 +200,7 @@
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
-	cleanup_tracker()
+	cleanup_beacon()
 	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)
