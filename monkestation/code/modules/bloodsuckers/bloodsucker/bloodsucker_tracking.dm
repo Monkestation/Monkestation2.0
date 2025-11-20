@@ -3,7 +3,7 @@
 		cleanup_beacon()
 	if (tracker)
 		cleanup_tracker()
-	tracker = new(body, REF(src))
+	tracker = new(body)
 	tracker.make_beacon(REF(src))
 
 /datum/antagonist/bloodsucker/proc/cleanup_beacon()
