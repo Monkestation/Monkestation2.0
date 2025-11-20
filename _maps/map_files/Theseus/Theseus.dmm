@@ -48929,7 +48929,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash/mess,
-/mob/living/basic/sloth/citrus,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)

@@ -294,3 +294,44 @@
   imedial and Sakaniko:
   - rscadd: Silicons can now view their laws from the status panel in the top right.
   - bugfix: Fixed uncategorized Malfunction Modules for Malf AI.
+2025-11-18:
+  Absolucy:
+  - qol: The Eye of God's rebuke glow effect is yellow once more.
+  - admin: Darkspawn thralls now show up in the admin Check Antagonists panel.
+  - bugfix: Oozeling darkspawn thralls are no longer instantly deconverted upon being
+      revived.
+  - balance: Bolts of nothingness (from a warlock darkspawn's staff) now just deal
+      brute damage against simple/basic mobs.
+  - balance: Bolts of nothingness now pause stamina regeneration when they hit.
+  JohnFulpWillard:
+  - bugfix: HoP now has shipping access.
+  - bugfix: Removed a Citrus from Theseus (there were 2)
+  - bugfix: Medbots, cleanbots, and hygienebots are no longer affected by temperatures.
+  - bugfix: Bank Machines (in the Vault) now properly yell when unauthorized and don't
+      when authorized.
+  - balance: Speaking of, they also now only speak in Supply chat when authorized,
+      rather than alert the whole station.
+  - bugfix: Fixed an edge case where Nightmares can't spawn on Pubbystation (and potentially
+      Heliostation).
+  - bugfix: Medbeams are no longer considered guns (for beepsky and honorbound Chaplains).
+  SirNightKnight:
+  - rscadd: added justice helmets to the sectech contraband section
+  notghosti:
+  - balance: Explorer masks have pepper spray protection
+  - balance: Skittish will only lock a locker if you could lock the locker in the
+      first place
+  - balance: Warlocks staff is no longer considered lethally chambered
+  - balance: Cracking a boulder will attempt to mine a new boulder in range.
+  - map: Icebox cargo now has a expanded warehouse, with a Ripley and a cargo loader
+      modsuit. And there's now a starting vent.
+  - balance: Halves the rate of antagonist tokens
+  - bugfix: Satchel + backpack will apply slowdown
+2025-11-19:
+  Absolucy:
+  - qol: Oozelings will no longer lose blood from low nutrition if they are actively
+      eating something with nutriment.
+  KnigTheThrasher:
+  - map: Oshan
+  notghosti:
+  - bugfix: Mending touch no longer levels you to the targets blood level, rather
+      just adjusting the transfer rate.

@@ -20808,6 +20808,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "bJh" = (
 /obj/structure/sign/poster/contraband/random/directional/east,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den/gaming)
 "bJi" = (
@@ -29039,6 +29040,10 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"cKO" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/security/brig)
 "cKQ" = (
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -30153,6 +30158,7 @@
 "dMI" = (
 /obj/item/clothing/suit/apron/surgical,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "dMO" = (
@@ -30791,6 +30797,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
+"env" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "enL" = (
 /obj/machinery/door/airlock{
 	name = "Garden"
@@ -33064,6 +33074,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"gih" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "gii" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/nt_rep)
@@ -34759,6 +34773,12 @@
 "hEC" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/abandoned)
+"hER" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/wood,
+/area/station/service/abandoned_gambling_den)
 "hEX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -35039,6 +35059,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/station/science/lab)
+"hTD" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "hUx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -41019,6 +41043,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"nhC" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/central)
 "nih" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/clothing/costume,
@@ -72334,7 +72362,7 @@ aaa
 aaa
 aiu
 aiX
-ajD
+cKO
 aks
 aiu
 ait
@@ -80136,7 +80164,7 @@ bDi
 bRF
 bDi
 uIR
-bDi
+gih
 bva
 bPA
 ftp
@@ -92890,7 +92918,7 @@ aiU
 jHP
 aju
 ajt
-alQ
+hER
 mnG
 xjl
 otM
@@ -93414,7 +93442,7 @@ ajv
 ajv
 ajv
 ajv
-ajv
+hTD
 asl
 aiS
 aqT
@@ -100653,7 +100681,7 @@ aaa
 vgm
 jEL
 uSW
-yet
+nhC
 uSW
 lEn
 vYN
@@ -101145,7 +101173,7 @@ aEj
 aFi
 ezQ
 aFi
-aFi
+env
 odG
 aEj
 wmE
