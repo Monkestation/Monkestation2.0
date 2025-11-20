@@ -444,6 +444,7 @@
 	unique_reskin = list("Red" = "sprayer_med_red",
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
+	possible_transfer_amounts = list(2,5,10,15)
 
 /obj/item/reagent_containers/spray/medical/click_alt(mob/user)
 	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
@@ -461,8 +462,11 @@
 			inhand_icon_state = "sprayer_med_blue"
 	M.update_held_items()
 
-/obj/item/reagent_containers/spray/hercuri
+/obj/item/reagent_containers/spray/hercuri //note to self make a subtype of medical spray bottles after the medical clean up is done - NK
 	name = "medical spray (hercuri)"
-	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
-	icon_state = "sprayer_large"
+	icon = 'icons/obj/medical/chemical.dmi'
+	desc = "A medical spray bottle. This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
+	icon_state = "sprayer_med_yellow"
 	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)
+	volume = 100
+	possible_transfer_amounts = list(2,5,10,15)
