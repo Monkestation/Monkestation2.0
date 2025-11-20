@@ -330,3 +330,8 @@
   Absolucy:
   - qol: Oozelings will no longer lose blood from low nutrition if they are actively
       eating something with nutriment.
+  KnigTheThrasher:
+  - map: Oshan
+  notghosti:
+  - bugfix: Mending touch no longer levels you to the targets blood level, rather
+      just adjusting the transfer rate.
