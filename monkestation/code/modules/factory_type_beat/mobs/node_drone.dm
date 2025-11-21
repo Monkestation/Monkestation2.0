@@ -16,7 +16,6 @@
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
-
 	maxHealth = 300 // We adjust the max health based on the vent size in the arrive() proc.
 	health = 300
 	density = TRUE
@@ -30,6 +29,7 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
+	bodytemp_cold_damage_limit = -1
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
