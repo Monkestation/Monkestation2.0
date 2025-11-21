@@ -105,6 +105,7 @@
 
 /obj/item/organ/external/anime_halo/proc/update_halo_on_death(mob/living/carbon/halo_owner, new_owner_stat, old_owner_stat)
 	SIGNAL_HANDLER
+	
 	if((new_owner_stat == DEAD) || (old_owner_stat == DEAD))
 		halo_owner.update_body_parts()
 
