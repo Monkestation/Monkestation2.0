@@ -81,20 +81,20 @@
 	if(istype(blob, /mob/eye/blob/lesser)) //probably refactor all these to actual buttons so we can choose what to grant on the blob instead of a type check
 		var/obj/structure/blob/special/resource/node = locate() in get_turf(blob)
 		if(!node)
-			blob.balloon_alert(blob, "No resource blob here")
+			blob.balloon_alert(blob, "no resource blob here")
 			return
 		if(!node.blob_team)
-			blob.balloon_alert(blob, "Unclaimed")
+			blob.balloon_alert(blob, "unclaimed")
 			return
 		if(blob in node.give_to)
-			blob.balloon_alert(blob, "Already gaining resources from this blob")
+			blob.balloon_alert(blob, "already gaining resources from this blob")
 			return
 		var/cost = node.point_cost
 		if(!blob.buy(cost))
-			blob.balloon_alert(blob, "Not enough resources, need [cost]")
+			blob.balloon_alert(blob, "not enough resources, need [cost]")
 			return
 		node.give_to += blob
-		node.balloon_alert(blob, "Givings resources")
+		node.balloon_alert(blob, "giving resources")
 	else
 		blob.create_special(/obj/structure/blob/special/resource, /obj/structure/blob/special/resource::point_cost, TRUE, BLOB_RESOURCE_MIN_DISTANCE)
 

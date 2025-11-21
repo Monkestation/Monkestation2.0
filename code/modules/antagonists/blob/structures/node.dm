@@ -80,19 +80,19 @@
 	if(!hosting && non_lesser_click) //base cost of 80, 10 more per lesser overmind we already have
 		var/lesser_overmind_cost = 80 + (10 * (length(overmind.antag_team.overminds) - 1))
 		if(lesser_overmind_cost > OVERMIND_MAX_POINTS_DEFAULT)
-			balloon_alert(overmind, "Maximum lesser overminds reached")
+			balloon_alert(overmind, "maximum lesser overminds reached")
 			return FALSE
 
 		if(!overmind.buy(lesser_overmind_cost))
-			balloon_alert(overmind, "Not enough resources, need [lesser_overmind_cost]")
+			balloon_alert(overmind, "not enough resources, need [lesser_overmind_cost]")
 			return FALSE
 
 		if(!spawn_lesser_overmind(overmind))
-			balloon_alert(overmind, "No willing ghosts")
+			balloon_alert(overmind, "no willing ghosts")
 			overmind.add_points(lesser_overmind_cost)
 			return FALSE
 		else
-			balloon_alert(overmind, "Lesser overmind spawned")
+			balloon_alert(overmind, "lesser overmind spawned")
 			return TRUE
 
 	var/host_click = hosting == overmind
