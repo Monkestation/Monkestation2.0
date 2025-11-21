@@ -69,7 +69,7 @@
 		SSthe_ark.convert_area_turfs(marked_area, 50, conversion_timer)
 
 	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
-	send_clock_message(null, span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
+	send_clock_message(span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
 	START_PROCESSING(SSthe_ark, src)
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	update_icon()
@@ -127,7 +127,7 @@
 		priority_announce("Reality warping object located in [crystal_area].", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
 /obj/structure/destructible/clockwork/anchoring_crystal/Destroy()
-	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has been destroyed!")))
+	send_clock_message(span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has been destroyed!")))
 	SSthe_ark.anchoring_crystals -= src
 	STOP_PROCESSING(SSthe_ark, src)
 	UnregisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS)
@@ -141,7 +141,7 @@
 
 //do all the stuff for finishing charging
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/finish_charging()
-	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")))
+	send_clock_message(span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")))
 	charge_state = FULLY_CHARGED
 	resistance_flags |= INDESTRUCTIBLE
 	atom_integrity = INFINITY
