@@ -2926,6 +2926,7 @@
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\ert.dm"
 #include "code\modules\admin\verbs\fix_air.dm"
+#include "code\modules\admin\verbs\fix_sm.dm"
 #include "code\modules\admin\verbs\fov.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
