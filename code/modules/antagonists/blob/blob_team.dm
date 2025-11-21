@@ -61,15 +61,18 @@
 		overminds -= member.current
 
 /datum/team/blob/process(seconds_per_tick)
+	if(!main_overmind?.blob_core)
+		return
+
 	if(resource_delay <= world.time)
-		var/amount_to_give = blobstrain?.core_process() || 0 //make sure amount_to_give is always a num
+		var/amount_to_give = round(blobstrain?.core_process(), 0.1) || 0 //make sure amount_to_give is always a num
 		resource_delay = world.time + (1 SECOND)
 		main_overmind?.add_points(amount_to_give)
 		if(length(overminds) > 1)
 			amount_to_give = ceil(amount_to_give / 2)
 			for(var/mob/eye/blob/overmind in overminds - main_overmind)
 				overmind.add_points(amount_to_give)
-	main_overmind?.blob_core?.repair_damage(base_core_regen + blobstrain.core_regen_bonus)
+	main_overmind.blob_core.repair_damage(base_core_regen + blobstrain.core_regen_bonus)
 
 ///Set our strain and update all our overminds and tiles
 /datum/team/blob/proc/set_team_strain(datum/blobstrain/new_strain)
@@ -92,6 +95,7 @@
 	QDEL_NULL(blobstrain)
 	STOP_PROCESSING(SSprocessing, src)
 	SSshuttle.clearHostileEnvironment(main_overmind)
+	SSticker.news_report = BLOB_DESTROYED
 	for(var/obj/structure/blob/blob_structure in all_blob_tiles)
 		blob_structure.blob_team = null
 		blob_structure.update_appearance()

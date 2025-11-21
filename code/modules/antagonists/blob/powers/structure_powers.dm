@@ -26,7 +26,8 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/special/core/core = new(get_turf(src), antag_team, TRUE)
+		var/obj/structure/blob/special/node/core/core = new(get_turf(src), antag_team, TRUE)
+		core.hosting = src
 		antag_team.blobs_legit++
 		blob_core = core
 		core.update_appearance()
@@ -37,7 +38,7 @@
 	return TRUE
 
 /// Places important blob structures
-/mob/eye/blob/proc/create_special(price, blobstrain, min_separation, needs_node, turf/tile)
+/mob/eye/blob/proc/create_special(obj/structure/blob/created_type, price = created_type::point_cost, needs_node = FALSE, min_separation = 0, turf/tile)
 	if(!tile)
 		tile = get_turf(src)
 	var/obj/structure/blob/blob = (locate(/obj/structure/blob) in tile)
@@ -55,40 +56,20 @@
 			to_chat(src, span_warning("This type of blob must be placed on the station!"))
 			balloon_alert(src, "can't place off-station!")
 			return null
-		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, tile)))
+		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)))
 			to_chat(src, span_warning("You need to place this blob closer to a node or core!"))
 			balloon_alert(src, "too far from node or core!")
 			return null //handholdotron 2000
 	if(min_separation)
 		for(var/obj/structure/blob/other_blob in orange(min_separation, tile))
-			if(other_blob.type == blobstrain)
+			if(other_blob.type == created_type)
 				to_chat(src, span_warning("There is a similar blob nearby, move more than [min_separation] tiles away from it!"))
 				other_blob.balloon_alert(src, "too close!")
 				return null
-	if(!can_buy(price))
+	if(!buy(price))
 		return null
-	var/obj/structure/blob/node = blob.change_to(blobstrain, src)
+	var/obj/structure/blob/node = blob.change_to(created_type, antag_team)
 	return node
-
-/// Creates a shield to reflect projectiles
-/mob/eye/blob/proc/create_shield(turf/tile)
-	var/obj/structure/blob/shield/shield = locate(/obj/structure/blob/shield) in tile
-	if(!shield)
-		shield = create_special(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, tile)
-		shield?.balloon_alert(src, "upgraded to [shield.name]!")
-		return FALSE
-
-	if(!can_buy(BLOB_UPGRADE_REFLECTOR_COST))
-		return FALSE
-
-	if(shield.get_integrity() < shield.max_integrity * 0.5)
-		add_points(BLOB_UPGRADE_REFLECTOR_COST)
-		to_chat(src, span_warning("This shield blob is too damaged to be modified properly!"))
-		return FALSE
-
-	to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity."))
-	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
-	shield.balloon_alert(src, "upgraded to [shield.name]!")
 
 /// Toggles requiring nodes
 /mob/eye/blob/proc/toggle_node_req()
@@ -111,7 +92,7 @@
 	if(factory.get_integrity() < factory.max_integrity * 0.5)
 		to_chat(src, span_warning("This factory blob is too damaged to sustain a blobbernaut."))
 		return FALSE
-	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
+	if(!buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return FALSE
 
 	factory.is_creating_blobbernaut = TRUE
@@ -148,14 +129,13 @@
 /// When one of our boys attacked something, we sometimes want to perform extra effects
 /mob/eye/blob/proc/on_blobbernaut_attacked(mob/living/basic/blobbynaut, atom/target, success) //move this over to the team
 	SIGNAL_HANDLER
-	if (!success)
+	if(!success || !isliving(target))
 		return
 	antag_team.blobstrain.blobbernaut_attack(target, blobbynaut)
 
 /// Searches the tile for a blob structure and removes it.
 /mob/eye/blob/proc/remove_blob(turf/tile)
 	var/obj/structure/blob/blob = locate() in tile
-
 	if(!blob)
 		to_chat(src, span_warning("There is no blob there!"))
 		return FALSE
@@ -164,24 +144,14 @@
 		to_chat(src, span_warning("Unable to remove this blob."))
 		return FALSE
 
-	if(max_blob_points < blob.point_return + blob_points)
-		to_chat(src, span_warning("You have too many resources to remove this blob!"))
-		return FALSE
-
-	if(blob.point_return)
-		add_points(blob.point_return)
-		to_chat(src, span_notice("Gained [blob.point_return] resources from removing \the [blob]."))
-		blob.balloon_alert(src, "+[blob.point_return] resource\s")
-
-	qdel(blob)
-	return TRUE
+	return blob.attempt_removal(src)
 
 /// Expands to nearby tiles
 /mob/eye/blob/proc/expand_blob(turf/tile)
 	if(world.time < last_attack)
 		return FALSE
-	var/list/possible_blobs = list()
 
+	var/list/possible_blobs = list()
 	for(var/obj/structure/blob/blob in range(tile, 1))
 		possible_blobs += blob
 
@@ -189,21 +159,18 @@
 		to_chat(src, span_warning("There is no blob adjacent to the target tile!"))
 		return FALSE
 
-	if(!can_buy(BLOB_EXPAND_COST))
+	if(!buy(BLOB_EXPAND_COST))
 		return FALSE
 
 	var/attack_success
-	for(var/mob/living/player in tile)
-		if(!player.can_blob_attack())
+	for(var/mob/living/target in tile)
+		if(!target.can_blob_attack() || (ROLE_BLOB in target.faction) || target.stat == DEAD)
 			continue
-		if(ROLE_BLOB in player.faction) //no friendly/dead fire
-			continue
-		if(player.stat != DEAD)
-			attack_success = TRUE
-		antag_team.blobstrain.attack_living(player, possible_blobs)
+
+		attack_success = TRUE
+		antag_team.blobstrain.attack_living(target, possible_blobs)
 
 	var/obj/structure/blob/blob = locate() in tile
-
 	if(blob)
 		if(attack_success) //if we successfully attacked a turf with a blob on it, only give an attack refund
 			blob.blob_attack_animation(tile, src)
@@ -218,3 +185,40 @@
 		last_attack = world.time + CLICK_CD_MELEE
 	else
 		last_attack = world.time + CLICK_CD_RAPID
+
+/proc/create_blob_tile(turf/tile, obj/structure/blob/created, obj/structure/blob/created_from, mob/eye/blob/creator, needs_node = FALSE, price = created::point_cost, min_separation = 0)
+	if(!tile)
+		tile = get_turf(creator || created_from)
+		if(!tile)
+			return FALSE
+
+	//are we converting from one tile type to another
+	var/converting = (created_from && get_turf(created_from) == tile && !(created_from.type == created || istype(created_from, /obj/structure/blob/special)))
+	if(needs_node)
+		if((converting && !created_from.legit) || !(astype(tile.loc, /area).area_flags & BLOBS_ALLOWED))
+			if(creator)
+				to_chat(creator, span_warning("This type of blob must be placed on the station!"))
+				creator.balloon_alert(creator, "can't place off-station!")
+			return FALSE
+
+		//currently ignores creator.nodes_required as its not actually used anywhere
+		if(!(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)))
+			if(creator)
+				to_chat(creator, span_warning("You need to place this blob closer to a node or core!"))
+				creator.balloon_alert(creator, "too far from node or core!")
+			return FALSE
+
+	if(min_separation)
+		for(var/obj/structure/blob/other_blob in orange(min_separation, tile))
+			if(other_blob.type == created)
+				if(creator)
+					to_chat(creator, span_warning("There is a similar blob nearby, move more than [min_separation] tiles away from it!"))
+					other_blob.balloon_alert(creator, "too close!")
+				return FALSE
+
+	if(creator && !creator.buy(price))
+		return FALSE
+
+	if(converting)
+		return created_from.change_to(created, creator.antag_team)
+	return new created(tile, (creator?.antag_team || created_from?.blob_team))

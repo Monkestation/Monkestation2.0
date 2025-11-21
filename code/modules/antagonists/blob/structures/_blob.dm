@@ -13,6 +13,8 @@
 	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 	max_integrity = BLOB_REGULAR_MAX_HP
 	armor_type = /datum/armor/structure_blob
+	/// How many points does it cost to create a blob of this type
+	var/point_cost = 0
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	/// how much health this blob regens when pulsed
@@ -25,8 +27,8 @@
 	var/atmosblock = FALSE
 	/// is this tile valid for winning
 	var/legit = FALSE
-	/// ref to the team that we belong to
-	var/datum/team/blob/blob_team
+	/// ref to the team that we belong to, should only be updated by set_owner()
+	VAR_FINAL/datum/team/blob/blob_team
 
 	/// We got pulsed when?
 	COOLDOWN_DECLARE(pulse_timestamp)
@@ -40,7 +42,8 @@
 
 /obj/structure/blob/Initialize(mapload, datum/team/blob/owning_team)
 	. = ..()
-	set_owner(owning_team)
+	if(owning_team)
+		set_owner(owning_team)
 	register_context()
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
@@ -55,9 +58,9 @@
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(TRUE, FALSE)
-	set_owner(null)
+	set_owner(null, FALSE)
 	GLOB.blobs -= src //it's no longer in the all blobs list either
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 /obj/structure/blob/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -179,7 +182,7 @@
 		damage_amount = blob_team.blobstrain.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
-/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = FALSE, sound_effect = TRUE, attack_dir)
 	. = ..()
 	if(. && atom_integrity > 0)
 		update_appearance()
@@ -204,7 +207,7 @@
 			. += blob_team.blobstrain.examine(user)
 		. += "It seems to be made of [get_chem_name()]."
 
-/obj/structure/blob/proc/chemeffectreport(mob/user)
+/obj/structure/blob/proc/chemeffectreport(mob/user) as /list
 	RETURN_TYPE(/list)
 	. = list()
 	if(blob_team)
@@ -220,7 +223,7 @@
 							"<b>Health:</b> [span_notice("[atom_integrity]/[max_integrity]")]",
 							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
 
-/obj/structure/blob/proc/change_to(passed_type, controller) //needs to be passed the team
+/obj/structure/blob/proc/change_to(passed_type, datum/team/blob/controller)
 	if(!ispath(passed_type))
 		CRASH("change_to(): invalid type for blob")
 	var/obj/structure/blob/changed_to = new passed_type(src.loc, controller)
@@ -238,18 +241,19 @@
 			COOLDOWN_START(src, heal_timestamp, 20)
 		update_appearance()
 		COOLDOWN_START(src, pulse_timestamp, 10)
-		return TRUE//we did it, we were pulsed!
+		return TRUE //we did it, we were pulsed!
 	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/scannerreport()
-	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
+	return "None."
 
 /obj/structure/blob/proc/get_chem_name()
 	return blob_team?.blobstrain.name || "some kind of organic tissue"
 
 ///Update our blob_team to the passed value, returns our old team if we had one and changed team
-/obj/structure/blob/proc/set_owner(datum/team/blob/new_owner)
+/obj/structure/blob/proc/set_owner(datum/team/blob/new_owner, update_visuals = TRUE)
 	if(new_owner == blob_team)
+		message_admins("4")
 		return FALSE
 
 	. = blob_team
@@ -259,6 +263,7 @@
 		else
 			stack_trace("Blob tile\[[src]\] passed an invalid new_owner\[[new_owner], [new_owner.type]\].")
 
+	check_legit()
 	blob_team = new_owner
 	if(.)
 		var/datum/team/blob/old_owner = .
@@ -274,8 +279,34 @@
 			blob_team.all_blobs_by_type[src.type] = list(src)
 		else
 			typed_blobs += src
-		var/turf/our_turf = get_turf(src)
-		if(our_turf && astype(our_turf.loc, /area).area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
+
+		if(legit)
 			blob_team.blobs_legit++
-			src.legit = TRUE
-	update_appearance()
+			if(!blob_team.victory_in_progress)
+				blob_team.highest_tile_count = max(blob_team.highest_tile_count, blob_team.blobs_legit)
+
+	if(update_visuals)
+		update_appearance()
+	message_admins("5 [.]")
+
+///Check if our area allows blobs and update related values
+/obj/structure/blob/proc/check_legit(new_team = FALSE)
+	var/old_value = legit
+	legit = (astype(get_step(src, 0).loc, /area).area_flags & BLOBS_ALLOWED)
+	if(legit != old_value && blob_team)
+		if(legit)
+			blob_team.blobs_legit++
+		else
+			blob_team.blobs_legit--
+
+/obj/structure/blob/proc/handle_ctrl_click(mob/eye/blob/overmind)
+	return
+
+/obj/structure/blob/proc/attempt_removal(mob/eye/blob/overmind)
+	if(point_return && overmind)
+		overmind.add_points(point_return)
+		to_chat(overmind, span_notice("Gained [point_return] resources from removing \the [src]."))
+		balloon_alert(overmind, "+[point_return] resource\s")
+
+	qdel(src)
+	return TRUE

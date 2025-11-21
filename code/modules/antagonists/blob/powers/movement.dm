@@ -36,7 +36,7 @@
 		to_chat(src, span_warning("You cannot relocate your core here!"))
 		return FALSE
 
-	if(!can_buy(BLOB_POWER_RELOCATE_COST))
+	if(!buy(BLOB_POWER_RELOCATE_COST))
 		return FALSE
 
 	var/turf/old_turf = get_turf(blob_core)

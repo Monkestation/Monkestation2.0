@@ -15,7 +15,7 @@
 	reagent.expose_mob(attacked, VAPOR, amount_injected, TRUE, (attacked.getarmor(null, BIO) * 0.01), attacker)
 	send_message(attacked)
 
-/datum/blobstrain/reagent/blobbernaut_attack(mob/living/attacked)
+/datum/blobstrain/reagent/blobbernaut_attack(mob/living/attacked, blobbernaut)
 	//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 	reagent.expose_mob(attacked, VAPOR, blobbernaut_amount_injected, FALSE, (attacked.getarmor(null, BIO) * 0.01))
 

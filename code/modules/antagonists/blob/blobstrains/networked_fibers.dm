@@ -15,9 +15,9 @@
 	if(!controller || isspaceturf(target_turf))
 		return
 
-	if(!istype(expanding, /obj/structure/blob/special))
-		for(var/obj/structure/blob/possible_expander in range(1, new_blob))
-			if(possible_expander.blob_team == blob_team && istype(possible_expander, /obj/structure/blob/special))
+	if(!istype(expanding, /obj/structure/blob/special/node))
+		for(var/obj/structure/blob/special/node/possible_expander in range(1, new_blob))
+			if(possible_expander.blob_team == blob_team)
 				expanding = possible_expander
 				break
 

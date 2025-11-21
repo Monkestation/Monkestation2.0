@@ -1,6 +1,5 @@
 //Few global vars to track the blob
-GLOBAL_LIST_EMPTY(blobs) //complete list of all blobs made.
-GLOBAL_LIST_EMPTY(blob_cores)
+GLOBAL_LIST_EMPTY(blobs) //complete list of all blob tiles made.
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
@@ -24,7 +23,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	lighting_cutoff_blue = 20
 	hud_type = /datum/hud/blob_overmind
 	///Ref to our core structure
-	var/obj/structure/blob/special/blob_core
+	var/obj/structure/blob/special/node/blob_core
 	///How many points do we have, used for building and attacking
 	var/blob_points = 0
 	///The maximum amount of points we can have
@@ -61,7 +60,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	manualplace_min_time += world.time
 	autoplace_max_time += world.time
 	GLOB.overminds += src
-	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	var/is_lesser = istype(src, /mob/eye/blob/lesser)
+	var/new_name = "[is_lesser ? "Lesser " : null][initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
@@ -70,7 +70,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		blob_core.update_appearance()
 
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	if(!is_lesser)
+		START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
 
 /mob/eye/blob/Destroy()
@@ -84,26 +85,25 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	return ..()
 
 /mob/eye/blob/proc/validate_location()
-	var/turf/T = get_turf(src)
-	if(is_valid_turf(T))
+	var/turf/our_turf = get_turf(src)
+	if(is_valid_turf(our_turf))
 		return
 
 	if(LAZYLEN(GLOB.blobstart))
-		var/list/blobstarts = shuffle(GLOB.blobstart)
-		for(var/_T in blobstarts)
-			if(is_valid_turf(_T))
-				T = _T
+		for(var/turf/start as anything in shuffle(GLOB.blobstart))
+			if(is_valid_turf(start))
+				our_turf = start
 				break
 	else // no blob starts so look for an alternate
 		for(var/i in 1 to 16)
 			var/turf/picked_safe = find_safe_turf()
 			if(is_valid_turf(picked_safe))
-				T = picked_safe
+				our_turf = picked_safe
 				break
 
-	if(!T)
+	if(!our_turf)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
-	forceMove(T)
+	forceMove(our_turf)
 
 /mob/eye/blob/proc/update_strain(had_strain = FALSE)
 	if(had_strain)
@@ -142,7 +142,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				place_blob_core(BLOB_RANDOM_PLACEMENT)
 		else
 			// If we get here, it means yes: the blob is kill
-			SSticker.news_report = BLOB_DESTROYED
 			qdel(src)
 	else if(!antag_team.victory_in_progress && (antag_team.blobs_legit >= antag_team.blobwincount))
 		antag_team.victory_in_progress = TRUE
@@ -154,9 +153,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	else if(!free_strain_rerolls && ((last_reroll_time + BLOB_POWER_REROLL_FREE_TIME) < world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
-
-	if(!antag_team.victory_in_progress)
-		antag_team.highest_tile_count = max(antag_team.highest_tile_count, antag_team.blobs_legit)
 
 	if(antag_team?.announcement_time && (world.time >= antag_team.announcement_time || antag_team.blobs_legit >= antag_team.announcement_size) && !antag_team.has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
@@ -202,8 +198,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
 		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
-		if(main_objective)
-			main_objective.completed = TRUE
+		main_objective?.completed = TRUE
 	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = FORCE_END_ROUND

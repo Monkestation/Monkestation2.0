@@ -72,7 +72,7 @@
 			var/pronoun_appropriate_demonym = "CLOCK-SIBLING"
 			if(affected_mob.gender == MALE)
 				pronoun_appropriate_demonym = "CLOCK-BROTHER"
-			if(affected_mob.gender == FEMALE)
+			else if(affected_mob.gender == FEMALE)
 				pronoun_appropriate_demonym = "CLOCK-SISTER"
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
 			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("YOUR SERVITUDE IS NOT FINISHED, [uppertext(affected_mob.real_name)]. RISE, [pronoun_appropriate_demonym], AND BE RENEWED.")]\""))

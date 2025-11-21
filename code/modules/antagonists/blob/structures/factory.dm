@@ -5,7 +5,8 @@
 	desc = "A thick spire of tendrils."
 	max_integrity = BLOB_FACTORY_MAX_HP
 	health_regen = BLOB_FACTORY_HP_REGEN
-	point_return = BLOB_REFUND_FACTORY_COST
+	point_cost = 60
+	point_return = 35
 	resistance_flags = LAVA_PROOF
 	armor_type = /datum/armor/structure_blob/factory
 	///How many spores this factory can have.

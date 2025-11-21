@@ -15,9 +15,7 @@
 
 // Generic blob defines
 
-#define BLOB_BASE_POINT_RATE 2 // Base amount of points per process()
-#define BLOB_EXPAND_COST 4 // Price to expand onto a new tile
-#define BLOB_ATTACK_REFUND 2 // Points 'refunded' when the expand attempt actually attacks something instead
+#define BLOB_BASE_POINT_RATE 1.5 // Base amount of points per second
 #define BLOB_BRUTE_RESIST 0.5 // Brute damage taken gets multiplied by this value
 #define BLOB_FIRE_RESIST 1 // Burn damage taken gets multiplied by this value
 #define BLOB_EXPAND_CHANCE_MULTIPLIER 1 // Increase this value to make blobs naturally expand faster
@@ -65,23 +63,22 @@
 #define BLOB_REFLECTOR_HP_REGEN 2
 
 
-// Structure purchasing
+// Costs
 
+#define BLOB_EXPAND_COST 4
 #define BLOB_UPGRADE_STRONG_COST 15 // Upgrade and build costs here
-#define BLOB_UPGRADE_REFLECTOR_COST 15
-#define BLOB_STRUCTURE_RESOURCE_COST 40
-#define BLOB_STRUCTURE_FACTORY_COST 60
-#define BLOB_STRUCTURE_NODE_COST 50
+#define BLOB_UPGRADE_REFLECTOR_COST 10
 
-#define BLOB_REFUND_STRONG_COST 4 // Points refunded when destroying the structure
-#define BLOB_REFUND_REFLECTOR_COST 8
-#define BLOB_REFUND_RESOURCE_COST 15
-#define BLOB_REFUND_FACTORY_COST 25
-#define BLOB_REFUND_NODE_COST 25
+// Refund amounts
+
+#define BLOB_ATTACK_REFUND 2 // Points 'refunded' when the expand attempt actually attacks something instead
+#define BLOB_REFUND_STRONG_COST 8 // Points refunded when destroying the structure
+#define BLOB_REFUND_REFLECTOR_COST 12
+#define BLOB_REFUND_RESOURCE_COST 20
 
 // Blob power properties
 
-#define BLOB_POWER_RELOCATE_COST 80 // Resource cost to move your core to a different node
+#define BLOB_POWER_RELOCATE_COST 60 // Resource cost to move your core to a different node
 #define BLOB_POWER_REROLL_COST 40 // Strain reroll
 #define BLOB_POWER_REROLL_FREE_TIME (4 MINUTES) // Gain a free strain reroll every x minutes
 #define BLOB_POWER_REROLL_CHOICES 6 // Possibilities to choose from; keep in mind increasing this might fuck with the radial menu
@@ -98,9 +95,9 @@
 #define BLOBMOB_BLOBBERNAUT_HEALTH 200 // Base blobbernaut health
 #define BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER 20 // Damage without active overmind (core dead or xenobio mob)
 #define BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER 20
-#define BLOBMOB_BLOBBERNAUT_DMG_LOWER 4 // Damage dealt with active overmind (most damage comes from strain chems)
-#define BLOBMOB_BLOBBERNAUT_DMG_UPPER 4
+#define BLOBMOB_BLOBBERNAUT_DMG_LOWER 8 // Damage dealt with active overmind (most damage comes from strain chems)
+#define BLOBMOB_BLOBBERNAUT_DMG_UPPER 8
 #define BLOBMOB_BLOBBERNAUT_DMG_OBJ 60 // Damage dealth to objects/machines
-#define BLOBMOB_BLOBBERNAUT_HEALING_CORE 0.05 // Percentage multiplier HP restored on Life() when within 2 tiles of the blob core
-#define BLOBMOB_BLOBBERNAUT_HEALING_NODE 0.0125 // Same, but for a nearby node
+#define BLOBMOB_BLOBBERNAUT_HEALING_CORE 0.75 // Percentage multiplier HP restored on Life() when within 2 tiles of the blob core
+#define BLOBMOB_BLOBBERNAUT_HEALING_NODE 0.5 // Same, but for a nearby node
 #define BLOBMOB_BLOBBERNAUT_HEALTH_DECAY 0.025 // Percentage multiplier HP lost when not near blob tiles or without factory

@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 
 	/// Adds to claim, pulse, and expand range
 	var/node_range_bonus = 0
-	/// Nodes can sustain this any extra spores with this strain
+	/// Nodes can sustain this many extra spores with this strain
 	var/node_spore_bonus = 0
 	/// Extra range up to which the node reinforces blobs
 	var/node_strong_reinforcement_range_bonus = 0
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 
 /datum/blobstrain/proc/on_gain()
 	if(blob_team.main_overmind?.blob_core) //only apply core buffs to the main core
-		var/obj/structure/blob/special/main_core = blob_team.main_overmind.blob_core
+		var/obj/structure/blob/special/node/core/main_core = blob_team.main_overmind.blob_core
 		main_core.claim_range += core_range_bonus
 		main_core.pulse_range += core_range_bonus
 		main_core.expand_range += core_range_bonus
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 
 /datum/blobstrain/proc/on_lose()
 	if(blob_team.main_overmind.blob_core)
-		var/obj/structure/blob/special/main_core = blob_team.main_overmind.blob_core
+		var/obj/structure/blob/special/node/core/main_core = blob_team.main_overmind.blob_core
 		main_core.claim_range -= core_range_bonus
 		main_core.pulse_range -= core_range_bonus
 		main_core.expand_range -= core_range_bonus

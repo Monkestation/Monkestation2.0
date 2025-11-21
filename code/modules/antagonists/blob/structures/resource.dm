@@ -7,6 +7,7 @@
 	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
 	armor_type = /datum/armor/structure_blob/resource
+	point_cost = 40
 	///the next world.time to give resources
 	var/resource_delay = 0
 	///list of soverminds gaining resources from us
@@ -17,12 +18,15 @@
 
 /obj/structure/blob/special/resource/set_owner(datum/team/blob/new_owner)
 	. = ..()
-	if(!.)
+	if(. == FALSE)
+		message_admins("1")
 		return
 
 	if(new_owner)
+		message_admins("2")
 		give_to = list(new_owner.main_overmind)
 	else
+		message_admins("3")
 		give_to = null
 
 /obj/structure/blob/special/resource/scannerreport()

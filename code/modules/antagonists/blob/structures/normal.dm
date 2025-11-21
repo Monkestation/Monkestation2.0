@@ -2,14 +2,10 @@
 	name = "normal blob"
 	icon_state = "blob"
 	light_outer_range = 0
+	point_cost = BLOB_EXPAND_COST
 	max_integrity = BLOB_REGULAR_MAX_HP
-	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN
 	brute_resist = BLOB_BRUTE_RESIST * 0.5
-
-/obj/structure/blob/normal/Initialize(mapload, owner_overmind)
-	. = ..()
-	update_integrity(initial_integrity)
 
 /obj/structure/blob/normal/scannerreport()
 	if(atom_integrity <= 15)
@@ -40,3 +36,8 @@
 	else
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	return ..()
+
+/obj/structure/blob/normal/handle_ctrl_click(mob/eye/blob/overmind)
+	if(overmind.buy(BLOB_UPGRADE_STRONG_COST))
+		var/obj/structure/blob/shield_blob = change_to(/obj/structure/blob/shield, overmind.antag_team)
+		shield_blob.balloon_alert(overmind, "upgraded to [shield_blob.name]!")

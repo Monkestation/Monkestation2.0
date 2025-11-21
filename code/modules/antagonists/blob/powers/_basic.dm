@@ -1,7 +1,8 @@
+//these files are for organization and contrain procs of /mob/eye/blob
 #define BLOB_REROLL_RADIUS 60
 
-/// Simple price check
-/mob/eye/blob/proc/can_buy(cost = 15)
+/// Attempt to buy something
+/mob/eye/blob/proc/buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, span_warning("You cannot afford this, you need at least [cost] resources!"))
 		balloon_alert(src, "need [cost-blob_points] more resource\s!")
@@ -39,19 +40,14 @@
 			if(object.density)
 				to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
 				return FALSE
-
 	return TRUE
 
-/// Finds cardinal and diagonal attack directions
+/// Finds cardinal and diagonal attack directions and then tries to expand from cardinals
 /mob/eye/blob/proc/directional_attack(turf/tile, list/possible_blobs, attack_success = FALSE)
 	var/list/cardinal_blobs = list()
 	var/list/diagonal_blobs = list()
-
 	for(var/obj/structure/blob/blob in possible_blobs)
-		if(get_dir(blob, tile) in GLOB.cardinals)
-			cardinal_blobs += blob
-		else
-			diagonal_blobs += blob
+		(CARDINALS_BITFIELD & get_dir(blob, tile)) ? (cardinal_blobs += blob) : (diagonal_blobs += blob)
 
 	var/obj/structure/blob/attacker
 	if(length(cardinal_blobs))
@@ -116,7 +112,7 @@
 	if(isnull(strain_result))
 		return
 
-	if(!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
+	if(!free_strain_rerolls && !buy(BLOB_POWER_REROLL_COST))
 		return
 
 	antag_team.set_team_strain(strain_result) //MAKE SURE THIS ACTUALLY WORKS
