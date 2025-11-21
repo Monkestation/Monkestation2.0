@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Chem Masters can now become reactionless if installed with cryo beakers."
