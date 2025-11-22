@@ -1307,8 +1307,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Does this item bypass ranged armor checks?
 /* #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor" */
 
-/// Trait which means that this item is considered illegal contraband, and valid for the contraband bounty or when scanned by an nspect scanner.
-/* #define TRAIT_CONTRABAND "illegal_contraband" */
+/// Trait which means that this item is considered illegal contraband, ~(and valid for the contraband bounty or when scanned by an nspect scanner.)~ not implemented yet.
+#define TRAIT_CONTRABAND "illegal_contraband"
 
 /// Traits given by settler, each with their own specific effects for cases where someone would have that trait, but not the other settler effects
 

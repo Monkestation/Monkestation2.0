@@ -1,4 +1,4 @@
-import { Button, Stack } from '../..//components';
+import { Button, Stack } from '../../components';
 import { BooleanLike } from 'common/react';
 import { capitalizeFirst } from 'common/string';
 

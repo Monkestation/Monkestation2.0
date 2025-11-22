@@ -163,7 +163,24 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		if(GLOB.areas_by_type[delivery_area_type])
 			chosen_delivery_area = delivery_area_type
 			break
-	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
+
+	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
+		return
+
+	department_order = new(
+		pack = pack,
+		orderer = name,
+		orderer_rank = rank,
+		orderer_ckey = ckey,
+		reason = "Departmental Order",
+		paying_account = null,
+		department_destination = chosen_delivery_area,
+		coupon = null,
+		manifest_can_fail = FALSE,
+	)
+
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))

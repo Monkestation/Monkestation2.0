@@ -10,9 +10,13 @@
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
+//	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
+
+/obj/item/paper/requisition
+//	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 
 /obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
@@ -21,13 +25,13 @@
 	if(!manifest_can_fail)
 		return
 
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(prob(MANIFEST_ERROR_CHANCE) && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //Too confusing if station name gets changed
 		errors |= MANIFEST_ERROR_NAME
 		investigate_log("Supply order #[order_id] generated a manifest with an incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
 		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
-	if(prob(MANIFEST_ERROR_CHANCE))
+	else if(prob(MANIFEST_ERROR_CHANCE)) //Content and item errors could remove the same items, so only one at a time
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
@@ -56,8 +60,6 @@
 	var/manifest_can_fail = TRUE
 	///Boolean on whether the manifest can be cancelled through cargo consoles.
 	var/can_be_cancelled = TRUE
-	///the account we charge for this purchase
-	var/account_to_charge = ACCOUNT_CAR
 
 /datum/supply_order/New(
 	datum/supply_pack/pack,
@@ -72,7 +74,6 @@
 	manifest_can_fail = TRUE,
 	cost_type = "cr",
 	can_be_cancelled = TRUE,
-	account_to_charge = ACCOUNT_CAR,
 )
 	id = SSshuttle.order_number++
 	src.cost_type = cost_type
@@ -87,19 +88,22 @@
 	src.charge_on_purchase = charge_on_purchase
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
-	src.account_to_charge = account_to_charge
+
+/datum/supply_order/Destroy(force)
+	QDEL_NULL(applied_coupon)
+	return ..()
 
 //returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
 /datum/supply_order/proc/get_final_cost()
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
-		cost -= (cost * applied_coupon.discount_pct_off)
-	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+		cost *= (1 - applied_coupon.discount_pct_off)
+	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
-	return cost
+	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/requisition_paper = new(T)
+	var/obj/item/paper/requisition/requisition_paper = new(T)
 
 	requisition_paper.name = "requisition form - #[id] ([pack.name])"
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
@@ -109,8 +113,7 @@
 	requisition_text += "Item: [pack.name]<br/>"
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"
-	if(paying_account)
-		requisition_text += "Paid by: [paying_account.account_holder]<br/>"
+	requisition_text += "Paid by: [paying_account?.account_holder || "Cargo"]<br/>"
 	requisition_text += "Rank: [orderer_rank]<br/>"
 	requisition_text += "Comment: [reason]<br/>"
 
@@ -127,24 +130,34 @@
 
 	var/manifest_text = "<h2>[command_name()] Shipping Manifest</h2>"
 	manifest_text += "<hr/>"
+	manifest_text += "Paid for by [owner]<br/>"
 	if(owner && !(owner == "Cargo"))
-		manifest_text += "Direct purchase from [owner]<br/>"
 		manifest_paper.name += " - Purchased by [owner]"
 	manifest_text += "Order[packname?"":"s"]: [id]<br/>"
 	manifest_text += "Destination: [station_name]<br/>"
-	manifest_text += "Paid For By: [account_to_charge]<br/>"
 	if(packname)
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
+	for(var/obj/item/stuff in container.contents - manifest_paper)
+		if(isstack(stuff))
+			var/obj/item/stack/thing = stuff
+			container_contents[thing.singular_name] += thing.amount
+			continue
+		container_contents[stuff.name]++
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
 		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
 			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
 		else
-			for(var/atom/movable/AM in container.contents - manifest_paper)
-				manifest_text += "<li>[AM.name]</li>"
-				if(prob(50))
-					manifest_text += "<li>[AM.name]</li>"
+			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+				var/missing_item = pick(container_contents)
+				container_contents[missing_item]--
+				if(!container_contents[missing_item]) // To avoid 0s and negative values on the manifest
+					container_contents -= missing_item
+
+	for(var/item in container_contents)
+		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
@@ -158,16 +171,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
-		C.manifest = manifest_paper
-		C.update_appearance()
-	else
-		container.contents += manifest_paper
+		var/obj/structure/closet/crate/crate = container
+		crate.manifest = WEAKREF(manifest_paper)
+		crate.update_appearance()
 
 	return manifest_paper
 
@@ -178,6 +188,9 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
+	if(pack.contraband)
+		for(var/atom/movable/item_within as anything in crate.get_all_contents())
+			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)
@@ -185,16 +198,27 @@
 
 /datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents, misc_cost)
 	for (var/I in misc_contents)
-		var/obj/item = new I(miscbox)
-
-		if(istype(item, /obj/item/gun))
-			var/obj/item/gun/gun_actually = item
-			QDEL_NULL(gun_actually.pin)
-			var/obj/item/firing_pin/permit_pin/new_pin = new(gun_actually)
-			gun_actually.pin = new_pin
-
+		new I(miscbox)
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
+
+/datum/supply_order/proc/append_order(list/new_contents, cost_increase)
+	for(var/i in new_contents)
+		if(pack.contains[i])
+			pack.contains[i] += new_contents[i]
+		else
+			pack.contains += i
+			pack.contains[i] = new_contents[i]
+	pack.cost += cost_increase
+
+/// Custom type of order who's supply pack can be safely deleted
+/datum/supply_order/disposable/Destroy(force)
+	QDEL_NULL(pack)
+	return ..()
+
+/// Custom material order to append cargo crate value to the final order cost
+/datum/supply_order/disposable/materials/get_final_cost()
+	return (..() + CARGO_CRATE_VALUE)
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
