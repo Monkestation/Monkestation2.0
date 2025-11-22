@@ -918,3 +918,64 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/hauntium/five
 	amount = 5
+
+
+/obj/item/stack/sheet/cocaine
+	name = "cocaine"
+	desc = "Reenact your favorite scenes from Scarface!"
+	singular_name = "powder cocaine pile"
+	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon_state = "cocaine"
+	mats_per_unit = list(/datum/material/cocaine = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/cocaine
+	throwforce = 0
+	merge_type = /obj/item/stack/sheet/cocaine
+	resistance_flags = FLAMMABLE
+	novariants = TRUE
+	grind_results = list(/datum/reagent/drug/cocaine = 10)
+
+
+/obj/item/stack/sheet/cocaine/proc/snort(mob/living/user)
+	if(!iscarbon(user))
+		return
+
+	var/covered = ""
+	if(user.is_mouth_covered(ITEM_SLOT_HEAD))
+		covered = "headgear"
+	else if(user.is_mouth_covered(ITEM_SLOT_MASK))
+		covered = "mask"
+	if(covered)
+		to_chat(user, span_warning("You have to remove your [covered] first!"))
+		return
+
+	user.visible_message(span_notice("'[user] starts snorting [src]."), span_notice("You start snorting [src]..."))
+	if(!do_after(user, 3 SECONDS))
+		return
+
+	to_chat(user, span_notice("You finish snorting [src]."))
+	if(grind_results)
+		user.reagents.add_reagent_list(grind_results)
+	use(1)
+
+/obj/item/stack/sheet/cocaine/attack(mob/target, mob/user)
+	if(target == user)
+		snort(user)
+
+/obj/item/stack/sheet/cocaine/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!in_range(user, src) || user.get_active_held_item())
+		return
+
+	snort(user)
+
+/obj/item/stack/sheet/cocaine/five
+	amount = 5
+/obj/item/stack/sheet/cocaine/twenty
+	amount = 20
+/obj/item/stack/sheet/cocaine/fifty
+	amount = 50
