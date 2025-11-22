@@ -292,3 +292,6 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait added by battle royale
+#define BATTLE_ROYALE_TRAIT "battle_royale"

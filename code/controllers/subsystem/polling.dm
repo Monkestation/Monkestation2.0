@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(polling)
 	amount_to_pick = 0,
 	chat_text_border_icon,
 	announce_chosen = TRUE,
-	show_candidate_amount = TRUE,
+	show_candidate_amount = TRUE
 )
 	if(length(group) == 0)
 		return
