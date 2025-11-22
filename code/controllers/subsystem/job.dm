@@ -978,8 +978,14 @@ SUBSYSTEM_DEF(job)
 		if(length(available_turfs))
 			return pick(available_turfs)
 
-	stack_trace("Unable to find last resort spawn point.")
-	return GET_ERROR_ROOM
+	// stupid snowflake thing
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		var/turf/hallway_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
+		if(hallway_turf)
+			return hallway_turf
+
+	. = GET_ERROR_ROOM
+	CRASH("Unable to find last resort spawn point.")
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)

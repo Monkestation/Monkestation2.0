@@ -71,6 +71,9 @@
 		lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 		return
 	lightning_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "lightning")
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.apply_height_filters(lightning_overlay)
 	owner.add_overlay(lightning_overlay)
 	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
@@ -123,7 +126,7 @@
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "your heart strenghtens")
+	balloon_alert(organ_owner, "your heart strengthens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime

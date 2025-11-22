@@ -73,8 +73,8 @@
 	user.remove_filter(id)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	user.visible_message("A bright flash eminates from under [user]'s hat!")
+	log_game("[key_name(user)] has been gibbed by the removal of their [src]")
 	user.gib()
-	log_game("[user] has been gibbed by the removal of their [src]")
 	explosion(src, devastation_range = 0, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, flash_range = 7)
 	qdel(src)
 

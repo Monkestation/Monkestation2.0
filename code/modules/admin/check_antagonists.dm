@@ -139,7 +139,7 @@
 					if(isdrone(checked_mob))
 						drones++
 						continue
-					if(is_centcom_level(checked_mob.z))
+					if(is_centcom_level(checked_mob.z) && is_centcom_area(checked_mob))
 						living_skipped++
 						continue
 					living_players++

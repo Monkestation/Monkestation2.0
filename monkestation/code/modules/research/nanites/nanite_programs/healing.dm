@@ -228,7 +228,7 @@
 		C.emote("gasp")
 		C.set_jitter_if_lower(10 SECONDS)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-		log_game("[C] has been successfully defibrillated by nanites.")
+		log_game("[key_name(C)] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
 

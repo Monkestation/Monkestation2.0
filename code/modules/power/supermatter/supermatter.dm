@@ -853,6 +853,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = portion * zap_energy_accumulation[key]
 	zap_energy_accumulation[key] -= .
 
+/**
+ * Sets if this supermatter should be "hugbox" or not.
+ * Args:
+ * * hugbox: A boolean value on whether hugbox mode should be forcefully set, or if it should be the default.
+ */
+/obj/machinery/power/supermatter_crystal/proc/set_hugbox(hugbox)
+	if(hugbox)
+		disable_damage = TRUE
+		disable_gas = TRUE
+		disable_power_change = TRUE
+		disable_process = SM_PROCESS_DISABLED
+	else
+		disable_damage = initial(disable_damage)
+		disable_gas = initial(disable_gas)
+		disable_power_change = initial(disable_power_change)
+		disable_process = initial(disable_process)
+
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
 		return
