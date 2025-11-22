@@ -5,7 +5,7 @@
 		/datum/event_admin_setup/listed_options/bitrunning_glitch,
 	)
 	category = EVENT_CATEGORY_INVASION
-	track = EVENT_TRACK_ROLESET
+	track = EVENT_TRACK_MODERATE
 	description = "Causes a short term antagonist to spawn in the virtual domain."
 	dynamic_should_hijack = FALSE
 	min_players = 1
