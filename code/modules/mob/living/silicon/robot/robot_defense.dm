@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("You can't reach the wiring!"))
 		return
 
-	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
+	if((attacking_item.slot_flags & ITEM_SLOT_HEAD) && model.hat_offset != INFINITY && !(user.istate & ISTATE_HARM) && !is_type_in_typecache(attacking_item, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [attacking_item] on your head by yourself!") )
 			return
@@ -56,6 +56,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
 				place_on_head(attacking_item)
 		return
+
+	if(istype(attacking_item, /obj/item/clothing/accessory/badge))
+		to_chat(user, span_notice("You begin to decorate [src] with [attacking_item]..."))
+		to_chat(src, span_notice("[user] is pinning [attacking_item] onto you..."))
+		if(do_after(user, 3 SECONDS, target = src))
+			if (user.temporarilyRemoveItemFromInventory(attacking_item, TRUE))
+				pin_badge(attacking_item)
 
 	if(istype(attacking_item, /obj/item/defibrillator) && !(user.istate & ISTATE_HARM))
 		if(!opened)
