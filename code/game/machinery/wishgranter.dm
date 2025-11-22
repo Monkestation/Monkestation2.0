@@ -31,12 +31,13 @@
 
 	else
 		to_chat(user, span_boldnotice("You speak. [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")]. The Wish Granter answers."))
-		to_chat(user, span_boldnotice("Your head pounds for a moment, before your vision clears. You are the avatar of the Wish Granter, and your power is LIMITLESS! And it's all yours. You need to make sure no one can take it from you. No one can know, first."))
 
 		charges--
 		insisting = 0
 
 		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has become the Wishgranter Avatar!")
+		deadchat_broadcast(span_bold(" has become the Wishgranter Avatar!"), span_name("[user.real_name]"), follow_target = user, message_type = DEADCHAT_ANNOUNCEMENT)
 
 		to_chat(user, span_warning("You have a very bad feeling about this."))
 
