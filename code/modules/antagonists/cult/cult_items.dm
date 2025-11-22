@@ -85,6 +85,10 @@ Striking a noncultist, however, will tear their flesh."}
 	)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))

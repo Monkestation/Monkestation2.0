@@ -37,6 +37,12 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
+/obj/item/energy_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+	return ..()
+
 /obj/item/energy_katana/Initialize(mapload)
 	. = ..()
 	jaunt = new(src)
