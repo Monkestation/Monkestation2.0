@@ -483,6 +483,13 @@
 	overdose_threshold = 60 // it takes a lot, if youre really messed up you CAN hit this but its unlikely
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	if((our_guy.mob_biotypes & MOB_ROBOTIC))
+		var/cooling = 50 * REM * seconds_per_tick
+		our_guy.reagents?.chem_temp -= cooling
+		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.bodytemp_cold_damage_limit + 5)
+		our_guy.adjustFireLoss(-1.5)
+
 /datum/reagent/dinitrogen_plasmide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 
