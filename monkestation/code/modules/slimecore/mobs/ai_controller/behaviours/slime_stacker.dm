@@ -48,11 +48,10 @@
 	if (isliving(controller.pawn))
 		var/mob/living/pawn = controller.pawn
 		if (world.time < pawn.next_move)
-			return
+			return AI_BEHAVIOR_INSTANT
 
 	. = ..()
-
-	finish_action(controller, TRUE, BB_BASIC_MOB_CURRENT_TARGET)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/slime_stacker/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
