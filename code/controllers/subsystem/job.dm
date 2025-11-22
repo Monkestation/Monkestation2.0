@@ -624,6 +624,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
+	var/datum/job/P = SSjob.GetJob(JOB_PRISONER)
 	if(!J)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
@@ -634,6 +635,8 @@ SUBSYSTEM_DEF(job)
 			JobDebug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
+			P.total_positions = ceil(officer_positions / 3) // 3 secoff to 1 perma ratio
+			P.spawn_positions = ceil(officer_positions / 3)
 
 	//Spawn some extra eqipment lockers if we have more than 5 officers
 	var/equip_needed = J.total_positions
