@@ -265,6 +265,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		// THESE WILL EAT OTHER ITEMS AND ALSO LAZYLOAD AN AREA
 		/obj/structure/bingle_hole,
 		/obj/structure/bingle_pit_overlay,
+		//shouldnt exist when not attached to a species datum and a mob
+		/obj/item/modular_computer/pda/ipc
 		// monkestation end
 	)
 	//Say it with me now, type template
