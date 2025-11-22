@@ -299,6 +299,16 @@
 	spawn_count = 6
 	spawn_coupon = FALSE
 
+/obj/item/storage/fancy/cigarettes/flash_powder
+	spawn_type = /obj/item/clothing/mask/cigarette/flash_powder
+
+/obj/item/storage/fancy/cigarettes/cigpack_greytide
+	name = "\improper Mainthol Grey packet"
+	desc = "The thin grey line."
+	icon_state = "greytide"
+	base_icon_state = "greytide"
+	spawn_type = /obj/item/clothing/mask/cigarette/greytide
+
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
@@ -371,8 +381,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
-	name = "\improper Xeno Filtered packet"
-	desc = "Loaded with 100% pure slime. And also nicotine."
+	name = "\improper slimey cigarette packet"
+	desc = "A pack of cigarettes made from slimes and industry. It smells faintly of the medical bay."
 	icon_state = "slime"
 	base_icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
@@ -429,6 +439,7 @@
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
@@ -454,6 +465,7 @@
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	custom_premium_price = PAYCHECK_COMMAND * 1.75
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
@@ -461,6 +473,7 @@
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
+	custom_premium_price = PAYCHECK_COMMAND * 2.25
 
 /*
  * Heart Shaped Box w/ Chocolates

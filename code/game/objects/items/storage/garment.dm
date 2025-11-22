@@ -60,11 +60,12 @@
 	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/captain(src)
 	new /obj/item/clothing/head/costume/crown/fancy(src)
+	new /obj/item/clothing/head/nanner_crown(src)
 	new /obj/item/clothing/head/hats/caphat(src)
 	new /obj/item/clothing/head/hats/caphat/parade(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/clothing/head/nanner_crown(src)
+	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/caphat/beret(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()

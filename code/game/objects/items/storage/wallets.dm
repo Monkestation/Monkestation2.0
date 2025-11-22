@@ -13,7 +13,7 @@
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 4
+	atom_storage.max_slots = 5
 	atom_storage.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
@@ -29,9 +29,11 @@
 		/obj/item/dice,
 		/obj/item/disk,
 		/obj/item/gbp_punchcard,
+		/obj/item/gbp_puncher,
 		/obj/item/implanter,
 		/obj/item/lighter,
 		/obj/item/match,
+		/obj/item/storage/box/matches,
 		/obj/item/paper,
 		/obj/item/pen,
 		/obj/item/photo,
@@ -57,19 +59,12 @@
 	LAZYCLEARLIST(combined_access)
 
 	front_id = null
-	var/winning_tally = 0
 	var/is_magnetic_found = FALSE
 	for(var/obj/item/card/id/id_card in contents)
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
 		if(!is_magnetic_found && HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
 			is_magnetic_found = TRUE
-
-		if(!is_magnetic_found)
-			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
-			if(card_tally > winning_tally)
-				winning_tally = card_tally
-				front_id = id_card
 
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
