@@ -411,6 +411,12 @@ MINUTE_CLICK_LIMIT 400
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
+## Error reporting
+# Your Sentry/Glitchtip DSN url
+#GLITCHTIP_DSN
+
+# Environment this is running in, "production", "development" and "testing" are most common
+#GLITCHTIP_ENVIRONMENT development
 
 ## Game Chat Message Options
 ## Various messages to be sent to connected chat channels.
