@@ -82,6 +82,7 @@
 		use(1)
 		if(repeating && amount > 0)
 			try_heal(patient, user, TRUE)
+	return TRUE
 
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
 /obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
@@ -107,7 +108,7 @@
 	patient.balloon_alert(user, "can't heal that!")
 
 /// The healing effects on a carbon patient. Since we have extra details for dealing with bodyparts, we get our own fancy proc. Still returns TRUE on success and FALSE on fail
-/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/patient, mob/user, brute, burn)
+/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/patient, mob/user, brute, burn, silent = FALSE)
 	var/obj/item/bodypart/affecting = patient.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
@@ -116,10 +117,11 @@
 		patient.balloon_alert(user, "it's not organic!")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-		user.visible_message(
-			span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
-			span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
-		)
+		if(!silent)
+			user.visible_message(
+				span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
+				span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
+			)
 		var/previous_damage = affecting.get_damage()
 		if(affecting.heal_damage(brute, burn))
 			patient.update_damage_overlays()
@@ -165,6 +167,12 @@
 	absorption_capacity = 5
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
+	/// has this gauze been used? set to true in apply_gauze()
+	var/used = FALSE
+	/// can we clean this to restore capacity?
+	var/can_clean = TRUE
+	heal_burn = 10
+	heal_brute = 10
 	merge_type = /obj/item/stack/medical/gauze
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
@@ -179,7 +187,7 @@
 		name = "used [initial(name)]"
 	else if(absorption_capacity <= base_cap * 0.2)
 		name = "dirty [initial(name)]"
-	else if(absorption_capacity <= base_cap * 0.8)
+	else if(absorption_capacity <= base_cap * 0.8 || used)
 		name = "worn [initial(name)]"
 	else
 		name = initial(name)
@@ -188,15 +196,19 @@
 	. = ..()
 	if(!.)
 		return .
+	if(used || check.used)
+		return FALSE
 	// need to be in +- 0.5 dirtiness of each other
 	// otherwise you can merge a completely used bandage with a brand new one, which would magically unuse it
-	if(check.absorption_capacity < absorption_capacity - 0.25 || check.absorption_capacity > absorption_capacity + 0.25)
+	if(check.absorption_capacity < absorption_capacity || check.absorption_capacity > absorption_capacity)
 		return FALSE
 	return .
 
 /obj/item/stack/medical/gauze/wash(clean_types)
 	. = ..()
 	if(.)
+		return .
+	if(!can_clean)
 		return .
 	if(!(clean_types & CLEAN_TYPE_HARD_DECAL)) // gotta scrub realllly hard to clean gauze
 		return .
@@ -237,17 +249,18 @@
 	var/theirs = user == patient ? patient.p_their() : "[patient]'s"
 	var/wrap_or_replace = limb.current_gauze ? "replacing [limb.current_gauze] on" : "wrapping"
 	var/with_what = limb.current_gauze?.type == type ? "more of [src]" : src
-	if(boosted)
-		treatment_delay *= 0.5
-		user.visible_message(
-			span_notice("[user] begins expertly [wrap_or_replace] [theirs] [limb.plaintext_zone] with [with_what]."),
-			span_notice("You begin quickly [wrap_or_replace] [whose] [limb.plaintext_zone] with [with_what], keeping the holo-image indications in mind..."),
-		)
-	else
-		user.visible_message(
-			span_notice("[user] begins [wrap_or_replace] [theirs] [limb.plaintext_zone] with [with_what]."),
-			span_notice("You begin [wrap_or_replace] [whose] [limb.plaintext_zone] with [with_what]..."),
-		)
+	if(!silent)
+		if(boosted)
+			treatment_delay *= 0.5
+			user.visible_message(
+				span_notice("[user] begins expertly [wrap_or_replace] [theirs] [limb.plaintext_zone] with [with_what]."),
+				span_notice("You begin quickly [wrap_or_replace] [whose] [limb.plaintext_zone] with [with_what], keeping the holo-image indications in mind..."),
+			)
+		else
+			user.visible_message(
+				span_notice("[user] begins [wrap_or_replace] [theirs] [limb.plaintext_zone] with [with_what]."),
+				span_notice("You begin [wrap_or_replace] [whose] [limb.plaintext_zone] with [with_what]..."),
+			)
 	user.balloon_alert(user, "applying gauze...")
 	if(user != patient)
 		user.balloon_alert(patient, "applying gauze...")
@@ -267,12 +280,18 @@
 	user.balloon_alert(user, "gauze applied")
 	if(user != patient)
 		user.balloon_alert(patient, "gauze applied")
-
-	user.visible_message(
-		span_infoplain(span_green("[user] applies [src] to [theirs] [limb.plaintext_zone].")),
-		span_infoplain(span_green("You [limb.current_gauze?.type == type ? "replace" : "bandage"] the wounds on [whose] [limb.plaintext_zone].")),
-	)
+	if(!silent)
+		user.visible_message(
+			span_infoplain(span_green("[user] applies [src] to [theirs] [limb.plaintext_zone].")),
+			span_infoplain(span_green("You [limb.current_gauze?.type == type ? "replace" : "bandage"] the wounds on [whose] [limb.plaintext_zone].")),
+		)
 	limb.apply_gauze(src)
+	if(iscarbon(patient) && !used)
+		var/mob/living/carbon/carbon_patient = patient
+		heal_carbon(carbon_patient, user, heal_brute, heal_burn, TRUE)
+		heal_burn = 0
+		heal_brute = 0
+	return TRUE //for flesh burn wound code
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
@@ -309,7 +328,27 @@
 	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 4
+	heal_burn = 5
+	heal_brute = 5
 	merge_type = /obj/item/stack/medical/gauze/improvised
+
+/obj/item/stack/medical/gauze/plastiseal
+	name = "plastiseal"
+	desc = "A synthetic skin with hemostatic properties, able to quickly seal most wounds. Very effective against burn wounds."
+	singular_name = "plastiseal"
+	icon_state = "plastiseal"
+	grind_results = list(/datum/reagent/cellulose = 2, /datum/reagent/medicine/polypyr = 2, /datum/reagent/medicine/antipathogenic/spaceacillin = 1)
+	custom_price = PAYCHECK_CREW * 3
+	absorption_rate = 0.2
+	absorption_capacity = 5
+	splint_factor = 0.35
+	burn_cleanliness_bonus = 0.1
+	merge_type = /obj/item/stack/medical/gauze/plastiseal
+	heal_burn = 30
+	sanitization = 3
+	flesh_regeneration = 15
+	heal_brute = 15
+	can_clean = FALSE
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,

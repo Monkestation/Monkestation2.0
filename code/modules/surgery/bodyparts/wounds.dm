@@ -307,7 +307,7 @@
  * Arguments:
  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
  */
-/obj/item/bodypart/proc/update_wounds(replaced = FALSE)
+/obj/item/bodypart/proc/update_wounds(replaced = FALSE, force_remove = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
@@ -318,7 +318,7 @@
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [parse_zone(body_zone)] falls away."))
-		QDEL_NULL(current_gauze)
+		remove_gauze(drop_location())
 
 	wound_damage_multiplier = dam_mul
 	refresh_bleed_rate()
