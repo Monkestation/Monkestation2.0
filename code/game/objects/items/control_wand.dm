@@ -21,7 +21,9 @@
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
-	access_list = SSid_access.get_region_access_list(list(region_access))
+	if(!islist(region_access))
+		region_access = list(region_access)
+	access_list = SSid_access.get_region_access_list(region_access)
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -151,7 +153,7 @@
 	name = "civilian+supply door remote"
 	icon_state = "remote_civilian_open" //monkestation edit
 	remote_type = "civilian" //monkestation edit
-	region_access = (REGION_GENERAL && REGION_SUPPLY) //monkestation addition
+	region_access = list(REGION_GENERAL, REGION_SUPPLY) //monkestation addition
 
 #undef WAND_OPEN
 #undef WAND_BOLT

@@ -335,3 +335,26 @@
   notghosti:
   - bugfix: Mending touch no longer levels you to the targets blood level, rather
       just adjusting the transfer rate.
+2025-11-21:
+  Absolucy:
+  - qol: Eye of god now counts as prescription glasses
+  - rscadd: Ore Vents now generate on Oshan's mining level.
+  - qol: Heretic influences should now spawn more uniformly, similar to smugglers
+      satchels.
+  - bugfix: Fixed an issue with heretic influences sometimes spawning in nullspace
+      for some reason (hopefully)
+  EssentialTomato:
+  - rscadd: Added new anime halos.
+  - balance: Anime halos now temporarily disappear while dead.
+  JohnFulpWillard:
+  - bugfix: HoP's door remote works now.
+  Tractor-Maam:
+  - admin: expunging records now lists the name of the record expunged.
+  - admin: Creating records now creates an investigate log.
+  - admin: Deleting records now properly lists the ckey of the person who did it.
+  - admin: Setting security record notes now shows the ckey of the person who did
+      it... if this specific section of code was actually ever called.
+  - spellcheck: retitled the CentCom commander's suit to the CentCom admiral's suit
+      to match the loadout info
+  - spellcheck: fixed the name of the CentCom Admiral's coat
+  - rscadd: Chem Masters can now become reactionless if installed with cryo beakers.
