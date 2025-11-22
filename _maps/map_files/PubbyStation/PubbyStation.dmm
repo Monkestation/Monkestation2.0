@@ -2817,9 +2817,21 @@
 /turf/open/floor/iron,
 /area/station/security/evidence)
 "akL" = (
-/obj/machinery/flasher/portable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "akM" = (

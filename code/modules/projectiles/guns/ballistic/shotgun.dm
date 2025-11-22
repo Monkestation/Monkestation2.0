@@ -24,7 +24,7 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
-
+	rack_delay = 6
 	pb_knockback = 2
 	gun_flags = GUN_SMOKE_PARTICLES
 
@@ -45,6 +45,7 @@
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 8
+	rack_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
@@ -122,6 +123,9 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
+	rack_delay = 4
+	pbk_gentle = FALSE
+
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
 
@@ -140,6 +144,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 	pbk_gentle = TRUE
+	rack_delay = 4
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -234,6 +239,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
+	rack_delay = 4
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -464,7 +470,7 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
 	spread = SAWN_OFF_ACC_PENALTY
 	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
-	projectile_wound_bonus = -5  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
+	projectile_wound_bonus = -15  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
 
 /obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)

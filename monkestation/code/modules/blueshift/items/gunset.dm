@@ -213,8 +213,8 @@
 	generate_items_inside(list(
 		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 4,
 		/obj/item/ammo_box/c980grenade/shrapnel = 1,
-		/obj/item/ammo_box/c980grenade/smoke = 1,
-		/obj/item/ammo_box/c980grenade/riot = 3,
+		/obj/item/ammo_box/c980grenade = 2,
+		/obj/item/ammo_box/c980grenade/riot = 2,
 		/obj/item/clothing/mask/gas/sechailer/swat = 1,
 	), src)
 
