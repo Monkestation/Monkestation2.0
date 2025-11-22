@@ -38,7 +38,7 @@
 	SSholomaps.station_holomaps += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/station_map/LateInitialize()
+/obj/machinery/station_map/LateInitialize(mapload_arg)
 	. = ..()
 	if(SSholomaps.initialized)
 		setup_holomap()

@@ -366,6 +366,11 @@
 	integer = FALSE
 	min_val = 0
 
+/datum/config_entry/number/oshan_budget
+	default = 60
+	integer = FALSE
+	min_val = 0
+
 /datum/config_entry/flag/allow_random_events // Enables random events mid-round when set
 
 /datum/config_entry/flag/forbid_station_traits

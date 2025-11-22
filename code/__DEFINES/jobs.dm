@@ -249,5 +249,5 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
-#define SUPERVISOR_QM "the Quartermaster"
+#define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel" //monkestation edit: Those under QM is also under HoP
 #define SUPERVISOR_RD "the Research Director"

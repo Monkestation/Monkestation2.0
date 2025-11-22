@@ -106,7 +106,7 @@
 	update_weight()
 	update_appearance()
 
-/obj/item/stack/LateInitialize()
+/obj/item/stack/LateInitialize(mapload_arg)
 	merge_with_loc()
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)

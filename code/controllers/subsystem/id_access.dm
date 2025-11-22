@@ -160,6 +160,7 @@ SUBSYSTEM_DEF(id_access)
 			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
+			//ACCESS_SUPPLY we exclude this because it would make the QM's ID trimmer able to edit service
 			"regions" = list(REGION_GENERAL),
 			"head" = JOB_HEAD_OF_PERSONNEL,
 			"templates" = list(),
@@ -186,6 +187,12 @@ SUBSYSTEM_DEF(id_access)
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
 			"head" = JOB_CHIEF_ENGINEER,
+			"templates" = list(),
+			"pdas" = list(),
+		),
+		"[ACCESS_QM]" = list(
+			"regions" = list(REGION_SUPPLY),
+			"head" = JOB_QUARTERMASTER,
 			"templates" = list(),
 			"pdas" = list(),
 		),

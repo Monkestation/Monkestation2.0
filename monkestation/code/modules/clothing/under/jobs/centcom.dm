@@ -1,5 +1,5 @@
 /obj/item/clothing/under/rank/centcom/admiral
-	name = "\improper CentCom commander's suit"
+	name = "\improper CentCom Admiral's suit"
 	desc = "It's a suit worn by a higher authority than any could imagine."
 	icon_state = "admiral"
 	inhand_icon_state = "dg_suit"

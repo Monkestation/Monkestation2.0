@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "gave marine helmets eye/mouth coverage and made them pepperproof."
+  - bugfix: "fixed marine helmet sprites breaking when using their lights."
