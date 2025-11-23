@@ -35,7 +35,7 @@
 	loot = list(
 		/obj/item/shared_storage/red = 1,
 //		/obj/item/clothing/neck/cloak/wolf_coat = 1, // MONKESTATION EDIT OLD -- Awaiting being added
-		/obj/item/clothing/suit/hooded/cultrobes/hardened // MONKESTATION EDIT NEW
+		/obj/item/clothing/suit/hooded/cultrobes/hardened = 1, // MONKESTATION EDIT NEW
 		/obj/item/soulstone/anybody/mining = 1,
 		/obj/item/clothing/glasses/godeye = 1,
 		/obj/item/reagent_containers/cup/bottle/potion/flight = 1,
