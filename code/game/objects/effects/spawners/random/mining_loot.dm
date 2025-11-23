@@ -25,6 +25,7 @@
 		/obj/item/book/granter/action/spell/summonitem = 1,
 		/obj/item/book_of_babel = 1,
 		/obj/item/clothing/neck/necklace/memento_mori = 1,
+		/obj/item/organ/internal/cyberimp/arm/item_set/katana = 1, // MONKESTATION ADDITION
 	)
 
 /obj/effect/spawner/random/mining_loot/demonic
@@ -53,6 +54,9 @@
 		/obj/item/book/granter/action/spell/summonitem = 1,
 		/obj/item/clothing/neck/necklace/memento_mori = 1,
 		/obj/item/book/granter/action/spell/sacredflame = 1,
+		/obj/item/book_of_babel = 1, // MONKESTATION ADDITION
+		/obj/item/wisp_lantern = 1, // MONKESTATION ADDITION
+		/obj/item/organ/internal/cyberimp/arm/item_set/katana = 1, // MONKESTATION ADDITION
 	)
 
 /// For spawning a rare PKA modkit
