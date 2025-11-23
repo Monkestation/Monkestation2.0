@@ -206,9 +206,13 @@
 
 	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 
+	check_yellow_alert()
+
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_yellow_alert))
+
 	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
@@ -339,6 +343,13 @@
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_INTERACT_WIRES
 
+/mob/living/basic/drone/proc/check_yellow_alert()
+	SIGNAL_HANDLER
+	if(SSsecurity_level?.get_current_level_as_number() == SEC_LEVEL_YELLOW)
+		if(GLOB.drone_machine_blacklist_enabled)
+			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
+	else if (GLOB.drone_machine_blacklist_enabled == FALSE)
+		GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy
