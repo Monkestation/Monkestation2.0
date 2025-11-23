@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM))
+	if(isobserver(AM) || AM.invisibility)
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
 	if(prob(30))
 		var/sound_to_play = pick(list(
