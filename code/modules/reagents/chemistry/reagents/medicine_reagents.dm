@@ -1161,7 +1161,7 @@
 	name = "Weakened Regenerative Jelly"
 	description = "Artificially weakened regenerative slime jelly that regenerates tissues slower, but lasts longer with the same volume."
 	healing = 0.5 // Same as omnizine, but still heals toxin-lovers
-	metabolization_rate = 0.12 * REAGENTS_METABOLISM
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"

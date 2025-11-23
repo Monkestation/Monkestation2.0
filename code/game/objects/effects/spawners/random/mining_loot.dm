@@ -10,8 +10,8 @@
 		/obj/item/clothing/glasses/godeye = 1,
 		/obj/item/reagent_containers/cup/bottle/potion/flight = 1,
 		/obj/item/clothing/gloves/gauntlets = 1,
-//		/obj/effect/spawner/random/mining_loot/pka_mod = 1, // MONKESTATION REMOVAL -- Blood-drunk already drops all of them
-		/obj/item/borg/upgrade/modkit/lifesteal = 1, // MONKESTATION ADDITION -- Except this one
+//		/obj/effect/spawner/random/mining_loot/pka_mod = 1, // MONKESTATION EDIT OLD -- Blood-drunk already drops all of them
+		/obj/item/borg/upgrade/modkit/lifesteal = 1, // MONKESTATION EDIT NEW -- Except this one
 		/obj/item/rod_of_asclepius = 1,
 //		/obj/item/organ/heart/cursed/wizard = 1, // MONKESTATION EDIT OLD
 		/obj/item/organ/internal/heart/cursed/wizard = 1, // MONKESTATION EDIT NEW
@@ -34,13 +34,14 @@
 	icon_state = "necrocrate"
 	loot = list(
 		/obj/item/shared_storage/red = 1,
-//		/obj/item/clothing/neck/cloak/wolf_coat = 1, // Awaiting being added
+//		/obj/item/clothing/neck/cloak/wolf_coat = 1, // MONKESTATION EDIT OLD -- Awaiting being added
+		/obj/item/clothing/suit/hooded/cultrobes/hardened // MONKESTATION EDIT NEW
 		/obj/item/soulstone/anybody/mining = 1,
 		/obj/item/clothing/glasses/godeye = 1,
 		/obj/item/reagent_containers/cup/bottle/potion/flight = 1,
 		/obj/item/clothing/gloves/gauntlets = 1,
-//		/obj/effect/spawner/random/mining_loot/pka_mod = 1, // MONKESTATION REMOVAL -- Blood-drunk already drops all of them
-		/obj/item/borg/upgrade/modkit/lifesteal = 1, // MONKESTATION ADDITION -- Except this one
+//		/obj/effect/spawner/random/mining_loot/pka_mod = 1, // MONKESTATION EDIT OLD -- Blood-drunk already drops all of them
+		/obj/item/borg/upgrade/modkit/lifesteal = 1, // MONKESTATION EDIT NEW -- Except this one
 		/obj/item/rod_of_asclepius = 1,
 //		/obj/item/organ/heart/cursed/wizard = 1, // MONKESTATION EDIT OLD
 		/obj/item/organ/internal/heart/cursed/wizard = 1, // MONKESTATION EDIT NEW
