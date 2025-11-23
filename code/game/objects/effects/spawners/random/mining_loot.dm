@@ -57,6 +57,7 @@
 		/obj/item/book_of_babel = 1, // MONKESTATION ADDITION
 		/obj/item/wisp_lantern = 1, // MONKESTATION ADDITION
 		/obj/item/organ/internal/cyberimp/arm/item_set/katana = 1, // MONKESTATION ADDITION
+		/obj/item/clothing/suit/hooded/berserker = 1, // MONKESTATION ADDITION
 	)
 
 /// For spawning a rare PKA modkit
