@@ -69,7 +69,7 @@
 
 /obj/item/t_scanner/thermal/attack_self_secondary(mob/user)
 	thermal = !thermal
-	to_chat(user, "<span class='notice'>You turn the goggles to [thermal ? "scan for thermal difference.":"detect underfloor objects."]</span>")
+	to_chat(user, span_notice("You turn the goggles to [thermal ? "scan for thermal difference.":"detect underfloor objects."]"))
 
 /obj/item/t_scanner/thermal/examine(mob/user)
 	. = ..()
