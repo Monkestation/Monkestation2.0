@@ -5575,6 +5575,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "bFv" = (
@@ -9450,7 +9454,7 @@
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -12828,6 +12832,7 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet/black,
 /area/station/cargo/quartermaster)
 "dLE" = (
@@ -29839,15 +29844,7 @@
 /obj/item/gun_maintenance_supplies{
 	pixel_y = 4
 	},
-/obj/item/gps/mining{
-	gpstag = "QM0";
-	pixel_y = 4
-	},
 /obj/machinery/light_switch/directional/south,
-/obj/item/folder/yellow{
-	pixel_x = -15;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "ivQ" = (
@@ -81539,9 +81536,9 @@
 	name = "cargo camera"
 	},
 /obj/machinery/status_display/ai/directional/south,
-/obj/structure/table/wood,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer/preset/id{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
@@ -83349,8 +83346,13 @@
 "xfD" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/structure/table/wood/fancy/black,
+/obj/item/gps/mining{
+	gpstag = "QM0";
+	pixel_y = 4
+	},
+/obj/item/folder/yellow,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "xfM" = (

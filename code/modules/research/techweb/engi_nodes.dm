@@ -30,6 +30,7 @@
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
+		"microwave_engineering",
 		"nano_mani",
 		"oxygen_tank",
 		"pacman",

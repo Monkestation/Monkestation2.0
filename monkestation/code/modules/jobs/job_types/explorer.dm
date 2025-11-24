@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 6
 	spawn_positions = 6
-	supervisors = SUPERVISOR_QM
+	supervisors = SUPERVISOR_QM_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "EXPLORER"
 

@@ -825,6 +825,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
 	var/list/blacklisted_from_rng_placement = list(
 		SPECIES_ETHEREAL, // they revive on death which is bad juju
+		SPECIES_OOZELING, // they become a core, which clogs up GPSes
 		SPECIES_HUMAN,  // already have a 50% chance of being selected
 	)
 

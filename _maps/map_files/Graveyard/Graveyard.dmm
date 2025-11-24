@@ -24376,6 +24376,7 @@
 /area/station/science/research)
 "jyB" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jyF" = (
@@ -47404,7 +47405,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -2
 	},
@@ -60674,6 +60675,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "xCf" = (

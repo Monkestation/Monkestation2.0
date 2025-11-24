@@ -705,7 +705,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 8;
 	pixel_y = 10
 	},
@@ -50463,7 +50463,6 @@
 /obj/item/toy/figure/qm{
 	pixel_x = -17
 	},
-/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/carpet/orange,
 /area/station/cargo/quartermaster)
 "pMR" = (
@@ -58508,7 +58507,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "snG" = (
-/obj/machinery/computer/cargo,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/requests_console/directional/north{
@@ -58521,6 +58519,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/iron/dark,
 /area/station/cargo/quartermaster)
 "snK" = (

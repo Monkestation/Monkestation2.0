@@ -11704,7 +11704,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -1
 	},
@@ -48931,7 +48931,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash/mess,
-/mob/living/basic/sloth/citrus,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
@@ -58604,6 +58603,7 @@
 	id = "qm_warehouse";
 	pixel_x = -6
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "rfU" = (
@@ -68634,6 +68634,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tWo" = (
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "tWp" = (
