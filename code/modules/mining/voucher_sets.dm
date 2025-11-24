@@ -96,7 +96,6 @@
 	icon_state = "disabler"
 	set_items = list(
 		/obj/item/storage/belt/holster/energy/disabler,
-		/obj/item/gun/energy/disabler,
 		)
 
 /datum/voucher_set/security/primary/advanced_taser
