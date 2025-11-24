@@ -405,3 +405,7 @@
   - balance: Drone tools are given a additional space to fit a round start construction
       bag.
   - qol: drones can equip items with hotkeys
+2025-11-24:
+  Absolucy:
+  - bugfix: Fixed obfuscate's teleport being inconsistent, especially during situations
+      where there's stuff like xeno weeds spread around.
