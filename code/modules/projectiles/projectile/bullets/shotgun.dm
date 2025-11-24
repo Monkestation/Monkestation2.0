@@ -22,6 +22,7 @@
 	speed = 0.3 //sub-caliber + lighter = speed. (Smaller number = faster)
 	armour_penetration = 50
 	wound_bonus = -40
+	bare_wound_bonus = -40
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 50
 	ricochet_auto_aim_range = 0
@@ -36,7 +37,7 @@
 		if(pierces > 2)
 			projectile_piercing = NONE
 
-			if(damage > 10) // Lets just be safe with this one
+			if(damage > 10)
 				damage -= 5
 			armour_penetration -= 25
 

@@ -49,6 +49,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 10
 	light_color = COLOR_DARK_RED
+	light_outer_range = 1.5
 	armour_penetration = 30
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
