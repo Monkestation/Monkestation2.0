@@ -104,9 +104,12 @@
 	if(ishuman(owner) && HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
 		var/mob/living/carbon/human/bloodsucker_user = owner
 		bloodsucker_user.physiology.brute_mod /= fortitude_resist
-		bloodsucker_user.physiology.stamina_mod /= (fortitude_resist - 0.2)
 		bloodsucker_user.physiology.burn_mod /= (fortitude_resist * 0.5)
-
+		if(level_current >= 4)
+			bloodsucker_user.physiology.stamina_mod *= 100
+			//has to be done this way so we can keep track of what the stamina mod is. Saving the old modifier opens us up to exploits.
+		else
+			bloodsucker_user.physiology.stamina_mod /= fortitude_resist
 	// Remove Traits & Effects
 	owner.remove_traits(base_traits + upgraded_traits, FORTITUDE_TRAIT)
 
