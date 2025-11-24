@@ -19,14 +19,11 @@
 /obj/structure/blob/special/resource/set_owner(datum/team/blob/new_owner)
 	. = ..()
 	if(. == FALSE)
-		message_admins("1")
 		return
 
 	if(new_owner)
-		message_admins("2")
 		give_to = list(new_owner.main_overmind)
 	else
-		message_admins("3")
 		give_to = null
 
 /obj/structure/blob/special/resource/scannerreport()
