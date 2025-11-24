@@ -3,11 +3,6 @@
 	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
-/obj/item/ammo_casing/energy/lasergun/sidearm
-	projectile_type = /obj/projectile/beam/laser/sidearm
-	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
-	select_name = "kill"
-
 /obj/item/ammo_casing/energy/laser/hellfire
 	projectile_type = /obj/projectile/beam/laser/hellfire
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
@@ -15,11 +10,16 @@
 
 /obj/item/ammo_casing/energy/laser/hellfire/blueshield
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(13, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
+	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
+	select_name = "kill"
+
+/obj/item/ammo_casing/energy/lasergun/sidearm
+	projectile_type = /obj/projectile/beam/laser/sidearm
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
