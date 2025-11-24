@@ -183,11 +183,14 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
+	base_icon_state = "marine_command"
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dog_fashion = null
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
@@ -211,20 +214,26 @@
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
 	icon_state = "marine_security"
+	base_icon_state = "marine_security"
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
 	icon_state = "marine_engineer"
+	base_icon_state = "marine_engineer"
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
+	base_icon_state = "marine_medic"
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
+	base_icon_state = "marine"
 	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for it's lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	flags_cover = null
+	flags_inv = HIDEHAIR|HIDEEARS
 	clothing_flags = null
 	armor_type = /datum/armor/pmc
 

@@ -330,3 +330,78 @@
   Absolucy:
   - qol: Oozelings will no longer lose blood from low nutrition if they are actively
       eating something with nutriment.
+  KnigTheThrasher:
+  - map: Oshan
+  notghosti:
+  - bugfix: Mending touch no longer levels you to the targets blood level, rather
+      just adjusting the transfer rate.
+2025-11-21:
+  Absolucy:
+  - qol: Eye of god now counts as prescription glasses
+  - rscadd: Ore Vents now generate on Oshan's mining level.
+  - qol: Heretic influences should now spawn more uniformly, similar to smugglers
+      satchels.
+  - bugfix: Fixed an issue with heretic influences sometimes spawning in nullspace
+      for some reason (hopefully)
+  EssentialTomato:
+  - rscadd: Added new anime halos.
+  - balance: Anime halos now temporarily disappear while dead.
+  JohnFulpWillard:
+  - bugfix: HoP's door remote works now.
+  Tractor-Maam:
+  - admin: expunging records now lists the name of the record expunged.
+  - admin: Creating records now creates an investigate log.
+  - admin: Deleting records now properly lists the ckey of the person who did it.
+  - admin: Setting security record notes now shows the ckey of the person who did
+      it... if this specific section of code was actually ever called.
+  - spellcheck: retitled the CentCom commander's suit to the CentCom admiral's suit
+      to match the loadout info
+  - spellcheck: fixed the name of the CentCom Admiral's coat
+  - rscadd: Chem Masters can now become reactionless if installed with cryo beakers.
+2025-11-22:
+  MilkForever:
+  - image: The engineering hardsuit sprite has been changed.
+  SirNightKnight:
+  - balance: gave marine helmets eye/mouth coverage and made them pepperproof.
+  - bugfix: fixed marine helmet sprites breaking when using their lights.
+  SirNightKnight, Melbert, GPeckman, lessthnthree:
+  - rscadd: Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA
+      to be charged wirelessly through microwave frequencies. You can Wave-charge
+      your device by placing it inside a compatible microwave and selecting the charge
+      mode.
+  - rscadd: Microwaves can be upgraded to add wireless charging
+  - rscadd: Cell-swappable microwave for the engineer on-the-go
+  - rscadd: Microwave now has a wire to swap charge/cook modes
+  - qol: Clicking on an adjacent dense object (or mob) with Spray Cleaner will now
+      spritz it rather than doing nothing. This means you can use Spray Cleaner to
+      clean bloodied windows, as the janitor gods intended. It also means you can
+      fill a spray bottle with Napalm, I guess.
+  - refactor: Any cleaning object can now clean a microwave.
+  - bugfix: When on 'stream' mode, the cleaning spray from a bottle of space cleaner
+      should no longer be blocked by just about everything.
+  - bugfix: inverted spray and stream range values for spray bottles so spray is closer
+      and stream is further.
+  - bugfix: ctrl-click spray bottle to change the nozzle mode.
+  - bugfix: fixed a few interactions with microwaves when there's no power.
+  - qol: gives medical spray bottles more reagent transfer control.
+  - bugfix: hercuri comes in yellow medical spray bottles.
+  - bugfix: fixed doorjacks being microwaveable.
+  TheColorCyan:
+  - bugfix: bloodsucker vassals will no longer get a stuck arrow on their screen if
+      the bloodsucker shapeshifts
+  notghosti:
+  - balance: Avtomat AC 3 ammo and reserves dropped from 2000 to 750 and 1500
+  - balance: Ammo reserves dropped to 375 to refill equally with new values.
+  - bugfix: Avtomat AC 3 no longer will enter -4 bullets upon firing every single
+      bullter
+2025-11-23:
+  Tractor-Maam:
+  - bugfix: fixed chem masters not considering the second beakers size in its buffer
+      if the first wasnt a cryo beaker.
+  notghosti:
+  - rscadd: Drone's are given a modified T-Ray scanner that can show thermal differences.
+  - balance: Maintenance drones will no longer be blacklisted from machinery during
+      Yellow alert
+  - balance: Drone tools are given a additional space to fit a round start construction
+      bag.
+  - qol: drones can equip items with hotkeys

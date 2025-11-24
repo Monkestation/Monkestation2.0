@@ -160,7 +160,7 @@
 			return TRUE
 
 		if("delete_record")
-			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
@@ -178,7 +178,7 @@
 
 		if("set_note")
 			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
 			target.security_note = note
 			return TRUE
 
