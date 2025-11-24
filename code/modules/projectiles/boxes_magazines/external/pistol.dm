@@ -201,7 +201,7 @@
 	base_icon_state = "35"
 	ammo_type = /obj/item/ammo_casing/c35
 	caliber = CALIBER_35
-	max_ammo = 16
+	max_ammo = 9
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
 	w_class = WEIGHT_CLASS_SMALL

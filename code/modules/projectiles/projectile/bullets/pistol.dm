@@ -135,24 +135,15 @@
 
 /obj/projectile/bullet/c35
 	name = ".35 Auto bullet"
-	damage = 15
+	damage = 20
 	wound_bonus = -10
-	var/biotype_damage_multiplier = 1.5 ///22.5 damage vs mobs, just under 1-shot vs carp
-	var/biotype_we_look_for = MOB_HUMANOID
-
-/obj/projectile/bullet/c35/on_hit(atom/target, blocked, pierce_hit)
-	var/mob/living/target_mob = target
-	if(isliving(target))
-		if(!((target_mob.mob_biotypes & biotype_we_look_for) || ishuman(target_mob) || issilicon(target_mob)))
-			damage *= biotype_damage_multiplier
-	return ..()
 
 /obj/projectile/bullet/c35/rubber
 	name = ".35 Auto rubber bullet"
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
 	damage = 3
-	stamina = 40 // ~6 shots to drop
+	stamina = 55
 	sharpness = NONE
 	embedding = null
 	debilitating = TRUE

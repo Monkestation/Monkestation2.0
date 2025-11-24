@@ -443,6 +443,7 @@
 	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	fire_delay = 0.5 SECONDS
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = FALSE
 	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'
