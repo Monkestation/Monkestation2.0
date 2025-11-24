@@ -183,7 +183,7 @@
 /obj/item/clothing/neck/tie/disco/equipped(mob/living/user, slot)
 	. = ..()
 	if(user.client)
-		AddComponent(/datum/component/soulcatcher/attachable_soulcatcher)
+		LoadComponent(/datum/component/soulcatcher/attachable_soulcatcher)
 
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
