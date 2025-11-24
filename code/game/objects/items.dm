@@ -157,6 +157,7 @@
 	var/strip_delay = 40
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
+	var/breakout_while_moving = FALSE
 
 	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
 	var/list/attack_verb_continuous

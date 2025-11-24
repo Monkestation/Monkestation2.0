@@ -155,6 +155,9 @@
 
 	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
 		target.apply_status_effect(/datum/status_effect/silver_cuffed)
+		breakout_while_moving = FALSE
+	else
+		breakout_while_moving = TRUE
 
 /**
  * # Alien handcuffs
