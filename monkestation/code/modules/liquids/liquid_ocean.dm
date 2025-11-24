@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM) || iseyemob(AM))
+	if(isobserver(AM) || iseyemob(AM) || iseffect(AM))
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
 	if(isliving(AM))
 		var/mob/living/arrived = AM
