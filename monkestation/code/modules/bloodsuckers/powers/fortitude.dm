@@ -12,9 +12,9 @@
 	power_flags = BP_AM_TOGGLE | BP_AM_CUSTOM_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
-	bloodcost = 30
+	bloodcost = 80 //it's a VERY strong ability that standard vamps do constantly. This way they have some form of blood upkeep during fights.
 	cooldown_time = 30 SECONDS
-	constant_bloodcost = 5
+	constant_bloodcost = 0 //literally does nothing at the moment anyway
 
 	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 	/// Base traits granted by fortitude.
