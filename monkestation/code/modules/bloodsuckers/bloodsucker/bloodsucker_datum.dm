@@ -200,7 +200,7 @@
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
-	cleanup_tracker()
+	cleanup_beacon()
 	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)

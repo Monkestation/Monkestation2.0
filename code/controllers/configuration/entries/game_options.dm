@@ -179,7 +179,7 @@
 	default = "Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated."
 
 /datum/config_entry/string/alert_yellow
-	default = "The security alert level has been changed to yellow. There is currently a critical engineering issue on board %STATION_NAME%. Crewmembers are advised to avoid damaged areas, and report them as needed."
+	default = "The security alert level has been changed to yellow. There is currently a critical engineering issue on board %STATION_NAME%. Station automatous drones have been granted relaxed protocols temporarily. Crewmembers are advised to avoid damaged areas, and report them as needed."
 
 /datum/config_entry/string/alert_amber
 	default = "The security alert level has been changed to amber. There is an ongoing C-B-R-N threat to the station. Crewmembers are advised to don protective gear, and personal oxygen systems until the alert is lifted. Report any symptoms to medical personnel immediately."
