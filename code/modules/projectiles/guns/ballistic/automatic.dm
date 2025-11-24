@@ -847,7 +847,6 @@
 	fire_delay = 0.8 SECONDS
 	spread = 0
 	projectile_damage_multiplier = 1.75
-	projectile_wound_bonus = 20
 
 /obj/item/gun/ballistic/automatic/sol_rifle/marksman/Initialize(mapload)
 	. = ..()
@@ -897,7 +896,7 @@
 	suppressor_y_offset = 0
 	can_bayonet = FALSE
 	burst_size = 1
-	fire_delay = 1.2 SECONDS
+	fire_delay = 1 SECONDS
 	actions_types = list()
 	recoil = 1.5
 	wield_recoil = 0.5
