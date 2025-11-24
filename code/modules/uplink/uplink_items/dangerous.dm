@@ -209,11 +209,13 @@
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/wespe
 	cost = 3
 
-/datum/uplink_item/dangerous/shotgun_revolver
+/*
+/datum/uplink_item/dangerous/shotgun_revolver //Just not suitable for a syndicate weapon anymore, and I'm not going to make a syndicate version rn.
 	name = "\improper Bóbr 12 GA revolver"
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
 	item = /obj/item/storage/box/syndie_kit/shotgun_revolver
 	cost = 6
+*/
 
 /datum/uplink_item/dangerous/shit_smg
 	name = "Surplus Smg Bundle"
