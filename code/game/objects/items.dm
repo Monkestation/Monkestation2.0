@@ -152,11 +152,12 @@
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
 	///In deciseconds, how long an item takes to put on another person
-	var/equip_delay_other = 20
+	var/equip_delay_other = 2 SECONDS
 	///In deciseconds, how long an item takes to remove from another person
-	var/strip_delay = 40
+	var/strip_delay = 4 SECONDS
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
+	/// If TRUE, then moving will not cancel resisting out of the item.
 	var/breakout_while_moving = FALSE
 
 	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
