@@ -711,6 +711,8 @@
 
 /// Admires the aquarium for a few seconds, giving a mood event based on how many fish are alive or dead
 /datum/component/aquarium/proc/admire(atom/movable/source, mob/living/user)
+	if(!isliving(user))
+		return
 	source.balloon_alert(user, "admiring aquarium...")
 	if(!do_after(user, 5 SECONDS, target = source))
 		return
