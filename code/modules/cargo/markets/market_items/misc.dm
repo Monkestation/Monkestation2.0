@@ -141,3 +141,12 @@
 	price_max = CARGO_CRATE_VALUE * 5
 	stock_max = 1
 	availability_prob = 25
+
+/datum/market_item/misc/roulettepin
+	name = "\"Roulette\" type electronic firing pin"
+	desc = "Illegal firing pins. Gets you back what security took from you. Warranty valid for exactly 1 use."
+	item = /obj/item/weaponcrafting/giant_wrench
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 3
+	availability_prob = 30
