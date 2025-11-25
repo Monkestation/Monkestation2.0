@@ -446,9 +446,9 @@
 /obj/item/firing_pin/cargo/unremovable
 	pin_removable = FALSE
 
-/obj/item/firing_pin/buckshotroulette //no cheating allowed
+/obj/item/firing_pin/buckshotroulette
 	name = "roulette firing pin"
-	desc = "A firing pin that remembers the identity of the last person that fired it, only allowing them to fire once before having to give up their turn."
+	desc = "A firing pin that remembers the identity of the last person that fired it, only allowing them to fire once before having to give up their turn, unless they shoot themselves."
 	fail_message = "turn finished"
 	var/last_user
 

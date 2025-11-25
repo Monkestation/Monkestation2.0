@@ -493,7 +493,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
 	sawn_desc = "This one doesn't fix itself."
 	can_be_sawn_off = TRUE
-	pin = /obj/item/firing_pin/buckshotroulette/unremovable
+	pin = /obj/item/firing_pin/buckshotroulette/unremovable //you arent getting a 10 round shotgun for free.
 
 /obj/item/gun/ballistic/shotgun/buckshotroulette/Initialize(mapload)
 	. = ..()
