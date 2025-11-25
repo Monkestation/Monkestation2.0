@@ -70,10 +70,8 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isturf(target_atom))
-		return FALSE
-	var/turf/target_turf = target_atom
-	if(target_turf.is_blocked_turf_ignore_climbable())
+	var/turf/target_turf = get_turf(target_atom)
+	if(!target_turf || target_turf.is_blocked_turf_ignore_climbable())
 		return FALSE
 	if(level_current < OBFUSCATION_ANYWHERE_LEVEL && !(target_turf in view(owner.client.view, owner.client)))
 		owner.balloon_alert(owner, "out of view!")
@@ -114,9 +112,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/FireSecondaryTargetedPower(atom/target, params)
 	. = ..()
-	var/mob/living/user = owner
-	var/turf/targeted_turf = get_turf(target)
-	obfuscation_blink(user, targeted_turf)
+	obfuscation_blink(owner, get_turf(target))
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/on_use_item(mob/living/source, atom/target, obj/item/weapon, click_parameters)
