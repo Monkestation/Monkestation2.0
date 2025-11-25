@@ -145,8 +145,18 @@
 /datum/market_item/misc/roulettepin
 	name = "\"Roulette\" type electronic firing pin"
 	desc = "Illegal firing pins. Gets you back what security took from you. Warranty valid for exactly 1 use."
-	item = /obj/item/weaponcrafting/giant_wrench
+	item = /obj/item/firing_pin/buckshotroulette
 	price_min = CARGO_CRATE_VALUE * 2
 	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 3
+	availability_prob = 30
+
+
+/datum/market_item/misc/roulettepin
+	name = "Magazine Shuffler"
+	desc = "This \"tool\", if its even useful enough to call it that, was found in the wreckage of a station. Stick it on a gun or magazine and watch it work on those rounds!"
+	item = /obj/item/magazine_shuffler
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 3
 	stock_max = 3
 	availability_prob = 30

@@ -289,15 +289,16 @@
 /datum/supply_pack/service/buckshotroulette //yeah sure fuck it, give it to service. Let the bartender have a gimmick to do.
 	name = "Shotgun Roulette starter kit"
 	desc = "Double or nothing? Contains everything you need to add more patients to medbays stasis beds. \
-	Includes a roulette shotgun (10 round capacity!), a spare roulette pin for use in other guns, and extra ammo. \
+	Includes a roulette shotgun (10 round capacity!), a spare roulette pin for use in other guns, a magazine shuffler, and extra ammo. \
 	legal permission not included."
 	cost = CARGO_CRATE_VALUE * 8 // might be a shitty gun to fight with, but it still contains a gun.
 	contraband = TRUE
-	access = ACCESS_SECURITY // should it be armory? IDK.
+	access = ACCESS_BAR
 	crate_type = /obj/structure/closet/crate/secure/gear
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/buckshotroulette,
 		/obj/item/firing_pin/buckshotroulette, //maybe a shotgun isnt your speed. Particle Accelerator Roulette.
 		/obj/item/storage/box/buckshotroulette,
 		/obj/item/storage/box/lethalshot,
+		/obj/item/magazine_shuffler,
 	)
