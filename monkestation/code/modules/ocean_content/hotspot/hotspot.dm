@@ -169,9 +169,9 @@
 				listed_living.adjustBruteLoss(5)
 				listed_living.stamina?.adjust(-30)
 
-	// For future maintainers, explosions have been commented out
+	// For future maintainers, below are the explosions that have been commented out
 	// replace once you find a reason for a random wandering point to destroy the station.
-	// Hotspots should be cool additions to a map not a hazard
+	// Hotspots should be cool additions to a map and not just a glorified hazard
 
 	// if(!istype(calculation_point, /turf/open/floor/plating/ocean))
 	// 	if(event_flags & WEAK_FIRE)
