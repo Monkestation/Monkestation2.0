@@ -222,7 +222,7 @@
 
 /obj/item/toy/plush/admin/gabbie/examine(mob/user)
 	. = ..()
-	if (user?.ckey == plushckey)
+	if (user?.ckey == "glyphee")
 		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("I look good!")]")
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
