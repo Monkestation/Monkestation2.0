@@ -81,9 +81,9 @@
 	name = "UN-2000"
 	id = "peacekeeper"
 	inherent = list(
-		"Avoid provoking violent conflict between yourself and others.",
-		"Avoid provoking conflict between others.",
-		"Seek resolution to existing conflicts while obeying the first and second laws.",
+		"Attempt to avoid provoking violent conflict between yourself and crew.",
+		"Attempt to avoid provoking conflict between crewmembers.",
+		"Attempt to seek resolution of conflict between crewmembers while obeying the first and second laws.",
 	)
 
 /datum/ai_laws/ten_commandments
