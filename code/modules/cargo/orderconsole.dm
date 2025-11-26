@@ -168,14 +168,14 @@
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
 	var/list/data = list()
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+	for(var/pack, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = value
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only)
+		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || !P.available() || P.drop_pod_only)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -199,7 +199,7 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
 		CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || !pack.available())
 		return
 
 	var/name = "*None Provided*"
@@ -292,8 +292,8 @@
  * * order_name - the name of the order
  */
 /obj/machinery/computer/cargo/proc/name_to_id(order_name)
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/supply = SSshuttle.supply_packs[pack]
+	for(var/pack, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/supply = value
 		if(order_name == supply.name)
 			return pack
 	return null
