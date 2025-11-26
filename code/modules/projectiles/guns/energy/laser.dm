@@ -61,6 +61,7 @@
 	desc = "A bulky energy-based laser auto-carbine that rapidly fires low-frequency beams of light which pass through glass and armour composite."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+	cell_type = /obj/item/stock_parts/power_store/cell/e_gun // 1.5 * STANDARD_CELL_CHARGE, 40 shots total
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)

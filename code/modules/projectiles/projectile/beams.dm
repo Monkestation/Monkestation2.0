@@ -169,7 +169,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 35
+	stamina = 40
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -182,7 +182,7 @@
 	speed = 0.65 //Just slightly faster than lasers
 
 /obj/projectile/beam/disabler/weak
-	stamina = 15
+	stamina = 20
 	debilitate_mult = 0.5
 	speed = 0.8
 

@@ -5,6 +5,9 @@
 	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/electrode/hybrid
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE * 0.5)
+
 /obj/item/ammo_casing/energy/electrode/hos // MONKE EDIT: 4th shot mode
 	e_cost = LASER_SHOTS(6, STANDARD_CELL_CHARGE * 1.2)
 

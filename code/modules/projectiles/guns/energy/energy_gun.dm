@@ -1,13 +1,15 @@
 /obj/item/gun/energy/e_gun
 	name = "\improper Allstar SC-2 energy carbine"
-	desc = "A hefty high-capacity energy carbine with two settings: disable and kill."
+	desc = "A hefty high-capacity energy carbine with a burst emitter and two settings: disable and kill."
 	icon_state = "energy"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/lasergun/sidearm)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smg, /obj/item/ammo_casing/energy/lasergun/carbine)
 	modifystate = TRUE
 	ammo_x_offset = 3
-	cell_type = /obj/item/stock_parts/power_store/cell/e_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/e_gun //60 shots of smg disabler ~= 30 shots of disabler, 40 shots of carbine laser ~= 20 shots of laser
+	burst_size = 2
+	fire_delay = 1 //2 shots at 0.1 seconds spacing every 0.4 seconds
 
 /obj/item/gun/energy/e_gun/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
