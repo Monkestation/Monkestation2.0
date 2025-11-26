@@ -93,15 +93,18 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	used = TRUE
 	to_chat(user, use_message)
 	var/guardian_type_name = random ? "Random" : capitalize(initial(guardian_path.creator_name))
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 		"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
-		jobban_type = ROLE_PAI,
+		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
+		alert_pic = guardian_path,
+		role_name_text = "guardian spirit"
 	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
 		spawn_guardian(user, candidate, guardian_path)
+		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else
 		to_chat(user, failure_message)
 		used = FALSE
@@ -118,7 +121,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]
 	var/mob/living/basic/guardian/summoned_guardian = new guardian_path(user, guardian_theme)
 	summoned_guardian.set_summoner(user, different_person = TRUE)
-	summoned_guardian.key = candidate.key
+	summoned_guardian.PossessByPlayer(candidate.key)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
@@ -170,6 +173,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = GUARDIAN_THEME_TECH
+	allow_multiple = TRUE
 	allow_changeling = FALSE
 	use_message = span_holoparasite("You start to power on the injector...")
 	used_message = span_holoparasite("The injector has already been used.")
@@ -198,6 +202,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "dustyshard"
 	theme = GUARDIAN_THEME_MINER
+	allow_multiple = FALSE
 	use_message = span_holoparasite("You pierce your skin with the shard...")
 	used_message = span_holoparasite("This shard seems to have lost all its power...")
 	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")

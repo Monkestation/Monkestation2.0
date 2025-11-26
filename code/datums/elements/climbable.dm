@@ -18,10 +18,11 @@
 	if(climb_stun)
 		src.climb_stun = climb_stun
 
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
+	// remove the `override = TRUE` whenever we actually fix this shit
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine), override = TRUE)
+	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive), override = TRUE)
+	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun), override = TRUE)
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -49,12 +50,12 @@
 			return
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(climbed_thing)
-		structure_climber.Paralyze(40)
+		structure_climber.Immobilize(40)
 		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
 
 
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
-	if(!can_climb(climbed_thing, user))
+	if(!can_climb(climbed_thing, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING))
 		return
 	climbed_thing.add_fingerprint(user)
 	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
@@ -67,27 +68,38 @@
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
-		adjusted_climb_stun *= 0.8
+	//MONKESTATION EDIT START
+	if(HAS_TRAIT(user, TRAIT_FEEBLE)) //do you have any idea how slow I am???
+		adjusted_climb_time *= 1.25
+	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
+		adjusted_climb_time *= 0.3
+	//MONKESTATION EDIT END
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
-	if(do_after(user, adjusted_climb_time, climbed_thing))
+	if(do_after(user, adjusted_climb_time, climbed_thing, interaction_key = DOAFTER_SOURCE_CLIMBING)) // monkestation edit: add an interaction key
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
-		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN)//monkestation edit: simians can fling themselves off climbable structures
+		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN || HAS_TRAIT(user, TRAIT_VAULTING) &&user.m_intent == MOVE_INTENT_SPRINT)//monkestation edit: simians can fling themselves off climbable structures
 			vault_over_object(user, climbed_thing)
 			if(climb_stun)
-				user.Stun(climb_stun)
-				user.visible_message("<span class='warning'>[user] flips over [src]!</span>", \
-									"<span class='notice'>You flip over [climbed_thing]!</span>")
+				user.Immobilize(climb_stun)
+				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
+									span_notice("You flip over [climbed_thing]!"))
 
 		else if(do_climb(climbed_thing, user, params))
 			user.visible_message(span_warning("[user] climbs onto [climbed_thing]."), \
 								span_notice("You climb onto [climbed_thing]."))
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
-				user.Stun(adjusted_climb_stun)
+				user.Immobilize(adjusted_climb_stun)
+			var/atom/movable/buckle_target = climbed_thing
+			if(istype(buckle_target))
+				if(buckle_target.is_buckle_possible(user))
+					buckle_target.buckle_mob(user)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
+		if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
+			user.adjust_bodytemperature((user.bodytemp_heat_damage_limit - user.standard_body_temperature) * 0.4)
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
@@ -131,6 +143,7 @@
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
+
 	if(user != dropped_atom || !isliving(dropped_atom))
 		return
 	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
@@ -138,6 +151,7 @@
 	var/mob/living/living_target = dropped_atom
 	if(living_target.mobility_flags & MOBILITY_MOVE)
 		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/try_speedrun(datum/source, mob/bumpee)
@@ -147,9 +161,15 @@
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
 	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
-		INVOKE_ASYNC(src, PROC_REF(attempt_sprint_climb), source, bumpee)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
-	if(do_after(bumpee, climb_time * 1.2, source))
-		do_climb(source, bumpee)
+	if(DOING_INTERACTION(bumpee, DOAFTER_SOURCE_CLIMBING))
+		return
+	if(HAS_TRAIT(bumpee, TRAIT_FREERUNNING))
+		if(do_after(bumpee, climb_time, source, interaction_key = DOAFTER_SOURCE_CLIMBING))
+			do_climb(source, bumpee)
+	else
+		if(do_after(bumpee, climb_time * 1.2, source, interaction_key = DOAFTER_SOURCE_CLIMBING))
+			do_climb(source, bumpee)

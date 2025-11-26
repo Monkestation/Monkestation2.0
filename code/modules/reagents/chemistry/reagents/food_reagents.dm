@@ -60,14 +60,9 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/nutriment/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	. = ..()
 	target.fertility_boosting += min(25, volume * 0.5)
-
-/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(SPT_PROB(30, seconds_per_tick))
@@ -125,8 +120,7 @@
 	burn_heal = 1
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(M.satiety < MAX_SATIETY)
-		M.satiety += 30 * REM * seconds_per_tick
+	M.adjust_satiety(30 * REM * seconds_per_tick)
 	. = ..()
 
 /// The basic resource of vat growing.
@@ -174,7 +168,7 @@
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 	turf_exposure = TRUE
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
@@ -236,17 +230,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
 
-// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjust_weedlevel(rand(1,2))
-		mytray.adjust_pestlevel(rand(1,2))
 
-
-/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume)
+/datum/reagent/consumable/sugar/feed_interaction(mob/living/basic/chicken/target, volume, mob/user)
 	.=..()
-	target.adjust_happiness(0.1*volume)
+	target.adjust_happiness(0.1*volume, user)
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
@@ -265,12 +252,6 @@
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-	// Compost for EVERYTHING
-/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -298,29 +279,24 @@
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
+	holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
+
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			heating = 5
-			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
-			if(isslime(M))
-				heating = rand(5, 20)
+			heating = 0.1 KELVIN
 		if(15 to 25)
-			heating = 10
-			if(isslime(M))
-				heating = rand(10, 20)
+			heating = 0.33 KELVIN
 		if(25 to 35)
-			heating = 15
-			if(isslime(M))
-				heating = rand(15, 20)
+			heating = 0.66 KELVIN
 		if(35 to INFINITY)
-			heating = 20
-			if(isslime(M))
-				heating = rand(20, 25)
-	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
-	..()
+			heating = 1.2 KELVIN
+
+	affected_mob.adjust_bodytemperature(heating * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(39 CELCIUS))
+	return ..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -335,33 +311,33 @@
 	bypass_restriction = TRUE
 	turf_exposure = TRUE
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	var/cooling = 0
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
+	holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
+
+	var/cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 	switch(current_cycle)
 		if(1 to 15)
-			cooling = -10
-			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
-			if(isslime(M))
-				cooling = -rand(5, 20)
+			if(isslime(affected_mob))
+				cooling = -rand(5,20)
 		if(15 to 25)
-			cooling = -20
-			if(isslime(M))
-				cooling = -rand(10, 20)
+			cooling *= 2
+			if(isslime(affected_mob))
+				cooling = -rand(10,20)
 		if(25 to 35)
-			cooling = -30
+			cooling *= 3
+			if(isslime(affected_mob))
+				cooling = -rand(15,20)
 			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
-				cooling = -rand(15, 20)
+				affected_mob.emote("shiver")
 		if(35 to INFINITY)
-			cooling = -40
+			cooling *= 4
 			if(prob(5))
-				M.emote("shiver")
-			if(isslime(M))
-				cooling = -rand(20, 25)
-	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
-	..()
+				affected_mob.emote("shiver")
+
+	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 15 KELVIN)
+	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -375,7 +351,7 @@
 		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * specific_heat) / (heat_capacity + reac_volume * specific_heat)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -419,11 +395,10 @@
 			if(prob(5))
 				victim.vomit()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(!holder.has_reagent(/datum/reagent/consumable/milk))
-		if(SPT_PROB(5, seconds_per_tick))
-			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
-	..()
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!holder.has_reagent(/datum/reagent/consumable/milk) && SPT_PROB(5, seconds_per_tick))
+		affected_mob.visible_message(span_warning("[affected_mob] [pick("dry heaves!","coughs!","splutters!")]"))
+	return ..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -441,6 +416,39 @@
 		return
 
 	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
+
+/datum/reagent/consumable/salt/expose_mob(mob/living/carbon/exposed_carbon, methods, reac_volume)
+	. = ..()
+	if(!iscarbon(exposed_carbon) || !(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in exposed_carbon.all_wounds)
+		iter_wound.on_salt(reac_volume, exposed_carbon)
+
+// Salt can help with wounds by soaking up fluid, but undiluted salt will also cause irritation from the loose crystals, and it might soak up the body's water as well!
+// A saltwater mixture would be best, but we're making improvised chems here, not real ones.
+/datum/wound/proc/on_salt(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume, initial_flow * 0.6) // 20u of a salt shacker * 0.1 = -1.6~ blood flow, but is always clamped to, at best, third blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	gauzed_clot_rate *= 0.65
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/slash/flesh/on_salt(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.1 * reac_volume, initial_flow * 0.5) // 20u of a salt shacker * 0.1 = -2~ blood flow, but is always clamped to, at best, halve blood loss from that wound.
+	// Crystal irritation worsening recovery.
+	clot_rate *= 0.75
+	to_chat(carbies, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin but soaking up most of the blood."))
+
+/datum/wound/burn/flesh/on_salt(reac_volume)
+	// Slightly sanitizes and disinfects, but also increases infestation rate (some bacteria are aided by salt), and decreases flesh healing (can damage the skin from moisture absorption)
+	sanitization += VALUE_PER(0.4, 30) * reac_volume
+	infestation -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
+	infestation_rate += VALUE_PER(0.12, 30) * reac_volume
+	flesh_healing -= max(VALUE_PER(5, 30) * reac_volume, 0)
+	to_chat(victim, span_notice("The salt bits seep in and stick to [lowertext(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
+
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -467,14 +475,7 @@
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/garlic/on_mob_add(mob/living/L, amount)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_GARLIC_BREATH, type)
-
-/datum/reagent/consumable/garlic/on_mob_delete(mob/living/L)
-	. = ..()
-	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+	added_traits = list(TRAIT_GARLIC_BREATH)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
@@ -531,6 +532,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 	turf_exposure = TRUE
 
 /datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -581,7 +583,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(0.2 KELVIN * REM * seconds_per_tick, 0, M.standard_body_temperature)
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -593,7 +595,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, seconds_per_tick, times_fired)
-	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+	target_mob.adjust_bodytemperature(WARM_DRINK KELVIN * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(45 CELCIUS))
 	..()
 
 /datum/reagent/consumable/flour
@@ -602,8 +604,37 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 	default_container = /obj/item/reagent_containers/condiment/flour
+
+/datum/reagent/consumable/flour/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_flour(reac_volume, carbies)
+
+/datum/wound/proc/on_flour(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.015 * reac_volume) // 30u of a flour sack * 0.015 = -0.45~ blood flow, prettay good
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+
+/datum/wound/slash/flesh/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.04 * reac_volume) // 30u of a flour sack * 0.04 = -1.25~ blood flow, pretty good!
+	to_chat(carbies, span_notice("The flour seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+
+// Don't pour flour onto burn wounds, it increases infection risk! Very unwise. Backed up by REAL info from REAL professionals.
+// https://www.reuters.com/article/uk-factcheck-flour-burn-idUSKCN26F2N3
+/datum/wound/burn/flesh/on_flour(reac_volume)
+	to_chat(victim, span_notice("The flour seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 1)
+	infestation += 0.2
+	return
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -670,6 +701,37 @@
 	description = "A slippery solution."
 	color = "#DBCE95"
 	taste_description = "slime"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
+
+// Starch has similar absorbing properties to flour (Stronger here because it's rarer)
+/datum/reagent/consumable/corn_starch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.on_starch(reac_volume, carbies)
+
+/datum/wound/proc/on_starch(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/bleed/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.03 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying some of it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/slash/flesh/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/burn/flesh/on_starch(reac_volume, mob/living/carbon/carbies)
+	to_chat(carbies, span_notice("The slimey starch seeps into [lowertext(src)], spiking you with intense pain! That probably wasn't a good idea..."))
+	sanitization -= min(0, 0.5)
+	infestation += 0.1
+	return
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
@@ -692,16 +754,6 @@
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/honey
-
-	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
-/datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		if(myseed && prob(80))
-			mytray.adjust_weedlevel(rand(1,2))
-			mytray.adjust_pestlevel(rand(1,2))
-			myseed.adjust_maturation(rand(1,2))
-			myseed.adjust_lifespan(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
@@ -796,6 +848,7 @@
 	add_reagent_light(exposed_mob)
 
 /datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
+	. = ..()
 	remove_reagent_light(M)
 
 /datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
@@ -805,7 +858,7 @@
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
 	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
+	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion), override = TRUE)
 
 /datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
 	UnregisterSignal(living_holder, COMSIG_QDELETING)
@@ -853,7 +906,8 @@
 	if(isethereal(M))
 		M.blood_volume += 1 * seconds_per_tick
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES | SHOCK_NOSTUN) //the shock is coming from inside the house //MONKESTATION ADDITION NO STUN
+		M.Immobilize(1 SECOND) //MONKESTATION ADDITION
 		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
@@ -940,14 +994,14 @@
 	color = "#800000"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
+	taste_description = "chocolate and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/chocolatepudding
 	required_drink_type = /datum/reagent/consumable/chocolatepudding
-	name = "chocolate pudding"
-	desc = "Tasty."
+	name = "Chocolate Pudding"
+	desc = "Chocolate pudding in a clear cup with soft whipping cream and chocolate sprinkles."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "chocolatepudding"
 
@@ -957,15 +1011,48 @@
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
+	taste_description = "vanilla and happiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/vanillapudding
 	required_drink_type = /datum/reagent/consumable/vanillapudding
-	name = "vanilla pudding"
-	desc = "Tasty."
+	name = "Vanilla Pudding"
+	desc = "Vanilla pudding in a clear cup with a dollop of icing shaped like a baby bunny on top."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillapudding"
+
+/datum/reagent/consumable/flan
+	name = "Flan"
+	description = "A carefully constructed caramel pudding."
+	color = "#ce6f30"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "caramel custard"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/flan
+	required_drink_type = /datum/reagent/consumable/flan
+	name = "Flan"
+	desc = "Tasty and caramelly."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "flan"
+
+/datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	description = "Cherry pudding in a clear cup with icing and a cherry on top."
+	color = "#bd4138"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "Cherry with a cherry on top"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/glass_style/drinking_glass/cherrypudding
+	required_drink_type = /datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	desc = "A sweet creamy treat"
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "cherrypudding"
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"
@@ -1107,3 +1194,50 @@
 		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		affected_mob.inflate_gib()
 	return ..()
+
+/datum/reagent/consumable/worcestershire
+	name = "Worcestershire Sauce"
+	description = "That's \"Woostershire\" sauce, by the way."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#572b26"
+	taste_description = "sweet fish"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/worcestershire
+
+/datum/reagent/consumable/red_bay
+	name = "Red Bay Seasoning"
+	description = "A secret blend of herbs and spices that goes well with anything- according to Martians, at least."
+	color = "#8E4C00"
+	taste_description = "spice"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/red_bay
+
+/datum/reagent/consumable/curry_powder
+	name = "Curry Powder"
+	description = "One of humanity's most common spices. Typically used to make curry."
+	color = "#F6C800"
+	taste_description = "dry curry"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/curry_powder
+
+/datum/reagent/consumable/dashi_concentrate
+	name = "Dashi Concentrate"
+	description = "A concentrated form of dashi. Simmer with water in a 1:8 ratio to produce a tasty dashi broth."
+	color = "#372926"
+	taste_description = "extreme umami"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/dashi_concentrate
+
+/datum/reagent/consumable/martian_batter
+	name = "Martian Batter"
+	description = "A thick batter made with dashi and flour, used for making dishes such as okonomiyaki and takoyaki."
+	color = "#D49D26"
+	taste_description = "umami dough"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/grounding_solution
+	name = "Grounding Solution"
+	description = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	color = "#efeff0"
+	taste_description = "metallic salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -34,3 +34,8 @@
 #define DISEASE_SEVERITY_DANGEROUS "Dangerous"
 /// Diseases that can quickly kill an unprepared victim (fungal tb, gbs)
 #define DISEASE_SEVERITY_BIOHAZARD "BIOHAZARD"
+
+#define DISEASE_HOLOSIGN_BLOCK 3
+
+/// Any non predefined disease subtype.
+#define WILD_ACUTE_DISEASES (subtypesof(/datum/disease/acute) - typesof(/datum/disease/acute/premade))

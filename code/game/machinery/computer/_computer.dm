@@ -11,6 +11,9 @@
 	light_inner_range = 0.1
 	light_outer_range = 2
 	light_power = 0.8
+	clicksound = SFX_KEYBOARD
+	/// Boolean, Doesn't have standard overlays or appearance, but has the same effects
+	var/special_appearance = FALSE
 	/// Icon_state of the keyboard overlay.
 	var/icon_keyboard = "generic_key"
 	/// Should we render an unique icon for the keyboard when off?
@@ -21,6 +24,9 @@
 	var/time_to_unscrew = 2 SECONDS
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
+	/// Will projectiles be able to pass over this computer?
+	var/projectiles_pass_chance = 50
+	pass_flags_self = LETPASSTHROW //monkestation addition
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -38,6 +44,8 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
+	if(special_appearance)
+		return
 	if(icon_keyboard)
 		if(keyboard_change_icon && (machine_stat & NOPOWER))
 			. += "[icon_keyboard]_off"
@@ -81,6 +89,23 @@
 				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/machinery/computer/CanAllowThrough(atom/movable/mover, border_dir) // allows projectiles to fly over the computer
+	. = ..()
+	if(.)
+		return
+	if(!projectiles_pass_chance)
+		return FALSE
+	if(!isprojectile(mover))
+		return FALSE
+	var/obj/projectile/proj = mover
+	if(!anchored)
+		return TRUE
+	if(proj.firer && Adjacent(proj.firer))
+		return TRUE
+	if(prob(projectiles_pass_chance))
+		return TRUE
+	return FALSE
 
 /obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
@@ -128,13 +153,6 @@
 		for(var/obj/C in src)
 			C.forceMove(loc)
 	qdel(src)
-
-/obj/machinery/computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !is_operational)
-		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)

@@ -2,7 +2,7 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
-	icon_keyboard = "mining"
+	icon_keyboard = "mining_key"
 	icon_screen = "bitrunning"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/LateInitialize(mapload_arg)
 	. = ..()
 
 	if(isnull(server_ref?.resolve()))
@@ -104,5 +104,4 @@
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
 		if(nearby_server)
 			server_ref = WEAKREF(nearby_server)
-			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server

@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -32,8 +45,19 @@
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK "#0000007A"
 
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
 #define COLOR_RED "#FF0000"
+#define COLOR_CHRISTMAS_RED "#D6001C"
+#define COLOR_OLD_GLORY_RED "#B22234"
+#define COLOR_FRENCH_RED "#EF4135"
+#define COLOR_ETHIOPIA_RED "#DA121A"
+#define COLOR_UNION_JACK_RED "#C8102E"
+#define COLOR_MEDIUM_DARK_RED "#CC0000"
+#define COLOR_PINK_RED "EF3340"
 #define COLOR_SYNDIE_RED "#F10303"
+#define COLOR_SYNDIE_RED_HEAD "#760500"
 #define COLOR_MOSTLY_PURE_RED "#FF3300"
 #define COLOR_DARK_RED "#A50824"
 #define COLOR_RED_LIGHT "#FF3333"
@@ -49,7 +73,11 @@
 
 #define COLOR_YELLOW "#FFFF00"
 #define COLOR_VIVID_YELLOW "#FBFF23"
+#define COLOR_TANGERINE_YELLOW "#FFCC00"
 #define COLOR_VERY_SOFT_YELLOW "#FAE48E"
+#define COLOR_GOLD "#FFD700"
+#define COLOR_ETHIOPIA_YELLOW "#FCDD09"
+#define COLOR_LIGHT_YELLOW "#FFFEE0"
 
 #define COLOR_OLIVE "#808000"
 #define COLOR_ASSISTANT_OLIVE "#828163"
@@ -62,6 +90,9 @@
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
+#define COLOR_CHRISTMAS_GREEN "#00873E"
+#define COLOR_IRISH_GREEN "#169B62"
+#define COLOR_ETHIOPIA_GREEN "#078930"
 #define COLOR_DARK_MODERATE_LIME_GREEN "#44964A"
 #define COLOR_PAI_GREEN "#00FF88"
 #define COLOR_PALE_GREEN "#20e28e"
@@ -71,6 +102,10 @@
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
 #define COLOR_BLUE "#0000FF"
+#define COLOR_OLD_GLORY_BLUE "#3C3B6E"
+#define COLOR_FRENCH_BLUE "#0055A4"
+#define COLOR_UNION_JACK_BLUE "#012169"
+#define COLOR_TRUE_BLUE "#0066CC"
 #define COLOR_STRONG_BLUE "#1919c8"
 #define COLOR_CENTCOM_BLUE "#134975"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
@@ -98,6 +133,7 @@
 #define COLOR_DARK_PURPLE "#551A8B"
 
 #define COLOR_ORANGE "#FF9900"
+#define COLOR_IRISH_ORANGE "#FF883E"
 #define COLOR_ENGINEERING_ORANGE "#FFA62B"
 #define COLOR_MOSTLY_PURE_ORANGE "#ff8000"
 #define COLOR_TAN_ORANGE "#FF7B00"
@@ -118,6 +154,7 @@
 #define COLOR_LIGHT_BROWN "#996666"
 #define COLOR_BROWNER_BROWN "#663300"
 
+#define COLOR_CENTCOM_GREEN "#86ff82"
 #define COLOR_GREEN_GRAY "#99BB76"
 #define COLOR_RED_GRAY "#B4696A"
 #define COLOR_PALE_BLUE_GRAY "#98C5DF"
@@ -142,6 +179,16 @@
 #define COLOR_ASSEMBLY_LBLUE "#5D99BE"
 #define COLOR_ASSEMBLY_BLUE "#38559E"
 #define COLOR_ASSEMBLY_PURPLE "#6F6192"
+
+//Colors for crayons.
+#define COLOR_CRAYON_RED "#DA0000"
+#define COLOR_CRAYON_ORANGE "#FF9300"
+#define COLOR_CRAYON_YELLOW "#FFF200"
+#define COLOR_CRAYON_GREEN "#A8E61D"
+#define COLOR_CRAYON_BLUE "#00B7EF"
+#define COLOR_CRAYON_PURPLE "#DA00FF"
+#define COLOR_CRAYON_BLACK "#1C1C1C"
+#define COLOR_CRAYON_RAINBOW "#FFF000"
 
 ///Colors for grayscale tools
 #define COLOR_TOOL_BLUE "#1861d5"
@@ -180,6 +227,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffac4"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
@@ -236,6 +285,8 @@
 #define LIGHT_COLOR_TUNGSTEN "#FFD6AA"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
+/// Nearly red. rgb(226, 78, 118)
+#define LIGHT_COLOR_BUBBLEGUM "#e24e76"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits
 #define CIRCUIT_COLOR_GENERIC "#1A7A13"
@@ -247,12 +298,13 @@
 #define CIRCUIT_COLOR_ENGINEERING "#F8D700"
 #define CIRCUIT_COLOR_SUPPLY "#C47749"
 
-/// Highly Saturated Colors
-#define COLOR_BRIGHT_RED "#FF6666"
-#define COLOR_BRIGHT_YELLOW "#EAFF51"
-#define COLOR_BRIGHT_GREEN "#41FC66"
-#define COLOR_BRIGHT_TEAL "#42FFF2"
-#define COLOR_BRIGHT_PURPLE "#5D5DFC"
+/// Colors for pride week
+#define COLOR_PRIDE_RED "#FF6666"
+#define COLOR_PRIDE_ORANGE "#FC9F3C"
+#define COLOR_PRIDE_YELLOW "#EAFF51"
+#define COLOR_PRIDE_GREEN "#41FC66"
+#define COLOR_PRIDE_BLUE "#42FFF2"
+#define COLOR_PRIDE_PURPLE "#5D5DFC"
 
 /// The default color for admin say, used as a fallback when the preference is not enabled
 #define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
@@ -283,6 +335,9 @@
 	#define CABLE_HEX_COLOR_WHITE COLOR_WHITE
 #define CABLE_COLOR_YELLOW "yellow"
 	#define CABLE_HEX_COLOR_YELLOW COLOR_YELLOW
+
+#define COLOR_DARKSPAWN_PSI "#7264FF"
+#define COLOR_VELVET "#21007F"
 
 #define COLOR_CARP_PURPLE "#aba2ff"
 #define COLOR_CARP_PINK "#da77a8"
@@ -332,3 +387,13 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_YELLOW = CABLE_HEX_COLOR_YELLOW,
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
+
+#define HUSK_COLOR_TONE rgb(96, 88, 80)
+
+#define CM_COLOR_SAT_MIN 0.6
+#define CM_COLOR_SAT_MAX 0.7
+#define CM_COLOR_LUM_MIN 0.65
+#define CM_COLOR_LUM_MAX 0.75
+
+//Monkestation non-modular change: This has to be here because we use it in setup_consistent_human_dna
+#define COLOR_MONKEY_BROWN "#cd8765"

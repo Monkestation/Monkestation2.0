@@ -84,11 +84,11 @@
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
-	var/list/candidates = poll_ghost_candidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Santa is coming to town! Do you want to be Santa?", poll_time = 15 SECONDS, alert_pic = /obj/item/clothing/head/costume/santa, role_name_text = "santa")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
-		santa.key = C.key
+		santa.PossessByPlayer(C.key)
 
 		var/datum/antagonist/santa/A = new
 		santa.mind.add_antag_datum(A)

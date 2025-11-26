@@ -92,6 +92,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 	)
 
 	/// Bonus reward to grant if you booby trap successfully
@@ -151,6 +152,8 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	var/obj/machinery/target_machine_path
 	/// The time it takes to deploy the bomb.
 	var/deploy_time = 10 SECONDS
+	var/component_datum = /datum/component/interaction_booby_trap
+	var/exploding_taunt = ""
 
 /obj/item/traitor_machine_trapper/examine(mob/user)
 	. = ..()
@@ -165,13 +168,14 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	if (. || !istype(target, target_machine_path))
 		return
 	balloon_alert(user, "planting device...")
-	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
+	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE, hidden = TRUE))
 		return TRUE
 	target.AddComponent(\
-		/datum/component/interaction_booby_trap,\
+		component_datum,\
 		additional_triggers = list(COMSIG_ORM_COLLECTED_ORE),\
 		on_triggered_callback = CALLBACK(src, PROC_REF(on_triggered)),\
 		on_defused_callback = CALLBACK(src, PROC_REF(on_defused)),\
+		on_explode = exploding_taunt,\
 	)
 	RegisterSignal(target, COMSIG_QDELETING, GLOBAL_PROC_REF(qdel), src)
 	moveToNullspace()

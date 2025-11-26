@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(materials)
 		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
 		new /datum/stack_recipe("Material floor tile", /obj/item/stack/tile/material, 1, 4, 20, applies_mats = TRUE, check_density = FALSE, category = CAT_TILES),
 		new /datum/stack_recipe("Material airlock assembly", /obj/structure/door_assembly/door_assembly_material, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS),
-		new /datum/stack_recipe("Railing", /obj/structure/railing, one_per_turf = FALSE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
+		new /datum/stack_recipe("Railing", /obj/structure/railing, one_per_turf = FALSE, on_solid_ground = TRUE, check_direction = TRUE, applies_mats = TRUE, category = CAT_FURNITURE),
 	)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
@@ -157,17 +157,18 @@ SUBSYSTEM_DEF(materials)
 	var/list/combo_params = list()
 	for(var/x in materials_declaration)
 		var/datum/material/mat = x
-		combo_params += "[istype(mat) ? mat.id : mat]=[materials_declaration[mat] * multiplier]"
+		combo_params += "[istype(mat) ? mat.id : mat]=[OPTIMAL_COST(materials_declaration[mat] * multiplier)]"
 	sortTim(combo_params, GLOBAL_PROC_REF(cmp_text_asc)) // We have to sort now in case the declaration was not in order
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
 	if(!combo)
 		combo = list()
 		for(var/mat in materials_declaration)
-			combo[GET_MATERIAL_REF(mat)] = materials_declaration[mat] * multiplier
+			combo[GET_MATERIAL_REF(mat)] = OPTIMAL_COST(materials_declaration[mat] * multiplier)
 		material_combos[combo_index] = combo
 	return combo
-
+///MONKESTATION REMOVAL, we dont use this boi, not removing the proc because LAYZ
 /datum/controller/subsystem/materials/proc/InitializeTemplates()
-	for(var/datum/mining_template/template as anything in typesof(/datum/mining_template))
-		LAZYADD(template_paths_by_rarity["[initial(template.rarity)]"], template)
+//	for(var/datum/mining_template/template as anything in typesof(/datum/mining_template))
+//		LAZYADD(template_paths_by_rarity["[initial(template.rarity)]"], template)
+//

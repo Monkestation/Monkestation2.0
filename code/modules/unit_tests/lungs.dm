@@ -61,7 +61,7 @@
 
 /datum/unit_test/lungs/lungs_sanity_ashwalker/Run()
 	// Gas mix resembling one cell of lavaland's atmosphere.
-	if(SSmapping.config.map_name == "Oshan Station")
+	if(SSmapping.current_map.map_name == "Oshan Station")
 		return
 	var/datum/gas_mixture/lavaland_test_mix = create_lavaland_mix()
 	var/obj/item/organ/internal/lungs/lavaland/test_lungs = allocate(/obj/item/organ/internal/lungs/lavaland)
@@ -193,6 +193,7 @@
 
 /// Set up an Lavaland gas mix which is "ideal" for Ashwalker life.
 /datum/unit_test/lungs/proc/create_lavaland_mix()
+	CACHE_PLANETARY_ATMOS(LAVALAND_DEFAULT_ATMOS)
 	var/datum/gas_mixture/immutable/planetary/lavaland_mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 	var/datum/gas_mixture/test_mix = allocate(/datum/gas_mixture, 2500)
 	test_mix.copy_from(lavaland_mix)

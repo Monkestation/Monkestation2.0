@@ -23,14 +23,17 @@
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/operating/LateInitialize()
+/obj/machinery/computer/operating/LateInitialize(mapload_arg)
 	. = ..()
-
+	var/static/list/dissection_signals = list(
+		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment)
+	)
 	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+		experiment_signals = dissection_signals, \
 	)
 
 /obj/machinery/computer/operating/Destroy()
@@ -56,7 +59,7 @@
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \
 			span_hear("You hear the chatter of a floppy drive."))
 		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			advanced_surgeries |= D.surgeries
 		return TRUE
 	return ..()
@@ -135,12 +138,7 @@
 	data["patient"]["health"] = patient.health
 
 	// check here to see if the patient has standard blood reagent, or special blood (like how ethereals bleed liquid electricity) to show the proper name in the computer
-	var/blood_id = patient.get_blood_id()
-	if(blood_id == /datum/reagent/blood)
-		data["patient"]["blood_type"] = patient.dna?.blood_type
-	else
-		var/datum/reagent/special_blood = GLOB.chemical_reagents_list[blood_id]
-		data["patient"]["blood_type"] = special_blood ? special_blood.name : blood_id
+	data["patient"]["blood_type"] = "[patient.get_blood_type() || "None"]"
 
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -171,9 +169,7 @@
 			))
 	return data
 
-
-
-/obj/machinery/computer/operating/ui_act(action, params)
+/obj/machinery/computer/operating/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

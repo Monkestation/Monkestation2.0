@@ -6,14 +6,12 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	stinger_sound = 'sound/magic/demon_attack1.ogg'
+	antag_count_points = 15
 	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
 	/// The innate ability to summon rifts
 	var/datum/action/innate/summon_rift/rift_ability
-	/// Current time since the the last rift was activated.  If set to -1, does not increment.
-	var/riftTimer = 0
-	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.
-	var/maxRiftTimer = 300
 	/// A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.
 	var/list/obj/structure/carp_rift/rift_list = list()
 	/// How many rifts have been successfully charged
@@ -21,9 +19,13 @@
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
 	/// What mob to spawn from ghosts using this dragon's rifts
-	var/minion_to_spawn = /mob/living/basic/carp
+	var/minion_to_spawn = /mob/living/basic/carp/advanced
 	/// What AI mobs to spawn from this dragon's rifts
 	var/ai_to_spawn = /mob/living/basic/carp
+	/// Wavespeak mind linker, to allow telepathy between dragon and carps
+	var/datum/component/mind_linker/wavespeak
+	/// What areas are we allowed to place rifts in?
+	var/list/chosen_rift_areas = list()
 
 /datum/antagonist/space_dragon/greet()
 	. = ..()
@@ -31,18 +33,42 @@
 					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
 					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\
 					Today, we will snuff out one of those lights.</b>")
-	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
 /datum/antagonist/space_dragon/forge_objectives()
+	var/static/list/area/allowed_areas
+	if(!allowed_areas)
+		// Areas that will prove a challeng for the dragon and are provocative to the crew.
+		allowed_areas = typecacheof(list(
+			/area/station/command,
+			/area/station/engineering,
+			/area/station/science,
+			/area/station/security,
+		))
+
+	var/list/possible_areas = typecache_filter_list(get_sorted_areas(), allowed_areas)
+	for(var/area/possible_area as anything in possible_areas)
+		if(initial(possible_area.outdoors) || !(possible_area.area_flags & VALID_TERRITORY))
+			possible_areas -= possible_area
+
+	for(var/i in 1 to 5)
+		chosen_rift_areas += pick_n_take(possible_areas)
+
 	var/datum/objective/summon_carp/summon = new
-	summon.dragon = src
 	objectives += summon
+	summon.owner = owner
+	summon.update_explanation_text()
 
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	rift_ability = new()
+	owner.special_role = ROLE_SPACE_DRAGON
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	return ..()
+
+/datum/antagonist/space_dragon/on_removal()
+	owner.special_role = null
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
@@ -52,6 +78,15 @@
 	antag.faction |= FACTION_CARP
 	// Give the ability over if we have one
 	rift_ability?.Grant(antag)
+	wavespeak = antag.AddComponent( \
+		/datum/component/mind_linker, \
+		network_name = "Wavespeak", \
+		chat_color = "#635BAF", \
+		signals_which_destroy_us = list(COMSIG_LIVING_DEATH), \
+		speech_action_icon = 'icons/mob/actions/actions_space_dragon.dmi', \
+		speech_action_icon_state = "wavespeak", \
+	)
+	RegisterSignal(wavespeak, COMSIG_QDELETING, PROC_REF(clear_wavespeak))
 
 /datum/antagonist/space_dragon/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/antag = mob_override || owner.current
@@ -59,11 +94,14 @@
 	UnregisterSignal(antag, COMSIG_LIVING_DEATH)
 	antag.faction -= FACTION_CARP
 	rift_ability?.Remove(antag)
+	QDEL_NULL(wavespeak)
 
 /datum/antagonist/space_dragon/Destroy()
 	rift_list = null
 	carp = null
 	QDEL_NULL(rift_ability)
+	QDEL_NULL(wavespeak)
+	chosen_rift_areas.Cut()
 	return ..()
 
 /datum/antagonist/space_dragon/get_preview_icon()
@@ -77,6 +115,10 @@
 
 	return icon
 
+/datum/antagonist/space_dragon/proc/clear_wavespeak()
+	SIGNAL_HANDLER
+	wavespeak = null
+
 /**
  * Checks to see if we need to do anything with the current state of the dragon's rifts.
  *
@@ -86,19 +128,6 @@
 /datum/antagonist/space_dragon/proc/rift_checks()
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
-		return
-	if(riftTimer == -1)
-		return
-	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)
-	if(riftTimer == (maxRiftTimer - 60))
-		to_chat(owner.current, span_boldwarning("You have a minute left to summon the rift! Get to it!"))
-		return
-	if(riftTimer >= maxRiftTimer)
-		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
-		destroy_rifts()
-		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
-		owner.current.death(/* gibbed = */ TRUE)
-		QDEL_NULL(owner.current)
 
 /**
  * Destroys all of Space Dragon's current rifts.
@@ -113,7 +142,6 @@
 	rifts_charged = 0
 	ADD_TRAIT(owner.current, TRAIT_RIFT_FAILURE, REF(src))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
-	riftTimer = -1
 	SEND_SOUND(owner.current, sound('sound/vehicles/rocketlaunch.ogg'))
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.dragon = null
@@ -133,8 +161,7 @@
 	objective_complete = TRUE
 	permanant_empower()
 	var/datum/objective/summon_carp/main_objective = locate() in objectives
-	if(main_objective)
-		main_objective.completed = TRUE
+	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
 		Remaining crew are advised to evacuate as soon as possible.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
 	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
@@ -178,8 +205,19 @@
 	owner.current.remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /datum/objective/summon_carp
-	var/datum/antagonist/space_dragon/dragon
-	explanation_text = "Summon and protect the rifts to flood the station with carp."
+	explanation_text = "Summon 3 rifts in order to flood the station with carp."
+
+/datum/objective/summon_carp/update_explanation_text()
+	var/datum/antagonist/space_dragon/dragon_owner = owner.has_antag_datum(/datum/antagonist/space_dragon)
+	if(isnull(dragon_owner))
+		return
+
+	var/list/converted_names = list()
+	for(var/area/possible_area as anything in dragon_owner.chosen_rift_areas)
+		converted_names += possible_area.get_original_area_name()
+
+	explanation_text = initial(explanation_text)
+	explanation_text += " Your possible rift locations are: [english_list(converted_names)]"
 
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
@@ -198,7 +236,17 @@
 		parts += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
-	if(carp.len)
-		parts += "<span class='header'>The [name] was assisted by:</span>"
-		parts += printplayerlist(carp)
+
+	if(length(carp))
+		parts += "<br><span class='header'>The [name] was assisted by:</span>"
+		parts += "<ul class='playerlist'>"
+		var/list/players_to_carp_taken = list()
+		for(var/datum/mind/carpy as anything in carp)
+			players_to_carp_taken[carpy.key] += 1
+		var/list = ""
+		for(var/carp_user in players_to_carp_taken)
+			list += "<li><b>[carp_user]</b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
+		parts += list
+		parts += "</ul>"
+
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

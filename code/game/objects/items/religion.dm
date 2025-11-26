@@ -337,15 +337,20 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-/obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(staffcooldown + staffwait > world.time)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
-	if(do_after(user, 2 SECONDS, src))
-		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
+	if(do_after(user, 2 SECONDS, interacting_with))
+		interacting_with.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/godstaff/red
 	icon_state = "godstaff-red"
@@ -360,9 +365,9 @@
 	icon_state = "crusader"
 	desc = "They're like gloves, but made of metal."
 	siemens_coefficient = 0
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/gloves/plate/red
@@ -378,9 +383,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/shoes_plate
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
-	cold_protection = FEET
+
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
+
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /datum/armor/shoes_plate

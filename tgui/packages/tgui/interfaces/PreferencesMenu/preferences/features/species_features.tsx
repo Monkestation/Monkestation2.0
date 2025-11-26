@@ -1,4 +1,11 @@
-import { FeatureColorInput, Feature, FeatureChoiced, FeatureValueProps, FeatureDropdownInput, StandardizedPalette } from './base';
+import {
+  FeatureColorInput,
+  Feature,
+  FeatureChoiced,
+  FeatureValueProps,
+  FeatureDropdownInput,
+  StandardizedPalette,
+} from './base';
 
 const eyePresets = {
   // these need to be short color (3 byte) compatible
@@ -266,6 +273,11 @@ export const feature_mcolor_secondary: Feature<string> = {
 
 export const underwear_color: Feature<string> = {
   name: 'Underwear color',
+  component: FeatureColorInput,
+};
+
+export const socks_color: Feature<string> = {
+  name: 'Socks color',
   component: FeatureColorInput,
 };
 

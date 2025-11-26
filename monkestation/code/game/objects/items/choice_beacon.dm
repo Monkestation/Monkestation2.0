@@ -1,3 +1,6 @@
+/obj/item/choice_beacon
+	w_class = WEIGHT_CLASS_SMALL
+
 // Pet Beacon for Monkecoin shop
 
 /obj/item/choice_beacon/pet
@@ -37,7 +40,9 @@
 			/mob/living/basic/pet/dog/pug,
 			/mob/living/basic/pet/dog/bullterrier,
 			/mob/living/basic/lizard,
-			/mob/living/basic/ant
+			/mob/living/basic/ant,
+			/mob/living/simple_animal/pet/hamster,
+			/mob/living/basic/pet/pcreacher
 		)
 
 		for(var/mob/living/basic_mob as anything in selectable_pets)
@@ -92,13 +97,3 @@
 		return
 
 	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
-
-/obj/item/choice_beacon/jukebox //this is probably a terrible way to do this, but its the first that worked.
-	name = "jukebox beacon"
-	desc = "Deploys a jukebox! Also comes wrenched down to the floor for you on delivery! How convenient!"
-/obj/item/choice_beacon/jukebox/interact(mob/user)
-	to_chat(user, span_hear("You hear a crackle before a message plays through [src]: \"Thank you for picking Dave's Instant Jukebox Shipping! This beacon will now self destruct.\""))
-	new /obj/machinery/media/jukebox(get_turf(user))
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
-	do_sparks(3, source = src)
-	qdel(src)

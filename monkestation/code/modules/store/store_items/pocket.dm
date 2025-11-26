@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 /datum/store_item/pocket
 	category = LOADOUT_ITEM_MISC
 
-/datum/store_item/pocket
+/datum/store_item/pocket/wallet
 	name = "Wallet"
 	item_path = /obj/item/storage/wallet
 
@@ -12,8 +12,8 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 	item_path = /obj/item/storage/box/gum/nicotine
 
 /datum/store_item/pocket/gum_pack_hp
-	name = "Pack of HP+ Gum"
-	item_path = /obj/item/storage/box/gum/happiness
+	name = "Pack of Diet HP+ Gum"
+	item_path = /obj/item/storage/box/gum/happiness/diet
 
 /*
 *	LIPSTICK
@@ -118,3 +118,13 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 /datum/store_item/pocket/pet_beacon
 	name = "Pet Delivery Beacon"
 	item_path = /obj/item/choice_beacon/pet
+
+/datum/store_item/pocket/brush
+	name = "Hairbrush"
+	item_path = /obj/item/hairbrush
+	item_cost = 5000
+
+/datum/store_item/pocket/comb
+	name = "Comb"
+	item_path = /obj/item/hairbrush/comb
+	item_cost = 5000

@@ -8,6 +8,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
+	animate_movement = NO_STEPS //Use SLIDE_STEPS in conjunction with legacy
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
 	wound_bonus = CANT_WOUND // can't wound by default
@@ -15,12 +16,15 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
+	var/generic_name
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = "" //Aiming at
+	/// Set to TRUE if we're grazing, which affects the message / embed chance / damage / effects
+	var/grazing = FALSE
 	var/atom/movable/firer = null//Who shot it
 	var/datum/fired_from = null // the thing that the projectile was fired from (gun, turret, spell)
 	var/suppressed = FALSE //Attack message
@@ -46,6 +50,13 @@
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
 	var/temporary_unstoppable_movement = FALSE
 
+	//monkestation edit start
+	/// Do we damage walls?
+	var/damage_walls = FALSE
+	/// demolition mod on walls
+	var/wall_dem_mod = 1
+	//monkestation edit end
+
 	/** PROJECTILE PIERCING
 	  * WARNING:
 	  * Projectile piercing MUST be done using these variables.
@@ -68,6 +79,8 @@
 	var/projectile_piercing = NONE
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
+	/// How many times this projectile can pierce something before deleting
+	var/max_pierces = 0
 
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -108,6 +121,8 @@
 	var/ricochet_incidence_leeway = 40
 	/// Can our ricochet autoaim hit our firer?
 	var/ricochet_shoots_firer = TRUE
+	/// Do we bounce off of everything reasonable to bounce, or based off of armor flags
+	var/expanded_bounce = FALSE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -150,6 +165,8 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Flat armor ignorance, applied AFTER penetration has reduced the amount of armor by %
+	var/armour_ignorance = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
@@ -157,6 +174,7 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+	var/fauna_mod = 1 // What is the multiplier vs lavaland fauna and megafauna?
 
 	// Status effects applied on hit
 	var/stun = 0 SECONDS
@@ -170,6 +188,8 @@
 	var/drowsy = 0 SECONDS
 	/// Jittering applied on projectile hit
 	var/jitter = 0 SECONDS
+	/// Bonus pain, like stamina damage
+	var/pain = 0
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
 	var/stamina = 0
 	/// Stuttering applied on projectile hit
@@ -196,15 +216,24 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
-	var/static/list/projectile_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
+	///Stamina and damage dropoff over distance, for shotguns and the like
+	///It is a flat value that is SUBTRACTED from damage for every tile it moves, I.E 5 dropoff means the projectile looses 5 damage for every tile it moves past the first tile
+	var/tile_dropoff = 0
+	var/tile_dropoff_s = 0
+
+	var/static/list/projectile_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
+	/// How much accuracy is lost for each tile travelled
+	var/accuracy_falloff = 0
+	/// How much accuracy before falloff starts to matter. Formula is range - falloff * tiles travelled
+	var/accurate_range = 100
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
-	/// If this projectile has been parried before
-	var/parried = FALSE
 	///how long we paralyze for as this is a disorient
 	var/paralyze_timer = 0
+	/// If this projectile inflicts debilitating
+	var/debilitating = FALSE
+	/// How many stacks the projectile applies per hit. Default is 1, each stack adds 0.05, it stacks up to 2x stamina damage
+	var/debilitate_mult = 1
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -221,6 +250,12 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage > 0)
+		damage -= tile_dropoff
+	if(stamina > 0)
+		stamina -= tile_dropoff_s
+	if(damage < 0 && stamina < 0)
+		qdel(src)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
@@ -228,17 +263,6 @@
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE_OUT)
 	qdel(src)
-
-//to get the correct limb (if any) for the projectile hit message
-/mob/living/proc/check_limb_hit(hit_zone)
-	if(has_limbs)
-		return hit_zone
-
-/mob/living/carbon/check_limb_hit(hit_zone)
-	if(get_bodypart(hit_zone))
-		return hit_zone
-	else //when a limb is missing the damage is actually passed to the chest
-		return BODY_ZONE_CHEST
 
 /**
  * Called when the projectile hits something
@@ -261,11 +285,17 @@
 
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
 	// maybe we care what the projectile thinks! See about combining these via args some time when it's not 5AM
-	var/obj/item/bodypart/hit_limb
-	if(isliving(target))
-		var/mob/living/L = target
-		hit_limb = L.check_limb_hit(def_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
+	if(debilitating == TRUE && isliving(target))
+		var/mob/living/living = target
+		var/datum/status_effect/stacking/debilitated/effect = living.has_status_effect(/datum/status_effect/stacking/debilitated)
+		if(effect)
+			effect.add_stacks(debilitate_mult)
+		else
+			living.apply_status_effect(/datum/status_effect/stacking/debilitated, debilitate_mult)
+
+	if(fired_from)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, def_zone, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, def_zone, blocked)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
@@ -280,64 +310,89 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
-		var/turf/closed/wall/W = target_turf
-		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_turf, hitx, hity)
-
-		W.add_dent(WALL_DENT_SHOT, hitx, hity)
-
-		return BULLET_ACT_HIT
+	if(isturf(target_turf) && hitsound_wall)
+		var/volume = clamp(vol_by_damage() + 20, 0, 100)
+		if(suppressed)
+			volume = 5
+		playsound(loc, hitsound_wall, volume, TRUE, -1)
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
-		if(isturf(target) && hitsound_wall)
-			var/volume = clamp(vol_by_damage() + 20, 0, 100)
-			if(suppressed)
-				volume = 5
-			playsound(loc, hitsound_wall, volume, TRUE, -1)
+		if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
+			var/turf/closed/wall/target_wall = target_turf
+			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
+			//monkestation edit start
+			if(damage_walls && target_wall.uses_integrity)
+				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
+			//monkestation edit end
+
 		return BULLET_ACT_HIT
 
-	var/mob/living/L = target
+	var/mob/living/living_target = target
+
+	if(isobj(living_target.buckled))
+		var/obj/buck_source = living_target.buckled
+		if(buck_source.cover_amount != 0)
+			if(prob(buck_source.cover_amount))
+				do_sparks(round((damage / 10)), FALSE, living_target)
+				src.Impact(buck_source)
+				blocked = 100 ///Brute force time
+				damage = 0
+				wound_bonus = CANT_WOUND
+				embedding = list("embed_chance" = 0)
+				qdel(src)
+				return BULLET_ACT_HIT
 
 	if(blocked != 100) // not completely blocked
-		if(damage && L.blood_volume && damage_type == BRUTE)
-			var/splatter_dir = dir
-			if(starting)
-				splatter_dir = get_dir(starting, target_turf)
-			if(isalien(L))
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir, COLOR_DARK_PURPLE)
-			else
-				var/angle = !isnull(Angle) ? Angle : round(get_angle(starting, src), 1)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, angle, COLOR_DARK_RED)
-			if(prob(33))
-				L.add_splatter_floor(target_turf)
+		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
+		if(faction_check(living_target.faction, FACTION_MINING || FACTION_BOSS))
+			damage *= fauna_mod
+		if (damage)
+			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+				var/splatter_dir = dir
+				if(starting)
+					splatter_dir = get_dir(starting, target_turf)
+				living_target.do_splatter_effect(splatter_dir)
+				if(prob(damage))
+					living_target.blood_particles(amount = rand(1, 1 + round(damage/20, 1)), angle = src.Angle)
+
+			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
+				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
+				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
+
+				var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
+				if (spark_amount > 0)
+					do_sparks(spark_amount, FALSE, living_target)
+
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
 
 		var/organ_hit_text = ""
-		var/limb_hit = hit_limb
-		if(limb_hit)
-			organ_hit_text = " in \the [parse_zone(limb_hit)]"
+		if(def_zone)
+			organ_hit_text = " in \the [parse_zone(def_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
 			playsound(loc, hitsound, 5, TRUE, -1)
-			to_chat(L, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
+			to_chat(living_target, span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"))
 		else
-			if(hitsound)
-				var/volume = vol_by_damage()
-				playsound(src, hitsound, volume, TRUE, -1)
-			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			playsound(loc, hitsound, vol_by_damage(), TRUE, -1)
+			living_target.visible_message(
+				span_danger("[living_target] is [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),
+				span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),
+				span_hear("You hear a woosh."),
+				// vision_distance = COMBAT_MESSAGE_RANGE,
+			)
+			if(living_target.is_blind())
+				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
 
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
 	if(ismob(firer))
-		log_combat(firer, L, "shot", src, reagent_note)
+		log_combat(firer, living_target, "shot", src, reagent_note)
 		return BULLET_ACT_HIT
 
 	if(isvehicle(firer))
@@ -347,10 +402,10 @@
 		if(!LAZYLEN(logging_mobs))
 			logging_mobs = firing_vehicle.return_drivers()
 		for(var/mob/logged_mob as anything in logging_mobs)
-			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+			log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
 
-	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
+	living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -395,36 +450,6 @@
 
 	UnregisterSignal(old_loc, COMSIG_ATOM_ATTACK_HAND)
 
-	if(isturf(loc))
-		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
-
-/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
-/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
-	SIGNAL_HANDLER
-
-	if(parried)
-		return FALSE
-
-	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
-		on_parry(user, modifiers)
-		return TRUE
-
-	return FALSE
-
-
-/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
-/obj/projectile/proc/on_parry(mob/user, list/modifiers)
-	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
-		return
-
-	parried = TRUE
-	set_angle(dir2angle(user.dir) + rand(-3, 3))
-	firer = user
-	speed *= 0.8 // Go 20% faster when parried
-	damage *= 1.15 // And do 15% more damage
-	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
-
-
 /**
  * Called when the projectile hits something
  * This can either be from it bumping something,
@@ -442,6 +467,10 @@
 		return FALSE
 	if(impacted[A]) // NEVER doublehit
 		return FALSE
+	if(istype(A, /mob/living/))
+		var/mob/living/living_atom = A
+		if(impacted[living_atom.buckled])
+			return FALSE
 	var/datum/point/point_cache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
@@ -459,8 +488,19 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	var/distance = decayedRange - range
+	var/hit_prob = clamp(accurate_range - (accuracy_falloff * distance), 5, 100)
+	if(isliving(A))
+		var/mob/living/who_is_shot = A
+		if(who_is_shot.body_position == LYING_DOWN)
+			hit_prob *= 1.2
+	// melbert todo : make people more skilled with weapons have a lower miss chance // Consider nuking this TODO and update the projectile refactor
+	if(!prob(hit_prob))
+		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(get_turf(A), starting)), 5, 100))
+		grazing = !prob(hit_prob) // jeez you missed twice? that's a graze
+		if(grazing)
+			wound_bonus = CANT_WOUND
+			bare_wound_bonus = CANT_WOUND
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 
@@ -505,8 +545,10 @@
 		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
-	if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
-		qdel(src)
+	var/signal_bitfield = SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) //monkestation edit
+	if (signal_bitfield & PROJECTILE_INTERRUPT_HIT  || (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, args) & PROJECTILE_INTERRUPT_HIT))
+		if(!(signal_bitfield & PROJECTILE_INTERRUPT_BLOCK_QDEL)) //monkestation edit
+			qdel(src)
 		return BULLET_ACT_BLOCK
 	if(mode == PROJECTILE_PIERCE_HIT)
 		++pierces
@@ -584,12 +626,12 @@
 		var/mob/target_mob = target
 		if(faction_check(target_mob.faction, ignored_factions))
 			return FALSE
-	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+	if((target.density && !target.IsObscured()) || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(isturf(target)) // non dense turfs
 			return can_hit_turfs && direct_target
-		if(target.layer < hit_threshhold)
+		if(target.layer < hit_threshhold && !HAS_TRAIT(target, TRAIT_PROJECTILE_SINK))
 			return FALSE
 		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
@@ -707,6 +749,9 @@
 	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
+	if(expanded_bounce && (A.flags_ricochet & (RICOCHET_HARD | RICOCHET_SHINY)))
+		return TRUE
+
 	return FALSE
 
 /obj/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle) //I say predicted because there's no telling that the projectile won't change direction/location in flight.
@@ -746,7 +791,7 @@
 			required_moves = SSprojectiles.global_max_tick_moves
 			time_offset += overrun * speed
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
-
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 	for(var/i in 1 to required_moves)
 		pixel_move(pixel_speed_multiplier, FALSE)
 
@@ -791,7 +836,6 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
-	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -905,28 +949,32 @@
 		process_homing()
 	var/forcemoved = FALSE
 	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
-		if(QDELETED(src))
+		if(QDELETED(src) || !trajectory) //monkestation edit: adds the trajectory check
 			return
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
 			qdel(src)
 			return
-		if(T.z != loc.z)
-			var/old = loc
-			before_z_change(loc, T)
-			trajectory_ignore_forcemove = TRUE
-			forceMove(T)
-			trajectory_ignore_forcemove = FALSE
-			after_z_change(old, loc)
-			if(!hitscanning)
-				pixel_x = trajectory.return_px()
-				pixel_y = trajectory.return_py()
-			forcemoved = TRUE
-			hitscan_last = loc
-		else if(T != loc)
+		if (T == loc)
+			continue
+		if (T.z == loc.z)
 			step_towards(src, T)
 			hitscan_last = loc
+			SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
+			continue
+		var/old = loc
+		before_z_change(loc, T)
+		trajectory_ignore_forcemove = TRUE
+		forceMove(T)
+		trajectory_ignore_forcemove = FALSE
+		after_z_change(old, loc)
+		if(!hitscanning)
+			pixel_x = trajectory.return_px()
+			pixel_y = trajectory.return_py()
+		forcemoved = TRUE
+		hitscan_last = loc
+		SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
 	if(QDELETED(src)) //deleted on last move
 		return
 	if(!hitscanning && !forcemoved)

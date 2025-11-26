@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(communications)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
-/datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
+/datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending, print = TRUE, unique = FALSE, sanitize = TRUE) // monkestation edit - sanitization
 	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(communications)
 			if(print)
 				var/obj/item/paper/printed_paper = new /obj/item/paper(C.loc)
 				printed_paper.name = "paper - '[sending.title]'"
-				printed_paper.add_raw_text(sending.content)
+				printed_paper.add_raw_text(sending.content, advanced_html = !sanitize) // monkestation edit - sanitization
 				printed_paper.update_appearance()
 
 #undef COMMUNICATION_COOLDOWN

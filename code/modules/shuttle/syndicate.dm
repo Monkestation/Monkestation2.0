@@ -45,7 +45,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!is_reserved_level(z))
+	if(!is_centcom_level(z))
 		to_chat(user, span_warning("Pods are one way!"))
 		return FALSE
 	return TRUE
@@ -66,3 +66,37 @@
 	see_hidden = TRUE
 
 #undef SYNDICATE_CHALLENGE_TIMER
+
+/obj/docking_port/stationary/firebase_trident
+	name = "Firebase Trident hangar bay"
+	shuttle_id = "syndicate_away2"
+	roundstart_template = /datum/map_template/shuttle/infiltrator/advanced
+	area_type = /area/centcom/syndicate_mothership/firebase_trident/hangar
+	dwidth = 14
+	dheight = 1
+	height =  22
+	width = 25
+
+/obj/machinery/computer/shuttle/syndicate/alt
+	shuttleId = "syndicate2"
+	possible_destinations = "syndicate_away2;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
+	var/refuel_time
+
+/obj/machinery/computer/shuttle/syndicate/alt/Initialize(mapload)
+	. = ..()
+	refuel_time = world.time + 20 MINUTES
+
+/obj/machinery/computer/shuttle/syndicate/alt/launch_check(mob/user)
+	. = ..()
+	if(world.time < refuel_time)
+		balloon_alert(user, "shuttle refueling! ([DisplayTimeText(refuel_time - world.time)] left)")
+		return FALSE
+	return TRUE
+
+/obj/machinery/computer/shuttle/syndicate/alt/recall
+	name = "syndicate shuttle recall terminal"
+	desc = "Use this if your friends left you behind."
+	possible_destinations = "syndicate_away2"
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/alt
+	shuttleId = "syndicate2"

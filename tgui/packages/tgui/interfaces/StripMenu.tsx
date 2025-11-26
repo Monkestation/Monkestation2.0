@@ -30,7 +30,8 @@ const CornerText = (props: {
         left: align === 'left' ? '2px' : '-2px',
         'text-align': align,
         'text-shadow': '1px 1px 1px #555',
-      }}>
+      }}
+    >
       {children}
     </Box>
   );
@@ -248,8 +249,8 @@ type StripMenuData = {
   name: string;
 };
 
-export const StripMenu = (props, context) => {
-  const { act, data } = useBackend<StripMenuData>(context);
+export const StripMenu = (props) => {
+  const { act, data } = useBackend<StripMenuData>();
 
   const gridSpots = new Map<GridSpotKey, string>();
   for (const key of Object.keys(data.items)) {
@@ -302,6 +303,7 @@ export const StripMenu = (props, context) => {
                         width="100%"
                         style={{
                           '-ms-interpolation-mode': 'nearest-neighbor',
+                          'image-rendering': 'pixelated',
                           'vertical-align': 'middle',
                         }}
                       />
@@ -336,13 +338,15 @@ export const StripMenu = (props, context) => {
                       style={{
                         width: BUTTON_DIMENSIONS,
                         height: BUTTON_DIMENSIONS,
-                      }}>
+                      }}
+                    >
                       <Box
                         style={{
                           position: 'relative',
                           width: '100%',
                           height: '100%',
-                        }}>
+                        }}
+                      >
                         <Button
                           onClick={() => {
                             act('use', {
@@ -359,7 +363,8 @@ export const StripMenu = (props, context) => {
                             width: '100%',
                             height: '100%',
                             padding: 0,
-                          }}>
+                          }}
+                        >
                           {slot.image && (
                             <Box
                               as="img"
@@ -388,7 +393,8 @@ export const StripMenu = (props, context) => {
                               bottom: 0,
                               right: 0,
                               'z-index': 2,
-                            }}>
+                            }}
+                          >
                             <Icon name={alternateAction.icon} />
                           </Button>
                         )}

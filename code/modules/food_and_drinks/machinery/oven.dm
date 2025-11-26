@@ -31,6 +31,8 @@
 	var/datum/looping_sound/oven/oven_loop
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
+	///Currently used particle type, if any
+	var/particle_type
 
 /obj/machinery/oven/Initialize(mapload)
 	. = ..()
@@ -40,7 +42,8 @@
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
-	QDEL_NULL(particles)
+	if (particle_type)
+		remove_shared_particles(particle_type)
 	return ..()
 
 /// Used to determine if the oven appears active and cooking, or offline.
@@ -93,14 +96,14 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 
-/obj/machinery/oven/attackby(obj/item/I, mob/user, params)
-	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
-		if(user.transferItemToLoc(I, src, silent = FALSE))
-			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
+/obj/machinery/oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(open && !used_tray && istype(attacking_item, /obj/item/plate/oven_tray))
+		if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
+			to_chat(user, span_notice("You put [attacking_item] in [src]."))
+			add_tray_to_oven(attacking_item, user)
 	else
 		return ..()
 
@@ -135,10 +138,34 @@
 	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
 	update_baking_audio()
 
+/obj/machinery/oven/attack_robot(mob/user)
+	. = ..()
+	if(user.Adjacent(src))
+		attack_hand(user)
+	return TRUE
+
+/obj/machinery/oven/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	attack_hand_secondary(user, modifiers)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/oven/attack_hand(mob/user, modifiers)
 	. = ..()
 	open = !open
 	if(open)
+		timer_duration = world.time - timer_laststart
+		deltimer(oven_timer)
+		oven_timer = null
+		if(used_tray)
+			var/obj/item/reagent_containers/cooking_container/located = locate(/obj/item/reagent_containers/cooking_container) in used_tray.contents
+			if(located)
+				if(user && user.Adjacent(src))
+					located.process_item(src, user, lower_quality_on_fail=CHEWIN_BASE_QUAL_REDUCTION, send_message=TRUE)
+				else
+					located.process_item(src, user,  lower_quality_on_fail=CHEWIN_BASE_QUAL_REDUCTION)
+
 		playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		to_chat(user, span_notice("You open [src]."))
@@ -146,6 +173,8 @@
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
+		timer_laststart = world.time
+		oven_timer = addtimer(CALLBACK(src, PROC_REF(go_off_queen)), timer_duration, TIMER_UNIQUE | TIMER_STOPPABLE)
 		playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
 		to_chat(user, span_notice("You close [src]."))
 		if(used_tray)
@@ -172,23 +201,29 @@
 /obj/machinery/oven/proc/set_smoke_state(new_state)
 	if(new_state == smoke_state)
 		return
-	smoke_state = new_state
 
-	QDEL_NULL(particles)
+	smoke_state = new_state
+	if (particle_type)
+		remove_shared_particles(particle_type)
+		particle_type = null
+
 	switch(smoke_state)
 		if(OVEN_SMOKE_STATE_BAD)
-			particles = new /particles/smoke()
+			particle_type = /particles/smoke
 		if(OVEN_SMOKE_STATE_NEUTRAL)
-			particles = new /particles/smoke/steam()
+			particle_type = /particles/smoke/steam
 		if(OVEN_SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild()
+			particle_type = /particles/smoke/steam/mild
+
+	if (particle_type)
+		add_shared_particles(particle_type)
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/oven/range
 	name = "range"
@@ -212,6 +247,7 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 	max_items = 6
+	biggest_w_class = WEIGHT_CLASS_BULKY
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

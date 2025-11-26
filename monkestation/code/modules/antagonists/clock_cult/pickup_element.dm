@@ -1,6 +1,6 @@
 #define REGULAR_PICKUP_MOD 1
 #define CULTIST_PICKUP_MOD 2
-#define PICKUP_SHOCK_DAMAGE 25
+#define PICKUP_SHOCK_DAMAGE 20
 
 /datum/element/clockwork_pickup
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
@@ -8,7 +8,6 @@
 
 	/// What slots will attempt to shock the equpper
 	var/list/equip_slots = list()
-
 
 /datum/element/clockwork_pickup/Attach(datum/target, list/slots_to_count)
 	. = ..()
@@ -24,7 +23,6 @@
 	if(!locate(target.type) in GLOB.types_to_drop_on_clock_deonversion)
 		GLOB.types_to_drop_on_clock_deonversion |= target.type
 
-
 /datum/element/clockwork_pickup/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_ITEM_EQUIPPED)
@@ -38,22 +36,20 @@
  *  * equipper - The mob that picked up the item
  * 	* slot - The slot the item was equipped in, unused
  */
-/datum/element/clockwork_pickup/proc/attempt_shock(obj/item/source, mob/equipper, slot)
+/datum/element/clockwork_pickup/proc/attempt_shock(obj/item/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
 
-	if(IS_CLOCK(equipper) || !isliving(equipper) || (length(equip_slots) && !(slot in equip_slots)))
+	if(!isliving(equipper) || IS_CLOCK(equipper) || (length(equip_slots) && !(slot in equip_slots)))
 		return
 
-	var/mob/living/equipper_living = equipper
 	var/power_multiplier = REGULAR_PICKUP_MOD
-
-	if(IS_CULTIST(equipper_living))
+	if(IS_CULTIST(equipper))
 		power_multiplier = CULTIST_PICKUP_MOD
 
-	to_chat(equipper_living, span_warning("As you [slot == ITEM_SLOT_HANDS ? "touch" : "equip"] [source], you feel a jolt course through you!"))
+	to_chat(equipper, span_warning("As you [slot == ITEM_SLOT_HANDS ? "touch" : "equip"] [source], you feel a jolt course through you!"))
 
-	equipper_living.dropItemToGround(source, TRUE)
-	equipper_living.electrocute_act(PICKUP_SHOCK_DAMAGE * power_multiplier, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+	equipper.dropItemToGround(source, TRUE)
+	equipper.electrocute_act(PICKUP_SHOCK_DAMAGE * power_multiplier, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
 
 #undef REGULAR_PICKUP_MOD
 #undef CULTIST_PICKUP_MOD

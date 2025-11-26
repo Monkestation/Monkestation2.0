@@ -1,3 +1,5 @@
+GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
+
 /*
  * Fireaxe
  */
@@ -34,6 +36,9 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
+	if(!GLOB.bridge_axe && istype(get_area(src), /area/station/command))
+		GLOB.bridge_axe = src
+
 	AddComponent(/datum/component/butchering, \
 		speed = 10 SECONDS, \
 		effectiveness = 80, \
@@ -47,19 +52,22 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
+/obj/item/fireaxe/Destroy()
+	if(GLOB.bridge_axe == src)
+		GLOB.bridge_axe = null
+	return ..()
+
 /obj/item/fireaxe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
-			if(!(A.resistance_flags & INDESTRUCTIBLE))
-				var/obj/structure/W = A
-				W.atom_destruction("fireaxe")
+	if(target.resistance_flags & INDESTRUCTIBLE)
+		return
+	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille) || istype(target, /obj/structure/window_sill))
+		target.atom_destruction("fireaxe")
 
 /*
  * Bone Axe
@@ -85,8 +93,43 @@
 	name = "metallic hydrogen axe"
 	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	force_unwielded = 5
-	force_wielded = 15
+	force_wielded = 20
 	demolition_mod = 2
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
+
+/*
+ * Energised Fire Axe
+ */
+/obj/item/fireaxe/energy
+	icon = 'icons/obj/weapons/eaxe.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/eaxe_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/eaxe_righthand.dmi'
+	icon_state = "eaxe0"
+	base_icon_state = "eaxe"
+	name = "energised fire axe"
+	desc = "A truly terrifying weapon, this variant of the fireaxe boasts a durable and lightweight polymer handle, and an impossibly sharp hardlight edge. You feel like this could probably cut through anything."
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 1.5
+	light_power = 1.5
+	light_color = COLOR_DARK_RED
+	light_on = TRUE
+	force_unwielded = 15
+	throwforce = 30
+	force_wielded = 40
+	demolition_mod = 2.5
+	wound_bonus = 10
+	armour_penetration = 75
+	armour_ignorance = 10
+	hitsound = 'sound/weapons/blade1.ogg'
+
+/obj/item/fireaxe/energy/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! Heavens above it's going clean through!"))
+	user.gib()
+	return MANUAL_SUICIDE
+
+/obj/item/fireaxe/energy/ignition_effect(atom/atom, mob/user)
+	. = span_warning("[user] holds [user.p_their()] axe edge to the [atom.name]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process. Holy fuck.")
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	add_fingerprint(user)

@@ -27,7 +27,7 @@
 	unsuitable_heat_damage = 0
 	speed = 0
 	density = FALSE
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSTABLE | PASSMOB | PASSDOORS //Monke, drones have PASSDOORS so they don't have to open doors to pass.
 	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
@@ -37,11 +37,10 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = TRUE
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET,FACTION_SLIME)
 	hud_type = /datum/hud/dextrous/drone
 	dexterous = TRUE
 	// Going for a sort of pale green here
@@ -100,7 +99,8 @@
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
-	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
+	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"+\
+	"<span class='notice'>Drone Rules and info can be found at our wiki <a href='https://wiki.monkestation.com/en/jobs/non-human/drone'>HERE</a></span>\n"
 	/// blacklisted drone areas, direct
 	var/list/drone_area_blacklist_flat = list(/area/station/engineering/atmos, /area/station/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
@@ -162,6 +162,12 @@
 		/obj/item/clothing/mask,
 		/obj/item/storage/box/lights,
 		/obj/item/lightreplacer,
+		/obj/item/construction/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/rcd_upgrade,
+		/obj/item/storage/part_replacer,
+		/obj/item/soap,
+		/obj/item/holosign_creator,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
@@ -175,13 +181,15 @@
 	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
+	AddComponent(/datum/component/personal_crafting) //MONKESTATION ADDITION
 
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
 		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
 
 	for(var/holiday_name in GLOB.holidays)
-		var/obj/item/potential_hat
+		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]
+		var/obj/item/potential_hat = holiday_today.holiday_hat
 		if(!isnull(potential_hat) && isnull(default_headwear)) //If our drone type doesn't start with a hat, we take the holiday one.
 			default_headwear = potential_hat
 
@@ -196,24 +204,26 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
-	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER), INNATE_TRAIT)
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NEGATES_GRAVITY, TRAIT_LITERATE, TRAIT_KNOW_ENGI_WIRES, TRAIT_ADVANCEDTOOLUSER, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
+
+	check_yellow_alert()
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_yellow_alert))
+
 	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 /mob/living/basic/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = get_cached_height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated())
@@ -252,10 +262,10 @@
 	if(head)
 		dropItemToGround(head)
 
-	alert_drones(DRONE_NET_DISCONNECT)
+	alert_drones(span_danger("DRONE NETWORK: [name] is not responding. Last distress signal sent from [get_area_name(src)]."))
 
 
-/mob/living/basic/drone/gib()
+/mob/living/basic/drone/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	dust()
 
 /mob/living/basic/drone/examine(mob/user)
@@ -263,7 +273,7 @@
 
 	//Hands
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		. += "It has [held_thing.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
 
@@ -333,6 +343,13 @@
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_INTERACT_WIRES
 
+/mob/living/basic/drone/proc/check_yellow_alert()
+	SIGNAL_HANDLER
+	if(SSsecurity_level?.get_current_level_as_number() == SEC_LEVEL_YELLOW)
+		if(GLOB.drone_machine_blacklist_enabled)
+			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
+	else if (GLOB.drone_machine_blacklist_enabled == FALSE)
+		GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy

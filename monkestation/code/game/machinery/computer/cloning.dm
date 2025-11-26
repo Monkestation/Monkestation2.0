@@ -7,13 +7,14 @@
 	name = "record"
 	var/list/fields = list()
 
-/obj/machinery/computer/cloning		//hippie start, re-add cloning
+/obj/machinery/computer/cloning		//monke start, re-add cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
 	req_access = list(ACCESS_GENETICS) //for modifying records
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -36,6 +37,7 @@
 /obj/machinery/computer/cloning/Initialize()
 	. = ..()
 	updatemodules(TRUE)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.
 
 /obj/machinery/computer/cloning/Destroy()
 	if(pods)
@@ -57,20 +59,21 @@
 	if(pods)
 		for(var/P in pods)
 			var/obj/machinery/clonepod/pod = P
-			if(pod.is_operational && pod.efficiency > 5)
+			if(pod.is_operational && pod.efficiency > 5 && pod.auto_clone)
 				return TRUE
 
 /obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
 	if(pods)
-		for(var/P in pods)
-			var/obj/machinery/clonepod/pod = P
+		for(var/obj/machinery/clonepod/pod as anything in pods)
+			if(!pod.auto_clone)
+				continue
 			if(pod.occupant && pod.clonemind == mind)
 				return pod
 			else if(!. && pod.is_operational && !(pod.occupant || pod.mess) && pod.efficiency > 5)
 				. = pod
 
 /proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R, empty)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["blood_type"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
+	return pod.growclone(R.fields["name"], R.fields["mutations"], R.fields["underwear"], R.fields["undershirt"], R.fields["socks"], R.fields["DNA"], R.fields["mindref"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -79,21 +82,17 @@
 	if(scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
-	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mindref"])
+	for(var/datum/data/record/record in records)
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(record.fields["mindref"])
 
-		if(!pod)
+		if(QDELETED(pod) || !pod.auto_clone || !QDELETED(pod.occupant))
 			return
-
-		if(pod.occupant)
-			break
-
-		var/result = grow_clone_from_record(pod, R)
+		var/result = grow_clone_from_record(pod, record)
 		if(result & CLONING_SUCCESS)
-			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-			log_cloning("Cloning of [key_name(R.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+			temp = "[record.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+			log_cloning("Cloning of [key_name(record.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
-			records -= R
+			records -= record
 
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
@@ -139,36 +138,38 @@
 	pod.connected = null
 	LAZYREMOVE(pods, pod)
 
-/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
-		if (!diskette)
-			if (!user.transferItemToLoc(W,src))
-				return
-			diskette = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			updateUsrDialog()
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+/obj/machinery/computer/cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
 
-		if(istype(P.buffer, /obj/machinery/clonepod))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/pod = P.buffer
-			if(pod.connected)
-				pod.connected.DetachCloner(pod)
-			AttachCloner(pod)
-		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
-		return
-	else
-		return ..()
+	if(!istype(multi.buffer, /obj/machinery/clonepod))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
+
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/pod = multi.buffer
+	pod.connected?.DetachCloner(pod)
+	AttachCloner(pod)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/cloning/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(!istype(tool, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		return NONE
+
+	if(!diskette || !user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	diskette = tool
+	to_chat(user, "<span class='notice'>You insert [tool].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	updateUsrDialog()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	. = ..()
@@ -183,8 +184,6 @@
 			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
 		else
 			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
-	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 	switch(menu)
@@ -522,7 +521,10 @@
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	var/datum/dna/dna
+	if(QDELETED(mob_occupant))
+		return
+	var/datum/dna/copied_dna = new()
+	var/datum/dna/old_dna
 	var/datum/bank_account/has_bank_account
 
 	// Do not use unless you know what they are.
@@ -530,28 +532,34 @@
 	var/mob/living/brain/B = mob_occupant
 
 	if(ishuman(mob_occupant))
-		dna = C.has_dna()
-		var/mob/living/carbon/human/human_occupant = mob_occupant
+		old_dna = C.has_dna()
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
-		if(!istype(dna) || (NO_DNA_COPY in human_occupant.dna.species.species_traits))
+		if(!istype(old_dna) || HAS_TRAIT(mob_occupant, TRAIT_NO_DNA_COPY))
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
-			
 	if(isbrain(mob_occupant))
-		dna = B.stored_dna
+		old_dna = B.stored_dna
+	if((mob_occupant.mob_biotypes & MOB_ROBOTIC) || (old_dna?.species?.inherent_biotypes & MOB_ROBOTIC))
+		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
+	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_NO_CLONE))
+		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
-		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to scan properly, restore DNA or upgrade machine and try again.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to initiate cloning procedure.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if (!body_only && isnull(mob_occupant.mind))
@@ -564,34 +572,39 @@
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
 	var/datum/data/record/R = new()
-	if(dna.species)
-		// We store the instance rather than the path, because some
-		// species (abductors, slimepeople) store state in their
-		// species datums
-		dna.delete_species = FALSE
-		R.fields["mrace"] = dna.species
-	else
-		var/datum/species/rando_race = pick(GLOB.roundstart_races)
-		R.fields["mrace"] = rando_race.type
+	old_dna.copy_dna(copied_dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	R.fields["mutations"] = list()
+	for(var/datum/mutation/mutation in old_dna.mutations)
+		var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
+		if(!length(valid_sources))
+			continue
+		var/datum/mutation/added_mutation = mutation.make_copy()
+		added_mutation.sources = valid_sources.Copy()
+		R.fields["mutations"] += added_mutation
 
 	R.fields["name"] = mob_occupant.real_name
 	R.fields["id"] = copytext_char(md5(mob_occupant.real_name), 2, 6)
-	R.fields["UE"] = dna.unique_enzymes
-	R.fields["UI"] = dna.unique_identity
-	R.fields["SE"] = dna.mutation_index
-	R.fields["blood_type"] = dna.blood_type
-	R.fields["features"] = dna.features
+	R.fields["DNA"] = copied_dna
 	R.fields["factions"] = mob_occupant.faction
 	R.fields["quirks"] = list()
-	for(var/V in mob_occupant.quirks)
-		var/datum/quirk/T = V
-		R.fields["quirks"][T.type] = T.clone_data()
+	for(var/datum/quirk/quirk as anything in mob_occupant.quirks)
+		if(quirk.quirk_flags & QUIRK_DONT_CLONE)
+			continue
+		R.fields["quirks"][quirk.type] = quirk.clone_data()
 
 	R.fields["traumas"] = list()
 	if(ishuman(mob_occupant))
 		R.fields["traumas"] = C.get_traumas()
+		var/mob/living/carbon/human/D = C
+		R.fields["underwear"] = D.underwear
+		R.fields["undershirt"] = D.undershirt
+		R.fields["socks"] = D.socks
 	if(isbrain(mob_occupant))
 		R.fields["traumas"] = B.get_traumas()
+		R.fields["underwear"] = /datum/sprite_accessory/underwear/male_briefs
+		R.fields["undershirt"] = /datum/sprite_accessory/undershirt/shirt_grey
+		R.fields["socks"] = /datum/sprite_accessory/socks/white_knee
 
 	R.fields["bank_account"] = has_bank_account
 	R.fields["mindref"] = "[REF(mob_occupant.mind)]"
@@ -599,8 +612,8 @@
 
 	var/datum/data/record/old_record = find_record_old("mindref", REF(mob_occupant.mind), records)
 	if(body_only)
-		old_record = find_record_old("UE", dna.unique_enzymes, records) //Body-only records cannot be identified by mind, so we use the DNA
-		if(old_record && ((old_record.fields["UI"] != dna.unique_identity) || (!old_record.fields["body_only"]))) //Never overwrite a mind-and-body record if it exists
+		old_record = find_record_old("UE", copied_dna.unique_enzymes, records) //Body-only records cannot be identified by mind, so we use the DNA
+		if(old_record && ((old_record.fields["UI"] != copied_dna.unique_identity) || (!old_record.fields["body_only"]))) //Never overwrite a mind-and-body record if it exists
 			old_record = null
 	if(old_record)
 		records -= old_record
@@ -610,4 +623,3 @@
 	records += R
 	log_cloning("[M ? key_name(M) : "Autoprocess"] added the [body_only ? "body-only " : ""]record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
-

@@ -13,7 +13,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
@@ -39,6 +39,10 @@
 
 /obj/item/pinpointer/examine(mob/user)
 	. = ..()
+	// MONKESTATION ADDITION START -- CONTRACTORS -- USED BY /obj/item/pinpointer/area_pinpointer
+	if(special_examine) // need it here else it would say "it is current tracking the floor". Technically correct but not really
+		return
+	// MONKESTATION ADDITION END
 	if(target)
 		. += "It is currently tracking [target]."
 
@@ -78,7 +82,7 @@
 
 ///Called by update_icon after sanity. There is a target
 /obj/item/pinpointer/proc/get_direction_icon(here, there)
-	if(get_dist_euclidian(here,there) <= minimum_range)
+	if(get_dist_euclidean(here,there) <= minimum_range)
 		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
@@ -172,15 +176,19 @@
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"
 	desc = "A handheld tracking device that locks onto its other half of the matching pair."
-	var/other_pair
+	var/obj/item/pinpointer/pair/other_pair //monkestation edit
 
 /obj/item/pinpointer/pair/Destroy()
 	other_pair = null
 	. = ..()
 
 /obj/item/pinpointer/pair/scan_for_target()
-	target = other_pair
-
+//monkestation edit start
+	if(other_pair.active)
+		target = other_pair
+	else
+		target = null
+//monkestation edit stop
 /obj/item/pinpointer/pair/examine(mob/user)
 	. = ..()
 	if(!active || !target)
@@ -192,6 +200,7 @@
 
 /obj/item/storage/box/pinpointer_pairs
 	name = "pinpointer pair box"
+	custom_premium_price = PAYCHECK_COMMAND * 3.5 //monkestation edit
 
 /obj/item/storage/box/pinpointer_pairs/PopulateContents()
 	var/obj/item/pinpointer/pair/A = new(src)

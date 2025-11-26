@@ -146,7 +146,7 @@
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
-	if(!(user.istate & ISTATE_HARM))
+	if(!(user.istate & ISTATE_HARM) && istype(user.client?.imode, /datum/interaction_mode/combat_mode))
 		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -180,11 +180,11 @@
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
-	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
-		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+		splash_animation.icon_state = "splash_floor"
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+	target.flick_overlay_view(splash_animation, 1 SECONDS)
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
@@ -248,7 +248,7 @@
 		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE, override_spillable = FALSE)
-	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable))
+	if(!reagents?.total_volume || (!spillable && !override_spillable))
 		return
 	var/mob/thrown_by = thrownby?.resolve()
 
@@ -279,7 +279,7 @@
 			if(istype(T, /turf/open))
 				T.add_liquid_from_reagents(reagents, FALSE, reagents.chem_temp)
 
-			if(reagents.reagent_list.len && thrown_by)
+			if(length(reagents.reagent_list) && thrown_by)
 				log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
 				log_game("[key_name(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 				message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
@@ -287,21 +287,25 @@
 			reagents.expose(target, TOUCH)
 			var/turf/targets_loc = target.loc
 			if(istype(targets_loc, /turf/open))
-				targets_loc.add_liquid_from_reagents(reagents)
+				if(thrown_by && !target.can_atmos_pass)
+					var/turf/open/open = get_step(src, get_dir(src, thrown_by))
+					open?.add_liquid_from_reagents(reagents)
+				else
+					targets_loc.add_liquid_from_reagents(reagents)
 			else
 				targets_loc = get_step_towards(targets_loc, thrown_by)
-				targets_loc.add_liquid_from_reagents(reagents) //not perfect but i can't figure out how to move something to the nearest visible turf from throw_target
+				targets_loc?.add_liquid_from_reagents(reagents) //not perfect but i can't figure out how to move something to the nearest visible turf from throw_target
 		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
-	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
-		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+		splash_animation.icon_state = "splash_floor"
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+	target.flick_overlay_view(splash_animation, 1.0 SECONDS)
 
 	reagents.clear_reagents()
 
@@ -317,10 +321,9 @@
 	SIGNAL_HANDLER
 	update_appearance()
 
-	if(reasses_processing())
-		START_PROCESSING(SSobj, src)
-	else if(datum_flags & DF_ISPROCESSING)
-		STOP_PROCESSING(SSobj, src)
+	//Monkestation Addition: For Australium
+	reagent_processing()
+	//End Monkestation Addition
 
 	return NONE
 
@@ -343,3 +346,9 @@
 
 	filling.color = mix_color_from_reagents(reagents.reagent_list)
 	. += filling
+
+/obj/item/reagent_containers/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	after_attack_pour(user, target)
+
+/obj/item/reagent_containers/proc/after_attack_pour(mob/user, atom/target)

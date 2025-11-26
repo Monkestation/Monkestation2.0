@@ -4,13 +4,13 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "riotgun"
 	inhand_icon_state = "riotgun"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL //monkestation edit: bulky to normal
 	throw_speed = 2
 	throw_range = 7
 	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()
@@ -24,15 +24,15 @@
 	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
 	return ..()
 
-/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
+/obj/item/gun/grenadelauncher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(istype(I, /obj/item/grenade/c4))
+	if(istype(attacking_item, /obj/item/grenade/c4))
 		return
-	if((isgrenade(I)))
+	if((isgrenade(attacking_item)))
 		if(grenades.len < max_grenades)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			grenades += I
+			grenades += attacking_item
 			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
 		else
 			balloon_alert(user, "it's already full!")

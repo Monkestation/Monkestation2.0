@@ -1,7 +1,7 @@
 /**
  * An armblade that instantly snuffs out lights
  */
-/obj/item/light_eater
+/obj/item/light_eater/nightmare
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
@@ -10,7 +10,8 @@
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	item_flags = ABSTRACT | DROPDEL | ACID_PROOF
+	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
@@ -18,7 +19,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 20
 
-/obj/item/light_eater/Initialize(mapload)
+/obj/item/light_eater/nightmare/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, \
@@ -26,3 +27,4 @@
 	effectiveness = 70, \
 	)
 	AddComponent(/datum/component/light_eater)
+

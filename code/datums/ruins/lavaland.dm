@@ -23,11 +23,13 @@
 	Includes a unique(*) laser pistol display case, and the recently introduced I.C.E(tm)."
 	suffix = "lavaland_surface_biodome_winter.dmm"
 
+/* Until slipping is fixed
 /datum/map_template/ruin/lavaland/biodome/clown
 	name = "Biodome Clown Planet"
 	id = "biodome-clown"
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
+*/
 
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
@@ -55,6 +57,11 @@
 	cost = 1
 	allow_duplicates = FALSE
 	always_place = TRUE
+
+/datum/map_template/ruin/lavaland/ash_walker/New()
+	if(rand(50))
+		suffix = "lavaland_surface_ash_walker2.dmm"
+	. = ..()
 
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"

@@ -32,11 +32,11 @@
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
+	required_container_accepts_subtypes = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 	reaction_flags = REACTION_NON_INSTANT
-	var/Nonsouprecipe = FALSE
 
 	// General soup guideline:
 	// - Soups should produce 60-90 units (3-4 servings)
@@ -55,11 +55,6 @@
 	/// Lower this if your ingredients have a small amount of nutriment and isn't filling enough per serving
 	/// (EX: A tomato with 10 nutriment will lose 2.5 nutriment before being added to the pot)
 	var/percentage_of_nutriment_converted = 0.25
-
-	///an assoc list of what items are outputted as a final product in the soup production line
-	var/list/outputted_ingredients
-	///how many ouputs can be processed per reaction
-	var/max_outputs = 1
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
@@ -90,6 +85,39 @@
 /datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(!length(required_ingredients))
 		return
+	// If a food item is supposed to be made, remove relevant ingredients from the pot, then make the item
+	if(!isnull(resulting_food_path))
+		var/list/tracked_ingredients
+		LAZYINITLIST(tracked_ingredients)
+		var/ingredient_max_multiplier = INFINITY
+		var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+
+		// Tracked ingredients are indexed by type and point to a list containing the actual items
+		for(var/obj/item/ingredient as anything in pot.added_ingredients)
+			if(is_type_in_list(ingredient, required_ingredients))
+				LAZYADD(tracked_ingredients[ingredient.type],ingredient)
+		// Find the max number of ingredients that may be used for making the food item
+		for(var/list/ingredient_type as anything in tracked_ingredients)
+			ingredient_max_multiplier = min(ingredient_max_multiplier,LAZYLEN(tracked_ingredients[ingredient_type]))
+		// Create the food items, removing the relavent ingredients at the same time
+		for(var/i in 1 to (min(created_volume,ingredient_max_multiplier)))
+			for(var/list/ingredient_type as anything in tracked_ingredients)
+				var/ingredient = tracked_ingredients[ingredient_type][i]
+				LAZYREMOVE(pot.added_ingredients,ingredient)
+				qdel(ingredient)
+			var/obj/item/created = new resulting_food_path(get_turf(pot))
+			created.pixel_y += 8
+			BLACKBOX_LOG_FOOD_MADE(created)
+		// Re-add required reagents that were not used in this step
+		if(created_volume > ingredient_max_multiplier)
+			for(var/reagent_path in required_reagents)
+				holder.add_reagent(reagent_path,(required_reagents[reagent_path])*(created_volume-ingredient_max_multiplier))
+
+	// This only happens if we're being instant reacted so let's just skip to what we really want
+	if(isnull(reaction))
+		testing("Soup reaction of type [type] instant reacted, cleaning up.")
+		clean_up(holder)
+		return
 
 	if(isnull(total_ingredient_max))
 		total_ingredient_max = 0
@@ -113,7 +141,6 @@
 /datum/chemical_reaction/food/soup/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	if(!length(required_ingredients))
 		return
-
 	testing("Soup reaction step progressing with an increment volume of [step_reaction_vol] and delta_t of [delta_t].")
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/cached_ingredients = reaction.data["ingredients"]
@@ -163,47 +190,59 @@
 	. = ..()
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
-		CRASH("[pot ? "Non-pot atom" : "Null pot"]) made it to the end of the [type] reaction chain.")
-	reaction.data["ingredients"] = null
+		CRASH("[pot ? "Non-pot atom" : "Null pot"] made it to the end of the [type] reaction chain.")
 
 	testing("Soup reaction finished with a total react volume of [react_vol] and [length(pot.added_ingredients)] ingredients. Cleaning up.")
+	clean_up(holder, reaction, react_vol)
 
-	if(length(outputted_ingredients))
-		var/repeating_amount = 0
+/**
+ * Cleans up the ingredients and adds whatever leftover reagents to the mixture
+ *
+ * * holder: The soup pot
+ * * reaction: The reaction being cleaned up, note this CAN be null if being instant reacted
+ * * react_vol: How much soup was produced
+ */
+/datum/chemical_reaction/food/soup/proc/clean_up(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+
+	reaction?.data["ingredients"] = null
+
+	// If soup is made, remove ingredients as their reagents were added to the soup
+	if(react_vol)
 		for(var/obj/item/ingredient as anything in pot.added_ingredients)
-			if(is_type_in_list(ingredient, required_ingredients))
-				qdel(ingredient)
-				repeating_amount++
+			// Let's not mess with  indestructible items.
+			// Chef doesn't need more ways to delete things with cooking.
+			if(ingredient.resistance_flags & INDESTRUCTIBLE)
+				continue
 
-		repeating_amount = min(repeating_amount, max_outputs)
-		for(var/number in 1 to repeating_amount)
-			for(var/obj/item/created_output as anything in outputted_ingredients)
-				var/obj/item/new_item = new created_output(pot)
-				LAZYADD(pot.added_ingredients, new_item)
+			// Everything else will just get fried
+			if(isnull(ingredient.reagents) && !is_type_in_list(ingredient, required_ingredients))
+				ingredient.AddElement(/datum/element/fried_item, 30)
+				continue
 
-	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Let's not mess with fireproof / indestructible items.
-		// It's not likely that soups use fireproof items as ingredients,
-		// and chef doesn't need more ways to delete things with cooking.
-		if(ingredient.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE))
-			continue
-
-		// Things that had reagents or ingredients in the soup will get deleted
-		if((!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients)) && !is_type_in_list(ingredient, outputted_ingredients) && !Nonsouprecipe) //monkeedit
+			// Things that had reagents or ingredients in the soup will get deleted
+			LAZYREMOVE(pot.added_ingredients, ingredient)
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done
 			qdel(ingredient)
 
-		// Everything else will just get fried
-		if (!Nonsouprecipe) //monkeedit
-			ingredient.AddElement(/datum/element/fried_item, 30)
-
-	//LAZYNULL(pot.added_ingredients)
+	// Anything left in the ingredient list will get dumped out
+	pot.dump_ingredients(get_turf(pot), y_offset = 8)
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
-	BLACKBOX_LOG_FOOD_MADE(type)
 
+/**
+ * Transfers reagents from the passed reagent to the soup pot, as a "result"
+ *
+ * Also handles deleting a portion of nutriment reagents present, pseudo-converting it into soup reagent
+ *
+ * * ingredient: The ingredient to transfer reagents from
+ * * holder: The reagent holder of the soup pot the reaction is taking place in
+ * * amount: The amount of reagents to transfer, if null will transfer all reagents
+ */
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
+	if(ingredient_reagent_multiplier <= 0)
+		return
 	var/datum/reagents/ingredient_pool = ingredient.reagents
 	// Some ingredients are purely flavor (no pun intended) and will have reagents
 	if(isnull(ingredient_pool) || ingredient_pool.total_volume <= 0)
@@ -217,8 +256,9 @@
 	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment, amount * percentage_of_nutriment_converted)
 	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, amount * percentage_of_nutriment_converted)
 	// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
-	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
+	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, preserve_data = FALSE, no_react = TRUE)
 
+/// Called whenever the soup pot overfills with reagent.
 /datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/turf/below_pot = get_turf(pot)
@@ -524,8 +564,8 @@
 
 /datum/chemical_reaction/food/soup/chili_sin_carne
 	required_reagents = list(
-		/datum/reagent/water = 40,
-		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/water = 30,
+		/datum/reagent/water/salt = 10,
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/chili = 1,
@@ -550,7 +590,10 @@
 	drink_type = VEGETABLES | FRUIT // ??
 
 /datum/chemical_reaction/food/soup/tomatosoup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/cream = 5
+	)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 	)
@@ -1043,8 +1086,8 @@
 
 /datum/chemical_reaction/food/soup/electron
 	required_reagents = list(
-		/datum/reagent/water = 45,
-		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/water = 40,
+		/datum/reagent/water/salt = 10,
 	)
 	required_ingredients = list(
 		/obj/item/food/grown/mushroom/jupitercup = 1,
@@ -1104,7 +1147,7 @@
 		/obj/item/food/grown/onion = 2,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/boiledrice = 1,
 	)
 	results = list(
@@ -1451,12 +1494,12 @@
 /datum/chemical_reaction/food/soup/cheese
 	required_reagents = list(
 		/datum/reagent/water = 30,
-		/datum/reagent/consumable/flour = 10,
 		/datum/reagent/consumable/milk = 10,
 	)
 	required_ingredients = list(
+		/obj/item/food/doughslice = 2,
 		/obj/item/food/cheese/wedge = 2,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/grown/potato/sweet = 1,
 	)
 	results = list(
@@ -1607,8 +1650,8 @@
 
 /datum/chemical_reaction/food/soup/rice_porridge
 	required_reagents = list(
-		/datum/reagent/water = 30,
-		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/water = 20,
+		/datum/reagent/water/salt = 10,
 	)
 	required_ingredients = list(
 		/obj/item/food/boiledrice = 1,
@@ -1667,7 +1710,7 @@
 	required_ingredients = list(
 		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/cheese/curd_cheese = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/cheese_porridge = 30,
@@ -1738,3 +1781,439 @@
 		/datum/reagent/consumable/sugar = 8,
 	)
 	percentage_of_nutriment_converted = 0.1
+
+// Martian Food
+// Boiled Noodles
+/datum/chemical_reaction/food/soup/boilednoodles
+	required_reagents = list(
+		/datum/reagent/consumable/salt = 2
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/rawnoodles = 1
+	)
+	required_catalysts = list(
+		/datum/reagent/water/salt = 10,
+	)
+	resulting_food_path = /obj/item/food/spaghetti/boilednoodles
+	ingredient_reagent_multiplier = 0
+
+// Dashi Broth
+/datum/reagent/consumable/nutriment/soup/dashi
+	name = "Dashi"
+	description = "Made with kombu and katsuobushi, this mother stock forms the basis for a large number of Japanese dishes."
+	data = list("umami" = 1)
+	color = "#D49D26"
+
+/datum/glass_style/has_foodtype/soup/dashi
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/dashi
+	name = "dashi"
+	drink_type = SEAFOOD
+
+/datum/chemical_reaction/food/soup/dashi
+	required_reagents = list(
+		/datum/reagent/consumable/dashi_concentrate = 5,
+		/datum/reagent/water = 40,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 40,
+	)
+
+// Teriyaki Sauce
+/datum/reagent/consumable/nutriment/soup/teriyaki
+	name = "Teriyaki Sauce"
+	description = "A Japanese sauce that's heavy on umami."
+	data = list("umami" = 1)
+	color = "#3F0D02"
+
+/datum/glass_style/has_foodtype/soup/teriyaki
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/teriyaki
+	name = "teriyaki sauce"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/teriyaki
+	required_reagents = list(
+		/datum/reagent/consumable/soysauce = 10,
+		/datum/reagent/consumable/ethanol/sake = 10,
+		/datum/reagent/consumable/honey = 5,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 20,
+	)
+
+// Curry Sauce
+/datum/reagent/consumable/nutriment/soup/curry_sauce
+	name = "Curry Sauce"
+	description = "A basic curry sauce that goes well on a wide range of foods."
+	data = list("curry" = 1)
+	color = "#F6C800"
+
+/datum/glass_style/has_foodtype/soup/curry_sauce
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/curry_sauce
+	name = "curry sauce"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/curry_sauce
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/curry_powder = 10,
+		/datum/reagent/consumable/soysauce = 5,
+		/datum/reagent/consumable/corn_starch = 5,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/curry_sauce = 40,
+	)
+
+// Shoyu Ramen
+/datum/reagent/consumable/nutriment/soup/shoyu_ramen
+	name = "Shōyu Ramen"
+	description = "A soy-sauce based ramen, with noodles, fishcake, barbecued meat and a boiled egg."
+	data = list("egg" = 1, "fish" = 1, "noodles" = 1, "meat" = 1, "broth" = 1)
+	color = "#442621"
+
+/datum/glass_style/has_foodtype/soup/shoyu_ramen
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/shoyu_ramen
+	name = "shōyu ramen"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "shoyu_ramen"
+	drink_type = MEAT | GRAIN | VEGETABLES | SEAFOOD
+
+/datum/chemical_reaction/food/soup/shoyu_ramen
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 15,
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/kamaboko_slice = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/boiledegg = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/shoyu_ramen = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 8,
+	)
+	percentage_of_nutriment_converted = 0.2
+
+// Gyuramen
+/datum/reagent/consumable/nutriment/soup/gyuramen
+	name = "Gyuramen Miy Käzu"
+	description = "A rich beef and onion ramen with cheese- blending several cultural influences seemlessly into one tasty dish."
+	data = list("beef broth" = 1, "onion" = 1, "cheese" = 1)
+	color = "#442621"
+
+/datum/glass_style/has_foodtype/soup/gyuramen
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/gyuramen
+	name = "gyuramen miy käzu"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "gyuramen"
+	drink_type = MEAT | GRAIN | DAIRY | VEGETABLES
+
+/datum/chemical_reaction/food/soup/gyuramen
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
+		/datum/reagent/consumable/soysauce = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/onion_slice = 2,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/gyuramen = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/nutriment/protein = 10,
+	)
+	percentage_of_nutriment_converted = 0.15
+
+// New Osaka Sunrise
+/datum/reagent/consumable/nutriment/soup/new_osaka_sunrise
+	name = "New Osaka Sunrise Soup"
+	description = "A bright, flavourful miso soup with tofu that commonly forms part of a traditional Martian breakfast, at least in the capital."
+	data = list("miso" = 1, "tofu" = 1, "onion" = 1, "eggplant" = 1)
+	color = "#EAB26E"
+
+/datum/glass_style/has_foodtype/soup/new_osaka_sunrise
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/new_osaka_sunrise
+	name = "\improper New Osaka Sunrise soup"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "new_osaka_sunrise"
+	drink_type = MEAT | GRAIN | DAIRY | VEGETABLES
+
+/datum/chemical_reaction/food/soup/new_osaka_sunrise
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/miso = 15,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/herbs = 1,
+		/obj/item/food/grown/eggplant = 1,
+		/obj/item/food/onion_slice = 1,
+		/obj/item/food/tofu = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/new_osaka_sunrise = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 2,
+	)
+	percentage_of_nutriment_converted = 0.15
+
+// Satsuma Black
+/datum/reagent/consumable/nutriment/soup/satsuma_black
+	name = "Satsuma Black Soup"
+	description = "A rich, heavy seafood and noodle soup from Mars, employing squid ink to give a strong taste of the sea."
+	data = list("seafood" = 1, "tofu" = 1, "noodles" = 1)
+	color = "#171221"
+
+/datum/glass_style/has_foodtype/soup/satsuma_black
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/satsuma_black
+	name = "\improper Satsuma Black soup"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "satsuma_black"
+	drink_type = SEAFOOD | GRAIN | VEGETABLES
+
+/datum/chemical_reaction/food/soup/satsuma_black
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/tofu = 1,
+		/obj/item/food/canned/squid_ink = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/satsuma_black = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	percentage_of_nutriment_converted = 0.15
+
+// Dragon Style
+/datum/reagent/consumable/nutriment/soup/dragon_ramen
+	name = "Dragon Style Ramen"
+	description = "For the ramen fan who hates their tastebuds and digestive tract. Traditionally made with seven different chilis, although after two or so the point sorta gets lost."
+	data = list("meat" = 1, "liquid hot magma" = 1, "noodles" = 1)
+	color = "#980F00"
+
+/datum/glass_style/has_foodtype/soup/dragon_ramen
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/dragon_ramen
+	name = "\improper Dragon Style ramen"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "dragon_ramen"
+	drink_type = SEAFOOD | GRAIN | VEGETABLES
+
+/datum/chemical_reaction/food/soup/dragon_ramen
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 20,
+		/datum/reagent/consumable/nutriment/soup/teriyaki = 10,
+		/datum/reagent/consumable/red_bay = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/grown/ghost_chili = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/kamaboko_slice = 1,
+		/obj/item/food/boiledegg = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/dragon_ramen = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	ingredient_reagent_multiplier = 0.3 //reduces the impact of the chilis to manageable levels
+
+// Hong Kong Borscht
+/datum/reagent/consumable/nutriment/soup/hong_kong_borscht
+	name = "Hong Kong Borscht"
+	description = "Also known as luo song tang or Russian soup, this dish bears little to no resemblance to Eastern European borscht- indeed, it's a tomato-based soup with no beets in sight."
+	data = list("tomato" = 1, "meat" = 1, "cabbage" = 1)
+	color = "#CA4810"
+
+/datum/glass_style/has_foodtype/soup/hong_kong_borscht
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/hong_kong_borscht
+	name = "\improper Hong Kong borscht"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "hong_kong_borscht"
+	drink_type = MEAT | VEGETABLES
+
+/datum/chemical_reaction/food/soup/hong_kong_borscht
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/soysauce = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/meat/cutlet = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/hong_kong_borscht = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/nutriment/protein = 2,
+	)
+	percentage_of_nutriment_converted = 0.1
+
+// Huotui Tong Fen
+/datum/reagent/consumable/nutriment/soup/hong_kong_macaroni
+	name = "Hong Kong Macaroni Soup"
+	description = "A favourite from Hong Kong's Cha Chaan Tengs, this macaroni soup came to Mars with Cantonese settlers under Cybersun Industries, and has become as much of a breakfast staple there as it is in its homeland."
+	data = list("cream" = 1, "chicken" = 1, "pasta" = 1, "ham" = 1)
+	color = "#FFFAB5"
+
+/datum/glass_style/has_foodtype/soup/hong_kong_macaroni
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/hong_kong_macaroni
+	name = "\improper Hong Kong macaroni soup"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "hong_kong_macaroni"
+	drink_type = MEAT | VEGETABLES
+
+/datum/chemical_reaction/food/soup/hong_kong_macaroni
+	required_reagents = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/cream = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/meat/cutlet/chicken = 1,
+		/obj/item/food/meat/bacon = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/hong_kong_macaroni = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	percentage_of_nutriment_converted = 0.2
+
+// Fox's Prize Soup
+/datum/reagent/consumable/nutriment/soup/foxs_prize_soup
+	name = "Fox's Prize Soup"
+	description = "Originally based on the Chinese classic of egg-drop soup, fox's prize soup iterated on the concept via the addition of aburaage and dashi, making a dish that would truly appeal to any hungry fox."
+	data = list("egg" = 1, "chicken" = 1, "fried tofu" = 1, "umami broth" = 1)
+	color = "#E9B200"
+
+/datum/glass_style/has_foodtype/soup/foxs_prize_soup
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/foxs_prize_soup
+	name = "fox's prize soup"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "foxs_prize_soup"
+	drink_type = MEAT | VEGETABLES
+
+/datum/chemical_reaction/food/soup/foxs_prize_soup
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 30,
+		/datum/reagent/consumable/eggwhite = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/meat/cutlet/chicken = 1,
+		/obj/item/food/tofu = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/foxs_prize_soup = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+
+// Secret Noodle Soup
+/datum/reagent/consumable/nutriment/soup/secret_noodle_soup
+	name = "Secret Noodle Soup"
+	description = "Made to a secret family recipe (that's in several cookbooks). What is the secret ingredient, you ask? Well, let's just say it could be anything..."
+	data = list("noodles" = 1, "chicken" = 1, "aromatic broth" = 1)
+	color = "#D9BB79"
+
+/datum/glass_style/has_foodtype/soup/secret_noodle_soup
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/secret_noodle_soup
+	name = "secret noodle soup"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "secret_noodle_soup"
+	drink_type = MEAT | VEGETABLES
+
+/datum/chemical_reaction/food/soup/secret_noodle_soup
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/soup/dashi = 30,
+	)
+	required_ingredients = list(
+		/obj/item/food/meat/cutlet/chicken = 1,
+		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/secret_noodle_soup = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+
+// Budae-Jjigae
+/datum/reagent/consumable/nutriment/soup/budae_jjigae
+	name = "Budae-Jjigae"
+	description = "A dish born of the American presence in South Korea, made with ingredients typical to the 1960s American army base- hot dogs, chap, and baked beans, as well as a number of native Korean ingredients such as gochujang and kimchi."
+	data = list("hot dog" = 1, "pork" = 1, "beans" = 1, "kimchi" = 1, "noodles" = 1)
+	color = "#C8400E"
+
+/datum/glass_style/has_foodtype/soup/budae_jjigae
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/budae_jjigae
+	name = "budae-jjigae"
+	icon = 'icons/obj/food/martian.dmi'
+	icon_state = "budae_jjigae"
+	drink_type = MEAT | VEGETABLES | GRAIN
+
+/datum/chemical_reaction/food/soup/budae_jjigae
+	required_reagents = list(
+		/datum/reagent/water = 30,
+	)
+	required_ingredients = list(
+		/obj/item/food/canned/beans = 1,
+		/obj/item/food/spaghetti/rawnoodles = 1,
+		/obj/item/food/sausage/american = 1,
+		/obj/item/food/chapslice = 2,
+		/obj/item/food/kimchi = 1,
+		/obj/item/food/cheese/wedge = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/budae_jjigae = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	percentage_of_nutriment_converted = 0.1
+
+// 24-Volt Fish
+// Simply poach the fish in boiling energy drink, easy as
+/datum/chemical_reaction/food/soup/volt_fish
+	required_reagents = list(
+		/datum/reagent/consumable/volt_energy = 15,
+	)
+	required_ingredients = list(
+		/obj/item/food/fishmeat = 1
+	)
+	resulting_food_path = /obj/item/food/volt_fish
+	ingredient_reagent_multiplier = 0
+	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+//Saimin, a Hawaiian noodle soup
+/datum/reagent/consumable/nutriment/soup/saimin
+	name = "Saimin"
+	description = "A traditional hawaiian noodle soup."
+	data = list("eggs"= 1, "onion" = 1, "cabbage" = 1, "noodles" = 1)
+	color = "#9dc530"
+
+/datum/glass_style/has_foodtype/soup/saimin
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/saimin
+	icon = 'icons/obj/food/martian.dmi'
+	name = "saimin"
+	icon_state = "saimin"
+	drink_type = VEGETABLES | GRAIN
+
+/datum/chemical_reaction/food/soup/saimin
+	required_reagents = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/soysauce = 5,
+	)
+	required_ingredients = list(
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/spaghetti/rawnoodles = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/saimin = 30,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
+	)

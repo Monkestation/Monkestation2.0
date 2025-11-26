@@ -199,7 +199,7 @@
 	bait_height -= difficulty
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
-/datum/fishing_challenge/Destroy(force, ...)
+/datum/fishing_challenge/Destroy(force)
 	if(!completed)
 		complete(win = FALSE)
 	if(fishing_line)
@@ -625,7 +625,7 @@
 		return
 	var/static/icon_height
 	if(!icon_height)
-		var/list/icon_dimensions = get_icon_dimensions(icon)
+		var/alist/icon_dimensions = get_icon_dimensions(icon)
 		icon_height = icon_dimensions["height"]
 	var/height_percent_diff = challenge.bait_pixel_height/MINIGAME_BAIT_HEIGHT
 	transform = transform.Scale(1, height_percent_diff)

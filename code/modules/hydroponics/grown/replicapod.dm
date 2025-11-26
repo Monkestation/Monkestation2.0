@@ -12,7 +12,7 @@
 	endurance = 25
 	maturation = 30
 	production = 5
-	yield = 4
+	yield = 40
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -41,7 +41,7 @@
 	endurance = 8
 	maturation = 10
 	production = 1
-	yield = 1 //seeds if there isn't a dna inside
+	yield = 10
 	potency = 30
 	var/volume = 5
 	var/ckey
@@ -121,7 +121,7 @@
 		return null
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
-	var/obj/machinery/hydroponics/parent = loc
+	var/atom/movable/parent = loc
 	var/make_podman = FALSE
 	var/ckey_holder = null
 	var/list/result = list()
@@ -134,7 +134,7 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
@@ -175,7 +175,6 @@
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray(user, seed_count)
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -187,13 +186,14 @@
 		podman.real_name = "Pod Person ([rand(1,999)])"
 	mind.transfer_to(podman)
 	if(ckey)
-		podman.ckey = ckey
+		podman.PossessByPlayer(ckey)
 	else
-		podman.ckey = ckey_holder
+		podman.PossessByPlayer(ckey_holder)
 	podman.gender = blood_gender
 	podman.faction |= factions
-	if(!features["mcolor"])
-		features["mcolor"] = "#59CE00"
+	var/datum/color_palette/generic_colors/palette = podman.dna.color_palettes[/datum/color_palette/generic_colors]
+	if(!palette.mutant_color)
+		palette.mutant_color = "#59CE00"
 	if(!features["pod_hair"])
 		features["pod_hair"] = pick(GLOB.pod_hair_list)
 
@@ -209,7 +209,6 @@
 			most_plentiful_reagent.Cut()
 			most_plentiful_reagent[reagent] = reagents_add[reagent]
 
-	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
+	//podman.dna.species.exotic_blood = most_plentiful_reagent[1] //Monkestation edit BLOOD_DATUM: This needs to be looked into
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
-	parent.update_tray(user, 1)
 	return result

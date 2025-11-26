@@ -11,6 +11,7 @@
 	weather_overlay = "snow_storm"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
+	use_glow = FALSE
 
 	end_duration = 100
 	end_message = "<span class='boldannounce'>The snowfall dies down, it should be safe to go outside again.</span>"
@@ -39,7 +40,7 @@
 	if(isobserver(player))
 		return TRUE
 
-	if(HAS_TRAIT(player, TRAIT_DETECT_STORM))
+	if(HAS_MIND_TRAIT(player, TRAIT_DETECT_STORM))
 		return TRUE
 
 	if(istype(get_area(player), /area/mine))

@@ -11,7 +11,7 @@
 		return FALSE
 
 	for(var/datum/traitor_objective/objective in handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_INACTIVE)
+		if(objective.objective_state != OBJECTIVE_STATE_INVALID)
 			return FALSE
 
 	return TRUE
@@ -38,9 +38,11 @@
 
 /datum/uplink_item/bundles_tc/surplus/lootbox/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
 	crate_tc_value = rand(1,20) * 5 // randomise how much in TC it gives, from 5 to 100 TC
+
 	if(crate_tc_value == 5) //horrible luck, welcome to gambling
 		crate_tc_value = 0
 		to_chat(user, span_warning("You feel an overwhelming sense of pride and accomplishment."))
+
 	if(crate_tc_value == 100) // Jackpot, how lucky
 		crate_tc_value *= 2
 		print_command_report("Congratulations to [user] for being the [rand(2, 9)]th lucky winner of the syndicate lottery! \
@@ -50,11 +52,14 @@
 			var/obj/item/implant/weapons_auth/auth = new
 			auth.implant(user)
 			to_chat(user, span_notice("You feel as though the syndicate have given you the ability to use weapons beyond your normal access level."))
+
 	var/obj/structure/closet/crate/surplus_crate = new crate_type()
+	// quick safety check
 	if(!istype(surplus_crate))
 		CRASH("crate_type is not a crate")
 
 	var/list/possible_items = generate_possible_items(user, handler, TRUE)
+	// again safety check, if things fucked up badly we give them back their cost and return
 	if(!possible_items || !length(possible_items))
 		handler.telecrystals += cost
 		to_chat(user, span_warning("You get the feeling something went wrong and that you should inform syndicate command."))
@@ -63,15 +68,30 @@
 
 	fill_crate(surplus_crate, possible_items)
 
-	podspawn(list( // unlike other chests, lets give them the chest with STYLE
+	// unlike other chests, lets give them the chest with STYLE by droppodding in a STYLIZED pod
+	podspawn(list(
 		"target" = get_turf(user),
 		"style" = STYLE_SYNDICATE,
 		"spawn" = surplus_crate,
 	))
+
+	// lock everything except random entries, once you start gambling you cannot stop
 	handler.add_locked_entries(subtypesof(/datum/uplink_item) - /datum/uplink_item/bundles_tc/random)
+
+	// return the source, this is so the round-end uplink section shows how many TC the traitor spent on us (20TC) and a radio icon. Instead of 0 TC and a blank one
+	return source
 
 //pain
 ///Check if we should ignore handler locked_entries or not
 /datum/uplink_item/bundles_tc/random/proc/check_ignore_locked(datum/uplink_handler/handler)
 	return (length(handler.locked_entries) == (length(subtypesof(/datum/uplink_item)) - 1)) && !(src.type in handler.locked_entries)
 
+
+/datum/uplink_item/bundles_tc/syndicate_mini_kit
+	name = "Syndicate Mini-Kit"
+	desc = "A small, budget-friendly kit for new operatives. Contains a selection of basic tools. \
+			The Syndicate provides only one Mini-Kit per agent."
+	item = /obj/item/storage/box/syndie_kit/mini_kit
+	cost = 10
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

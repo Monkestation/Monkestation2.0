@@ -15,6 +15,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
+	block_sound = 'sound/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -77,7 +78,7 @@
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
 	inhand_icon_state = "buckler"
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	max_integrity = 55
@@ -88,7 +89,7 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	inhand_icon_state = "roman_shield"
-	custom_materials = list(/datum/material/iron=8500)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.25)
 	max_integrity = 65
 	shield_break_sound = 'sound/effects/grillehit.ogg'
 	shield_break_leftover = /obj/item/stack/sheet/iron
@@ -104,7 +105,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
-	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
+	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
@@ -198,7 +199,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 20, target = user))
+			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -230,8 +231,8 @@
 		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new <b>flash</b>.")
 
 /obj/item/shield/energy
-	name = "energy combat shield"
-	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
+	name = "combat energy shield"
+	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well as providing well-rounded defense from most all other attacks."
 	icon_state = "eshield"
 	inhand_icon_state = "eshield"
 	w_class = WEIGHT_CLASS_TINY
@@ -242,6 +243,10 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
+	block_sound = 'sound/weapons/block_blade.ogg'
+	/// Whether the shield is currently extended and protecting the user.
+	var/enabled = FALSE
+	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
 	var/active_throwforce = 8
@@ -249,6 +254,10 @@
 	var/active_throw_speed = 2
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
+	/// The chance for projectiles to be reflected by the shield
+	var/reflection_probability = 50
+	/// The chance for energy projectiles to be reflected by the shield
+	var/energy_reflection_probability = 75
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
@@ -263,11 +272,19 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return FALSE
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK)
+		var/obj/projectile/our_projectile = hitby
+
+		if(our_projectile.reflectable) //We handle this via IsReflect() instead.
+			final_block_chance = 0
+
+	return ..()
 
 /obj/item/shield/energy/IsReflect()
-	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
-
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(energy_reflection_probability)
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  */
@@ -285,7 +302,7 @@
 	icon_state = "teleriot"
 	inhand_icon_state = "teleriot"
 	worn_icon_state = "teleriot"
-	custom_materials = list(/datum/material/iron = 3600, /datum/material/glass = 3600, /datum/material/silver = 270, /datum/material/titanium = 180)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2.7, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 1.8)
 	slot_flags = null
 	force = 3
 	throwforce = 3
@@ -328,3 +345,12 @@
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 #undef BATON_BASH_COOLDOWN
+
+/obj/item/shield/energy/advanced
+	name = "advanced combat energy shield"
+	desc = "A hardlight shield capable of reflecting all energy projectiles, as well las providing well-rounded defense from most all other attacks. \
+		Often employed by Nanotrasen deathsquads."
+	icon_state = "advanced_eshield"
+	inhand_icon_state = "advanced_eshield"
+	reflection_probability = 75
+	energy_reflection_probability = 100 //Guaranteed reflection

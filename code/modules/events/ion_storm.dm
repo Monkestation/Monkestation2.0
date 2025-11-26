@@ -7,6 +7,9 @@
 	description = "Gives the AI a new, randomized law."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_TARGETED, TAG_ALIEN)
+	event_group = /datum/event_group/bsod
 
 /datum/round_event/ion_storm
 	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
@@ -36,10 +39,8 @@
 		M.laws_sanity_check()
 		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
-				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
-				// pick_weighted_lawset gives us a typepath,
-				// so we have to instantiate it to access its laws
-				ion_lawset = new()
+				var/ion_lawset_type = pick_weighted_lawset()
+				var/datum/ai_laws/ion_lawset = new ion_lawset_type()
 				// our inherent laws now becomes the picked lawset's laws!
 				M.laws.inherent = ion_lawset.inherent.Copy()
 				// and clean up after.

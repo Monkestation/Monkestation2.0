@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	GLOB.mafia_game = src
 	map_deleter = new
 
-/datum/mafia_controller/Destroy(force, ...)
+/datum/mafia_controller/Destroy(force)
 	. = ..()
 	GLOB.mafia_game = null
 	end_game()
@@ -599,9 +599,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
-		H.add_traits(list(TRAIT_NOFIRE, TRAIT_NOBREATH, TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL), MAFIA_TRAIT)
+		H.add_traits(list(TRAIT_NOFIRE, TRAIT_NOBREATH, TRAIT_CANNOT_CRYSTALIZE, TRAIT_PERMANENTLY_MORTAL, TRAIT_GODMODE), MAFIA_TRAIT)
 		H.equipOutfit(outfit_to_distribute)
-		H.status_flags |= GODMODE
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
@@ -676,7 +675,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /datum/mafia_controller/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/mafia),
+		get_asset_datum(/datum/asset/spritesheet_batched/mafia),
 	)
 
 /datum/mafia_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

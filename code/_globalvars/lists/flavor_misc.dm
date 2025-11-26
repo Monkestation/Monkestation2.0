@@ -38,19 +38,31 @@ GLOBAL_LIST_EMPTY(wings_open_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
+GLOBAL_LIST_EMPTY(apid_antenna_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(ipc_screens_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(ipc_antennas_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(ipc_chassis_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(apid_wings_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_EMPTY(pod_hair_list)
-GLOBAL_LIST_EMPTY(tails_list_monkey) //Monkestation Addition
+GLOBAL_LIST_EMPTY(ethereal_horns_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(ethereal_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(tails_list_monkey)
 GLOBAL_LIST_EMPTY(anime_top_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(anime_middle_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(anime_bottom_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(anime_halo_list)
 GLOBAL_LIST_EMPTY(arachnid_appendages_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_chelicerae_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(goblin_ears_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(goblin_nose_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(satyr_fluff_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(satyr_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(satyr_horns_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_wings_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_horns_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
@@ -58,8 +70,7 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Burnt Orange" = "#cc4400",
 	"Cyan Blue" = "#00ffff",
 	"Dark Blue" = "#6666ff",
-	"Dark Fuschia" = "#cc0066",
-
+	"Dark Fuschia" = "#C70064", //Monkestation Edit: #CC0066 TO #C70064
 	"Dark Green" = "#37835b",
 	"Dark Red" = "#9c3030",
 	"Dull Yellow" = "#fbdf56",
@@ -73,6 +84,17 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Red" = "#ff4d4d",
 	"Seafoam Green" = "#00fa9a",
 	"White" = "#f2f2f2",
+	"Fuschia" = "#FF0066", //Monkestation Addition
+	"Dark Purple" = "#502A77", //Monkestation Addition
+	"Gray" = "#505050", //Monkestation Addition
+))
+
+GLOBAL_LIST_INIT(color_list_lustrous, list(
+	"Cyan Blue" = "#00ffff",
+	"Sky Blue" = "#37c0ff",
+	"Blue" = "#3374ff",
+	"Dark Blue" = "#5b5beb",
+	"Bright Red" = "#fa2d2d",
 ))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
@@ -135,74 +157,6 @@ GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 ))
 //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
-	":thinking:",
-	"Alien",
-	"Angel",
-	"Banned",
-	"Bliss",
-	"Blue",
-	"Boxfort",
-	"Boy",
-	"Clown",
-	"Database",
-	"Dorf",
-	"Firewall",
-	"Fuzzy",
-	"Gentoo",
-	"Girl",
-	"Glitchman",
-	"Gondola",
-	"Goon",
-	"Hades",
-	"HAL 9000",
-	"Heartline",
-	"Helios",
-	"Hotdog",
-	"House",
-	"Inverted",
-	"Matrix",
-	"Monochrome",
-	"Murica",
-	"Nanotrasen",
-	"Not Malf",
-	"Portrait",
-	"President",
-	"Rainbow",
-	"Random",
-	"Red October",
-	"Red",
-	"Static",
-	"Syndicat Meow",
-	"Terminal",
-	"Text",
-	"Too Deep",
-	"Triumvirate-M",
-	"Triumvirate",
-	"Weird",
-	"Yes-Man",
-)))
-
-/// A form of resolve_ai_icon that is guaranteed to never sleep.
-/// Not always accurate, but always synchronous.
-/proc/resolve_ai_icon_sync(input)
-	SHOULD_NOT_SLEEP(TRUE)
-
-	if(!input || !(input in GLOB.ai_core_display_screens))
-		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
-
-/proc/resolve_ai_icon(input)
-	if (input == "Portrait")
-		var/datum/portrait_picker/tgui = new(usr)//create the datum
-		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-		return "ai-portrait" //just take this until they decide
-
-	return resolve_ai_icon_sync(input)
-
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,
@@ -219,6 +173,8 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 #define GDUFFELBAG "Grey Duffel Bag"
 #define GSATCHEL "Grey Satchel"
 #define LSATCHEL "Leather Satchel"
+#define BSATCHEL "Black Leather Satchel" //MONKESTATION
+#define RSATCHEL "Retro Satchel" //MONKESTATION
 GLOBAL_LIST_INIT(backpacklist, list(
 	DBACKPACK,
 	DDUFFELBAG,
@@ -227,6 +183,8 @@ GLOBAL_LIST_INIT(backpacklist, list(
 	GDUFFELBAG,
 	GSATCHEL,
 	LSATCHEL,
+	BSATCHEL, //MONKESTATION
+	RSATCHEL, //MONKESTATION
 ))
 
 	//Suit/Skirt
@@ -239,8 +197,6 @@ GLOBAL_LIST_INIT(backpacklist, list(
 #define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT "Implant"
 
-	//Female Uniforms
-GLOBAL_LIST_EMPTY(female_clothing_icons)
 	//Auto-generated 'fallback' clothing icons
 GLOBAL_LIST_EMPTY(fallback_clothing_icons)
 
@@ -368,8 +324,33 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 	"bluealert",
 	"redalert",
 	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
 	"radiation",
 	"currentalert", //For automatic set of status display on current level
+))
+
+// All possible alert level displays
+GLOBAL_LIST_INIT(status_display_alert_level_pictures, list(
+	"greenalert",
+	"bluealert",
+	"redalert",
+	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
+))
+
+// Alert level names on the same level
+GLOBAL_LIST_INIT(same_level_alert_levels, list(
+	"blue",
+	"yellow",
+	"amber",
 ))
 
 // Members of status_display_approved_pictures that are actually states and not alert values
@@ -377,3 +358,14 @@ GLOBAL_LIST_INIT(status_display_state_pictures, list(
 	"blank",
 	"shuttle",
 ))
+
+/// 1000 element long list containing the 1000 most common words in the English language.
+/// Indexed by word, value is the rank of the word in the list. So accessing it is fasta.
+GLOBAL_LIST_INIT(most_common_words, init_common_words())
+
+/proc/init_common_words()
+	. = list()
+	var/i = 1
+	for(var/word in world.file2list("strings/1000_most_common.txt"))
+		.[word] = i
+		i += 1

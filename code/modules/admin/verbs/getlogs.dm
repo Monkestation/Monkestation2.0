@@ -1,18 +1,10 @@
-//This proc allows download of past server logs saved within the data/logs/ folder.
-/client/proc/getserverlogs()
-	set name = "Get Server Logs"
-	set desc = "View/retrieve logfiles."
-	set category = "Admin.Logging"
+ADMIN_VERB(get_server_logs, R_ADMIN, FALSE, "Get Server Logs", "View or retrieve logfiles.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs()
 
-	browseserverlogs()
+ADMIN_VERB(get_current_logs, R_ADMIN, FALSE, "Get Current Logs", "View or retrieve logfiles for the current round.", ADMIN_CATEGORY_MAIN)
+	user.browseserverlogs(current=TRUE)
 
-/client/proc/getcurrentlogs()
-	set name = "Get Current Logs"
-	set desc = "View/retrieve logfiles for the current round."
-	set category = "Admin.Logging"
-
-	browseserverlogs(current=TRUE)
-
+/* monkestation edit: replaced in [monkestation\code\modules\admin\verbs\getlogs.dm]
 /client/proc/browseserverlogs(current=FALSE)
 	var/path = browse_files(current ? BROWSE_ROOT_CURRENT_LOGS : BROWSE_ROOT_ALL_LOGS)
 	if(!path)
@@ -24,7 +16,7 @@
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	switch(tgui_alert(usr,"View (in game), Open (in your system's text editor), or Download?", path, list("View", "Open", "Download")))
 		if ("View")
-			src << browse("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>", list2params(list("window" = "viewfile.[path]")))
+			src << browse(HTML_SKELETON("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>"), list2params(list("window" = "viewfile.[path]")))
 		if ("Open")
 			src << run(file(path))
 		if ("Download")
@@ -33,3 +25,4 @@
 			return
 	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.", confidential = TRUE)
 	return
+*/

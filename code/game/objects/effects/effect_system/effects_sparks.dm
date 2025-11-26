@@ -16,7 +16,7 @@
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = TRUE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 2
 	light_power = 0.5
 	light_color = LIGHT_COLOR_FIRE
@@ -25,7 +25,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/particle_effect/sparks/LateInitialize()
+/obj/effect/particle_effect/sparks/LateInitialize(mapload_arg)
 	flick(icon_state, src)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/T = loc

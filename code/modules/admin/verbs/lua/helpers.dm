@@ -1,29 +1,30 @@
+#ifndef DISABLE_DREAMLUAU
 #define PROMISE_PENDING 0
 #define PROMISE_RESOLVED 1
 #define PROMISE_REJECTED 2
 
 /**
- * Auxtools hooks act as "set waitfor = 0" procs. This means that whenever
- * a proc directly called from auxtools sleeps, the hook returns with whatever
+ * Byondapi hooks act as "set waitfor = 0" procs. This means that whenever
+ * a proc directly called from an external library sleeps, the hook returns with whatever
  * the called proc had as its return value at the moment it slept. This may not
  * be desired behavior, so this datum exists to wrap these procs.
  *
  * Some procs that don't sleep could take longer than the execution limit would
  * allow for. We can wrap these in a promise as well.
  */
-/datum/auxtools_promise
+/datum/promise
 	var/datum/callback/callback
 	var/return_value
 	var/runtime_message
 	var/status = PROMISE_PENDING
 
-/datum/auxtools_promise/New(...)
+/datum/promise/New(...)
+	if(!usr)
+		usr = GLOB.lua_usr
 	callback = CALLBACK(arglist(args))
-	perform()
+	INVOKE_ASYNC(src, PROC_REF(perform))
 
-/datum/auxtools_promise/proc/perform()
-	set waitfor = 0
-	sleep() //In case we have to call a super-expensive non-sleeping proc (like getFlatIcon)
+/datum/promise/proc/perform()
 	try
 		return_value = callback.Invoke()
 		status = PROMISE_RESOLVED
@@ -34,17 +35,4 @@
 #undef PROMISE_PENDING
 #undef PROMISE_RESOLVED
 #undef PROMISE_REJECTED
-
-/**
- * When a datum is created from lua, it gets held in `SSlua.gc_guard`, and later,
- * in the calling state datum's `var/list/references`, just in case it would be garbage
- * collected due to there not being any references that BYOND recognizes. To avoid harddels,
- * we register this proc as a signal handler any time a DM function called from lua returns
- * a datum.
- */
-/datum/proc/lua_reference_cleanup()
-	SIGNAL_HANDLER
-	if(SSlua.gc_guard == src)
-		SSlua.gc_guard = null
-	for(var/datum/lua_state/state in SSlua.states)
-		state.references -= src
+#endif

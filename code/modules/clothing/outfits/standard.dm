@@ -115,6 +115,16 @@
 	r_hand = /obj/item/gun/energy/recharge/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
+/datum/outfit/heretic_hallucination
+	name = "Heretic Hallucination"
+
+	uniform = /obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	neck = /obj/item/clothing/neck/heretic_focus
+	r_hand = /obj/item/melee/touch_attack/mansus_fist
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
 /datum/outfit/rev_cutout
 	name = "Revolutionary Cutout"
 
@@ -177,7 +187,7 @@
 	l_hand = /obj/item/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	for(var/obj/item/I in H.held_items)
 		I.add_mob_blood(H)
@@ -217,8 +227,7 @@
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
 	var/obj/item/modular_computer/pda/heads/pda = H.belt
-	pda.saved_identification = H.real_name
-	pda.saved_job = "Reaper"
+	pda.imprint_id(H.real_name, "Reaper")
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -427,7 +436,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/debug/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -459,7 +468,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/admin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

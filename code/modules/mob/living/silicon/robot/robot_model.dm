@@ -184,6 +184,8 @@
  * Pulls from the charger's silo connection, or fails otherwise.
  */
 /obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -202,9 +204,8 @@
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -to_stock, "units", list(storage_datum.mat_type))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
@@ -229,6 +230,8 @@
 	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
+		if(!cyborg.client)
+			cyborg.pending_model = new_config_type
 		qdel(new_model)
 		return
 	cyborg.model = new_model
@@ -283,7 +286,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
-		cyborg.hat = null
+
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
 	do_transform_delay()
@@ -382,7 +385,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -390,6 +393,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil,
+		/obj/item/holosign_creator/atmos,
 	)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(
@@ -614,7 +618,7 @@
 
 	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
-	reagents.remove_any(2) //reaction() doesn't use up the reagents
+	reagents.remove_all(2) //reaction() doesn't use up the reagents
 
 /datum/action/toggle_buffer/update_button_name(atom/movable/screen/movable/action_button/current_button, force)
 	if(buffer_on)
@@ -664,22 +668,23 @@
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/cyborg, //MONKESTATION EDIT
+		/obj/item/device/antibody_scanner, // monkestation addition:
 		/obj/item/reagent_containers/borghypo/medical,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
-		/obj/item/retractor,
+		/obj/item/retractor, //Monke edit start: remove augment tools
 		/obj/item/hemostat,
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
-		/obj/item/circular_saw,
+		/obj/item/circular_saw, //Monke edit end: remove augment tools
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
-		/obj/item/roller/robo,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
@@ -714,6 +719,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon,
+		/obj/item/borg/apparatus/organ_storage/monster,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(
@@ -760,7 +766,7 @@
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	to_chat(loc, "<span class='userdanger'>You are an Enforcer and Upholder of your active lawset. \
 	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
 /obj/item/robot_model/security
@@ -802,13 +808,23 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		// Monkestation edit start: Cooking
+		/obj/item/knife/kitchen/silicon,
+		/obj/item/borg/apparatus/cooking,
+		// Monkestation edit end
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
+		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
+		// Monkestation edit start: Barbering
+		/obj/item/scissors,
+		/obj/item/hairbrush/comb,
+		/obj/item/dyespray,
+		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,
@@ -820,6 +836,12 @@
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		// Monkestation edit start: Botany
+		/obj/item/storage/bag/plants,
+		/obj/item/plant_analyzer,
+		/obj/item/shovel/spade,
+		/obj/item/cultivator,
+		// Monkestation edit end
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -835,7 +857,7 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_service", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO),
+		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_service", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO, SKIN_TRAITS = list(TRAIT_CAT)),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -843,6 +865,26 @@
 	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
 	if(enzyme)
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+
+//MONKESTATION ADDITION - lets service borgs craft
+/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
+	var/mob/living/silicon/robot/cyborg = loc
+
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+/obj/item/robot_model/service/Destroy()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
+	return ..()
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
@@ -879,13 +921,15 @@
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/surgical_drapes,
-		/obj/item/retractor,
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
+		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
+		/obj/item/hemostat/augment,
+		/obj/item/cautery/augment,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/scalpel/augment, //monkestation edit: Augmented tools
 		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/roller/robo,
+		/obj/item/bonesetter,
+		/obj/item/blood_filter,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
@@ -960,6 +1004,93 @@
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
+//CENTCOM BORG!!!!
+/obj/item/robot_model/centcom
+	name = "CentCom"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/clipboard/cyborg,
+		/obj/item/pen,
+		/obj/item/pen/fountain,
+		/obj/item/stamp/centcom,
+		/obj/item/stamp/granted,
+		/obj/item/stamp/denied,
+		/obj/item/stamp/void,
+		/obj/item/knife/kitchen/silicon,
+		/obj/item/borg/apparatus/cooking,
+		/obj/item/reagent_containers/cup/beaker/large,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/soap/deluxe/centcom/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/hand_labeler/borg,
+		/obj/item/rsf/deluxe/cyborg,
+		/obj/item/instrument/piano_synth/robot,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
+		/obj/item/borg/apparatus/beaker/service,
+	)
+	radio_channels = list(RADIO_CHANNEL_CENTCOM)
+	cyborg_base_icon = "centcomborg"
+	model_select_icon = "service"
+	special_light_key = "centcomborg"
+	hat_offset = 3
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "centcomborg"),
+		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_centcom", SKIN_LIGHT_KEY = NONE, SKIN_TRAITS = list(TRAIT_CAT)),
+	)
+
+/obj/item/robot_model/centcom/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
+	if(enzyme)
+		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+	var/obj/item/soap/deluxe/centcom/cyborg/soap = locate(/obj/item/soap/deluxe/centcom/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
+
+/obj/item/robot_model/centcom/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
+	var/mob/living/silicon/robot/cyborg = loc
+
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+	qdel(cyborg.radio.keyslot)
+	cyborg.radio.keyslot = new /obj/item/encryptionkey/headset_cent()
+	cyborg.radio.recalculateChannels()
+
+	//remove all laws
+	if(!cyborg.shell)
+		cyborg.set_connected_ai(null)
+		cyborg.clear_inherent_laws()
+		cyborg.clear_zeroth_law()
+		cyborg.clear_supplied_laws()
+		cyborg.clear_ion_laws()
+		cyborg.clear_hacked_laws()
+	cyborg.emagged = TRUE
+	cyborg.centcom = TRUE
+
+/obj/item/robot_model/centcom/Destroy()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
+
+		qdel(cyborg.radio.keyslot)
+		cyborg.radio.recalculateChannels()
+
+		cyborg.emagged = FALSE
+		cyborg.centcom = FALSE
+	return ..()
 
 // ------------------------------------------ Storages
 /datum/robot_energy_storage

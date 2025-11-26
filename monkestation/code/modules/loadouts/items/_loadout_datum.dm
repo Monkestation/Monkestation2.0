@@ -58,6 +58,10 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/requires_purchase = TRUE
 	///can only admins use this?
 	var/admin_only = FALSE
+	//can only mentors use this?
+	var/mentor_only = FALSE
+	/// Should this be preloaded in SSwardrobe?
+	var/preload = TRUE
 
 /*
  * Place our [var/item_path] into [outfit].
@@ -70,7 +74,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		spawn_in_backpack(outfit, item_path, equipper)
 
 /*
  * To be called before insert_path_into_outfit()
@@ -86,7 +90,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/pre_equip_item(datum/outfit/outfit, datum/outfit/outfit_important_for_life, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(!visuals_only)
-		LAZYADD(outfit.backpack_contents, item_path)
+		spawn_in_backpack(outfit, item_path, equipper)
 
 /*
  * Called When the item is equipped on [equipper].
@@ -102,17 +106,13 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 		if(ispath(item_path, /obj/item/clothing))
 			// When an outfit is equipped in preview, get_equipped_items() does not work, so we have to use get_all_contents()
 			var/obj/item/clothing/equipped_item = locate(item_path) in (visuals_only ? equipper.get_all_contents() : equipper.get_all_gear()) // needs held items for briefcasers
-			if(equipped_item)
-				equipped_item.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
-			else
-				stack_trace("[type] on_equip_item(): Could not locate clothing item (path: [item_path]) in [equipper]'s [visuals_only ? "visible":"all"] contents to set greyscaling!")
+			equipped_item?.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
+			//stack_trace("[type] on_equip_item(): Could not locate clothing item (path: [item_path]) in [equipper]'s [visuals_only ? "visible":"all"] contents to set greyscaling!")
 
 		else if(!visuals_only)
 			var/obj/item/other_item = locate(item_path) in equipper.get_all_gear()
-			if(other_item)
-				other_item.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
-			else
-				stack_trace("[type] on_equip_item(): Could not locate backpack item (path: [item_path]) in [equipper]'s contents to set greyscaling!")
+			other_item?.set_greyscale(our_loadout[item_path][INFO_GREYSCALE])
+			// stack_trace("[type] on_equip_item(): Could not locate backpack item (path: [item_path]) in [equipper]'s contents to set greyscaling!")
 
 	if(can_be_named && !visuals_only && (INFO_NAMED in our_loadout[item_path]))
 		var/obj/item/equipped_item = locate(item_path) in equipper.get_all_gear()
@@ -126,3 +126,12 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  */
 /datum/loadout_item/proc/post_equip_item(datum/preferences/preference_source, mob/living/carbon/human/equipper)
 	return FALSE
+
+/*
+ * quick check proc to try spawn in backpack else, spawn them on the floor
+ */
+/datum/loadout_item/proc/spawn_in_backpack(datum/outfit/outfit_contents, item_path_to_spawn, mob/living/carbon/human/equipper)
+	if(ispath(outfit_contents.back, /obj/item/storage) || (!outfit_contents.back && (ispath(equipper.back, /obj/item/storage) || !isnull(equipper.backpack))))
+		LAZYADD(outfit_contents.backpack_contents, item_path_to_spawn)
+	else
+		SSwardrobe.provide_type(item_path_to_spawn, equipper.drop_location())

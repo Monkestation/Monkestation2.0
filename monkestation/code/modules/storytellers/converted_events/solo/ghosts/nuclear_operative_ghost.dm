@@ -1,12 +1,13 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/nuclear_operative
 	name = "Nuclear Assault"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_datum = /datum/antagonist/nukeop
 	typepath = /datum/round_event/antagonist/solo/ghost/nuclear_operative
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
 		JOB_CHIEF_ENGINEER,
 		JOB_CHIEF_MEDICAL_OFFICER,
 		JOB_CYBORG,
@@ -17,6 +18,8 @@
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	base_antags = 3
 	maximum_antags = 4
@@ -24,6 +27,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
@@ -32,8 +36,8 @@
 	required_enemies = 5
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
-	earliest_start = 45 MINUTES
-	weight = 4
+	earliest_start = 60 MINUTES
+	weight = 3
 	max_occurrences = 1
 	prompted_picking = TRUE
 
@@ -48,10 +52,7 @@
 	if(most_experienced == antag_mind)
 		return
 	var/mob/living/current_mob = antag_mind.current
-	var/list/items = current_mob.get_equipped_items(TRUE)
-	current_mob.unequip_everything()
-	for(var/obj/item/item as anything in items)
-		qdel(item)
+	current_mob.clear_inventory()
 
 	if(!most_experienced)
 		most_experienced = get_most_experienced(setup_minds, required_role)

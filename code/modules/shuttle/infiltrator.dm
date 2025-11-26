@@ -14,3 +14,7 @@
 /obj/docking_port/mobile/infiltrator/Destroy(force)
 	SSpoints_of_interest.remove_point_of_interest(src)
 	return ..()
+
+/obj/docking_port/mobile/infiltrator/alt
+	name = "advanced syndicate infiltrator"
+	shuttle_id = "syndicate2"

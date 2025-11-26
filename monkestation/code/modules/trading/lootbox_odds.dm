@@ -32,8 +32,9 @@
 			user.client.client_token_holder.adjust_antag_tokens(LOW_THREAT, 1)
 
 		if("Loadout Item")
-			var/static/list/viable_types = list()
-			if(!length(viable_types))
+			var/static/list/viable_types
+			if(!viable_types)
+				viable_types = list()
 				for(var/datum/loadout_item/type as anything in subtypesof(/datum/loadout_item))
 					var/datum/loadout_item/listed = new type()
 					if(!istype(listed))
@@ -48,7 +49,7 @@
 			var/datum/loadout_item/picked = pick(viable_types)
 			temp = new picked.item_path
 			if(picked.item_path in user.client.prefs.inventory)
-				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multipler = FALSE)
+				user.client.prefs.adjust_metacoins(user.ckey, 2500, "Duplicate Loadout Item", donator_multiplier = FALSE)
 				temp.color = COLOR_GRAY
 				temp.name = "Loadout Item [temp.name] (Duplicate)"
 				user.overlay_fullscreen("lb_duplicate", /atom/movable/screen/fullscreen/lootbox_overlay/duplicate)
@@ -61,33 +62,37 @@
 
 /datum/loadout_item/proc/add_to_user(client/buyer)
 	SHOULD_CALL_PARENT(TRUE)
-	var/fail_message ="<span class='warning'>Failed to add lootbox item to database. Will reattempt until added!</span>"
+	var/replacement_lootbox_message = span_warning("The item you received will not be saved, but you have been granted a replacement lootbox to use at a later point.")
 	if(!SSdbcore.IsConnected())
-		to_chat(buyer, fail_message)
+		to_chat(buyer, span_warning("Database is not connected."))
+		to_chat(buyer, replacement_lootbox_message)
+		buyer.prefs.lootboxes_owned++
+		buyer.prefs.save_preferences()
 		return FALSE
 	if(!buyer?.prefs)
 		return FALSE
+	buyer.prefs.inventory += item_path
+	var/datum/db_query/query_add_gear_purchase
 	if(!buyer.prefs.inventory[item_path])
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+		query_add_gear_purchase = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
 			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			addtimer(CALLBACK(src, PROC_REF(add_to_user), buyer), 15 SECONDS)
-			return FALSE
-		qdel(query_add_gear_purchase)
 	else
-		buyer.prefs.inventory += item_path
-		var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
+		// Note from someone who didn't make this lootbox system: This seems to be related to
+		// duplicate lootbox items, but duplicate items don't appear to run this proc, making this
+		// seemingly useless. Even then, why are we setting the amount to 1?
+		query_add_gear_purchase = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
 			list("ckey" = buyer.ckey, "item_id" = item_path, "amount" = 1))
-		if(!query_add_gear_purchase.Execute())
-			to_chat(buyer, fail_message)
-			qdel(query_add_gear_purchase)
-			return FALSE
+	if(!query_add_gear_purchase.Execute())
+		// If the query fails to execute, notify the user and give them a replacement lootbox.
+		to_chat(buyer, span_warning("Failed to add lootbox item to database."))
+		to_chat(buyer, replacement_lootbox_message)
+		buyer.prefs.lootboxes_owned++
+		buyer.prefs.save_preferences()
 		qdel(query_add_gear_purchase)
+		return FALSE
+	qdel(query_add_gear_purchase)
 
 	return TRUE
 
@@ -136,12 +141,16 @@ GLOBAL_LIST_INIT(possible_lootbox_clothing, list(
 		/obj/item/clothing/head/costume/foilhat,
 		/obj/item/clothing/head/costume/football_helmet,
 		/obj/item/clothing/head/costume/garland,
+		/obj/item/clothing/head/costume/garland/rainbowbunch,
+		/obj/item/clothing/head/costume/garland/sunflower,
+		/obj/item/clothing/head/costume/garland/poppy,
+		/obj/item/clothing/head/costume/garland/lily,
 		/obj/item/clothing/head/costume/griffin,
 		/obj/item/clothing/head/costume/hasturhood,
 		/obj/item/clothing/head/costume/irs,
 		/obj/item/clothing/head/costume/jackbros,
 		/obj/item/clothing/head/costume/jester,
-		/obj/item/clothing/head/costume/jester/alt,
+		/obj/item/clothing/head/costume/jester2,
 		/obj/item/clothing/head/costume/justice,
 		/obj/item/clothing/head/costume/kitty,
 		/obj/item/clothing/head/costume/lizard,
@@ -224,4 +233,6 @@ GLOBAL_LIST_INIT(possible_lootbox_clothing, list(
 		/obj/item/clothing/head/wizard/black/lootbox,
 		/obj/item/clothing/head/wizard/marisa/lootbox,
 		/obj/item/clothing/head/wonka,
+		/obj/item/clothing/head/costume/minicrown/lootbox,
+		/obj/item/clothing/head/costume/tiara/lootbox,
 ))

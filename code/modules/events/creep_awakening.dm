@@ -1,3 +1,4 @@
+/* Monestation removal: Codeblocked, we use roleset Compulsive Obsession event now.
 /datum/round_event_control/obsessed
 	name = "Obsession Awakening"
 	typepath = /datum/round_event/obsessed
@@ -5,6 +6,7 @@
 	min_players = 20
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember becomes obsessed with another."
+	weight = 0 // essentially disables it
 
 /datum/round_event/obsessed
 	fakeable = FALSE
@@ -24,3 +26,4 @@
 		H.gain_trauma(/datum/brain_trauma/special/obsessed)
 		announce_to_ghosts(H)
 		break
+*/

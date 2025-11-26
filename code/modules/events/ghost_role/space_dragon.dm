@@ -10,6 +10,10 @@
 	description = "Spawns a space dragon, which will try to take over the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_ROLESET
+	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
@@ -20,9 +24,8 @@
 	priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
-
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
-	if(!candidates.len)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, alert_pic = /mob/living/basic/space_dragon, chat_text_border_icon = /mob/living/basic/space_dragon)
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected = pick(candidates)
@@ -33,9 +36,7 @@
 		return MAP_ERROR
 
 	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
-	dragon.key = key
-	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
-	dragon.mind.special_role = ROLE_SPACE_DRAGON
+	dragon.PossessByPlayer(key)
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")

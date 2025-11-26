@@ -1,0 +1,4 @@
+yogbell.dmi
+sourced from https://github.com/yogstation13/Yogstation/blob/ae2886be95c234202212a3090ee7637173ea2c1d/icons/obj/bell.dmi
+credited to comma, DeityLink, Spookerton, nmajask
+because those names are on the PR and i cannot tell who EXACTLY made the sprite.

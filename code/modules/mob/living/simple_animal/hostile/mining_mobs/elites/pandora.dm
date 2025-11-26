@@ -36,6 +36,7 @@
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
+	mob_biotypes = MOB_ROBOTIC|MOB_MINING
 	death_sound = 'sound/magic/repulse.ogg'
 	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
@@ -184,15 +185,11 @@
 	icon_state = "hope"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/accessory/pandora_hope/on_uniform_equip(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L?.mind)
-		L.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
+/obj/item/clothing/accessory/pandora_hope/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	user.add_mood_event("hope_lavaland", /datum/mood_event/hope_lavaland)
 
-/obj/item/clothing/accessory/pandora_hope/on_uniform_dropped(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L?.mind)
-		L.clear_mood_event("hope_lavaland")
+/obj/item/clothing/accessory/pandora_hope/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	user.clear_mood_event("hope_lavaland")
 
 #undef SINGULAR_SHOT
 #undef MAGIC_BOX

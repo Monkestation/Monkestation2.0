@@ -19,14 +19,14 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I,/obj/item/card/id))
+/obj/structure/votebox/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item,/obj/item/card/id))
 		if(!owner)
-			register_owner(I,user)
+			register_owner(attacking_item,user)
 			return
-	if(istype(I,/obj/item/paper))
+	if(istype(attacking_item,/obj/item/paper))
 		if(voting_active)
-			apply_vote(I,user)
+			apply_vote(attacking_item,user)
 		else
 			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
 		return
@@ -44,13 +44,13 @@
 		dat += "<h1> Unregistered. Swipe ID card to register as voting box operator </h1>"
 	dat += "<h1>[vote_description]</h1>"
 	if(is_operator(user))
-		dat += "Voting: <a href='?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
-		dat += "Set Description: <a href='?src=[REF(src)];act=set_desc'>Set Description</a><br>"
-		dat += "One vote per ID: <a href='?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
-		dat += "Reset voted ID's: <a href='?src=[REF(src)];act=reset_voted'>Reset</a><br>"
-		dat += "Draw random vote: <a href='?src=[REF(src)];act=raffle'>Raffle</a><br>"
-		dat += "Shred votes: <a href='?src=[REF(src)];act=shred'>Shred</a><br>"
-		dat += "Tally votes: <a href='?src=[REF(src)];act=tally'>Tally</a><br>"
+		dat += "Voting: <a href='byond://?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
+		dat += "Set Description: <a href='byond://?src=[REF(src)];act=set_desc'>Set Description</a><br>"
+		dat += "One vote per ID: <a href='byond://?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
+		dat += "Reset voted ID's: <a href='byond://?src=[REF(src)];act=reset_voted'>Reset</a><br>"
+		dat += "Draw random vote: <a href='byond://?src=[REF(src)];act=raffle'>Raffle</a><br>"
+		dat += "Shred votes: <a href='byond://?src=[REF(src)];act=shred'>Shred</a><br>"
+		dat += "Tally votes: <a href='byond://?src=[REF(src)];act=tally'>Tally</a><br>"
 
 	var/datum/browser/popup = new(user, "votebox", "Voting Box", 300, 300)
 	popup.set_content(dat.Join())
@@ -133,7 +133,7 @@
 /obj/structure/votebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 4 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()

@@ -3,7 +3,7 @@
 /obj/structure/mop_bucket
 	name = "mop bucket"
 	desc = "Fill it with water, but don't forget a mop!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mopbucket"
 	density = TRUE
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
@@ -33,8 +33,10 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE // skip attack animation when refilling cart
 	if(istype(weapon, /obj/item/mop))
-		reagents.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
+		weapon.reagents?.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
 		balloon_alert(user, "wring mop")
+		update_appearance(UPDATE_OVERLAYS)
+		return FALSE
 	return ..()
 
 /obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, params)
@@ -80,6 +82,7 @@
 
 /obj/structure/mop_bucket/janitorialcart/Initialize(mapload)
 	. = ..()
+	reagents.maximum_volume *= 2.5 //monkestation edit
 	GLOB.janitor_devices += src
 
 /obj/structure/mop_bucket/janitorialcart/Destroy()
@@ -188,7 +191,7 @@
 
 	return . || NONE
 
-/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/mop))
 		if(mymop)
 			balloon_alert(user, "already has \a [mymop]!")
@@ -236,7 +239,7 @@
 /obj/structure/mop_bucket/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
 	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 		balloon_alert(user, "mop bucket is empty!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
 	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
@@ -245,7 +248,7 @@
 		reagents.expose(loc)
 		reagents.clear_reagents()
 		update_appearance(UPDATE_OVERLAYS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()

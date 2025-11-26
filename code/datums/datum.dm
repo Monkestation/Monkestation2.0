@@ -17,6 +17,10 @@
 	  */
 	var/gc_destroyed
 
+	/// Open uis owned by this datum
+	/// Lazy, since this case is semi rare
+	var/list/open_uis
+
 	/// Active timers with this datum as the target
 	var/list/_active_timers
 	/// Status traits attached to this datum. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
@@ -40,13 +44,6 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
-#ifndef EXPERIMENT_515_DONT_CACHE_REF
-	/// A cached version of our \ref
-	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
-	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
-	var/cached_ref
-#endif
-
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
@@ -61,15 +58,28 @@
 
 	/// List for handling persistent filters.
 	var/list/filter_data
+	/// An accursed beast of a list that contains our filters. Why? Because var/list/filters on atoms/images isn't actually a list
+	/// but a snowflaked skinwalker pretending to be one, which doesn't support half the list procs/operations and the other half behaves weirdly
+	/// so we cut down on filter creation and appearance update costs by editing *this* list, and then assigning ours to it
+	var/list/filter_cache
 
 #ifdef REFERENCE_TRACKING
 	var/running_find_references
+	/// When was this datum last touched by a reftracker?
+	/// If this value doesn't match with the start of the search
+	/// We know this datum has never been seen before, and we should check it
 	var/last_find_references = 0
+	/// How many references we're trying to find when searching
+	var/references_to_clear = 0
 	#ifdef REFERENCE_TRACKING_DEBUG
 	///Stores info about where refs are found, used for sanity checks and testing
 	var/list/found_refs
 	#endif
 #endif
+
+	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I wanna cover my bases
+	var/harddel_deets_dumped = FALSE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
@@ -100,7 +110,7 @@
  *
  * Returns [QDEL_HINT_QUEUE]
  */
-/datum/proc/Destroy(force=FALSE, ...)
+/datum/proc/Destroy(force = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -124,13 +134,14 @@
 	//BEGIN: ECS SHIT
 	var/list/dc = _datum_components
 	if(dc)
-		var/all_components = dc[/datum/component]
-		if(length(all_components))
-			for(var/datum/component/component as anything in all_components)
-				qdel(component, FALSE, TRUE)
-		else
-			var/datum/component/C = all_components
-			qdel(C, FALSE, TRUE)
+		for(var/component_key in dc)
+			var/component_or_list = dc[component_key]
+			if(islist(component_or_list))
+				for(var/datum/component/component as anything in component_or_list)
+					qdel(component, FALSE)
+			else
+				var/datum/component/C = component_or_list
+				qdel(C, FALSE)
 		dc.Cut()
 
 	_clear_signal_refs()
@@ -200,7 +211,7 @@
 
 ///Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
-	. = serialize_list(options)
+	. = serialize_list(options, list())
 	if(!islist(.))
 		. = null
 	else
@@ -299,50 +310,103 @@
  * * name - Filter name
  * * priority - Priority used when sorting the filter.
  * * params - Parameters of the filter.
+ * * update - If we should update our actual filters list, or wait until something updates it later
  */
-/datum/proc/add_filter(name, priority, list/params)
-	LAZYINITLIST(filter_data)
-	var/list/copied_parameters = params.Copy()
-	copied_parameters["priority"] = priority
-	filter_data[name] = copied_parameters
-	update_filters()
-
-/// Reapplies all the filters.
-/datum/proc/update_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+/datum/proc/add_filter(name, priority, list/params, update = TRUE)
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
-	atom_cast.filters = null
-	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
-	for(var/filter_raw in filter_data)
-		var/list/data = filter_data[filter_raw]
-		var/list/arguments = data.Copy()
+	LAZYINITLIST(filter_data)
+	LAZYINITLIST(filter_cache)
+	var/list/copied_parameters = params.Copy()
+	copied_parameters["name"] = name
+	copied_parameters["priority"] = priority
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (filter_info["name"] != name)
+			continue
+		filter_data -= list(filter_info)
+		filter_cache -= filter_cache[index]
+		break
+
+	BINARY_INSERT_DEFINE(list(copied_parameters), filter_data, SORT_VAR_NO_TYPE, copied_parameters, SORT_PRIORITY_INDEX, COMPARE_KEY)
+
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (filter_info["name"] != name)
+			continue
+		var/list/arguments = filter_info.Copy()
 		arguments -= "priority"
-		atom_cast.filters += filter(arglist(arguments))
+		filter_cache.Insert(index, filter(arglist(arguments)))
+		break
+
+	if (update)
+		atom_cast.filters = filter_cache
+
+/// A version of add_filter that takes a list of filters to add rather than being individual, to limit appearance updates
+/datum/proc/add_filters(list/list/filters, update = TRUE)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
+	for (var/list/individual_filter as anything in filters)
+		add_filter(individual_filter["name"], individual_filter["priority"], individual_filter["params"], update = FALSE)
+	if (update)
+		atom_cast.filters = filter_cache
+
+/// Reapplies all the filters. If start_index is passed, only a portion of all filters are reapplied starting from said index
+/datum/proc/update_filters(start_index = null)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
+	if (start_index)
+		filter_cache.Cut(start_index)
+	else
+		atom_cast.filters = null
+		filter_cache.Cut()
+
+	for (var/index in start_index || 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		var/list/arguments = filter_info.Copy()
+		arguments -= "priority"
+		if (start_index) // See https://www.byond.com/forum/post/2980598 as to why we cannot just override the existing filter
+			atom_cast.filters -= filter_info["name"] // We're trapped in the belly of this horrible machine
+		filter_cache += filter(arglist(arguments)) // And the machine is bleeding to death
+
+	atom_cast.filters = filter_cache
 	UNSETEMPTY(filter_data)
 
-/obj/item/update_filters()
+/obj/item/update_filters(start_index = null)
 	. = ..()
 	update_item_action_buttons()
 
-/** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
+/** Update a filter's parameter to the new one. If the filter doesn't exist we won't do anything.
  *
  * Arguments:
  * * name - Filter name
  * * new_params - New parameters of the filter
  * * overwrite - TRUE means we replace the parameter list completely. FALSE means we only replace the things on new_params.
+ * * update - If we should apply our filter cache to our actual filters
  */
-/datum/proc/modify_filter(name, list/new_params, overwrite = FALSE)
-	var/filter = get_filter(name)
-	if(!filter)
-		return
-	if(overwrite)
-		filter_data[name] = new_params
-	else
-		for(var/thing in new_params)
-			filter_data[name][thing] = new_params[thing]
-	update_filters()
+/datum/proc/modify_filter(name, list/new_params, overwrite = FALSE, update = TRUE)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (filter_info["name"] != name)
+			continue
 
-/** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
+		if (overwrite)
+			filter_data[index] = new_params
+		else
+			for (var/thing in new_params)
+				filter_info[thing] = new_params[thing]
+
+		var/list/arguments = filter_info.Copy()
+		arguments -= "priority"
+		filter_cache[index] = filter(arglist(arguments))
+
+		if (update)
+			atom_cast.filters = filter_cache
+		return
+
+/** Update a filter's parameter and animate this change. If the filter doesn't exist we won't do anything.
  * Basically a [datum/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
  *
  * Arguments:
@@ -354,47 +418,99 @@
  */
 /datum/proc/transition_filter(name, list/new_params, time, easing, loop)
 	var/filter = get_filter(name)
-	if(!filter)
+	if (!filter)
 		return
 	// This can get injected by the filter procs, we want to support them so bye byeeeee
 	new_params -= "type"
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 
+/** Keeps the steps in the correct order.
+* Arguments:
+* * params - the parameters you want this step to animate to
+* * duration - the time it takes to animate this step
+* * easing - the type of easing this step has
+*/
+/proc/filter_chain_step(params, duration, easing, flags)
+	params -= "type"
+	return list("params" = params, "duration" = duration, "easing" = easing, "flags" = flags)
+
+/** Similar to transition_filter(), except it creates an animation chain that moves between a list of states.
+ * Arguments:
+ * * name - Filter name
+ * * num_loops - Amount of times the chain loops. INDEFINITE = Infinite
+ * * ... - a list of each link in the animation chain. Use filter_chain_step(params, duration, easing) for each link
+ * Example use:
+ * * add_filter("blue_pulse", 1, color_matrix_filter(COLOR_WHITE))
+ * * transition_filter_chain(src, "blue_pulse", INDEFINITE,\
+ * *	filter_chain_step(color_matrix_filter(COLOR_BLUE), 10 SECONDS, CUBIC_EASING),\
+ * *	filter_chain_step(color_matrix_filter(COLOR_WHITE), 10 SECONDS, CUBIC_EASING))
+ * The above code would edit a color_matrix_filter() to slowly turn blue over 10 seconds before returning back to white 10 seconds after, repeating this chain forever.
+ */
+/datum/proc/transition_filter_chain(name, num_loops, ...)
+	var/list/transition_steps = args.Copy(3)
+	var/filter = get_filter(name)
+	if (!filter)
+		return
+	var/list/first_step = transition_steps[1]
+	animate(filter, first_step["params"], time = first_step["duration"], easing = first_step["easing"], flags = first_step["flags"], loop = num_loops)
+	for (var/transition_step in 2 to length(transition_steps))
+		var/list/this_step = transition_steps[transition_step]
+		animate(this_step["params"], time = this_step["duration"], easing = this_step["easing"], flags = this_step["flags"])
+
 /// Updates the priority of the passed filter key
 /datum/proc/change_filter_priority(name, new_priority)
-	if(!filter_data || !filter_data[name])
-		return
+	for (var/list/filter_info as anything in filter_data)
+		if (filter_info["name"] != name)
+			continue
 
-	filter_data[name]["priority"] = new_priority
-	update_filters()
+		remove_filter(name, update = FALSE)
+		add_filter(name, new_priority, filter_info)
+		return
 
 /// Returns the filter associated with the passed key
 /datum/proc/get_filter(name)
-	ASSERT(isatom(src) || istype(src, /image))
-	if(filter_data && filter_data[name])
-		var/atom/atom_cast = src // filters only work with images or atoms.
-		return atom_cast.filters[filter_data.Find(name)]
-
-/// Returns the indice in filters of the given filter name.
-/// If it is not found, returns null.
-/datum/proc/get_filter_index(name)
-	return filter_data?.Find(name)
+	ASSERT(isatom(src) || isimage(src))
+	var/atom/atom_cast = src // filters only work with images or atoms.
+	return atom_cast.filters[name]
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
-/datum/proc/remove_filter(name_or_names)
+/datum/proc/remove_filter(name_or_names, update = TRUE)
+	ASSERT(isatom(src) || isimage(src))
 	if(!filter_data)
 		return
-
+	var/atom/atom_cast = src // filters only work with images or atoms.
 	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
-
-	for(var/name in names)
-		if(filter_data[name])
-			filter_data -= name
-	update_filters()
+	. = FALSE
+	var/list/new_data = list()
+	var/list/new_cache = list()
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (!(filter_info["name"] in names))
+			new_data += list(filter_info)
+			new_cache += filter_cache[index]
+	filter_data = new_data
+	filter_cache = new_cache
+	if (update)
+		atom_cast.filters = filter_cache
+	return .
 
 /datum/proc/clear_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
+	filter_cache = null
 	atom_cast.filters = null
+
+/// Return text from this proc to provide extra context to hard deletes that happen to it
+/// Optional, you should use this for cases where replication is difficult and extra context is required
+/// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
+/datum/proc/dump_harddel_info()
+	return
+
+///images are pretty generic, this should help a bit with tracking harddels related to them
+/image/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"

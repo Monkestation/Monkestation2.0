@@ -202,6 +202,7 @@ As it's a medical module, we'll put it [here](modules/modules_medical.dm). Let's
 ```
 
 As we want this effect to be on demand, we probably want this to be an usable module. There are four types of modules:
+
 - Passive: These have a passive effect.
 - Togglable: You can turn these on and off.
 - Usable: You can use these for a one time effect.
@@ -217,7 +218,7 @@ As we have an usable module, we want to set a cooldown time. All modules are als
 	icon_state = "neuron_healer"
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/neuron_healer)
 	cooldown_time = 15 SECONDS
 	var/brain_damage_healed = 25
@@ -245,7 +246,7 @@ After this, we want to put our special code, a basic effect of healing all mobs 
 		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brain_damage_healed)
 		mod.wearer.Beam(carbon_mob, icon_state = "plasmabeam", time = 1.5 SECONDS)
 	playsound(src, 'sound/effects/magic.ogg', 100, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 ```
 
 We now have a basic module, we can add it to the techwebs to make it printable ingame, and we can add an inbuilt, advanced version of it for our psychological suit. We'll give it more healing power, no complexity and make it unremovable.
@@ -321,4 +322,5 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 ```
 
 ## Ending
+
 This finishes this hopefully easy to follow along tutorial. You should now know how to make a basic theme, a skin for it, and a module.

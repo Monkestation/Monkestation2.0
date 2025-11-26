@@ -88,6 +88,11 @@
 	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
+	/// An associative list of all resource costs
+	var/list/resource_costs
+	/// Boolean, if true, resource costs will be ignored
+	var/bypass_cost = FALSE
+
 /datum/action/cooldown/spell/Grant(mob/grant_to)
 	// If our spell is mind-bound, we only wanna grant it to our mind
 	if(istype(target, /datum/mind))
@@ -103,7 +108,7 @@
 	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
@@ -119,6 +124,7 @@
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
 		SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
@@ -141,7 +147,9 @@
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return FALSE
-	if(!is_valid_target(target))
+	if(target == owner)
+		target = get_caster_from_target(target)
+	if(isnull(target) || !is_valid_target(target))
 		return FALSE
 
 	return Activate(target)
@@ -169,6 +177,15 @@
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
 		return FALSE
+
+	//used for darkspawn spells
+	if(owner.mind && !bypass_cost && LAZYLEN(resource_costs))
+		for(var/i in resource_costs)
+			var/has_cost = SEND_SIGNAL(owner.mind, COMSIG_MIND_CHECK_ANTAG_RESOURCE, i, resource_costs[i])
+			if(!has_cost)
+				if(feedback)
+					to_chat(owner, span_warning("You don't have enough [i]!"))
+				return FALSE
 
 	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
@@ -213,10 +230,6 @@
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
 
-		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
-		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
-			return FALSE
-
 	return TRUE
 
 /**
@@ -228,6 +241,28 @@
  */
 /datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	return TRUE
+
+/**
+ * Used to get the cast_on atom if a self cast spell is being cast.
+ *
+ * Allows for some atoms to be used as casting sources if a spell caster is located within.
+ */
+/datum/action/cooldown/spell/proc/get_caster_from_target(atom/target)
+	var/atom/cast_loc = target.loc
+	if(isnull(cast_loc))
+		return null // No magic in nullspace
+
+	if(isturf(cast_loc))
+		return target // They're just standing around, proceed as normal
+
+	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
+		/*if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+			return cast_loc.loc
+		else*/ //monkestation temp removal
+		return cast_loc
+	// They're in an atom which allows casting, so redirect the caster to loc
+
+	return null
 
 // The actual cast chain occurs here, in Activate().
 // You should generally not be overriding or extending Activate() for spells.
@@ -254,6 +289,7 @@
 	if(!(precast_result & SPELL_NO_IMMEDIATE_COOLDOWN))
 		// The entire spell is done, start the actual cooldown at its set duration
 		StartCooldown()
+		consume_resource()
 
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
@@ -322,6 +358,12 @@
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 
+/// Called after the effect happens, whether that's after the button press or after hitting someone with a touch ability
+/datum/action/cooldown/spell/proc/consume_resource() //to-do: rework vampire blood use into using this proc
+	if(!bypass_cost && LAZYLEN(resource_costs) && owner?.mind)
+		SEND_SIGNAL(owner.mind, COMSIG_MIND_SPEND_ANTAG_RESOURCE, resource_costs)
+
+
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()
 	if(!owner)
@@ -378,6 +420,8 @@
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
+		if(HAS_TRAIT(living_owner, TRAIT_SIGN_LANG) && !HAS_MIND_TRAIT(living_owner, TRAIT_CANT_SIGN_SPELLS)) // monkestation edit: allow sign language users to cast spells
+			return TRUE
 		if(feedback)
 			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE
@@ -406,6 +450,7 @@
 
 	spell_level++
 	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
@@ -426,12 +471,9 @@
 	else
 		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 
+	name = "[get_spell_title()][initial(name)]"
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
-
-/datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	name = "[get_spell_title()][initial(name)]"
-	return ..()
 
 /// Gets the title of the spell based on its level.
 /datum/action/cooldown/spell/proc/get_spell_title()

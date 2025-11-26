@@ -4,5 +4,4 @@
 	color = null
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "clocktail"
-	organ_flags = ORGAN_SYNTHETIC
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC

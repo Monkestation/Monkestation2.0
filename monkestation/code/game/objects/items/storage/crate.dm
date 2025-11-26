@@ -13,7 +13,7 @@
 		if(3,4)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(5,6)
-			new /obj/item/organ/internal/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/item_set/katana(src)
 		if(7,8)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(9,10)
@@ -59,9 +59,7 @@
 			new /obj/item/toy/balloon/syndicate(src)
 			new /obj/item/storage/box/syndimaid(src)
 		if(44,45,46)
-			new /obj/item/cardboard_cutout{
-				starting_cutout = "Xenomorph Maid"
-				}(src)
+			new /obj/item/cardboard_cutout/xeno_maid(src)
 			new	/obj/item/clothing/neck/maid(src)
 			new	/obj/item/clothing/head/costume/maidheadband(src)
 			new	/obj/item/clothing/gloves/maid(src)
@@ -184,7 +182,7 @@
 			new /obj/item/toy/plush/ratplush(src)
 			new /obj/item/toy/plush/narplush(src)
 		if(94)
-			new /obj/item/clothing/under/misc/syndicate_souvenir(src)
+			new /obj/machinery/nuclearbomb/bee(src) //just replaces the syndicate tshirt with the bomb
 		if(96)
 			new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(src)
 		if(95)
@@ -223,3 +221,6 @@
 			new /obj/item/stack/spacecash/c10000(src)
 		if(100) //Jackpot
 			new /obj/item/storage/backpack/holding(src)
+
+/obj/item/cardboard_cutout/xeno_maid
+	starting_cutout = "Xenomorph Maid"

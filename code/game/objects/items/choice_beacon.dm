@@ -111,11 +111,12 @@
 		// cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		var/list/selectable_types = list(
 			/obj/item/organ/internal/cyberimp/brain/anti_drop,
-			/obj/item/organ/internal/cyberimp/arm/toolset,
-			/obj/item/organ/internal/cyberimp/arm/surgery,
+			/obj/item/organ/internal/cyberimp/arm/item_set/toolset,
+			/obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 			/obj/item/organ/internal/cyberimp/chest/thrusters,
 			/obj/item/organ/internal/lungs/cybernetic/tier3,
 			/obj/item/organ/internal/liver/cybernetic/tier3,
+			/obj/item/organ/internal/spleen/cybernetic/tier3,
 		)
 		for(var/obj/item/organ/organ as anything in selectable_types)
 			augment_list[initial(organ.name)] = organ
@@ -174,4 +175,5 @@
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice_path]")
 	GLOB.holy_armor_type = choice_path
 	return ..()
+
 

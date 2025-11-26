@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *5, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 1.25)
 
 	var/on = TRUE
 	var/code = 2
@@ -37,16 +37,16 @@
 			return
 	return ..()
 
-/obj/item/electropack/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/clothing/head/helmet))
+/obj/item/electropack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
 		A.icon = 'icons/obj/assemblies/assemblies.dmi'
 
-		if(!user.transferItemToLoc(W, A))
-			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))
+		if(!user.transferItemToLoc(attacking_item, A))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand, you cannot attach it to [src]!"))
 			return
-		W.master = A
-		A.helmet_part = W
+		attacking_item.master = A
+		A.helmet_part = attacking_item
 
 		user.transferItemToLoc(src, A, TRUE)
 		master = A
@@ -104,7 +104,7 @@
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/obj/item/electropack/ui_act(action, params)
+/obj/item/electropack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

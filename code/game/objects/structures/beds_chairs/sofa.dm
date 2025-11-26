@@ -30,7 +30,7 @@ path/corner/color_name {\
 	if(same_z_layer)
 		return ..()
 	cut_overlay(armrest)
-	QDEL_NULL(armrest)
+	armrest = null
 	gen_armrest()
 	return ..()
 

@@ -22,6 +22,7 @@ img {
 img.icon {
   height: 1em;
   min-height: 16px;
+  min-width: 16px;
   width: auto;
   vertical-align: bottom;
 }
@@ -176,11 +177,13 @@ a.popt {
   padding: 2px 0;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .filterMessages input {
 }
 
 .filterMessages label {
 }
+*/
 
 .icon-stack {
   height: 1em;
@@ -302,12 +305,14 @@ em {
   font-weight: bold;
 }
 
+/* commented these out bc the "Do not use empty rulesets" warning annoyed me ~Lucy
 .say,
 .emote,
 .infoplain,
 .oocplain,
 .warningplain {
 }
+*/
 
 .deadsay {
   color: #e2c1ff;
@@ -375,6 +380,10 @@ em {
 
 .aiprivradio {
   color: #d65d95;
+}
+
+.enteradio {
+  color: #79c5a8;
 }
 
 .redteamradio {
@@ -619,6 +628,16 @@ em {
   font-size: 370%;
 }
 
+.velvet {
+  color: #7264ff;
+}
+
+.progenitor {
+  color: #7264ff;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .colossus {
   color: #7f282a;
   font-size: 310%;
@@ -637,6 +656,12 @@ em {
 
 .purple {
   color: #9956d3;
+}
+
+.purplelarge {
+  color: #9956d3;
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .holoparasite {
@@ -747,8 +772,21 @@ em {
   font-size: 160%;
 }
 
+.soapbox {
+  font-weight: bold;
+  font-size: 135%;
+}
+
 .small {
   font-size: 60%;
+}
+
+.smaller {
+  font-size: 90%;
+}
+
+.slightly_larger {
+  font-size: 115%;
 }
 
 .big {
@@ -895,6 +933,15 @@ em {
   color: #298f85;
 }
 
+.upside_down {
+  display: inline;
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
 .connectionClosed,
 .fatalError {
   background: red;
@@ -935,16 +982,115 @@ em {
   margin-left: 3em;
 }
 
-.examine_block {
-  background: #1b1c1e;
-  border: 1px solid #a4bad6;
-  margin: 0.5em;
-  padding: 0.5em 0.75em;
-}
-
 .tooltip {
   font-style: italic;
-  border-bottom: 1px dashed #fff;
+  border-bottom: 1px dashed;
+}
+
+.tooltip_alt {
+  border-bottom: 1px dashed;
+}
+
+.fieldset_legend {
+  position: relative;
+  max-width: 95%;
+  font-size: 120%;
+  padding: 0.2em 0.33em;
+  background: #151515; // Chat background color
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: 0.33em;
+  z-index: 0;
+
+  // "Mask" a half of the border
+  // It very rough but it only possible way i see with IE compat
+  // Replace it with normal mask-image when 516 got stable
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 1.15em;
+    width: 100%;
+    background: #151515; // Chat background color
+    transform: translateY(-50%) scaleX(1.05);
+    z-index: -1;
+  }
+}
+
+.boxed_message {
+  background: hsl(220, 10%, 10%);
+  border: calc(1em * (1 / 12)) solid;
+  border-left: calc(1em * (4 / 12)) solid;
+  border-color: hsla(220, 40%, 75%, 0.25);
+  margin: 0.5em 0;
+  padding: 0.5em 0.75em;
+  border-radius: 0.33em;
+
+  &.red_box {
+    background: hsl(0, 20%, 10%);
+    border-color: hsla(0, 100%, 50%, 0.5);
+  }
+
+  &.green_box {
+    background: hsl(140, 20%, 10%);
+    border-color: hsla(120, 100%, 50%, 0.5);
+  }
+
+  &.blue_box {
+    background: hsl(220, 20%, 10%);
+    border-color: hsla(225, 90%, 65%, 0.5);
+  }
+
+  &.purple_box {
+    background: hsl(260, 25%, 12.5%);
+    border-color: hsla(260, 100%, 75%, 0.5);
+  }
+
+  hr {
+    margin: 0.5em -0.75em;
+    border-color: inherit;
+  }
+}
+
+// Provides a horizontal bar with text in the middle
+// I got this off stackoverflow
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid hsl(213.6, 37.9%, 74.1%);
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+// Used to display images besides text
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 3em; // a css guru can probably dehardcode this later
+  height: auto;
+  margin-right: 12px;
+  margin-top: 6px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
 }
 
 $alert-stripe-colors: (
@@ -957,6 +1103,8 @@ $alert-stripe-colors: (
   'red': #420000,
   'purple': #2c0030,
   'grey': #252525,
+  'amber': #b26800,
+  'crimson': #750b20,
 );
 
 $alert-stripe-alternate-colors: (
@@ -969,6 +1117,8 @@ $alert-stripe-alternate-colors: (
   'red': #520000,
   'purple': #38003d,
   'grey': #292929,
+  'amber': #945a09,
+  'crimson': #4b121e,
 );
 
 $alert-major-header-colors: (
@@ -981,6 +1131,8 @@ $alert-major-header-colors: (
   'red': #ff5297,
   'purple': #c7a1f7,
   'grey': #ff5297,
+  'amber': #e1bd89,
+  'crimson': #d48585,
 );
 
 $alert-subheader-header-colors: (
@@ -993,6 +1145,8 @@ $alert-subheader-header-colors: (
   'red': #33d5ff,
   'purple': #33d5ff,
   'grey': #33d5ff,
+  'amber': #33d5ff,
+  'crimson': #33d5ff,
 );
 
 $border-width: 4;
@@ -1093,11 +1247,11 @@ $border-width-px: $border-width * 1px;
   }
 
   .chat_alert_#{$color-name} .minor_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5%);
   }
 
   .chat_alert_#{$color-name} .major_announcement_text {
-    background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
+    background-color: darken(map.get($alert-stripe-colors, $color-name), 5%);
   }
 }
 
@@ -1179,8 +1333,157 @@ $border-width-px: $border-width * 1px;
 }
 // MONKESTATION ADDITION END PR#45 - Clock cult
 
+.uncommonradio {
+  color: #78a1b1;
+}
+
 // MONKESTATION
 .honk {
   color: #ff70c1;
   font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.looc {
+  color: #ffde5c;
+  font-weight: bold;
+}
+
+.death_message {
+  display: block;
+  color: white;
+  text-align: center;
+  background-color: black;
+  border: 2px solid rgb(240, 62, 225);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 20px;
+}
+
+// blueshift ports
+.pink {
+  color: #ff00ff;
+  font-weight: bold;
+}
+
+.brown {
+  color: #3d2009;
+  font-weight: bold;
+}
+
+.orange {
+  color: #b8761a;
+  font-weight: bold;
+}
+
+.yellow {
+  color: #c7b72c;
+  font-weight: bold;
+}
+
+.cyan {
+  color: #0ea1e6;
+  font-weight: bold;
+}
+
+// monkestation addition start: kbity
+.kbity {
+  background: linear-gradient(
+    90deg,
+    #ffb6c1,
+    #ff69b4,
+    #da70d6,
+    #ba55d3,
+    #ffb6c1
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: kbity_gradient 6s linear infinite;
+}
+
+@keyframes kbity_gradient {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+// monkestation addition end: kbity
+
+$job-colors: (
+  // Command
+  'rawcommand': #99afe9,
+  'bridgeassistant': #99afe9,
+  'captain': #ecc478,
+  'actingcaptain': #ecc478,
+  // Service
+  'rawservice': #abdaa2,
+  'assistant': #cccccc,
+  'headofpersonnel': #526bf8,
+  'bartender': #b2ceb3,
+  'botanist': #95de85,
+  'cook': #a2fbb9,
+  'chaplain': #8ab48c,
+  'curator': #88c999,
+  'janitor': #81dacb,
+  'lawyer': #c07d7d,
+  'mime': #bad3bb,
+  'clown': #ff83d7,
+  'explorer': #85d8b8,
+  'barber': #a58264,
+  // Cargo
+  'rawcargo': #d8bc8a,
+  'quartermaster': #c79c52,
+  'cargotechnician': #d3a372,
+  'shaftminer': #ce957e,
+  // Engineering
+  'rawengineering': #e0c595,
+  'chiefengineer': #cfbb72,
+  'stationengineer': #ebc27d,
+  'atmospherictechnician': #d4a07d,
+  'signaltech': #ff9f5f,
+  // Medical
+  'rawmedical': #99ccda,
+  'chiefmedicalofficer': #41defa,
+  'medicaldoctor': #6cb1c5,
+  'paramedic': #8fbeb4,
+  'virologist': #5ac5b0,
+  'chemist': #82bdce,
+  'psychiatrist': #88bac9,
+  // R&D
+  'rawscience': #dbafe6,
+  'researchdirector': #974ea9,
+  'scientist': #c772c7,
+  'roboticist': #ac71ba,
+  'geneticist': #83bbbf,
+  'xenobiologist': #ffacff,
+  // Security
+  'rawsecurity': #dbb6b6,
+  'headofsecurity': #ec3550,
+  'warden': #dd3944,
+  'securityofficer': #e6a3a3,
+  'detective': #c78b8b,
+  'brigphysician': #b16789,
+  'secass': #eed4d4,
+  // CentCom
+  'rawcentcom': #83ce6b,
+  'centcom': #59d62f,
+  'blueshield': #4444ff,
+  'ert': #23a7ff,
+  // MISC - job
+  'vip': #e4ce6c,
+  'king': #e4ce6c,
+  'prisoner': #d38a5c,
+  'syndicate': #a16363,
+  'notcentcom': #8d8cf0,
+  'unassigned': #e6dbd0,
+  'unknown': #cec9c1
+);
+
+@each $job-name, $job-color in $job-colors {
+  .job__#{$job-name} {
+    color: $job-color;
+  }
 }

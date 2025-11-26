@@ -1,6 +1,6 @@
 // A reasonable number of maximum overlays an object needs
 // If you think you need more, rethink it
-#define MAX_ATOM_OVERLAYS 100
+#define MAX_ATOM_OVERLAYS 250
 
 /// Checks if an atom has reached the overlay limit, and make a loud error if it does.
 #define VALIDATE_OVERLAY_LIMIT(changed_on) \
@@ -13,6 +13,17 @@
 	} \
 
 
+#ifndef DISABLE_DEMOS
+#define POST_OVERLAY_CHANGE_DEMOS(changed_on) \
+	if(isturf(changed_on)) { \
+		SSdemo.marked_turfs?[changed_on] = TRUE; \
+	} else if(isobj(changed_on) || ismob(changed_on)) { \
+		SSdemo.mark_dirty(changed_on); \
+	}
+#else
+#define POST_OVERLAY_CHANGE_DEMOS(changed_on)
+#endif
+
 /// Performs any operations that ought to run after an appearance change
 #define POST_OVERLAY_CHANGE(changed_on) \
 	if(alternate_appearances) { \
@@ -22,4 +33,6 @@
 				AA.copy_overlays(changed_on, TRUE);\
 			}\
 		} \
-	}
+	} \
+	POST_OVERLAY_CHANGE_DEMOS(changed_on)
+//Monkestation Edit: REPLAYS //I Feel Dirty

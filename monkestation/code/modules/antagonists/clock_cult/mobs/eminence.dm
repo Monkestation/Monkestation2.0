@@ -3,10 +3,10 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence //yes this should be a camera mob, that will not work because cameras are deaf
 	name = "Eminence"
 	real_name = "Eminence"
-	desc = "An entity forever bound to Rat'var, acting upon his will."
+	desc = "An entity forever bound to Ratvar, acting upon his will."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "eminence"
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
@@ -16,8 +16,8 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	density = FALSE
 	move_force = INFINITY
 	move_resist = INFINITY
-	status_flags = GODMODE
 	sight = SEE_SELF
+	status_flags = NONE
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	initial_language_holder = /datum/language_holder/universal //lesser god, they CAN understand you
 	hud_possible = list(ANTAG_HUD)
@@ -42,6 +42,8 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	cogs = GLOB.clock_installed_cogs
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
+	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	grant_all_languages() //this is appearently an issue, im too lazy to figure it out so im just gonna do this
 
 /mob/living/eminence/Destroy()
 	if(GLOB.current_eminence == src)
@@ -117,7 +119,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		return FALSE
 	. = ..()
 
-/mob/living/eminence/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/eminence/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	return
 
 //eminence_act() stuff, might be a better way to do this
@@ -167,7 +169,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
 
-	use_power(5)
+	use_energy(5)
 	icon_state = "[skin]1"
 
 	if(device)

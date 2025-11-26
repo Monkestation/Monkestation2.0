@@ -16,7 +16,7 @@
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
 	light_outer_range = 3
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
@@ -71,8 +71,6 @@
 	// Onboard Items
 	/// Atmospheric analyzer
 	var/obj/item/analyzer/atmos_analyzer
-	/// Health analyzer
-	var/obj/item/healthanalyzer/host_scan
 	/// GPS
 	var/obj/item/gps/pai/internal_gps
 	/// Music Synthesizer
@@ -115,26 +113,16 @@
 		"crow" = TRUE,
 		"duffel" = TRUE,
 		"fox" = FALSE,
+		"frog" = TRUE,
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"monkey" = TRUE,
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
-	)
-	/// List of all available card overlays.
-	var/static/list/possible_overlays = list(
-		"null",
-		"angry",
-		"cat",
-		"extremely-happy",
-		"face",
-		"happy",
-		"laugh",
-		"off",
-		"sad",
-		"sunglasses",
-		"what"
+		"kitten" = FALSE,
+		"puppy" = FALSE,
+		"spider" = FALSE,
 	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
@@ -157,7 +145,6 @@
 	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
-	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
@@ -185,7 +172,7 @@
 	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
 
 /mob/living/silicon/pai/get_status_tab_items()
-	. += ..()
+	. = ..()
 	if(!stat)
 		. += text("Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)].")
 	else
@@ -203,8 +190,6 @@
 		atmos_analyzer = null
 	if(deleting_atom == camera)
 		camera = null
-	if(deleting_atom == host_scan)
-		host_scan = null
 	if(deleting_atom == internal_gps)
 		internal_gps = null
 	if(deleting_atom == instrument)
@@ -258,11 +243,15 @@
 	return radio.screwdriver_act(user, tool)
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
+
+/mob/living/silicon/pai/set_stat(new_stat)
+	. = ..()
+	update_stat()
 
 /**
  * Resolves the weakref of the pai's master.
@@ -328,6 +317,13 @@
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
 	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
+	return TRUE
+
+/mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	set_silence_if_lower(disrupt_duration)
+	set_emote_mute_if_lower(disrupt_duration)
+	balloon_alert(src, "muted!")
 	return TRUE
 
 /**
@@ -428,7 +424,7 @@
 	to_chat(src, span_userdanger("Your mental faculties leave you."))
 	to_chat(src, span_rose("oblivion... "))
 	balloon_alert(user, "personality wiped")
-	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
+	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	qdel(src)
 	return TRUE
 
@@ -446,3 +442,6 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+/mob/living/silicon/pai/get_access()
+	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs

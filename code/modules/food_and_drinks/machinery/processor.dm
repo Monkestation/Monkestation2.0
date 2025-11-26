@@ -7,7 +7,9 @@
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
+	pass_flags = PASSTABLE
 	circuit = /obj/item/circuitboard/machine/processor
+	anchored_tabletop_offset = 8
 	///Is the processor blending items at the moment
 	var/processing = FALSE
 	///The speed at which the processor processes items
@@ -81,7 +83,7 @@
 /obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/processor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(processing)
@@ -143,7 +145,7 @@
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/total_time = 0
 	for(var/atom/movable/movable_input as anything in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)
@@ -151,9 +153,12 @@
 			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += recipe.time
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
-	sleep(total_time / rating_speed)
+
+	var/duration = (total_time / rating_speed)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 1, 0, duration)
+	addtimer(CALLBACK(src, PROC_REF(complete_processing)), duration)
+
+/obj/machinery/processor/proc/complete_processing()
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
 		if (!recipe)
@@ -182,60 +187,5 @@
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
 	user.visible_message(span_notice("[user] crawls free of the processor!"))
-
-/obj/machinery/processor/slime
-	name = "slime processor"
-	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
-	circuit = /obj/item/circuitboard/machine/processor/slime
-
-/obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/atom_to_drop)
-	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)
-	var/i = 0
-	if(!(i = slimecores.Find(atom_to_drop.type))) // If the item is not found
-		return
-	if (i <= 16) // If in the first 12 slots
-		atom_to_drop.pixel_x = atom_to_drop.base_pixel_x - 12 + ((i%4)*8)
-		atom_to_drop.pixel_y = atom_to_drop.base_pixel_y - 12 + (round(i/4)*8)
-		return i
-	var/ii = i - 16
-	atom_to_drop.pixel_x = atom_to_drop.base_pixel_x - 8 + ((ii%3)*8)
-	atom_to_drop.pixel_y = atom_to_drop.base_pixel_y - 8 + (round(ii/3)*8)
-	return i
-
-/obj/machinery/processor/slime/process()
-	if(processing)
-		return
-	var/mob/living/simple_animal/slime/picked_slime
-	for(var/mob/living/simple_animal/slime/slime in range(1,src))
-		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
-			continue
-		if(slime.stat)
-			picked_slime = slime
-			break
-	if(!picked_slime)
-		return
-	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(picked_slime)
-	if (!recipe)
-		return
-
-	visible_message(span_notice("[picked_slime] is sucked into [src]."))
-	LAZYADD(processor_contents, picked_slime)
-	picked_slime.forceMove(src)
-
-/obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/processed_slime = what
-	if (!istype(processed_slime))
-		return
-
-	if(processed_slime.stat != DEAD)
-		processed_slime.forceMove(drop_location())
-		processed_slime.balloon_alert_to_viewers("crawls free")
-		return
-	var/core_count = processed_slime.cores
-	for(var/i in 1 to (core_count+rating_amount-1))
-		var/atom/movable/item = new processed_slime.coretype(drop_location())
-		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
-	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

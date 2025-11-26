@@ -1,12 +1,6 @@
 GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
-/client/proc/flip_ghost_spawn()
-	set category = "Admin.Fun"
-	set name = "Toggle Centcomm Spawning"
-	set desc= "Toggles whether dead players can respawn in the centcomm area"
-
-	if(!check_rights(R_FUN))
-		return
+ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles whether dead players can respawn in the centcomm area.", ADMIN_CATEGORY_FUN)
 	GLOB.disable_ghost_spawning = !GLOB.disable_ghost_spawning
 
 /mob/living/carbon/human/ghost
@@ -23,8 +17,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 
 /mob/living/carbon/human/ghost/death(gibbed)
 	. = ..()
-	fully_heal()
-	move_to_ghostspawn()
+	life_or_death()
 
 /mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter, obj/item/organ/internal/brain/_old_human)
 	. = ..()
@@ -37,34 +30,43 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
-	if(dueling && linked_button)
-		addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
-
 	if(linked_button)
-		linked_button.remove_user(src)
-		linked_button = null
+		if(dueling)
+			addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
+		else
+			linked_button.remove_user(src)
+			linked_button = null
+
 	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
-	if(stat > SOFT_CRIT)
-		if(dueling)
-			linked_button?.end_duel(src)
-		move_to_ghostspawn()
-		fully_heal()
 	. = ..()
+	if(. && stat > SOFT_CRIT)
+		life_or_death()
 
-/mob/living/carbon/human/ghost/proc/disolve_ghost()
-	var/mob/dead/observer/new_ghost = ghostize(FALSE)
-	new_ghost.key = old_key
-	new_ghost.mind = old_mind
-	new_ghost.can_reenter_corpse = old_reenter
+/mob/living/carbon/human/ghost/final_checkout(obj/item/suicide_tool, apply_damage)
+	dissolve_and_ghost()
 
-	if(old_human)
-		old_human.temporary_sleep = FALSE
-
+/mob/living/carbon/human/ghost/proc/dissolve_and_ghost()
+	var/mob/dead/observer/new_ghost = ghostize(can_reenter_corpse = FALSE)
+	if(!QDELETED(new_ghost))
+		new_ghost.PossessByPlayer(old_key)
+		new_ghost.mind = old_mind
+		new_ghost.can_reenter_corpse = old_reenter
+	old_human?.temporary_sleep = FALSE
 	qdel(src)
+
+/mob/living/carbon/human/ghost/proc/life_or_death()
+	if(dueling)
+		linked_button?.end_duel(src)
+	if(QDELING(src) || QDELETED(client) || client.is_afk())
+		dissolve_and_ghost()
+	else
+		move_to_ghostspawn()
+		revive(full_heal_flags = ADMIN_HEAL_ALL)
 
 /datum/action/cooldown/mob_cooldown/return_to_ghost
 	name = "Return to Ghost"
@@ -85,7 +87,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 		return
 	if(living_owner.revive_prepped)
 		return TRUE
-	living_owner.disolve_ghost()
+	living_owner.dissolve_and_ghost()
 	return TRUE
 
 
@@ -132,12 +134,16 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 			brain.temporary_sleep = TRUE
 
 	var/client/our_client = client || GLOB.directory[ckey]
-	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse, brain)
-	our_client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
-	new_existance.move_to_ghostspawn()
-	new_existance.key = key
-	new_existance.equipOutfit(/datum/outfit/job/assistant)
-	SSquirks.AssignQuirks(new_existance, our_client)
+	var/mob/living/carbon/human/ghost/new_existence = new(key, mind, can_reenter_corpse, brain)
+	our_client?.prefs.safe_transfer_prefs_to(new_existence, TRUE, FALSE)
+	new_existence.move_to_ghostspawn()
+	new_existence.PossessByPlayer(key)
+	new_existence.equip_outfit_and_loadout(/datum/outfit/ghost_player, our_client.prefs)
+	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(our_client?.prefs?.loadout_list))
+		if(length(item.restricted_roles))
+			continue
+		item.post_equip_item(our_client.prefs, new_existence)
+	SSquirks.AssignQuirks(new_existence, our_client)
 	our_client?.init_verbs()
 	qdel(src)
 	return TRUE

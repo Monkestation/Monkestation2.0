@@ -1,9 +1,3 @@
-//stack recipe placement check types
-/// Checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_CARDINALS (1<<0)
-/// Checks if there is an object of the result type within one tile
-#define STACK_CHECK_ADJACENT (1<<1)
-
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -79,7 +73,7 @@
 	var/absorption_rate
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
+	if(new_amount != null && isnum(new_amount))
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
@@ -95,14 +89,9 @@
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
 
 	. = ..()
+
 	if(merge)
-		for(var/obj/item/stack/item_stack in loc)
-			if(item_stack == src)
-				continue
-			if(can_merge(item_stack))
-				INVOKE_ASYNC(src, PROC_REF(merge_without_del), item_stack)
-				if(is_zero_amount(delete_if_zero = FALSE))
-					return INITIALIZE_HINT_QDEL
+		. = INITIALIZE_HINT_LATELOAD
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
@@ -116,10 +105,14 @@
 
 	update_weight()
 	update_appearance()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/stack/LateInitialize(mapload_arg)
+	merge_with_loc()
+
+/obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
+		merge_with_loc()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -135,6 +128,33 @@
  */
 /obj/item/stack/proc/update_custom_materials()
 	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+
+/obj/item/stack/proc/find_other_stack(alist/already_found)
+	if(QDELETED(src) || isnull(loc))
+		return
+	for(var/obj/item/stack/item_stack in loc)
+		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
+			continue
+		if(!(item_stack.flags_1 & INITIALIZED_1))
+			continue
+		var/stack_ref = REF(item_stack)
+		if(already_found[stack_ref])
+			continue
+		if(can_merge(item_stack))
+			already_found[stack_ref] = TRUE
+			return item_stack
+
+/// Tries to merge the stack with everything on the same tile.
+/obj/item/stack/proc/merge_with_loc()
+	var/alist/already_found = alist()
+	var/obj/item/other_stack = find_other_stack(already_found)
+	var/sanity = max_amount // just in case
+	while(other_stack && sanity > 0)
+		sanity--
+		if(merge(other_stack))
+			return FALSE
+		other_stack = find_other_stack(already_found)
+	return TRUE
 
 /**
  * Override to make things like metalgen accurately set custom materials
@@ -206,35 +226,33 @@
 		. = (amount)
 
 /**
- * Builds all recipes in a given recipe list and returns an association list containing them
- *
- * Arguments:
- * * recipe_to_iterate - The list of recipes we are using to build recipes
+ * Recursively builds the recipes data for the given list of recipes, iterating through each recipe.
+ * If recipe is of type /datum/stack_recipe, it adds the recipe data to the recipes_data list with the title as the key.
+ * If recipe is of type /datum/stack_recipe_list, it recursively calls itself, scanning the entire list and adding each recipe to its category.
  */
-/obj/item/stack/proc/recursively_build_recipes(list/recipe_to_iterate)
-	var/list/L = list()
-	for(var/recipe in recipe_to_iterate)
-		if(istype(recipe, /datum/stack_recipe_list))
-			var/datum/stack_recipe_list/R = recipe
-			L["[R.title]"] = recursively_build_recipes(R.recipes)
+/obj/item/stack/proc/recursively_build_recipes(list/recipes_to_iterate)
+	var/list/recipes_data = list()
+	for(var/recipe in recipes_to_iterate)
 		if(istype(recipe, /datum/stack_recipe))
-			var/datum/stack_recipe/R = recipe
-			L["[R.title]"] = build_recipe(R)
-	return L
+			var/datum/stack_recipe/single_recipe = recipe
+			recipes_data["[single_recipe.title]"] = build_recipe_data(single_recipe)
 
-/**
- * Returns a list of properties of a given recipe
- *
- * Arguments:
- * * R - The stack recipe we are using to get a list of properties
- */
-/obj/item/stack/proc/build_recipe(datum/stack_recipe/R)
-	return list(
-		"res_amount" = R.res_amount,
-		"max_res_amount" = R.max_res_amount,
-		"req_amount" = R.req_amount,
-		"ref" = text_ref(R),
-	)
+		else if(istype(recipe, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/recipe_list = recipe
+			recipes_data["[recipe_list.title]"] = recursively_build_recipes(recipe_list.recipes)
+
+	return recipes_data
+
+/obj/item/stack/proc/build_recipe_data(datum/stack_recipe/recipe)
+	var/list/data = list()
+
+	data["ref"] = text_ref(recipe)
+	data["required_amount"] = recipe.req_amount
+	data["result_amount"] = recipe.res_amount
+	data["max_result_amount"] = recipe.max_res_amount
+	data["image"] = recipe.image
+
+	return data
 
 /**
  * Checks if the recipe is valid to be used
@@ -265,7 +283,8 @@
 /obj/item/stack/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "StackCrafting", name)
+		ui = new(user, src, "StackCraft", name)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/item/stack/ui_data(mob/user)
@@ -278,7 +297,7 @@
 	data["recipes"] = recursively_build_recipes(recipes)
 	return data
 
-/obj/item/stack/ui_act(action, params)
+/obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -287,7 +306,6 @@
 		if("make")
 			var/datum/stack_recipe/recipe = locate(params["ref"])
 			var/multiplier = text2num(params["multiplier"])
-
 			return make_item(usr, recipe, multiplier)
 
 /// The key / title for a radial option that shows the entire list of buildables (uses the old menu)
@@ -402,6 +420,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
@@ -431,6 +450,9 @@
 	//BubbleWrap END
 
 	return TRUE
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
@@ -495,6 +517,8 @@
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+	if(!..())
+		return FALSE
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
@@ -623,17 +647,6 @@
 	. = merge_without_del(target_stack, limit)
 	is_zero_amount(delete_if_zero = TRUE)
 
-/// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
-/obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
-	SIGNAL_HANDLER
-
-	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
-	if(arrived == src)
-		return
-
-	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
-
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
 		merge(hitting)
@@ -686,9 +699,9 @@
 
 	is_zero_amount(delete_if_zero = TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(can_merge(W, inhand = TRUE))
-		var/obj/item/stack/S = W
+/obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(can_merge(attacking_item, inhand = TRUE))
+		var/obj/item/stack/S = attacking_item
 		if(merge(S))
 			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
 	else

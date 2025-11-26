@@ -27,7 +27,7 @@
 		job = SSjob.GetJobType(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -102,6 +102,32 @@
 		access |= list(
 			ACCESS_MAINT_TUNNELS)
 
+/datum/id_trim/job/bridge_assistant
+	assignment = "Bridge Assistant"
+	trim_state = "trim_assistant"
+	sechud_icon_state = SECHUD_BRIDGEASSISTANT
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_COMMAND_BLUE
+	minimal_access = list(
+		ACCESS_COMMAND,
+		ACCESS_SECURITY, //console
+		ACCESS_MEDICAL, //console AGAIN
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_TELEPORTER,
+	)
+	extra_access = list(ACCESS_RC_ANNOUNCE,)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+	)
+	job = /datum/job/bridge_assistant
+
+/datum/id_trim/job/bridge_assistant/chat_span()
+	return "job__bridgeassistant"
+
 /datum/id_trim/job/atmospheric_technician
 	assignment = "Atmospheric Technician"
 	trim_state = "trim_atmospherictechnician"
@@ -175,6 +201,7 @@
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
 		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
@@ -242,12 +269,12 @@
 		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
 
@@ -324,6 +351,7 @@
 		ACCESS_MINISAT,
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_TCOMMS,
+		ACCESS_TCOMMS_ADMIN, // MONKESTATION ADDITION -- NTSL
 		ACCESS_TECH_STORAGE,
 		)
 	minimal_wildcard_access = list(
@@ -482,7 +510,7 @@
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
 	department_color = COLOR_SCIENCE_PINK
-	subdepartment_color = COLOR_SCIENCE_PINK
+	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_GENETICIST
 	minimal_access = list(
 		ACCESS_GENETICS,
@@ -543,6 +571,15 @@
 		ACCESS_TELEPORTER,
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
+		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
+		ACCESS_BIT_DEN,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_MECH_MINING,
+		ACCESS_QM,
+		ACCESS_SHIPPING,
+		ACCESS_VAULT,
+		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOP,
@@ -593,6 +630,7 @@
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
@@ -789,12 +827,14 @@
 		)
 	job = /datum/job/psychologist
 
+//Monkestation Edit Start - QM is not a head
+
 /datum/id_trim/job/quartermaster
 	assignment = "Quartermaster"
 	trim_state = "trim_quartermaster"
-	department_color = COLOR_COMMAND_BLUE
+	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
-	department_state = "departmenthead"
+	department_state = "department"
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
@@ -817,6 +857,8 @@
 		ACCESS_HOP,
 	)
 	job = /datum/job/quartermaster
+
+//Monkestation Edit End
 
 /datum/id_trim/job/research_director
 	assignment = "Research Director"
@@ -907,11 +949,11 @@
 		ACCESS_ORDNANCE_STORAGE,
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
-		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
 		ACCESS_ROBOTICS,
+		ACCESS_XENOBIOLOGY, //monkestation edit: Xenobio job
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -935,6 +977,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		)
 	extra_access = list(
 		ACCESS_DETECTIVE,
@@ -1064,8 +1107,14 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
+
+/datum/id_trim/job/shaft_miner/refresh_trim_access()
+	. = ..()
+	if(. && SSmapping.is_planetary())
+		access |= list(ACCESS_EXTERNAL_AIRLOCKS)
 
 /// ID card obtained from the mining Disney dollar points vending machine.
 /datum/id_trim/job/shaft_miner/spare
@@ -1119,6 +1168,7 @@
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY, // MONKESTATION EDIT: Pathologists now have access to pharmacy due to their need for chems. Hopefully doesn't get abused too much and MDs have this too.
 		)
 	extra_access = list(
 		ACCESS_PLUMBING,
@@ -1147,6 +1197,7 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
+		ACCESS_PERMABRIG, // monkestation edit: add permabrig-only access
 		) // See /datum/job/warden/get_access()
 	extra_access = list(
 		ACCESS_DETECTIVE,

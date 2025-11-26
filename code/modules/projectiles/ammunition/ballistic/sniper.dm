@@ -32,3 +32,20 @@
 	name = ".50 BMG marksman round bullet casing"
 	desc = "A .50 caliber marksman round casing."
 	projectile_type = /obj/projectile/bullet/p50/marksman
+
+
+//.60 Strela (Wylom AM rifle)
+
+/obj/item/ammo_casing/p60strela
+	name = ".60 Strela caseless cartridge"
+	desc = "A massive block of plasma-purple propellant with an equally massive round sticking out the top of it. \
+		While good at killing a man, you'll find most effective use out of destroying things with it."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon_state = "amr_bullet"
+	caliber = CALIBER_60STRELA
+	projectile_type = /obj/projectile/bullet/p60strela
+
+/obj/item/ammo_casing/p60strela/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
+

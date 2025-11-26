@@ -1,10 +1,6 @@
-/// An admin verb to view all circuits, plus useful information
-/datum/admins/proc/view_all_circuits()
-	set category = "Admin.Logging"
-	set name = "View All Circuits"
-
+ADMIN_VERB(view_all_circuits, R_ADMIN, FALSE, "View All Circuits", "List all circuits in the game.", ADMIN_CATEGORY_GAME)
 	var/static/datum/circuit_admin_panel/circuit_admin_panel = new
-	circuit_admin_panel.ui_interact(usr)
+	circuit_admin_panel.ui_interact(user.mob)
 
 /datum/circuit_admin_panel
 
@@ -68,12 +64,14 @@
 			circuit.ui_interact(usr)
 		if ("open_player_panel")
 			var/datum/mind/inserter = circuit.inserter_mind?.resolve()
-			usr.client?.holder?.show_player_panel(inserter?.current)
+			usr.client.VUAP_selected_mob = inserter?.current
+			usr.client.selectedPlayerCkey = inserter?.current?.ckey
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal)
 
 	return TRUE
 
 /datum/circuit_admin_panel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/circuit_admin_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

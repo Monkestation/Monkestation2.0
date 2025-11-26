@@ -31,8 +31,8 @@ export type ScrubberProps = {
   }[];
 };
 
-export const Vent = (props: VentProps, context) => {
-  const { act } = useBackend(context);
+export const Vent = (props: VentProps) => {
+  const { act } = useBackend();
   const {
     refID,
     long_name,
@@ -61,7 +61,8 @@ export const Vent = (props: VentProps, context) => {
             })
           }
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
@@ -161,8 +162,8 @@ export const Vent = (props: VentProps, context) => {
   );
 };
 
-export const Scrubber = (props: ScrubberProps, context) => {
-  const { act } = useBackend(context);
+export const Scrubber = (props: ScrubberProps) => {
+  const { act } = useBackend();
   const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
   return (
     <Section
@@ -179,7 +180,8 @@ export const Scrubber = (props: ScrubberProps, context) => {
             })
           }
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button

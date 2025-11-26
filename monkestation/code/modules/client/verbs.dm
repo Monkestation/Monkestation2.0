@@ -1,26 +1,10 @@
-GLOBAL_LIST_INIT(high_threat_antags, list(
-	/datum/antagonist/cult,
-	/datum/antagonist/rev/head,
-	/datum/antagonist/wizard,
-	/datum/antagonist/clock_cultist,
-	/datum/antagonist/ninja,
-))
+GLOBAL_LIST(antag_token_config)
 
-GLOBAL_LIST_INIT(medium_threat_antags, list(
-	/datum/antagonist/heretic,
-	/datum/antagonist/bloodsucker,
-))
-
-GLOBAL_LIST_INIT(low_threat_antags, list(
-	/datum/antagonist/florida_man,
-	/datum/antagonist/traitor,
-	/datum/antagonist/paradox_clone,
-))
-
-#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
-#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
-#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
-#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
+#define ANTAG_TOKEN_CONFIG_FILE "[global.config.directory]/monkestation/antag-tokens.toml"
+#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
+#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"
@@ -32,15 +16,17 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 		return
 
 	if(isobserver(mob))
-		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
+		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so be careful where you are."))
 
 	if(!client_token_holder)
+		if(!prefs?.loaded)
+			CRASH("Tried to load client_token's before prefs were loaded how the fuck?")
 		client_token_holder = new(src)
 
 	var/tier = tgui_input_list(src, "High: [client_token_holder.total_high_threat_tokens] | \
 									Med: [client_token_holder.total_medium_threat_tokens] | \
 									Low: [client_token_holder.total_low_threat_tokens] | \
-									Donator: [client_token_holder.donator_token ? "Yes" : "No"]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
+									Donator: [client_token_holder.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
 	if(!tier)
 		return
 
@@ -62,24 +48,25 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 				if(client_token_holder.total_low_threat_tokens <= 0)
 					return
 
-	var/datum/antagonist/chosen_antagonist
-	var/static/list/token_values = list(
-		HIGH_THREAT = GLOB.high_threat_antags,
-		MEDIUM_THREAT = GLOB.medium_threat_antags,
-		LOW_THREAT = GLOB.low_threat_antags,
-	)
-	chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", token_values[tier])
-	if(!chosen_antagonist)
+	if(isnull(GLOB.antag_token_config))
+		GLOB.antag_token_config = load_antag_token_config()
+	var/list/chosen_tier = GLOB.antag_token_config[tier]
+	var/antag_key = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", chosen_tier)
+	if(!antag_key || !chosen_tier[antag_key])
 		return
+	var/datum/antagonist/chosen_antagonist = chosen_tier[antag_key]
 
 	client_token_holder.queued_donor = using_donor
 	client_token_holder.in_queued_tier = tier
 	client_token_holder.in_queue = new chosen_antagonist
 
-	to_chat(src, "Your request has been sent to the admins.")
-	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
-							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
-							[src] has requested to use their antag token to be a [chosen_antagonist].")]")
+	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
+	send_formatted_admin_message( \
+		"[ADMIN_LOOKUPFLW(src)] has requested to use their antag token to be a [chosen_antagonist::name].\n\n[ADMIN_APPROVE_ANTAG_TOKEN(src)] | [ADMIN_REJECT_ANTAG_TOKEN(src)]",	\
+		title = "Antag Token Request", \
+		color_override = "orange" \
+	)
+	client_token_holder.antag_timeout = addtimer(CALLBACK(client_token_holder, TYPE_PROC_REF(/datum/meta_token_holder, timeout_antag_token)), 5 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
 /client/verb/trigger_token_event()
 	set category = "IC"
@@ -93,7 +80,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	var/static/list/event_list
 	if(!event_list)
 		event_list = list()
-		for(var/event as anything in SStwitch.twitch_events_by_type)
+		for(var/event in SStwitch.twitch_events_by_type)
 			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
 			if(!event_instance.token_cost)
 				continue
@@ -110,14 +97,75 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(confirm == "Yes")
 		if(client_token_holder.event_tokens >= selected_event.token_cost)
 			client_token_holder.queued_token_event = selected_event
-			to_chat(src, "Your request has been sent.")
+			to_chat(src, span_boldnotice("Your request has been sent."))
 			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
-			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
-																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
-																				[src] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).")]")
+			send_formatted_admin_message( \
+				"[ADMIN_LOOKUPFLW(src)] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).\n\n[ADMIN_APPROVE_TOKEN_EVENT(src)] | [ADMIN_REJECT_TOKEN_EVENT(src)]",	\
+				title = "Event Token Request", \
+				color_override = "orange" \
+			)
+			client_token_holder.event_timeout = addtimer(CALLBACK(client_token_holder, TYPE_PROC_REF(/datum/meta_token_holder, timeout_event_token)), 5 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 			return
 		to_chat(src, "You dont have enough tokens to trigger this event.")
 
+/proc/init_antag_list(list/antag_types)
+	. = list()
+	for(var/datum/antagonist/antag_type as anything in antag_types)
+		if(istext(antag_type))
+			var/antag_type_text = "[antag_type]"
+			antag_type = text2path("/datum/antagonist/[antag_type_text]")
+			if(isnull(antag_type))
+				stack_trace("Invalid antag datum path '[antag_type_text]' (/datum/antagonist/[antag_type_text])")
+				continue
+		if(!ispath(antag_type))
+			continue
+		.[antag_type::name] = antag_type
+
+/proc/load_antag_token_config()
+	var/static/list/default_config = list(
+		HIGH_THREAT = init_antag_list(list(
+			/datum/antagonist/cult,
+			/datum/antagonist/wizard,
+			/datum/antagonist/clock_cultist,
+			/datum/antagonist/ninja,
+			/datum/antagonist/blob,
+		)),
+		MEDIUM_THREAT = init_antag_list(list(
+			/datum/antagonist/heretic,
+			/datum/antagonist/bloodsucker,
+			/datum/antagonist/changeling,
+			/datum/antagonist/cortical_borer/hivemind,
+		)),
+		LOW_THREAT = init_antag_list(list(
+			/datum/antagonist/florida_man,
+			/datum/antagonist/traitor,
+			/datum/antagonist/paradox_clone,
+			/datum/antagonist/cortical_borer,
+		))
+	)
+	var/static/list/toml_keys = list(
+		"high" = HIGH_THREAT,
+		"medium" = MEDIUM_THREAT,
+		"low" = LOW_THREAT
+	)
+	if(!fexists(ANTAG_TOKEN_CONFIG_FILE))
+		log_config("No antag token config file found, using default config.")
+		return default_config
+	var/list/token_config = rustg_read_toml_file(ANTAG_TOKEN_CONFIG_FILE)
+	if(!length(token_config))
+		log_config("Antag token config file is empty, using default config.")
+		return default_config
+	. = list(
+		HIGH_THREAT = list(),
+		MEDIUM_THREAT = list(),
+		LOW_THREAT = list()
+	)
+	for(var/toml_key in toml_keys)
+		var/list/tier_name = toml_keys[toml_key]
+		var/list/token_list = token_config[toml_key]
+		.[tier_name] = init_antag_list(token_list)
+
+#undef ANTAG_TOKEN_CONFIG_FILE
 #undef ADMIN_APPROVE_ANTAG_TOKEN
 #undef ADMIN_REJECT_ANTAG_TOKEN
 #undef ADMIN_APPROVE_TOKEN_EVENT

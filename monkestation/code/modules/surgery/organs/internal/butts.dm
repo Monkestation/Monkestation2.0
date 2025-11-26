@@ -16,6 +16,7 @@
 	var/atmos_gas = "miasma=0.25;TEMP=310.15" //310.15 is body temperature
 	var/fart_instability = 1 //Percent chance to lose your rear each fart.
 	var/cooling_down = FALSE
+	var/superfart_armed = FALSE
 
 //ADMIN ONLY ATOMIC ASS
 /obj/item/organ/internal/butt/atomic
@@ -147,6 +148,9 @@
 	var/volume = 40
 	var/true_instability = fart_instability
 
+	if(istype(Location, /turf/open/floor/iron/kitchen_coldroom) || istype(Location, /turf/open/floor/iron/freezer))
+		new /obj/item/stack/sheet/mineral/frozen_fart(Location)
+
 	//TRAIT CHECKS
 	if(Person.has_quirk(/datum/quirk/loud_ass))
 		volume = volume*2
@@ -157,7 +161,7 @@
 
 	//BIBLEFART
 	//This goes above all else because it's an instagib.
-	for(var/obj/item/storage/book/bible/Holy in Location)
+	for(var/obj/item/book/bible/Holy in Location)
 		if(Holy)
 			cooling_down = TRUE
 			var/turf/T = get_step(get_step(Person, NORTH), NORTH)
@@ -175,6 +179,15 @@
 
 	//EMOTE MESSAGE/MOB TARGETED FARTS
 	var/hit_target = FALSE
+
+	var/list/ignored_mobs = list()
+	for(var/mob/anything in GLOB.player_list)
+		if(!anything.client)
+			continue
+		if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+			continue
+		ignored_mobs |= anything
+
 	for(var/mob/living/Targeted in Location)
 		if(Targeted != user)
 			user.visible_message("[user] [pick(
@@ -185,15 +198,19 @@
 										"commits an act of butthole bioterror all over [Targeted]!",
 										"poots, singing [Targeted]'s eyebrows!",
 										"humiliates [Targeted] like never before!",
-										"gets real close to [Targeted]'s face and cuts the cheese!")]")
+										"gets real close to [Targeted]'s face and cuts the cheese!")]", ignored_mobs = ignored_mobs)
 			hit_target = TRUE
 			break
 	if(!hit_target)
 		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
 
+	if(superfart_armed)
+		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))
+		Person.clear_mood_event("superfart_armed")
+		superfart_armed = FALSE
 
 	//SOUND HANDLING
-	playsound(user, pick(sound_effect), volume , use_reverb = TRUE, pressure_affected = FALSE)
+	playsound(user, pick(sound_effect), volume , use_reverb = TRUE, pressure_affected = FALSE, mixer_channel = CHANNEL_PRUDE)
 
 	//GAS CREATION, ASS DETACHMENT & COOLDOWNS
 	if(!cooling_down)
@@ -218,10 +235,10 @@
 
 
 //Buttbot Production
-/obj/item/organ/internal/butt/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/bodypart/arm/left/robot) || istype(I, /obj/item/bodypart/arm/right/robot))
+/obj/item/organ/internal/butt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/bodypart/arm/left/robot) || istype(attacking_item, /obj/item/bodypart/arm/right/robot))
 		var/mob/living/simple_animal/bot/buttbot/new_butt = new(get_turf(src))
-		qdel(I)
+		qdel(attacking_item)
 		switch(src.type) //A BUTTBOT FOR EVERYONE!
 			if(/obj/item/organ/internal/butt/atomic)
 				new_butt.name = "Atomic Buttbot"
@@ -257,7 +274,7 @@
 				new_butt.desc = "hiss!"
 				new_butt.icon_state = "buttbot_xeno"
 
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 		qdel(src)
 
 
@@ -272,10 +289,13 @@
 	maxHealth = 25
 	bot_type = BUTT_BOT
 	pass_flags = PASSMOB
-	has_unlimited_silicon_privilege = FALSE
 	var/cooling_down = FALSE
 	var/butt_probability = 15
 	var/listen_probability = 30
+
+/mob/living/simple_animal/bot/buttbot/Initialize(mapload)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_SILICON_ACCESS, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
@@ -285,9 +305,9 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 100 ,use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 
-/mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
+/mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(!cooling_down && prob(listen_probability) && ishuman(speaker))
 		cooling_down = TRUE
@@ -303,7 +323,7 @@
 			cooling_down = FALSE
 			return
 		say(joined_text)
-		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, pick('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg', 'monkestation/sound/effects/fart3.ogg', 'monkestation/sound/effects/fart4.ogg'), 25 , use_reverb = TRUE, mixer_channel = CHANNEL_PRUDE)
 		spawn(20)
 			cooling_down = FALSE
 

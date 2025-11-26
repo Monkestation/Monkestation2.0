@@ -6,15 +6,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/config
-	var/datum/map_config/next_map_config
-
-	/// Has the map for the next round been voted for already?
-	var/map_voted = FALSE
-	/// Has the map for the next round been deliberately chosen by an admin?
-	var/map_force_chosen = FALSE
-	/// Has the map vote been rocked?
-	var/map_vote_rocked = FALSE
+	/// The current map config the server loaded at round start.
+	var/datum/map_config/current_map
 
 	var/list/map_templates = list()
 
@@ -33,6 +26,9 @@ SUBSYSTEM_DEF(mapping)
 	/// List of z level (as number) -> plane offset of that z level
 	/// Used to maintain the plane cube
 	var/list/z_level_to_plane_offset = list()
+	/// List of z level (as number) -> list of all z levels vertically connected to ours
+	/// Useful for fast grouping lookups and such
+	var/list/z_level_to_stack = list()
 	/// List of z level (as number) -> The lowest plane offset in that z stack
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
@@ -98,25 +94,28 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
 	var/list/random_bar_spawners = list()
-	var/list/random_arena_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
-	config = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
+	current_map = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
 #else
-	config = load_map_config(error_if_missing = FALSE)
+	current_map = load_map_config(error_if_missing = FALSE)
 #endif
 
 /datum/controller/subsystem/mapping/Initialize()
 	if(initialized)
 		return SS_INIT_SUCCESS
-	if(config.defaulted)
-		var/old_config = config
-		config = global.config.defaultmap
-		if(!config || config.defaulted)
-			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to Meta Station."))
-			config = old_config
+	if(current_map.defaulted)
+		var/datum/map_config/old_config = current_map
+		current_map = config.defaultmap
+		if(!current_map || current_map.defaulted)
+			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
+			current_map = old_config
+	var/mapping_url = config.Get(/datum/config_entry/string/webmap_url)
+	if(mapping_url != "")
+		var/map_name = replacetext_char(trimtext(current_map.map_name), " ", "")
+		current_map.mapping_url = replacetext_char(mapping_url, "$map", map_name)
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
 	plane_to_offset = list()
@@ -139,28 +138,42 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 
 #ifndef LOWMEMORYMODE
+	var/start_time = REALTIMEOFDAY
+	SStitle.add_init_text("Empty Space", "> Space", "<font color='yellow'>LOADING...</font>")
 	// Create space ruin levels
-	while (space_levels_so_far < config.space_ruin_levels)
+	while (space_levels_so_far < current_map.space_ruin_levels)
+		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
-	// and one level with no ruins
-	for (var/i in 1 to config.space_empty_levels)
+	// Create empty space levels
+	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+	SStitle.add_init_text("Empty Space", "> Space", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
+	start_time = REALTIMEOFDAY
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
+		SStitle.add_init_text("Away Mission", "> Away Mission", "<font color='yellow'>LOADING...</font>")
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
+		SStitle.add_init_text("Away Mission", "> Away Mission", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
+//	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+//		load_all_away_missions() We don't use away missions, as of now at least
+
+	start_time = REALTIMEOFDAY
+	SStitle.add_init_text("Ruins", "> Ruins", "<font color='yellow'>LOADING...</font>")
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
+	SStitle.add_init_text("Ruins", "> Ruins", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
 #endif
 	// Run map generation after ruin generation to prevent issues
-	run_map_generation()
+	run_map_terrain_generation()
 	// Generate our rivers, we do this here so the map doesn't load on top of them
 	setup_rivers()
+	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
+	run_map_terrain_population()
 	// Add the first transit level
 	var/datum/space_level/base_transit = add_reservation_zlevel()
 	require_area_resort()
@@ -176,7 +189,7 @@ SUBSYSTEM_DEF(mapping)
 	// Cache for sonic speed
 	var/list/unused_turfs = src.unused_turfs
 	var/list/world_contents = GLOB.areas_by_type[world.area].contents
-	var/list/world_turf_contents = GLOB.areas_by_type[world.area].contained_turfs
+	var/list/world_turf_contents_by_z = GLOB.areas_by_type[world.area].turfs_by_zlevel
 	var/list/lists_to_reserve = src.lists_to_reserve
 	var/index = 0
 	while(index < length(lists_to_reserve))
@@ -187,15 +200,20 @@ SUBSYSTEM_DEF(mapping)
 				if(index)
 					lists_to_reserve.Cut(1, index)
 				return
-			var/turf/T = packet[packetlen]
-			T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
-			LAZYINITLIST(unused_turfs["[T.z]"])
-			unused_turfs["[T.z]"] |= T
-			var/area/old_area = T.loc
-			old_area.turfs_to_uncontain += T
-			T.turf_flags = UNUSED_RESERVATION_TURF
-			world_contents += T
-			world_turf_contents += T
+			var/turf/reserving_turf = packet[packetlen]
+			reserving_turf.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+			LAZYINITLIST(unused_turfs["[reserving_turf.z]"])
+			unused_turfs["[reserving_turf.z]"] |= reserving_turf
+			var/area/old_area = reserving_turf.loc
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, reserving_turf.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[reserving_turf.z] += reserving_turf
+			reserving_turf.turf_flags = UNUSED_RESERVATION_TURF
+			// reservation turfs are not allowed to interact with atmos at all
+			reserving_turf.blocks_air = TRUE
+
+			world_contents += reserving_turf
+			LISTASSERTLEN(world_turf_contents_by_z, reserving_turf.z, list())
+			world_turf_contents_by_z[reserving_turf.z] += reserving_turf
 			packet.len--
 			packetlen = length(packet)
 
@@ -247,22 +265,27 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/setup_ruins()
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
-	if (lava_ruins.len)
+	if (length(lava_ruins))
 		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
-	if (ice_ruins.len)
+	if (length(ice_ruins))
 		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
-	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE)
+	if (length(ice_ruins_underground))
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE, mineral_budget = 21)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
-	if (space_ruins.len)
-		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
+	if (length(space_ruins))
+		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0)
+
+	// Generate oshan ruins
+	var/list/oshan_ruins = levels_by_trait(ZTRAIT_OSHAN_MINING)
+	if (length(oshan_ruins))
+		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
@@ -336,9 +359,9 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/determine_fake_sale()
 	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
-		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+		GLOB.arcade_prize_pool[/obj/item/stack/tile/fakeice/loaded] = 1 // monkestation edit: fix null weight
 	else
-		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+		GLOB.arcade_prize_pool[/obj/item/stack/tile/fakespace/loaded] = 1 // monkestation edit: fix null weight
 
 
 /datum/controller/subsystem/mapping/Recover()
@@ -363,8 +386,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	random_bar_templates = SSmapping.random_bar_templates
 	random_arena_templates = SSmapping.random_arena_templates
 
-	config = SSmapping.config
-	next_map_config = SSmapping.next_map_config
+	current_map = SSmapping.current_map
 
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
 
@@ -376,6 +398,8 @@ Used by the AI doomsday and the self-destruct nuke.
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
 	. = list()
 	var/start_time = REALTIMEOFDAY
+	if(!silent)
+		SStitle.add_init_text(path, "> [name]", "<font color='yellow'>LOADING...</font>")
 
 	if (!islist(files))  // handle single-level maps
 		files = list(files)
@@ -397,7 +421,6 @@ Used by the AI doomsday and the self-destruct nuke.
 		for (var/i in 1 to total_z)
 			traits += list(default_traits)
 	else if (total_z != traits.len)  // mismatch
-		INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [total_z] z-levels in [path]!")
 		if (total_z < traits.len)  // ignore extra traits
 			traits.Cut(total_z + 1)
 		while (total_z > traits.len)  // fall back to defaults on extra levels
@@ -418,11 +441,12 @@ Used by the AI doomsday and the self-destruct nuke.
 		if (!pm.load(x_offset, y_offset, start_z + parsed_maps[pm], no_changeturf = TRUE, new_z = TRUE))
 			errorList |= pm.original_path
 	if(!silent)
-		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+		SStitle.add_init_text(path, "> [name]", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/LoadStationRooms()
 	var/start_time = REALTIMEOFDAY
+	var/added_text = FALSE
 	for(var/obj/effect/spawner/room/R as() in random_room_spawners)
 		var/list/possibletemplates = list()
 		var/datum/map_template/random_room/candidate
@@ -433,78 +457,81 @@ Used by the AI doomsday and the self-destruct nuke.
 				candidate = null
 				continue
 			possibletemplates[candidate] = candidate.weight
-		if(possibletemplates.len)
+		if(length(possibletemplates))
+			if(!added_text)
+				SStitle.add_init_text("Random Rooms", "> Random Rooms", "<font color='yellow'>LOADING...</font>")
+				added_text = TRUE
 			var/datum/map_template/random_room/template = pick_weight(possibletemplates)
 			template.stock--
 			template.weight = (template.weight / 2)
 			if(template.stock <= 0)
 				template.spawned = TRUE
+			log_world("Loading random room template [template.name] ([template.type]) at [AREACOORD(R)]")
 			template.stationinitload(get_turf(R), centered = template.centerspawner)
 		SSmapping.random_room_spawners -= R
 		qdel(R)
 	random_room_spawners = null
-	INIT_ANNOUNCE("Loaded Random Rooms in [(REALTIMEOFDAY - start_time)/10]s!")
+	if(added_text)
+		SStitle.add_init_text("Random Rooms", "> Random Rooms", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 
 /datum/controller/subsystem/mapping/proc/load_random_engines()
 	var/start_time = REALTIMEOFDAY
+	var/added_text = FALSE
 	for(var/obj/effect/spawner/random_engines/engine_spawner as() in random_engine_spawners)
 		var/list/possible_engine_templates = list()
 		var/datum/map_template/random_room/random_engines/engine_candidate
 		shuffle_inplace(random_engine_templates)
 		for(var/ID in random_engine_templates)
 			engine_candidate = random_engine_templates[ID]
-			if(config.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
+			if(current_map.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
 				engine_candidate = null
 				continue
 			possible_engine_templates[engine_candidate] = engine_candidate.weight
-		if(possible_engine_templates.len)
+		if(length(possible_engine_templates))
+			if(!added_text)
+				SStitle.add_init_text("Random Engine", "> Random Engine", "<font color='yellow'>LOADING...</font>")
+				added_text = TRUE
 			var/datum/map_template/random_room/random_engines/template = pick_weight(possible_engine_templates)
+			log_world("Loading random engine template [template.name] ([template.type]) at [AREACOORD(engine_spawner)]")
 			template.stationinitload(get_turf(engine_spawner), centered = template.centerspawner)
 		SSmapping.random_engine_spawners -= engine_spawner
 		qdel(engine_spawner)
+	if(added_text)
+		SStitle.add_init_text("Random Engine", "> Random Engine", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 	random_engine_spawners = null
-	INIT_ANNOUNCE("Loaded Random Engine in [(REALTIMEOFDAY - start_time)/10]s!")
 
 
 /datum/controller/subsystem/mapping/proc/load_random_bars()
 	var/start_time = REALTIMEOFDAY
+	var/added_text = FALSE
 	for(var/obj/effect/spawner/random_bar/bar_spawner as() in random_bar_spawners)
 		var/list/possible_bar_templates = list()
 		var/datum/map_template/random_room/random_bar/bar_candidate
 		shuffle_inplace(random_bar_templates)
 		for(var/ID in random_bar_templates)
 			bar_candidate = random_bar_templates[ID]
-			if(config.map_name != bar_candidate.station_name || bar_candidate.weight == 0 || bar_spawner.room_height != bar_candidate.template_height || bar_spawner.room_width != bar_candidate.template_width)
+			if(current_map.map_name != bar_candidate.station_name || bar_candidate.weight == 0 || bar_spawner.room_height != bar_candidate.template_height || bar_spawner.room_width != bar_candidate.template_width)
 				bar_candidate = null
 				continue
 			possible_bar_templates[bar_candidate] = bar_candidate.weight
-		if(possible_bar_templates.len)
+		if(length(possible_bar_templates))
+			if(!added_text)
+				SStitle.add_init_text("Random Bar", "> Random Bar", "<font color='yellow'>LOADING...</font>")
+				added_text = TRUE
 			var/datum/map_template/random_room/random_bar/template = pick_weight(possible_bar_templates)
+			log_world("Loading random bar template [template.name] ([template.type]) at [AREACOORD(bar_spawner)]")
 			template.stationinitload(get_turf(bar_spawner), centered = template.centerspawner)
 		SSmapping.random_bar_spawners -= bar_spawner
 		qdel(bar_spawner)
+	if(added_text)
+		SStitle.add_init_text("Random Bar", "> Random Bar", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 	random_bar_spawners = null
-	INIT_ANNOUNCE("Loaded Random Bars in [(REALTIMEOFDAY - start_time)/10]s!")
 
 /datum/controller/subsystem/mapping/proc/load_random_arena()
 	var/start_time = REALTIMEOFDAY
-	for(var/obj/effect/spawner/random_arena_spawner/arena_spawner as() in random_arena_spawners)
-		var/list/possible_arena_templates = list()
-		var/datum/map_template/random_room/random_arena/arena_candidate
-		shuffle_inplace(random_arena_templates)
-		for(var/ID in random_arena_templates)
-			arena_candidate = random_arena_templates[ID]
-			if(arena_candidate.weight == 0)
-				arena_candidate = null
-				continue
-			possible_arena_templates[arena_candidate] = arena_candidate.weight
-		if(possible_arena_templates.len)
-			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arena_templates)
-			template.stationinitload(get_turf(arena_spawner), centered = template.centerspawner)
-		SSmapping.random_arena_spawners -= arena_spawner
-		qdel(arena_spawner)
-	random_arena_spawners = null
-	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time)/10]s!")
+	SStitle.add_init_text("Random Arena", "> Random Arena", "<font color='yellow'>LOADING...</font>")
+	GLOB.ghost_arena.spawn_random_arena(init = TRUE)
+	SStitle.add_init_text("Random Arena", "> Random Arena", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -516,8 +543,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	// load the station
 	station_start = world.maxz + 1
-	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION)
 
 	LoadStationRoomTemplates()
 	LoadStationRooms()
@@ -529,22 +555,24 @@ Used by the AI doomsday and the self-destruct nuke.
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
-		"}, list("map_name" = config.map_name, "round_id" = GLOB.round_id))
+		"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
+	while (world.maxz < (5 - 1) && space_levels_so_far < current_map.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
-	if(config.minetype == "lavaland")
+	if(current_map.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if(config.minetype == "oshan")
+	else if(current_map.minetype == "oshan")
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)
-	else if (!isnull(config.minetype) && config.minetype != "none")
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
+		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
+	if(CONFIG_GET(flag/eclipse))
+		LoadGroup(FailedZs, "Eclipse", "~monkestation/unique", "eclipse.dmm", traits = ZTRAITS_ECLIPSE)
 #endif
 
 	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
@@ -557,10 +585,8 @@ Used by the AI doomsday and the self-destruct nuke.
 #undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == CUSTOM_MAP_PATH)
-		fdel("_maps/custom/[config.map_file]")
-		// And as the file is now removed set the next map to default.
-		next_map_config = load_default_map_config()
+	if(current_map.map_path == CUSTOM_MAP_PATH)
+		fdel("_maps/custom/[current_map.map_file]")
 
 /**
  * Global list of AREA TYPES that are associated with the station.
@@ -574,7 +600,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Generates the global station area list, filling it with typepaths of unique areas found on the station Z.
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/station_area in GLOB.areas)
-		if (!(station_area.area_flags & UNIQUE_AREA))
+		if (!(station_area.area_flags & UNIQUE_AREA) || istype(station_area, /area/ruin))
 			continue
 		if (is_station_level(station_area.z))
 			GLOB.the_station_areas += station_area.type
@@ -582,91 +608,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
-/datum/controller/subsystem/mapping/proc/run_map_generation()
+/// Generate the turfs of the area
+/datum/controller/subsystem/mapping/proc/run_map_terrain_generation()
 	for(var/area/A as anything in GLOB.areas)
-		A.RunGeneration()
+		A.RunTerrainGeneration()
 
-/datum/controller/subsystem/mapping/proc/maprotate()
-	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
-		return
-
-	var/players = GLOB.clients.len
-	var/list/mapvotes = list()
-	//count votes
-	var/pmv = CONFIG_GET(flag/preference_map_voting)
-	if(pmv)
-		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.read_preference(/datum/preference/choiced/preferred_map)
-			if (!vote)
-				if (global.config.defaultmap)
-					mapvotes[global.config.defaultmap.map_name] += 1
-				continue
-			mapvotes[vote] += 1
-	else
-		for(var/M in global.config.maplist)
-			mapvotes[M] = 1
-
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-			continue
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		if(map in SSpersistence.blocked_maps)
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
-
-		if(pmv)
-			mapvotes[map] = mapvotes[map]*VM.voteweight
-
-	var/pickedmap = pick_weight(mapvotes)
-	if (!pickedmap)
-		return
-	var/datum/map_config/VM = global.config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.map_name]")
-	. = changemap(VM)
-	if (. && VM.map_name != config.map_name)
-		to_chat(world, span_boldannounce("Map rotation has chosen [VM.map_name] for next round!"))
-
-/datum/controller/subsystem/mapping/proc/mapvote()
-	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
-		return
-	if(SSvote.current_vote) //Theres already a vote running, default to rotation.
-		maprotate()
-		return
-	SSvote.initiate_vote(/datum/vote/map_vote, "automatic map rotation", forced = TRUE)
-
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/change_to)
-	if(!change_to.MakeNextMap())
-		next_map_config = load_default_map_config()
-		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
-		return
-
-	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
-	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-
-	next_map_config = change_to
-	return TRUE
+/// Populate the turfs of the area
+/datum/controller/subsystem/mapping/proc/run_map_terrain_population()
+	for(var/area/A as anything in GLOB.areas)
+		A.RunTerrainPopulation()
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates() //see master controller setup
 	if(IsAdminAdvancedProcCall())
@@ -722,10 +672,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("spaceruinblacklist.txt")
-	if(config.minetype == "lavaland")
+	if(current_map.minetype == "lavaland")
 		banned += generateMapList("lavaruinblacklist.txt")
-	else if(config.blacklist_file)
-		banned += generateMapList(config.blacklist_file)
+	else if(current_map.blacklist_file)
+		banned += generateMapList(current_map.blacklist_file)
 
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
 		var/datum/map_template/ruin/ruin_type = item
@@ -778,33 +728,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		holodeck_templates[holo_template.template_id] = holo_template
 
-//Manual loading of away missions.
-/client/proc/admin_away()
-	set name = "Load Away Mission"
-	set category = "Admin.Events"
-
-	if(!holder || !check_rights(R_FUN))
-		return
-
-
+ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)
-		if(tgui_alert(usr, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
 			return
 
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 	var/secret = FALSE
-	if(tgui_alert(usr, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
 		secret = TRUE
-	var/answer = input("What kind?","Away") as null|anything in possible_options
+	var/answer = input(user, "What kind?","Away") as null | anything in possible_options
 	switch(answer)
 		if("Custom")
-			var/mapfile = input("Pick file:", "File") as null|file
+			var/mapfile = input(user, "Pick file:", "File") as null | file
 			if(!mapfile)
 				return
 			away_name = "[mapfile] custom"
-			to_chat(usr,span_notice("Loading [away_name]..."))
+			to_chat(user,span_notice("Loading [away_name]..."))
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z(secret)
 		else
@@ -816,8 +758,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			else
 				return
 
-	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
-	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
+	message_admins("Admin [key_name_admin(user)] has loaded [away_name] away mission.")
+	log_admin("Admin [key_name(user)] has loaded [away_name] away mission.")
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return
@@ -937,8 +879,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
-	z_level_to_lowest_plane_offset += 1
+	z_level_to_lowest_plane_offset.len += 1
 	gravity_by_z_level.len += 1
+	z_level_to_stack.len += 1
+	// Bare minimum we have ourselves
+	z_level_to_stack[z_value] = list(z_value)
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
@@ -961,12 +906,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Faster
 	if(space_guaranteed)
 		var/area/global_area = GLOB.areas_by_type[world.area]
-		global_area.contained_turfs += Z_TURFS(z_level)
+		LISTASSERTLEN(global_area.turfs_by_zlevel, z_level, list())
+		global_area.turfs_by_zlevel[z_level] = Z_TURFS(z_level)
 		return
 
 	for(var/turf/to_contain as anything in Z_TURFS(z_level))
 		var/area/our_area = to_contain.loc
-		our_area.contained_turfs += to_contain
+		LISTASSERTLEN(our_area.turfs_by_zlevel, z_level, list())
+		our_area.turfs_by_zlevel[z_level] += to_contain
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
@@ -988,6 +935,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
 		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
+		z_level_to_stack[level_to_update.z_value] = z_stack
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN
@@ -1026,7 +974,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
 			var/string_plane = "[offset_plane]"
 
-			if(!initial(master_type.allows_offsetting))
+			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
 				plane_offset_blacklist[string_plane] = TRUE
 				var/render_target = initial(master_type.render_target)
 				if(!render_target)
@@ -1045,6 +993,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				true_to_offset_planes[string_real] = list()
 
 			true_to_offset_planes[string_real] |= offset_plane
+
+/// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
+/datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)
+	var/z_level = connected
+	if(isturf(z_level))
+		z_level = connected.z
+	return z_level_to_stack[z_level]
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
@@ -1074,9 +1029,20 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
-	return config.planetary
+	return current_map.planetary
 
 /proc/generate_lighting_appearance_by_z(z_level)
 	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
 		GLOB.default_lighting_underlays_by_z.len = z_level
 	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+
+///Returns the map name, with an openlink action tied to it (if one exists) for the map.
+/datum/map_config/proc/return_map_name(webmap_included)
+	var/text
+	if(feedback_link)
+		text = "<a href='byond://?action=openLink&link=[url_encode(feedback_link)]'>[map_name]</a>"
+	else
+		text = map_name
+	if(webmap_included && !isnull(SSmapping.current_map.mapping_url))
+		text += " | <a href='byond://?action=openWebMap'>(Show Map)</a>"
+	return text

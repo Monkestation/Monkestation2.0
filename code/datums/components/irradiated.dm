@@ -51,14 +51,16 @@
 /datum/component/irradiated/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
+	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
 
 /datum/component/irradiated/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_GEIGER_COUNTER_SCAN,
+		COMSIG_LIVING_HEALTHSCAN,
 	))
 
-/datum/component/irradiated/Destroy(force, silent)
+/datum/component/irradiated/Destroy(force)
 	var/atom/movable/parent_movable = parent
 	if (istype(parent_movable))
 		parent_movable.remove_filter("rad_glow")
@@ -96,7 +98,7 @@
 	process_tox_damage(human_parent, seconds_per_tick)
 
 /datum/component/irradiated/proc/should_halt_effects(mob/living/carbon/human/target)
-	if (IS_IN_STASIS(target))
+	if (HAS_TRAIT(target, TRAIT_STASIS))
 		return TRUE
 
 	if (HAS_TRAIT(target, TRAIT_HALT_RADIATION_EFFECTS))
@@ -185,6 +187,12 @@
 		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Target is irradiated."))
 
 	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
+
+/datum/component/irradiated/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+	SIGNAL_HANDLER
+
+	render_list += conditional_tooltip("<span class='alert ml-1'>Subject is irradiated.</span>", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
+	render_list += "<br>"
 
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"

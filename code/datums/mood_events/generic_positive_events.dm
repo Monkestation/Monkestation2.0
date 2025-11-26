@@ -194,8 +194,8 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/hope_lavaland
-	description = "What a peculiar emblem.  It makes me feel hopeful for my future."
-	mood_change = 10
+	description = "What a peculiar emblem. It makes me feel hopeful for my future."
+	mood_change = 6
 
 /datum/mood_event/confident_mane
 	description = "I'm feeling confident with a head full of hair."
@@ -360,7 +360,29 @@
 	special_screen_obj = "birthday"
 	special_screen_replace = FALSE
 
+/datum/mood_event/moon_smile
+	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
+	mood_change = 10
+	timeout = 2 MINUTES
+
 ///Wizard cheesy grand finale - what the wizard gets
 /datum/mood_event/madness_elation
 	description = "Madness truly is the greatest of blessings..."
 	mood_change = 200
+
+/datum/mood_event/prophat
+	description = "This hat fills me with whimsical joy!"
+	mood_change = 2
+
+/datum/mood_event/has_borer
+	description = "i feel content, the melody completes me."
+	mood_change = 5
+
+/datum/mood_event/thrall_darkspawn
+	description = span_velvet("<i>The darkness is true. I love them. I love the masters.</i>\n")
+	mood_change = 40
+
+///darkspawn moodlet
+/datum/mood_event/sling
+	description = span_velvet("<b>The keys to reality are within my grasp.</b>\n")
+	mood_change = 20

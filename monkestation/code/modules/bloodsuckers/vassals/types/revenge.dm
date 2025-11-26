@@ -11,21 +11,24 @@
 	antag_hud_name = "vassal4"
 	special_type = REVENGE_VASSAL
 	vassal_description = "The Revenge Vassal will not deconvert on your Final Death, \
-		instead they will gain all your Powers, and the objective to take revenge for your demise. \
+		instead they will gain all your Powers, become immune to mindshields, and gain the objective to take revenge for your demise. \
 		They additionally maintain your Vassals after your departure, rather than become aimless."
 
 	///all ex-vassals brought back into the fold.
 	var/list/datum/antagonist/ex_vassal/ex_vassals = list()
 
+	///Has this revenge vassal been 'activated' by their master's final death?
+	var/revenge_mode = FALSE
+
 /datum/antagonist/vassal/revenge/roundend_report()
 	var/list/report = list()
 	report += printplayer(owner)
-	if(objectives.len)
+	if(length(objectives))
 		report += printobjectives(objectives)
 
 	// Now list their vassals
-	if(ex_vassals.len)
-		report += "<span class='header'>The Vassals brought back into the fold were...</span>"
+	if(length(ex_vassals))
+		report += span_header("The Vassals brought back into the fold were...")
 		for(var/datum/antagonist/ex_vassal/all_vassals as anything in ex_vassals)
 			if(!all_vassals.owner)
 				continue
@@ -35,11 +38,17 @@
 
 /datum/antagonist/vassal/revenge/on_gain()
 	. = ..()
-	RegisterSignal(master, BLOODSUCKER_FINAL_DEATH, PROC_REF(on_master_death))
+	RegisterSignal(master, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_master_death))
 
 /datum/antagonist/vassal/revenge/on_removal()
-	UnregisterSignal(master, BLOODSUCKER_FINAL_DEATH)
+	UnregisterSignal(master, COMSIG_BLOODSUCKER_FINAL_DEATH)
 	return ..()
+
+/datum/antagonist/vassal/revenge/pre_mindshield(mob/implanter, mob/living/mob_override)
+	if (revenge_mode)
+		return COMPONENT_MINDSHIELD_RESISTED
+	else
+		return ..()
 
 /datum/antagonist/vassal/revenge/ui_static_data(mob/user)
 	var/list/data = list()
@@ -58,14 +67,19 @@
 	SIGNAL_HANDLER
 
 	show_in_roundend = TRUE
+	revenge_mode = TRUE
 	for(var/datum/objective/all_objectives as anything in objectives)
 		objectives -= all_objectives
 	BuyPower(new /datum/action/cooldown/bloodsucker/vassal_blood)
 	for(var/datum/action/cooldown/bloodsucker/master_powers as anything in bloodsuckerdatum.powers)
 		if(master_powers.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			continue
-		master_powers.Grant(owner.current)
-		owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
+		if(istype(master_powers, /datum/action/cooldown/bloodsucker/gohome))
+			continue
+		if (master_powers.active)
+			master_powers.DeactivatePower()
+		master_powers.bloodsuckerdatum_power = null
+		BuyPower(master_powers)
 
 	var/datum/objective/survive/new_objective = new
 	new_objective.name = "Avenge Bloodsucker"

@@ -144,11 +144,11 @@
 /obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/beebox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/honey_frame))
-		var/obj/item/honey_frame/HF = I
+/obj/structure/beebox/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/honey_frame))
+		var/obj/item/honey_frame/HF = attacking_item
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
 			visible_message(span_notice("[user] adds a frame to the apiary."))
 			if(!user.transferItemToLoc(HF, src))
@@ -158,12 +158,12 @@
 			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
 		return
 
-	if(istype(I, /obj/item/queen_bee))
+	if(istype(attacking_item, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, span_warning("This hive already has a queen!"))
 			return
 
-		var/obj/item/queen_bee/new_queen = I
+		var/obj/item/queen_bee/new_queen = attacking_item
 		user.temporarilyRemoveItemFromInventory(new_queen)
 
 		bees += new_queen.queen

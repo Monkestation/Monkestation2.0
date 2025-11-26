@@ -230,6 +230,8 @@
 	//add the reagent to the existing if it exists
 	for(var/datum/reagent/iter_reagent as anything in cached_reagents)
 		if(iter_reagent.type == reagent)
+			if(!iter_reagent.can_merge)
+				return
 			if(override_base_ph)
 				added_ph = iter_reagent.ph
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
@@ -311,36 +313,6 @@
 
 			return TRUE
 	return FALSE
-
-/// Remove an amount of reagents without caring about what they are
-/datum/reagents/proc/remove_any(amount = 1)
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/R = cached_reagents[current_list_element]
-		var/remove_amt = min(amount-total_removed,round(amount/rand(2,initial_list_length),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(R.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-		update_total()
-
-	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
 
 /// Removes all reagents from this holder
 /datum/reagents/proc/remove_all(amount = 1)
@@ -515,6 +487,7 @@
 	var/transfer_log = list()
 	var/r_to_send = list()	// Validated list of reagents to be exposed
 	var/reagents_to_remove = list()
+	SEND_SIGNAL(R, COMSIG_REAGENT_PRE_TRANS_TO, src)
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -525,6 +498,10 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
@@ -557,10 +534,14 @@
 			var/transfer_amount = amount
 			if(amount > reagent.volume)
 				transfer_amount = reagent.volume
-			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+			if(is_reagent_container(my_atom))
+				var/obj/item/reagent_containers/container = my_atom
+				if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, container.amount_per_transfer_from_this))
+					return
+			if(SEND_SIGNAL(R, COMSIG_REAGENT_CACHE_ADD_ATTEMPT, reagent, src, amount))
 				continue
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
-				continue
+				return
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(isorgan(target_atom))
@@ -764,6 +745,7 @@
  */
 /datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/need_mob_update = FALSE
+	SEND_SIGNAL(src, COMSIG_REAGENT_METABOLIZE_REAGENT, reagent, seconds_per_tick)
 	if(QDELETED(reagent.holder))
 		return FALSE
 
@@ -931,6 +913,12 @@
 			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
+			// monkestation start
+			var/banned_due_to_plant = FALSE
+			if((reaction.reaction_flags & REACTION_NOT_IN_PLANTS) && istype(cached_my_atom, /obj/item/food/grown))
+				banned_due_to_plant = TRUE
+			// monkestation end
+
 			for(var/req_reagent in cached_required_reagents)
 				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*granularity)))
 					break
@@ -940,7 +928,10 @@
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				matching_container = reaction.required_container ? (cached_my_atom.type == reaction.required_container) : TRUE
+				if(reaction.required_container_accepts_subtypes)
+					matching_container = !reaction.required_container || istype(cached_my_atom, reaction.required_container)
+				else
+					matching_container = !reaction.required_container || cached_my_atom.type == reaction.required_container
 
 				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
@@ -962,7 +953,7 @@
 			else
 				meets_ph_requirement = TRUE
 
-			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && !banned_due_to_plant)
 				if(meets_temp_requirement && meets_ph_requirement)
 					possible_reactions += reaction
 				else
@@ -1030,11 +1021,11 @@
 			if(!text_in_list(temp_mix_message, mix_message))
 				mix_message += temp_mix_message
 			continue
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction] total reaction steps")
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
-	if(length(mix_message)) //This is only at the end
+	if(length(mix_message) && my_atom) //This is only at the end
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))
@@ -1233,9 +1224,10 @@
 	//If the reaction pollutes, pollute it here if we have an atom
 	if(selected_reaction.pollutant_type && my_atom)
 		var/turf/my_turf = get_turf(my_atom)
-		my_turf.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
+		my_turf?.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
 
 	selected_reaction.on_reaction(src, null, multiplier)
+	selected_reaction.reaction_finish(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused
@@ -1265,7 +1257,7 @@
 		else
 			. += reagent.volume
 	total_volume = .
-	recalculate_sum_ph()
+	// recalculate_sum_ph() // monkestation edit: we don't use ph or purity
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
@@ -1500,9 +1492,11 @@
 * Arguments:
 * * value - How much to adjust the base pH by
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_all_reagents_ph(value, lower_limit = 0, upper_limit = 14)
 	for(var/datum/reagent/reagent as anything in reagent_list)
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Adjusts the base pH of all of the listed types
@@ -1513,11 +1507,13 @@
 * * input_reagents_list - list of reagent objects to adjust
 * * value - How much to adjust the base pH by
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_specific_reagent_list_ph(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
 	for(var/datum/reagent/reagent as anything in input_reagents_list)
 		if(!reagent) //We can call this with missing reagents.
 			continue
 		reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Adjusts the base pH of a specific type
@@ -1530,15 +1526,18 @@
 * * lower_limit - how low the pH can go
 * * upper_limit - how high the pH can go
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value, lower_limit = 0, upper_limit = 14)
 	var/datum/reagent/reagent = get_reagent(input_reagent)
 	if(!reagent) //We can call this with missing reagents.
 		return FALSE
 	reagent.ph = clamp(reagent.ph + value, lower_limit, upper_limit)
+monkestation end */
 
 /*
 * Updates the reagents datum pH based off the volume weighted sum of the reagent_list's reagent pH
 */
+/* monkestation removal: we don't use ph or purity
 /datum/reagents/proc/recalculate_sum_ph()
 	if(!reagent_list || !total_volume) //Ensure that this is true
 		ph = CHEMICAL_NORMAL_PH
@@ -1548,6 +1547,7 @@
 		total_ph += (reagent.ph * reagent.volume)
 	//Keep limited
 	ph = clamp(total_ph/total_volume, 0, 14)
+*/
 
 /**
  * Outputs a log-friendly list of reagents based on an external reagent list.
@@ -2048,6 +2048,7 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+	return reagents
 
 /atom/movable/chem_holder
 	name = "This atom exists to hold chems. If you can see this, make an issue report"

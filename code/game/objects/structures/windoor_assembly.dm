@@ -30,7 +30,7 @@
 	var/state = "01" //How far the door assembly has progressed
 	can_atmos_pass = ATMOS_PASS_PROC
 
-/obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
+/obj/structure/windoor_assembly/Initialize(mapload, set_dir)
 	. = ..()
 	if(set_dir)
 		setDir(set_dir)
@@ -92,19 +92,19 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
+/obj/structure/windoor_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)
 		if("01")
-			if(W.tool_behaviour == TOOL_WELDER && !anchored)
-				if(!W.tool_start_check(user, amount=0))
+			if(attacking_item.tool_behaviour == TOOL_WELDER && !anchored)
+				if(!attacking_item.tool_start_check(user, amount=0))
 					return
 
 				user.visible_message(span_notice("[user] disassembles the windoor assembly."),
 					span_notice("You start to disassemble the windoor assembly..."))
 
-				if(W.use_tool(src, user, 40, volume=50))
+				if(attacking_item.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice("You disassemble the windoor assembly."))
 					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 					if (!QDELETED(RG))
@@ -117,7 +117,7 @@
 				return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(W.tool_behaviour == TOOL_WRENCH && !anchored)
+			if(attacking_item.tool_behaviour == TOOL_WRENCH && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
 						to_chat(user, span_warning("There is already a windoor in that location!"))
@@ -125,7 +125,7 @@
 				user.visible_message(span_notice("[user] secures the windoor assembly to the floor."),
 					span_notice("You start to secure the windoor assembly to the floor..."))
 
-				if(W.use_tool(src, user, 40, volume=100))
+				if(attacking_item.use_tool(src, user, 40, volume=100))
 					if(anchored)
 						return
 					for(var/obj/machinery/door/window/WD in loc)
@@ -140,11 +140,11 @@
 						name = "anchored windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(W.tool_behaviour == TOOL_WRENCH && anchored)
+			else if(attacking_item.tool_behaviour == TOOL_WRENCH && anchored)
 				user.visible_message(span_notice("[user] unsecures the windoor assembly to the floor."),
 					span_notice("You start to unsecure the windoor assembly to the floor..."))
 
-				if(W.use_tool(src, user, 40, volume=100))
+				if(attacking_item.use_tool(src, user, 40, volume=100))
 					if(!anchored)
 						return
 					to_chat(user, span_notice("You unsecure the windoor assembly."))
@@ -155,8 +155,8 @@
 						name = "windoor assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
-			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
-				var/obj/item/stack/sheet/plasteel/P = W
+			else if(istype(attacking_item, /obj/item/stack/sheet/plasteel) && !secure)
+				var/obj/item/stack/sheet/plasteel/P = attacking_item
 				if(P.get_amount() < 2)
 					to_chat(user, span_warning("You need more plasteel to do this!"))
 					return
@@ -175,13 +175,13 @@
 						name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(istype(attacking_item, /obj/item/stack/cable_coil) && anchored)
 				user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(!src || !anchored || src.state != "01")
 						return
-					var/obj/item/stack/cable_coil/CC = W
+					var/obj/item/stack/cable_coil/CC = attacking_item
 					if(!CC.use(1))
 						to_chat(user, span_warning("You need more cable to do this!"))
 						return
@@ -197,10 +197,10 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(W.tool_behaviour == TOOL_WIRECUTTER)
+			if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), span_notice("You start to cut the wires from airlock assembly..."))
 
-				if(W.use_tool(src, user, 40, volume=100))
+				if(attacking_item.use_tool(src, user, 40, volume=100))
 					if(state != "02")
 						return
 
@@ -213,32 +213,32 @@
 						name = "anchored windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/electronics/airlock))
-				if(!user.transferItemToLoc(W, src))
+			else if(istype(attacking_item, /obj/item/electronics/airlock))
+				if(!user.transferItemToLoc(attacking_item, src))
 					return
-				W.play_tool_sound(src, 100)
+				attacking_item.play_tool_sound(src, 100)
 				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
 					span_notice("You start to install electronics into the airlock assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(!src || electronics)
-						W.forceMove(drop_location())
+						attacking_item.forceMove(drop_location())
 						return
 					to_chat(user, span_notice("You install the airlock electronics."))
 					name = "near finished windoor assembly"
-					electronics = W
+					electronics = attacking_item
 				else
-					W.forceMove(drop_location())
+					attacking_item.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+			else if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 				if(!electronics)
 					return
 
 				user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."),
 					span_notice("You start to uninstall electronics from the airlock assembly..."))
 
-				if(W.use_tool(src, user, 40, volume=100) && electronics)
+				if(attacking_item.use_tool(src, user, 40, volume=100) && electronics)
 					to_chat(user, span_notice("You remove the airlock electronics."))
 					name = "wired windoor assembly"
 					var/obj/item/electronics/airlock/ae
@@ -246,7 +246,7 @@
 					electronics = null
 					ae.forceMove(drop_location())
 
-			else if(istype(W, /obj/item/pen))
+			else if(IS_WRITING_UTENSIL(attacking_item))
 				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, MAX_NAME_LEN)
 				if(!t)
 					return
@@ -258,7 +258,7 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(W.tool_behaviour == TOOL_CROWBAR)
+			else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 				if(!electronics)
 					to_chat(usr, span_warning("The assembly is missing electronics!"))
 					return
@@ -266,56 +266,12 @@
 				user.visible_message(span_notice("[user] pries the windoor into the frame."),
 					span_notice("You start prying the windoor into the frame..."))
 
-				if(W.use_tool(src, user, 40, volume=100) && electronics)
-
+				if(attacking_item.use_tool(src, user, 40, volume=100) && electronics)
 					set_density(TRUE) //Shouldn't matter but just incase
+
 					to_chat(user, span_notice("You finish the windoor."))
 
-					if(secure)
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(loc)
-						if(facing == "l")
-							windoor.icon_state = "leftsecureopen"
-							windoor.base_state = "leftsecure"
-						else
-							windoor.icon_state = "rightsecureopen"
-							windoor.base_state = "rightsecure"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
-
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
-
-					else
-						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(loc)
-						if(facing == "l")
-							windoor.icon_state = "leftopen"
-							windoor.base_state = "left"
-						else
-							windoor.icon_state = "rightopen"
-							windoor.base_state = "right"
-						windoor.setDir(dir)
-						windoor.set_density(FALSE)
-
-						if(electronics.one_access)
-							windoor.req_one_access = electronics.accesses
-						else
-							windoor.req_access = electronics.accesses
-						windoor.electronics = electronics
-						electronics.forceMove(windoor)
-						if(created_name)
-							windoor.name = created_name
-						qdel(src)
-						windoor.close()
-
+					finish_door()
 
 			else
 				return ..()
@@ -323,8 +279,53 @@
 	//Update to reflect changes(if applicable)
 	update_appearance()
 
-/obj/structure/windoor_assembly/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+/obj/structure/windoor_assembly/proc/finish_door()
+	var/obj/machinery/door/window/windoor
+	if(secure)
+		windoor = new /obj/machinery/door/window/brigdoor(loc)
+		if(facing == "l")
+			windoor.icon_state = "leftsecureopen"
+			windoor.base_state = "leftsecure"
+		else
+			windoor.icon_state = "rightsecureopen"
+			windoor.base_state = "rightsecure"
+
+	else
+		windoor = new /obj/machinery/door/window(loc)
+		if(facing == "l")
+			windoor.icon_state = "leftopen"
+			windoor.base_state = "left"
+		else
+			windoor.icon_state = "rightopen"
+			windoor.base_state = "right"
+
+	windoor.setDir(dir)
+	windoor.set_density(FALSE)
+	if(created_name)
+		windoor.name = created_name
+	else if(electronics.passed_name)
+		windoor.name = electronics.passed_name
+	if(electronics.one_access)
+		windoor.req_one_access = electronics.accesses
+	else
+		windoor.req_access = electronics.accesses
+	if(electronics.unres_sides)
+		windoor.unres_sides = electronics.unres_sides
+		switch(dir)
+			if(NORTH,SOUTH)
+				windoor.unres_sides &= ~EAST
+				windoor.unres_sides &= ~WEST
+			if(EAST,WEST)
+				windoor.unres_sides &= ~NORTH
+				windoor.unres_sides &= ~SOUTH
+		windoor.unres_sensor = TRUE
+	electronics.forceMove(windoor)
+	windoor.electronics = electronics
+	windoor.autoclose = TRUE
+	windoor.close()
+	windoor.update_appearance()
+
+	qdel(src)
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()

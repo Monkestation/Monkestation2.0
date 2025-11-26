@@ -135,6 +135,7 @@
 	// Yes this code is the same as normal chameleon glasses, but we don't
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()
@@ -151,6 +152,22 @@
 		return
 	chameleon_action.emp_randomise()
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/glasses/hud/security/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
+		return ..()
+
+	if(chameleon_action.hidden)
+		chameleon_action.hidden = FALSE
+		actions += chameleon_action
+		chameleon_action.Grant(user)
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon security HUD ([name]) with [attacking_item]")
+	else
+		chameleon_action.hidden = TRUE
+		actions -= chameleon_action
+		chameleon_action.Remove(user)
+		log_game("[key_name(user)] has locked the disguise of the chameleon security HUD ([name]) with [attacking_item]")
+// MONKESTATION ADDITION END
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "eyepatch HUD"
@@ -171,6 +188,16 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/normal /// Monkestation edit : Adding some substance to the detective role
+	name = "sunglasses"
+	desc = "N/A"
+	icon_state = "sun"
+	inhand_icon_state = "sunglasses"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"

@@ -10,13 +10,21 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_SPACE, TAG_COMBAT)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/contractor
 	minimum_required = 1
 	role_name = "Drifting Contractor"
 
 /datum/round_event/ghost_role/contractor/spawn_role()
-	var/list/candidates = get_candidates(ROLE_DRIFTING_CONTRACTOR)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a drifting contractor?",
+		check_jobban = ROLE_DRIFTING_CONTRACTOR,
+		role = ROLE_DRIFTING_CONTRACTOR,
+		poll_time = 20 SECONDS,
+		alert_pic = /datum/antagonist/traitor/contractor,
+		role_name_text = "drifting contractor"
+	)
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 

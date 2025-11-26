@@ -95,7 +95,7 @@
 	else
 		target.throw_at(get_edge_target_turf(target, dir), range = rand(1, 2), speed = 7, thrower = src)
 
-/mob/living/basic/gorilla/gib()
+/mob/living/basic/gorilla/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	var/mob/living/brain/gorilla_brain = new(drop_location())
 	gorilla_brain.name = real_name
 	gorilla_brain.real_name = real_name
@@ -159,12 +159,13 @@
  * Preferably in future we can replace this with a popup on the lobby to queue to become a gorilla.
  */
 /mob/living/basic/gorilla/cargorilla/proc/poll_for_gorilla()
+	var/tip = span_notice("You can carry up to three crates by Right-Clicking on them in Combat Mode and put them down by Right-Clicking on an open turf.")
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = TRUE,\
 		poll_length = 30 SECONDS,\
 		role_name = "Cargorilla",\
-		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight.",\
+		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight. [tip]",\
 		poll_ignore_key = POLL_IGNORE_CARGORILLA,\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)

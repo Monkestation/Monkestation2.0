@@ -45,6 +45,26 @@
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
 
+/datum/supply_pack/goody/hunterslugs
+	name = "12 Gauge Hunter Slugs"
+	desc = "12 Gauge shells designed to put down most lavaland xenofauna in a single shot. Make sure to take a combative stance before firing."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/ammo_box/advanced/s12gauge/hunter)
+
+/datum/supply_pack/goody/barkeep_single
+	name = "Double Barrel Single-Pack"
+	desc = "Lost your lupara in a brawl fight? Drunken haze? Simply want a dedicated 'shot'gun? We got you, as long as you pay the fee."
+	cost = PAYCHECK_COMMAND * 12
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel, /obj/item/storage/belt/bandolier)
+
+/datum/supply_pack/goody/pump_single
+	name = "Pump Shotgun Single-Pack"
+	desc = "A respectable pump action shotgun, to restock armoury supplies. Comes with a bandolier."
+	cost = PAYCHECK_COMMAND * 15
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/gun/ballistic/shotgun/riot, /obj/item/storage/belt/bandolier)
+
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
@@ -139,13 +159,19 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
+	contains = list(/obj/item/paper/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"
 	desc = "The most important thing you could possibly spend your hard-earned money on."
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
+
+/datum/supply_pack/goody/blahaj
+	name = "Shark Plushie"
+	desc = "A soft, warm companion for midday naps."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/toy/plush/shark)
 
 /datum/supply_pack/goody/dog_bone
 	name = "Jumbo Dog Bone"
@@ -251,7 +277,7 @@
 /datum/supply_pack/goody/fishing_hook_rescue
 	name = "Rescue Fishing Hook"
 	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
-	cost = PAYCHECK_CREW * 12
+	cost = PAYCHECK_CREW * 6 //Monkestation price edit
 	contains = list(/obj/item/fishing_hook/rescue)
 
 /datum/supply_pack/goody/premium_bait
@@ -295,3 +321,17 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+/datum/supply_pack/goody/climbing_hook
+	name = "Climbing hook"
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/summoner_nifsoft
+	name = "Grimoire Caeruleam NIFSoft"
+	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/disk/nifsoft_uploader/summoner,
+	)

@@ -1,11 +1,21 @@
 ///ANIME ACCESSORIES GO HERE
 /datum/sprite_accessory/anime_head
 	icon = 'monkestation/icons/mob/anime/anime_head.dmi'
-	color_src = ANIME
+	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_head/none
 	name = "None"
-	icon_state = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/anime_head/elf1
+	name = "Short Elf Ears"
+	icon_state = "elf1"
+	color_src = SKIN_COLOR
+
+/datum/sprite_accessory/anime_head/elf2
+	name = "Long Elf Ears"
+	icon_state = "elf2"
+	color_src = SKIN_COLOR
 
 /datum/sprite_accessory/anime_head/pony
 	name = "Pony Ears"
@@ -30,7 +40,6 @@
 
 /datum/sprite_accessory/anime_head/tallhorns
 	name = "Tall Horns"
-	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
 	icon_state = "tallhorns"
 
 /datum/sprite_accessory/anime_head/antlers
@@ -39,7 +48,6 @@
 
 /datum/sprite_accessory/anime_head/bigantlers
 	name = "Big Antlers"
-	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
 	icon_state = "bigantlers"
 
 
@@ -55,7 +63,6 @@
 
 /datum/sprite_accessory/anime_head/rabbit
 	name = "Rabbit Ears"
-	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
 	icon_state = "rabbit"
 
 /datum/sprite_accessory/anime_head/mouse
@@ -63,9 +70,13 @@
 	icon_state = "mouse"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_head/playbunny
+	name = "Bunny Ears"
+	icon_state = "playbunny"
+
 /datum/sprite_accessory/anime_middle
 	icon = 'monkestation/icons/mob/anime/anime_middle.dmi'
-	color_src = ANIME
+	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_middle/none
 	name = "None"
@@ -101,7 +112,7 @@
 
 /datum/sprite_accessory/anime_bottom
 	icon = 'monkestation/icons/mob/anime/anime_bottom.dmi'
-	color_src = ANIME
+	color_src = ANIME_COLOR
 
 /datum/sprite_accessory/anime_bottom/none
 	name = "None"
@@ -152,3 +163,142 @@
 /datum/sprite_accessory/anime_bottom/cat
 	name = "Cat Tail"
 	icon_state = "cat"
+
+/datum/sprite_accessory/anime_bottom/rabbit
+	name = "Rabbit Tail"
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/anime_bottom/bunny
+	name = "Bunny Puff"
+	icon_state = "playbunny"
+
+/datum/sprite_accessory/anime_bottom/mouse
+	name = "Mouse Tail"
+	icon_state = "mouse"
+	color_src = null
+
+/datum/sprite_accessory/anime_bottom/plug
+	name = "Plug"
+	icon_state = "plug"
+	hasinner = TRUE
+
+/datum/sprite_accessory/anime_halo
+	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
+	color_src = ANIME_HALO_COLOR
+	is_emissive = TRUE
+	dimension_x = 32
+	center = TRUE
+	dimension_y = 64
+
+/datum/sprite_accessory/anime_halo/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/anime_halo/gabriel
+	name = "Messenger's halo"
+	icon_state = "gabriel"
+
+/datum/sprite_accessory/anime_halo/threespike
+	name = "Triple starred halo"
+	icon_state = "threespike"
+
+/datum/sprite_accessory/anime_halo/brokenspike
+	name = "Prophet's halo"
+	icon_state = "brokenspike"
+
+/datum/sprite_accessory/anime_halo/arrows
+	name = "Wayfinder's halo"
+	icon_state = "arrows"
+
+/datum/sprite_accessory/anime_halo/circles
+	name = "Orbiting halo"
+	icon_state = "circles"
+
+/datum/sprite_accessory/anime_halo/thorns
+	name = "Judge's halo"
+	icon_state = "thorns"
+
+/datum/sprite_accessory/anime_halo/cross
+	name = "Faithful halo"
+	icon_state = "cross"
+
+/datum/sprite_accessory/anime_halo/plus
+	name = "Unfaithful halo"
+	icon_state = "crossalt"
+
+/datum/sprite_accessory/anime_halo/moon
+	name = "Lunar halo"
+	icon_state = "moon"
+
+/datum/sprite_accessory/anime_halo/crown
+	name = "Lauded halo"
+	icon_state = "crown"
+
+/datum/sprite_accessory/anime_halo/shiroinv
+	name = "Focused halo"
+	icon_state = "shiroinv"
+
+/datum/sprite_accessory/anime_halo/shiroko
+	name = "Headstrong halo"
+	icon_state = "shiroko"
+
+/datum/sprite_accessory/anime_halo/wings
+	name = "Elevated's halo"
+	icon_state = "wings"
+
+/datum/sprite_accessory/anime_halo/star
+	name = "Bright halo"
+	icon_state = "star"
+
+/datum/sprite_accessory/anime_halo/squares
+	name = "Logistician's halo"
+	icon_state = "squares"
+
+/datum/sprite_accessory/anime_halo/spikes
+	name = "Intrepid halo"
+	icon_state = "spikes"
+
+/datum/sprite_accessory/anime_halo/reticle
+	name = "Marksman's halo"
+	icon_state = "reticle"
+
+/datum/sprite_accessory/anime_halo/polygon
+	name = "Pragmatic's halo"
+	icon_state = "polygon"
+
+/datum/sprite_accessory/anime_halo/offset
+	name = "Mercurial halo"
+	icon_state = "offset"
+
+/datum/sprite_accessory/anime_halo/nanotrasen
+	name = "Corpo halo"
+	icon_state = "nanotrasen"
+
+/datum/sprite_accessory/anime_halo/corpomedic
+	name = "Corpo medic halo"
+	icon_state = "corpomedic"
+
+/datum/sprite_accessory/anime_halo/traumaresponse
+	name = "Trauma response halo"
+	icon_state = "traumaresponse"
+
+/datum/sprite_accessory/anime_halo/aesculapian
+	name = "Aesculapian halo"
+	icon_state = "aesculapian"
+
+/datum/sprite_accessory/anime_halo/crowned
+	name = "Crowned halo"
+	icon_state = "crowned"
+
+/datum/sprite_accessory/anime_halo/goldenring
+	name = "Golden ring"
+	icon_state = "goldenring"
+	color_src = null
+
+/datum/sprite_accessory/anime_halo/neonring
+	name = "Neon ring"
+	icon_state = "neonring"
+
+/datum/sprite_accessory/anime_halo/engineer
+	name = "Grease monke's halo"
+	icon_state = "engineer"

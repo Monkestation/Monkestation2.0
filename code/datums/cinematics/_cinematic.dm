@@ -54,7 +54,7 @@
 
 /datum/cinematic/Destroy()
 	QDEL_NULL(screen)
-	QDEL_NULL(special_callback)
+	special_callback = null
 	watching.Cut()
 	locked.Cut()
 	return ..()
@@ -155,7 +155,7 @@
 
 /// Unlocks a previously locked weakref
 /datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
-	var/mob/locked_mob = mob_ref.resolve()
+	var/mob/locked_mob = mob_ref?.resolve()
 	if(isnull(locked_mob))
 		return
 	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)

@@ -173,6 +173,9 @@
 /area/ruin/space/has_grav/deepstorage/storage
 	name = "\improper Deep Storage Storage"
 
+/area/ruin/space/has_grav/deepstorage/aux_storage
+	name = "\improper Deep Storage Auxiliary Storage"
+
 /area/ruin/space/has_grav/deepstorage/dorm
 	name = "\improper Deep Storage Dormitory"
 
@@ -184,6 +187,9 @@
 
 /area/ruin/space/has_grav/deepstorage/pharmacy
 	name = "\improper Deep Storage Pharmacy"
+
+/area/ruin/space/has_grav/deepstorage/xenobiology
+	name = "\improper Deep Storage Xenobiology"
 
 //Ruin of Abandoned Zoo
 
@@ -352,9 +358,48 @@
 // Area define for organization
 /area/ruin/space/ks13/engineering
 
+/* MONKESTATION REMOVAL
 /area/ruin/space/ks13/engineering/singulo
-	name = "\improper Derelict Singulairty Engine"
+	name = "\improper Derelict Singularity Engine" //MONKESTATION EDIT: corrects misspell of singularity despite the fact this is commented out because fuck you
 	icon_state = "ks13_singulo"
+*/
+
+//MONKESTATION ADDITION
+/area/ruin/space/ks13/monke/engineering
+	icon = 'monkestation/icons/area/areas_derelict.dmi'
+
+/area/ruin/space/ks13/monke/engineering/engine_hallway
+	name = "\improper Derelict Engineering Hallway"
+	icon_state = "ks13_engineering_hallway"
+
+/area/ruin/space/ks13/monke/engineering/engine_room
+	name = "\improper Derelict Engine Room"
+	icon_state = "ks13_engine_room"
+
+/area/ruin/space/ks13/monke/engineering/engine_control_room
+	name = "\improper Derelict Engine Control Room"
+	icon_state = "ks13_engine_control_room"
+
+/area/ruin/space/ks13/monke/engineering/engine_storage
+	name = "\improper Derelict Engineering Storage"
+	icon_state = "ks13_engineering_storage"
+
+/area/ruin/space/ks13/monke/engineering/engine_gas_storage
+	name = "\improper Derelict Engineering Gas Storage"
+	icon_state = "ks13_engineering_gas_storage"
+
+/area/ruin/space/ks13/monke/engineering/aux_engine
+	name = "\improper Derelict Aux Engine"
+	icon_state = "ks13_auxiliary_engine"
+
+/area/ruin/space/ks13/monke/engineering/escape_pod_bay
+	name = "\improper Derelict Escape Pod Bay"
+	icon_state = "ks13_escape_pods"
+
+/area/ruin/space/ks13/monke/engineering/repair_bay
+	name = "\improper Derelict Repair Bay"
+	icon_state = "ks13_repair_bay"
+//END OF ADDITION
 
 /area/ruin/space/ks13/engineering/atmos
 	name = "\improper Derelict Atmospherics"
@@ -545,11 +590,11 @@
 
 	name = "\improper Abandoned Ship"
 
+//ruin hull ship
+/area/ruin/space/ruined_hull_1
+	name = "\improper interstellar modulars hull"
 
-//SYNDICATE LISTENING POST STATION
-
-/area/ruin/space/has_grav/listeningstation
-	name = "\improper Listening Post"
+//some sorta ancient shuttle idk
 
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "\improper Ancient Shuttle"
@@ -560,7 +605,7 @@
 
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "\improper Hell Factory Office"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT //who decided blobs should be allowed, i don't know, but it's funny
 
 //Ruin of Spinward Smoothies
 
@@ -656,3 +701,77 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+// Abandoned SCP Site Ruins
+/area/ruin/space/has_grav/abandonedscpsite
+	name = "Abandoned Site Maintenance"
+
+/area/ruin/space/has_grav/abandonedscpsite/enterance
+	name = "Containment Site Enterance"
+
+/area/ruin/space/has_grav/abandonedscpsite/ezhall
+	name = "Containment Site Enterance Zone Hallway"
+
+/area/ruin/space/has_grav/abandonedscpsite/engineering
+	name = "Containment Site Engineering"
+
+/area/ruin/space/has_grav/abandonedscpsite/office1
+	name = "Containment Site General Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/cafeteria
+	name = "Containment Site Cafeteria"
+
+/area/ruin/space/has_grav/abandonedscpsite/moffice
+	name = "Containment Site Managers Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/hcz1
+	name = "HCZ Checkpoint 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/hcz2
+	name = "HCZ Checkpoint 2"
+
+/area/ruin/space/has_grav/abandonedscpsite/lcz1
+	name = "LCZ Checkpoint 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/hczhall
+	name = "HCZ Hall"
+
+/area/ruin/space/has_grav/abandonedscpsite/czbrig
+	name = "Containment Site Brig"
+
+/area/ruin/space/has_grav/abandonedscpsite/containment1
+	name = "Containment 1"
+
+/area/ruin/space/has_grav/abandonedscpsite/containment2
+	name = "Containment 2"
+
+/area/ruin/space/has_grav/abandonedscpsite/czmedbay
+	name = "Containment Site Medbay"
+
+/area/ruin/space/has_grav/abandonedscpsite/lounge
+	name = "Containment Site Break Room"
+
+/area/ruin/space/has_grav/abandonedscpsite/lczhall
+	name = "LCZ Hall"
+
+/area/ruin/space/has_grav/abandonedscpsite/office2
+	name = "Specialized Office"
+
+/area/ruin/space/has_grav/abandonedscpsite/czprison
+	name = "Containment Site Prison"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisoncafe
+	name = "Containment Site Prison Cafeteria"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisonlibrary
+	name = "Containment Site Prison Library"
+
+/area/ruin/space/has_grav/abandonedscpsite/czmaintenance
+	name = "Containment Site Maintenance"
+
+/area/ruin/space/has_grav/abandonedscpsite/prisonguard
+	name = "Containment Site Prison Watchpoint"
+
+//Infested Flotilla
+/area/ruin/space/has_grav/infested_flotilla
+	name = "Infested Flotilla"

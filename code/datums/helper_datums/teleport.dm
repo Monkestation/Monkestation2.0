@@ -65,7 +65,9 @@
 		return FALSE
 
 	if(!forced)
-		if(!check_teleport_valid(teleatom, destination, channel))
+		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
+			if(ismob(teleatom))
+				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
 	if(isobserver(teleatom))
@@ -114,7 +116,28 @@
 
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
 			return random_location
+// Safe Location finder in maintenance (used in slasher)
+/proc/find_safe_turf_in_maintenance(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
+	if(!zlevels)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/turf/random_location = locate(x,y,z)
 
+		// Check if we're in maintenance
+		var/area/A = get_area(random_location)
+		if(!istype(A, /area/station/maintenance))
+			continue
+
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))
+			return random_location
+	return null // Return null if no safe maintenance turf found
 /// Checks if a given turf is a "safe" location
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE
@@ -173,7 +196,7 @@
 		if(T.is_transition_turf())
 			continue // Avoid picking these.
 		var/area/A = T.loc
-		if(!(A.area_flags & NOTELEPORT))
+		if(!(A.area_flags & NOTELEPORT) || (SSticker.current_state == GAME_STATE_FINISHED)) // monkestation edit: allow jaunts to work after roundend
 			posturfs.Add(T)
 	return posturfs
 
@@ -183,24 +206,30 @@
 		return pick(turfs)
 
 /// Validates that the teleport being attempted is valid or not
-/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel)
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
 	var/area/origin_area = get_area(teleported_atom)
 	var/turf/origin_turf = get_turf(teleported_atom)
 
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
 
-	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
-		return FALSE
+	if(SSticker.current_state < GAME_STATE_FINISHED)
+		if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+			return FALSE
 
-	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
-		return FALSE
+		// prevent unprecise teleports from landing you outside of the destination's reserved area
+		if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+			&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
+			return FALSE
 
-	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
+		if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
+			return FALSE
 
-	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
+		if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
+
+		if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
 
 	SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
 	SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, origin_turf, destination_turf)

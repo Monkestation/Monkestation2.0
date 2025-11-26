@@ -1,6 +1,3 @@
-/**
- * The base object for the quantum server
- */
 /obj/machinery/quantum_server
 	name = "quantum server"
 
@@ -16,16 +13,14 @@
 	var/datum/lazy_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
 	var/datum/map_template/safehouse/generated_safehouse
-	/// The connected console
-	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// If any threats were spawned, adds to rewards
-	var/domain_threats = 0
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// List of available domains
 	var/list/available_domains = list()
+	/// Chance multipled by threat to spawn a glitch
+	var/glitch_chance = 0.2
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
@@ -43,25 +38,31 @@
 	/// Changes how much info is available on the domain
 	var/scanner_tier = 1
 	/// Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 3 MINUTES
+	var/server_cooldown_time = 90 SECONDS //MONKESTATION EDIT
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
+	/// Determines the glitches available to spawn, builds with completion
+	var/threat = 0
+	/// Maximum rate at which a glitch can spawn
+	var/threat_prob_max = 15
 	/// The turfs we can place a hololadder on.
-	var/turf/exit_turfs = list()
+	var/list/turf/exit_turfs = list()
+	/// Determines if we broadcast to entertainment monitors or not
+	var/broadcasting = FALSE
+	/// Cooldown between being able to toggle broadcasting
+	COOLDOWN_DECLARE(broadcast_toggle_cd)
+
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/LateInitialize(mapload_arg)
 	. = ..()
 
-	if(isnull(console_ref))
-		find_console()
-
 	radio = new(src)
-	radio.set_frequency(FREQ_SUPPLY)
+	radio.set_frequency(FREQ_SECURITY) //MONKESTATION EDIT
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
@@ -81,10 +82,24 @@
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
-	QDEL_NULL(exit_turfs)
+	exit_turfs.Cut()
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
+
+/obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
+	if(obj_flags & EMAGGED)
+		return
+
+	obj_flags |= EMAGGED
+	glitch_chance *= 2
+	threat_prob_max *= 2
+
+	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
+	balloon_alert(user, "system jailbroken...")
+	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
@@ -147,4 +162,3 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, servo_rating)

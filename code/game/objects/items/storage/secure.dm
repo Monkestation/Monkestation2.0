@@ -40,7 +40,7 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(can_hack_open && atom_storage.locked)
 		return ..()
 	else
@@ -83,8 +83,8 @@
 	message = text("[]", entered_code)
 	if (!locked)
 		message = "*****"
-	dat += text("<HR>\n>[]<BR>\n<A href='?src=[REF(src)];type=1'>1</A>-<A href='?src=[REF(src)];type=2'>2</A>-<A href='?src=[REF(src)];type=3'>3</A><BR>\n<A href='?src=[REF(src)];type=4'>4</A>-<A href='?src=[REF(src)];type=5'>5</A>-<A href='?src=[REF(src)];type=6'>6</A><BR>\n<A href='?src=[REF(src)];type=7'>7</A>-<A href='?src=[REF(src)];type=8'>8</A>-<A href='?src=[REF(src)];type=9'>9</A><BR>\n<A href='?src=[REF(src)];type=R'>R</A>-<A href='?src=[REF(src)];type=0'>0</A>-<A href='?src=[REF(src)];type=E'>E</A><BR>\n</TT>", message)
-	user << browse(dat, "window=caselock;size=300x280")
+	dat += text("<HR>\n>[]<BR>\n<A href='byond://?src=[REF(src)];type=1'>1</A>-<A href='byond://?src=[REF(src)];type=2'>2</A>-<A href='byond://?src=[REF(src)];type=3'>3</A><BR>\n<A href='byond://?src=[REF(src)];type=4'>4</A>-<A href='byond://?src=[REF(src)];type=5'>5</A>-<A href='byond://?src=[REF(src)];type=6'>6</A><BR>\n<A href='byond://?src=[REF(src)];type=7'>7</A>-<A href='byond://?src=[REF(src)];type=8'>8</A>-<A href='byond://?src=[REF(src)];type=9'>9</A><BR>\n<A href='byond://?src=[REF(src)];type=R'>R</A>-<A href='byond://?src=[REF(src)];type=0'>0</A>-<A href='byond://?src=[REF(src)];type=E'>E</A><BR>\n</TT>", message)
+	user << browse(HTML_SKELETON(dat), "window=caselock;size=300x280")
 
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
@@ -96,15 +96,13 @@
 				lock_code = entered_code
 				lock_set = TRUE
 			else if ((entered_code == lock_code) && lock_set)
-				atom_storage.locked = FALSE
-				update_appearance()
+				atom_storage.set_locked(STORAGE_NOT_LOCKED)
 				entered_code = null
 			else
 				entered_code = "ERROR"
 		else
 			if (href_list["type"] == "R")
-				atom_storage.locked = TRUE
-				update_appearance()
+				atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 				entered_code = null
 				atom_storage.hide_contents(usr)
 			else
@@ -231,8 +229,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
-	atom_storage.locked = TRUE
-	update_appearance()
+	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)

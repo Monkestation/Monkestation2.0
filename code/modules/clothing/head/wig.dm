@@ -18,11 +18,11 @@
 /obj/item/clothing/head/wig/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/dropped(mob/user)
 	. = ..()
-	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/hair_style = GLOB.roundstart_hairstyles_list[hairstyle]
@@ -30,7 +30,6 @@
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
 	return ..()
-
 
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
@@ -50,7 +49,7 @@
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.roundstart_hairstyles_list - "Bald")
-	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
+	var/newcolor = adjustablecolor ? tgui_color_picker(usr, "", "Choose Color", color) : null
 	if(!user.can_perform_action(src))
 		return
 	if(new_style && new_style != hairstyle)
@@ -60,16 +59,22 @@
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
-	. = ..()
-	if(!istype(target))
-		return
+/obj/item/clothing/head/wig/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/clothing/head/wig/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with) || interacting_with == user)
+		return NONE
+	var/mob/living/carbon/human/target = interacting_with
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
+	if(!noggin)
+		to_chat(user, span_warning("[target.p_They()] have no head!"))
+		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
@@ -77,7 +82,7 @@
 		var/obj/item/clothing/head/wig/wig = target.head
 		selected_hairstyle = wig.hairstyle
 		selected_hairstyle_color = wig.color
-	else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+	else if((noggin.head_flags & HEAD_HAIR) && target.hairstyle != "Bald")
 		selected_hairstyle = target.hairstyle
 		selected_hairstyle_color = "[target.hair_color]"
 
@@ -86,6 +91,7 @@
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.roundstart_hairstyles_list - "Bald") //Don't want invisible wig
@@ -106,7 +112,7 @@
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		if (color != user.hair_color) // only update if necessary
+		if(color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
 		user.update_worn_head()

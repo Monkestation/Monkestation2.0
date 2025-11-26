@@ -15,10 +15,12 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_DIAGNOSTIC_BASIC = new/datum/atom_hud/data/diagnostic/basic(),
 	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
-	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
-	DATA_HUD_PERMIT = new/datum/atom_hud/data/human/permit()
+	DATA_HUD_PERMIT = new/datum/atom_hud/data/human/permit(), //monkestation edit
+	DATA_HUD_SENSORS = new/datum/atom_hud/data/human/medical/basic/sensors(), //monkestation edit - CYBERNETICS
+	DATA_HUD_CREW = new/datum/atom_hud/data/human/crew_hud(), //Monkestation edit, crew hud
+	DATA_HUD_BORER = new/datum/atom_hud/borer(),
 ))
 
 /datum/atom_hud
@@ -156,6 +158,8 @@ GLOBAL_LIST_INIT(huds, list(
 		else
 			next_time_allowed[new_viewer] = world.time + ADD_HUD_TO_COOLDOWN
 			for(var/atom/hud_atom_to_add as anything in get_hud_atoms_for_z_level(their_turf.z))
+				if(QDELETED(hud_atom_to_add))
+					continue
 				add_atom_to_single_mob_hud(new_viewer, hud_atom_to_add)
 	else
 		hud_users_all_z_levels[new_viewer] += 1 //increment the number of times this hud has been added to this hud user
@@ -206,6 +210,8 @@ GLOBAL_LIST_INIT(huds, list(
 	hud_atoms[atom_turf.z] |= new_hud_atom
 
 	for(var/mob/mob_to_show as anything in get_hud_users_for_z_level(atom_turf.z))
+		if(QDELETED(mob_to_show))
+			continue
 		if(!queued_to_see[mob_to_show])
 			add_atom_to_single_mob_hud(mob_to_show, new_hud_atom)
 	return TRUE
@@ -221,6 +227,8 @@ GLOBAL_LIST_INIT(huds, list(
 		UnregisterSignal(hud_atom_to_remove, COMSIG_QDELETING)
 
 	for(var/mob/mob_to_remove as anything in hud_users_all_z_levels)
+		if(QDELETED(mob_to_remove))
+			continue
 		remove_atom_from_single_hud(mob_to_remove, hud_atom_to_remove)
 
 	hud_atoms_all_z_levels -= hud_atom_to_remove
@@ -247,7 +255,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return FALSE
 
 	for(var/mob/hud_user as anything in get_hud_users_for_z_level(atom_turf.z))
-		if(!hud_user.client)
+		if(QDELETED(hud_user) || !hud_user.client)
 			continue
 		if(!hud_exceptions[hud_user] || !(hud_atom in hud_exceptions[hud_user]))
 			hud_user.client.images |= hud_atom.active_hud_list[hud_category_to_add]
@@ -269,7 +277,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return FALSE
 
 	for(var/mob/hud_user as anything in get_hud_users_for_z_level(atom_turf.z))
-		if(!hud_user.client)
+		if(QDELETED(hud_user) || !hud_user.client)
 			continue
 		hud_user.client.images -= hud_atom.active_hud_list[hud_category_to_remove]//by this point it shouldnt be in active_hud_list
 
@@ -304,9 +312,8 @@ GLOBAL_LIST_INIT(huds, list(
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to requesting_mob's client.images list
 /datum/atom_hud/proc/add_atom_to_single_mob_hud(mob/requesting_mob, atom/hud_atom) //unsafe, no sanity apart from client
-	if(!requesting_mob || !requesting_mob.client || !hud_atom)
+	if(QDELETED(requesting_mob) || !requesting_mob.client || QDELETED(hud_atom))
 		return
-
 	for(var/hud_category in (hud_icons & hud_atom.active_hud_list))
 		if(!hud_exceptions[requesting_mob] || !(hud_atom in hud_exceptions[requesting_mob]))
 			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
@@ -314,7 +321,7 @@ GLOBAL_LIST_INIT(huds, list(
 /// all passed in hud_atoms's hud images (that are part of this atom_hud) to requesting_mob's client.images list
 /// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/add_all_atoms_to_single_mob_hud(mob/requesting_mob, list/atom/hud_atoms) //unsafe, no sanity apart from client
-	if(!requesting_mob || !requesting_mob.client)
+	if(QDELETED(requesting_mob) || !requesting_mob.client)
 		return
 
 	// Hud entries this mob ignores
@@ -322,6 +329,8 @@ GLOBAL_LIST_INIT(huds, list(
 
 	for(var/hud_category in hud_icons)
 		for(var/atom/hud_atom as anything in hud_atoms)
+			if(QDELETED(hud_atom))
+				continue
 			if(mob_exceptions && (hud_atom in hud_exceptions[requesting_mob]))
 				continue
 			var/image/output = hud_atom.active_hud_list?[hud_category]
@@ -343,14 +352,14 @@ GLOBAL_LIST_INIT(huds, list(
 	// Cache for sonic speed, lists are structs
 	var/list/exceptions = hud_exceptions
 	for(var/mob/requesting_mob as anything in requesting_mobs)
-		if(!requesting_mob.client)
+		if(QDELETED(requesting_mob) || !requesting_mob.client)
 			continue
 		if(!exceptions[requesting_mob] || !(hud_atom in exceptions[requesting_mob]))
 			requesting_mob.client.images |= images_to_add
 
 /// remove every hud image for this hud on atom_to_remove from client_mob's client.images list
 /datum/atom_hud/proc/remove_atom_from_single_hud(mob/client_mob, atom/atom_to_remove)
-	if(!client_mob || !client_mob.client || !atom_to_remove?.active_hud_list)
+	if(QDELETED(client_mob) || !client_mob.client || !atom_to_remove?.active_hud_list)
 		return
 	for(var/hud_image in hud_icons)
 		client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
@@ -362,7 +371,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	for(var/hud_image in hud_icons)
 		for(var/atom/atom_to_remove as anything in atoms_to_remove)
-			if(!atom_to_remove)
+			if(QDELETED(atom_to_remove))
 				continue
 			client_mob.client.images -= atom_to_remove.active_hud_list?[hud_image]
 
@@ -377,7 +386,7 @@ GLOBAL_LIST_INIT(huds, list(
 		images_to_remove |= atom_to_remove.active_hud_list[hud_image]
 
 	for(var/mob/client_mob as anything in client_mobs)
-		if(!client_mob.client)
+		if(QDELETED(client_mob) || !client_mob.client)
 			continue
 		client_mob.client.images -= images_to_remove
 
@@ -430,6 +439,8 @@ GLOBAL_LIST_INIT(huds, list(
 	for(var/datum/atom_hud/hud in GLOB.all_huds)
 		if(hud?.hud_users_all_z_levels[src])
 			for(var/atom/hud_atom as anything in hud.get_hud_atoms_for_z_level(our_turf.z))
+				if(QDELETED(hud_atom))
+					continue
 				hud.add_atom_to_single_mob_hud(src, hud_atom)
 
 /mob/dead/new_player/reload_huds()

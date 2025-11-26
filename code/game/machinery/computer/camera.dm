@@ -15,9 +15,7 @@
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
-	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/atom/movable/screen/background/cam_background
+	var/atom/movable/screen/map_view/camera/cam_screen
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
 
@@ -34,13 +32,9 @@
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -66,13 +60,12 @@
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
-			use_power(active_power_usage)
-		// Register map objects
-		cam_screen.display_to(user)
-		user.client.register_map_obj(cam_background)
+			use_energy(active_power_usage)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+		// Register map objects
+		cam_screen.display_to(user, ui.window)
 
 /obj/machinery/computer/security/ui_status(mob/user)
 	. = ..()
@@ -82,57 +75,71 @@
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
+			ref = REF(active_camera),
 			status = active_camera.status,
 		)
 	return data
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	var/list/cameras = get_available_cameras()
-	data["cameras"] = list()
-	for(var/i in cameras)
-		var/obj/machinery/camera/C = cameras[i]
-		data["cameras"] += list(list(
-			name = C.c_tag,
-		))
-
+	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
-/obj/machinery/computer/security/ui_act(action, params)
+/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
-		var/list/cameras = get_available_cameras()
-		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
-		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
-		if(!selected_camera)
+		if(isnull(active_camera))
 			return TRUE
 
 		update_active_camera_screen()
 
 		return TRUE
 
+// this is stupid imo
+// there has to be a better solution for this
+/obj/machinery/computer/security/proc/endpoint(atom/source, turf/target_turf)
+	var/turf/current_turf = get_turf(source)
+	var/turf/old_turf = current_turf
+
+	if(current_turf == target_turf)
+		return current_turf
+
+	current_turf = get_step_towards(current_turf, target_turf)
+	while(current_turf != target_turf)
+		if(IS_OPAQUE_TURF(current_turf) || !current_turf)
+			return old_turf
+		old_turf = current_turf
+		current_turf = get_step_towards(current_turf, target_turf)
+
+	return current_turf
+
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
-		show_camera_static()
+		cam_screen.show_camera_static()
 		return
 
 	var/list/visible_turfs = list()
 
 	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
+	var/turf/new_cam_turf = get_turf(active_camera)
+	var/tx = clamp(new_cam_turf.x + active_camera.view_offset_x, 1, world.maxx)
+	var/ty = clamp(new_cam_turf.y + active_camera.view_offset_y, 1, world.maxy)
+	new_cam_turf = locate(tx, ty, new_cam_turf.z)
+	new_cam_turf = endpoint(active_camera, new_cam_turf)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
@@ -154,9 +161,7 @@
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
@@ -171,37 +176,36 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 
-/obj/machinery/computer/security/proc/show_camera_static()
-	cam_screen.vis_contents.Cut()
+/atom/movable/screen/map_view/camera
+	/// All the plane masters that need to be applied.
+	var/atom/movable/screen/background/cam_background
+
+/atom/movable/screen/map_view/camera/Destroy()
+	QDEL_NULL(cam_background)
+	return ..()
+
+/atom/movable/screen/map_view/camera/generate_view(map_key)
+	. = ..()
+	cam_background = new
+	cam_background.del_on_map_removal = FALSE
+	cam_background.assigned_map = assigned_map
+
+/atom/movable/screen/map_view/camera/display_to_client(client/show_to)
+	show_to.register_map_obj(cam_background)
+	. = ..()
+
+/atom/movable/screen/map_view/camera/proc/show_camera(list/visible_turfs, size_x, size_y)
+	vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
+
+/atom/movable/screen/map_view/camera/proc/show_camera_static()
+	vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
-// Returns the list of cameras accessible from this computer
-/obj/machinery/computer/security/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
-		//Get the camera's turf in case it's inside something like a borg
-		var/turf/camera_turf = get_turf(cam)
-		if((is_away_level(z) || is_away_level(camera_turf.z)) && (camera_turf.z != z))//if on away mission, can only receive feed from same z_level cameras
-			continue
-		L.Add(cam)
-	var/list/D = list()
-	for(var/obj/machinery/camera/cam in L)
-		if(!cam.network)
-			stack_trace("Camera in a cameranet has no camera network")
-			continue
-		if(!(islist(cam.network)))
-			stack_trace("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = cam.network & network
-		if(tempnetwork.len)
-			D["[cam.c_tag]"] = cam
-	return D
-
 // SECURITY MONITORS
-
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
@@ -240,6 +244,12 @@
 	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
+	circuit = null
+
+/obj/machinery/computer/security/old
+	name = "\improper worn camera console"
+	desc = "A security console with access to the station's camera network. The screen barley flickers to life."
+	network = list("Alpha", "Beta", "Charlie", "Delta",)
 	circuit = null
 
 #undef DEFAULT_MAP_SIZE

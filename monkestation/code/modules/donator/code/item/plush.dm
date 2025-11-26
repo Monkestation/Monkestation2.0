@@ -49,3 +49,152 @@
 	desc = "A plush of a hotdog. ~Handcrafted lovingly for Spinnermaster."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "hotdog"
+
+/obj/item/toy/plush/jackfrost
+	name = "jack frost plush"
+	desc = "A plush of Jack Frost. ~Handcrafted lovingly for tonymcsp"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "jack_frost"
+
+/obj/item/toy/plush/liefflos
+	name = "lief flos plush"
+	desc = "A plush of the Floran Lief Flos. ~Handcrafted lovingly for rickdude"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "lief_flos"
+
+/obj/item/toy/plush/gumball_goblin
+	name = "gumball goblin plush"
+	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs. Help. ~Handcrafted lovingly for elliethedarksun"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "gumball_goblin"
+
+/obj/item/toy/plush/glep
+	name = "glep plush"
+	desc = "A plush of Glep."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "glep"
+	squeak_override = list('monkestation/code/modules/donator/sounds/glep1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep3.ogg'=1)
+
+/obj/item/toy/plush/mr_frog
+	name = "mr frog plush"
+	desc = "A plush of a classic beloved television star, Mr. Frog."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "mr_frog"
+	squeak_override = list('monkestation/code/modules/donator/sounds/mr_frog1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog3.ogg'=1)
+
+/obj/item/toy/plush/pim
+	name = "pim plush"
+	desc = "A plush of Pim."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "pim"
+	squeak_override = list('monkestation/code/modules/donator/sounds/pim.ogg'=1)
+
+/obj/item/toy/plush/charlie
+	name = "charlie plush"
+	desc = "A plush of Charlie."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "charlie"
+	squeak_override = list('monkestation/code/modules/donator/sounds/charlie.ogg'=1)
+
+/obj/item/toy/plush/cowlephant
+	name = "cowlephant plush"
+	desc = "A plush of a Cowlephant ~Handcrafted lovingly for Raziaar"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "cowlephant"
+
+/obj/item/toy/plush/elliethedarksun
+	name = "ellie plush"
+	desc = "A plush of a crewmember named Ellie! ~Handcrafted lovingly for elliethedarksun (must be an alias for something..)"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "elliethedarksun"
+	squeak_override = list('monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-1.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-2.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-3.ogg'=1)
+
+/obj/item/clothing/head/sheep_plush_av4l0n
+	name = "sheep plushie"
+	desc = "What a silly little guy."
+	attack_verb_continuous = list("thumps", "whomps", "bumps")
+	attack_verb_simple = list("thump", "whomp", "bump")
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/plushes.dmi'
+	icon_state = "av4l0n_sheep"
+	inhand_icon_state = "av4l0n_sheep"
+	lefthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_left.dmi'
+	righthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_right.dmi'
+
+/obj/item/toy/plush/bluedragon66
+	name = "sees plushie"
+	desc = "A plushie meant to resemble one of Nanotrasen's Tizirian employees. If you put your ear up to it, you swear you could hear a cacophony of terrified rats screaming for their lives. Smells like space cleaner."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "bluedragon66"
+
+/obj/item/toy/plush/pooba_bee_plush
+	name = "bumbliest bee plushie"
+	desc = "God damn that's a cute bee."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "poba_fat_bee"
+
+/obj/item/toy/plush/toadie_wan_kenfrogi
+	name = "Toadie Wan Kenfrogi"
+	desc = "Hello there."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "toadie_wan_kenfrogi"
+
+/obj/item/toy/plush/trax_the_coward
+	name = "trax the coward plush"
+	desc = "A plushie of Trax the Coward. They're wearing a captains uniform."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "trax_the_coward"
+
+/obj/item/toy/plush/bubblesmothy
+	name = "bubbles mothy plush"
+	desc = "A plushie of Bubbles Mothy. They're wearing a revolutionary coat. They also wield a sword and a sign that you can't read that well."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "bubblesmothy"
+
+/obj/item/toy/plush/donator_xsi
+	name = "xsi plush"
+	desc = "A plushie of XSI. It's a robot!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "xsi"
+
+/obj/item/toy/plush/jill_plushie
+	name = "jill plush"
+	desc = "A plushie of Jill! It's handmade too!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "jill_plushie"
+
+/obj/item/toy/plush/kaiser_roach
+	name = "kaiser roach plush"
+	desc = "A plushie of a kaiser roach."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "kaiser_roach"
+
+/obj/item/toy/plush/clown_king
+	name = "clown king plush"
+	desc = "A plushie of a clown king!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "clown_king"
+
+/obj/item/toy/plush/ellie_valentine
+	name = "ellie valentine plush"
+	desc = "A hug from this doll ensures your day is better- it loves you all and MonkeStation!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "ellie_valentine"
+
+/obj/item/toy/plush/ai
+	name = "Artificial Intelligence Plush"
+	desc = "Computer! Turn off that noise!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "ai_plush"
+
+/obj/item/toy/plush/monkey
+	name = "chimpson plush"
+	desc = "Chimp of many titles, most notably 'Annoying'."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "monkey_plushie"

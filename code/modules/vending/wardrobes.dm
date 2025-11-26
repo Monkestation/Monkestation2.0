@@ -5,7 +5,6 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
-	input_display_header = "Returned Clothing"
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
@@ -22,19 +21,51 @@
 		/obj/item/storage/backpack/duffelbag/sec = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
+		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
+		/obj/item/clothing/gloves/color/black/security = 3,
+		/obj/item/clothing/head/soft/sec/blue = 3, //monkestation edit
+		/obj/item/clothing/head/hats/security_peaked_cap = 3, //monkestation edit
+		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
 		/obj/item/clothing/mask/bandana/striped/security = 3,
-		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
+		/obj/item/clothing/mask/russian_balaclava = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
+		/obj/item/clothing/under/rank/security/officer/tactical = 3, //monkestation edit
+		/obj/item/clothing/under/rank/security/officer/tactical/blue = 3, //monkestation edit
+		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+		/obj/item/clothing/head/helmet/blueshirt = 3, //monkestation edit
+		/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3, //monkestation edit
+		/obj/item/clothing/suit/armor/vest/blueshirt = 3, //monkestation edit
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/suit/armor/secduster = 3,
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/constable = 3, //Monkestation edit
+		/obj/item/clothing/under/rank/security/brig_physician = 3, //Monkestation edit
+		/obj/item/clothing/under/rank/security/brig_physician/skirt = 3, //Monkestation edit
+		/obj/item/clothing/suit/toggle/labcoat/brig_physician = 3, //Monkestation edit
+		/obj/item/clothing/under/civilprotection_uniform = 1, //monkestation edit
+		/obj/item/clothing/shoes/civilprotection_boots = 1, //monkestation edit
+		/obj/item/clothing/gloves/civilprotection_gloves = 1, //monkestation edit
+		/obj/item/clothing/head/helmet/civilprotection_helmet = 1, //monkestation edit
+		/obj/item/clothing/suit/armor/civilprotection_vest = 1, //monkestation edit
+		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
+		/obj/item/clothing/head/helmet/guardmanhelmet = 1, //monkestation edit: Guardman
+		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
 	)
+	//MONKESTATION EDIT START
+	contraband = list(
+		/obj/item/clothing/under/color/red = 3,
+		/obj/item/clothing/shoes/sneakers/brown = 3,
+		/obj/item/clothing/head/helmet/surplus = 3,
+		/obj/item/clothing/suit/armor/surplus = 3,
+	)
+	//MONKESTATION EDIT STOP
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,
 		/obj/item/clothing/suit/jacket/officer/blue = 3,
@@ -46,7 +77,9 @@
 		/obj/item/clothing/suit/armor/secduster/cargo = 2,
 		/obj/item/clothing/head/helmet/hat/cowboy/cargo = 2,
 		/obj/item/clothing/suit/armor/secduster/science = 2,
-		/obj/item/clothing/head/helmet/hat/cowboy/science = 2
+		/obj/item/clothing/head/helmet/hat/cowboy/science = 2,
+		/obj/item/clothing/head/cop_mascot = 1, // MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/costume/cop_mascot = 1, // MONKESTATION EDIT ADDITION
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
@@ -78,9 +111,11 @@
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,
 		/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
+		/obj/item/clothing/suit/toggle/labcoat/medical = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/blue = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/green = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/purple = 4,
+		/obj/item/clothing/under/rank/medical/doctor/utility = 4,
 		/obj/item/clothing/suit/toggle/labcoat = 4,
 		/obj/item/clothing/suit/toggle/labcoat/paramedic = 4,
 		/obj/item/clothing/shoes/sneakers/white = 4,
@@ -227,6 +262,9 @@
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/under/rank/rnd/scientist/skirt = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,
+		/obj/item/clothing/under/rank/rnd/scientist/hlscience = 3,
+		/obj/item/clothing/under/rank/rnd/scientist/utility = 3,
+		/obj/item/clothing/suit/toggle/jacket/sci = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
 		/obj/item/radio/headset/headset_sci = 3,
 		/obj/item/clothing/mask/gas = 3,
@@ -285,7 +323,7 @@
 		/obj/item/clothing/glasses/regular = 2,
 		/obj/item/clothing/glasses/regular/jamjar = 1,
 		/obj/item/storage/bag/books = 1,
-		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/radio/headset/headset_srvent = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -305,10 +343,14 @@
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,
+		/obj/item/clothing/under/costume/playbunny = 2, // MONKESTATION EDIT ADDITION
+		/obj/item/clothing/neck/tie/bunnytie = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/suit/apron/purple_bartender = 2,
 		/obj/item/clothing/head/soft/black = 2,
+		/obj/item/clothing/head/playbunnyears = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/clothing/shoes/sneakers/black = 2,
+		/obj/item/clothing/shoes/heels = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/storage/box/beanbag = 1,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
@@ -321,6 +363,7 @@
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
+		/obj/item/clothing/suit/jacket/tailcoat/bartender = 2, // MONKESTATION EDIT ADDITION
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -350,6 +393,7 @@
 		/obj/item/clothing/shoes/cookflops = 2,
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/clothing/suit/hooded/wintercoat = 2,
+		/obj/item/clothing/under/artisan = 2, //monkestation edit
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -422,6 +466,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
+		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
 		/obj/item/clothing/accessory/lawyers_badge = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
@@ -455,6 +500,7 @@
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
+		/obj/item/clothing/suit/chaplainsuit/technotao = 1,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	contraband = list(
@@ -538,6 +584,7 @@
 		/obj/item/storage/backpack/virology = 2,
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
+		/obj/item/clothing/gloves/latex/nitrile = 2, // Monkestation addition
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED

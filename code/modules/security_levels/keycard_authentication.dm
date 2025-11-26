@@ -3,6 +3,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 #define KEYCARD_RED_ALERT "Red Alert"
 #define KEYCARD_EMERGENCY_MAINTENANCE_ACCESS "Emergency Maintenance Access"
 #define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
+#define KEYCARD_PIN_UNRESTRICT "Unrestrict Permit Firing Pins"
 
 #define ACCESS_GRANTING_COOLDOWN (30 SECONDS)
 
@@ -15,7 +16,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/datum/callback/ev
+	var/datum/callback/activated
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
@@ -27,11 +28,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
-	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
+	activated = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
 
 /obj/machinery/keycard_auth/Destroy()
-	GLOB.keycard_events.clearEvent("triggerEvent", ev)
-	QDEL_NULL(ev)
+	GLOB.keycard_events.clearEvent("triggerEvent", activated)
+	activated = null
 	return ..()
 
 /obj/machinery/keycard_auth/ui_state(mob/user)
@@ -48,12 +49,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	data["waiting"] = waiting
 	data["auth_required"] = event_source ? event_source.event : 0
 	data["red_alert"] = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) ? 1 : 0
+	data["can_set_alert"] = SSsecurity_level.current_security_level?.can_crew_change_alert
 	data["emergency_maint"] = GLOB.emergency_access
 	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
-	if(isdrone(user))
+	if(isdrone(user) || issilicon(user)) //no more borg red alerts
 		return UI_CLOSE
 	if(!isanimal_or_basicmob(user))
 		return ..()
@@ -62,14 +64,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/keycard_auth/ui_act(action, params)
+/obj/machinery/keycard_auth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || waiting || !allowed(usr))
 		return
 
 	switch(action)
 		if("red_alert")
-			if(!event_source)
+			if(!event_source && SSsecurity_level.current_security_level?.can_crew_change_alert)
 				sendEvent(KEYCARD_RED_ALERT)
 				. = TRUE
 		if("emergency_maint")
@@ -81,6 +83,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 				event_source.trigger_event(usr)
 				event_source = null
 				update_appearance()
+				. = TRUE
+		if("pin_unrestrict")
+			if(!event_source)
+				sendEvent(KEYCARD_PIN_UNRESTRICT)
 				. = TRUE
 		if("bsa_unlock")
 			if(!event_source)
@@ -152,29 +158,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	deadchat_broadcast(" confirmed [event] at [span_name("[A2.name]")].", span_name("[confirmer]"), confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
-			SSsecurity_level.set_level(SEC_LEVEL_RED)
+			if(SSsecurity_level.current_security_level?.can_crew_change_alert)
+				SSsecurity_level.set_level(SEC_LEVEL_RED)
 		if(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
+		if(KEYCARD_PIN_UNRESTRICT)
+			toggle_permit_pins()
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
-	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area as anything in A.get_contained_turfs())
-			for(var/obj/machinery/door/airlock/D in in_area)
-				D.emergency = TRUE
-				D.update_icon(ALL, 0)
+	for(var/area/station/maintenance/area in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				for(var/obj/machinery/door/airlock/airlock in area_turf)
+					airlock.emergency = TRUE
+					airlock.update_icon(ALL, 0)
+
 	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
 	GLOB.emergency_access = TRUE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
-	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area as anything in A.get_contained_turfs())
-			for(var/obj/machinery/door/airlock/D in in_area)
-				D.emergency = FALSE
-				D.update_icon(ALL, 0)
+	for(var/area/station/maintenance/area in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				for(var/obj/machinery/door/airlock/airlock in area_turf)
+					airlock.emergency = FALSE
+					airlock.update_icon(ALL, 0)
+
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "disabled"))
@@ -188,3 +201,4 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 #undef KEYCARD_RED_ALERT
 #undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
 #undef KEYCARD_BSA_UNLOCK
+#undef KEYCARD_PIN_UNRESTRICT

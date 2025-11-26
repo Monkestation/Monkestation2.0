@@ -27,6 +27,8 @@
 	var/area/weakpoint_area
 
 /datum/traitor_objective/locate_weakpoint/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates) > 0)
+		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
 	if(SStraitor.get_taken_count(/datum/traitor_objective/locate_weakpoint) > 0)
@@ -132,7 +134,11 @@
 	var/greatest_dist = 0
 	var/list/turfs_to_collapse = list()
 	for(var/turf/collapsed_turf as anything in GLOB.station_turfs)
-		if(istype(get_area(collapsed_turf), /area/station/ai_monitored)) //remote bombing of these areas would be bad
+		var/area/turf_area = get_area(collapsed_turf)
+
+		if(istype(turf_area, /area/station/ai_monitored) || istype(turf_area, /area/shuttle)) //remote bombing of these areas would be bad
+			continue
+		if(!(turf_area.type in GLOB.the_station_areas))
 			continue
 
 		var/dist = get_dist(epicenter, collapsed_turf)
@@ -219,7 +225,7 @@
 	for(var/mob/living/silicon/ai/ai_player in GLOB.player_list)
 		to_chat(ai_player, alertstr)
 
-	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective)))
+	if(!do_after(user, 30 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, PROC_REF(scan_checks), user, user_area, objective), hidden = TRUE))
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 
@@ -270,28 +276,24 @@
 	objective_weakref = null
 	return ..()
 
-/obj/item/grenade/c4/es8/afterattack(atom/movable/target, mob/user, flag)
-	if(!user.mind)
-		return
-
+/obj/item/grenade/c4/es8/plant_c4(atom/bomb_target, mob/living/user)
 	if(!IS_TRAITOR(user))
 		to_chat(user, span_warning("You can't seem to find a way to detonate the charge."))
-		return
+		return FALSE
 
 	var/datum/traitor_objective/locate_weakpoint/objective = objective_weakref.resolve()
-
 	if(!objective || objective.objective_state == OBJECTIVE_STATE_INACTIVE || objective.handler.owner != user.mind)
 		to_chat(user, span_warning("You don't think it would be wise to use [src]."))
-		return
+		return FALSE
 
-	var/area/target_area = get_area(target)
+	var/area/target_area = get_area(bomb_target)
 	if (target_area.type != objective.weakpoint_area)
 		to_chat(user, span_warning("[src] can only be detonated in [initial(objective.weakpoint_area.name)]."))
-		return
+		return FALSE
 
-	if(!isfloorturf(target) && !iswallturf(target))
+	if(!isfloorturf(bomb_target) && !iswallturf(bomb_target))
 		to_chat(user, span_warning("[src] can only be planted on a wall or the floor!"))
-		return
+		return FALSE
 
 	return ..()
 

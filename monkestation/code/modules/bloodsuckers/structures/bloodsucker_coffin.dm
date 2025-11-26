@@ -1,23 +1,47 @@
 /datum/antagonist/bloodsucker/proc/claim_coffin(obj/structure/closet/crate/claimed, area/current_area)
+	var/static/list/banned_areas_typecache
+	if(!banned_areas_typecache)
+		banned_areas_typecache = typecacheof(list(
+			/area/icemoon,
+			/area/lavaland,
+			/area/ocean,
+			/area/shuttle,
+			/area/space,
+		))
+
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner.current)
-			to_chat(owner, "This is your [src].")
+			to_chat(owner, span_notice("This is your [src]."))
 		else
-			to_chat(owner, "This [src] has already been claimed by another.")
+			to_chat(owner, span_warning("This [src] has already been claimed by another."))
 		return FALSE
-	if(!(GLOB.the_station_areas.Find(current_area.type)))
-		claimed.balloon_alert(owner.current, "not part of station!")
+	var/turf/coffin_turf = get_turf(claimed)
+	// this if check is split up bc it's annoying to read and mentally parse when it's combined into one big if statement
+	var/valid_lair_area = TRUE
+	if(!coffin_turf)
+		valid_lair_area = FALSE
+	else if(!(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
+		if(is_centcom_level(coffin_turf.z) || is_type_in_typecache(current_area, banned_areas_typecache) || (istype(current_area, /area/ruin) && current_area.outdoors))
+			valid_lair_area = FALSE
+	if(!valid_lair_area)
+		claimed.balloon_alert(owner.current, "ineligible area!")
 		return
 	// This is my Lair
 	coffin = claimed
 	bloodsucker_lair_area = current_area
-	if(!(/datum/crafting_recipe/vassalrack in owner?.learned_recipes))
-		owner.teach_crafting_recipe(/datum/crafting_recipe/vassalrack)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/candelabrum)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/bloodthrone)
-		owner.teach_crafting_recipe(/datum/crafting_recipe/meatcoffin)
+	if(!(/datum/crafting_recipe/vassalrack in owner.learned_recipes))
+		owner.teach_crafting_recipe(list(
+			/datum/crafting_recipe/vassalrack,
+			/datum/crafting_recipe/candelabrum,
+			/datum/crafting_recipe/bloodthrone,
+			/datum/crafting_recipe/meatcoffin,
+		))
 		owner.current.balloon_alert(owner.current, "new recipes learned!")
+
+	if(!(locate(/datum/action/cooldown/bloodsucker/gohome) in powers))
+		BuyPower(new /datum/action/cooldown/bloodsucker/gohome)
+
 	to_chat(owner, span_userdanger("You have claimed the [claimed] as your place of immortal rest! Your lair is now [bloodsucker_lair_area]."))
 	to_chat(owner, span_announce("Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i>, including the <i>Persuasion Rack</i> for converting crew into Vassals."))
 	return TRUE
@@ -30,11 +54,14 @@
 	///The time it takes to pry this open with a crowbar.
 	var/pry_lid_timer = 25 SECONDS
 
+/obj/structure/closet/crate/coffin
+	COOLDOWN_DECLARE(bloodsucker_dirt_cooldown)
+
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
 	if(user == resident)
 		. += span_cult("This is your Claimed Coffin.")
-		. += span_cult("Rest in it while injured to enter Torpor. Entering it with unspent Ranks will allow you to spend one.")
+		. += span_cult("Rest in it while injured to enter Torpor. Entering it with unspent Ranks will allow you to spend them.")
 		. += span_cult("Alt-Click while inside the Coffin to Lock/Unlock.")
 		. += span_cult("Alt-Click while outside of your Coffin to Unclaim it, unwrenching it and all your other structures as a result.")
 
@@ -42,6 +69,7 @@
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
 	icon_state = "coffin"
+	base_icon_state = "coffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -64,6 +92,7 @@
 	name = "secure coffin"
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
+	base_icon_state = "securecoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
 	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
@@ -86,6 +115,7 @@
 	name = "meat coffin"
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
+	base_icon_state = "meatcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
@@ -108,6 +138,7 @@
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
+	base_icon_state = "metalcoffin"
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
@@ -143,39 +174,44 @@
 	return ..()
 
 /obj/structure/closet/crate/coffin/process(mob/living/user)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(user in src)
-		var/list/turf/area_turfs = get_area_turfs(get_area(src))
-		// Create Dirt etc.
-		var/turf/T_Dirty = pick(area_turfs)
-		if(T_Dirty && !T_Dirty.density)
-			// Default: Dirt
-			// STEP ONE: COBWEBS
+	if(!COOLDOWN_FINISHED(src, bloodsucker_dirt_cooldown) || !(user in src))
+		return
+	var/area/our_area = get_area(src)
+	var/list/turf/area_turfs = our_area.get_turfs_by_zlevel(z)
+	// Create Dirt etc.
+	var/turf/T_Dirty = pick(area_turfs)
+	if(T_Dirty && !T_Dirty.density)
+		// Default: Dirt
+		// STEP ONE: COBWEBS
+		if(!(locate(/obj/effect/decal/cleanable/cobweb) in T_Dirty))
 			// CHECK: Wall to North?
 			var/turf/check_N = get_step(T_Dirty, NORTH)
-			if(istype(check_N, /turf/closed/wall))
+			if(iswallturf(check_N))
 				// CHECK: Wall to West?
 				var/turf/check_W = get_step(T_Dirty, WEST)
-				if(istype(check_W, /turf/closed/wall))
+				if(iswallturf(check_W))
 					new /obj/effect/decal/cleanable/cobweb(T_Dirty)
-				// CHECK: Wall to East?
-				var/turf/check_E = get_step(T_Dirty, EAST)
-				if(istype(check_E, /turf/closed/wall))
-					new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
+				else
+					// CHECK: Wall to East?
+					var/turf/check_E = get_step(T_Dirty, EAST)
+					if(iswallturf(check_E))
+						new /obj/effect/decal/cleanable/cobweb/cobweb2(T_Dirty)
+		if(!(locate(/obj/effect/decal/cleanable/dirt) in T_Dirty))
 			new /obj/effect/decal/cleanable/dirt(T_Dirty)
+	COOLDOWN_START(src, bloodsucker_dirt_cooldown, rand(30 SECONDS, 1.5 MINUTES))
 
 /obj/structure/closet/crate/proc/unclaim_coffin(manual = FALSE)
 	// Unanchor it (If it hasn't been broken, anyway)
 	anchored = FALSE
-	if(!resident || !resident.mind)
+	if(!resident?.mind)
 		return
 	// Unclaiming
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = resident.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum && bloodsuckerdatum.coffin == src)
+	if(bloodsuckerdatum?.coffin == src)
 		bloodsuckerdatum.coffin = null
 		bloodsuckerdatum.bloodsucker_lair_area = null
+		for(var/datum/action/cooldown/bloodsucker/gohome/power in bloodsuckerdatum.powers)
+			bloodsuckerdatum.RemovePower(power)
 	for(var/obj/structure/bloodsucker/bloodsucker_structure in get_area(src))
 		if(bloodsucker_structure.owner == resident)
 			bloodsucker_structure.unbolt()
@@ -196,7 +232,7 @@
 			update_icon()
 		locked = FALSE
 		return TRUE
-	playsound(get_turf(src), 'sound/machines/door_locked.ogg', 20, 1)
+	playsound(get_turf(src), 'sound/machines/door_locked.ogg', vol = 20, vary = TRUE)
 	to_chat(user, span_notice("[src] appears to be locked tight from the inside."))
 
 /obj/structure/closet/crate/coffin/close(mob/living/user)
@@ -205,7 +241,7 @@
 		return FALSE
 	// Only the User can put themself into Torpor. If already in it, you'll start to heal.
 	if(user in src)
-		var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(/datum/antagonist/bloodsucker)
+		var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(user)
 		if(!bloodsuckerdatum)
 			return FALSE
 		var/area/current_area = get_area(src)
@@ -219,9 +255,12 @@
 		//Level up if possible.
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
-		else
-			bloodsuckerdatum.SpendRank()
-		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
+		else if(!bloodsuckerdatum.frenzied)
+			if (bloodsuckerdatum.bloodsucker_level_unspent > 0)
+				bloodsuckerdatum.SpendRank()
+			if (bloodsuckerdatum.bloodsucker_level_unspent < 1)
+				bloodsuckerdatum.blood_level_gain()
+		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the opportunity to do so.
 		bloodsuckerdatum.check_begin_torpor()
 	return TRUE
 
@@ -252,21 +291,22 @@
 	return ..()
 
 /// Distance Check (Inside Of)
-/obj/structure/closet/crate/coffin/AltClick(mob/user)
-	. = ..()
+/obj/structure/closet/crate/coffin/click_alt(mob/living/user)
 	if(user in src)
 		LockMe(user, !locked)
-		return
+		return CLICK_ACTION_SUCCESS
 
 	if(user == resident && user.Adjacent(src))
 		balloon_alert(user, "unclaim coffin?")
 		var/static/list/unclaim_options = list(
 			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
-			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"))
+			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		)
 		var/unclaim_response = show_radial_menu(user, src, unclaim_options, radius = 36, require_near = TRUE)
 		switch(unclaim_response)
 			if("Yes")
 				unclaim_coffin(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/proc/LockMe(mob/user, inLocked = TRUE)
 	if(user == resident)
@@ -279,7 +319,7 @@
 			return
 		// Broken? Let's fix it.
 		to_chat(resident, span_notice("The secret latch that would lock [src] from the inside is broken. You set it back into place..."))
-		if(!do_after(resident, 5 SECONDS, src))
+		if(!do_after(resident, 5 SECONDS, src, hidden = TRUE))
 			to_chat(resident, span_notice("You fail to fix [src]'s mechanism."))
 			return
 		to_chat(resident, span_notice("You fix the mechanism and lock it."))

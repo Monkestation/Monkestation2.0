@@ -8,7 +8,7 @@
 	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
@@ -17,7 +17,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Microwave Beam - Microwaves items instantly.
 /obj/item/mod/module/microwave_beam
@@ -27,8 +27,8 @@
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
-	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 1
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
 
@@ -53,7 +53,7 @@
 	var/datum/effect_system/spark_spread/spark_effect_two = new()
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 //Waddle - Makes you waddle and squeak.
 /obj/item/mod/module/waddle
@@ -80,3 +80,21 @@
 	mod.wearer.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")
+
+// recharging cleaner spray module
+/obj/item/mod/module/mister/cleaner
+	name = "MOD janitorial mister module"
+	desc = "An space cleaner mister, able to clean up messes quickly. Synthesizes its own supply over time (if active)."
+	device = /obj/item/reagent_containers/spray/mister/janitor
+	volume = 100
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+
+/obj/item/mod/module/mister/cleaner/Initialize(mapload)
+	. = ..()
+	reagents.flags = AMOUNT_VISIBLE
+	reagents.add_reagent(/datum/reagent/space_cleaner, volume)
+
+/obj/item/mod/module/mister/cleaner/on_active_process(seconds_per_tick)
+	var/refill_add = min(volume - reagents.total_volume, 2 * seconds_per_tick)
+	if(refill_add > 0)
+		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)

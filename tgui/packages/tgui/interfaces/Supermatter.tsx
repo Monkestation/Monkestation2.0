@@ -4,7 +4,14 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { getGasFromPath } from '../constants';
 import { Window } from '../layouts';
 
@@ -49,7 +56,7 @@ type SupermatterEntryProps = {
   detail?: InfernoNode;
   alwaysShowChevron?: boolean;
 };
-const SupermatterEntry = (props: SupermatterEntryProps, context) => {
+const SupermatterEntry = (props: SupermatterEntryProps) => {
   const { title, content, detail, alwaysShowChevron } = props;
   if (!alwaysShowChevron && !detail) {
     return (
@@ -63,7 +70,7 @@ const SupermatterEntry = (props: SupermatterEntryProps, context) => {
       </Stack.Item>
     );
   }
-  const [activeDetail, setActiveDetail] = useLocalState(context, title, false);
+  const [activeDetail, setActiveDetail] = useLocalState(title, false);
   return (
     <>
       <Stack.Item>
@@ -84,7 +91,7 @@ const SupermatterEntry = (props: SupermatterEntryProps, context) => {
     </>
   );
 };
-export const SupermatterContent = (props: SupermatterProps, context) => {
+export const SupermatterContent = (props: SupermatterProps) => {
   const {
     sectionButton,
     uid,
@@ -104,11 +111,7 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
     gas_total_moles,
     gas_metadata,
   } = props;
-  const [allGasActive, setAllGasActive] = useLocalState(
-    context,
-    'allGasActive',
-    false
-  );
+  const [allGasActive, setAllGasActive] = useLocalState('allGasActive', false);
   const gas_composition: [gas_path: string, amount: number][] = flow([
     !allGasActive && filter(([gas_path, amount]) => amount !== 0),
     sortBy(([gas_path, amount]) => -amount),
@@ -120,7 +123,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
           fill
           scrollable
           title={uid + '. ' + area_name}
-          buttons={sectionButton}>
+          buttons={sectionButton}
+        >
           <Stack vertical>
             <SupermatterEntry
               title="Integrity"
@@ -132,7 +136,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [0.9, Infinity],
                     average: [0.5, 0.9],
                     bad: [-Infinity, 0.5],
-                  }}>
+                  }}
+                >
                   {toFixed(integrity, 2) + ' %'}
                 </ProgressBar>
               }
@@ -143,7 +148,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                       <LabeledList.Item
                         key={name}
                         label={name + ' (∆)'}
-                        labelWrap>
+                        labelWrap
+                      >
                         <Box color={amount > 0 ? 'green' : 'red'}>
                           {toFixed(amount, 2) + ' %'}
                         </Box>
@@ -165,7 +171,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [-Infinity, 5000],
                     average: [5000, 7000],
                     bad: [7000, Infinity],
-                  }}>
+                  }}
+                >
                   {toFixed(internal_energy) + ' MeV/cm3'}
                 </ProgressBar>
               }
@@ -176,7 +183,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                       <LabeledList.Item
                         key={name}
                         label={name + ' (∆)'}
-                        labelWrap>
+                        labelWrap
+                      >
                         <Box color={amount > 0 ? 'green' : 'red'}>
                           {toFixed(amount, 2) + ' MeV/cm3'}
                         </Box>
@@ -198,7 +206,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [1.2, Infinity],
                     average: [0.8, 1.2],
                     bad: [-Infinity, 0.8],
-                  }}>
+                  }}
+                >
                   {toFixed(zap_multiplier, 2) + ' x'}
                 </ProgressBar>
               }
@@ -227,7 +236,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [0, 900],
                     average: [900, 1800],
                     bad: [1800, Infinity],
-                  }}>
+                  }}
+                >
                   {toFixed(gas_total_moles, 2) + ' Moles'}
                 </ProgressBar>
               }
@@ -244,7 +254,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [logScale(100), logScale(300)],
                     average: [logScale(300), logScale(temp_limit)],
                     bad: [logScale(temp_limit), Infinity],
-                  }}>
+                  }}
+                >
                   {toFixed(gas_temperature, 2) + ' K'}
                 </ProgressBar>
               }
@@ -279,7 +290,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     good: [-Infinity, 0.8],
                     average: [0.8, 2],
                     bad: [2, Infinity],
-                  }}>
+                  }}
+                >
                   {toFixed(waste_multiplier, 2) + ' x'}
                 </ProgressBar>
               }
@@ -312,10 +324,12 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
           buttons={
             <Button
               icon={allGasActive ? 'times' : 'book-open'}
-              onClick={() => setAllGasActive(!allGasActive)}>
+              onClick={() => setAllGasActive(!allGasActive)}
+            >
               {allGasActive ? 'Hide Gases' : 'Show All Gases'}
             </Button>
-          }>
+          }
+        >
           <Stack vertical>
             {gas_composition.map(([gas_path, amount]) => (
               <SupermatterEntry
@@ -326,7 +340,8 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                     color={getGasFromPath(gas_path)?.color}
                     value={amount}
                     minValue={0}
-                    maxValue={1}>
+                    maxValue={1}
+                  >
                     {toFixed(amount * 100, 2) + '%'}
                   </ProgressBar>
                 }
@@ -354,12 +369,13 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
                                         : effect.amount < 0
                                           ? 'green'
                                           : 'red'
-                                    }>
+                                    }
+                                  >
                                     {effect.amount > 0
                                       ? '+' + effect.amount * 100 + '%'
                                       : effect.amount * 100 + '%'}
                                   </LabeledList.Item>
-                                )
+                                ),
                             )}
                           </LabeledList>
                         </>
@@ -385,8 +401,8 @@ export type SupermatterData = {
   gas_metadata: SMGasMetadata;
 };
 
-export const Supermatter = (props, context) => {
-  const { act, data } = useBackend<SupermatterData>(context);
+export const Supermatter = (props) => {
+  const { act, data } = useBackend<SupermatterData>();
   const { sm_data, gas_metadata } = data;
   return (
     <Window width={700} height={400} theme="ntos">

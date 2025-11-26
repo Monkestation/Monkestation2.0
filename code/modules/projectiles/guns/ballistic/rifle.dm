@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
@@ -16,6 +16,9 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 	gun_flags = GUN_SMOKE_PARTICLES
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	var/need_bolt_lock_to_interact = TRUE
+	box_reload_delay = CLICK_CD_RANGE ///0.4 SECONDS
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -33,7 +36,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
+	if(need_bolt_lock_to_interact && !bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
 		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
@@ -60,7 +63,7 @@
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
 	knife_x_offset = 27
 	knife_y_offset = 13
@@ -121,15 +124,8 @@
 		process_fire(user, user, FALSE)
 		. = TRUE
 
-/obj/item/gun/ballistic/rifle/boltaction/harpoon
-	name = "ballistic harpoon gun"
-	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
-	icon_state = "speargun"
-	inhand_icon_state = "speargun"
-	worn_icon_state = "speargun"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	can_be_sawn_off = FALSE
+/obj/item/gun/ballistic/rifle/boltaction/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SAKHNO)
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	desc = "A classic Mosin Nagant, ruined by centuries of moisture. Some Space Russians claim that the moisture \
@@ -143,7 +139,7 @@
 		Tiger Co-op assassins, cryo-frozen Space Russians, and security personnel with \
 		little care for professional conduct while making 'arrests' point blank in the back of the head \
 		until the gun clicks. EXTREMELY moist."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
@@ -162,6 +158,9 @@
 	if(.)
 		name = "\improper Regal Obrez" // wear it loud and proud
 
+/obj/item/gun/ballistic/rifle/boltaction/prime/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
 	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
@@ -173,7 +172,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
 	alternative_caliber = CALIBER_A762
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -189,13 +188,16 @@
 	. = ..()
 	do_sparks(1, TRUE, src)
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/give_manufacturer_examine()
+	return
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
 	desc = "Older, territorial assistants typically possess more valuable loot."
 	icon_state = "musket_prime"
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
@@ -204,7 +206,7 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
 
 /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
@@ -221,7 +223,7 @@
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 
-	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
@@ -268,7 +270,7 @@
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -301,3 +303,120 @@
 		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
 		Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+
+/// Blueshift guns
+///	Currently nonexistent in code, some day I hope to convert this to 6.5 anti-xeno and get a slick mining rifle
+
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized
+	name = "\improper Rengo Precision Rifle"
+	desc = "A heavily modified Sakhno rifle, parts made by Xhihao light arms based around Jupiter herself. \
+		Has a higher capacity than standard Sakhno rifles, fitting ten .310 cartridges."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns40x.dmi'
+	icon_state = "rengo"
+	inhand_icon_state = "moistnugget"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/bubba
+	can_be_sawn_off = FALSE
+	knife_x_offset = 35
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/examine_more(mob/user)
+	. = ..()
+
+	. += "The Xhihao 'Rengo' conversion rifle. Came as parts sold in a single kit by Xhihao Light Arms, \
+		which can be swapped out with many of the outdated or simply old parts on a typical Sakhno rifle. \
+		While not necessarily increasing performance in any way, the magazine is slightly longer. The weapon \
+		is also overall a bit shorter, making it easier to handle for some people. Cannot be sawn off, cutting \
+		really any part of this weapon off would make it non-functional."
+
+	return .
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/empty
+	bolt_locked = TRUE // so the bolt starts visibly open
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
+
+/obj/item/ammo_box/magazine/internal/boltaction/bubba
+	name = "Sakhno extended internal magazine"
+	desc = "How did you get it out?"
+	ammo_type = /obj/item/ammo_casing/strilka310
+	caliber = CALIBER_STRILKA310
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
+	start_empty = TRUE
+
+/*
+*	Box that contains Sakhno rifles, but less soviet union since we don't have one of those
+*/
+
+/obj/item/storage/toolbox/guncase/soviet/sakhno
+	desc = "A weapon's case. This one is green and looks pretty old, but is otherwise in decent condition."
+	icon = 'icons/obj/storage/case.dmi'
+	material_flags = NONE // ????? Why do these have materials enabled??
+
+
+//.45 Long Lever-Rifle, cargo cowboy gun, used to be a shotgun, this makes more sense.
+/obj/item/gun/ballistic/rifle/leveraction
+	name = "brush gun"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
+	icon_state = "brushgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	bolt_wording = "Lever"
+	bolt_type = BOLT_TYPE_STANDARD
+	cartridge_wording = "bullet"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
+	projectile_wound_bonus = 10
+	projectile_damage_multiplier = 1.4
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	flags_1 = CONDUCT_1
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_HEAVY
+	pb_knockback = 0
+	need_bolt_lock_to_interact = FALSE
+	box_reload_delay = CLICK_CD_MELEE
+
+
+
+//Stupid OP mining rifle, WARNING, FIRES PLASMA NOT BULLETS     probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+/obj/item/gun/ballistic/rifle/minerjdj
+	name = ".950 JDJ 'Thor' Kinetic Rifle"
+	desc = "Completely absurd, in both size and firepower. The people down in Mining Research were either overcompensating, \
+	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
+	and the Mining Research Director, all passed out on the floor with beers and sodas. Fires an absolutely massive round that \
+	is sure to stop pretty much anything in its tracks that would even warrent it."
+	icon_state = "fatmac"
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	inhand_icon_state = "fatmac"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "fatmac"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	recoil = 8 //ow my back
+	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound_volume = 200 // L O U D
+	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	need_bolt_lock_to_interact = TRUE
+	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
+

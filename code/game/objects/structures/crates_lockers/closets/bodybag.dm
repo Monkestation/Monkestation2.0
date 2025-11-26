@@ -1,4 +1,3 @@
-
 /obj/structure/closet/body_bag
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
@@ -17,8 +16,14 @@
 	cutting_tool = null // Bodybags are not deconstructed by cutting
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
+	can_install_electronics = FALSE
+	paint_jobs = null
+
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
+	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
+	var/tag_name
+
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
 	can_install_electronics = FALSE
 
@@ -43,7 +48,7 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
-	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)
@@ -70,10 +75,9 @@
 	if(tagged)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/close(mob/living/user)
+/obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
-	if(.)
-		set_density(FALSE)
+	set_density(FALSE)
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -158,7 +162,7 @@
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
 			var/mob/living/carbon/mob = content
-			if (mob.dna.get_mutation(/datum/mutation/human/dwarfism))
+			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
 				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
 				continue
 		if(!isitem(content))
@@ -183,7 +187,7 @@
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental
 	/// The list of weathers we protect from.
-	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
+	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
 	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
@@ -255,28 +259,24 @@
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
 	return ..()
 
+/obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(sinched && !force)
+		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
+		return FALSE
+
+	sinched = FALSE //in case it was forced open unsinch it
+	return TRUE
+
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
 	if(sinched)
 		icon_state = initial(icon_state) + "_sinched"
 	else
 		icon_state = initial(icon_state)
-
-/obj/structure/closet/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
-	if(sinched && !force)
-		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
-		return TRUE
-	if(opened)
-		return FALSE
-	sinched = FALSE
-	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
-	opened = TRUE
-	if(!dense_when_open)
-		set_density(FALSE)
-	dump_contents()
-	update_appearance()
-	after_open(user, force)
-	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
 	/// copy-pasted with changes because flavor text as well as some other misc stuff
@@ -289,7 +289,7 @@
 		location.relay_container_resist_act(user, src)
 		return
 	if(!sinched)
-		open()
+		open(user)
 		return
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -371,7 +371,7 @@
 	icon_state = "holobag_med"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
-	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
+	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
@@ -383,7 +383,7 @@
 	icon_state = "holobag_sec"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	foldedbag_path = null
-	weather_protection = list(TRAIT_VOIDSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
+	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))

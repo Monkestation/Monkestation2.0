@@ -34,7 +34,8 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	if(projectile.type != /obj/projectile/beam/emitter/hitscan) //monkestation edit
+		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED
 
@@ -95,7 +96,7 @@
 			return
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
-		if(do_after(user, 3 SECONDS, src))
+		if(do_after(user, 3 SECONDS, src, hidden = TRUE))
 			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
 			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
 			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)

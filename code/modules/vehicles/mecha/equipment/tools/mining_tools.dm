@@ -31,6 +31,15 @@
 	disabled = TRUE, \
 	)
 
+/obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	// Check if we can still use the equipment & use power for every iteration of do after
+	if(!action_checks(target))
+		return FALSE
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
@@ -57,6 +66,9 @@
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
 			var/turf/T = target
 			T.drill_act(src, source)
 			return ..()
@@ -81,13 +93,17 @@
 	return
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
+	playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 	if(drill.do_after_mecha(src, user, 60 / drill.drill_level))
 		drill.log_message("Drilled through [src]", LOG_MECHA)
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	if(drill.drill_level >= DRILL_HARDENED)
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		if(drill.do_after_mecha(src, user, 120 / drill.drill_level))
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
@@ -95,7 +111,9 @@
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
+		playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE) //monkestation edit
 			M.gets_drilled()
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
@@ -109,8 +127,8 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
-		var/obj/vehicle/sealed/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
+	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley) && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment))
+		var/obj/vehicle/sealed/mecha/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
 		R.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
@@ -130,11 +148,7 @@
 		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
 
 		//blood splatters
-		var/splatter_dir = get_dir(chassis, target)
-		if(isalien(target))
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir, COLOR_DARK_PURPLE)
-		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir, COLOR_DARK_RED)
+		target.do_splatter_effect(get_dir(chassis, target))
 
 		//organs go everywhere
 		if(target_part && prob(10 * drill_level))
@@ -169,12 +183,34 @@
 	if(!loc)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
-	if(istype(loc, /obj/vehicle/sealed/mecha/working) && scanning_time <= world.time)
-		var/obj/vehicle/sealed/mecha/working/mecha = loc
-		if(!LAZYLEN(mecha.occupants))
-			return
-		scanning_time = world.time + equip_cooldown
-		mineral_scan_pulse(get_turf(src))
+	if(scanning_time > world.time)
+		return
+	if(!chassis || !ismecha(loc))
+		return
+	if(!LAZYLEN(chassis.occupants))
+		return
+	scanning_time = world.time + equip_cooldown
+	mineral_scan_pulse(get_turf(src))
+
+/obj/item/mecha_parts/mecha_equipment/drill/makeshift
+	name = "Makeshift exosuit drill"
+	desc = "Cobbled together from likely stolen parts, this drill is nowhere near as effective as the real deal."
+	equip_cooldown = 60 //Its slow as shit
+	force = 10 //Its not very strong
+	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+	drill_level = DRILL_BASIC
+	drill_delay = 15
+
+/obj/item/mecha_parts/mecha_equipment/drill/giantdrill
+	name = "Giant drill"
+	icon_state = "mecha_giantdrill"
+	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
+	equip_cooldown = 1 SECONDS // it is not slow as shit
+	force = 15 // force low or it 1 taps.
+	mech_flags = EXOSUIT_MODULE_DRILL
+	drill_level = DRILL_HARDENED
+	drill_delay = 1.2
+	toolspeed = 0.7
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED

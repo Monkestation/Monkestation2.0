@@ -6,15 +6,21 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
-	req_access = list(ACCESS_ATMOSPHERICS)
+	// monkestation edit: let engineers unlock air alarms
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE_EQUIP)
+	// monkestation end
 	max_integrity = 250
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
+	clicksound = 'sound/machines/terminal_select.ogg'
 
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
+	/// Current alert level of the area of our air alarm.
+	var/area_danger = FALSE
 
 	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
 	var/datum/air_alarm_mode/selected_mode
@@ -38,6 +44,32 @@
 
 	/// An assoc list of [datum/tlv]s, indexed by "pressure", "temperature", and [datum/gas] typepaths.
 	var/list/datum/tlv/tlv_collection
+
+	/// Used for air alarm helper called unlocked to make air alarm unlocked.
+	var/unlocked = FALSE
+	/// Used for air alarm helper called syndicate_access to make air alarm's required access syndicate_access.
+	var/syndicate_access = FALSE
+	/// Used for air alarm helper called away_general_access to make air alarm's required access away_general_access.
+	var/away_general_access = FALSE
+	/// Used for air alarm helper called engine_access to make air alarm's required access one of ACCESS_ATMOSPHERICS & ACCESS_ENGINEERING.
+	var/engine_access = FALSE
+	/// Used for air alarm helper called mixingchamber_access to make air alarm's required access one of ACCESS_ATMOSPHERICS & ACCESS_ORDNANCE.
+	var/mixingchamber_access = FALSE
+	/// Used for air alarm helper called all_access to remove air alarm's required access.
+	var/all_access = FALSE
+
+	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
+	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
+	var/tlv_no_checks = FALSE
+
+	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
+	var/obj/machinery/air_sensor/connected_sensor
+	/// Used to link air alarm to air sensor via map helpers
+	var/air_sensor_chamber_id = ""
+	/// Whether it is possible to link/unlink this air alarm from a sensor
+	var/allow_link_change = TRUE
+
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -73,9 +105,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
 
-	my_area = get_area(src)
+	my_area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 	alarm_manager = new(src)
-	select_mode(src, /datum/air_alarm_mode/filtering)
+	select_mode(src, /datum/air_alarm_mode/filtering, should_apply = FALSE)
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
@@ -96,13 +128,21 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms -= src
 	return ..()
 
+/obj/machinery/airalarm/power_change()
+	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	if(isnull(environment))
+		return
+	check_danger(our_turf, environment, environment.temperature)
+	return ..()
+
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
 	//were already registered to an area. exit from here first before entering into an new area
 	if(!isnull(my_area))
 		return
 	. = ..()
 
-	my_area = area_to_register
+	my_area = connected_sensor ? get_area(connected_sensor) : area_to_register
 	update_appearance()
 
 /obj/machinery/airalarm/update_name(updates)
@@ -115,7 +155,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return
 	. = ..()
 
-	my_area = null
+	my_area = connected_sensor ? get_area(connected_sensor) : null
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -128,12 +168,25 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
 
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(user.has_unlimited_silicon_privilege && aidisabled)
+	if(HAS_SILICON_ACCESS(user) && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE
 
+/obj/machinery/airalarm/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	.= ..()
+
+	if (!istype(multi_tool) || locked)
+		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		if(!allow_link_change)
+			balloon_alert(user, "linking disabled")
+			return ITEM_INTERACT_BLOCKING
+		connect_sensor(multi_tool.buffer)
+		balloon_alert(user, "connected sensor")
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -156,19 +209,28 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/data = list()
 
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
-	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
+	data["atmosAlarm"] = !!area_danger
 	data["fireAlarm"] = my_area.fire
+	data["faultStatus"] = my_area.fault_status
+	data["faultLocation"] = my_area.fault_location
+	data["sensor"] = !!connected_sensor
+	data["allowLinkChange"] = allow_link_change
 
-	var/turf/turf = get_turf(src)
+	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = turf.return_air()
 	var/total_moles = environment.total_moles()
 	var/temp = environment.temperature
 	var/pressure = environment.return_pressure()
 
 	data["envData"] = list()
+	if(connected_sensor)
+		data["envData"] += list(list(
+			"name" = "Linked area",
+			"value" = my_area.name
+		))
 	data["envData"] += list(list(
 		"name" = "Pressure",
 		"value" = "[round(pressure, 0.01)] kPa",
@@ -209,7 +271,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		singular_tlv["hazard_max"] = tlv.hazard_max
 		data["tlvSettings"] += list(singular_tlv)
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || HAS_SILICON_ACCESS(user))
 		data["vents"] = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			data["vents"] += list(list(
@@ -259,16 +321,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	return data
 
-/obj/machinery/airalarm/ui_act(action, params)
+/obj/machinery/airalarm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	var/mob/user = ui.user
+	if((locked && !HAS_SILICON_ACCESS(user)) || (HAS_SILICON_ACCESS(user) && aidisabled))
 		return
 
-	var/mob/user = usr
-	var/area/area = get_area(src)
+	var/area/area = connected_sensor ? get_area(connected_sensor) : get_area(src)
+
 	ASSERT(!isnull(area))
 
 	var/ref = params["ref"]
@@ -282,8 +345,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("power")
 			var/obj/machinery/atmospherics/components/powering = vent || scrubber
 			powering.on = !!params["val"]
+			powering.atmos_conditions_changed()
 			powering.update_appearance(UPDATE_ICON)
-			powering.check_atmos_process()
 		if ("direction")
 			if (isnull(vent))
 				return TRUE
@@ -373,9 +436,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/threshold_type = params["threshold_type"]
 			var/value = params["value"]
 			tlv.set_value(threshold_type, value)
-			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(user)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = get_turf(src)
+			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			check_danger(our_turf, environment, environment.temperature)
 
@@ -386,9 +449,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return
 			var/threshold_type = params["threshold_type"]
 			tlv.reset_value(threshold_type)
-			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = get_turf(src)
+			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 			var/datum/gas_mixture/environment = our_turf.return_air()
 			check_danger(our_turf, environment, environment.temperature)
 
@@ -399,6 +462,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("reset")
 			if (alarm_manager.clear_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_NONE
+
+		if ("disconnect_sensor")
+			if(allow_link_change)
+				disconnect_sensor()
+
+		if ("lock")
+			togglelock(user)
+			return TRUE
 
 	update_appearance()
 
@@ -413,11 +484,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
-		color = "#DA0205" // red
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
-		color = "#EC8B2F" // yellow
+		color = "#FF0022" // red
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
+		color = "#FFAA00" // yellow
 	else
-		color = "#03A728" // green
+		color = "#00FFCC" // teal
 
 	set_light(l_outer_range = 1.4, l_power = 1, l_color = color)
 
@@ -432,7 +503,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				icon_state = "alarm_b1"
 		return ..()
 
-	icon_state = "alarmp"
+	icon_state = isnull(connected_sensor) ? "alarmp" : "alarmp_remote"
 	return ..()
 
 /obj/machinery/airalarm/update_overlays()
@@ -444,7 +515,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/state
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		state = "alarm1"
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		state = "alarm2"
 	else
 		state = "alarm0"
@@ -459,8 +530,13 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
+	if(!environment)
+		return
+
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
+	var/old_area_danger = area_danger
+	area_danger = my_area.active_alarms[ALARM_ATMOS]
 
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
@@ -469,8 +545,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		for(var/gas_path in GLOB.meta_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
@@ -478,19 +554,109 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 
-	if(old_danger != danger_level)
+	if(old_danger != danger_level || old_area_danger != area_danger)
 		update_appearance()
 
 	selected_mode.replace(my_area, pressure)
 
-/obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
+/obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path, should_apply = TRUE)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
 	if(!new_mode)
 		return
 	if(new_mode.emag && !(obj_flags & EMAGGED))
 		return
 	selected_mode = new_mode
-	selected_mode.apply(my_area)
+	if(should_apply)
+		selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
+
+/// Used for unlocked air alarm helper, which unlocks the air alarm.
+/obj/machinery/airalarm/proc/unlock()
+	locked = FALSE
+
+/// Used for syndicate_access air alarm helper, which sets air alarm's required access to syndicate_access.
+/obj/machinery/airalarm/proc/give_syndicate_access()
+	req_access = list(ACCESS_SYNDICATE)
+
+///Used for away_general_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_away_general_access()
+	req_access = list(ACCESS_AWAY_GENERAL)
+
+///Used for engine_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_engine_access()
+	name = "engine air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINEERING)
+
+///Used for mixingchamber_access air alarm helper, which set air alarm's required access to away_general_access.
+/obj/machinery/airalarm/proc/give_mixingchamber_access()
+	name = "chamber air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ORDNANCE)
+
+///Used for all_access air alarm helper, which set air alarm's required access to null.
+/obj/machinery/airalarm/proc/give_all_access()
+	name = "all-access air alarm"
+	desc = "This particular atmos control unit appears to have no access restrictions."
+	locked = FALSE
+	req_access = null
+	req_one_access = null
+
+///Used for air alarm cold room tlv helper, which sets cold room temperature and pressure alarm thresholds
+/obj/machinery/airalarm/proc/set_tlv_cold_room()
+	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
+	//monkestation addition start: helps keep cold rooms cold
+	ac_temp_target = COLD_ROOM_TEMP
+	ac_temp_min = COLD_ROOM_TEMP - 5
+	ac_temp_max = COLD_ROOM_TEMP + 5
+	//monkestation addition end
+
+///Used for air alarm no tlv helper, which removes alarm thresholds
+/obj/machinery/airalarm/proc/set_tlv_no_checks()
+	tlv_collection["temperature"] = new /datum/tlv/no_checks
+	tlv_collection["pressure"] = new /datum/tlv/no_checks
+	stop_ac() //monkestation addition: prevents air conditioning from trying to heat up telecomms
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
+///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
+/obj/machinery/airalarm/proc/setup_chamber_link()
+	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
+	if(isnull(sensor))
+		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
+		return
+	connect_sensor(sensor)
+
+///Used to connect air alarm with a sensor
+/obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
+	if(!isnull(connected_sensor))
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+	connected_sensor = sensor
+	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
+	my_area = get_area(connected_sensor)
+
+	var/turf/our_turf = get_turf(connected_sensor)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	check_danger(our_turf, environment, environment.temperature)
+
+	update_appearance()
+	update_name()
+
+///Used to reset the air alarm to default configuration after disconnecting from air sensor
+/obj/machinery/airalarm/proc/disconnect_sensor()
+	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+	connected_sensor = null
+	my_area = get_area(src)
+
+	var/turf/our_turf = get_turf(src)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	check_danger(our_turf, environment, environment.temperature)
+
+	update_appearance()
+	update_name()

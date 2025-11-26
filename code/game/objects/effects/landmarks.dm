@@ -33,6 +33,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
 	var/used = FALSE
+	var/required_jobtitle
 
 /obj/effect/landmark/start/proc/after_round_start()
 	if(delete_after_roundstart)
@@ -76,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/bitrunner
 	name = "Bitrunner"
-	icon_state = "x3"
+	icon_state = "Bitrunner"
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
@@ -121,6 +122,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/captain
 	name = "Captain"
 	icon_state = "Captain"
+
+/obj/effect/landmark/start/bridge_assistant
+	name = "Bridge Assistant"
+	icon_state = JOB_ASSISTANT //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
+	color = COLOR_NAVY //IM LAZY OKAY
 
 /obj/effect/landmark/start/detective
 	name = "Detective"
@@ -278,6 +284,26 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/nukeop_leader/Initialize(mapload)
 	..()
 	GLOB.nukeop_leader_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/commando_nukeop
+	name = "commando nukeop"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
+
+/obj/effect/landmark/start/commando_nukeop/Initialize(mapload)
+	..()
+	GLOB.commando_nukeop_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/commando_nukeop_leader
+	name = "commando nukeop leader"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
+/obj/effect/landmark/start/commando_nukeop_leader/Initialize(mapload)
+	..()
+	GLOB.commando_nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
 // Must be immediate because players will
@@ -484,7 +510,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	party_debris = null
 	return ..()
 
-/obj/effect/landmark/start/hangover/LateInitialize()
+/obj/effect/landmark/start/hangover/LateInitialize(mapload_arg)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
@@ -538,21 +564,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return
 
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
-	make_hungover(joining_mob)
-
-/obj/effect/landmark/start/hangover/closet
-	name = "hangover spawn closet"
-	icon_state = "hangover_spawn_closet"
-
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
+	var/mob/created_joining_mob = ..()
+	make_hungover(created_joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		joining_mob.forceMove(closet)
-		return
-	return ..() //Call parent as fallback
+		created_joining_mob.forceMove(closet)
+		return created_joining_mob
+	return created_joining_mob
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
@@ -564,7 +583,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/landmark/navigate_destination/LateInitialize()
+/obj/effect/landmark/navigate_destination/LateInitialize(mapload_arg)
 	. = ..()
 	if(!location)
 		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
@@ -702,3 +721,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/disposals
 	location = "Disposals"
+
+//Monke edit
+/obj/effect/landmark/navigate_destination/servicehallway
+	location = "Service Hallway"
+
+/obj/effect/landmark/navigate_destination/cryo
+	location = "Cryogentic Crew Storage"
+
+/obj/effect/landmark/navigate_destination/virology
+	location = "Virology"
+//End of monke edit

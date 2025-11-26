@@ -87,6 +87,11 @@
 	for(var/datum/reagent/toxin/pestkiller/current_reagent in reagents)
 		apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
 
+/mob/living/basic/spider/get_status_tab_items()
+	. = ..()
+	if(directive)
+		. += "Directive: [html_decode(directive)]"
+
 /// Spider which turns into another spider over time
 /mob/living/basic/spider/growing
 	/// The mob type we will grow into.

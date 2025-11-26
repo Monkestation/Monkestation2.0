@@ -97,6 +97,10 @@
 		return
 
 	if (!(flags & CALTROP_BYPASS_SHOES))
+		// Monkestation addition start, taken from Skyrat
+		if(HAS_TRAIT(H, TRAIT_HARD_SOLES))
+			return
+		// Monkestation addition end, taken from Skyrat
 		if ((H.wear_suit?.body_parts_covered | H.w_uniform?.body_parts_covered | H.shoes?.body_parts_covered) & FEET)
 			return
 
@@ -112,7 +116,7 @@
 			span_userdanger("You step on [parent]!")
 		)
 
-	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
+	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
 		if(!HAS_TRAIT(H, TRAIT_LIGHT_STEP))

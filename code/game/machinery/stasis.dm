@@ -12,6 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+	interaction_flags_click = ALLOW_SILICON_REACH
 	var/stasis_enabled = TRUE
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
@@ -22,6 +23,7 @@
 
 /obj/machinery/stasis/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 6)
 	for(var/direction in GLOB.alldirs)
 		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
 		if(op_computer)
@@ -51,24 +53,23 @@
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
-/obj/machinery/stasis/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(world.time >= stasis_can_toggle && user.can_perform_action(src, ALLOW_SILICON_REACH))
-		stasis_enabled = !stasis_enabled
-		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
-		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
-		user.visible_message(span_notice("\The [src] [stasis_enabled ? "powers on" : "shuts down"]."), \
-					span_notice("You [stasis_enabled ? "power on" : "shut down"] \the [src]."), \
-					span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))
-		play_power_sound()
-		update_appearance()
+/obj/machinery/stasis/click_alt(mob/user)
+	if(world.time < stasis_can_toggle)
+		return CLICK_ACTION_BLOCKING
+	stasis_enabled = !stasis_enabled
+	stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
+	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	user.visible_message(span_notice("\The [src] [stasis_enabled ? "powers on" : "shuts down"]."), \
+				span_notice("You [stasis_enabled ? "power on" : "shut down"] \the [src]."), \
+				span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))
+	play_power_sound()
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/stasis/Exited(atom/movable/gone, direction)
 	if(gone == occupant)
 		var/mob/living/L = gone
-		if(IS_IN_STASIS(L))
+		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
 
@@ -137,19 +138,21 @@
 	if(target == occupant)
 		update_use_power(IDLE_POWER_USE)
 
-/obj/machinery/stasis/post_buckle_mob(mob/living/L)
-	if(!can_be_occupant(L))
+/obj/machinery/stasis/post_buckle_mob(mob/living/buckled)
+	if(!can_be_occupant(buckled))
 		return
-	set_occupant(L)
+	set_occupant(buckled)
 	if(stasis_running() && check_nap_violations())
-		chill_out(L)
+		chill_out(buckled)
 	update_appearance()
+	buckled.pixel_y -= 2
 
-/obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
-	thaw_them(L)
-	if(L == occupant)
+/obj/machinery/stasis/post_unbuckle_mob(mob/living/buckled)
+	thaw_them(buckled)
+	if(buckled == occupant)
 		set_occupant(null)
 	update_appearance()
+	buckled.pixel_y += 2
 
 /obj/machinery/stasis/process()
 	if(!(occupant && isliving(occupant) && check_nap_violations()))
@@ -157,9 +160,9 @@
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
-		if(!IS_IN_STASIS(L_occupant))
+		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
+	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)

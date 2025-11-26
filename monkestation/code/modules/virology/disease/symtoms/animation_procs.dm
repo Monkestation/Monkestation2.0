@@ -4,12 +4,6 @@
 								0.00, 0.00, 0.00, 1.00,\
 								0.00, 0.00, 0.00, 0.00)
 
-#define COLOR_MATRIX_GRAYSCALE list(0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.00,0.00,0.00,1.00,\
-									0.00,0.00,0.00,0.00)
-
 /atom/proc/fade_matrix(time = 1 SECONDS, matrix = COLOR_MATRIX_GRAYSCALE)
 	color = COLOR_MARTIX_BASE
 	animate(src, color=matrix, time=time, easing=SINE_EASING)
@@ -28,6 +22,7 @@
 		M.Scale(1.2,1.2)
 		sleep(0.1 SECONDS)
 	alpha = 0
+	return TRUE
 
 //inverse of above
 /atom/proc/fading_leap_down()
@@ -82,3 +77,41 @@
 
 #undef COLOR_MARTIX_BASE
 #undef COLOR_MATRIX_GRAYSCALE
+
+
+/atom/movable/proc/mods_send_them_to_hell(size = 1)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, ADMIN_TRAIT)
+
+	var/matrix/matrix_one = matrix()
+	matrix_one.Scale(0,0)
+
+	var/list/created_hell = list()
+
+	var/turf/our_turf = get_turf(src)
+	var/list/turfs = CORNER_BLOCK_OFFSET(our_turf, 2+size, 2+size, -1, -1)
+
+	for(var/turf/turf as anything in turfs)
+		created_hell += new /obj/effect/hell(turf)
+
+	animate(src, transform = matrix_one, time = 2 SECONDS)
+	sleep(2 SECONDS)
+	for(var/obj/effect/hell as anything in created_hell) ///probably some really smart way to animate this into the center point using its offset from the center and animates but eh
+		qdel(hell)
+	if(isliving(src))
+		var/mob/living/living = src
+		living.gib(FALSE)
+	else
+		qdel(src)
+
+/obj/effect/hell
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "lava"
+	name = "Portal to Hell"
+	plane = WALL_PLANE
+
+/datum/smite/portal_to_hell
+	name = "Portal to Hell"
+
+/datum/smite/portal_to_hell/effect(client/user, mob/living/target)
+	. = ..()
+	target.mods_send_them_to_hell(1)

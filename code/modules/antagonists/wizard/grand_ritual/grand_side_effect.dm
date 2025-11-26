@@ -110,7 +110,8 @@
 		if (can_create[create_path] == 0)
 			continue
 		can_create[create_path] = can_create[create_path] - 1
-		new create_path(pick(anomaly_positions), new_lifespan = rand(150, 300), drops_core = FALSE)
+		var/obj/effect/anomaly/target = new create_path(pick(anomaly_positions), /*new_lifespan = */rand(15 SECONDS, 30 SECONDS))
+		QDEL_NULL(target.anomaly_core)
 		to_create--
 
 #undef MIN_ANOMALIES_CREATED
@@ -333,6 +334,7 @@
 		to_create--
 		addtimer(CALLBACK(src, PROC_REF(drop_food), pick_n_take(valid_turfs)), rand(0, (1 SECONDS) * seconds_per_tick))
 
+/* monkestation edit: reimplemented in [monkestation/code/modules/antagonists/wizard/grand_ritual/grand_side_effect.dm]
 /obj/effect/abstract/local_food_rain/proc/drop_food(turf/landing_zone)
 	podspawn(list(
 			"target" = landing_zone,
@@ -343,6 +345,7 @@
 			"effectQuiet" = TRUE,
 		)
 	)
+monkestation end */
 
 /obj/effect/abstract/local_food_rain/proc/end_rain()
 	qdel(src)

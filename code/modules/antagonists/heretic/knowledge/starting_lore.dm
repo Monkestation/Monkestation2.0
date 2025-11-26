@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey into the Mansus. \
+	desc = "Starts your journey into The Mansus. \
 		Grants you the Mansus Grasp, a powerful and upgradable \
 		disabling spell that can be cast regardless of having a focus."
 	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
@@ -106,27 +106,24 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
-	// Obviously you need a heart in your chest to do a ritual on your... heart
-	if(!our_living_heart)
-		loc.balloon_alert(user, "ritual failed, you have no [our_heretic.living_heart_organ_slot]!") // "you have no heart!"
-		return FALSE
-	// For sanity's sake, check if they've got a heart -
+	// For sanity's sake, check if they've got a living heart -
 	// even though it's not invokable if you already have one,
 	// they may have gained one unexpectantly in between now and then
-	if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
-		loc.balloon_alert(user, "ritual failed, already have a living heart!")
-		return FALSE
+	if(!QDELETED(our_living_heart))
+		if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+			loc.balloon_alert(user, "ritual failed, already have a living heart!")
+			return FALSE
 
-	// By this point they are making a new heart
-	// If their current heart is organic / not synthetic, we can continue the ritual as normal
-	if(is_valid_heart(our_living_heart))
-		return TRUE
+		// By this point they are making a new heart
+		// If their current heart is organic / not synthetic, we can continue the ritual as normal
+		if(is_valid_heart(our_living_heart))
+			return TRUE
 
-	// If their current heart is not organic / is synthetic, they need an organic replacement
-	// ...But if our organ-to-be-replaced is unremovable, we're screwed
-	if(our_living_heart.organ_flags & ORGAN_UNREMOVABLE)
-		loc.balloon_alert(user, "ritual failed, [our_heretic.living_heart_organ_slot] unremovable!") // "heart unremovable!"
-		return FALSE
+		// If their current heart is not organic / is synthetic, they need an organic replacement
+		// ...But if our organ-to-be-replaced is unremovable, we're screwed
+		if(our_living_heart.organ_flags & ORGAN_UNREMOVABLE)
+			loc.balloon_alert(user, "ritual failed, [our_heretic.living_heart_organ_slot] unremovable!") // "heart unremovable!"
+			return FALSE
 
 	// Otherwise, seek out a replacement in our atoms
 	for(var/obj/item/organ/nearby_organ in atoms)
@@ -148,17 +145,21 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
 	if(!is_valid_heart(our_new_heart))
 		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
-		if(our_replacement_heart)
+		if(!our_replacement_heart)
+			CRASH("[type] required a replacement organic heart in on_finished_recipe, but did not find one.")
+		// Repair the organic heart, if needed, to just below the high threshold
+		if(our_replacement_heart.damage >= our_replacement_heart.high_threshold)
+			our_replacement_heart.set_organ_damage(our_replacement_heart.high_threshold - 1)
+		// And now, put our organic heart in its place
+		our_replacement_heart.Insert(user, TRUE, TRUE)
+		if(our_new_heart)
 			// Throw our current heart out of our chest, violently
 			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
 			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
-			// And put our organic heart in its place
-			our_replacement_heart.Insert(user, TRUE, TRUE)
+			selected_atoms -= our_new_heart // so we don't delete our old heart while we dramatically toss is out
 			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
-			our_new_heart = our_replacement_heart
-		else
-			CRASH("[type] required a replacement organic heart in on_finished_recipe, but did not find one.")
+		our_new_heart = our_replacement_heart
 
 	if(!our_new_heart)
 		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
@@ -179,13 +180,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /// Checks if the passed heart is a valid heart to become a living heart
 /datum/heretic_knowledge/living_heart/proc/is_valid_heart(obj/item/organ/new_heart)
-	if(!new_heart)
+	if(QDELETED(new_heart))
 		return FALSE
 	if(!new_heart.useable)
 		return FALSE
-	if(new_heart.status == ORGAN_ROBOTIC)
-		return FALSE
-	if(new_heart.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING))
+	if(new_heart.organ_flags & (ORGAN_ROBOTIC|ORGAN_FAILING))
 		return FALSE
 
 	return TRUE
@@ -228,7 +227,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
 		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
 	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
-		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+		Within the leather-bound faces and age old pages, a path into The Mansus is revealed."
 	required_atoms = list(
 		/obj/item/book = 1,
 		/obj/item/pen = 1,
@@ -269,7 +268,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
 	var/mob/living/body = locate() in selected_atoms
 	if(!body)
-		return
+		return ..()
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
 	// If carbon, it's the limb. If not, it's the body.
@@ -298,3 +297,28 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
+
+/datum/heretic_knowledge/feast_of_owls
+	name = "Feast of Owls"
+	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
+	route = PATH_START
+	required_atoms = list()
+
+/datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !invoker.feast_of_owls
+
+/datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/alert = tgui_alert(user, "Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes, I'm sure!", "No"), 30 SECONDS)
+	if(alert != "Yes, I'm sure!")
+		return FALSE
+	user.set_temp_blindness(5 SECONDS)
+	user.AdjustParalyzed(5 SECONDS)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	for(var/i in 0 to 4)
+		user.emote("scream")
+		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
+		heretic_datum.knowledge_points++
+		sleep(1 SECONDS)
+	to_chat(user, span_danger("You feel different..."))
+	heretic_datum.feast_of_owls = TRUE

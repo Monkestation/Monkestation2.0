@@ -62,8 +62,11 @@
 			handle_fill(ingredient)
 
 
-/datum/component/customizable_reagent_holder/Destroy(force, silent)
-	QDEL_NULL(top_overlay)
+/datum/component/customizable_reagent_holder/Destroy(force)
+	if(top_overlay)
+		var/atom/atom_parent = parent
+		atom_parent.cut_overlay(top_overlay)
+		top_overlay = null
 	return ..()
 
 
@@ -154,7 +157,7 @@
 
 	if(job && job_xp)
 		if(attacker.client?.prefs)
-			add_jobxp_chance_delayed_check(attacker.client, job_xp, job, 60, FALSE)
+			add_jobxp_chance_delayed_check(attacker.client, job_xp, job, 40, FALSE)
 
 	handle_reagents(ingredient)
 	add_ingredient(ingredient)

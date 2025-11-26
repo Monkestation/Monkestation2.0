@@ -90,7 +90,7 @@
 	speaking = FALSE
 	times_spoken_to++
 
-/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+/obj/structure/speaking_tile/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_paw(mob/user, list/modifiers)
@@ -103,9 +103,6 @@
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_ai(mob/user)
-	return interact(user)
-
-/obj/structure/speaking_tile/attack_slime(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_animal(mob/user, list/modifiers)
@@ -123,7 +120,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/glass = 500)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/rupee/Initialize(mapload)
 	. = ..()
@@ -147,7 +144,7 @@
 		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	..()
 
 /obj/effect/landmark/error

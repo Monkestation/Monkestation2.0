@@ -4,7 +4,8 @@
 	stage = 3
 	restricted = TRUE
 	max_multiplier = 2
-
+	badness = EFFECT_DANGER_HINDRANCE
+	severity = 3
 
 /datum/symptom/bad_adrenaline/activate(mob/living/carbon/affected_mob)
 	switch(round(multiplier))
@@ -29,6 +30,7 @@
 	desc = "Attacks the infected's DNA, causing it to break down."
 	stage = 3
 	badness = EFFECT_DANGER_DEADLY
+	severity = 5
 	max_multiplier = 5
 	restricted = TRUE
 
@@ -45,7 +47,7 @@
 			if(prob(1))
 				mob.emote("drool")
 			if(prob(1.5))
-				mob.adjustCloneLoss(1, FALSE)
+				mob.adjustToxLoss(1, FALSE)
 			if(prob(1))
 				to_chat(mob, span_danger("Your skin feels strange."))
 
@@ -56,7 +58,7 @@
 				mob.emote("drool")
 			if(prob(2.5))
 				mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
-				mob.adjustCloneLoss(2, FALSE)
+				mob.adjustToxLoss(2, FALSE)
 			if(prob(7.5))
 				mob.adjust_stutter(6 SECONDS)
 		if(5)
@@ -67,5 +69,5 @@
 			if(prob(2.5))
 				to_chat(mob, span_danger("Your skin starts degrading!"))
 			if(prob(5))
-				mob.adjustCloneLoss(5, FALSE)
+				mob.adjustToxLoss(5, FALSE)
 				mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)

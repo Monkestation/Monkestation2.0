@@ -26,12 +26,12 @@
 	if (!CONFIG_GET(flag/secure_chat_commands) || CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.Connect())
 		return Validated_Run(sender, params)
 
-	var/discord_id = SSdiscord.get_discord_id_from_mention(sender.mention) || sender.id
+	var/discord_id = SSplexora.get_discord_id_from_mention(sender.mention) || sender.id
 	if (!discord_id)
 		return new /datum/tgs_message_content("Error: Unknown error trying to get your discord id.")
 
 	var/datum/admins/linked_admin
-	var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
+	var/admin_ckey = ckey(SSplexora.lookup_ckey(discord_id))
 
 	if (admin_ckey)
 		linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]
@@ -120,5 +120,5 @@
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["total"]
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
+	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(FALSE, TRUE, FALSE)]). Round has [SSticker.HasRoundStarted() ? "" : "not "]started."
 	return new /datum/tgs_message_content(status)

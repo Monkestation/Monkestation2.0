@@ -73,6 +73,8 @@
 #define COMSIG_GLOB_NUKE_DEVICE_ARMED "!nuclear_device_armed"
 /// global signal sent when a nuclear device is disarmed (/obj/machinery/nuclearbomb/nuke/disarmed_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DISARMED "!nuclear_device_disarmed"
+/// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
+#define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
 
 /// Global signal sent when a light mechanism is completed (try_id)
 #define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
@@ -83,6 +85,9 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// global signal when a global nullrod type is picked
+#define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
+
 
 //monkestation edit start
 // Used for smothering fires upon weather event start/stop
@@ -90,3 +95,9 @@
 
 #define COMSIG_GLOB_WEATHER_EFFECT "!weather_effect_update"
 //monkestation edit end
+
+/// Global signal sent when darkspawns ascend: (No arguments)
+#define COMSIG_DARKSPAWN_ASCENSION "!darkspawn_ascension"
+
+/// Global signal sent whenever checking to see if there's valid monster hunter targets: (list/prey)
+#define COMSIG_GLOB_MONSTER_HUNTER_QUERY "!monster_hunter_query"

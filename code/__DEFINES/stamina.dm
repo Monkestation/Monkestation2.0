@@ -15,7 +15,9 @@
 ///The default maximum stamina
 #define STAMINA_MAX 250
 ///Carbons enter Exhaustion when their stamina drops below this percentage
-#define STAMINA_EXHAUSTION_THRESHOLD_MODIFIER (0.4) //40% or less
+#define STAMINA_EXHAUSTION_THRESHOLD_MODIFIER (0.3) //30% or less
+///Carbons exit Exhaustion when their stamina drops below this percentage
+#define STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT (0.45) //45% or less
 ///The slowdown when a mob is exhausted
 #define STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN 3
 ///Carbons will be exposed to stamina stuns upon dropping below this percentage
@@ -42,7 +44,7 @@
 ///The amount of stamina at which point swinging is free.
 #define STAMINA_MAXIMUM_TO_SWING 100
 ///The time a mob is stunned when stamina stunned
-#define STAMINA_STUN_TIME 5 SECONDS
+#define STAMINA_STUN_TIME 9 SECONDS
 ///The base value of a stamina stun chance
 #define STAMINA_SCALING_STUN_BASE 20
 ///The maximum additional stun chance based on missing stamina
@@ -77,3 +79,4 @@
 #define STAMINA_GRAB_AGGRESSIVE_RESIST_CHANCE 60
 /// Chance to resist out of chokeholds grabs.
 #define STAMINA_GRAB_CHOKE_RESIST_CHANCE 45
+

@@ -22,9 +22,11 @@
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak: Classic"
 	typepath = /datum/round_event/disease_outbreak
-	max_occurrences = 1
-	min_players = 10
-	weight = 5
+	max_occurrences = 2
+	min_players = 15
+	weight = 4
+	track = EVENT_TRACK_MAJOR //monkie edit
+	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_HEALTH
 	description = "A 'classic' virus will infect some members of the crew."
 	min_wizard_trigger_potency = 2
@@ -32,6 +34,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
@@ -51,7 +55,7 @@
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
 	disease_candidates.Cut() //We clear the list and rebuild it again.
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
-		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
+		if(!(candidate.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
 		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
@@ -96,6 +100,19 @@
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
+	if(!illness_type)
+		var/list/virus_candidates = list(
+			/datum/disease/cold,
+			/datum/disease/cold9,
+			/datum/disease/brainrot,
+			/datum/disease/flu,
+			/datum/disease/fluspanish,
+			/// And here are some that will never roll for real, just to mess around.
+			/datum/disease/gastrolosis,
+			/datum/disease/gbs,
+		)
+		var/datum/disease/fake_virus = pick(virus_candidates)
+		illness_type = initial(fake_virus.name)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
@@ -107,30 +124,31 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
-		ANTIGEN_COMMON	= 1,
+		ANTIGEN_COMMON	= 2,
 		ANTIGEN_RARE	= 2,
 		ANTIGEN_ALIEN	= 0,
 		)
 	var/list/bad = list(
-		EFFECT_DANGER_HELPFUL	= 0,
-		EFFECT_DANGER_FLAVOR	= 1,
+		EFFECT_DANGER_HELPFUL	= 2,
+		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 0,
 		EFFECT_DANGER_DEADLY	= 0,
 		)
-	var/datum/disease/advanced/new_disease = new virus_choice
+	var/datum/disease/acute/new_disease = new virus_choice
 	new_disease.makerandom(list(30,60),list(50,100),anti,bad,src)
 	new_disease.carrier = TRUE
+	new_disease.Refresh_Acute()
 	illness_type = new_disease.name
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
@@ -143,9 +161,9 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 7 //monkestation change 15 ==> 7
+	weight = 3 //monkestation change 15 ==> 3
 	min_players = 35 // To avoid shafting lowpop
-	earliest_start = 15 MINUTES // give the chemist a chance
+	earliest_start = 40 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
@@ -154,6 +172,7 @@
 		/datum/event_admin_setup/listed_options/disease_outbreak_advanced,
 		/datum/event_admin_setup/input_number/disease_outbreak_advanced
 	)
+	track = EVENT_TRACK_MAJOR
 
 /**
  * Admin virus customization
@@ -216,7 +235,7 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
@@ -225,21 +244,20 @@
 		)
 	var/list/bad = list(
 		EFFECT_DANGER_HELPFUL	= 0,
-		EFFECT_DANGER_FLAVOR	= 0,
+		EFFECT_DANGER_FLAVOR	= 2,
 		EFFECT_DANGER_ANNOYING	= 2,
 		EFFECT_DANGER_HINDRANCE	= 3,
 		EFFECT_DANGER_HARMFUL	= 3,
-		EFFECT_DANGER_DEADLY	= 1,
+		EFFECT_DANGER_DEADLY	= 0,
 		)
-	var/datum/disease/advanced/new_disease = new virus_choice
+	var/datum/disease/acute/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
-	new_disease.carrier = TRUE
-	illness_type = new_disease.name
+	new_disease.Refresh_Acute()
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)

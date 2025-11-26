@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
 	///The overlay datum that actually draws stuff on the limb
@@ -57,6 +57,9 @@
 	return ..()
 
 /obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	if(!should_external_organ_apply_to(type, receiver))
+		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
+
 	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
@@ -116,12 +119,27 @@
 	return ..()
 
 /obj/item/organ/external/remove_from_limb()
-	ownerlimb.external_organs -= src
-	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+	if(!QDELETED(ownerlimb))
+		ownerlimb.external_organs -= src
+		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
+		if(ownerlimb.owner && external_bodytypes)
+			ownerlimb.synchronize_bodytypes(ownerlimb.owner)
 	ownerlimb = null
 	return ..()
+
+/proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)
+	if(isnull(organpath) || isnull(target))
+		stack_trace("passed a null path or mob to 'should_external_organ_apply_to'")
+		return FALSE
+
+	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
+	var/feature_key = !isnull(bodypart_overlay) && initial(bodypart_overlay.feature_key)
+	if(isnull(feature_key))
+		return TRUE
+
+	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)
+		return TRUE
+	return FALSE
 
 ///Update our features after something changed our appearance
 /obj/item/organ/external/proc/mutate_feature(features, mob/living/carbon/human/human)
@@ -283,7 +301,7 @@
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
-	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+	if(!burnt && human.get_skin_temperature() >= CELCIUS_TO_KELVIN(175 CELCIUS) && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
 
 		burn_antennae()
@@ -327,6 +345,11 @@
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEANTENNAE))
+		return TRUE
+	return FALSE
+
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
 	name = "podperson hair"
@@ -345,13 +368,18 @@
 
 ///Podperson bodypart overlay, with special coloring functionality to render the flowers in the inverse color
 /datum/bodypart_overlay/mutant/pod_hair
-	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
+	// layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT monkestation edit - original
+	layers = EXTERNAL_FRONT
 	feature_key = "pod_hair"
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT
 	///The individual rgb colors are subtracted from this to get the color shifted layer
 	var/color_inverse_base = 255
+	color_source = ORGAN_COLOR_OVERRIDE
+	palette = /datum/color_palette/generic_colors
+	palette_key = "pod_color"
+
 
 /datum/bodypart_overlay/mutant/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list

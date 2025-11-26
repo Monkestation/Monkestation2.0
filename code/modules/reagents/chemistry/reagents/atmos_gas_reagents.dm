@@ -23,11 +23,11 @@
 	color = "90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	metabolized_traits = list(TRAIT_RESISTHEAT)
 
 /datum/reagent/halon/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(breather, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/breather)
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
@@ -43,15 +43,12 @@
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/healium/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	breather.PermaSleeping()
-
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/breather)
-	breather.SetSleeping(10)
+	breather.SetSleeping(1 SECONDS)
 	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+	breather.SetSleeping(30 SECONDS)
 	breather.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	breather.adjustToxLoss(-5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	breather.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -81,14 +78,7 @@
 	ph = 1.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 14)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
-	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-	return ..()
+	metabolized_traits = list(TRAIT_SLEEPIMMUNE)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
 	breather.stamina.adjust(2 * REM * seconds_per_tick, FALSE)
@@ -141,10 +131,11 @@
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
 	affected_respiration_type = ALL
-
+///monke edit begin, nerfs damage numbers to breathing zauker
 /datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
-	breather.adjustBruteLoss(6 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustOxyLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	breather.adjustFireLoss(2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	breather.adjustToxLoss(2 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	breather.adjustBruteLoss(4 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	breather.adjustOxyLoss(0.7 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	breather.adjustFireLoss(1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	breather.adjustToxLoss(1.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	return ..()
+///monke edit end

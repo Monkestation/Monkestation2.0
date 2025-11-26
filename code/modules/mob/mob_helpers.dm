@@ -209,7 +209,7 @@
 // moved out of admins.dm because things other than admin procs were calling this.
 /**
  * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
- * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
+ * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with ANTAG_FAKE won't pass.
 */
 /proc/is_special_character(mob/M, allow_fake_antags = FALSE)
 	if(!SSticker.HasRoundStarted())
@@ -231,7 +231,7 @@
 	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
 	var/faker = FALSE
 	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+		if((antag_datum.antag_flags & ANTAG_FAKE))
 			faker = TRUE
 		else
 			return TRUE
@@ -240,10 +240,22 @@
 	// Else, return FALSE.
 	return (faker && allow_fake_antags)
 
+/**
+ * Checks if this mob is an antag
+ * By default excludes antags like Valentines, which are "fake antags"
+ */
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
+			return TRUE
 
-/mob/proc/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) // utilized in the species code
-	return TRUE
+	return FALSE
 
+/mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
+	return FALSE
+
+/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
+	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
 
 /**
  * Fancy notifications for ghosts
@@ -257,10 +269,8 @@
  * * source The source of the notification
  * * alert_overlay The alert overlay to show in the alert message
  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
  * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(
@@ -270,24 +280,22 @@
 	atom/source,
 	mutable_appearance/alert_overlay,
 	action = NOTIFY_JUMP,
-	flashwindow = TRUE,
-	ignore_mapload = TRUE,
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	ignore_key,
 	header = "",
-	notify_suiciders = TRUE,
 	notify_volume = 100
 )
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
-		if(flashwindow)
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
 			window_flash(ghost.client)
 
 		if(ghost_sound)
@@ -298,7 +306,7 @@
 			continue
 
 		var/custom_link = enter_link ? " [enter_link]" : ""
-		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+		var/link = " <a href='byond://?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
 
@@ -308,7 +316,7 @@
 			new_master = source,
 		)
 		toast.action = action
-		toast.desc = "Click to [action]."
+		toast.desc = "[message] -- Click to [action]."
 		toast.name = header
 		toast.target = source
 
@@ -339,12 +347,14 @@
 		return
 	return TRUE
 
-///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
+///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
+		return FALSE
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
+		return FALSE
 	return TRUE
 
 /**
@@ -366,14 +376,13 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 20 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control", chat_text_border_icon = M)
 
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = C.key
+		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
@@ -423,7 +432,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)

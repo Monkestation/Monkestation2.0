@@ -34,10 +34,12 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-/proc/ui_hand_position(i) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
-	var/x_off = i % 2 ? 0 : -1
-	var/y_off = round((i-1) / 2)
-	return"CENTER+[x_off]:16,SOUTH+[y_off]:5"
+//Monkestation EDIT: START - CYBERNETICS
+/proc/ui_hand_position(i,y_offset = 0,y_pixel_offset = 0) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
+	var/x_off = -(!(i % 2))
+	var/y_off = round((i-1) / 2) + y_offset
+	return"CENTER+[x_off]:16,SOUTH+[y_off]:[5 + y_pixel_offset]"
+//Monkestation EDIT: END - CYBERNETICS
 
 /proc/ui_equip_position(mob/M)
 	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
@@ -48,12 +50,16 @@
 	var/y_off = round((M.held_items.len-1) / 2)
 	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
 
+// Middle
+#define around_player "CENTER-1,CENTER-1"
+
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
 
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+#define ui_blooddisplay "WEST:6,CENTER:-2"
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -76,14 +82,6 @@
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
-#define ui_navigate_menu "EAST-4:22,SOUTH:5"
-
-//Upper-middle right (alerts)
-#define ui_alert1 "EAST-1:28,CENTER+5:27"
-#define ui_alert2 "EAST-1:28,CENTER+4:25"
-#define ui_alert3 "EAST-1:28,CENTER+3:23"
-#define ui_alert4 "EAST-1:28,CENTER+2:21"
-#define ui_alert5 "EAST-1:28,CENTER+1:19"
 
 //Upper left (action buttons)
 #define ui_action_palette "WEST+0:23,NORTH-1:5"
@@ -97,6 +95,7 @@
 #define ui_health "EAST-1:28,CENTER-1:19"
 #define ui_internal "EAST-1:28,CENTER+1:21"
 #define ui_mood "EAST-1:28,CENTER:21"
+#define ui_hunger "EAST-1:2,CENTER:21"
 #define ui_spacesuit "EAST-1:28,CENTER-4:14"
 #define ui_stamina "EAST-1:28,CENTER-3:14"
 
@@ -142,15 +141,17 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_navigate_menu "CENTER+4:19,SOUTH+1:6"
+#define ui_borg_navigate_menu "CENTER+3:21,SOUTH:21"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
-#define ui_alien_language_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_navigate_menu "EAST-4:20,SOUTH:5"
+#define ui_alien_language_menu "EAST-2:26,SOUTH+2:8"
+#define ui_alien_navigate_menu "EAST-1:28,SOUTH+1:23"
+#define ui_alien_larva_language_menu "EAST-4:20,SOUTH:20"
+#define ui_alien_larva_navigate_menu "EAST-4:21,SOUTH:-12"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -189,8 +190,8 @@
 #define ui_pai_take_picture "SOUTH:6,WEST+11"
 #define ui_pai_view_images "SOUTH:6,WEST+12"
 #define ui_pai_radio "SOUTH:6,WEST+13"
-#define ui_pai_language_menu "SOUTH+1:8,WEST+12:31"
-#define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:31"
+#define ui_pai_language_menu "SOUTH+1:22,WEST+12:31"
+#define ui_pai_navigate_menu "SOUTH:22,WEST+13"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"

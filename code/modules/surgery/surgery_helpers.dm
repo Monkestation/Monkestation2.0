@@ -1,6 +1,10 @@
 /proc/get_location_modifier(mob/located_mob)
 	var/turf/mob_turf = get_turf(located_mob)
-	if(locate(/obj/structure/table/optable, mob_turf))
+	// monkestation start: alien surgical tables are even faster
+	if(locate(/obj/structure/table/optable/abductor, mob_turf))
+		return 1.2
+	// monkestation end
+	else if(locate(/obj/structure/table/optable, mob_turf))
 		return 1
 	else if(locate(/obj/machinery/stasis, mob_turf))
 		return 0.9
@@ -34,10 +38,10 @@
 			if(covered_locations & HEAD)
 				return FALSE
 		if(BODY_ZONE_PRECISE_EYES)
-			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
+			if((face_covered & HIDEEYES) || (eyesmouth_covered & (MASKCOVERSEYES|HEADCOVERSEYES|GLASSESCOVERSEYES)))
 				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
+			if((face_covered & HIDEFACE) || (eyesmouth_covered & (MASKCOVERSMOUTH|HEADCOVERSMOUTH)))
 				return FALSE
 		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)

@@ -28,7 +28,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
+/atom/movable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
@@ -54,9 +54,8 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
-	return mouse_buckle_handling(M, user)
+/atom/movable/mouse_drop_receive(atom/dropped, mob/user, params)
+	return mouse_buckle_handling(dropped, user)
 
 /**
  * Does some typechecks and then calls user_buckle_mob
@@ -91,6 +90,9 @@
 /atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
+
+	if(M.buckled)
+		M.buckled.unbuckle_mob(M)
 
 	if(!is_buckle_possible(M, force, check_loc))
 		return FALSE
@@ -193,14 +195,19 @@
 	if(!has_buckled_mobs())
 		return
 	for(var/m in buckled_mobs)
+		if(isliving(m))
+			var/mob/living/living = m
+			if(!living.buckled) //this somehow happens?
+				buckled_mobs -= m
+				continue
 		unbuckle_mob(m, force)
 
 //Handle any extras after buckling
 //Called on buckle_mob()
-/atom/movable/proc/post_buckle_mob(mob/living/M)
+/atom/movable/proc/post_buckle_mob(mob/living/buckled_mob)
 
 //same but for unbuckle
-/atom/movable/proc/post_unbuckle_mob(mob/living/M)
+/atom/movable/proc/post_unbuckle_mob(mob/living/unbuckled_mob)
 
 /**
  * Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.
@@ -239,16 +246,16 @@
 		return FALSE
 
 	// Make sure the target isn't already buckled to something.
-	if(target.buckled)
-		return FALSE
+	//if(target.buckled)
+		//return FALSE
 
 	// Make sure this atom can still have more things buckled to it.
 	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
 		return FALSE
 
 	// Stacking buckling leads to lots of jank and issues, better to just nix it entirely
-	if(target.has_buckled_mobs())
-		return FALSE
+	//if(target.has_buckled_mobs())
+		//return FALSE
 
 	// If the buckle requires restraints, make sure the target is actually restrained.
 	if(buckle_requires_restraints && !HAS_TRAIT(target, TRAIT_RESTRAINED))

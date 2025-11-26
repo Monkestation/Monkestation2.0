@@ -26,13 +26,12 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
-	/// Allows us to replace the plating we are attacking if our baseturfs are the same.
-	var/replace_plating = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+	AddElement(/datum/element/openspace_item_click_handler)
 	if(tile_reskin_types)
 		tile_reskin_types = tile_reskin_list(tile_reskin_types)
 	if(tile_rotate_dirs)
@@ -77,28 +76,16 @@
 	if(!istype(target_plating))
 		return
 
-	if(!replace_plating)
-		if(!use(1))
-			return
-		target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
-		target_plating.setDir(turf_dir)
-		playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return target_plating // Most executions should end here.
-
-	// If we and the target tile share the same initial baseturf and they consent, replace em.
-	if(!target_plating.allow_replacement || initial(target_plating.baseturfs) != initial(placed_turf_path.baseturfs))
-		to_chat(user, span_notice("You cannot place this tile here directly!"))
-		return
-	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!istype(target_plating))
-		return
 	if(!use(1))
 		return
 
-	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
+
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, click_parameters)
+	target.attackby(src, user, click_parameters)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -120,6 +107,13 @@
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
+
+/obj/item/stack/tile/fairygrass/dark
+	name = "dark fairygrass tile"
+	singular_name = "dark fairygrass floor tile"
+	desc = "A patch of odd, light consuming grass."
+	turf_type = /turf/open/floor/grass/fairy/dark
+	color = "#410096"
 
 //Wood
 /obj/item/stack/tile/wood
@@ -982,6 +976,9 @@
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
 
+/obj/item/stack/tile/fakespace/sixty
+	amount = 60
+
 /obj/item/stack/tile/fakepit
 	name = "fake pits"
 	singular_name = "fake pit"
@@ -1021,6 +1018,33 @@
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
 
+/obj/item/stack/tile/noslip/tram
+	name = "high-traction platform tile"
+	singular_name = "high-traction platform tile"
+	desc = "A titanium-aluminium induction plate that powers the tram."
+	icon_state = "tile_noslip"
+	inhand_icon_state = "tile-noslip"
+	turf_type = /turf/open/floor/noslip/tram
+	merge_type = /obj/item/stack/tile/noslip/tram
+
+/obj/item/stack/tile/noslip/tram_platform
+	name = "tram platform tiles"
+	singular_name = "tram platform"
+	desc = "A tile used for tram platforms."
+	icon_state = "darkiron_catwalk"
+	inhand_icon_state = "tile-neon"
+	turf_type = /turf/open/floor/noslip/tram_platform
+	merge_type = /obj/item/stack/tile/noslip/tram_platform
+
+/obj/item/stack/tile/noslip/tram_plate
+	name = "high-traction platform tile"
+	singular_name = "high-traction platform tile"
+	desc = "A high-traction tile used for tram platforms."
+	icon_state = "darkiron_plate"
+	inhand_icon_state = "tile-neon"
+	turf_type = /turf/open/floor/noslip/tram_plate
+	merge_type = /obj/item/stack/tile/noslip/tram_plate
+
 //Circuit
 /obj/item/stack/tile/circuit
 	name = "blue circuit tile"
@@ -1030,6 +1054,13 @@
 	inhand_icon_state = "tile-bcircuit"
 	turf_type = /turf/open/floor/circuit
 	merge_type = /obj/item/stack/tile/circuit
+	// Monkestation Addition Start: They stack, this is better imo than adding a new subtype and leaving this base as unused
+	tile_reskin_types = list(
+		/obj/item/stack/tile/circuit,
+		/obj/item/stack/tile/circuit/green,
+		/obj/item/stack/tile/circuit/red,
+	)
+	// End Monkestation Addition
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
@@ -1038,7 +1069,7 @@
 	icon_state = "tile_gcircuit"
 	inhand_icon_state = "tile-gcircuit"
 	turf_type = /turf/open/floor/circuit/green
-	merge_type = /obj/item/stack/tile/circuit/green
+	//merge_type = /obj/item/stack/tile/circuit/green Monkestation Edit: merges with all circuit floors
 
 /obj/item/stack/tile/circuit/green/anim
 	turf_type = /turf/open/floor/circuit/green/anim
@@ -1051,7 +1082,7 @@
 	icon_state = "tile_rcircuit"
 	inhand_icon_state = "tile-rcircuit"
 	turf_type = /turf/open/floor/circuit/red
-	merge_type = /obj/item/stack/tile/circuit/red
+	//merge_type = /obj/item/stack/tile/circuit/red Monkestation Edit: merges with all circuit floors
 
 /obj/item/stack/tile/circuit/red/anim
 	turf_type = /turf/open/floor/circuit/red/anim
@@ -1093,7 +1124,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	mats_per_unit = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
 
@@ -1141,7 +1172,7 @@
 	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
 	icon_state = "tile_brass"
 	turf_type = /turf/open/floor/bronze
-	mats_per_unit = list(/datum/material/bronze=500)
+	mats_per_unit = list(/datum/material/bronze=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/bronze
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bronze,
@@ -1169,7 +1200,7 @@
 	desc = "A strange tile made from runed metal. Doesn't seem to actually have any paranormal powers."
 	icon_state = "tile_cult"
 	turf_type = /turf/open/floor/cult
-	mats_per_unit = list(/datum/material/runedmetal=500)
+	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult
 
 /// Floor tiles used to test emissive turfs.
@@ -1207,7 +1238,7 @@
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
-	mats_per_unit = list(/datum/material/iron=100)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	turf_type = /turf/open/floor/catwalk_floor
 	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
 	tile_reskin_types = list(
@@ -1268,8 +1299,7 @@
 	turf_type = /turf/open/floor/glass
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
-	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
+	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
 
 /obj/item/stack/tile/glass/sixty
 	amount = 60
@@ -1282,8 +1312,7 @@
 	inhand_icon_state = "tile-rglass"
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
-	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	replace_plating = TRUE
+	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60
@@ -1295,7 +1324,7 @@
 	icon_state = "tile_pglass"
 	turf_type = /turf/open/floor/glass/plasma
 	merge_type = /obj/item/stack/tile/glass/plasma
-	mats_per_unit = list(/datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)
+	mats_per_unit = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)
 
 /obj/item/stack/tile/rglass/plasma
 	name = "reinforced plasma glass floor"
@@ -1304,4 +1333,4 @@
 	icon_state = "tile_rpglass"
 	turf_type = /turf/open/floor/glass/reinforced/plasma
 	merge_type = /obj/item/stack/tile/rglass/plasma
-	mats_per_unit = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = MINERAL_MATERIAL_AMOUNT * 0.25)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)

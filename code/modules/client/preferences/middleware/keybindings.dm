@@ -9,7 +9,7 @@
 	)
 
 /datum/preference_middleware/keybindings/get_ui_static_data(mob/user)
-	if (preferences.current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES)
+	if (preferences.current_window == PREFERENCE_WINDOW_CHARACTERS)
 		return list()
 
 	var/list/keybindings = preferences.key_bindings

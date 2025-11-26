@@ -1,4 +1,4 @@
-#define EXTERNALREPLYCOUNT 2
+// monkestation edit: moved EXTERNALREPLYCOUNT to __defines
 #define EXTERNAL_PM_USER "IRCKEY"
 
 // HEY FUCKO, IMPORTANT NOTE!
@@ -14,35 +14,19 @@
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
 /// Allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
-	set category = null
-	set name = "Admin PM Mob"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Context: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-	if(!ismob(M))
-		to_chat(src,
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", mob/target in world)
+	if(!ismob(target))
+		to_chat(
+			src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
-			confidential = TRUE)
+			confidential = TRUE
+		)
 		return
-	cmd_admin_pm(M.client, null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	user.cmd_admin_pm(target.client, null)
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
-/// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
-/client/proc/cmd_admin_pm_panel()
-	set category = "Admin"
-	set name = "Admin PM"
-	if(!holder)
-		to_chat(src,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_danger("Error: Admin-PM-Panel: Only administrators may use this command."),
-			confidential = TRUE)
-		return
-
+ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of clients to PM", ADMIN_CATEGORY_MAIN)
 	var/list/targets = list()
 	for(var/client/client in GLOB.clients)
 		var/nametag = ""
@@ -59,11 +43,11 @@
 			nametag = "[real_mob_name](as [mob_name])"
 		targets["[nametag] - [client]"] = client
 
-	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null|anything in sort_list(targets)
+	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null | anything in sort_list(targets)
 	if (isnull(target))
 		return
-	cmd_admin_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	user.cmd_admin_pm(targets[target], null)
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM")
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
@@ -97,7 +81,7 @@
 	// The ticket our recipient is using
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
-	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
+	var/datum/admin_help/recipient_interactions = recipient_ticket?._interactions // MONKESTATION EDIT - tgui tickets
 	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
@@ -153,7 +137,7 @@
 				html = "[span_danger("<b>Message not sent:</b>")]<br>[message]",
 				confidential = TRUE)
 			if(recipient_ticket)
-				recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[message]")
+				recipient_ticket.AddInteraction("No client found, message not sent: [message]") // MONKESTATION EDIT - tgui tickets
 			return
 	cmd_admin_pm(whom, message)
 
@@ -293,7 +277,7 @@
 			html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 			confidential = TRUE)
 		if(recipient_ticket)
-			recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+			recipient_ticket.AddInteraction("No client found, message not sent: [msg]") // MONKESTATION EDIT - tgui tickets
 		return null
 	if(our_ticket)
 		our_ticket.MessageNoRecipient(msg)
@@ -304,10 +288,11 @@
 /// or a /client, in which case we send in the standard form
 /// send_message is the raw message to send, it will be filtered and treated to ensure we do not break any text handling
 /// Returns FALSE if the send failed, TRUE otherwise
-/client/proc/sends_adminpm_message(ambiguious_recipient, send_message)
+/client/proc/sends_adminpm_message(ambiguious_recipient, raw_send_message)
 	if(IsAdminAdvancedProcCall())
 		return FALSE
 
+	var/send_message = raw_send_message // monkestation edit: PLEXORA
 	send_message = adminpm_filter_text(ambiguious_recipient, send_message)
 	if(!send_message)
 		return null
@@ -339,6 +324,7 @@
 		var/category = "Reply: [ckey]"
 		if(new_admin_help)
 			category = "#[new_help_id] [category]"
+			SSplexora.aticket_pm(new_admin_help, raw_send_message) // monkestation edit: PLEXORA
 
 		send2adminchat(category, raw_message)
 		return TRUE
@@ -360,8 +346,6 @@
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
 	// Stores a bit of html with our ckey highlighted as a reply link
 	var/link_to_us = key_name(src, TRUE, FALSE)
-	// Stores a bit of html with outhe ckey of the recipientr highlighted as a reply link
-	var/link_to_their = key_name(recipient, TRUE, FALSE)
 	// Our ckey
 	var/our_ckey = ckey
 	// Recipient ckey
@@ -403,30 +387,33 @@
 			ticket_id = ticket?.id
 			recipient_ticket_id = recipient_ticket?.id
 			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
-
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-			confidential = TRUE)
+		// MONKESTATION START
+		if(!recipient_ticket.handling_admin_ckey)
+			recipient_ticket.Administer(FALSE)
+		// MONKESTATION END
 
 		recipient.receive_ahelp(
 			link_to_us,
 			span_linkify(send_message),
 		)
 
-		to_chat(recipient,
-			type = MESSAGE_TYPE_ADMINPM,
-			html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-			confidential = TRUE)
+		// monkestation start: PLEXORA
+		if (!ticket || recipient_ticket)
+			var/datum/admin_help = GLOB.ahelp_tickets.TicketByID(recipient_ticket_id)
+
+			SSplexora.aticket_pm(admin_help, raw_send_message, src.ckey) // monkestation edit: PLEXORA
+		else
+			SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
+		// monkestation end: PLEXORA
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_notice("Admin PM to-<b>[their_name_with_link]</b>: [span_linkify(send_message)]"),
 			confidential = TRUE)
 
 		admin_ticket_log(recipient,
-			"<font color='purple'>PM From [name_key_with_link]: [keyword_parsed_msg]</font>",
-			log_in_blackbox = FALSE,
-			player_message = "<font color='purple'>PM From [link_to_us]: [send_message]</font>")
+			send_message,
+			for_admins = FALSE,
+			log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 
 		if(!already_logged) //Reply to an existing ticket
 			SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
@@ -487,28 +474,29 @@
 			confidential = TRUE)
 
 		//omg this is dumb, just fill in both their logs
-		var/interaction_message = "<font color='purple'>PM from-<b>[name_key_with_link]</b> to-<b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
-		var/player_interaction_message = "<font color='purple'>PM from-<b>[link_to_us]</b> to-<b>[link_to_their]</b>: [send_message]</font>"
+		// MONKESTATION EDIT START - tgui tickets
 		admin_ticket_log(src,
-			interaction_message,
-			log_in_blackbox = FALSE,
-			player_message = player_interaction_message)
+			send_message,
+			for_admins = FALSE,
+			log_in_blackbox = FALSE)
 		if(recipient != src) //reeee
 			admin_ticket_log(recipient,
-				interaction_message,
-				log_in_blackbox = FALSE,
-				player_message = player_interaction_message)
+				send_message,
+				for_admins = FALSE,
+				log_in_blackbox = FALSE)
+		// MONKESTATION EDIT END
+
+		if (ticket || recipient_ticket) SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
 
 		SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 		return TRUE
 
 	// This is us (a player) trying to talk to the recipient (an admin)
 	var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkify(keyword_parsed_msg)]"
-	var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkify(send_message)]"
 	admin_ticket_log(src,
-		"<font color='red'>[replymsg]</font>",
-		log_in_blackbox = FALSE,
-		player_message = player_replymsg)
+		send_message,
+		for_admins = FALSE,
+		log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_danger("[replymsg]"),
@@ -516,6 +504,7 @@
 
 	ticket.reply_to_admins_notification(send_message)
 	SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
+	SSplexora.aticket_pm(ticket, raw_send_message) // monkestation edit: PLEXORA
 
 	return TRUE
 
@@ -724,20 +713,10 @@
 	message_admins("External message from [sender] to [recipient_name_linked] : [message]")
 	log_admin_private("External PM: [sender] -> [recipient_name] : [message]")
 
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>",
-		confidential = TRUE)
-
 	recipient.receive_ahelp(
-		"<a href='?priv_msg=[stealthkey]'>[adminname]</a>",
+		"<a href='byond://?priv_msg=[stealthkey]'>[adminname]</a>",
 		message,
 	)
-
-	to_chat(recipient,
-		type = MESSAGE_TYPE_ADMINPM,
-		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
-		confidential = TRUE)
 
 	admin_ticket_log(recipient, "<font color='purple'>PM From [tgs_tagged]: [message]</font>", log_in_blackbox = FALSE)
 
@@ -783,8 +762,13 @@
 	to_chat(
 		src,
 		type = MESSAGE_TYPE_ADMINPM,
-		html = "<span class='[span_class]'>Admin PM from-<b>[reply_to]</b>: [message]</span>",
-		confidential = TRUE,
+		html = fieldset_block(
+			span_adminhelp("Administrator private message"),
+			"<span class='[span_class]'>Admin PM from-<b>[reply_to]</b></span>\n\n\
+			<span class='[span_class]'>[message]</span>\n\n\
+			<i class='adminsay'>Click on the administrator's name to reply.</i>",
+			"boxed_message red_box"),
+		confidential = TRUE
 	)
 
 	current_ticket?.player_replied = FALSE
@@ -792,5 +776,4 @@
 	SEND_SIGNAL(src, COMSIG_ADMIN_HELP_RECEIVED, message)
 
 #undef EXTERNAL_PM_USER
-#undef EXTERNALREPLYCOUNT
 #undef TGS_AHELP_USAGE

@@ -364,6 +364,10 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
+"ln" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall/wood,
+/area/shuttle/pirate/flying_dutchman)
 "mG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -707,6 +711,9 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/blue/airless,
+/area/shuttle/pirate/flying_dutchman)
+"KV" = (
+/turf/closed/wall/r_wall/wood,
 /area/shuttle/pirate/flying_dutchman)
 "KZ" = (
 /obj/structure/table/wood,
@@ -1117,7 +1124,7 @@ af
 WR
 pG
 SV
-WR
+KV
 af
 ny
 af
@@ -1144,11 +1151,11 @@ SV
 WR
 Fz
 vw
-WR
-WR
-Gt
-WR
-WR
+KV
+KV
+ln
+KV
+KV
 af
 "}
 (8,1,1) = {"
@@ -1171,12 +1178,12 @@ OL
 hz
 fY
 Gr
-WR
+KV
 VF
 tt
 Hh
-WR
-WR
+KV
+KV
 "}
 (9,1,1) = {"
 af
@@ -1198,12 +1205,12 @@ WB
 WB
 WB
 Gr
-WR
-WR
+KV
+KV
 Ms
 vt
 Yr
-WR
+KV
 "}
 (10,1,1) = {"
 af
@@ -1226,11 +1233,11 @@ dM
 KZ
 Le
 Ac
-WR
+KV
 Fv
 rN
 Jp
-WR
+KV
 "}
 (11,1,1) = {"
 ac
@@ -1257,7 +1264,7 @@ sf
 WS
 gP
 gq
-WR
+KV
 "}
 (12,1,1) = {"
 af
@@ -1280,11 +1287,11 @@ PS
 hV
 RO
 gS
-WR
+KV
 tH
 kz
 Dr
-WR
+KV
 "}
 (13,1,1) = {"
 af
@@ -1306,12 +1313,12 @@ WB
 WB
 WB
 Gr
-WR
-WR
+KV
+KV
 Ms
 WQ
 xA
-WR
+KV
 "}
 (14,1,1) = {"
 af
@@ -1333,12 +1340,12 @@ rd
 FK
 yy
 Gr
-WR
+KV
 EU
 bO
 YJ
-WR
-WR
+KV
+KV
 "}
 (15,1,1) = {"
 af
@@ -1360,11 +1367,11 @@ uw
 WR
 fH
 Pm
-WR
-WR
-Gt
-WR
-WR
+KV
+KV
+ln
+KV
+KV
 af
 "}
 (16,1,1) = {"
@@ -1387,7 +1394,7 @@ af
 WR
 pG
 uw
-WR
+KV
 af
 ny
 af

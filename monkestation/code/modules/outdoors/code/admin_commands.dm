@@ -1,17 +1,21 @@
-/client/proc/run_particle_weather()
-	set category = "Admin.Events"
-	set name = "Run Particle Weather"
-	set desc = "Triggers a particle weather"
-
-	if(!holder)
+ADMIN_VERB(run_particle_weather, R_ADMIN, FALSE, "Run Particle Weather", "Triggers a particle weather.", ADMIN_CATEGORY_EVENTS)
+	if(!SSparticle_weather.enabled)
+		to_chat(user, span_warning("Particle weather is currently disabled!"), type = MESSAGE_TYPE_ADMINLOG)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input(user, "Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
 	if(!weather_type)
 		return
 
-	SSparticle_weather.run_weather(new weather_type(), TRUE)
+	var/where = input(user, "Choose Where", "Weather") as null|anything in list("Eclipse", "Default")
+	if(!where)
+		return
 
-	message_admins("[key_name_admin(usr)] started weather of type [weather_type].")
-	log_admin("[key_name(usr)] started weather of type [weather_type].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Particle Weather")
+	var/send_value = FALSE
+	if(where == "Eclipse")
+		send_value = TRUE
+	SSparticle_weather.run_weather(new weather_type(where), TRUE, send_value)
+
+	message_admins("[key_name_admin(user)] started weather of type [weather_type].")
+	log_admin("[key_name(user)] started weather of type [weather_type].")
+	BLACKBOX_LOG_ADMIN_VERB("Run Particle Weather")

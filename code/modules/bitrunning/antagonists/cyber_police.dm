@@ -1,21 +1,17 @@
 /datum/job/cyber_police
 	title = ROLE_CYBER_POLICE
 
-/datum/antagonist/cyber_police
+/datum/antagonist/bitrunning_glitch/cyber_police
 	name = ROLE_CYBER_POLICE
-	antagpanel_category = ANTAG_GROUP_CYBERAUTH
 	job_rank = ROLE_CYBER_POLICE
-	preview_outfit = /datum/outfit/cyber_police
-	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	suicide_cry = "ALT F4!"
-	ui_name = "AntagInfoCyberAuth"
+	ui_name = "AntagInfoGlitch"
 
-/datum/antagonist/cyber_police/greet()
+/datum/antagonist/bitrunning_glitch/cyber_police/greet()
 	. = ..()
 	owner.announce_objectives()
 
-/datum/antagonist/cyber_police/on_gain()
+/datum/antagonist/bitrunning_glitch/cyber_police/on_gain()
 	if(!ishuman(owner.current))
 		stack_trace("humans only for this position")
 		return
@@ -33,7 +29,6 @@
 	player.add_traits(list(
 		//TRAIT_NO_AUGMENTS,
 		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NOBLOOD,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
@@ -57,7 +52,7 @@
 
 	return ..()
 
-/datum/antagonist/cyber_police/forge_objectives()
+/datum/antagonist/bitrunning_glitch/cyber_police/forge_objectives()
 	var/datum/objective/cyber_police_fluff/objective = new()
 	objective.owner = owner
 	objectives += objective

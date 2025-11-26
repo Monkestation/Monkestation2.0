@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	inhand_icon_state = "mousetrap"
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	attachable = TRUE
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
@@ -89,7 +89,7 @@
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 					pulse()
 		update_appearance()
-		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 /obj/item/assembly/mousetrap/update_icon_state()
 	icon_state = "mousetrap[armed ? "armed" : ""]"
@@ -146,6 +146,13 @@
 
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
+
+	// MONKESTATION ADDITION START -- ID:CORTICAL_BORERS
+	else if(iscorticalborer(target))
+		var/mob/living/basic/cortical_borer/pest = target
+		visible_message(span_boldannounce("SPLAT!"))
+		pest.adjust_health(50)
+	// MONKESTATION ADDITION END
 
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	pulse()

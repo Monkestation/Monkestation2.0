@@ -3,13 +3,19 @@ import { classes } from 'common/react';
 import { InfernoNode, Inferno } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
-import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
+import {
+  createSetPreference,
+  Job,
+  JoblessRole,
+  JobPriority,
+  PreferencesMenuData,
+} from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const sortJobs = (entries: [string, Job][], head?: string) =>
   sortBy<[string, Job]>(
     ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key
+    ([key, _]) => key,
   )(entries);
 
 const PRIORITY_BUTTON_SIZE = '18px';
@@ -47,8 +53,7 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
-  context,
-  jobName: string
+  jobName: string,
 ): CreateSetPriority => {
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
@@ -63,7 +68,7 @@ const createCreateSetPriorityFromName = (
     }
 
     const setPriority = () => {
-      const { act } = useBackend<PreferencesMenuData>(context);
+      const { act } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
@@ -109,10 +114,11 @@ const PriorityButtons = (props: {
     <Stack
       style={{
         'align-items': 'center',
-        'height': '100%',
+        height: '100%',
         'justify-content': 'flex-end',
         'padding-left': '0.3em',
-      }}>
+      }}
+    >
       {isOverflow ? (
         <>
           <PriorityButton
@@ -166,23 +172,16 @@ const PriorityButtons = (props: {
   );
 };
 
-const JobRow = (
-  props: {
-    className?: string;
-    job: Job;
-    name: string;
-  },
-  context
-) => {
-  const { data } = useBackend<PreferencesMenuData>(context);
+const JobRow = (props: { className?: string; job: Job; name: string }) => {
+  const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
   const priority = data.job_preferences[name];
 
-  const createSetPriority = createCreateSetPriorityFromName(context, name);
+  const createSetPriority = createCreateSetPriorityFromName(name);
 
-  const { act } = useBackend<PreferencesMenuData>(context);
+  const { act } = useBackend<PreferencesMenuData>();
 
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
@@ -236,16 +235,18 @@ const JobRow = (
       className={className}
       style={{
         'margin-top': 0,
-      }}>
+      }}
+    >
       <Stack>
         <Tooltip content={job.description} position="right">
           <Stack.Item
             align="center"
             className="job-name"
-            width="50%"
+            width="70%"
             style={{
               'padding-left': '0.3em',
-            }}>
+            }}
+          >
             {' '}
             {!job.alt_titles ? (
               name
@@ -262,7 +263,7 @@ const JobRow = (
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item width="50%" className="options" /* SKYRAT EDIT */>
+        <Stack.Item width="40%" className="options" /* SKYRAT EDIT */>
           {rightSide}
         </Stack.Item>
       </Stack>
@@ -294,7 +295,7 @@ const Department: Inferno.SFC<{ department: string }> = (props) => {
 
         const jobsForDepartment = sortJobs(
           Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head
+          department.head,
         );
 
         return (
@@ -332,8 +333,8 @@ const Gap = (props: { amount: number }) => {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const JoblessRoleDropdown = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
   const options = [
@@ -352,7 +353,7 @@ const JoblessRoleDropdown = (props, context) => {
   ];
 
   return (
-    <Box position="absolute" right={0} width="30%">
+    <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
         selected={selected}
@@ -421,7 +422,11 @@ export const JobsPage = () => {
                 <Gap amount={6} />
               </Department>
 
-              <Department department="Medical" />
+              <Department department="Medical">
+                <Gap amount={6} />
+              </Department>
+
+              <Department department="Central Command" />
             </Stack.Item>
           </Stack>
         </Stack.Item>

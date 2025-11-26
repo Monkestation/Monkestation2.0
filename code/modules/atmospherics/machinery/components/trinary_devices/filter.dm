@@ -6,7 +6,7 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-	construction_type = /obj/item/pipe/trinary/flippable
+	construction_type = /obj/item/pipe/trinary/flippable/filter
 	pipe_state = "filter"
 
 	///Rate of transfer of the gases to the outputs
@@ -24,7 +24,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/trinary/filter/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -32,13 +32,14 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
-	if(can_interact(user))
-		transfer_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [transfer_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/trinary/filter/click_alt(mob/user)
+	if(transfer_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	transfer_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [transfer_rate] L/s")
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/trinary/filter/update_overlays()
 	. = ..()
@@ -134,11 +135,11 @@
 	data["filter_types"] = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "gas_id" = gas[META_GAS_ID], "enabled" = (path in filter_type)))
+		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "enabled" = (path in filter_type)))
 
 	return data
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
+/obj/machinery/atmospherics/components/trinary/filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

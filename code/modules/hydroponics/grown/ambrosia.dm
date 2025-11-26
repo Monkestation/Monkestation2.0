@@ -20,7 +20,7 @@
 	product = /obj/item/food/grown/ambrosia/vulgaris
 	lifespan = 60
 	endurance = 25
-	yield = 6
+	yield = 60
 	potency = 5
 	icon_dead = "ambrosia-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -71,7 +71,7 @@
 	name = "ambrosia gaia branch"
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70

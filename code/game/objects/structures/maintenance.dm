@@ -89,16 +89,16 @@ at the cost of risking a vicious bite.**/
 			return
 	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
+/obj/structure/moisture_trap/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)
-	if(is_reagent_container(I))
-		if(istype(I, /obj/item/food/monkeycube))
-			var/obj/item/food/monkeycube/cube = I
+	if(is_reagent_container(attacking_item))
+		if(istype(attacking_item, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = attacking_item
 			cube.Expand()
 			return
-		var/obj/item/reagent_containers/reagent_container = I
+		var/obj/item/reagent_containers/reagent_container = attacking_item
 		if(reagent_container.is_open_container())
 			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
 			to_chat(user, span_notice("You fill [reagent_container] from [src]."))
@@ -106,11 +106,11 @@ at the cost of risking a vicious bite.**/
 	if(hidden_item)
 		to_chat(user, span_warning("There is already something inside [src]."))
 		return
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in [src]!"))
+	if(!user.transferItemToLoc(attacking_item, src))
+		to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in [src]!"))
 		return
-	hidden_item = I
-	to_chat(user, span_notice("You hide [I] inside the basin."))
+	hidden_item = attacking_item
+	to_chat(user, span_notice("You hide [attacking_item] inside the basin."))
 
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
@@ -150,7 +150,7 @@ at the cost of risking a vicious bite.**/
 	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(altar_result)
 		if("Change Color")
-			var/chosen_color = input(user, "", "Choose Color", pants_color) as color|null
+			var/chosen_color = tgui_color_picker(user, "", "Choose Color", pants_color)
 			if(!isnull(chosen_color) && user.can_perform_action(src))
 				pants_color = chosen_color
 		if("Create Artefact")

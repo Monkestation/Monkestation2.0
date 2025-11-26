@@ -17,7 +17,7 @@
 	return ..()
 
 /datum/buildmode_mode/area_edit/Destroy()
-	QDEL_NULL(areaimage)
+	areaimage = null
 	storedarea = null
 	return ..()
 

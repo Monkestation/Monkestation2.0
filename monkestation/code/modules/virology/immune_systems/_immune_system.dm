@@ -1,6 +1,7 @@
 /datum/immune_system
 	var/mob/living/carbon/host = null
 	var/strength = 1
+	var/boost = 1
 	var/overloaded = FALSE
 	var/list/antibodies = list(
 		ANTIGEN_O	= 0,
@@ -16,47 +17,67 @@
 		ANTIGEN_X	= 0,
 		ANTIGEN_Y	= 0,
 		ANTIGEN_Z	= 0,
+		ANTIGEN_IG 	= 0,
 		)
 
-/datum/immune_system/Destroy(force, ...)
-	. = ..()
+/datum/immune_system/Destroy(force)
 	host = null
 	antibodies = null
+	return ..()
 
-/datum/immune_system/New(mob/living/carbon/source)
+/datum/immune_system/New(mob/living/carbon/host, boost = 1)
 	..()
-	if (!source)
-		del(src)
+	if(QDELETED(host))
+		stack_trace("Attempted to initialize immune system on invalid entity!")
+		qdel(src)
 		return
-	host = source
-
-	for (var/antibody in antibodies)
-		if (antibody in GLOB.rare_antigens)
-			antibodies[antibody] = rand(1,15)
+	src.host = host
+	src.boost = boost
+	for(var/antibody in antibodies)
+		if(antibody in GLOB.rare_antigens)
+			antibodies[antibody] = rand(1, 15) * boost
 			if (prob(5))
-				antibodies[antibody] += 10
-		if (antibody in GLOB.common_antigens)
-			antibodies[antibody] = rand(10,30)
-		if (antibody in GLOB.blood_antigens)
-			antibodies[antibody] = rand(10,20)
-			if(!ismouse(host))
-				if (host.dna && host.dna.blood_type)
-					if (antibody == ANTIGEN_O)
-						antibodies[antibody] += rand(12,15)
-					if (antibody == ANTIGEN_A && findtext(host.dna.blood_type,"A"))
-						antibodies[antibody] += rand(12,15)
-					if (antibody == ANTIGEN_B && findtext(host.dna.blood_type,"B"))
-						antibodies[antibody] += rand(12,15)
-					if (antibody == ANTIGEN_RH && findtext(host.dna.blood_type,"+"))
-						antibodies[antibody] += rand(12,15)
+				antibodies[antibody] += 10 * boost
+		if(antibody in GLOB.common_antigens)
+			antibodies[antibody] = rand(10, 30) * boost
+		if(antibody in GLOB.blood_antigens)
+			antibodies[antibody] = rand(10, 20) * boost
+			var/blood_type = host.has_dna()?.human_blood_type
+			if(blood_type)
+				switch(antibody)
+					if(ANTIGEN_O)
+						antibodies[antibody] += rand(12, 15) * boost
+					if(ANTIGEN_A)
+						if(findtext(blood_type, "A"))
+							antibodies[antibody] += rand(12, 15) * boost
+					if(ANTIGEN_B)
+						if(findtext(blood_type, "B"))
+							antibodies[antibody] += rand(12, 15) * boost
+					if(ANTIGEN_RH)
+						if(findtext(blood_type, "+"))
+							antibodies[antibody] += rand(12, 15) * boost
+		if(boost > 1)
+			antibodies[antibody] = min(antibodies[antibody], boost)
 
 /datum/immune_system/proc/transfer_to(mob/living/carbon/source)
-	if (!source.immune_system)
+	if(QDELETED(source))
+		CRASH("Attempted to transfer immune system to non-existant mob")
+	if(QDELETED(source.immune_system))
 		source.immune_system = new(source)
 
 	source.immune_system.strength = strength
+	source.immune_system.boost = boost
 	source.immune_system.overloaded = overloaded
 	source.immune_system.antibodies = antibodies.Copy()
+
+/datum/immune_system/proc/change_boost(new_boost = 1)
+	var/old_boost = boost
+	if(new_boost == old_boost)
+		return
+	for(var/antibody in antibodies)
+		antibodies[antibody] /= old_boost
+		antibodies[antibody] *= new_boost
+	boost = new_boost
 
 /datum/immune_system/proc/GetImmunity()
 	return list(strength, antibodies.Copy())
@@ -70,16 +91,19 @@
 		var/mob/living/carbon/human/H = host
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
 	for(var/ID in host.diseases)
-		var/datum/disease/advanced/D = host.diseases[ID]
-		D.cure(host,2)
+		var/datum/disease/acute/D = host.diseases[ID]
+		D.cure(target = host)
 	strength = 0
 	overloaded = TRUE
 
 
 //If even one antibody hass sufficient concentration, the disease won't be able to infect
-/datum/immune_system/proc/CanInfect(datum/disease/advanced/disease)
+/datum/immune_system/proc/CanInfect(datum/disease/acute/disease)
 	if (overloaded)
 		return TRUE
+
+	if(HAS_TRAIT(host, TRAIT_VIRUSIMMUNE))
+		return FALSE
 
 	for (var/antigen in disease.antigen)
 		if ((antibodies[antigen]) >= disease.strength)
@@ -87,11 +111,11 @@
 	return TRUE
 
 /datum/immune_system/proc/ApplyAntipathogenics(threshold)
-	if (overloaded)
+	if(overloaded)
 		return
 
-	for (var/datum/disease/advanced/disease as anything in host.diseases)
-		for (var/A in disease.antigen)
+	for(var/datum/disease/acute/disease as anything in host.diseases)
+		for(var/A in disease.antigen)
 			var/tally = 0.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
 				tally += 0.5
@@ -103,9 +127,10 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 2.5
 
+			tally *= boost
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
 			else
@@ -113,7 +138,7 @@
 					antibodies[A] = min(antibodies[A] + 1, 100)
 
 /datum/immune_system/proc/NaturalImmune() //called with a 8% chance every time a virus activates
-	for (var/datum/disease/advanced/disease as anything in host.diseases)
+	for (var/datum/disease/acute/disease as anything in host.diseases)
 		for (var/A in disease.antigen)
 			var/tally = 1.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
@@ -121,14 +146,28 @@
 				var/obj/structure/bed/B = locate() in host.loc
 				if (host.buckled == B)//fucking chairs n stuff
 					tally += 0.5
-				if (host.IsUnconscious())
+				if (host.IsUnconscious() || host.IsSleeping())
 					if (tally < 2.5)
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 3.5
 
+			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
+				switch(host.nutrition)
+					if(NUTRITION_LEVEL_FAT to INFINITY)
+						tally -= 0.5
+					if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+						tally += 1.5
+					if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+						tally += 1
+					if(0 to NUTRITION_LEVEL_STARVING)
+						tally = max(tally - 1.5, 0.5)
+					else
+						EMPTY_BLOCK_GUARD
+
+			tally *= boost
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else
@@ -152,7 +191,7 @@
 	if (overloaded)
 		return
 
-	for (var/datum/disease/advanced/disease as anything in host.diseases)
+	for (var/datum/disease/acute/disease as anything in host.diseases)
 		for (var/A in disease.antigen)
 			antibodies[A] = 100
 
@@ -161,10 +200,10 @@
 		return
 
 	for (var/A in antigen)
-		antibodies[A] = min(antibodies[A] + 10 * amount, 100)
+		antibodies[A] = min(antibodies[A] + 5 * amount, 100)
 	if(decay)
 		addtimer(CALLBACK(src, PROC_REF(decay_vaccine), antigen, amount), decay)
 
 /datum/immune_system/proc/decay_vaccine(list/antigens, amount = 1)
 	for (var/A in antigens)
-		antibodies[A] = max(antibodies[A] - 5 * amount, 10)
+		antibodies[A] = max(antibodies[A] - 2.5 * amount, 10)

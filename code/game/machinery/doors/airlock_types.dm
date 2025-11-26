@@ -245,7 +245,7 @@
 	material_modifier = 0.25
 
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
-	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
+	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 10)
 	. = ..()
 
 /obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
@@ -354,7 +354,7 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/LateInitialize()
+/obj/machinery/door/airlock/external/LateInitialize(mapload_arg)
 	. = ..()
 	if(space_dir)
 		unres_sides |= space_dir

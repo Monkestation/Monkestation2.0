@@ -87,7 +87,7 @@
 
 	return data
 
-/obj/machinery/telecomms/ui_act(action, params)
+/obj/machinery/telecomms/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -153,10 +153,10 @@
 				var/obj/machinery/telecomms/T = heldmultitool.buffer
 				. = add_new_link(T, operator)
 		if("buffer")
-			heldmultitool.buffer = src
+			heldmultitool.set_buffer(src)
 			. = TRUE
 		if("flush")
-			heldmultitool.buffer = null
+			heldmultitool.set_buffer(null)
 			. = TRUE
 
 	add_act(action, params)

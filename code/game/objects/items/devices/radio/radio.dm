@@ -10,14 +10,14 @@
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
-	obj_flags = USES_TGUI
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
 	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
@@ -67,8 +67,10 @@
 	var/translate_binary = FALSE
 	/// If true, can say/hear on the special CentCom channel.
 	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
+	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from passive radio jamming effects.
 	var/syndie = FALSE
+	/// If true, ignores all radio jamming effects, including targeted disruptor waves.
+	var/ignores_radio_jammers = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -91,10 +93,15 @@
 	/// If TRUE, will set the icon in initializations.
 	VAR_PRIVATE/should_update_icon = FALSE
 
-	///Range that they can listen from different than canhear_range
+	/// Range that they can listen from different than canhear_range
 	var/listening_range
-	///can we radio host
+	/// Can we radio host?
 	var/radio_host = FALSE
+	/// If TRUE, then this message will always be received intact, regardless of exospheric anomalies / processor issues.
+	var/lossless = FALSE
+	/// If TRUE, then this radio will always use universal_transmission, bypassing tcomms servers, allowing everyone on connected z-levels to hear it.
+	/// Implies `lossless = TRUE` too.
+	var/universal = FALSE
 
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
@@ -109,7 +116,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie, radio_host))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -124,6 +131,12 @@
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
+
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return TRUE
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -151,6 +164,9 @@
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
+
+	if(!listening)
+		remove_radio_all(src)
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
@@ -259,6 +275,8 @@
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
 
+	set_frequency(frequency)
+
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
 		return
@@ -281,14 +299,16 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-
-	if(channel == FREQ_RADIO && !radio_host)
+	//MONKESTATION EDIT START
+	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
 		return
+	//MONKESTATION EDIT STOP
 
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -302,7 +322,7 @@
 
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
-	if(channel && channels && channels.len > 0)
+	if(channel && length(channels))
 		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
@@ -312,12 +332,14 @@
 		freq = frequency
 		channel = null
 
+	// monkestation start: prevent non-radio mics from broadcasting over the radio channel
+	if(freq == FREQ_RADIO && !radio_host)
+		return
+	// monkestation end
+
 	// Nearby active jammers prevent the message from transmitting
-	var/turf/position = get_turf(src)
-	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
-		var/turf/jammer_turf = get_turf(jammer)
-		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range) && !syndie)
-			return
+	if(is_within_radio_jammer_range(src) && !syndie && !ignores_radio_jammers)
+		return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, talking_movable, src)
@@ -326,12 +348,19 @@
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
-	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
+	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW || freq ==  FREQ_UNCOMMON))
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)
 		signal.broadcast()
 		return
+	// monkestation edit: "lossless" and "universal" vars
+	if(universal)
+		universal_transmission(signal) // just immediately do direct signal transmission
+		return
+	else if(lossless)
+		signal.data["compression"] = 0
+	// monkestation end
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -352,7 +381,7 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.levels = list(T.z)
+	signal.levels = SSmapping.get_connected_levels(T)
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
@@ -403,8 +432,10 @@
 				return TRUE
 	return FALSE
 
-/obj/item/radio/proc/on_recieve_message()
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+/obj/item/radio/proc/on_recieve_message(list/data)
+	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -454,7 +485,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, syndie, radio_host))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -499,9 +530,9 @@
 	. = ..()
 	if(unscrewed)
 		return
-	if(broadcasting)
+	if(broadcasting && overlay_mic_idle)
 		. += overlay_mic_idle
-	if(listening)
+	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
@@ -582,7 +613,7 @@
 	to_chat(user, span_notice("You pop out the encryption key in the radio."))
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)
@@ -603,5 +634,66 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+// RADIOS USED BY BROADCASTING
+/obj/item/radio/entertainment
+	desc = "You should not hold this."
+	canhear_range = 7
+	freerange = TRUE
+	freqlock = RADIO_FREQENCY_LOCKED
+//	radio_noise = FALSE //to add when radio noises are ported
+
+/obj/item/radio/entertainment/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENTERTAINMENT)
+
+/obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
+	should_be_listening = TRUE
+	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
+
+/obj/item/radio/entertainment/speakers/Initialize(mapload)
+	. = ..()
+	set_broadcasting(FALSE)
+	set_listening(TRUE)
+	wires?.cut(WIRE_TX)
+
+/* //to add when radio noises are ported
+/obj/item/radio/entertainment/speakers/on_receive_message(list/data)
+	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+
+	return ..()
+*/
+
+/obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
+	name = "entertainment radio"
+	desc = "A portable one-way radio permamently tuned into entertainment frequency."
+	icon_state = "radio"
+	inhand_icon_state = "radio"
+	worn_icon_state = "radio"
+	overlay_speaker_idle = "radio_s_idle"
+	overlay_speaker_active = "radio_s_active"
+	overlay_mic_idle = "radio_m_idle"
+	overlay_mic_active = "radio_m_active"
+
+/obj/item/radio/entertainment/microphone // Used inside of a broadcast camera, not to be used as a actual item
+	should_be_listening = FALSE
+	should_be_broadcasting = TRUE
+
+/obj/item/radio/entertainment/microphone/Initialize(mapload)
+	. = ..()
+	set_broadcasting(TRUE)
+	set_listening(FALSE)
+	wires?.cut(WIRE_RX)
+
+/obj/item/radio/entertainment/microphone/physical // Can be used as a physical item
+	name = "microphone"
+	desc = "No comments."
+	icon = 'icons/obj/service/broadcast.dmi'
+	icon_state = "microphone"
+	inhand_icon_state = "microphone"
+	canhear_range = 3
 
 #undef FREQ_LISTENING

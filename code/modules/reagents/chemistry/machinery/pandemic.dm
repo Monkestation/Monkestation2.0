@@ -85,10 +85,11 @@
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && (user.istate & ISTATE_SECONDARY))
-			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+		var/list/modifiers = params2list(params)
+		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			held_item.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.afterattack(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -152,7 +153,7 @@
 	data["resistances"] = get_resistance_data(blood)
 	return data
 
-/obj/machinery/computer/pandemic/ui_act(action, params)
+/obj/machinery/computer/pandemic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -197,17 +198,17 @@
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[adv_disease.name] culture bottle"
-	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[adv_disease.name] culture tube"
+	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
 	wait = TRUE
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
-	log_virus("A culture bottle was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
+	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
@@ -219,11 +220,11 @@
  * @returns {boolean} - Success or failure.
  */
 /obj/machinery/computer/pandemic/proc/create_vaccine_bottle(index)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[disease.name] vaccine bottle"
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[disease.name] vaccine tube"
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE
 	update_appearance()
@@ -307,7 +308,7 @@
 		traits["description"] = disease.desc || "none"
 		traits["index"] = index++
 		traits["name"] = disease.name
-		traits["spread"] = disease.spread_text || "none"
+		traits["spread"] = disease.get_spread_string() || "none"
 		if(istype(disease, /datum/disease/advance)) // Advanced diseases get more info
 			var/datum/disease/advance/adv_disease = disease
 			var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())

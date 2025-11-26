@@ -46,23 +46,6 @@
 		/datum/stock_part/micro_laser = 2,
 		/datum/stock_part/manipulator = 1)
 
-/obj/item/circuitboard/machine/nanite_program_hub
-	name = "Nanite Program Hub (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/nanite_program_hub
-	req_components = list(
-		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1)
-
-/obj/item/circuitboard/machine/nanite_programmer
-	name = "Nanite Programmer (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/nanite_programmer
-	req_components = list(
-		/datum/stock_part/manipulator = 2,
-		/datum/stock_part/micro_laser = 2,
-		/datum/stock_part/scanning_module = 1)
-
 /obj/item/circuitboard/machine/public_nanite_chamber
 	name = "Public Nanite Chamber (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -83,3 +66,39 @@
 /obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
 	. = ..()
 	. += "Cloud ID is currently set to [cloud_id]."
+
+/obj/item/circuitboard/machine/bomb_actualizer
+	name = "Bomb Actualizer (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/bomb_actualizer
+	req_components = list(
+		/datum/stock_part/manipulator = 1,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/matter_bin = 5)
+
+/obj/item/circuitboard/machine/composters
+	name = "NT-Brand Auto Composter (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/composters
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/manipulator = 1,
+	)
+
+/obj/item/circuitboard/machine/splicer
+	name = "Splicer (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/splicer
+	req_components = list(
+		/datum/stock_part/manipulator = 1,
+	)
+
+/obj/item/circuitboard/machine/cyborgrecharger/fullupgrade
+	name = "Cyborg Recharger"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/recharge_station/fullupgrade
+	req_components = list(
+		/datum/stock_part/capacitor/tier4 = 2,
+		/obj/item/stock_parts/power_store/cell = 1,
+		/datum/stock_part/manipulator/tier4 = 1)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/bluespace)

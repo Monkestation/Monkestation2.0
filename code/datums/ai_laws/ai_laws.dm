@@ -139,7 +139,7 @@ GLOBAL_VAR(round_default_lawset)
 	/// These laws will go away when an AI is reset
 	var/list/hacked = list()
 
-/datum/ai_laws/Destroy(force = FALSE, ...)
+/datum/ai_laws/Destroy(force = FALSE)
 	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
 		if(force) //Unless we're forced...
 			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
@@ -426,7 +426,7 @@ GLOBAL_VAR(round_default_lawset)
 
 /datum/ai_laws/proc/show_laws(mob/to_who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
-	to_chat(to_who, examine_block(jointext(printable_laws, "\n")))
+	to_chat(to_who, boxed_message(jointext(printable_laws, "\n")))
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)

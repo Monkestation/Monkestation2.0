@@ -8,6 +8,7 @@
 	base_icon_state = "smoke"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	processing_flags = NONE
 
 	var/efficiency = 20
@@ -23,7 +24,7 @@
 	src.location = get_turf(location)
 	src.amount = amount
 	carry?.copy_to(chemholder, 20)
-	carry?.remove_any(amount / efficiency)
+	carry?.remove_all(amount / efficiency)
 
 /// A factory which produces clouds of smoke for the smoke machine.
 /datum/effect_system/fluid_spread/smoke/chem/smoke_machine
@@ -90,26 +91,26 @@
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
 		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
 		on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
-/obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/smoke_machine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
+	if(is_reagent_container(attacking_item) && attacking_item.is_open_container())
+		var/obj/item/reagent_containers/RC = attacking_item
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
-	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
+	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", attacking_item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -129,7 +130,10 @@
 	var/TankContents[0]
 	var/TankCurrentVolume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+		var/chem_name = R.name
+		if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+			chem_name = "Ammonia?"
+		TankContents.Add(list(list("name" = chem_name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 		TankCurrentVolume += R.volume
 	data["TankContents"] = TankContents
 	data["isTankLoaded"] = reagents.total_volume ? TRUE : FALSE

@@ -13,6 +13,11 @@
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)
 
+/datum/mood_event/wrong_brandy
+	description = "I hate that type of drink."
+	mood_change = -2
+	timeout = 6 MINUTES
+
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."
 	mood_change = 2
@@ -37,3 +42,8 @@
 	description = "Amazing taste!"
 	mood_change = 50
 	timeout = 10 MINUTES
+
+/datum/mood_event/wellcheers
+	description = "What a tasty can of Wellcheers! The salty grape flavor is a great pick-me-up."
+	mood_change = 3
+	timeout = 7 MINUTES

@@ -19,14 +19,14 @@
 		return
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
-	burrower.status_flags |= GODMODE
+	ADD_TRAIT(burrower, TRAIT_GODMODE, REF(src))
 	burrower.invisibility = INVISIBILITY_MAXIMUM
 	burrower.forceMove(unburrow_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(unburrow_turf)
-	burrower.status_flags &= ~GODMODE
+	REMOVE_TRAIT(burrower, TRAIT_GODMODE, REF(src))
 	burrower.invisibility = 0
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/get_unburrow_turf(mob/living/burrower, atom/target)
@@ -79,6 +79,10 @@
 	damage_type = BURN
 	pass_flags = PASSTABLE
 
+/obj/projectile/bileworm_acid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /datum/action/cooldown/mob_cooldown/devour
 	name = "Devour"
 	desc = "Burrow underground, and then move to your target to consume them. Short cooldown, but your target must be unconscious."
@@ -104,14 +108,14 @@
 		return //this will give up on devouring the target which is fine by me
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(devourer))
-	devourer.status_flags |= GODMODE
+	ADD_TRAIT(devourer, TRAIT_GODMODE, REF(src))
 	devourer.invisibility = INVISIBILITY_MAXIMUM
 	devourer.forceMove(devour_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), devourer)
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(devour_turf)
-	devourer.status_flags &= ~GODMODE
+	REMOVE_TRAIT(devourer, TRAIT_GODMODE, REF(src))
 	devourer.invisibility = 0
 	if(!(target in devour_turf))
 		to_chat(devourer, span_warning("Someone stole your dinner!"))

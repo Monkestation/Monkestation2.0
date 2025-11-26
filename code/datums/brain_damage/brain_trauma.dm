@@ -12,9 +12,9 @@
 	var/gain_text = span_notice("You feel traumatized.")
 	var/lose_text = span_notice("You no longer feel traumatized.")
 	var/can_gain = TRUE
-	var/random_gain = TRUE //can this be gained through random traumas?
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
-	var/clonable = TRUE // will this transfer if the brain is cloned?
+	/// Flags for this trauma. See `TRAUMA_X` defines.
+	var/trauma_flags = TRAUMA_DEFAULT_FLAGS
 
 /datum/brain_trauma/Destroy()
 	// Handles our references with our brain
@@ -25,9 +25,9 @@
 	return ..()
 
 /datum/brain_trauma/proc/on_clone()
-	if(clonable)
+	if(trauma_flags & TRAUMA_CLONEABLE)
 		return new type
-		
+
 //Called on life ticks
 /datum/brain_trauma/proc/on_life(seconds_per_tick, times_fired)
 	return
@@ -38,6 +38,7 @@
 
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()
+	SHOULD_CALL_PARENT(TRUE)
 	if(gain_text)
 		to_chat(owner, gain_text)
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -45,6 +46,7 @@
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && lose_text)
 		to_chat(owner, lose_text)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)

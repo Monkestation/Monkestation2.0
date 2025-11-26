@@ -5,6 +5,7 @@
 	icon_state = "chronogun"
 	inhand_icon_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
 
 	var/mob/living/current_target
 	var/last_check = 0
@@ -70,7 +71,7 @@
 	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))//this is a WAY better rangecheck than what was done before (process check)
 
-	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+	SSblackbox.record_feedback("tally", "gun_fired", 1, initial(name))
 
 /obj/item/gun/medbeam/process()
 	if(!mounted && !isliving(loc))

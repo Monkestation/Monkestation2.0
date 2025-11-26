@@ -62,6 +62,14 @@
 	icon_state = "milkman"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/batter
+	name = "batter uniform"
+	desc = "Purification in Progress."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "batter"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/tragic
 	name = "tragic mime suit"
 	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."
@@ -70,6 +78,14 @@
 	icon_state = "tragic"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
 	alternate_worn_layer = GLOVES_LAYER
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/harlequin
+	name = "harlequin jumpsuit"
+	desc = "This is what you wear if you wanna be a weird fusion of a clown and mime."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "harlequin"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/bee
@@ -81,6 +97,49 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/cop_mascot
+	name = "policeman mascot suit"
+	desc = "A blue police mascot suit. On the chest is a star badge with an eye in the middle. You feel like you should be chopping people apart with power tools while wearing this."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "cop_mascot"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
+	alternate_worn_layer = GLOVES_LAYER
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/crueltysquad_under
+	name = "CSIJ level I body armor"
+	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "crueltysquad_under"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/infinity_under
+	name = "infinity shorts"
+	desc = "Worn by those who want more matching team colors."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "infinity_shorts"
+	body_parts_covered = CHEST|GROIN|LEGS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/bb_dress
+	name = "bb dress"
+	desc = "Howdy, it's me BB. Zines, zines, zines."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "bb_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/citizen_uniform
+	name = "citizen uniform"
+	desc = "A blue matching uniform. It makes you feel like you're in a labor camp."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "citizen_uniform"
+	can_adjust = FALSE
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */
@@ -96,7 +155,7 @@
 	icon_state = "kimono"
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-
+	alternate_worn_layer = ABOVE_SHOES_LAYER
 /*
 *	CHRISTMAS CLOTHES
 */
@@ -111,14 +170,98 @@
 	desc = "4:00, wallow in self-pity. 4:30, stare into the abyss. 5:00, solve world hunger, tell no one. 5:30, jazzercize; 6:30, dinner with me. I can't cancel that again. 7:00, wrestle with my self-loathing. I'm booked. Of course, if I bump the loathing to 9, I could still be done in time to lay in bed, stare at the ceiling and slip slowly into madness."
 	icon_state = "christmas_green"
 
-/obj/item/clothing/under/costume/skyrat/christmas/croptop
-	name = "sexy christmas costume"
-	desc = "About 550 years since the release of Mariah Carey's \"All I Want For Christmas is You\", society has yet to properly recover from its repercussions. Some still keep a gun as their christmas mantlepiece, just in case she's heard singing on their rooftop late in the night..."
-	icon_state = "christmas_crop"
-	body_parts_covered = CHEST|GROIN
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+/*
+BUNNY SUITS
+*/
+/obj/item/clothing/under/costume/playbunny
+	name = "bunny suit"
+	desc = "The staple of any bunny themed waiters and the like. It has a little cottonball tail too."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "playbunny"
+	greyscale_colors = "#39393f#39393f#ffffff#87502e"
+	greyscale_config = /datum/greyscale_config/bunnysuit
+	greyscale_config_worn = /datum/greyscale_config/bunnysuit_worn
+	greyscale_config_worn_digitigrade = /datum/greyscale_config/bunnysuit_worn/digitigrade
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
+	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/costume/skyrat/christmas/croptop/green
-	name = "sexy green christmas costume"
-	desc = "Stupid. Ugly. Out of date. If I can't find something nice to wear I'm not going."
-	icon_state = "christmas_crop_green"
+/obj/item/clothing/under/costume/playbunny/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny)
+
+/obj/item/clothing/under/syndicate/syndibunny //heh
+	name = "blood-red bunny suit"
+	desc = "The staple of any bunny themed syndicate assassins. Are those carbon nanotube stockings?"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "syndibunny"
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/syndicate/syndibunny/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/small)
+
+/obj/item/clothing/under/costume/playbunny/magician
+	name = "magician's bunny suit"
+	desc = "The staple of any bunny themed stage magician."
+	icon_state = "playbunny_wiz"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/costume/playbunny/magician/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/tiny/magician)
+
+/datum/storage/pockets/tiny/magician/New() //this is probably a good idea
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(
+		/obj/item/gun/magic/wand,
+		/obj/item/warp_whistle,
+	))
+	exception_hold = exception_cache
+
+/obj/item/clothing/under/costume/playbunny/centcom
+	name = "centcom bunnysuit"
+	desc = "A modified Centcom version of a bunny outfit, using Lunarian technology to condense countless amounts of rabbits into a material that is extremely comfortable and light to wear."
+	icon_state = "playbunny_centcom"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/costume/playbunny/british
+	name = "british bunny suit"
+	desc = "The staple of any bunny themed monarchists. It has a little cottonball tail too."
+	icon_state = "playbunny_brit"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/costume/playbunny/communist
+	name = "really red bunny suit"
+	desc = "The staple of any bunny themed communists. It has a little cottonball tail too."
+	icon_state = "playbunny_communist"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/under/costume/playbunny/usa
+	name = "striped bunny suit"
+	desc = "A bunny outfit stitched together from several American flags. It has a little cottonball tail too."
+	icon_state = "playbunny_usa"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_digitigrade = null
+/*
+END OF BUNNY SUITS
+*/

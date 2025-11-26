@@ -32,14 +32,53 @@
 		// Then broadcast that signal to
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
+
+/obj/machinery/telecomms/hub/update_power()
+	var/old_on = on
+	if (toggled && (machine_stat & (BROKEN|NOPOWER|EMPED)))
+		on = FALSE
+		soundloop.stop()
+	else
+		on = TRUE
+		soundloop.start()
+	if(old_on != on)
+		update_appearance()
+
+/obj/machinery/telecomms/hub/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, on)
+
+/obj/machinery/telecomms/hub/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 //Preset HUB
 
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
 	network = "tcommsat"
-	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "h_relay", "science", "medical",
-	"supply", "service", "common", "command", "engineering", "security",
-	"receiverA", "receiverB", "broadcasterA", "broadcasterB", "autorelay", "messaging")
+	autolinkers = list(
+		"hub",
+		"relay",
+		"s_relay",
+		"m_relay",
+		"r_relay",
+		"h_relay",
+		"science",
+		"medical",
+		"supply",
+		"service",
+		"common",
+		"command",
+		"engineering",
+		"entertainment",
+		"security",
+		"receiverA",
+		"receiverB",
+		"broadcasterA",
+		"broadcasterB",
+		"autorelay",
+		"messaging",
+	)
 

@@ -1,9 +1,13 @@
 /obj/machinery/splicer
 	name = "Splicer"
 	desc = "Splices two seeds together."
-
-	icon_state = "splicer"
 	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
+	base_icon_state = "splicer"
+	icon_state = "splicer"
+	circuit = /obj/item/circuitboard/machine/splicer
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
+
 	var/obj/item/seeds/seed_1
 	var/obj/item/seeds/seed_2
 	var/obj/item/reagent_containers/cup/beaker/held_beaker
@@ -29,12 +33,50 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			seed_2 = I
-	if(istype(I, /obj/item/reagent_containers/cup/beaker))
+	else if(istype(I, /obj/item/reagent_containers/cup/beaker))
 		if(!held_beaker)
 			if(!user.transferItemToLoc(I, src))
 				return
 			held_beaker = I
 			return
+
+/obj/machinery/splicer/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/splicer/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
+
+/obj/machinery/splicer/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
+
+/obj/machinery/splicer/update_icon_state()
+	. = ..()
+	if(machine_stat & BROKEN)
+		icon_state = "[base_icon_state]_broken"
+	else if((machine_stat & NOPOWER) || !anchored)
+		icon_state = "[base_icon_state]_off"
+	else if(working)
+		icon_state = "[base_icon_state]_working"
+	else
+		icon_state = "[base_icon_state]"
+
+/obj/machinery/splicer/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += "[base_icon_state]_open"
+
+/obj/machinery/splicer/set_anchored(anchorvalue)
+	. = ..()
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/splicer/on_set_panel_open(old_value)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/splicer/ui_data(mob/user)
 	. = ..()
@@ -104,7 +146,7 @@
 
 /obj/machinery/splicer/proc/eject_seed(obj/item/seeds/ejected_seed)
 	if (ejected_seed)
-		if(Adjacent(usr) && !issiliconoradminghost(usr))
+		if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 			if (!usr.put_in_hands(ejected_seed))
 				ejected_seed.forceMove(drop_location())
 		else
@@ -113,7 +155,7 @@
 
 /obj/machinery/splicer/proc/eject_beaker()
 	if (held_beaker)
-		if(Adjacent(usr) && !issiliconoradminghost(usr))
+		if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 			if (!usr.put_in_hands(held_beaker))
 				held_beaker.forceMove(drop_location())
 		else
@@ -144,7 +186,7 @@
 	new_seed.icon_dead = first_seed.icon_dead
 	new_seed.growthstages = first_seed.growthstages
 	new_seed.growing_icon = first_seed.growing_icon
-	new_seed.seed_offset = first_seed.seed_offset
+	new_seed.plant_icon_offset = first_seed.plant_icon_offset
 
 	new_seed.reagents_add = first_seed.reagents_add.Copy()
 
@@ -188,7 +230,7 @@
 	for(var/reag_id in new_seed.reagents_add)
 		new_seed.genes += new /datum/plant_gene/reagent(reag_id, new_seed.reagents_add[reag_id])
 
-	if(Adjacent(usr) && !issiliconoradminghost(usr))
+	if(Adjacent(usr) && !HAS_SILICON_ACCESS(usr))
 		if (!usr.put_in_hands(new_seed))
 			new_seed.forceMove(drop_location())
 	else
@@ -221,13 +263,20 @@
 	potential_damage = stats["damage"]
 
 /obj/machinery/splicer/proc/infuse()
-	if(!held_beaker)
+	if(!held_beaker || !seed_1) /// Checks if we have a beaker and a seed to infuse
 		return
-	seed_1.infusion_damage += potential_damage
-	if(seed_1.infusion_damage >= 100)
+	potential_damage = held_beaker.reagents.total_volume / 10 /// Every 10 units of reagents in the beaker will cause 1 damage to the seed.
+	seed_1.infusion_damage += min(potential_damage, 100 - seed_1.infusion_damage)
+
+	if(seed_1.infusion_damage >= 100) /// If the seed has taken too much damage, it gets deleted.
+		to_chat(usr, span_warning("[seed_1] has become too damaged from infusion and disintegrated!"))
 		qdel(seed_1)
 		seed_1 = null
+		stats = list()
+		potential_damage = 0
 		return
+
+	var/list/successful_reagents = list()
 
 	seed_1.adjust_potency(stats["potency_change"])
 	seed_1.adjust_yield(stats["yield_change"])
@@ -238,7 +287,65 @@
 	seed_1.adjust_weed_rate(stats["weed_rate_change"])
 	seed_1.adjust_maturation(stats["maturation_change"])
 
-	seed_1.check_infusions(held_beaker.reagents.reagent_list)
-	held_beaker.reagents.remove_any(held_beaker.reagents.total_volume)
+	if(held_beaker.reagents && held_beaker.reagents.reagent_list.len > 0)
+		var/list/current_reagent_instances = held_beaker.reagents.reagent_list.Copy()
+
+		for (var/datum/reagent/reagent_instance in current_reagent_instances)
+			if(!reagent_instance)
+				continue
+
+			var/reagent_id_path = reagent_instance.type
+			if (!(reagent_instance.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+				to_chat(usr, span_warning("[reagent_instance.name] cannot be infused into plants!"))
+				continue
+
+			var/volume = reagent_instance.volume
+			if (volume <= 0)
+				continue
+
+			var/infusion_chance = min(floor(volume / 5), 100)
+
+			if(prob(infusion_chance))
+				var/random_rate = rand(3, 25) / 100
+
+				var/datum/plant_gene/reagent/existing_gene = null
+				for(var/datum/plant_gene/gene_check in seed_1.genes)
+					if(istype(gene_check, /datum/plant_gene/reagent))
+						var/datum/plant_gene/reagent/reagent_gene = gene_check
+						if(reagent_gene.reagent_id == reagent_id_path)
+							existing_gene = reagent_gene
+							break
+
+				if(existing_gene)
+					/// Add to existing gene's rate
+					to_chat(usr, span_notice("Increased [reagent_instance.name] rate in [seed_1] from [round(existing_gene.rate * 100)]% to [round(existing_gene.rate * 100) + round(random_rate * 100)]%."))
+					existing_gene.rate += random_rate
+				else
+					/// Create a new gene with the random rate
+					var/datum/plant_gene/reagent/new_gene = new /datum/plant_gene/reagent(reagent_id_path, random_rate)
+					if(new_gene.can_add(seed_1))
+						seed_1.genes += new_gene
+						to_chat(usr, span_notice("Successfully infused [reagent_instance.name] into [seed_1] with a rate of [round(new_gene.rate * 100)]%."))
+					else
+						/// Skips adding the gene mutation if it failed to add
+						to_chat(usr, span_warning("Could not add new gene for [reagent_instance.name] to [seed_1]."))
+						qdel(new_gene)
+						continue
+
+				successful_reagents += reagent_instance
+			else
+				to_chat(usr, span_notice("Attempted to infuse [reagent_instance.name] into [seed_1], but it failed."))
+
+
+		seed_1.reagents_from_genes()
+	else
+		to_chat(usr, span_warning("The beaker is empty! Nothing to infuse."))
+
+	seed_1.check_infusions(successful_reagents)
+	if(held_beaker && held_beaker.reagents)
+		held_beaker.reagents.remove_all(held_beaker.reagents.total_volume)
+	successful_reagents = list()
 	stats = list()
 	potential_damage = 0
+
+	to_chat(usr, span_notice("[seed_1] infusion process complete."))

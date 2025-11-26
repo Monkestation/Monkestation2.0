@@ -22,6 +22,12 @@
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
+/proc/nightmare_name()
+	return "[pick(GLOB.nightmare_names)]"
+
+/proc/darkspawn_name()
+	return "[pick(GLOB.nightmare_names)]"
+
 GLOBAL_VAR(command_name)
 /proc/command_name()
 	if (GLOB.command_name)
@@ -79,17 +85,17 @@ GLOBAL_VAR(command_name)
 
 	// Prefix
 	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
+	var/list/seasons = list("spring","summer","fall","winter")
 	if(holiday_name)
 		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
 		name = holiday.getStationPrefix()
 		//get normal name
-	if(!name)
+	if(!name || (name in seasons))
 		name = pick(GLOB.station_names)
 	if(name)
 		new_station_name += name + " "
-
 	// Suffix
 	name = pick(GLOB.station_suffixes)
 	new_station_name += name + " "

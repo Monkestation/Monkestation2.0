@@ -136,25 +136,25 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(state == AI_READY_CORE)
 		if(!core_mmi)
 			balloon_alert(user, "no brain installed!")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		else if(!core_mmi.brainmob?.mind || suicide_check())
 			balloon_alert(user, "brain is inactive!")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "connecting neural network...")
 			if(!tool.use_tool(src, user, 10 SECONDS))
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			if(!ai_structure_to_mob())
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			balloon_alert(user, "connected neural network")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/attackby(obj/item/P, mob/living/user, params)
 	if(!anchored)
@@ -216,7 +216,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
 							state = CABLED_CORE
 							update_appearance()
@@ -243,7 +243,7 @@
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
+						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
 							balloon_alert(user, "added glass panel")
 							state = GLASS_CORE
 							update_appearance()
@@ -374,7 +374,15 @@
 			icon_state = "2"
 		if(CABLED_CORE)
 			if(core_mmi)
+				// monkestation edit start
+				/* original
 				icon_state = "3b"
+				*/
+				if (istype(core_mmi, /obj/item/mmi/posibrain))
+					icon_state = "3c"
+				else
+					icon_state = "3b"
+				// monkestation edit end
 			else
 				icon_state = "3"
 		if(GLASS_CORE)
@@ -409,6 +417,7 @@ That prevents a few funky behaviors.
 
 
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
+	SHOULD_CALL_PARENT(TRUE)
 	if(istype(card))
 		if(card.flush)
 			to_chat(user, span_alert("ERROR: AI flush is in progress, cannot execute transfer protocol."))

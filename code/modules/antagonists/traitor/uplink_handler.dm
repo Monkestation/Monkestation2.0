@@ -48,10 +48,19 @@
 	var/debug_mode = FALSE
 	/// Whether the shop is locked or not. If set to true, nothing can be purchased.
 	var/shop_locked = FALSE
+	/// Callback which returns true if you can choose to replace your objectives with different ones
+	var/datum/callback/can_replace_objectives
+	/// Callback which performs that operation
+	var/datum/callback/replace_objectives
 
 /datum/uplink_handler/New()
 	. = ..()
 	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
+
+/datum/uplink_handler/Destroy(force)
+	can_replace_objectives = null
+	replace_objectives = null
+	return ..()
 
 /// Called whenever an update occurs on this uplink handler. Used for UIs
 /datum/uplink_handler/proc/on_update()
@@ -111,6 +120,20 @@
 		item_stock[to_purchase.stock_key] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
+	on_update()
+	return TRUE
+
+/datum/uplink_handler/proc/purchase_raw_tc(mob/user, amount, atom/movable/source)
+	if(shop_locked)
+		return FALSE
+	if(telecrystals < amount)
+		return FALSE
+
+	telecrystals -= amount
+	var/tcs = new /obj/item/stack/telecrystal(user.drop_location(), amount)
+	user.put_in_hands(tcs)
+
+	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")
 	on_update()
 	return TRUE
 

@@ -31,8 +31,8 @@
 	speak_emote = list("telepathically cries")
 
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = T0C
-	maximum_survivable_temperature = T0C + 1500
+	bodytemp_cold_damage_limit = T0C
+	bodytemp_heat_damage_limit = T0C + 1500
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 	lighting_cutoff_red = 40
@@ -56,7 +56,7 @@
 	glare.Grant(src)
 	ai_controller.set_blackboard_key(BB_GLARE_ABILITY, glare)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(on_tame)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
@@ -117,7 +117,7 @@
 	befriend(target)
 	COOLDOWN_START(src, eye_healing, 15 SECONDS)
 
-/mob/living/basic/eyeball/proc/on_tame(mob/tamer)
+/mob/living/basic/eyeball/tamed(mob/living/tamer, atom/food)
 	spin(spintime = 2 SECONDS, speed = 1)
 	//become passive to the humens
 	faction |= tamer.faction

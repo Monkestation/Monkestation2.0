@@ -23,6 +23,7 @@
 	resistance_flags = NONE
 	max_integrity = 300
 	var/shoulder_carry = FALSE
+	var/satchel_movespeed_modifier = PAIRED_STORAGE_DEFAULT_SLOWDOWN
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -30,15 +31,23 @@
 	AddElement(/datum/element/attack_equip)
 
 /obj/item/storage/backpack/equipped(mob/user, slot, initial)
-	if(slot == ITEM_SLOT_BACK)
-		if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-			slowdown++
 	. = ..()
+	check_belt_satchel(user)
 
 /obj/item/storage/backpack/dropped(mob/user, silent)
 	. = ..()
-	slowdown = initial(slowdown)
+	check_belt_satchel(user)
 
+/obj/item/storage/backpack/proc/check_belt_satchel(mob/user)
+	if(QDELETED(user))
+		return
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, update = FALSE)
+	var/obj/item/storage/backpack/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
+	var/obj/item/storage/backpack/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(back_item) && istype(belt_item))
+		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, TRUE, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
+	else
+		user.update_movespeed()
 /*
  * Backpack Types
  */
@@ -126,7 +135,7 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "backpack-cult"
 	inhand_icon_state = "backpack"
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -157,6 +166,7 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
@@ -201,12 +211,23 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
+//MONKESTATION EDIT START// adds generic backpack and touches up the sprites
 /obj/item/storage/backpack/ert
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets."
+	icon_state = "ert_plain"
+	inhand_icon_state = "securitypack"
+	resistance_flags = FIRE_PROOF
+	alternate_worn_layer = (HEAD_LAYER-0.5)
+
+/obj/item/storage/backpack/ert/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 25 //lots of pockets
+
+/obj/item/storage/backpack/ert/commander
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
 	icon_state = "ert_commander"
-	inhand_icon_state = "securitypack"
-	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/ert/security
 	name = "emergency response team security backpack"
@@ -233,6 +254,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
 
+/obj/item/storage/backpack/ert/generic
+	name = "emergency response team backpack"
+	desc = "A spacious backpack with lots of pockets"
+	icon_state = "ert_generic"
+//MONKESTATION EDIT STOP
+
 /obj/item/storage/backpack/saddlepack
 	name = "saddlepack"
 	desc = "A backpack designed to be saddled on a mount or carried on your back, and switch between the two on the fly. It's quite spacious, at the cost of making you feel like a literal pack mule."
@@ -255,6 +282,7 @@
 	throwforce = 15
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
 	///Sounds used in the squeak component
 	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
 	///Reagents added to the edible component, ingested when you EAT the MEAT
@@ -271,13 +299,26 @@
 
 /obj/item/storage/backpack/meat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/edible,\
+	AddComponent(
+		/datum/component/edible,\
 		initial_reagents = meat_reagents,\
 		foodtypes = foodtypes,\
 		tastes = tastes,\
 		eatverbs = eatverbs,\
 	)
 	AddComponent(/datum/component/squeak, meat_sounds)
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 15,\
+		max_blood = 300,\
+	)
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("MEAT DNA" = "MT+"),\
+		diseases = null,\
+	)
 
 /*
  * Satchel Types
@@ -295,22 +336,6 @@
 	. = ..()
 	atom_storage.max_total_storage = 18
 
-/obj/item/storage/backpack/satchel/equipped(mob/user, slot, initial)
-	. = ..()
-	if(slot == ITEM_SLOT_BELT)
-		ADD_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown++
-
-/obj/item/storage/backpack/satchel/dropped(mob/user, silent)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-		REMOVE_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown = initial(selected_bag.slowdown)
-
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
@@ -322,6 +347,36 @@
 
 /obj/item/storage/backpack/satchel/fireproof
 	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/backpack/satchel/flowery
+	name = "perfume scented satchel"
+	desc = "It's a very fancy satchel made with fine leather."
+	icon_state = "flowerybag"
+	inhand_icon_state = "flowerybag"
+
+/obj/item/storage/backpack/satchel/wing
+	name = "angel wing satchel"
+	desc = "A uniqe satchel that comes with hidden straps. How many chickens were felled for this look?"
+	icon_state = "angelwing"
+	inhand_icon_state = "satchel"
+
+/obj/item/storage/backpack/satchel/wing/alt
+	name = "devil wing satchel"
+	desc = "A uniqe satchel that comes with hidden straps. How many chickens were felled for this look?"
+	icon_state = "devilwing"
+	inhand_icon_state = "devilwing"
+
+/obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+	name = "black leather satchel"
+	desc = "It's a fancy satchel made with plastic imitation leather."
+	icon_state = "satchel-blackleather"
+	inhand_icon_state = "satchel-blackleather"
+
+/obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
+	name = "retro satchel"
+	desc = "A satchel commonly worn during planetary surveys."
+	icon_state = "satchel-retro"
+	inhand_icon_state = "satchel-retro"
 
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
@@ -411,11 +466,14 @@
 
 	..()
 
+/obj/item/storage/backpack/satchel/flat/listening_post_secret_stash
+	desc = "God, the stench from this thing is potent."
+
 /obj/item/storage/backpack/satchel/flat/listening_post_secret_stash/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/eva(src)
-	new /obj/item/clothing/suit/space/eva(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
-	new /obj/item/tank/internals/oxygen/empty(src)
+	new /obj/item/seeds/cannabis(src)
+	new /obj/item/food/grown/cannabis(src)
+	new /obj/item/storage/box/donkpockets/donkpockethonk(src)
+	new /obj/item/choice_beacon/pet(src)
 
 	..()
 
@@ -612,19 +670,20 @@
 	inhand_icon_state = "duffel-syndiemed"
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
+	new /obj/item/reagent_containers/medigel/sterilizine(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/emergency_bed(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
-	new /obj/item/blood_filter(src)
-	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
@@ -666,17 +725,17 @@
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/compression_kit(src)
+	new /obj/item/compression_kit(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
+	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/gun/ballistic/automatic/c20r(src)
@@ -710,7 +769,10 @@
 	new /obj/item/gun/ballistic/automatic/c20r/toy(src)
 	new /obj/item/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
+	// MONKESTATION EDIT START
+	// MONKESTATION EDIT ORIGINAL new /obj/item/grenade/chem_grenade/bioterrorfoam(src)
+	new /obj/item/grenade/chem_grenade/large/bioterrorfoam(src)
+	// MONKESTATION EDIT END
 	if(prob(5))
 		new /obj/item/food/pizza/pineapple(src)
 
@@ -777,3 +839,124 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/item/storage/backpack/cursed
+	name = "Dirty Duffelbag"
+	desc = "A cursed backpack"
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/storage/backpack/cursed/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "slasher")
+
+// Special Mining Backpacks
+
+/obj/item/storage/backpack/rockspider
+	name = "Rockspider Pack"
+	desc = "A surprisingly flexible and durable bag, capable of carrying up to three mining guns at once, for those who prowl the wastes with a passion for marksmanship. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
+	icon_state = "rockspider"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
+
+/obj/item/storage/backpack/rockspider/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/rifle/minerjdj,
+		/obj/item/gun/ballistic/revolver/govmining,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
+	))
+	atom_storage.max_total_storage = 100
+
+/obj/item/storage/backpack/ashduelist
+	name = "Ashen Duelist Pack"
+	desc = "A bag with a mount and holster, capable of carrying any crusher type weapon and a gun, for the aspiring duelist who needs a bit more than just a blade. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
+	icon_state = "ashenduelist"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
+
+/obj/item/storage/backpack/ashduelist/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/shotgun/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/rifle/minerjdj,
+		/obj/item/gun/ballistic/revolver/govmining,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
+		/obj/item/kinetic_crusher,
+		/obj/item/kinetic_crusher/machete,
+		/obj/item/kinetic_crusher/spear,
+		/obj/item/kinetic_crusher/hammer,
+		/obj/item/kinetic_crusher/claw,
+		/obj/item/kinetic_crusher/pilebunker,
+		/obj/item/kinetic_crusher/knives,
+		/obj/item/kinetic_crusher/sickle,
+	))
+	atom_storage.max_total_storage = 100
+
+/obj/item/storage/backpack/trenchjockey
+	name = "Trench Jockey Pack"
+	desc = "A exceptionally spacious bag full of slots and pouches for different kinds of ammunition, for those who really need more than just one extra round. Despite its weight, it fits incredibly well with a satchel, and does not hinder your movement as much as a regular backpack would."
+	icon_state = "trenchjockey"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = PAIRED_STORAGE_LIGHT_SLOWDOWN
+
+/obj/item/storage/backpack/trenchjockey/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14 //TWO whole rows to fill with ammo, this should be PLENTY, if you run out you either spent way to long on lavaland and should go touch grass, or you have a TREMENDOUS skill issue
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list( //all the ammo for mining guns can be stored in here, but nothing else.
+		/obj/item/ammo_box/magazine/pksmgmag,
+		/obj/item/storage/box/kinetic,
+		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_casing/shotgun/hydrakinetic,
+		/obj/item/storage/box/kinetic/autoshotgun,
+		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
+		/obj/item/ammo_casing/a762/kinetic,
+		/obj/item/ammo_box/a762/kinetic,
+		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_casing/a40mm/kinetic,
+		/obj/item/storage/box/kinetic/grenadelauncher,
+		/obj/item/ammo_casing/govmining,
+		/obj/item/ammo_box/govmining,
+		/obj/item/storage/box/kinetic/govmining,
+		/obj/item/ammo_casing/minerjdj,
+		/obj/item/ammo_casing/shotgun/kinetic,
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
+		/obj/item/storage/box/kinetic/shotgun,
+		/obj/item/storage/box/kinetic/shotgun/sniperslug,
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker
+	),
+	list( //cant hold these
+		/obj/item/storage/box/kinetic/govmining/bigcase,
+		/obj/item/storage/box/kinetic/autoshotgun/bigcase,
+		/obj/item/storage/box/kinetic/kineticlmg/bigcase,
+		/obj/item/storage/box/kinetic/grenadelauncher/bigcase,
+		/obj/item/storage/box/kinetic/minerjdj/bigcase, //just incase...
+		/obj/item/storage/box/kinetic/shotgun/bigcase,
+		/obj/item/storage/box/pksmg //also just incase...
+	))
+
+	atom_storage.max_total_storage = 100

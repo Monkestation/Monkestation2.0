@@ -13,7 +13,8 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	heat_protection = 0.5 // minor heat insulation
+	temperature_insulation = 0.5 // minor heat insulation
+	bodytemp_heat_damage_limit = CELCIUS_TO_KELVIN(85 CELCIUS)
 
 	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
@@ -45,29 +46,11 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the environment and natural stabilization
-	. = ..()
-
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		//Body temperature is too hot.
+/mob/living/carbon/alien/body_temperature_alerts()
+	if(bodytemperature > bodytemp_heat_damage_limit)
 		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
-		switch(bodytemperature)
-			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
-			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
-			if(460 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3 * seconds_per_tick, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 	else
 		clear_alert(ALERT_XENO_FIRE)
-
-/mob/living/carbon/alien/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) //can metabolize all reagents
-	return FALSE
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -95,11 +78,13 @@ Proc: RemoveInfectionImages()
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
-	if (client)
-		for(var/image/I in client.images)
+	if(client)
+		var/list/image/to_remove
+		for(var/image/client_image as anything in client.images)
 			var/searchfor = "infected"
-			if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+			if(findtext(client_image.icon_state, searchfor, 1, length(searchfor) + 1))
+				to_remove += client_image
+		client.images -= to_remove
 	return
 
 /mob/living/carbon/alien/canBeHandcuffed()
@@ -132,6 +117,13 @@ Des: Removes all infected images from the alien.
 	if(nanites)
 		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
+	if(is_holding_items())
+		for(var/hand_index = 1 to length(held_items))
+			var/obj/item/item_in_hand = held_items[hand_index]
+			if(QDELETED(item_in_hand))
+				continue
+			dropItemToGround(item_in_hand, force = TRUE, silent = TRUE)
+			new_xeno.put_in_hand(item_in_hand, hand_index, forced = TRUE)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

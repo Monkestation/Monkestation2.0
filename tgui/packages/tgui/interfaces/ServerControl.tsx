@@ -31,8 +31,8 @@ type LogData = {
   node_research_location: string;
 };
 
-export const ServerControl = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ServerControl = (props) => {
+  const { act, data } = useBackend<Data>();
   const { server_connected, servers, consoles, logs } = data;
   if (!server_connected) {
     return (
@@ -135,7 +135,8 @@ export const ServerControl = (props, context) => {
                   <Table.Row
                     mt={1}
                     key={server_log.node_name}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell>{server_log.node_name}</Table.Cell>
                     <Table.Cell>{server_log.node_cost}</Table.Cell>
                     <Table.Cell>{server_log.node_researcher}</Table.Cell>

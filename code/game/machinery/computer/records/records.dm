@@ -13,15 +13,22 @@
 	if(!has_access)
 		return data
 
-	data["assigned_view"] = "preview_[user.ckey]_[REF(src)]_records"
+	data["assigned_view"] = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	data["station_z"] = !!(z && is_station_level(z))
 
 	return data
+
+/obj/machinery/computer/records/ui_close(mob/user)
+	. = ..()
+	user.client?.screen_maps -= USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
+	if((LAZYLEN(open_uis) <= 1) && character_preview_view) //only delete the preview if we're the last one to close the console.
+		QDEL_NULL(character_preview_view)
 
 /obj/machinery/computer/records/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
+	var/mob/user = ui.user
 
 	var/datum/record/crew/target
 	if(params["crew_ref"])
@@ -34,8 +41,9 @@
 			if(!field || !(field in target?.vars))
 				return FALSE
 
-			var/value = trim(params["value"], MAX_BROADCAST_LEN)
-			target.vars[field] = value || "Unknown"
+			var/value = reject_bad_name(params["value"], allow_numbers = TRUE, max_length = MAX_BROADCAST_LEN, strict = TRUE, cap_after_symbols = FALSE) || "Unknown"
+			investigate_log("[key_name(user)] changed the field: \"[field]\" with value: \"[target.vars[field]]\" to new value: \"[value]\"", INVESTIGATE_RECORDS)
+			target.vars[field] = value
 
 			return TRUE
 
@@ -44,24 +52,47 @@
 				return FALSE
 			// Don't let people off station futz with the station network.
 			if(!is_station_level(z))
-				balloon_alert(usr, "out of range!")
+				balloon_alert(user, "out of range!")
 				return TRUE
 
+			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 			expunge_record_info(target)
-			balloon_alert(usr, "record expunged")
+			balloon_alert(user, "record expunged")
 			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
-			investigate_log("[key_name(usr)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
 
 		if("login")
-			authenticated = secure_login(usr)
+			authenticated = secure_login(user)
+			investigate_log("[key_name(user)] [authenticated ? "successfully logged" : "failed to log"] into the [src].", INVESTIGATE_RECORDS)
 			return TRUE
 
 		if("logout")
-			balloon_alert(usr, "logged out")
+			balloon_alert(user, "logged out")
 			playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
 			authenticated = FALSE
+
+			return TRUE
+
+		if("purge_records")
+			// Don't let people off station futz with the station network.
+			if(!is_station_level(z))
+				balloon_alert(user, "out of range!")
+				return TRUE
+
+			ui.close()
+			balloon_alert(user, "purging records...")
+			playsound(src, 'sound/machines/terminal_alert.ogg', 70, TRUE)
+
+			if(do_after(user, 5 SECONDS))
+				for(var/datum/record/crew/entry in GLOB.manifest.general)
+					expunge_record_info(entry)
+
+				balloon_alert(user, "records purged")
+				playsound(src, 'sound/machines/terminal_off.ogg', 70, TRUE)
+				investigate_log("[key_name(user)] purged all records.", INVESTIGATE_RECORDS)
+			else
+				balloon_alert(user, "interrupted!")
 
 			return TRUE
 
@@ -69,30 +100,32 @@
 			if(!target)
 				return FALSE
 
-			playsound(src, "sound/machines/terminal_button0[rand(1, 8)].ogg", 50, TRUE)
-			update_preview(usr, params["assigned_view"], target)
+			playsound(src, SFX_TERMINAL_TYPE, 50, TRUE)
+			update_preview(user, params["assigned_view"], target, ui.window)
 			return TRUE
 
 	return FALSE
 
 /// Creates a character preview view for the UI.
-/obj/machinery/computer/records/proc/create_character_preview_view(mob/user)
-	var/assigned_view = "preview_[user.ckey]_[REF(src)]_records"
+/obj/machinery/computer/records/proc/create_character_preview_view(mob/user, datum/tgui_window/window)
+	var/assigned_view = USER_PREVIEW_ASSIGNED_VIEW(user.ckey)
 	if(user.client?.screen_maps[assigned_view])
 		return
 
 	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
-	new_view.display_to(user)
+	new_view.display_to(user, window)
+	return new_view
 
 /// Takes a record and updates the character preview view to match it.
-/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
+/obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target, datum/tgui_window/window)
 	var/mutable_appearance/preview = new(target.character_appearance)
 	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
 	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
 
 	var/atom/movable/screen/map_view/char_preview/old_view = user.client?.screen_maps[assigned_view]?[1]
 	if(!old_view)
+		character_preview_view = create_character_preview_view(user, window)
 		return
 
 	old_view.appearance = preview.appearance
@@ -140,7 +173,7 @@
 		return FALSE
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
-
+	investigate_log("[key_name(user)] created a new record named [name]", INVESTIGATE_RECORDS)
 	balloon_alert(user, "record created")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 70, TRUE)
 

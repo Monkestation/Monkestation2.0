@@ -1,4 +1,4 @@
-/datum/mutation/human/antenna
+/datum/mutation/antenna
 	name = "Antenna"
 	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
 	quality = POSITIVE
@@ -18,29 +18,32 @@
 	. = ..()
 	radio.name = "internal antenna"
 
-/datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/antenna/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(linked_radio)
 
-/datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 
-/datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/antenna/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
-/datum/mutation/human/antenna/get_visual_indicator()
+/* Moved to 'monkestation/code/datums/mutations/antenna.dm'
+/datum/mutation/antenna/get_visual_indicator()
 	return visual_indicators[type][1]
+*/
 
-/datum/mutation/human/mindreader
+/datum/mutation/mindreader
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
 	quality = POSITIVE
@@ -86,6 +89,11 @@
 		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind."))
 		return
 
+	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
+		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
+			you feel the overwhelming emptiness within. A truly evil being. \
+			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
+
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
 	if(prob(20))
 		// chance to alert the read-ee
@@ -102,10 +110,10 @@
 		to_chat(owner, span_boldnotice("You find that their intent is to [(carbon_cast_on.istate & ISTATE_HARM) ? "harm" : "help"]..."))
 		to_chat(owner, span_boldnotice("You uncover that [carbon_cast_on.p_their()] true identity is [carbon_cast_on.mind.name]."))
 
-/datum/mutation/human/mindreader/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/mindreader/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
 
-/datum/mutation/human/mindreader/get_visual_indicator()
+/datum/mutation/mindreader/get_visual_indicator()
 	return visual_indicators[type][1]

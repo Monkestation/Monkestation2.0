@@ -10,8 +10,8 @@
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
-	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	complexity = 1
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
@@ -60,7 +60,7 @@
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/implant/mod
 	name = "MOD pathfinder implant"

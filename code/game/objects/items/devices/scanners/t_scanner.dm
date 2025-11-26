@@ -11,7 +11,7 @@
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 1.5)
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -35,8 +35,7 @@
 
 /obj/item/t_scanner/process()
 	if(!on)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	scan()
 
 /obj/item/t_scanner/proc/scan()
@@ -56,3 +55,22 @@
 			t_ray_images += I
 	if(t_ray_images.len)
 		flick_overlay_global(t_ray_images, list(viewer.client), flick_time)
+
+/obj/item/t_scanner/thermal
+	name = "\improper Advanced T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes. This one has also been modified with the function to detect thermal differences."
+	var/thermal = FALSE
+
+/obj/item/t_scanner/thermal/scan()
+	if(thermal)
+		atmos_thermal(loc)
+		return
+	return ..()
+
+/obj/item/t_scanner/thermal/attack_self_secondary(mob/user)
+	thermal = !thermal
+	to_chat(user, span_notice("You turn the goggles to [thermal ? "scan for thermal difference.":"detect underfloor objects."]"))
+
+/obj/item/t_scanner/thermal/examine(mob/user)
+	. = ..()
+	. += span_notice("Right-click [src] to toggle between it's t-ray and thermal functions.")

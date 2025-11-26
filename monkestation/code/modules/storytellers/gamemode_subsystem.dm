@@ -3,18 +3,21 @@
 #define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
 ///amount of players we can have before no longer running votes for storyteller
 #define MAX_POP_FOR_STORYTELLER_VOTE 25
+///the duration into the round for which roundstart events are still valid to run
+#define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
 	init_order = INIT_ORDER_GAMEMODE
 	runlevels = RUNLEVEL_GAME
 	flags = SS_BACKGROUND | SS_KEEP_TIMING
+	priority = 20
 	wait = 2 SECONDS
 
 	/// List of our event tracks for fast access during for loops.
 	var/list/event_tracks = EVENT_TRACKS
 	/// Our storyteller. They progresses our trackboards and picks out events
-	var/datum/storyteller/storyteller
+	var/datum/storyteller/current_storyteller
 	/// Result of the storyteller vote/pick. Defaults to the guide.
 	var/selected_storyteller = /datum/storyteller/guide
 	/// List of all the storytellers. Populated at init. Associative from type
@@ -115,12 +118,9 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/control = list() //list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list() //list of all existing /datum/round_event
 	var/list/round_end_data = list() //list of all reports that need to add round end reports
-	var/list/currentrun = list()
 
 	/// List of all uncategorized events, because they were wizard or holiday events
 	var/list/uncategorized = list()
-
-	var/list/holidays //List of all holidays occuring today or null if no holidays
 
 	/// Event frequency multiplier, it exists because wizard, eugh.
 	var/event_frequency_multiplier = 1
@@ -134,6 +134,9 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// Whether the storyteller has been halted
 	var/halted_storyteller = FALSE
+
+	// Used to determine if an admin chosed a storyteller, so it doesnt pick one randomly
+	var/admin_picked_storyteller = FALSE
 
 	/// Ready players for roundstart events.
 	var/ready_players = 0
@@ -153,13 +156,17 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// What is our currently desired/selected roundstart event
 	var/datum/round_event_control/antagonist/solo/current_roundstart_event
-	var/list/last_round_events = list()
+	var/list/recent_storyteller_events = list()
+	/// Has a roundstart event been run
 	var/ran_roundstart = FALSE
+	/// Are we able to run roundstart events
+	var/can_run_roundstart = TRUE
 	var/list/triggered_round_events = list()
 
-	var/total_valid_antags = 0
-
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
+#if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
+	CONFIG_SET(flag/disable_storyteller, TRUE)
+#endif
 	// Populate event pools
 	for(var/track in event_tracks)
 		event_pools[track] = list()
@@ -168,14 +175,15 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/type in subtypesof(/datum/storyteller))
 		storytellers[type] = new type()
 
-	for(var/type in typesof(/datum/round_event_control))
-		var/datum/round_event_control/event = new type()
-		if(!event.typepath || !event.name)
-			continue //don't want this one! leave it for the garbage collector
+	for(var/datum/round_event_control/event_type as anything in typesof(/datum/round_event_control))
+		if(!event_type::typepath || !event_type::name)
+			continue
+
+		var/datum/round_event_control/event = new event_type
 		if(!event.valid_for_map())
+			qdel(event)
 			continue // event isn't good for this map no point in trying to add it to the list
 		control += event //add it to the list of all events (controls)
-	getHoliday()
 
 	load_config_vars()
 	load_event_config_vars()
@@ -188,13 +196,38 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
-
-//	return ..()
-
+	if(CONFIG_GET(flag/disable_storyteller)) // we're just gonna disable firing but still initialize, so we don't have any weird runtimes
+		flags |= SS_NO_FIRE
+		return SS_INIT_NO_NEED
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
-	if(!resumed)
-		src.currentrun = running.Copy()
+	if(SSticker.round_start_time && (world.time - SSticker.round_start_time) >= ROUNDSTART_VALID_TIMEFRAME)
+		can_run_roundstart = FALSE
+	else if(current_roundstart_event && length(current_roundstart_event.preferred_events)) //note that this implementation is made for preferred_events being other roundstart events
+		var/list/preferred_copy = current_roundstart_event.preferred_events.Copy()
+		var/datum/round_event_control/selected_event = pick_weight(preferred_copy)
+		var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+		if(ispath(selected_event)) //get the instances if we dont have them
+			current_roundstart_event.preferred_events = list()
+			for(var/datum/round_event_control/e_control as anything in preferred_copy)
+				current_roundstart_event.preferred_events[new e_control] = preferred_copy[e_control]
+			preferred_copy = current_roundstart_event.preferred_events.Copy()
+			selected_event = null
+		else if(!selected_event.can_spawn_event(player_count))
+			preferred_copy -= selected_event
+			selected_event = null
+
+		var/sanity = 0
+		while(!selected_event && length(preferred_copy) && sanity < 100)
+			sanity++
+			selected_event = pick_weight(preferred_copy)
+			if(!selected_event.can_spawn_event(player_count))
+				preferred_copy -= selected_event
+				selected_event = null
+
+		if(selected_event)
+			current_storyteller.try_buy_event(selected_event)
 
 	///Handle scheduled events
 	for(var/datum/scheduled_event/sch_event in scheduled_events)
@@ -203,47 +236,48 @@ SUBSYSTEM_DEF(gamemode)
 		else if(!sch_event.alerted_admins && world.time >= sch_event.start_time - 1 MINUTES)
 			///Alert admins 1 minute before running and allow them to cancel or refund the event, once again.
 			sch_event.alerted_admins = TRUE
-			message_admins("Scheduled Event: [sch_event.event] will run in [(sch_event.start_time - world.time) / 10] seconds. (<a href='?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='?src=[REF(sch_event)];action=refund'>REFUND</a>)")
+			message_admins("Scheduled Event: [sch_event.event] will run in [(sch_event.start_time - world.time) / 10] seconds. (<a href='byond://?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(sch_event)];action=refund'>REFUND</a>)")
 
-	if(!halted_storyteller && next_storyteller_process <= world.time && storyteller)
+	if(!halted_storyteller && next_storyteller_process <= world.time && current_storyteller)
 		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
 		update_crew_infos()
 		next_storyteller_process = world.time + STORYTELLER_WAIT_TIME
-		storyteller.process(STORYTELLER_WAIT_TIME * 0.1)
-
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-
-	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
-		currentrun.len--
-		if(thing)
-			thing.process(wait * 0.1)
-		else
-			running.Remove(thing)
-		if (MC_TICK_CHECK)
-			return
+		current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1)
 
 /// Gets the number of antagonists the antagonist injection events will stop rolling after.
 /datum/controller/subsystem/gamemode/proc/get_antag_cap()
-	var/total_number = get_correct_popcount() + (sec_crew * 2)
-	var/cap = FLOOR((total_number / ANTAG_CAP_DENOMINATOR), 1) + ANTAG_CAP_FLAT
-	return cap
+	var/points = 0
+	for(var/mob/living/player in get_active_players())
+		var/datum/job/player_role = player.mind?.assigned_role
+		if(player_role)
+			points += player_role.antag_capacity_points
+	return ANTAG_CAP_FLAT + max(points - (ANTAG_CAP_FLAT + 5), 1)
+
+/// Return the total point value of active antags
+/datum/controller/subsystem/gamemode/proc/get_antag_count()
+	. = 0
+	var/alist/already_counted = alist() //only count their highest point antag
+	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
+		if(QDELETED(antag) || QDELETED(antag.owner))
+			continue
+		if(!antag.should_count_for_antag_cap())
+			continue
+
+		var/counted_value = already_counted[antag.owner]
+		if(counted_value && counted_value > antag.antag_count_points)
+			continue
+
+		counted_value = antag.antag_count_points
+		if(antag.owner.current && !ishuman(antag.owner.current) && !(antag.antag_flags & FLAG_ANTAG_CAP_IGNORE_HUMANITY))
+			counted_value /= 2 //non humans count for half
+		already_counted[antag.owner] = counted_value
+
+	for(var/datum/mind/owner, points in already_counted)
+		. += points
 
 /// Whether events can inject more antagonists into the round
 /datum/controller/subsystem/gamemode/proc/can_inject_antags()
-	total_valid_antags = 0
-	for(var/mob/checked_mob in GLOB.mob_list)
-		if(!checked_mob.mind)
-			continue
-		if(!checked_mob.mind.special_role)
-			continue
-		if(checked_mob.stat == DEAD)
-			continue
-		total_valid_antags++
-
-
-	return (get_antag_cap() > total_valid_antags)
+	return (get_antag_cap() > get_antag_count())
 
 /// Gets candidates for antagonist roles.
 /datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
@@ -251,6 +285,8 @@ SUBSYSTEM_DEF(gamemode)
 	var/list/candidate_candidates = list() //lol
 
 	for(var/mob/player as anything in GLOB.player_list)
+		if(QDELETED(player) || player.mind?.picking)
+			continue
 		if(ready_newplayers && isnewplayer(player))
 			var/mob/dead/new_player/new_player = player
 			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
@@ -260,7 +296,9 @@ SUBSYSTEM_DEF(gamemode)
 		else if(living_players && isliving(player))
 			if(!ishuman(player) && !isAI(player))
 				continue
-			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
+			// I split these checks up to make the code more readable ~Lucy
+			var/is_on_station = is_station_level(player.z)
+			if(!is_on_station && !is_late_arrival(player))
 				continue
 			candidate_candidates += player
 
@@ -270,8 +308,18 @@ SUBSYSTEM_DEF(gamemode)
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
-			if(no_antags && candidate.mind.special_role)
+
+			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
 				continue
+
+			if(no_antags && !isnull(candidate.mind.antag_datums))
+				var/real = FALSE
+				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
+					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & ANTAG_FAKE))
+						real = TRUE
+						break
+				if(real)
+					continue
 			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
 				continue
 			if(length(required_roles) && !(candidate.mind.assigned_role.title in required_roles))
@@ -328,7 +376,7 @@ SUBSYSTEM_DEF(gamemode)
 
 /// We roll points to be spent for roundstart events, including antagonists.
 /datum/controller/subsystem/gamemode/proc/roll_pre_setup_points()
-	if(storyteller.disable_distribution || halted_storyteller)
+	if(current_storyteller.disable_distribution || halted_storyteller)
 		return
 	/// Distribute points
 	for(var/track in event_track_points)
@@ -352,12 +400,12 @@ SUBSYSTEM_DEF(gamemode)
 				gain_amt = ROUNDSTART_OBJECTIVES_GAIN
 		var/calc_value = base_amt + (gain_amt * ready_players)
 		calc_value *= roundstart_point_multipliers[track]
-		calc_value *= storyteller.starting_point_multipliers[track]
-		calc_value *= (rand(100 - storyteller.roundstart_points_variance,100 + storyteller.roundstart_points_variance)/100)
+		calc_value *= current_storyteller.starting_point_multipliers[track]
+		calc_value *= (rand(100 - current_storyteller.roundstart_points_variance,100 + current_storyteller.roundstart_points_variance)/100)
 		event_track_points[track] = round(calc_value)
 
 	/// If the storyteller guarantees an antagonist roll, add points to make it so.
-	if(storyteller.guarantees_roundstart_roleset && event_track_points[EVENT_TRACK_ROLESET] < point_thresholds[EVENT_TRACK_ROLESET])
+	if(current_storyteller.guarantees_roundstart_roleset && event_track_points[EVENT_TRACK_ROLESET] < point_thresholds[EVENT_TRACK_ROLESET])
 		event_track_points[EVENT_TRACK_ROLESET] = point_thresholds[EVENT_TRACK_ROLESET]
 
 	/// If we have any forced events, ensure we get enough points for them
@@ -367,18 +415,20 @@ SUBSYSTEM_DEF(gamemode)
 
 /// At this point we've rolled roundstart events and antags and we handle leftover points here.
 /datum/controller/subsystem/gamemode/proc/handle_post_setup_points()
-	for(var/track in event_track_points) //Just halve the points for now.
-		event_track_points[track] *= 0.5
+//	for(var/track in event_track_points) //Just halve the points for now.
+//		event_track_points[track] *= 0.5 TESTING HOW THINGS GO WITHOUT THIS HALVING OF POINTS
+	return
 
 /// Because roundstart events need 2 steps of firing for purposes of antags, here is the first step handled, happening before occupation division.
 /datum/controller/subsystem/gamemode/proc/handle_pre_setup_roundstart_events()
-	if(storyteller.disable_distribution)
+	if(current_storyteller.disable_distribution)
 		return
 	if(halted_storyteller)
 		message_admins("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
+		log_storyteller("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
 		return
 	while(TRUE)
-		if(!storyteller.handle_tracks())
+		if(!current_storyteller.handle_tracks())
 			break
 
 /// Second step of handlind roundstart events, happening after people spawn.
@@ -398,27 +448,26 @@ SUBSYSTEM_DEF(gamemode)
 	var/datum/scheduled_event/scheduled = new (passed_event, world.time + passed_time, passed_cost, passed_ignore, passed_announce)
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
-		message_admins("Event: [passed_event] has been scheduled to run in [passed_time / 10] seconds. (<a href='?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='?src=[REF(scheduled)];action=refund'>REFUND</a>)")
+		message_admins("Event: [passed_event] has been scheduled to run in [passed_time / 10] seconds. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
 	else //Only roundstart events can be scheduled before round start
-		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
+		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
 	scheduled_events += scheduled
 
+//simplified version of `get_active_player_count()`
+/datum/controller/subsystem/gamemode/proc/get_active_players()
+	. = list()
+	for(var/mob/living/carbon/human/player_mob in GLOB.alive_player_list)
+		if(player_mob.client?.is_afk())
+			continue
+		. += player_mob
+
 /datum/controller/subsystem/gamemode/proc/update_crew_infos()
-	// Very similar logic to `get_active_player_count()`
 	active_players = 0
 	head_crew = 0
 	eng_crew = 0
 	med_crew = 0
 	sec_crew = 0
-	for(var/mob/player_mob as anything in GLOB.player_list)
-		if(!player_mob.client)
-			continue
-		if(player_mob.stat) //If they're alive
-			continue
-		if(player_mob.client.is_afk()) //If afk
-			continue
-		if(!ishuman(player_mob))
-			continue
+	for(var/mob/living/carbon/human/player_mob in get_active_players())
 		active_players++
 		if(player_mob.mind?.assigned_role)
 			var/datum/job/player_role = player_mob.mind.assigned_role
@@ -438,7 +487,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/high_pop_bound = pop_scale_thresholds[track]
 		var/scale_penalty = pop_scale_penalties[track]
 
-		var/perceived_pop = max(low_pop_bound, active_players) // after max pop we start generating even more threat
+		var/perceived_pop = min(max(low_pop_bound, active_players), high_pop_bound)
 
 		var/divisor = high_pop_bound - low_pop_bound
 		/// If the bounds are equal, we'd be dividing by zero or worse, if upper is smaller than lower, we'd be increasing the factor, just make it 1 and continue.
@@ -463,75 +512,17 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceEvent(usr)
+ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceEvent(user.mob)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-/client/proc/forceGamemode()
-	set name = "Open Gamemode Panel"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceGamemode(usr)
+ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceGamemode(user.mob)
 
 /datum/admins/proc/forceGamemode(mob/user)
 	SSgamemode.admin_panel(user)
-
-
-//////////////
-// HOLIDAYS //
-//////////////
-//Uncommenting ALLOW_HOLIDAYS in config.txt will enable holidays
-
-//It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
-//You can then check if it's a special day in any code in the game by doing if(SSgamemode.holidays["Groundhog Day"])
-
-//You can also make holiday random events easily thanks to Pete/Gia's system.
-//simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
-//Anything with a holidayID, which isn't in the holidays list, will never occur.
-
-//Please, Don't spam stuff up with stupid stuff (key example being april-fools Pooh/ERP/etc),
-//And don't forget: CHECK YOUR CODE!!!! We don't want any zero-day bugs which happen only on holidays and never get found/fixed!
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-//ALSO, MOST IMPORTANTLY: Don't add stupid stuff! Discuss bonus content with Project-Heads first please!//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-//sets up the holidays and holidays list
-/datum/controller/subsystem/gamemode/proc/getHoliday()
-	if(!CONFIG_GET(flag/allow_holidays))
-		return // Holiday stuff was not enabled in the config!
-	for(var/H in subtypesof(/datum/holiday))
-		var/datum/holiday/holiday = new H()
-		var/delete_holiday = TRUE
-		for(var/timezone in holiday.timezones)
-			var/time_in_timezone = world.realtime + timezone HOURS
-
-			var/YYYY = text2num(time2text(time_in_timezone, "YYYY")) // get the current year
-			var/MM = text2num(time2text(time_in_timezone, "MM")) // get the current month
-			var/DD = text2num(time2text(time_in_timezone, "DD")) // get the current day
-			var/DDD = time2text(time_in_timezone, "DDD") // get the current weekday
-
-			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
-				holiday.celebrate()
-				LAZYSET(holidays, holiday.name, holiday)
-				delete_holiday = FALSE
-				break
-		if(delete_holiday)
-			qdel(holiday)
-
-	if(holidays)
-		holidays = shuffle(holidays)
-		// regenerate station name because holiday prefixes.
-		set_station_name(new_station_name())
-		world.update_status()
 
 /datum/controller/subsystem/gamemode/proc/toggleWizardmode()
 	wizardmode = !wizardmode //TODO: decide what to do with wiz events
@@ -562,9 +553,9 @@ SUBSYSTEM_DEF(gamemode)
 	if(SSdbcore.Connect())
 		var/list/to_set = list()
 		var/arguments = list()
-		if(storyteller)
+		if(current_storyteller)
 			to_set += "game_mode = :game_mode"
-			arguments["game_mode"] = storyteller.name
+			arguments["game_mode"] = current_storyteller.name
 		if(GLOB.revdata.originmastercommit)
 			to_set += "commit_hash = :commit_hash"
 			arguments["commit_hash"] = GLOB.revdata.originmastercommit
@@ -757,8 +748,26 @@ SUBSYSTEM_DEF(gamemode)
 					event.reoccurence_penalty_multiplier = value
 				if("shared_occurence_type")
 					if(!isnull(value))
-						value = text2path(value)
+						value = "[value]"
 					event.shared_occurence_type = value
+				if("repeated_mode_adjust")
+					event.repeated_mode_adjust = value
+				if("extra_spawned_events")
+					if(!islist(value) && !isnull(value))
+						stack_trace("extra_spawned_events must be a list or null (tried to set invalid for [event_path])")
+						continue
+					if(!istype(event, /datum/round_event_control/antagonist/solo))
+						stack_trace("tried to set extra_spawned_events for event that isn't a subtype of /datum/round_event_control/antagonist/solo ([event_path])")
+						continue
+					var/datum/round_event_control/antagonist/solo/antag_event = event
+					LAZYNULL(antag_event.extra_spawned_events)
+					var/list/extra_spawned_events = fill_with_ones(value)
+					for(var/key in extra_spawned_events)
+						var/extra_path = text2path(key)
+						if(!extra_path)
+							stack_trace("invalid event typepath '[key]' in extra_spawned_events for [event_path] in events.json")
+							continue
+						LAZYSET(antag_event.extra_spawned_events, extra_path, extra_spawned_events[key])
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
@@ -786,7 +795,9 @@ SUBSYSTEM_DEF(gamemode)
 	point_thresholds[EVENT_TRACK_ROLESET] = CONFIG_GET(number/roleset_point_threshold)
 	point_thresholds[EVENT_TRACK_OBJECTIVES] = CONFIG_GET(number/objectives_point_threshold)
 
-/datum/controller/subsystem/gamemode/proc/handle_picking_stroyteller()
+/datum/controller/subsystem/gamemode/proc/handle_picking_storyteller()
+	if(CONFIG_GET(flag/disable_storyteller))
+		return
 	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
 		secret_storyteller = TRUE
 		selected_storyteller = pick_weight(get_valid_storytellers(TRUE))
@@ -838,69 +849,62 @@ SUBSYSTEM_DEF(gamemode)
 	return valid_storytellers
 
 /datum/controller/subsystem/gamemode/proc/init_storyteller()
+	// Don't allow the storyteller to be set if an admin set the storyteller
+	if (admin_picked_storyteller)
+		return
 	set_storyteller(selected_storyteller)
 
 /datum/controller/subsystem/gamemode/proc/set_storyteller(passed_type)
 	if(!storytellers[passed_type])
 		message_admins("Attempted to set an invalid storyteller type: [passed_type], force setting to guide instead.")
-		storyteller = storytellers[/datum/storyteller/guide] //if we dont have any then we brick, lets not do that
+		current_storyteller = storytellers[/datum/storyteller/guide] //if we dont have any then we brick, lets not do that
 		CRASH("Attempted to set an invalid storyteller type: [passed_type].")
-	storyteller = storytellers[passed_type]
+	current_storyteller = storytellers[passed_type]
 	if(!secret_storyteller)
-		send_to_playing_players(span_notice("<b>Storyteller is [storyteller.name]!</b>"))
-		send_to_playing_players(span_notice("[storyteller.welcome_text]"))
+		send_to_playing_players(span_notice("<b>Storyteller is [current_storyteller.name]!</b>"))
+		send_to_playing_players(span_notice("[current_storyteller.welcome_text]"))
 	else
-		send_to_observers(span_boldbig("<b>Storyteller is [storyteller.name]!</b>")) //observers still get to know
+		send_to_observers(span_boldbig("<b>Storyteller is [current_storyteller.name]!</b>")) //observers still get to know
 
 /// Panel containing information, variables and controls about the gamemode and scheduled event
 /datum/controller/subsystem/gamemode/proc/admin_panel(mob/user)
 	update_crew_infos()
-	total_valid_antags = 0
-	for(var/mob/checked_mob in GLOB.mob_list)
-		if(!checked_mob.mind)
-			continue
-		if(!checked_mob.mind.special_role)
-			continue
-		if(checked_mob.stat == DEAD)
-			continue
-		total_valid_antags++
-
 	var/round_started = SSticker.HasRoundStarted()
 	var/list/dat = list()
-	dat += "Storyteller: [storyteller ? "[storyteller.name]" : "None"] "
-	dat += " <a href='?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='?src=[REF(src)];panel=main'>Refresh</a>"
+	dat += "Storyteller: [current_storyteller ? "[current_storyteller.name]" : "None"] "
+	dat += " <a href='byond://?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(src)];panel=main'>Refresh</a>"
 	dat += "<BR><font color='#888888'><i>Storyteller determines points gained, event chances, and is the entity responsible for rolling events.</i></font>"
 	dat += "<BR>Active Players: [active_players]   (Head: [head_crew], Sec: [sec_crew], Eng: [eng_crew], Med: [med_crew])"
-	dat += "<BR>Antagonist Count vs Maximum: [total_valid_antags] / [get_antag_cap()]"
+	dat += "<BR>Antagonist Point Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
 	dat += "<HR>"
-	dat += "<a href='?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
-	dat += " <a href='?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
+	dat += "<a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
+	dat += " <a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
 	dat += "<HR>"
 	switch(panel_page)
 		if(GAMEMODE_PANEL_VARIABLES)
-			dat += "<a href='?src=[REF(src)];panel=main;action=reload_config_vars'>Reload Config Vars</a> <font color='#888888'><i>Configs located in game_options.txt.</i></font>"
+			dat += "<a href='byond://?src=[REF(src)];panel=main;action=reload_config_vars'>Reload Config Vars</a> <font color='#888888'><i>Configs located in game_options.txt.</i></font>"
 			dat += "<BR><b>Point Gains Multipliers (only over time):</b>"
 			dat += "<BR><font color='#888888'><i>This affects points gained over time towards scheduling new events of the tracks.</i></font>"
 			for(var/track in event_tracks)
-				dat += "<BR>[track]: <a href='?src=[REF(src)];panel=main;action=vars;var=pts_multiplier;track=[track]'>[point_gain_multipliers[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=pts_multiplier;track=[track]'>[point_gain_multipliers[track]]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Roundstart Points Multipliers:</b>"
 			dat += "<BR><font color='#888888'><i>This affects points generated for roundstart events and antagonists.</i></font>"
 			for(var/track in event_tracks)
-				dat += "<BR>[track]: <a href='?src=[REF(src)];panel=main;action=vars;var=roundstart_pts;track=[track]'>[roundstart_point_multipliers[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=roundstart_pts;track=[track]'>[roundstart_point_multipliers[track]]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Minimum Population for Tracks:</b>"
 			dat += "<BR><font color='#888888'><i>This are the minimum population caps for events to be able to run.</i></font>"
 			for(var/track in event_tracks)
-				dat += "<BR>[track]: <a href='?src=[REF(src)];panel=main;action=vars;var=min_pop;track=[track]'>[min_pop_thresholds[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=min_pop;track=[track]'>[min_pop_thresholds[track]]</a>"
 			dat += "<HR>"
 
 			dat += "<b>Point Thresholds:</b>"
 			dat += "<BR><font color='#888888'><i>Those are thresholds the tracks require to reach with points to make an event.</i></font>"
 			for(var/track in event_tracks)
-				dat += "<BR>[track]: <a href='?src=[REF(src)];panel=main;action=vars;var=pts_threshold;track=[track]'>[point_thresholds[track]]</a>"
+				dat += "<BR>[track]: <a href='byond://?src=[REF(src)];panel=main;action=vars;var=pts_threshold;track=[track]'>[point_thresholds[track]]</a>"
 
 		if(GAMEMODE_PANEL_MAIN)
 			var/even = TRUE
@@ -929,9 +933,9 @@ SUBSYSTEM_DEF(gamemode)
 				dat += "<td>[percent]% ([lower]/[upper])</td>" //Progress
 				dat += "<td>~[next] seconds</td>" //Next
 				var/datum/round_event_control/forced_event = forced_next_events[track]
-				var/forced = forced_event ? "[forced_event.name] <a href='?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[track]'>X</a>" : ""
+				var/forced = forced_event ? "[forced_event.name] <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=remove_forced;track=[track]'>X</a>" : ""
 				dat += "<td>[forced]</td>" //Forced
-				dat += "<td><a href='?src=[REF(src)];panel=main;action=track_action;track_action=set_pts;track=[track]'>Set Pts.</a> <a href='?src=[REF(src)];panel=main;action=track_action;track_action=next_event;track=[track]'>Next Event</a></td>" //Actions
+				dat += "<td><a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=set_pts;track=[track]'>Set Pts.</a> <a href='byond://?src=[REF(src)];panel=main;action=track_action;track_action=next_event;track=[track]'>Next Event</a></td>" //Actions
 				dat += "</tr>"
 			dat += "</table>"
 
@@ -983,18 +987,18 @@ SUBSYSTEM_DEF(gamemode)
  /// Panel containing information and actions regarding events
 /datum/controller/subsystem/gamemode/proc/event_panel(mob/user)
 	var/list/dat = list()
-	if(storyteller)
-		dat += "Storyteller: [storyteller.name]"
-		dat += "<BR>Repetition penalty multiplier: [storyteller.event_repetition_multiplier]"
-		dat += "<BR>Cost variance: [storyteller.cost_variance]"
-		if(storyteller.tag_multipliers)
+	if(current_storyteller)
+		dat += "Storyteller: [current_storyteller.name]"
+		dat += "<BR>Repetition penalty multiplier: [current_storyteller.event_repetition_multiplier]"
+		dat += "<BR>Cost variance: [current_storyteller.cost_variance]"
+		if(current_storyteller.tag_multipliers)
 			dat += "<BR>Tag multipliers:"
-			for(var/tag in storyteller.tag_multipliers)
-				dat += "[tag]:[storyteller.tag_multipliers[tag]] | "
-		storyteller.calculate_weights(statistics_track_page)
+			for(var/tag in current_storyteller.tag_multipliers)
+				dat += "[tag]:[current_storyteller.tag_multipliers[tag]] | "
+		current_storyteller.calculate_weights(statistics_track_page)
 	else
 		dat += "Storyteller: None<BR>Weight and chance statistics will be inaccurate due to the present lack of a storyteller."
-	dat += "<BR><a href='?src=[REF(src)];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
+	dat += "<BR><a href='byond://?src=[REF(src)];panel=stats;action=set_roundstart'[roundstart_event_view ? "class='linkOn'" : ""]>Roundstart Events</a> Forced Roundstart events will use rolled points, and are guaranteed to trigger (even if the used points are not enough)"
 	dat += "<BR>Avg. event intervals: "
 	for(var/track in event_tracks)
 		if(last_point_gains[track])
@@ -1002,7 +1006,7 @@ SUBSYSTEM_DEF(gamemode)
 			dat += "[track]: ~[est_time] m. | "
 	dat += "<HR>"
 	for(var/track in EVENT_PANEL_TRACKS)
-		dat += "<a href='?src=[REF(src)];panel=stats;action=set_cat;cat=[track]'[(statistics_track_page == track) ? "class='linkOn'" : ""]>[track]</a>"
+		dat += "<a href='byond://?src=[REF(src)];panel=stats;action=set_cat;cat=[track]'[(statistics_track_page == track) ? "class='linkOn'" : ""]>[track]</a>"
 	dat += "<HR>"
 	/// Create event info and stats table
 	dat += "<table align='center'; width='100%'; height='100%'; style='background-color:#13171C'>"
@@ -1029,8 +1033,8 @@ SUBSYSTEM_DEF(gamemode)
 		else
 			event_lookup = event_pools[statistics_track_page]
 	var/list/assoc_spawn_weight = list()
+	var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 	for(var/datum/round_event_control/event as anything in event_lookup)
-		var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 		if(event.roundstart != roundstart_event_view)
 			continue
 		if(event.can_spawn_event(players_amt))
@@ -1058,7 +1062,7 @@ SUBSYSTEM_DEF(gamemode)
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
 		dat += "<td>[event.return_failure_string(active_players)]</td>" //Why can't happen?
-		var/weight_string = "(new.[event.calculated_weight] /raw.[event.weight])"
+		var/weight_string = "(new.[event.calculated_weight] /raw.[event.get_weight()]/base.[event.weight])"
 		if(assoc_spawn_weight[event])
 			var/percent = round((event.calculated_weight / total_weight) * 100)
 			weight_string = "[percent]% - [weight_string]"
@@ -1089,11 +1093,15 @@ SUBSYSTEM_DEF(gamemode)
 						message_admins("[key_name_admin(usr)] has cancelled picking a Storyteller.")
 						return
 					message_admins("[key_name_admin(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
+					log_admin("[key_name(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
 					var/new_storyteller_type = name_list[new_storyteller_name]
 					set_storyteller(new_storyteller_type)
+					current_storyteller.round_started = SSticker.HasRoundStarted()
+					admin_picked_storyteller = TRUE
 				if("halt_storyteller")
 					halted_storyteller = !halted_storyteller
 					message_admins("[key_name_admin(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
+					log_admin("[key_name(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
 				if("vars")
 					var/track = href_list["track"]
 					switch(href_list["var"])
@@ -1123,6 +1131,7 @@ SUBSYSTEM_DEF(gamemode)
 							point_thresholds[track] = new_value
 				if("reload_config_vars")
 					message_admins("[key_name_admin(usr)] reloaded gamemode config vars.")
+					log_admin("[key_name(usr)] reloaded gamemode config vars.")
 					load_config_vars()
 				if("tab")
 					var/tab = href_list["tab"]
@@ -1139,6 +1148,7 @@ SUBSYSTEM_DEF(gamemode)
 							if(forced_next_events[track])
 								var/datum/round_event_control/event = forced_next_events[track]
 								message_admins("[key_name_admin(usr)] removed forced event [event.name] from track [track].")
+								log_admin("[key_name(usr)] removed forced event [event.name] from track [track].")
 								forced_next_events -= track
 						if("set_pts")
 							var/set_pts = input(usr, "New point amount ([point_thresholds[track]]+ invokes event):", "Set points for [track]") as num|null
@@ -1146,13 +1156,13 @@ SUBSYSTEM_DEF(gamemode)
 								return
 							event_track_points[track] = set_pts
 							message_admins("[key_name_admin(usr)] set points of [track] track to [set_pts].")
-							log_admin_private("[key_name(usr)] set points of [track] track to [set_pts].")
+							log_admin("[key_name(usr)] set points of [track] track to [set_pts].")
 						if("next_event")
 							message_admins("[key_name_admin(usr)] invoked next event for [track] track.")
-							log_admin_private("[key_name(usr)] invoked next event for [track] track.")
+							log_admin("[key_name(usr)] invoked next event for [track] track.")
 							event_track_points[track] = point_thresholds[track]
-							if(storyteller)
-								storyteller.handle_tracks()
+							if(current_storyteller)
+								current_storyteller.handle_tracks()
 			admin_panel(user)
 		if("stats")
 			switch(href_list["action"])
@@ -1174,28 +1184,29 @@ SUBSYSTEM_DEF(gamemode)
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	var/congealed_string = ""
-	for(var/event_name as anything in triggered_round_events)
-		congealed_string += event_name
-		congealed_string += ","
-	text2file(congealed_string, "data/last_round_events.txt")
+	var/max_history = length(CONFIG_GET(number_list/repeated_mode_adjust))
+	recent_storyteller_events.Insert(1, list(triggered_round_events))
+	if(length(recent_storyteller_events) > max_history)
+		recent_storyteller_events.Cut(max_history + 1)
+	rustg_file_write(json_encode(recent_storyteller_events, JSON_PRETTY_PRINT), "data/recent_storyteller_events.json") // pretty-print just to make manually looking at it easier
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
-	var/massive_string = trim(file2text("data/last_round_events.txt"))
-	if(fexists("data/last_round_events.txt"))
-		fdel("data/last_round_events.txt")
-	if(!massive_string)
+	if(!fexists("data/recent_storyteller_events.json"))
 		return
-	last_round_events = splittext(massive_string, ",")
-
-	if(!length(last_round_events))
-		return
-	for(var/event_name as anything in last_round_events)
-		for(var/datum/round_event_control/listed as anything in control)
-			if(listed.name != event_name)
-				continue
-			listed.occurrences++
-			listed.occurrences++
+	var/recent_json = rustg_file_read("data/recent_storyteller_events.json")
+	if(!recent_json || !rustg_json_is_valid(recent_json))
+		rustg_file_write("\[\]", "data/recent_storyteller_events.json")
+		CRASH("recent_storyteller_events.json was invalid: [recent_json]")
+	var/list/recent = json_decode(recent_json)
+	recent_storyteller_events.Cut()
+	for(var/round = 1 to length(recent))
+		var/list/entries = list()
+		for(var/event in recent[round])
+			var/event_path = text2path(event)
+			if(event_path)
+				entries += event_path
+		recent_storyteller_events += list(entries)
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
+#undef ROUNDSTART_VALID_TIMEFRAME

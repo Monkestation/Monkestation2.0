@@ -35,7 +35,7 @@
 	..()
 
 /datum/brain_trauma/mild/phobia/on_clone()
-	if(clonable)
+	if(trauma_flags & TRAUMA_CLONEABLE)
 		return new type(phobia_type)
 
 /datum/brain_trauma/mild/phobia/on_life(seconds_per_tick, times_fired)
@@ -86,8 +86,7 @@
 		return FALSE
 	if (!isitem(checked))
 		return TRUE
-	var/obj/item/checked_item = checked
-	return !(checked_item.item_flags & EXAMINE_SKIP)
+	return !HAS_TRAIT(checked, TRAIT_EXAMINE_SKIP)
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE])) 	//words can't trigger you if you can't hear them *taps head*
@@ -104,10 +103,16 @@
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 	if(trigger_regex.Find(speech_args[SPEECH_MESSAGE]) != 0)
+		//MONKESTATION EDIT START - Phobias should not prevent forced speech (such as through tourettes)
+		if(speech_args[SPEECH_FORCED])
+			// Freak out
+			addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2], TRUE), 10)
+			return
+		//MONKESTATION EDIT END
 		to_chat(owner, span_warning("You can't bring yourself to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
 		speech_args[SPEECH_MESSAGE] = ""
 
-/datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
+/datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word, said_not_heard = FALSE)
 	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(owner.stat == DEAD)
 		return
@@ -115,7 +120,10 @@
 	if(reason)
 		to_chat(owner, span_userdanger("Seeing [reason] [message]!"))
 	else if(trigger_word)
-		to_chat(owner, span_userdanger("Hearing \"[trigger_word]\" [message]!"))
+		if(said_not_heard)
+			to_chat(owner, span_userdanger("Saying \"[trigger_word]\" [message]!"))
+		else
+			to_chat(owner, span_userdanger("Hearing \"[trigger_word]\" [message]!"))
 	else
 		to_chat(owner, span_userdanger("Something [message]!"))
 	var/reaction = rand(1,4)
@@ -144,99 +152,99 @@
 
 /datum/brain_trauma/mild/phobia/spiders
 	phobia_type = "spiders"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/space
 	phobia_type = "space"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/security
 	phobia_type = "security"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/clowns
 	phobia_type = "clowns"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/greytide
 	phobia_type = "greytide"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/lizards
 	phobia_type = "lizards"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/skeletons
 	phobia_type = "skeletons"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/snakes
 	phobia_type = "snakes"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/robots
 	phobia_type = "robots"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/doctors
 	phobia_type = "doctors"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/authority
 	phobia_type = "authority"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/supernatural
 	phobia_type = "the supernatural"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/aliens
 	phobia_type = "aliens"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/strangers
 	phobia_type = "strangers"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/heresy
 	phobia_type = "heresy"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/insects
 	phobia_type = "insects"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/birds
 	phobia_type = "birds"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/falling
 	phobia_type = "falling"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/anime
 	phobia_type = "anime"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/conspiracies
 	phobia_type = "conspiracies"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/insects
 	phobia_type = "insects"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/ocky_icky
 	phobia_type = "ocky icky"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/blood/is_scary_item(obj/checked)
 	if (GET_ATOM_BLOOD_DNA_LENGTH(checked))

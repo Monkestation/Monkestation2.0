@@ -73,14 +73,14 @@
 		return FALSE
 
 	if(soft_filter_result && !filterproof)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, "Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
-			log_filter("Soft IC", message, filter_result)
+			log_filter("Soft IC", message, soft_filter_result)
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
-		log_filter("Soft IC (Passed)", message, filter_result)
+		log_filter("Soft IC (Passed)", message, soft_filter_result)
 
 	if(client && !(ignore_spam || forced))
 		if(client.prefs.muted & MUTE_IC)
@@ -147,7 +147,7 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M == src)
 			continue
-		if(!isdead(M))
+		if(SSticker.current_state != GAME_STATE_FINISHED && (M.see_invisible < invisibility || (!isdead(M) && !HAS_TRAIT(M, TRAIT_SIXTHSENSE))))
 			continue
 		if (M.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			M.create_chat_message(src, /datum/language/common, message)
@@ -170,9 +170,9 @@
 	var/customsaypos = findtext(message, "*")
 	if(!customsaypos)
 		return message
-	if (is_banned_from(ckey, "Emote"))
+	if (!isnull(ckey) && is_banned_from(ckey, "Emote"))
 		return copytext(message, customsaypos + 1)
-	mods[MODE_CUSTOM_SAY_EMOTE] = lowertext(copytext_char(message, 1, customsaypos))
+	mods[MODE_CUSTOM_SAY_EMOTE] = copytext(message, 1, customsaypos)
 	message = copytext(message, customsaypos + 1)
 	if (!message)
 		mods[MODE_CUSTOM_SAY_ERASE_INPUT] = TRUE
@@ -229,3 +229,18 @@
 	return message
 
 #undef MESSAGE_MODS_LENGTH
+
+/mob/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	. = ..()
+	if(client?.prefs?.read_preference(/datum/preference/toggle/sound_ai_radio) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)))
+		var/atom/movable/virtualspeaker/vspeaker = speaker
+		if(isAI(vspeaker.source))
+			playsound_local(
+				get_turf(src),
+				'goon/sounds/misc/talk/radio_ai.ogg',
+				vol = 170,
+				vary = TRUE,
+				pressure_affected = FALSE,
+				use_reverb = FALSE,
+				mixer_channel = CHANNEL_MOB_SOUNDS
+			)

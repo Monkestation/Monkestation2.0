@@ -19,6 +19,7 @@
 	var/can_transfer = TRUE
 	/// Weakref to the creator of this golem shell.
 	var/datum/weakref/owner_ref
+	random_appearance = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/golem/Initialize(mapload, datum/species/golem/species, mob/creator)
 	if(creator)
@@ -29,8 +30,6 @@
 		mob_species = species
 	. = ..()
 	var/area/init_area = get_area(src)
-	if(!mapload && init_area)
-		notify_ghosts("\A golem shell has been completed in \the [init_area.name].", source = src, action = NOTIFY_PLAY, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 	if(creator)
 		you_are_text = "You are a golem."
 		flavour_text = "You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools."
@@ -38,6 +37,13 @@
 		owner_ref = WEAKREF(creator)
 		spawner_job_path = /datum/job/servant_golem
 
+	notify_ghosts(
+		"\A golem shell has been completed in \the [init_area.name].",
+		source = src,
+		action = NOTIFY_PLAY,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ignore_key = POLL_IGNORE_GOLEM,
+	)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
 	if(!forced_name)

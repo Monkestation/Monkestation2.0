@@ -8,7 +8,7 @@
 	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
-	volume = 260
+	volume = 200
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
@@ -64,6 +64,10 @@
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 			. += get_attached_image(get_dir(src, machine_check), i, COLOR_VERY_LIGHT_GRAY)
 		return
+	if(istype(machine_check, /obj/machinery/atmospherics/components/unary/airlock_pump))
+		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
+		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
+		return
 	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
@@ -98,7 +102,7 @@
 	normalize_cardinal_directions()
 	find_all_connections()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/set_piping_layer()
+/obj/machinery/atmospherics/pipe/layer_manifold/set_piping_layer(new_layer)
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()

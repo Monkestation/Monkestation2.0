@@ -2,7 +2,7 @@
 /obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || (owner.status_flags & GODMODE))
+	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || (HAS_TRAIT(owner, TRAIT_GODMODE)))
 		return
 
 	var/mangled_state = get_mangled_state()
@@ -56,13 +56,15 @@
 		return
 
 	// note that these are fed into an exponent, so these are magnified
+	// monkestation edit: balance out TRAIT_EASILY_WOUNDED and TRAIT_HARDLY_WOUNDED
 	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
-		damage *= 1.5
+		if(!HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
+			damage *= 1.5
+	else if(HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
+		damage *= 0.85
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
-
-	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
-		damage *= 0.85
+	// monkestation end
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.1
@@ -72,7 +74,7 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
-	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100))
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)
 		return
@@ -85,7 +87,7 @@
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
-		var/list/clothing = human_wearer.clothingonpart(src)
+		var/list/clothing = human_wearer.get_clothing_on_part(src)
 		for(var/obj/item/clothing/clothes_check as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			if(clothes_check.get_armor_rating(WOUND))
@@ -120,10 +122,13 @@
 						possible_wounds -= other_path
 						continue
 
-	while (length(possible_wounds))
+	while (TRUE)
 		var/datum/wound/possible_wound = pick_weight(possible_wounds)
-		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
+		if (isnull(possible_wound))
+			break
+
 		possible_wounds -= possible_wound
+		var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
 
 		var/datum/wound/replaced_wound
 		for(var/datum/wound/existing_wound as anything in wounds)
@@ -172,13 +177,14 @@
  * * max_severity: The maximum severity that will be considered.
  * * severity_pick_mode: The "pick mode" to be used. See get_corresponding_wound_type's documentation
  * * wound_source: The source of the wound to be applied. Nullable.
+ * * smited: If the wound is to be applied from a smite.
  *
  * For the rest of the args, refer to get_corresponding_wound_type().
  *
  * Returns:
  * A new wound instance if the application was successful, null otherwise.
 */
-/mob/living/carbon/proc/cause_wound_of_type_and_severity(wounding_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source)
+/mob/living/carbon/proc/cause_wound_of_type_and_severity(wounding_type, obj/item/bodypart/limb, min_severity, max_severity = min_severity, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, wound_source, smited = FALSE)
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
@@ -188,7 +194,7 @@
 
 	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode)
 	if (corresponding_typepath)
-		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
+		return limb.force_wound_upwards(corresponding_typepath, smited = smited, wound_source = wound_source)
 
 /// Limb is nullable, but picks a random one. Defers to limb.get_wound_threshold_of_wound_type, see it for documentation.
 /mob/living/carbon/proc/get_wound_threshold_of_wound_type(wounding_type, severity, default, obj/item/bodypart/limb, wound_source)
@@ -242,7 +248,7 @@
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		var/list/clothing = human_owner.clothingonpart(src)
+		var/list/clothing = human_owner.get_clothing_on_part(src)
 		for(var/obj/item/clothing/clothes as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.get_armor_rating(WOUND)
@@ -305,6 +311,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
+
+	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
+	for(var/datum/wound/iter_wound as anything in wounds)
+		dam_mul *= iter_wound.damage_multiplier_penalty
 
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("The [current_gauze.name] on your [parse_zone(body_zone)] falls away."))

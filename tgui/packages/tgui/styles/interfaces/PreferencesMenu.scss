@@ -7,6 +7,8 @@ $department_map: (
   'Assistant': colors.$grey,
   'Captain': colors.fg(colors.$blue),
   'Cargo': colors.$brown,
+  'Central': #86ff82,
+  //only the first word matters, apparently.
   'Civilian': colors.$grey,
   'Command': colors.$yellow,
   'Security': colors.$red,
@@ -51,6 +53,7 @@ $department_map: (
           .antagonist-icon {
             border-radius: 50%;
             -ms-interpolation-mode: nearest-neighbor;
+            image-rendering: pixelated;
             overflow: hidden;
             transition: transform 0.1s ease-in;
           }

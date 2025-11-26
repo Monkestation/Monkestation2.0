@@ -7,13 +7,17 @@ SUBSYSTEM_DEF(economy)
 	var/roundstart_paychecks = 5
 	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
-	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
-										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
-										ACCOUNT_SCI = ACCOUNT_SCI_NAME,
-										ACCOUNT_MED = ACCOUNT_MED_NAME,
-										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
-										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
-										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
+	var/list/department_accounts = list(
+		ACCOUNT_CIV = ACCOUNT_CIV_NAME,
+		ACCOUNT_ENG = ACCOUNT_ENG_NAME,
+		ACCOUNT_SCI = ACCOUNT_SCI_NAME,
+		ACCOUNT_MED = ACCOUNT_MED_NAME,
+		ACCOUNT_SRV = ACCOUNT_SRV_NAME,
+		ACCOUNT_CAR = ACCOUNT_CAR_NAME,
+		ACCOUNT_SEC = ACCOUNT_SEC_NAME,
+		ACCOUNT_CMD = ACCOUNT_CMD_NAME,
+		ACCOUNT_CC = ACCOUNT_CC_NAME,
+	)
 	var/list/generated_accounts = list()
 	/**
 	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
@@ -66,7 +70,7 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
-	///the mail crate we last generated
+	/// The mail crate we last generated.
 	var/obj/structure/closet/crate/mail/economy/mail_crate
 
 /datum/controller/subsystem/economy/Initialize()
@@ -114,13 +118,14 @@ SUBSYSTEM_DEF(economy)
 
 		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 
-	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
+	var/effective_mailcount = round(living_player_count()) ///(inflation_value - 0.5)) //More mail at low inflation, and vis versa. | MONKESTATION EDIT
+	mail_waiting += clamp(effective_mailcount, 4, MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
  */
-/datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
+/datum/controller/subsystem/economy/proc/get_dep_account(dep_id) as /datum/bank_account/department
+	RETURN_TYPE(/datum/bank_account/department)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D
@@ -183,9 +188,9 @@ SUBSYSTEM_DEF(economy)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(
-		"account" = account.account_holder,
+		"account" = "[account.account_holder]",
 		"cost" = price_to_use,
-		"vendor" = vendor,
+		"vendor" = "[vendor]",
 	))
 
 #undef ECON_DEPARTMENT_STEP

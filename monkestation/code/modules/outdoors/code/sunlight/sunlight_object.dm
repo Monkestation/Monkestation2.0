@@ -17,10 +17,27 @@ Sunlight System
 				     Emits light to SKY_BLOCKED tiles, and fully white to display the overlay color
 */
 
+// Keep in mind. Lighting corners accept the bottom left (northwest) set of cords to them as input
+#define GENERATE_MISSING_CORNERS(gen_for) \
+	if (!gen_for.lighting_corner_NE) { \
+		gen_for.lighting_corner_NE = new /datum/lighting_corner(gen_for.x, gen_for.y, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_SE) { \
+		gen_for.lighting_corner_SE = new /datum/lighting_corner(gen_for.x, gen_for.y - 1, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_SW) { \
+		gen_for.lighting_corner_SW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y - 1, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_NW) { \
+		gen_for.lighting_corner_NW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y, gen_for.z); \
+	} \
+	gen_for.lighting_corners_initialised = TRUE;
+
 /atom/movable/outdoor_effect
 	name = ""
 	mouse_opacity = 0
-	anchored = 1
+	anchored = TRUE
+	move_resist = INFINITY
 
 	/* misc vars */
 	var/mutable_appearance/sunlight_overlay
@@ -43,7 +60,11 @@ Sunlight System
 
 	return ..()
 
+/atom/movable/outdoor_effect/singularity_pull(obj/singularity/singularity, current_size)
+	return
 
+/atom/movable/outdoor_effect/singularity_act()
+	return
 
 /atom/movable/outdoor_effect/Initialize(mapload)
 	. = ..()
@@ -105,7 +126,7 @@ Sunlight System
 		if(IS_OPAQUE_TURF(T)) /* get_corners used to do opacity checks for arse */
 			continue
 		if (!T.lighting_corners_initialised)
-			T.generate_missing_corners()
+			GENERATE_MISSING_CORNERS(T)
 		corners |= T.lighting_corner_NE
 		corners |= T.lighting_corner_SE
 		corners |= T.lighting_corner_SW
@@ -238,7 +259,7 @@ Sunlight System
 
 /turf/proc/apply_weather_effect(datum/source, datum/weather_effect/effect)
 	SIGNAL_HANDLER
-	if(!weather_affectable || !prob(effect.probability))
+	if(/* !weather_affectable || */ !prob(effect.probability)) // weather_affectable isn't set anywhere. uncomment that if it's ever actually used. ~Absolucy
 		return
 
 	effect.effect_affect(src)
@@ -383,3 +404,4 @@ Sunlight System
 
 #undef SUN_FALLOFF
 #undef hardSun
+#undef GENERATE_MISSING_CORNERS

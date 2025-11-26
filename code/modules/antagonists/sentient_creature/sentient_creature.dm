@@ -4,6 +4,7 @@
 	show_in_roundend = FALSE
 	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoSentient"
+	antag_flags = FLAG_ANTAG_CAP_IGNORE // monkestation addition
 
 /datum/antagonist/sentient_creature/get_preview_icon()
 	var/icon/final_icon = icon('icons/mob/simple/pets.dmi', "corgi")
@@ -23,8 +24,7 @@
 	var/mob/living/master = owner.enslaved_to?.resolve()
 	if(master)
 		owner.current.copy_languages(master, LANGUAGE_MASTER)
-		owner.current.update_atom_languages()
-	. = ..()
+	return ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)
 	var/list/data = list()

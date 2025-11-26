@@ -1,12 +1,37 @@
 //entirely neutral or internal status effects go here
 
-/datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
+/datum/status_effect/crusher_damage
 	id = "crusher_damage"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	/// How much damage?
 	var/total_damage = 0
+
+/datum/status_effect/crusher_damage/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_taken))
+	return TRUE
+
+/datum/status_effect/crusher_damage/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE)
+
+/datum/status_effect/crusher_damage/proc/damage_taken(
+	datum/source,
+	damage_dealt,
+	damagetype,
+	def_zone,
+	blocked,
+	wound_bonus,
+	bare_wound_bonus,
+	sharpness,
+	attack_direction,
+	attacking_item,
+)
+	SIGNAL_HANDLER
+
+	if(istype(attacking_item, /obj/item/kinetic_crusher))
+		total_damage += damage_dealt
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
@@ -46,7 +71,7 @@
 
 /datum/status_effect/in_love
 	id = "in_love"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/in_love
 	var/hearts
@@ -61,6 +86,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 
@@ -75,15 +101,16 @@
 
 /datum/status_effect/throat_soothed/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/throat_soothed/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
 	var/mob/living/rewarded
 
 /datum/status_effect/bounty/on_creation(mob/living/new_owner, mob/living/caster)
@@ -118,8 +145,8 @@
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup
 	id = "heldup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/heldup
 
@@ -139,8 +166,8 @@
 // holdup is for the person aiming
 /datum/status_effect/holdup
 	id = "holdup"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/holdup
 
@@ -148,12 +175,13 @@
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
+	clickable_glow = TRUE
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
 	id = "offering"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
 	/// The people who were offered this item at the start
@@ -163,7 +191,7 @@
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/offered)
 	. = ..()
 	if(!.)
 		return
@@ -171,11 +199,11 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	if(offered && is_taker_elligible(offered))
+	if(offered && is_taker_elligible(offered, offer))
 		register_candidate(offered)
 	else
-		for(var/mob/living/carbon/possible_taker in orange(1, owner))
-			if(!is_taker_elligible(possible_taker))
+		for(var/mob/living/possible_taker in orange(1, owner))
+			if(!is_taker_elligible(possible_taker, offer))
 				continue
 
 			register_candidate(possible_taker)
@@ -186,27 +214,27 @@
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
 	RegisterSignals(offered_item, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
-	//RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /datum/status_effect/offering/Destroy()
-	for(var/i in possible_takers)
-		var/mob/living/carbon/removed_taker = i
+	for(var/mob/living/carbon/removed_taker as anything in possible_takers)
 		remove_candidate(removed_taker)
 	LAZYCLEARLIST(possible_takers)
+	offered_item = null
 	return ..()
 
 /// Hook up the specified carbon mob to be offered the item in question, give them the alert and signals and all
 /datum/status_effect/offering/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[owner]", give_alert_type)
+	var/atom/movable/screen/alert/give/G = possible_candidate.throw_alert("[REF(owner)]_offer", give_alert_type)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
 	RegisterSignal(possible_candidate, COMSIG_MOVABLE_MOVED, PROC_REF(check_taker_in_range))
-	G.setup(possible_candidate, owner, offered_item)
+	G.setup(possible_candidate, src)
+	SEND_SIGNAL(possible_candidate, COMSIG_LIVING_GIVE_ITEM_CHECK, G, offered_item)
 
 /// Remove the alert and signals for the specified carbon mob. Automatically removes the status effect when we lost the last taker
 /datum/status_effect/offering/proc/remove_candidate(mob/living/carbon/removed_candidate)
-	removed_candidate.clear_alert("[owner]")
+	removed_candidate.clear_alert("[REF(owner)]_offer")
 	LAZYREMOVE(possible_takers, removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_MOVABLE_MOVED)
 	if(!possible_takers && !QDELING(src))
@@ -225,8 +253,7 @@
 /datum/status_effect/offering/proc/check_owner_in_range(mob/living/carbon/source)
 	SIGNAL_HANDLER
 
-	for(var/i in possible_takers)
-		var/mob/living/carbon/checking_taker = i
+	for(var/mob/living/carbon/checking_taker as anything in possible_takers)
 		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
@@ -241,9 +268,8 @@
  *
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
-/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker)
-	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
-
+/datum/status_effect/offering/proc/is_taker_elligible(mob/living/carbon/taker, obj/item/offer)
+	return (owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)) || SEND_SIGNAL(taker, COMSIG_LIVING_ITEM_OFFERED_PRECHECK, offer)
 
 /**
  * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
@@ -256,17 +282,14 @@
 /datum/status_effect/offering/proc/additional_taker_check(mob/living/carbon/taker)
 	return taker.can_hold_items()
 
-
 /**
  * This status effect is meant only for items that you don't actually receive
  * when offered, mostly useful for `/obj/item/hand_item` subtypes.
  */
 /datum/status_effect/offering/no_item_received
 
-
 /datum/status_effect/offering/no_item_received/additional_taker_check(mob/living/carbon/taker)
-	return TRUE
-
+	return taker.usable_hands > 0
 
 /**
  * This status effect is meant only to be used for offerings that require the target to
@@ -276,25 +299,20 @@
  */
 /datum/status_effect/offering/no_item_received/needs_resting
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/additional_taker_check(mob/living/carbon/taker)
 	return taker.body_position == LYING_DOWN
-
 
 /datum/status_effect/offering/no_item_received/needs_resting/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_owner_standing))
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/register_candidate(mob/living/carbon/possible_candidate)
 	. = ..()
 	RegisterSignal(possible_candidate, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_candidate_resting))
 
-
 /datum/status_effect/offering/no_item_received/needs_resting/remove_candidate(mob/living/carbon/removed_candidate)
 	UnregisterSignal(removed_candidate, COMSIG_LIVING_SET_BODY_POSITION)
 	return ..()
-
 
 /// Simple signal handler that ensures that, if the owner stops standing, the offer no longer stands either!
 /datum/status_effect/offering/no_item_received/needs_resting/proc/check_owner_standing(mob/living/carbon/owner)
@@ -303,7 +321,6 @@
 
 	// This doesn't work anymore if the owner is no longer standing up, sorry!
 	qdel(src)
-
 
 /// Simple signal handler that ensures that, should a candidate now be standing up, the offer won't be standing for them anymore!
 /datum/status_effect/offering/no_item_received/needs_resting/proc/check_candidate_resting(mob/living/carbon/candidate)
@@ -315,16 +332,19 @@
 	// No longer lying down? You're no longer eligible to take the offer, sorry!
 	remove_candidate(candidate)
 
+/// Subtype for high fives, so we can fake out people
+/datum/status_effect/offering/no_item_received/high_five
+	id = "offer_high_five"
 
-/datum/status_effect/offering/secret_handshake
-	id = "secret_handshake"
-	give_alert_type = /atom/movable/screen/alert/give/secret_handshake
+/datum/status_effect/offering/no_item_received/high_five/dropped_item(obj/item/source)
+	// Lets us "too slow" people, instead of qdeling we just handle the ref
+	offered_item = null
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender
 	id = "surrender"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/surrender
 
@@ -332,6 +352,7 @@
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
 	icon_state = "surrender"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()
@@ -339,6 +360,21 @@
 		return
 
 	owner.emote("surrender")
+
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
 
 /*
  * A status effect used for preventing caltrop message spam
@@ -352,7 +388,7 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = INFINITY
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
@@ -435,14 +471,10 @@
 				owner.Knockdown(10)
 
 			var/list/items = list()
-			var/max_loop
-			if (length(owner.get_contents()) >= 10)
-				max_loop = 10
-			else
-				max_loop = length(owner.get_contents())
+			var/max_loop  = min(length(owner.get_contents()), 10)
 			for (var/i in 1 to max_loop)
 				var/obj/item/item = owner.get_contents()[i]
-				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+				if (!istype(item) || (item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
 					continue
 				items.Add(item)
 
@@ -501,7 +533,7 @@
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/external/tail/simian/monkey_tail = new ()
+				var/obj/item/organ/external/tail/monkey/monkey_tail = new()
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
@@ -530,3 +562,74 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+/datum/status_effect/tagalong //applied to darkspawns while they accompany someone //yogs start: darkspawn
+	id = "tagalong"
+	tick_interval = 2 //as fast as possible
+	alert_type = /atom/movable/screen/alert/status_effect/tagalong
+	var/mob/living/shadowing
+	//we store this so if the mob is somehow gibbed we aren't put into nullspace
+	var/turf/cached_location
+
+/datum/status_effect/tagalong/on_creation(mob/living/owner, mob/living/tag)
+	. = ..()
+	if(!.)
+		return
+	shadowing = tag
+	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
+
+/datum/status_effect/tagalong/on_remove()
+	if(owner.loc != shadowing)
+		return
+	owner.forceMove(cached_location ? cached_location : get_turf(owner))
+	shadowing.visible_message(span_warning("[owner] breaks away from [shadowing]'s shadow!"), \
+	span_userdanger("You feel a sense of freezing cold pass through you!"))
+	to_chat(owner, span_velvet("You break away from [shadowing]."))
+	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
+	owner.setDir(SOUTH)
+
+/datum/status_effect/tagalong/proc/on_equip()
+	SIGNAL_HANDLER
+	to_chat(owner, span_userdanger("Equipping an item forces you out!"))
+	qdel(src)
+
+/datum/status_effect/tagalong/tick()
+	. = ..()
+	if(!shadowing)
+		owner.forceMove(cached_location)
+		qdel(src)
+		return
+	cached_location = get_turf(shadowing)
+	if(cached_location.get_lumcount() < SHADOW_SPECIES_DIM_LIGHT)
+		owner.forceMove(cached_location)
+		shadowing.visible_message(span_warning("[owner] suddenly appears from the dark!"))
+		to_chat(owner, span_warning("You are forced out of [shadowing]'s shadow!"))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/tagalong
+	name = "Tagalong"
+	desc = "You are accompanying TARGET_NAME. Use the Tagalong ability to break away at any time."
+	icon_state = "shadow_mend"
+
+/atom/movable/screen/alert/status_effect/tagalong/MouseEntered()
+	var/datum/status_effect/tagalong/tagalong = attached_effect
+	desc = replacetext(desc, "TARGET_NAME", tagalong.shadowing.real_name)
+	..()
+	desc = initial(desc) //yogs end
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

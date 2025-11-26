@@ -1,4 +1,10 @@
-import { CheckboxInput, FeatureColorInput, Feature, FeatureDropdownInput, FeatureToggle } from '../base';
+import {
+  CheckboxInput,
+  FeatureColorInput,
+  Feature,
+  FeatureDropdownInput,
+  FeatureToggle,
+} from '../base';
 import { multiline } from 'common/string';
 
 export const asaycolor: Feature<string> = {
@@ -13,6 +19,14 @@ export const brief_outfit: Feature<string> = {
   category: 'ADMIN',
   description: 'The outfit to gain when spawning as the briefing officer.',
   component: FeatureDropdownInput,
+};
+
+export const autoadmin: FeatureToggle = {
+  name: 'Autoadmin - On join',
+  category: 'ADMIN',
+  description:
+    'When enabled, you will automatically readmin on new connection (Only if you have a rank with the AUTOADMIN flag).',
+  component: CheckboxInput,
 };
 
 export const bypass_deadmin_in_centcom: FeatureToggle = {

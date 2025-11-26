@@ -7,6 +7,7 @@
 	icon_state = "legion_remains"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	decay_factor = STANDARD_ORGAN_DECAY * 3 // About 5 minutes outside of a host
 	/// What stage of growth the corruption has reached.
 	var/stage = 0
@@ -30,13 +31,13 @@
 	. = ..()
 	animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	var/was_failing = organ_flags & ORGAN_FAILING
 	. = ..()
 	if (was_failing != (organ_flags & ORGAN_FAILING))
 		animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
+/obj/item/organ/internal/legion_tumour/set_organ_damage(damage_amount, required_organtype)
 	. = ..()
 	animate_pulse()
 
@@ -80,7 +81,7 @@
 		return FALSE
 
 	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
-	var/mob/living/basic/legion_brood/skull = new(target.loc)
+	var/mob/living/basic/mining/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
 	return TRUE
 
@@ -119,7 +120,7 @@
 				if (prob(50))
 					var/turf/check_turf = get_step(owner.loc, owner.dir)
 					var/atom/land_turf = (check_turf.is_blocked_turf()) ? owner.loc : check_turf
-					var/mob/living/basic/legion_brood/child = new(land_turf)
+					var/mob/living/basic/mining/legion_brood/child = new(land_turf)
 					child.assign_creator(owner, copy_full_faction = FALSE)
 
 			if(SPT_PROB(3, seconds_per_tick))

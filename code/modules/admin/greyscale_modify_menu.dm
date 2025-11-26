@@ -65,6 +65,8 @@
 /datum/greyscale_modify_menu/Destroy()
 	target = null
 	user = null
+	apply_callback = null
+	config = null
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
@@ -100,7 +102,7 @@
 	data["sprites"] = sprite_data
 	return data
 
-/datum/greyscale_modify_menu/ui_act(action, params)
+/datum/greyscale_modify_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -147,12 +149,12 @@
 
 		if("pick_color")
 			var/group = params["color_index"]
-			var/new_color = input(
+			var/new_color = tgui_color_picker(
 				usr,
 				"Choose color for greyscale color group [group]:",
 				"Greyscale Modification Menu",
 				split_colors[group]
-			) as color|null
+			)
 			if(new_color)
 				split_colors[group] = new_color
 				queue_refresh()

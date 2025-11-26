@@ -38,7 +38,7 @@
 	melee_damage_upper = 2
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-	minimum_survivable_temperature = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
+	bodytemp_cold_damage_limit = COLD_ROOM_TEMP - 75 // enough so that they can survive the cold room spawn with plenty of room for comfort
 
 	blood_volume = BLOOD_VOLUME_NORMAL
 
@@ -125,6 +125,8 @@
 
 /// Proc that handles dealing with the various types of plants we might eat. Assumes that a valid list of type(s) will be passed in.
 /mob/living/basic/goat/proc/eat_plant(list/plants)
+	if(health <= 0) //monkestation edit
+		return
 	var/eaten = FALSE
 
 	for(var/atom/target as anything in plants)

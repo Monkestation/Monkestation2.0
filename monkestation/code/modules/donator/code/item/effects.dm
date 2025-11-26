@@ -3,6 +3,7 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "void_mothroach"
 	var/mob/living/basic/animal_transformation = null
+	var/basic_inhands_y_offset = -6
 
 /obj/item/effect_granter/donator/grant_effect(mob/living/carbon/granter)
 	var/mob/living/basic/animal = src.animal_transformation
@@ -10,7 +11,8 @@
 	animal.mind_initialize()
 	var/datum/mind/granters_mind = granter.mind
 	granters_mind.transfer_to(animal)
-	animal.adjust_hand_count(2)
+	animal.AddElement(/datum/element/dextrous)
+	animal.AddComponent(/datum/component/basic_inhands, y_offset = basic_inhands_y_offset)
 	qdel(granter)
 	. = ..()
 
@@ -57,3 +59,111 @@
 	name = "Spycrab transformation"
 	icon_state = "crab_red"
 	animal_transformation = /mob/living/basic/crab/spycrab
+
+//tonymcp
+
+/obj/item/effect_granter/donator/void_butterfly
+	name = "void butterfly transformation"
+	icon_state = "void_butterfly"
+	animal_transformation = /mob/living/basic/butterfly/void/spacial
+
+//rickdude
+/obj/item/effect_granter/donator/plant_crab
+	name = "plantcrab transformation"
+	icon_state = "crab_plant"
+	animal_transformation = /mob/living/basic/crab/plant
+
+//ellie
+/obj/item/effect_granter/donator/gumball_goblin
+	name = "gumball goblin transformation"
+	icon_state = "gumball_goblin"
+	animal_transformation = /mob/living/basic/pet/gumball_goblin
+
+
+//Raziaar
+/obj/item/effect_granter/donator/orangutan
+	name = "orangutan transformation"
+	icon_state = "orangutan"
+	animal_transformation = /mob/living/basic/pet/orangutan
+
+
+//Bluedragon66
+/obj/item/effect_granter/donator/fluffykobold
+	name = "fluffy kobold transformation"
+	icon_state = "Bluedragon66"
+	animal_transformation = /mob/living/basic/pet/fluffykobold
+
+/obj/item/effect_granter/donator/darkscug
+	name = "night slugcat transformation"
+	icon = 'icons/mob/simple/slugcats.dmi'
+	icon_state = "scug_nightcat"
+	animal_transformation = /mob/living/basic/pet/darkscug
+
+//Ophaq
+/obj/item/effect_granter/donator/hypnotoad
+	name = "hypnotoad transformation"
+	icon_state = "hypnotoad"
+	animal_transformation = /mob/living/basic/frog/hypnotoad
+
+//ThePooba
+/obj/item/effect_granter/donator/ghastly_evil_demon
+	name = "ghastly evil demon transformation"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "ghastly_evil_demon"
+	animal_transformation = /mob/living/basic/pet/ghastly_evil_demon
+	basic_inhands_y_offset = 0
+
+//Eacles13
+/obj/item/effect_granter/donator/albino_ghost_ian
+	name = "ghost ian transformation"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "albino_ghost_ian"
+	animal_transformation = /mob/living/basic/pet/albino_ghost_ian
+
+//Jason Farqiour
+/obj/item/effect_granter/donator/fluffydonator
+	name = "fluffy"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "fluffy"
+	animal_transformation = /mob/living/basic/pet/fluffydonator
+
+//TheSpecialSnowflake
+/obj/item/effect_granter/donator/robottoything
+	name = "robot toy"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robottoything"
+	animal_transformation = /mob/living/basic/pet/robottoything
+
+//Cobalt Velvet 235
+/obj/item/effect_granter/donator/babypukeko
+	name = "baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko
+
+/obj/item/effect_granter/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	animal_transformation = /mob/living/basic/pet/babypukeko/tall
+
+//Mycah
+/obj/item/effect_granter/donator/eris_romch
+	name = "romch"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	animal_transformation = /mob/living/basic/pet/eris_romch
+
+//Mrsmall_theclown
+/obj/item/effect_granter/donator/theclown_clownpet
+	name = "short clown"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	animal_transformation = /mob/living/basic/pet/theclown_clownpet
+
+//adamcoal
+/obj/item/effect_granter/donator/cyber_husky
+	name = "cyber husky"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	animal_transformation = /mob/living/basic/pet/cyber_husky

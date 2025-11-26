@@ -6,6 +6,7 @@
 @use 'sass:color';
 @use '../base.scss';
 @use '../colors.scss';
+@use '../functions.scss' as *;
 
 $text-color: rgba(255, 255, 255, 0.75) !default;
 $background-color: #363636 !default;
@@ -24,12 +25,16 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
 .TitleBar__clickable {
   color: color.change($text-color, $alpha: 0.5);
   background-color: $background-color;
-  transition: color 250ms ease-out, background-color 250ms ease-out;
+  transition:
+    color 250ms ease-out,
+    background-color 250ms ease-out;
 
   &:hover {
     color: rgba(255, 255, 255, 1);
     background-color: #cc0000;
-    transition: color 0ms, background-color 0ms;
+    transition:
+      color 0ms,
+      background-color 0ms;
   }
 }
 
@@ -51,7 +56,7 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
 .TitleBar__buttons {
   pointer-events: initial;
   display: inline-block;
-  width: 100%;
+  width: vp(100vw);
   margin-left: 10px;
 }
 

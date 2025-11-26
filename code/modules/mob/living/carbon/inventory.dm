@@ -49,9 +49,9 @@
 		legcuffed,
 	)
 
-/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
+/mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1, move_equipped = FALSE) //MONKESTATION EDIT - Added 'move_equipped = FALSE'
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
+		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE, move_equipped = move_equipped)) //MONKESTATION EDIT - Added 'move_equipped = move_equipped'
 			return slot
 	if(qdel_on_fail)
 		qdel(I)
@@ -134,6 +134,9 @@
 
 	return not_handled
 
+/mob/living/carbon/get_equipped_speed_mod_items()
+	return ..() + get_all_worn_items()
+
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	return item.on_equipped(src, slot, initial)
@@ -184,22 +187,21 @@
 
 	update_equipment_speed_mods()
 
-/// Returns TRUE if an air tank compatible helmet is equipped.
+/// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
 	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
-		return TRUE
+		return head
 
-/// Returns TRUE if an air tank compatible mask is equipped.
+/// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
 	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
-		return TRUE
+		return wear_mask
 
-/// Returns TRUE if a breathing tube is equipped.
+/// Returns the tube if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
-	if (get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		return TRUE
+	return get_organ_slot(ORGAN_SLOT_BREATHING_TUBE)
 
-/// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
+/// Returns the object that allows us to breathe internals - tube implant, mask or helmet
 /mob/living/carbon/proc/can_breathe_internals()
 	return can_breathe_tube() || can_breathe_mask() || can_breathe_helmet()
 
@@ -351,98 +353,15 @@
 		update_sight()
 	if(I.flags_inv & HIDEMASK || forced)
 		update_worn_mask()
+	if(I.flags_inv & HIDEEARS || forced)
+		update_inv_ears()
+	if(I.flags_inv & HIDEEYES || forced)
+		update_worn_glasses()
 	update_worn_head()
 
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
-
-/**
- * Proc called when offering an item to another player
- *
- * This handles creating an alert and adding an overlay to it
- */
-/mob/living/carbon/proc/give(mob/living/carbon/offered)
-	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering something!"))
-		return
-
-	if(IS_DEAD_OR_INCAP(src))
-		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
-		return
-
-	var/obj/item/offered_item = get_active_held_item()
-	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
-	if(!offered_item || ((offered_item.item_flags & ABSTRACT) && !(offered_item.item_flags & HAND_ITEM)))
-		to_chat(src, span_warning("You're not holding anything to offer!"))
-		return
-
-	if(offered)
-		if(offered == src)
-			if(!swap_hand(get_inactive_hand_index())) //have to swap hands first to take something
-				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
-				return
-			if(!put_in_active_hand(offered_item))
-				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
-				return
-			else
-				to_chat(src, span_notice("You take [offered_item] from yourself."))
-				return
-
-		if(IS_DEAD_OR_INCAP(offered))
-			to_chat(src, span_warning("[offered.p_theyre(TRUE)] unable to take anything in [offered.p_their()] current state!"))
-			return
-
-		if(!CanReach(offered))
-			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
-			return
-	else
-		if(!(locate(/mob/living/carbon) in orange(1, src)))
-			to_chat(src, span_warning("There's nobody beside you to take it!"))
-			return
-
-	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
-		return
-
-	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
-					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
-
-	apply_status_effect(/datum/status_effect/offering, offered_item, null, offered)
-
-/**
- * Proc called when the player clicks the give alert
- *
- * Handles checking if the player taking the item has open slots and is in range of the offerer
- * Also deals with the actual transferring of the item to the players hands
- * Arguments:
- * * offerer - The person giving the original item
- * * I - The item being given by the offerer
- */
-/mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
-	clear_alert("[offerer]")
-	if(IS_DEAD_OR_INCAP(src))
-		to_chat(src, span_warning("You're unable to take anything in your current state!"))
-		return
-	if(get_dist(src, offerer) > 1)
-		to_chat(src, span_warning("[offerer] is out of range!"))
-		return
-	if(!I || offerer.get_active_held_item() != I)
-		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
-		return
-	if(!get_empty_held_indexes())
-		to_chat(src, span_warning("You have no empty hands!"))
-		return
-
-	if(I.on_offer_taken(offerer, src)) // see if the item has special behavior for being accepted
-		return
-
-	if(!offerer.temporarilyRemoveItemFromInventory(I))
-		visible_message(span_notice("[offerer] tries to hand over [I] but it's stuck to them...."))
-		return
-
-	visible_message(span_notice("[src] takes [I] from [offerer]."), \
-					span_notice("You take [I] from [offerer]."))
-	put_in_hands(I)
 
 ///Returns a list of all body_zones covered by clothing
 /mob/living/carbon/proc/get_covered_body_zones()
@@ -466,3 +385,16 @@
 		covered_flags |= worn_item.body_parts_covered
 
 	return covered_flags
+
+/// Attempts to equip the given item in a conspicious place.
+/// This is used when, for instance, a character spawning with an item
+/// in their hands would be a dead giveaway that they are an antagonist.
+/// Returns the human readable name of where it placed the item, or null otherwise.
+/mob/living/carbon/proc/equip_conspicuous_item(obj/item/item, delete_item_if_failed = TRUE)
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET
+	)
+
+	return equip_in_one_of_slots(item, slots, qdel_on_fail = delete_item_if_failed)

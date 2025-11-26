@@ -6,6 +6,7 @@
 	desc = "It's coarse and rough and gets everywhere."
 	baseturfs = /turf/open/misc/asteroid
 	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	base_icon_state = "asteroid"
 
@@ -28,14 +29,24 @@
 	var/broken_state = "asteroid_dug"
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance = 30
-
 	/// Set to TRUE to call ex_act parent
 	var/explodable = FALSE
+	var/changes_icon = TRUE
 
-
+/turf/open/misc/asteroid/broken_states()
+	if(initial(dug))
+		return list(icon_state)
+	return list("[base_icon_state]_dug")
 
 /turf/open/misc/asteroid/break_tile()
-	icon_state = broken_state
+	. = ..()
+	if(!.)
+		return FALSE
+	dug = TRUE
+	return TRUE
+
+/turf/open/misc/asteroid/burn_tile()
+	return
 
 /turf/open/misc/asteroid/Initialize(mapload)
 	var/proper_name = name
@@ -47,10 +58,11 @@
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
 	dug = TRUE
+	broken = TRUE
 	new dig_result(src, 5)
 	if (prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
-	icon_state = "[base_icon_state]_dug"
+	update_appearance()
 
 /// If the user can dig the turf
 /turf/open/misc/asteroid/proc/can_dig(mob/user)
@@ -72,12 +84,12 @@
 		return
 	return ..()
 
-/turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/asteroid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
+	if(attacking_item.tool_behaviour == TOOL_SHOVEL || attacking_item.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
 			return TRUE
 
@@ -86,15 +98,15 @@
 
 		balloon_alert(user, "digging...")
 
-		if(W.use_tool(src, user, 40, volume=50))
+		if(attacking_item.use_tool(src, user, 40, volume=50))
 			if(!can_dig(user))
 				return TRUE
 			getDug()
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 			return TRUE
-	else if(istype(W, /obj/item/storage/bag/ore))
+	else if(istype(attacking_item, /obj/item/storage/bag/ore))
 		for(var/obj/item/stack/ore/O in src)
-			SEND_SIGNAL(W, COMSIG_ATOM_ATTACKBY, O)
+			SEND_SIGNAL(attacking_item, COMSIG_ATOM_ATTACKBY, O)
 
 
 /turf/open/floor/plating/lavaland_baseturf
@@ -105,6 +117,9 @@
 	dug = TRUE
 	base_icon_state = "asteroid_dug"
 	icon_state = "asteroid_dug"
+
+/turf/open/misc/asteroid/dug/broken_states()
+	return list("asteroid_dug")
 
 /turf/open/misc/asteroid/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -122,7 +137,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "basalt"
 	floor_variance = 15
 	dig_result = /obj/item/stack/ore/glass/basalt
-	broken_state = "basalt_dug"
 
 /turf/open/misc/asteroid/basalt/getDug()
 	set_light(0)
@@ -178,10 +192,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	baseturfs = /turf/open/misc/asteroid/snow
 	icon_state = "snow"
 	base_icon_state = "snow"
-	broken_state = "snow_dug"
 	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	flags_1 = NONE
@@ -189,16 +203,18 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	dig_result = /obj/item/stack/sheet/mineral/snow
-	var/burnt = FALSE
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
 		visible_message(span_danger("[src] melts away!."))
 		slowdown = 0
 		burnt = TRUE
-		icon_state = "snow_dug"
+		update_appearance()
 		return TRUE
 	return FALSE
+
+/turf/open/misc/grass/burnt_states()
+	return list("snow_dug")
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
@@ -230,18 +246,19 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	damaged_dmi = null
 
 /turf/open/misc/asteroid/snow/ice/break_tile()
-	return
+	return FALSE
+
+/turf/open/misc/asteroid/snow/ice/burn_tile()
+	return FALSE
 
 /turf/open/misc/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 0
-
-/turf/open/misc/asteroid/snow/ice/burn_tile()
-	return FALSE
 
 /turf/open/misc/asteroid/snow/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -271,3 +288,18 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/snow/standard_air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+
+/turf/open/misc/asteroid/moon
+	name = "lunar surface"
+	baseturfs = /turf/open/misc/asteroid/moon
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	base_icon_state = "moon"
+	floor_variance = 40
+	dig_result = /obj/item/stack/ore/glass/basalt
+
+/turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
+	dug = TRUE
+	floor_variance = 0
+	base_icon_state = "moon_dug"
+	icon_state = "moon_dug"

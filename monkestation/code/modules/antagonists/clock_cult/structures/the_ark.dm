@@ -1,11 +1,6 @@
 GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark) //set to be equal to the ark on creation if none
 GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
-#define ARK_STATE_BASE 0 //base state the ark is created in, any state besides this will be a hostile environment
-#define ARK_STATE_CHARGING 1 //state for the grace period after the cult has reached its member count max and have an active anchor crystal
-#define ARK_STATE_ACTIVE 2 //state for after the cult has been annouced as well as the first half of the assault
-#define ARK_STATE_SUMMONING 3 //state for the halfway point of ark activation
-#define ARK_STATE_FINAL 4 //the ark has either finished opening or been destroyed in this state
 #define ARK_READY_PERIOD 300 SECONDS //how long until the cult is annouced after they reach max members, 5 minutes
 #define ARK_GRACE_PERIOD 210 SECONDS //how long until the portals open after the cult is annouced, 3 minutes 30 seconds
 #define ARK_ASSAULT_PERIOD 600 //how long the crew has to destroy the ark after the assault begins, 10 minutes
@@ -29,7 +24,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 	///current charge state of the ark
 	var/current_state = ARK_STATE_BASE
-	///tracker for how long until rat'var is summoned in ARK_STATE_ACTIVE/ARK_STATE_SUMMONING
+	///tracker for how long until ratvar is summoned in ARK_STATE_ACTIVE/ARK_STATE_SUMMONING
 	var/charging_for = 0
 
 /obj/structure/destructible/clockwork/the_ark/Initialize(mapload)
@@ -37,6 +32,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(!GLOB.clock_ark)
 		GLOB.clock_ark = src
 	SSpoints_of_interest.make_point_of_interest(src)
+
+	if(!SSthe_ark.initialized)
+		SSthe_ark.Initialize()
 
 /obj/structure/destructible/clockwork/the_ark/examine(mob/user)
 	. = ..()
@@ -48,13 +46,15 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 				. += span_brass("The ark is opening, [charging_for ? "defend it until ratvar arrives in [ARK_ASSAULT_PERIOD - charging_for] seconds." : "prepare to defend it!"]")
 			if(ARK_STATE_SUMMONING)
 				. += span_brass("Ratvar has nearly arrived, it will only be [ARK_ASSAULT_PERIOD - charging_for] more seconds!")
+	if(user.client?.holder)
+		. += span_warning("ADMIN ONLY WARNING: DELETING THIS WILL END THE ROUND.")
 
 /obj/structure/destructible/clockwork/the_ark/Destroy()
 	if(GLOB.clock_ark == src)
 		GLOB.clock_ark = null
 	if(GLOB.ratvar_risen)
 		return ..()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSthe_ark, src)
 	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
@@ -95,10 +95,13 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 				for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
 					qdel(portal)
 				SSshuttle.clearHostileEnvironment(src)
-				SSsecurity_level.set_level(2)
+				SSsecurity_level.set_level(SEC_LEVEL_RED)
 		qdel(src)
 
 /obj/structure/destructible/clockwork/the_ark/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if(current_state == ARK_STATE_FINAL)
+		return
+
 	. = ..()
 	if(!.)
 		return
@@ -111,7 +114,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		return
 
 	if(current_state >= ARK_STATE_CHARGING)
-		charging_for = min(charging_for + seconds_per_tick, ARK_ASSAULT_PERIOD)
+		charging_for = min(charging_for + (seconds_per_tick * DELTA_WORLD_TIME(SSthe_ark)), ARK_ASSAULT_PERIOD)
 
 	if(charging_for >= ARK_ASSAULT_PERIOD)
 		summon_ratvar()
@@ -137,12 +140,12 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	icon_state = "clockwork_gateway_charging"
 	send_clock_message(null, span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
 					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
-	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD)
+	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD) //MOVE THIS TO A LOOP ON THE ARK SS
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
-	if(current_state >= ARK_STATE_ACTIVE)
+	if(current_state >= ARK_STATE_GRACE)
 		return
-	current_state = ARK_STATE_ACTIVE
+	current_state = ARK_STATE_GRACE
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
 	send_clock_message(null, span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
@@ -151,24 +154,24 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
 	send_clock_message(null, span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
-
 	sleep(3 SECONDS)
+	current_state = ARK_STATE_ACTIVE
 
 	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
 		var/mob/living/servant_mob = servant_mind.current
-		if(!servant_mob || QDELETED(servant_mob))
+		if(QDELETED(servant_mob))
 			continue
+
 		if(GLOB.abscond_markers)
 			try_servant_warp(servant_mob, get_turf(pick(GLOB.abscond_markers)))
-		if(ishuman(servant_mob))
-			var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
-			if(servant_antag)
-				servant_antag.forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
-				servant_mob.add_overlay(servant_antag.forbearance)
+
+		var/datum/antagonist/clock_cultist/servant_antag = servant_mind.has_antag_datum(/datum/antagonist/clock_cultist)
+		servant_antag?.add_forbearance(servant_mob)
 
 	sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 50)
-	SSsecurity_level.set_level(3)
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	addtimer(CALLBACK(src, PROC_REF(begin_assault)), ARK_GRACE_PERIOD)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package), /obj/item/turf_demolisher/reebe), 10 SECONDS)
 
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
@@ -179,7 +182,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")
 
 /obj/structure/destructible/clockwork/the_ark/proc/begin_assault()
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSthe_ark, src)
 	priority_announce("Space-time anomalies detected near the station. Source determined to be a temporal \
 		energy pulse emanating from J1523-215. All crew are to enter [text2ratvar("prep#re %o di%")]\
 		and destroy the [text2ratvar("I'd like to see you try")], which has been determined to be the source of the \
@@ -194,7 +197,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(current_state >= ARK_STATE_FINAL)
 		return
 	current_state = ARK_STATE_FINAL
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSthe_ark, src)
 	resistance_flags |= INDESTRUCTIBLE
 	send_clock_message(null, span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))
@@ -206,7 +209,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 			var/mob/living/newgod = current_mind.current
 			if(!newgod)
 				continue
-			newgod.status_flags |= GODMODE
+			ADD_TRAIT(newgod, TRAIT_GODMODE, "ratvar")
 	else
 		stack_trace("Clockwork ark calling summon_ratvar() with no set main_clock_cult.")
 
@@ -231,19 +234,14 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 /proc/explode_reebe()
 	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)
-	if(reebe_area_list.len)
+	if(length(reebe_area_list))
 		for(var/i in 1 to 30)
 			explosion(pick(reebe_area_list), 0, 2, 4, 4, FALSE)
 			sleep(5)
-	if(GLOB.abscond_markers.len)
+	if(length(GLOB.abscond_markers))
 		explosion(pick(GLOB.abscond_markers), 50, 40, 30, 30, FALSE, TRUE)
 	SSticker.force_ending = TRUE
 
-#undef ARK_STATE_BASE
-#undef ARK_STATE_CHARGING
-#undef ARK_STATE_ACTIVE
-#undef ARK_STATE_SUMMONING
-#undef ARK_STATE_FINAL
 #undef ARK_READY_PERIOD
 #undef ARK_GRACE_PERIOD
 #undef ARK_ASSAULT_PERIOD

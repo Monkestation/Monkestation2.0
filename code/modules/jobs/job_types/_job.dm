@@ -103,8 +103,12 @@
 	/// List of family heirlooms this job can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 
-	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN)
+	/// All values = (JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CANNOT_OPEN_SLOTS)
 	var/job_flags = NONE
+
+	/// Holidays this job should only appear on. Leave null for it to always show. Supports multiple holidays.
+	//base defines in [code\__DEFINES\time.dm]
+	var/list/job_holiday_flags //MONKESTATION EDIT
 
 	/// Multiplier for general usage of the voice of god.
 	var/voice_of_god_power = 1
@@ -127,22 +131,24 @@
 	/// custom ringtone for this job
 	var/job_tone
 
+	/// Donor rank required for this job. Leave null for no requirement.
+	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
+	var/job_req_donor = null //MONKESTATION EDIT
+	///donator bypass for holidays
+	var/job_donor_bypass = null //MONKESTATION EDIT
+
+	//yes this could probably be a config but I dont really care
+	///How many points of antag capacity does this job give
+	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
 /datum/job/New()
 	. = ..()
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!job_changes[title])
-		return TRUE
-
-	var/list/job_positions_edits = job_changes[title]
-	if(!job_positions_edits)
-		return TRUE
-
-	if(isnum(job_positions_edits["spawn_positions"]))
-		spawn_positions = job_positions_edits["spawn_positions"]
-	if(isnum(job_positions_edits["total_positions"]))
-		total_positions = job_positions_edits["total_positions"]
-
+	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
+	if(isnum(new_spawn_positions))
+		spawn_positions = new_spawn_positions
+	var/new_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
+	if(isnum(new_total_positions))
+		total_positions = new_total_positions
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
@@ -150,6 +156,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 	if(length(mind_traits))
 		spawned.mind.add_traits(mind_traits, JOB_TRAIT)
+
+	if(faction == FACTION_STATION)
+		ADD_TRAIT(spawned.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
 
 	var/obj/item/organ/internal/liver/liver = spawned.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && length(liver_traits))
@@ -173,7 +182,33 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	if(prob(25))
+		var/virus_choice = pick(WILD_ACUTE_DISEASES)
+		var/list/anti = list(
+			ANTIGEN_BLOOD	= 2,
+			ANTIGEN_COMMON	= 2,
+			ANTIGEN_RARE	= 1,
+			ANTIGEN_ALIEN	= 0,
+		)
+		var/list/bad = list(
+			EFFECT_DANGER_HELPFUL	= 1,
+			EFFECT_DANGER_FLAVOR	= 2,
+			EFFECT_DANGER_ANNOYING	= 2,
+			EFFECT_DANGER_HINDRANCE	= 2,
+			EFFECT_DANGER_HARMFUL	= 2,
+			EFFECT_DANGER_DEADLY	= 2,
+		)
+		var/datum/disease/acute/disease = new virus_choice
+		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
 
+		disease.disease_flags |= DISEASE_DORMANT
+		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
+
+		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
+		disease.Refresh_Acute()
+
+/// Announce that this job as joined the round to all crew members.
+/// Note the joining mob has no client at this point.
 /datum/job/proc/announce_job(mob/living/joining_mob, job_title)
 	if(head_announce)
 		announce_head(joining_mob, head_announce, job_title)
@@ -183,17 +218,48 @@
 /datum/job/proc/special_check_latejoin(client/latejoin)
 	return TRUE
 
+//Used to check if the config or special setting for this job is enabled.
+//Override where appropriate. Be aware of parent procs. Defaults to false.
+/datum/job/proc/special_config_check()
+	return FALSE
 
-/mob/living/proc/on_job_equipping(datum/job/equipping)
+/mob/living/proc/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	return
+
+/mob/living/silicon/robot/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
+	var/list/loadout_datums = loadout_list_to_datums(used_pref?.loadout_list)
+	var/obj/item/hat_to_use = null
+
+	// We want the last hat in the list to match the behaviour of humanoid loadouts
+	for (var/datum/loadout_item/head/item in loadout_datums)
+		if (ispath(item.item_path, /obj/item))
+			var/obj/item/hat = new item.item_path()
+			if (hat.slot_flags & ITEM_SLOT_HEAD)
+				hat_to_use = hat
+
+	if (hat_to_use)
+		place_on_head(hat_to_use)
+
+#define VERY_LATE_ARRIVAL_TOAST_PROB 20
 
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, datum/preferences/used_pref)
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 	bank_account.payday(STARTING_PAYCHECKS, TRUE)
 	account_id = bank_account.account_id
 	bank_account.replaceable = FALSE
-	dress_up_as_job(equipping, FALSE, used_pref)
+	add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
 
+	// monkestation edit start
+	/* original
+	dress_up_as_job(equipping)
+	*/
+	dress_up_as_job(equipping, FALSE, used_pref)
+	// monkestation edit end
+
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN && prob(VERY_LATE_ARRIVAL_TOAST_PROB))
+		equip_to_slot_or_del(new /obj/item/food/griddle_toast(src), ITEM_SLOT_MASK)
+
+#undef VERY_LATE_ARRIVAL_TOAST_PROB
 
 /mob/living/proc/dress_up_as_job(datum/job/equipping, visual_only = FALSE)
 	return
@@ -202,10 +268,20 @@
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 	equip_outfit_and_loadout(equipping.outfit, used_pref, visual_only, equipping)
 
-/datum/job/proc/announce_head(mob/living/carbon/human/H, channels, job_title) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
-	if(H && GLOB.announcement_systems.len)
-		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, job_title, channels), 1))
+/datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+	if(!human)
+		return
+	var/obj/machinery/announcement_system/system
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.newhead_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	system = pick(available_machines)
+	//timer because these should come after the captain announcement
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(system, TYPE_PROC_REF(/obj/machinery/announcement_system, announce), AUTO_ANNOUNCE_NEWHEAD, human.real_name, human.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
@@ -247,19 +323,14 @@
  * If they have 0 spawn and total positions in the config, the job is entirely removed from occupations prefs for the round.
  */
 /datum/job/proc/map_check()
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!job_changes[title]) //no edits made
-		return TRUE
-
-	var/list/job_positions_edits = job_changes[title]
-	if(!job_positions_edits)
-		return TRUE
-
 	var/available_roundstart = TRUE
 	var/available_latejoin = TRUE
-	if(!isnull(job_positions_edits["spawn_positions"]) && (job_positions_edits["spawn_positions"] == 0))
+
+	var/edited_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
+	if(!isnull(edited_spawn_positions) && (edited_spawn_positions == 0))
 		available_roundstart = FALSE
-	if(!isnull(job_positions_edits["total_positions"]) && (job_positions_edits["total_positions"] == 0))
+	var/edited_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
+	if(!isnull(edited_total_positions) && (edited_total_positions == 0))
 		available_latejoin = FALSE
 
 	if(!available_roundstart && !available_latejoin) //map config disabled the job
@@ -267,8 +338,53 @@
 
 	return TRUE
 
-/datum/job/proc/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
+/// Gets the message that shows up when spawning as this job
+/// monkestation edit: added "chosen_title" argument
+/datum/job/proc/get_spawn_message(chosen_title)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	// monkestation edit start
+	// return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; "))) original
+	return boxed_message(span_infoplain(jointext(get_spawn_message_information(chosen_title), "\n&bull; ")))
+	// monkestation edit end
+
+/// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
+/// monkestation edit: added "chosen_title" argument
+/datum/job/proc/get_spawn_message_information(chosen_title)
+	SHOULD_CALL_PARENT(TRUE)
+	var/list/info = list()
+	info += "<b>You are the [title].</b>\n"
+	var/related_policy = get_policy(title)
+	var/radio_info = get_radio_information()
+	if(related_policy)
+		info += related_policy
+	if(supervisors)
+		info += "As the [title] you answer directly to [supervisors]. Special circumstances may change this."
+	if(radio_info)
+		info += radio_info
+	if(req_admin_notify)
+		info += "<b>You are playing a job that is important for Game Progression. \
+			If you have to disconnect, please notify the admins via adminhelp.</b>"
+	if(CONFIG_GET(number/minimal_access_threshold))
+		info += span_boldnotice("As this station was initially staffed with a \
+			[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
+			have been added to your ID card.")
+
+	// monkestation edit start
+	if(chosen_title != title)
+		info += "Remember that alternate titles are purely for flavor and roleplay. " \
+			+ span_warning("Do not use your \"[chosen_title]\" alt \ title as an excuse to forego your duties as a [title].")
+	// monkestation edit end
+
+	return info
+
+/// Returns information pertaining to this job's radio.
+/datum/job/proc/get_radio_information()
+	if(job_flags & JOB_CREW_MEMBER)
+		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
+
+//Checks if certain conditions are met making the job eligible.
+/datum/job/proc/conditions_met()
+	return TRUE
 
 /datum/outfit/job
 	name = "Standard Gear"
@@ -302,6 +418,10 @@
 				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 			if(LSATCHEL)
 				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+			if(BSATCHEL)
+				back = /obj/item/storage/backpack/satchel/blackleather //Black Leather Satchel MONKESTATION
+			if(RSATCHEL)
+				back = /obj/item/storage/backpack/satchel/retro //Retro Satchel MONKESTATION
 			if(DSATCHEL)
 				back = satchel //Department satchel
 			if(DDUFFELBAG)
@@ -356,8 +476,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.saved_identification = equipped.real_name
-		pda.saved_job = equipped_job.title
+		pda.imprint_id(equipped.real_name, equipped_job.title)
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 
@@ -399,7 +518,7 @@
 
 
 /// Returns an atom where the mob should spawn in.
-/datum/job/proc/get_roundstart_spawn_point()
+/datum/job/proc/get_roundstart_spawn_point(chosen_title)
 	if(random_spawns_possible)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
@@ -416,22 +535,37 @@
 			return hangover_spawn_point || get_latejoin_spawn_point()
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
-	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
+	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point(chosen_title)
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 		return get_latejoin_spawn_point()
 	return spawn_point
 
 
 /// Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.
-/datum/job/proc/get_default_roundstart_spawn_point()
+/datum/job/proc/get_default_roundstart_spawn_point(chosen_title)
+	var/list/spawn_points_picked = list()
+	var/list/spawn_points_not_picked = list()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
 		if(spawn_point.name != title)
 			continue
-		. = spawn_point
-		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
-			continue
-		spawn_point.used = TRUE
-		break
+		if(spawn_point.required_jobtitle && spawn_point.required_jobtitle == chosen_title) // we default to jobtitle spawns first
+			. = spawn_point
+			if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+				continue
+			spawn_point.used = TRUE
+			break
+		else
+
+			if(spawn_point.used)
+				spawn_points_picked += spawn_point
+			else
+				spawn_points_not_picked += spawn_point
+
+	var/obj/effect/landmark/start/picked = length(spawn_points_not_picked) ? pick(spawn_points_not_picked) : pick(spawn_points_picked)
+
+	. = picked
+	picked.used = TRUE
+
 	if(!.)
 		log_world("Couldn't find a round start spawn point for [title]")
 
@@ -452,8 +586,7 @@
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob)
 	else
-		spawn_instance = new spawn_type(player_client.mob.loc)
-		spawn_point.JoinPlayerHere(spawn_instance, TRUE)
+		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -508,7 +641,6 @@
 			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
-	dna.species.after_equip_job(job, src, FALSE, player_client.prefs)
 
 /mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
 	if(GLOB.current_anonymous_theme)
@@ -516,7 +648,8 @@
 		return
 	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
 	set_core_display_icon(null, player_client)
-
+	apply_pref_emote_display(player_client)
+	apply_pref_hologram_display(player_client)
 
 /mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
 	if(mmi)
@@ -535,15 +668,26 @@
 				return // Disconnected while checking the appearance ban.
 			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
+		// monkestation edit start
+		/* original
 		mmi.name = "[initial(mmi.name)]: [organic_name]"
 		if(mmi.brain)
 			mmi.brain.name = "[organic_name]'s brain"
 		if(mmi.brainmob)
 			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
 			mmi.brainmob.name = organic_name
+		*/
+		qdel(mmi)
+		mmi = make_mmi(positronic=(player_client.prefs.read_preference(/datum/preference/choiced/silicon_brain) == "Positronic"), organic_name=organic_name)
+		// monkestation edit end
+
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		apply_pref_name(/datum/preference/name/cyborg, player_client)
+
+	// monkestation edit start
+	TryConnectToAI() // needs to happen before the client is transfered to the mob
+	// monkestation edit end
 
 /**
  * Called after a successful roundstart spawn.
@@ -562,3 +706,34 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+///Returns a string that will be used for the contents of an employment contract.
+/datum/job/proc/employment_contract_contents(employee_name)
+	SHOULD_CALL_PARENT(FALSE)
+
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as SLAVE), \
+	and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).\
+	<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, \
+	who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, \
+	in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, \
+	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"
+
+/// Returns a large (due to cropping) icon of this job's sechud icon state.
+/datum/job/proc/get_lobby_icon() as /icon
+	var/datum/outfit/job_outfit = outfit
+	if(!job_outfit || !job_outfit::id_trim)
+	#ifdef TESTING
+		log_job_debug("[src.type] has no job outfit but either doesn't overwrite get_lobby_icon() or has no SecHUD icon.")
+	#endif
+		return
+	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon_state = job_trim::sechud_icon_state
+	if(!icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon state.")
+
+	return uni_icon('icons/mob/huds/hud.dmi', icon_state)

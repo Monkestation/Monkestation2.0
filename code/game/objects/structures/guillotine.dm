@@ -58,13 +58,13 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
-/obj/structure/guillotine/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/plasteel))
+/obj/structure/guillotine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/sheet/plasteel))
 		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
 		if(blade_sharpness<10)
 			if(do_after(user,100,target=user))
 				blade_sharpness = min(10,blade_sharpness+3)
-				I.use(1)
+				attacking_item.use(1)
 				to_chat(user, span_notice("You repair the guillotine with the plasteel."))
 			else
 				to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
@@ -174,7 +174,7 @@
 					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 			else
-				victim.apply_damage(15 * blade_sharpness, BRUTE, head)
+				victim.apply_damage(15 * blade_sharpness, BRUTE, head, attacking_item = src)
 				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
 				victim.emote("scream")
 
@@ -184,8 +184,8 @@
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
 
-/obj/structure/guillotine/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/sharpener))
+/obj/structure/guillotine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (istype(attacking_item, /obj/item/sharpener))
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return
@@ -193,7 +193,7 @@
 		if (blade_status == GUILLOTINE_BLADE_RAISED)
 			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
 				blade_status = GUILLOTINE_BLADE_SHARPENING
-				if(do_after(user, 7, target = src))
+				if(do_after(user, 0.7 SECONDS, target = src))
 					blade_status = GUILLOTINE_BLADE_RAISED
 					user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
 						                 span_notice("You sharpen the large blade of the guillotine."))
@@ -254,6 +254,7 @@
 	..()
 
 /obj/structure/guillotine/post_unbuckle_mob(mob/living/M)
+	M.cut_overlays() // monkestation: bugfix
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
@@ -277,7 +278,7 @@
 	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
 		current_action = GUILLOTINE_ACTION_IDLE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	current_action = GUILLOTINE_ACTION_IDLE
 	return FALSE
 

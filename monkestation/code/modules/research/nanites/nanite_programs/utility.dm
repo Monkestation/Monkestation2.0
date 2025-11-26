@@ -46,6 +46,109 @@
 
 	host_mob.hud_set_nanite_indicator()
 
+#define NANITE_RESEARCH_CHANGE "nanite_research_change"
+#define NANITE_RESEARCH_SLOW "Slow (1x)"
+#define NANITE_RESEARCH_FAST "Fast (2x)"
+#define NANITE_RESEARCH_SUPERFAST "Bitcoin Miner (10x)"
+
+/datum/nanite_program/research
+	name = "Research Network Integration"
+	desc = "The nanites contribute processing power to the research network, generating useful data and heat. Higher usage rates will consume more nanites. Requires a live host."
+	rogue_types = list(/datum/nanite_program/spreading, /datum/nanite_program/mitosis) // it researches itself into oblivion
+	use_rate = 0.5
+
+	var/research_speed
+	var/current_research_bonus
+	var/current_mode
+	COOLDOWN_DECLARE(next_warning_time)
+
+/datum/nanite_program/research/register_extra_settings()
+	extra_settings[NES_MODE] = new /datum/nanite_extra_setting/type(NANITE_RESEARCH_SLOW, list(NANITE_RESEARCH_SLOW, NANITE_RESEARCH_FAST, NANITE_RESEARCH_SUPERFAST))
+
+/datum/nanite_program/research/check_conditions()
+	return host_mob.stat != DEAD && ..()
+
+/datum/nanite_program/research/active_effect() // yep it's basically a space heater
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+
+	if (current_mode != mode.get_value() && passive_enabled)
+		disable_passive_effect() // toggles it so that it updates
+		enable_passive_effect()
+
+	var/turf/turf = get_turf(host_mob)
+	if (!istype(turf))
+		return
+
+	var/datum/gas_mixture/enviroment = turf.return_air()
+	if (host_mob.bodytemperature < enviroment.temperature) // sadly our bitcoin mining operations just aren't cool enough
+		return
+
+	var/difference = host_mob.bodytemperature - enviroment.temperature
+	var/heat_capacity = enviroment.heat_capacity()
+	var/required_energy = difference * heat_capacity
+	var/delta_temperature = min(required_energy, research_speed * 500) / heat_capacity
+
+	enviroment.temperature += delta_temperature
+	turf.air_update_turf()
+
+/datum/nanite_program/research/enable_passive_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	current_mode = mode.get_value()
+
+	var/message
+	switch (current_mode)
+		if (NANITE_RESEARCH_SLOW)
+			message = span_notice("You feel slightly warmer than usual.")
+		if (NANITE_RESEARCH_FAST)
+			message = span_warning("You feel a lot warmer than usual.")
+		if (NANITE_RESEARCH_SUPERFAST)
+			message = span_userdanger("You feel your insides radiate with dizzying heat!")
+
+	update_research_speed()
+
+	host_mob.add_homeostasis_level(NANITE_RESEARCH_CHANGE, host_mob.standard_body_temperature + research_speed * 15, 0.25 KELVIN)
+	use_rate = (initial(use_rate) * research_speed) / 50
+	current_research_bonus = use_rate
+	SSresearch.science_tech.nanite_bonus += current_research_bonus
+
+	if (COOLDOWN_FINISHED(src, next_warning_time))
+		to_chat(host_mob, message)
+		COOLDOWN_START(src, next_warning_time, 10 SECONDS)
+
+/datum/nanite_program/research/disable_passive_effect()
+	. = ..()
+	SSresearch.science_tech.nanite_bonus -= current_research_bonus
+	host_mob.remove_homeostasis_level(NANITE_RESEARCH_CHANGE)
+
+/datum/nanite_program/research/set_extra_setting(setting, value)
+	. = ..()
+	update_research_speed()
+
+/datum/nanite_program/research/copy_programming(datum/nanite_program/target, copy_activated)
+	. = ..()
+	var/datum/nanite_program/research/research = target
+	if (!istype(research))
+		return
+	research.update_research_speed()
+
+/datum/nanite_program/research/proc/update_research_speed()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_MODE]
+	switch (mode.get_value())
+		if (NANITE_RESEARCH_SLOW)
+			research_speed = 1
+		if (NANITE_RESEARCH_FAST)
+			research_speed = 2
+		if (NANITE_RESEARCH_SUPERFAST)
+			research_speed = 10 // oh god
+	use_rate = initial(use_rate) * research_speed
+
+#undef NANITE_RESEARCH_CHANGE
+#undef NANITE_RESEARCH_SLOW
+#undef NANITE_RESEARCH_FAST
+#undef NANITE_RESEARCH_SUPERFAST
+
 /datum/nanite_program/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
@@ -147,12 +250,12 @@
 	if(!iscarbon(host_mob))
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.nutrition <= NUTRITION_LEVEL_WELL_FED)
+	if(C.nutrition <= NUTRITION_LEVEL_STARVING) //It's the nanite programmer's job to make sure nanites don't starve the host, also allows a saboteur to starve everyone who has nanites.
 		return FALSE
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.adjust_nutrition(-0.5)
+	host_mob.adjust_nutrition(-0.25)
 
 /datum/nanite_program/access
 	name = "Subdermal ID"
@@ -200,7 +303,7 @@
 	for(var/mob/living/L in oview(5, host_mob))
 		if(!prob(25))
 			continue
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(L))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
@@ -224,7 +327,7 @@
 /datum/nanite_program/nanite_sting/on_trigger(comm_message)
 	var/list/mob/living/target_hosts = list()
 	for(var/mob/living/L in oview(1, host_mob))
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob) || issilicon(L))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
@@ -257,6 +360,49 @@
 			return
 		fault.software_error()
 		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
+
+/datum/nanite_program/repeat
+	name = "Signal Repeater"
+	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat
+	name = "Relay Signal Repeater"
+	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+
+/datum/nanite_program/relay_repeat/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(0, 1, 9999)
+	extra_settings[NES_RELAY_CHANNEL] = new /datum/nanite_extra_setting/number(1, 1, 9999)
+	extra_settings[NES_DELAY] = new /datum/nanite_extra_setting/number(0, 0, 3600, "s")
+
+/datum/nanite_program/relay_repeat/on_trigger(comm_message)
+	var/datum/nanite_extra_setting/ES = extra_settings[NES_DELAY]
+	addtimer(CALLBACK(src, PROC_REF(send_code)), ES.get_value() * 10)
+
+/datum/nanite_program/relay_repeat/send_code()
+	var/datum/nanite_extra_setting/relay = extra_settings[NES_RELAY_CHANNEL]
+	if(activated && relay.get_value())
+		for(var/X in SSnanites.nanite_relays)
+			var/datum/nanite_program/relay/N = X
+			var/datum/nanite_extra_setting/code = extra_settings[NES_SENT_CODE]
+			N.relay_signal(code.get_value(), relay.get_value(), "a [name] program")
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"
@@ -309,3 +455,125 @@
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
+	playsound(owner, SFX_BUTTON_CLICK, vol = 20, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
+
+/datum/nanite_program/nanite_injector
+	name = "Nanomechanical Injection System"
+	desc = "While active, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
+	use_rate = 0.5
+	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
+	var/obj/item/nanite_injection_tentacle/pokey
+	COOLDOWN_DECLARE(nospammy)
+
+/datum/nanite_program/nanite_injector/enable_passive_effect()
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, nospammy))
+		return
+	if(pokey)
+		QDEL_NULL(pokey)
+	if(!host_mob)
+		return
+	COOLDOWN_START(src, nospammy, 0.5 SECONDS)
+	pokey = new(host_mob)
+	host_mob.dropItemToGround(host_mob.get_active_held_item())
+	if(!host_mob.put_in_hands(pokey))
+		to_chat(host_mob, span_warning("Your nanites fail to form an injector."))
+		QDEL_NULL(pokey)
+		return
+	host_mob.visible_message(span_notice("A tendril of silvery dust forms around [host_mob]'s arm."), span_notice("A nanomechanical injection tendril forms around your arm."))
+
+/datum/nanite_program/nanite_injector/disable_passive_effect()
+	. = ..()
+	if(pokey)
+		host_mob.visible_message(span_notice("The mass of metal around [host_mob]'s arm dissolves."), span_notice("Your injection device dissipates."))
+		QDEL_NULL(pokey)
+
+/obj/item/nanite_injection_tentacle
+	name = "nanomechanical mass"
+	desc = "This condensed tendril of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users. It can even be used as a substitute implantation device, though the process is both slow and exceedingly painful."
+	icon = 'icons/obj/weapons/changeling_items.dmi'
+	icon_state = "tentacle"
+	inhand_icon_state = "tentacle"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE
+	color = COLOR_SILVER
+
+/obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/guy_we_are_stabbing = interacting_with
+	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
+		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
+		return ITEM_INTERACT_BLOCKING
+	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
+	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
+		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
+		return ITEM_INTERACT_BLOCKING
+	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
+	guy_we_are_stabbing.visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))
+	to_chat(guy_we_are_stabbing, span_danger("Your flesh [(none_mod == 1) ? "aches" : "burns and tears agonizingly"] as [user] begins forcing [src] [(none_mod == 1) ? "against" : "straight through"] your chest!")) //agent smith type shit
+	var/success = FALSE
+	if(none_mod == 1)
+		if(do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			success = TRUE
+	else
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce1.ogg', 50, TRUE, -1) //sounds like someone blowing a hole right through your chest. Because basically that's what's happening.
+		guy_we_are_stabbing.emote("scream")
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/wounds/pierce3.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.visible_message(span_warning("[user] wrenches the [src] around and around, drilling a gaping hole into [guy_we_are_stabbing]'s chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("[user] wrenches [src] around, the amalgamated metal mass frothing as it drills straight through you!"))
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] tenses as [src] is ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("The [src] is pulled out of your chest, the gaping hole it made slowly refilling with new flesh! OWW..."))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/guy_to_deal_pain_to = guy_we_are_stabbing
+				guy_to_deal_pain_to.sharp_pain(BODY_ZONE_CHEST, 60, BRUTE, 10 SECONDS)
+			return
+		playsound(guy_we_are_stabbing.loc, 'sound/effects/butcher.ogg', 50, TRUE, -1)
+		guy_we_are_stabbing.emote("scream")
+		guy_we_are_stabbing.do_splatter_effect(guy_we_are_stabbing.dir)
+		guy_we_are_stabbing.visible_message(span_warning("A writhing web of grainy tendrils extend from [src] and plunge into [guy_we_are_stabbing]'s open chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_danger("A web of searing tendrils extrude from [src] and spread throughout your open chest cavity! God almighty, it BURNS!")) // if this sequence makes you sympathetically flinch in real life, i have succeeded.
+		if(!do_after(user, 5 SECONDS, guy_we_are_stabbing))
+			to_chat(guy_we_are_stabbing, span_danger("[src] is ripped from you, writhing tendrils tearing at your insides! It's PURE [span_hypnophrase("AGONY")]!"))
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] writhes and seizes as the mass of metallic tendrils is violently ripped from [guy_we_are_stabbing.p_their()] chest!"), ignored_mobs=list(user,guy_we_are_stabbing))
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/human_to_impale = guy_we_are_stabbing
+				human_to_impale.sharp_pain(BODY_ZONE_CHEST, 120, BRUTE, 10 SECONDS) //if you chicken out at the last possible second, it's gonna fuckin HURT
+			return
+		success = TRUE
+
+
+	if(success)
+		nanos.consume_nanites(200)
+		if(none_mod != 1)
+			guy_we_are_stabbing.visible_message(span_warning("[guy_we_are_stabbing] slumps forwards, shuddering as some of [src] flows into [guy_we_are_stabbing.p_their()] open chest cavity. The hole in their flesh begins slowly sealing from the inside."), ignored_mobs=list(user,guy_we_are_stabbing))
+		to_chat(guy_we_are_stabbing, span_warning("The [(none_mod == 1) ? "pain recedes" : "horrific incendiary sensation flows through you"] as [src] [(none_mod == 1) ? "flows through your skin." : "dissolves inside your chest, the hole it made shrinking to a tiny pinprick."]")) /// so the idea is that if you already have nanites they can just open a couple tiny holes in you for more nanites to enter, but if you dont... they have to make their own.
+		if(guy_we_are_stabbing.GetComponent(/datum/component/nanites))
+			var/datum/component/nanites/theirnanos = guy_we_are_stabbing.GetComponent(/datum/component/nanites)
+			theirnanos.consume_nanites(-150)
+		else
+			guy_we_are_stabbing.AddComponent(/datum/component/nanites, 150)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SYNC, nanos)
+			SEND_SIGNAL(guy_we_are_stabbing, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			to_chat(guy_we_are_stabbing, span_userdanger("...Why can I feel my blood? WHY CAN I FEEL M-")) //i am aiming for as much grotesque body horror with this as it is possible to extract from a text-box and 32x32 sprites
+			if(ishuman(guy_we_are_stabbing))
+				var/mob/living/carbon/human/yeowch = guy_we_are_stabbing
+				yeowch.sharp_pain(BODY_ZONES_ALL, 60, BURN, 15 SECONDS) //using this as an actual nanite implanter is really a last resort despiration option but it does work
+			guy_we_are_stabbing.emote("scream")
+			to_chat(guy_we_are_stabbing, span_reallybig(span_robot("Integration complete.")))
+			SEND_SOUND(guy_we_are_stabbing, sound('sound/machines/chime.ogg', volume = 150))
+			to_chat(guy_we_are_stabbing, span_robot("Integration-Shock should begin to recede in approximately FIFTEEN seconds."))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
+
+/obj/item/nanite_injection_tentacle/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)

@@ -51,7 +51,6 @@
 	access_list += ACCESS_MINISAT
 	return access_list
 
-
 /obj/effect/mapping_helpers/airlock/access/any/command/gateway/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_GATEWAY
@@ -503,6 +502,11 @@
 	access_list += list(ACCESS_CENT_CAPTAIN)
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_SPECOPS)
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/admin/bar/get_access()
 	var/list/access_list = ..()
 	access_list += list(ACCESS_CENT_CAPTAIN)
@@ -738,6 +742,7 @@
 	var/list/access_list = ..()
 	access_list += ACCESS_HOS
 	return access_list
+
 
 // -------------------- Service access helpers
 /obj/effect/mapping_helpers/airlock/access/all/service

@@ -96,9 +96,16 @@
 	for(var/i in 1 to 10)
 		new /obj/item/match(src)
 
-/obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/match))
-		W.matchignite()
+/obj/item/storage/box/matches/item_interaction(mob/living/user, obj/item/match/match, list/modifiers)
+	if(!SHOULD_SKIP_INTERACTION(src, match, user)) // You have to harm intent to light a match
+		return NONE
+	if(istype(match))
+		match.matchignite()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/storage/box/matches/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()
@@ -203,6 +210,23 @@
 /obj/item/storage/box/party_poppers/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/spray/chemsprayer/party(src)
+
+/obj/item/storage/box/balloons
+	name = "box of long balloons"
+	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
+	illustration = "balloon"
+
+/obj/item/storage/box/lights/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 24
+	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
+	atom_storage.max_total_storage = 24 * WEIGHT_CLASS_NORMAL
+	atom_storage.allow_quick_gather = FALSE
+
+/obj/item/storage/box/balloons/PopulateContents()
+	. = list()
+	for(var/i in 1 to 24)
+		new /obj/item/toy/balloon/long(src)
 
 /obj/item/storage/box/stickers
 	name = "box of stickers"

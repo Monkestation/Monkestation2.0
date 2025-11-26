@@ -18,12 +18,12 @@
 	endurance = 35
 	maturation = 10
 	production = 5
-	yield = 4
+	yield = 40
 	potency = 15
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/medicine/painkiller/morphine = 0.35, /datum/reagent/medicine/c2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
 /obj/item/food/grown/mushroom/reishi
@@ -44,7 +44,7 @@
 	endurance = 35
 	maturation = 10
 	production = 5
-	yield = 4
+	yield = 40
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -71,7 +71,7 @@
 	endurance = 35
 	maturation = 12
 	production = 5
-	yield = 2
+	yield = 20
 	potency = 35
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
@@ -97,7 +97,7 @@
 	product = /obj/item/food/grown/mushroom/libertycap
 	maturation = 7
 	production = 1
-	yield = 5
+	yield = 50
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
@@ -122,7 +122,7 @@
 	product = /obj/item/food/grown/mushroom/plumphelmet
 	maturation = 8
 	production = 1
-	yield = 4
+	yield = 40
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
@@ -149,7 +149,7 @@
 	lifespan = 30
 	endurance = 30
 	maturation = 22
-	yield = 1
+	yield = 10
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	possible_mutations = list()
@@ -176,7 +176,7 @@
 	endurance = 20
 	maturation = 7
 	production = 1
-	yield = 5
+	yield = 50
 	potency = 15
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
@@ -202,7 +202,7 @@
 	lifespan = 40
 	production = 4
 	endurance = 8
-	yield = 4
+	yield = 40
 	growthstages = 2
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -228,11 +228,11 @@
 	endurance = 30
 	maturation = 15
 	production = 1
-	yield = 3 //-> spread
+	yield = 30 //-> spread
 	potency = 30 //-> brightness
 	growthstages = 4
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/potencylimit)
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	possible_mutations = list(/datum/hydroponics/plant_mutation/glow_cap, /datum/hydroponics/plant_mutation/shadow_shroom)
 	reagents_add = list(/datum/reagent/uranium/radium = 0.1, /datum/reagent/phosphorus = 0.1, /datum/reagent/consumable/nutriment = 0.04)

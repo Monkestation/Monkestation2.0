@@ -16,6 +16,8 @@
 	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
+	//monkestation edit: var for allowing a mover to pass through the barricade if the turf they move from has a barricade, this sounds dumb
+	var/pass_same_type = TRUE
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -25,21 +27,21 @@
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
+/obj/structure/barricade/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(I.use_tool(src, user, 40, volume=40))
+			if(attacking_item.use_tool(src, user, 40, volume=40))
 				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
 /obj/structure/barricade/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.
 	. = ..()
-	if(locate(/obj/structure/barricade) in get_turf(mover))
+	if((locate(/obj/structure/barricade) in get_turf(mover)) && pass_same_type)
 		return TRUE
 	else if(isprojectile(mover))
 		if(!anchored)
@@ -68,17 +70,16 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
+/obj/structure/barricade/wooden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/W = attacking_item
 		if(W.amount < 5)
 			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
 			return
 		else
-			to_chat(user, span_notice("You start adding [I] to [src]..."))
+			to_chat(user, span_notice("You start adding [attacking_item] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src))
-				W.use(5)
+			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
 				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
@@ -86,14 +87,14 @@
 	return ..()
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "deconstructing barricade...")
+	loc.balloon_alert(user, "deconstructing barricade...")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
 		return
-	balloon_alert(user, "barricade deconstructed")
+	loc.balloon_alert(user, "barricade deconstructed")
 	tool.play_tool_sound(src)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), drop_amount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -129,6 +130,7 @@
 /obj/structure/barricade/sandbags/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/barricade/security
 	name = "security barrier"
@@ -137,19 +139,22 @@
 	icon_state = "barrier0"
 	density = FALSE
 	anchored = FALSE
-	max_integrity = 180
+	max_integrity = 200 //monkestation edit 180 to 200
 	proj_pass_rate = 20
 	armor_type = /datum/armor/barricade_security
 
-	var/deploy_time = 40
+	var/deploy_time = 5 SECONDS //monkestation edit
 	var/deploy_message = TRUE
+	//monkestation edit: var for setting density
+	var/locked = FALSE
+	pass_same_type = FALSE
 
 
 /datum/armor/barricade_security
 	melee = 10
-	bullet = 50
-	laser = 50
-	energy = 50
+	bullet = 60 //monkestation edit: 50 to 60
+	laser = 60 //monkestation edit: 50 to 60
+	energy = 60 //monkestation edit: 50 to 60
 	bomb = 10
 	fire = 10
 
@@ -158,12 +163,53 @@
 	addtimer(CALLBACK(src, PROC_REF(deploy)), deploy_time)
 
 /obj/structure/barricade/security/proc/deploy()
-	icon_state = "barrier1"
-	set_density(TRUE)
+	toggle_lock() //monkestation edit
 	set_anchored(TRUE)
 	if(deploy_message)
 		visible_message(span_warning("[src] deploys!"))
 
+//MONKESTATION EDIT START
+/obj/structure/barricade/security/proc/toggle_lock()
+	if(!locked)
+		set_density(TRUE)
+		icon_state = "barrier1"
+		locked = TRUE
+		playsound(src, 'sound/machines/boltsup.ogg', 45)
+	else
+		set_density(FALSE)
+		icon_state = "barrier0"
+		locked = FALSE
+		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+	update_appearance()
+
+/obj/structure/barricade/security/attackby(obj/item/tool, mob/living/user, params)
+	if(isidcard(tool))
+		var/obj/item/card/id/id_card = tool
+		if((ACCESS_SECURITY in id_card.GetAccess()))
+			toggle_lock()
+			balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
+		else
+			balloon_alert(user, "no access!")
+	else
+		return ..()
+
+/obj/structure/barricade/security/wrench_act(mob/living/user, obj/item/tool, params)
+	if(locked)
+		balloon_alert(user, "must be unlocked first!")
+		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
+		return
+	set_anchored(!anchored)
+	tool.play_tool_sound(src)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/barricade/security/emp_act(severity)
+	toggle_lock()
+
+/obj/structure/barricade/security/emag_act()
+	toggle_lock()
+//MONKESTATION EDIT STOP
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
@@ -178,10 +224,9 @@
 	. = ..()
 	. += span_notice("Alt-click to toggle modes.")
 
-/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)

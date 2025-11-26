@@ -6,7 +6,8 @@
 #define AREA_USAGE_STATIC_EQUIP 4
 #define AREA_USAGE_STATIC_LIGHT 5
 #define AREA_USAGE_STATIC_ENVIRON 6
-#define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+#define AREA_USAGE_APC_CHARGE 7
+#define AREA_USAGE_LEN AREA_USAGE_APC_CHARGE // largest idx
 
 /// Index of the first dynamic usage channel
 #define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
@@ -28,8 +29,8 @@
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
-#define BASE_MACHINE_IDLE_CONSUMPTION 100
-///Base global power consumption for active machines
+#define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
+///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
@@ -60,6 +61,11 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER (1<<7) //Prints nanite disks
+
+//design bitflags for special interactions
+#define BLUE_ALERT_DESIGN (1<<0)
+#define WHITELISTED_DESIGN (1<<1)
+
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
@@ -67,6 +73,8 @@
 /// For wiremod/integrated circuits. Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+/// Can be made by the orderable colony fabricator
+#define COLONY_FABRICATOR (1<<11)
 
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2
@@ -144,6 +152,15 @@
 /// Max length of a status line in the status display
 #define MAX_STATUS_LINE_LENGTH 40
 
+///Define for automated system arrival announcement
+#define AUTO_ANNOUNCE_ARRIVAL "ARRIVAL"
+///Define for automated system announcement when a head of staff arrives
+#define AUTO_ANNOUNCE_NEWHEAD "NEWHEAD"
+///Define for automated system announcement for when the arrival shuttle is broken
+#define AUTO_ANNOUNCE_ARRIVALS_BROKEN "ARRIVALS_BROKEN"
+///Define for automated system announcement for researched nodes
+#define AUTO_ANNOUNCE_NODE "NODE"
+
 /// Blank Status Display
 #define SD_BLANK 0
 /// Shows the emergency shuttle timer
@@ -152,3 +169,5 @@
 #define SD_MESSAGE 2
 /// Shows an alert picture (e.g. red alert, radiation, etc.)
 #define SD_PICTURE 3
+///clicky noises, how much time needed in between clicks on the machine for the sound to play on click again.
+#define CLICKSOUND_INTERVAL (0.1 SECONDS)

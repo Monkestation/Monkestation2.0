@@ -3,25 +3,23 @@ const TITLE_BOT_HEADER = "title: ";
 
 // Only check jobs that start with these.
 // Helps make sure we don't restart something like screenshot tests or linters, which are not known to be flaky.
-const CONSIDERED_JOBS = [
-  "Integration Tests",
-];
+const CONSIDERED_JOBS = ["Integration Tests"];
 
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
-  const {
-    data: { jobs },
-  } = await github.rest.actions.listJobsForWorkflowRunAttempt({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    run_id: workflowRunId,
-    attempt_number: runAttempt,
-  });
+  const jobs = await github.paginate(
+    github.rest.actions.listJobsForWorkflowRunAttempt,
+    {
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      run_id: workflowRunId,
+      attempt_number: runAttempt,
+    },
+    (response) => {
+      return response.data;
+    },
+  );
 
-  return jobs
-    .filter((job) => job.conclusion === "failure")
-    .filter((job) =>
-      CONSIDERED_JOBS.some((title) => job.name.startsWith(title))
-    );
+  return jobs.filter((job) => job.conclusion === "failure");
 }
 
 export async function rerunFlakyTests({ github, context }) {
@@ -29,19 +27,19 @@ export async function rerunFlakyTests({ github, context }) {
     github,
     context,
     context.payload.workflow_run.id,
-    context.payload.workflow_run.run_attempt
+    context.payload.workflow_run.run_attempt,
   );
 
-  if (failingJobs.length > 1) {
-    console.log("Multiple jobs failing. PROBABLY not flaky, not rerunning.");
+  const filteredFailingJobs = failingJobs.filter((job) => {
+    console.log(`Failing job: ${job.name}`);
+    return CONSIDERED_JOBS.some((title) => job.name.startsWith(title));
+  });
+  if (filteredFailingJobs.length === 0) {
+    console.log("Failing jobs are NOT designated flaky. Not rerunning.");
     return;
   }
 
-  if (failingJobs.length === 0) {
-    throw new Error(
-      "rerunFlakyTests should not have run on a run with no failing jobs"
-    );
-  }
+  console.log(`Rerunning job: ${filteredFailingJobs[0].name}`);
 
   github.rest.actions.reRunWorkflowFailedJobs({
     owner: context.repo.owner,
@@ -137,8 +135,30 @@ export function extractDetails(log) {
   // Common patterns where we can always get a detailed title
   const runtimeMatch = failure.headline.match(/Runtime in .+?: (?<error>.+)/);
   if (runtimeMatch) {
+    const runtime = runtimeMatch.groups.error.trim();
+
+    const invalidTimerMatch = runtime.match(
+      /^Invalid timer:.+object:(?<object>[^[]+).*delegate:(?<proc>.+?), source:/,
+    );
+    if (invalidTimerMatch) {
+      return {
+        title: `Flaky test ${failGroup}: Invalid timer: ${invalidTimerMatch.groups.proc.trim()} on ${invalidTimerMatch.groups.object.trim()}`,
+        failures,
+      };
+    }
+
     return {
-      title: `Flaky test ${failGroup}: ${runtimeMatch.groups.error.trim()}`,
+      title: `Flaky test ${failGroup}: ${runtime}`,
+      failures,
+    };
+  }
+
+  const hardDelMatch = failure.headline.match(
+    /^(?<object>\/[\w/]+) hard deleted .* times out of a total del count of/,
+  );
+  if (hardDelMatch) {
+    return {
+      title: `Flaky hard delete: ${hardDelMatch.groups.object}`,
       failures,
     };
   }
@@ -181,7 +201,7 @@ async function getExistingIssueId(graphql, context, title) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       label: LABEL,
-    }
+    },
   );
 
   const exactTitle = openFlakyTestIssues.find((issue) => issue.title === title);
@@ -190,7 +210,7 @@ async function getExistingIssueId(graphql, context, title) {
   }
 
   const foundInBody = openFlakyTestIssues.find((issue) =>
-    issue.body.includes(`<!-- ${TITLE_BOT_HEADER}${exactTitle} -->`)
+    issue.body.includes(`<!-- ${TITLE_BOT_HEADER}${exactTitle} -->`),
   );
   if (foundInBody !== undefined) {
     return foundInBody.number;
@@ -205,13 +225,13 @@ function createBody({ title, failures }, runUrl) {
 	<!-- title: ${title} -->
 
 	Flaky tests were detected in [this test run](${runUrl}). This means that there was a failure that was cleared when the tests were simply restarted.
-	
+
 	Failures:
 	\`\`\`
 	${failures
     .map(
       (failure) =>
-        `${failure.group}: ${failure.headline}\n\t${failure.details.join("\n")}`
+        `${failure.group}: ${failure.headline}\n\t${failure.details.join("\n")}`,
     )
     .join("\n")}
 	\`\`\`
@@ -223,19 +243,24 @@ export async function reportFlakyTests({ github, context }) {
     github,
     context,
     context.payload.workflow_run.id,
-    context.payload.workflow_run.run_attempt - 1
+    context.payload.workflow_run.run_attempt - 1,
   );
 
+  const filteredFailingJobs = failedJobsFromLastRun.filter((job) => {
+    console.log(`Failing job: ${job.name}`);
+    return CONSIDERED_JOBS.some((title) => job.name.startsWith(title));
+  });
+
   // This could one day be relaxed if we face serious enough flaky test problems, so we're going to loop anyway
-  if (failedJobsFromLastRun.length !== 1) {
+  if (filteredFailingJobs.length !== 1) {
     console.log(
-      "Multiple jobs failing after retry, assuming maintainer rerun."
+      "Multiple jobs failing after retry, assuming maintainer rerun.",
     );
 
     return;
   }
 
-  for (const job of failedJobsFromLastRun) {
+  for (const job of filteredFailingJobs) {
     const { data: log } =
       await github.rest.actions.downloadJobLogsForWorkflowRun({
         owner: context.repo.owner,
@@ -248,7 +273,7 @@ export async function reportFlakyTests({ github, context }) {
     const existingIssueId = await getExistingIssueId(
       github.graphql,
       context,
-      details.title
+      details.title,
     );
 
     if (existingIssueId !== undefined) {
@@ -268,7 +293,7 @@ export async function reportFlakyTests({ github, context }) {
           context.repo.repo
         }/actions/runs/${context.payload.workflow_run.id}/attempts/${
           context.payload.workflow_run.run_attempt - 1
-        }`
+        }`,
       ),
     });
   }

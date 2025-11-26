@@ -108,9 +108,9 @@
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
-	QDEL_NULL(consume_callback)
+	consume_callback = null
 	target = null
 
 	return ..()
@@ -217,7 +217,7 @@
 			tile.singularity_pull(parent, singularity_size)
 
 		for (var/atom/movable/thing as anything in tile)
-			if(thing == parent)
+			if(thing == parent || QDELETED(thing))
 				continue
 			if (in_consume_range)
 				consume(src, thing)
@@ -254,6 +254,8 @@
 				break
 			// eat the stuff if we're going to move into it so it doesn't mess up our movement
 			for(var/atom/thing_on_turf in current_turf.contents)
+				if(thing_on_turf == parent || QDELETED(thing_on_turf))
+					continue
 				consume(src, thing_on_turf)
 			consume(src, current_turf)
 
@@ -286,7 +288,7 @@
 			if (STAGE_ONE)
 				steps = 1
 			if (STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2//Now THIS is right
 			if (STAGE_THREE)
 				steps = 3
 			if (STAGE_FOUR)
@@ -360,8 +362,9 @@
 			target = potentially_closer
 	//if we lost that target get a new one
 	if(!target || QDELETED(target))
-		target = find_new_target()
-		foreboding_nosebleed(target)
+		var/mob/living/new_target = find_new_target()
+		new_target?.ominous_nosebleed()
+		target = new_target
 	return ..()
 
 ///Searches the living list for the closest target, and begins chasing them down.
@@ -372,30 +375,13 @@
 	for(var/mob/living/target as anything in GLOB.mob_living_list)
 		if(target.z != atom_parent.z)
 			continue
-		if(target.status_effects & GODMODE)
+		if(HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		var/distance_from_target = get_dist(target, atom_parent)
 		if(distance_from_target < closest_distance)
 			closest_distance = distance_from_target
 			closest_target = target
 	return closest_target
-
-/// gives a little fluff warning that someone is being hunted.
-/datum/component/singularity/bloodthirsty/proc/foreboding_nosebleed(mob/living/target)
-	if(!iscarbon(target))
-		to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
-		return
-	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
-	if(head)
-		if(has_no_blood)
-			to_chat(carbon_target, span_notice("You get a headache."))
-			return
-		head.adjustBleedStacks(5)
-		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_warning("You get a nosebleed."))
-		return
-	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
 #undef CHANCE_TO_MOVE_TO_TARGET
 #undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY

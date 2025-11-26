@@ -2,11 +2,12 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
+	interaction_flags_click = ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
-	///Badminnery resize
-	var/resize = 1
+	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
+	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null
 	var/lastattackerckey = null
 
@@ -20,6 +21,9 @@
 	var/max_stamina = 120
 	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/staminaloss = 0
+
+	/// Modified applied to attacks with items or fists
+	var/outgoing_damage_mod = 1
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -61,6 +65,8 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
+	/// Does the mob rotate when lying
+	var/rotate_on_lying = FALSE
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
 	var/timeofdeath = 0
@@ -91,9 +97,7 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	var/cameraFollow = null
-
-	/// Time of death
+	///The mob's latest time-of-death, as a station timestamp instead of world.time
 	var/tod = null
 
 	/// Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
@@ -115,6 +119,8 @@
 	var/num_legs = 2
 	///How many usable legs this mob currently has. Should only be changed through set_usable_legs()
 	var/usable_legs = 2
+	///what leg we step with
+	var/step_leg = 1
 
 	///How many hands does this mob have by default. This shouldn't change at runtime.
 	var/default_num_hands = 2
@@ -134,7 +140,7 @@
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
 	///what icon the mob uses for speechbubbles
-	var/bubble_icon = "default"
+	//var/bubble_icon = "default" //MONKESTATION REMOVAL
 	///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 	var/health_doll_icon
 
@@ -185,9 +191,6 @@
 	///Whether the mob is slowed down when dragging another prone mob
 	var/slowed_by_drag = TRUE
 
-	/// List of changes to body temperature, used by desease symtoms like fever
-	var/list/body_temp_changes = list()
-
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	///left hand icon for holding mobs
 	var/icon/held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
@@ -201,10 +204,12 @@
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
 
-	///The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)
-	var/body_position_pixel_x_offset = 0
 	///The x amount a mob's sprite should be offset due to the current position they're in
+	var/body_position_pixel_x_offset = 0
+	///The y amount a mob's sprite should be offset due to the current position they're in or size (e.g. lying down moves your sprite down)
 	var/body_position_pixel_y_offset = 0
+	///The height offset of a mob's maptext due to their current size.
+	var/body_maptext_height_offset = 0
 
 	/// FOV view that is applied from either nativeness or traits
 	var/fov_view
@@ -225,5 +230,29 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
-	/// Whether this mob can be mutated into a cybercop via quantum server get_valid_domain_targets(). Specifically dodges megafauna
-	var/can_be_cybercop = TRUE
+	/// Body temp we homeostasize to
+	var/standard_body_temperature = BODYTEMP_NORMAL
+	/// Temperature of our insides
+	var/bodytemperature = BODYTEMP_NORMAL
+	/// Lazylist of targets we homeostasize to
+	/// This allows multiple effects to add a different target to the list, which is averaged
+	/// (So you can have both a fever and a cold at the same time)
+	/// If empty just defaults to standard_body_temperature
+	var/list/homeostasis_targets
+
+	/// How cold to start sustaining cold damage
+	var/bodytemp_cold_damage_limit = -1 // -1 = no cold damage ever
+	/// How hot to start sustaining heat damage
+	var/bodytemp_heat_damage_limit = INFINITY // INFINITY = no heat damage ever
+
+	/// How fast the mob's temperature normalizes to their environment
+	var/temperature_normalization_speed = 0.1
+	/// How fast the mob's temperature normalizes to their homeostasis
+	/// Also gets multiplied by metabolism_efficiency.
+	/// Note that more of this = more nutrition is consumed every life tick.
+	var/temperature_homeostasis_speed = 0.5
+	/// Protection (insulation) from temperature changes, max 1
+	var/temperature_insulation = 0.15
+
+	/// Whether we currently have temp alerts, minor optimization
+	VAR_PRIVATE/temp_alerts = FALSE

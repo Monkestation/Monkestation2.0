@@ -20,6 +20,10 @@
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
+//Maximum pressure passive devices max out at
+#define MAX_PASSIVE_OUTPUT_PRESSURE 1e12
+//Maximum temperature setting for devices
+#define MAX_TEMPERATURE_SETTING 1e12
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE 200
 /// How many percent of the contents that an overclocked volume pumps leak into the air
@@ -29,6 +33,9 @@
 #define BINARY 2
 #define TRINARY 3
 #define QUATERNARY 4
+
+// The volume per direction of atmos pipes.
+#define UNARY_PIPE_VOLUME 35
 
 //TANKS
 /// The volume of the standard handheld gas tanks on the station.
@@ -41,6 +48,8 @@
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 /// The default initial value gas plasmamen tanks releases valves are set to.
 #define TANK_PLASMAMAN_RELEASE_PRESSURE 4
+/// The default initial value gas flown tanks releases valves are set to.
+#define TANK_CLOWN_RELEASE_PRESSURE 20
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.
@@ -81,11 +90,19 @@
 #define PIPING_ALL_COLORS (1<<4)
 /// can bridge over pipenets
 #define PIPING_BRIDGE (1<<5)
+/// intended to connect with layers 2 and 4 only
+#define PIPING_DISTRO_AND_WASTE_LAYERS (1<<6)
 
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
-#define VENTCRAWL_ALLOWED	(1<<0)
+#define VENTCRAWL_ALLOWED (1<<0)
 ///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
 #define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
 ///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
-#define VENTCRAWL_CAN_SEE	(1<<2)
+#define VENTCRAWL_CAN_SEE (1<<2)
+
+DEFINE_BITFIELD(vent_movement, list(
+	"Ventcrawl Allowed" = VENTCRAWL_ALLOWED,
+	"Ventcrawl Entrance Allowed" = VENTCRAWL_ENTRANCE_ALLOWED,
+	"Ventcrawl Can See" = VENTCRAWL_CAN_SEE,
+))

@@ -74,6 +74,14 @@
 /// It should not be used simply to silence CI.
 #define SS_OK_TO_FAIL_INIT (1 << 6)
 
+/// This subsystem should not be queued if it has no work.
+/// Populate the [hibernate_checks] list with the names of vars to check before a subsystem is queued.
+/// If the length() of each var is 0, it will not be queued.
+#define SS_HIBERNATE (1 << 7)
+
+/// Don't show when this has init'd
+#define SS_NO_INIT_MESSAGE (1 << 8)
+
 //! SUBSYSTEM STATES
 #define SS_IDLE 0 /// ain't doing shit.
 #define SS_QUEUED 1 /// queued to run

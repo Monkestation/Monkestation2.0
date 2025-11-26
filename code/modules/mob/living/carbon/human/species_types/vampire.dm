@@ -7,32 +7,29 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-		DRINKSBLOOD,
-		BLOOD_CLANS,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
+		TRAIT_DRINKS_BLOOD,
+		TRAIT_BLOOD_CLANS,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_USES_SKINTONES
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = "U"
+	exotic_bloodtype = /datum/blood_type/universal
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
-	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
+	/// UI displaying how much blood we have
+	var/atom/movable/screen/blood_level/blood_display
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
@@ -44,12 +41,16 @@
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
-	new_vampire.set_safe_hunger_level()
 	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
+	if(new_vampire.hud_used)
+		on_hud_created(new_vampire)
+	else
+		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+	QDEL_NULL(blood_display)
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
@@ -70,6 +71,14 @@
 		vampire.adjustFireLoss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
+
+///Gives the blood HUD to the vampire so they always know how much blood they have.
+/datum/species/vampire/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/blood_hud = source.hud_used
+	blood_display = new(null, blood_hud)
+	blood_hud.infodisplay += blood_display
+	blood_hud.show_hud(blood_hud.hud_version)
 
 /datum/species/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
@@ -167,8 +176,8 @@
 			if(victim.stat == DEAD)
 				to_chat(H, span_warning("You need a living victim!"))
 				return
-			if(!victim.blood_volume || (victim.dna && (HAS_TRAIT(victim, TRAIT_NOBLOOD) || victim.dna.species.exotic_blood)))
-				to_chat(H, span_warning("[victim] doesn't have blood!"))
+			if(!istype(victim.get_blood_type(), /datum/blood_type/crew/human))
+				to_chat(H, span_warning("[victim] doesn't have valid blood!"))
 				return
 			COOLDOWN_START(V, drain_cooldown, 3 SECONDS)
 			if(victim.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
@@ -179,7 +188,7 @@
 				victim.show_message(span_warning("[H] tries to bite you, but recoils in disgust!"))
 				to_chat(H, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 				return
-			if(!do_after(H, 3 SECONDS, target = victim))
+			if(!do_after(H, 3 SECONDS, target = victim, hidden = TRUE))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
@@ -188,24 +197,12 @@
 			playsound(H, 'sound/items/drink.ogg', 30, TRUE, -2)
 			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			if(!victim.blood_volume)
+			if(victim.blood_volume <= 0)
 				to_chat(H, span_notice("You finish off [victim]'s blood supply."))
 
 /obj/item/organ/internal/heart/vampire
 	name = "vampire heart"
 	color = "#1C1C1C"
-
-/obj/item/organ/internal/heart/vampire/on_insert(mob/living/carbon/receiver)
-	. = ..()
-	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-
-/obj/item/organ/internal/heart/vampire/on_remove(mob/living/carbon/heartless)
-	. = ..()
-	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
-
-/obj/item/organ/internal/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
-	SIGNAL_HANDLER
-	items += "Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

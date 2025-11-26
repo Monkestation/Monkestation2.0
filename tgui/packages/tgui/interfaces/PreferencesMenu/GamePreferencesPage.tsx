@@ -13,18 +13,18 @@ type PreferenceChild = {
 };
 
 const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
-  (child) => child.name
+  (child) => child.name,
 );
 
 const sortByName = sortBy<[string, PreferenceChild[]]>(([name]) => name);
 
-export const GamePreferencesPage = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const GamePreferencesPage = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
 
   for (const [featureId, value] of Object.entries(
-    data.character_preferences.game_preferences
+    data.character_preferences.game_preferences,
   )) {
     const feature = features[featureId];
 
@@ -36,14 +36,15 @@ export const GamePreferencesPage = (props, context) => {
           as="span"
           style={{
             'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-          }}>
+          }}
+        >
           {nameInner}
         </Box>
       );
     }
 
     let name: InfernoNode = (
-      <Flex.Item grow={1} pr={2} basis={0} ml={2}>
+      <Flex.Item maxWidth="400px" grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
       </Flex.Item>
     );
@@ -57,7 +58,7 @@ export const GamePreferencesPage = (props, context) => {
     }
 
     const child = (
-      <Flex align="center" key={featureId} pb={2}>
+      <Flex align="center" key={featureId} pb={2} className="candystripe">
         {name}
 
         <Flex.Item grow={1} basis={0}>
@@ -86,18 +87,19 @@ export const GamePreferencesPage = (props, context) => {
 
     gamePreferences[category] = binaryInsertPreference(
       gamePreferences[category] || [],
-      entry
+      entry,
     );
   }
 
   const gamePreferenceEntries: [string, InfernoNode][] = sortByName(
-    Object.entries(gamePreferences)
+    Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
     return [category, preferences.map((entry) => entry.children)];
   });
 
   return (
     <TabbedMenu
+      name="Settings"
       categoryEntries={gamePreferenceEntries}
       contentProps={{
         fontSize: 1.5,

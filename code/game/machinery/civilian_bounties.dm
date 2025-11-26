@@ -22,10 +22,10 @@
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
-/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
-	if(isidcard(I))
-		if(id_insert(user, I, inserted_scan_id))
-			inserted_scan_id = I
+/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isidcard(attacking_item))
+		if(id_insert(user, attacking_item, inserted_scan_id))
+			inserted_scan_id = attacking_item
 			return TRUE
 	return ..()
 
@@ -35,10 +35,10 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/civilian/LateInitialize()
+/obj/machinery/computer/piratepad_control/civilian/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/civilian/C in GLOB.machines)
+		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
 			if(C.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(C)
 				return
@@ -106,8 +106,7 @@
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
 
-
-		usr.client.prefs.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "completed a bounty", respects_roundcap = TRUE)
+		usr.client?.prefs?.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "Completed a bounty", respects_roundcap = TRUE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -141,11 +140,9 @@
 	inserted_scan_id.registered_account.bounties = null
 	return inserted_scan_id.registered_account.civilian_bounty
 
-/obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
-	. = ..()
-	if(!Adjacent(user))
-		return FALSE
+/obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
 	id_eject(user, inserted_scan_id)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
@@ -172,7 +169,7 @@
 
 	return data
 
-/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -328,7 +325,7 @@
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
-	bounty_value = my_bounty.reward
+	bounty_value = round(my_bounty.reward)
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment

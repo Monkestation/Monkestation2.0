@@ -52,6 +52,11 @@ type ByondType = {
   TRIDENT: number | null;
 
   /**
+   * Version of Blink engine of WebView2. Null if N/A.
+   */
+  BLINK: number | null;
+
+  /**
    * True if browser is IE8 or lower.
    */
   IS_LTE_IE8: boolean;
@@ -82,6 +87,11 @@ type ByondType = {
    * It is recommended that you keep this ON to detect hard to find bugs.
    */
   strictMode: boolean;
+
+  /**
+   * The external URL for the IndexedDB IFrame to use as the origin
+   */
+  storageCdn: string;
 
   /**
    * Makes a BYOND call.
@@ -163,6 +173,11 @@ type ByondType = {
   parseJson(text: string): any;
 
   /**
+   * Downloads a blob, platform-agnostic
+   */
+  saveBlob(blob: Blob, filename: string, ext: string): void;
+
+  /**
    * Sends a message to `/datum/tgui_window` which hosts this window instance.
    */
   sendMessage(type: string, payload?: any): void;
@@ -188,6 +203,11 @@ type ByondType = {
    * Loads a script into the document.
    */
   loadJs(url: string): void;
+
+  /**
+   * Maps icons to their ref
+   */
+  iconRefMap: Record<string, string>;
 };
 
 /**
@@ -200,4 +220,13 @@ interface Window {
   Byond: ByondType;
   __store__: Store<unknown, AnyAction>;
   __augmentStack__: (store: Store) => StackAugmentor;
+
+  // IE IndexedDB stuff.
+  msIndexedDB: IDBFactory;
+  msIDBTransaction: IDBTransaction;
+
+  // 516 byondstorage API.
+  hubStorage: Storage;
+  domainStorage: Storage;
+  serverStorage: Storage;
 }

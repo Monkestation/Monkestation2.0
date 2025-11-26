@@ -6,7 +6,7 @@
  * * no_organs - Should the mob NOT drop organs?
  * * no_bodyparts - Should the mob NOT drop bodyparts?
 */
-/mob/living/proc/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/proc/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
@@ -14,12 +14,21 @@
 	if(!prev_lying)
 		gib_animation()
 
+	ghostize()
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
 	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
+		spread_bodyparts(no_brain, no_organs, TRUE)
 
 	spawn_gibs(no_bodyparts)
+	///lol I want it to be bloody as fuck
+	blood_particles(5, min_deviation = 70, max_deviation = 120, min_pixel_z = 4, max_pixel_z = 11)
+	blood_particles(6, min_deviation = -70, max_deviation = -30, min_pixel_z = 5, max_pixel_z = 7)
+	blood_particles(4, min_deviation = -190, max_deviation = -80, min_pixel_z = 0, max_pixel_z = 9)
+	blood_particles(7, min_deviation = 130, max_deviation = 160, min_pixel_z = 12, max_pixel_z = 16)
+	blood_particles(4, min_deviation = -200, max_deviation = -220, min_pixel_z = 4, max_pixel_z = 6)
+	blood_particles(2, min_deviation = 161, max_deviation = 200, min_pixel_z = 2, max_pixel_z = 12)
+	///lol
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
@@ -27,12 +36,14 @@
 	return
 
 /mob/living/proc/spawn_gibs()
+	if(flags_1 & HOLOGRAM_1)
+		return
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
 
-/mob/living/proc/spread_bodyparts()
+/mob/living/proc/spread_bodyparts(skip_head, skip_organs, violent)
 	return
 
 /**
@@ -74,6 +85,9 @@
 	if(stat == DEAD)
 		return FALSE
 
+	if(!gibbed && (death_sound || death_message || (living_flags & ALWAYS_DEATHGASP)))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
@@ -84,8 +98,9 @@
 	var/player_mob_check = mind && mind.name && mind.active
 	// and, display a death message if the area allows it (or if they're in nullspace)
 	var/valid_area_check = !death_area || !(death_area.area_flags & NO_DEATH_MESSAGE)
-	if(player_mob_check && valid_area_check)
-		deadchat_broadcast(" has died at <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
+	if(player_mob_check)
+		if(valid_area_check)
+			deadchat_broadcast(" has died at <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
 		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
 			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
 			ghostize(TRUE)
@@ -100,13 +115,14 @@
 	med_hud_set_status()
 	stop_pulling()
 
+	set_ssd_indicator(FALSE)
+
 	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
 
-	if(!gibbed && (death_sound || death_message))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
+	persistent_client?.time_of_death = timeofdeath
 
 	return TRUE

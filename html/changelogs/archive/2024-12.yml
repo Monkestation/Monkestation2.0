@@ -1,0 +1,521 @@
+2024-12-01:
+  Marabout2:
+  - rscadd: Added a new stylish admin jail
+2024-12-02:
+  Absolucy:
+  - bugfix: Fixed some seemingly common runtime errors related to lighting.
+  - balance: His Grace now provides immunity to pain effects while in use.
+  - qol: Web sounds (admin/curator music + walkmans) should now show the english title
+      if youtube provides one.
+  - rscadd: Drones now have built-in diagnostic HUDs.
+  - bugfix: Proto-kinetic crushers with zero or negative recharge times will just
+      not de-charge at all.
+  Absolucy, GoldenAlpharex:
+  - qol: Grown logs no longer spam your chat when cut into planks, instead displaying
+      balloon alerts informing you of how many planks were made!
+  - qol: Cotton and Durathread bundles no longer spam your chat either, and display
+      a balloon alert instead.
+  - bugfix: Cotton and Durathread bundles no longer runtime when creating raw cotton/durathread
+      from the created stack having been merged with an existing one.
+  Absolucy, Melbert:
+  - qol: Cockroaches, butterflies, chickens, and similarly small mobs can't bump open
+      (public access) airlocks unless they are controlled by a player.
+  - qol: Tweaked the sizes of a few mobs.
+  - bugfix: Hopefully fixed FPS lag relating to large amounts of blood on-screen.
+  Absolucy, Y0SH1M4S73R:
+  - qol: The asteroid on Tramstation can now have areas expanded into or created within.
+  Eagletanker:
+  - rscadd: Added the CommDrobe (Command Outfitting Station) to the maps which lacked
+      it. These can be found in the bridge.
+  Gw0sty:
+  - rscadd: Added biomass links to Box's xenobio.
+  - bugfix: Replaced caravan space ruin arm-mounted implant with a toolset implant.
+  Marabout2:
+  - rscadd: 'Added a version of the space hotel ruin, that actually work as a hotel.
+      With ghost roles.
+
+      :cl:'
+  - rscadd: Added three new Syndicate ghost roles in the Deep_storage ruin inculding
+      a comms agent
+  Shoddd:
+  - rscadd: Map votes now auto start when the round ends
+  Wisemonster:
+  - rscadd: Added a request console boards to the telecomms of Blueshift, Delta, Meta,
+      and Theseus.
+  - balance: Signal Technicians can now use the request consoles' announcement system
+  - rscadd: The HoP will now spawn with his HoP backpacks, rather than the standard
+      grey ones.
+  flleeppyy:
+  - server: Adds the ability to add lobby notices. These will show in the pre-round
+      shop, latejoin menu, and in chat when you first join.
+2024-12-05:
+  Gboster-0:
+  - rscadd: Added the amogus potion to nuclear operative uplinks for 10 TC, do not
+      drink it at 3 AM!!!!!
+  Sorenon:
+  - rscadd: Implemented the Feeble quirk
+  The-Black-Screen:
+  - rscadd: added papers to the engineering notice boards in the engine smes room
+      and the large airlock next to it, miscellaneous things
+  - rscdel: removed miscellaneous things
+  - bugfix: fixed the cloning lab, the xenobiology lab, lighting in a few areas, miscellaneous
+      things
+  - code_imp: added boxstation specific papers to monkestation/code/modules/_paperwork/paper_premade.dm
+  ThePooba:
+  - rscadd: Added Rayne Lamp to company imports tab. It provides some light and a
+      bit of warmth, worn in the neck slot.
+  - rscadd: Added Rayne Corporation to company imports.
+  Uristthedorf:
+  - rscadd: Adds wound armor to smithed armor.
+  - rscadd: Smithed armor can hold makeshift and smithed weapons in suit storage.
+  - rscadd: Smithed daggers can be used as knives.
+  - balance: Remove stamina cost from smithed weapons.
+  - bugfix: SMITHED SPEARS DO POINTY DAMAGE
+  - bugfix: Weak weapon trait also reduces throwing damage.
+  - balance: Reduce Muur/Archangel bullet and melee armor.
+  lemonycake:
+  - rscadd: Added yellow cake.
+2024-12-06:
+  Absolucy:
+  - refactor: Refactored how some internal stuff regarding Patreon and Twitch ranks
+      are handled.
+  - rscadd: Added a chat message when using the lobby buttons to connect to another
+      server to make things more clear.
+  - bugfix: Updated the connection port for the MRP lobby button.
+  Jason Farqiour:
+  - rscadd: Added more items to the medical room in centcom.
+  - rscadd: Added rooms and a IPC/Borg repair room.
+  - rscdel: Removed the old bubble room up top for extra space to expand Centcom.
+  - qol: Pretty up medical centcom while trimming the wasted space as well as add
+      extra stuff.
+2024-12-08:
+  Absolucy:
+  - bugfix: The recursive symptom varient should now work as intended rather than
+      cascading horribly.
+  - bugfix: The "Quantumly Entangled" (bluespace) symptom varient should work properly
+      now.
+  - bugfix: Symptoms being deleted properly cleanup their attached varients now.
+  - bugfix: Clown operative leaders now properly spawn with their gear.
+  - bugfix: Anime quirk appearance prefs now properly transfer when becoming a roundstart
+      nuke/clown operative.
+  - bugfix: Clean up the inventory/items of players becoming roundstart nuke/clown
+      operatives more thoroughly and quietly.
+  - refactor: Cleaned up code related to roundstart nuke/clown operatives.
+  - bugfix: Heretics healing on rust via Leeching Walk or rust ascension now properly
+      updates health.
+  - qol: Heretics healing on rust via Leeching Walk or rust ascension scales with
+      the world's delta time, making its rate independent of subsystem lag.
+  - admin: Added a warning+confirmation if an admin try to run a specifically laggy
+      proc.
+  Absolucy, SmArtKar, Kapu:
+  - code_imp: Implemented caching for icon sizes which should significantly improve
+      mob health performance due to HUDs constantly fetching icons.
+  Gw0sty:
+  - rscadd: Gave Chameleon gloves the property to transmit radio for sign language.
+  - rscadd: Research directors now get a mixture of scientist and roboticist bounties.
+  - rscadd: Added craft able cleanbot variation, Scrubs Junior, a cleanbot that medical
+      doctors can access.
+  - rscadd: New bounty types for roboticists, bots, requiring various station bots
+      that do not spawn roundstart.
+  - bugfix: Renamed Late Join to Late Arrival
+  - qol: Cleanbots will now burn cigarbutts, loose ammo casings, and food wrappers
+  SirNightKnight:
+  - bugfix: Fixed Nanotrasen Representative's alt title options excluding the original
+      title once picked.
+  Uristthedorf:
+  - balance: Durathread vests now cover your arms.
+  - image: Worn durathread vest sprites show your arms being covered.
+  Wisemonster:
+  - spellcheck: Clarified NT representative's description as being more an "Observe
+      and report" role, and that they cannot give orders to command (They can still
+      make suggestions).
+2024-12-10:
+  Absolucy:
+  - bugfix: Fixed not being able to select container/pill/patch type in ChemMasters.
+  Gw0sty:
+  - rscadd: R&D consoles are now locked by default when built.
+  Loiosh42:
+  - bugfix: You can now print AP shells at the ammo workbench
+  Shoddd:
+  - bugfix: Wonderland grass no longer has chasms underneath
+  - rscadd: Satyr headbutt now checks for hands and mobility
+  SirNightKnight:
+  - balance: Rebalance debilitated to be more tame.
+2024-12-12:
+  Absolucy:
+  - rscdel: Removed the Tower of Babel wizard event.
+  - rscdel: Staff of Babel is now admin-only.
+  - rscadd: 3+ living ascended heretics will automatically raise the alert level to
+      Lambda.
+  - bugfix: Nar'sie and Ratvar now properly raise the alert level to Lambda.
+  - qol: Ascended heretics are now in their own category in the ghost orbit menu.
+  - refactor: Cleaned up code relating to heretic ascension announcements and traits.
+  - bugfix: Syndicate implants are now properly hidden from HUDs/scanners.
+  - qol: Rearranged the curator's radio booth / private study on MetaStation, hopefully
+      making it less of a cramped eyesore.
+  Absolucy, JohnFulpWillard:
+  - bugfix: Shaft Miners and Explorers are now alerted of icemoon storms, Clowns are
+      naive, and Curators are immune to the Tower of Babel again.
+2024-12-13:
+  Absolucy:
+  - refactor: Challenge and monkecoin reward code is now more resilient.
+2024-12-14:
+  SentientVoid:
+  - rscadd: The Blueshift aquarium has been altered and moved to maintenance. It has
+      been replaced with the monke box.
+  Syndicat-Meow:
+  - rscadd: Added Disabler SMG available to be ordered from cargo
+  - image: added sprite for Disabler SMG
+  - rscadd: Added Laser Carbine available to be ordered from cargo
+  - image: added sprite for the Laser Carbine
+  - rscadd: Added Syndicate Lipstick! Finish off your opponents with a deadly kiss
+      of death!
+  - rscadd: Added a new trait that comes from using the lipstick
+  - image: added sprite for syndicate lipstick
+  - rscadd: Added two new crossbows one being craftable by crew using and engineering
+      inducer!
+  - rscadd: Added special ammo for the crossbows and a book for stronger normal ammo
+      and their crafting recipes
+  - image: Added sprites of crossbows and ammo
+  - code_imp: changed some code about autofire and minor changes to relavant code
+  - sound: Added a new sound for the crossbow
+  - admin: Added an admin only crossbow bolt =)
+  - rscadd: Added angry cats in a can for 5 TC
+  - rscadd: Added angry cat in a red suit
+  - rscadd: Tossed 3 red suit angry cats in a can for 20 TC
+  - image: Added sprites for the Syndicate Cat
+  ThePooba:
+  - rscadd: adds a Rayne co. medkit that you buy from the company import, you can
+      healthscan people with it and it hates your guts
+  - rscadd: adds bloody drips unusual effect
+  - balance: christmas earlier
+  - qol: smoothbore disabler now needs red queen instead of the reagent that deletes
+      itself
+  - qol: laser musket doesnt need glasses anymore and instead needs another drinking
+      glass
+  - balance: prime laser muskets no longer require twohanded and also shoot better
+      lasers
+  - balance: smoothbore disablers can crank on the run
+  - qol: more suits can hold muskets and pipeguns
+  - bugfix: Fixes a few bugs
+  Wisemonster:
+  - bugfix: Fixed some loadout clothing not updating after alt-clicking while worn
+2024-12-15:
+  Absolucy:
+  - bugfix: Fixed railing stacking.
+  - bugfix: Fixed some double-encodes related to relaying admin/mentor messages to
+      discord.
+  - rscadd: Added christmas tree spawners to Blueshift - one north of science on the
+      upper floor, one west of botany on the lower floor.
+  SirNightKnight:
+  - rscadd: Nanotrasen has found the budget to improve on it's Emergency Response
+      Corps.
+  - balance: Nanotrasen has re-evaluated it's pulse weaponry and has lowered the explosive
+      impact of pulse beams after finding the resulting damage too costly to repair.
+  - balance: FEAR THE DEATH-RIPLEY!!
+  - bugfix: Shuttle decals properly rotate on shuttle move.
+  - bugfix: ' Made the tactical combat uniforms unadjustable so their sprite doesn''t
+      break.'
+  - sound: The newers ERTs now have a greet sound.
+  - code_imp: Changed the logic ordering of the  mech hydraulic clamp.
+  Siro:
+  - rscadd: Added an ability for dead oozelings, "Membrane Murmur", allowing them
+      to vocalize a short-range cry for help from their core every so often.
+  TheColorCyan:
+  - bugfix: Random lipstick now has proper icon upon spawn.
+  - rscdel: Syndie lipstick can no longer spawn as a random lipstick color.
+2024-12-16:
+  Shoddd:
+  - bugfix: bitrunning vending console now researchable
+2024-12-17:
+  Absolucy:
+  - bugfix: Fixed suiciding as a centcom ghost player spawning an extra catatonic
+      body.
+2024-12-18:
+  Absolucy:
+  - admin: Admins will get notified whenever a player responds to OPFOR chat (if there
+      is a handling admin, and they aren't afk, only they will be notified)
+  - admin: Added a yes/no confirmation to the "Request OPFOR" admin verb.
+  - qol: Players will be notified when an admin responds to their OPFOR chat.
+  - bugfix: Fixed some missing colored chat spans.
+  - bugfix: OPFOR roundend reports won't show blank sections if the opfor had objectives
+      or equipment if none of them were actually approved.
+  Gw0sty:
+  - rscadd: Engi Wire knowledge can now see Air alarms and vending machines wires
+  - rscadd: Robo Wire knowledge can now see Modsuit and Mulebot wires
+  - bugfix: Made red HOS mantle show up instead of the blue
+  - bugfix: Spraypaint the sm should now work! I don't know why you still would!
+  - bugfix: Bronze can now be ejected from autolathes.
+  - bugfix: Maintence door in artsci is now visible to our robotic overloads on metastation
+  - balance: Made the multi cell wall charger not charge at KW instead of W
+  ThePooba:
+  - rscdel: Eeble plush removed.
+2024-12-19:
+  Absolucy:
+  - bugfix: Zombies and nightmares should now properly be immune to pain.
+  - balance: The Cybersun Juggernaut suit now provides the wearer with immunity to
+      pain and its effects.
+  - balance: Florida Man is now immune to pain and its effects.
+  - balance: Ascended rust heretics, while on rusted tiles, are immune to pain and
+      its effects.
+  - balance: Ascended blade heretic lifesteal now heals pain and reduce shock buildup.
+  - balance: Bloodsuckers are now fully immune to pain and its effects while Fortitude
+      is active.
+  - balance: Bloodsuckers now heal off pain while in torpor.
+  - balance: Bloodsuckers gain a 50% *increase* in pain from the debuff applied while
+      out during Sol.
+  - code_imp: Added some additional sanity checks to pain code, to prevent potential
+      runtime errors.
+  - balance: Clown spawner artifacts will no longer spawn another spawner if the previous
+      one still exists.
+  - bugfix: The cargo imports UI now shows the correct price when the station has
+      strong or distant supply lines.
+  - bugfix: Ordering from cargo imports now actually checks to see if you have the
+      correct amount of money when the station has strong or distant supply lines.
+  - qol: There is now a chat notice and a visual indicator in the lobby for when there's
+      a non-standard overflow.
+  - qol: Added a preference (disabled by default) to confirm readying up when there's
+      a non-standard overflow.
+  - bugfix: Fixed a bug where the overflow station trait could roll assistants, which
+      just did... nothing.
+  Gboster-0:
+  - qol: Made pride pins display their pride in the name, like "transexual pride pin"
+      instead of "pride pin"
+  Gw0sty:
+  - rscadd: brought the Christmas spirit (tree) to Thesues!
+  - rscadd: Gave Ancient/charlie/oldstation a supermatter shard that gives its warnings
+      on Uncommon frequency
+  - rscadd: Added three uncommon radio keys to the science box on charlie so borgs
+      can get the frequency
+  - bugfix: Replaced knifes in Theseus's kitchen with kitchen knives. Now (nothing
+      changes) chefs can use their knifes in peace.
+  - bugfix: Made it so you can actually leave the Theseus Gulag shuttle.
+  - bugfix: added missing job to Icons for alt title jobs.
+  - bugfix: Ipc surgery research now works as intended
+  - rscadd: Added Blob Infections as a triggerable event. A dormant host containing
+      acting as the vessel of a Overmind in them.
+  - balance: Infected Blob hosts will show as sick no matter their active state.
+  - balance: Lowered the weight of blobs spawning.
+  - balance: Research directors remote now has AI upload access.
+  Loiosh42:
+  - balance: Tweaks AP shotgun shells, and gives them pierce
+  - balance: Nerfs the Bobr
+  - balance: Gives the Wylom AM rifle pierce
+  ThePooba:
+  - bugfix: nerfs christmas presents and allows the real chrimas presents to spawn
+  - bugfix: blob zombie event wont spawn you on asteroids and shit anymore
+  - balance: christmas presents from 50% to 5% chance to get the "toys only" christmas
+      present so you gusy get your op bullshit back, but added some stinky stuff to
+      blacklist like the item spawner wand and the var edit wand(what the fuck)
+  - balance: thermonuclear catsplosion more dangerous, twice as likely
+  - bugfix: Added no interact to hardlight spears so you cant switch them in hand
+      and hardlock yourself
+  - bugfix: i think tiny artifacts can now detonate properly now i couldnt get them
+      to spawn properly
+  Uristthedorf:
+  - rscadd: EMPing a holosign creator, will destroy all of the holosigns.
+2024-12-20:
+  Absolucy:
+  - bugfix: The xenobio Slimeperson and Luminscent subspecies will now properly get
+      slime wings from drinking a flight potion.
+  - bugfix: Slime in vents/slime grinders/etc will no longer secrete ooze on the floor.
+  - admin: Added a new mapping verb, Export Lighting Info (behind Mapping Verbs -
+      Enable) that exports the lighting info of z levels into a json file.
+  Siro:
+  - rscadd: Refunding of unreviewed mixtapes at round end
+  - rscadd: Cassette Manager interface
+  - rscadd: Admin.Games Review Cassettes to the admin menu
+  - rscdel: tgui alert for already reviewed cassettes
+  - bugfix: tgui alert spamming the client when attempting to review an already reviewed
+      cassette.
+  - bugfix: Runtime error on cassette_review Destroy proc
+  Wisemonster, Jacquerel:
+  - rscdel: Being sacrificed by a Heretic no longer gives you an incurable phobia.
+  - rscadd: Being sacrificed by a Heretic will drop 2-4 of your organs on the ground
+      and replace them with "corrupt organs" with negative effects which can be suppressed
+      with Holy Water.
+  - rscadd: Players who have been sacrificed by Heretics will experience additional
+      and rapidly lethal consequences for attempting to fight someone who previously
+      sacrificed them, as long as that person is wearing a focus.
+2024-12-21:
+  Absolucy:
+  - refactor: The effect from a monster hunter's blood vial is now just a status effect,
+      rather than a weird combination between a status effect and a reagent.
+  Coll6:
+  - rscadd: Ooze sucker machinery can be stored in multi tool buffer.
+  - bugfix: Allows ooze suckers to be linked if its inside a valid pen, that is also
+      linked to the same controller.
+  Loiosh42:
+  - balance: Reworks Debilitated, and by extension buffs disablers
+  Shoddd:
+  - rscadd: Explorer now has 6 slots
+  TheColorCyan:
+  - bugfix: interdyne MOD no longer looks off when worn by people without digitigrade
+      legs
+  ThePooba:
+  - bugfix: fixes the CANT... BREATH... moodlet but when you could breathe fine
+  Uristthedorf:
+  - rscdel: Removes tasers from the armory.
+  - rscadd: Tasers can be bought at cargo.
+  Wisemonster:
+  - rscadd: Added a disabler to QM's locker. It has a cargo-locked firing pin that
+      can only be used in the cargo's warehouse and storage.
+  - bugfix: Heretic sacrifice targets will have their blood restored and cleared of
+      chems if they are sent to the mansus.
+2024-12-22:
+  Absolucy:
+  - bugfix: Properly marked the message type and confidentiality of a few admin/mentor-related
+      notifications.
+  - bugfix: The map selected for the next round should actually always be the map
+      that loads next round.
+  - rscadd: Added tinyfans to the arrivals shuttle and public mining shuttle doors
+      on Blueshift.
+  - qol: All ghosts now see PDA messages, not just observers.
+  Absolucy, Melbert:
+  - bugfix: You should be afflicted by the "Curse of Mundanity" far, far less.
+  Shoddd:
+  - bugfix: you can no longer akimbo and fire a wand forever
+  Tractor Mann:
+  - admin: Admins will no longer be told you dusted someone with power gloves when
+      you didnt, and that you shocked someone with power gloves when you dust them.
+2024-12-23:
+  Absolucy:
+  - admin: Admins can now much more easily see which of a player's items came from
+      a gift.
+  - rscadd: Ghosts, santa, and anyone after roundend can an examine an item to see
+      if its a gift, who opened it, and how long ago they did so.
+  - rscadd: Closely examining (double-examining) an item will now tell you if it was
+      from a gift.
+  - qol: Fire alarms no longer burn out lights.
+2024-12-25:
+  Shoddd:
+  - bugfix: fixes a typo in regen extract
+  Wisemonster:
+  - bugfix: Fixed the syndicate lavaland base delamming if they spawned with an SM
+2024-12-26:
+  Absolucy, Aylong:
+  - qol: AdminPMs, admin tickets, vote results and started vote notification are now
+      much more visible in the chat.
+  - qol: Boxed messages in chat (like examine), has been restyled.
+2024-12-27:
+  Absolucy:
+  - admin: Added the "Delete All Glowshrooms" and "Toggle Glowshroom Spreading" admin
+      verbs.
+  DexeeXI:
+  - bugfix: 'Blueshift: fixed the transit tube station in AI sat.'
+  - bugfix: Metastation armory now has atmos working in it again.
+  - balance: all maps excluding Blueshift and Tramstation have their ordnance oxygen
+      tanks contain even more oxygen. Not for assistant use.
+  Marabout2:
+  - balance: Modified the size of the paco's magazine from small to normal
+  Shoddd:
+  - qol: Traitor Kiboko starts with lethals
+  ThePooba:
+  - image: changes atmos and engi hardsuit sprites to be more colourful
+  Uristthedorf:
+  - bugfix: You can now print prescription glasses.
+2024-12-28:
+  Absolucy:
+  - balance: Mark of Rust now arms grenades instead of instantly detonating them.
+      A balloon alert indicates this to the victim and witnesses, altho the heretic
+      will see which grenades were activated.
+  - refactor: Cleaned up and reorganized some monster hunter code.
+  - bugfix: The monster hunter Beast Claw now properly sets its wound bonus when (de)activated.
+  Gw0sty:
+  - qol: Predefined heartworms as a dangerous disease.
+  KittyNoodle:
+  - qol: The assops interrogator can no longer cause brain damage.
+  Shoddd:
+  - bugfix: Adds carbon check to flipping tables, no more imaginary friends and roaches
+      flipping tables
+  ThePooba:
+  - bugfix: atmos and engi hardsuit sprites updated again courtesy of waffles
+  Tractor Mann:
+  - bugfix: Circuit Nerds, rejoice, for it has finally happened, the Access Checker
+      Components ID menu now works again.
+2024-12-29:
+  Absolucy:
+  - bugfix: Fix the radio frequency not being heard by some types of radios/intercoms.
+  Addust:
+  - rscadd: A Syndicate logistics depot has recently been detected in the sector.
+      Avoid approach if at all possible.
+  - rscadd: other syndicate fax machines may contact the Listening Post now
+  - bugfix: the deep storage outpost the syndies have now only has 1 big-ass bomb
+      and also now has actual writing implements.
+  - bugfix: blueshift's netmin computer room is no longer a hazardous unventilated
+      space
+  - bugfix: a metastation surgery room is now airtight
+  - bugfix: disposal chutes shouldnt obliterate you as frequently now
+  DexeeXI:
+  - bugfix: changed frames for machine frames on the ghost variant of the Space Hotel.
+  - bugfix: fixed all the doors and shutters. the buttons should actually do what
+      they say they do.
+  Gw0sty:
+  - bugfix: Removed unneeded security access on Blueshift departures.
+  Loiosh42:
+  - balance: Most costume armors now have the same storage as security armor
+  Siro:
+  - bugfix: 'Some Quirks that give unique items or random rolled effects will be transferred
+      between bodies. Fixes #2247 and Fixes #2354'
+  - bugfix: Oozling ability status effects like Slime Cleaning and Hydrophobia slow
+      down will be removed upon ability loss.
+  - bugfix: Oozling core no longer broadcasts GPS after being crushed.
+  - bugfix: 'Dnr Oozling sacrifice runtime due to brainmob not having a last_mind
+      field Fixes #4219'
+  - bugfix: Resolved issue where Oozling cores could prevent core item ejection during
+      core destruction.
+  - bugfix: 'Head regeneration fixes no eyes blindness. Fixes #2777'
+  - bugfix: 'Gibbing deaths (which is a bigger list for oozlings) will now correctly
+      delete the Oozling core rather than dropping one with no soul attached. Fixes
+      #2540 and similar instances. Few rare cases exist like emagged Recyclers.'
+  - rscadd: Oozlings now scream and have the jitter status applied to them when nugget
+      revived. Similar to human revival.
+  - rscadd: 'Foreign objects, such as organ implants and features, are now pulled
+      into the core instead of being deleted outright. Fixes #3665'
+  - rscadd: Ooozlings now like toxic foods. Slime Jelly rolls anyone?
+  - balance: 'Restored the wetness system: 1 blood randomly above 1 stack. Above 5
+      lose 2 blood constantly'
+  - code_imp: 'Ensured items are handled and moved into the core first before other
+      object-move mechanics can take place. Fixes unintended duplication and deletion
+      bugs (e.g., chasms). Fixes #4107'
+  - bugfix: 'Addressed revival visual/HUD/gameplay bugs, by properly removing the
+      limbs on nugget revival. Fixes #2485'
+  - balance: Re-added healing, reduced from 2 burn 2 brute to 2.5 shared to both.
+      Must stay warm and Hydrophobia off.
+  - rscadd: Added filters to Oozling core storage to prevent certain items (e.g.,
+      Nuclear Authentication Disk) from being stored. Fixes issues with protected
+      items.
+  Sorenon:
+  - bugfix: fixed runtimes caused by 64x64 clothing icons
+  - bugfix: fixed clipping experienced by some masks, eyewear and earwear worn by
+      tall players
+  - bugfix: fixed a few minor related bugs
+  TheColorCyan:
+  - rscadd: blueshield's mantis blades are now replaced with shield blades. They have
+      less offensive utility, but allow you to go into defensive stance to be able
+      to block most of attacks, for the cost of slowdown and inability to attack things
+      yourself.
+  - rscdel: mantis blades can no longer pry airlocks open.
+  - rscadd: syndicate mantis blades will now be able to pry airlocks open instead.
+  ven1883:
+  - rscadd: Adds The Tunnel Arts, a traitor assistant exclusive martial arts with
+      some anime-esque style.
+  - rscadd: Also adds a cool new jacket available in the bundle.
+  - code_imp: Martial Arts module now has a misc folder for Stuff.
+  - code_imp: There is a new status effect, No Gravity, which temporarily disables
+      gravity for the victim. It's only used in TTA.
+2024-12-30:
+  Absolucy:
+  - bugfix: Reactions such as Life, Corgium, etc are now banned from occuring in grown
+      plants, to prevent massive lag.
+  KittyNoodle:
+  - bugfix: 'Fixes ethereal eyes not having their own sprite.
+
+      :cl:'
+  Shoddd:
+  - rscdel: Removed blindfold from maid costume
+2024-12-31:
+  DexeeXI:
+  - bugfix: made the bows in ashieland actually longbows like they should be.
+  Shoddd:
+  - bugfix: hypo and hyper algesia quirk now incompat

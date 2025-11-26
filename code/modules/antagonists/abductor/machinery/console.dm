@@ -118,7 +118,7 @@
 		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 	return data
 
-/obj/machinery/abductor/console/ui_act(action, list/params)
+/obj/machinery/abductor/console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -202,7 +202,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/abductor/console/LateInitialize()
+/obj/machinery/abductor/console/LateInitialize(mapload_arg)
 	if(!team_number)
 		return
 
@@ -268,7 +268,7 @@
 	else
 		return ..()
 
-/obj/machinery/abductor/console/proc/Dispense(item,cost=1)
+/obj/machinery/abductor/console/proc/Dispense(items_list, cost=1)
 	if(experiment && experiment.credits >= cost)
 		experiment.credits -=cost
 		say("Incoming supply!")
@@ -276,7 +276,8 @@
 		if(pad)
 			flick("alien-pad", pad)
 			drop_location = pad.loc
-		new item(drop_location)
-
+		for(var/each_item in items_list)
+			for(var/i in 1 to items_list[each_item])
+				new each_item(drop_location)
 	else
 		say("Insufficent data!")

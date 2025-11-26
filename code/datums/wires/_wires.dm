@@ -4,7 +4,7 @@
 	if(!I)
 		return
 
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL || I.tool_behaviour == TOOL_HACKING)
 		return TRUE
 	if(isassembly(I))
 		var/obj/item/assembly/A = I
@@ -64,7 +64,12 @@
 
 /datum/wires/Destroy()
 	holder = null
-	assemblies = list()
+	//properly clear refs to avoid harddels & other problems
+	for(var/color in assemblies)
+		var/obj/item/assembly/assembly = assemblies[color]
+		assembly.holder = null
+		assembly.connected = null
+	LAZYCLEARLIST(assemblies)
 	return ..()
 
 /datum/wires/proc/add_duds(duds)
@@ -186,6 +191,14 @@
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
 		S.forceMove(holder)
+		/**
+		 * special snowflake check for machines
+		 * someone attached a signaler to the machines wires
+		 * move it to the machines component parts so it doesn't get moved out in dump_inventory_contents() which gets called a lot
+		 */
+		if(istype(holder, /obj/machinery))
+			var/obj/machinery/machine = holder
+			LAZYADD(machine.component_parts, S)
 		S.connected = src
 		S.on_attach() // Notify assembly that it is attached
 		return S
@@ -195,7 +208,6 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-		S.forceMove(holder.drop_location())
 		return S
 
 /// Called from [/atom/proc/emp_act]
@@ -254,9 +266,12 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+	if(user.is_holding_item_of_type(/obj/item/blueprints) && !randomize)
 		return TRUE
-
+/*
+	if(revealed_wires)
+		return TRUE
+*/
 	return FALSE
 
 /**
@@ -304,7 +319,7 @@
 	data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
 	return data
 
-/datum/wires/ui_act(action, params)
+/datum/wires/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !interactable(usr))
 		return

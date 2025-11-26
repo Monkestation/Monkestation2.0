@@ -15,6 +15,7 @@
 	var/rename_with_volume = FALSE
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
+	var/skips_attack = FALSE
 
 /obj/item/reagent_containers/pill/Initialize(mapload)
 	. = ..()
@@ -24,6 +25,9 @@
 		name += " ([reagents.total_volume]u)"
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+	if(skips_attack)
+		return ..()
+
 	if(!canconsume(M, user))
 		return FALSE
 
@@ -55,24 +59,20 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/pill/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!dissolvable || !target.is_refillable())
-		return
+		return NONE
 	if(target.is_drainable() && !target.reagents.total_volume)
 		to_chat(user, span_warning("[target] is empty! There's nothing to dissolve [src] in."))
-		return
-
+		return ITEM_INTERACT_BLOCKING
 	if(target.reagents.holder_full())
 		to_chat(user, span_warning("[target] is full."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * On accidental consumption, consume the pill
@@ -95,6 +95,21 @@
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list(/datum/reagent/toxin/cyanide = 50)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/spewium
+	name = "spewium pill"
+	desc = "Hope you had an empty stomach."
+	icon_state = "pill5"
+	list_reagents = list(/datum/reagent/toxin/spewium = 50)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/amanitin
+	name = "amanitin pill"
+	desc = "You won't feel it until it's too late."
+	icon_state = "pill5"
+	list_reagents = list(/datum/reagent/toxin/amanitin = 50)
+	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
@@ -106,7 +121,7 @@
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-	list_reagents = list(/datum/reagent/medicine/morphine = 30)
+	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 30)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/stimulant
@@ -264,8 +279,8 @@
 	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
 /obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
-	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with get_random_reagent_id_unrestricted_non_ethanol()
-	list_reagents = list(get_random_reagent_id_unrestricted_non_ethanol() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
+	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with pick_weight(GLOB.weighted_random_reagents)
+	list_reagents = list(pick_weight(GLOB.weighted_random_reagents) = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	if(!GLOB.pill_names.len)
 		var/json = file("strings/pill_names.json")
@@ -317,3 +332,60 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/radiomagnetic_disruptor
+	name = "radiomagnetic disruptor pill"
+	desc = "A small pill of nanite purging toxin."
+	icon_state = "pill3"
+	list_reagents = list(/datum/reagent/toxin/radiomagnetic_disruptor = 10)
+
+// Pill styles for chem master
+
+/obj/item/reagent_containers/pill/style
+	icon_state = "pill0"
+/obj/item/reagent_containers/pill/style/purplered
+	icon_state = "pill1"
+/obj/item/reagent_containers/pill/style/greenwhite
+	icon_state = "pill2"
+/obj/item/reagent_containers/pill/style/teal
+	icon_state = "pill3"
+/obj/item/reagent_containers/pill/style/red
+	icon_state = "pill4"
+/obj/item/reagent_containers/pill/style/redwhite
+	icon_state = "pill5"
+/obj/item/reagent_containers/pill/style/tealbrown
+	icon_state = "pill6"
+/obj/item/reagent_containers/pill/style/yellowflat
+	icon_state = "pill7"
+/obj/item/reagent_containers/pill/style/tealflat
+	icon_state = "pill8"
+/obj/item/reagent_containers/pill/style/whiteflat
+	icon_state = "pill9"
+/obj/item/reagent_containers/pill/style/purpleflat
+	icon_state = "pill10"
+/obj/item/reagent_containers/pill/style/limelat
+	icon_state = "pill11"
+/obj/item/reagent_containers/pill/style/redflat
+	icon_state = "pill12"
+/obj/item/reagent_containers/pill/style/greenpurpleflat
+	icon_state = "pill13"
+/obj/item/reagent_containers/pill/style/yellowpurpleflat
+	icon_state = "pill14"
+/obj/item/reagent_containers/pill/style/redyellowflat
+	icon_state = "pill15"
+/obj/item/reagent_containers/pill/style/bluetealflat
+	icon_state = "pill16"
+/obj/item/reagent_containers/pill/style/greenlimeflat
+	icon_state = "pill17"
+/obj/item/reagent_containers/pill/style/white
+	icon_state = "pill18"
+/obj/item/reagent_containers/pill/style/whitered
+	icon_state = "pill19"
+/obj/item/reagent_containers/pill/style/purpleyellow
+	icon_state = "pill20"
+/obj/item/reagent_containers/pill/style/blackwhite
+	icon_state = "pill21"
+/obj/item/reagent_containers/pill/style/limewhite
+	icon_state = "pill22"
+/obj/item/reagent_containers/pill/style/happy
+	icon_state = "pill_happy"

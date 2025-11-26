@@ -8,7 +8,7 @@
 	name = "Hydroponics Tray"
 	description = "The lab technicians are trying to figure out how to lower the power drain of hydroponics trays, but we fried our last one. Mind building one for us?"
 	reward = CARGO_CRATE_VALUE * 4
-	wanted_types = list(/obj/machinery/hydroponics/constructable = TRUE)
+	wanted_types = list(/obj/machinery/growing/tray = TRUE)
 
 /datum/bounty/item/engineering/cyborg_charger
 	name = "Recharging Station"
@@ -40,11 +40,13 @@
 	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(/obj/machinery/power/energy_accumulator/tesla_coil = TRUE)
 
+/* monkestation removal: get rid of bounties that just make take away station resources
 /datum/bounty/item/engineering/welding_tank
 	name = "Welding Fuel Tank"
 	description = "We need more welding fuel for the engineering team, send us a tank."
 	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(/obj/structure/reagent_dispensers/fueltank = TRUE)
+monkestation end */
 
 /datum/bounty/item/engineering/reflector
 	name = "Reflector"

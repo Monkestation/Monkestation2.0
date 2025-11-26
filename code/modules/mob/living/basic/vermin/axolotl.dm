@@ -1,3 +1,7 @@
+#define AXOLOTL_VOLUME				60
+#define AXOLOTL_NOISE_COOLDOWN		1.5 SECONDS
+#define AXOLOTL_FALLOFF_EXPONENT	20 // same as bike horn
+
 /mob/living/basic/axolotl
 	name = "axolotl"
 	desc = "Quite the colorful amphibian!"
@@ -31,12 +35,72 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/axolotl
 
+	var/stepped_sound = 'sound/effects/axolotl.ogg'
+	COOLDOWN_DECLARE(axolotlspam_cooldown)
+
 /mob/living/basic/axolotl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_AXOLOTL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+
+/mob/living/basic/axolotl/proc/on_entered(datum/source, mob/living/stepper)
+	SIGNAL_HANDLER
+	if(stat || !isliving(stepper) || stepper.mob_size <= MOB_SIZE_TINY || !COOLDOWN_FINISHED(src, axolotlspam_cooldown))
+		return
+	playsound(
+		src,
+		stepped_sound,
+		vol = AXOLOTL_VOLUME,
+		vary = TRUE,
+		extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE,
+		falloff_exponent = AXOLOTL_FALLOFF_EXPONENT,
+		ignore_walls = FALSE, // do you want to hear this the next department over? doesnt matter bc im copying frog code.
+		mixer_channel = CHANNEL_SQUEAK,
+	)
+	COOLDOWN_START(src, axolotlspam_cooldown, AXOLOTL_NOISE_COOLDOWN)
+
+/mob/living/basic/axolotl/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(src.stat == DEAD)
+		return
+	else
+		playsound(
+		src,
+		stepped_sound,
+		vol = AXOLOTL_VOLUME,
+		vary = TRUE,
+		extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE,
+		falloff_exponent = AXOLOTL_FALLOFF_EXPONENT,
+		ignore_walls = FALSE,
+		mixer_channel = CHANNEL_SQUEAK,
+	)
+
+/mob/living/basic/axolotl/attackby(obj/item/attacking_item, mob/living/user, params)
+	. = ..()
+	if(src.stat == DEAD)
+		return
+	else
+		playsound(
+		src,
+		stepped_sound,
+		vol = AXOLOTL_VOLUME,
+		vary = TRUE,
+		extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE,
+		falloff_exponent = AXOLOTL_FALLOFF_EXPONENT,
+		ignore_walls = FALSE,
+		mixer_channel = CHANNEL_SQUEAK,
+	)
 
 /datum/ai_controller/basic_controller/axolotl
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+#undef AXOLOTL_FALLOFF_EXPONENT
+#undef AXOLOTL_NOISE_COOLDOWN
+#undef AXOLOTL_VOLUME

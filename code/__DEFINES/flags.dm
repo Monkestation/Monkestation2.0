@@ -70,8 +70,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
-/// Used for items that cannot be used directly to harm people with, ex. loafs
-#define CANNOT_ATTACK_WITH (1<<21)
+/// This atom should never be marked in demos/replays. (monkestation addition)
+#define DEMO_IGNORE_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_CLEARING (1<<7)
 
 #define TURF_WEATHER (1<<8) //monkestation edit
+/// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<9)
+
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
 #define VALID_TERRITORY (1<<0)
@@ -134,7 +137,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNIQUE_AREA (1<<8)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
+/// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF (1<<11)
@@ -153,9 +156,11 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 ///is this a ghost accessible area?
 #define GHOST_AREA (1<<18)
 ///can we explode during rounds?
-#define NO_EXPLOSIONS_DURING (1<<19)
-///are ghosts not allowed to enter during round
-#define NO_GHOSTS_DURING_ROUND (1<<20)
+#define NO_GHOSTS_DURING_ROUND (1<<19)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<20)
+/// This area can always be claimed as a bloodsucker lair regardless of Z-level and such
+#define ALWAYS_VALID_BLOODSUCKER_LAIR (1<<21)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -176,6 +181,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSDOORS (1<<10)
 #define PASSVEHICLE (1<<11)
 #define PASSITEM (1<<12)
+/// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
+#define LETPASSCLICKS (1<<13)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -201,6 +208,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE (1<<6)
 /// can't be frozen
 #define FREEZE_PROOF (1<<7)
+/// can't be shuttle crushed.
+#define SHUTTLE_CRUSH_PROOF (1<<8)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)
@@ -220,6 +229,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
 
 //Mob mobility var flags
 /// can move

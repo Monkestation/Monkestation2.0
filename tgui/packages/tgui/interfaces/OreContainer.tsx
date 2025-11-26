@@ -1,28 +1,32 @@
 import { createSearch, toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Stack, Flex, Section } from '../components';
+import {
+  Button,
+  Input,
+  Stack,
+  Flex,
+  Section,
+  DmIcon,
+  Icon,
+} from '../components';
 import { Window } from '../layouts';
 
 type Ores = {
   id: string;
   name: string;
   amount: number;
-};
-
-type Ore_images = {
-  name: string;
   icon: string;
+  icon_state: string;
 };
 
 type Data = {
   ores: Ores[];
-  ore_images: Ore_images[];
 };
 
-export const OreContainer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OreContainer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { ores = [] } = data;
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch(searchItem, (ore: Ores) => ore.name);
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
@@ -84,28 +88,15 @@ export const OreContainer = (props, context) => {
   );
 };
 
-const RetrieveIcon = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { ore_images = [] } = data;
+const RetrieveIcon = (props) => {
   const { ore } = props;
-
-  let icon_display = ore_images.find((icon) => icon.name === ore.name);
-
-  if (!icon_display) {
-    return null;
-  }
-
   return (
-    <Box
-      as="img"
-      m={1}
-      src={`data:image/jpeg;base64,${icon_display.icon}`}
+    <DmIcon
       height="64px"
       width="64px"
-      style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'vertical-align': 'middle',
-      }}
+      icon={ore.icon}
+      icon_state={ore.icon_state}
+      fallback={<Icon name="spinner" size={2} spin />}
     />
   );
 };

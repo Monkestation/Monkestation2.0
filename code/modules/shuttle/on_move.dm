@@ -21,26 +21,22 @@ All ShuttleMove procs go here
 		return
 
 	var/shuttle_dir = shuttle.dir
-	for(var/i in contents)
-		var/atom/movable/thing = i
-		if(ismob(thing))
-			if(isliving(thing))
-				var/mob/living/M = thing
-				if(M.buckled)
-					M.buckled.unbuckle_mob(M, 1)
-				if(M.pulledby)
-					M.pulledby.stop_pulling()
-				M.stop_pulling()
-				M.visible_message(span_warning("[shuttle] slams into [M]!"))
-				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
-				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
-				M.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
-				M.gib()
-
-
-		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/effect/abstract) || istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
+	for(var/atom/movable/thing as anything in contents)
+		if(thing.resistance_flags & SHUTTLE_CRUSH_PROOF)
+			continue
+		if(isliving(thing))
+			var/mob/living/living_thing = thing
+			if(living_thing.incorporeal_move) // Don't crush incorporeal things
 				continue
+			living_thing.buckled?.unbuckle_mob(living_thing, force = TRUE)
+			living_thing.pulledby?.stop_pulling()
+			living_thing.stop_pulling()
+			living_thing.visible_message(span_warning("[shuttle] slams into [living_thing]!"))
+			SSblackbox.record_feedback("tally", "shuttle_gib", 1, living_thing.type)
+			log_shuttle("[key_name(living_thing)] was shuttle gibbed by [shuttle].")
+			living_thing.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
+			living_thing.gib()
+		else if(!ismob(thing))
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
 			else
@@ -120,12 +116,11 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 	if(light)
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
-
-	update_parallax_contents()
 
 	return TRUE
 
@@ -179,19 +174,53 @@ All ShuttleMove procs go here
 
 /obj/machinery/door/airlock/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
+
+	if (cycle_pump)
+		INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, undock))
+
 	for(var/obj/machinery/door/airlock/other_airlock in range(2, src))  // includes src, extended because some escape pods have 1 plating turf exposed to space
 		other_airlock.shuttledocked = FALSE
 		other_airlock.air_tight = TRUE
+		if (other_airlock.cycle_pump)
+			INVOKE_ASYNC(other_airlock.cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, undock))
+			continue
 		INVOKE_ASYNC(other_airlock, TYPE_PROC_REF(/obj/machinery/door/, close), FALSE, TRUE) // force crush
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/current_area = get_area(src)
+	var/turf/local_turf
+	var/tile_air_pressure
 	for(var/obj/machinery/door/airlock/other_airlock in orange(2, src))  // does not include src, extended because some escape pods have 1 plating turf exposed to space
 		if(get_area(other_airlock) != current_area)  // does not include double-wide airlocks unless actually docked
 			// Cycle linking is only disabled if we are actually adjacent to another airlock
 			shuttledocked = TRUE
 			other_airlock.shuttledocked = TRUE
+			if (other_airlock.cycle_pump)
+				local_turf = get_step(src, REVERSE_DIR(other_airlock.cycle_pump.dir))
+				tile_air_pressure = 0
+				if (local_turf)
+					tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+				INVOKE_ASYNC(other_airlock.cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+			// Save external airlocks turf in case our own docking purpouses
+			local_turf = get_turf(other_airlock)
+
+	if (cycle_pump)
+		tile_air_pressure = 0
+		if (local_turf)
+			local_turf = get_step(local_turf, REVERSE_DIR(cycle_pump.dir))
+			if (local_turf)
+				tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+			INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+		else
+			// In case, somebody decides to build an airlock on evac shuttle, we count CentComs blastdoors as valid docking airlock
+			local_turf = get_step(src, REVERSE_DIR(cycle_pump.dir))
+			if (local_turf)
+				for(var/obj/machinery/door/poddoor/shuttledock/centcom_airlock in local_turf)
+					// For some reason on docking moment those tiles are vacuum, and pump denies safe_dock attempt
+					// To fix this we're lying, that external pressure is nominal
+					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
+					break
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -207,18 +236,16 @@ All ShuttleMove procs go here
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	if(pipe_vision_img)
-		pipe_vision_img.loc = loc
-
 /obj/machinery/computer/auxiliary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
+	if(pipe_vision_img)
+		pipe_vision_img.loc = loc
+
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])
@@ -262,19 +289,7 @@ All ShuttleMove procs go here
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 
-/************************************Item move procs************************************/
-
-/obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	// If the pod was launched, the storage will always open. The reserved_level check
-	// ignores the movement of the shuttle from the transit level to
-	// the station as it is loaded in.
-	if (oldT && !is_reserved_level(oldT.z))
-		unlocked = TRUE
-		update_appearance()
-
 /************************************Mob move procs************************************/
-
 /mob/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!move_on_shuttle)
 		return
@@ -298,8 +313,14 @@ All ShuttleMove procs go here
 
 	var/knockdown = movement_force["KNOCKDOWN"]
 	if(knockdown)
-		Paralyze(knockdown)
-
+		// Only apply the "no drop" version when the emergency shuttle is docking (endgame)
+		if(SSshuttle?.emergency?.mode == SHUTTLE_ENDGAME)
+			var/datum/status_effect/incapacitating/knockdown/knockdown_effect = Knockdown(knockdown)
+			if(knockdown_effect)
+				knockdown_effect.prevent_drop = TRUE
+		else
+			// Normal shuttle movement knockdown
+			Knockdown(knockdown)
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	. = ..()

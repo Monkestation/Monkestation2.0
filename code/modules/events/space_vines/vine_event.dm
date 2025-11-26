@@ -14,6 +14,10 @@
 		/datum/event_admin_setup/input_number/spacevine_potency,
 		/datum/event_admin_setup/input_number/spacevine_production,
 	)
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN)
+	checks_antag_cap = TRUE
+	event_group = /datum/event_group/guests
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -38,7 +42,7 @@
 		var/obj/structure/spacevine/vine = new()
 
 		for(var/area/station/hallway/area in GLOB.areas)
-			for(var/turf/open/floor in area.get_contained_turfs())
+			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
 				if(floor.Enter(vine))
 					turfs += floor
 

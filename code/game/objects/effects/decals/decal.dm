@@ -45,6 +45,10 @@
 	plane = FLOOR_PLANE
 	layer = TURF_DECAL_LAYER
 	anchored = TRUE
+	/// Does this decal change colors on holidays
+	var/use_holiday_colors = FALSE
+	/// The pattern used when recoloring the decal. If null, it'll use the def of the station or holiday.
+	var/pattern
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern
@@ -55,6 +59,13 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	// If the tile uses holiday colors, apply them here
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
+
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
@@ -63,6 +74,12 @@
 
 /obj/effect/turf_decal/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
+#ifndef DISABLE_DEMOS
+	// monkestation start: ensure we clean up some stuff with replays
+	demo_last_appearance = null
+	demo_last_loc = null
+	// monkestation end
+#endif
 #ifdef UNIT_TESTS
 // If we don't do this, turf decals will end up stacking up on a tile, and break the overlay limit
 // I hate it too bestie

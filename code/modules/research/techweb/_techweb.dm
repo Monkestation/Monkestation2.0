@@ -26,7 +26,7 @@
 	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
-	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
@@ -56,6 +56,8 @@
 	var/should_generate_points = FALSE
 	///A multiplier applied to all research gain, cut in half if the Master server was sabotaged.
 	var/income_modifier = 1
+	///An additive bonus applied to all research gain, given by the Research Network Integration nanite program
+	var/nanite_bonus = 0
 	///The amount of research points generated the techweb generated the latest time it generated.
 	var/last_income
 
@@ -70,6 +72,11 @@
 	  * Filled with nulls on init, populated only on publication.
 	*/
 	var/list/published_papers
+	/**
+	  * Assoc list of nodes queued for automatic research when there are enough points available
+	  * research_queue_nodes[node_id] = user_enqueued
+	*/
+	var/list/research_queue_nodes = list()
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -107,8 +114,8 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -118,8 +125,8 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -129,8 +136,8 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -143,10 +150,10 @@
 		CHECK_TICK
 		if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
 			receiver.hidden_nodes -= i //We can see it so let them see it too.
-	for(var/i in researched_nodes)
+	for(var/i in researched_nodes - receiver.researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
-	for(var/i in researched_designs)
+	for(var/i in researched_designs - receiver.researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
 	receiver.recalculate_nodes()
@@ -170,19 +177,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -324,10 +331,44 @@
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/enqueue_node(id, mob/user)
+	var/is_rd = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/list/access = living_user.get_idcard(hand_first = TRUE)?.GetAccess()
+		if(ACCESS_RD in access)
+			is_rd = TRUE
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+	if(id in research_queue_nodes)
+		if(is_rd)
+			research_queue_nodes.Remove(id)
+		else
+			return FALSE
+
+	for(var/node_id in research_queue_nodes)
+		if(research_queue_nodes[node_id] == user)
+			research_queue_nodes.Remove(node_id)
+
+	if (is_rd)
+		research_queue_nodes.Insert(1, id)
+	research_queue_nodes[id] = user
+
+	return TRUE
+
+/datum/techweb/proc/dequeue_node(id, mob/user)
+	if(!(id in research_queue_nodes))
+		return FALSE
+	if(research_queue_nodes[id] != user)
+		return FALSE
+
+	research_queue_nodes.Remove(id)
+
+	return TRUE
+
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
+
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -372,6 +413,9 @@
 	if (MC_RUNNING())
 		log_research(log_message)
 
+	// Dequeue
+	if(node.id in research_queue_nodes)
+		research_queue_nodes.Remove(node.id)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
@@ -390,17 +434,15 @@
 	LAZYINITLIST(boosted_nodes[node.id])
 	for(var/point_type in pointlist)
 		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
-	if(node.autounlock_by_boost)
-		hidden_nodes -= node.id
+	unhide_node(node)
 	update_node_status(node)
 	return TRUE
 
-/// Boosts a techweb node by using items.
-/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
-	if(!istype(node) || !ispath(itempath))
+///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/datum/techweb/proc/unhide_node(datum/techweb_node/node)
+	if(!istype(node))
 		return FALSE
-	var/list/boost_amount = node.boost_item_paths[itempath]
-	boost_techweb_node(node, boost_amount)
+	hidden_nodes -= node.id
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)
@@ -441,7 +483,7 @@
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
-		for(var/id in node.design_ids)
+		for(var/id in node.design_ids - researched_designs)
 			add_design(SSresearch.techweb_design_by_id(id))
 	else
 		if(available)

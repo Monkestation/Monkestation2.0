@@ -70,6 +70,15 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/obj/structure/closet/supplypod/podspawn/deathmatch
+	desc = "A blood-red styled drop pod."
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+	for(var/mob/living/critter in contents)
+		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+	return ..()
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -83,12 +92,64 @@
 	leavingSound = 'sound/effects/podwoosh.ogg'
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
+/obj/structure/closet/supplypod/nuke_relocation
+	name = "Syndicate Relocation Pod"
+	desc = "A specalised, blood-red styled pod for relocating high-value assets in active mission areas."
+	specialised = TRUE
+	layer = GATEWAY_UNDERLAY_LAYER
+	style = STYLE_SYNDICATE
+	bluespace = FALSE
+	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	reversing = TRUE
+	explosionSize = list(0,0,0,0)
+	/// Turf we return to after exiting
+	var/turf/return_to_turf
+	stay_after_drop = TRUE
+	leavingSound = 'sound/effects/podwoosh.ogg'
+	reverse_option_list = list("Mobs"=TRUE,"Objects"=TRUE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Unanchored" = TRUE, "Floors"=FALSE,"Walls"=FALSE, "Mecha"=TRUE)
+
+/obj/structure/closet/supplypod/nuke_relocation/preReturn(atom/movable/holder)
+	if(return_to_turf)
+		reverse_dropoff_coords = list(return_to_turf.x, return_to_turf.y, return_to_turf.z)
+	return ..()
+
+/obj/structure/closet/supplypod/syndicate_relocation/setOpened()
+	opened = TRUE
+	set_density(TRUE)
+	update_appearance()
+
+/obj/structure/closet/supplypod/syndicate_missile
+	name = "missile"
+	desc = "If you are seeing this, run."
+	specialised = TRUE
+	effectMissile = TRUE
+	style = STYLE_RED_MISSILE
+	explosionSize = list(3, 6, 12, 12)
+	effectGib = TRUE
+	damage = 500
+	delays = list(POD_TRANSIT = 100, POD_FALLING = 5, POD_OPENING = 30, POD_LEAVING = 30)
+
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/closet/supplypod/deadmatch_missile
+	name = "cruise missile"
+	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	icon_state = "smissile"
+	decal = null
+	door = null
+	fin_mask = null
+	explosionSize = list(0,1,2,2)
+	effectShrapnel = TRUE
+	rubble_type = RUBBLE_THIN
+	specialised = TRUE
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
+	effectMissile = TRUE
+	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
 /datum/armor/closet_supplypod
 	melee = 30
@@ -210,7 +271,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -222,6 +283,9 @@
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
+	if (holder != src)
+		contents |= holder.contents
+		qdel(holder)
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	forceMove(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
 	if (!reverse_dropoff_coords) //If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay. If we're an extraction pod, it should be the ninja jail. Thus, this shouldn't ever really happen.
@@ -288,6 +352,8 @@
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
+		for (var/mob/living/mob_in_pod in benis.contents)
+			mob_in_pod.reset_perspective(null)
 		moveToNullspace()
 		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
@@ -310,7 +376,7 @@
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
 	for (var/turf_type in turfs_in_cargo)
 		turf_underneath.PlaceOnTop(turf_type)
-	for (var/cargo in contents)
+	for (var/cargo in holder.contents)
 		var/atom/movable/movable_cargo = cargo
 		movable_cargo.forceMove(turf_underneath)
 	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
@@ -354,17 +420,21 @@
 	insert(turf_underneath, holder)
 
 /obj/structure/closet/supplypod/insert(atom/to_insert, atom/movable/holder)
-	if(insertion_allowed(to_insert))
-		if(isturf(to_insert))
-			var/turf/turf_to_insert = to_insert
-			turfs_in_cargo += turf_to_insert.type
-			turf_to_insert.ScrapeAway()
-		else
-			var/atom/movable/movable_to_insert = to_insert
-			movable_to_insert.forceMove(holder)
-		return TRUE
-	else
+	if(!insertion_allowed(to_insert))
 		return FALSE
+
+	if(isturf(to_insert))
+		var/turf/turf_to_insert = to_insert
+		turfs_in_cargo += turf_to_insert.type
+		turf_to_insert.ScrapeAway()
+		return TRUE
+
+	var/atom/movable/movable_to_insert = to_insert
+	if (ismob(movable_to_insert))
+		var/mob/mob_to_insert = movable_to_insert
+		if (!isnull(mob_to_insert.buckled))
+			mob_to_insert.buckled.unbuckle_mob(mob_to_insert, force = TRUE)
+	movable_to_insert.forceMove(holder)
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/to_insert)
 	if(to_insert.invisibility == INVISIBILITY_ABSTRACT)
@@ -372,7 +442,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)
@@ -432,16 +502,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
@@ -479,7 +552,8 @@
 	. = ..()
 	if(same_z_layer)
 		return
-	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
+	if(glow_effect)
+		SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -529,7 +603,7 @@
 /obj/effect/supplypod_smoke/proc/drawSelf(amount)
 	alpha = max(0, 255-(amount*20))
 
-/obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
+/obj/effect/supplypod_rubble
 	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'

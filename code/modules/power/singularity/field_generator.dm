@@ -126,7 +126,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
@@ -206,6 +206,7 @@ no power level overlay is currently in the overlays list.
 	air_update_turf(TRUE, FALSE)
 	INVOKE_ASYNC(src, PROC_REF(cleanup))
 	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
@@ -218,6 +219,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
 	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)
@@ -360,7 +362,7 @@ no power level overlay is currently in the overlays list.
 	if(connected_gens.len < 2)
 		return
 	var/connected_gen_counter
-	for(connected_gen_counter = 1; connected_gen_counter < connected_gens.len, connected_gen_counter++)
+	for(connected_gen_counter = 1; connected_gen_counter < connected_gens.len; connected_gen_counter++)
 
 		var/list/connected_gen_list = ((connected_gens[connected_gen_counter].connected_gens & connected_gens[connected_gen_counter+1].connected_gens)^src)
 		if(!connected_gen_list.len)
@@ -408,6 +410,14 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/bump_field(atom/movable/AM as mob|obj)
 	if(fields.len)
 		..()
+
+/obj/machinery/field/generator/starts_on
+	anchored = TRUE
+	state = FG_WELDED
+
+/obj/machinery/field/generator/starts_on/Initialize(mapload)
+	. = ..()
+	turn_on()
 
 #undef FG_UNSECURED
 #undef FG_SECURED

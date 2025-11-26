@@ -13,71 +13,81 @@
 		blood_color = COLOR_DARK_RED
 	var/x_component = sin(angle) * -15
 	var/y_component = cos(angle) * -15
-	if(!GLOB.blood_particles[blood_color])
-		GLOB.blood_particles[blood_color] = new /particles/splatter(blood_color)
-	particles = GLOB.blood_particles[blood_color]
-	particles.velocity = list(x_component, y_component)
+	var/obj/effect/abstract/shared_particle_holder/splatter = add_shared_particles(/particles/splatter, "bloodsplatter_[blood_color]")
+	if(blood_color != "red")
+		splatter.particles.color = blood_color
+	splatter.particles.velocity = list(x_component, y_component)
 	color = blood_color
 	icon_state = "[splatter_type][pick(1, 2, 3, 4, 5, 6)]"
 	. = ..()
-	var/target_pixel_x = 0
-	var/target_pixel_y = 0
+	var/target_pixel_x = pixel_x
+	var/target_pixel_y = pixel_y
 	switch(angle)
 		if(0, 360)
-			target_pixel_x = 0
-			target_pixel_y = 8
+			target_pixel_x += 0
+			target_pixel_y += 8
 		if(1 to 44)
-			target_pixel_x = round(4 * ((angle) / 45))
-			target_pixel_y = 8
+			target_pixel_x += round(4 * ((angle) / 45))
+			target_pixel_y += 8
 		if(45)
-			target_pixel_x = 8
-			target_pixel_y = 8
+			target_pixel_x += 8
+			target_pixel_y += 8
 		if(46 to 89)
-			target_pixel_x = 8
-			target_pixel_y = round(4 * ((90 - angle) / 45))
+			target_pixel_x += 8
+			target_pixel_y += round(4 * ((90 - angle) / 45))
 		if(90)
-			target_pixel_x = 8
-			target_pixel_y = 0
+			target_pixel_x += 8
+			target_pixel_y += 0
 		if(91 to 134)
-			target_pixel_x = 8
-			target_pixel_y = round(-3 * ((angle - 90) / 45))
+			target_pixel_x += 8
+			target_pixel_y += round(-3 * ((angle - 90) / 45))
 		if(135)
-			target_pixel_x = 8
-			target_pixel_y = -6
+			target_pixel_x += 8
+			target_pixel_y += -6
 		if(136 to 179)
-			target_pixel_x = round(4 * ((180 - angle) / 45))
-			target_pixel_y = -6
+			target_pixel_x += round(4 * ((180 - angle) / 45))
+			target_pixel_y += -6
 		if(180)
-			target_pixel_x = 0
-			target_pixel_y = -6
+			target_pixel_x += 0
+			target_pixel_y += -6
 		if(181 to 224)
-			target_pixel_x = round(-6 * ((angle - 180) / 45))
-			target_pixel_y = -6
+			target_pixel_x += round(-6 * ((angle - 180) / 45))
+			target_pixel_y += -6
 		if(225)
-			target_pixel_x = -6
-			target_pixel_y = -6
+			target_pixel_x += -6
+			target_pixel_y += -6
 		if(226 to 269)
-			target_pixel_x = -6
-			target_pixel_y = round(-6 * ((270 - angle) / 45))
+			target_pixel_x += -6
+			target_pixel_y += round(-6 * ((270 - angle) / 45))
 		if(270)
-			target_pixel_x = -6
-			target_pixel_y = 0
+			target_pixel_x += -6
+			target_pixel_y += 0
 		if(271 to 314)
-			target_pixel_x = -6
-			target_pixel_y = round(8 * ((angle - 270) / 45))
+			target_pixel_x += -6
+			target_pixel_y += round(8 * ((angle - 270) / 45))
 		if(315)
-			target_pixel_x = -6
-			target_pixel_y = 8
+			target_pixel_x += -6
+			target_pixel_y += 8
 		if(316 to 359)
-			target_pixel_x = round(-6 * ((360 - angle) / 45))
-			target_pixel_y = 8
+			target_pixel_x += round(-6 * ((360 - angle) / 45))
+			target_pixel_y += 8
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Destroy()
+	remove_shared_particles("bloodsplatter_[color]")
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
+	icon_state = "ion_fade"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 10
+	randomdir = 0
+
+
+/obj/effect/temp_visual/dir_setting/magicbroom_trail //monkestation addition
+	name = "magic trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -93,14 +103,14 @@
 	switch(newdir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			pixel_x = rand(-3,3)
-			pixel_y = rand(4,6)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(4,6)
 		if(SOUTH)
-			pixel_x = rand(-3,3)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-3,3)
+			pixel_y += rand(-1,1)
 		else
-			pixel_x = rand(-1,1)
-			pixel_y = rand(-1,1)
+			pixel_x += rand(-1,1)
+			pixel_y += rand(-1,1)
 	..()
 
 /obj/effect/temp_visual/dir_setting/firing_effect/energy
@@ -203,6 +213,17 @@
 		if(EAST)
 			icon_state = "beam_splash_e"
 
+/obj/effect/temp_visual/bsa_impact
+	name = "\improper Bluespace Artillery detonation"
+	desc = "Tearing into conventional space once more, the immense energy of the beam is delivered directly into the target and its surroundings."
+	icon = 'icons/effects/96x160.dmi'
+	icon_state = "bsa_impact_ex"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -32
+	pixel_x = -32
+	duration = 10
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/simple/mob.dmi'
@@ -274,7 +295,7 @@
 	icon_state = "3"
 	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
-	duration = 10
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
@@ -283,7 +304,17 @@
 /obj/effect/temp_visual/revenant/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
-	duration = 6
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/revenant/cracks/glow
+
+/obj/effect/temp_visual/revenant/cracks/glow/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/revenant/cracks/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/temp_visual/gravpush
 	name = "gravity wave"
@@ -309,6 +340,10 @@
 	name = "bluespace fissure"
 	icon_state = "bluestream_fade"
 	duration = 9
+
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
 
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
@@ -450,8 +485,7 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (size_calc_target.get_cached_height() /world.icon_size)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -507,11 +541,12 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	obj_flags = CAN_BE_HIT
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	var/status = 0
 	var/delay = 0
 
-/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status, rcd_upgrades)
 	. = ..()
 	status = rcd_status
 	delay = rcd_delay
@@ -521,6 +556,26 @@
 		icon_state = "rcd_end_reverse"
 	else
 		update_appearance()
+
+	if (rcd_upgrades & RCD_UPGRADE_ANTI_INTERRUPT)
+		color = list(
+			1.0, 0.5, 0.5, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.0, 0.0, 0.0, 1.0,
+			0.0, 0.0, 0.0, 0.0,
+		)
+
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
+
+/obj/effect/constructing_effect/update_name(updates)
+	. = ..()
+
+	if (status == RCD_DECONSTRUCT)
+		name = "deconstruction effect"
+	else
+		name = "construction effect"
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
@@ -541,11 +596,25 @@
 	if (status == RCD_DECONSTRUCT)
 		qdel(src)
 	else
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
 		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/constructing_effect/proc/attacked(mob/user)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	end()
+
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+	attacked(user)
+
+/obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
+	attacked(user)
 
 /obj/effect/temp_visual/electricity
 	icon_state = "electricity3"
@@ -598,3 +667,38 @@
 /// Remove the image from the modsuit wearer's screen
 /obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
 	looker?.client?.images -= modsuit_image
+
+/obj/effect/temp_visual/block //color is white by default, set to whatever is needed
+	name = "blocking glow"
+	icon_state = "block"
+	duration = 6.7
+
+/obj/effect/temp_visual/block/Initialize(mapload, set_color)
+	if(set_color)
+		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
+	. = ..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "big_slash"
+	pixel_x = -32
+	pixel_y = -32
+	duration = 0.3 SECONDS
+	light_power = 0
+	light_on = 0
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/semicircle
+	icon_state = "big_slash_180"
+
+/obj/effect/temp_visual/dir_setting/firing_effect/sweep_attack/full_circle
+	icon_state = "big_slash_360"
+	duration = 0.4 SECONDS

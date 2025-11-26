@@ -1,0 +1,540 @@
+2024-03-01:
+  Absolucy, LT3, Ghommie:
+  - refactor: Refactored maptext (those floating words)
+  - bugfix: Fixed special chat bubbles for yelling, clown, redtext, greentext
+  - bugfix: Fixed alignment of status display text
+  - code_imp: Status displays now synchronize their message lines when scrolling
+  - image: More maptext and font tweaks
+  - spellcheck: Context tooltips too small, too big... just right?
+  - bugfix: Maptext should now properly show superscript characters when performing
+      actions
+  - bugfix: Fixed text effects for runechat messages (the stuff enclosed in +, | and
+      _ characters).
+  - spellcheck: Improved the tip for say/text effects.
+  Absolucy, itsmeowdev:
+  - rscadd: Added TGUI color picker and replaced all use of BYOND color pickers with
+      it (TGUI input preference is still respected).
+  - qol: The Generic UI theme will now affect the border color of number inputs and
+      text areas the same as text inputs.
+  DexeeXI:
+  - bugfix: Baseline job titles for Cargo Tech, Quartermaster and Shaft Miner return.
+  - rscdel: Removed a single extra air pipe on the Icebox Maid Cafe so it stops causing
+      11 lines of test failures
+  - bugfix: Tweaks the Metastation Singularity Engine Complex to also stop unit test
+      failures.
+  MrMelbert:
+  - qol: Glasses colors should be a lot less harsh, and being blind no longer also
+      blinds your hud.
+2024-03-02:
+  Absolucy:
+  - rscadd: Nanotrasen has rescinded their restrictions on species such as lizards
+      and moths growing hair.
+2024-03-03:
+  Absolucy:
+  - bugfix: Fix dissection experiment never completing.
+  - bugfix: Ghost players now have their own outfit, which notably lacks a PDA, so
+      they no longer clog up the PDA messenger
+  - rscadd: Ghost players get loadout items by default
+  - qol: Explosions can no longer occur in centcom at all outside of the arena.
+  - rscadd: Players in "safe" areas of centcom will now get a status effect that makes
+      them much more resilient. Entering a duel or leaving centcom will remove these
+      effects.
+  - balance: Hypercharged slime batteries are now EMP-proof, like their ordinary charged
+      counterparts.
+  - rscadd: Added "Refresh TGUI" and "Fix Chat" buttons to the Help menu at the top
+      of the game window.
+  Absolucy, Melbert:
+  - balance: Stop, drop, and roll no longer instantly clears 5 fire stacks off of
+      you - Instead, it will clear 1 fire stack off of you every time you roll, with
+      a roll every 0.8 seconds.
+  - balance: Stop, drop, and roll no longer stuns you for 6 seconds. Instead, it will
+      knock you to the floor while you are rolling. Moving around or getting up will
+      cancel the roll, and you cannot use items while rolling around.
+  - balance: Stop, drop, and roll will now repeat until the fire is put out or you
+      get up.
+  Absolucy, Momo8289:
+  - rscadd: Cigarettes can now be placed in and smoked through gas masks, so long
+      as the mask has no filters installed and is not covering the mouth.
+  Absolucy, Reality Overseer:
+  - bugfix: fixed photographs having black borders in photos
+  Absolucy, mc-oofert:
+  - qol: mice and rats now are visually spaced out from eachother for visual clarity
+  DexeeXI:
+  - bugfix: QM is NOT a head.
+  - bugfix: QM no longer has command related items on spawn.
+  - bugfix: QM is not chain of command. No more biscuit.
+  - bugfix: QM's SECHUD icon is no longer blue. It's improved, hope you appreciate
+      the cringe.
+  - bugfix: QM's PDA doesn't have bullshit programs on it anymore. In fact, it's a
+      non-head PDA that has what you require to **do your job**.
+  - bugfix: QM offices properly reflect their non-head status.
+  - bugfix: Maid Cafe on Icebox had extra pipe causing a litany of issues. The extra
+      pipe is now removed.
+  - bugfix: damned rabbit mask no longer can be knocked off and provides protection
+      from facehuggers.
+  KittyNoodle:
+  - balance: Returns mindswap to its original, targeted form
+  Melbert, Absolucy:
+  - rscadd: You can now wear multiple accessories on your uniform at once (up to five
+      by default)
+  NicoDeLuna:
+  - rscadd: Added Helldiver uniform
+2024-03-07:
+  Absolucy:
+  - qol: The roundend message on discord is now a "silent" ping.
+  - server: Renamed the `?status-old` webhook world topic back to `?status`, and renamed
+      the `?status` to `?status-webhook"
+  Absolucy, Ghommie:
+  - rscadd: Standing on structures such as crates, tables and bed will now look like
+      it.
+  DimWhat:
+  - rscadd: Added Quilark's donator items. Thank you.
+  - rscadd: Added zergking's pill name. Thank you.
+2024-03-08:
+  Absolucy:
+  - qol: Constructs now reuse the victim's mind instead of just moving their client
+  - bugfix: Fix a weird runtime that broke telecomms
+  - bugfix: Curators, chaplains, and monster hunters can now all actually properly
+      USE the Archive of the Kindred, as they're meant to.
+  - bugfix: Fix broken dropdown buttons in the tgui chat settings.
+  Absolucy, JupiterJaeden, FlufflesTheDog:
+  - qol: people now lie down when buckled to surgery tables, and you no longer need
+      cuffs to buckle someone to a surgery table
+2024-03-09:
+  wraith-54321:
+  - bugfix: Fixed some turf atmos diffs on tram and CC
+2024-03-10:
+  AlbertNanotracen:
+  - bugfix: Sprinting now correctly checks the sprinter for the frerunning trait.
+  - bugfix: Freeruning trait now accelerates climbing onto objects when sprinting
+      into it.
+2024-03-11:
+  Absolucy:
+  - bugfix: Secondary alt-click works, so you can now properly detach accessories
+      and such.
+  - rscadd: Added built-in air conditioning (temperature regulation) to air alarms!
+      While certainly not as powerful as a proper dedicated space heater, it can still
+      help greatly with stabilizing the temperature of an area.
+  - bugfix: walls built next to firelocks no longer hold onto their alarms. (Deadgebert)
+  - balance: The heresy phobia from being sacrificed is now deep-rooted rather than
+      permanent, meaning that it can be cured with a lobotomy.
+  - balance: Victims in stamina crit are now also eligible for the heretic sacrifice
+      rune.
+  - qol: Heretic influences take longer to fade in (15 seconds -> 1 minute), and disappear
+      after 10 minutes.
+  - qol: Heretic sacrifices will now try to grab a corpse's ghost when trying to revive.
+  - bugfix: Touching a tear in reality while being immune to dismemberment will just
+      result in the arm being terribly wounded instead, avoiding a bug with the limb
+      still being "there" despite being deleted.
+  - balance: The Codex Cicatrix is now fully acid and fire-proof.
+  - balance: Heretic armor and the void cloak are now fully acid and fire-proof.
+  - qol: The beginning of the heretic sacrifice minigame will nullify any sorts of
+      pre-existing stuns or sleeps, and prevent several external factors such as heart/liver
+      problems, phobias, sedatives, epilepsy, or brain tumors from causing issues
+      during the minigame.
+  - balance: Ash heretics will no longer succumb to infections from burn wounds. The
+      wound itself still remains an issue, it just won't get infected.
+  AlbertNanotracen:
+  - bugfix: Crafting a mk58 flashlight module should now give you a mk58 flashlight
+      module.
+  - image: Added a open icon sprite (maintenance hatch) for nanite programmer and
+      nanite program hub.
+2024-03-12:
+  Generic DM, PositiveEntropy, ReturnToZender:
+  - rscadd: Cargo shelves are now craftable using metal! They store up to 3 crates
+      per shelf.
+2024-03-13:
+  Absolucy:
+  - rscadd: Say emote prefixes are no longer forced to be lowercase. This includes
+      radio emotes!
+  - bugfix: new hotkeys unbound by default (like emotes) no longer scream at you when
+      added
+  - bugfix: fixed custom say emotes with non-ASCII characters
+  - bugfix: Mobs can once again emote (with sound) when they die.
+  - rscadd: Adds an emote to push up glasses with *glasses
+  - rscadd: Adds a visual effect to *sigh
+  - spellcheck: Fixed a spelling error with the daps emote.
+  - sound: '*flap now makes a fluttering noise for moth wings'
+  - sound: Moths now have a death sound
+  - qol: '*tremble emote now is just "trembles!" instead of "trembles in fear!"'
+  - qol: Improve the emote help verb to be more user friendly.
+  - rscadd: Emote Panel TGUI added in IC category.
+  - bugfix: Cut down a significant amount of time that caused the start of rounds
+      to lag.
+  - bugfix: Fixed a lot of missing/broken images, such as emojis, language icons,
+      commendation hearts, icons in R&D menu, etc.
+  - sound: Dying with a SecHailer on your face will make a unique death sound
+2024-03-14:
+  AlbertNanotracen:
+  - rscadd: Radiohydrate now has an overdose threshold of 20u
+  - rscadd: While overdosing on Radiohydrate, your antigens slowly decay
+  - balance: Having a higher than normal immune strength now decays whenever you are
+      sick
+  - rscadd: Self Sustaining trays bypass the nutrient requirement to grow
+  - rscadd: Self Sustaining trays now pause aging when fully grown & functional(corpse
+      flowers)
+  - bugfix: Corpse flowers now make miasma again
+  - bugfix: Hydroponics trays now run out of nutrients entirely
+2024-03-16:
+  Absolucy:
+  - rscadd: Buffs number of character slots (for everyone) to 20.
+  - bugfix: Removed some sources of hard deletes.
+  - bugfix: Fixed some sources of runtime errors.
+  - bugfix: fixes experimental cloners spitting out randomized clones instead of clones
+      of who was scanned
+  - bugfix: Centcom ghost players are now properly revived / cleaned up whenever they
+      die.
+  Absolucy, Singul0:
+  - balance: Brainwashed individuals can no longer be debrainwashed through a mindshield
+      implant, they still protect you from brainwashing though! You just need to get
+      medical to fix them up.
+  DimWhat:
+  - rscadd: You can now set your socks color.
+  - rscadd: Added a few new sock types.
+  - rscdel: Removed black socks as they aren't needed.
+  - bugfix: Made socks properly change for feminine bodytypes if needed.
+  - rscadd: Equalized pay for most roundstart species.
+  - image: Tweaked the jabberwocky sprite slightly.
+  - balance: Lowered the chance of both real and fake diseases occuring
+  FernandoJ8:
+  - bugfix: Posession now revives those who are dead or in hard crit and turns them
+      into temporary vassals
+  - qol: Added a balloon alert that indicates when someone cannot be tortured in a
+      persuasion rack due to being dead or in hard crit.
+  Gboster-0:
+  - rscadd: the PTL after exporting 1 Megawatt of power will now give announcements
+      every 30 minutes about its power exported
+  - balance: AI's now do not have a good time when trying to prevent slashers from
+      incorporealizing
+  KittyNoodle:
+  - rscdel: The Operative has been removed from rotation
+  - rscdel: The Mystic no longer does wizard events
+  - bugfix: Clown Storyteller has been re-removed from rotation after it was re-added
+      thanks to an oversight.
+  - balance: Reduces the antag cap slightly.
+  - balance: Wizard weight has been lowered to match malf ai weight.
+  - balance: Guide is slightly less common
+  - balance: Jester is now slightly less excessive
+  - balance: Sleeper has been made less rare(it was at the same level as warrior before)
+  - balance: Paradox clones have been made more common.
+  KnigTheThrasher:
+  - bugfix: Moved cargo apc covering atm to below hop's office.
+  - bugfix: Moved Meta tesla/singulo engine a bit further to the east.
+  - rscadd: Replaced the generic shuttle welcome sound with Duke Nukem announcer
+  Marabout2:
+  - image: Replaced moffin_1 in food.dmi with the moffin sent on the discord.
+  NicoDeLuna:
+  - rscadd: Added Harlequin clothes for Clown and Mime
+  TTNT789:
+  - rscadd: viking stuff credit to dimwhat for the sprites(credit to camriod_core
+      for adjusting helmet for ian)
+  - rscadd: Sunset sarsaparilla drinking gives a slight healing over time effect
+  githubuser4141:
+  - image: Replaces the occupied, unoccupied, broken and phasing icons for phazon,
+      durand, gygax and odysseus mechs.
+  jlsnow301, Rhials, Paxilmaniac, san7890:
+  - rscadd: 'jlsnow301: Added some clarity to the range of netpods (4 tiles) in their
+      exam text.'
+  - rscdel: 'jlsnow301: Chamber of Echoes map removed as it conflicts with the actual
+      Legion'
+  - bugfix: 'jlsnow301: Entering a virtual domain should no longer give you a message
+      that it doesn''t forbid items'
+  - bugfix: 'jlsnow301: Paraplegics can now enter netpods.'
+  - bugfix: 'jlsnow301: Fixes an exploit caused by teleporting out of a netpod.'
+  - bugfix: 'jlsnow301: Outfit selection at netpods shouldn''t give armor bonuses
+      any longer.'
+  - bugfix: 'jlsnow301: Bubblegum should no longer teleport out of the simulation
+      when threatened'
+  - bugfix: 'jlsnow301: Heretics won''t lose their living heart while bitrunning anymore.'
+  - qol: 'Rhials: As an observer, clicking on a bitrunning pod will let you orbit
+      it''s bitrunning avatar. Cool!'
+  - code_imp: 'Paxilmaniac: Bitrunner domains can now have spells or items from disks
+      disabled if the domain maker wants such a thing'
+  - bugfix: 'san7890: Bitrunners can no longer get mass-mindswapped out of their avatar
+      when the wizard does the event. Something about machinery and magic not going
+      well together.'
+2024-03-19:
+  Absolucy:
+  - qol: Cassette pouches are now proper storage, rather than their own snowflake
+      thing. They can still only hold cassettes, tho.
+  - qol: The roundstart cassettes (both blank and approved) now all spawn inside the
+      cassette pouch in the radio booth.
+  - admin: Admin Lua scripting works once more!
+  - bugfix: Removed duplicate APC from Icebox random bar theaters.
+  Absolucy, itseasytosee:
+  - rscadd: A new traitor item has been added, Polarized Contacts, for 2 TC!
+  AlbertNanotracen:
+  - rscadd: Examining a person will now give you their species.
+  CannibalHunter:
+  - rscadd: Adds a new fingergun emote! (*fingergun)
+  DimWhat:
+  - rscadd: The detective's revolver is now a small sized item
+  Litberries:
+  - rscadd: bee nuke
+  Skelessant:
+  - rscadd: Added Five pebbles ai display option.
+  aberrantQuesrist:
+  - rscadd: Slugcats simplemob
+  lmenvs:
+  - rscadd: Adds Oliver's Donation items.  Thank you for your support!
+2024-03-20:
+  Absolucy:
+  - balance: Anomalies now last 200 seconds (from 99) before detonating.
+  - balance: Bioscrambler anomalies are no longer immortal.
+  - balance: Dimensional anomalies now have a limited number of relocations before
+      they detonate, where it will distort a much larger surrounding area.
+  - balance: All anomaly events now share their occurrence count, meaning that the
+      storyteller can't spawn like 20 of each type of anomaly. Wormholes are also
+      included in this shared "group".
+  - refactor: Ghost roles now offer ghosts a clickable poll button. Ghosts can select
+      a role, deselect it, alt-click it for "Never For This Round", can cancel "Never",
+      can see the countdown, and can see how many other people are signed up for the
+      role poll.
+  - bugfix: Admins can now properly force events to fire.
+  - balance: Harnessing Shoreline Quay (bluespace energy, probably), a mystical energy
+      (total bullshit) that permeates the Astral Waterways (bluespace quantum dimensions,
+      probably), Sleeping Carp users can now once against deflect projectiles with
+      their bare hands when focused in on battle (in combat mode).
+  - balance: The Keelhaul technique is now nonlethal (a philosophical acknowledgement
+      of the familial bond of sleep and death), but causes the target to become temporarily
+      blind and dizzy along with its previous effects.
+  - balance: Sleeping Carp users, while in combat mode, deal Stamina damage with their
+      grabs and shoves. If the target of their grab has enough Stamina damage (80),
+      they are knocked unconscious from a well placed nerve pinch.
+  - balance: Sleeping Carp users find it very hard to wake up once they fall asleep....
+  - balance: The Sleeping Carp martial arts scroll now costs 17 TC.
+  - qol: Clicking on anomalies with analyzers is now easier
+  Absolucy, san7890, EvilDragonfiend:
+  - qol: Who and Adminwho messages are now in an examine block for heightened clarity.
+  - admin: Admins without R_ADMIN perm are sorted in another section in staff_who,
+      so that people will not believe coders can handle adminhelps.
+  Absolucy, zeskorion:
+  - rscadd: Adds the Bluespace Compression Kit (based on Zams' implementation from
+      BeeStation) to the syndie uplink for 4 TC. It can be used to compress items
+      to fit in smaller slots, without compromising the functionality of the item.
+      This does not work on storage items tho (except for the briefcase launchpad,
+      which will lose its ability to function as a normal briefcase when compressed)
+  Gboster-0:
+  - rscadd: Contractors now can purchase an area pinpointer
+2024-03-21:
+  Absolucy, LT3:
+  - code_imp: Changing security levels will only trigger the nightshift subsystem
+      if lighting changes are required.
+  - code_imp: Server wide admin announcements now use an alert box like other announcements.
+  - qol: Roundstart intercept report and security level announcements are combined
+      into a single announcement.
+  SeeBeeSee:
+  - balance: Kneecapped instakill electrical activity plants
+2024-03-23:
+  KnigTheThrasher:
+  - bugfix: Fixed zombies being able to infect headless corpses (Including former
+      zombies)
+  - bugfix: 'Fixed bio armor being totally useless against zombies. Now it checks
+      how hurt your limb is: If it''s more than the bio armor value, you get infected.
+      THICKMATERIAL clothing guarantees at least 25 damage required to infect you,
+      non-thick clothing reduces effective defence by 25. In practice this means people
+      with MODsuits, biosuits will resist infection unless they''re pummeled into
+      crit, and wearing a firesuit will save you from the first few slashes.'
+  - bugfix: Fixed the bomb hood armor not having the same bio armor value as bomb
+      armor.
+  - qol: Added a message to the zed when they succesfully infect someone.
+  - code_imp: Turned some proc names into snake_case rather than, uh, nospacecase.
+2024-03-25:
+  AlbertNanotracen:
+  - rscadd: Immunity scanner now shows symptoms for recorded diseases.
+  - balance: Aluxive has a stronger instant effect.
+  - balance: Aetericilide is effective as preventative medication but not much value
+      once infected. (Also its max strength was lowered to 3x base strength from 5x
+      base strength)
+  - bugfix: Retrovirus now utilizes its multiplier for its effects rather than its
+      constant max_multiplier.
+  DATA-xPUNGED, KnigTheThrasher:
+  - rscadd: You can now boop fellow crew members by targeting their mouth on help
+      mode, try it on your local clown!
+  - sound: Increased the volume of shuttle welcome sound because it was too quiet.
+  DexeeXI:
+  - rscdel: Virus extrapolators no longer spawn in l3 bioclosets or pathologist kits.
+2024-03-26:
+  AlbertNanotracen:
+  - bugfix: Placing a mouse inside your chef hat will once more allow it to pilot
+      you around.
+  - rscadd: A player-controlled mouse inside your chef hat can compel you to perform
+      complex actions, such as flipping and spinning. You will obey because the mouse
+      knows better than you do.
+  - bugfix: Gunthers no longer kill Gubbucks instead of breeding with them
+  - bugfix: gutlunches will stop having too many children
+  - balance: gutlunches are no longer in the mining faction
+  wraith-54321:
+  - code_imp: added support for key based antag huds
+2024-03-27:
+  Absolucy:
+  - bugfix: Fixed cigarettes not being smokeable without a space helmet + internals.
+  - bugfix: Fixed being unable to melee lavaland tendrils.
+  - balance: (Melbert) Rats are now 5x less likely to decide to eat a cable when idling.
+      (1%, down from 5%)
+  - rscadd: (Kapu) Lockers, crates, and machines no longer block click attempts in
+      adjacency checks. Basically, you can reach tables cornered between lockers/machines.
+  - qol: (Rhials) Ventcrawling mobs have a 1 second delay/warning before exiting the
+      ventilation.
+  - qol: (LT3) ID card linking now preloads your bank account number.
+  - bugfix: (Kapu) Blood once again appears as small drops instead of splatters during
+      minor bleeding.
+  - qol: (dieamond13) Gives roundstart prisoners a key memory of what their crime
+      is.
+  - balance: (Noodlecat) Heretic robes now have wound armor.
+  - balance: (Noodlecat) Heretic blades now have knife-level wound bonuses.
+  - bugfix: (Shadow-Quill) The CRAB-17 will now only take whole credits, as fractional
+      credits were found to be worth less.
+  - qol: (JohnFulpWillard) Health Analyzers now show embeds in bodyparts on examine.
+  - qol: (mc-oofert) Latejoining crew start with crowbars if arrivals enviromental
+      power is OFF.
+  - image: (SandPoot) Changed screentips icons to something a lot fancier unified
+      with the LMB / RMB text.
+  - qol: (SandPoot) There are accessibility preferences to disable this! Look for
+      "Screentip context with images" beside the other screentip preferences.
+  - rscadd: (Rhials) Nuclear Operatives, in an attempt to appeal to the more "tacticool"
+      members of their cause, have begun using callsigns to designate themselves.
+      Check your preferences to set your Operative Alias!
+  - qol: (Rhials) At the request of the more vain members of the cause, hair dye has
+      been added to the Operative Firebase dorms.
+  - qol: (carlarctg) Heretic runes no longer have every single transparent pixel set
+      to 1 alpha, to make it easier to click on objects.
+  - qol: (carlarctg) Clearing heretic runes with mansus grasp takes 0.4 seconds of
+      standing still, to prevent you from accidentally clearing it in combat.
+  - code_imp: (carlarctg) Added code for effect remover element to use a windup if
+      set.
+  - qol: (Momo8289) Cryotubes will now notify medbay if the patient within is dead,
+      and will eject them if auto is on.
+  - qol: (Momo8289) Cryotubes will now automatically turn on when a patient enters
+      it if auto is on, but you can no longer close the cryotube on yourself.
+  - qol: (LT3) TGUI will now wait longer trying to reconnect to a new round.
+  - qol: (Shroopy) Implanted HUDs can now be toggled on and off with an action.
+  - sound: (Tattle) nerfed the police whistle volume.
+  - bugfix: (carlarctg) Cauteries now have 'heat', like lighters, welders, etc.
+  - qol: (carlarctg) You can smoke with a space helmet as long as you have internals
+      on.
+  - qol: (LT3) Being connected to an IV now has a visual indicator.
+  - rscadd: (uaioy) Added 2 pocket quick equip keybinds.
+  - qol: (nikothedude) Departmental order consoles now alert their department via
+      radio when their cooldown expires.
+  - rscadd: (Thunder12345) Crewmembers arriving very late will not always have time
+      to finish their breakfast.
+  - bugfix: (Dawnseer) fixed an oversight - Made Goliath Cloak and Goliath Cloak Hood
+      fireproof. And Goliath hide.
+  - balance: (iwishforducks) Railings now only cost 2 rods and are much easier to
+      construct. But they can now be destroyed much easier and cut with wirecutters
+      without unwrenching.
+  - balance: (Melbert) If your server has non-human morgue cadavers enabled, you will
+      be guaranteed one human cadaver no matter what.
+  - balance: (Melbert) All maps now have an additional morgue cadaver roundstart.
+  - qol: (MTandi) You can fill microwave with stuff by hitting it with a box full
+      of stuff.
+  - balance: (Melbert) Body temperature from being lit on fire will soft cap at 1,200
+      K. It will still increase beyond this, but with diminishing returns. For example,
+      at 5,000 K, fire will heat 67x weaker.
+  - sound: (carlarctg) Adds a sound effect for hypospray/medipen injections. Doesn't
+      affect sleepy pens.
+  - rscadd: (mc-oofert, Ghommie) added a new hallucination, your mother.
+  - refactor: Improved shuttle gibbing code, adding a new resistance flag, `SHUTTLE_CRUSH_PROOF`.
+  - bugfix: Immortality revival spectres can no longer be crushed by shuttles.
+  - rscadd: The ghost of Poly can no longer be shuttle-crushed, nor can anything incorporeal.
+  - qol: Antag/event token requests now time out after 5 minutes of inaction.
+  - admin: Improved the admin notification for token requests.
+  - sound: Added a sound whenever an token is rejected.
+  AlbertNanotracen:
+  - bugfix: Plants with no product defined will no longer have a chance to return
+      early on harvest.
+  Gboster, Kapu1178:
+  - qol: 'Gboster: made the asteroid magnet into a TGUI'
+  - rscadd: 'Kapu1178: The magnet now has a 60 second cooldown between uses.'
+  - bugfix: 'Kapu1178: Summoned asteroids are removed from the list of available asteroids.'
+  - bugfix: 'Kapu1178: Fixed a bug that allowed you to summon multiple asteroids at
+      once.'
+  KnigTheThrasher:
+  - rscadd: Blind support for booping
+  - rscadd: Chat message when someone boops you
+  - bugfix: Removed a duped door when meta rolls a sinularity engine
+2024-03-28:
+  Absolucy:
+  - bugfix: Chameleon holsters, thermals, and sechuds can be locked with multitools,
+      like all other chameleon items.
+  - bugfix: Fix incorrect pixel_y shift after getting up, which resulted in the player
+      being shifted 6 pixels down.
+  - bugfix: fix modular computers (i.e hop's id console) being borked
+  DexeeXI:
+  - balance: spectral music items are halloween or badmin only.
+  Gboster-0:
+  - code_imp: PKA code got cleaned up
+  NicoDeLuna:
+  - rscadd: added harlequin boots
+  Rhials, Jolly-66, MrMelbert, Jacquerel, cnleth, Ghommie, MelokGleb and KREKS, McRamon:
+  - sound: Revolutionaries now have their own stinger that plays upon becoming that
+      antagonist.
+  - spellcheck: Changeling hallucination sting will now tell you it costs 10 chemicals.
+      It always did, but now its there. Cheers?
+  - bugfix: Ling Augmented Eyesight now no longer causes you to lose the effects of
+      your Meson glasses
+  - bugfix: Ling Augmented Eyesight now more consistently tracks the flash protection
+      / vulnerability it confers.
+  - qol: Changeling Emporium is now sorted alphabetically.
+  - qol: Changeling Emporium now has a search bar!
+  - refactor: Refactored display-ing of antag objectives in their UIs
+  - rscadd: Traitors, Changelings, Heretics, Wizards, Malfunctioning AIs, and Ninjas
+      can now all reject their original objectives and provide one of their own in
+      its place. A Heretic doing this will no longer be able to ascend.
+  - rscadd: '"Custom" objectives which aren''t mechanically tracked will no longer
+      report success or failure upon round end.'
+  - qol: Space Ninja spider charges will now display where they can be detonated when
+      examined, if you are a ninja.
+  - bugfix: Changeling tentacle and bloodchiller from xenobio will no longer stop
+      working if you have antimagic
+  - spellcheck: Replaced an irrelevant tip of the round about scars with a better
+      one
+  - rscadd: Added a new 0 cost passive changeling ability, the Defibrillator Grasp.
+  - rscadd: DNA sing is now no longer innate, but 0 cost, allowing changelings to
+      not take it if they don't plan on using it.
+  - balance: The Changeling Space Suit has been replaced by a new ability which makes
+      you passively spaceproof without replacing your clothing.
+  - admin: Editing the atmos sensitivity variables on a basic mob during the game
+      will now actually do something.
+  - rscadd: Added the daily (roundstart) message server key to the Chief Engineer's
+      memories.
+  - image: New sprites for changeling powers and items. Woooh.
+  - bugfix: Fix ling revival for full-dead lings
+  Tattle:
+  - image: removed a stray gray pixel from the milk containers
+  Tractor Mann:
+  - rscadd: Now thats what i call music! 22 new songs have been added to the bartenders
+      jukebox and lobby!
+2024-03-29:
+  Absolucy:
+  - bugfix: The experimental cloner ghost poll now shows what the clone will actually
+      look like, rather than a nugget.
+  - bugfix: The experimental cloner should 100% work properly now.
+  - qol: Experimental cloners no longer delete records upon a successful clone, but
+      they will no longer start clones while autoprocessing is enabled either.
+  AlbertNanotracen:
+  - rscadd: Added a station version of sandy dirt floors.
+  - qol: Dirt in chicken pens can be crowbarred up and replaced.
+  - image: Added a new icon for the station version of the sandy dirt tile
+2024-03-30:
+  Absolucy:
+  - bugfix: (Xander3359) Fix hack comms console/locate weakpoint objective showing
+      up multiple times
+  - bugfix: (Jacquerel) Traitors should generate with "free objective" less often,
+      and will once more be assigned to steal things.
+  - bugfix: (carlarctg) Fixed being unable to reimburse syndicate spawners via uplinks.
+      This includes nukie reinforcements, cyborgs, and holoparasite injectors.
+  - refactor: (carlarctg) Turned TC reimbursement into a bespoke element.
+  - spellcheck: (carlarctg) Tuned demon's blood message when there's no ghosts to
+      pick to be a little more understandable and sensible.
+2024-03-31:
+  Absolucy:
+  - bugfix: Fixed double-encoded messages with AI holocalls.
+  Gboster-0:
+  - bugfix: fixed the area pinpointer maybe
+  The-Black-Screen:
+  - rscadd: adds an updated version of our BoxStation back into the game, also adds
+      the random bars and engines
+  - code_imp: changes `roomspawner.dm` to include BoxStation's random bars and engines
+  - config: changes `maps.txt` to include BoxStation

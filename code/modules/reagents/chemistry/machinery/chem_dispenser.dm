@@ -23,10 +23,14 @@
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	processing_flags = NONE
 
-	var/obj/item/stock_parts/cell/cell
-	var/powerefficiency = 0.1
+	/// The cell used to dispense reagents
+	var/obj/item/stock_parts/power_store/cell/cell
+	/// Efficiency used when converting cell power to reagents. Joule per volume.
+	var/power_cost = 0.1 KILO WATTS
+	/// The current amount this machine is dispensing
 	var/amount = 30
-	var/recharge_amount = 10
+	/// The rate at which this machine recharges the power cell.
+	var/recharge_amount = 0.3 KILO WATTS
 	var/recharge_counter = 0
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	///If the UI has the pH meter shown
@@ -65,21 +69,31 @@
 		/datum/reagent/fuel,
 		/datum/reagent/silver,
 	)
-	//these become available once the manipulator has been upgraded to tier 4 (femto)
+	//These become available once upgraded. (Monkestation Edit)
 	var/list/upgrade_reagents = list(
-		/datum/reagent/acetone,
-		/datum/reagent/ammonia,
-		/datum/reagent/ash,
-		/datum/reagent/diethylamine,
 		/datum/reagent/fuel/oil,
+		/datum/reagent/ammonia,
+		/datum/reagent/ash
+	)
+
+	var/list/upgrade_reagents2 = list(
+		/datum/reagent/acetone,
+		/datum/reagent/phenol,
+		/datum/reagent/diethylamine
+	)
+
+	var/list/upgrade_reagents3 = list(
+		/datum/reagent/medicine/mine_salve,
+		/datum/reagent/toxin,
 		/datum/reagent/saltpetre
 	)
+
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
-		/datum/reagent/medicine/morphine,
+		/datum/reagent/medicine/painkiller/morphine,
 		/datum/reagent/drug/space_drugs,
-		/datum/reagent/toxin
+		/datum/reagent/australium
 	)
 
 	var/list/recording_recipe
@@ -107,9 +121,9 @@
 	if(panel_open)
 		. += span_notice("[src]'s maintenance hatch is open!")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads:\n\
-		Recharging <b>[recharge_amount]</b> power units per interval.\n\
-		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
+		. += span_notice("The status display reads:\n\
+		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
+		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.")
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 
@@ -121,13 +135,11 @@
 
 
 /obj/machinery/chem_dispenser/process(seconds_per_tick)
-	if (recharge_counter >= 8)
-		var/usedpower = cell.give(recharge_amount)
-		if(usedpower)
-			use_power(active_power_usage + recharge_amount)
-		recharge_counter = 0
+	if(cell.maxcharge == cell.charge)
 		return
-	recharge_counter += seconds_per_tick
+	use_energy(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
+	charge_cell(recharge_amount * seconds_per_tick, cell) //This also costs power.
+
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -204,16 +216,63 @@
 /obj/machinery/chem_dispenser/ui_data(mob/user)
 	var/data = list()
 	data["amount"] = amount
-	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
-	data["maxEnergy"] = cell.maxcharge * powerefficiency
-	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["energy"] = cell.charge ? cell.charge : "0" //To prevent NaN in the UI.
+	data["maxEnergy"] = cell.maxcharge
+	data["displayedUnits"] = cell.charge ? (cell.charge / power_cost) : "0"
+	data["displayedMaxUnits"] = cell.maxcharge / power_cost
 	data["showpH"] = show_ph
 
+	var/list/chemicals = list()
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+
+	for(var/re in dispensable_reagents)
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
+		if(temp)
+			var/chemname = temp.name
+			var/chemcolor = temp.color
+			if(is_hallucinating && prob(5))
+				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
+				chemcolor = random_colour()
+			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph)))
+	data["chemicals"] = chemicals
+	data["recipes"] = saved_recipes
+
+	data["recordingRecipe"] = recording_recipe
+	data["recipeReagents"] = list()
+	if(beaker?.reagents.ui_reaction_id)
+		var/datum/chemical_reaction/reaction = get_chemical_reaction(beaker.reagents.ui_reaction_id)
+		for(var/_reagent in reaction.required_reagents)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			data["recipeReagents"] += reagent.name
+
+	var/list/beaker_data = null
+	if(!QDELETED(beaker))
+		beaker_data = list()
+		beaker_data["maxVolume"] = beaker.volume
+		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
+		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		var/list/beakerContents = list()
+		if(length(beaker.reagents.reagent_list))
+			for(var/datum/reagent/reagent as anything in beaker.reagents.reagent_list)
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
+		beaker_data["contents"] = beakerContents
+	data["beaker"] = beaker_data
+
+	return data
+
+	/*
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = round(R.volume, 0.01), "pH" = R.ph, "purity" = R.purity))) // list in a list because Byond merges the first list...
+			var/chem_name = R.name
+			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				chem_name = "Ammonia?"
+			beakerContents.Add(list(list("name" = chem_name, "volume" = round(R.volume, 0.01), "pH" = R.ph, "purity" = R.purity))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
@@ -252,11 +311,13 @@
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
 			data["recipeReagents"] += ckey(reagent.name)
 	return data
+	*/
 
-/obj/machinery/chem_dispenser/ui_act(action, params)
+/obj/machinery/chem_dispenser/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("amount")
 			if(!is_operational || QDELETED(beaker))
@@ -265,26 +326,31 @@
 			if(target in beaker.possible_transfer_amounts)
 				amount = target
 				work_animation()
-				. = TRUE
+				return TRUE
+
 		if("dispense")
 			if(!is_operational || QDELETED(cell))
 				return
 			var/reagent_name = params["reagent"]
 			if(!recording_recipe)
-				var/reagent = GLOB.name2reagent[reagent_name]
+				var/reagent = GLOB.name2reagent[clean_reagent_name(reagent_name)] // MONKE EDIT: clean_reagent_name until https://github.com/tgstation/tgstation/pull/78637
 				if(beaker && dispensable_reagents.Find(reagent))
-
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
-					if(!cell?.use(to_dispense / powerefficiency))
+					if(!to_dispense)
+						say("The container is full!")
+						return
+					if(!cell.use(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
+					beaker.add_hiddenprint(ui.user)
 					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature)
 
 					work_animation()
 			else
 				recording_recipe[reagent_name] += amount
-			. = TRUE
+			return TRUE
+
 		if("remove")
 			if(!is_operational || recording_recipe)
 				return
@@ -292,10 +358,12 @@
 			if(beaker && (amount in beaker.possible_transfer_amounts))
 				beaker.reagents.remove_all(amount)
 				work_animation()
-				. = TRUE
+				return TRUE
+
 		if("eject")
-			replace_beaker(usr)
-			. = TRUE
+			replace_beaker(ui.user)
+			return TRUE
+
 		if("dispense_recipe")
 			if(!is_operational || QDELETED(cell))
 				return
@@ -304,87 +372,96 @@
 			if(!LAZYLEN(chemicals_to_dispense))
 				return
 			for(var/key in chemicals_to_dispense)
-				var/reagent = GLOB.name2reagent[translate_legacy_chem_id(key)]
+				var/reagent = GLOB.name2reagent[clean_reagent_name(key)] // MONKE EDIT: clean_reagent_name
 				var/dispense_amount = chemicals_to_dispense[key]
 				if(!dispensable_reagents.Find(reagent))
 					return
 				if(!recording_recipe)
 					if(!beaker)
 						return
-
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(dispense_amount, holder.maximum_volume - holder.total_volume))
 					if(!to_dispense)
 						continue
-					if(!cell?.use(to_dispense / powerefficiency))
+					if(!cell.use(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
+					beaker.add_hiddenprint(ui.user)
 					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature)
 					work_animation()
 				else
 					recording_recipe[key] += dispense_amount
-			. = TRUE
+			return TRUE
+
 		if("clear_recipes")
-			if(!is_operational)
-				return
-			var/yesno = tgui_alert(usr, "Clear all recipes?",, list("Yes","No"))
-			if(yesno == "Yes")
+			if(is_operational && tgui_alert(ui.user, "Clear all recipes?", "Clear?", list("Yes", "No")) == "Yes")
 				saved_recipes = list()
-			. = TRUE
+				return TRUE
+
 		if("record_recipe")
-			if(!is_operational)
-				return
-			recording_recipe = list()
-			. = TRUE
+			if(is_operational)
+				recording_recipe = list()
+				return TRUE
+
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
-			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN)
+			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
-			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
+			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
 				return
 			if(name && recording_recipe)
 				for(var/reagent in recording_recipe)
-					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
+					var/reagent_id = GLOB.name2reagent[clean_reagent_name(reagent)] // MONKE EDIT: clean_reagent_name
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-						to_chat(usr, span_warning("[src] cannot find <b>[reagent]</b>!"))
+						to_chat(ui.user, span_warning("[src] cannot find <b>[reagent]</b>!"))
 						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
-				. = TRUE
+				return TRUE
+
 		if("cancel_recording")
-			if(!is_operational)
-				return
-			recording_recipe = null
-			. = TRUE
+			if(is_operational)
+				recording_recipe = null
+				return TRUE
+
 		if("reaction_lookup")
 			if(beaker)
-				beaker.reagents.ui_interact(usr)
+				beaker.reagents.ui_interact(ui.user)
+
+	var/result = handle_ui_act(action, params, ui, state)
+	if(isnull(result))
+		result = FALSE
+	return result
+
+/// Same as ui_act() but to be used by subtypes exclusively
+/obj/machinery/chem_dispenser/proc/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	return null
 
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+/obj/machinery/chem_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		update_appearance()
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
+	if(is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
+		var/obj/item/reagent_containers/B = attacking_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
 		ui_interact(user)
-	else if(!(user.istate & ISTATE_HARM) && !istype(I, /obj/item/card/emag))
-		to_chat(user, span_warning("You can't load [I] into [src]!"))
+	else if(!(user.istate & ISTATE_HARM) && !istype(attacking_item, /obj/item/card/emag))
+		to_chat(user, span_warning("You can't load [attacking_item] into [src]!"))
 		return ..()
 	else
 		return ..()
@@ -397,7 +474,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	var/list/datum/reagents/R = list()
-	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
+	var/total = min(rand(7,15), FLOOR(cell.charge*INVERSE(power_cost), 1))
 	var/datum/reagents/Q = new(total*10)
 	if(beaker?.reagents)
 		R += beaker.reagents
@@ -407,7 +484,7 @@
 	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
-	cell.use(total/powerefficiency)
+	cell.use(total * power_cost)
 	cell.emp_act(severity)
 	work_animation()
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
@@ -415,23 +492,24 @@
 /obj/machinery/chem_dispenser/RefreshParts()
 	. = ..()
 	recharge_amount = initial(recharge_amount)
-	var/newpowereff = 0.0666666
+	var/new_power_cost = initial(power_cost)
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/cell/stock_cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell/stock_cell in component_parts)
 		cell = stock_cell
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		newpowereff += 0.0166666666 * matter_bin.tier
+		new_power_cost -= (matter_bin.tier * 0.25 KILO WATTS)
 		parts_rating += matter_bin.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		recharge_amount *= capacitor.tier
 		parts_rating += capacitor.tier
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		if (manipulator.tier > 3)
+	for(var/datum/stock_part/manipulator/manipulator in component_parts) // Monkestation Edit
+		if (manipulator.tier > 1)
 			dispensable_reagents |= upgrade_reagents
-		else
-			dispensable_reagents -= upgrade_reagents
-		parts_rating += manipulator.tier
-	powerefficiency = round(newpowereff, 0.01)
+		if (manipulator.tier > 2)
+			dispensable_reagents |= upgrade_reagents2
+		if (manipulator.tier > 3)
+			dispensable_reagents |= upgrade_reagents3
+	power_cost = max(new_power_cost, 0.1 KILO WATTS)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
@@ -466,9 +544,6 @@
 /obj/machinery/chem_dispenser/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_dispenser/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
@@ -478,7 +553,7 @@
 	has_panel_overlay = FALSE
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
-	pixel_y = 6
+	anchored_tabletop_offset = 6
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null
@@ -495,6 +570,7 @@
 		/datum/reagent/consumable/lemonjuice,
 		/datum/reagent/consumable/lemon_lime,
 		/datum/reagent/consumable/limejuice,
+		/datum/reagent/consumable/melon_soda,
 		/datum/reagent/consumable/menthol,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/pineapplejuice,
@@ -502,6 +578,7 @@
 		/datum/reagent/consumable/shamblers,
 		/datum/reagent/consumable/spacemountainwind,
 		/datum/reagent/consumable/sodawater,
+		/datum/reagent/consumable/sol_dry,
 		/datum/reagent/consumable/space_up,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/tea,
@@ -567,6 +644,7 @@
 		/datum/reagent/consumable/ethanol/ale,
 		/datum/reagent/consumable/ethanol/applejack,
 		/datum/reagent/consumable/ethanol/beer,
+		/datum/reagent/consumable/ethanol/coconut_rum,
 		/datum/reagent/consumable/ethanol/cognac,
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
@@ -577,6 +655,7 @@
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/beer/maltliquor,
 		/datum/reagent/consumable/ethanol/navy_rum,
+		/datum/reagent/consumable/ethanol/rice_beer,
 		/datum/reagent/consumable/ethanol/rum,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/tequila,
@@ -585,6 +664,7 @@
 		/datum/reagent/consumable/ethanol/vodka,
 		/datum/reagent/consumable/ethanol/whiskey,
 		/datum/reagent/consumable/ethanol/wine,
+		/datum/reagent/consumable/ethanol/yuyake,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -691,7 +771,7 @@
 		/datum/reagent/fuel/oil,
 		/datum/reagent/saltpetre,
 		/datum/reagent/medicine/mine_salve,
-		/datum/reagent/medicine/morphine,
+		/datum/reagent/medicine/painkiller/morphine,
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,

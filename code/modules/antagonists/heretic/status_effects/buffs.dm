@@ -6,6 +6,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
+	show_duration = TRUE
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -30,15 +31,16 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
+	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 
 // WOUNDED SOLDIER
@@ -47,14 +49,15 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
 	tick_interval = 1 SECONDS
+	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/marshal/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/marshal/tick()
 	if(!iscarbon(owner))
@@ -106,7 +109,7 @@
 	id = "Silver Knives"
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.
@@ -133,7 +136,7 @@
 	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
-	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 	for(var/blade_num in 1 to max_num_blades)
 		var/time_until_created = (blade_num - 1) * time_between_initial_blades
 		if(time_until_created <= 0)
@@ -144,7 +147,7 @@
 	return TRUE
 
 /datum/status_effect/protective_blades/on_remove()
-	UnregisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
 	QDEL_LIST(blades)
 
 	return ..()
@@ -160,7 +163,7 @@
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
-/// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
+/// Signal proc for [COMSIG_LIVING_CHECK_BLOCK].
 /// If we have a blade in our list, consume it and block the incoming attack (shield it)
 /datum/status_effect/protective_blades/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -178,7 +181,9 @@
 	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
 		return
 
-	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, type)
+	SEND_SIGNAL(src, COMSIG_BLADE_BARRIER_TRIGGERED)
+	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id))
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 0.1 SECONDS)
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
@@ -191,9 +196,7 @@
 
 	qdel(to_remove)
 
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
-
-	return SHIELD_BLOCK
+	return SUCCESSFUL_BLOCK
 
 /// Remove deleted blades from our blades list properly.
 /datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
@@ -239,13 +242,12 @@
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION, TRAIT_GODMODE)
 
 /datum/status_effect/caretaker_refuge/on_apply()
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags |= GODMODE
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
@@ -256,7 +258,6 @@
 
 /datum/status_effect/caretaker_refuge/on_remove()
 	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags &= ~GODMODE
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
@@ -291,3 +292,23 @@
 /datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_CUFF_PREVENT
+
+// Path Of Moon status effect which hides the identity of the heretic
+/datum/status_effect/moon_grasp_hide
+	id = "Moon Grasp Hide Identity"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 15 SECONDS
+	show_duration = TRUE
+	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
+
+/datum/status_effect/moon_grasp_hide/on_apply()
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+	return TRUE
+
+/datum/status_effect/moon_grasp_hide/on_remove()
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+
+/atom/movable/screen/alert/status_effect/moon_grasp_hide
+	name = "Blessing of The Moon"
+	desc = "The Moon clouds their vision, as the sun always has yours."
+	icon_state = "moon_hide"

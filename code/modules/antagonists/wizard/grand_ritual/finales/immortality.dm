@@ -132,13 +132,12 @@
 	for(var/datum/quirk/target_quirk as anything in quirks)
 		target_quirk.add_to_holder(target)
 
-	dna.transfer_identity(target, TRUE)
+	dna.copy_dna(target.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
 		limb.update_limb(is_creating = TRUE)
 	target.updateappearance(mutcolor_update = TRUE)
 	target.domutcheck()
 	target.regenerate_icons()
-
 
 /// A ghostly image of a mob showing where and what is going to respawn
 /obj/effect/spectre_of_resurrection
@@ -154,6 +153,7 @@
 	light_inner_range = 1 //monkestation edit
 	light_outer_range = 2 //monkestation edit
 	light_color = COLOR_PALE_GREEN
+	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 	/// Who are we reviving?
 	var/mob/living/corpse
 	/// Who if anyone is playing as them?
@@ -206,7 +206,7 @@
 			dead_mind.grab_ghost(force = TRUE)
 		else
 			dead_mind.transfer_to(corpse, force_key_move = TRUE)
-	corpse.revive(HEAL_ALL) // The signal is sent even if they weren't actually dead
+	corpse.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // The signal is sent even if they weren't actually dead
 
 /// Remove our stored corpse back to the living world
 /obj/effect/spectre_of_resurrection/proc/on_corpse_revived()

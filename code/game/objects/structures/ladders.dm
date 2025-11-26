@@ -44,7 +44,7 @@
 	disconnect()
 	return ..()
 
-/obj/structure/ladder/LateInitialize()
+/obj/structure/ladder/LateInitialize(mapload_arg)
 	// By default, discover ladders above and below us vertically
 	var/turf/T = get_turf(src)
 	var/obj/structure/ladder/L
@@ -124,6 +124,10 @@
 
 	var/turf/target = get_turf(ladder)
 	user.zMove(target = target, z_move_flags = ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
+	if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
+		if(iscarbon(user))
+			var/mob/living/carbon/guy = user
+			guy.adjust_bodytemperature((guy.bodytemp_heat_damage_limit - guy.standard_body_temperature) * 0.6)
 
 	if(!is_ghost)
 		show_final_fluff_message(user, ladder, going_up)
@@ -224,17 +228,6 @@
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/ladder/attack_slime(mob/user, list/modifiers)
-	use(user)
-	return TRUE
-
-/obj/structure/ladder/attack_slime_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attackby(obj/item/item, mob/user, params)
 	use(user)
 	return TRUE
@@ -294,7 +287,7 @@
 	var/id
 	var/height = 0  // higher numbers are considered physically higher
 
-/obj/structure/ladder/unbreakable/LateInitialize()
+/obj/structure/ladder/unbreakable/LateInitialize(mapload_arg)
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
 		update_appearance()

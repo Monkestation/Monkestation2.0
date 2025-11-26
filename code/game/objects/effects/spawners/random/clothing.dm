@@ -152,6 +152,8 @@
 		/obj/item/storage/backpack/virology,
 		/obj/item/storage/backpack/satchel,
 		/obj/item/storage/backpack/satchel/leather,
+		/obj/item/storage/backpack/satchel/blackleather, //MONKESTATION
+		/obj/item/storage/backpack/satchel/retro, //MONKESTATION
 		/obj/item/storage/backpack/satchel/eng,
 		/obj/item/storage/backpack/satchel/med,
 		/obj/item/storage/backpack/satchel/vir,

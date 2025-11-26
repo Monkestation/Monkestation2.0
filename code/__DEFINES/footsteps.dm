@@ -29,11 +29,15 @@
 #define FOOTSTEP_MOB_RUST "footstep_rust"
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
+#define FOOTSTEP_OBJ_SILICON "footstep_silicon"
 
 //priority defines for the footstep_override element
 #define STEP_SOUND_NO_PRIORITY 0
 #define STEP_SOUND_CONVEYOR_PRIORITY 1
 #define STEP_SOUND_TABLE_PRIORITY 2
+
+///the key to a list of override sounds to replace with. Same format as the global lists.
+#define STEP_SOUND_SHOE_OVERRIDE "step_sound_shoe_override"
 
 ///the name of the index key for priority
 #define STEP_SOUND_PRIORITY "step_sound_priority"

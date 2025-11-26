@@ -1,7 +1,88 @@
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	..()
-	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))
+	. = ..()
+	if(QDELETED(src))
+		return
+	hit_by_damage(AM, throwingdatum)
+
+/obj/proc/hit_by_damage(atom/movable/hitting_us, datum/thrownthing/throwingdatum)
+	var/base_dam = hitting_us.throwforce
+	if(hitting_us.throwforce < damage_deflection) //yea no damage deflection was thrown out the window affecting a ton of stuff
+		take_damage(base_dam, BRUTE, MELEE, TRUE, get_dir(src, hitting_us), 0)
+		return
+	if(isliving(hitting_us))
+		var/mob/living/living_mob = hitting_us
+		var/speed_bonus = throwingdatum.speed - living_mob.throw_speed
+		if(speed_bonus > 0)
+			base_dam += (5 * speed_bonus)
+		base_dam += (5 * max(0, living_mob.mob_size - 1))
+	if(isitem(hitting_us))
+		var/obj/item/hit_item = hitting_us
+		base_dam += (5 * max(0, hit_item.w_class - 2))
+
+	// no armor penetration
+	take_damage(base_dam, BRUTE, MELEE, TRUE, get_dir(src, hitting_us), 0)
+
+/obj/structure/window/Initialize(mapload, direct)
+	. = ..()
+
+/obj/structure/window/Cross(atom/movable/crossed_atom)
+	. = ..()
+	if(.)
+		return .
+	if(!isliving(crossed_atom) || QDELETED(crossed_atom.throwing))
+		return .
+	if(anchored && get_integrity_percentage() > 0.5)
+		return .
+
+	var/turf/old_loc = loc
+
+	take_damage(INFINITY, BRUTE, MELEE, TRUE, get_dir(src, crossed_atom), 0)
+
+	if(!QDELETED(src))
+		return .
+
+	var/mob/living/defenestrated = crossed_atom
+	var/has_grille = locate(/obj/structure/grille) in old_loc
+	var/list/obj/item/shards = list()
+	for(var/obj/item/shard/shard in old_loc)
+		shards += shard
+
+	for(var/zone in shuffle(BODY_ZONES_ALL))
+		var/obj/item/bodypart/part = defenestrated.get_bodypart(zone)
+		if(!part)
+			continue
+		if(has_grille && prob(66))
+			continue
+
+		defenestrated.apply_damage(10, BRUTE, part, blocked = min(90, defenestrated.getarmor(part, MELEE)), sharpness = SHARP_POINTY, wound_bonus = 4, bare_wound_bonus = 8, attacking_item = (length(shards) ? shards[1] : null))
+		if(prob(25 * length(shards)) && shards[1].tryEmbed(part, TRUE))
+			shards -= shards[1]
+
+	if(has_grille)
+		defenestrated.Paralyze(1 SECONDS)
+		defenestrated.Knockdown(2 SECONDS)
+		defenestrated.visible_message(
+			span_danger("[defenestrated] is thrown against [src], shattering it!"),
+			span_userdanger("You are thrown against [src], shattering it!"),
+		)
+
+	else
+		defenestrated.Paralyze(3 SECONDS)
+		defenestrated.Knockdown(6 SECONDS)
+		defenestrated.visible_message(
+			span_danger("[defenestrated] is thrown clean through [src]!"),
+			span_userdanger("You are thrown clean through [src]!"),
+		)
+
+	return TRUE
+
+/obj/structure/window/hit_by_damage(atom/movable/hitting_us, datum/thrownthing/throwingdatum)
+	if(reinf || !isliving(hitting_us))
+		return ..()
+
+	// take a lot of damage from being hit with a mob - so we can defenestrate
+	take_damage(max_integrity * min(0.75, (get_armor_rating(MELEE) / 100)), BRUTE, MELEE, TRUE, get_dir(src, hitting_us), 0)
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -41,11 +122,25 @@
 		)
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
-			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
+			span_danger("[src] is hit by \a [hitting_projectile.generic_name || hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 
 	return damage_sustained > 0 ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+
+/obj/structure/window/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
+	// don't smack the window and its grille same turf, ever
+	for(var/obj/structure/grille/grille in loc)
+		hitting_projectile.impacted[grille] = TRUE
+
+	. = ..()
+	if(QDELETED(hitting_projectile) || . != BULLET_ACT_HIT)
+		return .
+	if(QDELETED(src) && prob(80))
+		// right through the window!
+		return BULLET_ACT_FORCE_PIERCE
+	return .
+
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
@@ -98,12 +193,6 @@
 	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
 	take_damage(amt, BRUTE)
 
-/obj/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	if(!user.is_adult)
-		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
-		log_combat(user, src, "attacked")
-
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
 	if(src && !QDELETED(src))
@@ -116,10 +205,10 @@
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
 	. = ..()
-	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || (acidpwr <= 0))
 		return FALSE
 
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume, custom_acid_overlay || GLOB.acid_overlay)
 	return TRUE
 
 ///called when the obj is destroyed by acid.
@@ -131,8 +220,8 @@
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
-		var/turf/T = loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		var/turf/our_turf = loc
+		if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
@@ -141,9 +230,8 @@
 		return TRUE
 	return ..()
 
-///called when the obj is destroyed by fire
-/obj/burn()
-	. = ..()
+/// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
+/obj/proc/burn()
 	deconstruct(FALSE)
 
 ///Called when the obj is hit by a tesla bolt.

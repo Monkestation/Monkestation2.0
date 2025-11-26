@@ -13,7 +13,7 @@ GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
 	maptext_height = 100
 	maptext_width = 500
 
-/atom/movable/screen/escape_menu/title/Initialize(mapload)
+/atom/movable/screen/escape_menu/title/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 
 	update_text()
@@ -35,7 +35,7 @@ GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
 		</span>
 	"}
 
-	maptext = "<font align='top'>" + subtitle_text + MAPTEXT_VCR_OSD_MONO(title_text) + "</font>"
+	maptext = "<font align='top'>" + subtitle_text + MAPTEXT_PIXELLARI(title_text) + "</font>"
 
 /atom/movable/screen/escape_menu/title/proc/on_station_name_changed()
 	SIGNAL_HANDLER

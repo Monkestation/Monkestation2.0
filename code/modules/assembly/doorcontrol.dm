@@ -142,9 +142,7 @@
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 
@@ -191,7 +189,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/tram/LateInitialize()
+/obj/item/assembly/control/tram/LateInitialize(mapload_arg)
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
 	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
@@ -218,8 +216,11 @@
 	if(!tram || !tram.is_operational) //tram is QDEL or has no power
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
-	if(tram.travelling) //in use
+	if(tram.travelling) //already on its way
 		say("The tram is already travelling to [tram.idle_platform].")
+		return
+	if(tram.controls_locked) //attempting a dispatch or on cooldown
+		say("The tram controller is busy. Try again in a moment.")
 		return
 	if(!destination_platform)
 		return
@@ -230,5 +231,8 @@
 		say("The tram is already here. Please board the tram and select a destination.")
 		return
 
-	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
-	tram.tram_travel(current_location)
+	if(tram.tram_travel(current_location))
+		say("The tram has been called to [current_location.name]. Please wait for its arrival.")
+		return
+	else
+		say("The tram controller has encountered an error. Try again in a moment.")

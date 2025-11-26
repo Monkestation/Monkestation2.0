@@ -35,6 +35,9 @@
 	var/normal_desc
 	//--end of love :'(--
 
+///Unique pet message
+	var/pet_message
+
 /*
 ** If you add a new plushie please add it to the lists at both:
 ** /obj/effect/spawner/random/entertainment/plushie
@@ -53,11 +56,10 @@
 		else
 			gender = MALE
 
-	love_message = list("\n[src] is so happy, \he could rip a seam!")
-	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
-	heartbroken_message = list("\n[src] looks so sad.")
-	vowbroken_message = list("\n[src] lost \his ring...")
-	parent_message = list("\n[src] can't remember what sleep is.")
+	love_message = list("[p_they(TRUE)] [p_are()] so happy, [p_they()] could rip a seam!")
+	heartbroken_message = list("[p_they(TRUE)] look\s so sad.")
+	vowbroken_message = list("[p_they(TRUE)] threw away [p_their()] wedding ring...")
+	parent_message = list("[p_they(TRUE)] can't remember what sleep is.")
 
 	normal_desc = desc
 
@@ -116,26 +118,28 @@
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
-		to_chat(user, span_notice("You pet [src]. D'awww."))
+		to_chat(user, span_notice("[pet_message ? pet_message : "You pet [src]. D'awww."]"))
 		if(grenade && !grenade.active)
 			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.get_sharpness())
+/obj/item/toy/plush/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, span_warning("You already murdered it!"))
 				return
 			if(!divine)
 				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
-				I.play_tool_sound(src)
+				attacking_item.play_tool_sound(src)
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
+				if(isliving(user))
+					var/mob/living/living_user = user
+					living_user.adjust_drunk_effect(20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
@@ -150,22 +154,22 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(isgrenade(I))
+	if(isgrenade(attacking_item))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
 		if(grenade)
 			to_chat(user, span_warning("[src] already has a grenade!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
-		span_danger("You slide [I] into [src]."))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
+		span_danger("You slide [attacking_item] into [src]."))
+		grenade = attacking_item
+		user.log_message("added a grenade ([attacking_item.name]) to [src]", LOG_GAME)
 		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
+	if(istype(attacking_item, /obj/item/toy/plush))
+		love(attacking_item, user)
 		return
 	return ..()
 
@@ -286,6 +290,7 @@
 	heal_memories()
 	partner.heal_memories()
 
+	partner_message = list("[p_they(TRUE)] [p_have()] a ring on [p_their()] finger! It says 'Bound to my dear [partner.name].'")
 	mood_message = pick(partner_message)
 	update_desc()
 
@@ -310,8 +315,9 @@
 	maternal_parent = Mama
 	paternal_parent = Dada
 	young = TRUE
-	name = "[Mama] Jr" //Icelandic naming convention pending
-	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	name = "[Mama.name] Jr" //Icelandic naming convention pending
+	normal_desc = "[src] [p_are()] a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	transform *= 0.75
 	update_desc()
 
 	Mama.mood_message = pick(Mama.parent_message)
@@ -381,16 +387,19 @@
 	desc = normal_desc
 	. = ..()
 	if(mood_message)
-		desc += mood_message
+		desc += span_info("\n[mood_message]")
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
@@ -501,6 +510,7 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
+// Worn sprite taken from Space Station 14. Bee hat sprite drawn by Ubaser.
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
@@ -509,16 +519,20 @@
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon_state = "map_plushie_lizard"
+	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
+	body_parts_covered = HEAD // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
-		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+		var/list/lizard_hsv = rgb2hsv(generated_lizard_color)
 
 		// If our color is too dark, use the classic green lizard plush color
-		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+		if(lizard_hsv[3] < 50)
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes
@@ -529,24 +543,36 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
-/obj/item/toy/plush/space_lizard_plushie
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
-	icon_state = "plushie_spacelizard"
-	inhand_icon_state = null
+	icon_state = "map_plushie_spacelizard"
+	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
 	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
+/obj/item/toy/plush/lizard_plushie/space/green
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "plushie_snake"
+	icon_state = "map_plushie_snake"
+	greyscale_config = /datum/greyscale_config/plush_snake
+	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
 	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -569,12 +595,15 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -633,6 +662,7 @@
 		say(pick(cry_still_messages))
 	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
 
+// Worn sprite taken from Space Station 14. Lizard hat sprite made by Cinder.
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
@@ -642,6 +672,10 @@
 	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	worn_icon_state = "plushie_h"
+	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
+	body_parts_covered = HEAD // Monkestation Edit
 
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
@@ -716,7 +750,7 @@
 	var/has_creepy_icons = FALSE //for updating icons
 
 	// only used for the base moth plush light
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 4
 	light_power = 1
 
@@ -767,7 +801,7 @@
 		update_brightness()
 
 		set_light_on(on)
-		if(light_system == STATIC_LIGHT)
+		if(light_system == COMPLEX_LIGHT)
 			update_light()
 
 		return TRUE
@@ -797,7 +831,7 @@
 	icon_state = "abductor"
 	inhand_icon_state = null
 	attack_verb_continuous = list("abducts", "probes")
-	attack_verb_continuous = list("abduct", "probe")
+	attack_verb_simple = list("abduct", "probe")
 	squeak_override = list('sound/weather/ashstorm/inside/weak_end.ogg' = 1) //very faint sound since abductors are silent as far as "speaking" is concerned.
 
 /obj/item/toy/plush/abductor/agent
@@ -806,7 +840,7 @@
 	icon_state = "abductor_agent"
 	inhand_icon_state = null
 	attack_verb_continuous = list("abducts", "probes", "stuns")
-	attack_verb_continuous = list("abduct", "probe", "stun")
+	attack_verb_simple = list("abduct", "probe", "stun")
 	squeak_override = list(
 		'sound/weapons/egloves.ogg' = 2,
 		'sound/weapons/cablecuff.ogg' = 1,
@@ -823,3 +857,20 @@
 		'sound/effects/slosh.ogg' = 1,
 		'sound/effects/splat.ogg' = 2
 	)
+
+/obj/item/toy/plush/shark
+	name = "shark plushie"
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia."
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
+	icon_state = "blahaj"
+	inhand_icon_state = "blahaj"
+	attack_verb_continuous = list("gnaws", "gnashes", "chews")
+	attack_verb_simple = list("gnaw", "gnash", "chew")
+
+/obj/item/toy/plush/donkpocket
+	name = "donk pocket plushie"
+	desc = "The stuffed companion of choice for the seasoned traitor."
+	icon_state = "donkpocket"
+	attack_verb_continuous = list("donks")
+	attack_verb_simple = list("donk")

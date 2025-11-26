@@ -1,0 +1,18 @@
+.VethPlayerPanel__header > .Section__title {
+  padding: 1em 0.5em;
+}
+
+.VethPlayerPanel__search > textarea {
+  padding: 0 0.5rem;
+  max-height: 2rem;
+  vertical-align: middle;
+}
+
+.VethPlayerPanel > tbody {
+  tr {
+    border-bottom: 1px solid hsla(240, 3%, 94%, 0.2);
+  }
+  :last-child {
+    border-bottom: none;
+  }
+}

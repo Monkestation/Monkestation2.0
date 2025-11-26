@@ -8,7 +8,7 @@
 	name = "nanite remote control"
 	desc = "A device that can remotely control active nanites through wireless signals."
 	w_class = WEIGHT_CLASS_SMALL
-	req_access = list(ACCESS_ROBOTICS)
+	req_access = list(ACCESS_RESEARCH)
 	icon = 'monkestation/icons/obj/device.dmi'
 	icon_state = "nanite_remote"
 	item_flags = NOBLUDGEON
@@ -19,21 +19,24 @@
 	var/code = 0
 	var/relay_code = 0
 	var/current_program_name = "Program"
+	/// Affects whether you can lock it, and use local mode.
+	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
 	if(locked)
 		. += span_notice("Alt-click to unlock.")
 
-/obj/item/nanite_remote/AltClick(mob/user)
-	. = ..()
-	if(locked)
-		if(allowed(user))
-			to_chat(user, span_notice("You unlock [src]."))
-			locked = FALSE
-			update_appearance()
-		else
-			to_chat(user, span_warning("Access denied."))
+/obj/item/nanite_remote/click_alt(mob/living/user)
+	if(!locked)
+		return CLICK_ACTION_BLOCKING
+	if(!allowed(user))
+		to_chat(user, span_warning("Access denied."))
+		return CLICK_ACTION_BLOCKING
+	to_chat(user, span_notice("You unlock [src]."))
+	locked = FALSE
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nanite_remote/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -51,24 +54,31 @@
 	if(locked)
 		. += "nanite_remote_locked"
 
-/obj/item/nanite_remote/afterattack(atom/target, mob/user, etc)
+/obj/item/nanite_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/nanite_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	switch(mode)
 		if(REMOTE_MODE_OFF)
-			return
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_SELF)
 			to_chat(user, span_notice("You activate [src], signaling the nanites in your bloodstream."))
 			signal_mob(user, code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_TARGET)
-			if(isliving(target) && (get_dist(target, get_turf(src)) <= 7))
-				to_chat(user, span_notice("You activate [src], signaling the nanites inside [target]."))
-				signal_mob(target, code, key_name(user))
+			if(isliving(interacting_with) && (get_dist(interacting_with, get_turf(src)) <= 7))
+				to_chat(user, span_notice("You activate [src], signaling the nanites inside [interacting_with]."))
+				signal_mob(interacting_with, code, key_name(user))
+				return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_AOE)
 			to_chat(user, span_notice("You activate [src], signaling the nanites inside every host around you."))
 			for(var/mob/living/L in view(user, 7))
 				signal_mob(L, code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_RELAY)
 			to_chat(user, span_notice("You activate [src], signaling all connected relay nanites."))
 			signal_relay(code, relay_code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code, source)
 	SEND_SIGNAL(M, COMSIG_NANITE_SIGNAL, code, source)
@@ -95,6 +105,7 @@
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
+	data["silicon"] = silicon
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
@@ -161,7 +172,7 @@
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
-			if(!(obj_flags & EMAGGED))
+			if(!(obj_flags & EMAGGED) && !silicon)
 				locked = TRUE
 				update_appearance()
 			. = TRUE
@@ -172,24 +183,28 @@
 	desc = "A device that can send text messages to specific programs."
 	var/comm_message = ""
 
-/obj/item/nanite_remote/comm/afterattack(atom/target, mob/user, etc)
+/obj/item/nanite_remote/comm/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	switch(mode)
 		if(REMOTE_MODE_OFF)
-			return
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_SELF)
 			to_chat(user, span_notice("You activate [src], signaling the nanites in your bloodstream."))
 			signal_mob(user, code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_TARGET)
-			if(isliving(target) && (get_dist(target, get_turf(src)) <= 7))
-				to_chat(user, span_notice("You activate [src], signaling the nanites inside [target]."))
-				signal_mob(target, code, key_name(user))
+			if(isliving(interacting_with) && (get_dist(interacting_with, get_turf(src)) <= 7))
+				to_chat(user, span_notice("You activate [src], signaling the nanites inside [interacting_with]."))
+				signal_mob(interacting_with, code, key_name(user))
+				return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_AOE)
 			to_chat(user, span_notice("You activate [src], signaling the nanites inside every host around you."))
 			for(var/mob/living/L in view(user, 7))
 				signal_mob(L, code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 		if(REMOTE_MODE_RELAY)
 			to_chat(user, span_notice("You activate [src], signaling all connected relay nanites."))
 			signal_relay(code, relay_code, key_name(user))
+			return ITEM_INTERACT_SUCCESS
 
 /obj/item/nanite_remote/comm/signal_mob(mob/living/M, code, source)
 	SEND_SIGNAL(M, COMSIG_NANITE_COMM_SIGNAL, code, comm_message, source)
@@ -225,6 +240,9 @@
 				return
 			comm_message = new_message
 			. = TRUE
+
+/obj/item/nanite_remote/cyborg
+	silicon = TRUE
 
 #undef REMOTE_MODE_OFF
 #undef REMOTE_MODE_SELF

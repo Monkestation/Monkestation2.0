@@ -9,6 +9,7 @@
 		/obj/item/reagent_containers/cup/glass/coffee = 6,
 		/obj/item/reagent_containers/cup/glass/mug/tea = 6,
 		/obj/item/reagent_containers/cup/glass/mug/coco = 3,
+		/obj/item/reagent_containers/cup/glass/mug/britcup/bogril = 3,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/cup/glass/ice = 12,

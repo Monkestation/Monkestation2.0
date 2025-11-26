@@ -1,5 +1,6 @@
 /mob/living/basic/chicken/rev_raptor
 	icon_suffix = "rev_raptor"
+	worn_slot_flags = null
 
 	breed_name = "Revolutionary Raptor"
 	breed_name_male = "Revolutionary Tiercel"
@@ -38,17 +39,17 @@
 	shared_cooldown = NONE
 	what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
 
-
 /datum/action/cooldown/mob_cooldown/chicken/rev_convert/PreActivate(atom/target)
-	. = ..()
-	if (target == owner)
-		return
-	if(!istype(target, /mob/living/basic/chicken))
-		return
+	if(target == owner || !istype(target, /mob/living/basic/chicken))
+		return FALSE
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/chicken/rev_convert/Activate(mob/living/target)
+	if(!istype(target, /mob/living/basic/chicken))
+		CRASH("Revolutionary raptor somehow tried to convert non-chicken")
 	owner.say("VIVA, BAWK!")
-	new /mob/living/basic/chicken/raptor(target.loc)
+	var/mob/living/basic/chicken/raptor/converted_raptor = new(target.loc)
+	target.mind?.transfer_to(converted_raptor)
 	qdel(target)
 	StartCooldown()
 	return TRUE

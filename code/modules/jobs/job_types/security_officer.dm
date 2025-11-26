@@ -38,8 +38,8 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
-
+	job_flags = STATION_JOB_FLAGS
+	antag_capacity_points = 3
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -121,13 +121,11 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			qdel(spawning.ears)
 		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
 
-	//monkestation edit start: add dept sec outfits
+	//monkestation edit start: add dept sec outfitsif(suit)
 	if(suit)
-		for(var/obj/item/gun/ballistic/automatic/pistol/paco/no_mag/stored in spawning.contents)
-			if(spawning.wear_suit)
-				qdel(spawning.wear_suit)
-			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
-			spawning.equip_to_slot_or_del(stored,ITEM_SLOT_SUITSTORE)
+		if(spawning.wear_suit)
+			qdel(spawning.wear_suit)
+		spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
 	if(head)
 		if(spawning.head && !isplasmaman(spawning))
 			qdel(spawning.head)
@@ -184,16 +182,18 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
-			if (pda.saved_identification in partners)
-				targets += pda
+		for(var/messenger_ref in GLOB.pda_messengers)
+			var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+			if(!(messenger.computer?.saved_identification in partners))
+				continue
+			targets += messenger
 
 	if (!targets.len)
 		return
 
-	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
-		"name" = "Security Department Update",
-		"job" = "Automated Announcement System",
+	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
+		"fakename" = "Security Department Update",
+		"fakejob" = "Automated Announcement System",
 		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
 		"targets" = targets,
 		"automated" = TRUE,
@@ -222,18 +222,17 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer
 	head = /obj/item/clothing/head/helmet/hat/cowboy //monkestation edit: cowboy sec
 	suit = /obj/item/clothing/suit/armor/secduster //monkestation edit: cowboy sec
-	suit_store = /obj/item/gun/ballistic/automatic/pistol/paco/no_mag //monkestation edit: Paco sec
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
-		/obj/item/ammo_box/magazine/m35/rubber = 2, //monkestation edit: Paco sec
-		/obj/item/ammo_box/magazine/m35 = 1, //monkestation edit: Paco sec
+		/obj/item/security_voucher/primary, //monkestation edit: Voucher sec
+		/obj/item/security_voucher/utility, //monkestation edit
 		)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	shoes = /obj/item/clothing/shoes/jackboots/sec
-	l_pocket = /obj/item/restraints/handcuffs
-	r_pocket = /obj/item/assembly/flash/handheld
+	l_pocket = /obj/item/assembly/flash/handheld
+	r_pocket = /obj/item/restraints/handcuffs
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec

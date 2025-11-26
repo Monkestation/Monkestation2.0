@@ -4,9 +4,13 @@
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	typepath = /datum/round_event/antagonist/solo/bloodcult
+	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
 		JOB_DETECTIVE,
@@ -15,12 +19,16 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
@@ -33,6 +41,8 @@
 	earliest_start = 0 SECONDS
 	weight = 4
 	max_occurrences = 1
+	event_icon_state = "cult"
+	preferred_events = list(/datum/round_event_control/antagonist/solo/clockcult = 1)
 
 /datum/round_event/antagonist/solo/bloodcult
 	excute_round_end_reports = TRUE

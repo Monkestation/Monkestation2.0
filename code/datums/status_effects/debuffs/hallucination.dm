@@ -38,13 +38,13 @@
 	))
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
-/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode)
+/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
 	if(!advanced)
 		return
-
-	render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
+	render_list += conditional_tooltip("<span class='info ml-1'>Subject is hallucinating.</span>", "Supply antipsychotic medication.", tochat)
+	render_list += "<br>"
 
 /// Signal proc for [COMSIG_CARBON_CHECKING_BODYPART],
 /// checking bodyparts while hallucinating can cause them to appear more damaged than they are
@@ -68,7 +68,7 @@
 	source.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [bumped]",)
 	return STOP_BUMP
 
-/datum/status_effect/hallucination/tick(seconds_per_tick, times_fired)
+/datum/status_effect/hallucination/tick(seconds_between_ticks, times_fired)
 	if(owner.stat == DEAD)
 		return
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
@@ -82,7 +82,7 @@
 /datum/status_effect/hallucination/sanity
 	id = "low sanity"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1 // This lasts "forever", only goes away with sanity gain
+	duration = STATUS_EFFECT_PERMANENT // This lasts "forever", only goes away with sanity gain
 
 /datum/status_effect/hallucination/sanity/on_apply()
 	if(!owner.mob_mood)
@@ -94,7 +94,7 @@
 /datum/status_effect/hallucination/sanity/refresh(...)
 	update_intervals()
 
-/datum/status_effect/hallucination/sanity/tick(seconds_per_tick, times_fired)
+/datum/status_effect/hallucination/sanity/tick(seconds_between_ticks, times_fired)
 	// Using psicodine / happiness / whatever to become fearless will stop sanity based hallucinations
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return

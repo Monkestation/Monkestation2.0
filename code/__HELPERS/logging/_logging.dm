@@ -142,6 +142,8 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			log_shuttle(log_text)
 		if(LOG_MECHCOMP)
 			log_mechcomp(log_text)
+		if(LOG_BLACKMARKET)
+			log_blackmarket(log_text)
 		if(LOG_SPEECH_INDICATORS)
 			log_speech_indicators(log_text)
 		else
@@ -215,11 +217,11 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if(key)
 		if(C?.holder && C.holder.fakekey && !include_name)
 			if(include_link)
-				. += "<a href='?priv_msg=[C.getStealthKey()]'>"
+				. += "<a href='byond://?priv_msg=[C.getStealthKey()]'>"
 			. += "Administrator"
 		else
 			if(include_link)
-				. += "<a href='?priv_msg=[ckey]'>"
+				. += "<a href='byond://?priv_msg=[ckey]'>"
 			. += key
 		if(!C)
 			. += "\[DC\]"
@@ -243,6 +245,13 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/key_name_admin(whom, include_name = TRUE)
 	return key_name(whom, TRUE, include_name)
 
+/proc/key_name_and_tag(whom, include_link = null, include_name = TRUE)
+	var/tag = "!tagless!" // whom can be null in key_name() so lets set this as a safety
+	if(isatom(whom))
+		var/atom/subject = whom
+		tag = subject.tag
+	return "[key_name(whom, include_link, include_name)] ([tag])"
+
 /proc/loc_name(atom/A)
 	if(!istype(A))
 		return "(INVALID LOCATION)"
@@ -263,3 +272,12 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_mechcomp(text, list/data)
 	logger.Log(LOG_CATEGORY_MECHCOMP, text, data)
+
+/proc/log_blackmarket(text, list/data)
+	logger.Log(LOG_CATEGORY_BLACKMARKET, text, data)
+
+/proc/log_antag_rep(text, list/data)
+	logger.Log(LOG_CATEGORY_ANTAG_REP, text, data)
+
+/proc/log_hotspot(text, list/data)
+	logger.Log(LOG_CATEGORY_HOTSPOTS, text, data)

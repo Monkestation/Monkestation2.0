@@ -1,4 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cB" = (
+/obj/item/book/mimery,
+/obj/item/book/granter/action/spell/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "dq" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/structure/reagent_dispensers/fueltank,
@@ -25,9 +30,7 @@
 /area/ruin)
 "hG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/open{
-	opened = 1
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
 /obj/item/food/pie/mimetart,
@@ -40,7 +43,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "iP" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "lS" = (
@@ -48,8 +51,13 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "mB" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
+/area/ruin)
+"nA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/lighter/mime,
+/turf/open/floor/iron/checker/airless,
 /area/ruin)
 "of" = (
 /obj/item/storage/toolbox/syndicate,
@@ -61,9 +69,7 @@
 /area/ruin)
 "ox" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet{
-	opened = 1
-	},
+/obj/structure/closet/preopen,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,
@@ -114,6 +120,10 @@
 	dir = 8
 	},
 /obj/item/bedsheet/mime,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"yw" = (
+/obj/item/pneumatic_cannon/pie/selfcharge,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "yY" = (
@@ -189,7 +199,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Ij" = (
@@ -240,7 +250,7 @@
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Mx" = (
@@ -386,7 +396,7 @@ Mx
 Jz
 Jz
 BU
-gV
+cB
 gZ
 Fx
 Fx
@@ -426,7 +436,7 @@ ve
 WY
 KI
 hG
-iP
+nA
 Vj
 Fx
 Fx
@@ -438,7 +448,7 @@ Fx
 Fx
 gZ
 gZ
-gV
+yw
 wo
 ef
 JW

@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/poppy
 	endurance = 10
 	maturation = 8
-	yield = 6
+	yield = 60
 	potency = 20
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -39,6 +39,11 @@
 	icon_state = "seed-lily"
 	species = "lily"
 	plantname = "Lily Plants"
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "poppy-grow"
+	icon_dead = "poppy-dead"
+	icon_harvest = null
 	product = /obj/item/food/grown/poppy/lily
 	possible_mutations = list(/datum/hydroponics/plant_mutation/trumpet)
 
@@ -46,7 +51,10 @@
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
 	desc = "A beautiful orange flower."
-	greyscale_colors = "#fe881f"
+	icon_state = "lily"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -60,7 +68,7 @@
 	production = 5
 	endurance = 10
 	maturation = 12
-	yield = 4
+	yield = 40
 	potency = 20
 	growthstages = 4
 	weed_rate = 2
@@ -94,9 +102,12 @@
 
 /obj/item/food/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
+	icon_state = "geranium"
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	greyscale_colors = "#1499bb"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -135,7 +146,7 @@
 	endurance = 20
 	maturation = 7
 	production = 1
-	yield = 2
+	yield = 20
 	potency = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
@@ -164,12 +175,12 @@
 	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
-	yield = 2
+	yield = 20
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
-	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_floor)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_flower)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/food/grown/sunflower // FLOWER POWER!

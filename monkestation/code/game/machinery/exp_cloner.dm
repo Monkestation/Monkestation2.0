@@ -7,71 +7,195 @@
 	req_access = null
 	circuit = /obj/item/circuitboard/machine/clonepod/experimental
 	internal_radio = FALSE
+	grab_ghost_when = CLONER_FRESH_CLONE // This helps with getting the objective for evil clones to display.
+	VAR_PRIVATE
+		static/list/image/cached_clone_images
+
+	auto_clone = TRUE
+
+	/// Am I producing evil clones?
+	var/datum/objective/evil_clone/evil_objective = null
+	/// Can my objective be changed?
+	var/locked = FALSE
+	/// The custom objective given by the traitor item.
+	var/custom_objective = null
+
+
+/obj/machinery/clonepod/experimental/Destroy()
+	clear_human_dummy(REF(src))
+	return ..()
+
+/obj/machinery/clonepod/experimental/examine(mob/user)
+	. = ..()
+	if((evil_objective || custom_objective) && (in_range(user, src) || isobserver(user)))
+		if(!isnull(evil_objective) || !isnull(custom_objective))
+			. += span_warning("You notice an ominous, flashing red LED light.")
+			if(isobserver(user))
+				if(!isnull(custom_objective))
+					. += span_notice("Those cloned will have the objective: [custom_objective]") //This doesn't look the best I think.
+				else
+					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
+
+	if (auto_clone)
+		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
+
+/obj/machinery/clonepod/experimental/RefreshParts()
+	. = ..()
+	if(!isnull(evil_objective) || !isnull(custom_objective))
+		speed_coeff = round(speed_coeff / 2) // So better parts have half the speed increase.
+		speed_coeff += 1 // I still want basic parts to have base 100% speed.
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
-	if(panel_open)
-		return NONE
-	if(mess || attempting)
+/obj/machinery/clonepod/experimental/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks)
+	if(panel_open || mess || attempting)
 		return NONE
 
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
 
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+	var/mob/living/carbon/human/clonee = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
+	dna.copy_dna(clonee.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	for(var/datum/mutation/mutation in mutations)
+		var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
+		if(!length(valid_sources))
+			continue
+		clonee.dna.add_mutation(mutation, valid_sources)
+
+	clonee.domutcheck()
+	clonee.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+
+	clonee.underwear = underwear
+	clonee.undershirt = undershirt
+	clonee.socks = socks
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
+		clonee.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.easy_random_mutate(POSITIVE)
+		clonee.easy_random_mutate(POSITIVE)
 	if(efficiency < 3 && prob(50))
-		var/mob/M = H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
-		if(ismob(M))
-			H = M
+		var/mob/new_mob = clonee.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
+		if(ismob(new_mob))
+			clonee = new_mob
 
-	occupant = H
+	occupant = clonee
 
 	if(!clonename)	//to prevent null names
 		clonename = "clone ([rand(1,999)])"
-	H.real_name = clonename
+	clonee.real_name = clonename
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	maim_clone(H)
-	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_MUTE, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOBREATH, CLONING_POD_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
-	H.Unconscious(80)
+	maim_clone(clonee)
+	ADD_TRAIT(clonee, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_MUTE, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	ADD_TRAIT(clonee, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	clonee.Unconscious(80)
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [clonename]'s defective clone?", null, null, 10 SECONDS, H, POLL_IGNORE_DEFECTIVECLONE)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		H.key = C.key
+	var/role_text
+	var/poll_text
+	if(!isnull(custom_objective))
+		role_text = "syndicate clone"
+		poll_text = "Do you want to play as [clonename]'s syndicate clone?"
+	else if(!isnull(evil_objective))
+		role_text = "evil clone"
+		poll_text = "Do you want to play as [clonename]'s evil clone?"
+	else
+		role_text = "defective clone"
+		poll_text = "Do you want to play as [clonename]'s defective clone?"
+
+	var/preview = get_clone_preview(clonee.dna) || clonee
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		poll_text,
+		poll_time = 10 SECONDS,
+		checked_target = clonee,
+		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
+		alert_pic = preview,
+		role_name_text = role_text,
+		chat_text_border_icon = preview,
+	)
+	if(chosen_one)
+		clonee.PossessByPlayer(chosen_one.key)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
-		H.grab_ghost()
-		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
+		clonee.grab_ghost()
+		to_chat(clonee, span_notice("<b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i>"))
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		H.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
-		to_chat(H.get_ghost(TRUE), "<span class='notice'>Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete.</span>")
+		clonee.ghostize(TRUE)	//Only does anything if they were still in their old body and not already a ghost
+		to_chat(clonee.get_ghost(TRUE), span_notice("Your body is beginning to regenerate in a cloning pod. You will become conscious when it is complete."))
 
-	if(H)
-		H.faction |= factions
-
-		H.set_cloned_appearance()
-
-		H.set_suicide(FALSE)
+	if(!QDELETED(clonee))
+		clonee.faction |= factions
+		clonee.set_cloned_appearance()
+		clonee.set_suicide(FALSE)
 	attempting = FALSE
-	return CLONING_DELETE_RECORD | CLONING_SUCCESS //so that we don't spam clones with autoprocess unless we leave a body in the scanner
+	return CLONING_SUCCESS //so that we don't spam clones with autoprocess unless we leave a body in the scanner
 
+/obj/machinery/clonepod/experimental/exp_clone_check(mob/living/carbon/human/mob_occupant)
+	if(!mob_occupant?.mind) //When experimental cloner fails to get a ghost, it won't spit out a body, so we don't get an army of brainless rejects.
+		qdel(mob_occupant)
+		return FALSE
+	else if(!isnull(custom_objective))
+		var/datum/antagonist/evil_clone/antag_object = new
+		var/datum/objective/evil_clone/custom = new
+		custom.explanation_text = custom_objective
+		antag_object.objectives += custom
+		mob_occupant.mind.add_antag_datum(antag_object)
+		mob_occupant.grant_language(/datum/language/codespeak) // So you don't have to remember to grant each and every identical clone codespeak with the manual.
+		mob_occupant.remove_blocked_language(/datum/language/codespeak, source=LANGUAGE_ALL) // All the effects the codespeak manual would have.
+		ADD_TRAIT(mob_occupant.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+		var/obj/item/implant/radio/syndicate/imp = new(src)
+		imp.implant(mob_occupant)
+		mob_occupant.faction |= ROLE_SYNDICATE
+		mob_occupant.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS, ACCESS_GENETICS, ACCESS_MINERAL_STOREROOM)) //Basic/syndicate access, and genetics too because clones are genetics stuff.
+	else if(!isnull(evil_objective))
+		var/datum/antagonist/evil_clone/antag_object = new
+		antag_object.objectives += new evil_objective()
+		mob_occupant.mind.add_antag_datum(antag_object)
+	return TRUE
+
+/obj/machinery/clonepod/experimental/proc/get_clone_preview(datum/dna/clone_dna)
+	RETURN_TYPE(/image)
+	if(!istype(clone_dna) || QDELING(clone_dna))
+		return
+	var/key = copytext_char(md5("[clone_dna.unique_identity][clone_dna.unique_features][clone_dna.species.type][clone_dna.body_height]"), 1, 8)
+	var/image/preview = LAZYACCESS(cached_clone_images, key)
+	if(!isnull(preview))
+		return preview
+	var/mob/living/carbon/human/dummy/preview_dummy = generate_or_wait_for_human_dummy(REF(src))
+	clone_dna.copy_dna(preview_dummy.dna, COPY_DNA_SPECIES)
+	preview_dummy.set_cloned_appearance()
+	preview_dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	preview = getFlatIcon(preview_dummy)
+	unset_busy_human_dummy(REF(src))
+	LAZYSET(cached_clone_images, key, preview)
+	return preview
+
+/obj/machinery/clonepod/experimental/emag_act(mob/user)
+	if(!locked)
+		evil_objective = /datum/objective/evil_clone/murder //Emags will give a nasty objective.
+		locked = TRUE
+		to_chat(user, span_warning("You corrupt the genetic compiler."))
+		add_fingerprint(user)
+		log_cloning("[key_name(user)] emagged [src] at [AREACOORD(src)], causing it to malfunction.")
+		RefreshParts()
+	else
+		to_chat(user, span_warning("The cloner is already malfunctioning."))
+
+/obj/machinery/clonepod/experimental/emp_act(severity)
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		if(prob(100/severity) && !locked)
+			evil_objective = pick(subtypesof(/datum/objective/evil_clone) - /datum/objective/evil_clone/murder)
+			RefreshParts()
+			log_cloning("[src] at [AREACOORD(src)] corrupted due to EMP pulse.")
 
 //Prototype cloning console, much more rudimental and lacks modern functions such as saving records, autocloning, or safety checks.
 /obj/machinery/computer/prototype_cloning
@@ -141,28 +265,24 @@
 	pod.connected = null
 	LAZYREMOVE(pods, pod)
 
-/obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+/obj/machinery/computer/prototype_cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!istype(multi.buffer, /obj/machinery/clonepod/experimental))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/experimental/pod = P.buffer
-			if(pod.connected)
-				pod.connected.DetachCloner(pod)
-			AttachCloner(pod)
-		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
-		return
-	else
-		return ..()
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_FAILURE
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/experimental/pod = multi.buffer
+	if(pod.connected)
+		pod.connected.DetachCloner(pod)
+	AttachCloner(pod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/prototype_cloning/attack_hand(mob/user)
 	if(..())
@@ -277,7 +397,7 @@
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to initiate cloning procedure.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 
@@ -300,6 +420,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else
-		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.human_blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

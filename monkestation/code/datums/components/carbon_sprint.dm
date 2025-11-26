@@ -3,11 +3,12 @@
 	var/sprint_key_down = FALSE
 	var/sprinting = FALSE
 	var/sustained_moves = 0
+	var/sprint_stamina_modifier = 1
 	var/last_dust
 	///Our very own dust
 	var/obj/effect/sprint_dust/dust = new(null)
 
-/datum/component/carbon_sprint/Destroy(force, silent)
+/datum/component/carbon_sprint/Destroy(force)
 	QDEL_NULL(dust)
 	return ..()
 
@@ -31,7 +32,7 @@
 			stopSprint()
 		return
 
-	if(sprint_key_down && !HAS_TRAIT(src, TRAIT_NO_SPRINT))
+	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT))
 		var/_step_size = (direct & (direct-1)) ? 1.4 : 1 //If we're moving diagonally, we're taking roughly 1.4x step size
 		if(!sprinting)
 			sprinting = TRUE
@@ -55,11 +56,15 @@
 					dust.appear("sprint_cloud_tiny", direct, get_turf(carbon_parent), 0.3 SECONDS)
 					last_dust = world.time
 				sustained_moves = 0
-		if(HAS_TRAIT(src, TRAIT_FREERUNNING))
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST/2)
+		if(carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated))
+			sprint_stamina_modifier = 1.3
 		else
-			carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST)
-
+			sprint_stamina_modifier = 1
+		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
+			sprint_stamina_modifier *= 0.7
+		carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * sprint_stamina_modifier)
+		if(HAS_TRAIT(carbon_parent, TRAIT_EXERTION_OVERHEAT))
+			carbon_parent.adjust_bodytemperature((carbon_parent.bodytemp_heat_damage_limit - carbon_parent.standard_body_temperature) * 0.15)
 	else if(sprinting)
 		stopSprint()
 

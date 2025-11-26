@@ -215,6 +215,10 @@
 	tastes = list("paint thinner" = 1)
 	color = "#EE35FF"
 
+/obj/item/food/bubblegum/happiness/diet //Can't just change it to normal bubblegum in loadouts, so just make it diet
+	name = "Diet HP+ gum"
+	food_reagents = list(/datum/reagent/consumable/sugar = 5)
+
 /obj/item/food/bubblegum/bubblegum
 	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
@@ -335,5 +339,26 @@
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/chewable)
+
+/obj/item/food/swirl_lollipop
+	name = "swirl lollipop"
+	desc = "A massive rainbow swirlled lollipop. Said to contain extra sugar."
+	icon_state = "swirl_lollipop"
+	worn_icon_state = "lollipop_stick"
+	inhand_icon_state = "swirl_lollipop"
+	food_reagents = list(
+		/datum/reagent/consumable/sugar = 30,
+		/datum/reagent/drug/happiness = 5, //swirl lollipops make everyone happy!
+		/datum/reagent/medicine/omnizine = 2,
+	)
+	tastes = list("whimsical joy" = 1, "sugar" = 2)
+	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+	slot_flags = ITEM_SLOT_MASK
+	//crafting_complexity = FOOD_COMPLEXITY_1 Monkestation Removal: no crafting complexity
+
+/obj/item/food/swirl_lollipop/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable)

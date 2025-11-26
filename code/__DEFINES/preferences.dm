@@ -60,6 +60,7 @@
 // Playtime tracking system, see jobs_exp.dm
 #define EXP_TYPE_LIVING "Living"
 #define EXP_TYPE_CREW "Crew"
+#define EXP_TYPE_CENTRAL_COMMAND "Central Command"
 #define EXP_TYPE_COMMAND "Command"
 #define EXP_TYPE_ENGINEERING "Engineering"
 #define EXP_TYPE_MEDICAL "Medical"
@@ -104,13 +105,15 @@
 
 // Values for /datum/preferences/current_tab
 /// Open the character preference window
-#define PREFERENCE_TAB_CHARACTER_PREFERENCES 0
-
+#define PREFERENCE_WINDOW_CHARACTERS 0
 /// Open the game preferences window
-#define PREFERENCE_TAB_GAME_PREFERENCES 1
+#define PREFERENCE_WINDOW_GAME_PREFERENCES 1
 
-/// Open the keybindings window
-#define PREFERENCE_TAB_KEYBINDINGS 2
+// Values for /datum/preferences/starting_page
+#define PREFERENCE_PAGE_CHARACTERS -1
+#define PREFERENCE_PAGE_SETTINGS 0
+#define PREFERENCE_PAGE_KEYBINDINGS 1
+#define PREFERENCE_PAGE_PREFERENCES_VOLUME 2
 
 /// These will be shown in the character sidebar, but at the bottom.
 #define PREFERENCE_CATEGORY_FEATURES "features"
@@ -136,3 +139,6 @@
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
+
+/// The key used for sprite accessories that should never actually be applied to the player.
+#define SPRITE_ACCESSORY_NONE "None"

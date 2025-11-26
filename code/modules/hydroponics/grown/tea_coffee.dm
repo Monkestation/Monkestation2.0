@@ -9,7 +9,7 @@
 	lifespan = 20
 	maturation = 5
 	production = 5
-	yield = 5
+	yield = 50
 	growthstages = 5
 	icon_dead = "tea-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -56,7 +56,7 @@
 	endurance = 20
 	maturation = 5
 	production = 5
-	yield = 5
+	yield = 50
 	growthstages = 5
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -89,4 +89,4 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/medicine/morphine = 0)
+	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/medicine/painkiller/morphine = 0)

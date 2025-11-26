@@ -11,12 +11,17 @@ Format:
 	voteweight [number] (How much to count each player vote as, defaults to 1, setting to 0.5 counts each vote as half a vote, 2 as double, etc, Setting to 0 disables the map but allows players to still pick it)
 	disabled (disables the map)
 	votable (is this map votable)
+	feedbackurl (link in-game shown to players to leave feedback for the map)
+endmap
+
+map heliostation
+	minplayers 25
+	votable
 endmap
 
 map metastation
 	#default
-	minplayers 25
-	#voteweight 0.5
+	minplayers 5
 	votable
 endmap
 
@@ -26,6 +31,8 @@ map deltastation
 endmap
 
 map kilostation
+	minplayers 5
+	votable
 endmap
 
 map icebox
@@ -33,21 +40,52 @@ map icebox
 	votable
 endmap
 
+map theseus
+	minplayers 5
+	votable
+	#feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
+endmap
+
 map tramstation
 	minplayers 35
 	votable
 endmap
 
-map northstar
-	minplayers 50
-	votable
-endmap
-
-
 map runtimestation
 endmap
 
 map multiz_debug
+endmap
+
+map boxstation
+	minplayers 25
+	votable
+endmap
+
+map blueshift
+	minplayers 75
+	votable
+endmap
+
+map voidraptor
+	minplayers 40
+	votable
+endmap
+
+map ouroboros
+	votable
+endmap
+
+map pubbystation
+	votable
+endmap
+
+map graveyard
+endmap
+
+map leadpoisoningstation
+	votable
+	minplayers 40
 endmap
 
 map oshan

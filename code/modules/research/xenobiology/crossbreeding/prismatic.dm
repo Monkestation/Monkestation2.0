@@ -10,25 +10,25 @@ Prismatic extracts:
 	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 
-/obj/item/slimecross/prismatic/afterattack(turf/target, mob/user, proximity)
-	if(!proximity)
-		return
-	if(!istype(target) || isspaceturf(target))
-		return
-	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
-	playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
+/obj/item/slimecross/prismatic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) || isspaceturf(interacting_with))
+		return NONE
+	user.do_attack_animation(interacting_with)
+	interacting_with.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
+	playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slimecross/prismatic/grey/
+/obj/item/slimecross/prismatic/grey
 	colour = "grey"
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
-/obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(target) && target.color != initial(target.color))
-		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
+/obj/item/slimecross/prismatic/grey/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isturf(interacting_with) && interacting_with.color != initial(interacting_with.color))
+		user.do_attack_animation(interacting_with)
+		interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/slimecross/prismatic/orange
 	paintcolor = "#FFA500"
@@ -115,7 +115,7 @@ Prismatic extracts:
 	colour = "rainbow"
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)
-	var/newcolor = input(user, "Choose the slime color:", "Color change",paintcolor) as color|null
+	var/newcolor = tgui_color_picker(user, "Choose the slime color:", "Color change", paintcolor)
 	if(user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!newcolor)

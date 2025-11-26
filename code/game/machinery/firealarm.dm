@@ -22,6 +22,7 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	armor_type = /datum/armor/machinery_firealarm
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
@@ -43,6 +44,8 @@
 	var/datum/looping_sound/firealarm/soundloop
 	///Are there ants in the alarm?
 	var/ants_remaining = 0
+	/// Delta Alarm Loop
+	var/datum/looping_sound/delta_alarm/alarmloop
 
 /datum/armor/machinery_firealarm
 	fire = 90
@@ -50,17 +53,19 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
+	id_tag = assign_random_name()
 	if(building)
 		buildstage = ALARM_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
-		name = "[get_area_name(src)] [initial(name)]"
+		update_name()
 	my_area = get_area(src)
 	LAZYADD(my_area.firealarms, src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	soundloop = new(src, FALSE)
+	alarmloop = new(src, FALSE)
 
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/firealarm,
@@ -87,6 +92,7 @@
 		LAZYREMOVE(my_area.firealarms, src)
 		my_area = null
 	QDEL_NULL(soundloop)
+	QDEL_NULL(alarmloop)
 	return ..()
 
 // Area sensitivity is traditionally tied directly to power use, as an optimization
@@ -114,7 +120,7 @@
 
 /obj/machinery/firealarm/update_name(updates)
 	. = ..()
-	name = "[get_area_name(my_area)] [initial(name)]"
+	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place
@@ -140,6 +146,8 @@
 /obj/machinery/firealarm/proc/set_status()
 	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
 		soundloop.stop()
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
+		alarmloop.stop()
 	update_appearance()
 
 /obj/machinery/firealarm/update_appearance(updates)
@@ -175,18 +183,36 @@
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
-				var/current_level = SSsecurity_level.get_current_level_as_number()
-				. += mutable_appearance(icon, "fire_[current_level]")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				switch(current_level)
+				switch(SSsecurity_level.get_current_level_as_number())
 					if(SEC_LEVEL_GREEN)
 						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
+						. += mutable_appearance(icon, "fire_green")
 					if(SEC_LEVEL_BLUE)
 						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
+						. += mutable_appearance(icon, "fire_blue")
 					if(SEC_LEVEL_RED)
 						set_light(l_color = LIGHT_COLOR_FLARE)
+						. += mutable_appearance(icon, "fire_red")
 					if(SEC_LEVEL_DELTA)
 						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+						. += mutable_appearance(icon, "fire_delta")
+					if(SEC_LEVEL_AMBER)
+						set_light(l_color = LIGHT_COLOR_LAVA)
+						. += mutable_appearance(icon, "fire_amber")
+					if(SEC_LEVEL_YELLOW)
+						set_light(l_color =  LIGHT_COLOR_DIM_YELLOW)
+						. += mutable_appearance(icon, "fire_yellow")
+					if(SEC_LEVEL_LAMBDA)
+						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+						. += mutable_appearance(icon, "fire_lambda")
+					if(SEC_LEVEL_GAMMA)
+						set_light(l_color = LIGHT_COLOR_FLARE)
+						. += mutable_appearance(icon, "fire_red")
+					if(SEC_LEVEL_EPSILON)
+						set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
+						. += mutable_appearance(icon, "fire_offstation")
+
 			else
 				. += mutable_appearance(icon, "fire_offstation")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
@@ -237,8 +263,14 @@
 /obj/machinery/firealarm/proc/check_security_level(datum/source, new_level)
 	SIGNAL_HANDLER
 
-	if(is_station_level(z))
-		update_appearance()
+	if(!is_station_level(z))
+		return
+
+	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+		alarmloop.start()
+	else
+		alarmloop.stop()
+	update_appearance()
 
 /**
  * Sounds the fire alarm and closes all firelocks in the area. Also tells the area to color the lights red.
@@ -259,6 +291,8 @@
 	if(user)
 		balloon_alert(user, "triggered alarm!")
 		user.log_message("triggered a fire alarm.", LOG_GAME)
+	my_area.fault_status = AREA_FAULT_MANUAL
+	my_area.fault_location = name
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
 	update_use_power(ACTIVE_POWER_USE)
@@ -281,6 +315,7 @@
 		balloon_alert(user, "reset alarm")
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
+	alarmloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
 
@@ -306,6 +341,7 @@
 		return
 	. = ..()
 	add_fingerprint(user)
+	play_click_sound(SFX_BUTTON)
 	if(my_area.fire)
 		reset(user)
 		return
@@ -411,7 +447,7 @@
 
 				else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
 					var/obj/item/electroadaptive_pseudocircuit/pseudoc = tool
-					if(!pseudoc.adapt_circuit(user, 15))
+					if(!pseudoc.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
 						return
 					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
@@ -431,7 +467,7 @@
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == ALARM_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_WALLFRAME, "delay" = 20, "cost" = 1)
+		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -476,6 +512,7 @@
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
+		. += "The fault location display is [my_area.fault_location] ([my_area.fault_status == AREA_FAULT_AUTOMATIC ? "Automatic Detection" : "Manual Trigger"])."
 		if(is_station_level(z))
 			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
@@ -505,8 +542,12 @@
 	my_area.fire_detect = !my_area.fire_detect
 	for(var/obj/machinery/firealarm/fire_panel in my_area.firealarms)
 		fire_panel.update_icon()
-	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
-	user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
+	// Used to force all the firelocks to update, if the zone is not manually activated
+	if (my_area.fault_status != AREA_FAULT_MANUAL)
+		reset() // Don't send user to prevent double balloon_alert() and the action is already logged in this proc.
+	if (user)
+		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
+		user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 

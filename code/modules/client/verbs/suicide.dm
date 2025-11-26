@@ -34,7 +34,7 @@
 	if(!can_suicide())
 		return FALSE
 
-	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide? If you are leaving the round, use cryo instead.", "Confirm Suicide", list("Yes", "No")) // MONKESTATION EDIT: clarification to state they should go to cryo instead of just killing themselves.
 
 	// ensure our situation didn't change while we were sleeping waiting for the tgui_alert.
 	if(!can_suicide() || (ckey != oldkey))
@@ -53,7 +53,7 @@
 		return FALSE
 
 	var/area/checkable = get_area(src)
-	if(checkable.area_flags & BLOCK_SUICIDE)
+	if(checkable?.area_flags & BLOCK_SUICIDE)
 		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
 		return FALSE
 

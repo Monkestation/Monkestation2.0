@@ -12,6 +12,8 @@
 	)
 
 /datum/preference_middleware/loadout/get_ui_static_data()
+	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
+		return list()
 	// [name] is the name of the tab that contains all the corresponding contents.
 	// [title] is the name at the top of the list of corresponding contents.
 	// [contents] is a formatted list of all the possible items for that slot.
@@ -37,6 +39,7 @@
 	loadout_tabs += list(list("name" = "Accessory", "title" = "Uniform Accessory Slot Items", "contents" = list_to_data(GLOB.loadout_accessory)))
 	loadout_tabs += list(list("name" = "Inhand", "title" = "In-hand Items", "contents" = list_to_data(GLOB.loadout_inhand_items)))
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys! ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_toys)))
+	loadout_tabs += list(list("name" = "Plushies", "title" = "Adorable little plushies! ([MAX_ALLOWED_PLUSHIES] max)", "contents" = list_to_data(GLOB.loadout_plushies)))
 	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_pocket_items)))
 	loadout_tabs += list(list("name" = "Effects", "title" = "Unique Effects", "contents" = list_to_data(GLOB.loadout_effects)))
 	loadout_tabs += list(list("name" = "Unusuals", "title" = "Unusual Hats", "contents" = convert_stored_unusuals_to_data()))
@@ -57,7 +60,7 @@
 
 	data["selected_loadout"] = all_selected_paths
 	data["selected_unusuals"] = all_selected_unusuals
-	data["user_is_donator"] = !!(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator() || is_admin(preferences.parent))
+	data["user_is_donator"] = !!(preferences.parent.persistent_client.patreon?.is_donator() || preferences.parent.persistent_client.twitch?.is_donator() || is_admin(preferences.parent))
 	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
 	data["total_coins"] = preferences.metacoins
@@ -73,16 +76,16 @@
 			return null
 
 	//Here we will perform basic checks to ensure there are no exploits happening
-	if(interacted_item.donator_only && !preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator() && !is_admin(preferences.parent))
-		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent.ckey] tried loading [interacted_item.item_path], but this is donator only.")
+	if(interacted_item.donator_only && !preferences.parent.persistent_client.patreon?.is_donator() && !preferences.parent.persistent_client.twitch?.is_donator() && !is_admin(preferences.parent))
+		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent_ckey] tried loading [interacted_item.item_path], but this is donator only.")
 		return null
 
-	if(interacted_item.ckeywhitelist && (!(preferences.parent.ckey in interacted_item.ckeywhitelist)) && !is_admin(preferences.parent))
-		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent.ckey] tried loading [interacted_item.item_path], but this is ckey locked.")
+	if(interacted_item.ckeywhitelist && (!(preferences.parent_ckey in interacted_item.ckeywhitelist)) && !is_admin(preferences.parent))
+		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent_ckey] tried loading [interacted_item.item_path], but this is ckey locked.")
 		return null
 
 	if(interacted_item.requires_purchase && !(interacted_item.item_path in preferences.inventory))
-		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent.ckey] has tried loading [interacted_item.item_path], but does not own that item.")
+		message_admins("LOADOUT SYSTEM: Possible exploit detected, [preferences.parent_ckey] has tried loading [interacted_item.item_path], but does not own that item.")
 		return null
 
 	return interacted_item
@@ -99,12 +102,12 @@
 	if(params["deselect"])
 		deselect_item(interacted_item, user)
 		return
-
+	var/num_plushies = 0
 	var/num_misc_items = 0
 	var/datum/loadout_item/first_misc_found
 	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(preferences.loadout_list))
 		if(item.category == interacted_item.category)
-			if((item.category == LOADOUT_ITEM_MISC || item.category == LOADOUT_ITEM_TOYS) && ++num_misc_items < MAX_ALLOWED_MISC_ITEMS)
+			if((item.category == LOADOUT_ITEM_PLUSHIES || item.category == LOADOUT_ITEM_MISC || item.category == LOADOUT_ITEM_TOYS) && ++num_misc_items < MAX_ALLOWED_MISC_ITEMS || ++num_plushies < MAX_ALLOWED_PLUSHIES)
 				if(!first_misc_found)
 					first_misc_found = item
 				continue
@@ -121,6 +124,8 @@
 	if("[params["unusual_placement"]]" in preferences.special_loadout_list["unusual"])
 		preferences.special_loadout_list["unusual"] -= params["unusual_placement"]
 		preferences.save_preferences()
+		var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
+		ui.send_update()
 		return
 
 	if(!islist(preferences.special_loadout_list["unusual"]))
@@ -139,19 +144,28 @@
 	preferences.character_preview_view?.update_body()
 
 /datum/preference_middleware/proc/list_to_data(list_of_datums)
-	if(!LAZYLEN(list_of_datums))
+	if(!LAZYLEN(list_of_datums) || QDELETED(preferences)|| QDELETED(preferences.parent))
 		return
 
 	var/list/formatted_list = new(length(list_of_datums))
 
 	var/array_index = 1
 	for(var/datum/loadout_item/item as anything in list_of_datums)
+		if(QDELETED(preferences) || QDELETED(preferences.parent))
+			return
+
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
-			if(!(preferences.parent.ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
+			if(!(preferences.parent_ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
+
 		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
+			if((!preferences.parent.persistent_client.patreon?.is_donator() && !preferences.parent.persistent_client.twitch?.is_donator()) && !is_admin(preferences.parent))
+				formatted_list.len--
+				continue
+
+		if(item.mentor_only) //These checks are also performed in the backend.
+			if(!is_mentor(preferences.parent) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
@@ -193,7 +207,7 @@
 	var/list/formatted_list = new(length(data))
 
 	var/array_index = 1
-	for(var/iter as anything in data)
+	for(var/iter in data)
 		var/list/formatted_item = list()
 		formatted_item["name"] = data[array_index]["name"]
 		formatted_item["path"] = data[array_index]["unusual_type"]
@@ -241,7 +255,7 @@
 	for(var/job_type in item.restricted_roles)
 		composed_message += span_green("[job_type] <br>")
 
-	to_chat(preferences.parent, examine_block(composed_message))
+	to_chat(preferences.parent, boxed_message(composed_message))
 
 /// Select [path] item to [category_slot] slot, and open up the greyscale UI to customize [path] in [category] slot.
 /datum/preference_middleware/loadout/proc/select_color(list/params, mob/user)
@@ -254,6 +268,9 @@
 		return
 
 	var/obj/item/colored_item = item.item_path
+	if(isnull(preferences.loadout_list) || !preferences.loadout_list[colored_item])
+		to_chat(user, span_warning("You need [item.name] equipped to recolor it!"))
+		return
 
 	var/list/allowed_configs = list()
 	if(initial(colored_item.greyscale_config))
@@ -271,7 +288,7 @@
 
 	menu = new(
 		src,
-		usr,
+		user,
 		allowed_configs,
 		CALLBACK(src, PROC_REF(set_slot_greyscale), colored_item),
 		starting_icon_state = initial(colored_item.icon_state),
@@ -279,7 +296,7 @@
 		starting_colors = slot_starting_colors,
 	)
 	RegisterSignal(menu, COMSIG_PREQDELETED, TYPE_PROC_REF(/datum/preference_middleware/loadout, cleanup_greyscale_menu))
-	menu.ui_interact(usr)
+	menu.ui_interact(user)
 
 /// A proc to make sure our menu gets null'd properly when it's deleted.
 /// If we delete the greyscale menu from the greyscale datum, we don't null it correctly here, it harddels.
@@ -300,17 +317,19 @@
 	var/list/colors = open_menu.split_colors
 	if(colors)
 		preferences.loadout_list[path][INFO_GREYSCALE] = colors.Join("")
+		preferences.character_preview_view?.update_body()
 
-/datum/preference_middleware/loadout/proc/clear_all_items()
+/datum/preference_middleware/loadout/proc/clear_all_items(list/params, mob/user)
 	LAZYNULL(preferences.loadout_list)
 	preferences.special_loadout_list["unusual"] = list()
 	preferences.character_preview_view.update_body()
+	SStgui.update_user_uis(user)
 
 /datum/preference_middleware/loadout/proc/ckey_explain(list/params, mob/user)
-	to_chat(preferences.parent, examine_block(span_green("This item is restricted to your ckey only. Thank you!")))
+	to_chat(preferences.parent, boxed_message(span_green("This item is restricted to your ckey only. Thank you!")))
 
 /datum/preference_middleware/loadout/proc/donator_explain(list/params, mob/user)
-	if(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator())
-		to_chat(preferences.parent, examine_block("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
+	if(preferences.parent.persistent_client.patreon?.is_donator() || preferences.parent.persistent_client.twitch?.is_donator())
+		to_chat(preferences.parent, boxed_message("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
 	else
-		to_chat(preferences.parent, examine_block(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))
+		to_chat(preferences.parent, boxed_message(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))

@@ -166,7 +166,10 @@
 	name = "Bone Armor"
 	result = /obj/item/clothing/suit/armor/bone
 	time = 3 SECONDS
-	reqs = list(/obj/item/stack/sheet/bone = 6)
+	reqs = list(
+		/obj/item/stack/sheet/bone = 6,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
+	)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/bonetalisman
@@ -221,19 +224,27 @@
 	result = /obj/item/clothing/suit/hooded/cloak/goliath
 	time = 5 SECONDS
 	reqs = list(
-		/obj/item/stack/sheet/leather = 2,
-		/obj/item/stack/sheet/sinew = 2,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 2,
-	) //it takes 4 goliaths to make 1 cloak if the plates are skinned
+		/obj/item/stack/sheet/sinew = 3,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 9,
+	)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/drakecloak
 	name = "Ash Drake Armour"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
-	time = 6 SECONDS
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 2,
+		/obj/item/drake_remains = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/drakeremains
+	name = "Drake Remains"
+	result = /obj/item/drake_remains
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
-		/obj/item/stack/sheet/sinew = 2,
 		/obj/item/stack/sheet/animalhide/ashdrake = 5,
 	)
 	category = CAT_CLOTHING
@@ -268,7 +279,7 @@
 	time = 1 SECONDS
 	tool_paths = list(
 		/obj/item/clothing/suit/hooded/chaplain_hoodie,
-		/obj/item/storage/book/bible,
+		/obj/item/book/bible,
 	)
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
@@ -281,6 +292,46 @@
 		/obj/item/food/grown/poppy = 4,
 		/obj/item/food/grown/harebell = 4,
 		/obj/item/food/grown/rose = 4,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/poppy_crown
+	name = "Poppy Crown"
+	result = /obj/item/clothing/head/costume/garland/poppy
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/poppy = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/lily_crown
+	name = "Lily Crown"
+	result = /obj/item/clothing/head/costume/garland/lily
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/poppy/lily = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/sunflower_crown
+	name = "Sunflower Crown"
+	result = /obj/item/clothing/head/costume/garland/sunflower
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/sunflower = 5,
+		/obj/item/stack/cable_coil = 3,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/rainbow_bunch_crown
+	name = "Rainbow Flower Crown"
+	result = /obj/item/clothing/head/costume/garland/rainbowbunch
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/food/grown/rainbow_flower = 5,
+		/obj/item/stack/cable_coil = 3,
 	)
 	category = CAT_CLOTHING
 
@@ -316,4 +367,50 @@
 		/obj/item/stack/sheet/mineral/gold = 2,
 	)
 
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_helmet
+	result = /obj/item/clothing/head/helmet/balloon
+	reqs = list(
+		/obj/item/toy/balloon/long = 6,
+	)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_helmet/check_requirements(mob/user, list/collected_requirements)
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+
+/datum/crafting_recipe/balloon_tophat
+	result = /obj/item/clothing/head/hats/tophat/balloon
+	reqs = list(
+		/obj/item/toy/balloon/long = 6,
+	)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_tophat/check_requirements(mob/user, list/collected_requirements)
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+
+/datum/crafting_recipe/balloon_vest
+	result = /obj/item/clothing/suit/armor/balloon_vest
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 8 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_vest/check_requirements(mob/user, list/collected_requirements)
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+
+/datum/crafting_recipe/voiceconcealer
+	name = "Voice Obfuscator Gas Mask"
+	result = /obj/item/clothing/mask/gas/voiceconcealer
+	reqs = list(
+		/obj/item/clothing/mask/gas = 1,
+		/obj/item/assembly/voice = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/plastic = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 8 SECONDS
 	category = CAT_CLOTHING

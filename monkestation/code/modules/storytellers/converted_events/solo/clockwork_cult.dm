@@ -1,12 +1,16 @@
 /datum/round_event_control/antagonist/solo/clockcult
 	name = "Clock Cult"
-	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_MAGICAL)
+	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_MAGICAL)
 	antag_flag = ROLE_CLOCK_CULTIST
 	antag_datum = /datum/antagonist/clock_cultist
 	typepath = /datum/round_event/antagonist/solo/clockcult
+	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
 		JOB_CHAPLAIN,
 		JOB_CYBORG,
 		JOB_DETECTIVE,
@@ -15,24 +19,29 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
 	)
 	required_enemies = 5
 	base_antags = 4
 	maximum_antags = 4
-	// I give up, just there should be enough heads with 35 players...
-	min_players = 30
+	min_players = 45
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
 	max_occurrences = 1
+	event_icon_state = "clockcult"
+	preferred_events = list(/datum/round_event_control/antagonist/solo/bloodcult = 1)
 
 /datum/round_event/antagonist/solo/clockcult
 	end_when = 60000

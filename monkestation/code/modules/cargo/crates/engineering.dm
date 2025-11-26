@@ -35,7 +35,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/service,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Service Techfab"
@@ -49,7 +48,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/security,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five
 					)
@@ -64,7 +62,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/cargo,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Cargo Techfab"
@@ -78,7 +75,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/medical,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Medical Techfab"
@@ -92,7 +88,6 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/engineering,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Engineering Protolathe"
@@ -106,13 +101,12 @@
 	contains = list(/obj/item/circuitboard/machine/protolathe/department/science,
 					/obj/item/stock_parts/matter_bin/adv = 2,
 					/obj/item/stock_parts/manipulator/nano = 2,
-					/obj/item/reagent_containers/cup/beaker = 2,
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five
 					)
 	crate_name = "Replacement Science Protolathe"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-
+/*
 /datum/supply_pack/engineering/trench_explorer
 	name = "Trench Explorer Kit"
 	desc = "A pack of 5 ladders and breaching charges to explore the pit."
@@ -122,7 +116,7 @@
 		/obj/item/trench_ladder_kit = 5
 	)
 	crate_name = "engineering vent crate"
-
+*/
 /datum/supply_pack/engine/am_jar
 	name = "Antimatter Containment Jar Crate"
 	desc = "Two Antimatter containment jars stuffed into a single crate."
@@ -143,3 +137,14 @@
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/am_shielding_container = 9)
 	crate_name = "antimatter shielding crate"
+
+// TEG Crate for when it works!
+/datum/supply_pack/engine/teg
+	name = "Thermoelectric Generator Crate"
+	desc = "Contains machine boards to construct a functional thermoelectric generator system. Some assembly required. At least it includes an RPD!"
+	cost = CARGO_CRATE_VALUE * 12
+	contains = list(/obj/item/circuitboard/machine/thermoelectric_generator,
+					/obj/item/circuitboard/machine/circulator = 2,
+					/obj/item/pipe_dispenser)
+	crate_name = "Thermoelectric Generator Crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering

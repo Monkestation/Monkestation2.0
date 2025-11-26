@@ -1,7 +1,20 @@
+import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
+import {
+  Button,
+  Dimmer,
+  Dropdown,
+  Section,
+  Stack,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
+import {
+  ObjectivePrintout,
+  Objective,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',
@@ -38,12 +51,6 @@ const fallenstyle = {
   fontWeight: 'bold',
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-};
-
 type Memory = {
   name: string;
   story: string;
@@ -55,17 +62,19 @@ type Info = {
   stolen_antag_info: string;
   memories: Memory[];
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
-export const AntagInfoChangeling = (props, context) => {
+export const AntagInfoChangeling = (props) => {
   return (
-    <Window width={720} height={720}>
+    <Window width={720} height={750}>
       <Window.Content
         style={{
-          'backgroundImage': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
-          <Stack.Item maxHeight={13.2}>
+          <Stack.Item maxHeight={16}>
             <IntroductionSection />
           </Stack.Item>
           <Stack.Item grow={4}>
@@ -90,26 +99,8 @@ export const AntagInfoChangeling = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const HivemindSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+const HivemindSection = (props) => {
+  const { act, data } = useBackend<Info>();
   const { true_name } = data;
   return (
     <Section fill title="Hivemind">
@@ -128,37 +119,47 @@ const HivemindSection = (props, context) => {
             you. Changelings grow in power greatly by absorbing their kind, and
             getting absorbed by another Changeling will leave you as a{' '}
             <span style={fallenstyle}>Fallen Changeling</span>. There is no
-            greater humiliation.
+            greater humiliation.{'\n'}
           </NoticeBox>
+          Additionally changeling rules can be found under{' '}
+          <a href="https://wiki.monkestation.com/#specific-stuff-for-antagonists">
+            Antagonist Guidance.
+          </a>
         </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
-const IntroductionSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
-  const { true_name, hive_name, objectives } = data;
+const IntroductionSection = (props) => {
+  const { act, data } = useBackend<Info>();
+  const { true_name, hive_name, objectives, can_change_objective } = data;
   return (
-    <Section
-      fill
-      title="Intro"
-      scrollable={!!objectives && objectives.length > 4}>
+    <Section fill title="Intro" style={{ overflowY: 'auto' }}>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are {true_name} from the
           <span style={hivestyle}> {hive_name}</span>.
         </Stack.Item>
         <Stack.Item>
-          <ObjectivePrintout />
+          <ObjectivePrintout
+            objectives={objectives}
+            objectiveFollowup={
+              <ReplaceObjectivesButton
+                can_change_objective={can_change_objective}
+                button_title={'Evolve New Directives'}
+                button_colour={'green'}
+              />
+            }
+          />
         </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
-const AbilitiesSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const AbilitiesSection = (props) => {
+  const { data } = useBackend<Info>();
   return (
     <Section fill title="Abilities">
       <Stack fill>
@@ -167,7 +168,7 @@ const AbilitiesSection = (props, context) => {
             <Stack.Item basis={0} textColor="label" grow>
               Your
               <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
-              you to steal the DNA and memories of a victim. Your
+              you to steal the DNA and memories of a victim. The
               <span style={absorbstyle}>&ensp;Extract DNA Sting</span> ability
               also steals the DNA of a victim, and is undetectable, but does not
               grant you their memories or speech patterns.
@@ -207,13 +208,12 @@ const AbilitiesSection = (props, context) => {
   );
 };
 
-const MemoriesSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const MemoriesSection = (props) => {
+  const { data } = useBackend<Info>();
   const { memories } = data;
   const [selectedMemory, setSelectedMemory] = useSharedState(
-    context,
     'memory',
-    (!!memories && memories[0]) || null
+    (!!memories && memories[0]) || null,
   );
   const memoryMap = {};
   for (const index in memories) {
@@ -235,7 +235,8 @@ const MemoriesSection = (props, context) => {
             help you impersonate your target!
           `}
         />
-      }>
+      }
+    >
       {(!!memories && !memories.length && (
         <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
       )) || (
@@ -257,14 +258,15 @@ const MemoriesSection = (props, context) => {
   );
 };
 
-const VictimPatternsSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const VictimPatternsSection = (props) => {
+  const { data } = useBackend<Info>();
   const { stolen_antag_info } = data;
   return (
     <Section
       fill
       scrollable={!!stolen_antag_info}
-      title="Additional Stolen Information">
+      title="Additional Stolen Information"
+    >
       {(!!stolen_antag_info && stolen_antag_info) || (
         <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
       )}

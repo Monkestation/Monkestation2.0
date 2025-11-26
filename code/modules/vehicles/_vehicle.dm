@@ -31,7 +31,7 @@
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
+	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
@@ -51,6 +51,7 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/vehicle/Destroy(force)
 	QDEL_NULL(trailer)
@@ -64,8 +65,6 @@
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += span_warning("It's on fire!")
 	. += generate_integrity_message()
 
 /// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
@@ -185,7 +184,7 @@
 	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
-/obj/vehicle/Move(newloc, dir)
+/obj/vehicle/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	// It is unfortunate, but this is the way to make it not mess up
 	var/atom/old_loc = loc
 	// When we do this, it will set the loc to the new loc

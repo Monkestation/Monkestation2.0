@@ -20,6 +20,13 @@
 		act = copytext(act, 1, custom_param)
 
 	act = lowertext(act)
+
+	//MONKESTATION EDIT START
+	// not a fan of this but I don't think there's a less hacky way to do it without changing how emotes work
+	if (HAS_TRAIT(src, TRAIT_FEEBLE) && !intentional && (act in list("scream", "screech", "screams", "screeches")))
+		act = pick("whimper", "cry")
+	//MONKESTATION EDIT END
+
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
@@ -41,32 +48,40 @@
 
 /datum/emote/help
 	key = "help"
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/list/keys = list()
-	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
+	var/list/message = list("Available emotes, you can use them with say [span_bold("\"*emote\"")]: \n")
+	message += span_smallnoticeital("Note - emotes highlighted in blue play a sound \n\n")
 
 	for(var/key in GLOB.emote_list)
-		for(var/datum/emote/P in GLOB.emote_list[key])
-			if(P.key in keys)
+		for(var/datum/emote/emote_action in GLOB.emote_list[key])
+			if(emote_action.key in keys)
 				continue
-			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
-				keys += P.key
+			if(emote_action.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+				keys += emote_action.key
 
 	keys = sort_list(keys)
+
+	// the span formatting will mess up sorting so need to do it afterwards
+	for(var/i in 1 to keys.len)
+		for(var/datum/emote/emote_action in GLOB.emote_list[keys[i]])
+			if(emote_action.get_sound(user) && emote_action.should_play_sound(user, intentional = TRUE))
+				keys[i] = span_boldnotice(keys[i])
+
 	message += keys.Join(", ")
 	message += "."
 	message = message.Join("")
-	to_chat(user, message)
+	to_chat(user, boxed_message(message))
 
 /datum/emote/flip
 	key = "flip"
 	key_third_person = "flips"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -79,7 +94,7 @@
 			var/mob/living/carbon/hat_loser = user
 			if(hat_loser.head)
 				var/obj/item/clothing/head/worn_headwear = hat_loser.head
-				if(worn_headwear.contents.len)
+				if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 					worn_headwear.throw_hats(rand(2,3), get_turf(hat_loser), hat_loser)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
@@ -108,8 +123,8 @@
 	key = "spin"
 	key_third_person = "spins"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/camera/imaginary_friend)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
@@ -121,7 +136,7 @@
 				var/mob/living/carbon/hat_loser = user
 				if(hat_loser.head)
 					var/obj/item/clothing/head/worn_headwear = hat_loser.head
-					if(worn_headwear.contents.len)
+					if(worn_headwear.contents.len && L.client?.prefs?.read_preference(/datum/preference/toggle/spin_flip_hats))
 						worn_headwear.throw_hats(rand(1,2), get_turf(hat_loser), hat_loser)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)

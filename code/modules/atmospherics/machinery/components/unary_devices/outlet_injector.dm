@@ -17,11 +17,11 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
-	///id of air sensor its connected to
-	var/chamber_id
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
+	if(isnull(id_tag))
+		id_tag = assign_random_name()
 	. = ..()
+
 	var/static/list/tool_screentips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
@@ -42,29 +42,19 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (!istype(multi_tool))
-		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		sensor.inlet_id = id_tag
+		multi_tool.set_buffer(null)
+		balloon_alert(user, "input linked to sensor")
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
-	return TRUE
+	multi_tool.set_buffer(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(.)
-		disconnect_chamber()
-
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_INPUT_FROM_ID(chamber_id)
-		chamber_id = null
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	disconnect_chamber()
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(can_interact(user))
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -72,13 +62,15 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
-	if(can_interact(user))
-		volume_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [volume_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
+	if(volume_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	volume_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [volume_rate] L/s")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
@@ -127,7 +119,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

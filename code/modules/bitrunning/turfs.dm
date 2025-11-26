@@ -3,6 +3,11 @@
 	desc = "Looks complex. You can see the circuits running through the floor."
 	icon_state = "bitrunning"
 
+/turf/open/indestructible/bitrunning_transport
+	name = "circuit floor"
+	desc = "Looks complex. You can see the circuits running through the floor."
+	icon_state = "bitrunning"
+
 /turf/closed/indestructible/binary
 	name = "tear in the fabric of reality"
 	icon = 'icons/turf/floors.dmi'

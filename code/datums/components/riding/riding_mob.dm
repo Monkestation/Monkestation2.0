@@ -25,7 +25,7 @@
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = TRUE
 
-/datum/component/riding/creature/Destroy(force, silent)
+/datum/component/riding/creature/Destroy(force)
 	unequip_buckle_inhands(parent)
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
@@ -81,8 +81,8 @@
 
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
 	if(istype(formerly_ridden) && istype(former_rider))
-		formerly_ridden.log_message("is no longer being ridden by [former_rider].", LOG_GAME, color="pink")
-		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
+		formerly_ridden.log_message("is no longer being ridden by [key_name(former_rider)].", LOG_GAME, color="pink")
+		former_rider.log_message("is no longer riding [key_name(formerly_ridden)].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
 		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
@@ -103,7 +103,7 @@
 	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal ? 2 : 1) * move_delay()) // monkestation edit: use move_delay() proc instead of raw vehicle_move_delay var
 	return ..()
 
 /datum/component/riding/creature/keycheck(mob/user)
@@ -217,17 +217,17 @@
 		return
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
-		living_parent.log_message("started giving [rider] a piggyback ride.", LOG_GAME, color="pink")
-		rider.log_message("started piggyback riding [living_parent].", LOG_GAME, color="pink")
+		living_parent.log_message("started giving [key_name(rider)] a piggyback ride.", LOG_GAME, color="pink")
+		rider.log_message("started piggyback riding [key_name(living_parent)].", LOG_GAME, color="pink")
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
-		living_parent.log_message("started fireman carrying [rider].", LOG_GAME, color="pink")
-		rider.log_message("was fireman carried by [living_parent].", LOG_GAME, color="pink")
+		living_parent.log_message("started fireman carrying [key_name(rider)].", LOG_GAME, color="pink")
+		rider.log_message("was fireman carried by [key_name(living_parent)].", LOG_GAME, color="pink")
 
 /datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	REMOVE_TRAIT(H, TRAIT_UNDENSE, VEHICLE_TRAIT)
+	REMOVE_TRAIT(former_rider, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
@@ -316,8 +316,10 @@
 	for(var/mob/living/rider in robot_parent.buckled_mobs)
 		rider.setDir(dir)
 		if(istype(robot_parent.model))
-			rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
-			rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
+			if(dir2text(dir) in robot_parent.model.ride_offset_x)
+				rider.pixel_x = robot_parent.model.ride_offset_x[dir2text(dir)]
+			if(dir2text(dir) in robot_parent.model.ride_offset_y)
+				rider.pixel_y = robot_parent.model.ride_offset_y[dir2text(dir)]
 
 //now onto every other ridable mob//
 
@@ -346,6 +348,32 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony/handle_specials()
+	. = ..()
+	vehicle_move_delay = 1.5
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(-2, 9), TEXT_WEST = list(2, 9)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony
+	COOLDOWN_DECLARE(pony_trot_cooldown)
+
+/datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	. = ..()
+
+	if (. == COMPONENT_DRIVER_BLOCK_MOVE || !COOLDOWN_FINISHED(src, pony_trot_cooldown))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+
+	if(human_user && is_clown_job(human_user.mind?.assigned_role))
+		// there's a new sheriff in town
+		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
+
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()
@@ -396,12 +424,15 @@
 /datum/component/riding/creature/goliath
 	vehicle_move_delay = 4
 
+/datum/component/riding/creature/goliath/deathmatch
+	keytype = null
+
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 
-/datum/component/riding/creature/goliath/Destroy(force, silent)
+/datum/component/riding/creature/goliath/Destroy(force)
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.remove_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
 	return ..()

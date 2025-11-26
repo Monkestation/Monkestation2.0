@@ -8,31 +8,45 @@
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE // monkestation edit
+	alternate_worn_layer = ABOVE_HEAD_LAYER // monkestation edit
 	var/gas_type = /datum/gas/oxygen
 	var/on = FALSE
-	var/stabilizers = FALSE
-	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
+	/// If the jetpack will have a speedboost in space/nograv or not
+	var/full_speed = TRUE
+	var/stabilize = FALSE
+	var/thrust_callback
+	var/can_be_emped = TRUE //monkestation addition: improvised jetpack doesn't have any electronics to emp
+	var/disabled = FALSE // If our jetpack is disabled, from getting EMPd
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
-	refresh_jetpack()
+	AddElement(/datum/element/update_icon_updates_onmob, slot_flags) // monkestation edit: use slot_flags
+	thrust_callback = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
+	configure_jetpack(stabilize)
 
 /obj/item/tank/jetpack/Destroy()
-	get_mover = null
-	check_on_move = null
+	thrust_callback = null
 	return ..()
 
-/obj/item/tank/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, JETPACK_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
+/**
+ * configures/re-configures the jetpack component
+ *
+ * Arguments
+ * stabilize - Should this jetpack be stabalized
+ */
+/obj/item/tank/jetpack/proc/configure_jetpack(stabilize)
+	src.stabilize = stabilize
 
-/obj/item/tank/jetpack/item_action_slot_check(slot)
-	if(slot & slot_flags)
-		return TRUE
+	AddComponent( \
+		/datum/component/jetpack, \
+		src.stabilize, \
+		COMSIG_JETPACK_ACTIVATED, \
+		COMSIG_JETPACK_DEACTIVATED, \
+		JETPACK_ACTIVATION_FAILED, \
+		thrust_callback, \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/tank/jetpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -55,8 +69,8 @@
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
-			set_stabilizers(!stabilizers)
-			to_chat(user, span_notice("You turn the jetpack stabilization [stabilizers ? "on" : "off"]."))
+			configure_jetpack(!stabilize)
+			to_chat(user, span_notice("You turn the jetpack stabilization [stabilize ? "on" : "off"]."))
 	else
 		toggle_internals(user)
 
@@ -73,20 +87,17 @@
 	else
 		turn_off(user)
 		to_chat(user, span_notice("You turn the jetpack off."))
-	update_item_action_buttons()
 
-/obj/item/tank/jetpack/proc/set_stabilizers(new_stabilizers)
-	if(new_stabilizers == stabilizers)
-		return
-	stabilizers = new_stabilizers
-	refresh_jetpack()
+	update_item_action_buttons()
 
 /obj/item/tank/jetpack/update_icon_state()
 	. = ..()
 	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED) & JETPACK_ACTIVATION_FAILED)
+	if(disabled)
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
@@ -95,16 +106,19 @@
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
-	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
-	set_stabilizers(FALSE)
 	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
-	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off(get_user())
+	var/mob/user = get(loc, /mob/living)
+	if(isnull(user))
+		return FALSE
+
+	if((num < 0.005 || air_contents?.total_moles() < num))
+		turn_off(user)
 		return FALSE
 
 	// We've got the gas, it's chill
@@ -113,18 +127,12 @@
 
 	var/datum/gas_mixture/removed = remove_air(num)
 	if(removed.total_moles() < 0.005)
-		turn_off(get_user())
+		turn_off(user)
 		return FALSE
 
 	var/turf/T = get_turf(src)
 	T.assume_air(removed)
 	return TRUE
-
-// Gives the jetpack component the user it expects
-/obj/item/tank/jetpack/proc/get_user()
-	if(!ismob(loc))
-		return null
-	return loc
 
 /obj/item/tank/jetpack/suicide_act(mob/living/user)
 	if (!ishuman(user))
@@ -133,6 +141,26 @@
 	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
 	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
 	return OXYLOSS
+
+/obj/item/tank/jetpack/emp_act(severity)
+	. = ..()
+	if(!can_be_emped) //monkestation addition: improvised jetpack doesn't have any electronics to emp
+		return
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	if(ismob(loc) && (item_flags & IN_INVENTORY))
+		var/mob/wearer = loc
+		turn_off(wearer)
+	else
+		turn_off()
+	update_item_action_buttons()
+	disabled = TRUE
+	src.visible_message(span_danger("[src]'s lights flicker and the thruster connections cut out!")) //monkestation addition
+	addtimer(CALLBACK(src, PROC_REF(remove_emp)), 4 SECONDS)
+
+///Removes the disabled flag after getting EMPd
+/obj/item/tank/jetpack/proc/remove_emp()
+	disabled = FALSE
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
@@ -144,11 +172,13 @@
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at modsuit jetpack speeds
+	can_be_emped = FALSE
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
-	var/mob/user = get_user()
-	if(!user)
+	if(!ismob(loc))
 		return FALSE
+
+	var/mob/user = loc
 	if(rand(0,250) == 0)
 		to_chat(user, span_notice("You feel your jetpack's engines cut out."))
 		turn_off(user)
@@ -159,6 +189,7 @@
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
+	volume = 50
 	inhand_icon_state = "jetpack-void"
 
 /obj/item/tank/jetpack/oxygen
@@ -167,7 +198,7 @@
 	icon_state = "jetpack"
 	inhand_icon_state = "jetpack"
 
-/obj/item/tank/jetpack/oxygen/harness
+/obj/item/tank/jetpack/harness //monkestation edit
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
@@ -175,6 +206,8 @@
 	volume = 40
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT //monkestation edit
+	can_be_emped = FALSE //monkestation: its fancy
 
 /obj/item/tank/jetpack/oxygen/captain
 	name = "captain's jetpack"
@@ -185,14 +218,13 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+	can_be_emped = FALSE //monkestation: its fancy
 
-/obj/item/tank/jetpack/oxygen/security
+/obj/item/tank/jetpack/security //monkestation edit
 	name = "security jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	inhand_icon_state = "jetpack-sec"
-
-
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
@@ -201,3 +233,11 @@
 	inhand_icon_state = "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
+
+//MONKESTATION EDIT START
+/obj/item/tank/jetpack/mining //tried to get hardsuit jetpacks to work again took all day with no real progess so this is the compromise
+	name = "mining jetpack (oxygen)"
+	icon_state = "jetpack-mining"
+	inhand_icon_state = "jetpack-mining"
+	desc = "A tank of compressed oxygen for miners to use as propulsion in local space."
+//MONKESTATION EDIT STOP

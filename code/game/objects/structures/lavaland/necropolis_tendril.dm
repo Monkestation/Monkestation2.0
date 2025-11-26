@@ -14,20 +14,23 @@
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
-
-	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
-
+	scanner_taggable = TRUE
+	mob_gps_id = "WT"
+	spawner_gps_id = "Necropolis Tendril"
 	var/deconstruct_override = FALSE // Monkestation addition: override for ocean tendrils
 
 /obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/basic/mining/goliath)
+	mob_gps_id = "GL"
 
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/basic/mining/legion/spawner_made)
+	mob_gps_id = "LG"
 
 /obj/structure/spawner/lavaland/icewatcher
 	mob_types = list(/mob/living/basic/mining/watcher/icewing)
+	mob_gps_id = "WT|I" // icewing
 
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)
@@ -68,7 +71,6 @@ GLOBAL_LIST_INIT(tendrils, list())
 				L.client.give_award(/datum/award/score/tendril_score, L) //Progresses score by one
 	GLOB.tendrils -= src
 	QDEL_NULL(emitted_light)
-	QDEL_NULL(gps)
 	return ..()
 
 /obj/effect/light_emitter/tendril
@@ -117,8 +119,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
 
+/obj/effect/collapse/attack_robot(mob/living/user)
+	. = ..()
+	if (Adjacent(user))
+		return attack_hand(user)
+
 /obj/effect/collapse/Destroy()
-	QDEL_NULL(collected)
+	collected.Cut()
 	QDEL_NULL(emitted_light)
 	return ..()
 
@@ -139,6 +146,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, TRUE)
 	visible_message(span_boldannounce("The tendril falls inward, the ground around it widening into a yawning chasm!"))
 	for(var/turf/T in RANGE_TURFS(2,src))
+		if(HAS_TRAIT(T, TRAIT_NO_TERRAFORM))
+			continue
 		if(!T.density)
 			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
 	qdel(src)

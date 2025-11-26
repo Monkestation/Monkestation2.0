@@ -11,6 +11,8 @@
 	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
 	gold_core_spawnable = NO_SPAWN
 
+	ckeywhitelist = list("spinnermaster")
+
 /mob/living/basic/crab/spycrab
 	name = "spy crab"
 	desc = "hon hon hon"
@@ -19,6 +21,8 @@
 	icon_living = "crab"
 	icon_dead = "crab_dead"
 	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("TTNT789")
 
 /mob/living/basic/crab/spycrab/Initialize(mapload)
 	. = ..()
@@ -39,6 +43,8 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 
+	ckeywhitelist = list("ruby_flamewing")
+
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
@@ -47,9 +53,12 @@
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"
 	icon_gib = null
+	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	basic_mob_flags = FLIP_ON_DEATH
+
+	ckeywhitelist = list("bidlink2")
 
 /mob/living/basic/lizard/snake
 	name = "Three Headed Snake"
@@ -70,6 +79,8 @@
 	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
 	gold_core_spawnable = NO_SPAWN
 
+	ckeywhitelist = list("mjolnir2")
+
 /mob/living/basic/pet/slime/talkative
 	name = "Extroverted Slime"
 	desc = "He's got a lot to say!"
@@ -79,7 +90,8 @@
 	icon_dead = "slime_dead"
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
-	ai_controller = /datum/ai_controller/basic_controller/
+	faction = list(FACTION_SLIME)
+	ai_controller = /datum/ai_controller/basic_controller
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
 					"I've seen salad that dresses better than you.",
 					"I smell smoke, are you thinking too hard again?",
@@ -89,6 +101,8 @@
 					"If I throw a stick, will you leave?",)
 	var/positive_quips = list("Hey there, slime pal!",
 								"Aw thanks buddy!",)
+
+	ckeywhitelist = list("Senri08")
 
 /mob/living/basic/pet/slime/talkative/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -112,3 +126,330 @@
 	icon_dead = "spider_dead"
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
+
+	ckeywhitelist = list("Random516")
+
+/mob/living/basic/butterfly/void
+	name = "Void Butterfly"
+	desc = "They say if a void butterfly flaps its wings..."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "void_butterfly"
+	icon_living = "void_butterfly"
+	icon_dead = "void_butterfly_dead"
+	gold_core_spawnable = NO_SPAWN
+	health = 20
+	maxHealth = 20
+
+	ckeywhitelist = list("tonymcsp")
+
+/mob/living/basic/butterfly/void/spacial
+	fixed_color = TRUE
+
+/mob/living/basic/crab/plant
+	name = "Plant crab"
+	desc = "Is it a crab made of plant or a plant made of crab?"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "crab_plant"
+	icon_living = "crab_plant"
+	icon_dead = "crab_plant_dead"
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("Rickdude1231")
+
+/mob/living/basic/pet/gumball_goblin
+	name = "Gumball Goblin"
+	desc = "AAAAAAAAAAAAAAAA"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "gumball_goblin"
+	icon_living = "gumball_goblin"
+	icon_dead = "gumball_goblin_dead"
+	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("elliethedarksun")
+
+	///Ability
+	var/datum/action/cooldown/lay_gumball/gumball_ability
+
+/mob/living/basic/pet/gumball_goblin/Initialize(mapload)
+	. = ..()
+	gumball_ability = new()
+	gumball_ability.Grant(src)
+
+
+
+///drops peels around the mob when activated
+/datum/action/cooldown/lay_gumball
+	name = "Lay gumball"
+	desc = "Produce a gumball"
+	cooldown_time = 15 SECONDS
+	button_icon_state = "gumball"
+	button_icon = 'icons/obj/food/lollipop.dmi'
+	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
+	///which type of gumballs to spawn
+	var/gumball_type = /obj/item/food/gumball
+	///How many gumballs to spawn
+	var/gumball_amount = 1
+
+/datum/action/cooldown/lay_gumball/Activate(atom/target)
+	. = ..()
+	var/list/reachable_turfs = list()
+	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
+		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
+			continue
+		reachable_turfs += adjacent_turf
+
+	var/gumballs_to_spawn = min(gumball_amount, reachable_turfs.len)
+	for(var/i in 1 to gumballs_to_spawn)
+		new gumball_type(pick_n_take(reachable_turfs))
+	StartCooldown()
+
+/mob/living/basic/pet/orangutan
+	name = "\improper Orangutan"
+	desc = "A vibrant colored primate once native to Indonesia"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "orangutan"
+	icon_living = "orangutan"
+	icon_dead = "orangutan"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+
+	ckeywhitelist = list("Raziaar")
+
+/mob/living/basic/pet/fluffykobold
+	name = "fluffy kobold"
+	desc = "A cute and fluffy horned creature with the attitude of a cat and the dexterity of a monkey. Whether it's a stow-away that snuck in from some foreign zoo, a geneticist's mad experiment or a supposedly terrifying predator from the ashlands, it's here now and it wants your pizza."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "Bluedragon66"
+	icon_living = "Bluedragon66"
+	icon_dead = "Bluedragon66-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Bluedragon66")
+
+
+/mob/living/basic/pet/darkscug
+	name = "night slugcat"
+	desc = "ITS A FUGGIN SCRUG"
+	icon = 'icons/mob/simple/slugcats.dmi'
+	icon_state = "scug_nightcat"
+	icon_living = "scug_nightcat"
+	icon_dead = "scug_dead_nightcat"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("CaptainShiba")
+
+/mob/living/basic/frog/hypnotoad
+	name = "hypnotoad"
+	desc = "All glory to the hypnotoad."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "hypnotoad"
+	icon_living = "hypnotoad"
+	icon_dead = "hypnotoad-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Ophaq")
+
+/mob/living/basic/pet/ghastly_evil_demon
+	name = "ghastly evil demon"
+	desc = "It's so scary!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "ghastly_evil_demon"
+	icon_living = "ghastly_evil_demon"
+	icon_dead = "ghastly_evil_demon-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("ThePooba")
+	movement_type = FLYING
+
+/mob/living/basic/pet/albino_ghost_ian
+	name = "ghost ian"
+	desc = "It's an albino corgi!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "albino_ghost_ian"
+	icon_living = "albino_ghost_ian"
+	icon_dead = "albino_ghost_ian-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Eacles13")
+
+/mob/living/basic/pet/fluffydonator
+	name = "fluffy"
+	desc = "A big black spider wearing pajama's from Central Command!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "fluffy"
+	icon_living = "fluffy"
+	icon_dead = "fluffy-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Jason Farqiour")
+
+/mob/living/basic/pet/robottoything
+	name = "robot toy"
+	desc = "It's a small robot toy. It's made of metal"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robottoything"
+	icon_living = "robottoything"
+	icon_dead = "robottoything-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("TheSpecialSnowflake")
+
+/mob/living/basic/pet/babypukeko
+	name = "baby pukeko"
+	desc = "DAMN!!!!!!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	icon_living = "babypukeko"
+	icon_dead = "babypukeko-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/mob/living/basic/pet/babypukeko/tall
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	icon_living = "tallbabypukeko"
+	icon_dead = "tallbabypukeko-dead"
+	pixel_x = -96
+
+/mob/living/basic/pet/eris_romch
+	name = "romch"
+	desc = "romch ."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	icon_living = "romch"
+	icon_dead = "romch-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mycah")
+
+/mob/living/basic/pet/theclown_clownpet
+	name = "short clown"
+	desc = "He's just a funny little guy."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	icon_living = "theclown_clownpet"
+	icon_dead = "theclown_clownpet-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mrsmall_theclown")
+
+/mob/living/basic/pet/cyber_husky
+	name = "Cyber Husky"
+	desc = "Whos a good cyber dog? You are!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	icon_living = "robodoggo"
+	icon_dead = "robodoggo-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("AdamCoal")
+	///Ability
+	var/datum/action/cooldown/change_hud/change_hud_ability
+
+/mob/living/basic/pet/cyber_husky/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+	change_hud_ability = new()
+	change_hud_ability.Grant(src)
+	var/mutable_appearance/overlay = mutable_appearance(icon, "robodoggo-glasses-dia")
+	src.add_overlay(overlay)
+	initial_language_holder = /datum/language_holder/synthetic
+
+///switches the amimal huds
+/datum/action/cooldown/change_hud
+	name = "change_hud"
+	desc = "Changes your HUD type."
+	cooldown_time = 2 SECONDS
+	button_icon_state = "aviators-diagnostic"
+	var/current_hud = 3
+	button_icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
+
+/datum/action/cooldown/change_hud/Activate(atom/target)
+	. = ..()
+
+	if(current_hud == 1)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-med")
+		usr.add_overlay(overlay)
+		button_icon_state = "aviators-health"
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 2)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-diagnostic"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-dia")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 3)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-meson"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-meson")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		usr.sight |= SEE_TURFS
+		StartCooldown()
+		return
+	if(current_hud == 4)
+		current_hud++
+		usr.sight &= ~SEE_TURFS
+		button_icon_state = "aviators-science"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-sci")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 5)
+		current_hud = 1
+		REMOVE_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		button_icon_state = "aviators-sec"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+
+/mob/living/basic/pet/cyber_husky/death(gibbed)
+	src.cut_overlays()
+	change_hud_ability.current_hud = 3
+	. = ..()
+
+/mob/living/basic/pet/bananadola
+	name = "bananadola"
+	desc = "Beloved pet of the Bananotrasen CEO, an abomination of genetic horror. Tastes good fried."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "bananadola"
+	icon_living = "bananadola"
+	icon_dead = "bananadola"
+	icon_gib = null
+	basic_mob_flags = FLIP_ON_DEATH
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Milthy")

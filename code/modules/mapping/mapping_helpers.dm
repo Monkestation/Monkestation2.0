@@ -16,7 +16,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/baseturf_helper/LateInitialize()
+/obj/effect/baseturf_helper/LateInitialize(mapload_arg)
 	if(!baseturf_to_replace)
 		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom))
 	else if(!length(baseturf_to_replace))
@@ -56,6 +56,10 @@
 /obj/effect/baseturf_helper/asteroid/snow
 	name = "asteroid snow baseturf editor"
 	baseturf = /turf/open/misc/asteroid/snow
+
+/obj/effect/baseturf_helper/asteroid/moon
+	name = "lunar sand baseturf editor"
+	baseturf = /turf/open/misc/asteroid/moon
 
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
@@ -110,6 +114,7 @@
 	layer = DOOR_HELPER_LAYER
 	late = TRUE
 
+/* replaced in monkestation\code\modules\mapping\mapping_helpers.dm
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -121,8 +126,9 @@
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
+*/
 
-/obj/effect/mapping_helpers/airlock/LateInitialize()
+/obj/effect/mapping_helpers/airlock/LateInitialize(mapload_arg)
 	. = ..()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(!airlock)
@@ -245,6 +251,167 @@
 	else
 		airlock.autoname = TRUE
 
+//air alarm helpers
+/obj/effect/mapping_helpers/airalarm
+	desc = "You shouldn't see this. Report it please."
+	layer = ABOVE_OBJ_LAYER
+	late = TRUE
+
+/obj/effect/mapping_helpers/airalarm/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find an air alarm at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/airalarm/LateInitialize(mapload_arg)
+	. = ..()
+	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
+
+	if(isnull(target))
+		qdel(src)
+		return
+	if(target.unlocked)
+		target.unlock()
+
+	if(target.tlv_cold_room)
+		target.set_tlv_cold_room()
+	if(target.tlv_no_checks)
+		target.set_tlv_no_checks()
+	if(target.tlv_no_checks && target.tlv_cold_room)
+		CRASH("Tried to apply incompatible air alarm threshold helpers!")
+
+	if(target.syndicate_access)
+		target.give_syndicate_access()
+	if(target.away_general_access)
+		target.give_away_general_access()
+	if(target.engine_access)
+		target.give_engine_access()
+	if(target.mixingchamber_access)
+		target.give_mixingchamber_access()
+	if(target.all_access)
+		target.give_all_access()
+	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
+		CRASH("Tried to combine incompatible air alarm access helpers!")
+
+	if(target.air_sensor_chamber_id)
+		target.setup_chamber_link()
+
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/airalarm/proc/payload(obj/machinery/airalarm/target)
+	return
+
+/obj/effect/mapping_helpers/airalarm/unlocked
+	name = "airalarm unlocked interface helper"
+	icon_state = "airalarm_unlocked_interface_helper"
+
+/obj/effect/mapping_helpers/airalarm/unlocked/payload(obj/machinery/airalarm/target)
+	if(target.unlocked)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to unlock the [target] but it's already unlocked!")
+	target.unlocked = TRUE
+
+/obj/effect/mapping_helpers/airalarm/syndicate_access
+	name = "airalarm syndicate access helper"
+	icon_state = "airalarm_syndicate_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/syndicate_access/payload(obj/machinery/airalarm/target)
+	if(target.syndicate_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to syndicate but it's already changed!")
+	target.syndicate_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/away_general_access
+	name = "airalarm away access helper"
+	icon_state = "airalarm_away_general_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/away_general_access/payload(obj/machinery/airalarm/target)
+	if(target.away_general_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to away_general but it's already changed!")
+	target.away_general_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/engine_access
+	name = "airalarm engine access helper"
+	icon_state = "airalarm_engine_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/engine_access/payload(obj/machinery/airalarm/target)
+	if(target.engine_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to engine_access but it's already changed!")
+	target.engine_access = TRUE
+	target.stop_ac() // monkestation addition: prevents the air conditioning from heating up the SM
+
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access
+	name = "airalarm mixingchamber access helper"
+	icon_state = "airalarm_mixingchamber_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access/payload(obj/machinery/airalarm/target)
+	if(target.mixingchamber_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to mixingchamber_access but it's already changed!")
+	target.mixingchamber_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/all_access
+	name = "airalarm all access helper"
+	icon_state = "airalarm_all_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/all_access/payload(obj/machinery/airalarm/target)
+	if(target.all_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to all_access but it's already changed!")
+	target.all_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room
+	name = "airalarm cold room tlv helper"
+	icon_state = "airalarm_tlv_cold_room_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room/payload(obj/machinery/airalarm/target)
+	if(target.tlv_cold_room)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
+	target.tlv_cold_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks
+	name = "airalarm no checks tlv helper"
+	icon_state = "airalarm_tlv_no_checks_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks/payload(obj/machinery/airalarm/target)
+	if(target.tlv_no_checks)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to no_checks but it's already changed!")
+	target.tlv_no_checks = TRUE
+
+/obj/effect/mapping_helpers/airalarm/link
+	name = "airalarm link helper"
+	icon_state = "airalarm_link_helper"
+	var/chamber_id = ""
+	var/allow_link_change = FALSE
+
+/obj/effect/mapping_helpers/airalarm/link/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
+	if(!isnull(alarm))
+		alarm.air_sensor_chamber_id = chamber_id
+		alarm.allow_link_change = allow_link_change
+	else
+		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
+		return INITIALIZE_HINT_QDEL
+
 //apc helpers
 /obj/effect/mapping_helpers/apc
 	desc = "You shouldn't see this. Report it please."
@@ -266,7 +433,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/apc/LateInitialize()
+/obj/effect/mapping_helpers/apc/LateInitialize(mapload_arg)
 	. = ..()
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 
@@ -405,7 +572,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/target_name
 
 //Late init so everything is likely ready and loaded (no warranty)
-/obj/effect/mapping_helpers/atom_injector/LateInitialize()
+/obj/effect/mapping_helpers/atom_injector/LateInitialize(mapload_arg)
 	if(!check_validity())
 		return
 	var/turf/target_turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
@@ -505,9 +672,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/trait_injector/check_validity()
 	if(!istext(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
-	if(!GLOB.trait_name_map)
-		GLOB.trait_name_map = generate_trait_name_map()
-	if(!GLOB.trait_name_map.Find(trait_name))
+	if(!GLOB.global_trait_name_map)
+		GLOB.global_trait_name_map = generate_global_trait_name_map()
+	if(!GLOB.global_trait_name_map.Find(trait_name))
 		stack_trace("Possibly wrong trait in [type] - [trait_name] is not a trait in the global trait list")
 	return TRUE
 
@@ -651,8 +818,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Dead Body placer"
 	late = TRUE
 	icon_state = "deadbodyplacer"
+	///if TRUE, was spawned out of mapload.
 	var/admin_spawned
-	var/bodycount = 2 //number of bodies to spawn
+	///number of bodies to spawn
+	var/bodycount = 3
+	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
+	var/list/blacklisted_from_rng_placement = list(
+		SPECIES_ETHEREAL, // they revive on death which is bad juju
+		SPECIES_OOZELING, // they become a core, which clogs up GPSes
+		SPECIES_HUMAN,  // already have a 50% chance of being selected
+	)
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -660,24 +835,25 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		return
 	admin_spawned = TRUE
 
-/obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
-	var/area/a = get_area(src)
-	var/list/trays = list()
-	for (var/i in a.contents)
-		if (istype(i, /obj/structure/bodycontainer/morgue))
-			if(admin_spawned)
-				var/obj/structure/bodycontainer/morgue/early_morgue_tray = i
-				if(early_morgue_tray.connected.loc != early_morgue_tray)
-					continue
-			trays += i
-	if(!trays.len)
+/obj/effect/mapping_helpers/dead_body_placer/LateInitialize(mapload_arg)
+	var/area/morgue_area = get_area(src)
+	var/list/obj/structure/bodycontainer/morgue/trays = list()
+	for (var/list/zlevel_turfs as anything in morgue_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
+			if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
+				continue
+			trays += morgue_tray
+
+	var/numtrays = length(trays)
+	if(numtrays == 0)
 		if(admin_spawned)
 			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
 		else
 			log_mapping("[src] at [x],[y] could not find any morgues.")
 		return
 
-	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
+	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
 	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
@@ -686,35 +862,39 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(use_species)
 		var/list/temp_list = get_selectable_species()
 		usable_races = temp_list.Copy()
-		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
-		LAZYREMOVE(usable_races, SPECIES_HUMAN)
-		if(!usable_races)
+		LAZYREMOVE(usable_races, blacklisted_from_rng_placement)
+		if(!LAZYLEN(usable_races))
 			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
 			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
-		usable_races += override_species
+		LAZYADD(usable_races, override_species)
 
-	for (var/i = 1 to bodycount)
+	var/guaranteed_human_spawned = FALSE
+	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
+		var/mob/living/carbon/human/new_human = new(morgue_tray.loc)
 
 		var/species_to_pick
-		if(LAZYLEN(usable_races))
-			if(!species_probability)
-				species_probability = 50
-				stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
-			if(prob(species_probability))
-				species_to_pick = pick(usable_races)
-				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
-				if(new_human_species)
-					new_human.set_species(new_human_species)
-					new_human_species = new_human.dna.species
-					new_human_species.randomize_features(new_human)
-					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
-				else
-					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+
+		if(guaranteed_human_spawned && use_species)
+			if(LAZYLEN(usable_races))
+				if(!isnum(species_probability))
+					species_probability = 50
+					stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
+				if(prob(species_probability))
+					species_to_pick = pick(usable_races)
+					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
+					if(new_human_species)
+						new_human.set_species(new_human_species)
+						new_human_species = new_human.dna.species
+						new_human_species.randomize_features(new_human)
+						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+					else
+						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+		else
+			guaranteed_human_spawned = TRUE
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
@@ -722,56 +902,62 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else
-				var/obj/item/organ/O = part
-				O.organ_flags |= ORGAN_FROZEN
+				part.organ_flags |= ORGAN_FROZEN
 
 		morgue_tray.update_appearance()
 
 	qdel(src)
-
 
 //On Ian's birthday, the hop's office is decorated.
 /obj/effect/mapping_helpers/ianbirthday
 	name = "Ian's Bday Helper"
 	late = TRUE
 	icon_state = "iansbdayhelper"
+	/// How many clusters of balloons to spawn.
 	var/balloon_clusters = 2
+	/// if TRUE, we give a map log warning if we can't find Ian's dogbed.
+	var/map_warning = TRUE
 
-/obj/effect/mapping_helpers/ianbirthday/LateInitialize()
-	if(check_holidays("Ian's Birthday"))
+/obj/effect/mapping_helpers/ianbirthday/LateInitialize(mapload_arg)
+	if(check_holidays(IAN_HOLIDAY))
 		birthday()
 	qdel(src)
 
 /obj/effect/mapping_helpers/ianbirthday/proc/birthday()
-	var/area/a = get_area(src)
-	var/list/table = list()//should only be one aka the front desk, but just in case...
-	var/list/openturfs = list()
+	var/area/celebration_area = get_area(src)
+	var/list/table_turfs = list()
+	var/list/open_turfs = list()
+	var/turf/dogbed_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
+			if(isopenturf(area_turf))
+				new /obj/effect/decal/cleanable/confetti(area_turf)
+				open_turfs += area_turf
 
-	//confetti and a corgi balloon! (and some list stuff for more decorations)
-	for(var/thing in a.contents)
-		if(istype(thing, /obj/structure/table/reinforced))
-			table += thing
-		if(isopenturf(thing))
-			new /obj/effect/decal/cleanable/confetti(thing)
-			if(locate(/obj/structure/bed/dogbed/ian) in thing)
-				new /obj/item/toy/balloon/corgi(thing)
-			else
-				openturfs += thing
+	if(isnull(dogbed_turf) && map_warning)
+		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
 
-	//cake + knife to cut it!
-	if(length(table))
-		var/turf/food_turf = get_turf(pick(table))
+	else
+		new /obj/item/toy/balloon/corgi(dogbed_turf)
+		var/turf/food_turf = length(table_turfs) ? pick(table_turfs) : dogbed_turf
 		new /obj/item/knife/kitchen(food_turf)
 		var/obj/item/food/cake/birthday/iancake = new(food_turf)
 		iancake.desc = "Happy birthday, Ian!"
 
+	if(!length(open_turfs))
+		return
+
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
-		var/turf/clusterspot = pick_n_take(openturfs)
+		var/turf/clusterspot = pick_n_take(open_turfs)
 		new /obj/item/toy/balloon(clusterspot)
 		var/balloons_left_to_give = 3 //the amount of balloons around the cluster
 		var/list/dirs_to_balloon = GLOB.cardinals.Copy()
@@ -798,8 +984,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ianbirthday/admin//so admins may birthday any room
 	name = "generic birthday setup"
 	icon_state = "bdayhelper"
+	map_warning = FALSE
 
-/obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
+/obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize(mapload_arg)
 	birthday()
 	qdel(src)
 
@@ -809,30 +996,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "iansnewyrshelper"
 
-/obj/effect/mapping_helpers/iannewyear/LateInitialize()
+/obj/effect/mapping_helpers/iannewyear/LateInitialize(mapload_arg)
 	if(check_holidays(NEW_YEAR))
 		fireworks()
 	qdel(src)
 
 /obj/effect/mapping_helpers/iannewyear/proc/fireworks()
-	var/area/a = get_area(src)
-	var/list/table = list()//should only be one aka the front desk, but just in case...
-	var/list/openturfs = list()
+	var/area/celebration_area = get_area(src)
+	var/list/table_turfs = list()
+	var/turf/dogbed_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
 
-	for(var/thing in a.contents)
-		if(istype(thing, /obj/structure/table/reinforced))
-			table += thing
-		else if(isopenturf(thing))
-			if(locate(/obj/structure/bed/dogbed/ian) in thing)
-				new /obj/item/clothing/head/costume/festive(thing)
-				var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(thing)
-				iandrink.name = "dog champagne"
-				iandrink.pixel_y += 8
-				iandrink.pixel_x += 8
-			else
-				openturfs += thing
+	if(isnull(dogbed_turf))
+		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
+		return
 
-	var/turf/fireworks_turf = get_turf(pick(table))
+	new /obj/item/clothing/head/costume/festive(dogbed_turf)
+	var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(dogbed_turf)
+	iandrink.name = "dog champagne"
+	iandrink.pixel_y += 8
+	iandrink.pixel_x += 8
+
+	var/turf/fireworks_turf = length(table_turfs) ? pick(table_turfs) : dogbed_turf
 	var/obj/item/storage/box/matches/matchbox = new(fireworks_turf)
 	matchbox.pixel_y += 8
 	matchbox.pixel_x -= 3
@@ -847,7 +1037,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/note_name //custom note name
 	var/note_path //if you already have something wrote up in a paper subtype, put the path here
 
-/obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
+/obj/effect/mapping_helpers/airlock_note_placer/LateInitialize(mapload_arg)
 	var/turf/turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
@@ -891,7 +1081,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "trapdoor"
 
-/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
+/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize(mapload_arg)
 	var/turf/component_target = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
@@ -903,7 +1093,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	/// List of traits to add to this Z-level.
 	var/list/traits_to_add = list()
 
-/obj/effect/mapping_helpers/ztrait_injector/LateInitialize()
+/obj/effect/mapping_helpers/ztrait_injector/LateInitialize(mapload_arg)
 	var/datum/space_level/level = SSmapping.z_list[z]
 	if(!level || !length(traits_to_add))
 		return
@@ -960,7 +1150,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
@@ -972,11 +1162,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
-/obj/effect/mapping_helpers/broken_floor/Initialize(mapload)
-	.=..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/mapping_helpers/broken_floor/LateInitialize()
+/obj/effect/mapping_helpers/broken_floor/LateInitialize(mapload_arg)
 	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.break_tile()
 	qdel(src)
@@ -985,14 +1171,60 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "burnt floor"
 	icon = 'icons/turf/damaged.dmi'
 	icon_state = "floorscorched1"
-	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
+	late = TRUE
 
-/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
-	.=..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
+/obj/effect/mapping_helpers/burnt_floor/LateInitialize(mapload_arg)
 	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.burn_tile()
 	qdel(src)
+
+///Basic mob flag helpers for things like deleting on death.
+/obj/effect/mapping_helpers/basic_mob_flags
+	name = "Basic mob flags helper"
+	desc = "Used to apply basic_mob_flags to basic mobs on the same turf."
+	late = TRUE
+
+	///The basic mob flag that we're adding to all basic mobs on the turf.
+	var/flag_to_give
+
+/obj/effect/mapping_helpers/basic_mob_flags/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/basic_mob_flags/LateInitialize(mapload_arg)
+	. = ..()
+	var/had_any_mobs = FALSE
+	for(var/mob/living/basic/basic_mobs in loc)
+		had_any_mobs = TRUE
+		basic_mobs.basic_mob_flags |= flag_to_give
+	if(!had_any_mobs)
+		CRASH("[src] called on a turf without any basic mobs.")
+	qdel(src)
+
+/obj/effect/mapping_helpers/basic_mob_flags/del_on_death
+	name = "Basic mob del on death flag helper"
+	icon_state = "basic_mob_del_on_death"
+	flag_to_give = DEL_ON_DEATH
+
+/obj/effect/mapping_helpers/basic_mob_flags/flip_on_death
+	name = "Basic mob flip on death flag helper"
+	icon_state = "basic_mob_flip_on_death"
+	flag_to_give = FLIP_ON_DEATH
+
+/obj/effect/mapping_helpers/basic_mob_flags/remain_dense_while_dead
+	name = "Basic mob remain dense while dead flag helper"
+	icon_state = "basic_mob_remain_dense_while_dead"
+	flag_to_give = REMAIN_DENSE_WHILE_DEAD
+
+/obj/effect/mapping_helpers/basic_mob_flags/flammable_mob
+	name = "Basic mob flammable flag helper"
+	icon_state = "basic_mob_flammable"
+	flag_to_give = FLAMMABLE_MOB
+
+/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
+	name = "Basic mob immune to fists flag helper"
+	icon_state = "basic_mob_immune_to_fists"
+	flag_to_give = IMMUNE_TO_FISTS

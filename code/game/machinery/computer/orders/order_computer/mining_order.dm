@@ -16,12 +16,15 @@
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 	credit_type = CREDIT_TYPE_MINING
+	projectiles_pass_chance = 0
 
 	order_categories = list(
 		CATEGORY_MINING,
-		CATEGORY_CONSUMABLES,
-		CATEGORY_TOYS_DRONE,
+		CATEGORY_SURVIVAL,
+		CATEGORY_CRUSHER,
 		CATEGORY_PKA,
+		CATEGORY_WASTE_WEAPON,
+		CATEGORY_EXTRA,
 	)
 	blackbox_key = "mining"
 
@@ -62,7 +65,7 @@
 /obj/machinery/computer/order_console/mining/retrive_points(obj/item/card/id/id_card)
 	return FLOOR(id_card.registered_account.mining_points, 1)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -89,7 +92,7 @@
 	var/static/list/set_types
 	if(!set_types)
 		set_types = list()
-		for(var/datum/voucher_set/static_set as anything in subtypesof(/datum/voucher_set))
+		for(var/datum/voucher_set/static_set as anything in subtypesof(/datum/voucher_set/mining)) //monkestation edit
 			set_types[initial(static_set.name)] = new static_set
 
 	var/list/items = list()
@@ -149,13 +152,13 @@
 	icon_state = "data_1"
 
 	///Amount of points this card contains.
-	var/points = 500
+	var/points = 325
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()
 	. += span_notice("There's [points] point\s on the card.")
 
-/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isidcard(attacking_item))
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item

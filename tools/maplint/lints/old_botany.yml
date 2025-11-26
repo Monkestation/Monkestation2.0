@@ -1,0 +1,3 @@
+help: "Please use /obj/machinery/growing instead of /obj/machinery/hydroponics"
+/obj/machinery/hydroponics:
+  banned: true

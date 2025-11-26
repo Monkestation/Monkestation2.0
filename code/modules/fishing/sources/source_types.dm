@@ -163,7 +163,7 @@
 	var/static/list/weighted_traits
 	if(!weighted_traits)
 		weighted_traits = list()
-		for(var/trait_type as anything in GLOB.fish_traits)
+		for(var/trait_type in GLOB.fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
@@ -193,6 +193,13 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
+/datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	. = ..()
+	if(istype(rod.hook, /obj/item/fishing_hook/rescue))
+		to_chat(fisherman, span_notice("The rescue hook falls straight down the chasm! Hopefully it catches a corpse."))
+		return
+	to_chat(fisherman, span_danger("Your fishing hook makes a soft 'thud' noise as it gets stuck on the wall of the chasm. It doesn't look like it's going to catch much of anything, except maybe some detritus."))
+
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
@@ -200,6 +207,8 @@
 		return rolled_reward
 
 	return rod.hook.chasm_detritus_type
+
+/datum/fish_source/chasm
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"

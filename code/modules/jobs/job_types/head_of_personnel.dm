@@ -1,14 +1,14 @@
 /datum/job/head_of_personnel
 	title = JOB_HEAD_OF_PERSONNEL
-	description = "Alter access on ID cards, manage the service department, \
-		protect Ian, run the station when the captain dies."
+	description = "Alter access on ID cards, manage the service and supply departments, \
+		protect Ian, run the station when the captain dies." //monkestation addition: clarifies the HoP is the supply head
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list(JOB_CAPTAIN)
 	head_announce = list(RADIO_CHANNEL_SERVICE, RADIO_CHANNEL_SUPPLY)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = SUPERVISOR_HOP
+	supervisors = SUPERVISOR_CAPTAIN //dunno when this got fucked but this will now be fixed to be proper.
 	req_admin_notify = 1
 	minimal_player_age = 10
 	exp_requirements = 1500
@@ -40,9 +40,9 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/trophy/silver_cup)
 	rpg_title = "Guild Questgiver"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 3 //could tone back down to 2
 
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
@@ -66,14 +66,20 @@
 	suit = /obj/item/clothing/suit/armor/vest/hop
 	implants = list(/obj/item/implant/mindshield)
 
+	//monkestation addition start:
+	backpack = /obj/item/storage/backpack/head_of_personnel
+	satchel = /obj/item/storage/backpack/satchel/head_of_personnel
+	duffelbag = /obj/item/storage/backpack/duffelbag/head_of_personnel
+	//monkestation addition end
+
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/hop,
+		/obj/item/stamp/head/hop,
 		)
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(check_holidays("Ian's Birthday"))
+	if(check_holidays(IAN_HOLIDAY))
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving

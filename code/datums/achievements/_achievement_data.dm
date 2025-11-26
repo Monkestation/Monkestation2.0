@@ -83,7 +83,7 @@
 
 /datum/achievement_data/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/simple/achievements),
+		get_asset_datum(/datum/asset/spritesheet_batched/achievements),
 	)
 
 /datum/achievement_data/ui_state(mob/user)
@@ -102,7 +102,7 @@
 	.["highscore"] = list()
 	.["user_key"] = user.ckey
 
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet_batched/achievements/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 	for(var/achievement_type in SSachievements.awards)
 		var/datum/award/award = SSachievements.awards[achievement_type]
 		if(!award.name) //No name? we a subtype.
@@ -113,7 +113,7 @@
 			"name" = award.name,
 			"desc" = award.desc,
 			"category" = award.category,
-			"icon_class" = assets.icon_class_name(award.icon),
+			"icon_class" = assets.icon_class_name("achievement-[award.icon_state]"),
 			"value" = data[achievement_type],
 			)
 		award_data += award.get_ui_data(user.ckey)
@@ -130,4 +130,4 @@
 	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
-	player_details.achievements.ui_interact(usr)
+	persistent_client.achievements.ui_interact(usr)

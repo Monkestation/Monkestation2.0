@@ -1,5 +1,12 @@
 import { Component } from 'inferno';
-import { Box, Button, KeyListener, Stack, Tooltip, TrackOutsideClicks } from '../../components';
+import {
+  Box,
+  Button,
+  KeyListener,
+  Stack,
+  Tooltip,
+  TrackOutsideClicks,
+} from '../../components';
 import { resolveAsset } from '../../assets';
 import { PreferencesMenuData } from './data';
 import { useBackend } from '../../backend';
@@ -7,6 +14,7 @@ import { range, sortBy } from 'common/collections';
 import { KeyEvent } from '../../events';
 import { TabbedMenu } from './TabbedMenu';
 import { fetchRetry } from '../../http';
+import { isEscape } from 'common/keys';
 
 type Keybinding = {
   name: string;
@@ -33,22 +41,22 @@ const isStandardKey = (event: KeyboardEvent): boolean => {
     event.key !== 'Alt' &&
     event.key !== 'Control' &&
     event.key !== 'Shift' &&
-    event.key !== 'Esc'
+    !isEscape(event.key)
   );
 };
 
 const KEY_CODE_TO_BYOND: Record<string, string> = {
-  'DEL': 'Delete',
-  'DOWN': 'South',
-  'END': 'Southwest',
-  'HOME': 'Northwest',
-  'INSERT': 'Insert',
-  'LEFT': 'West',
-  'PAGEDOWN': 'Southeast',
-  'PAGEUP': 'Northeast',
-  'RIGHT': 'East',
-  'SPACEBAR': 'Space',
-  'UP': 'North',
+  DEL: 'Delete',
+  DOWN: 'South',
+  END: 'Southwest',
+  HOME: 'Northwest',
+  INSERT: 'Insert',
+  LEFT: 'West',
+  PAGEDOWN: 'Southeast',
+  PAGEUP: 'Northeast',
+  RIGHT: 'East',
+  ' ': 'Space',
+  UP: 'North',
 };
 
 /**
@@ -65,7 +73,7 @@ const sortKeybindings = sortBy(([_, keybinding]: [string, Keybinding]) => {
 const sortKeybindingsByCategory = sortBy(
   ([category, _]: [string, Record<string, Keybinding>]) => {
     return category;
-  }
+  },
 );
 
 const formatKeyboardEvent = (event: KeyboardEvent): string => {
@@ -101,8 +109,8 @@ const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
       entries.findIndex(([category, _]) => {
         return category === findCategory;
       }),
-      1
-    )[0]
+      1,
+    )[0],
   );
 };
 
@@ -110,6 +118,8 @@ class KeybindingButton extends Component<{
   currentHotkey?: string;
   onClick?: () => void;
   typingHotkey?: string;
+  boundKeys: Record<string, string[]>;
+  keybindingName: string;
 }> {
   shouldComponentUpdate(nextProps) {
     return (
@@ -119,18 +129,36 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { currentHotkey, onClick, typingHotkey } = this.props;
+    const { currentHotkey, onClick, typingHotkey, boundKeys, keybindingName } =
+      this.props;
 
-    const child = (
+    let warningMessage: undefined | string;
+    if (currentHotkey && boundKeys[currentHotkey].length > 1) {
+      warningMessage =
+        'Already bound to: ' +
+        boundKeys[currentHotkey].filter((a) => a !== keybindingName).toString();
+    }
+
+    let child = (
       <Button
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
         onClick={onClick}
-        selected={typingHotkey !== undefined}>
-        {typingHotkey || currentHotkey || 'Unbound'}
+        selected={typingHotkey !== undefined}
+        color={warningMessage ? 'red' : null}
+      >
+        {typingHotkey || currentHotkey || <br />}
       </Button>
     );
+
+    if (warningMessage) {
+      child = (
+        <Tooltip content={warningMessage} position="bottom">
+          {child}
+        </Tooltip>
+      );
+    }
 
     if (typingHotkey && onClick) {
       return (
@@ -154,7 +182,8 @@ const KeybindingName = (props: { keybinding: Keybinding }) => {
         as="span"
         style={{
           'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-        }}>
+        }}
+      >
         {keybinding.name}
       </Box>
     </Tooltip>
@@ -169,13 +198,8 @@ KeybindingName.defaultHooks = {
   },
 };
 
-const ResetToDefaultButton = (
-  props: {
-    keybindingId: string;
-  },
-  context
-) => {
-  const { act } = useBackend<PreferencesMenuData>(context);
+const ResetToDefaultButton = (props: { keybindingId: string }) => {
+  const { act } = useBackend<PreferencesMenuData>();
 
   return (
     <Button
@@ -185,7 +209,8 @@ const ResetToDefaultButton = (
         act('reset_keybinds_to_defaults', {
           keybind_name: props.keybindingId,
         });
-      }}>
+      }}
+    >
       Reset to Defaults
     </Button>
   );
@@ -216,7 +241,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   componentDidUpdate() {
-    const { data } = useBackend<PreferencesMenuData>(this.context);
+    const { data } = useBackend<PreferencesMenuData>();
 
     // keybindings is static data, so it'll pass `===` checks.
     // This'll change when resetting to defaults.
@@ -226,7 +251,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   setRebindingHotkey(value?: string) {
-    const { act } = useBackend<PreferencesMenuData>(this.context);
+    const { act } = useBackend<PreferencesMenuData>();
 
     this.setState((state) => {
       let selectedKeybindings = state.selectedKeybindings;
@@ -257,8 +282,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       }
 
       act('set_keybindings', {
-        'keybind_name': keybindName,
-        'hotkeys': selectedKeybindings[keybindName],
+        keybind_name: keybindName,
+        hotkeys: selectedKeybindings[keybindName],
       });
 
       return {
@@ -284,7 +309,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
       return;
-    } else if (event.key === 'Esc') {
+    } else if (isEscape(event.key)) {
       this.setRebindingHotkey(undefined);
       return;
     }
@@ -351,7 +376,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
   async populateKeybindings() {
     const keybindingsResponse = await fetchRetry(
-      resolveAsset('keybindings.json')
+      resolveAsset('keybindings.json'),
     );
     const keybindingsData: Keybindings = await keybindingsResponse.json();
 
@@ -361,7 +386,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
   }
 
   populateSelectedKeybindings() {
-    const { data } = useBackend<PreferencesMenuData>(this.context);
+    const { data } = useBackend<PreferencesMenuData>();
 
     this.lastKeybinds = data.keybindings;
 
@@ -369,13 +394,13 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
       selectedKeybindings: Object.fromEntries(
         Object.entries(data.keybindings).map(([keybind, hotkeys]) => {
           return [keybind, hotkeys.filter((value) => value !== 'Unbound')];
-        })
+        }),
       ),
     });
   }
 
   render() {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const keybindings = this.state.keybindings;
 
     if (!keybindings) {
@@ -383,11 +408,25 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     }
 
     const keybindingEntries = sortKeybindingsByCategory(
-      Object.entries(keybindings)
+      Object.entries(keybindings),
     );
 
     moveToBottom(keybindingEntries, 'EMOTE');
     moveToBottom(keybindingEntries, 'ADMIN');
+
+    let boundKeys: Record<string, string[]> = {};
+
+    Object.values(keybindings).forEach((keybindingCat) => {
+      Object.entries(keybindingCat).forEach(([keybindingId, keybinding]) => {
+        this.state.selectedKeybindings![keybindingId].forEach((key) => {
+          if (boundKeys[key]) {
+            boundKeys[key].push(keybinding.name);
+          } else {
+            boundKeys[key] = [keybinding.name];
+          }
+        });
+      });
+    });
 
     return (
       <>
@@ -396,70 +435,69 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
           onKeyUp={this.handleKeyUp}
         />
 
-        <Stack vertical fill>
-          <Stack.Item grow>
-            <TabbedMenu
-              categoryEntries={keybindingEntries.map(
-                ([category, keybindings]) => {
-                  return [
-                    category,
-                    <Stack key={category} vertical fill>
-                      {sortKeybindings(Object.entries(keybindings)).map(
-                        ([keybindingId, keybinding]) => {
-                          const keys =
-                            this.state.selectedKeybindings![keybindingId] || [];
-
-                          const name = (
-                            <Stack.Item basis="25%">
-                              <KeybindingName keybinding={keybinding} />
-                            </Stack.Item>
-                          );
-
-                          return (
-                            <Stack.Item key={keybindingId}>
-                              <Stack fill>
-                                {name}
-
-                                {range(0, 3).map((key) => (
-                                  <Stack.Item key={key} grow basis="10%">
-                                    <KeybindingButton
-                                      currentHotkey={keys[key]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        key
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        key
-                                      )}
-                                    />
-                                  </Stack.Item>
-                                ))}
-
-                                <Stack.Item shrink>
-                                  <ResetToDefaultButton
-                                    keybindingId={keybindingId}
-                                  />
-                                </Stack.Item>
-                              </Stack>
-                            </Stack.Item>
-                          );
-                        }
-                      )}
-                    </Stack>,
-                  ];
-                }
-              )}
-            />
-          </Stack.Item>
-
-          <Stack.Item align="center">
+        <TabbedMenu
+          name="Keybindings"
+          extra={
             <Button.Confirm
               content="Reset all keybindings"
               onClick={() => act('reset_all_keybinds')}
             />
-          </Stack.Item>
-        </Stack>
+          }
+          categoryEntries={keybindingEntries.map(([category, keybindings]) => {
+            return [
+              category,
+              <Stack key={category} vertical fill>
+                {sortKeybindings(Object.entries(keybindings)).map(
+                  ([keybindingId, keybinding]) => {
+                    const keys =
+                      this.state.selectedKeybindings![keybindingId] || [];
+
+                    const name = (
+                      <Stack.Item basis="40%" maxWidth="230px">
+                        <KeybindingName keybinding={keybinding} />
+                      </Stack.Item>
+                    );
+
+                    return (
+                      <Stack.Item key={keybindingId}>
+                        <Stack fill>
+                          {name}
+
+                          {range(0, 3).map((key) => (
+                            <Stack.Item
+                              key={key}
+                              grow
+                              basis="10%"
+                              maxWidth="75px"
+                            >
+                              <KeybindingButton
+                                boundKeys={boundKeys}
+                                keybindingName={keybinding.name}
+                                currentHotkey={keys[key]}
+                                typingHotkey={this.getTypingHotkey(
+                                  keybindingId,
+                                  key,
+                                )}
+                                onClick={this.getKeybindingOnClick(
+                                  keybindingId,
+                                  key,
+                                )}
+                              />
+                            </Stack.Item>
+                          ))}
+
+                          <Stack.Item shrink>
+                            <ResetToDefaultButton keybindingId={keybindingId} />
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    );
+                  },
+                )}
+              </Stack>,
+            ];
+          })}
+        />
       </>
     );
   }

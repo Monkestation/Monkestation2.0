@@ -117,6 +117,17 @@
 		return
 	var/obj/new_object = new replace_path(object.loc)
 	new_object.setDir(object.dir)
+	if(istype(object, /obj/machinery/door/airlock))
+		if(istype(new_object, /obj/machinery/door/airlock)) //carry over access-related and adjacent variables. The rest is not as important
+			var/obj/machinery/door/airlock/airlock = object
+			var/obj/machinery/door/new_airlock = new_object
+			new_airlock.unres_sides = airlock.unres_sides
+			new_airlock.req_access = airlock.req_access?.Copy()
+			new_airlock.req_one_access = airlock.req_one_access?.Copy()
+			new_airlock.locked = airlock.locked
+			new_airlock.emergency = airlock.emergency
+			new_airlock.update_appearance()
+		new_object.name = object.name
 	qdel(object)
 
 /**
@@ -176,7 +187,7 @@
  * * affected_turf - Turf to transform.
  */
 /datum/dimension_theme/proc/apply_materials(turf/affected_turf)
-	var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+	var/list/custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 
 	if (istype(affected_turf, /turf/open/floor/material) || istype(affected_turf, /turf/closed/wall/material))
 		affected_turf.set_custom_materials(custom_materials)

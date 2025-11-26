@@ -39,15 +39,15 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/blackbox))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/blackbox))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		stored = I
+		stored = attacking_item
 		update_appearance()
 		return
 	return ..()
@@ -91,9 +91,6 @@
 
 /obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
-	if (!decryptkey)
-		decryptkey = GenerateKey()
-
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
@@ -112,13 +109,6 @@
 	if(calibrating)
 		. += span_warning("It's still calibrating.")
 
-/obj/machinery/telecomms/message_server/proc/GenerateKey()
-	var/newKey
-	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
-	newKey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
-	newKey += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-	return newKey
-
 /obj/machinery/telecomms/message_server/process()
 	. = ..()
 	if(calibrating && calibrating <= world.time)
@@ -131,14 +121,12 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
-		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
-		pda_msgs += msg
-		signal.logged = msg
+	if(istype(signal, /datum/signal/subspace/messaging/tablet_message))
+		var/datum/signal/subspace/messaging/tablet_message/PDAsignal = signal
+		var/datum/data_tablet_msg/log_message = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
+		pda_msgs += log_message
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		signal.logged = msg
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
 			rc_msgs += msg
 	signal.data["reject"] = FALSE
@@ -153,18 +141,40 @@
 	if(calibrating)
 		. += "message_server_calibrate"
 
+// Preset messaging server
+/obj/machinery/telecomms/message_server/preset
+	id = "Messaging Server"
+	network = "tcommsat"
+	autolinkers = list("messaging")
+	calibrating = 0
+
+GLOBAL_VAR(preset_station_message_server_key)
+
+/obj/machinery/telecomms/message_server/preset/Initialize(mapload)
+	. = ..()
+	// Just in case there are multiple preset messageservers somehow once the CE arrives,
+	// we want those on the station to share the same preset default decrypt key shown in his memories.
+	var/is_on_station = is_station_level(z)
+	if(is_on_station && GLOB.preset_station_message_server_key)
+		decryptkey = GLOB.preset_station_message_server_key
+		return
+	//Generate a random password for the message server
+	decryptkey = pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	decryptkey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	decryptkey += "[rand(0, 9)]"
+	if(is_on_station)
+		GLOB.preset_station_message_server_key = decryptkey
 
 // Root messaging signal datum
 /datum/signal/subspace/messaging
 	frequency = FREQ_COMMON
 	server_type = /obj/machinery/telecomms/message_server
-	var/datum/logged
 
 /datum/signal/subspace/messaging/New(init_source, init_data)
 	source = init_source
 	data = init_data
 	var/turf/T = get_turf(source)
-	levels = list(T.z)
+	levels = SSmapping.get_connected_levels(T)
 	if(!("reject" in data))
 		data["reject"] = TRUE
 
@@ -175,28 +185,30 @@
 	return copy
 
 // Tablet message signal datum
-/datum/signal/subspace/messaging/tablet_msg/proc/format_target()
-	if (length(data["targets"]) > 1)
+/datum/signal/subspace/messaging/tablet_message/proc/format_target()
+	if (data["everyone"])
 		return "Everyone"
-	var/obj/item/modular_computer/target = data["targets"][1]
+	var/datum/computer_file/program/messenger/target_app = data["targets"][1]
+	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspace/messaging/tablet_msg/proc/format_message()
-	return "\"[data["message"]]\""
+/datum/signal/subspace/messaging/tablet_message/proc/format_sender()
+	var/display_name = get_messenger_name(locate(data["ref"]))
+	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
-/datum/signal/subspace/messaging/tablet_msg/broadcast()
-	if (!logged)  // Can only go through if a message server logs it
-		return
-	for (var/obj/item/modular_computer/comp in data["targets"])
-		if(!QDELETED(comp))
-			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
-				if(!QDELETED(app))
-					app.receive_message(src)
+/datum/signal/subspace/messaging/tablet_message/proc/format_message()
+	return data["message"]
+
+/datum/signal/subspace/messaging/tablet_message/proc/format_photo_path()
+	return data["photo"]
+
+/datum/signal/subspace/messaging/tablet_message/broadcast()
+	for (var/datum/computer_file/program/messenger/app in data["targets"])
+		if(!QDELETED(app))
+			app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()
-	if (!logged)  // Like /pda, only if logged
-		return
 	var/recipient_department = ckey(data["recipient_department"])
 	for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 		if(ckey(console.department) == recipient_department || (data["ore_update"] && console.receive_ore_updates))
@@ -207,8 +219,8 @@
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
-	var/datum/picture/picture  // attached photo
-	var/automated = 0 //automated message
+	var/picture_asset_key  // attached photo path
+	var/automated = FALSE // automated message
 
 /datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
@@ -218,18 +230,7 @@
 	if(param_message)
 		message = param_message
 	if(param_photo)
-		picture = param_photo
-
-/datum/data_tablet_msg/Topic(href,href_list)
-	..()
-	if(href_list["photo"])
-		var/mob/M = usr
-		M << browse_rsc(picture.picture_image, "pda_photo.png")
-		M << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
-		onclose(M, "pdaphoto")
+		picture_asset_key = param_photo
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified"  // receiving department

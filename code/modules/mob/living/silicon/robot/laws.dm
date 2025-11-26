@@ -23,6 +23,8 @@
 		to_chat(src, span_bold("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
 	else if (connected_ai)
 		to_chat(src, span_bold("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
+	else if (centcom)
+		to_chat(src, span_bold("Remember, you are Nanotrasen-aligned and expected to act as such.\nYou are not bound to any AI, you are not required to listen to them."))
 	else if (emagged)
 		to_chat(src, span_bold("Remember, you are not required to listen to the AI."))
 	else
@@ -73,7 +75,9 @@
 
 		var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 		if(program)
-			program.force_full_update()
+			var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)
+			if(active_ui)
+				active_ui.send_full_update()
 
 	picturesync()
 

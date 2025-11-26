@@ -12,6 +12,8 @@
 	silent = TRUE
 	ui_name = FALSE
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	antag_flags = FLAG_ANTAG_CAP_IGNORE
+	count_against_dynamic_roll_chance = FALSE
 
 	///The revenge vassal that brought us into the fold.
 	var/datum/antagonist/vassal/revenge/revenge_vassal
@@ -32,7 +34,7 @@
 /datum/antagonist/ex_vassal/proc/on_examine(datum/source, mob/examiner, examine_text)
 	SIGNAL_HANDLER
 
-	var/datum/antagonist/vassal/revenge/vassaldatum = examiner.mind.has_antag_datum(/datum/antagonist/vassal/revenge)
+	var/datum/antagonist/vassal/revenge/vassaldatum = examiner.mind?.has_antag_datum(/datum/antagonist/vassal/revenge)
 	if(vassaldatum && !revenge_vassal)
 		examine_text += span_notice("[owner.current] is an ex-vassal!")
 

@@ -4,7 +4,7 @@
 	scan_desc = "partial schizophrenia"
 	gain_text = span_notice("You feel in good company, for some reason.")
 	lose_text = span_warning("You feel lonely again.")
-	var/mob/camera/imaginary_friend/friend
+	var/mob/eye/imaginary_friend/friend
 	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
@@ -47,15 +47,22 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
+		question = "Do you want to play as [owner.real_name]'s imaginary friend?",
+		check_jobban = ROLE_PAI,
+		poll_time = 10 SECONDS,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend"
+	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
+		friend.PossessByPlayer(C.key)
 		friend_initialized = TRUE
 	else
 		qdel(src)
 
-/mob/camera/imaginary_friend
+/mob/eye/imaginary_friend
 	name = "imaginary friend"
 	real_name = "imaginary friend"
 	move_on_shuttle = TRUE
@@ -70,19 +77,19 @@
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
-	var/bubble_icon = "default"
+	//var/bubble_icon = "default" // MONKESTATION REMOVAL
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
 
-/mob/camera/imaginary_friend/Login()
+/mob/eye/imaginary_friend/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	greet()
 	Show()
 
-/mob/camera/imaginary_friend/proc/greet()
+/mob/eye/imaginary_friend/proc/greet()
 	to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
 	to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
 	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
@@ -92,8 +99,13 @@
  * * imaginary_friend_owner - The living mob that owns the imaginary friend.
  * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on these prefs.
  */
-/mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
+/mob/eye/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
 	. = ..()
+
+	//Monkestation Edit Begin
+	if(istype(src, /mob/eye/imaginary_friend/mentor))
+		return
+	//Monkestation Edit End
 
 	owner = imaginary_friend_owner
 
@@ -111,7 +123,7 @@
 		owner.imaginary_group = list(owner)
 	owner.imaginary_group += src
 
-/mob/camera/imaginary_friend/proc/setup_friend()
+/mob/eye/imaginary_friend/proc/setup_friend()
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
@@ -123,7 +135,7 @@
  * Arguments:
  * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on the currently selected character in them. Otherwise, it's random.
  */
-/mob/camera/imaginary_friend/proc/setup_friend_from_prefs(datum/preferences/appearance_from_prefs)
+/mob/eye/imaginary_friend/proc/setup_friend_from_prefs(datum/preferences/appearance_from_prefs)
 	if(!istype(appearance_from_prefs))
 		stack_trace("Attempted to create imaginary friend appearance from null prefs. Using random appearance.")
 		setup_friend()
@@ -155,14 +167,14 @@
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
 /// Returns all member clients of the imaginary_group
-/mob/camera/imaginary_friend/proc/group_clients()
+/mob/eye/imaginary_friend/proc/group_clients()
 	var/group_clients = list()
 	for(var/mob/person as anything in owner.imaginary_group)
 		if(person.client)
 			group_clients += person.client
 	return group_clients
 
-/mob/camera/imaginary_friend/proc/Show()
+/mob/eye/imaginary_friend/proc/Show()
 	if(!client) //nobody home
 		return
 
@@ -183,7 +195,7 @@
 
 	src.client.images |= current_image
 
-/mob/camera/imaginary_friend/Destroy()
+/mob/eye/imaginary_friend/Destroy()
 	if(owner?.client)
 		owner.client.images.Remove(human_image)
 	if(client)
@@ -191,21 +203,21 @@
 	owner.imaginary_group -= src
 	return ..()
 
-/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/mob/eye/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/send_speech(message, range = 7, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
+/mob/eye/imaginary_friend/send_speech(message, range = 7, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
 	message = get_message_mods(message, message_mods)
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))
@@ -237,11 +249,11 @@
 	var/rendered = "[span_name("[name]")] [quoted_message]"
 	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
-	var/language = message_language || owner.language_holder.get_selected_language()
+	var/language = message_language || owner.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
+		if(eavesdrop_range && get_dist(src, person) > WHISPER_RANGE + eavesdrop_range && !HAS_TRAIT(person, TRAIT_GOOD_HEARING))
 			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
 			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
 		else
@@ -274,16 +286,16 @@
 		var/link = FOLLOW_LINK(dead_player, owner)
 		to_chat(dead_player, "[link] [dead_rendered]")
 
-/mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
+/mob/eye/imaginary_friend/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
-/mob/camera/imaginary_friend/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
+/mob/eye/imaginary_friend/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
 	if(!message)
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
 
 /datum/emote/imaginary_friend
-	mob_type_allowed_typecache = /mob/camera/imaginary_friend
+	mob_type_allowed_typecache = /mob/eye/imaginary_friend
 
 // We have to create our own since we can only show emotes to ourselves and our owner
 /datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
@@ -300,7 +312,7 @@
 	if(!msg)
 		return TRUE
 
-	var/mob/camera/imaginary_friend/friend = user
+	var/mob/eye/imaginary_friend/friend = user
 	var/dchatmsg = "[span_bold("[friend] (Imaginary friend of [friend.owner])")] [msg]"
 	message = "[span_name("[user]")] [msg]"
 
@@ -324,7 +336,7 @@
 	message = "points."
 	message_param = "points at %t."
 
-/datum/emote/imaginary_friend/point/run_emote(mob/camera/imaginary_friend/friend, params, type_override, intentional)
+/datum/emote/imaginary_friend/point/run_emote(mob/eye/imaginary_friend/friend, params, type_override, intentional)
 	message_param = initial(message_param) // reset
 	return ..()
 
@@ -358,7 +370,7 @@
 	return message
 
 // Another snowflake proc, when will they end... should have refactored it differently
-/mob/camera/imaginary_friend/point_at(atom/pointed_atom)
+/mob/eye/imaginary_friend/point_at(atom/pointed_atom)
 	if(!isturf(loc))
 		return
 
@@ -376,36 +388,36 @@
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
-/mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+/mob/eye/imaginary_friend/create_thinking_indicator()
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
 
-/mob/camera/imaginary_friend/remove_thinking_indicator()
+/mob/eye/imaginary_friend/remove_thinking_indicator()
 	if(!active_thinking_indicator)
 		return FALSE
 	remove_image_from_clients(active_thinking_indicator, group_clients())
 	active_thinking_indicator = null
 
-/mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+/mob/eye/imaginary_friend/create_typing_indicator()
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
 
-/mob/camera/imaginary_friend/remove_typing_indicator()
+/mob/eye/imaginary_friend/remove_typing_indicator()
 	if(!active_typing_indicator)
 		return FALSE
 	remove_image_from_clients(active_typing_indicator, group_clients())
 	active_typing_indicator = null
 
-/mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+/mob/eye/imaginary_friend/remove_all_indicators()
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 
-/mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
+/mob/eye/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
 		return FALSE
 	setDir(Dir)
@@ -416,11 +428,11 @@
 	abstract_move(NewLoc)
 	move_delay = world.time + 1
 
-/mob/camera/imaginary_friend/setDir(newdir)
+/mob/eye/imaginary_friend/setDir(newdir)
 	. = ..()
 	Show() // The image does not actually update until Show() gets called
 
-/mob/camera/imaginary_friend/proc/recall()
+/mob/eye/imaginary_friend/proc/recall()
 	if(!owner || loc == owner)
 		return FALSE
 	abstract_move(owner)
@@ -434,7 +446,7 @@
 	button_icon_state = "join"
 
 /datum/action/innate/imaginary_join/Activate()
-	var/mob/camera/imaginary_friend/I = owner
+	var/mob/eye/imaginary_friend/I = owner
 	I.recall()
 
 /datum/action/innate/imaginary_hide
@@ -446,7 +458,7 @@
 	button_icon_state = "hide"
 
 /datum/action/innate/imaginary_hide/proc/update_status()
-	var/mob/camera/imaginary_friend/I = owner
+	var/mob/eye/imaginary_friend/I = owner
 	if(I.hidden)
 		name = "Show"
 		desc = "Become visible to your owner."
@@ -458,13 +470,13 @@
 	build_all_button_icons()
 
 /datum/action/innate/imaginary_hide/Activate()
-	var/mob/camera/imaginary_friend/fake_friend = owner
+	var/mob/eye/imaginary_friend/fake_friend = owner
 	fake_friend.hidden = !fake_friend.hidden
 	fake_friend.Show()
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 /datum/action/innate/imaginary_hide/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	var/mob/camera/imaginary_friend/fake_friend = owner
+	var/mob/eye/imaginary_friend/fake_friend = owner
 	if(fake_friend.hidden)
 		name = "Show"
 		desc = "Become visible to your owner."
@@ -474,7 +486,7 @@
 	return ..()
 
 /datum/action/innate/imaginary_hide/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	var/mob/camera/imaginary_friend/fake_friend = owner
+	var/mob/eye/imaginary_friend/fake_friend = owner
 	if(fake_friend.hidden)
 		button_icon_state = "unhide"
 	else
@@ -490,10 +502,10 @@
 	desc = "Patient appears to be targeted by an invisible entity."
 	gain_text = ""
 	lose_text = ""
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
-	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)
+	friend = new /mob/eye/imaginary_friend/trapped(get_turf(owner), src)
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/reroll_friend() //no rerolling- it's just the last owner's hell
 	if(friend.client) //reconnected
@@ -505,17 +517,17 @@
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/get_ghost() //no randoms
 	return
 
-/mob/camera/imaginary_friend/trapped
+/mob/eye/imaginary_friend/trapped
 	name = "figment of imagination?"
 	real_name = "figment of imagination?"
 	desc = "The previous host of this body."
 
-/mob/camera/imaginary_friend/trapped/greet()
+/mob/eye/imaginary_friend/trapped/greet()
 	to_chat(src, span_notice(span_bold("You have managed to hold on as a figment of the new host's imagination!")))
 	to_chat(src, span_notice("All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them."))
 	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what the host cannot."))
 
-/mob/camera/imaginary_friend/trapped/setup_friend()
+/mob/eye/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"
 	name = real_name
 	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")

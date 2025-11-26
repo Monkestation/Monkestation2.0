@@ -1,8 +1,10 @@
 /client/var/lootbox_prompt = FALSE
+
 /client/proc/try_open_or_buy_lootbox()
-	if(!prefs)
+	if(!prefs || lootbox_prompt)
 		return
-	if(lootbox_prompt)
+	if(isnewplayer(mob))
+		to_chat(src, span_warning("You can't [prefs.lootboxes_owned ? "open" : "buy"] a lootbox here! Observe or spawn in first, then try again."))
 		return
 	if(!prefs.lootboxes_owned)
 		lootbox_prompt = TRUE
@@ -14,8 +16,8 @@
 	if(!prefs)
 		lootbox_prompt = FALSE
 		return
-	if(!prefs.has_coins(5000))
-		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
+	if(!prefs.has_coins(LOOTBOX_COST))
+		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox!"))
 		lootbox_prompt = FALSE
 		return
 	switch(tgui_alert(src, "Would you like to purchase a lootbox? 5K", "Buy a lootbox!", list("Yes", "No")))
@@ -27,13 +29,14 @@
 			return
 
 /client/proc/attempt_lootbox_buy()
-	if(!prefs.has_coins(5000))
-		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
+	if(!prefs.has_coins(LOOTBOX_COST))
+		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox!"))
 		lootbox_prompt = FALSE
 		return
-	if(!prefs.adjust_metacoins(ckey, -5000, donator_multipler = FALSE))
+	if(!prefs.adjust_metacoins(ckey, -LOOTBOX_COST, "Bought a lootbox"))
 		return
 	prefs.lootboxes_owned++
+	prefs.save_preferences()
 
 /client/proc/open_lootbox()
 	message_admins("[ckey] opened a lootbox!")
@@ -43,12 +46,13 @@
 		return
 
 	if(isnewplayer(mob))
-		to_chat(mob, span_warning("Observe or spawn in first!"))
+		to_chat(mob, span_warning("You can't open a lootbox here! The lootbox has been added to your inventory. Observe or spawn in first, then click the button again."))
 		return
 
 	if(!prefs.lootboxes_owned)
 		return
 	prefs.lootboxes_owned--
+	prefs.save_preferences()
 	mob.trigger_lootbox_on_self()
 
 /proc/give_lootboxes_to_randoms(amount)
@@ -63,3 +67,4 @@
 		return
 	prefs.lootboxes_owned += amount
 	to_chat(mob, span_notice("You have been given [amount] lootboxes! Open it using the escape menu."))
+	prefs.save_preferences()

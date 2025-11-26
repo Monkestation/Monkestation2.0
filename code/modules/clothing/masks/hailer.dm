@@ -45,10 +45,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
+	desc_controls = "CTRL-Click to toggle automatically hailing pointed targets."
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	inhand_icon_state = "sechailer"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
@@ -57,13 +58,33 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	alternative_deathgasps = list('sound/voice/sec_death.ogg')
 	COOLDOWN_DECLARE(hailer_cooldown)
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
-	var/overuse_cooldown = FALSE
-	var/recent_uses = 0
+	///Whether the hailer has been broken due to overuse or not
 	var/broken_hailer = FALSE
+	///Whether the hailer is currently in cooldown for resetting recent_uses
+	var/overuse_cooldown = FALSE
+	///How many times was the hailer used in the last OVERUSE_COOLDOWN seconds
+	var/recent_uses = 0
+	///Whether the hailer is emagged or not
 	var/safety = TRUE
+	///Wheter the hailer will hail pointed targets
+	var/auto_hail = TRUE
+
+/obj/item/clothing/mask/gas/sechailer/item_ctrl_click(mob/user)
+	var/mob/living/carbon/human/wearer = get(loc, /mob/living)
+	if(!istype(wearer))
+		return CLICK_ACTION_BLOCKING
+	auto_hail = !auto_hail
+	balloon_alert(user, "auto-hail toggled [auto_hail ? "on" : "off"]")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/mask/gas/sechailer/examine(mob/user)
+	. = ..()
+	. += span_notice("The hailer will [auto_hail ? "" : "not "]automatically hail pointed targets.")
 
 /obj/item/clothing/mask/gas/sechailer/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -79,7 +100,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	has_fov = TRUE
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
@@ -87,7 +107,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
 	icon_state = "spacepol"
 	inhand_icon_state = "spacepol_mask"
-	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
@@ -101,10 +120,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
-	. = TRUE
-	if(..())
-		return
-	else if (aggressiveness == AGGR_BROKEN)
+	. = ..()
+	if(aggressiveness == AGGR_BROKEN)
 		to_chat(user, span_danger("You adjust the restrictor but nothing happens, probably because it's broken."))
 		return
 	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
@@ -112,11 +129,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
-	. = TRUE
-	..()
+	. = ..()
 	if(aggressiveness != AGGR_BROKEN)
 		to_chat(user, span_danger("You broke the restrictor!"))
 		aggressiveness = AGGR_BROKEN
+		return
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/halt))
@@ -127,12 +144,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
 
-/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		balloon_alert(user, "vocal circuit fried")
-		return TRUE
-	return FALSE
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
+		return ..()
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -164,9 +180,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	// select phrase to play
 	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
 
-
 /obj/item/clothing/mask/gas/sechailer/proc/select_phrase()
-	if (!safety)
+	if(!safety)
 		return EMAG_PHRASE
 	else
 		var/upper_limit
@@ -190,26 +205,83 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
 	overuse_cooldown = FALSE
 
+//MONKESTATION EDIT START
+/obj/item/clothing/mask/gas/sechailer/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler), override = TRUE) // "equipped plays fast and loose"
+
+/obj/item/clothing/mask/gas/sechailer/proc/point_handler(mob/pointing_mob, mob/pointed_at)
+	SIGNAL_HANDLER
+	if(!auto_hail)
+		return
+
+	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
+		return
+
+	if(!isliving(pointed_at))
+		return
+
+	if(pointing_mob == pointed_at)
+		return
+
+	halt()
+	pointed_at.do_alert_animation()
+
+/obj/item/clothing/mask/gas/sechailer/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_POINTED)
+
+//MONKESTATION EDIT STOP
+
 /obj/item/clothing/mask/whistle
-	name = "police whistle"
-	desc = "A police whistle for when you need to make sure the criminals hear you."
+	name = "whistle" //monkestation edit
+	desc = "A whistle for when you need to make sure the criminals hear you." //monkestation edit
 	icon_state = "whistle"
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	action_slots = ALL
 	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
 	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
-	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
+	//user.audible_message("<font color='red' size='5'><b>HALT!</b></font>") monkestation removal
+	user.audible_message("[user] signals on their whistle!") //monkestation edit
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4, ignore_walls = FALSE)
 
 /datum/action/item_action/halt
 	name = "HALT!"
+
+//MONKESTATION EDIT START
+/obj/item/clothing/mask/whistle/equipped(mob/user, slot)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler), override = TRUE) // "equipped plays fast and loose"
+
+/obj/item/clothing/mask/whistle/proc/point_handler(mob/pointing_mob, mob/pointed_at)
+	SIGNAL_HANDLER
+
+	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
+		return
+
+	if(!isliving(pointed_at))
+		return
+
+	if(pointing_mob == pointed_at)
+		return
+	pointing_mob.audible_message("[pointing_mob] signals on their whistle!") //monkestation edit
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
+	pointed_at.do_alert_animation()
+	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
+
+/obj/item/clothing/mask/whistle/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_POINTED)
+
+//MONKESTATION EDIT STOP
 
 /obj/item/clothing/mask/party_horn
 	name = "party horn"

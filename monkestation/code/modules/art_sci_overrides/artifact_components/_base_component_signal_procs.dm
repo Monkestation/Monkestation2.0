@@ -4,21 +4,35 @@
 	if(!QDELETED(holder))
 		holder.loc.visible_message(span_warning("[holder] [artifact_origin.destroy_message]"))
 	artifact_deactivate(TRUE)
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		effect.on_destroy(source)
 	if(!QDELETED(holder))
 		qdel(holder)
 
 /datum/component/artifact/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(examine_hint)
-		examine_list += examine_hint
 	if(explict_examine)
 		examine_list += explict_examine
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		if(discovered_effects.Find(effect.type) && effect.examine_discovered)
+			examine_list += span_info(effect.examine_discovered)
+		else if (effect.examine_hint)
+			examine_list += span_info(effect.examine_hint)
+
+	for(var/datum/artifact_activator/act in activators)
+		if(discovered_activators.Find(act.type) && act.discovered_text)
+			examine_list += span_info(act.discovered_text)
+		else if(length(act.hint_texts))
+			examine_list += span_info(pick(act.hint_texts))
+
+	if(chosen_fault && chosen_fault.inspect_warning)
+		examine_list += span_warning(pick(chosen_fault.inspect_warning))
 
 /datum/component/artifact/proc/on_sticker(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER
 	if(analysis)
 		to_chat(user, "You peel off [analysis], to make room for [sticker].")
-		sticker.peel()
+		analysis.peel()
 	if(!istype(sticker, /obj/item/sticker/analysis_form))
 		return
 	analysis = sticker
@@ -58,12 +72,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human = user
 		var/obj/item/bodypart/arm = human.get_active_hand()
-		if(arm.bodytype & BODYTYPE_ROBOTIC)
-			process_stimuli(STIMULUS_SILICON_TOUCH)
-			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
-		else
-			process_stimuli(STIMULUS_CARBON_TOUCH)
-			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
+		if(arm)
+			if(arm.bodytype & BODYTYPE_ROBOTIC)
+				process_stimuli(STIMULUS_SILICON_TOUCH)
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
+			else
+				process_stimuli(STIMULUS_CARBON_TOUCH)
+				logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
 	else if(iscarbon(user))
 		process_stimuli(STIMULUS_CARBON_TOUCH)
 		logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
@@ -75,7 +90,8 @@
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
 
 	if(active)
-		effect_touched(user)
+		for(var/datum/artifact_effect/effect in artifact_effects)
+			effect.effect_touched(user)
 		return
 	if(LAZYLEN(artifact_origin.touch_descriptors))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_notice("<i>[pick(artifact_origin.touch_descriptors)]</i>")), 0.5 SECONDS)

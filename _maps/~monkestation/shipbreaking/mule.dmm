@@ -1,0 +1,1263 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/turf/closed/wall/mineral/titanium,
+/area/template_noop)
+"bY" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron,
+/area/template_noop)
+"cg" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"dd" = (
+/obj/structure/shipping_container/donk_co,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/template_noop)
+"dt" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/warm/directional/south,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"eg" = (
+/obj/effect/spawner/random/contraband,
+/turf/open/floor/plating,
+/area/template_noop)
+"gc" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/warm/directional/south,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"gq" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/very_dim/directional/north,
+/turf/open/floor/iron,
+/area/template_noop)
+"gx" = (
+/obj/machinery/button/door/directional/west{
+	id = 2
+	},
+/obj/structure/sign/poster/contraband/donk_co/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"gC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"gD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/template_noop)
+"gY" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/template_noop)
+"hc" = (
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"hq" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/artifact_spawner,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"iI" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/artifact_spawner,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"iO" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron,
+/area/template_noop)
+"iZ" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"jz" = (
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"jJ" = (
+/obj/effect/turf_decal/bot,
+/mob/living/basic/mimic/crate,
+/turf/open/floor/iron,
+/area/template_noop)
+"kf" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/critter,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"kp" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/template_noop)
+"kT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron,
+/area/template_noop)
+"kW" = (
+/obj/effect/artifact_spawner,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"lW" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate/critter,
+/mob/living/basic/slugcat,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/template_noop)
+"mG" = (
+/obj/machinery/button/door/directional/east{
+	id = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"mU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"mW" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/canister,
+/obj/machinery/light/small/warm/directional/south,
+/turf/open/floor/iron,
+/area/template_noop)
+"nm" = (
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"oP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/template_noop)
+"pj" = (
+/obj/structure/chair/sofa/middle/brown{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"qk" = (
+/obj/structure/cable,
+/obj/machinery/light/small/warm/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"rj" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/critter,
+/obj/machinery/light/small/warm/directional/south,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"rl" = (
+/obj/structure/closet/crate/critter,
+/mob/living/basic/pet/dog/breaddog,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"sb" = (
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"sC" = (
+/obj/structure/chair/sofa/corner/brown{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"sW" = (
+/obj/machinery/power/shuttle_engine/huge,
+/turf/open/floor/plating,
+/area/template_noop)
+"tn" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/plating,
+/area/template_noop)
+"tO" = (
+/obj/structure/falsewall/titanium,
+/turf/open/floor/plating,
+/area/template_noop)
+"tQ" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/template_noop)
+"ul" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/template_noop)
+"uA" = (
+/obj/machinery/button/door/directional/west{
+	id = 2
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"vo" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/plating,
+/area/template_noop)
+"vA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/template_noop)
+"vX" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/black/nodots,
+/area/template_noop)
+"xw" = (
+/obj/machinery/computer/old,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"yh" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"yR" = (
+/turf/template_noop,
+/area/template_noop)
+"zH" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
+/area/template_noop)
+"zO" = (
+/obj/structure/bed/double{
+	dir = 4
+	},
+/obj/item/bedsheet/qm/double{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Bq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"Bz" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/template_noop)
+"BK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/small/warm/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"BN" = (
+/obj/structure/chair/sofa/left/brown,
+/obj/machinery/light/very_dim/directional/north,
+/turf/open/floor/iron,
+/area/template_noop)
+"BW" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/template_noop)
+"CB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron,
+/area/template_noop)
+"CZ" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating,
+/area/template_noop)
+"DL" = (
+/obj/effect/turf_decal/delivery,
+/obj/item/toy/plush/slimeplushie,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/template_noop)
+"Fg" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"GZ" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/canister,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"HS" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/template_noop)
+"IR" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/syndicate/holographic,
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/effect/spawner/random/entertainment/wallet_lighter,
+/turf/open/floor/carpet/orange,
+/area/template_noop)
+"JE" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"Kb" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/bush/style_4,
+/obj/structure/flora/grass/green/style_3,
+/turf/open/floor/grass,
+/area/template_noop)
+"KG" = (
+/turf/open/floor/iron,
+/area/template_noop)
+"Lm" = (
+/obj/effect/spawner/random/contraband/landmine,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"Lt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/glass,
+/area/template_noop)
+"LQ" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/plating,
+/area/template_noop)
+"MM" = (
+/obj/machinery/button/door/directional/east{
+	id = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"Nx" = (
+/obj/structure/table/greyscale,
+/obj/item/storage/backpack/satchel/flat,
+/obj/effect/spawner/random/exotic/syndie,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"NF" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plating,
+/area/template_noop)
+"OQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/neon/simple/black/nodots,
+/area/template_noop)
+"Pe" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/engineering/canister,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"QE" = (
+/obj/machinery/button/door/directional/south{
+	id = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/carpet/neon/simple/black/nodots,
+/area/template_noop)
+"QZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/template_noop)
+"Rw" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"Rz" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/vending/donksofttoyvendor,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/template_noop)
+"RA" = (
+/obj/machinery/door/airlock/qm,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/template_noop)
+"RN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron,
+/area/template_noop)
+"RX" = (
+/obj/effect/spawner/random/contraband/prison,
+/obj/effect/spawner/random/contraband,
+/turf/open/floor/plating,
+/area/template_noop)
+"Sf" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"Sh" = (
+/obj/effect/spawner/random/contraband/plus,
+/turf/open/floor/plating,
+/area/template_noop)
+"Sn" = (
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/catwalk_floor/iron,
+/area/template_noop)
+"Su" = (
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/plating,
+/area/template_noop)
+"SO" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/side,
+/area/template_noop)
+"Uo" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/syndicate/holographic,
+/turf/open/floor/carpet/orange,
+/area/template_noop)
+"VT" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/table/greyscale,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 3;
+	pixel_x = -10
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Wl" = (
+/turf/open/floor/glass,
+/area/template_noop)
+"Wm" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"Wq" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/critter,
+/mob/living/basic/bear/butter,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"Ww" = (
+/obj/machinery/vending/cigarette/syndicate,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/template_noop)
+"WM" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"Xa" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"XH" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
+/obj/structure/flora/grass/jungle,
+/obj/structure/flora/bush/leavy,
+/turf/open/floor/grass,
+/area/template_noop)
+"Yo" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/template_noop)
+"Zv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/carpet/neon/simple/black/nodots,
+/area/template_noop)
+
+(1,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(2,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(3,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(4,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(5,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+WM
+WM
+WM
+ah
+yR
+ah
+WM
+WM
+WM
+ah
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(6,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+Wq
+JE
+kf
+ah
+yR
+ah
+Yo
+Sn
+SO
+ah
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(7,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+ah
+ah
+Yo
+rl
+SO
+ah
+ah
+ah
+hc
+JE
+jz
+ah
+ah
+ah
+yR
+yR
+yR
+yR
+"}
+(8,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+tn
+ah
+Yo
+JE
+rj
+ah
+RX
+ah
+Yo
+JE
+dt
+ah
+WM
+ah
+ah
+yR
+yR
+yR
+"}
+(9,1,1) = {"
+yR
+Xa
+ah
+ah
+ah
+yR
+ah
+eg
+ah
+DL
+kp
+lW
+ah
+tO
+ah
+Rz
+BW
+ul
+ah
+Rw
+iZ
+ah
+yR
+yR
+yR
+"}
+(10,1,1) = {"
+yR
+Xa
+VT
+zO
+ah
+yR
+ah
+tO
+ah
+ah
+tQ
+ah
+ah
+KG
+ah
+ah
+tQ
+ah
+ah
+qk
+NF
+ah
+yR
+yR
+yR
+"}
+(11,1,1) = {"
+Xa
+Xa
+yh
+nm
+ah
+yR
+ah
+sC
+pj
+iO
+gD
+uA
+KG
+KG
+KG
+RN
+gD
+gx
+ah
+Rw
+vo
+CZ
+yR
+yR
+yR
+"}
+(12,1,1) = {"
+Xa
+xw
+nm
+QE
+ah
+WM
+ah
+BN
+Uo
+IR
+Lt
+Lt
+Lt
+Lt
+Lt
+Lt
+dd
+KG
+ah
+Rw
+Fg
+WM
+WM
+sW
+yR
+"}
+(13,1,1) = {"
+Xa
+xw
+vX
+OQ
+RA
+QZ
+RA
+gC
+gC
+gC
+Lt
+zH
+Kb
+XH
+gY
+Wl
+gC
+gC
+cg
+QZ
+Fg
+WM
+WM
+WM
+yR
+"}
+(14,1,1) = {"
+Xa
+xw
+Nx
+Zv
+ah
+vA
+ah
+gq
+KG
+KG
+Lt
+Lt
+Lt
+Lt
+Lt
+Lt
+HS
+KG
+ah
+oP
+Fg
+WM
+WM
+WM
+yR
+"}
+(15,1,1) = {"
+Xa
+Xa
+nm
+nm
+ah
+mU
+ah
+Ww
+KG
+kT
+gD
+mG
+KG
+KG
+KG
+CB
+gD
+MM
+ah
+oP
+LQ
+CZ
+yR
+yR
+yR
+"}
+(16,1,1) = {"
+yR
+Xa
+nm
+nm
+ah
+yR
+ah
+tO
+ah
+ah
+tQ
+ah
+ah
+KG
+ah
+ah
+tQ
+ah
+ah
+BK
+Su
+ah
+yR
+yR
+yR
+"}
+(17,1,1) = {"
+yR
+Xa
+ah
+ah
+ah
+yR
+ah
+Sh
+ah
+Wm
+Bz
+Sf
+ah
+tO
+ah
+Wm
+Bz
+Pe
+ah
+oP
+Su
+ah
+yR
+yR
+yR
+"}
+(18,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+Sh
+ah
+Yo
+kW
+gc
+ah
+WM
+ah
+GZ
+Lm
+mW
+ah
+Bq
+ah
+ah
+yR
+yR
+yR
+"}
+(19,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+ah
+ah
+Yo
+JE
+SO
+ah
+ah
+ah
+GZ
+sb
+jJ
+ah
+ah
+ah
+yR
+yR
+yR
+yR
+"}
+(20,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+iI
+JE
+hq
+ah
+yR
+ah
+GZ
+JE
+bY
+ah
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(21,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+ah
+WM
+WM
+WM
+ah
+yR
+ah
+WM
+WM
+WM
+ah
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(22,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(23,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(24,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}
+(25,1,1) = {"
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+yR
+"}

@@ -1,6 +1,11 @@
+#define CHECK_AHELP_ACTIVE\
+	if(state != AHELP_ACTIVE) { \
+		return;\
+	};
+
 /datum/admin_help/ClosureLinks(ref_src)
 	. = ..()
-	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=mhelp'>MHELP</A>)"
+	. += " (<A HREF='byond://?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=mhelp'>MHELP</A>)"
 
 /**
  * We're overwriting /datum/admin_help/proc/Action(action)
@@ -11,6 +16,8 @@
 	. = ..()
 	switch(action)
 		if("mhelp")
+			CHECK_AHELP_ACTIVE
+			SSplexora.aticket_closed(src, usr.ckey, AHELP_CLOSETYPE_CLOSE, AHELP_CLOSEREASON_MENTOR)
 			MHelpThis()
 
 /datum/admin_help/proc/MHelpThis(key_name = key_name_admin(usr))
@@ -29,5 +36,7 @@
 	var/msg = "Ticket [TicketHref("#[id]")] told to mentorhelp by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Told to mentorhelp by [key_name].")
+	AddInteraction("Told to mentorhelp by [key_name].", "Sent to mentor help")
 	Close(silent = TRUE)
+
+#undef CHECK_AHELP_ACTIVE

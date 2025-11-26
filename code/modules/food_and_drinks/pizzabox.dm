@@ -15,7 +15,7 @@
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard =SHEET_MATERIAL_AMOUNT)
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
@@ -171,9 +171,9 @@
 		update_appearance()
 		user.regenerate_icons()
 
-/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pizzabox))
-		var/obj/item/pizzabox/newbox = I
+/obj/item/pizzabox/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/pizzabox))
+		var/obj/item/pizzabox/newbox = attacking_item
 		if(!open && !newbox.open)
 			var/list/add = list()
 			add += newbox
@@ -194,30 +194,30 @@
 			return
 		else
 			balloon_alert(user, "close it first!")
-	else if(istype(I, /obj/item/food/pizza))
+	else if(istype(attacking_item, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				balloon_alert(user, "it's full!")
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			pizza = I
+			pizza = attacking_item
 			update_appearance()
 			return
-	else if(istype(I, /obj/item/bombcore/miniature/pizza))
+	else if(istype(attacking_item, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			set_wires(new /datum/wires/explosive/pizza(src))
-			bomb = I
+			bomb = attacking_item
 			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(istype(I, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(attacking_item))
 		if(!open)
-			if(!user.can_write(I))
+			if(!user.can_write(attacking_item))
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -227,7 +227,7 @@
 			boxtag_set = TRUE
 			update_appearance()
 			return
-	else if(is_wire_tool(I))
+	else if(is_wire_tool(attacking_item))
 		if(wires && bomb)
 			wires.interact(user)
 	..()
@@ -382,14 +382,14 @@
 		if(pizza.type != pizza_preferences[nommer.ckey])
 			QDEL_NULL(pizza)
 		else
-			pizza.foodtypes = nommer.dna.species.liked_food //make sure it's our favourite
+			pizza.foodtypes = nommer.get_liked_foodtypes() //make sure it's our favourite
 			return
 
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
 	pizza = new favourite_pizza_type
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
-	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+	pizza.foodtypes = nommer.get_liked_foodtypes() //it's our favorite!
 
 ///screentips for pizzaboxes
 /obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)

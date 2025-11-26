@@ -15,6 +15,10 @@ REVIVAL_BRAIN_LIFE -1
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
+## LOOC
+## Comment this out to disable LOOC
+LOOC_ENABLED
+
 ## EMOJI ###
 ## Comment this out if you want to disable emojis
 EMOJIS
@@ -33,7 +37,7 @@ COMMENDATION_PERCENT_POLL 0.05
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-SPRINT_DELAY 1.2
+SPRINT_DELAY 1.4
 RUN_DELAY 1.8
 WALK_DELAY 4
 
@@ -44,7 +48,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
@@ -345,16 +349,22 @@ ROUNDSTART_RACES human
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES moth
+ROUNDSTART_RACES tundra
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES oozeling
 ROUNDSTART_RACES ipc
 ROUNDSTART_RACES simian
 ROUNDSTART_RACES arachnid
+ROUNDSTART_RACES apid
+ROUNDSTART_RACES satyr
+ROUNDSTART_RACES ornithid
+ROUNDSTART_RACES oni
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
 ROUNDSTART_RACES goblin
+ROUNDSTART_RACES oni
 ROUNDSTART_RACES floran
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
@@ -542,6 +552,14 @@ METACURRENCY_NAME Metacoin
 
 TWITCH_KEY mrhouse
 
+## How long (in minutes) after roundstart should the server start an automatic crew transfer vote?
+## Defaults to 90 minutes. Set to 0 to completely disable automatic crew transfer votes.
+TRANSFER_VOTE_TIME 90
+
+## If players vote against a crew transfer, how long (in minutes) until another automatic transfer vote will be initiated?
+## Defaults to 30 minutes. Set to 0 to completely disable subsequent crew transfer votes.
+SUBSEQUENT_TRANSFER_VOTE_TIME 30
+
 ## Gamemode configurations
 
 ## Multipliers for points gained over time for event tracks.
@@ -588,3 +606,13 @@ MODERATE_POP_SCALE_PENALTY 30
 MAJOR_POP_SCALE_PENALTY 30
 ROLESET_POP_SCALE_PENALTY 30
 OBJECTIVES_POP_SCALE_PENALTY 30
+
+## Uncomment to prevent mechcomp interaction components from holding items.
+#DISABLE_MECHCOMP_INTERACTION_ITEMS
+
+## Uncomment to prevent mechcomp interaction components from using storage.
+#DISABLE_MECHCOMP_INTERACTION_STORAGE
+
+## Additional typepaths to prevent mechcomp interaction components from interacting with.
+#BLACKLIST_MECHCOMP_INTERACTION /obj/item/doohickey
+#BLACKLIST_MECHCOMP_INTERACTION /obj/item/thingymajig

@@ -1,14 +1,27 @@
 /datum/crafting_recipe/improv_explosive
-	name = "IED"
-	result = /obj/item/grenade/iedcasing
+	name = "Improvised Explosive"
+	result = /obj/item/grenade/iedcasing/spawned
 	reqs = list(
-		/datum/reagent/fuel = 50,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/assembly/igniter = 1,
-		/obj/item/reagent_containers/cup/soda_cans = 1,
+		/datum/reagent/fuel = 20,
+		/obj/item/stack/cable_coil = 5, //Monke, only takes 5 coils.
+		/obj/item/assembly/timer = 1,
+		/obj/item/pipe = 1,
+		/obj/item/shard = 3, //Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
 	)
-	parts = list(/obj/item/reagent_containers/cup/soda_cans = 1)
-	time = 1.5 SECONDS
+	time = 6 SECONDS
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/improv_explosive/plasma
+	name = "Plasma Improvised Explosive"
+	result = /obj/item/grenade/iedcasing/spawned/plasma
+	reqs = list(
+		/datum/reagent/toxin/plasma = 20,
+		/obj/item/stack/cable_coil = 5, //Monke, only takes 5 coils.
+		/obj/item/assembly/timer = 1,
+		/obj/item/pipe = 1,
+		/obj/item/shard = 3, //Monke, NOOBS who don't know about the ADVANCED crafting still get shrapnel.
+	)
+	time = 6 SECONDS
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/molotov
@@ -136,7 +149,7 @@
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
+	var/obj/item/stock_parts/power_store/cell/cell = locate(/obj/item/stock_parts/power_store/cell) in range(1)
 	if(!cell)
 		return
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result

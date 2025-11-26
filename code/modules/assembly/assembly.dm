@@ -6,7 +6,7 @@
 	icon_state = ""
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
@@ -113,7 +113,7 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isassembly(attacking_item))
 		var/obj/item/assembly/new_assembly = attacking_item
 		// Check both our's and their's assembly flags to see if either should not duplicate

@@ -30,25 +30,24 @@
 			if(istype(T.loc, /area/shuttle))
 				continue
 
-			if(isfloorturf(T))
+			else if(isfloorturf(T))
 				var/turf/open/floor/TF = T
 				if(TF.burnt)
 					floor += 1
 				else
 					floor += 2
 
-			if(iswallturf(T))
+			else if(iswallturf(T))
 				wall += 1
+				if(istype(T, /turf/closed/wall/r_wall))
+					var/turf/closed/wall/r_wall/TRW = T
+					if(TRW.d_state == INTACT)
+						r_wall += 2
+					else
+						r_wall += 1
 
-			if(istype(T, /turf/closed/wall/r_wall))
-				var/turf/closed/wall/r_wall/TRW = T
-				if(TRW.d_state == INTACT)
-					r_wall += 2
-				else
-					r_wall += 1
 
-
-			for(var/obj/O in T.contents)
+			for(var/obj/O as anything in T.contents)
 				if(istype(O, /obj/structure/window))
 					window += 1
 				else if(istype(O, /obj/structure/grille))

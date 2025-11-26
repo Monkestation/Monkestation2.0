@@ -160,10 +160,10 @@
 	default = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 
 /datum/config_entry/string/alert_blue_upto
-	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
+	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_blue_downto
-	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
+	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_red_upto
 	default = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
@@ -173,6 +173,23 @@
 
 /datum/config_entry/string/alert_delta
 	default = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
+
+// monkestation start: additional alert levels
+/datum/config_entry/string/alert_epsilon
+	default = "Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated."
+
+/datum/config_entry/string/alert_yellow
+	default = "The security alert level has been changed to yellow. There is currently a critical engineering issue on board %STATION_NAME%. Station automatous drones have been granted relaxed protocols temporarily. Crewmembers are advised to avoid damaged areas, and report them as needed."
+
+/datum/config_entry/string/alert_amber
+	default = "The security alert level has been changed to amber. There is an ongoing C-B-R-N threat to the station. Crewmembers are advised to don protective gear, and personal oxygen systems until the alert is lifted. Report any symptoms to medical personnel immediately."
+
+/datum/config_entry/string/alert_gamma
+	default = "Central Command has issued an elevated security alert. There is an elevated threat designated by Central Command on board the station. All security forces are to stay armed and on high alert, remaining staff are advised to seek shelter in their departments."
+
+/datum/config_entry/string/alert_lambda
+	default = "Central Command has detected a large spike of dimensional energy, consistent with the summoning of \[REDACTED\] entities. You are advised to make what little time you have left worthwhile; as no additional assets will be dispatched to %STATION_NAME% at this time."
+// monkestation end
 
 /datum/config_entry/flag/revival_pod_plants
 
@@ -267,8 +284,7 @@
 	movedelay_type = /mob/living/silicon/robot
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
-/datum/config_entry/number/outdated_movedelay/slime_delay
-	movedelay_type = /mob/living/simple_animal/slime
+
 /datum/config_entry/number/outdated_movedelay/animal_delay
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
@@ -327,6 +343,10 @@
 /datum/config_entry/string/overflow_job
 	default = JOB_ASSISTANT
 
+/datum/config_entry/flag/spring_enabled
+
+/datum/config_entry/flag/summer_enabled
+
 /datum/config_entry/flag/spooktober_enabled
 
 /datum/config_entry/flag/grey_assistants
@@ -343,6 +363,11 @@
 
 /datum/config_entry/number/space_budget
 	default = 16
+	integer = FALSE
+	min_val = 0
+
+/datum/config_entry/number/oshan_budget
+	default = 60
 	integer = FALSE
 	min_val = 0
 
@@ -401,6 +426,14 @@
 
 /datum/config_entry/number/ratcap
 	default = 64
+	min_val = 0
+
+/datum/config_entry/number/cowcap
+	default = 35
+	min_val = 0
+
+/datum/config_entry/number/pigcap
+	default = 35
 	min_val = 0
 
 /datum/config_entry/number/maxfine

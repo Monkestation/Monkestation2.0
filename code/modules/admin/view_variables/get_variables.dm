@@ -331,14 +331,14 @@
 			.["value"] = D
 
 		if(VV_COLOR)
-			.["value"] = input("Enter new color:", "Color", current_value) as color|null
+			.["value"] = tgui_color_picker(usr, "Enter new color:", "Color", current_value)
 			if(.["value"] == null)
 				.["class"] = null
 				return
 
 		if(VV_COLOR_MATRIX)
 			.["value"] = open_color_matrix_editor()
-			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+			if(.["value"] == COLOR_MATRIX_IDENTITY) //identity is equivalent to null
 				.["class"] = null
 
 		if(VV_INFINITY)

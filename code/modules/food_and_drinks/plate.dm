@@ -12,25 +12,29 @@
 	var/max_height_offset = 5
 	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
 	var/placement_offset = -15
+	/// The largest weight class we can carry, inclusive.
+	/// IE, if we this is normal, we can carry normal items or smaller.
+	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/plate/attackby(obj/item/I, mob/user, params)
-	if(!IS_EDIBLE(I))
-		to_chat(user, span_notice("[src] is made for food, and food alone!"))
-		return
+/obj/item/plate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_EDIBLE(tool))
+		balloon_alert(user, "not food!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.w_class > biggest_w_class)
+		balloon_alert(user, "too big!")
+		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= max_items)
-		to_chat(user, span_notice("[src] can't fit more items!"))
-		return
-	var/list/modifiers = params2list(params)
+		balloon_alert(user, "can't fit!")
+		return ITEM_INTERACT_BLOCKING
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-		return
-	if(user.transferItemToLoc(I, src, silent = FALSE))
-		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
-		I.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
-		to_chat(user, span_notice("You place [I] on [src]."))
-		AddToPlate(I, user)
-	else
-		return ..()
+		return ITEM_INTERACT_BLOCKING
+	if(user.transferItemToLoc(tool, src, silent = FALSE))
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
+		tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
+		to_chat(user, span_notice("You place [tool] on [src]."))
+		AddToPlate(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/plate/pre_attack(atom/A, mob/living/user, params)
 	if(!iscarbon(A))
@@ -54,6 +58,9 @@
 	item_to_plate.pixel_x = 0
 	item_to_plate.pixel_y = 0
 	update_appearance()
+	// If the incoming item is the same weight class as the plate, bump us up a class
+	if(item_to_plate.w_class == w_class)
+		w_class += 1
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
 /obj/item/plate/proc/ItemRemovedFromPlate(obj/item/removed_item)
@@ -61,11 +68,18 @@
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	// Resettt
+// Reset item offsets
 	removed_item.pixel_x = removed_item.pixel_w
 	removed_item.pixel_y = removed_item.pixel_z
 	removed_item.pixel_w = 0
 	removed_item.pixel_z = 0
+	// We need to ensure the weight class is accurate now that we've lost something
+	// that may or may not have been of equal weight
+	w_class = initial(w_class)
+	for(var/obj/item/on_board in src)
+		if(on_board.w_class == w_class)
+			w_class += 1
+			break
 
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
@@ -78,8 +92,10 @@
 	. = ..()
 	if(.)
 		return
+	var/turf/scatter_turf = get_turf(hit_atom)
+	if(!hit_atom.CanPass(src, get_dir(src, hit_atom))) //Object is too dense to fall apart on
+		scatter_turf = get_turf(src)
 	var/generator/scatter_gen = generator(GEN_CIRCLE, 0, 48, NORMAL_RAND)
-	var/scatter_turf = get_turf(hit_atom)
 
 	for(var/obj/item/scattered_item as anything in contents)
 		ItemRemovedFromPlate(scattered_item)
@@ -103,6 +119,7 @@
 	max_items = 12
 	max_x_offset = 8
 	max_height_offset = 12
+	biggest_w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/plate/small
 	name = "appetizer plate"
@@ -111,6 +128,7 @@
 	max_items = 4
 	max_x_offset = 4
 	max_height_offset = 5
+	biggest_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/plate_shard
 	name = "ceramic shard"

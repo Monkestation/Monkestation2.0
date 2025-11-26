@@ -75,7 +75,7 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "iN" = (
-/mob/living/simple_animal/hostile/pirate/melee{
+/mob/living/basic/trooper/pirate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron,
@@ -139,7 +139,7 @@
 	pixel_y = -30;
 	req_access = null
 	},
-/mob/living/simple_animal/hostile/pirate/ranged{
+/mob/living/basic/trooper/pirate/ranged{
 	environment_smash = 0
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -169,9 +169,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/red_rum/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "nN" = (
@@ -238,12 +236,6 @@
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
-"se" = (
-/obj/machinery/light/small/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/ruin/caravan/pirate)
 "sR" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -269,7 +261,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
@@ -362,10 +354,8 @@
 /area/shuttle/ruin/caravan/pirate)
 "xq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
@@ -436,10 +426,8 @@
 /area/shuttle/ruin/caravan/pirate)
 "BX" = (
 /obj/structure/closet/crate/secure/loot,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "CI" = (
@@ -511,10 +499,8 @@
 /obj/item/bedsheet/brown{
 	dir = 4
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -655,9 +641,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/white,
 /area/shuttle/ruin/caravan/pirate)
 "Po" = (
@@ -766,13 +751,11 @@
 	},
 /area/shuttle/ruin/caravan/pirate)
 "We" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "Wi" = (
@@ -798,19 +781,20 @@
 /area/shuttle/ruin/caravan/pirate)
 "WV" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged{
+/mob/living/basic/trooper/pirate/ranged{
 	environment_smash = 0
 	},
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
 "Xw" = (
 /obj/structure/table,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/item/ammo_box/a40mm,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/fancy/a40mm_box/frag{
+	pixel_x = 0;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "XF" = (
@@ -922,7 +906,7 @@ wg
 pR
 xq
 iM
-se
+wg
 ZU
 ti
 Kc

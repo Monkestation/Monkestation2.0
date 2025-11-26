@@ -26,6 +26,7 @@
 		return
 
 	playsound(user, 'sound/items/weeoo1.ogg', 50, 1)
+	L.visual_masked_scan()
 	var/info = ""
 	var/icon/scan = icon('monkestation/code/modules/virology/icons/virology_bg.dmi',"immunitybg")
 	var/display_width = scan.Width()
@@ -38,7 +39,8 @@
 					antigens_that_matter += antibody
 					continue
 				if (length(L.diseases))
-					for (var/datum/disease/advanced/D as anything in L.diseases)
+					for (var/datum/disease/acute/D as anything in L.diseases)
+						D.Refresh_Acute()
 						var/ID = "[D.uniqueID]-[D.subID]"
 						if(ID in GLOB.virusDB)
 							if (antibody in D.antigen)
@@ -70,14 +72,14 @@
 					rgb = "#E6FF81"
 				if ("X","Y","Z")
 					rgb = "#FF9681"
-				if ("C")
+				if ("C", "Ig")
 					rgb = "#F54B4B"
 				//add colors for new special antigens here
 			scan.DrawBox(rgb,i*bar_spacing+bar_offset+x_adjustment,6,i*bar_spacing+bar_width+bar_offset+x_adjustment,6+antibodies[antibody]*3)
 			i++
 
 	if (length(L.diseases))
-		for (var/datum/disease/advanced/D as anything in L.diseases)
+		for (var/datum/disease/acute/D as anything in L.diseases)
 			var/ID = "[D.uniqueID]-[D.subID]"
 			scan.DrawBox("#FF0000",6,6+D.strength*3,display_width-5,6+D.strength*3)
 			if(ID in GLOB.virusDB)
@@ -110,11 +112,13 @@
 	info += "</table>"
 
 	if (length(L.diseases))
-		for (var/datum/disease/advanced/D as anything in L.diseases)
+		for (var/datum/disease/acute/D as anything in L.diseases)
 			var/ID = "[D.uniqueID]-[D.subID]"
 			if(ID in GLOB.virusDB)
 				var/datum/data/record/V = GLOB.virusDB[ID]
 				info += "<br><i>[V.fields["name"]][V.fields["nickname"] ? " \"[V.fields["nickname"]]\"" : ""] detected. Strength: [D.strength]. Robustness: [D.robustness]. Antigen: [D.get_antigen_string()]</i>"
+				for(var/datum/symptom/e in D.symptoms)
+					info += "<br><b>Stage [e.stage] - [e.name]</b> (Danger: [e.badness]): <i>[e.desc]</i>"
 			else
 				info += "<br><i>Unknown [D.form] detected. Strength: [D.strength]</i>"
 
@@ -134,9 +138,26 @@
 		else if (I.sterility >= 100)
 			span = "notice"
 		to_chat(user,"<span class='[span]'>Scanning \the [I]...sterility level = [I.sterility]%</span>")
-		if (istype(I,/obj/item/weapon/virusdish))
+		if (isvirusdish(I))
 			var/obj/item/weapon/virusdish/dish = I
 			if (dish.open && dish.contained_virus)
 				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))
 
 	. = ..()
+
+
+/obj/effect/abstract/blank/scan
+	alpha = 255
+	icon = 'monkestation/code/modules/virology/icons/items.dmi'
+	icon_state = "scan"
+
+/atom/movable/proc/visual_masked_scan()
+	var/obj/effect/abstract/blank/scan/scanline = new
+
+	vis_contents += scanline
+	addtimer(CALLBACK(src, PROC_REF(remove), scanline), 2 SECONDS)
+
+/atom/movable/proc/remove(atom/scanline)
+	vis_contents -= scanline
+	qdel(scanline)
+

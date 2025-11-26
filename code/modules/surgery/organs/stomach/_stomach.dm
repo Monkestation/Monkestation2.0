@@ -32,6 +32,11 @@
 
 	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
+	/// Typecache of food we can eat that will never give us disease.
+	var/list/disease_free_foods
+	///our hunger modifier
+	var/hunger_modifier = 1
+
 /obj/item/organ/internal/stomach/Initialize(mapload)
 	. = ..()
 	//None edible organs do not get a reagent holder by default
@@ -71,7 +76,7 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max)
+		var/amount = round(min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max), CHEMICAL_VOLUME_ROUNDING)
 
 		if(amount <= 0)
 			continue
@@ -125,40 +130,34 @@
 		if(human.overeatduration < (200 SECONDS))
 			to_chat(human, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
-			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_worn_undersuit()
-			human.update_worn_oversuit()
+
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
-			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_worn_undersuit()
-			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
-		var/hunger_rate = HUNGER_FACTOR
-		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
+		var/hunger_rate = HUNGER_FACTOR * PASSIVE_HUNGER_MULTIPLIER
+		if(human.mob_mood?.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(1 - 0.002 * human.mob_mood.sanity, 0.5) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0
-		if(human.satiety > MAX_SATIETY)
-			human.satiety = MAX_SATIETY
-		else if(human.satiety > 0)
-			human.satiety--
-		else if(human.satiety < -MAX_SATIETY)
-			human.satiety = -MAX_SATIETY
+		if(human.satiety > 0)
+			human.adjust_satiety(-1 * seconds_per_tick)
+
 		else if(human.satiety < 0)
-			human.satiety++
+			human.adjust_satiety(1 * seconds_per_tick)
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
-			hunger_rate = 2 * HUNGER_FACTOR
+			hunger_rate *= 3
+
+		hunger_rate *= hunger_modifier
 		hunger_rate *= human.physiology.hunger_mod
-		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
+		human.adjust_nutrition(-1 * hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition
-	if(nutrition > NUTRITION_LEVEL_FULL)
+	if(nutrition > NUTRITION_LEVEL_FULL && !HAS_TRAIT(human, TRAIT_NOFAT))
 		if(human.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
 			human.overeatduration = min(human.overeatduration + (1 SECONDS * seconds_per_tick), 20 MINUTES)
 	else
@@ -184,18 +183,6 @@
 	//Hunger slowdown for if mood isn't enabled
 	if(CONFIG_GET(flag/disable_human_mood))
 		handle_hunger_slowdown(human)
-
-	// If we did anything more then just set and throw alerts here I would add bracketing
-	// But well, it is all we do, so there's not much point bothering with it you get me?
-	switch(nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			human.clear_alert(ALERT_NUTRITION)
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/hungry)
-		if(0 to NUTRITION_LEVEL_STARVING)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
 
 ///for when mood is disabled and hunger should handle slowdowns
 /obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
@@ -230,6 +217,7 @@
 				disgusted.adjust_confusion(2.5 SECONDS)
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.vomit(10, distance = 0, vomit_type = NONE)
+				disgusted.adjust_disgust(-50)
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(SPT_PROB(13, seconds_per_tick))
@@ -258,13 +246,16 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
+/obj/item/organ/internal/stomach/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	receiver.hud_used?.hunger?.update_hunger_bar()
+
+/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
-		human_owner.clear_alert(ALERT_NUTRITION)
-
+	stomach_owner.hud_used?.hunger?.update_hunger_bar()
 	return ..()
 
 /obj/item/organ/internal/stomach/bone
@@ -302,7 +293,7 @@
 	name = "basic cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.035 // not as good at digestion
@@ -325,6 +316,21 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
+/obj/item/organ/internal/stomach/cybernetic/surplus
+	name = "surplus prosthetic stomach"
+	desc = "A mechanical plastic oval that utilizes sulfuric acid instead of stomach acid. \
+		Very fragile, with painfully slow metabolism.\
+		Offers no protection against EMPs."
+	icon_state = "stomach-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	emp_vulnerability = 100
+	metabolism_efficiency = 0.025
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/stomach/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -333,7 +339,20 @@
 		owner.vomit(stun = FALSE)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
+// Lizard stomach to Let Them Eat Rat
+/obj/item/organ/internal/stomach/lizard
+	name = "lizardperson stomach"
+	desc = "A stomach native to a Lizardperson of Tiziran... or maybe one of its colonies."
+	color = COLOR_VERY_DARK_LIME_GREEN
+	// Lizards don't homeostasize (they're cold blooded) so they get hungrier faster to offset that
+	// Even with this modifier, note they still get hungrier like 1.5x slower than humans
+	hunger_modifier = 2
+
+/obj/item/organ/internal/stomach/lizard/Initialize(mapload)
+	. = ..()
+	var/static/list/rat_cache = typecacheof(/obj/item/food/deadmouse)
+	disease_free_foods = rat_cache
 
 #undef STOMACH_METABOLISM_CONSTANT

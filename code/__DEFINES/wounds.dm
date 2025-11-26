@@ -48,16 +48,13 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 
 
 // ~determination second wind defines
-// How much determination reagent to add each time someone gains a new wound in [/datum/wound/proc/second_wind]
-#define WOUND_DETERMINATION_MODERATE 1
-#define WOUND_DETERMINATION_SEVERE 2.5
-#define WOUND_DETERMINATION_CRITICAL 5
-#define WOUND_DETERMINATION_LOSS 7.5
+// How much determination to add each time someone gains a new wound in [/datum/wound/proc/second_wind]
+#define WOUND_DETERMINATION_MODERATE (5 SECONDS)
+#define WOUND_DETERMINATION_SEVERE (10 SECONDS)
+#define WOUND_DETERMINATION_CRITICAL (20 SECONDS)
+#define WOUND_DETERMINATION_LOSS (30 SECONDS)
 /// the max amount of determination you can have
-#define WOUND_DETERMINATION_MAX 10
-
-/// While someone has determination in their system, their bleed rate is slightly reduced
-#define WOUND_DETERMINATION_BLEED_MOD 0.85
+#define WOUND_DETERMINATION_MAX (1 MINUTES)
 
 /// Wounds using this competition mode will remove any wounds of a greater severity than itself in a random wound roll. In most cases, you dont want to use this.
 #define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
@@ -125,6 +122,16 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+/// Cranial fissure wound.
+#define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
+
+// MONKESTATION ADDITION START
+//Have to put it here so it can be used in the global list of wound series wounding_types_to_series
+/// muscle wounds applied at a low chance from blunt, slash, or pierce attacks
+#define WOUND_MUSCLE "wound_muscle"
+/// T1-T2 Muscle wounds. Both flesh and robotic variants. See muscle.dm and robotic_blunt.dm
+#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
+// MONKESTATION ADDITION END
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
@@ -205,8 +212,12 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	WOUND_BURN = list(
 		WOUND_SERIES_FLESH_BURN_BASIC,
 	),
-	WOUND_PUNCTURE = list(
+	WOUND_PIERCE = list(
 		WOUND_SERIES_FLESH_PUNCTURE_BLEED
+	),
+	//MONKESTATION ADDITION
+	WOUND_MUSCLE = list(
+		WOUND_SERIES_MUSCLE_DAMAGE
 	),
 ))
 
@@ -243,19 +254,19 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
 	var/list/wounding_type_list = list()
-	for (var/wounding_type as anything in wounding_types)
+	for (var/wounding_type in wounding_types)
 		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(wounding_type_list))
+	for (var/series in shuffle(wounding_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
 
 		var/picked_severity
-		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+		for (var/severity_text in shuffle(GLOB.wound_severities_chronological))
 			var/severity = text2num(severity_text)
 			if (severity > severity_min || severity < severity_max)
 				continue
@@ -302,8 +313,8 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 #define WOUND_SLASH_DAMAGE_FLOW_COEFF 0.025
 /// if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
 #define WOUND_BONE_HEAD_TIME_VARIANCE 20
-
-
+/// the modifier applied to the final chance for rolling chest disemboweling wounds
+#define WOUND_DISEMBOWEL_MODIFIER 0.1
 
 // ~mangling defines
 // With the wounds pt. 2 update, general dismemberment now requires 2 things for a limb to be dismemberable (exterior/bone only creatures just need the second):

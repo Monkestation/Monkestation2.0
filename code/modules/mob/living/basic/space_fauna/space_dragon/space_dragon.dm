@@ -1,5 +1,5 @@
 /// You can't make a dragon darker than this, it'd be hard to see
-#define REJECT_DARK_COLOUR_THRESHOLD 50
+#define REJECT_DARK_COLOUR_THRESHOLD 20
 /// Any interactions executed by the space dragon
 #define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
@@ -36,8 +36,8 @@
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	melee_attack_cooldown = CLICK_CD_MELEE
-	mob_size = MOB_SIZE_LARGE
-	armour_penetration = 30
+	mob_size = MOB_SIZE_HUGE
+	armour_penetration = 75
 	pixel_x = -16
 	base_pixel_x = -16
 	maptext_height = 64
@@ -100,13 +100,13 @@
 
 /// Select scale colour with the colour picker
 /mob/living/basic/space_dragon/proc/select_colour()
-	chosen_colour = input(src, "What colour would you like to be?" ,"Colour Selection", COLOR_WHITE) as color|null
+	chosen_colour = tgui_color_picker(src, "What colour would you like to be?", "Colour Selection", COLOR_WHITE)
 	if(!chosen_colour) // Redo proc until we get a color
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()
 		return
-	var/temp_hsv = RGBtoHSV(chosen_colour)
-	if(ReadHSV(temp_hsv)[3] < REJECT_DARK_COLOUR_THRESHOLD)
+	var/list/skin_hsv = rgb2hsv(chosen_colour)
+	if(skin_hsv[3] < REJECT_DARK_COLOUR_THRESHOLD)
 		to_chat(src, span_danger("Invalid colour. Your colour is not bright enough."))
 		select_colour()
 		return

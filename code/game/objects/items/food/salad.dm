@@ -70,11 +70,13 @@
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | RAW
 
+/* Monkestation Edit: You have to boil it
 /obj/item/food/uncooked_rice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/boiledrice, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/uncooked_rice/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledrice)
+End Monkestation Edit */
 
 /obj/item/food/boiledrice
 	name = "boiled rice"
@@ -166,7 +168,7 @@
 	icon_state = "bowl"
 	base_icon_state = "bowl"
 	reagent_flags = OPENCONTAINER | DUNKABLE
-	custom_materials = list(/datum/material/glass = 500)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 0.6
 	fill_icon_thresholds = list(0)

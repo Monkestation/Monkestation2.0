@@ -1,6 +1,6 @@
 /datum/status_effect/woozy
 	id = "woozy"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/woozy
 
@@ -14,7 +14,7 @@
 
 /datum/status_effect/high_blood_pressure
 	id = "high_blood_pressure"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/high_blood_pressure
 
@@ -40,7 +40,7 @@
 
 /datum/status_effect/seizure
 	id = "seizure"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/seizure
 
@@ -78,7 +78,7 @@
 	human_owner.eye_color_left = BLOODCULT_EYE //makes cult eyes less obvious
 	human_owner.eye_color_right = BLOODCULT_EYE //makes cult eyes less obvious
 	human_owner.update_body() //updates eye color
-	human_owner.add_traits(list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type) // impairs motor coordination and dilates blood vessels in eyes
+	human_owner.add_traits(list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), TRAIT_STATUS_EFFECT(id)) // impairs motor coordination and dilates blood vessels in eyes
 	human_owner.add_mood_event("stoned", /datum/mood_event/stoned) //improves mood
 	human_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED //not realistic but very immersive
 	return TRUE
@@ -91,7 +91,7 @@
 	human_owner.eye_color_left = original_eye_color_left
 	human_owner.eye_color_right = original_eye_color_right
 	human_owner.update_body()
-	human_owner.remove_traits(list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), type)
+	human_owner.remove_traits(list(TRAIT_CLUMSY, TRAIT_BLOODSHOT_EYES), TRAIT_STATUS_EFFECT(id))
 	human_owner.clear_mood_event("stoned")
 	human_owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 

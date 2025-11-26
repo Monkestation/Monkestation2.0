@@ -10,12 +10,19 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
+/* Emissives commented out until rotation is fixed.
+/obj/item/clothing/head/helmet/space/hardsuit/engine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+*/
+
 /obj/item/clothing/suit/space/hardsuit/engine
 	name = "engineering hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "hardsuit-engineering"
 	armor_type = /datum/armor/hardsuit/engineering
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
+	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/engine
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/engine/Initialize(mapload)
@@ -32,6 +39,13 @@
 	if(GS)
 		qdel(GS)
 
+/* Emissives commented out until rotation is fixed.
+/obj/item/clothing/suit/space/hardsuit/engine/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+*/
+
 /////////////////////////////////// ATMOSPHERICS /////////////////////////////////////////////
 
 /obj/item/clothing/head/helmet/space/hardsuit/atmos
@@ -40,7 +54,7 @@
 	icon_state = "hardsuit0-atmos"
 	hardsuit_type = "atmos"
 	armor_type = /datum/armor/hardsuit/atmos
-	heat_protection = HEAD //Uncomment to enable firesuit protection
+
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/atmos
@@ -48,9 +62,9 @@
 	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
 	icon_state = "hardsuit-atmos"
 	armor_type = /datum/armor/hardsuit/atmos
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
+
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos
+	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/atmos
 
 /obj/item/clothing/suit/space/hardsuit/atmos/equipped(mob/user, slot)
 	. = ..()

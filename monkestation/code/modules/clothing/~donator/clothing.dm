@@ -44,7 +44,7 @@
 
 /obj/item/canvas/drawingtablet/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/dtselectcolor))
-		currentcolor = input(user, "", "Choose Color", currentcolor) as color|null
+		currentcolor = tgui_color_picker(user, "", "Choose Color", currentcolor)
 	else if(istype(action, /datum/action/item_action/dtcolormenu))
 		var/list/selects = colors.Copy()
 		selects["Save"] = "Save"
@@ -127,7 +127,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
+
 	supports_variations_flags = NONE
 
 // Donation reward for Thedragmeme
@@ -269,15 +269,16 @@
 /obj/item/clothing/gloves/ring/hypno/coffeepot
 	name = "hypnodemon's ring"
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
-	spans = list("velvet")
+	spans = list("hypnophrase")
 
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
 
 /obj/item/clothing/gloves/ring/hypno/ui_action_click(mob/living/user, action)
+	set waitfor = FALSE
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = tgui_input_text(user, "Speak with a hypnotic whisper", "Whisper", encode = FALSE)
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)
@@ -291,7 +292,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	supports_variations_flags = NONE
@@ -409,7 +410,7 @@
 	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/toy/darksabre/get_belt_overlay()
-	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-darksabre")
+	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-sabre")
 
 // Donation reward for inferno707
 /obj/item/storage/belt/sabre/darksabre
@@ -419,6 +420,9 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	worn_icon_state = "darksheath"
+	inhand_icon_state = "darksheath"
+	lefthand_file = 'monkestation/icons/donator/mob/inhands/donator_left.dmi'
+	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/storage/belt/sabre/darksabre/Initialize(mapload)
 	. = ..()
@@ -441,6 +445,10 @@
 	dog_fashion = /datum/dog_fashion/back
 	supports_variations_flags = NONE
 	armor_type = /datum/armor/none
+
+/obj/item/clothing/suit/armor/vest/darkcarapace/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 // Donation reward for inferno707
 /obj/item/clothing/mask/hheart
@@ -541,6 +549,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	worn_icon_state = "scraparmor"
 	body_parts_covered = CHEST
+
+/obj/item/clothing/suit/scraparmour/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 // Donation reward for Enzoman
 /obj/item/clothing/mask/luchador/enzo
@@ -663,7 +675,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -674,7 +686,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "chernocoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex
@@ -706,11 +718,6 @@
 	. = ..()
 	if(welding_upgraded)
 		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
-
-/obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
-	. = ..()
-	if(. && (slot & ITEM_SLOT_HEAD))
-		return FALSE
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
@@ -870,6 +877,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "cross"
 
+/obj/item/clothing/neck/cross/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for gamerguy14948
 /obj/item/storage/belt/fannypack/occult
 	name = "trinket belt"
@@ -1024,6 +1035,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "fishpendant"
 
+/obj/item/clothing/neck/fishpendant/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for Weredoggo
 /obj/item/hairbrush/tactical
 	name = "tactical hairbrush"
@@ -1115,14 +1130,15 @@
 	worn_icon_state = "pocketwatch"
 	icon_state = "pocketwatch"
 	inhand_icon_state = "pocketwatch"
-	var/list/spans = list("velvet")
+	var/list/spans = list("hypnophrase")
 	actions_types = list(/datum/action/item_action/hypno_whisper)
 
 //TODO: make a component for all that various hypno stuff instead of adding it to items individually
 /obj/item/clothing/accessory/hypno_watch/ui_action_click(mob/living/user, action)
+	set waitfor = FALSE
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = tgui_input_text(user, "Speak with a hypnotic whisper", "Whisper", encode = FALSE)
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)
@@ -1130,6 +1146,10 @@
 /obj/item/clothing/accessory/hypno_watch/examine()
 	. = ..()
 	. += span_boldwarning("Who knows what it could be used for?")
+
+/obj/item/clothing/accessory/hypno_watch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/gold) //maaaaan i hate that i have to do this
 
 // Donation reward for BoisterousBeebz
 

@@ -42,6 +42,8 @@ SUBSYSTEM_DEF(chat)
 	return payload
 
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)
+	if(!target?.tgui_panel?.window)
+		return
 	target.tgui_panel.window.send_message("chat/message", payload.into_message())
 	SEND_TEXT(target, payload.get_content_as_html())
 
@@ -61,6 +63,7 @@ SUBSYSTEM_DEF(chat)
 
 /datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data)
 	var/list/targets = islist(queue_target) ? queue_target : list(queue_target)
+
 	for(var/target in targets)
 		var/client/client = CLIENT_FROM_VAR(target)
 		if(isnull(client))

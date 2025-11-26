@@ -4,30 +4,29 @@
 	var/curing
 	var/virusing
 
-	var/obj/item/reagent_containers/cup/beaker/vial/container = null
+	var/obj/item/reagent_containers/cup/tube/container = null
 
-/obj/machinery/computer/curer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/cup/beaker/vial))
-		var/mob/living/carbon/C = user
-		if(!container)
-			if(C.forceMove(I, src))
-				container = I
-	if(istype(I,/obj/item/weapon/virusdish))
+/obj/machinery/computer/curer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/reagent_containers/cup/tube))
+		if(!container && tool.forceMove(src))
+			container = tool
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(isvirusdish(tool))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
-			return
-		var/obj/item/reagent_containers/cup/beaker/vial/product = new(src.loc)
-
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/reagent_containers/cup/tube/product = new(loc)
 		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=0)
-		data["viruses"] |= I:viruses
+		data["viruses"] |= tool:viruses
 		product.reagents.add_reagent(/datum/reagent/blood, 30,data)
-
 		virusing = 1
 		spawn(1200) virusing = 0
+		return ITEM_INTERACT_SUCCESS
 
-		return
 	src.attack_hand(user)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/curer/attack_hand(mob/user)
 	if(..())
@@ -46,14 +45,14 @@
 			var/code = ""
 			for(var/V in GLOB.all_antigens) if(text2num(V) & B.data["antibodies"]) code += GLOB.all_antigens[V]
 			dat += "<BR>Antibodies: [code]"
-			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
+			dat += "<BR><A href='byond://?src=\ref[src];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject container</a>"
+		dat += "<BR><A href='byond://?src=\ref[src];eject=1'>Eject container</a>"
 	else
 		dat = "Please insert a container."
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(HTML_SKELETON(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 	return
 
@@ -62,7 +61,7 @@
 
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	use_power(500)
+	use_energy(500)
 
 	if(curing)
 		curing -= 1
@@ -88,12 +87,13 @@
 
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/reagent_containers/cup/beaker/container)
-	var/obj/item/reagent_containers/cup/beaker/vial/product = new(src.loc)
+	var/obj/item/reagent_containers/cup/tube/product = new(src.loc)
 
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
 
 	var/list/data = list()
-	data["antigen"] = B.data["immunity"]
-	
-	product.reagents.add_reagent(/datum/reagent/vaccine , 30, data)
+	var/list/immunity = B.data["immunity"]
+	if(length(immunity))
+		data["antigen"] = immunity[2]
 
+	product.reagents.add_reagent(/datum/reagent/vaccine, 30, data)

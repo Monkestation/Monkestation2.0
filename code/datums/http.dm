@@ -11,6 +11,11 @@
 
 	var/_raw_response
 
+/datum/http_request/New(...)
+	. = ..()
+	if(length(args))
+		src.prepare(arglist(args))
+
 /datum/http_request/proc/prepare(method, url, body = "", list/headers, output_file)
 	if (!length(headers))
 		headers = ""
@@ -22,6 +27,11 @@
 	src.body = body
 	src.headers = headers
 	src.output_file = output_file
+
+/datum/http_request/proc/fire_and_forget()
+	var/result = rustg_http_request_fire_and_forget(method, url, body, headers, build_options())
+	if(result != "ok")
+		CRASH("[result]")
 
 /datum/http_request/proc/execute_blocking()
 	_raw_response = rustg_http_request_blocking(method, url, body, headers, build_options())

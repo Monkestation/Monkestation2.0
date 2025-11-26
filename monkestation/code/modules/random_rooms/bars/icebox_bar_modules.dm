@@ -10,7 +10,7 @@
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/fake_abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 
 /turf/open/floor/mineral/fake_abductor/Initialize(mapload)
 	. = ..()
@@ -23,7 +23,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
-	mats_per_unit = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*0.25)
 	turf_type = /turf/open/floor/mineral/fake_abductor
 	mineralType = "iron"
 	merge_type = /obj/item/stack/tile/mineral/abductor
@@ -111,7 +111,7 @@
 	icon_state = "console"
 
 ///////////////
-//ARCAEDE BAR//
+//ARCADE BAR//
 ///////////////
 
 /obj/machinery/computer/arcade/amputation/bar
@@ -120,3 +120,10 @@
 
 /obj/item/circuitboard/computer/arcade/amputation/bar
 	build_path = /obj/machinery/computer/arcade/amputation/bar
+
+//SM BAR
+/area/station/engineering/supermatter/icebox_bar
+	name = "Bar Supermatter"
+
+/area/station/engineering/supermatter/room/icebox_bar
+	name = "Bar Supermatter Chamber"

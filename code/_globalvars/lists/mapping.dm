@@ -93,6 +93,13 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHWEST,
 ))
 
+GLOBAL_LIST_INIT(cardinal_angles, list(
+	"[NORTH]" = 0,
+	"[SOUTH]" = 180,
+	"[EAST]" = 90,
+	"[WEST]" = 270,
+))
+
 /// list of all landmarks created
 GLOBAL_LIST_EMPTY(landmarks_list)
 /// list of all job spawn points created
@@ -110,6 +117,8 @@ GLOBAL_LIST_EMPTY(jobspawn_overrides)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
+GLOBAL_LIST_EMPTY(commando_nukeop_start)
+GLOBAL_LIST_EMPTY(commando_nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp) //admin prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility) //captured people go here (ninja energy net)

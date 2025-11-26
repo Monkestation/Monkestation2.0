@@ -21,7 +21,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_SEC
+	paycheck_department = ACCOUNT_CMD
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
@@ -42,15 +42,17 @@
 		/obj/item/skillchip/sabrage = 5,
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	rpg_title = "Star Duke"
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 3
 
 /datum/job/captain/get_captaincy_announcement(mob/living/captain)
 	return "Captain [captain.real_name] on deck!"
 
+/datum/job/captain/get_radio_information()
+	. = list(..(), "You have access to all radio channels, but they are not automatically tuned. Check your radio for more information.")
 
 /datum/outfit/job/captain
 	name = "Captain"
@@ -79,7 +81,7 @@
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,
-		/obj/item/stamp/captain,
+		/obj/item/stamp/head/captain,
 		)
 	implants = list(/obj/item/implant/mindshield)
 	skillchips = list(/obj/item/skillchip/disk_verifier)
@@ -88,23 +90,26 @@
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	var/list/job_changes = SSmapping.config.job_changes
-	if(!length(job_changes))
-		return
-	var/list/captain_changes = job_changes[JOB_CAPTAIN]
-	if(!length(captain_changes))
-		return
-	special_charter = captain_changes["special_charter"]
+	special_charter = CHECK_MAP_JOB_CHANGE(JOB_CAPTAIN, "special_charter")
 	if(!special_charter)
 		return
-	backpack_contents.Remove(/obj/item/station_charter)
-	l_hand = /obj/item/station_charter/banner
+
+	backpack_contents -= /obj/item/station_charter
+
+	if(!l_hand)
+		l_hand = /obj/item/station_charter/banner
+	else if(!r_hand)
+		r_hand = /obj/item/station_charter/banner
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	. = ..()
-	var/obj/item/station_charter/banner/celestial_charter = equipped.held_items[LEFT_HANDS]
-	if(!celestial_charter)
+	if(visualsOnly || !special_charter)
 		return
+	var/obj/item/station_charter/banner/celestial_charter = locate() in equipped.held_items
+	if(isnull(celestial_charter))
+		// failed to give out the unique charter, plop on the ground
+		celestial_charter = new(get_turf(equipped))
+
 	celestial_charter.name_type = special_charter
 
 /datum/outfit/job/captain/mod

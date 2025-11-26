@@ -41,6 +41,11 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	item_path = /obj/item/clothing/mask/gas
 	item_cost = 4000
 
+/datum/store_item/mask/atp_mask
+	name = "ATP Engineer Mask"
+	item_path = /obj/item/clothing/mask/gas/atp
+	item_cost = 5000
+
 /*
 *	JOB-LOCKED
 */
@@ -59,6 +64,12 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 /*
 *	MISC
 */
+
+/datum/store_item/mask/griddle_toast
+	name = "Griddle Toast"
+	item_path = /obj/item/food/griddle_toast
+	item_cost = 2500
+
 /datum/store_item/mask/fake_mustache
 	name = "Fake Moustache"
 	item_path = /obj/item/clothing/mask/fakemoustache
@@ -108,7 +119,17 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	item_path = /obj/item/clothing/mask/kitsuneblack
 	item_cost = 5000
 
+/datum/store_item/mask/kitsune
+	name = "Greyscale Kitsune Mask"
+	item_path = /obj/item/clothing/mask/kitsune
+	item_cost = 5000
+
 /datum/store_item/mask/ook
 	name = "Ook Mask"
 	item_path = /obj/item/clothing/mask/ookmask
 	item_cost = 15000
+
+/datum/store_item/mask/manhunt
+	name = "Smiley Mask"
+	item_path = /obj/item/clothing/mask/joy/manhunt
+	item_cost = 5000

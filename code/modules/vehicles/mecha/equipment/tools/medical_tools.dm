@@ -4,23 +4,23 @@
 	mech_flags = EXOSUIT_MODULE_MEDICAL
 	movedelay = 0.2
 
-/obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/medical/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach(atom/moveto)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/process()
 	if(!chassis)
 		return PROCESS_KILL
 
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon_state = "mecha_sleeper"
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
@@ -45,10 +45,7 @@
 	)
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
 	switch(action)
 		if("eject")
 			go_out()
@@ -161,12 +158,11 @@
 			t1 = "*dead*"
 		else
 			t1 = "Unknown"
-	var/core_temp = ""
-	if(ishuman(patient))
-		var/mob/living/carbon/human/humi = patient
-		core_temp = {"<font color="[humi.coretemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [humi.bodytemperature-T0C]&deg;C ([humi.bodytemperature*1.8-459.67]&deg;F)</font><br />"}
+	var/skin_temp = patient.get_skin_temperature()
+	var/body_temp = patient.bodytemperature
 	return {"<font color="[patient.health > 50 ? "#3d5bc3" : "#c51e1e"]"><b>Health:</b> [patient.stat > 1 ? "[t1]" : "[patient.health]% ([t1])"]</font><br />
-				[core_temp]
+				<font color="[skin_temp > patient.bodytemp_heat_damage_limit ? "#3d5bc3" : "#c51e1e"]"><b>Skin Temperature:</b> [KELVIN_TO_CELCIUS(skin_temp)]&deg;C ([KELVIN_TO_FAHRENHEIT(skin_temp)]&deg;F)</font><br />
+				<font color="[body_temp > patient.bodytemp_heat_damage_limit ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [KELVIN_TO_CELCIUS(body_temp)]&deg;C ([KELVIN_TO_FAHRENHEIT(body_temp)]&deg;F)</font><br />
 				<font color="[patient.bodytemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />
 				<font color="[patient.getBruteLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Brute Damage:</b> [patient.getBruteLoss()]%</font><br />
 				<font color="[patient.getOxyLoss() < 60 ? "#3d5bc3" : "#c51e1e"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
@@ -190,7 +186,7 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=[REF(src)];inject=[REF(R)]\">Inject [R.name]</a><br />"
+				output += "<a href=\"byond://?src=[REF(src)];inject=[REF(R)]\">Inject [R.name]</a><br />"
 	return output
 
 
@@ -234,7 +230,7 @@
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
 	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
@@ -245,8 +241,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "syringegun"
+	icon_state = "mecha_syringegun"
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 	energy_drain = 10
@@ -293,16 +288,14 @@
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_SYRINGE,
 		"mode" = mode == FIRE_SYRINGE_MODE ? "Launch" : "Analyze",
+		"mode_label" = "Action",
 		"syringe" = LAZYLEN(syringes),
 		"max_syringe" = max_syringes,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/handle_ui_act(action, list/params)
 	if(action == "change_mode")
 		mode = !mode
 		return TRUE
@@ -424,9 +417,9 @@
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
-			output += "[R]: [round(R.volume,0.001)] - <a href=\"?src=[REF(src)];purge_reagent=[R]\">Purge Reagent</a><br />"
+			output += "[R]: [round(R.volume,0.001)] - <a href=\"byond://?src=[REF(src)];purge_reagent=[R]\">Purge Reagent</a><br />"
 	if(output)
-		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
+		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"byond://?src=[REF(src)];purge_all=1\">Purge All</a>"
 	return output || "None"
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S, mob/user)
@@ -483,7 +476,7 @@
 	var/amount = seconds_per_tick * synth_speed / LAZYLEN(processed_reagents)
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
-		chassis.use_power(energy_drain)
+		chassis.use_energy(energy_drain)
 
 #undef FIRE_SYRINGE_MODE
 #undef ANALYZE_SYRINGE_MODE
@@ -499,7 +492,7 @@
 	equip_cooldown = 0
 	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing
 	var/obj/item/gun/medbeam/mech/medigun
-	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*4, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize(mapload)
 	. = ..()
@@ -524,3 +517,11 @@
 	STOP_PROCESSING(SSobj, src)
 	medigun.LoseTarget()
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
+	name = "mounted stretcher"
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_mounted_stretcher"
+	desc = "A mangled bunched of medical equipment connecting to a strecher, It can transport and stabilize patients fine. just don't expect anything more"
+	inject_amount = 0
+	mech_flags = EXOSUIT_MODULE_AMBULANCE

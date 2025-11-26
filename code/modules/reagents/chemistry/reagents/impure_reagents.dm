@@ -15,11 +15,11 @@
 	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	var/obj/item/organ/internal/liver/L = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(!L)//Though, lets be safe
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!liver)//Though, lets be safe
 		affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)//Incase of no liver!
 		return ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	return ..()
 
 //Basically just so people don't forget to adjust metabolization_rate
@@ -30,13 +30,12 @@
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
 	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups in the ui
 	inverse_chem = null
-	///how much this reagent does for tox damage too
-	var/tox_damage = 1
+	// var/tox_damage = 1 MONKESTATION REMOVAL
 
 
-/datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/*/datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)  MONKESTATION REMOVAL
 	affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	return ..()
+	return ..()*/
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction

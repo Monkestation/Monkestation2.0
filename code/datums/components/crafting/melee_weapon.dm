@@ -44,6 +44,18 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/balloon_mallet
+	name = "Balloon Mallet"
+	result = /obj/item/balloon_mallet
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
@@ -151,3 +163,55 @@
 				/obj/item/shard = 1)
 	category = CAT_WEAPON_MELEE
 	tool_behaviors = list(TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/giant_wrench
+	name = "Big Slappy"
+	result = /obj/item/shovel/giant_wrench
+	tool_behaviors = list(TOOL_CROWBAR, TOOL_SCREWDRIVER, TOOL_WELDER)
+	reqs = list(
+		/obj/item/wrench = 4,
+		/obj/item/weaponcrafting/giant_wrench = 1,
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/rods = 10,
+		/obj/item/pickaxe/drill = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_flesh_blade_toy
+	name = "Flesh-Like Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/flesh_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/food/meat/slab = 2,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_ash_blade_toy
+	name = "Metallic Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/ash_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 3,
+		/obj/item/match = 1,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_rust_blade_toy
+	name = "Rustic Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/rust_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 3,
+		/datum/reagent/water = 50,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE

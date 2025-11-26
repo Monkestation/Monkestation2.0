@@ -5,21 +5,22 @@
  *
  * A Locksmith’s Secret
  * Grasp of Knock
- * > Sidepaths:
- *   Ashen Eyes
- *	 Codex Cicatrix
  * Key Keeper’s Burden
- *
+ * > Sidepaths:
+ *   Mindgate
  * Rite Of Passage
  * Mark Of Knock
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
- *   Apetra Vulnera
  *   Opening Blast
+ *   Unfathomable Curio
+ * 		Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
+ * > Sidepaths:
+ * 	 	Apetra Vulnera
  *
  * Many secrets behind the Spider Door
  */
@@ -45,11 +46,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_KNOCK
 
@@ -64,7 +61,7 @@
 /datum/heretic_knowledge/knock_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
+	if(istype(suit) && suit.adjusted == NORMAL_STYLE && suit.can_adjust)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
@@ -95,29 +92,42 @@
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
 	desc = "Allows you to transmute a box, an iron rod, and an ID card to create an Eldritch Card. \
-		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
-		You can use it in-hand to change its form to a card you fused. \
-		Does not preserve the card used in the ritual."
+		Attacking it with a normal ID card consumes it and gains its access, \
+		and you can use it in-hand to change its appearance to a card you fused."
 	gain_text = "Gateways shall open before me, my very will ensnaring reality."
-	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/box = 1, //monkestation edit wallet ==> box (leather is too hard to get due to botany changes)
 		/obj/item/stack/rods = 1,
-		/obj/item/card/id = 1,
+		/obj/item/card/id/advanced = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/rite_of_passage)
+	next_knowledge = list(
+		/datum/heretic_knowledge/limited_amount/rite_of_passage,
+		/datum/heretic_knowledge/spell/mind_gate,
+	)
 	cost = 1
 	route = PATH_KNOCK
 
+/datum/heretic_knowledge/key_ring/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/obj/item/card/id = locate(/obj/item/card/id/advanced) in selected_atoms
+	if(isnull(id))
+		return FALSE
+	var/obj/item/card/id/advanced/heretic/result_item = new(loc)
+	if(!istype(result_item))
+		return FALSE
+	selected_atoms -= id
+	result_item.eat_card(id)
+	result_item.shapeshift(id)
+	return TRUE
+
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Consecrated Book. \
+	desc = "Allows you to transmute a crayon, a book, and a multitool to create a Consecrated Book. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
 		/obj/item/toy/crayon = 1, //monkestation edit crayon/white ==> crayon (i checked the game code for this and i can't find a consistant spawn for it other than detective pockets)
-		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/book = 1,
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_lintel)
@@ -144,14 +154,15 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
-	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/blade_upgrade/flesh/knock,
+		/datum/heretic_knowledge/unfathomable_curio,
+		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
-	cost = 2
+	cost = 1
 	route = PATH_KNOCK
 
 /datum/heretic_knowledge/blade_upgrade/flesh/knock //basically a chance-based weeping avulsion version of the former
@@ -173,8 +184,10 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
-	adds_sidepath_points = 1
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/knock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/knock_final,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+	)
 	route = PATH_KNOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
@@ -193,6 +206,8 @@
 		Reality will soon be torn, the Spider Gate opened! WITNESS ME!"
 	required_atoms = list(/mob/living/carbon/human = 3)
 	route = PATH_KNOCK
+	announcement_text = "Delta-class dimensional anomaly detec%SPOOKY% Reality rended, torn. Gates open, doors open, %NAME% has ascended! Fear the tide! %SPOOKY%"
+	announcement_sound = 'sound/ambience/antag/heretic/ascend_knock.ogg'
 
 /datum/heretic_knowledge/ultimate/knock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -216,14 +231,6 @@
 
 /datum/heretic_knowledge/ultimate/knock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-	user.client?.give_award(/datum/award/achievement/misc/knock_ascension, user)
-
 	// buffs
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)

@@ -1,3 +1,8 @@
+#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
+#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
+#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
+
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -11,19 +16,21 @@
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
+	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
-	var/max_blood_volume = 600
+	var/max_blood_volume = BLOODSUCKER_MAX_BLOOD_DEFAULT
 
 	var/datum/bloodsucker_clan/my_clan
 
 	// TIMERS //
-	///Timer between alerts for Burn messages
-	COOLDOWN_DECLARE(bloodsucker_spam_sol_burn)
 	///Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(bloodsucker_spam_healing)
-
+	/// Cooldown for bloodsuckers going into Frenzy.
+	COOLDOWN_DECLARE(bloodsucker_frenzy_cooldown)
+	//Timer to track how long the bloodsucker has been in torpor
+	COOLDOWN_DECLARE(bloodsucker_torpor_max_time)
 	///Used for assigning your name
 	var/bloodsucker_name
 	///Used for assigning your title
@@ -41,11 +48,12 @@
 	var/frenzy_threshold = FRENZY_THRESHOLD_ENTER
 	///If we are currently in a Frenzy
 	var/frenzied = FALSE
-
+	/// Whether the death handling code is active or not.
+	var/handling_death = FALSE
+	/// If this bloodsucker has suffered final death.
+	var/final_death = FALSE
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
-	///Frenzy Grab Martial art given to Bloodsuckers in a Frenzy
-	var/datum/martial_art/frenzygrab/frenzygrab = new
 
 	///Vassals under my control. Periodically remove the dead ones.
 	var/list/datum/antagonist/vassal/vassals = list()
@@ -54,6 +62,7 @@
 
 	var/bloodsucker_level = 0
 	var/bloodsucker_level_unspent = 1
+	var/sol_levels_remaining = 6
 	var/additional_regen
 	var/bloodsucker_regen_rate = 0.3
 
@@ -62,12 +71,25 @@
 	var/obj/structure/closet/crate/coffin
 	var/total_blood_drank = 0
 
+	/// Used for Bloodsuckers gaining levels from drinking blood
+	var/blood_level_gain = 0
+	var/total_blood_level_gain = 0
+	var/blood_level_gain_amount = 0
+
 	///Blood display HUD
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
 	var/atom/movable/screen/bloodsucker/rank_counter/vamprank_display
-	///Sunlight timer HUD
-	var/atom/movable/screen/bloodsucker/sunlight_counter/sunlight_display
+
+	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
+
+	/// List of limbs we've applied additional punch damage to.
+	var/list/affected_limbs = list(
+		BODY_ZONE_L_ARM = null,
+		BODY_ZONE_R_ARM = null,
+		BODY_ZONE_L_LEG = null,
+		BODY_ZONE_R_LEG = null,
+	)
 
 	/// Static typecache of all bloodsucker powers.
 	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
@@ -78,23 +100,56 @@
 		/datum/antagonist/changeling,
 		/datum/antagonist/cult,
 	)
+	/// Traits that don't get removed by Masquerade
+	var/static/list/always_traits = list(
+		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
+		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_OOZELING_NO_CANNIBALIZE, // prevents weird softlocks
+	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_STABLEHEART,
-		TRAIT_NOSOFTCRIT,
-		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
-		TRAIT_COLDBLOODED,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_TOXIMMUNE,
+		TRAIT_COLD_BLOODED,
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NO_BLEED_WARN,
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TOXIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_VIRUSIMMUNE,
+		// they eject zombie tumors and xeno larvae during eepy time anyways
+		TRAIT_NO_ZOMBIFY, // they're already undead lol
+		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
 	)
+	/// Traits applied during Torpor.
+	var/static/list/torpor_traits = list(
+		TRAIT_DEATHCOMA,
+		TRAIT_FAKEDEATH,
+		TRAIT_NODEATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+	)
+	/// Traits applied while inside of a coffin.
+	var/static/list/coffin_traits = list(
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+	)
+	/// A typecache of organs we'll expel during Torpor.
+	var/static/list/yucky_organ_typecache = typecacheof(list(
+		/obj/item/organ/internal/body_egg,
+		/obj/item/organ/internal/zombie_infection,
+	))
 
 /**
  * Apply innate effects is everything given to the mob
@@ -104,21 +159,34 @@
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
+	RegisterSignal(current_mob, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, PROC_REF(after_expose_reagents))
+	RegisterSignal(current_mob, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_items))
+	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(life_tick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
+	current_mob.clear_mood_event("vampcandle")
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
 	if(current_mob.hud_used)
 		on_hud_created()
 	else
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+
+	ensure_brain_nonvital(current_mob)
+	setup_limbs(current_mob)
+	setup_tracker(current_mob)
+
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
 	new /obj/structure/closet/crate/coffin(user_loc)
 	new /obj/structure/bloodsucker/vassalrack(user_loc)
 #endif
+
 
 /**
  * Remove innate effects is everything given to the mob
@@ -128,33 +196,38 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
 	handle_clown_mutation(current_mob, removing = FALSE)
+	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
+
+	cleanup_beacon()
+	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
-		hud_used.infodisplay -= sunlight_display
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
-		QDEL_NULL(sunlight_display)
+
+/datum/antagonist/bloodsucker/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/bloodsucker/proc/get_status_tab_items(datum/source, list/items)
+	SIGNAL_HANDLER
+	items += "Blood Drank: [total_blood_drank]"
+	items += "Maximum blood: [max_blood_volume]"
+	items += "Blood Thickening: [blood_level_gain] / [get_level_cost()]"
 
 /datum/antagonist/bloodsucker/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
 	var/datum/hud/bloodsucker_hud = owner.current.hud_used
 
-	blood_display = new /atom/movable/screen/bloodsucker/blood_counter()
-	blood_display.hud = bloodsucker_hud
+	blood_display = new /atom/movable/screen/bloodsucker/blood_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += blood_display
 
-	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter()
-	vamprank_display.hud = bloodsucker_hud
+	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
-
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter()
-	sunlight_display.hud = bloodsucker_hud
-	bloodsucker_hud.infodisplay += sunlight_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
 	UnregisterSignal(owner.current, COMSIG_MOB_HUD_CREATED)
@@ -177,11 +250,10 @@
 
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
-	RegisterSignal(SSsunlight, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
-	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsunlight, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
+
+	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 
 	if(IS_FAVORITE_VASSAL(owner.current)) // Vassals shouldnt be getting the same benefits as Bloodsuckers.
 		bloodsucker_level_unspent = 0
@@ -201,12 +273,23 @@
 	give_starting_powers()
 	assign_starting_stats()
 
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
+
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
-	UnregisterSignal(SSsunlight, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
+	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
+	if(!iscarbon(owner.current))
+		return
+	var/mob/living/carbon/carbon_owner = owner.current
+	var/obj/item/organ/internal/brain/not_vamp_brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(not_vamp_brain && (not_vamp_brain.decoy_override != initial(not_vamp_brain.decoy_override)))
+		not_vamp_brain.organ_flags |= ORGAN_VITAL
+		not_vamp_brain.decoy_override = FALSE
 	return ..()
 
 /datum/antagonist/bloodsucker/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -215,54 +298,21 @@
 		if(old_body)
 			all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
-	var/obj/item/bodypart/old_left_arm = old_body.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/old_right_arm = old_body.get_bodypart(BODY_ZONE_R_ARM)
-	var/old_left_arm_unarmed_damage_low
-	var/old_left_arm_unarmed_damage_high
-	var/old_right_arm_unarmed_damage_low
-	var/old_right_arm_unarmed_damage_high
-	if(old_body && ishuman(old_body))
-		var/mob/living/carbon/human/old_user = old_body
-		var/datum/species/old_species = old_user.dna.species
-		old_species.species_traits -= DRINKSBLOOD
-		//Keep track of what they were
-		old_left_arm_unarmed_damage_low = old_left_arm.unarmed_damage_low
-		old_left_arm_unarmed_damage_high = old_left_arm.unarmed_damage_high
-		old_right_arm_unarmed_damage_low = old_right_arm.unarmed_damage_low
-		old_right_arm_unarmed_damage_high = old_right_arm.unarmed_damage_high
-		//Then reset them
-		old_left_arm.unarmed_damage_low = initial(old_left_arm.unarmed_damage_low)
-		old_left_arm.unarmed_damage_high = initial(old_left_arm.unarmed_damage_high)
-		old_right_arm.unarmed_damage_low = initial(old_right_arm.unarmed_damage_low)
-		old_right_arm.unarmed_damage_high = initial(old_right_arm.unarmed_damage_high)
-	if(ishuman(new_body))
-		var/mob/living/carbon/human/new_user = new_body
-		var/datum/species/new_species = new_user.dna.species
-		new_species.species_traits += DRINKSBLOOD
-		var/obj/item/bodypart/new_left_arm
-		var/obj/item/bodypart/new_right_arm
-		//Give old punch damage values
-		new_left_arm = new_body.get_bodypart(BODY_ZONE_L_ARM)
-		new_right_arm = new_body.get_bodypart(BODY_ZONE_R_ARM)
-		new_left_arm.unarmed_damage_low = old_left_arm_unarmed_damage_low
-		new_left_arm.unarmed_damage_high = old_left_arm_unarmed_damage_high
-		new_right_arm.unarmed_damage_low = old_right_arm_unarmed_damage_low
-		new_right_arm.unarmed_damage_high = old_right_arm_unarmed_damage_high
 
 	//Give Bloodsucker Traits
-	if(old_body)
-		old_body.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
-	new_body.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	old_body?.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
+	new_body.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 
 /datum/antagonist/bloodsucker/greet()
-	. = ..()
+	if(silent) // don't bother calling ..(), we don't need the duplicate "You are the Bloodsucker!" message
+		return
 	var/fullname = return_full_name()
 	to_chat(owner, span_userdanger("You are [fullname], a strain of vampire known as a Bloodsucker!"))
 	owner.announce_objectives()
 	if(bloodsucker_level_unspent >= 2)
 		to_chat(owner, span_announce("As a latejoiner, you have [bloodsucker_level_unspent] bonus Ranks, entering your claimed coffin allows you to spend a Rank."))
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
+	play_stinger()
 
 /datum/antagonist/bloodsucker/farewell()
 	to_chat(owner.current, span_userdanger("<FONT size = 3>With a snap, your curse has ended. You are no longer a Bloodsucker. You live once more!</FONT>"))
@@ -289,32 +339,23 @@
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/bloodsucker/ui_static_data(mob/user)
-	var/list/data = list()
-	//we don't need to update this that much.
-	data["in_clan"] = !!my_clan
-	var/list/clan_data = list()
+	. = ..()
 	if(my_clan)
-		clan_data["clan_name"] = my_clan.name
-		clan_data["clan_description"] = my_clan.description
-		clan_data["clan_icon"] = my_clan.join_icon_state
+		.["clan"] = list(
+			"name" = my_clan.name,
+			"desc" = my_clan.description,
+			"icon" = my_clan.join_icon,
+			"icon_state" = my_clan.join_icon_state,
+		)
 
-	data["clan"] += list(clan_data)
-
+	.["powers"] = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
-		var/list/power_data = list()
-
-		power_data["power_name"] = power.name
-		power_data["power_explanation"] = power.power_explanation
-		power_data["power_icon"] = power.button_icon_state
-
-		data["power"] += list(power_data)
-
-	return data + ..()
-
-/datum/antagonist/bloodsucker/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/simple/bloodsucker_icons),
-	)
+		.["powers"] += list(list(
+			"name" = power.name,
+			"explanation" = power.html_power_explanation(),
+			"icon" = power.button_icon,
+			"icon_state" = power.button_icon_state,
+		))
 
 /datum/antagonist/bloodsucker/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -327,7 +368,7 @@
 				return
 			assign_clan_and_bane()
 			ui.send_full_update(force = TRUE)
-			return
+			return TRUE
 
 /datum/antagonist/bloodsucker/roundend_report()
 	var/list/report = list()
@@ -340,20 +381,18 @@
 
 	// Default Report
 	var/objectives_complete = TRUE
-	if(objectives.len)
+	if(length(objectives))
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
-			if(objective.objective_name == "Optional Objective")
-				continue
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
 
 	// Now list their vassals
-	if(vassals.len)
-		report += "<span class='header'>Their Vassals were...</span>"
+	if(length(vassals))
+		report +=  span_header("Their Vassals were...")
 		for(var/datum/antagonist/vassal/all_vassals as anything in vassals)
-			if(!all_vassals.owner)
+			if(QDELETED(all_vassals?.owner))
 				continue
 			var/list/vassal_report = list()
 			vassal_report += "<b>[all_vassals.owner.name]</b>"
@@ -366,12 +405,25 @@
 				vassal_report += " and was the <b>Revenge Vassal</b>"
 			report += vassal_report.Join()
 
-	if(objectives.len == 0 || objectives_complete)
+	if(!length(objectives) || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"
 
 	return report.Join("<br>")
+
+/// "Oh, well, that's step one. What about two through ten?"
+/// Beheading bloodsuckers is kinda buggy and results in them being dead-dead without actually being final deathed, which is NOT something that's desired.
+/// Just stake them. No shortcuts.
+/datum/antagonist/bloodsucker/proc/ensure_brain_nonvital(mob/living/mob_override)
+	var/mob/living/carbon/carbon_owner = mob_override || owner.current
+	if(!iscarbon(carbon_owner) || isoozeling(carbon_owner))
+		return
+	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		return
+	brain.organ_flags &= ~ORGAN_VITAL
+	brain.decoy_override = TRUE
 
 /datum/antagonist/bloodsucker/proc/give_starting_powers()
 	for(var/datum/action/cooldown/bloodsucker/all_powers as anything in all_bloodsucker_powers)
@@ -384,25 +436,16 @@
 	var/mob/living/carbon/human/user = owner.current
 	if(ishuman(owner.current))
 		var/datum/species/user_species = user.dna.species
-		var/obj/item/bodypart/user_left_arm = user.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/user_right_arm = user.get_bodypart(BODY_ZONE_R_ARM)
-		user_species.species_traits += DRINKSBLOOD
+		user_species.inherent_traits += TRAIT_DRINKS_BLOOD
 		user.dna?.remove_all_mutations()
-		user_left_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
-		user_left_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
-		user_right_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
-		user_right_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
 	//Give Bloodsucker Traits
-	owner.current.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	//Clear Addictions
 	for(var/addiction_type in subtypesof(/datum/addiction))
 		owner.current.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 	//No Skittish "People" allowed
 	if(HAS_TRAIT(owner.current, TRAIT_SKITTISH))
 		REMOVE_TRAIT(owner.current, TRAIT_SKITTISH, ROUNDSTART_TRAIT)
-	// Tongue & Language
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
-	owner.current.grant_language(/datum/language/vampiric)
 	/// Clear Disabilities & Organs
 	heal_vampire_organs()
 
@@ -428,9 +471,9 @@
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/user = owner.current
 		var/datum/species/user_species = user.dna.species
-		user_species.species_traits -= DRINKSBLOOD
+		user_species.inherent_traits -= TRAIT_DRINKS_BLOOD
 	// Remove all bloodsucker traits
-	owner.current.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	// Update Health
 	owner.current.setMaxHealth(initial(owner.current.maxHealth))
 	// Language
@@ -442,7 +485,7 @@
 		newheart.beating = initial(newheart.beating)
 	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(user_eyes)
-		user_eyes.flash_protect = initial(user_eyes.flash_protect)
+		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
 		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
 		user_eyes.sight_flags = initial(user_eyes.sight_flags)
 	user.update_sight()
@@ -460,38 +503,103 @@
 
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives()
 	// Claim a Lair Objective
-	var/datum/objective/bloodsucker/lair/lair_objective = new
-	lair_objective.owner = owner
-	objectives += lair_objective
-	// Survive Objective
-	var/datum/objective/survive/bloodsucker/survive_objective = new
-	survive_objective.owner = owner
-	objectives += survive_objective
+	objectives += new /datum/objective/bloodsucker/lair(null, owner)
+	// Escape Objective
+	objectives += new /datum/objective/escape(null)
 
-	// Objective 1: Vassalize a Head/Command, or a specific target
-	switch(rand(1, 3))
-		if(1) // Conversion Objective
-			var/datum/objective/bloodsucker/conversion/chosen_subtype = pick(subtypesof(/datum/objective/bloodsucker/conversion))
-			var/datum/objective/bloodsucker/conversion/conversion_objective = new chosen_subtype
-			conversion_objective.owner = owner
-			conversion_objective.objective_name = "Optional Objective"
-			objectives += conversion_objective
-		if(2) // Heart Thief Objective
-			var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-			heartthief_objective.owner = owner
-			heartthief_objective.objective_name = "Optional Objective"
-			objectives += heartthief_objective
-		if(3) // Drink Blood Objective
-			var/datum/objective/bloodsucker/gourmand/gourmand_objective = new
-			gourmand_objective.owner = owner
-			gourmand_objective.objective_name = "Optional Objective"
-			objectives += gourmand_objective
+	// Conversion objective.
+	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
+	var/static/list/weighted_objectives
+	if(!weighted_objectives)
+		weighted_objectives = list(/datum/objective/bloodsucker/conversion = 10)
+		weighted_objectives[subtypesof(/datum/objective/bloodsucker/conversion)] = 1
+	var/conversion_objective_type = pick_weight_recursive(weighted_objectives)
+	var/datum/objective/bloodsucker/conversion_objective = new conversion_objective_type(null, owner)
+	objectives += conversion_objective
 
-/datum/antagonist/bloodsucker/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
-	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.equipOutfit(/datum/outfit/job/assistant)
-		newmob.mind.make_bloodsucker(hosts_mind)
+/datum/antagonist/bloodsucker/proc/on_moved(datum/source)
+	SIGNAL_HANDLER
+	var/mob/living/current = owner?.current
+	if(QDELETED(current))
+		return
+	tracker?.tracking_beacon?.update_position()
+	if(istype(current.loc, /obj/structure/closet/crate/coffin))
+		current.add_traits(coffin_traits, BLOODSUCKER_COFFIN_TRAIT)
 	else
-		hosts_mind.make_bloodsucker(hosts_mind)
+		REMOVE_TRAITS_IN(current, BLOODSUCKER_COFFIN_TRAIT)
+
+/datum/antagonist/bloodsucker/proc/setup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	RegisterSignal(target, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
+	RegisterSignal(target, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			register_limb(target, limb, initial = TRUE)
+
+/datum/antagonist/bloodsucker/proc/cleanup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	UnregisterSignal(target, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			unregister_limb(target, limb)
+
+/datum/antagonist/bloodsucker/proc/register_limb(mob/living/carbon/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
+	SIGNAL_HANDLER
+	if(new_limb.body_zone == BODY_ZONE_HEAD || new_limb.body_zone == BODY_ZONE_CHEST)
+		return
+
+	affected_limbs[new_limb.body_zone] = new_limb
+	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
+
+	var/extra_damage = 1 + (bloodsucker_level * BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
+	new_limb.unarmed_damage_low += extra_damage
+	new_limb.unarmed_damage_high += extra_damage
+
+/datum/antagonist/bloodsucker/proc/unregister_limb(mob/living/carbon/owner, obj/item/bodypart/lost_limb, special)
+	SIGNAL_HANDLER
+	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
+		return
+	var/extra_damage = 1 + (bloodsucker_level / BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP)
+
+	affected_limbs[lost_limb.body_zone] = null
+	UnregisterSignal(lost_limb, COMSIG_QDELETING)
+	// safety measure in case we ever accidentally fuck up the math or something
+	lost_limb.unarmed_damage_low = max(lost_limb.unarmed_damage_low - extra_damage, initial(lost_limb.unarmed_damage_low))
+	lost_limb.unarmed_damage_high = max(lost_limb.unarmed_damage_high - extra_damage, initial(lost_limb.unarmed_damage_high))
+
+/datum/antagonist/bloodsucker/proc/limb_gone(obj/item/bodypart/deleted_limb)
+	SIGNAL_HANDLER
+	if(affected_limbs[deleted_limb.body_zone])
+		affected_limbs[deleted_limb.body_zone] = null
+		UnregisterSignal(deleted_limb, COMSIG_QDELETING)
+
+/datum/antagonist/bloodsucker/proc/after_expose_reagents(mob/source_mod, list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
+	SIGNAL_HANDLER
+	var/datum/reagent/blood/blood_reagent = locate() in reagents
+	if(!blood_reagent)
+		return
+	var/blood_volume = round(reagents[blood_reagent], 0.1)
+	if(blood_volume > 0)
+		bloodsucker_blood_volume = min(bloodsucker_blood_volume + blood_volume, BLOOD_VOLUME_MAXIMUM)
+
+/datum/antagonist/bloodsucker/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/bloodsucker/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(final_death || handling_death || istype(my_clan, /datum/bloodsucker_clan/vassal))
+		return
+	if(broke_masquerade || length(vassals) || total_blood_level_gain >= 250) // arbitrary number but whatever
+		prey += owner
+
+/datum/status_effect/silver_cuffed
+	id = "silver cuffed"
+	alert_type = null
+	remove_on_fullheal = TRUE

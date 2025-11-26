@@ -6,7 +6,7 @@
 		mobjs = jointext(typesof(/mob), ";")
 		create_mob_html = file2text('html/create_object.html')
 		create_mob_html = replacetext(create_mob_html, "Create Object", "Create Mob")
-		create_mob_html = replacetext(create_mob_html, "null /* object types */", "\"[mobjs]\"")
+		create_mob_html = replacetext(create_mob_html, "null; /* object types */", "\"[mobjs]\";")
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
@@ -26,8 +26,10 @@
 	human.eye_color_left = random_eye_color
 	human.eye_color_right = random_eye_color
 
-	human.dna.blood_type = random_blood_type()
-	human.dna.features["mcolor"] = "#[random_color()]"
+	human.dna.human_blood_type = random_human_blood_type()
+	var/datum/color_palette/generic_colors/palette = human.dna.color_palettes[/datum/color_palette/generic_colors]
+	palette.mutant_color = "#[random_color()]"
+	palette.mutant_color_secondary = "#[random_color()]"
 	human.dna.species.randomize_active_underwear_only(human)
 
 	for(var/datum/species/species_path as anything in subtypesof(/datum/species))

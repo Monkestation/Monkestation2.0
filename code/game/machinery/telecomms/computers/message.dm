@@ -71,7 +71,7 @@
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/message_monitor/LateInitialize()
+/obj/machinery/computer/message_monitor/LateInitialize(mapload_arg)
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
@@ -113,7 +113,7 @@
 			data["requests"] = request_list
 	return data
 
-/obj/machinery/computer/message_monitor/ui_act(action, params)
+/obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -210,14 +210,16 @@
 			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
 
 			var/recipient
+			var/list/tablet_to_messenger = list()
 			var/list/viewable_tablets = list()
-			for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
-				var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
+			for (var/messenger_ref in GLOB.pda_messengers)
+				var/datum/computer_file/program/messenger/message_app = GLOB.pda_messengers[messenger_ref]
 				if(!message_app || message_app.invisible)
 					continue
-				if(!tablet.saved_identification)
+				if(!message_app.computer.saved_identification)
 					continue
-				viewable_tablets += tablet
+				viewable_tablets += message_app.computer
+				tablet_to_messenger[message_app.computer] = message_app
 			if(length(viewable_tablets) > 0)
 				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 			else
@@ -234,14 +236,11 @@
 				notice_message = "NOTICE: No message entered!"
 				return attack_hand(usr)
 
-			var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-				"name" = "[sender]",
-				"job" = "[job]",
-				"message" = html_decode(message),
-				"ref" = REF(src),
-				"targets" = list(recipient),
-				"rigged" = FALSE,
-				"automated" = FALSE,
+			var/datum/signal/subspace/messaging/tablet_message/signal = new(src, list(
+				"fakename" = "[sender]",
+				"fakejob" = "[job]",
+				"message" = message,
+				"targets" = list(tablet_to_messenger[recipient]),
 			))
 			// This will log the signal and transmit it to the target
 			linkedServer.receive_information(signal, null)
@@ -290,7 +289,7 @@
 	add_overlay("paper_words")
 	update_appearance()
 
-/obj/item/paper/monitorkey/LateInitialize()
+/obj/item/paper/monitorkey/LateInitialize(mapload_arg)
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
 		if (server.decryptkey)
 			print(server)

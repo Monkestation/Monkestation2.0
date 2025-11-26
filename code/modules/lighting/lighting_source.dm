@@ -88,6 +88,7 @@
 	//yes, we register the signal to the top atom too, this is intentional and ensures contained lighting updates properly
 	if(ismovable(new_atom_host) && new_atom_host == source_atom)
 		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
+	RegisterSignal(new_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT, PROC_REF(force_update))
 	return TRUE
 
 ///remove this light source from old_atom_host's light_sources list, unsetting movement registrations
@@ -98,27 +99,17 @@
 	LAZYREMOVE(old_atom_host.light_sources, src)
 	if(ismovable(old_atom_host) && old_atom_host == source_atom)
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(old_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT)
 	return TRUE
-
-///signal handler for when our host atom moves and we need to update our effects
-/datum/light_source/proc/update_host_lights(atom/movable/host)
-	SIGNAL_HANDLER
-
-	if(QDELETED(host))
-		return
-
-	host.update_light()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
 // Actually that'd be great if you could!
-#define EFFECT_UPDATE(level)                  \
-	if (needs_update == LIGHTING_NO_UPDATE) { \
-		SSlighting.sources_queue += src;      \
-	}                                         \
-	if (needs_update < level) {               \
-		needs_update = level;                 \
-	}
+#define EFFECT_UPDATE(level)                \
+	if (needs_update == LIGHTING_NO_UPDATE) \
+		SSlighting.sources_queue += src; \
+	if (needs_update < level)               \
+		needs_update = level;    \
 
 
 /// This proc will cause the light source to update the top atom, and add itself to the update queue.
@@ -149,7 +140,29 @@
 // This is the define used to calculate falloff.
 // Assuming a brightness of 1 at range 1, formula should be (brightness = 1 / distance^2)
 // However, due to the weird range factor, brightness = (-(distance - full_dark_start) / (full_dark_start - full_light_end)) ^ light_max_bright
-#define LUM_FALLOFF(C, T)(CLAMP01(-((((C.x - T.x) ** 2 +(C.y - T.y) ** 2) ** 0.5 - light_outer_range) / max(light_outer_range - light_inner_range, 1))) ** light_falloff_curve)
+//#define LUM_FALLOFF(C, T)(CLAMP01(-((((C.x - T.x) ** 2 +(C.y - T.y) ** 2) ** 0.5 - light_outer_range) / max(light_outer_range - light_inner_range, 1))) ** light_falloff_curve)
+
+#define LUM_FALLOFF(C) (CLAMP01(-((((C.x - _turf_x) ** 2 +(C.y - _turf_y) ** 2) ** 0.5 - light_outer_range) / _range_divisor)) ** light_falloff_curve)
+
+// This exists so we can cache the vars used in this macro, and save MASSIVE time :)
+// Most of this is saving off datum var accesses, tho some of it does actually cache computation
+// You will NEED to call this before you call APPLY_CORNER
+#define SETUP_CORNERS_CACHE(lighting_source) \
+	var/_turf_x = lighting_source.pixel_turf.x; \
+	var/_turf_y = lighting_source.pixel_turf.y; \
+	var/_range_divisor = max(1, lighting_source.light_outer_range - lighting_source.light_inner_range); \
+	var/_light_power = lighting_source.light_power; \
+	var/_applied_lum_r = lighting_source.applied_lum_r; \
+	var/_applied_lum_g = lighting_source.applied_lum_g; \
+	var/_applied_lum_b = lighting_source.applied_lum_b; \
+	var/_lum_r = lighting_source.lum_r; \
+	var/_lum_g = lighting_source.lum_g; \
+	var/_lum_b = lighting_source.lum_b; \
+
+#define SETUP_CORNERS_REMOVAL_CACHE(lighting_source) \
+	var/_applied_lum_r = lighting_source.applied_lum_r; \
+	var/_applied_lum_g = lighting_source.applied_lum_g; \
+	var/_applied_lum_b = lighting_source.applied_lum_b;
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -157,37 +170,54 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define APPLY_CORNER(C)                          \
-	. = LUM_FALLOFF(C, pixel_turf);              \
-	. *= (light_power ** 2);                \
-	. *= light_power < 0 ? -1:1;            \
+	. = LUM_FALLOFF(C);              \
+	. *= (_light_power ** 2);                \
+	. *= _light_power < 0 ? -1:1;            \
 	var/OLD = effect_str[C];                     \
 	                                             \
 	C.update_lumcount                            \
 	(                                            \
-		(. * lum_r) - (OLD * applied_lum_r),     \
-		(. * lum_g) - (OLD * applied_lum_g),     \
-		(. * lum_b) - (OLD * applied_lum_b)      \
+		(. * _lum_r) - (OLD * _applied_lum_r),     \
+		(. * _lum_g) - (OLD * _applied_lum_g),     \
+		(. * _lum_b) - (OLD * _applied_lum_b)      \
 	);                                           \
 
 #define REMOVE_CORNER(C)                         \
 	. = -effect_str[C];                          \
 	C.update_lumcount                            \
 	(                                            \
-		. * applied_lum_r,                       \
-		. * applied_lum_g,                       \
-		. * applied_lum_b                        \
+		. * _applied_lum_r,                       \
+		. * _applied_lum_g,                       \
+		. * _applied_lum_b                        \
 	);
 
 /// This is the define used to calculate falloff.
 /datum/light_source/proc/remove_lum()
+	SETUP_CORNERS_REMOVAL_CACHE(src)
 	applied = FALSE
+#ifndef DISABLE_DEMOS
+	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 	for (var/datum/lighting_corner/corner as anything in effect_str)
+		if(isnull(corner))
+			continue
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
+
+#ifndef DISABLE_DEMOS
+		// monkestation start: REPLAYS
+		if(!isnull(marked_turfs))
+			marked_turfs[corner.master_NE] = TRUE
+			marked_turfs[corner.master_SE] = TRUE
+			marked_turfs[corner.master_SW] = TRUE
+			marked_turfs[corner.master_NW] = TRUE
+		// monkestation end: REPLAYS
+#endif
 
 	effect_str = null
 
 /datum/light_source/proc/recalc_corner(datum/lighting_corner/corner)
+	SETUP_CORNERS_CACHE(src)
 	LAZYINITLIST(effect_str)
 	if (effect_str[corner]) // Already have one.
 		REMOVE_CORNER(corner)
@@ -196,6 +226,22 @@
 	APPLY_CORNER(corner)
 	effect_str[corner] = .
 
+
+// Keep in mind. Lighting corners accept the bottom left (northwest) set of cords to them as input
+#define GENERATE_MISSING_CORNERS(gen_for) \
+	if (!gen_for.lighting_corner_NE) { \
+		gen_for.lighting_corner_NE = new /datum/lighting_corner(gen_for.x, gen_for.y, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_SE) { \
+		gen_for.lighting_corner_SE = new /datum/lighting_corner(gen_for.x, gen_for.y - 1, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_SW) { \
+		gen_for.lighting_corner_SW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y - 1, gen_for.z); \
+	} \
+	if (!gen_for.lighting_corner_NW) { \
+		gen_for.lighting_corner_NW = new /datum/lighting_corner(gen_for.x - 1, gen_for.y, gen_for.z); \
+	} \
+	gen_for.lighting_corners_initialised = TRUE;
 
 
 #define INSERT_CORNERS(insert_into, draw_from)             \
@@ -212,6 +258,9 @@
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
+
+	if (QDELETED(src))
+		return
 
 	if (QDELETED(source_atom))
 		qdel(src)
@@ -234,7 +283,8 @@
 		update = TRUE
 
 	if (!light_outer_range || !light_power)
-		qdel(src)
+		if (!QDELETED(src))
+			qdel(src)
 		return
 
 	if (isturf(top_atom))
@@ -280,7 +330,9 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs = list()
+#ifndef DISABLE_DEMOS
+	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 
 	if (source_turf)
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
@@ -291,23 +343,29 @@
 				if(IS_OPAQUE_TURF(T))
 					continue
 				if (!T.lighting_corners_initialised)
-					T.generate_missing_corners()
+					GENERATE_MISSING_CORNERS(T)
+
 				corners[T.lighting_corner_NE] = 0
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				turfs += T
+#ifndef DISABLE_DEMOS
+				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+#endif
 		else
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
 					continue
 				if (!T.lighting_corners_initialised)
-					T.generate_missing_corners()
+					GENERATE_MISSING_CORNERS(T)
+
 				corners[T.lighting_corner_NE] = 0
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				turfs += T
+#ifndef DISABLE_DEMOS
+				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+#endif
 
 				var/turf/below = GET_TURF_BELOW(T)
 				var/turf/previous = T
@@ -320,13 +378,18 @@
 						// Of this corner
 						break
 					// Now we do lighting things to it
+					if(IS_OPAQUE_TURF(below))
+						continue
 					if (!below.lighting_corners_initialised)
-						below.generate_missing_corners()
+						GENERATE_MISSING_CORNERS(below)
+
 					corners[below.lighting_corner_NE] = 0
 					corners[below.lighting_corner_SE] = 0
 					corners[below.lighting_corner_SW] = 0
 					corners[below.lighting_corner_NW] = 0
-					turfs += below
+#ifndef DISABLE_DEMOS
+					marked_turfs?[below] = TRUE // Monkestation Edit: REPLAYS
+#endif
 					// ANNND then we add the one below it
 					previous = below
 					below = GET_TURF_BELOW(below)
@@ -337,32 +400,30 @@
 					if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
 						break
 					if (!above.lighting_corners_initialised)
-						above.generate_missing_corners()
+						GENERATE_MISSING_CORNERS(above)
+
 					corners[above.lighting_corner_NE] = 0
 					corners[above.lighting_corner_SE] = 0
 					corners[above.lighting_corner_SW] = 0
 					corners[above.lighting_corner_NW] = 0
-					turfs += above
+#ifndef DISABLE_DEMOS
+					marked_turfs?[above] = TRUE // Monkestation Edit: REPLAYS
+#endif
 					above = GET_TURF_ABOVE(above)
 
 		source_turf.luminosity = oldlum
 
-	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
-	LAZYINITLIST(effect_str)
+	SETUP_CORNERS_CACHE(src)
 
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner)
-			if (. != 0)
-				LAZYADD(corner.affecting, src)
-				effect_str[corner] = .
-	else
-		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner)
-			if (. != 0)
-				LAZYADD(corner.affecting, src)
-				effect_str[corner] = .
-
+	var/list/datum/lighting_corner/new_corners = (corners - src.effect_str)
+	LAZYINITLIST(src.effect_str)
+	for (var/datum/lighting_corner/corner as anything in new_corners)
+		APPLY_CORNER(corner)
+		if (. != 0)
+			LAZYADD(corner.affecting, src)
+			effect_str[corner] = .
+	// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
+	if(needs_update != LIGHTING_VIS_UPDATE && length(corners) != length(new_corners))
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			APPLY_CORNER(corner)
 			if (. != 0)
@@ -371,8 +432,11 @@
 				LAZYREMOVE(corner.affecting, src)
 				effect_str -= corner
 
+
 	var/list/datum/lighting_corner/gone_corners = effect_str - corners
 	for (var/datum/lighting_corner/corner as anything in gone_corners)
+		if(isnull(corner))
+			continue
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 	effect_str -= gone_corners
@@ -381,9 +445,26 @@
 	applied_lum_g = lum_g
 	applied_lum_b = lum_b
 
-	UNSETEMPTY(effect_str)
+	UNSETEMPTY(src.effect_str)
+
+///signal handler for when our host atom moves and we need to update our effects
+/datum/light_source/proc/update_host_lights(atom/movable/host)
+	SIGNAL_HANDLER
+	if(QDELETED(host))
+		return
+
+	// If the host is our owner, we want to call their update so they can decide who the top atom should be
+	if(host == source_atom)
+		host.update_light()
+		return
+
+	// Otherwise, our top atom just moved, so we trigger a normal rebuild
+	EFFECT_UPDATE(LIGHTING_CHECK_UPDATE)
 
 #undef APPLY_CORNER
 #undef EFFECT_UPDATE
 #undef INSERT_CORNERS
 #undef LUM_FALLOFF
+#undef SETUP_CORNERS_REMOVAL_CACHE
+#undef SETUP_CORNERS_CACHE
+#undef GENERATE_MISSING_CORNERS

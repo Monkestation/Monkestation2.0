@@ -35,6 +35,8 @@
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
+	///Whether or not the web comes from an arachnid
+	var/arachnid = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -43,9 +45,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.balloon_alert_to_viewers("weaving...")
+	loc.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
-		user.balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -60,6 +62,8 @@
 	. = ..()
 	if(genetic)
 		return
+	if(arachnid)
+		return
 	if(sealed)
 		return FALSE
 	if(isliving(mover))
@@ -68,7 +72,7 @@
 		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -100,7 +104,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -174,13 +178,13 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isspider(mover))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(isspider(mover.pulledby))
+	if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
-	balloon_alert(mover, "stuck in web!")
+	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
 
 /obj/structure/spider/spikes

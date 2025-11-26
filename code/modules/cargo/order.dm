@@ -137,13 +137,14 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	for(var/atom/movable/AM in container.contents - manifest_paper)
-		if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
+		else
+			for(var/atom/movable/AM in container.contents - manifest_paper)
 				manifest_text += "<li>[AM.name]</li>"
-			else
-				continue
-		manifest_text += "<li>[AM.name]</li>"
+				if(prob(50))
+					manifest_text += "<li>[AM.name]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
@@ -184,7 +185,14 @@
 
 /datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents, misc_cost)
 	for (var/I in misc_contents)
-		new I(miscbox)
+		var/obj/item = new I(miscbox)
+
+		if(istype(item, /obj/item/gun))
+			var/obj/item/gun/gun_actually = item
+			QDEL_NULL(gun_actually.pin)
+			var/obj/item/firing_pin/permit_pin/new_pin = new(gun_actually)
+			gun_actually.pin = new_pin
+
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
 

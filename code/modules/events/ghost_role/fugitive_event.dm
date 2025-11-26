@@ -9,6 +9,9 @@
 	category = EVENT_CATEGORY_INVASION
 	description = "Fugitives will hide on the station, followed by hunters."
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1
@@ -20,7 +23,7 @@
 	if(isnull(landing_turf))
 		return MAP_ERROR
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_FUGITIVE, role = ROLE_FUGITIVE, alert_pic = /obj/item/card/id/advanced/prisoner)
 
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
@@ -99,14 +102,18 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick("space cop", "russian", "bounty hunter")
+	var/backstory = pick(HUNTER_PACK_COPS, HUNTER_PACK_RUSSIAN, HUNTER_PACK_BOUNTY) // MONKESTATION REMOVAL HUNTER_PACK_PSYKER DISGUSTING
 	var/datum/map_template/shuttle/ship
-	if(backstory == "space cop")
-		ship = new /datum/map_template/shuttle/hunter/space_cop
-	else if (backstory == "russian")
-		ship = new /datum/map_template/shuttle/hunter/russian
-	else
-		ship = new /datum/map_template/shuttle/hunter/bounty
+	switch(backstory)
+		if(HUNTER_PACK_COPS)
+			ship = new /datum/map_template/shuttle/hunter/space_cop
+		if(HUNTER_PACK_RUSSIAN)
+			ship = new /datum/map_template/shuttle/hunter/russian
+		if(HUNTER_PACK_BOUNTY)
+			ship = new /datum/map_template/shuttle/hunter/bounty
+//		if(HUNTER_PACK_PSYKER) MONKESTATION REMOVAL
+//			ship = new /datum/map_template/shuttle/hunter/psyker
+
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value

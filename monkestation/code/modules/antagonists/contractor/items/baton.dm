@@ -22,6 +22,7 @@
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 170
+	knockdown_time = 1.5 SECONDS
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
@@ -48,6 +49,7 @@
 	var/mob/living/carbon/carbon_target = target
 	if(upgrade_flags & BATON_MUTE_UPGRADE)
 		carbon_target.adjust_silence_up_to(MUTE_APPLIED, MUTE_MAX)
+		carbon_target.adjust_emote_mute_up_to(MUTE_APPLIED, MUTE_MAX)
 
 	if(upgrade_flags & BATON_FOCUS_UPGRADE)
 		var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(user)
@@ -67,7 +69,7 @@
 		break
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/melee/baton/telescopic/contractor_baton/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/melee/baton/telescopic/contractor_baton/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(attacking_item, /obj/item/baton_upgrade))
 		add_upgrade(attacking_item, user)

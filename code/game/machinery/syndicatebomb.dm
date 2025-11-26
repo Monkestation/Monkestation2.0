@@ -194,16 +194,16 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(is_wire_tool(I) && open_panel)
+	if(is_wire_tool(attacking_item) && open_panel)
 		wires.interact(user)
 
-	else if(istype(I, /obj/item/bombcore))
+	else if(istype(attacking_item, /obj/item/bombcore))
 		if(!payload)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			payload = I
+			payload = attacking_item
 			to_chat(user, span_notice("You place [payload] into [src]."))
 		else
 			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
@@ -251,7 +251,12 @@
 	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
 		return
 
-	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	notify_ghosts(
+		"\A [src] has been activated at [get_area(src)]!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		header = "Bomb Planted",
+	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
@@ -508,21 +513,21 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
-		I.play_tool_sound(src)
+/obj/item/bombcore/chemical/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
+		attacking_item.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
 			beakers -= B
 		return
-	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
+	else if(istype(attacking_item, /obj/item/reagent_containers/cup/beaker) || istype(attacking_item, /obj/item/reagent_containers/cup/bottle))
 		if(beakers.len < max_beakers)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			beakers += I
-			to_chat(user, span_notice("You load [src] with [I]."))
+			beakers += attacking_item
+			to_chat(user, span_notice("You load [src] with [attacking_item]."))
 		else
-			to_chat(user, span_warning("[I] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+			to_chat(user, span_warning("[attacking_item] won't fit! \The [src] can only hold up to [max_beakers] containers."))
 			return
 	..()
 
@@ -603,7 +608,8 @@
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existent++
-		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+		//playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+		playsound(src, SFX_BUTTON_CLICK, vol = 25, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY) // monkestation edit: button sounds
 		to_chat(user, span_notice("[existent] found, [detonated] triggered."))
 		if(detonated)
 			detonated--

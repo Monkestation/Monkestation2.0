@@ -2,10 +2,17 @@
 
 /datum/status_effect/his_grace
 	id = "his_grace"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 4
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
+	/// Base traits given to the user of His Grace.
+	var/static/list/base_traits = list(
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+	)
 
 /atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
@@ -27,29 +34,34 @@
 		priority = 3,
 		self_message = span_boldwarning("His Grace protects you from the stun!"),
 	)
+	owner.add_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/his_grace/on_remove()
 	owner.remove_stun_absorption(id)
+	owner.remove_traits(base_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
-		if(HG.bloodthirst > bloodlust)
-			bloodlust = HG.bloodthirst
-		if(HG.awakened)
+	for(var/obj/item/his_grace/his_grace in owner.held_items)
+		if(his_grace.bloodthirst > bloodlust)
+			bloodlust = his_grace.bloodthirst
+		if(his_grace.awakened)
 			graces++
 	if(!graces)
 		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.05
-	owner.adjustBruteLoss(-grace_heal)
-	owner.adjustFireLoss(-grace_heal)
-	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
-	owner.adjustOxyLoss(-(grace_heal * 2))
-	owner.adjustCloneLoss(-grace_heal)
+	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
+	needs_update += owner.adjustBruteLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-grace_heal, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-grace_heal, updating_health = FALSE, forced = TRUE)
+	needs_update += owner.adjustOxyLoss(-(grace_heal * 2), updating_health = FALSE)
+	needs_update += owner.adjustCloneLoss(-grace_heal, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
@@ -63,7 +75,7 @@
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(ADMIN_HEAL_ALL)
+	owner.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 
@@ -74,7 +86,7 @@
 
 /datum/status_effect/cult_master
 	id = "The Cult Master"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
@@ -104,7 +116,7 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = 0
+	tick_interval = STATUS_EFFECT_NO_TICK // monkestation edit
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
 /atom/movable/screen/alert/status_effect/blooddrunk
@@ -113,7 +125,7 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/blooddrunk/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.brute_mod *= 0.1
@@ -135,7 +147,7 @@
 		human_owner.physiology.oxy_mod *= 10
 		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal
@@ -145,6 +157,7 @@
 	id = "fleshmend"
 	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+	show_duration = TRUE
 
 /datum/status_effect/fleshmend/on_apply()
 	. = ..()
@@ -198,7 +211,7 @@
 /datum/status_effect/hippocratic_oath
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 25
 	alert_type = null
 
@@ -238,7 +251,7 @@
 	med_hud.hide_from(owner)
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
+	return span_notice("[owner.p_they(TRUE)] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
@@ -328,16 +341,13 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
+	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
-	owner.fully_heal(HEAL_CC_STATUS)
-	owner.bodytemperature = owner.get_body_temp_normal()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/humi = owner
-		humi.set_coretemperature(humi.get_body_temp_normal())
+	owner.heal_overall_damage(brute = 25, burn = 25, updating_health = FALSE) // fully_heal always calls updatehealth anyways
+	owner.fully_heal(HEAL_CC_STATUS|HEAL_TEMP)
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
@@ -347,6 +357,7 @@
 	id = "Lightning Orb"
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
+	show_duration = TRUE
 
 /datum/status_effect/lightningorb/on_apply()
 	. = ..()
@@ -365,7 +376,7 @@
 
 /datum/status_effect/mayhem
 	id = "Mayhem"
-	duration = 2 MINUTES
+	duration = 1 MINUTE // monkestation edit
 	/// The chainsaw spawned by the status effect
 	var/obj/item/chainsaw/doomslayer/chainsaw
 
@@ -387,10 +398,12 @@
 
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
-		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+		chainsaw.item_flags |= DROPDEL // monkestation addition
+		chainsaw.resistance_flags |= INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // monkestation addition
 		owner.put_in_hands(chainsaw, forced = TRUE)
 		chainsaw.attack_self(owner)
-		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
+		//owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25) MONKESTATION REMOVAL
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
@@ -409,21 +422,29 @@
 	id = "speed_boost"
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	show_duration = TRUE
+	alert_type = null
+	//negative speeds up, positive slows down. -1 is default speedup
+	var/slowdown = -1
 
-/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration, multiplier)
+	if(multiplier)
+		slowdown = multiplier
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	var/datum/movespeed_modifier/status_speed_boost/newboost = new /datum/movespeed_modifier/status_speed_boost
+	newboost.multiplicative_slowdown = slowdown
+	owner.add_movespeed_modifier(newboost, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
-	multiplicative_slowdown = -1
+	multiplicative_slowdown = 0
 
 ///this buff provides a max health buff and a heal.
 /datum/status_effect/limited_buff/health_buff
@@ -461,22 +482,22 @@
 
 /datum/status_effect/nest_sustenance
 	id = "nest_sustenance"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
-/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+/datum/status_effect/nest_sustenance/tick(seconds_between_ticks, times_fired)
 	. = ..()
 
 	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
-	owner.stamina.adjust(4 * seconds_per_tick)
-	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
+	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.stamina.adjust(4 * seconds_between_ticks)
+	owner.adjust_bodytemperature(INFINITY, max_temp = owner.standard_body_temperature) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
 /atom/movable/screen/alert/status_effect/nest_sustenance
@@ -490,8 +511,8 @@
  */
 /datum/status_effect/blessing_of_insanity
 	id = "blessing_of_insanity"
-	duration = -1
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blessing_of_insanity
 
 /atom/movable/screen/alert/status_effect/blessing_of_insanity
@@ -513,7 +534,7 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -531,4 +552,45 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
+
+/// Gives you a brief period of anti-gravity
+/datum/status_effect/jump_jet
+	id = "jump_jet"
+	alert_type = null
+	duration = 5 SECONDS
+
+/datum/status_effect/jump_jet/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	return TRUE
+
+/datum/status_effect/jump_jet/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 60 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/time_dilation
+
+/datum/status_effect/time_dilation/get_examine_text()
+	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] is moving jerkily and unpredictably!")
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 0.5 // For the duration of this you move and attack faster
+	owner.ignore_slowdown(id)
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 2
+	owner.unignore_slowdown(id)
+
+/atom/movable/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"
+
+/datum/movespeed_modifier/time_dilation
+	multiplicative_slowdown = -0.5

@@ -99,14 +99,6 @@
 	y_offset = 0
 	see_hidden = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/psyker
-	name = "psyker navigation warper"
-	desc = "Used to designate a precise transit location for the psyker shuttle, using sent out brainwaves as detailed sight."
-	icon_screen = "recharge_comp_on"
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
-	x_offset = 0
-	y_offset = 11
-
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
 	shuttle_id = "pirate"
@@ -124,19 +116,20 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	var/cooldown = 300
-	var/next_use = 0
+	/// Cooldown on locating booty.
+	COOLDOWN_DECLARE(locate_cooldown)
 
 /obj/machinery/loot_locator/interact(mob/user)
-	if(world.time <= next_use)
-		to_chat(user,span_warning("[src] is recharging."))
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
 		return
-	next_use = world.time + cooldown
 	var/atom/movable/AM = find_random_loot()
 	if(!AM)
 		say("No valuables located. Try again later.")
 	else
 		say("Located: [AM.name] at [get_area_name(AM)]")
+
+	COOLDOWN_START(src, locate_cooldown, 10 SECONDS)
 
 /obj/machinery/loot_locator/proc/find_random_loot()
 	if(!GLOB.exports_list.len)
@@ -150,6 +143,19 @@
 		P = pick_n_take(possible_loot)
 		AM = P.find_loot()
 	return AM
+
+/// Surgery disk for the space IRS (I don't know where to dump them anywhere else)
+/obj/item/disk/surgery/irs
+	name = "Advanced Surgery Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	surgeries = list(
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/healing/combo/upgraded, // monkestation edit: Fixed surgeries
+		/datum/surgery/advanced/pacify, // monkestation edit: Fixed surgeries
+	)
+
 
 //Pad & Pad Terminal
 /obj/machinery/piratepad
@@ -168,8 +174,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
-		I.buffer = src
+		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
@@ -214,7 +220,7 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P in GLOB.machines)
@@ -240,7 +246,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

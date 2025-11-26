@@ -1,21 +1,20 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
-	category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
-	program_icon_state = "radarntos"
-	requires_ntnet = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	program_open_overlay = "radarntos"
+	program_flags = PROGRAM_REQUIRES_NTNET
+	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
 	var/list/objects
 	///Ref of the last trackable object selected by the user in the tgui window. Updated in the ui_act() proc.
-	var/atom/selected
-	///Used to store when the next scan is available. Updated by the scan() proc.
-	var/next_scan = 0
-	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_appearance() calls
+	var/selected
+	///Used to store when the next scan is available.
+	COOLDOWN_DECLARE(next_scan)
+	///Used to keep track of the last value program_open_overlay was set to, to prevent constant unnecessary update_appearance() calls
 	var/last_icon_state = ""
 	///Used by the tgui interface, themed NT or Syndicate.
 	var/arrowstyle = "ntosradarpointer.png"
@@ -29,7 +28,7 @@
 		return
 	return FALSE
 
-/datum/computer_file/program/radar/kill_program(forced = FALSE)
+/datum/computer_file/program/radar/kill_program(mob/user)
 	objects = list()
 	selected = null
 	STOP_PROCESSING(SSfastprocess, src)
@@ -62,10 +61,7 @@
 		data["target"] = trackinfo
 	return data
 
-/datum/computer_file/program/radar/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/radar/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("selecttarget")
 			selected = params["ref"]
@@ -94,7 +90,7 @@
 	var/locx = (target_turf.x - here_turf.x) + 24
 	var/locy = (here_turf.y - target_turf.y) + 24
 
-	if(get_dist_euclidian(here_turf, target_turf) > 24)
+	if(get_dist_euclidean(here_turf, target_turf) > 24)
 		userot = TRUE
 		rot = round(get_angle(here_turf, target_turf))
 	else
@@ -171,28 +167,28 @@
 
 	var/atom/movable/signal = find_atom()
 	if(!trackable(signal))
-		program_icon_state = "[initial(program_icon_state)]lost"
-		if(last_icon_state != program_icon_state)
+		program_open_overlay = "[initial(program_open_overlay)]lost"
+		if(last_icon_state != program_open_overlay)
 			computer.update_appearance()
-			last_icon_state = program_icon_state
+			last_icon_state = program_open_overlay
 		return
 
 	var/here_turf = get_turf(computer)
 	var/target_turf = get_turf(signal)
-	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
+	var/trackdistance = get_dist_euclidean(here_turf, target_turf)
 	switch(trackdistance)
 		if(0)
-			program_icon_state = "[initial(program_icon_state)]direct"
+			program_open_overlay = "[initial(program_open_overlay)]direct"
 		if(1 to 12)
-			program_icon_state = "[initial(program_icon_state)]close"
+			program_open_overlay = "[initial(program_open_overlay)]close"
 		if(13 to 24)
-			program_icon_state = "[initial(program_icon_state)]medium"
+			program_open_overlay = "[initial(program_open_overlay)]medium"
 		if(25 to INFINITY)
-			program_icon_state = "[initial(program_icon_state)]far"
+			program_open_overlay = "[initial(program_open_overlay)]far"
 
-	if(last_icon_state != program_icon_state)
+	if(last_icon_state != program_open_overlay)
 		computer.update_appearance()
-		last_icon_state = program_icon_state
+		last_icon_state = program_open_overlay
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
@@ -200,6 +196,8 @@
 	if(computer.active_program == src)
 		START_PROCESSING(SSfastprocess, src)
 
+//MONKESTATION REMOVAL START
+/*
 ///////////////////
 //Suit Sensor App//
 ///////////////////
@@ -209,9 +207,8 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_MEDICAL)
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_MEDICAL)
 	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
@@ -247,16 +244,16 @@
 			var/obj/item/clothing/under/uniform = humanoid.w_uniform
 			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
 				return TRUE
-	return FALSE
+	return FALSE */
+//MONKESTATION REMOVAL END
 
 ///Tracks all janitor equipment
 /datum/computer_file/program/radar/custodial_locator
 	filename = "custodiallocator"
 	filedesc = "Custodial Locator"
 	extended_desc = "This program allows for tracking of custodial equipment."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_JANITOR)
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_JANITOR)
 	program_icon = "broom"
 	size = 2
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
@@ -282,8 +279,8 @@
 			var/obj/structure/mop_bucket/janitorialcart/janicart = custodial_tools
 			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
-		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
-			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
+		if(istype(custodial_tools, /mob/living/basic/bot/cleanbot))
+			var/mob/living/basic/bot/cleanbot/cleanbots = custodial_tools
 			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
 
 		var/list/tool_information = list(
@@ -300,12 +297,9 @@
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "radarsyndicate"
+	program_open_overlay = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
+	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRadarSyndicate"
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
@@ -318,7 +312,7 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
-/datum/computer_file/program/radar/fission360/kill_program(forced)
+/datum/computer_file/program/radar/fission360/kill_program(mob/user)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	return ..()
 

@@ -67,7 +67,7 @@
 
 	mob_parent = null
 
-/datum/mood/Destroy(force, ...)
+/datum/mood/Destroy(force)
 	STOP_PROCESSING(SSmood, src)
 	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()
@@ -77,9 +77,9 @@
 		if(MOOD_LEVEL_SAD4)
 			set_sanity(sanity - 0.3 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD3)
-			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_INSANE)
+			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_CRAZY)
 		if(MOOD_LEVEL_SAD2)
-			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_CRAZY)
+			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_SAD1)
 			set_sanity(sanity - 0.05 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_NEUTRAL)
@@ -92,7 +92,6 @@
 			set_sanity(sanity + 0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(MOOD_LEVEL_HAPPY4)
 			set_sanity(sanity + 0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
-	handle_nutrition()
 
 	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
 	// mood runtime, so 50% average uptime across the hour.
@@ -112,26 +111,32 @@
 	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
-/datum/mood/proc/handle_nutrition()
-	if (HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
-		clear_mood_event(MOOD_CATEGORY_NUTRITION)  // if you happen to switch species while hungry youre no longer hungy
-		return FALSE // no moods for nutrition
+/datum/mood/proc/update_nutrition_moodlets()
+	if(HAS_TRAIT(mob_parent, TRAIT_NOHUNGER))
+		clear_mood_event(MOOD_CATEGORY_NUTRITION)
+		return FALSE
+
+	if(HAS_TRAIT(mob_parent, TRAIT_FAT) && !HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
+		add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
+		return TRUE
+
 	switch(mob_parent.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if (!HAS_TRAIT(mob_parent, TRAIT_VORACIOUS))
-				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fat)
-			else
-				add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed) // round and full
+			add_mood_event(MOOD_CATEGORY_NUTRITION, HAS_TRAIT(mob_parent, TRAIT_VORACIOUS) ? /datum/mood_event/wellfed : /datum/mood_event/too_wellfed)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fed)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
 			clear_mood_event(MOOD_CATEGORY_NUTRITION)
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+		if(NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry)
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry_very)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/starving)
+
+	return TRUE
 
 /**
  * Adds a mood event to the mob
@@ -281,7 +286,7 @@
 	mood_screen_object.color = "#4b96c4"
 	hud.infodisplay += mood_screen_object
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(unmodify_hud))
-	RegisterSignal(mood_screen_object, COMSIG_CLICK, PROC_REF(hud_click))
+	RegisterSignal(mood_screen_object, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(hud_click))
 
 /// Removes the mood HUD object
 /datum/mood/proc/unmodify_hud(datum/source)
@@ -305,6 +310,43 @@
 /// Prints the users mood, sanity, and moodies to chat
 /datum/mood/proc/print_mood(mob/user)
 	var/msg = "[span_info("<EM>My current mental status:</EM>")]\n"
+
+	if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
+		msg += span_notice("My hunger: ")
+		var/nutrition = mob_parent.nutrition
+		switch(nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				msg += span_info("I'm completely stuffed!\n")
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				msg += span_info("I'm well fed!\n")
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				msg += span_info("I'm not hungry.\n")
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				msg += "[span_info("I could use a bite to eat.")]<br>"
+			if(NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
+				msg += "[span_warning("I'm feeling hungry.")]<br>"
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
+				msg += "[span_warning("I feel quite hungry.")]<br>"
+			if(0 to NUTRITION_LEVEL_STARVING)
+				msg += span_boldwarning("I'm starving!\n")
+
+	var/drunkness = mob_parent.get_drunk_amount()
+	if(drunkness >= 1)
+		msg += span_notice("My current drunkenness: ")
+		switch(drunkness)
+			if(1 to 10)
+				msg += span_info("I'm feeling a little tipsy.\n")
+			if(11 to 21)
+				msg += span_info("I'm feeling a bit drunk.\n")
+			if(21 to 41)
+				msg += span_info("I'm feeling quite drunk.\n")
+			if(41 to 61)
+				msg += span_info("I'm feeling very drunk.\n")
+			if(61 to 81)
+				msg += span_warning("I'm feeling like a mess.\n")
+			if(81 to INFINITY)
+				msg += span_boldwarning("I'm completely wasted.\n")
+
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
@@ -345,6 +387,7 @@
 	if(mood_events.len)
 		for(var/category in mood_events)
 			var/datum/mood_event/event = mood_events[category]
+			msg += "&bull; "
 			switch(event.mood_change)
 				if(-INFINITY to MOOD_SAD2)
 					msg += span_boldwarning(event.description + "\n")
@@ -359,8 +402,11 @@
 				if(MOOD_HAPPY2 to INFINITY)
 					msg += span_boldnicegreen(event.description + "\n")
 	else
-		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
-	to_chat(user, examine_block(msg))
+		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]\n"
+
+	if(LAZYLEN(mob_parent.quirks))
+		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
+	to_chat(user, boxed_message(msg))
 
 /// Updates the mob's moodies, if the area provides a mood bonus
 /datum/mood/proc/check_area_mood(datum/source, area/new_area)
@@ -409,8 +455,8 @@
 /datum/mood/proc/set_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
-	if(amount < minimum)
-		amount += clamp(minimum - amount, 0, 0.7)
+	if(amount < minimum && sanity < minimum)
+		amount = sanity + 0.7
 	if((!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE)) || amount > maximum)
 		amount = min(sanity, amount)
 	if(amount == sanity) //Prevents stuff from flicking around.
@@ -450,7 +496,7 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	// Crazy or insane = add some uncommon hallucinations
-	if(sanity_level >= SANITY_CRAZY)
+	if(sanity_level >= SANITY_LEVEL_CRAZY)
 		mob_parent.apply_status_effect(/datum/status_effect/hallucination/sanity)
 	else
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)

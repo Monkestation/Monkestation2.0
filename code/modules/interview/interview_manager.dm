@@ -29,7 +29,7 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		return
 	approved_ckeys = json
 
-/datum/interview_manager/Destroy(force, ...)
+/datum/interview_manager/Destroy(force)
 	SSpersistence.save_keys(approved_ckeys)
 	QDEL_LIST(open_interviews)
 	QDEL_LIST(interview_queue)
@@ -193,7 +193,7 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		ui.open()
 
 /datum/interview_manager/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/interview_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())

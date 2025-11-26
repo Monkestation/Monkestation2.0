@@ -63,7 +63,7 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon = 'icons/effects/dirt.dmi'
-	icon_state = "dirt"
+	icon_state = "dirt-flat-0"
 	base_icon_state = "dirt"
 	smoothing_flags = NONE
 	smoothing_groups = SMOOTH_GROUP_CLEANABLE_DIRT
@@ -73,6 +73,10 @@
 
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
+	icon_state = pick("dirt-flat-0","dirt-flat-1","dirt-flat-2","dirt-flat-3")
+	var/obj/structure/broken_flooring/broken_flooring = locate(/obj/structure/broken_flooring) in loc
+	if(!isnull(broken_flooring))
+		return
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
@@ -88,6 +92,12 @@
 /obj/effect/decal/cleanable/dirt/dust
 	name = "dust"
 	desc = "A thin layer of dust coating the floor."
+	icon_state = "dust"
+	base_icon_state = "dust"
+
+/obj/effect/decal/cleanable/dirt/dust/Initialize(mapload)
+	. = ..()
+	icon_state = base_icon_state
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -164,6 +174,14 @@
 			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
 			qdel(src)
 
+/// Nebula vomit with extra guests
+/obj/effect/decal/cleanable/vomit/nebula/worms
+
+/obj/effect/decal/cleanable/vomit/nebula/worms/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for (var/i in 1 to rand(2, 3))
+		new /mob/living/basic/hivelord_brood(loc)
+
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
@@ -223,12 +241,13 @@
 	name = "blue glitter"
 	icon_state = "freon"
 
+//MONKESTATION EDIT START: MADE THE EFFECT NOT FLOUR, IT'S PAIN!
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
-	icon_state = "flour"
-	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#2D2D2D"
+	icon_state = "purpleglow"
+	icon = 'monkestation/icons/effects/stabilized_plasma.dmi'
+//MONKESTATION EDIT STOP
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"
@@ -264,6 +283,9 @@
 
 /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	icon_state = "syndie_pinata_shreds"
+
+/obj/effect/decal/cleanable/wrapping/pinata/donk
+	icon_state = "donk_pinata_shreds"
 
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
@@ -443,3 +465,36 @@
 	if(item.ignition_effect(src, user))
 		ignite()
 	return ..()
+
+/obj/effect/decal/cleanable/fuel_pool/hivis
+	icon_state = "fuel_pool_hivis"
+
+//-----------
+// Nuke Gibs
+//-----------
+/obj/effect/decal/cleanable/nuke_debris
+	name = "nuke debris"
+	desc = "Glad that's finally over with."
+	icon = 'icons/obj/machines/nuke.dmi'
+	icon_state = "debris2"
+	random_icon_states = null
+
+/obj/effect/decal/cleanable/nuke_debris/proc/streak(list/directions, mapload=FALSE)
+	var/direction = pick(directions)
+	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+		return
+	if(mapload)
+		for (var/i in 1 to range)
+			if (!step_to(src, get_step(src, direction), 0))
+				break
+		return
+
+/obj/effect/decal/cleanable/nuke_debris/timer
+	icon_state = "debris1"
+
+/obj/effect/decal/cleanable/nuke_debris/main
+	icon_state = "debris4"
+
+/obj/effect/decal/cleanable/nuke_debris/slot
+	icon_state = "debris3"

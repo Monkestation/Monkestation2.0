@@ -133,7 +133,10 @@
 		old_turfs[oldT] = move_mode
 
 /obj/docking_port/mobile/proc/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
-	for(var/i in 1 to old_turfs.len)
+#ifndef DISABLE_DEMOS
+	var/list/atoms_to_mark = list() // monkestation edit: replays
+#endif
+	for(var/i in 1 to length(old_turfs))
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		var/move_mode = old_turfs[oldT]
@@ -152,6 +155,10 @@
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src) //atoms
 				moved_atoms[moving_atom] = oldT
+#ifndef DISABLE_DEMOS
+				atoms_to_mark += moving_atom
+	SSdemo.mark_multiple_dirty(atoms_to_mark) // monkestation edit: replays
+#endif
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)

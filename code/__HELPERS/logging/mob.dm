@@ -20,8 +20,8 @@
 	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
 
 	if(client)
-		if(!islist(client.player_details.logging[smessage_type]))
-			client.player_details.logging[smessage_type] = list()
+		if(!islist(persistent_client.logging[smessage_type]))
+			persistent_client.logging[smessage_type] = list()
 
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
@@ -51,7 +51,7 @@
 	logging[smessage_type] += timestamped_message
 
 	if(client)
-		client.player_details.logging[smessage_type] += timestamped_message
+		persistent_client.logging[smessage_type] += timestamped_message
 
 	..()
 
@@ -80,7 +80,7 @@
 		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 
 	var/list/raw_lines = list()
-	for (var/key as anything in recent_speech)
+	for (var/key in recent_speech)
 		raw_lines += recent_speech[key]
 
 	return raw_lines

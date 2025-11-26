@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_SUPPLY] = REGION_ACCESS_SUPPLY
 	accesses_by_region[REGION_COMMAND] = REGION_ACCESS_COMMAND
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
+	accesses_by_region[REGION_CHARLIE_STATION] = REGION_ACCESS_CHARLIE_STATION //MONKESTATION ADDITION - Used for Charlie Station ID console.
 
 	station_regions = REGION_AREA_STATION
 
@@ -159,6 +160,7 @@ SUBSYSTEM_DEF(id_access)
 			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
+			//ACCESS_SUPPLY we exclude this because it would make the QM's ID trimmer able to edit service
 			"regions" = list(REGION_GENERAL),
 			"head" = JOB_HEAD_OF_PERSONNEL,
 			"templates" = list(),
@@ -185,6 +187,12 @@ SUBSYSTEM_DEF(id_access)
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
 			"head" = JOB_CHIEF_ENGINEER,
+			"templates" = list(),
+			"pdas" = list(),
+		),
+		"[ACCESS_QM]" = list(
+			"regions" = list(REGION_SUPPLY),
+			"head" = JOB_QUARTERMASTER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
@@ -300,6 +308,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
 	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
 	desc_by_access["[ACCESS_TCOMMS]"] = "Telecommunications"
+	desc_by_access["[ACCESS_TCOMMS_ADMIN]"] = "Telecommunications Admin"
 	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
 	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
 	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
@@ -323,6 +332,21 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
+	desc_by_access["[ACCESS_PERMABRIG]"] = "Permabrig" // monkestation edit: add permabrig-only access
+	//MONKESTATION ADDITION - Adds descriptions to Charlie Station access levels. Used for Charlie Station ID Console.
+	desc_by_access["[ACCESS_AWAY_GENERAL]"] = "Station General Access"
+	desc_by_access["[ACCESS_AWAY_SCIENCE]"] = "Delta Station Science"
+	desc_by_access["[ACCESS_AWAY_MAINTENANCE]"] = "Charlie Station Maintenance"
+	desc_by_access["[ACCESS_AWAY_SUPPLY]"] = "Alpha Station Supply"
+	desc_by_access["[ACCESS_AWAY_GENERIC1]"] = "Station Generic 1"
+	desc_by_access["[ACCESS_AWAY_GENERIC2]"] = "Station Generic 2"
+	desc_by_access["[ACCESS_AWAY_GENERIC3]"] = "Station Generic 3"
+	desc_by_access["[ACCESS_AWAY_GENERIC4]"] = "Station Generic 4"
+	desc_by_access["[ACCESS_AWAY_COMMAND]"] = "Charlie Station Command"
+	desc_by_access["[ACCESS_AWAY_MEDICAL]"] = "Beta Station Medical"
+	desc_by_access["[ACCESS_AWAY_SEC]"] = "Charlie Station Security"
+	desc_by_access["[ACCESS_AWAY_ENGINEERING]"] = "Beta Station Engineering"
+	//END OF ADDITION
 
 /**
  * Returns the access bitflags associated with any given access level.
@@ -434,6 +458,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = trim.department_color
 	id_card.department_state_override = trim.department_state
 	id_card.subdepartment_color_override = trim.subdepartment_color
+	id_card.trim_chat_span_override = trim.chat_span()
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -454,6 +479,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = null
 	id_card.department_state_override = null
 	id_card.subdepartment_color_override = null
+	id_card.trim_chat_span_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -493,3 +519,78 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
+/**
+ * Helper proc for creating a copy of the in-character information you could render from scanning for an ID card.
+ * Accounts for chameleon cards, silicons, and ID read failures.
+ * Pertinently, it also returns relevant information for their bank account (if they have one).
+ * To return bank account info for a chameleon card, bypass_chameleon must be set to TRUE. Otherwise it returns
+ * a bogey record.
+ * datum/source -
+ */
+/datum/controller/subsystem/id_access/proc/__in_character_record_id_information(
+	atom/movable/target_of_record,
+	bypass_chameleon = FALSE
+	) as /alist
+
+	var/alist/returned_record = alist(
+		"name" = null,
+		"age" = null,
+		"assignment" = null,
+		"account_id" = null,
+		"account_holder" = null,
+		"account_assignment" = null,
+		"accesses" = null,
+	)
+	. = returned_record
+	if(isnull(target_of_record))
+		.["name"] = ID_READ_FAILURE
+		.["age"] = ID_READ_FAILURE
+		.["assignment"] = ID_READ_FAILURE
+		.["account_id"] = ID_READ_FAILURE
+		.["account_holder"] = ID_READ_FAILURE
+		.["account_assignment"] = ID_READ_FAILURE
+		.["accesses"] = ID_READ_FAILURE
+		.[ID_READ_FAILURE] = ID_READ_FAILURE
+		return .
+	var/mob/living/target = astype(target_of_record, /mob/living)
+	if(target)
+		if(!issilicon(target) && !isdrone(target))
+			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
+			return .
+		.["name"] = target.name
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
+		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
+		return .
+	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
+	if(id_card)
+		.["name"] = id_card.registered_name || "Unknown"
+		.["age"] = id_card.registered_age || "Unknown"
+		.["assignment"] = id_card.assignment || "Unassigned"
+		.["accesses"] = id_card.access
+		var/datum/bank_account/id_account = id_card.registered_account
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
+			// Generate a bogey record based only on the ID card
+			// Generates a random bank account number every time as a 'spot the thread' for anyone who
+			// went through records for this entry for whatever reason.
+			.["account_id"] = rand(111111, 999999)
+			.["account_holder"] = .["name"]
+			.["account_assignment"] = .["assignment"]
+			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
+			return .
+		if(!id_account)
+			.["account_id"] = 0
+			.["account_holder"] = "NO ACCOUNT."
+			.["account_assignment"] = "NO ACCOUNT."
+			return .
+		.["account_id"] = id_account.account_id
+		.["account_holder"] = id_account.account_holder
+		.["account_assignment"] = id_account.account_job?.title || "Unassigned"
+		return .
+	else
+		. = ID_DATA(null)

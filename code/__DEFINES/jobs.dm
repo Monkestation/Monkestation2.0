@@ -6,6 +6,9 @@
 #define JOB_UNAVAILABLE_SLOTFULL 5
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
+/// Job unavailable due to insufficient donor rank.
+#define JOB_UNAVAILABLE_DONOR_RANK 7 //MONKESTATION EDIT
+#define JOB_UNAVAILABLE_CONDITIONS_UNMET 8
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -40,12 +43,14 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
 #define JOB_PERSONAL_AI "Personal AI"
 //Security
 #define JOB_WARDEN "Warden"
+#define JOB_BRIG_PHYSICIAN "Brig Physician"
 #define JOB_DETECTIVE "Detective"
 #define JOB_SECURITY_OFFICER "Security Officer"
 #define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
@@ -80,6 +85,17 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+//Spring Donator Jobs
+#define JOB_NEWS_REPORTER "News Reporter"
+#define JOB_EASTER_BUNNY "Easter Bunny"
+#define JOB_FLORIST "Florist"
+#define JOB_SPRING_CLEANER "Spring Cleaner"
+#define JOB_BIRD_WATCHER "Bird Watcher"
+//Summer Donator Jobs
+#define JOB_GRILLER "Grill Master"
+#define JOB_HOTDOG "Hotdog Dude"
+#define JOB_GYM_BRO "Gym Bro"
+#define JOB_TOURIST "Tourist"
 //Spooktober
 #define JOB_SPOOKTOBER_GHOST "Ghost"
 #define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
@@ -119,6 +135,9 @@
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
+#define JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE 2.25 //monkestation edit: nanotrasen representative
+#define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
+#define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 2.75 // modularisation is dead but monke addition still
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -130,14 +149,17 @@
 #define JOB_DISPLAY_ORDER_LAWYER 11
 #define JOB_DISPLAY_ORDER_CHAPLAIN 12
 #define JOB_DISPLAY_ORDER_PSYCHOLOGIST 13
+#define JOB_DISPLAY_ORDER_BARBER 13.5 //monkestation edit: Barber
 #define JOB_DISPLAY_ORDER_AI 14
 #define JOB_DISPLAY_ORDER_CYBORG 15
 #define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
+#define JOB_DISPLAY_ORDER_SIGNAL_TECHNICIAN 16.5 // MONKESTATION ADDITION -- NTSL
 #define JOB_DISPLAY_ORDER_STATION_ENGINEER 17
 #define JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN 18
 #define JOB_DISPLAY_ORDER_QUARTERMASTER 19
 #define JOB_DISPLAY_ORDER_CARGO_TECHNICIAN 20
 #define JOB_DISPLAY_ORDER_SHAFT_MINER 21
+#define JOB_DISPLAY_ORDER_EXPLORER 21.5 //monkestation edit: explorer
 #define JOB_DISPLAY_ORDER_BITRUNNER 22
 #define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 23
 #define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 24
@@ -148,11 +170,14 @@
 #define JOB_DISPLAY_ORDER_SCIENTIST 29
 #define JOB_DISPLAY_ORDER_ROBOTICIST 30
 #define JOB_DISPLAY_ORDER_GENETICIST 31
+#define JOB_DISPLAY_ORDER_XENOBIOLOGIST 31.5
 #define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 32
 #define JOB_DISPLAY_ORDER_WARDEN 33
-#define JOB_DISPLAY_ORDER_DETECTIVE 34
-#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 35
-#define JOB_DISPLAY_ORDER_PRISONER 36
+#define JOB_DISPLAY_ORDER_BRIG_PHYSICIAN 34
+#define JOB_DISPLAY_ORDER_DETECTIVE 35
+#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 36
+#define JOB_DISPLAY_ORDER_SECURITY_ASSISTANT 37 // monkestation edit: security assistants
+#define JOB_DISPLAY_ORDER_PRISONER 38
 
 
 #define DEPARTMENT_UNASSIGNED "No Department"
@@ -179,6 +204,16 @@
 #define DEPARTMENT_CAPTAIN "Captain"
 #define DEPARTMENT_BITFLAG_SPOOKTOBER (1<<10)
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
+#define DEPARTMENT_BITFLAG_SPRING (1<<11)
+#define DEPARTMENT_SPRING "Spring"
+#define DEPARTMENT_BITFLAG_SUMMER (1<<12)
+#define DEPARTMENT_SUMMER "Summer"
+
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<13)
+#define DEPARTMENT_CENTRAL_COMMAND "Central Command"
+
+#define DEPARTMENT_BITFLAG_LATE (1<<14)
+#define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.
@@ -199,8 +234,11 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
-/// Whether this job is enabled/disabled by the spooktober config
-#define JOB_SPOOKTOBER (1<<9)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"
@@ -211,5 +249,5 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
-#define SUPERVISOR_QM "the Quartermaster"
+#define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel" //monkestation edit: Those under QM is also under HoP
 #define SUPERVISOR_RD "the Research Director"

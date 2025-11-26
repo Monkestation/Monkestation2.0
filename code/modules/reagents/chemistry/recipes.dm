@@ -13,7 +13,9 @@
 	///Required chemicals that must be present in the container but are not USED.
 	var/list/required_catalysts = new/list()
 
-	/// the exact container path required for the reaction to happen, typepath
+	/// If required_container will check for the exact type, or will also accept subtypes
+	var/required_container_accepts_subtypes = FALSE
+	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
 	var/atom/required_container
 	/// an integer required for the reaction to happen
 	var/required_other = FALSE
@@ -62,21 +64,6 @@
 	var/pollutant_type
 	///How much amount per volume of the pollutant shall we emitt if `pollutant_type` is defined
 	var/pollutant_amount = 1
-
-/datum/chemical_reaction/New()
-	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
-
-/**
- * Updates information during the roundstart
- *
- * This proc is mainly used by explosives but can be used anywhere else
- * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
- * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
- */
-/datum/chemical_reaction/proc/update_info()
-	return
-
 
 ///REACTION PROCS
 
@@ -224,7 +211,7 @@
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
-		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
+		message += " (<A HREF='byond://?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)
@@ -265,7 +252,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(X) || iseyemob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -314,6 +301,12 @@
 		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
 			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+
+		// monkestation edit start
+		if(lastkey) // This is a sad way to do it. But a way to do it none the lesser.
+			log_bomber(get_mob_by_key(lastkey), "Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [touch_msg] Source: [holder.my_atom]")
+		// monkestation edit end
+
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
@@ -401,7 +394,7 @@
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
 		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
-	for(var/atom/movable/movey as anything in orange(range, this_turf))
+	for(var/atom/movable/movey in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))
 			continue
 		if(isliving(movey) && damage)
@@ -409,7 +402,7 @@
 			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
-		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
+		if(iseffect(movey) || iseyemob(movey) || isdead(movey))
 			continue
 		if(implosion)
 			var/distance = get_dist(movey, this_turf)

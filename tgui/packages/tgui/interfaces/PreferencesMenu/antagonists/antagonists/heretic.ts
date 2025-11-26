@@ -12,7 +12,7 @@ const Heretic: Antagonist = {
   description: [
     multiline`
       Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
-      of decay, but the mansus veil has weakened. We will make them taste fear
+      of decay, but The Mansus' veil has weakened. We will make them taste fear
       again...
     `,
     HERETIC_MECHANICAL_DESCRIPTION,

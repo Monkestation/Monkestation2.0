@@ -28,8 +28,11 @@
 	/// Which stage does this subsystem init at. Earlier stages can fire while later stages init.
 	var/init_stage = INITSTAGE_MAIN
 
-	/// This var is set to TRUE after the subsystem has been initialized.
+	/// This var is set to `INITIALIZATION_INNEW_REGULAR` after the subsystem has been initialized.
 	var/initialized = FALSE
+
+	/// Similar to above however this will be set even if an SS has SS_NO_INIT set.
+	var/ready = FALSE
 
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
@@ -37,8 +40,18 @@
 
 	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
+
+	///A list of var names present on this subsystem to be checked during CheckQueue. See [SS_HIBERNATE] for usage.
+	var/list/hibernate_checks
+
 	///Subsystem ID. Used for when we need a technical name for the SS used by SSmetrics
 	var/ss_id = "generic_ss_id"
+
+	/**
+	 * boolean set by admins. if TRUE then this subsystem will stop the world profiler after ignite() returns and start it again when called.
+	 * used so that you can audit a specific subsystem or group of subsystems' synchronous call chain.
+	 */
+	var/profiler_focused = FALSE
 
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
@@ -50,6 +63,9 @@
 	/// Scheduled world.time for next fire()
 	var/next_fire = 0
 
+	/// The subsystem had no work during CheckQueue and was not queued.
+	var/hibernation_state
+
 	/// Running average of the amount of milliseconds it takes the subsystem to complete a run (including all resumes but not the time spent paused)
 	var/cost = 0
 
@@ -58,6 +74,9 @@
 
 	/// Running average of the amount of tick usage (in percents of a game tick) the subsystem has spent past its allocated time without pausing
 	var/tick_overrun = 0
+
+	/// Flat list of usage and time, every odd index is a log time, every even index is a usage
+	var/list/rolling_usage = list()
 
 	/// How much of a tick (in percents of a tick) were we allocated last fire.
 	var/tick_allocation_last = 0
@@ -99,6 +118,9 @@
 	var/datum/controller/subsystem/queue_next
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
+
+	/// String to store an applicable error message for a subsystem crashing, used to help debug crashes in contexts such as Continuous Integration/Unit Tests
+	var/initialization_failure_message = null
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -179,6 +201,8 @@
 /// (we loop thru a linked list until we get to the end or find the right point)
 /// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
+	hibernation_state = hibernation_state == SS_IS_HIBERNATING ? SS_WAKING_UP : SS_NOT_HIBERNATING
+
 	var/SS_priority = priority
 	var/SS_flags = flags
 	var/datum/controller/subsystem/queue_node
@@ -275,6 +299,9 @@
 	return msg
 
 /datum/controller/subsystem/proc/state_letter()
+	if(hibernation_state)
+		return hibernation_state == SS_WAKING_UP ? "W" : "H"
+
 	switch (state)
 		if (SS_RUNNING)
 			. = "R"
@@ -292,6 +319,15 @@
 	if (can_fire && cycles >= 1)
 		postponed_fires += cycles
 
+/// Prunes out of date entries in our rolling usage list
+/datum/controller/subsystem/proc/prune_rolling_usage()
+	var/list/rolling_usage = src.rolling_usage
+	var/cut_to = 0
+	while(cut_to + 2 <= length(rolling_usage) && rolling_usage[cut_to + 1] < DS2TICKS(world.time - Master.rolling_usage_length))
+		cut_to += 2
+	if(cut_to)
+		rolling_usage.Cut(1, cut_to + 1)
+
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
 /datum/controller/subsystem/Recover()
@@ -305,19 +341,3 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
-
-/**
-* Returns the metrics for the subsystem.
-*
-* This can be overriden on subtypes for variables that could affect tick usage
-* Example: ATs on SSair
-*/
-
-/datum/controller/subsystem/proc/get_metrics()
-	SHOULD_CALL_PARENT(TRUE)
-	var/list/out = list()
-	out["relation_id_SS"] = "[ss_id]-[time_stamp()]-[rand(100, 10000)]" // since we insert custom into its own table we want to add a relational id to fetch from the custom data and the subsystem
-	out["cost"] = cost
-	out["tick_usage"] = tick_usage
-	out["custom"] = list() // Override as needed on child
-	return out

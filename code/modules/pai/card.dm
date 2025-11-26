@@ -14,12 +14,19 @@
 
 	/// Spam alert prevention
 	var/alert_cooldown
-	/// The emotion icon displayed.
-	var/emotion_icon = "off"
+	/// The icon displayed on the card's screen.
+	var/datum/pai_screen_image/screen_image = /datum/pai_screen_image/off
 	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
+
+/obj/item/pai_card/Initialize(mapload)
+	. = ..()
+
+	update_appearance()
+	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
@@ -60,14 +67,13 @@
 /obj/item/pai_card/handle_atom_del(atom/thing)
 	if(thing == pai) //double check /mob/living/silicon/pai/Destroy() if you change these.
 		pai = null
-		emotion_icon = initial(emotion_icon)
+		screen_image = initial(screen_image)
 		update_appearance()
 	return ..()
 
-/obj/item/pai_card/Initialize(mapload)
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	update_appearance()
-	SSpai.pai_card_list += src
+	return pai?.on_saboteur(source, disrupt_duration)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!"))
@@ -75,13 +81,13 @@
 
 /obj/item/pai_card/update_overlays()
 	. = ..()
-	. += "pai-[emotion_icon]"
+	. += image(icon = screen_image.icon, icon_state = screen_image.icon_state)
 	if(pai?.hacking_cable)
 		. += "[initial(icon_state)]-connector"
 
 /obj/item/pai_card/vv_edit_var(vname, vval)
 	. = ..()
-	if(vname == NAMEOF(src, emotion_icon))
+	if(vname == NAMEOF(src, screen_image))
 		update_appearance()
 
 /obj/item/pai_card/ui_interact(mob/user, datum/tgui/ui)
@@ -195,7 +201,7 @@
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
 	new_pai.real_name = new_pai.name
-	new_pai.key = candidate.ckey
+	new_pai.PossessByPlayer(candidate.ckey)
 	set_personality(new_pai)
 	SSpai.candidates -= ckey
 	return TRUE
@@ -220,8 +226,18 @@
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	balloon_alert(user, "pAI assistance requested")
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
-	notify_ghosts("[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.", source = user, alert_overlay = alert_overlay, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "pAI Request!", ignore_key = POLL_IGNORE_PAI)
-	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_DELETE_ME)
+
+	notify_ghosts(
+		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
+		source = user,
+		alert_overlay = alert_overlay,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "pAI Request!",
+		ignore_key = POLL_IGNORE_PAI,
+	)
+
+	addtimer(VARSET_CALLBACK(src, request_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE | TIMER_DELETE_ME)
 	return TRUE
 
 /**
@@ -256,7 +272,7 @@
 	if(pai)
 		return FALSE
 	pai = downloaded
-	emotion_icon = "null"
+	screen_image = /datum/pai_screen_image/neutral
 	update_appearance()
 	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("[src] plays a cheerful startup noise!")

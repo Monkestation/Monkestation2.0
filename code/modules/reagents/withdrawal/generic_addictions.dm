@@ -95,7 +95,7 @@
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+//	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type) // Monke disable, this has nothing to do with maintenance.
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
@@ -109,12 +109,14 @@
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	if(affected_human.gender == MALE)
 		to_chat(affected_human, span_warning("Your chin itches."))
-		affected_human.facial_hairstyle = "Beard (Full)"
-		affected_human.update_body_parts()
+		affected_human.set_facial_hairstyle("Beard (Full)", update = TRUE)
 	//Only like gross food
-	affected_human.dna?.species.liked_food = GROSS
-	affected_human.dna?.species.disliked_food = NONE
-	affected_human.dna?.species.toxic_food = ~GROSS
+	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes = GROSS
+	tongue.disliked_foodtypes = TOXIC
+	tongue.toxic_foodtypes = ~(GROSS | RAW | GORE | MEAT | BUGS | TOXIC | ALCOHOL)
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -146,12 +148,15 @@
 	if(!ishuman(affected_carbon))
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
-	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
-	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
-	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
+	//restore tongue's tastes
+	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
+		tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
+		tongue.toxic_foodtypes = initial(tongue.toxic_foodtypes)
 	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 	var/obj/item/organ/internal/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
-	eyes.refresh()
+	eyes?.refresh()
 
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
 /datum/addiction/medicine
@@ -286,3 +291,29 @@
 	affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
 	if(SPT_PROB(15, seconds_per_tick))
 		affected_carbon.emote("cough")
+
+
+//Coffee
+/datum/addiction/coffee
+	name = "coffee"
+	withdrawal_stage_messages = list("You feel a bit woozy...A cup of coffee would help", "You are getting rather drowsy", "Need...Coffee...")
+
+/datum/addiction/coffee/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.apply_status_effect(/datum/status_effect/woozy)
+
+/datum/addiction/coffee/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.apply_status_effect(/datum/status_effect/drowsiness)
+
+/datum/addiction/coffee/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.add_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
+	affected_carbon.add_movespeed_modifier(/datum/movespeed_modifier/stimulants)
+
+/datum/addiction/coffee/end_withdrawal(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.remove_status_effect(/datum/status_effect/woozy)
+	affected_carbon.remove_status_effect(/datum/status_effect/drowsiness)
+	affected_carbon.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
+	affected_carbon.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)

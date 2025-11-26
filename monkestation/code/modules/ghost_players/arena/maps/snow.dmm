@@ -3,7 +3,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/turf/open/floor/plating/snowed/smoothed/arena,
 /area/centcom/tdome/arena/actual)
 "cc" = (
 /obj/structure/fermenting_barrel{
@@ -19,12 +19,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "go" = (
 /obj/structure/dresser,
@@ -45,9 +45,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "ix" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -67,7 +65,7 @@
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
-/turf/open/space/basic,
+/turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "lO" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -104,7 +102,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "pD" = (
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/turf/open/floor/plating/snowed/smoothed/arena,
 /area/centcom/tdome/arena/actual)
 "pQ" = (
 /obj/structure/chair/wood{
@@ -138,21 +136,19 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "va" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "vl" = (
 /obj/structure/fence,
@@ -166,9 +162,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "zi" = (
 /obj/structure/bookcase/random/fiction,
@@ -191,7 +185,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/turf/open/floor/plating/snowed/smoothed/arena,
 /area/centcom/tdome/arena/actual)
 "ET" = (
 /obj/structure/flora/tree/stump{
@@ -205,9 +199,7 @@
 "Fh" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "FF" = (
 /obj/structure/chair/wood{
@@ -247,7 +239,7 @@
 "NA" = (
 /obj/structure/window/reinforced/fulltile/ice,
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/space/basic,
+/turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "Pb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -258,12 +250,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/obj/machinery/hydroponics/soil{
+/obj/machinery/growing/soil{
 	pixel_y = 7;
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "RD" = (
 /obj/structure/fluff/fokoff_sign,
@@ -275,7 +267,7 @@
 /area/centcom/tdome/arena/actual)
 "Tr" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/turf/open/floor/plating/snowed/smoothed/arena,
 /area/centcom/tdome/arena/actual)
 "Ty" = (
 /obj/item/wallframe/picture{
@@ -284,7 +276,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "Vj" = (
-/obj/item/storage/book/bible{
+/obj/item/book/bible{
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
@@ -297,17 +289,13 @@
 /area/centcom/tdome/arena/actual)
 "Xt" = (
 /obj/structure/fireplace,
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "ZN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 
 (1,1,1) = {"

@@ -9,14 +9,14 @@
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
-/// wanted, released, parroled, security status
+/// wanted, released, paroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// mindshield implant
 #define IMPLOYAL_HUD "5"
-/// chemical implant
-#define IMPCHEM_HUD "6"
-/// tracking implant
-#define IMPTRACK_HUD "7"
+/// first security implant
+#define IMPSEC_FIRST_HUD "6"
+/// second security implant
+#define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
 /// Silicon health bar
@@ -35,21 +35,28 @@
 #define DIAG_PATH_HUD "15"
 /// Gland indicators for abductors
 #define GLAND_HUD "16"
-#define SENTIENT_DISEASE_HUD "17"
-#define AI_DETECT_HUD "18"
+#define AI_DETECT_HUD "17"
 /// Displays launchpads' targeting reticle
-#define DIAG_LAUNCHPAD_HUD "19"
+#define DIAG_LAUNCHPAD_HUD "18"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD "20"
+#define ANTAG_HUD "19"
 // for fans to identify pins
-#define FAN_HUD "21"
+#define FAN_HUD "20"
 /// Mech camera HUD
-#define DIAG_CAMERA_HUD "22"
+#define DIAG_CAMERA_HUD "21"
 
-#define NANITE_HUD "23"
-#define DIAG_NANITE_FULL_HUD "24"
+//monkestation edit start
+#define NANITE_HUD "22"
+#define DIAG_NANITE_FULL_HUD "23"
 // for gun permit
-#define PERMIT_HUD "25"
+#define PERMIT_HUD "24"
+// for implants to let you see sensor field
+#define SENSOR_HUD	"25"
+// for silicons to know if you're crew
+#define CREW_HUD "26"
+/// Hud for spying who already has a host as a borer
+#define BORER_HUD "27"
+//monkestation edit end
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -64,10 +71,12 @@
 #define DATA_HUD_DIAGNOSTIC_BASIC 5
 #define DATA_HUD_DIAGNOSTIC_ADVANCED 6
 #define DATA_HUD_ABDUCTOR 7
-#define DATA_HUD_SENTIENT_DISEASE 8
-#define DATA_HUD_AI_DETECT 9
-#define DATA_HUD_FAN 10
-#define DATA_HUD_PERMIT 11
+#define DATA_HUD_AI_DETECT 8
+#define DATA_HUD_FAN 9
+#define DATA_HUD_PERMIT 10 //monkestation edit
+#define DATA_HUD_SENSORS 11 //monkestation edit
+#define DATA_HUD_CREW 12 //monkestation edit
+#define DATA_HUD_BORER 13
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
@@ -84,12 +93,16 @@
 #define SECHUD_UNKNOWN "hudunknown"
 #define SECHUD_CENTCOM "hudcentcom"
 #define SECHUD_SYNDICATE "hudsyndicate"
+#define SECHUD_SYNDICATE_INTERDYNE "hudsyndicateinterdyne"
+#define SECHUD_SYNDICATE_INTERDYNE_HEAD "hudsyndicateinterdynehead"
 
 #define SECHUD_ASSISTANT "hudassistant"
+#define SECHUD_BRIDGEASSISTANT "hudbridgeassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BITRUNNER "hudbitrunner"
 #define SECHUD_BOTANIST "hudbotanist"
+#define SECHUD_BRIG_PHYSICIAN "hudbrigphysician"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
 #define SECHUD_CHAPLAIN "hudchaplain"

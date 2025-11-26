@@ -1,13 +1,6 @@
+// Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
 	item_flags = NEEDS_PERMIT
-
-/obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
-		target.visible_message(span_danger("[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
-					span_userdanger("You block the attack!"))
-		user.Stun(40)
-		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -20,7 +13,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	force = 10
+	force = 1
+	pain_damage = 12
 	throwforce = 7
 	demolition_mod = 0.25
 	wound_bonus = 15
@@ -29,7 +23,7 @@
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	custom_materials = list(/datum/material/iron = 1000)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -69,7 +63,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	force = 15
+	force = 20 // MONKESTATION EDIT ORG 15
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
@@ -78,10 +72,11 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
+	block_sound = 'sound/weapons/parry.ogg'
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	custom_materials = list(/datum/material/iron = 1000)
-	wound_bonus = 10
-	bare_wound_bonus = 25
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	wound_bonus = 5 // MONKESTATION EDIT ORG 10
+	bare_wound_bonus = 20 // MONKESTATION EDIT ORG 25
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
@@ -98,12 +93,12 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
+	var/obj/item/storage/belt/sabre/sabre = container.real_location
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
+	var/obj/item/storage/belt/sabre/sabre = container.real_location
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 
@@ -166,15 +161,18 @@
 	throwforce = 10
 	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
-	armour_penetration = 65
+	armour_penetration = 100
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/melee/beesword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
+
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, click_parameters)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
@@ -222,20 +220,24 @@
 		if(!isspaceturf(turf))
 			consume_turf(turf)
 
-/obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/supermatter_sword/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if(user && target == user)
-		user.dropItemToGround(src)
-	if(proximity_flag)
-		consume_everything(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+	if(.)
+		return .
+
+	if(A == user)
+		user.dropItemToGround(src, TRUE)
+	else
+		user.do_attack_animation(A)
+	consume_everything(A)
+	return TRUE
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(ismob(hit_atom))
 		var/mob/mob = hit_atom
 		if(src.loc == mob)
-			mob.dropItemToGround(src)
+			mob.dropItemToGround(src, TRUE)
 	consume_everything(hit_atom)
 
 /obj/item/melee/supermatter_sword/pickup(user)
@@ -291,30 +293,6 @@
 	)
 	shard.Bump(turf)
 
-/obj/item/melee/curator_whip
-	name = "curator's whip"
-	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
-	icon = 'icons/obj/weapons/whip.dmi'
-	icon_state = "whip"
-	inhand_icon_state = "chain"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	worn_icon_state = "whip"
-	slot_flags = ITEM_SLOT_BELT
-	force = 15
-	demolition_mod = 0.25
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
-	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/weapons/whip.ogg'
-
-/obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(ishuman(target) && proximity_flag)
-		var/mob/living/carbon/human/human_target = target
-		human_target.drop_all_held_items()
-		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
-
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
@@ -329,16 +307,20 @@
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
 	/// The sausage attatched to our stick.
-	var/obj/item/food/sausage/held_sausage
+	var/obj/item/held_sausage
 	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
+	// Static list of things we can put on our roasting stick
+	var/static/list/roastables
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
 
 /obj/item/melee/roastingstick/Initialize(mapload)
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/machinery/power/shuttle_engine/propulsion))
+	if (!roastables)
+		roastables = typecacheof(list(/obj/item/food, /obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/toy/plush))
 	AddComponent( \
 		/datum/component/transforming, \
 		hitsound_on = hitsound, \
@@ -376,12 +358,15 @@
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
-	if (istype(target, /obj/item/food/sausage))
+	if (is_type_in_typecache(target, roastables))
 		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
 			to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
+			return
+		if (HAS_TRAIT(target, TRAIT_NODROP) || (target.resistance_flags & INDESTRUCTIBLE))
+			to_chat(user, span_warning("You don't feel it would be wise to put [target] on [src]..."))
 			return
 		if (user.transferItemToLoc(target, src))
 			held_sausage = target
@@ -390,51 +375,93 @@
 	update_appearance()
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
-	..()
-	if (held_sausage)
+	if (held_sausage && loc == user && user.is_holding(src))
 		user.put_in_hands(held_sausage)
 		held_sausage = null
-	update_appearance()
+		update_appearance()
+		return
+	..()
 
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
 	if(held_sausage)
-		. += mutable_appearance(icon, "roastingstick_sausage")
+		//. += mutable_appearance(icon, "roastingstick_sausage")
+		var/mutable_appearance/roastableicon = mutable_appearance(held_sausage.icon,held_sausage.icon_state)
+		roastableicon.copy_overlays(held_sausage)
+		roastableicon.transform = roastableicon.transform.Turn(45)
+		roastableicon.transform = roastableicon.transform.Translate(14, 14)
+		roastableicon.transform = roastableicon.transform.Scale(0.8, 0.8)
+		roastableicon.color = held_sausage.color
+		. += roastableicon
 
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
 	if (target == held_sausage)
 		held_sausage = null
 		update_appearance()
 
-/obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
-	. = ..()
+/obj/item/melee/roastingstick/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return
-	if (!is_type_in_typecache(target, ovens))
-		return
-	if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
-		to_chat(user, span_notice("You send [held_sausage] towards [target]."))
+		return NONE
+	if (!is_type_in_typecache(interacting_with, ovens))
+		return NONE
+	if ((istype(interacting_with, /obj/singularity) || istype(interacting_with, /obj/energy_ball)) && get_dist(user, interacting_with) < 10)
+		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
 		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-		beam = user.Beam(target, icon_state = "rped_upgrade", time = 10 SECONDS)
-	else if (user.Adjacent(target))
-		to_chat(user, span_notice("You extend [src] towards [target]."))
-		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	else
-		return
-	finish_roasting(user, target)
+		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
+		finish_roasting(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
-		to_chat(user, span_notice("You finish roasting [held_sausage]."))
-		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
-		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
-		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
-		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
-		update_appearance()
-	else
+/obj/item/melee/roastingstick/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return NONE
+	if (!is_type_in_typecache(interacting_with, ovens))
+		return NONE
+	to_chat(user, span_notice("You extend [src] towards [interacting_with]."))
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	finish_roasting(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/melee/roastingstick/proc/finish_roasting(mob/user, atom/target)
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_ROASTING_STICK))
+		return
+	if(!do_after(user, 10 SECONDS, target = user, interaction_key = DOAFTER_SOURCE_ROASTING_STICK) || !held_sausage)
 		QDEL_NULL(beam)
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		to_chat(user, span_notice("You put [src] away."))
+		return
+
+	if(istype(held_sausage, /obj/item/gun))
+		var/obj/item/gun/roastedgun = held_sausage
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+			to_chat(user, span_warning("You feel like \the [roastedgun] on [src] might accidentally hurt someone and put it away."))
+			return
+		if(roastedgun.can_shoot())
+			to_chat(user, span_warning("\The [roastedgun] suddenly fires off a shot."))
+			INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
+	if(IS_EDIBLE(held_sausage))
+		var/datum/component/grillable/grill_comp = held_sausage.GetComponent(/datum/component/grillable)
+		if(grill_comp?.positive_result)
+			grill_comp.current_cook_time += 10 SECONDS
+			if(grill_comp.current_cook_time >= grill_comp.required_cook_time)
+				var/atom/grilled_result = new grill_comp.cook_result(held_sausage.loc)
+				if(held_sausage.custom_materials)
+					grilled_result.set_custom_materials(held_sausage.custom_materials)
+				if(IS_EDIBLE(grilled_result))
+					BLACKBOX_LOG_FOOD_MADE(grilled_result)
+				if(user.mind)
+					ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+				qdel(held_sausage)
+				held_sausage = grilled_result
+		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
+		held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
+	to_chat(user, span_notice("You finish roasting [held_sausage]."))
+	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+	held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
+	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
+	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+	update_appearance()
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
@@ -451,12 +478,13 @@
 	greyscale_colors = "#FFFFFF"
 
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
-	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
-	armour_penetration = 50
+	block_sound = 'sound/weapons/genhit.ogg'
+	armour_penetration = 75
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

@@ -360,6 +360,35 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if (target)
 			return target
 
+///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
+/proc/get_safe_random_station_turf_equal_weight()
+	// Big list of departments, each with lists of each area subtype.
+	var/static/list/department_areas
+	if(isnull(department_areas))
+		department_areas = list(
+				subtypesof(/area/station/engineering), \
+				subtypesof(/area/station/medical), \
+				subtypesof(/area/station/science), \
+				subtypesof(/area/station/security), \
+				subtypesof(/area/station/service), \
+				subtypesof(/area/station/command), \
+				subtypesof(/area/station/hallway), \
+				subtypesof(/area/station/ai_monitored), \
+				subtypesof(/area/station/cargo)
+			)
+
+	var/list/area/final_department = pick(department_areas) // Pick a department
+	var/list/area/final_area_list = list()
+
+	for(var/area/checked_area as anything in final_department) // Check each area to make sure it exists on the station
+		if(checked_area in GLOB.the_station_areas)
+			final_area_list += checked_area
+
+	if(!length(final_area_list)) // Failsafe
+		return get_safe_random_station_turf()
+
+	return get_safe_random_station_turf(final_area_list)
+
 /**
  * Checks whether the target turf is in a valid state to accept a directional construction
  * such as windows or railings.
@@ -399,3 +428,48 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(locate(type_to_find) in location)
 		return TRUE
 	return FALSE
+
+/**
+ * get_blueprint_data
+ * Gets a list of turfs around a central turf and gets the blueprint data in a list
+ * Args:
+ * - central_turf: The center turf we're getting data from.
+ * - viewsize: The viewsize we're getting the turfs around central_turf of.
+ */
+/proc/get_blueprint_data(turf/central_turf, viewsize)
+	var/list/blueprint_data_returned = list()
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			blueprint_data_returned += nearby_turf.blueprint_data
+	return blueprint_data_returned
+
+/proc/noise_turfs_from_zs(z_levels, radius)
+	. = list()
+	if(!islist(z_levels))
+		z_levels = list(z_levels)
+	for(var/z in z_levels)
+		var/list/points = poisson_noise(world.maxx, world.maxy, radius)
+		for(var/list/point as anything in points)
+			var/turf/turf = locate(point[1], point[2], z)
+			if(turf)
+				. += turf
+
+/proc/noise_turfs_station_equal_weight(radius, list/area_blacklist_typecache)
+	var/list/filtered_points = list()
+	var/list/station_areas = GLOB.the_station_areas
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/list/points = poisson_noise(world.maxx, world.maxy, radius)
+		for(var/list/point as anything in points)
+			var/turf/turf = locate(point[1], point[2], z)
+			if(!turf)
+				continue
+			var/area/turf_area = get_area(turf)
+			if(!turf_area || !(turf_area.type in station_areas) || !(turf_area.area_flags & VALID_TERRITORY) || (area_blacklist_typecache && is_type_in_typecache(turf_area, area_blacklist_typecache)))
+				continue
+			// we'll just assume that each department has its own wires for now
+			var/area_subtype = turf_area.airlock_wires || /datum/wires/airlock
+			LAZYADD(filtered_points[area_subtype], turf)
+	return flatten_list(filtered_points)

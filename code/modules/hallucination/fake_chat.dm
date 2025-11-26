@@ -32,7 +32,12 @@
 		for(var/datum/mind/crew_mind in get_crewmember_minds())
 			if(crew_mind.current)
 				humans += crew_mind.current
+		if(!length(humans))
+			return FALSE
 		speaker = pick(humans)
+
+	if(!speaker)
+		return FALSE
 
 	// Time to generate a message.
 	// Spans of our message

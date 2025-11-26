@@ -44,11 +44,15 @@
 		if(OOC_CHANNEL)
 			client.ooc(entry)
 			return TRUE
+		if(LOOC_CHANNEL)
+			client.looc(entry)
+			return TRUE
 		if(ADMIN_CHANNEL)
-			client.cmd_admin_say(entry)
+			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, entry)
 			return TRUE
 		if(MENTOR_CHANNEL)
-			client.cmd_mentor_say(entry)
+			SSadmin_verbs.dynamic_invoke_mentor_verb(client, /datum/mentor_verb/cmd_mentor_say, entry)
+			return TRUE
 	return FALSE
 
 /**
@@ -91,7 +95,7 @@
 		return TRUE
 	if(type == "force")
 		var/target_channel = payload["channel"]
-		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL)
+		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL || target_channel == LOOC_CHANNEL) // monkestation: add looc
 			target_channel = SAY_CHANNEL // No ooc leaks
 		delegate_speech(alter_entry(payload), target_channel)
 		return TRUE

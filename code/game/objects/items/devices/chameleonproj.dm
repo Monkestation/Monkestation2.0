@@ -36,28 +36,38 @@
 	else
 		to_chat(user, span_warning("You can't use [src] while inside something!"))
 
-/obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_copy(interacting_with) || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	make_copy(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_copy(interacting_with)) // RMB scan works on storage items, LMB scan does not
+		return NONE
+	make_copy(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/chameleon/proc/can_copy(atom/target)
 	if(!check_sprite(target))
-		return
+		return FALSE
 	if(active_dummy)//I now present you the blackli(f)st
-		return
+		return FALSE
 	if(isturf(target))
-		return
+		return FALSE
 	if(ismob(target))
-		return
+		return FALSE
 	if(istype(target, /obj/structure/falsewall))
-		return
+		return FALSE
 	if(target.alpha != 255)
-		return
+		return FALSE
 	if(target.invisibility != 0)
-		return
-	if(iseffect(target))
-		if(!(istype(target, /obj/effect/decal))) //be a footprint
-			return
+		return FALSE
+	if(iseffect(target) && !istype(target, /obj/effect/decal)) //be a footprint
+		return FALSE
+	return TRUE
+
+/obj/item/chameleon/proc/make_copy(atom/target, mob/user)
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()
@@ -67,9 +77,7 @@
 	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)
-	if(target.icon_state in icon_states(target.icon))
-		return TRUE
-	return FALSE
+	return icon_exists(target.icon, target.icon_state)
 
 /obj/item/chameleon/proc/toggle(mob/user)
 	if(!can_use || !saved_appearance)
@@ -137,8 +145,6 @@
 /obj/effect/dummy/chameleon/attack_animal(mob/user, list/modifiers)
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/attack_slime(mob/user, list/modifiers)
-	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_alien(mob/user, list/modifiers)
 	master.disrupt()
@@ -154,22 +160,10 @@
 	if(!isturf(loc) || isspaceturf(loc) || !direction)
 		return //No magical movement! Trust me, this bad boy can do things like leap out of pipes if you're not careful
 
-	if(can_move < world.time)
-		var/amount
-		switch(user.bodytemperature)
-			if(300 to INFINITY)
-				amount = 10
-			if(295 to 300)
-				amount = 13
-			if(280 to 295)
-				amount = 16
-			if(260 to 280)
-				amount = 20
-			else
-				amount = 25
-
-		can_move = world.time + amount
-		try_step_multiz(direction)
+	if(can_move >= world.time)
+		return
+	can_move = world.time + 2 + (user.cached_multiplicative_slowdown * 4) // Fake movement speed calculating based on the mob's move speed
+	try_step_multiz(direction)
 	return
 
 /obj/effect/dummy/chameleon/Destroy()

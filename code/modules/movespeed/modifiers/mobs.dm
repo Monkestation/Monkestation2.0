@@ -27,9 +27,13 @@
 	movetypes = FLYING
 	variable = TRUE
 
+/// Movespeed modifier applied by worn equipment.
 /datum/movespeed_modifier/equipment_speedmod
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
+
+/// Movespeed modifier applied by immutably slow worn equipment. Should never be ignored, because that's the point.
+/datum/movespeed_modifier/equipment_speedmod/immutable
 
 /datum/movespeed_modifier/grab_slowdown
 	id = MOVESPEED_ID_MOB_GRAB_STATE
@@ -93,6 +97,7 @@
 	variable = TRUE
 	movetypes = GROUND
 	flags = IGNORE_NOSLOW
+	blacklisted_movetypes = FLOATING|FLYING // monkestation addition
 
 /datum/movespeed_modifier/simplemob_varspeed
 	variable = TRUE
@@ -168,3 +173,6 @@
 
 /datum/movespeed_modifier/basilisk_overheat
 	multiplicative_slowdown = -18
+
+/datum/movespeed_modifier/magic_ties
+	multiplicative_slowdown = 0.5

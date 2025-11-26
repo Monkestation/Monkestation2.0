@@ -10,7 +10,7 @@
 		var/mob/living/ook = target
 		if(ishuman(ook))
 			var/mob/living/carbon/human/human_ook = target
-			human_ook.alternative_laughs += 'monkestation/sound/misc/ook_loves_cats.ogg'
+			LAZYADD(human_ook.alternative_laughs, 'monkestation/sound/misc/ook_loves_cats.ogg')
 
 			var/obj/item/organ/internal/ears/cat/new_ears = new
 			new_ears.replace_into(human_ook)

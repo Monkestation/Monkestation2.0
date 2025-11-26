@@ -18,13 +18,13 @@
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
-	if(!(rift_location.area_flags & VALID_TERRITORY))
-		to_chat(owner, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
+	if(!(rift_location in dragon.chosen_rift_areas))
+		owner.balloon_alert(owner, "can't summon a rift here!")
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
-			to_chat(owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
+			owner.balloon_alert(owner, "already summoned a rift here!")
 			return
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
@@ -37,11 +37,16 @@
 		return
 	var/obj/structure/carp_rift/new_rift = new(get_turf(owner))
 	playsound(owner.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
-	dragon.riftTimer = -1
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
-	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
+	notify_ghosts(
+		"The Space Dragon has opened a rift!",
+		source = new_rift,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Carp Rift Opened",
+	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
@@ -64,7 +69,7 @@
 	light_color = LIGHT_COLOR_PURPLE
 	light_outer_range = 10
 	anchored = TRUE
-	density = FALSE
+	density = TRUE
 	plane = MASSIVE_OBJ_PLANE
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
@@ -77,11 +82,13 @@
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
 	/// The interval for adding additional space carp spawns to the rift.
-	var/carp_interval = 60
+	var/carp_interval = 45
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
 	var/list/ckey_list = list()
+	/// Gravity aura for the rift, makes all turfs nearby forced grav.
+	var/datum/proximity_monitor/advanced/gravity/warns_on_entrance/gravity_aura
 
 /datum/armor/structure_carp_rift
 	energy = 100
@@ -95,13 +102,24 @@
 
 	AddComponent( \
 		/datum/component/aura_healing, \
-		range = 0, \
+		range = 1, \
 		simple_heal = 5, \
 		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
 		healing_color = COLOR_BLUE, \
 	)
 
+	gravity_aura = new(
+		/* host = */src,
+		/* range = */15,
+		/* ignore_if_not_on_turf = */TRUE,
+		/* gravity = */1,
+	)
+
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/carp_rift/Destroy()
+	QDEL_NULL(gravity_aura)
+	return ..()
 
 // Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
 // and favours more weaker explosives to destroy the portal
@@ -173,7 +191,13 @@
 		if(light_color != LIGHT_COLOR_PURPLE)
 			set_light_color(LIGHT_COLOR_PURPLE)
 			update_light()
-		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
+		notify_ghosts(
+			"The carp rift can summon an additional carp!",
+			source = src,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Carp Spawn Available",
+		)
 		last_carp_inc -= carp_interval
 
 	// Is the rift now fully charged?
@@ -191,7 +215,6 @@
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			dragon.rift_ability = new()
 			dragon.rift_ability.Grant(dragon.owner.current)
-			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
 		return
@@ -227,16 +250,17 @@
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
 
-	if(!dragon)
+	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
 	newcarp.faction = dragon.owner.current.faction
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+	dragon.wavespeak?.link_mob(newcarp)
 
 	if(!is_listed)
 		ckey_list += user.ckey
-	newcarp.key = user.key
+	newcarp.PossessByPlayer(user.key)
 	newcarp.set_name()
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)

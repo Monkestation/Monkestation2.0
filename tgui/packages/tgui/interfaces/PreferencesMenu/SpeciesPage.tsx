@@ -1,8 +1,24 @@
 import { classes } from 'common/react';
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Icon, Section, Stack, Tooltip } from '../../components';
+import {
+  Box,
+  BlockQuote,
+  Button,
+  Divider,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
-import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from './data';
+import {
+  createSetPreference,
+  Food,
+  Perk,
+  PreferencesMenuData,
+  ServerData,
+  Species,
+} from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const FOOD_ICONS = {
@@ -82,7 +98,8 @@ const FoodList = (props: {
               .join(', ')}
           </Box>
         </Box>
-      }>
+      }
+    >
       <Stack ml={2}>
         {props.food.map((food) => {
           return (
@@ -154,7 +171,8 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           <Divider />
           <Box>{perk.description}</Box>
         </Box>
-      }>
+      }
+    >
       <Box class={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
@@ -212,20 +230,17 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
   );
 };
 
-const SpeciesPageInner = (
-  props: {
-    handleClose: () => void;
-    species: ServerData['species'];
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const SpeciesPageInner = (props: {
+  handleClose: () => void;
+  species: ServerData['species'];
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const setSpecies = createSetPreference(act, 'species');
 
   let species: [string, Species][] = Object.entries(props.species).map(
     ([species, data]) => {
       return [species, data];
-    }
+    },
   );
 
   // Humans are always the top of the list
@@ -265,7 +280,8 @@ const SpeciesPageInner = (
                       display: 'block',
                       height: '64px',
                       width: '64px',
-                    }}>
+                    }}
+                  >
                     <Box
                       className={classes(['species64x64', species.icon])}
                       ml={-1}
@@ -289,7 +305,8 @@ const SpeciesPageInner = (
                         currentSpecies.diet && (
                           <Diet diet={currentSpecies.diet} />
                         )
-                      }>
+                      }
+                    >
                       <Section title="Description">
                         {currentSpecies.desc}
                       </Section>
@@ -307,6 +324,23 @@ const SpeciesPageInner = (
                     />
                   </Stack.Item>
                 </Stack>
+              </Box>
+              <Box mt={1}>
+                <Section title="Lore">
+                  <BlockQuote>
+                    {currentSpecies.lore.map((text, index) => (
+                      <Box key={index} maxWidth="100%">
+                        {text}
+                        {index !== currentSpecies.lore.length - 1 && (
+                          <>
+                            <br />
+                            <br />
+                          </>
+                        )}
+                      </Box>
+                    ))}
+                  </BlockQuote>
+                </Section>
               </Box>
             </Box>
           </Stack.Item>

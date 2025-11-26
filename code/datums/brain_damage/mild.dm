@@ -134,6 +134,8 @@
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
+	for(var/obj/item/cane/cane in owner.held_items) // crutches will lessen the chance of you falling.
+		fall_chance /= 2
 	if(SPT_PROB(0.5 * fall_chance, seconds_per_tick) && owner.body_position == STANDING_UP)
 		to_chat(owner, span_warning("Your leg gives out!"))
 		owner.Paralyze(35)
@@ -190,42 +192,40 @@
 	gain_text = span_warning("You lose your grasp on complex words.")
 	lose_text = span_notice("You feel your vocabulary returning to normal again.")
 
-	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
-
 /datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
-		var/list/message_split = splittext(message, " ")
+		var/list/message_split = splittext_char(message, " ")
 		var/list/new_message = list()
 
 		for(var/word in message_split)
 			var/suffix = ""
 			var/suffix_foundon = 0
 			for(var/potential_suffix in list("." , "," , ";" , "!" , ":" , "?"))
-				suffix_foundon = findtext(word, potential_suffix, -length(potential_suffix))
+				suffix_foundon = findtext_char(word, potential_suffix, -length(potential_suffix))
 				if(suffix_foundon)
 					suffix = potential_suffix
 					break
 
 			if(suffix_foundon)
-				word = copytext(word, 1, suffix_foundon)
+				word = copytext_char(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(lowertext(word) in common_words)
+			if(GLOB.most_common_words[LOWER_TEXT(word)])
 				new_message += word + suffix
 			else
-				if(prob(30) && message_split.len > 2)
+				if(prob(30) && length(message_split) > 2)
 					new_message += pick("uh","erm")
 					break
 				else
 					var/list/charlist = text2charlist(word)
-					charlist.len = round(charlist.len * 0.5, 1)
+					charlist.len = round(length(charlist) * 0.5, 1)
 					shuffle_inplace(charlist)
 					new_message += jointext(charlist, "") + suffix
 
 		message = jointext(new_message, " ")
 
-	speech_args[SPEECH_MESSAGE] = trim(message)
+	speech_args[SPEECH_MESSAGE] = trimtext(message)
 
 /datum/brain_trauma/mild/mind_echo
 	name = "Mind Echo"
@@ -240,13 +240,13 @@
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
 
-	if(hear_dejavu.len >= 5)
+	if(length(hear_dejavu) >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(hear_dejavu)
 			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
 			hearing_args[HEARING_RAW_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_RAW_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
 			return
-	if(hear_dejavu.len >= 15)
+	if(length(hear_dejavu) >= 15)
 		if(prob(50))
 			popleft(hear_dejavu) //Remove the oldest
 			hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
@@ -254,14 +254,96 @@
 		hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
 
 /datum/brain_trauma/mild/mind_echo/handle_speech(datum/source, list/speech_args)
-	if(speak_dejavu.len >= 5)
+	if(length(speak_dejavu) >= 5)
 		if(prob(25))
 			var/deja_vu = pick_n_take(speak_dejavu)
 			speech_args[SPEECH_MESSAGE] = deja_vu
 			return
-	if(speak_dejavu.len >= 15)
+	if(length(speak_dejavu) >= 15)
 		if(prob(50))
 			popleft(speak_dejavu) //Remove the oldest
 			speak_dejavu += speech_args[SPEECH_MESSAGE]
 	else
 		speak_dejavu += speech_args[SPEECH_MESSAGE]
+
+/datum/brain_trauma/mild/color_blindness
+	name = "Achromatopsia"
+	desc = "Patient's occipital lobe is unable to recognize and interpret color, rendering the patient completely colorblind."
+	scan_desc = "colorblindness"
+	gain_text = span_warning("The world around you seems to lose its color.")
+	lose_text = span_notice("The world feels bright and colorful again.")
+
+/datum/brain_trauma/mild/color_blindness/on_gain()
+	owner.add_client_colour(/datum/client_colour/monochrome/colorblind)
+	return ..()
+
+/datum/brain_trauma/mild/color_blindness/on_lose(silent)
+	owner.remove_client_colour(/datum/client_colour/monochrome/colorblind)
+	return ..()
+
+/datum/brain_trauma/mild/possessive
+	name = "Possessive"
+	desc = "Patient is extremely possessive of their belongings."
+	scan_desc = "possessiveness"
+	gain_text = span_warning("You start to worry about your belongings.")
+	lose_text = span_notice("You worry less about your belongings.")
+
+/datum/brain_trauma/mild/possessive/on_lose(silent)
+	. = ..()
+	for(var/obj/item/thing in owner.held_items)
+		clear_trait(thing)
+
+/datum/brain_trauma/mild/possessive/on_life(seconds_per_tick, times_fired)
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+
+	var/obj/item/my_thing = pick(owner.held_items) // can pick null, that's fine
+	if(isnull(my_thing) || HAS_TRAIT(my_thing, TRAIT_NODROP) || (my_thing.item_flags & (HAND_ITEM|ABSTRACT)))
+		return
+
+	ADD_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
+	RegisterSignals(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), PROC_REF(clear_trait))
+	to_chat(owner, span_warning("You feel a need to keep [my_thing] close..."))
+	addtimer(CALLBACK(src, PROC_REF(relax), my_thing), rand(30 SECONDS, 3 MINUTES), TIMER_DELETE_ME)
+	//MONKESTATION ADDITION START - Adds logging to possessive
+	owner.log_message(
+		"became possessive of [my_thing]",
+		LOG_ATTACK,
+		color = "orange"
+	)
+	//MONKESTATION ADDITION END
+
+/datum/brain_trauma/mild/possessive/proc/relax(obj/item/my_thing)
+	if(QDELETED(my_thing))
+		return
+	if(HAS_TRAIT_FROM_ONLY(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)) // in case something else adds nodrop, somehow?
+		to_chat(owner, span_notice("You feel more comfortable letting go of [my_thing]."))
+	clear_trait(my_thing)
+
+/datum/brain_trauma/mild/possessive/proc/clear_trait(obj/item/my_thing, ...)
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(my_thing, TRAIT_NODROP, TRAUMA_TRAIT)
+	UnregisterSignal(my_thing, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED))
+	//MONKESTATION ADDITION START - Adds logging to possessive
+	owner.log_message(
+		"is no longer possessive of [my_thing]",
+		LOG_ATTACK,
+		color = "orange",
+	)
+	//MONKESTATION ADDITION END
+
+/datum/brain_trauma/mild/advert_force_speak
+	name = "Advertisement Echolalia"
+	desc = "Patient has an unsuppressible impulse to repeat consumeristic slogans."
+	scan_desc = "advertisement echolalia"
+	gain_text = span_warning("You feel the need to mimic advertisements.")
+	lose_text = span_notice("You no longer feel the need to mimic advertisements.")
+
+/datum/brain_trauma/mild/advert_force_speak/on_gain()
+	src.owner.AddComponentFrom(REF(src), /datum/component/advert_force_speak, rand(1 MINUTE))
+	return ..()
+
+/datum/brain_trauma/mild/advert_force_speak/on_lose(silent)
+	src.owner.RemoveComponentSource(REF(src), /datum/component/advert_force_speak)
+	return ..()

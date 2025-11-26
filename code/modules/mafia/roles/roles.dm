@@ -40,9 +40,9 @@
 		role_unique_actions += new abilities(game, src)
 		role_unique_actions -= abilities
 
-/datum/mafia_role/Destroy(force, ...)
+/datum/mafia_role/Destroy(force)
 	QDEL_NULL(body)
-	QDEL_NULL(role_unique_actions)
+	QDEL_LIST(role_unique_actions)
 	return ..()
 
 /**

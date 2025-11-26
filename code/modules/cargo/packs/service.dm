@@ -139,6 +139,14 @@
 				)
 	crate_name = "neon carpet crate"
 
+/datum/supply_pack/service/carpet_astral
+	name = "Astral Carpet Crate"
+	desc = "Beautiful carpets with a convincing star pattern. Contains 180 tiles."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/stack/tile/fakespace/sixty = 3)
+	crate_name = "astral carpet crate"
+	contraband = TRUE
+
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of \
@@ -187,7 +195,7 @@
 
 /// Box of 7 grey IDs.
 /datum/supply_pack/service/greyidbox
-	name = "Grey ID Card Multipack Cate"
+	name = "Grey ID Card Multipack Crate"
 	desc = "A convenient crate containing a box of seven cheap ID cards in a handy wallet-sized form factor. \
 		Cards come in every colour you can imagne, as long as it's grey."
 	cost = CARGO_CRATE_VALUE * 3
@@ -268,3 +276,12 @@
 	contains = list(/obj/machinery/coffeemaker/impressa)
 	crate_name = "coffeemaker crate"
 	crate_type = /obj/structure/closet/crate/large
+
+
+/// Spare bar sign wallmount
+/datum/supply_pack/service/bar_sign
+	name = "Bar Sign Replacement Kit"
+	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
+	cost = CARGO_CRATE_VALUE * 14
+	contains = list(/obj/item/wallframe/barsign/all_access)
+	crate_name = "bar sign crate"

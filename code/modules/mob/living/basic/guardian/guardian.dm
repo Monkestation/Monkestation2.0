@@ -14,6 +14,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	sentience_type = SENTIENCE_HUMANOID
 	hud_type = /datum/hud/guardian
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE) // Monkestation addition
 	faction = list()
 	speed = 0
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
@@ -38,7 +39,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_attack_cooldown = CLICK_CD_MELEE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_outer_range = 3
 	light_on = FALSE
 
@@ -136,7 +137,7 @@
 /mob/living/basic/guardian/proc/guardian_recolour()
 	if (isnull(client))
 		return
-	var/chosen_guardian_colour = input(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff") as color|null
+	var/chosen_guardian_colour = tgui_color_picker(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff")
 	if (isnull(chosen_guardian_colour)) //redo proc until we get a color
 		to_chat(src, span_warning("Invalid colour, please try again."))
 		return guardian_recolour()
@@ -196,7 +197,7 @@
 
 	return TRUE
 
-/mob/living/basic/guardian/gib()
+/mob/living/basic/guardian/gib(no_brain, no_organs, no_bodyparts, safe_gib = TRUE)
 	death(TRUE)
 
 /mob/living/basic/guardian/dust(just_ash, drop_items, force)

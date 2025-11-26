@@ -1,0 +1,615 @@
+2024-06-01:
+  Absolucy:
+  - bugfix: Fixed a runtime error (albeit a harmless one) relating to wooden barricades
+      being deconstructed.
+  - bugfix: Added a lot more sanity checking to liquid processing, which should make
+      it much harder for liquid processing to completely break.
+  Gboster-0:
+  - rscadd: the Rapid Pipe Dispenser was bumped up to modern TG, all fear the atmosian
+      powergame
+  KnigTheThrasher:
+  - rscadd: Reworked entire delta perma
+  - rscadd: Bitrunner dens in perma
+  - rscadd: Bitrunning is prisoners job now
+  - rscadd: Improved permabrig to actually fit 5 people (updated kitchen, botany and
+      stuff)
+  - rscdel: Removed bitrunners
+  - rscdel: Removed increased power consumption from upgrading parts
+  - config: bumped prisoner count to 5
+  Uristthedorf:
+  - bugfix: Speed related fixes from TG, including preventing adamantine armor slowdown
+      from being nullified.
+  - qol: Clones made in an experimental cloner that don't have a mind will be deleted.
+2024-06-02:
+  Gboster-0:
+  - rscadd: Meters can now be again placed on layers 1 and 5, thanks TG for removing
+      that originally
+  MichiRecRoom:
+  - qol: The Centcom Arena now accepts pacifists! Their pacifism will be removed for
+      the purposes of the fight.
+  - bugfix: The Arena will now properly take the wager from each person's pocket,
+      rather than twice from the first person's pocket.
+2024-06-04:
+  Absolucy:
+  - bugfix: Fixed the Mining Office APC not being wired on Meta.
+  - bugfix: Fixed some various runtime errors.
+  - qol: Shuttles will no longer show their current destination as a choice while
+      in transit.
+  - spellcheck: Adjusted font size from 30px to 15px.
+  - bugfix: Fixed a bug that would cause you to be unable to lean again if you tried
+      leaning while facing the wrong direction.
+  - balance: Supermatter zap power generation scales with the delta time between its
+      last zaps, preventing faster zapping from scaling power generation to extreme
+      levels.
+  - bugfix: Fixes supermatter zap rate not scaling properly. It should zap much faster
+      at higher energy levels as intended.
+  - qol: Changeling chemical generation scales with the world's delta time, making
+      its rate independent of subsystem lag.
+  - qol: Revenant essence generation scales with the world's delta time, making its
+      rate independent of subsystem lag.
+  - qol: Xenomorph plasma generation and resin healing scales with the world's delta
+      time, making their rates independent of subsystem lag.
+  - qol: The "Explosive Planted" alert for C4 actually shows the C4.
+  - bugfix: Now falsewalls visually don't close when they shouldn't.
+  - bugfix: Aheal now properly heals ear deafness.
+  - bugfix: The shuttle will no longer delete you while you are in jaunt.
+  - bugfix: You will now be ejected from Space Phase if you lose your focus or lose
+      consciousness somehow during the jaunt.
+  - bugfix: Fix a rare issue where a turf would remain permanently "elevated" if an
+      elevated object was initialized inside of a non-turf object.
+  - bugfix: Holodisk recording gives the right vfx again. Bonus, the rays work with
+      it now too!
+2024-06-05:
+  Absolucy:
+  - refactor: Tgui Say is rewritten, becoming "much more performant". Hey, that's
+      what it says on the tin! I'm not from marketing!
+  - bugfix: Tguisay drag zones are now ever so slightly larger around the corner of
+      the window.
+  - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
+      if it's already open.
+  - bugfix: Fix color selection in VV not working.
+  - rscdel: Removed the Supermatter Syndrome symptom.
+  - bugfix: Fixed a runtime error relating to viral extrapolators.
+  CannibalHunter:
+  - rscadd: Sandstone stool
+  - rscadd: Sandstone table
+  - rscadd: Sandstone sarcophagus
+  lmenvs:
+  - rscadd: Adds donator items for ellie. Thank you for your patronage!
+  - rscadd: Adds Pim, Glep and Mr. Frog plushes, complete with their own squeaks.  These
+      are all available to donators in the loadout.
+2024-06-06:
+  Absolucy:
+  - rscdel: Removed the doorjacking objective from ninjas.
+  - bugfix: Fixed some errors relating to oozeling revival balloon alerts.
+  - code_imp: Added a stack traces + fallback behavior for invalid usage of the `balloon_alert`
+      proc.
+  - bugfix: Fixed an error relating to Mythril.
+  Gboster-0:
+  - rscadd: The spraycan gun has cometh into existance, feed it with spraycans and
+      print it from an engineering or service protolathe
+2024-06-07:
+  AberrantQuerist Noodlecat Zestybastard:
+  - rscadd: Ethereals now use their blood as charge, and their stomach as a method
+      of recharge, instead of the stomach occupying the entire charge mechanic.
+  - rscadd: Ethereal Eyes
+  - rscadd: Ethereal Horns
+  - rscadd: Ethereal Tails
+  - bugfix: Ethereal meat no longer tastes like meat, as they are crystalline beings,
+      and now tastes like glass(mmm crunchy)
+  - bugfix: Ethereals now correctly turn grey after dying.
+  - image: New Sprites for ethereals
+  Absolucy:
+  - balance: Reduces the number of plant DNA samples needed to complete the DNA vault
+      to 8-15.
+  - bugfix: Fixed a weird body horror bug that could happen with guillotines, resulting
+      in a second, unremovable fake head.
+  - balance: Changeling blind stings no longer stack.
+  - config: Add a config that allows for overriding ruin template variables, for example,
+      forcing a space ruin to always spawn, changing its cost or weight, etc.
+  - qol: Curators can now rename their weapons with a pen.
+  - balance: Halves the amount of slime ooze needed for crossbreeds, except for regenerative
+      extracts.
+  - code_imp: Changed slime recipes to use defines for the required amount of ooze,
+      rather than hard-set numbers.
+  - bugfix: Fixed rare cases where a bloodsucker would be stuck in permanent torpor,
+      i.e if they were a species such as zombie or skeleton.
+  - bugfix: Fixed bloodsucker abilities such as Mesmerize spamming balloon alerts
+      after success.
+  - bugfix: Fixed various runtime errors relating to bloodsuckers.
+  - qol: rats no longer spawn on multiz cable hubs
+  - bugfix: Nametags should be far more consistent with the mob's actual name now.
+  - qol: Players now keep their name when turned into a gorilla.
+  - rscdel: Removes Advanced Tranquility, which is only intended for bitrunner stuff,
+      from the maint pill pool. Normal Tranquility is still available.
+  Absolucy, Aylong:
+  - qol: General settings tab into TGchat, looks better now, and is more convenient
+      to use. Also, each button has a font written on it.
+  - rscadd: Added Mute button into Chat Tabs settings, it disables tab unread counter.
+  - rscadd: Added Clear chat button into General settings, you can clear your dirty
+      chat like you did it before TGchat.
+  - bugfix: Case-sensitive highlighting now works properly.
+  - rscadd: Added an option to enable/disable individual chat highlights.
+  Absolucy, Melbert:
+  - qol: Wizard Spellbook is now alphabetized.
+  - qol: Wizard Spellbook now has a search bar!
+  Absolucy, Xander3359:
+  - qol: You can now open airlocks (That you have access to) while inside a stealth
+      implant box
+  Absolucy, grungussuss:
+  - qol: suit sensors can now be maxed by ctrl clicking your jumpsuit\
+  Absolucy, improvedname:
+  - qol: Arrivals shuttle is now more player friendly
+  DexeeXI:
+  - qol: Bounty Hunter Ships now require proper IDs to operate the doors. If Johnny
+      Greytide still somehow gets past this, one can expect them to be hung on MEAT
+      HOOKS!
+  - rscdel: Removed the ID console on Box
+  - rscdel: Removed a redundant console on Icebox.
+  MichiRecRoom:
+  - rscadd: 'Fax machines are now deconstructable in the same way as many other machines:
+      Screwdriver, then crowbar.'
+  Oricana-16:
+  - rscadd: Adds "Conversation Filter" nanite suppression program.
+  RikuTheKiller:
+  - bugfix: Hardlight spear implants now work on anyone with opposable thumbs rather
+      than only humans.
+  - balance: Pouring mannitol on brains now removes all basic and severe traumas.
+  - bugfix: Pouring mannitol on brains works properly again.
+  - bugfix: Pouring plasma on oozeling cores works better and has a warning for having
+      too little plasma.
+  lmenvs:
+  - rscadd: Raw spaghetti now has a chance to spawn with the correctly spelled name.
+2024-06-08:
+  Absolucy:
+  - qol: Oozelings now transfer orbiters to/from their core.
+  - code_imp: Cleaned up some code relating to oozeling cores.
+  - bugfix: Fixed an error with bloodsucker timing math (i.e 0.6 seconds instead of
+      1 minute)
+  - bugfix: Fixed candelabrum hallucinations stacking infinitely.
+  - bugfix: Vassals now get the candelabrum mood debuff cleared when converted.
+  - qol: Blood Brothers can now only convert people who have BB enabled in their prefs.
+      Failing to convert will give an appropriate feedback message (and the failed
+      convert won't notice anything other than a normal flashing).
+  - bugfix: Once again you can award people medals.
+  - rscadd: 'Added two new awards specifically for engineering and medical: The "Emergency
+      Services Award" and the "Atmospheric Mastery Award". CEs get 3 Emergency Services
+      Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards.'
+  - bugfix: Fixed some pollution-related runtimes.
+  - bugfix: Ctrl-clicking jumpsuits to max sensors now actually works
+  Uristthedorf:
+  - rscadd: Drones can walk through doors without opening them now.
+  - qol: Drone tools are as good as borg tools now.
+2024-06-09:
+  niknourse:
+  - rscadd: You can now put PACO ammo in your jackboots!
+  xPokee, CandleJaxx, MichiRecRoom, A.C.M.O., Melbert, JohnFulpWillard:
+  - rscadd: Frog, puppy, kitten, and spider pAI holoforms are now available! The frog
+      holoform can even be placed on your head.
+  - qol: Personal AI's face display selection is now a radial menu. As a bonus, now
+      you can see what the faces look like before selecting them.
+  - bugfix: Fixed Personal AI cards, allowing them to wake up from sleep.
+  - bugfix: Fixes PAI health scan software
+  - bugfix: pAI requests should no longer randomly permanently break in a round.
+2024-06-11:
+  Absolucy:
+  - refactor: Refactored Composter code in an attempt to eliminate the lag it can
+      cause.
+2024-06-12:
+  Absolucy:
+  - bugfix: Fix changing font size and such breaking tgchat. Whoopsie daisy!
+  - balance: Having both the "easily wounded" and "hardly wounded" traits will now
+      act like you have neither, resulting in you taking the normal amount of wound
+      damage.
+  RikuTheKiller:
+  - bugfix: Unknown Methamphetamine Isomer (cortical borer meth) is now actually safe
+      to use and doesn't cause brain damage or addiction. It's effects are now equivalent
+      to regular meth instead of being doubled, too.
+2024-06-13:
+  DexeeXI:
+  - bugfix: Loadouts should have EYEPATCHES of the regular variety available!
+2024-06-14:
+  Absolucy:
+  - bugfix: Fixed some runtime errors relating to interaction modes, mainly combat
+      mode.
+  - refactor: (vinylspiders) Fixed a bunch of instances of callbacks being qdeleted
+      and cleaned up related code.
+  - bugfix: Fixed a runtime error relating to mineral regrowth.
+  - bugfix: Roundstart antags should now be properly created when the Late Arrivals
+      station trait rolls.
+  - balance: '"Unconvertable" minds now consistently resist most, if not all forms
+      of conversion or brainwashing.'
+  - refactor: Refactored /datum/mind's "unconvertable" var into a trait.
+  - bugfix: Sign Language action properly toggles between an active/inactive background
+      again.
+  AlbertNanotracen:
+  - rscadd: T
+  - bugfix: Ingredients which fail to react in soup reactions drop when the reaction
+      finishes as intended
+  - rscadd: The ancient recipe for the Death Sandwich has been rediscovered buried
+      in the deepest depths of an erupting volcano.
+  - rscadd: Blood Brothers can chose the death sandwich recipe book as their gear(requested
+      by @knighthethrasher)
+  - rscadd: Added wedding cakes
+  - rscadd: Toast sandwich
+  - bugfix: The peanut butter banana sandwich is no longer presented as grilled when
+      it doesn't require a griddle to make.
+  Melbert:
+  - bugfix: Fixes runtime from trying to put two pots on one stove.
+  RikuTheKiller:
+  - balance: Silicons will no longer become soulless if they suicide.
+  ThePooba:
+  - bugfix: hiding under table for the borers and larvae, they get their plane changed
+      to WALL_PLANE when hiding so they can be under items, tables, other things
+  - bugfix: elevating under tables, they now elevate properly when hiding / unhiding
+      by toggling a trait
+  - rscadd: A trait define was added to manage this was added to elevate them slightly
+      when they are on certain turfs
+2024-06-15:
+  Absolucy:
+  - bugfix: Fixed a qdel runtime related to slimes.
+  - bugfix: The Gamemode and Holomaps subsystem will no longer claim to have loaded
+      with errors, when they in fact loaded just fine.
+  - balance: Cult stun hand is now less effective against mindshielded people, their
+      sacrifice target, and monster hunters, alongside anyone else after the cult
+      gains halos. The weakened stun will only knockdown, similar to mansus grasp,
+      and silence for a far shorter period of time.
+  - balance: Holy magic resistance now fully protects against the cult stun.
+  - rscadd: Added a funny interaction with the cult stun hand and sacrifice runes
+      when used on someone who is incredibly drunk.
+  - balance: The cult stun hand can now be countered by CQC and Sleeping Carp, consistent
+      with all other forms of "touch spells".
+2024-06-16:
+  Absolucy:
+  - bugfix: The "Clear Chat" button now properly works, instead of BSODing chat.
+  - bugfix: Hopefully fixed some lag relating to massive amounts of sounds. (me when
+      one morbillion lizard plushies)
+  - bugfix: (SyncIt21) Fixed a runtime when turning scrubbers on via the air alarm
+      UI.
+  - refactor: (SyncIt21) atmos_conditions_changed() now starts atmos processing based
+      on it's turf air contents.
+  - refactor: (SyncIt21) Don't send gas name to gas filter UI as the name is already
+      decoded there from it's ID.
+  - bugfix: (FlufflesTheDog) VERY small amounts of a gas (<0.0001 mol) in pipenets
+      will once again be fully removed.
+  - balance: (Deadgebert) Gas mixer output now accurate to set ratio regardless of
+      input temperatures.
+  - bugfix: (BurgerBB) Scrubbers and Vents will no longer reset their settings on
+      map load.
+  DexeeXI:
+  - bugfix: placed the PTL on the engine side of the SMES units.
+  KnigTheThrasher:
+  - rscadd: Added holomaps and ghost spawners to kilostation
+  ThePooba:
+  - bugfix: Heretics Codex Cicatrix ritual with a skin now uses up the items involved.
+  - bugfix: Changes Assault Pod Level trait check from not Reserved (centcom and station)
+      to station level trait (just station)
+2024-06-17:
+  Absolucy:
+  - rscadd: Exhaling a big puff of cigarette smoke now actually pollutes.
+  - bugfix: Oozeling bloodsuckers will no longer be stuck in permanent torpor after
+      reviving.
+  - bugfix: Fixed other weird bugs relating to Torpor too.
+  - qol: Oozeling changelings and bloodsuckers will now revive with all their limbs.
+  - bugfix: Fixed some runtime errors relating to Torpor.
+  - bugfix: Fixed a common runtime error relating to runechat messages and logged
+      out clients.
+  - bugfix: Advanced and toxin-healing medibots no longer kill oozelings.
+  - bugfix: Morphs now properly update their name tags when disgusing.
+  - bugfix: When implanting functional wings into a new body, they will actually be
+      able to use said wings now.
+  - balance: Split events into several 'shared occurance' groups, hopefully avoiding
+      tiring situations where multiple high-threat antags or events occur back-to-back.
+  KnigTheThrasher:
+  - bugfix: Loadout wallet now actually works
+2024-06-20:
+  Absolucy:
+  - rscdel: Bioscramblers can no longer give people an Atomic Ass.
+  RafRoq:
+  - rscadd: adds qp_sigmoid function
+  - bugfix: fixed a bug where kudzu vine used production 1 as maximum spread scaling
+  - code_imp: adjusted kudzu vine consts
+  - code_imp: adjusted battery plant gene zap damage to have  sigmoid scaling instead
+      of linear scaling
+  - balance: buffed battery plant gene zap probability chance at really high levels
+      of potency
+  - balance: nerfed battery plant gene zap probability chance at really low levels
+      of potency
+  - code_imp: adjusted prickle adhesion plant gene to have sigmoid scaling instead
+      of linear scaling in force and reagent injection
+  - code_imp: adjusted killer tomatos health to have sigmoid scaling instead of linear
+      scaling
+  - balance: killer tomatos have slightly more health at really high levels of endurance
+  - code_imp: adjusted killer tomatos damage to have sigmoid scaling instead of linear
+      scaling
+  - balance: 'killer tomatos have slightly more damage at really high levels of potency
+
+      :cl:'
+  RikuTheKiller:
+  - rscadd: Lots of new xenobiology upgrades are now available.
+  - balance: Slimes will no longer eat mutation items they've already consumed.
+  - balance: Mobs will no longer eat entire stacks of items at once.
+  - balance: Ooze production and fulfilled mutation conditions now carry through generations.
+  - balance: The stabilized grey extract is now twice as fast at making slimes friendly
+      to you.
+  - balance: You only need 2 slime steroids to max out a slime's ooze production.
+  - qol: '"Stop Eating" and "Follow" commands now have feedback messages.'
+  - qol: The "Stop Eating" command now has the additional aliases "Stay" and "Stop".
+  - qol: Slimes now have an examine message for ooze production.
+  - qol: You can now toggle between selective and indiscriminate firing modes on vacuum
+      packs. (except syndicate ones)
+  - qol: There's now an examine message on the vacuum nozzle telling you which firing
+      mode it's on.
+  - bugfix: The slime pen UI now has a more consistent style.
+  - bugfix: The slime market now correctly displays upgrade disk icons.
+  - bugfix: Slimes no longer break glass tables.
+  - bugfix: Cleaner slimes will now eat glass shards.
+  - bugfix: Visual slime mutations like "Gooey Cat" should now show up immediately.
+  - bugfix: Biomatter recyclers are now actually affected by stock part ratings.
+  - bugfix: Cleaner slimes and commanded slimes will now pathfind much better.
+  - bugfix: Deshapeshifting will no longer commit go go gadget blood deleter. (especially
+      for slimes)
+  - bugfix: Random color mutation syringes are now correctly labeled. (and refactored
+      slightly, please report issues)
+  - bugfix: Stone brick floor tiles now have an associated tile stack.
+  lmenvs:
+  - rscadd: Adds Raziaar's plush and pet.  Thank you so much for your patronage!
+  - rscadd: donators can get a Charlie plush in their loadout!
+2024-06-21:
+  Absolucy:
+  - admin: Add a version of the "Get Server Logs" and "Get Current Logs" verbs which
+      can only download debug/runtime logs, available to +DEBUG.
+  - admin: View Round Logs is now available to +DEBUG, but it will only show log categories
+      marked in the code as being "available" for debuggers.
+  - bugfix: Fix recipes for same-color crossbreeds requiring 1000u of ooze instead
+      of 500u.
+  Absolucy, Ghommie, SyncIt21:
+  - rscadd: Added a 'Closet Anomaly' station trait, which links and turns a portion
+      of the roundstart closets into impromptu teleporters.
+  CannibalHunter:
+  - rscadd: THE Security Liability Act! Adds in Body cameras in security that can
+      be used by the warden and AI to observe from thier safe space.
+  - balance: AIs and sec get a small buff using this, Ai can see out of the camera's
+  - admin: Body Camera item name is 'bodycam_upgrade'
+  OliverOtter:
+  - rscadd: Malphy's CC tomb!
+  - rscadd: Olivers CC office! Gamer loot included.
+  RikuTheKiller:
+  - bugfix: Reagents will now be removed/transferred consistently from cigarettes,
+      smoke machines, etc. rather than at random.
+  ven1883:
+  - balance: The PTL can now output up to quettawatts of power.
+  - balance: The PTL can now generate up to 5,000,000 credits per tick at max.
+  - balance: Adjusted the PTL money generation curve.
+2024-06-22:
+  Absolucy:
+  - qol: Roles such as brainwashed, abductee, etc no longer disqualify you from midround
+      antag.
+  - qol: The memories for the Smoker quirk now actually mention the preferred brand.
+  - refactor: Refactored how meteor shields detect meteors to blow up.
+  - bugfix: Meteor shields are no longer rendered useless by lag.
+  - bugfix: Meteor shields now properly affect meteor event weights for the storyteller
+      in addition to the normal event subsystem.
+  - qol: Meteor shields can now be shrunk down into tiny capsules, and deployed from
+      said capsules.
+  - balance: The meteor shield crate now contains 5 shield sat capsules.
+  Absolucy, LemonInTheDark:
+  - balance: Tcomms now works across connected (vertically) zlevels. No more hunting
+      in maint for the relay.
+  MomoBerri:
+  - qol: Removed vague elite lavaland mob text.
+  MrMelbert, NikoTheDude, Ported by Hardly:
+  - rscadd: Added examine text, describe your character in ways that a 32x32 sprite
+      can't!
+  - rscadd: Added temporary examine text alongside an indicator
+  - rscadd: Added character records text
+  - admin: Admins can see all flavor texts of a character
+  TTNT789:
+  - balance: added a surplus discount for borers
+  - rscadd: 3 new cane swords all currently admin spawn only
+  The-Black-Screen:
+  - rscadd: added `secure.dm` to `monkestation/code/game/objects/structures/crate_lockers/crates`,
+      added `security.dm` to `monkestation/code/game/objects/structures/crate_lockers/closets/secure`
+  - code_imp: added onto `security.dm` in `monkestation/code/modules/cargo/crates`
+  Uristthedorf:
+  - rscadd: Adds cybernetic brains for androids.
+  - rscadd: Adds robotic flavor for androids.
+  - image: Adds cybernetic brain sprite.
+  - bugfix: Mounted Chainsaw arm is now treated like it's robotic.
+2024-06-23:
+  RikuTheKiller:
+  - bugfix: Satchels can now be crafted out of cloth.
+  - bugfix: The secass description now reads "a" instead of "an", happy now?
+  ThePooba:
+  - bugfix: Fixed the button not appearing for thermoregulator on hardsuit
+  - bugfix: Energy cost for Hardsuits thermoregulator (it would run out in minutes)
+  - bugfix: Borers and Alien Larva can now hide on Multiple Z levels instead of just
+      one
+2024-06-24:
+  Absolucy:
+  - qol: Mechcomp teleporters now work across different floors on multi-z maps such
+      as Icebox or Tram.
+  Tractor Mann:
+  - rscadd: You can emag jukeboxes! you always could, but now it enables Hacked songs!
+2024-06-25:
+  Absolucy:
+  - bugfix: Eigenstasium no longer cares about purity, a mechanic which we do not
+      even use.
+  - bugfix: Fixed some assorted runtime errors.
+  - bugfix: Fixed some overlay sprite issues with the disease splicer.
+  - bugfix: Fixed curing diseases via aheals or such actually WORK.
+  - refactor: Made `pick_weight` more robust and performant.
+  - balance: '(carlarctg) Reduced the complexity cost of a lot of MODules: Pathfinder
+      2 -> 1, Tether 3 -> 2, Temperature Regulator 2 -> 1, DNA lock 2 -> 1, Health
+      analyzer 2 -> 1, Sonar 2 -> 1, Microwave beam 2 -> 1, Drill 2 -> 1, All visors
+      (including NV and thermals) 2 -> 1, Circuit Adapter 2 -> 1'
+  - balance: (carlarctg) The Mining MODsuit has had its complexity increased to 13
+      and now starts with the eating apparatus module, with a total base complexity
+      of 10/13 now.
+  - balance: (carlarctg) The Prototype MODsuit's active slowdown has been decreased
+      from 1.5 (!) to 1.
+  - spellcheck: (carlarctg) Fixed a type on the energy net module.
+  - rscadd: (Hatterhat) A really old data disk with the MOD module designs for the
+      status readout was recovered, and has been haphazardly hotpatched into the research
+      networks.
+  - rscadd: (Hatterhat) Also, the status readout module now plays a sound on death.
+  - qol: (Hatterhat) The MODsuit health analyzer's info tab health readout can now
+      be disabled in its settings.
+  - rscadd: (Melbert) The Atrocinator will now flip you even more.
+  - qol: (StaringGasMask) Now plasmamen can use the infiltrator MODsuit without having
+      their species revealed. The helmet's still not sealed, so remember your mask.
+  - qol: (Hatterhat) When a MOD fails to store something in itself when retracting,
+      you're now notified in both the chat and by a balloon alert.
+  - qol: (Momo8289) You can now use any hat with the hat stabilizer MOD.
+  - bugfix: (Momo8289) The MOD eating apparatus module now properly disables pepper
+      spray protection.
+  Absolucy, Melbert:
+  - balance: The alcohol tolerance quirk now prevents alcohol from killing you (on
+      its own). Now your character can be an alcoholic trainwreck without dying from
+      liver failure just for being yourself! You'll still be, well, a drunken wreck,
+      tho.
+  - rscadd: When you are drunk, the strength of your slurring now varies based on
+      how drunk you are. Being "a little drunk" only rarely slurs your words, being
+      average drunk is the same as the old effect, while being very drunk now slurs
+      your words even more.
+  - rscadd: Some non-alcohol sources of slurring, such as concussions, now give "generic
+      slurring" rather than "drunk slurring", which less resemble being drunk (ie,
+      no burping).
+  - rscadd: Mind restoration now heals ALL slurring, rather than only drunk slurring
+      (which includes cult / heretic slurring).
+  AlbertNanotracen:
+  - admin: Added an spawn mixtape verb to the admin tab.
+  - qol: Chemmaster UI tweaked
+  - qol: Chemical Press UI tweaked
+  - bugfix: Fixed chem master showing wrong data during reagent analysis
+  - bugfix: Fixed chem master not working with fermented drinks
+  - image: Chemmaster resprited, now has an indicator for buffer reagents
+  - refactor: Refactored chemmaster code, it now uses reagent containers instead of
+      styles
+  - balance: Chemmaster has printing animation of 0.75 second duration. Outputs 1
+      container or up to 2 pills/patches per cycle by default. Can be upgraded to
+      output up to 4 and 8 with t4 manipulators.
+  - image: Resprited many condiment containers
+  - image: Added a sprite for cooking oil / corn oil container
+  - image: Replaced old condiment bottles with the newer bottles in Condi Master
+  - rscadd: Added test tubes and racks for them
+  - balance: All 30u bottles now have 50u volume and chem master/factory output/chemical
+      press/pandemic spawn tubes instead of bottles
+  - bugfix: fixed the advanced watering can
+  Glyphee:
+  - balance: removed freerunning from goblins by default
+  - balance: 'raised stunmod
+
+      :cl:'
+  HimKobold:
+  - rscadd: Added the ability for hair dye spray to fully change your hair color by
+      selecting "None" in the "Choose Gradient" popup list.
+  - bugfix: '#2062
+
+      \:cl:'
+  JackEnoff, KnigTheThrasher:
+  - balance: Certain changeling abilities won't work while on fire.
+  - balance: Changeling stuff will burn down when lit on fire (can be regenerated
+      when you aren't burning)
+  KnigTheThrasher:
+  - rscadd: security gets spammed each time a bitrunner finishes their job because
+      they forget to take crates from perma
+  - rscdel: Deleted few doors in delta transfer area for easier access to the escape
+      pod
+  - rscdel: Deleted that oil stain under boxstation bit den door
+  - bugfix: fixed missing pipes in delta visitation area
+  - bugfix: fixed a backwards bench in delta perma
+  MrMelbert, KnigTheThrasher:
+  - rscadd: Lizards can customize their lisp
+  - code_imp: Added a modular file for species features
+2024-06-26:
+  Absolucy:
+  - rscadd: Holomaps now show meteor defense coverage, visualized by a blue grid.
+  - sound: Meteor defense zap sounds should be able to be heard from further away
+      now.
+  - balance: Meteor defense sats can now always be ordered from cargo, regardless
+      of station goal.
+  - balance: Meteor defense sats now cover upwards and downwards too, making them
+      less of a pain on multi-Z stations.
+  - refactor: Tracking which tiles are covered by meteor defense sats is now much
+      more intuitive and efficient.
+  - qol: Meteors now drop debris when zapped by meteor defense sats.
+  - qol: Examining meteor defense sats now also shows how many meteors have been zapped
+      overall by all sats.
+  - balance: Slightly boosted the range of meteor defense satellite from 14 to 16
+      tiles.
+2024-06-27:
+  Absolucy:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  - rscadd: RCDs can make girders now.
+  - bugfix: Some RCD constructs took more material than manual construction. The RCD
+      cost should be consistent in comparison to manual construction now.
+  - bugfix: RCDs can build wallmounts on reinforced walls.
+  - qol: RCDs can build directional windows without requiring/building a grill.
+  - bugfix: You should be able to click on lattices on icebox with the RCD and construct
+      a floor now
+  - balance: Maintenance drones now can use RPED, RCD, holosigns, and spray bottles.
+  - rscadd: Added liquid barriers, currently mapped into xenobio, which block all
+      liquid flow across them, hopefully preventing the dreaded station-wide ooze
+      floods.
+  - image: (intercepti0n) Resprites t-ray scanner, gas analyzer, geiger counter and
+      hand drill.
+  - image: (LT3) Medical and improvised gauze are visibly different from cloth.
+  - image: (Alecksohs) Updated the Advanced Surgical Tool's sprites.
+  - code_imp: (Alecksohs) Updated the Advanced Surgical Tool's light code.
+  - qol: Placing someone on an operating table now actually buckles them.
+  - qol: Prettied up the Chemical Analyzer's output in chat, making it easier to read,
+      especially when scanning multiple things.
+  DexeeXI:
+  - rscadd: New Title for Captains
+  DustanHache:
+  - rscadd: Egg bags are now craftable using cloth, like many other bags.
+  Kapu1178:
+  - bugfix: Fixed stuff relating to the MODsuit pathfinder module.
+  - code_imp: AI pathfinding should produce slightly better paths.
+  KnigTheThrasher:
+  - bugfix: fixed latejoin prisoner spawns
+  - bugfix: :)
+  RafRoq:
+  - rscadd: 'Added new botany plant trait, seedless, can be found in money tree seeds
+
+      :cl:'
+  Rex9001, DexeeXI:
+  - rscadd: Brig Physician as a job
+  - rscadd: 'Clothing items for Brig Physician: jumpsuit, skirt, scrubs, shoes, backpacks
+      of all kinds.'
+  - rscadd: Plasmaman support for Brig Physician. Sprites provided directly by DimWhat.
+  - rscadd: Alternative job title support for Brig Physician
+  - rscadd: SECHUD, Crew Monitor and ID card support for Brig Physician
+  - rscadd: Locker specifically for Brig Physician
+  - rscadd: Digi-legs support for new clothes for Lizards.
+  - rscadd: Most new items have inhand sprites
+  - rscadd: Brig Physician start markers in Prison Medbays.
+  - rscadd: Requested alternative title for Medical Doctor. (Admin Team Request)
+  - balance: All prison medbays overhauled to provide proper support. The old tram
+      medbay was completely bare while Box was mostly "feature complete". All medbays
+      should have very similar capability.
+  - bugfix: Head of Personnel's supervisor is now the Captain properly.
+  - rscdel: Virus extrapolator in the CMO's locker is now gone. (I don't know how
+      I missed this one)
+  TTNT789:
+  - rscadd: The Ashen Forge as a traitor faction
+  Uristthedorf:
+  - qol: You can craft plastitanium shards.
+  ven1883:
+  - rscadd: Adds Alveolic Deoxidation, a nanite program that heals suffocation.
+  - rscadd: Adds Alveolic Deoxidation to the tech tree.
+2024-06-30:
+  Absolucy:
+  - bugfix: Fixed cat ears disappearing from slimes with the gooey cat mutation across
+      Z-levels.
+  RafRoq:
+  - bugfix: 'Fixes botany early game yield
+
+      :cl:'

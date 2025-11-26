@@ -248,7 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(isitem(target))
 		var/obj/item/item = target
 		if(length(item.viruses))
-			for(var/datum/disease/advanced/D as anything in item.viruses)
+			for(var/datum/disease/acute/D as anything in item.viruses)
 				item.remove_disease(D)
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -319,7 +319,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
-	reagents.remove_any(SHOWER_SPRAY_VOLUME)
+	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
@@ -328,17 +328,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
-	var/mob/living/carbon/C = L
-
 	if(current_temperature == SHOWER_FREEZING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, span_warning("[src] is freezing!"))
+		if(L.bodytemperature >= L.standard_body_temperature - 1 KELVIN)
+			to_chat(L, span_warning("[src] is freezing!"))
+
+		L.adjust_bodytemperature(-0.5 KELVIN, min_temp = CELCIUS_TO_KELVIN(30))
+
 	else if(current_temperature == SHOWER_BOILING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(35, 0, 500)
-		L.adjustFireLoss(5)
-		to_chat(L, span_danger("[src] is searing!"))
+		if(L.bodytemperature <= L.standard_body_temperature + 1 KELVIN)
+			to_chat(L, span_warning("[src] is [pick("scalding", "searing")]!"))
+		L.adjust_bodytemperature(0.5 KELVIN, max_temp = CELCIUS_TO_KELVIN(40))
+		L.apply_damage(6, BURN, spread_damage = TRUE)
 
 
 /obj/structure/showerframe
@@ -375,9 +375,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	tool.play_tool_sound(src)
 	deconstruct()
 	return TRUE
-
-/obj/structure/showerframe/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist
 	name = "mist"

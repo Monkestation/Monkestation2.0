@@ -1,13 +1,17 @@
 /datum/round_event_control/electrical_storm
 	name = "Electrical Storm"
 	typepath = /datum/round_event/electrical_storm
-	earliest_start = 10 MINUTES
+	earliest_start = 45 MINUTES
 	min_players = 5
-	weight = 20
+	weight = 5
+	max_occurrences = 1
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Destroys all lights in a large area."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_SPOOKY)
+	event_group = /datum/event_group/error
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1

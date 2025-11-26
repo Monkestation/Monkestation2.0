@@ -9,6 +9,12 @@
 	name = "ATV key"
 	desc = "A small grey key for starting and operating ATVs."
 
+
+/obj/item/key/hoverdog
+	name = "Hoverdog key"
+	desc = "A golden painted key with a hotdog accessory."
+	icon_state = "keyhoverdog"
+
 /obj/item/key/security
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"

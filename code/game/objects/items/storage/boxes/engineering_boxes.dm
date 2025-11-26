@@ -18,56 +18,16 @@
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/chem_grenade/smart_metal_foam(src)
 
-/obj/item/storage/box/material
-	name = "box of materials"
-	illustration = "implant"
+//MONKESTATION EDIT START
+/obj/item/storage/box/nanofrost
+	name = "box of nanofrost grenades"
+	desc = "A box of A NanoFrost™ smoke grenades. Nanotrasen's response to frequent plasma related fires onboard their research stations."
+	illustration = "grenade"
 
-/obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
-	var/static/items_inside = list(
-		/obj/item/stack/sheet/iron/fifty=1,
-		/obj/item/stack/sheet/glass/fifty=1,
-		/obj/item/stack/sheet/rglass=50,
-		/obj/item/stack/sheet/plasmaglass=50,
-		/obj/item/stack/sheet/titaniumglass=50,
-		/obj/item/stack/sheet/plastitaniumglass=50,
-		/obj/item/stack/sheet/plasteel=50,
-		/obj/item/stack/sheet/mineral/plastitanium=50,
-		/obj/item/stack/sheet/mineral/titanium=50,
-		/obj/item/stack/sheet/mineral/gold=50,
-		/obj/item/stack/sheet/mineral/silver=50,
-		/obj/item/stack/sheet/mineral/plasma=50,
-		/obj/item/stack/sheet/mineral/uranium=20,
-		/obj/item/stack/sheet/mineral/diamond=50,
-		/obj/item/stack/sheet/bluespace_crystal=50,
-		/obj/item/stack/sheet/mineral/bananium=50,
-		/obj/item/stack/sheet/mineral/wood=50,
-		/obj/item/stack/sheet/plastic/fifty=1,
-		/obj/item/stack/sheet/runed_metal/fifty=1,
-		)
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/box/debugtools
-	name = "box of debug tools"
-	icon_state = "syndiebox"
-
-/obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/card/emag=1,
-		/obj/item/construction/rcd/combat/admin=1,
-		/obj/item/disk/tech_disk/debug=1,
-		/obj/item/flashlight/emp/debug=1,
-		/obj/item/geiger_counter=1,
-		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/modular_computer/pda/heads/captain=1,
-		/obj/item/pipe_dispenser=1,
-		/obj/item/stack/spacecash/c1000=50,
-		/obj/item/storage/box/beakers/bluespace=1,
-		/obj/item/storage/box/beakers/variety=1,
-		/obj/item/storage/box/material=1,
-		/obj/item/uplink/debug=1,
-		/obj/item/uplink/nuclear/debug=1,
-		)
-	generate_items_inside(items_inside,src)
+/obj/item/storage/box/nanofrost/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/smokebomb/nanofrost(src)
+//MONKESTATION EDIT STOP
 
 /obj/item/storage/box/plastic
 	name = "plastic box"
@@ -75,7 +35,7 @@
 	icon_state = "plasticbox"
 	foldable_result = null
 	illustration = "writing"
-	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT) //You lose most if recycled.
 
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"

@@ -8,6 +8,9 @@
 	category = EVENT_CATEGORY_ANOMALIES
 	description = "This anomaly shocks and explodes. This is the base type."
 	admin_setup = list(/datum/event_admin_setup/set_location/anomaly)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_MAGICAL)
+	event_group = /datum/event_group/anomalies
 
 /datum/round_event/anomaly
 	start_when = ANOMALY_START_HARMFUL_TIME
@@ -27,6 +30,8 @@
 	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/anomaly/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()

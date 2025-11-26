@@ -32,11 +32,10 @@ Burning extracts:
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
+	var/mob/living/basic/slime/S = new(get_turf(user))
 	S.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	S.set_friendship(user, 20) //Gas, gas, gas
+	SEND_SIGNAL(S, COMSIG_FRIENDSHIP_CHANGE, user, 110)
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.
-	S.set_nutrition(S.get_hunger_nutrition()) //Tonight, we fight!
 	..()
 
 /obj/item/slimecross/burning/orange
@@ -71,37 +70,45 @@ Burning extracts:
 	for(var/turf/open/T in range(3, get_turf(user)))
 		T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
 	for(var/mob/living/carbon/M in range(5, get_turf(user)))
-		if(M != user)
-			M.bodytemperature = BODYTEMP_COLD_DAMAGE_LIMIT + 10 //Not quite cold enough to hurt.
-			to_chat(M, span_danger("You feel a chill run down your spine, and the floor feels a bit slippery with frost..."))
+		if(M == user)
+			continue
+		M.adjust_bodytemperature(-INFINITY, min_temp = M.bodytemp_cold_damage_limit + 5 KELVIN)
+		to_chat(M, span_danger("You feel a chill run down your spine, and the floor feels a bit slippery with frost..."))
 	..()
 
 /obj/item/slimecross/burning/metal
 	colour = "metal"
-	effect_desc = "Instantly destroys walls around you."
+	effect_desc = "Instantly ignites adjacent walls as if thermite were applied to them."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
-	for(var/turf/closed/wall/W in range(1,get_turf(user)))
-		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
-	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
+	var/turf/our_turf = get_turf(src)
+	if(GLOB.clock_ark && on_reebe(our_turf) && get_dist(our_turf, GLOB.clock_ark) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
+		balloon_alert(user, "a near by energy source is stopping \the [src] from activating!")
+		return FALSE
+	for(var/turf/closed/wall/wall in RANGE_TURFS(1, our_turf))
+		var/datum/component/thermite/thermite = wall.AddComponent(/datum/component/thermite)
+		thermite.thermite_melt(user)
+		playsound(wall, 'sound/effects/break_stone.ogg', vol = 50, vary = TRUE)
+	user.visible_message(span_danger("[src] pulses violently, beginning to melt the walls around it!"))
 	..()
 
 /obj/item/slimecross/burning/yellow
 	colour = "yellow"
-	effect_desc = "Electrocutes people near you."
+	effect_desc = "Shocks nearby people with a burst of energy, heavily disorienting them for a short while."
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
-	user.visible_message(span_danger("[src] explodes into an electrical field!"))
+	user.visible_message(span_danger("[src] explodes into an energy field, shocking others nearby!"))
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
-	for(var/mob/living/M in range(4,get_turf(user)))
-		if(M != user)
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				C.electrocute_act(25,src)
-			else
-				M.adjustFireLoss(25)
-			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
+	// nothing here should deal actual damage - it's just painful and disorienting
+	for(var/mob/living/victim in range(4, get_turf(user)) - user)
+		victim.cause_pain(BODY_ZONES_ALL, 10, BURN)
+		victim.set_confusion_if_lower(10 SECONDS)
+		victim.set_eye_blur_if_lower(10 SECONDS)
+		ADD_TRAIT(victim, TRAIT_POOR_AIM, type)
+		addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_POOR_AIM, type), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		to_chat(victim, span_userdanger("You feel a sharp, painful pulse of energy throughout your body!"))
+		user.Beam(victim, icon_state = "sm_arc", time = 0.5 SECONDS)
+		log_combat(user, victim, "disoriented (burning yellow extract)")
 	..()
 
 /obj/item/slimecross/burning/darkpurple
@@ -183,12 +190,13 @@ Burning extracts:
 	effect_desc = "Shatters all lights in the current room."
 
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
+	var/area/user_area = get_area(user)
+	if(isnull(user_area.apc))
+		user.visible_message(span_danger("[src] releases a colorful wave of energy, but nothing seems to happen."))
+		return
+
+	user_area.apc.break_lights()
 	user.visible_message(span_danger("[src] releases a colorful wave of energy, which shatters the lights!"))
-	var/area/A = get_area(user.loc)
-	for(var/obj/machinery/light/L in A) //Shamelessly copied from the APC effect.
-		L.on = TRUE
-		L.break_light_tube()
-		stoplag()
 	..()
 
 /obj/item/slimecross/burning/red
@@ -197,14 +205,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
-	for(var/mob/living/simple_animal/slime/S in view(7, get_turf(user)))
+	for(var/mob/living/basic/slime/S in view(7, get_turf(user)))
+		/*
 		if(user in S.Friends)
 			var/friendliness = S.Friends[user]
 			S.clear_friends()
 			S.set_friendship(user, friendliness)
 		else
 			S.clear_friends()
-		S.rabid = 1
+		*/
+		ADD_TRAIT(S, TRAIT_SLIME_RABID, "burning-red")
 		S.visible_message(span_danger("The [S] is driven into a dangerous frenzy!"))
 	..()
 
@@ -273,16 +283,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/black
 	colour = "black"
-	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
+	effect_desc = "Gives the user a one-time use slime transformation ability. They can transform back at will and do not lose any items." // monkestation edit: same here
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	if(!isliving(user))
 		return
-	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
+	user.visible_message(span_danger("[user] absorbs \the [src]!")) // monkestation edit: slight change to reflect the cast removal
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	transform.cast(user)
+	transform.Activate(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

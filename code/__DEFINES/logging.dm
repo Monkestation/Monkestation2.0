@@ -5,6 +5,9 @@
 /// Admins can still manually request a re-render
 #define LOG_UPDATE_TIMEOUT 5 SECONDS
 
+// The maximum number of entries allowed in the signaler investigate log, keep this relatively small to prevent performance issues when an admin tries to query it
+#define INVESTIGATE_SIGNALER_LOG_MAX_LENGTH 500
+
 //Investigate logging defines
 #define INVESTIGATE_ACCESSCHANGES "id_card_changes"
 #define INVESTIGATE_ATMOS "atmos"
@@ -24,6 +27,7 @@
 #define INVESTIGATE_WIRES "wires"
 #define INVESTIGATE_NANITES "nanites"
 #define INVESTIGATE_ARTIFACT "artifact"
+#define INVESTIGATE_SIGNBOARD "signboard" // monkestation addition
 
 // Logging types for log_message()
 #define LOG_ATTACK (1 << 0)
@@ -49,7 +53,9 @@
 #define LOG_RADIO_EMOTE (1 << 20)
 #define LOG_SPEECH_INDICATORS (1 << 21)
 #define LOG_CLONING (1 << 22)
-#define LOG_MECHCOMP (1 <<23)
+#define LOG_MECHCOMP (1 << 23)
+#define LOG_NTSL (1 << 24) // MONKESTATION ADDITION -- NTSL
+#define LOG_BLACKMARKET (1 << 25)
 
 //Individual logging panel pages
 #define INDIVIDUAL_GAME_LOG (LOG_GAME)
@@ -59,7 +65,7 @@
 #define INDIVIDUAL_COMMS_LOG (LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS)
 #define INDIVIDUAL_OOC_LOG (LOG_OOC | LOG_ADMIN)
 #define INDIVIDUAL_OWNERSHIP_LOG (LOG_OWNERSHIP)
-#define INDIVIDUAL_SHOW_ALL_LOG (LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_RADIO_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME | LOG_ADMIN_PRIVATE | LOG_ASAY | LOG_MECHA | LOG_VIRUS | LOG_SHUTTLE | LOG_ECON | LOG_VICTIM | LOG_SPEECH_INDICATORS | LOG_CLONING)
+#define INDIVIDUAL_SHOW_ALL_LOG (LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_RADIO_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME | LOG_ADMIN_PRIVATE | LOG_ASAY | LOG_MECHA | LOG_VIRUS | LOG_SHUTTLE | LOG_ECON | LOG_VICTIM | LOG_SPEECH_INDICATORS | LOG_CLONING | LOG_NTSL)
 
 #define LOGSRC_CKEY "Ckey"
 #define LOGSRC_MOB "Mob"
@@ -78,6 +84,7 @@
 
 // Log entry keys
 #define LOG_ENTRY_KEY_TIMESTAMP "ts"
+#define LOG_ENTRY_KEY_ROUNDID "round_id"
 #define LOG_ENTRY_KEY_CATEGORY "cat"
 #define LOG_ENTRY_KEY_MESSAGE "msg"
 #define LOG_ENTRY_KEY_DATA "data"
@@ -86,8 +93,9 @@
 #define LOG_ENTRY_KEY_ID "id"
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 
-// Category for invalid/missing categories
-#define LOG_CATEGORY_NOT_FOUND "invalid-category"
+// Internal categories
+#define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
+#define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
 
 // Misc categories
 #define LOG_CATEGORY_ATTACK "attack"
@@ -110,10 +118,14 @@
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
+#define LOG_CATEGORY_NTSL "ntsl" // MONKESTATION ADDITION: NTSL
 #define LOG_CATEGORY_CLONING "cloning"
 #define LOG_CATEGORY_MUSIC "music"
 #define LOG_CATEGORY_META "currency"
 #define LOG_CATEGORY_ARTIFACT "artifact"
+#define LOG_CATEGORY_BLACKMARKET "blackmarket"
+#define LOG_CATEGORY_ANTAG_REP "antag-rep"
+#define LOG_CATEGORY_HOTSPOTS "hotspots"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -129,7 +141,9 @@
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
 #define LOG_CATEGORY_DEBUG_HREF "debug-href"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
+#ifndef DISABLE_DREAMLUAU
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
+#endif
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_QDEL "debug-qdel"
