@@ -5416,7 +5416,6 @@
 #include "code\modules\power\lighting\light_mapping_helpers.dm"
 #include "code\modules\power\lighting\light_wallframes.dm"
 #include "code\modules\power\rbmk\INCLUDES.dm"
-#include "code\modules\power\rbmk\reactor\rbmk_core.dm"
 #include "code\modules\power\singularity\boh_tear.dm"
 #include "code\modules\power\singularity\containment_field.dm"
 #include "code\modules\power\singularity\dark_matter_singularity.dm"
