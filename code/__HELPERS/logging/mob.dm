@@ -60,7 +60,7 @@
 	if(client)
 		persistent_client.logging[smessage_type] += timestamped_message
 
-	..(game_finish_added = game_finish_was_added)
+	..(message, message_type, color, log_globally, game_finish_was_added)
 
 /**
  * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob
