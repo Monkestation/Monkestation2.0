@@ -363,8 +363,8 @@
 /datum/supply_pack/security/armory/lasrifle
 	name = "Heavy Laser Crate"
 	desc = "Contains 2 heavy laser rifles to replace the ones that YOU LOST"
-	cost = CARGO_CRATE_VALUE * 20
-	contains = list(/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/sindano = 2)
+	cost = CARGO_CRATE_VALUE * 17.5
+	contains = list(/obj/item/gun/energy/laser/heavylaser = 2)
 	crate_name = "smg crate"
 
 /datum/supply_pack/security/armory/sindano

@@ -10,6 +10,7 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/e_gun //60 shots of smg disabler ~= 30 shots of disabler, 40 shots of carbine laser ~= 20 shots of laser
 	burst_size = 2
 	fire_delay = 1 //2 shots at 0.1 seconds spacing every 0.4 seconds
+	spread = 3 // I know it is a laser, but it just doesn't feel right without it
 
 /obj/item/gun/energy/e_gun/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
@@ -35,6 +36,7 @@
 	ammo_x_offset = 2
 	charge_sections = 3
 	single_shot_type_overlay = FALSE
+	spread = 0
 
 /obj/item/gun/energy/e_gun/mini/add_seclight_point()
 	// The mini energy gun's light comes attached but is unremovable.
@@ -53,6 +55,8 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/upgraded //monkestation ADDITION
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	spread = 0
+
 
 /obj/item/gun/energy/e_gun/old
 	name = "prototype energy gun"
@@ -60,6 +64,8 @@
 	icon_state = "protolaser"
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/electrode/old)
+	spread = 0
+
 
 /obj/item/gun/energy/e_gun/old/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -84,6 +90,7 @@
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	spread = 0
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
@@ -98,6 +105,7 @@
 	ammo_x_offset = 1
 	///A dragnet beacon set to be the teleport destination for snare teleport rounds.
 	var/obj/item/dragnet_beacon/linked_beacon
+	spread = 0
 
 /obj/item/gun/energy/e_gun/dragnet/attackby(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/dragnet_beacon))
@@ -154,6 +162,7 @@
 	weapon_weight = WEAPON_HEAVY
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
+	spread = 0
 
 /obj/item/gun/energy/e_gun/turret/add_seclight_point()
 	return
@@ -171,6 +180,7 @@
 	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
+	spread = 0
 
 /obj/item/gun/energy/e_gun/nuclear/process(seconds_per_tick)
 	if(fail_tick > 0)
@@ -217,4 +227,4 @@
 			. += "[icon_state]_fail_2"
 
 /obj/item/gun/energy/e_gun/lethal
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine, /obj/item/ammo_casing/energy/disabler/smg)

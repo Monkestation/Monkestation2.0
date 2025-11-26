@@ -37,6 +37,7 @@
 	projectile_type = /obj/projectile/beam/laser/carbine
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE * 1.5)
 	select_name = "kill"
+	delay = 2
 
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/projectile/beam/laser
