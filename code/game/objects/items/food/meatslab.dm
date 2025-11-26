@@ -6,27 +6,6 @@
 	var/subjectjob = null
 	var/blood_decal_type = /obj/effect/decal/cleanable/blood
 
-/obj/item/food/meat/Initialize(mapload)
-	. = ..()
-
-	if(!blood_decal_type)
-		return
-
-	AddComponent(
-		/datum/component/blood_walk,\
-		blood_type = blood_decal_type,\
-		blood_spawn_chance = 45,\
-		max_blood = custom_materials[custom_materials[1]],\
-	)
-
-	AddComponent(
-		/datum/component/bloody_spreader,\
-		blood_left = custom_materials[custom_materials[1]],\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
-
-
 /obj/item/food/meat/slab
 	name = "meat"
 	desc = "A slab of meat."
