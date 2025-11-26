@@ -79,7 +79,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
-			log_combat(user, C, "attempted to handcuff", src)
+			log_combat(user, C, "attempted to handcuff", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 
 			if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
 				handcuff_time_mod = 0.75
@@ -95,7 +95,7 @@
 									span_userdanger("[user] handcuffs you."))
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-				log_combat(user, C, "handcuffed", src, "Cuff Time: [(handcuff_time * handcuff_time_mod)/(1 SECOND)] Seconds. Uncuff Time: [breakouttime/(1 MINUTE)] Minutes")
+				log_combat(user, C, "handcuffed", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 			else
 				to_chat(user, span_warning("You fail to handcuff [C]!"))
 				log_combat(user, C, "failed to handcuff", src)
