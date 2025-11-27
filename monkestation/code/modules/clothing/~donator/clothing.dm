@@ -273,10 +273,8 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/misc.dmi'
 	icon_state = "ihateERROR"
 	body_parts_covered = null
-
-/obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
+	worn_icon = null
+	worn_icon_state = null
 
 /obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
 	. = ..()
