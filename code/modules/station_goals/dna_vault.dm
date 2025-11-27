@@ -140,6 +140,13 @@
 		/datum/mutation/quick_recovery,
 		/datum/mutation/tough,
 	)
+	// don't roll powers that the user already has through other sources!!
+	if(HAS_TRAIT(user, TRAIT_NOFIRE))
+		possible_powers -= /datum/mutation/fire_immunity
+	if(HAS_TRAIT(user, TRAIT_TOXIMMUNE) || HAS_TRAIT(user, TRAIT_TOXINLOVER))
+		possible_powers -= /datum/mutation/plasmocile
+	if(HAS_TRAIT_NOT_FROM(user, TRAIT_NOBREATH, CLOTHING_TRAIT)) // we exclude CLOTHING_TRAIT so that rebreathers won't count
+		possible_powers -= list(/datum/mutation/breathless, /datum/mutation/plasmocile) // also remove plasmocile bc they don't need to breathe anyways
 	var/list/gained_mutation = list()
 	gained_mutation += pick_n_take(possible_powers)
 	gained_mutation += pick_n_take(possible_powers)

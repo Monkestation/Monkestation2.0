@@ -15,8 +15,13 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	record_nuke_disk_location()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
 	// All but npcs sublists and ghost category contain only mobs with minds
-	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
-	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
+	var/list/file_data = list(
+		"escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()),
+		"abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()),
+		"ghosts" = list(),
+		"additional data" = list(),
+	)
+	var/num_survivors = 0 //Count of non-brain non-eye mobs with mind that are alive
 	var/num_escapees = 0 //Above and on centcom z
 	var/num_human_escapees = 0 //Above but humans only
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
@@ -41,7 +46,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 			mob_data["ckey"] = M.mind.key
 			if(M.onCentCom())
 				list_of_mobs_on_shuttle += M
-			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
+			if(M.stat != DEAD && !isbrain(M) && !iseyemob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
 					num_escapees++
@@ -220,8 +225,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 			if(greentexted)
 				var/score = round(human_mob.hardcore_survival_score * 2)
-				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				player_client?.give_award(/datum/award/score/hardcore_random, human_mob, score)
 				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				player_client?.prefs.adjust_metacoins(player_client.ckey, 500, "hardcore random greentext")
 				return
 
 	if(considered_escaped(human_mob.mind))
@@ -389,6 +395,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	//might want to make this a full section, monkestation edit
 	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "N/A"]")]</span></div>"
 
+	if(nanotrasen_rep_status)
+		parts += nanotrasen_rep_report()
+
 	//AI laws
 	parts += law_report()
 
@@ -538,6 +547,26 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		show_roundend_report(C)
 		give_show_report_button(C)
 		CHECK_TICK
+
+///Builds the report from the on-station NT Reps, giving score and comments.
+/datum/controller/subsystem/ticker/proc/nanotrasen_rep_report()
+	var/list/parts = list()
+	if(nanotrasen_rep_status == NT_REP_STATUS_DIED)
+		nanotrasen_rep_score = 0
+		nanotrasen_rep_comments = "Wait, what the hell, where's our representative?"
+	parts += "<div class='panel stationborder'><span class='header'>Representative Report:</span></br>"
+	parts += "Official Score: "
+	for(var/i in 1 to min(nanotrasen_rep_score, MAX_NT_REP_SCORE))
+		parts += "<i class='fa-solid fa-star' /></i>"
+	for(var/i in 1 to (MAX_NT_REP_SCORE - nanotrasen_rep_score))
+		parts += "<i class='fa-regular fa-star' /></i>"
+	parts += "</br>"
+
+	if(nanotrasen_rep_comments)
+		parts += "<span class='subheader'>The Representative left a comment:</span></br>"
+		parts += "[nanotrasen_rep_comments]"
+	parts += "</div>"
+	return parts
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
@@ -960,7 +989,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
 		parts += "<ul class='playerlist'>"
 		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
-			parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+			var/show_key = GLOB.roundend_hidden_ckeys[cheevo_report.winner_key]
+			parts += "<BR>[show_key ? "[cheevo_report.winner_key] was " : ""]<b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
 		parts += "</ul>"
 		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 

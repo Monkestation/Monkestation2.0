@@ -10,7 +10,7 @@
 		return
 
 	if(victim != attacker)
-		if(!do_after(attacker, 5 SECONDS, victim))
+		if(!do_after(attacker, 5 SECONDS, victim, hidden = TRUE))
 			return
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),
@@ -19,7 +19,7 @@
 		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 		return TRUE
 
-	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker)))
+	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker), hidden = TRUE))
 		victim.visible_message(
 			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
 			span_notice("You take a sip from \the [src]."),
@@ -191,6 +191,10 @@
 	embedding = list("embed_chance" = 65)
 	staketime = 60
 
+/obj/item/stake/hardened/silver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 //////////////////////
 //     ARCHIVES     //
 //////////////////////
@@ -244,32 +248,37 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	return FALSE
 
 ///Attacking someone with the book.
-/obj/item/book/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
-	. = ..()
-	if(!user.can_read(src) || DOING_INTERACTION(user, DOAFTER_SOURCE_KINDRED_ARCHIVE) || (target == user) || !ismob(target))
-		return
+/obj/item/book/kindred/interact_with_atom(mob/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with) || !user.can_read(src) || interacting_with == user)
+		return NONE
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_KINDRED_ARCHIVE))
+		return ITEM_INTERACT_BLOCKING
 	if(!HAS_MIND_TRAIT(user, TRAIT_OCCULTIST))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_warning("[src] burns your hands as you try to use it!"))
 			user.apply_damage(3, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert_to_viewers("reading book...", "looks at [target] and [src]")
-	if(!do_after(user, 3 SECONDS, target, interaction_key = DOAFTER_SOURCE_KINDRED_ARCHIVE))
+	user.balloon_alert_to_viewers("reading book...", "looks at [interacting_with] and [src]")
+	if(!do_after(user, 3 SECONDS, interacting_with, interaction_key = DOAFTER_SOURCE_KINDRED_ARCHIVE))
 		to_chat(user, span_notice("You quickly close [src]."))
-		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(target)
+		return ITEM_INTERACT_BLOCKING
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(interacting_with)
 	// Are we a Bloodsucker | Are we on Masquerade. If one is true, they will fail.
-	if(IS_BLOODSUCKER(target) && !HAS_TRAIT(target, TRAIT_MASQUERADE))
+	if(IS_BLOODSUCKER(interacting_with) && !HAS_TRAIT(interacting_with, TRAIT_MASQUERADE))
 		if(bloodsuckerdatum.broke_masquerade)
-			to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', is indeed a Bloodsucker, but you already knew this."))
-			return
-		to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
-		bloodsuckerdatum.break_masquerade()
+			to_chat(user, span_warning("[interacting_with], also known as '[bloodsuckerdatum.return_full_name()]', is indeed a Bloodsucker, but you already knew this."))
+		else
+			to_chat(user, span_warning("[interacting_with], also known as '[bloodsuckerdatum.return_full_name()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
+			bloodsuckerdatum.break_masquerade()
 	else
-		to_chat(user, span_notice("You fail to draw any conclusions to [target] being a Bloodsucker."))
+		to_chat(user, span_notice("You fail to draw any conclusions to [interacting_with] being a Bloodsucker."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/book/kindred/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/book/kindred/attack_self(mob/living/user)
 	if(!HAS_MIND_TRAIT(user, TRAIT_OCCULTIST))

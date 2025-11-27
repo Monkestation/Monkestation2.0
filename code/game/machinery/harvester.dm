@@ -56,14 +56,13 @@
 	else if(!harvesting)
 		open_machine()
 
-/obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/harvester/click_alt(mob/living/user)
 	if(harvesting || !user || !isliving(user) || state_open)
-		return
-	if(can_harvest())
-		start_harvest()
+		return CLICK_ACTION_BLOCKING
+	if(!can_harvest())
+		return CLICK_ACTION_BLOCKING
+	start_harvest()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered() || state_open || !occupant || !iscarbon(occupant))

@@ -81,16 +81,13 @@ GLOBAL_VAR(dj_booth)
 	logger.Log(LOG_CATEGORY_MUSIC, "[src] started broadcasting [inserted_tape]")
 	start_broadcast()
 
-/obj/machinery/cassette/dj_station/AltClick(mob/user)
-	. = ..()
-	if(!isliving(user) || !user.Adjacent(src))
-		return
-	if(!inserted_tape)
-		return
+/obj/machinery/cassette/dj_station/click_alt(mob/living/user)
+	if(!isliving(user) || !user.Adjacent(src) || !inserted_tape)
+		return CLICK_ACTION_BLOCKING
 	if(broadcasting)
 		next_song()
 
-/obj/machinery/cassette/dj_station/CtrlClick(mob/user)
+/obj/machinery/cassette/dj_station/click_ctrl(mob/user)
 	. = ..()
 	if(!inserted_tape || broadcasting)
 		return

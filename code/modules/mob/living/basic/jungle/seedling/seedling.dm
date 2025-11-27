@@ -100,23 +100,25 @@
 
 ///seedlings can water trays, remove weeds, or remove dead plants
 /mob/living/basic/seedling/proc/treat_hydro_tray(atom/movable/hydro)
-	var/datum/component/plant_growing/growing = hydro.GetComponent(/datum/component/plant_growing)
+	var/datum/component/plant_growing/growing = \
+			hydro.GetComponent(/datum/component/plant_growing)
 	if(!growing)
 		return
 
-	for(var/item in growing.managed_seeds)
-		var/obj/item/seeds/seed = growing.managed_seeds[item]
+	for(var/_item, seed_item in growing.managed_seeds)
+		var/obj/item/seeds/seed = seed_item
 		if(!seed)
 			continue
-		var/datum/component/growth_information/info = seed.GetComponent(/datum/component/growth_information)
+		var/datum/component/growth_information/info = \
+				seed.GetComponent(/datum/component/growth_information)
 
 		if(info.plant_state == HYDROTRAY_PLANT_DEAD)
-			balloon_alert(src, "dead plant removed")
-			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, item)
+			balloon_alert_to_viewers("dead plant removed")
+			SEND_SIGNAL(hydro, COMSIG_REMOVE_PLANT, seed_item)
 			return
 
 		if(growing.weed_level > 0)
-			balloon_alert(src, "weeds uprooted")
+			balloon_alert_to_viewers("weeds uprooted")
 			SEND_SIGNAL(hydro, COMSIG_PLANT_ADJUST_WEED, -10)
 			return
 

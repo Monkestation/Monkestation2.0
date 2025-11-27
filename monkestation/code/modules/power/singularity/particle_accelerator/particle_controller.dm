@@ -6,8 +6,8 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = NO_POWER_USE
-	idle_power_usage = 500
-	active_power_usage = 10000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	dir = NORTH
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	var/strength_upper_limit = 2

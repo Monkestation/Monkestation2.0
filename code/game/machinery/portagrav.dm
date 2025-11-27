@@ -10,6 +10,7 @@
 	max_integrity = 250
 	circuit = /obj/item/circuitboard/machine/portagrav
 	armor_type = /datum/armor/portable_gravity
+	interaction_flags_click = ALLOW_SILICON_REACH
 	//We don't use area power
 	use_power = NO_POWER_USE
 	///The cell we spawn with

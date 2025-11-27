@@ -3,19 +3,12 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
 /obj/machinery/computer/prisoner/management
 	name = "prisoner management console"
-	desc = "Used to manage tracking implants placed inside criminals."
+	desc = "Used to modify prisoner IDs, as well as manage security implants placed inside convicts and parolees."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
 	light_color = COLOR_SOFT_RED
-	var/id = 0
-	var/temp = null
-	var/status = 0
-	var/timeleft = 60
-	var/stop = 0
-	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	circuit = /obj/item/circuitboard/computer/prisoner
-
 
 /obj/machinery/computer/prisoner/management/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -50,7 +43,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
 	return data
 
-/obj/machinery/computer/prisoner/management/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/prisoner/management/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

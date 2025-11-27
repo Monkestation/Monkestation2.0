@@ -31,6 +31,15 @@
 	disabled = TRUE, \
 	)
 
+/obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	// Check if we can still use the equipment & use power for every iteration of do after
+	if(!action_checks(target))
+		return FALSE
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
@@ -57,6 +66,9 @@
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
 			var/turf/T = target
 			T.drill_act(src, source)
 			return ..()

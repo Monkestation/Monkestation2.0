@@ -8,3 +8,4 @@
 	icon_state = "clown_yellow"
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	worn_icon_state = "clown_yellow"
+	actions_types = null

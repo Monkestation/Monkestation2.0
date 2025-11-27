@@ -30,6 +30,13 @@
 	. = ..()
 	register_context()
 
+/obj/item/clothing/accessory/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /**
  * Can we be attached to the passed clothing article?
  */
@@ -59,7 +66,7 @@
 	. = ..()
 
 	var/obj/item/clothing/under/attached_to = loc
-	
+
 	if(!istype(attached_to))
 		return
 
@@ -118,10 +125,10 @@
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+	if(detach_from.atom_storage?.real_location == src)
 		// Ensure void items do not stick around
-		atom_storage.close_all()
-		detach_from.atom_storage.close_all()
+		atom_storage?.close_all()
+		detach_from.atom_storage?.close_all()
 		// And clean up the storage we made
 		QDEL_NULL(detach_from.atom_storage)
 

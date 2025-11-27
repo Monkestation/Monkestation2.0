@@ -66,7 +66,7 @@
 /obj/item/organ/internal/eyes/synth
 	name = "optical sensors"
 	icon_state = "cybernetic_eyeballs"
-	desc = "A very basic set of optical sensors with no extra vision modes or functions."
+	desc = "A very basic set of optical sensors, only helping serve against protecting vision from bright lights."
 	maxHealth = 1 * STANDARD_ORGAN_THRESHOLD
 	flash_protect = FLASH_PROTECTION_WELDER
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION
@@ -84,23 +84,6 @@
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Mild interference clouds your optics with static. Error Code: I-CS0"))
 			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum =maxHealth, required_organ_flag = ORGAN_ROBOTIC)
-
-/datum/design/synth_eyes
-	name = "Optical Sensors"
-	desc = "A very basic set of optical sensors with no extra vision modes or functions."
-	id = "synth_eyes"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	construction_time = 4 SECONDS
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/organ/internal/eyes/synth
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
 
 /obj/item/organ/internal/eyes/robotic/meson
 	name = "meson eyes"

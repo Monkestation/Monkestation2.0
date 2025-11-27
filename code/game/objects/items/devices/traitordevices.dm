@@ -691,7 +691,7 @@ effective or pretty fucking useless.
 		return
 	icon_state = "missile_targeter_0"
 
-/obj/item/missile_targeter/AltClick(mob/living/user)
+/obj/item/missile_targeter/click_alt(mob/living/user)
 	if(!(check_usability(user)))
 		return
 	if(!designated_target)

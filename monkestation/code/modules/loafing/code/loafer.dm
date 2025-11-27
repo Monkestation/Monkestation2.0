@@ -4,6 +4,7 @@
 	icon = 'monkestation/code/modules/loafing/icons/obj.dmi'
 	icon_state = "loafer"
 	base_icon_state = "loafer"
+	construct_type = /obj/structure/disposalconstruct/loafer
 	var/is_loafing = FALSE
 	var/static/list/loaf_blacklist
 
@@ -101,23 +102,6 @@
 /obj/structure/disposalpipe/loafer/update_icon_state()
 	icon_state = "[base_icon_state][is_loafing ? "-on" : ""]"
 	return ..()
-
-/obj/structure/disposalpipe/loafer/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			if(stored)
-				stored.forceMove(loc)
-				transfer_fingerprints_to(stored)
-				stored.setDir(dir)
-				stored = null
-		else
-			var/turf/T = get_turf(src)
-			for(var/D in GLOB.cardinals)
-				if(D & dpdir)
-					var/obj/structure/disposalpipe/broken/P = new(T)
-					P.setDir(D)
-	spew_forth()
-	qdel(src)
 
 /obj/structure/disposalpipe/loafer/emagged // in case an admin wants to spawn in a pre-emagged one
 	obj_flags = parent_type::obj_flags | EMAGGED

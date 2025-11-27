@@ -49,6 +49,8 @@
 		if (forced_interaction_mode)
 			client.imode?.replace(forced_interaction_mode)
 		else
+			// Give you your preferred hud rather than whatever imode is already in your client
+			client.imode?.replace(available_interaction_modes[client.prefs.read_preference(/datum/preference/choiced/interaction_mode)])
 			client.imode?.reload_hud(src)
 		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
 		if(!client)

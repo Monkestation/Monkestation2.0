@@ -186,6 +186,10 @@
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
 
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
 		direct_target = TRUE
@@ -493,7 +497,7 @@
 			if(to_revive.stat != DEAD)
 				continue
 			to_revive.set_species(/datum/species/shadow, TRUE)
-			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			//Free revives, but significantly limits your options for reviving except via the crystal
 			//except JK who cares about BADDNA anymore. this even heals suicides.
 			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)

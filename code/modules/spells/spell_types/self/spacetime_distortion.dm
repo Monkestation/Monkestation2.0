@@ -19,6 +19,8 @@
 	var/duration = 15 SECONDS
 	/// A lazylist of all scramble effects this spell has created.
 	var/list/effects
+	/// The type of effect we spawn
+	var/obj/effect/cross_action/spacetime_dist/spawned_effect_type = /obj/effect/cross_action/spacetime_dist
 
 /datum/action/cooldown/spell/spacetime_dist/Destroy()
 	QDEL_LAZYLIST(effects)

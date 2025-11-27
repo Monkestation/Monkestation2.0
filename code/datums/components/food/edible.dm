@@ -506,6 +506,20 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	var/mob/living/carbon/C = eater
 
+	if(HAS_TRAIT(eater, TRAIT_FOOD_ABSORPTION))
+		if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+			return
+		var/covered_bodyparts = NONE
+		for(var/obj/item/clothing/equipped in C.get_equipped_items())
+			covered_bodyparts |= equipped.body_parts_covered
+
+		if((covered_bodyparts & CHEST|HEAD|ARMS|HANDS|LEGS|FEET) == (CHEST|HEAD|ARMS|HANDS|LEGS|FEET) && C.is_mouth_covered())
+			var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
+			to_chat(feeder, span_warning("You have to expose the membrane on [who] body."))
+			return FALSE
+		else
+			return TRUE
+
 	if(!C.has_mouth())
 		return FALSE
 

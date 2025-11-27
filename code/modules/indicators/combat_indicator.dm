@@ -66,8 +66,6 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 
 /mob/living/proc/combat_indicator_unconscious_signal()
 	SIGNAL_HANDLER
-	if(stat < UNCONSCIOUS) // sanity check because something is calling this signal improperly -- it may be due to adjustconciousness()
-		CRASH("Improper COMSIG_LIVING_STATUS_UNCONSCIOUS sent; mob is not unconscious")
 	set_combat_indicator(FALSE)
 
 /**
@@ -115,12 +113,12 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 		combat_indicator = TRUE
 		apply_status_effect(/datum/status_effect/grouped/surrender, src)
 		log_message("<font color='red'>has turned ON the combat indicator!</font>", LOG_ATTACK)
-		RegisterSignal(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, PROC_REF(combat_indicator_unconscious_signal)) //From now on, whenever this mob falls unconcious, the referenced proc will fire.
+		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), PROC_REF(combat_indicator_unconscious_signal)) //From now on, whenever this mob falls unconcious, the referenced proc will fire.
 	else
 		combat_indicator = FALSE
 		remove_status_effect(/datum/status_effect/grouped/surrender, src)
 		log_message("<font color='blue'>has turned OFF the combat indicator!</font>", LOG_ATTACK)
-		UnregisterSignal(src, COMSIG_LIVING_STATUS_UNCONSCIOUS) //combat_indicator_unconcious_signal will no longer be fired if this mob is unconcious.
+		UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT)) //combat_indicator_unconcious_signal will no longer be fired if this mob is unconcious.
 	update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
 
 /**

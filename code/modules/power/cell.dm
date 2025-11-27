@@ -6,7 +6,7 @@
 /obj/item/stock_parts/power_store/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
-	icon = 'icons/obj/machines/cell_charger.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -15,7 +15,6 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 
@@ -70,17 +69,6 @@
 	SEND_SIGNAL(src, COMSIG_CELL_CHANGE_POWER) // MONKE EDIT: Signal being sent
 	return power_used
 
-/obj/item/stock_parts/power_store/cell/examine(mob/user)
-	. = ..()
-	if(rigged)
-		. += span_danger("This power cell seems to be faulty!")
-	// MONKESTATION EDIT ADDITION
-	else if(microfusion_readout)
-		. += "The charge meter reads [charge]/[maxcharge] MF."
-	// MONKESTATION EDIT END
-	else
-		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
-
 /obj/item/stock_parts/power_store/cell/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
@@ -96,10 +84,6 @@
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
-/obj/item/stock_parts/power_store/cell/crap/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
-
 /obj/item/stock_parts/power_store/cell/crap/empty
 	empty = TRUE
 
@@ -110,10 +94,6 @@
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
-
-/obj/item/stock_parts/power_store/cell/upgraded/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/stock_parts/power_store/cell/upgraded/plus
 	name = "upgraded power cell+"

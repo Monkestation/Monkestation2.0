@@ -13,7 +13,6 @@
 	contains = list(/obj/item/clothing/head/cone = 6)
 	crate_name = "engineering hat crate"
 
-/* // Commented out to remove from cargo orders as no maps in rotation require this. This will remain until it is changed. -Dexee 4/21/24
 /datum/supply_pack/engineering/stompers
 	name = "Hotspot Stomping Kit"
 	desc = "Everything you need to stomp hotspots."
@@ -27,7 +26,7 @@
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/vent_package = 5)
 	crate_name = "engineering vent crate"
-*/
+
 /datum/supply_pack/engineering/servicefab
 	name = "Service Techfab Replacement"
 	desc = "You're telling me botany broke it with a lemon?"

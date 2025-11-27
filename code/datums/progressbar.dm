@@ -18,25 +18,10 @@
 	var/listindex = 0
 	///The type of our last value for bar_loc, for debugging
 	var/location_type
-	///border image
-	var/image/border
-	///shown image
-	var/image/shown_image
-	///accessroy overlay that goes over the bar
-	var/image/border_look_accessory
-	///the color shown when its active
-	var/active_color
-	///the color shown when it fails
-	var/fail_color
-	///the color shown when it succeeds
-	var/finish_color
-	///do we use the old format of progress bars or the new version
-	var/old_format = FALSE
-	///the icon_state of the bar
-	var/bar_look
+	///Where to draw the progress bar above the icon
+	var/offset_y
 
-
-/datum/progressbar/New(mob/User, goal_number, atom/target, border_look = "border", border_look_accessory, bar_look = "prog_bar", old_format = FALSE, active_color = "#6699FF", finish_color = "#FFEE8C", fail_color = "#FF0033" , mutable_appearance/additional_image)
+/datum/progressbar/New(mob/User, goal_number, atom/target, starting_amount)
 	. = ..()
 	if (!istype(target))
 		stack_trace("Invalid target [target] passed in")
@@ -51,33 +36,16 @@
 		qdel(src)
 		return
 	goal = goal_number
-	src.location_type = target.type
-	src.old_format = old_format
-	src.active_color = active_color
-	src.fail_color = fail_color
-	src.finish_color = finish_color
+	bar_loc = target
+	location_type = bar_loc.type
 
-	src.bar_look = bar_look
-	if(additional_image)
-		shown_image = image(additional_image.icon, target, additional_image.icon_state, 1.1)
-		SET_PLANE_EXPLICIT(shown_image, ABOVE_HUD_PLANE, User)
-		shown_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/list/icon_offsets = target.get_oversized_icon_offsets()
+	var/offset_x = icon_offsets["x"]
+	offset_y = icon_offsets["y"]
 
-	border = image('monkestation/icons/effects/progessbar.dmi', target, border_look, 1)
-	border.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-	bar = image('monkestation/icons/effects/progessbar.dmi', target, bar_look, 1.1)
-
+	bar = image('icons/effects/progressbar.dmi', bar_loc, "prog_bar_0", pixel_x = offset_x)
 	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, User)
-	SET_PLANE_EXPLICIT(border, ABOVE_HUD_PLANE, User)
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	bar.color = active_color
-
-	if(border_look_accessory)
-		src.border_look_accessory = shown_image = image('monkestation/icons/effects/progessbar.dmi', target, border_look_accessory, 1.2)
-		SET_PLANE_EXPLICIT(src.border_look_accessory, ABOVE_HUD_PLANE, User)
-		src.border_look_accessory.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
 	user = User
 
 	LAZYADDASSOCLIST(user.progressbars, bar_loc, src)
@@ -92,6 +60,8 @@
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 
+	if(starting_amount)
+		update(starting_amount)
 
 /datum/progressbar/Destroy()
 	if(user)
@@ -101,13 +71,9 @@
 				continue
 			progress_bar.listindex--
 
-			var/dist_to_travel = 32 + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
-			animate(progress_bar.bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-			animate(progress_bar.border, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-			if(progress_bar.shown_image)
-				animate(progress_bar.shown_image, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-			if(progress_bar.border_look_accessory)
-				animate(progress_bar.border_look_accessory, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+			progress_bar.bar.pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
+			var/dist_to_travel = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
+			animate(progress_bar.bar, pixel_z = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
 		user = null
@@ -137,11 +103,6 @@
 	if(!user_client) //Disconnected, already gone.
 		return
 	user_client.images -= bar
-	user_client.images -= border
-	if(shown_image)
-		user_client.images -= shown_image
-	if(border_look_accessory)
-		user_client.images -= border_look_accessory
 	user_client = null
 
 
@@ -161,25 +122,11 @@
 
 ///Adds a smoothly-appearing progress bar image to the player's screen.
 /datum/progressbar/proc/add_prog_bar_image_to_client()
-	var/stored_index = listindex - 1
-	bar.pixel_y = -32
+	bar.pixel_z = 0
 	bar.alpha = 0
 	user_client.images += bar
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-	border.pixel_y = -32
-	border.alpha = 0
-	user_client.images += border
-	animate(border, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-	if(shown_image)
-		shown_image.pixel_y = -32
-		shown_image.alpha = 0
-		user_client.images += shown_image
-		animate(shown_image, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
-	if(border_look_accessory)
-		src.border_look_accessory.pixel_y = -32
-		src.border_look_accessory.alpha = 0
-		user_client.images += border_look_accessory
-		animate(src.border_look_accessory, pixel_y = 32 + (PROGRESSBAR_HEIGHT * stored_index), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+	animate(bar, pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+
 
 ///Updates the progress bar image visually.
 /datum/progressbar/proc/update(progress)
@@ -187,29 +134,17 @@
 	if(progress == last_progress)
 		return
 	last_progress = progress
-	var/complete = clamp(progress / goal, 0, 1)
-	if(old_format)
-		bar.icon_state = "[bar_look]_[round(((progress / goal) * 100), 5)]"
-	else
-		bar.transform = matrix(complete, 0, -10 * (1 - complete), 0, 1, 0)
+	bar.icon_state = "prog_bar_[round(((progress / goal) * 100), 5)]"
 
 
 ///Called on progress end, be it successful or a failure. Wraps up things to delete the datum and bar.
 /datum/progressbar/proc/end_progress()
 	if(last_progress != goal)
-		if(old_format)
-			bar.icon_state = "[bar.icon_state]_fail"
-		else
-			bar.color = fail_color
+		bar.icon_state = "[bar.icon_state]_fail"
 
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
-	animate(border, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
-	if(shown_image)
-		animate(shown_image, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
-	if(border_look_accessory)
-		animate(border_look_accessory, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 
 ///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
 ///So let's make hunting harddels easier yeah?

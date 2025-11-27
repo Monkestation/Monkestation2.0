@@ -70,13 +70,12 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	target.apply_status_effect(/datum/status_effect/wonderland_district)
 
 /obj/effect/anomaly/dimensional/wonderland
-	aSignal = null
+	anomaly_core = null
 	range = 5
 	immortal = TRUE
-	drops_core = FALSE
 	relocations_left = -1
 
-/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan)
 	INVOKE_ASYNC(src, PROC_REF(prepare_area), /datum/dimension_theme/wonderland)
 	return ..()
 

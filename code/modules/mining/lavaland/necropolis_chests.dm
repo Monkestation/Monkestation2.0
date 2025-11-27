@@ -15,6 +15,21 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
+// prevents chests from being destroyed by legions and such
+/obj/structure/closet/crate/necropolis/tendril/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!broken && !spawned_loot)
+		return FALSE
+	return ..()
+
+/obj/structure/closet/crate/necropolis/tendril/ex_act(severity, target)
+	if(broken || spawned_loot)
+		return ..()
+
+/obj/structure/closet/crate/necropolis/tendril/move_crushed(atom/movable/pusher, force, direction)
+	if(broken || spawned_loot)
+		return ..()
+	return FALSE
+
 /obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()

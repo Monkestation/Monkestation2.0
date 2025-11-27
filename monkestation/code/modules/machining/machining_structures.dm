@@ -462,7 +462,7 @@
 
 //circuits
 /obj/item/circuitboard/machine/industrial_lathe
-	name = "Manual lathe"
+	name = "Industrial Lathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/lathe
 	req_components = list(
@@ -473,21 +473,27 @@
 		)
 
 /obj/item/circuitboard/machine/industrial_lathe/workstation
+	name = "Workstation"
 	build_path = /obj/machinery/lathe/workstation
 
 /obj/item/circuitboard/machine/industrial_lathe/furnace
+	name = "Furnace"
 	build_path = /obj/machinery/lathe/furnace
 
 /obj/item/circuitboard/machine/industrial_lathe/tablesaw
+	name = "Tablesaw"
 	build_path = /obj/machinery/lathe/tablesaw
 
 /obj/item/circuitboard/machine/industrial_lathe/drophammer
+	name = "Drophammer"
 	build_path = /obj/machinery/lathe/drophammer
 
 /obj/item/circuitboard/machine/industrial_lathe/tailor
+	name = "Tailor"
 	build_path = /obj/machinery/lathe/tailor
 
 /obj/item/circuitboard/machine/industrial_lathe/drillpress
+	name = "Drill Press"
 	build_path = /obj/machinery/lathe/drillpress
 
 //machinery design

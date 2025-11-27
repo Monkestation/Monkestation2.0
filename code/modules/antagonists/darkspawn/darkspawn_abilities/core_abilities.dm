@@ -75,7 +75,7 @@
 	to_chat(caster, span_velvet("You begin siphoning [target]'s will..."))
 
 	//doing a second drain directly after the first makes this significantly faster
-	var doafterTime = 6 SECONDS
+	var/doafterTime = 6 SECONDS
 	if (target.has_status_effect(/datum/status_effect/broken_will))
 		doafterTime = 3 SECONDS
 		playsound(target, 'sound/magic/darkspawn/devour_will.ogg', 65, FALSE)
@@ -89,7 +89,7 @@
 	target.adjust_silence(10 SECONDS)
 
 	eating = TRUE
-	if(!do_after(caster, doafterTime, target))
+	if(!do_after(caster, doafterTime, target, hidden = TRUE))
 		to_chat(caster, span_danger("Being interrupted causes a backlash of psionic power."))
 		caster.Immobilize(5 SECONDS)
 		caster.Knockdown(10 SECONDS)
@@ -185,8 +185,12 @@
 	if(target.machine_stat)
 		to_chat(owner, span_warning("[target] has lost power."))
 		return
+	if(SSshuttle.emergency_no_recall || SSshuttle.admin_emergency_no_recall)
+		to_chat(owner, span_warning("The ruse was a failure, the shuttle will arrive anyways."))
+		return
 	SSshuttle.emergency.cancel()
 	to_chat(owner, span_velvet("The ruse was a success. The shuttle is on its way back."))
+	owner.log_message("recalled the shuttle using [src]", LOG_GAME)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/silver_tongue/proc/play_recall_sounds(obj/machinery/C, iterations) //neato sound effects
@@ -263,7 +267,7 @@
 		casting = TRUE
 		owner.balloon_alert(owner, "xkla'thra...")
 		playsound(get_turf(owner), 'sound/magic/darkspawn/devour_will_begin.ogg', 50, TRUE)
-		if(!do_after(owner, cast_time, cast_on))
+		if(!do_after(owner, cast_time, cast_on, hidden = TRUE))
 			casting = FALSE
 			return . | SPELL_CANCEL_CAST
 		casting = FALSE

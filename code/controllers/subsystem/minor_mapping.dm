@@ -41,19 +41,30 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/turf_temperature = proposed_turf.temperature
 	return turf_gasmix.has_gas(/datum/gas/oxygen, 5) && turf_temperature < NPC_DEFAULT_MAX_TEMP && turf_temperature > NPC_DEFAULT_MIN_TEMP
 
-/datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
-	var/list/turfs = find_satchel_suitable_turfs()
+/datum/controller/subsystem/minor_mapping/proc/place_satchels(satchel_amount = 10)
 	///List of areas where satchels should not be placed.
-	var/list/blacklisted_area_types = list(/area/station/holodeck)
+	var/list/blacklisted_area_types = list(
+		/area/space/nearstation,
+		/area/station/ai_monitored,
+		/area/station/holodeck,
+		/area/station/solars,
+	)
 
-	while(turfs.len && amount > 0)
-		var/turf/turf = pick_n_take(turfs)
-		if(is_type_in_list(get_area(turf), blacklisted_area_types))
+	var/list/noisy_turfs = noise_turfs_from_zs(SSmapping.levels_by_trait(ZTRAIT_STATION), 6)
+
+	var/list/station_areas = GLOB.the_station_areas
+	while(length(noisy_turfs) && satchel_amount > 0)
+		var/turf/turf = pick_n_take(noisy_turfs)
+		if(!isfloorturf(turf) || turf.underfloor_accessibility != UNDERFLOOR_HIDDEN)
+			continue
+		var/area/turf_area = get_area(turf)
+		if(!turf_area || is_type_in_list(turf_area, blacklisted_area_types) || !(turf_area.type in station_areas))
 			continue
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
 		SEND_SIGNAL(flat_satchel, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
-		amount--
+		satchel_amount--
+		log_game("Placed satchel at [AREACOORD(turf)]") // log_game for now so i can keep an eye on how evenly they are being distributed. should prolly be a blackbox thing but im lazy.
 
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
@@ -70,16 +81,6 @@ SUBSYSTEM_DEF(minor_mapping)
 			exposed_wires += T
 
 	return shuffle(exposed_wires)
-
-/proc/find_satchel_suitable_turfs()
-	var/list/suitable = list()
-
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		for(var/turf/detected_turf as anything in Z_TURFS(z))
-			if(isfloorturf(detected_turf) && detected_turf.underfloor_accessibility == UNDERFLOOR_HIDDEN)
-				suitable += detected_turf
-
-	return shuffle(suitable)
 
 #undef PROB_MOUSE_SPAWN
 #undef PROB_SPIDER_REPLACEMENT

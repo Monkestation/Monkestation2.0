@@ -99,6 +99,7 @@
 /datum/component/uplink/proc/handle_uplink_handler_update()
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
+	SStgui.update_static_data_for_all_viewers()
 
 /// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
 /datum/component/uplink/proc/handle_uplink_replaced()
@@ -234,8 +235,8 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
 			stock_list -= item
 		var/atom/actual_item = item.item
 		extra_purchasable += list(list(

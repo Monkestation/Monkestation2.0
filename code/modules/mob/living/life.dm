@@ -55,6 +55,8 @@
 		if(stat != DEAD)
 			//Random events (vomiting etc)
 			handle_random_events(seconds_per_tick, times_fired)
+			// Handle tempature alerts
+			body_temperature_alerts()
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -67,9 +69,6 @@
 			temperature_homeostasis(seconds_per_tick, times_fired)
 
 		handle_gravity(seconds_per_tick, times_fired)
-
-	if(stat != DEAD)
-		body_temperature_alerts()
 
 	handle_wounds(seconds_per_tick, times_fired)
 

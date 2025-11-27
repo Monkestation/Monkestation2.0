@@ -194,16 +194,19 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
 export const AntagsPage = () => {
   return (
-    <Box className="PreferencesMenu__Antags">
-      <AntagSelection
-        name="Roundstart"
-        antagonists={antagsByCategory.get(Category.Roundstart)!}
-      />
-
-      <AntagSelection
-        name="Midround"
-        antagonists={antagsByCategory.get(Category.Midround)!}
-      />
-    </Box>
+    <Stack overflowY="scroll" height="660px" vertical>
+      <Stack.Item>
+        <AntagSelection
+          name="Roundstart"
+          antagonists={antagsByCategory.get(Category.Roundstart)!}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <AntagSelection
+          name="Midround"
+          antagonists={antagsByCategory.get(Category.Midround)!}
+        />
+      </Stack.Item>
+    </Stack>
   );
 };

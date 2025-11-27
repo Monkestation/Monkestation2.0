@@ -43,7 +43,6 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
-#define JOB_BLUESHIELD "Blueshield" //Monke edit
 #define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
@@ -210,10 +209,10 @@
 #define DEPARTMENT_BITFLAG_SUMMER (1<<12)
 #define DEPARTMENT_SUMMER "Summer"
 
-#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<13)
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
-#define DEPARTMENT_BITFLAG_LATE (1<<12)
+#define DEPARTMENT_BITFLAG_LATE (1<<14)
 #define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
@@ -250,5 +249,5 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
-#define SUPERVISOR_QM "the Quartermaster"
+#define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel" //monkestation edit: Those under QM is also under HoP
 #define SUPERVISOR_RD "the Research Director"

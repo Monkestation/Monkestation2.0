@@ -506,7 +506,8 @@
 /obj/item/flashlight/flare/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(light_on)
-		visible_message("The enduring flickering of \the [src] refuses to fade.")
+		new trash_type(loc)
+		qdel(src)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/item/flashlight/flare/candle
@@ -624,6 +625,8 @@
 
 /obj/item/flashlight/flare/candle/process(seconds_per_tick)
 	. = ..()
+	if(QDELETED(src))
+		return
 
 	if(scented_type)
 		var/turf/my_turf = get_turf(src)

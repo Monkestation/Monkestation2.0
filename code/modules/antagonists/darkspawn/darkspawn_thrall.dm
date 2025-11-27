@@ -20,6 +20,7 @@
 	hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	antag_moodlet = /datum/mood_event/thrall_darkspawn
 	stinger_sound = 'sound/ambience/antag/darkspawn/become_veil.ogg'
+	antag_count_points = 5 //conversion
 	///The abilities granted to the thrall
 	var/list/abilities = list(/datum/action/cooldown/spell/toggle/nightvision, /datum/action/cooldown/spell/pointed/darkspawn_build/thrall_eye/thrall)
 	///The darkspawn team that the thrall is on
@@ -41,9 +42,11 @@
 	if(!team)
 		team = new
 		stack_trace("thrall made without darkspawns")
+	RegisterSignal(owner, COMSIG_OOZELING_REVIVED, PROC_REF(on_oozeling_revive))
 	return ..()
 
 /datum/antagonist/thrall_darkspawn/on_removal()
+	UnregisterSignal(owner, COMSIG_OOZELING_REVIVED)
 	message_admins("[key_name_admin(owner.current)] was dethralled!")
 	log_game("[key_name(owner.current)] was dethralled!")
 	owner.special_role = null
@@ -153,6 +156,14 @@
 		return
 	if(!get_shadow_tumor(source)) //if they somehow lose their tumor in an unusual way
 		source.remove_thrall()
+
+/// If an oozeling thrall is revived, give them a new tumor so they aren't immediately deconverted.
+/datum/antagonist/thrall_darkspawn/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core)
+	SIGNAL_HANDLER
+	var/obj/item/organ/internal/shadowtumor/thrall/tumor = new
+	tumor.Insert(new_body, drop_if_replaced = FALSE)
+	if(team)
+		tumor.antag_team = team
 
 ////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------Antag greet--------------------------------------//

@@ -184,7 +184,7 @@
 	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
-/obj/vehicle/Move(newloc, dir)
+/obj/vehicle/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	// It is unfortunate, but this is the way to make it not mess up
 	var/atom/old_loc = loc
 	// When we do this, it will set the loc to the new loc

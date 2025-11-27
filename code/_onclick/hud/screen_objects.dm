@@ -15,8 +15,9 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	appearance_flags = APPEARANCE_UI
-	/// A reference to the object in the slot. Grabs or items, generally.
-	var/obj/master = null
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
+	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
+	var/datum/weakref/master_ref = null
 	/// A reference to the owner HUD, if any.
 	// MONKESTATION EDIT START: There are a couple uses of this variable in
 	// `code\datums\interactions\interaction_mode.dm` that I'm unsure how to remove - so this can't
@@ -56,7 +57,7 @@
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
-	master = null
+	master_ref = null
 	hud = null
 	return ..()
 
@@ -65,6 +66,10 @@
 		SEND_SIGNAL(src, COMSIG_SCREEN_ELEMENT_CLICK, location, control, params, usr)
 	if(default_click)
 		return ..()
+
+///Screen elements are always on top of the players screen and don't move so yes they are adjacent
+/atom/movable/screen/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
+	return TRUE
 
 /atom/movable/screen/examine(mob/user)
 	return list()
@@ -124,8 +129,9 @@
 /atom/movable/screen/navigate
 	name = "navigate"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "navigate"
-	screen_loc = ui_navigate_menu
+	icon_state = "act_nav"
+	base_icon_state = "act_nav"
+	screen_loc = ui_above_movement
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/navigate/Click()
@@ -134,11 +140,19 @@
 	var/mob/living/navigator = usr
 	navigator.navigate()
 
+/atom/movable/screen/navigate/update_icon_state()
+	if(length(hud?.mymob?.client?.navigation_images))
+		icon_state = "[base_icon_state]_on"
+	else
+		icon_state = base_icon_state
+	return ..()
+
 /atom/movable/screen/craft
 	name = "crafting menu"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "craft"
+	icon_state = "craft_long"
 	screen_loc = ui_crafting
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/area_creator
 	name = "create new area"
@@ -183,7 +197,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(IGNORE_STASIS))
+	if(usr.incapacitated(IGNORE_STASIS|IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -241,6 +255,7 @@
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
 	var/held_index = 0
+	interaction_flags_atom = NONE //so dragging objects into hands icon don't skip adjacency & other checks
 
 /atom/movable/screen/inventory/hand/update_overlays()
 	. = ..()
@@ -272,7 +287,7 @@
 		return TRUE
 	if(world.time <= user.next_move)
 		return TRUE
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -293,10 +308,12 @@
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/close/Click()
-	var/datum/storage/storage = master
+	var/datum/storage/storage = master_ref?.resolve()
+	if(!storage)
+		return
 	storage.hide_contents(usr)
 	return TRUE
 
@@ -408,10 +425,8 @@
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
-		if(MOVE_INTENT_RUN)
+		if(MOVE_INTENT_RUN, MOVE_INTENT_SPRINT)
 			icon_state = "running"
-		if(MOVE_INTENT_SPRINT)
-			icon_state = "sprinting"
 	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
@@ -478,16 +493,16 @@
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master = new_master
+	master_ref = WEAKREF(new_master)
 
 /atom/movable/screen/storage/Click(location, control, params)
-	var/datum/storage/storage_master = master
+	var/datum/storage/storage_master = master_ref?.resolve()
 	if(!istype(storage_master))
 		return FALSE
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated())
+	if(usr.incapacitated(IGNORE_SOFTCRIT))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -1100,5 +1115,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(!isliving(source))
 		return
 	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
+
+
 
 #undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT

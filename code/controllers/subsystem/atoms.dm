@@ -15,14 +15,18 @@ SUBSYSTEM_DEF(atoms)
 	///initAtom() adds the atom its creating to this list iff InitializeAtoms() has been given a list to populate as an argument
 	var/list/created_atoms
 
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	var/list/init_costs = list()
+	var/list/init_counts = list()
+
+	var/list/late_init_costs = list()
+	var/list/late_init_counts = list()
+	#endif
+
 	/// Atoms that will be deleted once the subsystem is initialized
 	var/list/queued_deletions = list()
 
 	var/init_start_time
-
-	#ifdef PROFILE_MAPLOAD_INIT_ATOM
-	var/list/mapload_init_times = list()
-	#endif
 
 	initialized = INITIALIZATION_INSSATOMS
 
@@ -57,7 +61,21 @@ SUBSYSTEM_DEF(atoms)
 			//I hate that we need this
 			if(QDELETED(A))
 				continue
+
+			#ifdef PROFILE_MAPLOAD_INIT_ATOM
+			var/the_type = A.type
+			late_init_costs |= the_type
+			late_init_counts |= the_type
+			var/startreal = REALTIMEOFDAY
+			#endif
+
 			A.LateInitialize()
+
+			#ifdef PROFILE_MAPLOAD_INIT_ATOM
+			late_init_costs[the_type] += REALTIMEOFDAY - startreal
+			late_init_counts[the_type] += 1
+			#endif
+
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 
@@ -70,10 +88,6 @@ SUBSYSTEM_DEF(atoms)
 
 	testing("[queued_deletions.len] atoms were queued for deletion.")
 	queued_deletions.Cut()
-
-	#ifdef PROFILE_MAPLOAD_INIT_ATOM
-	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
-	#endif
 
 /// Actually creates the list of atoms. Exists soley so a runtime in the creation logic doesn't cause initalized to totally break
 /datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null, mapload_source = null)
@@ -100,9 +114,7 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
-				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
-				PROFILE_INIT_ATOM_END(A)
 #ifndef DISABLE_DEMOS
 		SSdemo.mark_multiple_new(atoms) // monkestation edit: replays
 #endif
@@ -114,9 +126,7 @@ SUBSYSTEM_DEF(atoms)
 		var/list/atoms_to_mark = list() // monkestation edit: replays
 		for(var/atom/A as anything in world)
 			if(!(A.flags_1 & INITIALIZED_1))
-				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, FALSE, mapload_arg)
-				PROFILE_INIT_ATOM_END(A)
 				atoms_to_mark += A // monkestation edit: replays
 				#ifdef TESTING
 				++count
@@ -142,6 +152,13 @@ SUBSYSTEM_DEF(atoms)
 			BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
 		return TRUE
 
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	init_costs |= A.type
+	init_counts |= A.type
+
+	var/startreal = REALTIMEOFDAY
+	#endif
+
 	// This is handled and battle tested by dreamchecker. Limit to UNIT_TESTS just in case that ever fails.
 	#ifdef UNIT_TESTS
 	var/start_tick = world.time
@@ -163,7 +180,16 @@ SUBSYSTEM_DEF(atoms)
 			if(arguments[1]) //mapload
 				late_loaders += A
 			else
-				A.LateInitialize()
+				#ifdef PROFILE_MAPLOAD_INIT_ATOM
+				late_init_costs |= the_type
+				late_init_counts |= the_type
+				var/late_startreal = REALTIMEOFDAY
+				#endif
+				A.LateInitialize(arguments)
+				#ifdef PROFILE_MAPLOAD_INIT_ATOM
+				late_init_costs[the_type] += REALTIMEOFDAY - late_startreal
+				late_init_counts[the_type] += 1
+				#endif
 		if(INITIALIZE_HINT_QDEL)
 			qdel(A)
 			qdeleted = TRUE
@@ -183,6 +209,11 @@ SUBSYSTEM_DEF(atoms)
 			SEND_SIGNAL(location, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, A, arguments[1])
 		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
 			created_atoms += A.get_all_contents()
+
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	init_costs[A.type] += REALTIMEOFDAY - startreal
+	init_counts[A.type] += 1
+	#endif
 
 	return qdeleted || QDELING(A)
 
@@ -281,3 +312,227 @@ SUBSYSTEM_DEF(atoms)
 	var/initlog = InitLog()
 	if(initlog)
 		text2file(initlog, "[GLOB.log_directory]/initialize.log")
+
+#ifdef PROFILE_MAPLOAD_INIT_ATOM
+/datum/controller/subsystem/atoms/proc/InitCostLog()
+	var/list/init_data = list()
+	for(var/path in init_costs)
+		init_data[path] = list(
+			"cost" = init_costs[path],
+			"count" = init_counts[path]
+		)
+
+	var/list/late_data = list()
+	for(var/path in late_init_costs)
+		late_data[path] = list(
+			"cost" = late_init_costs[path],
+			"count" = late_init_counts[path]
+		)
+
+	var/list/payload = list(
+		"init" = init_data,
+		"late" = late_data
+	)
+
+	var/json_payload = json_encode(payload)
+
+	. = {"
+<style>
+body { font-family: monospace; }
+.tree-node { margin-left: 20px; }
+.tree-item:hover { background: #2d2d30; }
+#tree_root { background-color: #171717; border: solid 1px #202020; font-family: "Courier New"; padding: 10px; }
+.cost-high { color: #f48771; font-weight: bold; }
+.cost-med { color: #dcdcaa; }
+.cost-low { color: #4ec9b0; }
+.expander { display: inline-block; width: 15px; }
+.percentage { color: #858585; font-size: 0.9em; }
+.count { color: #9cdcfe; font-size: 0.9em; }
+.avg { color: #ce9178; font-size: 0.9em; }
+.summary { background: #252526; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+.controls { background: #252526; border-radius: 5px; }
+.tab-group { display: inline-block; }
+</style>
+
+<a href="#" onclick='exportJSON()'>Export JSON</a>
+<script>
+function exportJSON() {
+	const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.DATA));
+	const dlAnchorElem = document.createElement('a');
+	dlAnchorElem.setAttribute("href", dataStr);
+	dlAnchorElem.setAttribute("download", `init_costs_${Math.floor(Date.now())}.json`);
+	document.body.appendChild(dlAnchorElem);
+	dlAnchorElem.click();
+	dlAnchorElem.remove();
+}
+</script>
+<a
+	onclick="window.location.href = 'byond://?action=openLink&link=' + encodeURIComponent('https://monkestation.github.io/ss13-init-cost-viewer/');"
+	target="_blank"
+	href="#"
+>Website version (More Features)</a>
+<div class='controls'>
+<div class='tab-group'>
+<a id='btn_init' class='active' onclick='setMode(\"init\")'>Initialize()</a>
+<a id='btn_late' onclick='setMode(\"late\")'>LateInitialize()</a>
+</div> |
+<div class='tab-group'>
+<a id='btn_total' class='active' onclick='setSort(\"total\")'>Sort by Total Time</a>
+<a id='btn_avg' onclick='setSort(\"avg\")'>Sort by Average Time</a>
+</div>
+</div>
+
+
+<div id='summary' class='statusDisplay'></div>
+<div id='tree_root'></div>
+
+<script>
+window.DATA = [json_payload];
+</script>
+<script>
+let MODE = 'init'; // 'init' or 'late'
+let SORT = 'total'; // 'total' or 'avg'
+
+function buildTree(flat) {
+	const root = {};
+	for(const path in flat) {
+		const entry = flat\[path\];
+		const parts = path.split('/').filter(Boolean);
+		let node = root;
+		let built = '';
+		for(let i=0;i<parts.length;i++) {
+			const part = parts\[i\];
+			built += (built ? '/' : '') + part;
+			if(!node\[part\]) {
+				node\[part\] = { cost: 0, count: 0, direct_cost: 0, direct_count: 0, children: {}, path: built, is_leaf: i === parts.length - 1 };
+			}
+			if(i === parts.length - 1) {
+				node\[part\].direct_cost = entry.cost || 0;
+				node\[part\].direct_count = entry.count || 0;
+			}
+			node\[part\].cost += entry.cost || 0;
+			node\[part\].count += entry.count || 0;
+			node = node\[part\].children;
+		}
+	}
+	return root;
+}
+
+function formatNumber(n) { return Math.round(n * 1000) / 1000; }
+function clearChildren(el) { while(el.firstChild) el.removeChild(el.firstChild); }
+
+function sortedKeys(tree, sortByAvg, totalCost) {
+	const keys = Object.keys(tree);
+	keys.sort((a,b)=>{
+		const n1 = tree\[a\], n2 = tree\[b\];
+		const v1 = sortByAvg ? (n1.cost / Math.max(n1.count,1)) : n1.cost;
+		const v2 = sortByAvg ? (n2.cost / Math.max(n2.count,1)) : n2.cost;
+		return v2 - v1; // descending
+	});
+	return keys;
+}
+
+let idCounter = 0;
+function renderTree(tree, container, totalCost, sortByAvg) {
+	const keys = sortedKeys(tree, sortByAvg, totalCost);
+	for(const key of keys) {
+		const node = tree\[key\];
+		const cost = node.cost;
+		const count = node.count;
+		const direct_cost = node.direct_cost;
+		const direct_count = node.direct_count;
+		const avg_cost = formatNumber(cost / Math.max(count,1));
+		const percentage = totalCost > 0 ? formatNumber((cost / totalCost) * 100) : 0;
+		idCounter++;
+		const myId = 'node' + idCounter;
+		const hasChildren = Object.keys(node.children).length > 0;
+		let costClass = 'cost-low';
+		if(percentage >= 10) costClass = 'cost-high';
+		else if(percentage >= 1) costClass = 'cost-med';
+
+		const item = document.createElement('div');
+		item.className = 'tree-item';
+
+		const exp = document.createElement('span');
+		exp.className = 'expander';
+		exp.id = 'exp_' + myId;
+		exp.textContent = hasChildren ? '▼' : '\\u00A0';
+		if(hasChildren) exp.style.cursor = 'pointer';
+		item.appendChild(exp);
+
+		const nameSpan = document.createElement('span');
+		nameSpan.className = costClass;
+		nameSpan.textContent = key;
+		item.appendChild(nameSpan);
+
+		const info = document.createElement('span');
+		info.innerHTML = ' - <b>' + cost + 'ds</b> <span class=\"count\">(' + count + 'x)</span> <span class=\"avg\">' + avg_cost + 'ds avg</span>';
+		if(direct_cost > 0 && hasChildren) {
+			const directAvg = formatNumber(direct_cost / Math.max(direct_count,1));
+			info.innerHTML += ' (direct: ' + direct_cost + 'ds, ' + direct_count + 'x, ' + directAvg + 'ds avg) ';
+		}
+		info.innerHTML += ' <span class=\"percentage\">(' + percentage + '%)</span>';
+		item.appendChild(info);
+
+		container.appendChild(item);
+
+		if(hasChildren) {
+			const childContainer = document.createElement('div');
+			childContainer.className = 'tree-node';
+			childContainer.id = myId;
+			container.appendChild(childContainer);
+			// by default children are visible; toggle handler
+			exp.addEventListener('click', ()=>{
+				if(childContainer.style.display === 'none') { childContainer.style.display = 'block'; exp.textContent = '▼'; }
+				else { childContainer.style.display = 'none'; exp.textContent = '▶'; }
+			});
+			renderTree(node.children, childContainer, totalCost, sortByAvg);
+		}
+	}
+}
+
+function renderAll() {
+	const flat = (MODE === 'init') ? DATA.init : DATA.late;
+	const tree = buildTree(flat);
+	// compute totals
+	let totalCost = 0, totalCount = 0, types = 0;
+	for(const k in flat) { totalCost += (flat\[k\].cost || 0); totalCount += (flat\[k\].count || 0); types++; }
+
+	const summary = document.getElementById('summary');
+	summary.innerHTML = '<h2>' + (MODE === 'late' ? 'Late ' : '') + 'Initialization Cost Analysis</h2>' +
+		'<b>Total ' + (MODE === 'late' ? 'Late ' : '') + 'Init Time:</b> ' + totalCost + ' ds (' + (formatNumber(totalCost/10)) + 's)<br>' +
+		'<b>Total Instances:</b> ' + totalCount + '<br>' +
+		'<b>Total Types:</b> ' + types + '<br>' +
+		'<b>Average Cost:</b> ' + (formatNumber(totalCost / Math.max(totalCount,1))) + ' ds per instance<br>' +
+		'<b>Sorting by:</b> ' + (SORT === 'avg' ? 'Average time per instance' : 'Total time');
+
+	const root = document.getElementById('tree_root');
+	clearChildren(root);
+	idCounter = 0;
+	renderTree(tree, root, totalCost, SORT === 'avg');
+	// update buttons classes
+	document.getElementById('btn_init').className = (MODE === 'init') ? 'active' : '';
+	document.getElementById('btn_late').className = (MODE === 'late') ? 'active' : '';
+	document.getElementById('btn_total').className = (SORT === 'total') ? 'active' : '';
+	document.getElementById('btn_avg').className = (SORT === 'avg') ? 'active' : '';
+}
+
+function setMode(m) { if(MODE === m) return; MODE = m; renderAll(); }
+function setSort(s) { if(SORT === s) return; SORT = s; renderAll(); }
+
+renderAll();
+</script>
+"}
+
+
+ADMIN_VERB(cmd_display_init_costs, R_DEBUG, FALSE, "Display Init Costs", "Displays initialization costs in a tree format", ADMIN_CATEGORY_DEBUG)
+	if(alert(user, "Are you sure you want to view the initialization costs? This may take more than a minute to load.", "Confirm", "Yes", "No") != "Yes")
+		return
+	if(!LAZYLEN(SSatoms.init_costs))
+		to_chat(user, span_notice("Init costs list is empty."))
+	else
+		var/datum/browser/panel = new(user, "initcosts", "Initialization Costs", 900, 600)
+		panel.set_content(HTML_SKELETON(SSatoms.InitCostLog()))
+		panel.open()
+
+#endif

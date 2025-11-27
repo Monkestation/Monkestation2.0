@@ -7,8 +7,10 @@
 	suicide_cry = ",r For Ratvar!!!"
 	ui_name = "AntagInfoClock"
 	show_to_ghosts = TRUE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 	antag_hud_name = "clockwork"
 	stinger_sound = 'sound/magic/clockwork/scripture_tier_up.ogg'
+	antag_count_points = 4
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new
 	/// Ref to the cultist's slab recall ability

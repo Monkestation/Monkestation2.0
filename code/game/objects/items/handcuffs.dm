@@ -40,7 +40,9 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
+	/// Breakout time for the cuffs
 	breakouttime = 1 MINUTES
+	/// Time to hand cuff someone
 	var/handcuff_time = 3 SECONDS
 	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
@@ -77,7 +79,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
-			log_combat(user, C, "attempted to handcuff")
+			log_combat(user, C, "attempted to handcuff", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 
 			if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
 				handcuff_time_mod = 0.75
@@ -93,10 +95,10 @@
 									span_userdanger("[user] handcuffs you."))
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-				log_combat(user, C, "handcuffed")
+				log_combat(user, C, "handcuffed", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 			else
 				to_chat(user, span_warning("You fail to handcuff [C]!"))
-				log_combat(user, C, "failed to handcuff")
+				log_combat(user, C, "failed to handcuff", src)
 		else
 			to_chat(user, span_warning("[C] doesn't have two hands..."))
 
@@ -127,6 +129,34 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
+
+/obj/item/restraints/handcuffs/silver
+	name = "silver handcuffs"
+	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, but some say they can contain certain creatures of the night..."
+	breakouttime = 45 SECONDS
+
+	trashtype = /obj/item/restraints/handcuffs/silver/used
+
+	color = list(
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1,
+		0.4,0.4,0.4
+	)
+
+/obj/item/restraints/handcuffs/silver/used
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
+	user.visible_message(span_danger("The [name] shatter into a hundred pieces!"))
+
+	return ..()
+
+/obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
+	. = ..()
+
+	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
+		target.apply_status_effect(/datum/status_effect/silver_cuffed)
 
 /**
  * # Alien handcuffs

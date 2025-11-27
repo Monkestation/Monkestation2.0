@@ -73,6 +73,7 @@
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	weird = TRUE
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
@@ -228,6 +229,7 @@
 	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
+	weird = TRUE
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)

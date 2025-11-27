@@ -35,9 +35,9 @@
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
 /// Access for Blueshield to their office and locker, as well as access to the NT Representitive Office
-#define ACCESS_BLUESHIELD "blueshield" ///monkestation edit
+#define ACCESS_BLUESHIELD "blueshield" //monkestation edit
 /// Access for NT Rep to their office and locker, as well as access to the Blueshield Office
-#define ACCESS_NT_REPRESENTATVE "nt_rep" ///monkestation edit
+#define ACCESS_NT_REPRESENTATVE "nt_rep" //monkestation edit
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
 #define ACCESS_SECURITY "security"

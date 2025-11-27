@@ -193,9 +193,11 @@
 			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase) //give the guy more time to hijack if it's already in flight.
 	return shuttle.hijack_status
 
-/obj/machinery/computer/emergency_shuttle/AltClick(user)
-	if(isliving(user))
-		attempt_hijack_stage(user)
+/obj/machinery/computer/emergency_shuttle/click_alt(mob/living/user)
+	if(!isliving(user))
+		return NONE
+	attempt_hijack_stage(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
@@ -773,12 +775,12 @@
 	// (IE all space suits instead of just the emergency ones)
 	// because an enterprising traitor might be able to hide things,
 	// like their syndicate toolbox or softsuit. may be fun?
-	var/static/list/exception_cache = typecacheof(list(
+	set_holdable(exception_hold_list = list(
 		/obj/item/clothing/suit/space,
 		/obj/item/pickaxe,
 		/obj/item/storage/toolbox,
 	))
-	src.exception_hold = exception_cache
+
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(update_lock))
 	update_lock(new_level = SSsecurity_level.get_current_level_as_number())
 

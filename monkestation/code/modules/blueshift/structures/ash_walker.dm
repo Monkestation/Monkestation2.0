@@ -325,9 +325,9 @@
 	if(has_buckled_mobs())
 		. += railoverlay
 
-/obj/vehicle/ridden/rail_cart/AltClick(mob/user)
+/obj/vehicle/ridden/rail_cart/click_alt(mob/user)
 	attach_trailer()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/rail_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -742,7 +742,7 @@
 		qdel(src)
 		return
 
-	living_inside.revive(ADMIN_HEAL_ALL)
+	living_inside.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	living_inside.forceMove(get_turf(src))
 	living_inside.mind.grab_ghost()
 	living_inside.balloon_alert_to_viewers("[living_inside] breaks out of [src]!")

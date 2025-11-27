@@ -5,6 +5,8 @@
 	base_icon_state = "splicer"
 	icon_state = "splicer"
 	circuit = /obj/item/circuitboard/machine/splicer
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	var/obj/item/seeds/seed_1
 	var/obj/item/seeds/seed_2

@@ -66,6 +66,9 @@
 		return FALSE
 	if(angery.stat != CONSCIOUS)//Thralls cannot be deconverted while awake
 		return FALSE
+	if(angery.handcuffed && angery.buckled)//Thralls cannot be deconverted while uncontained.
+		angery.visible_message(span_userdanger("[angery] suddenly slams upward, thrashing against their restraints."))
+		return FALSE
 	if(!IS_THRALL(angery))//non thralls don't resist
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, resist_cooldown))//adds a cooldown to the resist so a thrall ipc or preternis can't weaponize it

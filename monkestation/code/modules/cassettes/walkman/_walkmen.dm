@@ -85,17 +85,17 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 		to_chat(user,("There's no tape to play"))
 	playsound(src,'sound/machines/click.ogg',20,1)
 
-/obj/item/device/walkman/AltClick(mob/user)
-	if(tape)
-		eject_tape(user)
-	else
-		..()
+/obj/item/device/walkman/click_alt(mob/user)
+	if(!tape)
+		return CLICK_ACTION_BLOCKING
+	eject_tape(user)
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/device/walkman/CtrlClick(mob/user)
-	if(tape)
-		next_song(user)
-	else
-		return ..()
+/obj/item/device/walkman/item_ctrl_click(mob/user)
+	if(!tape)
+		return CLICK_ACTION_BLOCKING
+	next_song(user)
+	return CLICK_ACTION_SUCCESS
 
 ///This is called when sound needs to be broken ie you die or lose access to it
 /obj/item/device/walkman/proc/break_sound()

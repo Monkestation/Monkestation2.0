@@ -24,7 +24,6 @@
 	inhand_icon_state = "hyeseong_kill"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/saibasan/guns_worn.dmi'
 	worn_icon_state = "hyeseong_kill"
-	cell_type = /obj/item/stock_parts/power_store/cell/hyeseong_internal_cell
 	modifystate = FALSE
 	ammo_type = list(/obj/item/ammo_casing/energy/cybersun_big_kill)
 	can_select = FALSE
@@ -85,7 +84,6 @@
 	chat_color = DEFAULT_RUNECHAT_GUN_COLOR
 	chat_color_darkened = process_chat_color(DEFAULT_RUNECHAT_GUN_COLOR, sat_shift = 0.85, lum_shift = 0.85)
 	last_charge = cell.charge
-	tracked_soulcatcher = AddComponent(/datum/component/soulcatcher/modular_laser)
 	create_weapon_mode_stuff()
 
 /obj/item/gun/energy/modular_laser_rifle/examine(mob/user)
@@ -102,9 +100,9 @@
 	QDEL_NULL(tracked_soulcatcher)
 	return ..()
 
-/obj/item/gun/energy/modular_laser_rifle/AltClick(mob/user)
+/obj/item/gun/energy/modular_laser_rifle/click_alt(mob/user)
 	tracked_soulcatcher?.ui_interact(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 /// Handles filling out all of the lists regarding weapon modes and radials around that
 /obj/item/gun/energy/modular_laser_rifle/proc/create_weapon_mode_stuff()
@@ -200,6 +198,8 @@
 
 /obj/item/gun/energy/modular_laser_rifle/equipped(mob/user, slot, initial)
 	. = ..()
+	if(user.client)
+		tracked_soulcatcher = LoadComponent(/datum/component/soulcatcher/modular_laser)
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE))
 		speak_up("worn")
 	else if(slot & ITEM_SLOT_HANDS)
@@ -230,12 +230,6 @@
 	speak_up("[personality_mode ? "pickup" : "putdown"]", ignores_personality_toggle = TRUE)
 	return ..()
 
-// Power cell for the big rifle
-/obj/item/stock_parts/power_store/cell/hyeseong_internal_cell
-	name = "\improper Hyeseong modular laser rifle internal cell"
-	desc = "These are usually supposed to be inside of the gun, you know."
-	maxcharge = 1000 * 2
-
 /datum/action/item_action/toggle_personality
 	name = "Toggle Weapon Personality"
 	desc = "Toggles the weapon's personality core. Studies find that turning them off makes them quite sad, however."
@@ -254,7 +248,6 @@
 	worn_icon_state = "hoshi_kill"
 	base_icon_state = "hoshi"
 	charge_sections = 3
-	cell_type = /obj/item/stock_parts/power_store/cell
 	ammo_type = list(/obj/item/ammo_casing/energy/cybersun_small_hellfire)
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 	SET_BASE_PIXEL(0, 0)

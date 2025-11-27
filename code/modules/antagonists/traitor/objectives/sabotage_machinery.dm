@@ -92,6 +92,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 	)
 
 	/// Bonus reward to grant if you booby trap successfully
@@ -167,7 +168,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	if (. || !istype(target, target_machine_path))
 		return
 	balloon_alert(user, "planting device...")
-	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE))
+	if(!do_after(user, delay = deploy_time, target = src, interaction_key = DOAFTER_SOURCE_PLANTING_DEVICE, hidden = TRUE))
 		return TRUE
 	target.AddComponent(\
 		component_datum,\

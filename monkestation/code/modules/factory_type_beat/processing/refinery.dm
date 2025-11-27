@@ -126,6 +126,7 @@
 		if(istype(potential_boulder, /obj/item/processing/refined_dust))
 			boulders_concurrent-- //We count dust.
 			refine_dust(potential_boulder)
+			continue
 
 		var/obj/item/boulder/boulder = potential_boulder
 		if(boulder.durability < 0)
@@ -164,8 +165,8 @@
 	silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency)
 	if(length(dust.custom_materials)) // If our dust still has materials we cant process eject it.
 		dust.restart_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
-		if(isturf(get_step(src, export_side)))
-			dust.forceMove(get_step(src, export_side))
+		if(isturf(get_step(src, dir)))
+			dust.forceMove(get_step(src, dir))
 		else
 			dust.forceMove(drop_location())
 	else

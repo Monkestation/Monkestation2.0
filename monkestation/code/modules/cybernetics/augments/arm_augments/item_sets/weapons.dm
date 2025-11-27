@@ -188,8 +188,9 @@
 	/// The delay for how often you should be able to do it to prevent spam
 	var/spin_delay = 10 SECONDS
 
-/obj/item/pickaxe/drill/implant/AltClick(mob/user)
+/obj/item/pickaxe/drill/implant/click_alt(mob/user)
 	spin()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pickaxe/drill/implant/verb/spin()
 	set name = "Spin Drillbit"

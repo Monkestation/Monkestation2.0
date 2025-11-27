@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(possible_lootbox_clothing, list(
 		/obj/item/clothing/head/costume/irs,
 		/obj/item/clothing/head/costume/jackbros,
 		/obj/item/clothing/head/costume/jester,
-		/obj/item/clothing/head/costume/jester/alt,
+		/obj/item/clothing/head/costume/jester2,
 		/obj/item/clothing/head/costume/justice,
 		/obj/item/clothing/head/costume/kitty,
 		/obj/item/clothing/head/costume/lizard,

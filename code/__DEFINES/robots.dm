@@ -98,7 +98,7 @@
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
 #define BOT_COVER_MAINTS_OPEN (1<<0)
-///The Bot's cover is locked, and cannot be opened without unlocking it.
+///The Bot's cover is locked, and cannot be opened without unlocking it. (This is for bot_cover_flags, for bot_access_flags. It's the reverse (opened cover))
 #define BOT_COVER_LOCKED (1<<1)
 ///The Bot is emagged.
 #define BOT_COVER_EMAGGED (1<<2)

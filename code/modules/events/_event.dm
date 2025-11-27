@@ -159,7 +159,7 @@
 		return FALSE
 	if(earliest_start >= (world.time - SSticker.round_start_time))
 		return FALSE
-	if(!allow_magic && wizardevent != SSevents.wizardmode)
+	if(!allow_magic && wizardevent != SSgamemode.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE

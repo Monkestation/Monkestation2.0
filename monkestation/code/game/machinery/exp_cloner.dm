@@ -46,7 +46,7 @@
 		speed_coeff += 1 // I still want basic parts to have base 100% speed.
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/experimental/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks)
 	if(panel_open || mess || attempting)
 		return NONE
 
@@ -56,7 +56,20 @@
 
 	var/mob/living/carbon/human/clonee = new /mob/living/carbon/human(src)
 
-	clonee.hardset_dna(ui, mutation_index, null, clonee.real_name, blood_type, mrace, features)
+	dna.copy_dna(clonee.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	for(var/datum/mutation/mutation in mutations)
+		var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
+		if(!length(valid_sources))
+			continue
+		clonee.dna.add_mutation(mutation, valid_sources)
+
+	clonee.domutcheck()
+	clonee.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+
+	clonee.underwear = underwear
+	clonee.undershirt = undershirt
+	clonee.socks = socks
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)

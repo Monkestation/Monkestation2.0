@@ -169,16 +169,20 @@
 				listed_living.adjustBruteLoss(5)
 				listed_living.stamina?.adjust(-30)
 
-	if(!istype(calculation_point, /turf/open/floor/plating/ocean))
-		if(event_flags & WEAK_FIRE)
-			explosion(calculation_point, 0,  0, 0, 3, 0, adminlog = FALSE)
-		if(event_flags & FIRE_EVENT)
-			explosion(calculation_point, 0,  0, 0, 7, 0, adminlog = FALSE)
+	// For future maintainers, below are the explosions that have been commented out
+	// replace once you find a reason for a random wandering point to destroy the station.
+	// Hotspots should be cool additions to a map and not just a glorified hazard
 
-	if(event_flags & WEAK_EXPLOSION)
-		explosion(calculation_point, 0,  0, 1, 0, 3, adminlog = FALSE)
-	if(event_flags & EXPLOSION)
-		explosion(calculation_point, 0, 0, 3, 0, 5, adminlog = FALSE)
+	// if(!istype(calculation_point, /turf/open/floor/plating/ocean))
+	// 	if(event_flags & WEAK_FIRE)
+	// 		//explosion(calculation_point, 0,  0, 0, 3, 0, adminlog = FALSE)
+	// 	if(event_flags & FIRE_EVENT)
+	// 		//explosion(calculation_point, 0,  0, 0, 7, 0, adminlog = FALSE)
+
+	// if(event_flags & WEAK_EXPLOSION)
+	// 	//explosion(calculation_point, 0,  0, 1, 0, 3, adminlog = FALSE)
+	// if(event_flags & EXPLOSION)
+	// 	//explosion(calculation_point, 0, 0, 3, 0, 5, adminlog = FALSE)
 
 	var/area_name_string = get_area_name(calculation_point)
 	var/message
@@ -189,8 +193,10 @@
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 
+/*
 	if((istype(calculation_point.loc, /area/station) && heat > 4500) || heat > (SUBCALL_HEATCOST * subcalls))
 		message_admins(message)
+*/
 	log_hotspot(message)
 
 #undef SUBCALL_HEATCOST

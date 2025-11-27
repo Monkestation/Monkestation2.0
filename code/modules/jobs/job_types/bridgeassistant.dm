@@ -47,6 +47,7 @@ Bridge Assistant
 	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_power = 1.1 //SIR CAN YOU PLEASE GET AWAY FROM THE FIREAXE
+	antag_capacity_points = 2 //mindshielded by default, very open to changing back to 1
 
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

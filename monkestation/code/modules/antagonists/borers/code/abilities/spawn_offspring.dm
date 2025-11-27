@@ -59,7 +59,9 @@
 
 /datum/action/cooldown/borer/produce_offspring/proc/no_host_egg()
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	cortical_owner.health = max(cortical_owner.health, 1, cortical_owner.health -= OUT_OF_HOST_EGG_COST)
+	cortical_owner.health = max(1, cortical_owner.health -= OUT_OF_HOST_EGG_COST)
+	cortical_owner.update_damage_hud()
+	cortical_owner.med_hud_set_health()
 	produce_egg()
 	var/turf/borer_turf = get_turf(cortical_owner)
 	new/obj/effect/decal/cleanable/blood/splatter(borer_turf)

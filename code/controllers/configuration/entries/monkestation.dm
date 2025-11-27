@@ -37,6 +37,9 @@
 /datum/config_entry/flag/mentor_legacy_system
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/discordurl
+	default = "https://discord.monkestation.com/"
+
 /datum/config_entry/flag/looc_enabled
 
 /datum/config_entry/flag/log_storyteller
@@ -95,3 +98,8 @@
 	if(!findtext(str_val, GLOB.is_http_protocol))
 		return FALSE
 	return ..()
+
+/datum/config_entry/flag/require_discord_verification
+
+// Role ID to check if a user has in order for them to be let in.
+/datum/config_entry/string/plexora_verification_required_roleid

@@ -7,6 +7,7 @@
 	description = "Throw a dark matt-eor somewhere near the station."
 	admin_setup = list(/datum/event_admin_setup/warn_admin/dark_matteor)
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_OBJECTIVES
 
 /datum/round_event/dark_matteor
 	fakeable = FALSE //Already faked by meteors that miss. Please, god, please miss

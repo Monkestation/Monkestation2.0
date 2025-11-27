@@ -144,9 +144,14 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
+	hitsound = 'sound/weapons/bladeslice.ogg' // has a blade
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+	can_bayonet = FALSE
+	sharpness = SHARP_EDGED
+	force = 15
+	wound_bonus = 5
+	bare_wound_bonus = 10 // worse than surviavl knife
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL

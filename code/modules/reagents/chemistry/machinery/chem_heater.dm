@@ -140,7 +140,7 @@
 			update_appearance()
 			return FALSE
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step), override = TRUE)
 
 	update_appearance()
 

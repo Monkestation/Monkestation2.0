@@ -360,7 +360,7 @@
 
 /// Called after the effect happens, whether that's after the button press or after hitting someone with a touch ability
 /datum/action/cooldown/spell/proc/consume_resource() //to-do: rework vampire blood use into using this proc
-	if(!bypass_cost && owner.mind && LAZYLEN(resource_costs))
+	if(!bypass_cost && LAZYLEN(resource_costs) && owner?.mind)
 		SEND_SIGNAL(owner.mind, COMSIG_MIND_SPEND_ANTAG_RESOURCE, resource_costs)
 
 

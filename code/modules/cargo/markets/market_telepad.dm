@@ -17,6 +17,7 @@
 	density = TRUE
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 2
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 
 	/// Divider for energy_usage_per_teleport.
 	var/power_efficiency = 1

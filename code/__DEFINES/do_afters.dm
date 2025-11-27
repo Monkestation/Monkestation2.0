@@ -11,3 +11,4 @@
 /* #define DOAFTER_SOURCE_ATM "doafter_atm" */
 #define DOAFTER_SOURCE_EXTINGUISHING_HUG "doafter_extinguishing_hug"
 #define DOAFTER_SOURCE_LAVA_STAFF "doafter_lava_staff"
+#define DOAFTER_SOURCE_ROASTING_STICK "doafter_roasting_stick"

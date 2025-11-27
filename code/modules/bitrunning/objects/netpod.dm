@@ -11,6 +11,8 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+
 	/// Whether we have an ongoing connection
 	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
@@ -29,7 +31,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/netpod/LateInitialize()
+/obj/machinery/netpod/LateInitialize(mapload_arg)
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE
@@ -79,12 +81,10 @@
 
 	return ..()
 
-/obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/carbon/player = user
-	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
-		return
 
-	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
+	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
 		return
 
 	close_machine(target)

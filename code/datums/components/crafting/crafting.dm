@@ -47,30 +47,6 @@
 
 	var/list/requirements_list = list()
 
-	// Process all requirements
-	for(var/requirement_path in R.reqs)
-		// Check we have the appropriate amount available in the contents list
-		var/needed_amount = R.reqs[requirement_path]
-		for(var/content_item_path in contents)
-			// Right path and not blacklisted
-			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
-				continue
-
-			needed_amount -= contents[content_item_path]
-			if(needed_amount <= 0)
-				break
-
-		if(needed_amount > 0)
-			return FALSE
-
-		// Store the instances of what we will use for R.check_requirements() for requirement_path
-		var/list/instances_list = list()
-		for(var/instance_path in item_instances)
-			if(ispath(instance_path, requirement_path))
-				instances_list += item_instances[instance_path]
-
-		requirements_list[requirement_path] = instances_list
-
 	for(var/requirement_path in R.chem_catalysts)
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
@@ -94,6 +70,30 @@
 		// We didn't find the required item
 		if(needed_amount > 0)
 			return FALSE
+
+	// Process all requirements
+	for(var/requirement_path in R.reqs)
+		// Check we have the appropriate amount available in the contents list
+		var/needed_amount = R.reqs[requirement_path]
+		for(var/content_item_path in contents)
+			// Right path and not blacklisted
+			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
+				continue
+
+			needed_amount -= contents[content_item_path]
+			if(needed_amount <= 0)
+				break
+
+		if(needed_amount > 0)
+			return FALSE
+
+		// Store the instances of what we will use for R.check_requirements() for requirement_path
+		var/list/instances_list = list()
+		for(var/instance_path in item_instances)
+			if(ispath(instance_path, requirement_path))
+				instances_list += item_instances[instance_path]
+
+		requirements_list[requirement_path] = instances_list
 
 	return R.check_requirements(a, requirements_list)
 
@@ -404,7 +404,7 @@
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
 			continue
-		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
+		if(check_tools(user, recipe, surroundings) && check_contents(user, recipe, surroundings))
 			craftability["[REF(recipe)]"] = TRUE
 
 	data["craftability"] = craftability

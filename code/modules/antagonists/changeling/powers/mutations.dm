@@ -25,7 +25,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/weapon/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
@@ -101,7 +101,7 @@
 	. = ..()
 	if (!owner || !req_human)
 		return
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey))
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(became_monkey), override = TRUE)
 
 /datum/action/changeling/suit/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)
@@ -261,6 +261,7 @@
 	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
+	weird = TRUE
 
 /obj/item/gun/magic/tentacle
 	name = "tentacle"
@@ -364,7 +365,7 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
-				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
+				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,TRUE)
@@ -469,6 +470,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
+	weird = TRUE
 
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
@@ -524,6 +526,7 @@
 	dna_cost = 1
 	req_human = TRUE
 	recharge_slowdown = 0.125
+	weird = TRUE
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling

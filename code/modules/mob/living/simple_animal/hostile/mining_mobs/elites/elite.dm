@@ -7,6 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	faction = list(FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
@@ -157,9 +158,14 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	fire = 100
 	acid = 100
 
+/obj/structure/elite_tumor/attack_robot(mob/living/user)
+	. = ..()
+	if (Adjacent(user))
+		return attack_hand(user)
+
 /obj/structure/elite_tumor/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(!ishuman(user))
+	if(!ishuman(user) && !iscyborg(user))
 		return
 	switch(activity)
 		if(TUMOR_PASSIVE)

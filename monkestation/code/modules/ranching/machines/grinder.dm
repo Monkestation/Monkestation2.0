@@ -3,8 +3,8 @@
 	desc = "This is how chicken nuggets are made boys and girls."
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	///placeholder
 	icon = 'icons/obj/kitchen.dmi'
@@ -102,16 +102,16 @@
 		qdel(chicken)
 		stored_chicken_soul += 10
 
-/obj/machinery/chicken_grinder/AltClick(mob/user)
-	. = ..()
+/obj/machinery/chicken_grinder/click_alt(mob/living/user)
 	var/choice = tgui_input_list(user, "Choose an egg type", src, egg_types)
 	if(!choice)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(stored_chicken_soul >= 40)
 		new choice (src.loc)
 		stored_chicken_soul -= 40
 	else
 		to_chat(user, span_notice("You don't have enough chicken essence to produce an egg"))
+	return CLICK_ACTION_SUCCESS
 
 /datum/hover_data/chicken_grinder
 	var/obj/effect/overlay/hover/text_holder

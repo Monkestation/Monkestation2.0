@@ -222,9 +222,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
-	if(color_source)
-		qdel(color_source)
-		color_source = null
 	update_appearance()
 	use_energy(active_power_usage)
 

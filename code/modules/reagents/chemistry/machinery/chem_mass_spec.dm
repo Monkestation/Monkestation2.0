@@ -9,6 +9,7 @@ By selecting a range in the mass spectrograph certain reagents will be transferr
 This will not clean any inverted reagents. Inverted reagents will still be correctly detected and displayed on the scanner, however.
 \nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corresponding beaker."}
 	density = TRUE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "HPLC"
@@ -120,16 +121,14 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 	update_appearance()
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
-	. = ..()
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
-		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
-		return
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
+		balloon_alert(user, "still processing!")
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user, BEAKER1)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
+/obj/machinery/chem_mass_spec/click_alt_secondary(mob/living/user)
 	. = ..()
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
