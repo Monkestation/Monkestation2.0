@@ -85,4 +85,4 @@
 
 /datum/antagonist/wishgranter/proc/on_examine(mob/living/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_hierophant("A chaotic, radiant malignancy blazes from within. You feel as though nothing is safe from [source.p_their()] all-consuming madness.")
+	examine_text += span_boldwarning("A chaotic, radiant malignancy blazes from within. You feel as though nothing is safe from [source.p_their()] all-consuming madness.")
