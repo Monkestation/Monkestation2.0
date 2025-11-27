@@ -456,3 +456,5 @@
   - admin: added the handcuffing object and the uncuff and cuff time to successful
       handcuff combat logs.
   - balance: locked traitor final objectives to only generate above 35 pop.
+  ThatGuy-GEWP:
+  - refactor: Oshan hotspots no longer explode, Engineers rejoice!
