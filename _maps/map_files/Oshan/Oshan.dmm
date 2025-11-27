@@ -30548,15 +30548,15 @@
 /area/station/engineering/storage_shared)
 "jVm" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/modular_computer/preset/id{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 4
 	},
 /turf/open/floor/wood/large,
 /area/station/cargo/quartermaster)
@@ -39584,10 +39584,14 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/door/airlock/qm{
-	name = "Quartermaster's Office"
-	},
 /obj/effect/landmark/navigate_destination,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmprivacy";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Quatermaster's Office"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/quartermaster)
 "mNF" = (

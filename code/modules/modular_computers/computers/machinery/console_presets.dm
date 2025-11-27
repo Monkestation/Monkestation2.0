@@ -54,7 +54,7 @@
 	)
 
 /obj/machinery/modular_computer/preset/quartermaster
-	name = "identification console"
+	name = "quartermaster's identification console"
 	desc = "A stationary computer. This one comes preloaded with cargo and identification modification programs."
 	starting_programs = list(
 		/datum/computer_file/program/chatclient,
