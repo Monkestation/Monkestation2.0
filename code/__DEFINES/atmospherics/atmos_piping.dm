@@ -64,9 +64,9 @@
 #define TANK_MERGE_OVERPRESSURE "tank_overpressure"
 // Indices for the reaction_results returned by explosion_information()
 /// Reactions that have happened in the tank.
-#define TANK_RESULTS_REACTION 1
+#define TANK_RESULTS_REACTION "results_reaction"
 /// Additional information of the tank.
-#define TANK_RESULTS_MISC 2
+#define TANK_RESULTS_MISC "results_misc"
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
