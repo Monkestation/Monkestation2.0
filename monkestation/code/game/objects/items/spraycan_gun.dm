@@ -46,7 +46,7 @@
 
 	return ..()
 
-/obj/item/toy/crayon/spraycan/gun/use_charges(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/spraycan/gun/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	if(contained_spraycan?.charges == -1) // What's the point?
 		. = amount
 		return refill()
