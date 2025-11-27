@@ -19,11 +19,12 @@
 		/obj/item/wirecutters/drone,
 		/obj/item/multitool/drone,
 		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
+		/obj/item/t_scanner/thermal,
 		/obj/item/analyzer,
+		/obj/item/storage/bag/construction,
 	)
 	atom_storage.max_total_storage = 80
-	atom_storage.max_slots = 18
+	atom_storage.max_slots = 19
 	atom_storage.rustle_sound = FALSE
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat))
 
@@ -37,8 +38,9 @@
 	builtintools += new /obj/item/wirecutters/drone(src)
 	builtintools += new /obj/item/multitool/drone(src)
 	builtintools += new /obj/item/pipe_dispenser(src)
-	builtintools += new /obj/item/t_scanner(src)
+	builtintools += new /obj/item/t_scanner/thermal(src)
 	builtintools += new /obj/item/analyzer(src)
+	builtintools += new /obj/item/storage/bag/construction(src)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)

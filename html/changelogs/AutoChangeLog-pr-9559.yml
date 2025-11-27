@@ -1,5 +1,0 @@
-author: "imedial and Sakaniko"
-delete-after: True
-changes:
-  - rscadd: "Silicons can now view their laws from the status panel in the top right."
-  - bugfix: "Fixed uncategorized Malfunction Modules for Malf AI."

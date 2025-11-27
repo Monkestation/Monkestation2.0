@@ -39,6 +39,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	speed = 3
 	interaction_flags_click = ALLOW_SILICON_REACH
 	req_one_access = list(ACCESS_ROBOTICS)
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
+
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///The inserted (if any) pAI in this bot.

@@ -59,18 +59,24 @@
 		. += emissive_appearance(icon_file, "[inhand_icon_state]_emissive", src)
 
 ///////////////////FANCY PROJECTILE EFFECTS//////////////////////////
-/obj/item/gun/magic/darkspawn/proc/on_projectile_hit(datum/source, atom/movable/firer, atom/target, angle)
-	if(isliving(target))
-		var/mob/living/M = target
-		if(IS_TEAM_DARKSPAWN(M))
-			if(effect_flags & STAFF_UPGRADE_HEAL)
-				M.heal_ordered_damage(30, list(STAMINA, BURN, BRUTE, TOX, OXY, CLONE))
-			if(effect_flags & STAFF_UPGRADE_EXTINGUISH)
-				M.extinguish_mob()
+/obj/item/gun/magic/darkspawn/proc/on_projectile_hit(datum/source, atom/movable/firer, mob/living/target, angle)
+	if(!isliving(target))
+		return
+	if(IS_TEAM_DARKSPAWN(target))
+		if(effect_flags & STAFF_UPGRADE_HEAL)
+			target.heal_ordered_damage(30, list(STAMINA, BURN, BRUTE, TOX, OXY, CLONE))
+		if(effect_flags & STAFF_UPGRADE_EXTINGUISH)
+			target.extinguish_mob()
+	else
+		if(isanimal_or_basicmob(target) || !target.uses_stamina) // just deal brute damage if they don't use stamina
+			target.apply_damage(20, BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 		else
-			M.apply_damage(65, STAMINA)
-			if(effect_flags & STAFF_UPGRADE_CONFUSION)
-				M.adjust_confusion(4 SECONDS)
+			var/datum/stamina_container/stamina = target.stamina
+			stamina.adjust(-65)
+			if(stamina.is_regenerating) // resets stamina cooldown if they're regenerating
+				stamina.pause(STAMINA_REGEN_TIME)
+		if(effect_flags & STAFF_UPGRADE_CONFUSION)
+			target.adjust_confusion(4 SECONDS)
 
 ////////////////////////TWO-HANDED BLOCKING//////////////////////////
 /obj/item/gun/magic/darkspawn/proc/on_wield() //guns do weird things to some of the icon procs probably, and i can't find which ones, so i need to do this all again
@@ -108,6 +114,7 @@
 /obj/item/ammo_casing/magic/darkspawn
 	projectile_type = /obj/projectile/magic/darkspawn
 	firing_effect_type = null
+	harmful = FALSE
 
 /obj/projectile/magic/darkspawn
 	name = "bolt of nothingness"
