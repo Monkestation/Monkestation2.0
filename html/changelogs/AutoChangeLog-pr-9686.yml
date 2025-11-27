@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - admin: "added the handcuffing object and the uncuff and cuff time to successful handcuff combat logs."
