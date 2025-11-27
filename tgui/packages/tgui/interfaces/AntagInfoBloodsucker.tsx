@@ -1,7 +1,12 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, DmIcon, Flex, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import {
+  Objective,
+  ObjectivePrintout,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 type BloodsuckerInformation = {
   clan?: ClanInfo;
@@ -24,6 +29,7 @@ type PowerInfo = {
 
 type Info = {
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoBloodsucker = (props: any) => {
@@ -64,7 +70,7 @@ export const AntagInfoBloodsucker = (props: any) => {
 
 const BloodsuckerIntro = () => {
   const {
-    data: { objectives },
+    data: { objectives, can_change_objective },
   } = useBackend<Info>();
   return (
     <Stack vertical fill>
@@ -76,7 +82,16 @@ const BloodsuckerIntro = () => {
               living aboard Space Station 13
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout objectives={objectives} />
+              <ObjectivePrintout
+                objectives={objectives}
+                objectiveFollowup={
+                  <ReplaceObjectivesButton
+                    can_change_objective={can_change_objective}
+                    button_title={'Acquire New Tastes'}
+                    button_colour={'red'}
+                  />
+                }
+              />
             </Stack.Item>
           </Stack>
         </Section>

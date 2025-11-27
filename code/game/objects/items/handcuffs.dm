@@ -40,7 +40,9 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
+	/// Breakout time for the cuffs
 	breakouttime = 1 MINUTES
+	/// Time to hand cuff someone
 	var/handcuff_time = 3 SECONDS
 	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
@@ -77,7 +79,7 @@
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
-			log_combat(user, C, "attempted to handcuff")
+			log_combat(user, C, "attempted to handcuff", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 
 			if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
 				handcuff_time_mod = 0.75
@@ -93,10 +95,10 @@
 									span_userdanger("[user] handcuffs you."))
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-				log_combat(user, C, "handcuffed")
+				log_combat(user, C, "handcuffed", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 			else
 				to_chat(user, span_warning("You fail to handcuff [C]!"))
-				log_combat(user, C, "failed to handcuff")
+				log_combat(user, C, "failed to handcuff", src)
 		else
 			to_chat(user, span_warning("[C] doesn't have two hands..."))
 
