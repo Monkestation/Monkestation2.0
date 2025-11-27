@@ -1,6 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - balance: "Avtomat AC 3 ammo and reserves dropped from 2000 to 750 and 1500"
-  - balance: "Ammo reserves dropped to 375 to refill equally with new values."
-  - bugfix: "Avtomat AC 3 no longer will enter -4 bullets upon firing every single bullter"

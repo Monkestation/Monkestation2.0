@@ -1,4 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "bloodsucker vassals will no longer get a stuck arrow on their screen if the bloodsucker shapeshifts"

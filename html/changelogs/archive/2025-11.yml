@@ -358,3 +358,101 @@
       to match the loadout info
   - spellcheck: fixed the name of the CentCom Admiral's coat
   - rscadd: Chem Masters can now become reactionless if installed with cryo beakers.
+2025-11-22:
+  MilkForever:
+  - image: The engineering hardsuit sprite has been changed.
+  SirNightKnight:
+  - balance: gave marine helmets eye/mouth coverage and made them pepperproof.
+  - bugfix: fixed marine helmet sprites breaking when using their lights.
+  SirNightKnight, Melbert, GPeckman, lessthnthree:
+  - rscadd: Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA
+      to be charged wirelessly through microwave frequencies. You can Wave-charge
+      your device by placing it inside a compatible microwave and selecting the charge
+      mode.
+  - rscadd: Microwaves can be upgraded to add wireless charging
+  - rscadd: Cell-swappable microwave for the engineer on-the-go
+  - rscadd: Microwave now has a wire to swap charge/cook modes
+  - qol: Clicking on an adjacent dense object (or mob) with Spray Cleaner will now
+      spritz it rather than doing nothing. This means you can use Spray Cleaner to
+      clean bloodied windows, as the janitor gods intended. It also means you can
+      fill a spray bottle with Napalm, I guess.
+  - refactor: Any cleaning object can now clean a microwave.
+  - bugfix: When on 'stream' mode, the cleaning spray from a bottle of space cleaner
+      should no longer be blocked by just about everything.
+  - bugfix: inverted spray and stream range values for spray bottles so spray is closer
+      and stream is further.
+  - bugfix: ctrl-click spray bottle to change the nozzle mode.
+  - bugfix: fixed a few interactions with microwaves when there's no power.
+  - qol: gives medical spray bottles more reagent transfer control.
+  - bugfix: hercuri comes in yellow medical spray bottles.
+  - bugfix: fixed doorjacks being microwaveable.
+  TheColorCyan:
+  - bugfix: bloodsucker vassals will no longer get a stuck arrow on their screen if
+      the bloodsucker shapeshifts
+  notghosti:
+  - balance: Avtomat AC 3 ammo and reserves dropped from 2000 to 750 and 1500
+  - balance: Ammo reserves dropped to 375 to refill equally with new values.
+  - bugfix: Avtomat AC 3 no longer will enter -4 bullets upon firing every single
+      bullter
+2025-11-23:
+  Tractor-Maam:
+  - bugfix: fixed chem masters not considering the second beakers size in its buffer
+      if the first wasnt a cryo beaker.
+  notghosti:
+  - rscadd: Drone's are given a modified T-Ray scanner that can show thermal differences.
+  - balance: Maintenance drones will no longer be blacklisted from machinery during
+      Yellow alert
+  - balance: Drone tools are given a additional space to fit a round start construction
+      bag.
+  - qol: drones can equip items with hotkeys
+2025-11-24:
+  Absolucy:
+  - bugfix: Fixed obfuscate's teleport being inconsistent, especially during situations
+      where there's stuff like xeno weeds spread around.
+2025-11-26:
+  Absolucy:
+  - rscadd: The engineering plumbing constructor can now actually be printed.
+  - balance: Buying Super Syndie-Kitty Ears will now prevent you from taking any secondary
+      objectives, and you will also not be able to buy them if you have completed
+      any secondary objectives already.
+  Ice-Type:
+  - balance: No more armour module stacking to make borderline immortal mechs
+  - balance: You don't get to stack repair droids, either.
+  - balance: Putting tracking beacons on mechs now has a 5 second do after.
+  JohnFulpWillard:
+  - bugfix: The soulcatcher list is no longer filled up with non-existent items.
+  Pepsilawn, MrMelbert, JohnFulpWillard, ArcaneMusic, SyncIt21:
+  - bugfix: Cargo orders are now properly labelled as "Private" purchases when necessary.
+  - bugfix: Budget ordering app can't bypass the cargo order limit anymore
+  - bugfix: Department budgets can no longer be used in NT Pay,
+  - bugfix: Removed a stray "0" in request consoles
+  - bugfix: Request Consoles can no longer call the shuttle
+  - bugfix: Blueshield and NT Rep can now open departmental orders.
+  - bugfix: Shipping manifests now work properly, showing the contents of goods, no
+      longer will you get RNG content errors that you cannot verify!
+  - bugfix: Manifests now also properly say who ordered something, rather than always
+      saying "CAR"
+  - qol: You won't get incorrect station name manifests until the time to rename the
+      station has passed.
+  - qol: You can no longer get errors for both contents AND items.
+  - qol: Requisition forms are now blue.
+  Tractor-Maam:
+  - balance: reduces the idle power usage of the durand shield by approximately 10
+      times. (this consumed a quarter of a T4 cell per tick you arent allowed to complain.)
+  - balance: updated durand shield bullet absorption code to match TGstation.
+  notghosti:
+  - balance: Borer body (the borer organ) now follows the brain for it's organ slot,
+      Oozelings and IPC's beware.
+  - balance: Borers now gain their hosts temperature safety levels while inside a
+      host
+  - balance: Borers no longer heal a % of their max hp, rather a flat scaling amount
+      with their level.
+2025-11-27:
+  Absolucy:
+  - rscadd: Bloodsuckers can now set custom objectives.
+  MilkForever:
+  - rscdel: Meat no longer stains things in blood.
+  SirNightKnight:
+  - admin: added the handcuffing object and the uncuff and cuff time to successful
+      handcuff combat logs.
+  - balance: locked traitor final objectives to only generate above 35 pop.
