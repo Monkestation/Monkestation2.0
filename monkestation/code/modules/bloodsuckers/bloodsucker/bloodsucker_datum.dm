@@ -17,6 +17,7 @@
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
 	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
