@@ -23,11 +23,11 @@ export const NtosCargoUnion = (props) => {
           }
         >
           {union_members.map((member) => (
-            <Stack key={member} fill my={0.5}>
+            <Stack key={member} fill my={0.5} p={1} className="candystripe">
               <Stack.Item grow={1}>{member}</Stack.Item>
               <Stack.Item textAlign="right">
                 <Button.Confirm
-                  confirmContent="Are you sure?"
+                  confirmContent="Really "
                   onClick={() => act('remove_member', { member_name: member })}
                   tooltip="Removes this member from the Union."
                 >

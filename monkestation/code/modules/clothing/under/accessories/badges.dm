@@ -22,12 +22,27 @@
 	///The job title the badge holds.
 	var/badge_string
 
+/obj/item/clothing/accessory/badge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		return .
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Show off"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.GetID())
+		context[SCREENTIP_CONTEXT_LMB] = "Imprint Job"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Edit Job Title"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
 /obj/item/clothing/accessory/badge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
 		return .
 
-	if(istype(tool, /obj/item/card/id))
+	if(tool.GetID())
 		if(!allowed(user))
 			user.balloon_alert(user, "no access!")
 			return ITEM_INTERACT_BLOCKING
@@ -75,7 +90,13 @@
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
 		named_mob = findname(named_mob)
-	stored_name = named_mob.last_name()
+
+	//now is this a real mob we have, or just a random name we inserted?
+	if(ismob(named_mob))
+		stored_name = named_mob.last_name()
+	else
+		stored_name = named_mob
+
 	name = "[initial(name)] ([stored_name])"
 
 /**
@@ -98,7 +119,7 @@
 
 /obj/item/clothing/accessory/badge/detective/gold
 	name = "detective's badge"
-	desc = "An immaculately polished gold security badge on leather. Labeled 'Detective.'"
+	desc = "An immaculately polished gold security badge on leather."
 	icon_state = "detective-gold"
 
 /obj/item/clothing/accessory/badge/cargo
