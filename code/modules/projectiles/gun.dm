@@ -348,7 +348,7 @@
 //Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(user, TRAIT_THROW_GUNS))
+	if(HAS_TRAIT(user, TRAIT_THROW_GUNS) && trigger_guard != TRIGGER_GUARD_ALLOW_ALL)
 		super_throw = TRUE
 		user.throw_item(target)
 		return TRUE
