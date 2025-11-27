@@ -91,11 +91,12 @@
 
 /datum/voucher_set/security/primary/disabler
 	name = "Disabler"
-	description = "The standard issue energy gun of Nanotrasen security forces. Comes with it's own holster."
+	description = "A pair of standard-issue disablers. Comes with a complementary real leather holster."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "disabler"
 	set_items = list(
 		/obj/item/storage/belt/holster/energy/disabler,
+		/obj/item/gun/energy/disabler,
 		)
 
 /datum/voucher_set/security/primary/advanced_taser
