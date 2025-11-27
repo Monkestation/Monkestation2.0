@@ -26,10 +26,7 @@
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
-		if(!looping_time)
-			end_processing()
-		else
-			COOLDOWN_START(src, massdriver_countdown, time SECONDS)
+		end_processing()
 		alarm()
 
 /**

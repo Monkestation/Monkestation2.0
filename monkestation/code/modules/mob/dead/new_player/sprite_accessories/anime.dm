@@ -289,3 +289,16 @@
 /datum/sprite_accessory/anime_halo/crowned
 	name = "Crowned halo"
 	icon_state = "crowned"
+
+/datum/sprite_accessory/anime_halo/goldenring
+	name = "Golden ring"
+	icon_state = "goldenring"
+	color_src = null
+
+/datum/sprite_accessory/anime_halo/neonring
+	name = "Neon ring"
+	icon_state = "neonring"
+
+/datum/sprite_accessory/anime_halo/engineer
+	name = "Grease monke's halo"
+	icon_state = "engineer"

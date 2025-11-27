@@ -378,9 +378,9 @@
 	equip_cooldown = 0.3 SECONDS
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/peashooter
-	projectiles = 2000
+	projectiles = 750
 	projectiles_cache = 0
-	projectiles_cache_max = 2000
+	projectiles_cache_max = 1500
 	projectiles_per_shot = 6
 	projectile_delay = 0.09 SECONDS
 	variance = 20
