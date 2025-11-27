@@ -447,3 +447,14 @@
       host
   - balance: Borers no longer heal a % of their max hp, rather a flat scaling amount
       with their level.
+2025-11-27:
+  Absolucy:
+  - rscadd: Bloodsuckers can now set custom objectives.
+  MilkForever:
+  - rscdel: Meat no longer stains things in blood.
+  SirNightKnight:
+  - admin: added the handcuffing object and the uncuff and cuff time to successful
+      handcuff combat logs.
+  - balance: locked traitor final objectives to only generate above 35 pop.
+  ThatGuy-GEWP:
+  - refactor: Oshan hotspots no longer explode, Engineers rejoice!
