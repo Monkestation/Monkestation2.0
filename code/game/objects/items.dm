@@ -149,13 +149,13 @@
 	var/attack_speed = CLICK_CD_MELEE
 	/// The click cooldown on secondary attacks. Lower numbers mean faster attacks. Will use attack_speed if undefined.
 	var/secondary_attack_speed
-	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
+	/// How long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
-	///In deciseconds, how long an item takes to put on another person
+	/// How long an item takes to put on another person
 	var/equip_delay_other = 2 SECONDS
-	///In deciseconds, how long an item takes to remove from another person
+	/// How long an item takes to remove from another person
 	var/strip_delay = 4 SECONDS
-	///How long it takes to resist out of the item (cuffs and such)
+	/// How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 	/// If TRUE, then moving will not cancel resisting out of the item.
 	var/breakout_while_moving = FALSE
