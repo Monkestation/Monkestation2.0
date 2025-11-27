@@ -15,11 +15,11 @@
 	icon_state = "tape_white"   //Options are white, blue, red, yellow, purple, greyscale, or you can chose one randomly (see tape/ruins/random below)
 
 	max_capacity = 10 MINUTES
-	used_capacity = 0 SECONDS	//To keep in-line with the timestamps, you can also do this as 11 second
+	used_capacity = 0 SECONDS	//To keep in-line with the timestamps, you can also do this as 10 = 1 second
 	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
 	storedinfo = list()	//Look at the tape/ruins/ghostship tape for reference
 	///Numbered list of seconds the messages in the previous list appear at on the tape. Used by playback to get the timing right.
-	timestamp = list()	//11 second. Look at the tape/ruins/ghostship tape for reference
+	timestamp = list()	//10 = 1 second. Look at the tape/ruins/ghostship tape for reference
 	used_capacity_otherside = 0 SECONDS //Separate my side
 	storedinfo_otherside = list()
 	timestamp_otherside = list()
