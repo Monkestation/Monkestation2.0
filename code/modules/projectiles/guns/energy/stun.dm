@@ -40,14 +40,9 @@
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hybrid, /obj/item/ammo_casing/energy/disabler/hos) //5 electrodes, 15 disabler shots
+	ammo_type = list((/obj/item/ammo_casing/energy/electrode), /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
-	cell_type = /obj/item/stock_parts/power_store/cell/halfsize
-
-/obj/item/stock_parts/power_store/cell/halfsize
-	name = "Fast-charging energy cell"
-	maxcharge = STANDARD_CELL_CHARGE * 0.5
-	chargerate =  STANDARD_CELL_RATE
+	spread = 0
 
 
 
@@ -69,6 +64,7 @@
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	spread = 0
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
 	return
