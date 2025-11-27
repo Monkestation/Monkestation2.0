@@ -207,7 +207,7 @@
 	cuffs.item_flags |= BEING_REMOVED
 	breakouttime = cuffs.breakouttime
 	var/timed_action_flags = IGNORE_HELD_ITEM
-	if(breakout_while_moving)
+	if(cuffs.breakout_while_moving)
 		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
