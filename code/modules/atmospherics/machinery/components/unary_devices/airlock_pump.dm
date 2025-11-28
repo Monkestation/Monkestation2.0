@@ -115,7 +115,7 @@
 			nodes[1] = target // Distro
 		if(connection_check(target, 2) && !nodes[2])
 			nodes[2] = target // Waste
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
@@ -333,7 +333,7 @@
 		if(is_cycling_audible)
 			source_airlock.say("Decompressing airlock.")
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 
@@ -361,7 +361,7 @@
 	if(message && is_cycling_audible)
 		unlocked_airlocks[1].say(message)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/on_dock_request(requester_pressure = 0)
@@ -444,7 +444,7 @@
 	airlocks_animating = TRUE
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	say("Docking complete.")
 	return TRUE
 
