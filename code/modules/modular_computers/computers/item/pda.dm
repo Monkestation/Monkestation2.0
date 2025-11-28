@@ -305,6 +305,20 @@
 		/datum/computer_file/program/crew_manifest,
 	)
 
+/obj/item/modular_computer/pda/silicon/ai
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/themeify,
+		/datum/computer_file/program/notepad,
+		/datum/computer_file/program/emojipedia,
+		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/secureye/spesstv,
+		/datum/computer_file/program/ntnetmonitor,
+	)
+
+
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
