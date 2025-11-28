@@ -290,7 +290,6 @@ All ShuttleMove procs go here
 		GLOB.deliverybeacontags += location
 
 /************************************Mob move procs************************************/
-
 /mob/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!move_on_shuttle)
 		return
@@ -314,8 +313,14 @@ All ShuttleMove procs go here
 
 	var/knockdown = movement_force["KNOCKDOWN"]
 	if(knockdown)
-		Paralyze(knockdown)
-
+		// Only apply the "no drop" version when the emergency shuttle is docking (endgame)
+		if(SSshuttle?.emergency?.mode == SHUTTLE_ENDGAME)
+			var/datum/status_effect/incapacitating/knockdown/knockdown_effect = Knockdown(knockdown)
+			if(knockdown_effect)
+				knockdown_effect.prevent_drop = TRUE
+		else
+			// Normal shuttle movement knockdown
+			Knockdown(knockdown)
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	. = ..()

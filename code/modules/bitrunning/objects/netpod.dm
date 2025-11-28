@@ -31,7 +31,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/netpod/LateInitialize()
+/obj/machinery/netpod/LateInitialize(mapload_arg)
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE

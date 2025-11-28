@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		lift_master_datum = new lift_master_type(src)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/LateInitialize()
+/obj/structure/industrial_lift/LateInitialize(mapload_arg)
 	//after everything is initialized the lift master can order everything
 	lift_master_datum.order_platforms_by_z_level()
 

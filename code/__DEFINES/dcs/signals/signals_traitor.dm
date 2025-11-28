@@ -1,7 +1,7 @@
 /// Called when the hack_comm_console objective is completed.
 #define COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED "!traitor_objective_completed"
 
-/// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI. No arguments passed
+/// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI.
 #define COMSIG_UPLINK_HANDLER_ON_UPDATE "uplink_handler_on_update"
 /// Sent from the uplink handler when the traitor uses the syndicate uplink beacon to order a replacement uplink.
 #define COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED "uplink_handler_replacement_ordered"

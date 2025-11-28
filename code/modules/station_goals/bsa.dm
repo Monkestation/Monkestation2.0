@@ -278,6 +278,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
+	COOLDOWN_DECLARE(fire_cooldown) //the "cooldown" for firing the BSA normally is it consuming a absolutely absurd amount of power.
+	var/fire_cooldown_length = 5 SECONDS // (duration the beam exists) When this is (very easily) circumvented, then shit becomes an issue.
 
 /obj/machinery/computer/bsa_control/ui_state(mob/user)
 	return GLOB.physical_state
@@ -366,6 +368,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		notice = "Cannon unpowered!"
 		return
 	notice = null
+	if(!COOLDOWN_FINISHED(src, fire_cooldown) && fire_cooldown_length)
+		notice = "Cannon overheated!"
+		return
+	COOLDOWN_START(src, fire_cooldown, fire_cooldown_length)
 	var/turf/target_turf = get_impact_turf()
 	cannon.fire(user, target_turf)
 

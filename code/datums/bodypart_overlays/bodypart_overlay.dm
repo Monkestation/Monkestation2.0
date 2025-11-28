@@ -23,6 +23,9 @@
 	. = get_image(layer, limb)
 	color_image(., layer, limb)
 
+/datum/bodypart_overlay/proc/get_emissive_overlay(layer, obj/item/bodypart/limb)
+	return
+
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_secondary_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)

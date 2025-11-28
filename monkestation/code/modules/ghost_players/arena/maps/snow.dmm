@@ -24,7 +24,7 @@
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "go" = (
 /obj/structure/dresser,
@@ -45,9 +45,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "ix" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -138,9 +136,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "va" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -152,7 +148,7 @@
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "vl" = (
 /obj/structure/fence,
@@ -166,9 +162,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "zi" = (
 /obj/structure/bookcase/random/fiction,
@@ -205,9 +199,7 @@
 "Fh" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "FF" = (
 /obj/structure/chair/wood{
@@ -263,7 +255,7 @@
 	color = " #DCDCDC"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/tdome/arena/actual)
 "RD" = (
 /obj/structure/fluff/fokoff_sign,
@@ -297,17 +289,13 @@
 /area/centcom/tdome/arena/actual)
 "Xt" = (
 /obj/structure/fireplace,
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 "ZN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/stone,
 /area/centcom/tdome/arena/actual)
 
 (1,1,1) = {"

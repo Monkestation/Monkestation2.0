@@ -1,0 +1,466 @@
+2025-11-01:
+  Absolucy:
+  - bugfix: The plushie cannon/shotgun now actually properly works without having
+      to whack yourself with it.
+  JohnFulpWillard:
+  - refactor: Cortical borer's UI is now better, text now fits and icons aren't blurry
+      anymore.
+  SirNightKnight:
+  - rscadd: ghosts now use the character's hair color directly.
+  notghosti:
+  - map: Icebox maintence bar backroom/dorms no longer has a camera inside the wall
+2025-11-02:
+  Absolucy:
+  - bugfix: Fixed some runtimes with cortical borers with focuses entering/exiting
+      a host.
+  throwawayuseless:
+  - bugfix: Robustness now actually notably affects the natural immune response that
+      a pathogen causes. Pro tip, 100 x 0.01 != 10
+2025-11-04:
+  Absolucy:
+  - sound: Tesla zaps are now covered by the "Machinery" category in the volume mixer.
+  - sound: Tesla zaps now have slightly higher volume falloff over distance.
+  - code_imp: Slightly improved some tesla-related code.
+  - qol: The Shapeshift spell also copies your voice now
+  - sound: Rupees are no longer painfully loud.
+  EatsTheGrapes:
+  - bugfix: Non-dynamic antagonist roles (like Slasher, Florida Man, etc.) now respect
+      antag bans in the preferences menu.
+  - refactor: Integrated non-dynamic antagonist list into middleware to remove redundant
+      code paths.
+  - code_imp: Cleaned up preference middleware structure for consistency.
+  - sound: Added original track "Less Impossible" by Elluvion to the jukebox under
+      the Electronic genre.
+  - balance: Players no longer drop items when the emergency shuttle docks.
+  - refactor: Knockdown logic now uses proper handling and shares structure between
+      status and debuff systems.
+  - code_imp: Simplified tripping and knockdown consistency across files.
+  EssentialTomato:
+  - rscadd: Added halos to the anime implants.
+  MilkForever:
+  - rscadd: Arachnids now have the Sericulture ability, allowing them to produce silk
+      at the cost of hunger.
+  - rscadd: Added Silk. Silk can be used to make silk walls, furniture, floor tiles,
+      clothing and spider structures. Two pieces of silk can be refined into cloth.
+  - qol: Spider blood (AKA Arachnid blood) can now spawn in blood bags in blood freezers.
+      It can also be made in the wall med-stations that use biomass.
+  - rscdel: Removed Skrell blood, Skrell don't even exist.
+  RandomDudeFromTheRim:
+  - map: added in 2 missing walls
+  Snack-Max:
+  - rscadd: Edited Toggled Utility Jumpsuit sprites to show department colors.
+  Tractor-Maam:
+  - rscadd: Added the Voice Obfuscator Gas Mask, a crafting item that makes you sound
+      unknown.
+  - code_imp: Added TRAIT_ANONYMOUS to hide names/jobs only because TRAIT_UNKNOWN
+      extends too far for this use case.
+  Vect0r2:
+  - bugfix: Assemblers don't fuck shit up
+  notghosti:
+  - rscdel: AI Overflow is disabled
+  - balance: AI Triumvirate weight is bumped to 2 (from 1) to compensate for this
+      change.
+  - bugfix: AI Triumvirate will allow for 3 latejoin ai's
+2025-11-05:
+  Absolucy:
+  - rscadd: Anvils are now falling hazards, as in, if you drop it onto someone on
+      a lower floor, it hurts them. A lot.
+  Absolucy, JohnFulpWillard:
+  - refactor: Blueprints now use TGUI.
+  - qol: Blueprints can now be used while lying down.
+  "Fwog\u2122":
+  - rscadd: 'New Negative Quirk: Material Allergy! Ever wanted to be horribly burnt
+      at the touch of silver, or gold, or just for shits n giggles plastic or something?
+      Now you can! I don''t know why you wanted that. That''s a weird want. You''re
+      weird. Weirdo.'
+  JohnFulpWillard:
+  - bugfix: You can use regenerative cores/rush glands/brimdust sacs while resting.
+  - bugfix: Using the setting to hide your preference from the roundend report will
+      now also hide your ckey if you got an achievement.
+  Tractor-Maam:
+  - balance: Reverted the Voice Obfuscator Gas Mask recipe to its old version. Antags,
+      please test this and give feedback!
+  notghosti:
+  - map: Adds recharge stations to central command
+  - map: CC and oldstation will produce overall less GPS signals
+  - code_imp: Added a variable for communication and uploads for them to not produce
+      a gps signal
+  - rscadd: Health analyzers will now provide information about diseases once they
+      have been analyzed with a disease analyzer.
+  - balance: Anaphylaxis (Allergy attacks) will always be considered analyzed, albeit
+      not in the database.
+  - balance: Blacklisted food allergies from oozelings, as the disease would self
+      cure and be free points as they are toxin lovers.
+  - code_imp: Viral code now has a origin, more for additional logging purposes.
+2025-11-07:
+  Infernal-0:
+  - image: Nukes a few pixels that shouldn't be there from the security helmet. if
+      you have a nose that is.
+  - map: Security EVA suits are no longer sealed away behind armory access.
+  - map: Fixes the blueshift brig to have working lockers and flashers.
+  - map: Opens a lot of the shutters on box station.
+  - map: Removes the empty suit storage from paramedic EVA on blueshift, replacing
+      it with a cyborg recharger.
+  - map: Adds rechargers to the theseus security office and replaces a missing window.
+  LemonInTheDark, Flleeppyy:
+  - bugfix: Fixed a timing issue with SS_KEEP_TIMING subsystems, which impacts exactly
+      SSticker. TLDR is roundstart will now actually take the time it says it does,
+      instead of 75% of it.
+  - config: The roundstart delay config is now accurate, so you may want to decrease
+      it to not overlengthen lobby time. IDK you decide.
+  SirNightKnight:
+  - map: added AM's office to CentCom.
+  - image: adds the unbroken man beard.
+  TheColorCyan:
+  - bugfix: darkspawn time dilation ability now actually works
+  - bugfix: darkspawn encroach ability now fully protects you from light
+  - bugfix: you no longer always know deluxe donk pocket secret recipes
+  - bugfix: fixed crafting recipe books that taught you cooking recipes runtiming
+      and not working
+  - bugfix: fixed being able to bypass headgear to drink with click-drag
+  Uristthedorf:
+  - rscadd: The AI, and peacekeeper cyborgs with an upgrade, have a nanite remote.
+  - balance: Suppression nanites have been nerfed so AI can't get you too hard with
+      the nanite remote.
+  - qol: Nanite Programming UI has been reoriented to make it significantly easier.
+  - map: Removes deprecated nanite programming hub and nanite programmer.
+  - map: Adds bottle of nanite purging toxin to nanite labs.
+  ancient-engineer, CannibalHunter:
+  - rscadd: Bananotrasen Super Hat, donator item for Milthy
+  - rscadd: Bananadola, donator item for Milthy
+  - rscadd: Monkey Plushie, donator item for Milthy (Sprite made by Cannibal Hunter)
+  - rscadd: "Milthy's donator alternative title names: \u201CBananotrasen Representative\u201D\
+      \ Assistant, \"Head of Convicts\" Prisoner, \u201CGristled PI\u201D Detective"
+  necromanceranne:
+  - bugfix: Grasp of Lock can no longer yank down your jumpsuit unless it is capable
+      of being adjusted.
+  notghosti:
+  - admin: Build mode Help button is existent again.
+  - rscdel: Optical sensors can no longer be printed.
+  - map: Heliostation telecommunications only has one request console,
+  - map: Heliostation bar sign will now rename the bar.
+  - bugfix: Examine on disease incubators are now functional
+2025-11-08:
+  Wernerses:
+  - balance: Botany batteries have their effectiveness reduced to around 1/5, while
+      still being able to eventually grow enough to have significant play later in
+      shifts, albeit requiring more care and attention to the plants stats.
+  notghosti:
+  - bugfix: Messenger will no longer kick you out of your PDA app into messenger.
+2025-11-09:
+  Tractor-Maam:
+  - qol: moved View Map Vote Tallies from Server to OOC.
+  ancient-engineer:
+  - rscadd: Changed Milthy's plushie name from 'monkey plush' to 'chimpson plush'
+  - rscadd: Changed Milthy's plushie description
+2025-11-10:
+  Absolucy:
+  - bugfix: Possible fix for being sucked through holofans.
+  Absolucy, grungussuss:
+  - bugfix: fixed items not falling from a lattice after being deconstructed/destroyed
+  Tostah:
+  - rscadd: Anything gifts can once again (rarely) spawn in maints.
+  - balance: Chaplains cannot get mystery gifts from the maintenance sect
+  Tractor-Maam:
+  - balance: getting dusted by high voltages now keeps your brain safe.
+  notghosti:
+  - map: Final turfs with atmosphere differences have been cleaned up on snow arenas
+  - map: Deltastation Experimentation lab has been given some basic room necessities,
+      including fire protection, cameras,  light switches, ect.
+  - bugfix: RTG's now produce accurate amounts of power, instead of around half. this
+      should help deep storage significantly with power
+  - bugfix: PTL's no longer will heal you if under 25 MW, and now will properly try
+      to kill you normally without gibbing,
+  - bugfix: PTL's will no longer have access to twice the amount of power actually
+      in the power network
+  - bugfix: Ethereals charge rates have been increased/decreased. Some safer activites
+      should include apc's, lights, and rechargers not instantly overcharging, and
+      ethereal cores instantly draining players. Numbers are rough still
+2025-11-11:
+  Absolucy:
+  - rscdel: Oozelings will no longer be selected as random morgue corpses.
+  - bugfix: You should be able to perform head surgeries on oozelings now without
+      straight up taking their head off.
+  Iajret:
+  - rscadd: added ventpointer that points toward nearby ore vents and can be bought
+      with mining points
+  - balance: scanned ore vents can now be found with GPS
+  JohnFulpWillard:
+  - bugfix: Blast helmet no longer disappears when you toggle it.
+  - bugfix: Command outfitting station vending machines now load icons again.
+  - balance: QM can now modify people's access to Cargo
+  - rscadd: Traitors can get a secondary objective to sabotage the Cargo techfab again.
+  - balance: QM gets paid the same as crew.
+  - bugfix: QM is no longer considered "Command" to conspiracy theorists.
+  - bugfix: Much security equipment was re-added to the list of things you're scared
+      of if you have a phobia of security.
+  - spellcheck: QM's headset no longer calls them their own slave.
+  TheColorCyan:
+  - rscadd: heretic living heart will now show a tracker pointing to the target for
+      3 seconds
+  - bugfix: '(MrMelbert) Furious Steel now tracks consumed knives better: Using all
+      three knives to block no longer results in a 0 second cooldown, firing a single
+      knife no longer results in a 60 second cooldown.'
+  - bugfix: (EnterTheJake) Heretic Carving Knife runes are no longer triggered by
+      hovering projectiles.
+  - bugfix: space phase can be casted on ocean tiles same way they can be casted on
+      most planetary turfs
+  - qol: heretics can now see blessed tiles
+  Tractor-Maam:
+  - bugfix: fixed mentor manager again
+  flleeppyy:
+  - rscadd: init cost debug.
+  notghosti:
+  - bugfix: Assault operatives will now only receive one tracking beacon when a keycard
+      is extracted
+2025-11-12:
+  Absolucy:
+  - bugfix: You can once again use the Archive of the Kindred to analyze a bloodsucker
+      from across the room as curator, instead of only while directly next to the,
+  - qol: You shouldn't get knocked out by head surgery if you have Glass Jaw.
+  - balance: Slightly reduced the weight of Monster Hunters spawning from 25 to 20.
+  - balance: Whether a "monster" is considered valid prey for a Monster Hunter is
+      now dependent on more than just their existence.
+  - balance: Heretics are valid prey if they have sacrificed anyone, created any minions
+      (ghouls, prophets, sharks, etc), or if they've reached around 75% of their knowledge
+      objective.
+  - balance: Bloodsuckers are valid prey if they have broke the masquerade, made any
+      vassals, or if they've drank at least 250 blood from sentient beings.
+  - balance: Changelings are valid prey if they have absorbed anyone, made any teratomas,
+      or if they've used certain powers (armblade, tentacle, shield, armor, shrieks,
+      transform sting, blind sting, or defib grasp)
+  - balance: 3-person BB teams are now only possible around 10% of the time, as intended.
+  - qol: Roundstart smugglers satchels should be more uniformly distributed now, and
+      hopefully not next to each other quite as often.
+  TheColorCyan:
+  - balance: dance of the brand (blade heretic's riposte) now blocks attacks
+2025-11-13:
+  Absolucy:
+  - qol: You no longer need to awkwardly insert two half-stacks at a time into construction
+      bags.
+  - qol: Construction bags can now hold floor tiles, neon linings, and ducts.
+  - bugfix: Legions (as in the megafauna) will no longer smash the necropolis chests
+      they drop.
+  Absolucy, ItsTisme:
+  - bugfix: Being revived inside a legion now sets you free.
+  SirNightKnight:
+  - rscadd: Added new mechanics or
+  - refactor: refactored the swedish quirk to be a subtype of a parent along with
+      scottish.
+2025-11-14:
+  Absolucy:
+  - rscadd: You can now buy an Astral Carpet Crate from a hacked cargo console for
+      2000 credits, containing carpets with a beautifully convincing star pattern.
+  SirNightKnight:
+  - bugfix: fixed some inconsistency with the riot helmet worn sprite.
+2025-11-15:
+  SirNightKnight:
+  - bugfix: fixed carboard jamming on interact
+  notghosti:
+  - bugfix: NODE Drones no longer freeze to death on Icebox
+2025-11-16:
+  Absolucy:
+  - bugfix: Fixed the Voltaic Combat Cyberheart killing oozelings.
+  Absolucy, hry-gh:
+  - bugfix: you should experience less stutters every 10 seconds
+  - server: server operators can now configure an alternative storage domain for clientside
+      data storage, read the example configuration for more
+  Loiosh42:
+  - balance: Sprint speed somewhat reduced
+  - balance: Debilitation stacks now increase stamina drain from sprinting more
+  kuricityy:
+  - bugfix: Recalls all Syndicate Renoster shotguns for a faulty internal magazine
+      size, as well as being loaded with non lethal rounds. The Syndicate has replaced
+      said faulty internal magazines with proper 8 round magazines loaded with lethal
+      buckshot. The Syndicate apologizes for the inconvenience.
+  notghosti:
+  - rscadd: boulder smelter and refinery are printable from a protolathe
+  - map: Lavaland now starts with a single starter resource vent.
+  - map: Lavaland public and regular mining now have an alternative exit to the eastern
+      area.
+  - map: Mining lavaland now has a wardrobe on base
+  - bugfix: Starter mining node's well no longer defies light
+  - qol: Boulder tech now deposits it's ore on the side the machine is facing. Instead
+      of just east
+  - qol: Boulder tech now has examine text for which direction it's facing.
+  - bugfix: Purification chambers now can be multitooled to set the external oxygen
+      tank
+  - bugfix: Purifaction chambers, crushers, enrichment chambers no longer disappear
+      into nonexistence upon being screwdrivered
+2025-11-17:
+  SirNightKnight, JohnFulpWillard:
+  - qol: internal tanks gives a progress bar when you toggle them, allowing you to
+      see how much you've consumed so far.
+  imedial and Sakaniko:
+  - rscadd: Silicons can now view their laws from the status panel in the top right.
+  - bugfix: Fixed uncategorized Malfunction Modules for Malf AI.
+2025-11-18:
+  Absolucy:
+  - qol: The Eye of God's rebuke glow effect is yellow once more.
+  - admin: Darkspawn thralls now show up in the admin Check Antagonists panel.
+  - bugfix: Oozeling darkspawn thralls are no longer instantly deconverted upon being
+      revived.
+  - balance: Bolts of nothingness (from a warlock darkspawn's staff) now just deal
+      brute damage against simple/basic mobs.
+  - balance: Bolts of nothingness now pause stamina regeneration when they hit.
+  JohnFulpWillard:
+  - bugfix: HoP now has shipping access.
+  - bugfix: Removed a Citrus from Theseus (there were 2)
+  - bugfix: Medbots, cleanbots, and hygienebots are no longer affected by temperatures.
+  - bugfix: Bank Machines (in the Vault) now properly yell when unauthorized and don't
+      when authorized.
+  - balance: Speaking of, they also now only speak in Supply chat when authorized,
+      rather than alert the whole station.
+  - bugfix: Fixed an edge case where Nightmares can't spawn on Pubbystation (and potentially
+      Heliostation).
+  - bugfix: Medbeams are no longer considered guns (for beepsky and honorbound Chaplains).
+  SirNightKnight:
+  - rscadd: added justice helmets to the sectech contraband section
+  notghosti:
+  - balance: Explorer masks have pepper spray protection
+  - balance: Skittish will only lock a locker if you could lock the locker in the
+      first place
+  - balance: Warlocks staff is no longer considered lethally chambered
+  - balance: Cracking a boulder will attempt to mine a new boulder in range.
+  - map: Icebox cargo now has a expanded warehouse, with a Ripley and a cargo loader
+      modsuit. And there's now a starting vent.
+  - balance: Halves the rate of antagonist tokens
+  - bugfix: Satchel + backpack will apply slowdown
+2025-11-19:
+  Absolucy:
+  - qol: Oozelings will no longer lose blood from low nutrition if they are actively
+      eating something with nutriment.
+  KnigTheThrasher:
+  - map: Oshan
+  notghosti:
+  - bugfix: Mending touch no longer levels you to the targets blood level, rather
+      just adjusting the transfer rate.
+2025-11-21:
+  Absolucy:
+  - qol: Eye of god now counts as prescription glasses
+  - rscadd: Ore Vents now generate on Oshan's mining level.
+  - qol: Heretic influences should now spawn more uniformly, similar to smugglers
+      satchels.
+  - bugfix: Fixed an issue with heretic influences sometimes spawning in nullspace
+      for some reason (hopefully)
+  EssentialTomato:
+  - rscadd: Added new anime halos.
+  - balance: Anime halos now temporarily disappear while dead.
+  JohnFulpWillard:
+  - bugfix: HoP's door remote works now.
+  Tractor-Maam:
+  - admin: expunging records now lists the name of the record expunged.
+  - admin: Creating records now creates an investigate log.
+  - admin: Deleting records now properly lists the ckey of the person who did it.
+  - admin: Setting security record notes now shows the ckey of the person who did
+      it... if this specific section of code was actually ever called.
+  - spellcheck: retitled the CentCom commander's suit to the CentCom admiral's suit
+      to match the loadout info
+  - spellcheck: fixed the name of the CentCom Admiral's coat
+  - rscadd: Chem Masters can now become reactionless if installed with cryo beakers.
+2025-11-22:
+  MilkForever:
+  - image: The engineering hardsuit sprite has been changed.
+  SirNightKnight:
+  - balance: gave marine helmets eye/mouth coverage and made them pepperproof.
+  - bugfix: fixed marine helmet sprites breaking when using their lights.
+  SirNightKnight, Melbert, GPeckman, lessthnthree:
+  - rscadd: Introducing Nanotrasen Wave! A Nanotrasen exclusive, Waveallows your PDA
+      to be charged wirelessly through microwave frequencies. You can Wave-charge
+      your device by placing it inside a compatible microwave and selecting the charge
+      mode.
+  - rscadd: Microwaves can be upgraded to add wireless charging
+  - rscadd: Cell-swappable microwave for the engineer on-the-go
+  - rscadd: Microwave now has a wire to swap charge/cook modes
+  - qol: Clicking on an adjacent dense object (or mob) with Spray Cleaner will now
+      spritz it rather than doing nothing. This means you can use Spray Cleaner to
+      clean bloodied windows, as the janitor gods intended. It also means you can
+      fill a spray bottle with Napalm, I guess.
+  - refactor: Any cleaning object can now clean a microwave.
+  - bugfix: When on 'stream' mode, the cleaning spray from a bottle of space cleaner
+      should no longer be blocked by just about everything.
+  - bugfix: inverted spray and stream range values for spray bottles so spray is closer
+      and stream is further.
+  - bugfix: ctrl-click spray bottle to change the nozzle mode.
+  - bugfix: fixed a few interactions with microwaves when there's no power.
+  - qol: gives medical spray bottles more reagent transfer control.
+  - bugfix: hercuri comes in yellow medical spray bottles.
+  - bugfix: fixed doorjacks being microwaveable.
+  TheColorCyan:
+  - bugfix: bloodsucker vassals will no longer get a stuck arrow on their screen if
+      the bloodsucker shapeshifts
+  notghosti:
+  - balance: Avtomat AC 3 ammo and reserves dropped from 2000 to 750 and 1500
+  - balance: Ammo reserves dropped to 375 to refill equally with new values.
+  - bugfix: Avtomat AC 3 no longer will enter -4 bullets upon firing every single
+      bullter
+2025-11-23:
+  Tractor-Maam:
+  - bugfix: fixed chem masters not considering the second beakers size in its buffer
+      if the first wasnt a cryo beaker.
+  notghosti:
+  - rscadd: Drone's are given a modified T-Ray scanner that can show thermal differences.
+  - balance: Maintenance drones will no longer be blacklisted from machinery during
+      Yellow alert
+  - balance: Drone tools are given a additional space to fit a round start construction
+      bag.
+  - qol: drones can equip items with hotkeys
+2025-11-24:
+  Absolucy:
+  - bugfix: Fixed obfuscate's teleport being inconsistent, especially during situations
+      where there's stuff like xeno weeds spread around.
+2025-11-26:
+  Absolucy:
+  - rscadd: The engineering plumbing constructor can now actually be printed.
+  - balance: Buying Super Syndie-Kitty Ears will now prevent you from taking any secondary
+      objectives, and you will also not be able to buy them if you have completed
+      any secondary objectives already.
+  Ice-Type:
+  - balance: No more armour module stacking to make borderline immortal mechs
+  - balance: You don't get to stack repair droids, either.
+  - balance: Putting tracking beacons on mechs now has a 5 second do after.
+  JohnFulpWillard:
+  - bugfix: The soulcatcher list is no longer filled up with non-existent items.
+  Pepsilawn, MrMelbert, JohnFulpWillard, ArcaneMusic, SyncIt21:
+  - bugfix: Cargo orders are now properly labelled as "Private" purchases when necessary.
+  - bugfix: Budget ordering app can't bypass the cargo order limit anymore
+  - bugfix: Department budgets can no longer be used in NT Pay,
+  - bugfix: Removed a stray "0" in request consoles
+  - bugfix: Request Consoles can no longer call the shuttle
+  - bugfix: Blueshield and NT Rep can now open departmental orders.
+  - bugfix: Shipping manifests now work properly, showing the contents of goods, no
+      longer will you get RNG content errors that you cannot verify!
+  - bugfix: Manifests now also properly say who ordered something, rather than always
+      saying "CAR"
+  - qol: You won't get incorrect station name manifests until the time to rename the
+      station has passed.
+  - qol: You can no longer get errors for both contents AND items.
+  - qol: Requisition forms are now blue.
+  Tractor-Maam:
+  - balance: reduces the idle power usage of the durand shield by approximately 10
+      times. (this consumed a quarter of a T4 cell per tick you arent allowed to complain.)
+  - balance: updated durand shield bullet absorption code to match TGstation.
+  notghosti:
+  - balance: Borer body (the borer organ) now follows the brain for it's organ slot,
+      Oozelings and IPC's beware.
+  - balance: Borers now gain their hosts temperature safety levels while inside a
+      host
+  - balance: Borers no longer heal a % of their max hp, rather a flat scaling amount
+      with their level.
+2025-11-27:
+  Absolucy:
+  - rscadd: Bloodsuckers can now set custom objectives.
+  MilkForever:
+  - rscdel: Meat no longer stains things in blood.
+  SirNightKnight:
+  - admin: added the handcuffing object and the uncuff and cuff time to successful
+      handcuff combat logs.
+  - balance: locked traitor final objectives to only generate above 35 pop.
+  ThatGuy-GEWP:
+  - refactor: Oshan hotspots no longer explode, Engineers rejoice!
+2025-11-28:
+  Absolucy, TealSeer:
+  - refactor: rewrote all cases of numbers being used as keys in non-alist associative
+      lists
+  Uristthedorf:
+  - balance: Hivequeen borers are now empowered.

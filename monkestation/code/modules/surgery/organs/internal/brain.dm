@@ -246,11 +246,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		stored_language_holder = new slime_language_holder.type
 		stored_language_holder.copy_languages(slime_language_holder)
 
-	var/datum/atom_voice/slime_voice = slime.get_voice()
-	if(slime_voice)
-		if(!voice)
-			voice = new
-		voice.copy_from(slime_voice)
+	if(slime.voice)
+		copy_voice_from(slime)
 
 ///////
 /// CORE EJECTION PROC
@@ -315,6 +312,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	Remove(victim)
 	qdel(victim)
+
+	SEND_SIGNAL(mind, COMSIG_OOZELING_CORE_EJECTED, src)
 
 /obj/item/organ/internal/brain/slime/proc/do_steam_effects(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
@@ -448,7 +447,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	GLOB.dead_oozeling_cores -= src
 	set_organ_damage(0) // heals the brain fully
 
-	if(istype(loc, /obj/effect/abstract/chasm_storage))
+	if(istype(loc, /mob/living/basic/mining/legion))
+		var/mob/living/basic/mining/legion/legion = loc
+		legion.gib()
+	else if(istype(loc, /obj/effect/abstract/chasm_storage))
 		// oh fuck we're reviving in a chasm somehow, uhhhh, quick, find us the nearest non-chasm turf
 		for(var/turf/turf as anything in spiral_range_turfs(5, get_turf(src), TRUE))
 			if(!isopenturf(turf) || isgroundlessturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
@@ -481,9 +483,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		new_body.get_language_holder()?.copy_languages(stored_language_holder)
 		QDEL_NULL(stored_language_holder)
 	if(voice)
-		if(!new_body.voice)
-			new_body.voice = new
-		new_body.voice.copy_from(voice)
+		new_body.copy_voice_from(src)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
@@ -535,6 +535,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/policy = get_policy(revival_policy)
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
+
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)

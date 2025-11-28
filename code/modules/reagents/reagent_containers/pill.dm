@@ -333,6 +333,12 @@
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/radiomagnetic_disruptor
+	name = "radiomagnetic disruptor pill"
+	desc = "A small pill of nanite purging toxin."
+	icon_state = "pill3"
+	list_reagents = list(/datum/reagent/toxin/radiomagnetic_disruptor = 10)
+
 // Pill styles for chem master
 
 /obj/item/reagent_containers/pill/style

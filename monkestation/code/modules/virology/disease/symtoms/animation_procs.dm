@@ -4,12 +4,6 @@
 								0.00, 0.00, 0.00, 1.00,\
 								0.00, 0.00, 0.00, 0.00)
 
-#define COLOR_MATRIX_GRAYSCALE list(0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.00,0.00,0.00,1.00,\
-									0.00,0.00,0.00,0.00)
-
 /atom/proc/fade_matrix(time = 1 SECONDS, matrix = COLOR_MATRIX_GRAYSCALE)
 	color = COLOR_MARTIX_BASE
 	animate(src, color=matrix, time=time, easing=SINE_EASING)

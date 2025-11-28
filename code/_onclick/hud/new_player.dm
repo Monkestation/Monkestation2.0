@@ -703,7 +703,7 @@
 	if(!overflow_job)
 		disabled = TRUE
 		return
-	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)?.scale(16, 16)?.to_icon()
+	var/icon/job_icon = get_job_hud_icon(overflow_job)?.scale(16, 16)?.to_icon()
 	if(!job_icon)
 		return
 	job_overlay = mutable_appearance(job_icon)

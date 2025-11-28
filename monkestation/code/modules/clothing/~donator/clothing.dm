@@ -877,6 +877,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "cross"
 
+/obj/item/clothing/neck/cross/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for gamerguy14948
 /obj/item/storage/belt/fannypack/occult
 	name = "trinket belt"
@@ -1031,6 +1035,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "fishpendant"
 
+/obj/item/clothing/neck/fishpendant/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for Weredoggo
 /obj/item/hairbrush/tactical
 	name = "tactical hairbrush"
@@ -1138,6 +1146,10 @@
 /obj/item/clothing/accessory/hypno_watch/examine()
 	. = ..()
 	. += span_boldwarning("Who knows what it could be used for?")
+
+/obj/item/clothing/accessory/hypno_watch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/gold) //maaaaan i hate that i have to do this
 
 // Donation reward for BoisterousBeebz
 
