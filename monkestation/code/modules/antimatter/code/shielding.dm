@@ -60,7 +60,6 @@
 			break
 
 	if(!control_unit) //No other guys nearby look for a control unit
-		for(var/direction in GLOB.cardinals)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
