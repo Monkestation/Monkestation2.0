@@ -115,7 +115,7 @@ DEFINE_BITFIELD(foodtypes, list(
 */
 
 /// Labels for food quality
-GLOBAL_LIST_INIT(food_quality_description, list(
+GLOBAL_ALIST_INIT(food_quality_description, alist(
 	FOOD_QUALITY_NORMAL = "okay",
 	FOOD_QUALITY_NICE = "nice",
 	FOOD_QUALITY_GOOD = "good",
@@ -126,19 +126,8 @@ GLOBAL_LIST_INIT(food_quality_description, list(
 ))
 
 /* MONKESTATION REMOVAL START - food complexity is unported
-/// Mood events for food quality
-GLOBAL_LIST_INIT(food_quality_events, list(
-	FOOD_QUALITY_NORMAL = /datum/mood_event/food,
-	FOOD_QUALITY_NICE = /datum/mood_event/food/nice,
-	FOOD_QUALITY_GOOD = /datum/mood_event/food/good,
-	FOOD_QUALITY_VERYGOOD = /datum/mood_event/food/verygood,
-	FOOD_QUALITY_FANTASTIC = /datum/mood_event/food/fantastic,
-	FOOD_QUALITY_AMAZING = /datum/mood_event/food/amazing,
-	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
-))
-
-/// Crafted food buffs grouped by crafting_complexity
-GLOBAL_LIST_INIT(food_buffs, list(
+/// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
+GLOBAL_ALIST_INIT(food_buffs, alist(
 	FOOD_COMPLEXITY_1 = list(
 		/datum/status_effect/food/haste = 1,
 	),
