@@ -790,8 +790,8 @@
 	new_model = /obj/item/robot_model/centcom
 
 /obj/item/borg/upgrade/nvmeson
-	name = "night vision mesons upgrae"
-	desc = "An advanced mop replacement for the janiborg's standard mop."
+	name = "night vision mesons upgrade"
+	desc = "An augmentation to the standard meson sensor array seen on mining and engineering cyborgs to increase low light visibility."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/miner)

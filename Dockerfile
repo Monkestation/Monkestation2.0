@@ -59,7 +59,7 @@ RUN apt-get install -y --no-install-recommends \
         gcc-multilib \
         git \
     && git init \
-    && git remote add origin https://github.com/tgstation/rust-g
+    && git remote add origin "https://github.com/${RUST_G_REPO}"
 
 COPY dependencies.sh .
 

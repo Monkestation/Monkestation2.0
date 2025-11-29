@@ -294,7 +294,7 @@
 
 /datum/design/stompers
 	name = "Stomper Boots"
-	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	desc = /obj/item/clothing/shoes/stomper::desc
 	id = "stompers"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(

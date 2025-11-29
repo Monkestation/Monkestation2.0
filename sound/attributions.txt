@@ -152,3 +152,6 @@ portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made
 
 straw-suck.ogg and straw-end.ogg are adapted from straw slurp by dreamstobecome (Freesound) under Pixabay's license https://pixabay.com/service/license-summary/
 https://pixabay.com/sound-effects/straw-slurp-7066/
+
+paper_flip.ogg is made by gynation from Freesound.org, CC0
+https://freesound.org/people/gynation/sounds/82378/

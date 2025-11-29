@@ -75,7 +75,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	purchased_gas_mix = new(100)
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
-/obj/machinery/bluespace_vendor/LateInitialize()
+/obj/machinery/bluespace_vendor/LateInitialize(mapload_arg)
 	. = ..()
 	if(!map_spawned)
 		return

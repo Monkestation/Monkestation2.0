@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - admin: "logs made after the game is finished are coloured yellow and marked as such."

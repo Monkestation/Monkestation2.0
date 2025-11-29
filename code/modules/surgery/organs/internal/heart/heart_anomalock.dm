@@ -180,14 +180,16 @@
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/anomalock_active
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/voltaic_overdrive/tick(seconds_between_ticks)
 	. = ..()
-
-	if(owner.health <= owner.crit_threshold)
-		owner.heal_overall_damage(5, 5)
-		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
+	if(owner.health > owner.crit_threshold)
+		return
+	owner.heal_overall_damage(brute = 5, burn = 5, updating_health = FALSE)
+	owner.adjustOxyLoss(-5, updating_health = FALSE)
+	owner.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE)
+	owner.updatehealth()
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()

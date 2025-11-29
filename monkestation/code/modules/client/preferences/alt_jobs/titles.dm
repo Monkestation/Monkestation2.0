@@ -31,6 +31,7 @@
 		"Off-Duty Crew",
 		"Test Subject",
 		"Vagabond",
+		"Bananotrasen Representative",
 	)
 
 /datum/job/atmospheric_technician
@@ -208,6 +209,7 @@
 		"Forensic Scientist",
 		"Paranormal Investigator",
 		"Inspector",
+		"Gristled PI",
 	)
 
 /datum/job/doctor
@@ -293,6 +295,7 @@
 		"Felon",
 		"Inmate",
 		"Gamer",
+		"Head of Convicts",
 	)
 
 /datum/job/psychologist

@@ -372,6 +372,8 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/target_turf, difference)
+	if(!TURFS_CAN_SHARE(src, target_turf))
+		return
 	SSair.high_pressure_delta |= src
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, target_turf)

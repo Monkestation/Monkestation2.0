@@ -205,7 +205,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/photobooth_control/LateInitialize()
+/obj/item/assembly/control/photobooth_control/LateInitialize(mapload_arg)
 	find_machine()
 
 /// Locate the photobooth we're linked via ID

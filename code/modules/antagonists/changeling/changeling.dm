@@ -63,6 +63,10 @@
 	/// Whether we can currently respec in the cellular emporium.
 	var/can_respec = FALSE
 
+	/// If this changeling has used a "weird" power at least once.
+	/// Only used for monster hunter targeting.
+	var/used_weird_power = FALSE
+
 	/// The currently active changeling sting.
 	var/datum/action/changeling/sting/chosen_sting
 	/// A reference to our cellular emporium datum.
@@ -133,6 +137,7 @@
 		forge_objectives()
 	owner.current.get_language_holder().omnitongue = TRUE
 	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	return ..()
 
 /datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
@@ -211,6 +216,7 @@
 		QDEL_NULL(lingstingdisplay)
 
 /datum/antagonist/changeling/on_removal()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	remove_changeling_powers(include_innate = TRUE)
 	if(!iscarbon(owner.current))
 		return
@@ -864,6 +870,11 @@
 
 	user.regenerate_icons()
 	current_profile = chosen_profile
+
+/datum/antagonist/changeling/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(births > 0 || true_absorbs > 0 || used_weird_power)
+		prey += owner
 
 // Changeling profile themselves. Store a data to store what every DNA instance looked like.
 /datum/changeling_profile
