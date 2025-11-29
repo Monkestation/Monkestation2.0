@@ -39,6 +39,8 @@
 
 		if(isnull(icon_state))
 			continue //no sprite for the item.
+		if(isnull(worn_icon))
+			continue // no worn icon
 		if(icon_state in already_warned_icons)
 			continue
 
