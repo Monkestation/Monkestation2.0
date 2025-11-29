@@ -464,3 +464,7 @@
       lists
   Uristthedorf:
   - balance: Hivequeen borers are now empowered.
+2025-11-29:
+  SirNightKnight:
+  - bugfix: fixed chempuffs not applying reagent effects to turfs.
+  - image: gave the hypnodemon ring a sprite.
