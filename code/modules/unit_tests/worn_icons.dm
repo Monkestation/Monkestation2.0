@@ -39,8 +39,6 @@
 
 		if(isnull(icon_state))
 			continue //no sprite for the item.
-		if(isnull(worn_icon))
-			continue // no worn icon
 		if(icon_state in already_warned_icons)
 			continue
 
@@ -53,6 +51,9 @@
 			if(!(icon_state in icon_states(worn_icon, 1)))
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'[match_message]")
 			continue
+
+		if(isnull(worn_icon))
+			continue // no worn icon
 
 		var/icon_file //checks against all the default icon locations if one isn't defined.
 		var/fail_reasons
