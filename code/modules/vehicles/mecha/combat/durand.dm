@@ -18,7 +18,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 1,
 	)
 	var/obj/durand_shield/shield
 
@@ -50,7 +50,7 @@
 
 /obj/vehicle/sealed/mecha/durand/process()
 	. = ..()
-	if(defense_mode && !use_energy(100 KILO JOULES)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
+	if(defense_mode && !use_energy(0.01 * STANDARD_CELL_CHARGE)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
 		for(var/O in occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
@@ -275,7 +275,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_energy((max_integrity - atom_integrity) * 100))
+	if(!.)
+		return
+	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 150)))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O
