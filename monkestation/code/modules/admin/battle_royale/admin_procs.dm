@@ -21,4 +21,4 @@ ADMIN_VERB(battle_royale_panel, R_FUN, FALSE, "Battle Royale Panel", "Open the b
 	if(!GLOB.battle_royale_controller)
 		GLOB.battle_royale_controller = new
 
-	GLOB.battle_royale_controller?.ui_interact(usr)
+	GLOB.battle_royale_controller?.ui_interact(user)
