@@ -1,31 +1,33 @@
 /obj/item/magazine_shuffler
-	desc = "A peculiar device that somehow worms its way into any magazine in or outside a gun and shuffles the bullets within."
+	desc = "A clunky device that sucks up the bullets of a magazine, shuffles them about, and then returns them in a random order. Works on guns as well."
 	name = "magazine shuffler"
-	icon = 'monkestation/icons/obj/device.dmi'
-	icon_state = "musicaltuner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "magazine_shuffler"
 	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = FLAMMABLE
+	/// The cooldown for shaking the mag shuffler. IDK how intensive Shake() is, but if it has a warning for proccall, its probably bad.
+	COOLDOWN_DECLARE(shake_cooldown) // No cooldown length var fuck you.
 
 /obj/item/magazine_shuffler/interact_with_atom(obj/item/interacting_with, mob/living/user, list/modifiers)
+	var/obj/item/ammo_box/target = null
 	if(istype(interacting_with, /obj/item/ammo_box))
-		var/obj/item/ammo_box/item = interacting_with
-		balloon_alert(user, "shuffling...")
-		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-		if(do_after(user, 3 SECONDS, item))
-			shuffle_inplace(item?.stored_ammo)
-			balloon_alert(user, "magazine shuffled")
-		else
-			balloon_alert(user, "aborted!")
-	else if(istype(interacting_with, /obj/item/gun/ballistic)) // this could probably be better.
+		target = interacting_with
+	else if(istype(interacting_with, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = interacting_with
 		if(!gun.magazine)
 			balloon_alert(user, "no magazine!")
 			return
-		balloon_alert(user, "shuffling...")
-		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-		if(do_after(user, 3 SECONDS, gun))
-			shuffle_inplace(gun?.magazine.stored_ammo)
-			balloon_alert(user, "magazine shuffled")
-		else
-			balloon_alert(user, "aborted!")
+		target = gun?.magazine
+	else
+		return
+	balloon_alert(user, "shuffling...")
+	if(COOLDOWN_FINISHED(src, shake_cooldown))
+		COOLDOWN_START(src, shake_cooldown, 10 SECONDS)
+		Shake(3,0,3 SECONDS)
+	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+	if(do_after(user, 3 SECONDS, interacting_with))
+		shuffle_inplace(target.stored_ammo)
+		balloon_alert(user, "magazine shuffled")
+	else
+		balloon_alert(user, "aborted!")
+
 
