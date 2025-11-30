@@ -468,3 +468,108 @@
   SirNightKnight:
   - bugfix: fixed chempuffs not applying reagent effects to turfs.
   - image: gave the hypnodemon ring a sprite.
+2025-11-30:
+  Absolucy:
+  - bugfix: Legions don't instantly revive IPCs into limbo.
+  - bugfix: Oozeling cores do not decay while inside of legions, like how normal bodies
+      would be in stasis.
+  - rscadd: Legions now have the voice of their victim.
+  - bugfix: Fixed certain antags like nukies, wizards, and abductors not properly
+      counting towards the antag cap sometimes.
+  - bugfix: Fixed the banana cream pie overlay being improperly positioned on taller
+      or shorter characters.
+  - bugfix: Fixed some jobs such as barbers spawning in the rupee room on Oshan.
+  - bugfix: Legions can no longer launch skulls from inside of rocks/walls.
+  - bugfix: Silicons can no longer state laws while dead.
+  - bugfix: Fixed revenants making noise going through the ocean while invisible.
+  - bugfix: 'Fixed bloodsucker oozeling cores being able to use bloodsucker. (fun
+      fact: I''m pretty sure only observers complained about this, and not anyone
+      who actually got blood bolted)'
+  - bugfix: Fixed sleeping carp and awakened dragon users not being able to throw
+      guns.
+  - bugfix: Fixed awakened dragon users getting MORE prefixes when mind swapped (or
+      oozeling core revived)
+  - bugfix: Fixed various bloodsucker-related items using the left inhand sprites
+      for the right hand.
+  - bugfix: Fixed some plants (i.e trees) having a blank name in logs when harvested.
+  - admin: Various logs now properly include ckeys and real names.
+  - admin: Added a "Fix Supermatter" verb.
+  - image: Syndi-cats now have emissive effects on their sprite.
+  - spellcheck: Fixed a typo with the voltaic combat cyberheart.
+  - rscdel: Removed an outdated tip related to Bloodsuckers.
+  - bugfix: (SmArtKar) ORM now displays your mining point balance instead of your
+      bank account balance.
+  - qol: (Hatterhat) The skeletal corpses left from spawner legions (e.g. from ore
+      vent defenses and legion necropolis tendrils) now disappear during ash storms.
+      This does not apply if the body gets brainswapped into.
+  - bugfix: (Jacquerel) Ninjas should be correctly credited for using their spider
+      bombs.
+  - bugfix: (SyncIt21) Paintings can be sponsored again.
+  - bugfix: (Rhials) Icebox escape pods will now land randomly on the surface, instead
+      of only in certain ruins.
+  SirNightKnight:
+  - bugfix: fixed the worn icon unit test flagging objects with null worn icon.
+  - admin: logs made after the game is finished are coloured yellow and marked as
+      such.
+  SirNightKnight, massaheartsu, lelandkemble, zoomachina, Melbert, timothymtorres, JohnFulpWillard:
+  - rscadd: you can now blow puffs of smoke into people's face to irritate them. syndicate
+      smokes will blind them temporarily.
+  - rscadd: lighters now take fuel, examine a lighter inhand to check how much fuel
+      is left and examine it closely to check which fuel it uses. Nanotrasen advises
+      you do not try and fuel your lighters with plasma.
+  - rscadd: added smoking pipe boxes and tobacco pouches. you can craft tobacco pouches
+      with leather and purchase pipe boxes as a goody from cargo. the captain gets
+      a special pipe box in their locker.
+  - code_imp: moved lighters and cigarettes into their own files. added a misc. file
+      for smoking related items (matches, etc.)
+  - balance: tobacco now has more nicotine. space tobacco now has a mixture of salbutamol,
+      nicotine, and oxygen (so you can smoke in space!).
+  - qol: you can take a match out of a matchbox with Right-Click and Right-Click the
+      box again with the match to strike it.
+  - balance: matchboxes now have 14 matches.
+  - balance: lowered the cost of cheap lighters.
+  - balance: the captain's flask can now hold 90 units instead of 60 to encourage
+      their alcoholism.
+  - rscadd: you can now find trick cigarettes and make trick cigarettes by adding
+      flash powder to them. they explode harmlessly once lit. perfect for pranks.
+  - rscadd: added greytide brand cigarettes.
+  - balance: renamed Xeno Filtered cigarettes to just be slimey cigarettes. they don't
+      cause lung damage anymore.
+  - balance: all current cigarettes/cigars will have all their reagents smoked by
+      the time they go out.
+  - balance: syndicate smokes were given better filters after a syndicate captain
+      dropped dead from smoking them during an active operation.
+  - balance: cigars are properly tiered in terms of quality. regular -> cohiba ->
+      havana. prices reflect the quality.
+  - qol: smoking pipes can be packed until their chem volume is full. their smoke
+      time is set to 1.5 reagents per minute.
+  - bugfix: adjusted smoking pipe particles on mob.
+  - qol: vapes need their cap removed before you can empty them.
+  - balance: lowered the cost of syndicate smokes to one telecrystal.
+  - rscadd: added the bananium crown to the clown's heirloom and mail pick lists.
+  - rscadd: added jackboots to the captain's garment bag.
+  - qol: wallets can hold 5 items.
+  - qol: added matchboxes and GAP punchers to the wallet holdable list.
+  - bugfix: cigarette smoke is now affected by mob height.
+  - bugfix: fixed a bug with height offsets being applied incorrectly to stacked hats.
+  - bugfix: changed how pollution renders so it doesn't look messed up on lower z
+      levels.
+  - qol: vent scrubbers scrub pollution.
+  - qol: doubled the rate at which portable scrubbers remove pollution.
+  - balance: removed IDs being the first ID card in wallets based off their access.
+  Veth-s:
+  - rscadd: New art for Veth's plush, changeable with alt clicking the plush.
+  - rscadd: Drag's Plush, with alternate arts
+  - rscadd: New Admin Only CC admiral shoes
+  - rscadd: New Admin Only CC undersuit
+  - rscadd: New Admin Only CC cloak
+  - rscadd: Alternate art of the hornet cloak, as a seperate buyable loadout item.
+  - rscadd: Alternate art of the knight cloak, as a seperate buyable loadout item.
+  - rscadd: A new hairstyle, Hornet.
+  - rscadd: New plush for Am, G.E.B.O.R.
+  - rscadd: New plush for plum, Aster.
+  - rscadd: New plush for Milo, Plutella.
+  - rscadd: New plush for Wolfy, Wolfy.
+  - rscadd: New plush for jackary, Wolf.
+  - rscadd: New plush made by combining Wolf and Aster.
+  - rscadd: New plush for Britarnya, Beverly Valon.
