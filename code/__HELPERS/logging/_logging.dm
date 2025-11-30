@@ -286,3 +286,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_hotspot(text, list/data)
 	logger.Log(LOG_CATEGORY_HOTSPOTS, text, data)
+
+/proc/log_floxy(text, list/data)
+	logger.Log(LOG_CATEGORY_FLOXY, text, data)

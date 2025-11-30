@@ -259,7 +259,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
 				return TRUE
-			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
+			if(findtext(request.message, ":") && !is_http_protocol(request.message))
 				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
 				return TRUE
 

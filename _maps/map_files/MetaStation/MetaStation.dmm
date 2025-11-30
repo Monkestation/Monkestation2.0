@@ -6645,10 +6645,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/security/prison)
-"csh" = (
-/obj/machinery/pdapainter/supply,
-/turf/open/floor/carpet/red,
-/area/station/cargo/quartermaster)
 "cst" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -14859,6 +14855,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
+"foD" = (
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/carpet/red,
+/area/station/cargo/quartermaster)
 "foP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17201,6 +17201,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"gjB" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/camera/autoname/directional/north,
+/obj/structure/closet/secure_closet/quartermaster,
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "gjF" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/iron,
@@ -21223,12 +21229,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"hAx" = (
-/obj/machinery/modular_computer/preset/id{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "hAE" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
@@ -24710,6 +24710,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"iKR" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/private)
 "iKT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26061,13 +26068,6 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"jfa" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/private)
 "jff" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -34731,6 +34731,27 @@
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/station/medical/pathology/isolation)
+"mah" = (
+/obj/structure/table/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/clipboard{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/stamp/denied{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/stamp/qm{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "mam" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35981,12 +36002,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"mxO" = (
-/obj/machinery/airalarm/directional/north,
-/obj/machinery/camera/autoname/directional/north,
-/obj/structure/closet/secure_closet/quartermaster,
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "mxQ" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
@@ -44969,6 +44984,34 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
+"pAS" = (
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/device/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/device/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "pAW" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 4
@@ -49019,27 +49062,6 @@
 "qST" = (
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
-"qTo" = (
-/obj/structure/table/wood,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/item/clipboard{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/stamp{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/item/stamp/denied{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/stamp/qm{
-	pixel_x = 7;
-	pixel_y = -2
-	},
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "qTr" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/disposal/bin{
@@ -51319,34 +51341,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"rIa" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "rIh" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -62820,6 +62814,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
+"vJO" = (
+/obj/machinery/modular_computer/preset/id{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "vJX" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -87554,9 +87554,9 @@ eLb
 cbz
 kQP
 kQP
-mxO
+gjB
 qkD
-qTo
+mah
 qIK
 xWV
 kKr
@@ -88584,9 +88584,9 @@ qIK
 suJ
 bor
 iLV
-csh
+foD
 lud
-hAx
+vJO
 kQP
 ifI
 qzC
@@ -89365,7 +89365,7 @@ nxF
 sVY
 cyk
 qzS
-rIa
+pAS
 ahD
 wki
 jIY
@@ -90917,7 +90917,7 @@ wcL
 yfT
 klf
 tdI
-jfa
+iKR
 mda
 mda
 knK
