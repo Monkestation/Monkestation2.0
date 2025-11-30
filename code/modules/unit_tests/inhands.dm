@@ -27,7 +27,7 @@
 	//generate_possible_icon_states_list("your/folder/path/inhands/")
 
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
-		if(initial(item_path.item_flags) & ABSTRACT || HAS_TRAIT(item_path, TRAIT_NO_INHAND_ICON))
+		if(initial(item_path.item_flags) & ABSTRACT)
 			continue
 
 		var/skip_left

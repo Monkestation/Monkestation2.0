@@ -274,10 +274,13 @@
 	icon_state = "ihateERROR"
 	body_parts_covered = null
 	worn_icon = null
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
 
 /obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_NO_INHAND_ICON, TRAIT_NO_WORN_ICON), ABSTRACT_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
 	. = ..()
