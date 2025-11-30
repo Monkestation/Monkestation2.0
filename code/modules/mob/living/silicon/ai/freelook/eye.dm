@@ -151,6 +151,12 @@
 		L.Cut()
 	return ..()
 
+///Called when the AI shiftclicks on something to examinate it.
+/mob/eye/ai_eye/proc/examinate_check(mob/user, atom/source)
+	SIGNAL_HANDLER
+	if(user.client.eye == src)
+		return COMPONENT_ALLOW_EXAMINATE
+
 /atom/proc/move_camera_by_click()
 	if(!isAI(usr))
 		return
@@ -223,6 +229,7 @@
 	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
 	eyeobj.real_name = eyeobj.name
+	eyeobj.RegisterSignal(src, COMSIG_CLICK_SHIFT, TYPE_PROC_REF(/mob/eye/ai_eye, examinate_check))
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/set_eyeobj_visible(state = TRUE)
