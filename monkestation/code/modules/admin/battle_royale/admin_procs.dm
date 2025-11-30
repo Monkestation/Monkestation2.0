@@ -3,7 +3,7 @@ ADMIN_VERB(battle_royale_easy_setup, R_FUN, FALSE, "Easy Set Up Battle Royale", 
 		GLOB.battle_royale_controller = new
 
 	if(GLOB.battle_royale_controller?.active)
-		to_chat(usr, span_warning("A game has already started!"))
+		to_chat(user, span_warning("A game has already started!"))
 		return
 
 	var/input = tgui_alert(usr, "Do you want to quick start a battle royale?", "Battle royale", list("Normal(15 min max duration)", "Fast(10 min max duration)", "No"))
