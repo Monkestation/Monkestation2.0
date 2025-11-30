@@ -891,6 +891,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_UNCOMPOSTABLE "uncompostable" */
 /// Items with this trait will not have their worn icon overlayed.
 #define TRAIT_NO_WORN_ICON "no_worn_icon"
+/// Items with this trait will not have their inhand sprite flag the check. //note to self: make this apply to inhand rendering also - NK
+#define TRAIT_NO_INHAND_ICON "no_inhand_icon"
 /// Items with this trait will not appear when examined.
 #define TRAIT_EXAMINE_SKIP "examine_skip"
 

@@ -27,7 +27,7 @@
 	//generate_possible_icon_states_list("your/folder/path/inhands/")
 
 	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
-		if(initial(item_path.item_flags) & ABSTRACT)
+		if(initial(item_path.item_flags) & ABSTRACT || HAS_TRAIT(item_path, TRAIT_NO_INHAND_ICON))
 			continue
 
 		var/skip_left
@@ -40,9 +40,6 @@
 
 		var/lefthand_file = initial(item_path.lefthand_file)
 		var/righthand_file = initial(item_path.righthand_file)
-
-		if(isnull(lefthand_file && isnull(righthand_file))) //no inhand sprite for the item.
-			continue
 
 		var/held_icon_state = initial(item_path.inhand_icon_state)
 		if(!held_icon_state)
