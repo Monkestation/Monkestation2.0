@@ -43,7 +43,7 @@
 		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers?.len)
+	if(length(observers))
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 
