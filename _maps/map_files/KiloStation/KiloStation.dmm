@@ -15412,7 +15412,9 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "eRh" = (
@@ -50289,6 +50291,26 @@
 "pIO" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/command/heads_quarters/ce)
+"pIW" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = -1;
+	pixel_x = 4
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 7;
+	pixel_x = -1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/security/armory)
 "pJd" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63351,6 +63373,28 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
+"tRP" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -5
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/security/armory)
 "tRX" = (
 /obj/machinery/conveyor{
 	id = "garbage"
@@ -65323,26 +65367,52 @@
 "uyM" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/ammo_box/magazine/m35,
-/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
-	pixel_y = -1;
-	pixel_x = 4
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
 	},
-/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
-	pixel_y = 3;
-	pixel_x = 1
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
 	},
-/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
-	pixel_y = 7;
-	pixel_x = -1
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_x = 3;
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -2;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -66149,9 +66219,8 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -98945,7 +99014,7 @@ aCJ
 lxj
 aJb
 uMI
-nlQ
+tRP
 nlQ
 nZB
 nlQ
@@ -99202,7 +99271,7 @@ awD
 gYr
 wNz
 eRf
-nlQ
+pIW
 nlQ
 pLM
 nlQ

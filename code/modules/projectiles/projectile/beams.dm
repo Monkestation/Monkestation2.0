@@ -28,6 +28,41 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+//weaker laser, for sidearms
+/obj/projectile/beam/laser/sidearm
+	generic_name = "laser beam"
+	damage = 18
+
+//concentrated laser, similar to hellfires but far lower wounding
+/obj/projectile/beam/laser/conlaser
+	generic_name = "concentrated laser beam"
+	icon_state = "heavylaser"
+	damage = 25
+	pass_flags = PASSTABLE | PASSGLASS
+	projectile_piercing = PASSGRILLE
+	wound_bonus = -60
+	bare_wound_bonus = 0
+
+//lower-frequency laser, for higher firerate weapons
+/obj/projectile/beam/laser/carbine
+	icon_state = "carbine_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	damage = 10
+	light_color = COLOR_DARK_RED
+	light_outer_range = 1.5
+	armour_penetration = 30
+
+//overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
+/obj/projectile/beam/laser/hellfire
+	name = "hellfire laser"
+	wound_bonus = 0
+	damage = 25
+	speed = 0.6 // higher power = faster, that's how light works right
+
+/obj/projectile/beam/laser/hellfire/Initialize(mapload)
+	. = ..()
+	transform *= 2
+
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
 	damage = 25
@@ -57,22 +92,6 @@
 	ricochet_auto_aim_range = 10
 	ricochet_incidence_leeway = 90
 	ricochet_shoots_firer = TRUE
-
-/obj/projectile/beam/laser/carbine
-	icon_state = "carbine_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 9
-
-//overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
-/obj/projectile/beam/laser/hellfire
-	name = "hellfire laser"
-	wound_bonus = 0
-	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
-	. = ..()
-	transform *= 2
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -150,7 +169,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 35
+	stamina = 40
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -160,10 +179,12 @@
 	impact_type = /obj/effect/projectile/impact/disabler
 	debilitating = TRUE
 	debilitate_mult = 3
+	speed = 0.65 //Just slightly faster than lasers
 
 /obj/projectile/beam/disabler/weak
-	stamina = 15
+	stamina = 20
 	debilitate_mult = 0.5
+	speed = 0.8
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
@@ -290,7 +311,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "plasma_glob"
 	damage = 10
-	speed = 1.5
+	speed = 1.8
 	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
 	wound_bonus = -50 // However we do not very much against armor
 	pass_flags = PASSTABLE | PASSGRILLE // His ass does NOT pass through glass!
