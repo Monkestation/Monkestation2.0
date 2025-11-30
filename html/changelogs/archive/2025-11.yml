@@ -512,6 +512,12 @@
   - bugfix: You can no longer order astral carpets on planetary maps, as they're super
       buggy.
   - bugfix: Fixed not being able to toggle/configure air conditioning in air alarms.
+  - bugfix: Plant bags no longer allow you to bypass the usual "too crowded!" checks
+      when harvesting plants.
+  - rscadd: You can now buy the colored kimonos and yukatas in the loadout store,
+      for 2500 monkecoins each.
+  - qol: Being dusted by a death bolt (colossus, wendigo, demonic frost miner) now
+      drops items.
   BobDABuilder9001:
   - rscadd: Added a new Neutral Quirk to indicate to Medical you're willing to be
       borged
