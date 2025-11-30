@@ -31,7 +31,7 @@
 		"Off-Duty Crew",
 		"Test Subject",
 		"Vagabond",
-		"Bananotrasen CEO?",
+		"Bananotrasen CEO",
 	)
 
 /datum/job/atmospheric_technician
