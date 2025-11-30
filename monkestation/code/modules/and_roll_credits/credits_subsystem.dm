@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(credits)
 
 	var/director = "Some monkey we found on the street"
 	var/list/disclaimers = list()
+	var/list/music = list()
 	var/list/datum/episode_name/episode_names = list()
 
 	var/episode_name = ""
@@ -12,6 +13,7 @@ SUBSYSTEM_DEF(credits)
 	var/producers_string = ""
 	var/list/episode_string
 	var/list/disclaimers_string
+	var/list/music_string
 	var/list/cast_string
 
 	//If any of the following five are modified, the episode is considered "not a rerun".
@@ -41,6 +43,7 @@ SUBSYSTEM_DEF(credits)
 	credit_order += episode_string
 	credit_order += producers_string
 	credit_order += disclaimers_string
+	credit_order += music_string
 	credit_order += cast_string
 
 	credit_order += "<center>The Admin Bus</center>"
@@ -91,12 +94,14 @@ SUBSYSTEM_DEF(credits)
 /datum/controller/subsystem/credits/proc/draft()
 	draft_episode_names()
 	draft_disclaimers()
+	draft_music()
 	draft_caststring()
 
 /datum/controller/subsystem/credits/proc/finalize()
 	finalize_name()
 	finalize_episodestring()
 	finalize_disclaimerstring()
+	finalize_musicstring()
 
 /datum/controller/subsystem/credits/proc/generate_pref_images()
 	for(var/ckey in contributors)
@@ -260,3 +265,18 @@ SUBSYSTEM_DEF(credits)
 	plane = SPLASHSCREEN_PLANE
 	icon = 'monkestation/code/modules/and_roll_credits/icons/title_cards.dmi'
 	screen_loc = "CENTER-4,BOTTOM"
+
+
+/datum/controller/subsystem/credits/proc/finalize_musicstring()
+	music_string =  list()
+	for(var/music_line in music)
+		music_string += "<center>[music_line]</center>"
+
+/datum/controller/subsystem/credits/proc/draft_music()
+	if(GLOB.soundtrack_this_round.len)
+		music += "<center><h1>Music Credits</h1>"
+		for(var/song_path in GLOB.soundtrack_this_round)
+			var/datum/soundtrack_song/song = song_path
+			music += "<center><h2>[sanitize(initial(song.artist))] - \"[sanitize(initial(song.title))]\" ([sanitize(initial(song.album))])</h2>"
+		music += "<br>"
+		music += "<br>"
