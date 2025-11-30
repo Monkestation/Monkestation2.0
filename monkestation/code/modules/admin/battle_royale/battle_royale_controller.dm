@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 
 	spawn_loot_pods(calculate_spawned_loot_pods(seconds_per_tick))
 
-	if(SPT_PROB(current_data.rare_drop_prob, 1))
+	if(SPT_PROB(current_data.rare_drop_prob, seconds_per_tick))
 		spawn_rare_drop()
 
 	if(SPT_PROB(current_data.super_drop_prob, 1))
