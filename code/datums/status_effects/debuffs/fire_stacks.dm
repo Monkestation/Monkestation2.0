@@ -18,8 +18,6 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
-	/// how long have we been ON FIRE?
-	var/ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -208,28 +206,6 @@
 	var/turf/location = get_turf(owner)
 	location.hotspot_expose(700, 25 * seconds_between_ticks, TRUE)
 
-
-	if(!ishuman(owner))
-		return
-
-	var/mob/living/carbon/human/toasty_person = owner
-
-	if(toasty_person.get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
-		return
-
-	var/fire_armor = (100 - toasty_person.getarmor(null, FIRE)) * 0.01
-
-	switch(ticks_on_fire)
-		if(0 to 3)
-			toasty_person.apply_damage((0.20 * stacks * fire_armor), BURN)
-		if(4 to 6)
-			toasty_person.apply_damage((0.30 * stacks * fire_armor), BURN)
-		if(7 to 9)
-			toasty_person.apply_damage((0.40 * stacks * fire_armor), BURN)
-		if(10 to INFINITY)
-			toasty_person.apply_damage((0.50 * stacks * fire_armor), BURN)
-	ticks_on_fire += 1 * seconds_between_ticks
-
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
  *
@@ -268,7 +244,6 @@
 	for(var/obj/item/equipped in owner.get_equipped_items())
 		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
-	ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

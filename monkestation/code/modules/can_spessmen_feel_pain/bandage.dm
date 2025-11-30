@@ -54,6 +54,7 @@
 		remove_gauze(drop_location())
 
 	current_gauze = new new_gauze.type(src, 1)
+	current_gauze.used = TRUE
 	current_gauze.worn_icon_state = "[body_zone][rand(1, 3)]"
 	if(can_bleed() && (generic_bleedstacks || cached_bleed_rate))
 		current_gauze.add_mob_blood(owner)
@@ -62,17 +63,37 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
 	owner.update_damage_overlays()
 
+/obj/item/bodypart/proc/check_gauze_removal(burn, brute)
+	if(!current_gauze)
+		return
+	if(burn >= 15)
+		owner.visible_message(span_warning("\The [current_gauze.name] on [owner]'s [name] burns away!"), span_warning("The [current_gauze.name] on your [parse_zone(body_zone)] burns away!"))
+		playsound(current_gauze, 'sound/effects/wounds/sizzle2.ogg', 70, vary = TRUE)
+		var/obj/effect/decal/cleanable/ash/ash = new(drop_location())
+		ash.desc += " It looks like it used to be some kind of bandage."
+		remove_gauze()
+		return
+	if(brute >= 10 || burn >= 10)
+		owner.visible_message(span_warning("\The [current_gauze.name] on [owner]'s [name] comes loose!"), span_warning("The [current_gauze.name] on your [parse_zone(body_zone)] comes loose!"))
+		remove_gauze(drop_location())
+		return
+
 /obj/item/bodypart/proc/remove_gauze(atom/remove_to)
 	SEND_SIGNAL(src, COMSIG_BODYPART_UNGAUZED, current_gauze)
 	if(remove_to)
 		current_gauze.forceMove(remove_to)
 	else
-		current_gauze.moveToNullspace()
+		QDEL_NULL(current_gauze)
+		owner.update_damage_overlays()
+		return
 	if(can_bleed() && (generic_bleedstacks || cached_bleed_rate))
 		current_gauze.add_mob_blood(owner)
 	current_gauze.worn_icon_state = initial(current_gauze.worn_icon_state)
 	current_gauze.update_appearance()
 	. = current_gauze
+	if(current_gauze.sanitization)
+		current_gauze.sanitization = current_gauze.sanitization * 0.5
+	current_gauze.update_appearance(UPDATE_NAME)
 	current_gauze = null
 	owner.update_damage_overlays()
 	return .
