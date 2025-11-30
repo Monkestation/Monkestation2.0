@@ -4,8 +4,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "magazine_shuffler"
 	w_class = WEIGHT_CLASS_SMALL
-	/// The cooldown for shaking the mag shuffler. IDK how intensive Shake() is, but if it has a warning for proccall, its probably bad.
-	COOLDOWN_DECLARE(shake_cooldown) // No cooldown length var fuck you.
 
 /obj/item/magazine_shuffler/interact_with_atom(obj/item/interacting_with, mob/living/user, list/modifiers)
 	var/obj/item/ammo_box/target = null
@@ -20,9 +18,6 @@
 	else
 		return
 	balloon_alert(user, "shuffling...")
-	if(COOLDOWN_FINISHED(src, shake_cooldown))
-		COOLDOWN_START(src, shake_cooldown, 10 SECONDS)
-		Shake(3,0,3 SECONDS)
 	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 	if(do_after(user, 3 SECONDS, interacting_with))
 		shuffle_inplace(target.stored_ammo)
