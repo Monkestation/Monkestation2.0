@@ -1,8 +1,8 @@
-#define COMA_COOLDOWN (5 MINUTES) // Half a reviver that defibs you.
+#define COMA_COOLDOWN (40 SECONDS)
 /datum/symptom/coma
 	name = "Regenerative Coma"
 	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. Waking the host up some time later."
-	max_multiplier = 12
+	max_multiplier = 6
 	max_chance = 100
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
@@ -16,16 +16,16 @@
 
 /datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
-	if(!added_to_mob && max_multiplier >= 9)
-		added_to_mob = TRUE
-		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 	if (!COOLDOWN_FINISHED(src, last_coma))
 		cooldown_alert = FALSE
 		return
+	if(!added_to_mob && max_multiplier >= 4)
+		added_to_mob = TRUE
+		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 	if(!cooldown_alert)
-		cooldown_alert = FALSE
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "yawn")
-		to_chat(victim, span_warning("You can't help the urge to yawn."))
+		cooldown_alert = !cooldown_alert
+		INVOKE_ASYNC(mob, TYPE_PROC_REF(/mob, emote), "yawn")
+		to_chat(mob, span_warning("You can't help the urge to yawn."))
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)
 		return
@@ -58,14 +58,14 @@
 	if((victim.getBruteLoss() + victim.getFireLoss()) >= 80 && !active_coma)
 		to_chat(victim, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), victim), 8 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(coma), victim), 6 SECONDS)
 	return FALSE
 
 /datum/symptom/coma/proc/coma(mob/living/victim)
 	if(QDELETED(victim) || victim.stat == DEAD)
 		return
 	victim.fakedeath("regenerative_coma", TRUE)
-	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 20 SECONDS)
 
 /datum/symptom/coma/proc/uncoma(mob/living/victim)
 	if(QDELETED(victim) || !active_coma)
@@ -88,4 +88,5 @@
 	if((victim.getBruteLoss() + victim.getFireLoss()) > 30)
 		return TRUE
 	return FALSE
+
 #undef COMA_COOLDOWN
