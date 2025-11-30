@@ -10,7 +10,7 @@ ADMIN_VERB(battle_royale_easy_setup, R_FUN, FALSE, "Easy Set Up Battle Royale", 
 	if(!input || input == "No")
 		return
 
-	if(tgui_alert(usr, "Are you sure you want to start a battle royale?", "Battle royale", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, "Are you sure you want to start a battle royale?", "Battle royale", list("Yes", "No")) != "Yes")
 		return
 
 	message_admins("[key_name_admin(usr)] has triggered battle royale.")
