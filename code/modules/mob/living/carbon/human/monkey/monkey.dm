@@ -19,11 +19,16 @@
 
 /mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
+	/// The % chance this angry monkey will spawn with an ape escape helmet.
+	var/helmet_prob = 10
 
 /mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	. = ..()
-	if(prob(10))
+	if(prob(helmet_prob))
 		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
+
+/mob/living/carbon/human/species/monkey/angry/nohelmet
+	helmet_prob = 0
 
 /// Gives our funny monkey an Ape Escape hat reference
 /mob/living/carbon/human/species/monkey/angry/proc/give_ape_escape_helmet()
