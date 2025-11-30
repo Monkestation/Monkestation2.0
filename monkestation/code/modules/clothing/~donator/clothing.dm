@@ -274,8 +274,10 @@
 	icon_state = "ihateERROR"
 	body_parts_covered = null
 	worn_icon = null
-	lefthand_file = null
-	righthand_file = null
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
 	. = ..()

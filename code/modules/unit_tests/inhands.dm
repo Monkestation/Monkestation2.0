@@ -41,9 +41,6 @@
 		var/lefthand_file = initial(item_path.lefthand_file)
 		var/righthand_file = initial(item_path.righthand_file)
 
-		if(isnull(lefthand_file && isnull(righthand_file))) //no inhand sprite for the item.
-			continue
-
 		var/held_icon_state = initial(item_path.inhand_icon_state)
 		if(!held_icon_state)
 			var/base_icon_state = initial(item_path.icon_state)
