@@ -159,7 +159,7 @@
 	price_max = CARGO_CRATE_VALUE * 3
 	stock_max = 3
 	availability_prob = 30
-  
+
 /datum/market_item/misc/tricktrickcigarettes
 	name = "Trick Trick Cigarettes"
 	desc = "Cigarettes filled with flash powder. Makes for a fun prank!"
