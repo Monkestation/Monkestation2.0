@@ -39,7 +39,7 @@
 /obj/structure/bonfire/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(burning)
-		visible_message("The roaring fire of \the [src] refuses to fade.")
+		visible_message(span_warning("The roaring fire of \the [src] refuses to fade."))
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/structure/bonfire/Destroy()
