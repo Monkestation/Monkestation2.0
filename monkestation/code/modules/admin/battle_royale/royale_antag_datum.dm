@@ -14,7 +14,7 @@
 
 /datum/antagonist/battle_royale/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	var/mob/living/current = owner.current
+	var/mob/living/current = mob_override || owner.current
 	RegisterSignal(current, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 	RegisterSignal(current, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	START_PROCESSING(SSprocessing, src)
