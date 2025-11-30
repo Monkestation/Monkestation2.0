@@ -206,10 +206,13 @@
 		return
 	cuffs.item_flags |= BEING_REMOVED
 	breakouttime = cuffs.breakouttime
+	var/timed_action_flags = IGNORE_HELD_ITEM
+	if(cuffs.breakout_while_moving)
+		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -218,7 +221,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
