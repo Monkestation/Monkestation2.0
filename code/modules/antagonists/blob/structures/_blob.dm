@@ -287,7 +287,6 @@
 
 	if(update_visuals)
 		update_appearance()
-	message_admins("5 [.]")
 
 ///Check if our area allows blobs and update related values
 /obj/structure/blob/proc/check_legit(new_team = FALSE)
