@@ -458,3 +458,13 @@
   - balance: locked traitor final objectives to only generate above 35 pop.
   ThatGuy-GEWP:
   - refactor: Oshan hotspots no longer explode, Engineers rejoice!
+2025-11-28:
+  Absolucy, TealSeer:
+  - refactor: rewrote all cases of numbers being used as keys in non-alist associative
+      lists
+  Uristthedorf:
+  - balance: Hivequeen borers are now empowered.
+2025-11-29:
+  SirNightKnight:
+  - bugfix: fixed chempuffs not applying reagent effects to turfs.
+  - image: gave the hypnodemon ring a sprite.
