@@ -36,6 +36,9 @@
 	if(cell && cell.charge <= 0)
 		. += span_warning("Its battery indicator is blinking red!")
 
+	if(worn_badge)
+		. += "It is decorated with [icon2html(worn_badge, user)] \a [worn_badge]."
+
 	switch(stat)
 		if(CONSCIOUS)
 			if(shell)

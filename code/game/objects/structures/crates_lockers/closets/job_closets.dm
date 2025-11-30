@@ -95,8 +95,8 @@
 
 /obj/structure/closet/lawcloset/populate_contents_immediate()
 	. = ..()
-	new /obj/item/clothing/accessory/lawyers_badge(src)
-	new /obj/item/clothing/accessory/lawyers_badge(src)
+	new /obj/item/clothing/accessory/badge/lawyer(src)
+	new /obj/item/clothing/accessory/badge/lawyer(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"

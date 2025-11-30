@@ -80297,7 +80297,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 8
 	},
 /turf/open/floor/iron,
