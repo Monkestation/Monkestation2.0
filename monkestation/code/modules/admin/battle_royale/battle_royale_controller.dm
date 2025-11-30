@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 	if(SPT_PROB(current_data.rare_drop_prob, seconds_per_tick))
 		spawn_rare_drop()
 
-	if(SPT_PROB(current_data.super_drop_prob, 1))
+	if(SPT_PROB(current_data.super_drop_prob, seconds_per_tick))
 		spawn_super_drop()
 
 ///Setup and start a royale
