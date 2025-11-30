@@ -545,10 +545,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/machinery/flasher/portable{
-	name = "Moth Lamp"
-	},
 /obj/effect/turf_decal/box,
+/obj/vehicle/ridden/battering_ram{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "aja" = (
