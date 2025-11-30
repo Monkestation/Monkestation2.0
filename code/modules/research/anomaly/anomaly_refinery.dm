@@ -60,16 +60,14 @@
  * * anomaly_type - anomaly type define
  */
 /obj/machinery/research/anomaly_refinery/proc/get_required_radius(anomaly_type)
-	if(!SSresearch.is_core_available(anomaly_type))
-		return //return null
 
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
-	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
+	var/soft_limit = SSresearch.anomaly_soft_limit_by_type[anomaly_type]
 
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
-	var/radius_increase_per_core = radius_span / hard_limit
+	var/radius_increase_per_core = radius_span / soft_limit
 	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
 	return radius
 
