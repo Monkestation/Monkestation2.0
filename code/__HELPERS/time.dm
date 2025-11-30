@@ -6,6 +6,11 @@
 	var/time_string = time2text(world.timeofday, format)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
+/proc/time_stamp_metric()
+	var/date_portion = time2text(world.timeofday, "YYYY-MM-DD")
+	var/time_portion = time2text(world.timeofday, "hh:mm:ss")
+	return "[date_portion]T[time_portion]"
+
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time - SSticker.round_start_time
