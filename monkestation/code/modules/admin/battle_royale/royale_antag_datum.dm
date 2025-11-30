@@ -21,7 +21,7 @@
 
 /datum/antagonist/battle_royale/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	var/mob/living/current = owner.current
+	var/mob/living/current = mob_override || owner.current
 	UnregisterSignal(current, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
 	STOP_PROCESSING(SSprocessing, src)
 
