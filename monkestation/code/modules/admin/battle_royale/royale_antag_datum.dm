@@ -34,7 +34,7 @@
 	if(current_turf && (locate(/obj/effect/royale_storm_effect) in current_turf) || !is_type_in_list(get_area(current), GLOB.battle_royale_controller?.storm_controller?.safe_areas))
 		current.adjustFireLoss(3 * seconds_per_tick * max(round(storm_ticks * 0.1), 1)) //damage increases the longer you have been in the storm for
 		storm_ticks++
-		if(prob(30))
+		if(SPT_PROB(30, seconds_per_tick))
 			to_chat(current, span_userdanger("You're badly burned by the storm!"))
 		return
 
