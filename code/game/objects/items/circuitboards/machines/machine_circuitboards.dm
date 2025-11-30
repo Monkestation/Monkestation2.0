@@ -16,7 +16,8 @@
 	specific_parts = TRUE
 	req_components = list(
 		/datum/stock_part/manipulator/tier4 = 5,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1)
 
 /obj/item/circuitboard/machine/bsa/middle
 	name = "Bluespace Artillery Fusor"
