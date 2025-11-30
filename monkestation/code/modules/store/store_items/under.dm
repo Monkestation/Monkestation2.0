@@ -774,6 +774,31 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	item_path =  /obj/item/clothing/under/costume/skyrat/kimono
 	item_cost = 2500
 
+/datum/store_item/under/miscellaneous/kimono/black //BUYABLE
+	name = "Black Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono
+
+/datum/store_item/under/miscellaneous/kimono/red //BUYABLE
+	name = "Red Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono/red
+
+/datum/store_item/under/miscellaneous/kimono/purple //BUYABLE
+	name = "Purple Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono/purple
+
+/datum/store_item/under/miscellaneous/yukata
+	name = "Black Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/yukata/green
+	name = "Green Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/green
+
+/datum/store_item/under/miscellaneous/yukata/white
+	name = "White Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/white
+
 /datum/store_item/under/miscellaneous/chaps //BUYABLE
 	name = "Black Chaps"
 	item_path = /obj/item/clothing/under/pants/nova/chaps
