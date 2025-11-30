@@ -231,6 +231,7 @@
 		"plumbing_rcd",
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
+		"plumbing_rcd_engi",
 		"portable_chem_mixer",
 		"retractor",
 		"scalpel",

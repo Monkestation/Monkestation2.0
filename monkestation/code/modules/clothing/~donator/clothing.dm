@@ -270,6 +270,20 @@
 	name = "hypnodemon's ring"
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
 	spans = list("hypnophrase")
+	icon = 'monkestation/code/modules/donator/icons/obj/misc.dmi'
+	icon_state = "ihateERROR"
+	body_parts_covered = null
+	worn_icon = null
+	lefthand_file = null
+	righthand_file = null
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
+	. = ..()
+	. += "...you stare deeply into the ring... [span_hypnophrase("<i>you witness transcendental apparitions beyond your mortal comprehension...</i>")] [span_extremelybig(span_red("<b>ERROR</b>"))]"
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+		human_user.add_mood_event("error_insanity", /datum/mood_event/gates_of_mansus)
 
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
