@@ -284,14 +284,12 @@
 	if(!connected_pump)
 		return
 	connected_pump.set_on(TRUE)
-	connected_pump.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/atmos_volume_pump/proc/set_pump_off()
 	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
 	connected_pump.set_on(FALSE)
-	connected_pump.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/atmos_volume_pump/proc/request_pump_data()
 	CIRCUIT_TRIGGER
