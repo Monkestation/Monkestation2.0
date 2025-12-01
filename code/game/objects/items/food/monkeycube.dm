@@ -25,7 +25,7 @@
 	spawned_mob = shaken_mob
 	user.balloon_alert_to_viewers("shakes \the [src]!")
 	playsound(src, 'sound/effects/can_shake.ogg', vol = 40, vary = TRUE)
-	user.log_message("shook [src]", LOG_ATTACK)
+	user.log_message("shook [src], agitating [spawned_mob] into [shaken_mob]", LOG_ATTACK)
 
 /obj/item/food/monkeycube/proc/Expand()
 	if(expanding)
