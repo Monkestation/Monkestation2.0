@@ -299,7 +299,7 @@
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
 
-	on = TRUE
+	set_on(TRUE)
 	cycle_start_time = world.time
 
 	var/turf/local_turf = get_turf(src)
@@ -333,7 +333,6 @@
 		if(is_cycling_audible)
 			source_airlock.say("Decompressing airlock.")
 
-	update_appearance(UPDATE_ICON)
 	return TRUE
 
 
@@ -341,7 +340,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null, unbolt_only = FALSE)
 	if(!on)
 		return FALSE
-	on = FALSE
+	set_on(FALSE)
 
 	// In case we can open both sides safe_dock will do it for us
 	// it also handles its own messages. If we can't - procceed

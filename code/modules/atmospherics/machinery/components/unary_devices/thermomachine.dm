@@ -172,8 +172,7 @@
 	var/turf/local_turf = get_turf(src)
 
 	if(!is_operational || !local_turf)
-		on = FALSE
-		update_appearance(UPDATE_ICON)
+		set_on(FALSE)
 		return
 
 	// The gas we want to cool/heat
@@ -292,7 +291,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
@@ -324,10 +323,9 @@
 	if(!can_interact(user))
 		return
 
-	on = !on
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return

@@ -26,10 +26,9 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/click_ctrl(mob/user)
 	if(can_interact(user))
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance(UPDATE_ICON)
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/click_alt(mob/user)
@@ -145,7 +144,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
