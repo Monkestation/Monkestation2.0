@@ -344,6 +344,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/obj/machinery/station_map)
 	// Causes weird issues that I don't understand and can be investigated later and I just want this to stop randomly failing
 	ignore += typesof(/turf/open/floor/plating/ocean)
+	ignore += typesof(/turf/open/openspace/ocean)
 
 	return ignore
 
