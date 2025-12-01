@@ -16,6 +16,7 @@
 	var/obj/item/toy/plush/lover
 	var/list/plush_traits = list()
 	var/plush_flags
+	var/has_heartstring = TRUE
 	var/obj/item/toy/plush/partner
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
@@ -879,8 +880,27 @@
 
 //PLUSHTOMIZATION STUFF
 
+/obj/item/heartstring
+	name = "\improper Heart-strings"
+	desc = "A bundle of woven cotton fibres. The vivifying crux of a plush, comprised of its Soul-string and any adjoining Shape-strings. Without it, a plushes spirit is lost."
+	var/datum/weakref/our_plush
+	var/list/datum/plush_trait/shape_strings = list()
+
+/obj/item/heartstring/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
+		var/success_prob = istype(attacking_item, /obj/item/heartstring_extractor) : 90 ? 100
+
+/obj/item/shapestring
+	name = "\improper Shape-string"
+	desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial."
+	var/datum/plush_trait/stored_trait
+
+
+	
+
 /datum/plush_trait
 	var/name = "Buggy Nonsense"
 	var/desc = "The neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
 	var/removable = TRUE
+
 
