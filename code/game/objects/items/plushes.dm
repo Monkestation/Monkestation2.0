@@ -14,6 +14,8 @@
 	//--love ~<3--
 	gender = NEUTER
 	var/obj/item/toy/plush/lover
+	var/list/plush_traits = list()
+	var/plush_flags
 	var/obj/item/toy/plush/partner
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
@@ -874,3 +876,11 @@
 	icon_state = "donkpocket"
 	attack_verb_continuous = list("donks")
 	attack_verb_simple = list("donk")
+
+//PLUSHTOMIZATION STUFF
+
+/datum/plush_trait
+	var/name = "Buggy Nonsense"
+	var/desc = "The neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
+	var/removable = TRUE
+
