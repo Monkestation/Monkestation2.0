@@ -429,7 +429,7 @@
 
 /datum/action/innate/cult/master/pulse/do_ability(mob/living/clicker, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
-h	if(throwee && QDELING(throwee))
+	if(throwee && QDELING(throwee))
 		to_chat(clicker, span_cult("You lost your target!"))
 		throwee = null
 		throwee_ref = null
