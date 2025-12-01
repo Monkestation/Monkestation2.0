@@ -337,7 +337,7 @@
 		var/datum/blood_type/blood = hurtguy.get_blood_type()
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
 		. = TRUE
-		mendicant.blood_volume = min(hurtguy.blood_volume - round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
+		mendicant.blood_volume = min(mendicant.blood_volume - round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume + round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		if(!(mendicant.dna.human_blood_type in blood.compatible_types))
 		// MONKESTATION EDIT NEW END
@@ -364,7 +364,7 @@
 		var/datum/blood_type/mendicant_blood = mendicant.get_blood_type()
 		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
 		. = TRUE
-		mendicant.blood_volume = min(hurtguy.blood_volume + round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
+		mendicant.blood_volume = min(mendicant.blood_volume + round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume - round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
 		if(!(hurtguy.dna.human_blood_type in mendicant_blood.compatible_types))
 		// MONKESTATION EDIT NEW END

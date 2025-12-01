@@ -348,6 +348,10 @@
 //Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
+	if(HAS_TRAIT(user, TRAIT_THROW_GUNS))
+		super_throw = TRUE
+		user.throw_item(target)
+		return TRUE
 	return fire_gun(target, user, user.Adjacent(target), params)
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)

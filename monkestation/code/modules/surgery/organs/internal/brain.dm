@@ -262,6 +262,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
 	var/mob/living/basic/mining/legion/legionbody = astype(victim.loc)
+	if(legionbody)
+		ADD_TRAIT(src, TRAIT_NO_ORGAN_DECAY, REF(legionbody))
 
 	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
 		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
@@ -312,6 +314,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	Remove(victim)
 	qdel(victim)
+
+	SEND_SIGNAL(mind, COMSIG_OOZELING_CORE_EJECTED, src)
 
 /obj/item/organ/internal/brain/slime/proc/do_steam_effects(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
@@ -533,6 +537,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/policy = get_policy(revival_policy)
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
+
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
