@@ -188,7 +188,7 @@
 		if(express && (pack.hidden || pack.special))
 			continue
 
-		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only))
+		if(!express && ((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only))
 			continue
 
 		if(pack.contraband && !contraband)
@@ -232,7 +232,7 @@
 		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
 	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy shit fuck off
 		CRASH("Invalid amount passed into add_item")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || !pack.available())
 		return
 
 	var/name = "*None Provided*"

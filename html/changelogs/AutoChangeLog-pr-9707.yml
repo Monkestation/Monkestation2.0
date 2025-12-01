@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed chempuffs not applying reagent effects to turfs."
-  - image: "gave the hypnodemon ring a sprite."
