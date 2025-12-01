@@ -72,6 +72,7 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/bomb_actualizer
 	req_components = list(
+		/obj/item/radio = 1,
 		/datum/stock_part/manipulator = 1,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/matter_bin = 5)
