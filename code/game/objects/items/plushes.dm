@@ -11,12 +11,12 @@
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
+	var/list/datum/plush_trait/plush_traits = list()
+	var/plush_flags
+	var/has_heartstring = TRUE
 	//--love ~<3--
 	gender = NEUTER
 	var/obj/item/toy/plush/lover
-	var/list/plush_traits = list()
-	var/plush_flags
-	var/has_heartstring = TRUE
 	var/obj/item/toy/plush/partner
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
@@ -122,6 +122,8 @@
 	. = ..()
 	if(stuffed || grenade)
 		to_chat(user, span_notice("[pet_message ? pet_message : "You pet [src]. D'awww."]"))
+		for(var/datum/plush_trait/thingy in plush_traits)
+			thingy.squeezed(src, user)
 		if(grenade && !grenade.active)
 			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
@@ -896,8 +898,9 @@
 	var/datum/plush_trait/stored_trait
 
 /obj/item/shapestring/proc/set_trait(the_trait)
-	stored_trait = new the_trait()
-	name = "\improper [the_trait.name] Shape-string"
+	stored_trait = the_trait
+	name = "\improper [the_trait::name] Shape-string"
+	des
 
 
 	
@@ -906,5 +909,37 @@
 	var/name = "Buggy Nonsense"
 	var/desc = "The neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
 	var/removable = TRUE
+	var/processes = FALSE
+
+/datum/plush_trait/proc/activate(obj/item/toy/plush)
+	return
+
+/datum/plush_trait/proc/deactivate(obj/item/toy/plush)
+	return
+
+/datum/plush_trait/proc/process_trigger(seconds_per_tick, obj/item/toy/plush)
+	return
+
+/datum/plush_trait/proc/squeezed(obj/item/toy/plush, mob/living/squeezer)
+	return
+
+/datum/plush_trait/prickly
+	name = "Cactaceous"
+	desc = "Shapes the cloth of the plush into microscopic spines, which, though mostly harmless, are extremely painful."
+
+/datum/plush_trait/prickly/squeezed(obj/item/toy/plush, mob/living/squeezer)
+	var/ouched = TRUE
+	if(iscarbon(squeezer))
+		var/mob/living/carbon/carbsqueezer = squeezer
+		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
+			ouched = FALSE
+		if(HAS_TRAIT(carbsqueezer, PIERCEIMMUNE))
+			ouched = FALSE
+		if(!ouched)
+			return
+		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!")
+		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
+		carbsqueezer.emote("gasp")
 
 
