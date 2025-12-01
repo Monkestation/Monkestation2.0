@@ -895,6 +895,10 @@
 	desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial."
 	var/datum/plush_trait/stored_trait
 
+/obj/item/shapestring/proc/set_trait(the_trait)
+	stored_trait = new the_trait()
+	name = "\improper [the_trait.name] Shape-string"
+
 
 	
 
