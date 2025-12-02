@@ -90,8 +90,8 @@
 	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+	for(var/pack, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = value
 		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
@@ -99,7 +99,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
+		if((P.hidden && (P.contraband && !contraband) || !P.available() || P.drop_pod_only))
 			continue
 
 		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
@@ -219,7 +219,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if(pack.hidden || pack.contraband || pack.drop_pod_only || (pack.special && !pack.special_enabled))
+			if(pack.hidden || pack.contraband || pack.drop_pod_only || !pack.available())
 				return
 
 			var/name = "*None Provided*"

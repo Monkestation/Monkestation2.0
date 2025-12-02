@@ -321,8 +321,15 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM))
+	if(isobserver(AM) || iseyemob(AM) || iseffect(AM))
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
+	if(isliving(AM))
+		var/mob/living/arrived = AM
+		if(arrived.incorporeal_move)
+			return
+
+		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
+			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 	if(prob(30))
 		var/sound_to_play = pick(list(
 			'monkestation/sound/effects/water_wade1.ogg',
@@ -331,10 +338,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 			'monkestation/sound/effects/water_wade4.ogg'
 			))
 		playsound(T, sound_to_play, 50, 0)
-	if(isliving(AM))
-		var/mob/living/arrived = AM
-		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
-			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 
