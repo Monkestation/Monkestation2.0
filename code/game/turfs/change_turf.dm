@@ -89,7 +89,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
-	var/old_liquids = liquids
+	var/old_liquids
+	if(isgroundlessturf(path))
+		QDEL_NULL(liquids)
+	else
+		old_liquids = liquids
 
 	var/old_bp = blueprint_data
 	blueprint_data = null

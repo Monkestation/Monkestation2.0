@@ -146,7 +146,7 @@
 	if(istype(seed, /obj/item/seeds/sample))
 		return FALSE
 	if(istype(seed, /obj/item/storage/bag/plants))
-		if(harvesting)
+		if(!pre_harvest_checks(user) || harvesting)
 			return COMPONENT_NO_AFTERATTACK
 		harvesting = TRUE
 		for(var/_id, item in managed_seeds)
@@ -189,21 +189,18 @@
 	movable_parent.update_appearance()
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/plant_growing/proc/try_harvest(datum/source, mob/living/user)
-	if(!length(managed_seeds) || harvesting)
-		return
-
+/datum/component/plant_growing/proc/pre_harvest_checks(mob/living/user)
 	var/atom/movable/movable_parent = parent
 	if(isobj(movable_parent) && !movable_parent.anchored)
 		movable_parent.balloon_alert(user, "unanchored!")
 		to_chat(user, span_warning("\The [movable_parent] must be anchored in order to harvest from it!"))
-		return
+		return FALSE
 
 	var/turf/parent_turf = get_turf(movable_parent)
 	if(length(parent_turf.contents) >= 50)
 		movable_parent.balloon_alert(user, "too crowded!")
 		to_chat(user, span_warning("The tile is too crowded, clear some items off of it!"))
-		return
+		return FALSE
 
 	var/amount_of_shit = 0
 	for(var/obj/item/thing in range(1, parent_turf))
@@ -212,6 +209,16 @@
 	if(amount_of_shit >= 100)
 		movable_parent.balloon_alert(user, "too crowded!")
 		to_chat(user, span_warning("The area around \the [movable_parent] is too crowded, clean some items up!"))
+		return FALSE
+
+	return TRUE
+
+
+/datum/component/plant_growing/proc/try_harvest(datum/source, mob/living/user)
+	if(!length(managed_seeds) || harvesting)
+		return
+
+	if(!pre_harvest_checks(user))
 		return
 
 	harvesting = TRUE

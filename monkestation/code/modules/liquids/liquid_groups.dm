@@ -695,12 +695,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/turf/cached_turf in cached_edge_turfs)
 		for(var/direction in cached_edge_turfs[cached_turf])
 			var/turf/directional_turf = get_step(cached_turf, direction)
-			if(isclosedturf(directional_turf))
-				continue
-			if(!(directional_turf in cached_turf.atmos_adjacent_turfs)) //i hate that this is needed
-				continue
-			if(!cached_turf.atmos_adjacent_turfs[directional_turf])
-				continue
 			if(spread_liquid(directional_turf, cached_turf))
 				cached_edge_turfs[cached_turf] -= direction
 				if(!length(cached_edge_turfs[cached_turf]))
@@ -754,7 +748,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		for(var/turf/adjacent_turf in get_adjacent_open_turfs(queued_turf))
 			if(QDELETED(adjacent_turf.liquids) || !members[adjacent_turf])
 				continue
-			if(!(adjacent_turf in queued_turf.atmos_adjacent_turfs)) //i hate that this is needed
+			if(!TURFS_CAN_SHARE(queued_turf, adjacent_turf)) //i hate that this is needed
 				continue
 			visited_length = length(previously_visited)
 			previously_visited["[adjacent_turf.liquids.x]_[adjacent_turf.liquids.y]"] = adjacent_turf.liquids
@@ -956,20 +950,16 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
-	if(isclosedturf(new_turf) || !source_turf.atmos_adjacent_turfs)
-		return
+	if(isclosedturf(new_turf) || !TURFS_CAN_SHARE(source_turf, new_turf))
+		return FALSE
 	if(HAS_TRAIT(new_turf, TRAIT_BLOCK_LIQUID_SPREAD))
-		return
-	if(!(new_turf in source_turf.atmos_adjacent_turfs)) //i hate that this is needed
-		return
-	if(!source_turf.atmos_adjacent_turfs[new_turf])
-		return
+		return FALSE
 
 	if(isopenspaceturf(new_turf))
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
-			return
-		if(isspaceturf(Z_turf_below) || HAS_TRAIT(Z_turf_below, TRAIT_BLOCK_LIQUID_SPREAD))
+			return FALSE
+		if(isclosedturf(Z_turf_below) || isgroundlessturf(Z_turf_below) || isoceanturf(Z_turf_below) || HAS_TRAIT(Z_turf_below, TRAIT_BLOCK_LIQUID_SPREAD))
 			return FALSE
 		if(QDELETED(Z_turf_below.liquids))
 			Z_turf_below.liquids = new(Z_turf_below)
@@ -984,8 +974,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!QDELETED(Z_turf_below.liquids?.liquid_group))
 			splashy.color = Z_turf_below.liquids.liquid_group.group_color
 		return FALSE
+	else if(isgroundlessturf(new_turf) || isoceanturf(new_turf))
+		return FALSE
 
-	if(QDELETED(new_turf.liquids) && !istype(new_turf, /turf/open/openspace) && !isspaceturf(new_turf) && !istype(new_turf, /turf/open/floor/plating/ocean) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
+	if(QDELETED(new_turf.liquids) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
 		if(reagents_per_turf < LIQUID_HEIGHT_DIVISOR)
 			return FALSE
 		if(!length(members))

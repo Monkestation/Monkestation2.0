@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 	icon = 'monkestation/icons/obj/effects/liquid.dmi'
 	base_icon_state = "ocean"
-	icon_state = "ocean"
+	icon_state = "ocean_area"
 	alpha = 120
 
 	requires_power = TRUE
@@ -25,6 +25,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	GLOB.initalized_ocean_areas += src
 
 /area/ocean/dark
+	icon_state = "ocean_dark"
 	base_lighting_alpha = 0
 
 /area/ruin/ocean
@@ -320,8 +321,15 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM))
+	if(isobserver(AM) || iseyemob(AM) || iseffect(AM))
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
+	if(isliving(AM))
+		var/mob/living/arrived = AM
+		if(arrived.incorporeal_move)
+			return
+
+		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
+			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 	if(prob(30))
 		var/sound_to_play = pick(list(
 			'monkestation/sound/effects/water_wade1.ogg',
@@ -330,10 +338,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 			'monkestation/sound/effects/water_wade4.ogg'
 			))
 		playsound(T, sound_to_play, 50, 0)
-	if(isliving(AM))
-		var/mob/living/arrived = AM
-		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
-			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 
@@ -602,6 +606,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 	baseturfs = /turf/open/floor/plating/ocean/dark/rock/heavy
 
 /area/ocean/generated
+	icon_state = "ocean_gen"
 	base_lighting_alpha = 0
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
@@ -609,8 +614,9 @@ GLOBAL_LIST_EMPTY(the_lever)
 
 
 /area/ocean/generated_above
+	icon_state = "ocean_gen_above"
 	map_generator = /datum/map_generator/ocean_generator
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
@@ -675,6 +681,11 @@ GLOBAL_LIST_EMPTY(the_lever)
 	base_icon_state = "ironsand"
 	rand_variants = 15
 	rand_chance = 100
+
+/turf/open/floor/plating/ocean/plating_real
+	name = "plating"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "plating"
 
 /turf/open/floor/plating/ocean/rock
 	name = "rock"

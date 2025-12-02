@@ -72,7 +72,7 @@
 	desc = "A box of linked ammunition, designed for the Avtomat AC 3 exosuit weapon."
 	icon_state = "minigun"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	rounds = 500
+	rounds = 375
 	ammo_type = MECHA_AMMO_PEASHOOTER
 
 
