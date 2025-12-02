@@ -973,7 +973,7 @@ An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The P
 
 <br>Metaphysics:
 <br>
-<br>Textiles are inherently connected to and manipulative of three fundamental forces of reality; Cotton, Cloth, and Cord.
+<br>Textiles are inherently connected to and manipulative of three fundamental Forces of reality; Cotton, Cloth, and Cord.
 The quintessential force of Cotton can be conceptualized to be the primal possibility and base state of the concept of 'all'. The more theorhetically inclined may wish to know that current leading models define Cotton as a subordinal expression of the hermetic <i>Prima Materia</i>, though I, personally, find such advanced theory, being far past what can be converted into practice, to be of negligable import.
 The Cloth is a solidified product of the Cotton, inverse to it and formed of it. Where Cotton is motive and meaningless, Cloth is static and purposeful. It is the ordered solidity through which actuallity is derived. Cloth expresses itself directly through physical matter, rather than through immaterial energy. Cloth gives shape and property to Cotton.
 The Cloth and Cotton, defined by their inequallity, could not express the universe as they do while alone. Rectifying this is the Cord. Cord is the dynamic binding force. Cotton energizes Cloth and Cloth defines Cotton. Cord holds these arangements in place. Cord is what connects the two forces, weaving together the matters of Cloth and energies of Cotton.
@@ -987,7 +987,18 @@ Many tales of cursed toys also stem from inadvertant exposure to the effects of 
 <br>
 <br>Anatomy of a Construct
 <br>
-<br>A Construct, no matter its physical shape, is comprised of three base components, formed at the moment of Construction, each of which is a representation of the 
+<br>A Construct, no matter its physical shape, is comprised of three base components, formed at the moment of Construction, each of which is a manifestation of one of the Forces, and each of which is an analogue of the physical structure of the Construct. At that moment, cotton becomes Cotton, cloth becomes Cloth, and cord becomes Cord.
+Within the center all Constructs there can be found a loop of something resembling-but-not-quite yarn, typically red in color and faintly luminous. This is the Heart-string, a physical incarnation of the Cord. The Cord also inhabits the literal fiber that is used to stitch the Construct together.
+The Heart-string is the binding crux of a Construct, and is immutably linked to it. Stretching across the Heart-string is the Soul-string, typically this is a sort of blueish white, thin and brightly glowing. The Soul-string is Cotton made manifest, the primordial potential which powers the Construct. The stuffing material of a Construct is also suffused with a tiny fraction of the Cotton that the Soul-string is.
+Woven between the Heart and Soul strings are the Shape-strings. These may be many and varied, but one is always present and immutably linked to the Soul-string, representing the Cloth that shapes the physical form of the Construct. The material from which a Construct is created is also, of course, made of Cloth. Each Shape-string woven between the Heart and Soul strings expresses some fundamental property by which the Construct differs from its typical form. 
+These Shape-strings are typically formed at the moment of Construction. Soul-strings, being formed of purposeless energy, are extremely fragile. Attempting to manipulate a Soul-string directly is likely to damage it irreperably and, in any case, would likely yield no result beyond causing frustration and/or injury to the enterprising thaumatexilist. Severing the Soul-string will cause the instant and invariable obliteration of the Construct, as its Cloth ceases to recieve energy from its Cotton and it, thereby, ceases to exist.
+Severing the Heart-string will yield similar results, as the Construct's Cloth and Cotton are unbound and thus nonexistent.
+<br>
+<br>
+<br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study
+<br>
+<br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels, who's work with Cord preservation was intrumental to my later advances in direct Shape-string manipulating instruments.)
+Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of our Bursar.
 
 
 
