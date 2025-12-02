@@ -967,5 +967,17 @@
 		carbsqueezer.emote("gasp")
 
 /obj/item/paper/fluff/plushmagic
-	name = "Some Writings On The "
+	name = "\improper An Abridged Collection Of Notes On The Manipulation Of The Primordial Cotton"
+	default_raw_text = {"
+An Abridged Collection Of Notes On The Manipulation Of The Primordial Cotton.
+
+<br>Metaphysics:
+
+<br>Textiles are inherently connected to and manipulative of the Three most fundamental forces of reality; Cotton, Cloth, and Cord.
+The quintessential force of Cotton can be simplified to be the primal possibility and energy
+
+<br>A fabric-sewn plush-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of the quintessential Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructions (some older thaumatextilics works use the term Idols).
+Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses are known to induce Construction
+
+
 
