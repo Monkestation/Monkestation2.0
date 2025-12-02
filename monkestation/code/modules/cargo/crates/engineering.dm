@@ -20,12 +20,19 @@
 	contains = list(/obj/machinery/power/stomper = 3, /obj/item/dousing_rod = 3)
 	crate_name = "engineering stomping crate"
 
+
+/datum/supply_pack/engineering/stompers/available()
+	return ..() && length(SSmapping.levels_by_trait(ZTRAIT_OSHAN))
+
 /datum/supply_pack/engineering/vent_kit
 	name = "Hotspot Vent Kit"
 	desc = "A pack of 5 vents for hotspots."
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/vent_package = 5)
 	crate_name = "engineering vent crate"
+
+/datum/supply_pack/engineering/vent_kit/available()
+	return ..() && length(SSmapping.levels_by_trait(ZTRAIT_OSHAN))
 
 /datum/supply_pack/engineering/servicefab
 	name = "Service Techfab Replacement"

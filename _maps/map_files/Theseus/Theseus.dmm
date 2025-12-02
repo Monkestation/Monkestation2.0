@@ -5507,11 +5507,11 @@
 "bHk" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Equipment Room"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/office)
 "bHm" = (
@@ -11702,7 +11702,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -1
 	},
@@ -16513,6 +16513,7 @@
 	name = "Brig Blast Door"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "eVF" = (
@@ -19059,6 +19060,14 @@
 	},
 /obj/item/poster/random_official,
 /obj/item/poster/random_official,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "fIH" = (
@@ -25488,11 +25497,11 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/port/aft)
 "hBU" = (
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hBV" = (
@@ -32604,7 +32613,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "jEJ" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 6
 	},
@@ -48921,7 +48929,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash/mess,
-/mob/living/basic/sloth/citrus,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
@@ -58596,6 +58603,7 @@
 	id = "qm_warehouse";
 	pixel_x = -6
 	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "rfU" = (
@@ -58993,7 +59001,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "rll" = (
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -59004,6 +59011,7 @@
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 3
 	},
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron,
 /area/station/security/office)
 "rlo" = (
@@ -64746,11 +64754,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "sTP" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/structure/table,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/side,
 /area/station/science/circuits)
 "sTR" = (
@@ -68624,6 +68634,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tWo" = (
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "tWp" = (
@@ -70887,10 +70898,6 @@
 /obj/item/computer_disk{
 	pixel_x = -5;
 	pixel_y = 8
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 10;
-	pixel_x = 6
 	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 10;

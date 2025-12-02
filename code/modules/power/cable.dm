@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/cable/LateInitialize()
+/obj/structure/cable/LateInitialize(mapload_arg)
 	update_appearance(UPDATE_ICON)
 	is_fully_initialized = TRUE
 

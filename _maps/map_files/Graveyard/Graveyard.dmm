@@ -9416,6 +9416,11 @@
 	},
 /turf/open/misc/grass/jungle,
 /area/graveyard/surface)
+"dCY" = (
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/science/circuits)
 "dDc" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/stone,
@@ -21524,10 +21529,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"ioC" = (
-/obj/machinery/nanite_program_hub,
-/turf/open/floor/iron,
-/area/station/science/circuits)
 "ioW" = (
 /obj/structure/lattice,
 /obj/machinery/camera/autoname/directional/south{
@@ -24375,6 +24376,7 @@
 /area/station/science/research)
 "jyB" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/modular_computer/preset/id,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jyF" = (
@@ -31816,10 +31818,6 @@
 /area/station/maintenance/aft)
 "moQ" = (
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite,
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 4
-	},
 /obj/item/nanite_remote,
 /obj/item/nanite_remote,
 /obj/item/nanite_scanner,
@@ -47400,7 +47398,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -2
 	},
@@ -51719,7 +51717,8 @@
 /turf/open/floor/iron,
 /area/graveyard/bunker/science)
 "ufL" = (
-/obj/machinery/nanite_programmer,
+/obj/item/storage/box/disks_nanite,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/science/circuits)
 "ufM" = (
@@ -60669,6 +60668,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "xCf" = (
@@ -174834,8 +174834,8 @@ sZv
 mTZ
 abZ
 rzJ
-ioC
 ufL
+dCY
 tiX
 kkb
 kSK

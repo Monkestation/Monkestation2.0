@@ -77,7 +77,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/LateInitialize()
+/obj/machinery/atmospherics/LateInitialize(mapload_arg)
 	. = ..()
 	update_name()
 

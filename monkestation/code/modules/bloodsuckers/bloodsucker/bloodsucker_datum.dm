@@ -17,6 +17,7 @@
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
 	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
@@ -73,6 +74,7 @@
 
 	/// Used for Bloodsuckers gaining levels from drinking blood
 	var/blood_level_gain = 0
+	var/total_blood_level_gain = 0
 	var/blood_level_gain_amount = 0
 
 	///Blood display HUD
@@ -199,7 +201,7 @@
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
-	cleanup_tracker()
+	cleanup_beacon()
 	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)
@@ -250,6 +252,7 @@
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
 	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 
 	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 
@@ -276,6 +279,7 @@
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
@@ -588,6 +592,13 @@
 	var/mob/living/current = owner.current
 	if(!QDELETED(current))
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/bloodsucker/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(final_death || handling_death || istype(my_clan, /datum/bloodsucker_clan/vassal))
+		return
+	if(broke_masquerade || length(vassals) || total_blood_level_gain >= 250) // arbitrary number but whatever
+		prey += owner
 
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"

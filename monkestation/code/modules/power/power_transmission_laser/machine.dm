@@ -242,8 +242,8 @@
 			power_format_multi_output = 1 QW
 
 /obj/machinery/power/transmission_laser/process()
-	max_grid_load = terminal.surplus()
-	input_available = terminal.surplus()
+	max_grid_load = energy_to_power(terminal.surplus())
+	input_available = energy_to_power(terminal.surplus())
 	if((machine_stat & BROKEN) || !turned_on)
 		return
 
@@ -262,7 +262,7 @@
 
 		if(inputting)
 			if(input_pulling > 0)
-				terminal.add_load(input_pulling)
+				terminal.add_load(power_to_energy(input_pulling))
 				charge += input_pulling
 			else
 				inputting = FALSE
@@ -351,7 +351,7 @@
 	var/mw_power = (output_number * power_format_multi_output) / (1 MW)
 	switch(mw_power)
 		if(0 to 25)
-			victim.adjustFireLoss(-mw_power * 15)
+			victim.adjustFireLoss(mw_power * 15)
 			return
 		if(26 to 50)
 			victim.gib(FALSE)

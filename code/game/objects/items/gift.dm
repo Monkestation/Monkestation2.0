@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	qdel(src)
 
-	if(isitem(contains_type))
+	if(ispath(contains_type, /obj/item))
 		var/atom/I = new contains_type(get_turf(M))
 		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
 			M.put_in_hands(I)
@@ -141,6 +141,31 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/uplink/nuclear/debug,
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
+
+			//A list of every debug item I could find. I compiled a list of every item in the possible gifts list
+			//and ran a keyword search through the list. Hopefully, this grabbed most, if not all, of the items.
+			//There are PROBABLY repeats from the list above but it shouldn't matter.
+			//Shaved down to exclude the non-game-breaking ones
+
+
+			/obj/item/mod/control/pre_equipped/debug,
+			/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
+			/obj/item/reagent_containers/cup/bottle/disease_debug,
+			/obj/item/pinpointer/area_pinpointer/debug,
+			/obj/item/flashlight/emp/debug,
+			/obj/item/airlock_painter/decal/debug,
+			/obj/item/autosurgeon/organ/nif/debug,
+
+			/obj/item/melee/skateboard/hoverboard/admin,
+			/obj/item/mod/control/pre_equipped/administrative,
+			/obj/item/bombcore/badmin/summon,
+			/obj/item/bombcore/badmin/summon/clown,
+			/obj/item/ai_module/core/full/admin,
+			/obj/item/rwd/admin,
+			/obj/item/mining_scanner/admin,
+			/obj/item/kinetic_crusher/adminpilebunker,
+			/obj/item/camera/spooky/badmin,
+			/obj/item/storage/box/fish_debug,
 			)
 		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.

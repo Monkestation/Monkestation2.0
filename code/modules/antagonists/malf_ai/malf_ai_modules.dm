@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	return
 
 /// Modules causing destruction
-/datum/ai_module/destructive
+/datum/ai_module/malf/destructive
 	category = "Destructive Modules"
 
 /// Modules with stealthy and utility uses
@@ -867,7 +867,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, list(5, 25, 35))
 
 /// AI Turret Upgrade: Increases the health and damage of all turrets.
-/datum/ai_module/malf/malf/upgrade/upgrade_turrets
+/datum/ai_module/malf/upgrade/upgrade_turrets
 	name = "AI Turret Upgrade"
 	description = "Improves the power and health of all AI turrets. This effect is permanent. Upgrade is done immediately upon purchase."
 	cost = 30

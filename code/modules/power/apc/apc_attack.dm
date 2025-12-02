@@ -227,7 +227,7 @@
 				return
 			balloon_alert(ethereal, "received charge")
 			stomach.adjust_charge(APC_POWER_GAIN)
-			cell.use(APC_POWER_GAIN)
+			cell.use(APC_POWER_GAIN * 2000)
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
@@ -246,7 +246,7 @@
 	if(istype(stomach))
 		balloon_alert(ethereal, "transfered power")
 		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.give(APC_POWER_GAIN)
+		cell.give(APC_POWER_GAIN * 2000)
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 

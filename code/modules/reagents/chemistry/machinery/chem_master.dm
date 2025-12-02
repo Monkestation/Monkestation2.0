@@ -110,8 +110,15 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 /obj/machinery/chem_master/RefreshParts()
 	. = ..()
 	reagents.maximum_volume = 0
+	var/cryogenic = TRUE
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
+		if(!CHECK_BITFIELD(beaker.reagents.flags, NO_REACT))
+			cryogenic = FALSE
+	if(cryogenic == TRUE)
+		ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	else
+		DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	printing_amount = 0
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)//Monkestation Edit: We use manipulators instead of servos
 		printing_amount += manipulator.tier
@@ -492,6 +499,8 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads:<br>Reagent buffer capacity: <b>[reagents.maximum_volume]</b> units.<br>Number of containers printed at once increased by <b>[100 * (printing_amount / initial(printing_amount)) - 100]%</b>.")
+		if(CHECK_BITFIELD(reagents.flags, NO_REACT))
+			. += span_notice("This machine has been upgraded to put reagents in the buffer on cryostasis, preventing them from reacting.")
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"

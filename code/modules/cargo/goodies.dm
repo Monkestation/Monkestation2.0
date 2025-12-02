@@ -335,3 +335,11 @@
 	contains = list(
 		/obj/item/disk/nifsoft_uploader/summoner,
 	)
+
+/datum/supply_pack/goody/pipebox
+	name = "Smoking Pipe Set"
+	desc = "Contains a pipebox, smoking pipe, and two pouches of tobacco."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/storage/pipebox,
+	)

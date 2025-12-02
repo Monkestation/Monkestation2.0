@@ -1040,3 +1040,22 @@
 	item_path = /obj/item/clothing/suit/monkey_jacket
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/head/bananotrasen_super_hat
+	name = "Bananotrasen Super Hat"
+	item_path = /obj/item/clothing/head/hats/bananotrasen_super_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/monkey_plush
+	name = "Monkey Plush"
+	item_path = /obj/item/toy/plush/monkey
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/bananadola
+	name = "Pet Delivery Beacon - Bananadola"
+	item_path = /obj/item/choice_beacon/pet/donator/bananadola
+	ckeywhitelist = list("Milthy")
+	donator_only = TRUE
+	requires_purchase = FALSE

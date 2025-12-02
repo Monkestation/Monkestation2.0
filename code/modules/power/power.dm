@@ -527,6 +527,8 @@
 		var/obj/item/organ/internal/brain/carbon_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
 		var/turf/turf = get_turf(victim)
 		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
+		victim.death(FALSE, "electrocution")
+		carbon_brain.Remove(victim)
 		carbon_brain.forceMove(turf)
 		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
 		victim.dust()

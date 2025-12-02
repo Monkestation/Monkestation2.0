@@ -4038,7 +4038,7 @@
 	pixel_y = 12;
 	pixel_x = 5
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_y = 5
 	},
 /obj/item/stamp{
@@ -26843,14 +26843,6 @@
 "hWY" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 14
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -8;
-	pixel_y = 5
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = -7;
 	pixel_y = 19
@@ -26867,6 +26859,7 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "hWZ" = (
@@ -45962,7 +45955,6 @@
 /area/space)
 "nsV" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "nsY" = (
@@ -51255,12 +51247,10 @@
 /turf/open/openspace,
 /area/station/maintenance/starboard/greater)
 "pcp" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/obj/item/clothing/glasses/material/mining/gar,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -54984,6 +54974,9 @@
 /obj/machinery/requests_console/auto_name/directional/west,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/modular_computer/preset/id{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "qeV" = (
@@ -58276,7 +58269,6 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -63943,6 +63935,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/quartermaster,
+/obj/item/clothing/glasses/material/mining/gar,
 /turf/open/floor/iron/large,
 /area/station/cargo/quartermaster)
 "sNQ" = (
@@ -67003,6 +66997,7 @@
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 12
 	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/multitool{
 	pixel_x = -4;
 	pixel_y = 2
@@ -70566,7 +70561,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/nanite_program_hub,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/dark/small,
 /area/station/science/circuits)
 "uOw" = (

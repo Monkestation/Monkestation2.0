@@ -16,7 +16,7 @@ cd "$original_dir"
 # update rust-g
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
-	git clone https://github.com/tgstation/rust-g
+	git clone "https://github.com/${RUST_G_REPO}"
 	cd rust-g
 	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 else

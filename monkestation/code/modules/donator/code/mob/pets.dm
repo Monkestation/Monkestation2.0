@@ -440,3 +440,16 @@
 	src.cut_overlays()
 	change_hud_ability.current_hud = 3
 	. = ..()
+
+/mob/living/basic/pet/bananadola
+	name = "bananadola"
+	desc = "Beloved pet of the Bananotrasen CEO, an abomination of genetic horror. Tastes good fried."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "bananadola"
+	icon_living = "bananadola"
+	icon_dead = "bananadola"
+	icon_gib = null
+	basic_mob_flags = FLIP_ON_DEATH
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Milthy")

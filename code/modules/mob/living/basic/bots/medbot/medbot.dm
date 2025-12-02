@@ -149,7 +149,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/mob/living/basic/bot/medbot/LateInitialize()
+/mob/living/basic/bot/medbot/LateInitialize(mapload_arg)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		link_techweb(SSresearch.science_tech) // monkestation edit: techweb linking refactor
