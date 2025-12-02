@@ -957,13 +957,15 @@
 		var/mob/living/carbon/carbsqueezer = squeezer
 		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
 			ouched = FALSE
-		if(HAS_TRAIT(carbsqueezer, PIERCEIMMUNE))
+		if(HAS_TRAIT(carbsqueezer, TRAIT_FIRE_RESISTANCE))
 			ouched = FALSE
 		if(!ouched)
 			return
-		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!")
+		to_chat(carbsqueezer, span_warning("HOLY SHIT THAT'S FUCKING HOT OWWWWW!")
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
-		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
+		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
 
+/obj/item/paper/fluff/plushmagic
+	name = "Some Writings On The "
 
