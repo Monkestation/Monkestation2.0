@@ -1,4 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - bugfix: "Spaceallin now properly applies virus_resistance trait"
