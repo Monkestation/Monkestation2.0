@@ -10,11 +10,8 @@
     name = "Fuel Rod"
     desc = "A generic RBMK fuel rod used to sustain fission reactions."
     icon = 'icons/obj/fuel_rod.dmi'
-    icon_state = "empty"
-    anchored = FALSE
-    w_class = WEIGHT_CLASS_NORMAL
-    layer = OBJ_LAYER + 0.1
-    plane = DEFAULT_PLANE
+    layer = OBJ_LAYER
+    plane = GAME_PLANE
 
     /*************************************************************
      * Core variables

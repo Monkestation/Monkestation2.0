@@ -1,96 +1,83 @@
 /*************************************************************
- * RBMK Integrity Module (Rod-Driven Version, Fixed)
- * - Applies thermal, flux, instability, and pressure stress
- * - Damage scales with rod reactivity and cooling performance
- * - Stops integrity decay when reactor is shut down
+ * RBMK Integrity Module (Balanced 2025 Revision)
  *************************************************************/
 
-/// Applies cumulative integrity stress each reactor tick
+/// Applies structural damage from stress conditions
 /obj/machinery/rbmk/reactor/proc/update_reactor_integrity()
-	// --- Skip integrity checks if destroyed ---
+
 	if(reactor_integrity <= 0)
 		return
 
-	/*************************************************************
-	 * Offline / Fully Inserted Control Rods
-	 * - No active reaction → minimal passive fatigue only
-	 *************************************************************/
+	// Off or fully inserted rods → minimal wear
 	if(!running || control_rod_depth >= RBMK_CONTROL_ROD_MAX)
 		if(temperature > RBMK_AMBIENT_TEMP + 25)
-			reactor_integrity = max(reactor_integrity - 0.01, 0)
+			reactor_integrity = max(reactor_integrity - 0.005, 0)
 		return
 
 	var/total_damage = 0.0
 
 	/*************************************************************
-	 * SAFE ZONE GUARD
-	 * Skip damage entirely unless at least one parameter
-	 * exceeds realistic stress thresholds.
+	 * SAFE ZONE — no damage at all
 	 *************************************************************/
 	if( \
-		temperature < (RBMK_TEMP_STRESS_THRESHOLD * 1.05) && \
-		flux < (RBMK_FLUX_STRESS_THRESHOLD * 1.1) && \
-		instability < (RBMK_INSTABILITY_THRESHOLD * 1.5) && \
-		pressure < (RBMK_PRESSURE_WARNING * 1.1) \
-	)
+   	 	temperature < RBMK_TEMP_STRESS_THRESHOLD && \
+    	flux < RBMK_FLUX_STRESS_THRESHOLD && \
+    	instability < RBMK_INSTABILITY_THRESHOLD && \
+    	pressure < RBMK_PRESSURE_WARNING \
+)
 		return
 
+
 	/*************************************************************
-	 * Temperature Stress
-	 * - Gentle slope above threshold, steeper near max temp
+	 * Temperature Damage
 	 *************************************************************/
 	if(temperature > RBMK_TEMP_STRESS_THRESHOLD)
-		var/temp_excess = temperature - RBMK_TEMP_STRESS_THRESHOLD
-		total_damage += (temp_excess / RBMK_TEMP_STRESS_DIVISOR) ** 1.05
+		var/excess = temperature - RBMK_TEMP_STRESS_THRESHOLD
+		total_damage += (excess / RBMK_TEMP_STRESS_DIVISOR) ** 1.15
 
 	if(temperature > (max_temp * RBMK_TEMP_NEAR_MAX_RATIO))
-		var/near_max_excess = temperature - (max_temp * RBMK_TEMP_NEAR_MAX_RATIO)
-		total_damage += (near_max_excess / RBMK_TEMP_NEAR_MAX_DIVISOR) ** 1.25
+		var/ne = temperature - (max_temp * RBMK_TEMP_NEAR_MAX_RATIO)
+		total_damage += (ne / RBMK_TEMP_NEAR_MAX_DIVISOR) ** 1.3
 
 	/*************************************************************
-	 * Flux Stress
-	 * - Gentle rise near safe flux, steep increase at extremes
+	 * Flux Damage
 	 *************************************************************/
 	if(flux > RBMK_FLUX_STRESS_THRESHOLD)
-		var/flux_excess = flux - RBMK_FLUX_STRESS_THRESHOLD
-		total_damage += (flux_excess / RBMK_FLUX_STRESS_DIVISOR) ** 1.1
+		var/fe = flux - RBMK_FLUX_STRESS_THRESHOLD
+		total_damage += (fe / RBMK_FLUX_STRESS_DIVISOR) ** 1.15
 
 	if(flux > RBMK_FLUX_HIGH_THRESHOLD)
-		var/severe_flux = flux - RBMK_FLUX_HIGH_THRESHOLD
-		total_damage += (severe_flux / RBMK_FLUX_HIGH_DIVISOR) ** 1.25
+		var/fh = flux - RBMK_FLUX_HIGH_THRESHOLD
+		total_damage += (fh / RBMK_FLUX_HIGH_DIVISOR) ** 1.22
 
 	/*************************************************************
-	 * Instability Stress
-	 * - Reflects chaotic internal oscillations
-	 * - Adds passive wear even under safe heat/flux
+	 * Instability Damage
 	 *************************************************************/
 	if(instability > RBMK_INSTABILITY_THRESHOLD)
-		var/instability_excess = instability - RBMK_INSTABILITY_THRESHOLD
-		total_damage += (instability_excess / RBMK_INSTABILITY_DIVISOR) ** 1.1
+		var/ie = instability - RBMK_INSTABILITY_THRESHOLD
+		total_damage += (ie / RBMK_INSTABILITY_DIVISOR) ** 1.12
 
 	/*************************************************************
-	 * Pressure Stress
-	 * - Coolant overpressure adds direct mechanical load
+	 * Pressure Damage
 	 *************************************************************/
 	if(pressure > RBMK_PRESSURE_WARNING)
-		var/pressure_excess = pressure - RBMK_PRESSURE_WARNING
-		total_damage += (pressure_excess / RBMK_PRESSURE_WARNING_DIVISOR) ** 1.05
+		var/pe = pressure - RBMK_PRESSURE_WARNING
+		total_damage += (pe / RBMK_PRESSURE_WARNING_DIVISOR) ** 1.12
 
 	if(pressure > RBMK_PRESSURE_CRITICAL)
-		var/pressure_critical_excess = pressure - RBMK_PRESSURE_CRITICAL
-		total_damage += (pressure_critical_excess / RBMK_PRESSURE_CRITICAL_DIVISOR) ** 1.15
+		var/pce = pressure - RBMK_PRESSURE_CRITICAL
+		total_damage += (pce / RBMK_PRESSURE_CRITICAL_DIVISOR) ** 1.2
 
 	if(pressure > RBMK_PRESSURE_EXTREME)
-		var/pressure_extreme_excess = pressure - RBMK_PRESSURE_EXTREME
-		total_damage += (pressure_extreme_excess / RBMK_PRESSURE_EXTREME_DIVISOR) ** 1.25
+		var/pee = pressure - RBMK_PRESSURE_EXTREME
+		total_damage += (pee / RBMK_PRESSURE_EXTREME_DIVISOR) ** 1.28
 
 	/*************************************************************
-	 * Rod Structural Load
-	 * - Each active rod contributes a baseline mechanical stress
+	 * Rod Count Baseline — reduced
 	 *************************************************************/
 	var/rod_count = length(normal_slots) + length(special_slots)
 	if(rod_count > 0)
-		total_damage += rod_count * 0.0025 // reduced baseline from 0.005
+		total_damage += rod_count * 0.001  // (was 0.0025)
 
 	/*************************************************************
 	 * APPLY DAMAGE
@@ -102,10 +89,11 @@
 			trigger_meltdown("⚠ Reactor breached from combined overload!")
 
 	/*************************************************************
-	 * Update Repairable State
+	 * Repairable Flag
 	 *************************************************************/
-	repairable = (
-		temperature < (max_temp * RBMK_REPAIRABLE_TEMP_RATIO) && \
-		flux < RBMK_REPAIRABLE_FLUX_LIMIT && \
-		pressure < RBMK_REPAIRABLE_PRESSURE_LIMIT \
-	)
+	repairable = ( \
+    	temperature < (max_temp * RBMK_REPAIRABLE_TEMP_RATIO) && \
+    	flux < RBMK_REPAIRABLE_FLUX_LIMIT && \
+   		pressure < RBMK_REPAIRABLE_PRESSURE_LIMIT \
+)
+

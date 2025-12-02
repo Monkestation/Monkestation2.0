@@ -10,43 +10,53 @@
 
 /// Updates reactor sprite state based on temperature, integrity, and run status
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()
-	var/previous_state = icon_state
-	var/previous_overlay_count = overlays.len
+	var/old_state = icon_state
+	var/old_overlay_count = overlays.len
 
-	// --- Destroyed / Slagged State ---
+	// ---------------------------------------------------------
+	// 1. HANDLE SLAGGED CORE
+	// ---------------------------------------------------------
 	if (reactor_integrity <= 0)
 		icon_state = "reactor_slagged"
-		clear_and_add_integrity_overlay()
+		cut_overlays()
+		add_integrity_overlay()
 		set_light(0)
 		return
 
-	// --- Integrity Overlay ---
-	clear_and_add_integrity_overlay()
-
-	// --- Temperature-driven state changes ---
+	// ---------------------------------------------------------
+	// 2. DETERMINE BASE ICON FIRST (before overlays)
+	// ---------------------------------------------------------
 	if (!running)
+		// SCRAMMED / OFF―BASE SPRITES
 		if (temperature <= RBMK_TEMP_OFF)
 			icon_state = "reactor_off"
 		else
 			icon_state = "reactor_idle"
+
 		set_light(0)
-		return
 
-	// --- Active running states ---
-	if (temperature < RBMK_TEMP_RUNNING)
-		icon_state = "reactor_on"
-	else if (temperature < RBMK_TEMP_HOT)
-		icon_state = "reactor_hot"
-	else if (temperature < RBMK_TEMP_VERYHOT)
-		icon_state = "reactor_veryhot"
-	else if (temperature < RBMK_TEMP_OVERHEAT)
-		icon_state = "reactor_overheat"
+	else
+		// RUNNING STATES
+		if (temperature < RBMK_TEMP_RUNNING)
+			icon_state = "reactor_on"
+		else if (temperature < RBMK_TEMP_HOT)
+			icon_state = "reactor_hot"
+		else if (temperature < RBMK_TEMP_VERYHOT)
+			icon_state = "reactor_veryhot"
+		else if (temperature < RBMK_TEMP_OVERHEAT)
+			icon_state = "reactor_overheat"
+		else
+			icon_state = "reactor_overheat" // failsafe
 
+	// ---------------------------------------------------------
+	// 3. NOW APPLY DAMAGE OVERLAYS
+	// ---------------------------------------------------------
+	cut_overlays()
+	add_integrity_overlay()
 
-	// --- Only redraw overlays if something changed ---
-	if (icon_state != previous_state || overlays.len != previous_overlay_count)
+	// If something changed, refresh overlays
+	if (icon_state != old_state || overlays.len != old_overlay_count)
 		update_reactor_overlays()
-
 
 /*************************************************************
  * Integrity Overlay Management
@@ -73,13 +83,11 @@
 	else if (integrity_percent < RBMK_DAMAGE_OVERLAY_1)
 		overlays += image('icons/obj/machines/rbmk.dmi', "reactor_damaged_1")
 
-
 /*************************************************************
  * Overlay Refresh
  *************************************************************/
 
 /// Ensures overlays stay synced without recursion or flicker
 /obj/machinery/rbmk/reactor/proc/update_reactor_overlays()
-	// Prevent recursion by not calling update_reactor_icon() here again
 	cut_overlays()
 	add_integrity_overlay()
