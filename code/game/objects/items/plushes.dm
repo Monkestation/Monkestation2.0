@@ -998,7 +998,9 @@ Severing the Heart-string will yield similar results, as the Construct's Cloth a
 <br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study
 <br>
 <br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels, who's work with Cord preservation was intrumental to my later advances in direct Shape-string manipulating instruments.)
-Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of our Bursar.
-
-
+Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of the bursar, a symbol of the inexhaustable catataxia found in every academic institution. Scientific minds can prove to be unbelievably mutable when shown definitive practical proof of the violation of basic thermodynamic models.
+Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (Excepting social psychologists, but Social Psych is weird and I'm convinced they're trying to develop mind control technology so I refuse to count them.)
+<br>
+<br>
+<br>Applying Thaumatextilic Principles In Practice.
 
