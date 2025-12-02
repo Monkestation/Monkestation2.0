@@ -942,4 +942,28 @@
 		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
 		carbsqueezer.emote("gasp")
 
+/datum/plush_trait/energetic
+	name = "Estiferous"
+	desc = "Imbues the cloth of the plush with a fragment of the energy of its cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
+	processes = TRUE
+
+
+/datum/plush_trait/burny/process_trigger(seconds_per_tick, obj/item/toy/plush)
+	return
+
+/datum/plush_trait/energetic/squeezed(obj/item/toy/plush, mob/living/squeezer)
+	var/ouched = TRUE
+	if(iscarbon(squeezer))
+		var/mob/living/carbon/carbsqueezer = squeezer
+		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
+			ouched = FALSE
+		if(HAS_TRAIT(carbsqueezer, PIERCEIMMUNE))
+			ouched = FALSE
+		if(!ouched)
+			return
+		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!")
+		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
+		carbsqueezer.emote("gasp")
+
 
