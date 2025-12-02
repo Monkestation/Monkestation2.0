@@ -241,8 +241,8 @@
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -294,8 +294,8 @@
 	QDEL_NULL(wires)
 
 	GLOB.mechas_list -= src //global mech list
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src) //YEET
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
 ///Add parts on mech spawning. Skipped in manual construction.

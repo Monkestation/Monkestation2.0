@@ -1,0 +1,12 @@
+2025-12-01:
+  Absolucy:
+  - rscadd: You can now shake monkey cubes to piss off the monkey inside.
+  SirNightKnight:
+  - bugfix: cleaned up some code for the worn icon check.
+  notghosti:
+  - bugfix: Spaceallin now properly applies virus_resistance trait
+  - map: Oshan atmospherics has less dead ends and is properly connected to all scrubbers
+      and vents.
+  - map: Oshan transfer centre is now connected to power.
+  - map: Oshan Ai sat ai can now see its APC.
+  - map: Oshan AI now has additional cameras in various public blind spots

@@ -206,6 +206,7 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
+	unstackable = TRUE
 	movedelay = 0.4
 	/// Repaired health per second
 	var/health_boost = 1
