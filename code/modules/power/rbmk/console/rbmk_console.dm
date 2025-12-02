@@ -22,6 +22,7 @@
     // --- Bounds-based 3×1 layout ---
     bound_width = 96
     bound_height = 32
+    bound_x = -32
     pixel_x = -32
     pixel_y = 0
 
