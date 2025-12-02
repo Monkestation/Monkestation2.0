@@ -982,12 +982,12 @@ The interplay between Cotton, Cloth, and Cord form the universal base upon which
 <br>A fabric-sewn and fiber-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructs (some older thaumatextilic works use the term Idols).
 Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses of such disturbance exibit this property more impactfully. Many engineers' vehement insistance that their burst drive 'runs better with like that' are products of this phenomenon, their 'lucky charm' having undergone spontaneous Construction as a result of the bluespace pulse exposure.
 This effect has been noted in some cases to be so strong (specifically in areas of space with exceptionally thin spatial fabrics) as to induce Construction within minutes of a potential Construct being introduced to an area. 
-Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construction, the chaotic energies of the Construction's Cotton being shaped by its Cloth before being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
+Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construct, the chaotic energies of the Construct's Cotton being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
 <br>
 <br>
-<br>Anatomy of a Construction
+<br>Anatomy of a Construct
 <br>
-<br>A Construction, no matter its physical shape, is comprised of three base components, formed at the moment of Construction
+<br>A Construct, no matter its physical shape, is comprised of three base components, formed at the moment of Construction, each of which is a representation of the 
 
 
 
