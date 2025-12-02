@@ -465,18 +465,6 @@
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
 
-	// Limbs heal 1 damage per tick from the corresponding brute/burn kit passively
-	if(limb_flags & LIMB_KITTED_BRUTE)
-		if(brute_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BRUTE
-		else
-			heal_damage(1, 0)
-	if(limb_flags & LIMB_KITTED_BURN)
-		if(burn_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BURN
-		else
-			heal_damage(0, 1)
-
 /**
  * #receive_damage
  *
@@ -597,10 +585,8 @@
 	if(can_inflict <= 0)
 		return FALSE
 	if(brute)
-		limb_flags &= ~LIMB_KITTED_BRUTE
 		set_brute_dam(brute_dam + brute)
 	if(burn)
-		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
 
 	// gauze on the limb will be knocked off based on damage taken
