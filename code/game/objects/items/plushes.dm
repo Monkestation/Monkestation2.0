@@ -70,7 +70,7 @@
 		for(var/trait in starting_traits)
 			var/datum/plush_trait/new_trait = new trait()
 			plush_traits += new_trait
-			new_trait.Activate()
+			new_trait.activate()
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -1007,4 +1007,65 @@
 /datum/plush_trait/ominous_levitation/deactivate(obj/item/toy/plush/plush)
 	STOP_FLOATING_ANIM(plush)
 	plush.visible_message(span_notice("[plush] stops floating."))
+/datum/plush_trait/energetic
+	name = "Estiferous"
+	desc = "Imbues the cloth of the plush with a fragment of the energy of its cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
+	processes = TRUE
+
+
+/datum/plush_trait/energetic/process_trigger(seconds_per_tick, obj/item/toy/plush)
+	return
+
+/datum/plush_trait/energetic/squeezed(obj/item/toy/plush, mob/living/squeezer)
+	var/ouched = TRUE
+	if(iscarbon(squeezer))
+		var/mob/living/carbon/carbsqueezer = squeezer
+		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
+			ouched = FALSE
+		if(HAS_TRAIT(carbsqueezer, TRAIT_FIRE_RESISTANCE))
+			ouched = FALSE
+		if(!ouched)
+			return
+		to_chat(carbsqueezer, span_warning("HOLY SHIT THAT'S FUCKING HOT OWWWWW!")
+		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
+		carbsqueezer.emote("gasp")
+
+/obj/item/paper/fluff/plushmagic
+	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
+	default_raw_text = {"
+An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton.
+
+<br>Metaphysics:
+<br>
+<br>Textiles are inherently connected to and manipulative of three fundamental Forces of reality; Cotton, Cloth, and Cord.
+The quintessential force of Cotton can be conceptualized to be the primal possibility and base state of the concept of 'all'. The more theorhetically inclined may wish to know that current leading models define Cotton as a subordinal expression of the hermetic <i>Prima Materia</i>, though I, personally, find such advanced theory, being far past what can be converted into practice, to be of negligable import.
+The Cloth is a solidified product of the Cotton, inverse to it and formed of it. Where Cotton is motive and meaningless, Cloth is static and purposeful. It is the ordered solidity through which actuallity is derived. Cloth expresses itself directly through physical matter, rather than through immaterial energy. Cloth gives shape and property to Cotton.
+The Cloth and Cotton, defined by their inequallity, could not express the universe as they do while alone. Rectifying this is the Cord. Cord is the dynamic binding force. Cotton energizes Cloth and Cloth defines Cotton. Cord holds these arangements in place. Cord is what connects the two forces, weaving together the matters of Cloth and energies of Cotton.
+The interplay between Cotton, Cloth, and Cord form the universal base upon which all the cosmos is built. Typically, these forces are, if sometimes detectable, universally invisible. But in some cases, manifestations of their power can form spontaneously.
+<br>
+<br>A fabric-sewn and fiber-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructs (some older thaumatextilic works use the term Idols).
+Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses of such disturbance exibit this property more impactfully. Many engineers' vehement insistance that their burst drive 'runs better with like that' are products of this phenomenon, their 'lucky charm' having undergone spontaneous Construction as a result of the bluespace pulse exposure.
+This effect has been noted in some cases to be so strong (specifically in areas of space with exceptionally thin spatial fabrics) as to induce Construction within minutes of a potential Construct being introduced to an area.
+Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construct, the chaotic energies of the Construct's Cotton being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
+<br>
+<br>
+<br>Anatomy of a Construct
+<br>
+<br>A Construct, no matter its physical shape, is comprised of three base components, formed at the moment of Construction, each of which is a manifestation of one of the Forces, and each of which is an analogue of the physical structure of the Construct. At that moment, cotton becomes Cotton, cloth becomes Cloth, and cord becomes Cord.
+Within the center all Constructs there can be found a loop of something resembling-but-not-quite yarn, typically red in color and faintly luminous. This is the Heart-string, a physical incarnation of the Cord. The Cord also inhabits the literal fiber that is used to stitch the Construct together.
+The Heart-string is the binding crux of a Construct, and is immutably linked to it. Stretching across the Heart-string is the Soul-string, typically this is a sort of blueish white, thin and brightly glowing. The Soul-string is Cotton made manifest, the primordial potential which powers the Construct. The stuffing material of a Construct is also suffused with a tiny fraction of the Cotton that the Soul-string is.
+Woven between the Heart and Soul strings are the Shape-strings. These may be many and varied, but one is always present and immutably linked to the Soul-string, representing the Cloth that shapes the physical form of the Construct. The material from which a Construct is created is also, of course, made of Cloth. Each Shape-string woven between the Heart and Soul strings expresses some fundamental property by which the Construct differs from its typical form.
+These Shape-strings are typically formed at the moment of Construction. Soul-strings, being formed of purposeless energy, are extremely fragile. Attempting to manipulate a Soul-string directly is likely to damage it irreperably and, in any case, would likely yield no result beyond causing frustration and/or injury to the enterprising thaumatexilist. Severing the Soul-string will cause the instant and invariable obliteration of the Construct, as its Cloth ceases to recieve energy from its Cotton and it, thereby, ceases to exist.
+Severing the Heart-string will yield similar results, as the Construct's Cloth and Cotton are unbound and thus nonexistent.
+<br>
+<br>
+<br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study
+<br>
+<br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels, who's work with Cord preservation was intrumental to my later advances in direct Shape-string manipulating instruments.)
+Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of the bursar, a symbol of the inexhaustable catataxia found in every academic institution. Scientific minds can prove to be unbelievably mutable when shown definitive practical proof of the violation of basic thermodynamic models.
+Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (Excepting social psychologists, but Social Psych is weird and I'm convinced they're trying to develop mind control technology so I refuse to count them.)
+<br>
+<br>
+<br>Applying Thaumatextilic Principles In Practice.
 
