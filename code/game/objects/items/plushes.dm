@@ -972,18 +972,22 @@
 An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton.
 
 <br>Metaphysics:
-
+<br>
 <br>Textiles are inherently connected to and manipulative of three fundamental forces of reality; Cotton, Cloth, and Cord.
 The quintessential force of Cotton can be conceptualized to be the primal possibility and base state of the concept of 'all'. The more theorhetically inclined may wish to know that current leading models define Cotton as a subordinal expression of the hermetic <i>Prima Materia</i>, though I, personally, find such advanced theory, being far past what can be converted into practice, to be of negligable import.
 The Cloth is a solidified product of the Cotton, inverse to it and formed of it. Where Cotton is motive and meaningless, Cloth is static and purposeful. It is the ordered solidity through which actuallity is derived. Cloth expresses itself directly through physical matter, rather than through immaterial energy. Cloth gives shape and property to Cotton.
 The Cloth and Cotton, defined by their inequallity, could not express the universe as they do while alone. Rectifying this is the Cord. Cord is the dynamic binding force. Cotton energizes Cloth and Cloth defines Cotton. Cord holds these arangements in place. Cord is what connects the two forces, weaving together the matters of Cloth and energies of Cotton.
 The interplay between Cotton, Cloth, and Cord form the universal base upon which all the cosmos is built. Typically, these forces are, if sometimes detectable, universally invisible. But in some cases, manifestations of their power can form spontaneously.
-
-<br>A fabric-sewn and fiber-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructions (some older thaumatextilic works use the term Idols).
-Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses of such disturbance exibit this property more impactfully. Many engineers' vehement insistance that their burst drive 'runs better with like that' are products of this phenomenon, their 'lucky charm' having undergone spontaneous Construction as a result of the bluespace pulse exposure.
-Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construction, the chaotic energies of the Construction's Cotton being shaped by its Cloth before being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
-
 <br>
+<br>A fabric-sewn and fiber-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructs (some older thaumatextilic works use the term Idols).
+Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses of such disturbance exibit this property more impactfully. Many engineers' vehement insistance that their burst drive 'runs better with like that' are products of this phenomenon, their 'lucky charm' having undergone spontaneous Construction as a result of the bluespace pulse exposure.
+This effect has been noted in some cases to be so strong (specifically in areas of space with exceptionally thin spatial fabrics) as to induce Construction within minutes of a potential Construct being introduced to an area. 
+Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construction, the chaotic energies of the Construction's Cotton being shaped by its Cloth before being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
+<br>
+<br>
+<br>Anatomy of a Construction
+<br>
+<br>A Construction, no matter its physical shape, is comprised of three base components, formed at the moment of Construction
 
 
 
