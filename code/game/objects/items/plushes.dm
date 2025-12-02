@@ -68,9 +68,10 @@
 	normal_desc = desc
 	if(starting_traits)
 		for(var/trait in starting_traits)
-			var/datum/plush_trait/new_trait = new trait()
-			plush_traits += new_trait
-			new_trait.activate()
+			if(prob(starting_traits[trait]))
+				var/datum/plush_trait/new_trait = new trait()
+				plush_traits += new_trait
+				new_trait.activate()
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -711,7 +712,7 @@
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
-	starting_traits = list(/datum/plush_trait/prickly, /datum/plush_trait/ominous_levitation)
+	starting_traits = list(/datum/plush_trait/prickly = 100, /datum/plush_trait/ominous_levitation = 50)
 
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
@@ -915,7 +916,7 @@
 
 /obj/item/heartstring_extractor
 	name = "heart-string extractor"
-	desc = "This specially treated pair of scissors has been saturated with the energy of the quintessential cotton, helping to preserve Heart-strings and Shape-strings when used to cut them."
+	desc = "This specially treated pair of scissors has been saturated with the energy of the quintessential cotton, helping to preserve Heart-strings and Shape-strings when used to excise them."
 	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
 	icon_state = "scissors"
 	w_class = WEIGHT_CLASS_SMALL
@@ -924,7 +925,9 @@
 
 /obj/item/heartstring
 	name = "\improper Heart-strings"
-	desc = "A bundle of woven cotton fibres. The vivifying crux of a plush, comprised of its Soul-string and any adjoining Shape-strings. Without it, a plushes spirit is lost."
+	desc = "A bundle of woven cotton fibres. The vivifying crux of a plush, along with both its Soul-string and any adjoining Shape-strings. Without its Heart-string, a plushie's spirit is lost."
+	icon = 'icons/obj/toys/plushes.dmi'
+	icon_state = "heartstring"
 	var/datum/weakref/our_plush
 	var/list/datum/plush_trait/shape_strings = list()
 	w_class = WEIGHT_CLASS_SMALL
@@ -934,7 +937,6 @@
 		if(!shape_strings)
 			to_chat(user, span_warning("The Soul-string is bereft of Shape-strings."))
 			return
-		to_chat(user, span_notice("Select a Shape-string to cut from the "))
 		var/list/shape_string_names = list()
 		for(var/datum/plush_trait/possible_string in shape_strings)
 			if(possible_string::removable)
@@ -942,15 +944,19 @@
 		if(!length(shape_string_names))
 			to_chat(user, span_warning("The only Shape-strings here are woven irreversably into the Soul-string."))
 			return
+		to_chat(user, span_notice("Select a Shape-string to cut from the Heart-string."))
 		var/datum/plush_trait/shape_string_choice = shape_string_names[tgui_input_list(user, "Choose a string", "Plushtomization", shape_string_names)]
 		var/obj/item/shapestring/extracted = new(get_turf(src))
 		extracted.stored_trait = shape_string_choice
-		extracted.name = "\improper [shape_string_choice.name] Shape-string"
-		extracted.desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial. This particular one [shape_string_choice.desc]"
+		if(shape_string_choice::shapestring_icon_state != "")
+			extracted.icon_state = shape_string_choice::shapestring_icon_state
+		extracted.name = "\improper [shape_string_choice::name] Shape-string"
+		extracted.desc = "A thick cotton fibre. The sculpting energies of a plush. It moulds the quintessential Cotton into something more substantial, fueling the Cloth. This particular one [shape_string_choice.desc]"
+		shape_strings.Remove(shape_string_choice)
 
 /obj/item/shapestring
 	name = "\improper Shape-string"
-	desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial."
+	desc = "A thick cotton fibre. The sculpting and binding energies of a plush. It moulds the quintessential Cotton into something more substantial, fueling the Cloth."
 	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
 	icon_state = "scissors"
 	w_class = WEIGHT_CLASS_TINY
@@ -962,6 +968,7 @@
 	var/examine_text = ""
 	var/removable = TRUE
 	var/processes = FALSE
+	var/shapestring_icon_state = ""
 
 /datum/plush_trait/proc/activate(obj/item/toy/plush/plush)
 	return
@@ -1007,6 +1014,7 @@
 /datum/plush_trait/ominous_levitation/deactivate(obj/item/toy/plush/plush)
 	STOP_FLOATING_ANIM(plush)
 	plush.visible_message(span_notice("[plush] stops floating."))
+
 /datum/plush_trait/energetic
 	name = "Estiferous"
 	desc = "Imbues the cloth of the plush with a fragment of the energy of its cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
@@ -1026,7 +1034,7 @@
 			ouched = FALSE
 		if(!ouched)
 			return
-		to_chat(carbsqueezer, span_warning("HOLY SHIT THAT'S FUCKING HOT OWWWWW!")
+		to_chat(carbsqueezer, span_warning("HOLY SHIT THAT'S FUCKING HOT OWWWWW!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
@@ -1035,7 +1043,7 @@
 	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
 	default_raw_text = {"
 An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton.
-
+<br>
 <br>Metaphysics:
 <br>
 <br>Textiles are inherently connected to and manipulative of three fundamental Forces of reality; Cotton, Cloth, and Cord.
@@ -1067,5 +1075,5 @@ Before our research was formalized we had no recognition whatsoever, or often ri
 Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (Excepting social psychologists, but Social Psych is weird and I'm convinced they're trying to develop mind control technology so I refuse to count them.)
 <br>
 <br>
-<br>Applying Thaumatextilic Principles In Practice.
+<br>Applying Thaumatextilic Principles In Practice:"}
 
