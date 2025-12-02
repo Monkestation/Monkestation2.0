@@ -12,6 +12,7 @@
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 	var/list/datum/plush_trait/plush_traits = list()
+	var/list/starting_traits = list()
 	var/plush_flags
 	var/has_heartstring = TRUE
 	//--love ~<3--
@@ -65,6 +66,11 @@
 	parent_message = list("[p_they(TRUE)] can't remember what sleep is.")
 
 	normal_desc = desc
+	if(starting_traits)
+		for(var/trait in starting_traits)
+			var/datum/plush_trait/new_trait = new trait()
+			plush_traits += new_trait
+			new_trait.Activate()
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -131,7 +137,31 @@
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
 /obj/item/toy/plush/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/heartstring) && !has_heartstring)
+		var/obj/item/heartstring/new_heartstring = attacking_item
+		if(new_heartstring.our_plush.resolve() != src)
+			to_chat(user, span_warning("You're trying to replace the essential soul and spirit of one plush with that of another, which is metaphysically impossible. You'll need to use the plushes' original bundle of Heart-strings."))
+			return
+		for(var/datum/plush_trait/trait in new_heartstring.shape_strings)
+			var/datum/plush_trait/plush_trait = new trait()
+			plush_traits += plush_trait
+			plush_trait.activate()
 	if(attacking_item.get_sharpness())
+		if(istype(attacking_item, /obj/item/heartstring_extractor))
+			if(has_heartstring)
+				user.visible_message(span_notice("[user] begins cutting into [src] with [attacking_item], attempting to remove [src]'s Heart-strings."), span_notice("You begin to excise [src]'s Heart-strings."))
+				if(do_after(user, 3 SECONDS, src))
+					var/obj/item/heartstring/excised_heartstring = new(get_turf(src))
+					for(var/datum/plush_trait/trait in plush_traits)
+						trait.deactivate(src)
+						plush_traits.Remove(trait)
+						excised_heartstring.shape_strings += trait.type
+					excised_heartstring.our_plush = WEAKREF(src)
+					has_heartstring = FALSE
+
+			else
+				to_chat(user, span_warning("[src] has no Heart-strings to excise!"))
+				return
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, span_warning("You already murdered it!"))
@@ -681,6 +711,7 @@
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
+	starting_traits = list(/datum/plush_trait/prickly, /datum/plush_trait/ominous_levitation)
 
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
@@ -882,64 +913,98 @@
 
 //PLUSHTOMIZATION STUFF
 
+/obj/item/heartstring_extractor
+	name = "heart-string extractor"
+	desc = "This specially treated pair of scissors has been saturated with the energy of the quintessential cotton, helping to preserve Heart-strings and Shape-strings when used to cut them."
+	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
+	icon_state = "scissors"
+	w_class = WEIGHT_CLASS_SMALL
+	sharpness = SHARP_EDGED
+	force = 1
+
 /obj/item/heartstring
 	name = "\improper Heart-strings"
 	desc = "A bundle of woven cotton fibres. The vivifying crux of a plush, comprised of its Soul-string and any adjoining Shape-strings. Without it, a plushes spirit is lost."
 	var/datum/weakref/our_plush
 	var/list/datum/plush_trait/shape_strings = list()
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/heartstring/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.get_sharpness())
-		var/success_prob = istype(attacking_item, /obj/item/heartstring_extractor) : 90 ? 100
+	if(istype(attacking_item, /obj/item/heartstring_extractor))
+		if(!shape_strings)
+			to_chat(user, span_warning("The Soul-string is bereft of Shape-strings."))
+			return
+		to_chat(user, span_notice("Select a Shape-string to cut from the "))
+		var/list/shape_string_names = list()
+		for(var/datum/plush_trait/possible_string in shape_strings)
+			if(possible_string::removable)
+				shape_string_names[possible_string::name] = possible_string
+		if(!length(shape_string_names))
+			to_chat(user, span_warning("The only Shape-strings here are woven irreversably into the Soul-string."))
+			return
+		var/datum/plush_trait/shape_string_choice = shape_string_names[tgui_input_list(user, "Choose a string", "Plushtomization", shape_string_names)]
+		var/obj/item/shapestring/extracted = new(get_turf(src))
+		extracted.stored_trait = shape_string_choice
+		extracted.name = "\improper [shape_string_choice.name] Shape-string"
+		extracted.desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial. This particular one [shape_string_choice.desc]"
 
 /obj/item/shapestring
 	name = "\improper Shape-string"
 	desc = "A thick cotton fibre. The motive forces and sculpting energies of a plush. It moulds the quintessential cotton into something more substantial."
+	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
+	icon_state = "scissors"
+	w_class = WEIGHT_CLASS_TINY
 	var/datum/plush_trait/stored_trait
-
-/obj/item/shapestring/proc/set_trait(the_trait)
-	stored_trait = the_trait
-	name = "\improper [the_trait::name] Shape-string"
-	des
-
-
-	
 
 /datum/plush_trait
 	var/name = "Buggy Nonsense"
 	var/desc = "The neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
+	var/examine_text = ""
 	var/removable = TRUE
 	var/processes = FALSE
 
-/datum/plush_trait/proc/activate(obj/item/toy/plush)
+/datum/plush_trait/proc/activate(obj/item/toy/plush/plush)
 	return
 
-/datum/plush_trait/proc/deactivate(obj/item/toy/plush)
+/datum/plush_trait/proc/deactivate(obj/item/toy/plush/plush)
 	return
 
-/datum/plush_trait/proc/process_trigger(seconds_per_tick, obj/item/toy/plush)
+/datum/plush_trait/proc/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
 	return
 
-/datum/plush_trait/proc/squeezed(obj/item/toy/plush, mob/living/squeezer)
+/datum/plush_trait/proc/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	return
 
 /datum/plush_trait/prickly
 	name = "Cactaceous"
 	desc = "Shapes the cloth of the plush into microscopic spines, which, though mostly harmless, are extremely painful."
 
-/datum/plush_trait/prickly/squeezed(obj/item/toy/plush, mob/living/squeezer)
+/datum/plush_trait/prickly/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	var/ouched = TRUE
 	if(iscarbon(squeezer))
 		var/mob/living/carbon/carbsqueezer = squeezer
 		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
 			ouched = FALSE
-		if(HAS_TRAIT(carbsqueezer, PIERCEIMMUNE))
+		if(HAS_TRAIT(carbsqueezer, TRAIT_PIERCEIMMUNE))
 			ouched = FALSE
 		if(!ouched)
 			return
-		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!")
+		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
 		carbsqueezer.emote("gasp")
+		carbsqueezer.Stun(1 SECOND)
+		carbsqueezer.drop_all_held_items()
 
+/datum/plush_trait/ominous_levitation
+	name = "Autoaerolocomotive"
+	desc = "Imbues the stuffing of the plush with an anti-gravitational telekinetic field, enabling it to levitate."
+
+/datum/plush_trait/ominous_levitation/activate(obj/item/toy/plush/plush)
+	DO_FLOATING_ANIM(plush)
+	plush.visible_message(span_warning("[plush] begins to float for no conceivable reason!"))
+
+/datum/plush_trait/ominous_levitation/deactivate(obj/item/toy/plush/plush)
+	STOP_FLOATING_ANIM(plush)
+	plush.visible_message(span_notice("[plush] stops floating."))
 
