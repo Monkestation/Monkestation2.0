@@ -1039,6 +1039,21 @@
 		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
 
+/datum/plush_trait/puce
+	name = "Pucetrifying"
+	desc = "releases a wave of... Puce? what the fuck is puce?"
+	recipe = list(/datum/plush_trait/colorful, /datum/plush_trait/putrifying)
+	COOLDOWN_DECLARE(puceify)
+
+/datum/plush_trait/puce/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	if(COOLDOWN_FINISHED(src, puceify))
+		for(var/atom/ough in oview(5, plush)
+			plush.visible_message(span_danger("As [squeezer] hugs [plush], it releases a devastating wave of pucetrifacting energy!"))
+			ough.add_atom_colour("#cc8899", FIXED_COLOUR_PRIORITY) // woe, for you are puce forever
+			if(isliving(ough))
+				to_chat(ough, span_reallybig(span_hypnophrase("P U C E")))
+		COOLDOWN_START(src, puceify, 30 SECONDS)
+
 /obj/item/paper/fluff/plushmagic
 	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
 	default_raw_text = {"
@@ -1060,10 +1075,10 @@ Many tales of cursed toys also stem from inadvertant exposure to the effects of 
 <br>
 <br>Anatomy of a Construct
 <br>
-<br>A Construct, no matter its physical shape, is comprised of three base components, formed at the moment of Construction, each of which is a manifestation of one of the Forces, and each of which is an analogue of the physical structure of the Construct. At that moment, cotton becomes Cotton, cloth becomes Cloth, and cord becomes Cord.
+<br>A Construct's physical form—be it a toy bear, taxidermized bird, ragdoll, or any other plush-stuffed object—is comprised of three base components, formed at the moment of Construction, each of which is a manifestation of one of the Forces, and each of which is an analogue of the physical structure of the Construct. At that moment, cotton becomes Cotton, cloth becomes Cloth, and cord becomes Cord.
 Within the center all Constructs there can be found a loop of something resembling-but-not-quite yarn, typically red in color and faintly luminous. This is the Heart-string, a physical incarnation of the Cord. The Cord also inhabits the literal fiber that is used to stitch the Construct together.
 The Heart-string is the binding crux of a Construct, and is immutably linked to it. Stretching across the Heart-string is the Soul-string, typically this is a sort of blueish white, thin and brightly glowing. The Soul-string is Cotton made manifest, the primordial potential which powers the Construct. The stuffing material of a Construct is also suffused with a tiny fraction of the Cotton that the Soul-string is.
-Woven between the Heart and Soul strings are the Shape-strings. These may be many and varied, but one is always present and immutably linked to the Soul-string, representing the Cloth that shapes the physical form of the Construct. The material from which a Construct is created is also, of course, made of Cloth. Each Shape-string woven between the Heart and Soul strings expresses some fundamental property by which the Construct differs from its typical form.
+Woven between the Heart and Soul strings are the Shape-strings. These may be many and varied, but one is always present and immutably linked to the Soul-string, representing the Cloth that shapes the physical form of the Construct. The material from which a Construct is created is also, of course, made of Cloth. Each Shape-string woven between the Heart and Soul strings expresses some fundamental property ("Shape",  by which the Construct differs from its typical form.
 These Shape-strings are typically formed at the moment of Construction. Soul-strings, being formed of purposeless energy, are extremely fragile. Attempting to manipulate a Soul-string directly is likely to damage it irreperably and, in any case, would likely yield no result beyond causing frustration and/or injury to the enterprising thaumatexilist. Severing the Soul-string will cause the instant and invariable obliteration of the Construct, as its Cloth ceases to recieve energy from its Cotton and it, thereby, ceases to exist.
 Severing the Heart-string will yield similar results, as the Construct's Cloth and Cotton are unbound and thus nonexistent.
 <br>
@@ -1073,6 +1088,12 @@ Severing the Heart-string will yield similar results, as the Construct's Cloth a
 <br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels, who's work with Cord preservation was intrumental to my later advances in direct Shape-string manipulating instruments.)
 Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of the bursar, a symbol of the inexhaustable catataxia found in every academic institution. Scientific minds can prove to be unbelievably mutable when shown definitive practical proof of the violation of basic thermodynamic models.
 Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (Excepting social psychologists, but Social Psych is weird and I'm convinced they're trying to develop mind control technology so I refuse to count them.)
+<br>
+<br>
+<br>Intentional Construct Creation
+<br>
+<br>To apply thaumatextilics in any meaningful context would clearly require large amounts of unique Constructs to manipulate and experiment upon. Additionally, when a useful effect of Construction is discovered, one might wish to replicate it.
+Fortunately, there are effective procedures to do so. Construction can, as aforementioned, be induced by exposure to powerful high-duration temporal or spatial distortions. But to replicate existing effects, or even to create combinations of related effect
 <br>
 <br>
 <br>Applying Thaumatextilic Principles In Practice:"}
