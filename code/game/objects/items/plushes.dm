@@ -71,7 +71,7 @@
 			if(prob(starting_traits[trait]))
 				var/datum/plush_trait/new_trait = new trait()
 				plush_traits += new_trait
-				new_trait.activate()
+				new_trait.activate(src)
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -143,22 +143,33 @@
 		if(new_heartstring.our_plush.resolve() != src)
 			to_chat(user, span_warning("You're trying to replace the essential soul and spirit of one plush with that of another, which is metaphysically impossible. You'll need to use the plushes' original bundle of Heart-strings."))
 			return
-		for(var/datum/plush_trait/trait in new_heartstring.shape_strings)
-			var/datum/plush_trait/plush_trait = new trait()
-			plush_traits += plush_trait
-			plush_trait.activate()
+		user.visible_message(span_notice("[user] begins inserting [new_heartstring] into [src]."), span_notice("You begin the delicate process of rejoining the Heart-string bundle of [src] with its stuffing."))
+		if(do_after(user, 5 SECONDS, src))
+			for(var/datum/plush_trait/plush_trait in new_heartstring.shape_strings)
+				plush_traits += plush_trait
+				plush_trait.activate(src)
+				if(plush_trait.processes)
+					START_PROCESSING(SSobj, src)
+				new_heartstring.shape_strings.Remove(plush_trait)
+		user.visible_message(span_notice("[user] inserts [new_heartstring] into [src]. It looks happier, somehow."), span_notice("[src] seems happier with their heartstrings back."))
+		qdel(new_heartstring)
+		has_heartstring = TRUE
 	if(attacking_item.get_sharpness())
 		if(istype(attacking_item, /obj/item/heartstring_extractor))
 			if(has_heartstring)
 				user.visible_message(span_notice("[user] begins cutting into [src] with [attacking_item], attempting to remove [src]'s Heart-strings."), span_notice("You begin to excise [src]'s Heart-strings."))
 				if(do_after(user, 3 SECONDS, src))
 					var/obj/item/heartstring/excised_heartstring = new(get_turf(src))
+					STOP_PROCESSING(SSobj, src)
 					for(var/datum/plush_trait/trait in plush_traits)
 						trait.deactivate(src)
 						plush_traits.Remove(trait)
-						excised_heartstring.shape_strings += trait.type
+						excised_heartstring.shape_strings += trait
 					excised_heartstring.our_plush = WEAKREF(src)
 					has_heartstring = FALSE
+					return
+				else
+					return
 
 			else
 				to_chat(user, span_warning("[src] has no Heart-strings to excise!"))
@@ -209,6 +220,12 @@
 		return
 	return ..()
 
+/obj/item/toy/plush/process(seconds_per_tick)
+	. = ..()
+	for(var/datum/plush_trait/trait in plush_traits)
+		if(trait.processes)
+			trait.process_trigger(src)
+
 /obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user) //~<3
 	var/chance = 100 //to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?
 	var/concern = 20 //perhaps something might cloud true love with doubt
@@ -218,6 +235,13 @@
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
 		user.show_message(span_notice("[src] plays tag with [Kisser]."), MSG_VISUAL,
+			span_notice("They're happy."), NONE)
+		Kisser.cheer_up()
+		cheer_up()
+
+	//nor are we incestuous.
+	if((Kisser.plush_child == src || plush_child == Kisser))
+		user.show_message(span_notice("[src] talks with [Kisser]."), MSG_VISUAL,
 			span_notice("They're happy."), NONE)
 		Kisser.cheer_up()
 		cheer_up()
@@ -939,8 +963,8 @@
 			return
 		var/list/shape_string_names = list()
 		for(var/datum/plush_trait/possible_string in shape_strings)
-			if(possible_string::removable)
-				shape_string_names[possible_string::name] = possible_string
+			if(possible_string.removable)
+				shape_string_names[possible_string.name] = possible_string
 		if(!length(shape_string_names))
 			to_chat(user, span_warning("The only Shape-strings here are woven irreversably into the Soul-string."))
 			return
@@ -948,9 +972,9 @@
 		var/datum/plush_trait/shape_string_choice = shape_string_names[tgui_input_list(user, "Choose a string", "Plushtomization", shape_string_names)]
 		var/obj/item/shapestring/extracted = new(get_turf(src))
 		extracted.stored_trait = shape_string_choice
-		if(shape_string_choice::shapestring_icon_state != "")
-			extracted.icon_state = shape_string_choice::shapestring_icon_state
-		extracted.name = "\improper [shape_string_choice::name] Shape-string"
+		if(shape_string_choice.shapestring_icon_state != "")
+			extracted.icon_state = shape_string_choice.shapestring_icon_state
+		extracted.name = "\improper [shape_string_choice.name] Shape-string"
 		extracted.desc = "A thick cotton fibre. The sculpting energies of a plush. It moulds the quintessential Cotton into something more substantial, fueling the Cloth. This particular one [shape_string_choice.desc]"
 		shape_strings.Remove(shape_string_choice)
 
@@ -984,7 +1008,7 @@
 
 /datum/plush_trait/prickly
 	name = "Cactaceous"
-	desc = "Shapes the cloth of the plush into microscopic spines, which, though mostly harmless, are extremely painful."
+	desc = "shapes the fabric of the plush into microscopic spines, which, though mostly harmless, are extremely painful."
 
 /datum/plush_trait/prickly/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	var/ouched = TRUE
@@ -999,13 +1023,11 @@
 		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
-		carbsqueezer.emote("gasp")
-		carbsqueezer.Stun(1 SECOND)
-		carbsqueezer.drop_all_held_items()
+		carbsqueezer.emote("blink")
 
 /datum/plush_trait/ominous_levitation
-	name = "Autoaerolocomotive"
-	desc = "Imbues the stuffing of the plush with an anti-gravitational telekinetic field, enabling it to levitate."
+	name = "Unnervingly Hovering"
+	desc = "imbues the stuffing of the plush with an anti-gravitational telekinetic field, enabling it to levitate."
 
 /datum/plush_trait/ominous_levitation/activate(obj/item/toy/plush/plush)
 	DO_FLOATING_ANIM(plush)
@@ -1017,20 +1039,21 @@
 
 /datum/plush_trait/energetic
 	name = "Estiferous"
-	desc = "Imbues the cloth of the plush with a fragment of the energy of its cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
+	desc = "directly imbues the cloth of the plush with a fragment of the energy of its Cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
 	processes = TRUE
 
-
-/datum/plush_trait/energetic/process_trigger(seconds_per_tick, obj/item/toy/plush)
+/datum/plush_trait/energetic/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
 	return
 
-/datum/plush_trait/energetic/squeezed(obj/item/toy/plush, mob/living/squeezer)
+/datum/plush_trait/energetic/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	var/ouched = TRUE
 	if(iscarbon(squeezer))
 		var/mob/living/carbon/carbsqueezer = squeezer
-		if(carbsqueezer.gloves && !HAS_TRAIT(carbsqueezer.gloves, TRAIT_FINGERPRINT_PASSTHROUGH))
-			ouched = FALSE
-		if(HAS_TRAIT(carbsqueezer, TRAIT_FIRE_RESISTANCE))
+		if(carbsqueezer.gloves)
+			var/obj/item/clothing/gloves/electrician_gloves = carbsqueezer.gloves
+			if(electrician_gloves.max_heat_protection_temperature > 360)
+				ouched = FALSE
+		if(HAS_TRAIT(carbsqueezer, TRAIT_RESISTHEAT) || HAS_TRAIT(carbsqueezer, TRAIT_RESISTHEATHANDS))
 			ouched = FALSE
 		if(!ouched)
 			return
@@ -1038,6 +1061,45 @@
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
+		carbsqueezer.Stun(1 SECOND)
+		carbsqueezer.drop_all_held_items()
+
+/datum/plush_trait/slippery
+	name = "Lubricating"
+	desc = "causes the plush to become extremely slippery."
+
+/datum/plush_trait/slippery/activate(obj/item/toy/plush/plush)
+	plush.AddComponentFrom(REF(src), /datum/component/slippery, 50, SLIDE)
+
+/datum/plush_trait/slippery/deactivate(obj/item/toy/plush/plush)
+	plush.RemoveComponentSource(REF(src), /datum/component/slippery)
+
+//funny admin suggested traits
+/datum/plush_trait/wolfy
+	name = "Autoaerolocomotive"
+	desc = "The plushie moves towards the first person to hug the plushie after the Shape-string is inserted."
+	var/datum/weakref/our_owner
+
+/datum/plush_trait/wolfy/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
+	if(our_owner.resolve())
+		SSmove_manager.move_towards(plush, our_owner.resolve(), 5 SECONDS, TRUE)
+
+/datum/plush_trait/wolfy/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	if(!our_owner)
+		our_owner = WEAKREF(squeezer)
+		to_chat(squeezer, "It feels like [plush] is staring at you...")
+
+/datum/plush_trait/gabbie
+	name = "Cocainic"
+	desc = "The plushie increases the speed at which all actions are performed by 10% when held"
+	processes = TRUE
+
+/datum/plush_trait/gabbie/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
+	if(iscarbon(plush.loc))
+		var/mob/living/carbon/nerd = plush.loc
+
+
+
 
 /obj/item/paper/fluff/plushmagic
 	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
