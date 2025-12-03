@@ -64,6 +64,9 @@
 	desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-plating"
 
+/obj/item/mod/construction/plating/portable_suit
+	theme = /datum/mod_theme/portable_suit
+
 /obj/item/mod/construction/plating/engineering
 	theme = /datum/mod_theme/engineering
 
