@@ -90,6 +90,7 @@
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirt(src)
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirtleneck(src)
 	new /obj/item/clothing/head/hats/nanotrasen_representative(src)
+	new /obj/item/clothing/under/rank/centcom/officercasual(src)
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative/bathrobe(src)
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative(src)
 	new /obj/item/clothing/gloves/color/black(src)
