@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed flux and vortex anomalies being able to run on Oshan, when they weren't supposed to."
-  - bugfix: "Fixed some turfs (i.e ocean tiles, lava, etc) having liquid on them when they shouldn't have any."
-  - code_imp: "Some slight cleanups to liquid code."
