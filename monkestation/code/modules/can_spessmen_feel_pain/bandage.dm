@@ -25,6 +25,7 @@
 			override_file = 'monkestation/icons/mob/bandage.dmi',
 			override_state = current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
 		)
+		gauze_overlay.color = current_gauze.overlay_color
 		LAZYADD(overlays, gauze_overlay)
 	return overlays
 
@@ -55,7 +56,7 @@
 
 	current_gauze = new new_gauze.type(src, 1)
 	current_gauze.used = TRUE
-	current_gauze.worn_icon_state = "[body_zone][rand(1, 3)]"
+	current_gauze.worn_icon_state = "[body_zone][rand(2, 3)]"
 	if(can_bleed() && (generic_bleedstacks || cached_bleed_rate))
 		current_gauze.add_mob_blood(owner)
 		if(!QDELETED(new_gauze))
@@ -159,7 +160,7 @@
 	if(helper != owner)
 		helper.balloon_alert(owner, "gauze removed")
 
-	helper.put_in_hands(remove_gauze())
+	helper.put_in_hands(remove_gauze(drop_location()))
 
 /obj/item/proc/apply_digitigrade_filters(mutable_appearance/appearance, mob/living/carbon/wearer = loc, bodytype)
 	if(!istype(wearer) || !(bodytype & BODYTYPE_DIGITIGRADE))

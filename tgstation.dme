@@ -8327,7 +8327,6 @@
 #include "monkestation\code\modules\paradise_ports\aesthetics\carpet\fancy_floor.dm"
 #include "monkestation\code\modules\paradise_ports\aesthetics\carpet\tile_types.dm"
 #include "monkestation\code\modules\paradise_ports\aesthetics\smes\smes.dm"
-#include "monkestation\code\modules\patches_if_they_were_cool\_base_patch_changes.dm"
 #include "monkestation\code\modules\photography\photo\album.dm"
 #include "monkestation\code\modules\physics\atom_movables.dm"
 #include "monkestation\code\modules\physics\physics_component.dm"

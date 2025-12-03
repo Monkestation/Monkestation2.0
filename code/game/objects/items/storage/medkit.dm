@@ -73,7 +73,9 @@
 		/obj/item/stack/sticky_tape,
 		/obj/item/bodybag,
 		/obj/item/emergency_bed,
-		/obj/item/device/antibody_scanner //monkestation addition
+		/obj/item/device/antibody_scanner, //monkestation addition
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/surgical_processor,
 	)
 
 /obj/item/storage/medkit/Initialize(mapload)
@@ -130,59 +132,6 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	atom_storage.max_slots = 13
 	atom_storage.max_total_storage = 26
-	atom_storage.set_holdable(list(
-		/obj/item/healthanalyzer,
-		/obj/item/dnainjector,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/spray,
-		/obj/item/lighter,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/stack/medical,
-		/obj/item/flashlight/pen,
-		/obj/item/extinguisher/mini,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/sensor_device,
-		/obj/item/radio,
-		/obj/item/clothing/gloves/,
-		/obj/item/lazarus_injector,
-		/obj/item/bikehorn/rubberducky,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
-		/obj/item/surgical_drapes, //for true paramedics
-		/obj/item/surgical_processor,
-		/obj/item/scalpel,
-		/obj/item/circular_saw,
-		/obj/item/bonesetter,
-		/obj/item/surgicaldrill,
-		/obj/item/retractor,
-		/obj/item/cautery,
-		/obj/item/hemostat,
-		/obj/item/blood_filter,
-		/obj/item/shears,
-		/obj/item/geiger_counter,
-		/obj/item/clothing/neck/stethoscope,
-		/obj/item/stamp,
-		/obj/item/clothing/glasses,
-		/obj/item/wrench/medical,
-		/obj/item/clothing/mask/muzzle,
-		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
-	))
 
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
@@ -322,16 +271,11 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
-	custom_premium_price = PAYCHECK_COMMAND * 6
+	custom_premium_price = PAYCHECK_COMMAND * 4.5
 	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/advanced/get_medbot_skin()
 	return "advanced"
-
-/obj/item/storage/medkit/advanced/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-	atom_storage.max_total_storage = 16
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
@@ -339,7 +283,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/plastiseal = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 

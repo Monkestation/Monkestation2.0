@@ -176,6 +176,8 @@
 	merge_type = /obj/item/stack/medical/gauze
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
+	/// the color of the bandage overlay
+	var/overlay_color = "#048fc1"
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
@@ -331,6 +333,7 @@
 	heal_burn = 5
 	heal_brute = 5
 	merge_type = /obj/item/stack/medical/gauze/improvised
+	overlay_color = "#93acb5"
 
 /obj/item/stack/medical/gauze/plastiseal
 	name = "plastiseal"
@@ -349,6 +352,7 @@
 	flesh_regeneration = 15
 	heal_brute = 15
 	can_clean = FALSE
+	overlay_color = "#86d8be"
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,
