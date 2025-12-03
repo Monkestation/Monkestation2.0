@@ -1067,13 +1067,16 @@ The Cloth is a solidified product of the Cotton, inverse to it and formed of it.
 The Cloth and Cotton, defined by their inequallity, could not express the universe as they do while alone. Rectifying this is the Cord. Cord is the dynamic binding force. Cotton energizes Cloth and Cloth defines Cotton. Cord holds these arangements in place. Cord is what connects the two forces, weaving together the matters of Cloth and energies of Cotton.
 The interplay between Cotton, Cloth, and Cord form the universal base upon which all the cosmos is built. Typically, these forces are, if sometimes detectable, universally invisible. But in some cases, manifestations of their power can form spontaneously.
 <br>
+<br>
+<br> Constructs:
+<br>
 <br>A fabric-sewn and fiber-stuffed figure, more specifically a stuffed figure containing an unusually high concentration of Cotton, holds known power. Such figures are often incorrectly refered to as 'plushies', though this designation is to be restricted to mundane stuffed objects to reduce confusion with Cotton-suffused objects, which are more correctly refered to as Constructs (some older thaumatextilic works use the term Idols).
 Mundane 'plushies' are occasionally suffused with Cotton (the process of Construction ('Idolization')) through exposure to high levels of spatial and temporal disturbance. Potent, focused pulses of such disturbance exibit this property more impactfully. Many engineers' vehement insistance that their burst drive 'runs better with it like that' are products of this phenomenon, their 'lucky charm' having undergone spontaneous Construction as a result of the bluespace pulse exposure.
 This effect has been noted in some cases to be so strong (specifically in areas of space with exceptionally thin spatial fabrics) as to induce Construction within minutes of a potential Construct being introduced to an area.
 Many tales of cursed toys also stem from inadvertant exposure to the effects of a newly created Construct, the chaotic energies of the Construct's Cotton being broadcast to the world. This tends to create a variety of unusual effects on nearby reality, such as spontaneous energy creation or destruction, manipulation of electromagnetic fields, and alterations to the Cloth of other nearby objects.
 <br>
 <br>
-<br>Anatomy of a Construct
+<br>Anatomy of a Construct:
 <br>
 <br>A Construct's physical form—be it a toy bear, taxidermized bird, ragdoll, or any other plush-stuffed object—is comprised of three base components, formed at the moment of Construction, each of which is a manifestation of one of the Forces, and each of which is an analogue of the physical structure of the Construct. At that moment, cotton becomes Cotton, cloth becomes Cloth, and cord becomes Cord.
 Within the center all Constructs there can be found a loop of something resembling-but-not-quite yarn, typically red in color and faintly luminous. This is the Heart-string, a physical incarnation of the Cord. The Cord also inhabits the literal fiber that is used to stitch the Construct together.
@@ -1083,28 +1086,30 @@ These Shape-strings are typically formed at the moment of Construction. Soul-str
 Severing the Heart-string will yield similar results, as the Construct's Cloth and Cotton are unbound and thus nonexistent.
 <br>
 <br>
-<br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study
+<br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study:
 <br>
 <br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels who's work, both theorhetical and practicalwith Cord preservation was intrumental to my later advances in direct Heart-string manipulation instruments.)
 Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of the bursar, a symbol of the inexhaustable catataxia found within every academic institution. Scientific minds can prove to be unbelievably mutable when shown definitive practical proof of the violation of basic thermodynamic models.
-Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (With the possible exception of social psychologists, but Social Psychology is a silly science for silly scientists. Rich, perhaps, coming from the 'teddy bear wizard', but nonetheless true.)
+Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (With the possible exception of social psychologists, but Social Psychology is a silly science for silly scientists. Rich, perhaps, coming from the 'teddy-bear guy', but nonetheless true.)
 <br>
 <br>
-<br>Intentional Construct Creation
+<br>Intentional Construct Creation:
 <br>
 <br>To apply thaumatextilics in any meaningful context would clearly require large amounts of unique Constructs to manipulate and experiment upon. Additionally, when a useful effect of Construction is discovered, one might wish to replicate it.
 Fortunately, there are effective procedures to do so. Construction can, as aforementioned, be induced by exposure to powerful high-duration temporal or spatial distortions. But to replicate the existing Shapes of a construct, or even to create combinations of related Shapes, an enterprising thaumatextilist would need to somehow create a copy of an existing Construct. This is, fortunately, achievable.
 In some cases, when the Cloth and Cord of two Constructs come into contact, an iota of each Construct's Cotton and Cloth is ripped from the Constructs by the combined binding forces of their Cords, resulting in the coelessence of a Heart-string and subsequently the formation of an entirely new Construct with the Shapes of both source Constructs, and occasionally new Shapes resulting from a combination of those of the original two Constructs.
 This is process is typically known as Conglomeration (Some earlier works use 'Genesis', under the disproven notion that the process is spontaneous), and the resulting Construct a Conglomerate ('Child').
-Unfortunately, the most effective method my colleagues have so far found for inducing Conglomeration — <i>Cloth bear witness to my truth</i> — is to, and I quote verbatim: 'squeeze the two Constructs against eachother and rub them together suggestively.' ...Weep for us poor sinners, for we shall all be damned at the day of Judgement for what we have wrought.
-Excepting the concerning implications of the previous discovery, it is a vital component of practical Thaumatextilics. Just, look away, perhaps. 
+Unfortunately, the most effective method my colleagues have so far found for inducing Conglomeration — <i>Cloth bear witness to my truth</i> — is to, and I quote <b>verbatim</b>: 'squeeze the two Constructs against eachother and rub them together suggestively.' ...Weep for us poor sinners, for we shall all be damned at the day of Judgement for what we have wrought.
+Excepting the concerning implications of the previous discovery, it is a vital component of practical Thaumatextilics. Just, look away, perhaps. It feels somehow polite.
 <br>
 <br>
 <br>Tugging At The Heart-Strings:
 <br>
 <br>The manipulation of a Construct's Heart-strings and Shape-strings has been, until very recently, an inexact and largely fruitless endeavor until the release of influential modern research within the prior two decades.
 (Research which, if I may be so painfully shallow as to brag, I contributed a not-insignificant fraction of). Others have expounded on these discoveries in more detail in aforementioned works (See 'Methods of preservation of metaphysical binding energies after physical seperation.', written by Jay E. Michaels, PhD and published 2507 if you feel so inclined).
-The gist of such is that through the implementation of these modern methodology, a reliable, practical method of Construct manipulation can be devised. The fundamental instrument in this process is a Heart-string extractor, a tool first divised in a 2507 paper as a proposed solution to the problem of Cord dispersal and then actually invented over the following 5 years.
+The gist of such is that through the implementation of these modern methodologies, a reliable, practical method of Construct manipulation can be devised. The fundamental instrument in this process is a Heart-string extractor, a tool first divised in a 2507 paper as a theorhetical solution to the problem of Cord dispersal, and then actually invented over the following 5 years.
+An extractor is, in effect, a specially prepared set of sewing shears designed to 'seal the leak', as it were, in the linkage between Heart-string and Construct and subsequently between Heart-string and Shape-string. Attempting to simply cut a Construct's Heart-string free of it nigh-invariably results in the disconnection between Heart-string bundle and Construct. This effect is theorhetically interesting in that it is able to create Constructs that continue to exist while devoid of a Heart-string or Soul-string.
+These Constructs' Cloth appears to hold a remnant of its physical form though losing its Shapes. Research is currently being conducted into the possibilty of artificial Heart-string and/or Soul-string synthesis using such Constructs.
 
 "}
 
