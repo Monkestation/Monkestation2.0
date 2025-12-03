@@ -122,6 +122,8 @@
 		START_PROCESSING(SSactualfastprocess, src)
 
 /datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
+	if(paused)
+		return
 	var/burstees = burst_amount
 	if(random_bursts)
 		burstees = rand(1, burst_amount)

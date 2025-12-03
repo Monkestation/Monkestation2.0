@@ -21,6 +21,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
+	new /obj/item/storage/pipebox/fancy(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
