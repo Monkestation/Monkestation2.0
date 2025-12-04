@@ -720,7 +720,7 @@
 		DELAY 20
 		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
 		DELAY 20
-		SAY I am dying on my birthday, December Seventeenth, 2515, due to self-inflicted tracheal puncture.
+		SAY I am dying on my birthday, December Seventeenth, 2515, due to a self-inflicted tracheal puncture.
 		DELAY 20
 		EMOTE yanks his hands back, forcing the shaft of screwdriver straight through his throat.
 		SOUND stab
