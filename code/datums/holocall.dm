@@ -601,7 +601,7 @@
 
 /obj/item/disk/holodisk/plushie_madness_end
 	name = "17-12-2523: 'I Was.'"
-	desc = "A non-descript holodisk. Scribbled hastily on the front of the housing is a date, and a two words. 'I Was.'"
+	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in neat handwritten print, is a date and two words: 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
 	preset_record_text = {"
 		NAME Human Man
@@ -620,7 +620,7 @@
 		DELAY 10
 		EMOTE glances at something out of frame
 		DELAY 10
-		SAY ...Seventeen minutes ago, as of the date of this recording.
+		SAY ...Seventeen minutes ago.
 		DELAY 20
 		SAY #Happy `fucking` birthday...
 		DELAY 20
@@ -634,7 +634,7 @@
 		DELAY 5
 		SAY #I'm so sorry. Forgive me. Please.
 		DELAY 20
-		SAY I was a student at the best college that a minimum-wage 19 year-old could hypothetically have provided for, were the minimum wage a reasonable value.
+		SAY I was a student at the best college that a minimum-wage 19 year-old could hypothetically have provided for, were the minimum wage set at a reasonable value
 		DELAY 20
 		SAY I was awarded a variety of honors.
 		DELAY 20
@@ -651,6 +651,7 @@
 		SAY I was a madman in the eyes of others.
 		DELAY 20
 		SAY I was too curious. I was learning more than was good for me.
+		DELAY 10
 		EMOTE is hyperventilating. His face is pale. He's crying.
 		DELAY 20
 		SAY I was working on- on a project.
@@ -661,13 +662,74 @@
 		DELAY 10
 		EMOTE clenches his hands into fists. His fingernails draw blood
 		DELAY 10
-		SAY I was having unusual episodes.
+		SAY I was starting to have delusional episodes.
 		DELAY 20
-		SAY I was told it was probably after-effects of chemical exposure.
+		SAY I was told it was probably plasma exposure.
 		DELAY 20
-		SAY I was given some pills and some IVs.
+		SAY I was given some neurine IVs and some anti-psychotic pills. 
 		DELAY 20
-		SAY I was definitely not suffering from chemical exposure.
+		SAY I was definitely not suffering from plasma exposure.
+		DELAY 20
+		SAY I was told I was seeing things that weren't real.
+		DELAY 20
+		SAY I was sure they were.
+		DELAY 20
+		SAY I was told I was hallucinating.
+		DELAY 20
+		EMOTE squeezes his eyes shut
+		DELAY 10
+		SAY I was not halucinating.
+		DELAY 10
+		SAY I was seeing things that I was not meant to see.
+		DELAY 20
+		SAY I was unable to stop seeing them.
+		DELAY 20
+		SAY I was taught by the things I saw.
+		DELAY 20
+		SAY I was taught that we knew nothing.
+		DELAY 20
+		SAY I was taught that they could think.
+		DELAY 20
+		SAY I was taught that the things we studied were studying us.
+		DELAY 20
+		SAY I was not ready.
+		DELAY 20
+		EMOTE reaches outside of the frame of the recording. There's a rattling noise. He produces a flat-head screwdriver.
+		DELAY 20
+		SAY I was given psychiatric care.
+		DELAY 20
+		SAY I was not improving.
+		DELAY 20
+		SAY I was confined to my quarters.
+		DELAY 20
+		EMOTE stares at the screwdriver. He's gripping it so tightly that all the color has drained from his hand.
+		DELAY 20
+		SAY I was not okay.
+		DELAY 20
+		SAY I was compelled to warn others of what we had done.
+		DELAY 20
+		SAY I was probably ignored.
+		DELAY 20
+		EMOTE raises the screwdriver to his face, gripping it with both hands.
+		DELAY 20
+		EMOTE squeezes his eyes shut.
+		DELAY 20
+		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
+		DELAY 20
+		SAY I was killed on December Seventeenth, 2523, by self-inflicted tracheal puncture.
+		DELAY 20
+		EMOTE inhales sharply, forcing the shaft of screwdriver straight through his throat.
+		SOUND stab
+		DELAY 20
+		EMOTE shivers. His eyes widen. He clutches at his neck.
+		DELAY 20
+		EMOTE stumbles forwards. Falls. He's no longer visible in the recording.
+		SOUND bodyfall
+		DELAY 50
+		PRESET /datum/preset_holoimage/ai
+		NAME ZX-20 Holorecorder
+		SAY User absent. Terminating recording.
+		SOUND PING
 		
 		
 	"}
