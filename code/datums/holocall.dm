@@ -599,7 +599,7 @@
 		SOUND sparks
 	"}
 
-/obj/item/disk/holodisk/plushie_madness_end
+/obj/item/disk/holodisk/suicide_note
 	name = "17-12-2515: 'I Was.'"
 	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
@@ -720,9 +720,9 @@
 		DELAY 20
 		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
 		DELAY 20
-		SAY I am dying  on my birthday, December Seventeenth, 2515, due to `self-inflicted tracheal puncture`.
+		SAY I am dying on my birthday, December Seventeenth, 2515, due to self-inflicted tracheal puncture.
 		DELAY 20
-		EMOTE inhales sharply, forcing the shaft of screwdriver straight through his throat.
+		EMOTE yanks his hands back, forcing the shaft of screwdriver straight through his throat.
 		SOUND stab
 		DELAY 20
 		EMOTE shivers. His eyes widen. He clutches at his neck.
