@@ -601,7 +601,7 @@
 
 /obj/item/disk/holodisk/plushie_madness_end
 	name = "17-12-2523: 'I Was.'"
-	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in neat handwritten print, is a date and two words: 'I Was.'"
+	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
 	preset_record_text = {"
 		NAME Human Man
@@ -716,7 +716,9 @@
 		DELAY 20
 		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
 		DELAY 20
-		SAY I was killed on December Seventeenth, 2523, by self-inflicted tracheal puncture.
+		SAY I was alive.
+		DELAY 20
+		SAY I died December Seventeenth, 2523, by self-inflicted tracheal puncture.
 		DELAY 20
 		EMOTE inhales sharply, forcing the shaft of screwdriver straight through his throat.
 		SOUND stab
