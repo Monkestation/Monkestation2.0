@@ -312,7 +312,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 4,
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
 		/obj/item/healthanalyzer/advanced = 1,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/surgical_drapes = 1,
@@ -344,7 +344,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/healthanalyzer/advanced = 1,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
 		/obj/item/mod/module/thread_ripper = 1,
 		/obj/item/mod/module/surgical_processor/preloaded = 1,
 		/obj/item/mod/module/defibrillator/combat = 1,
@@ -377,7 +377,7 @@
 	if(empty)
 		return
 	var/static/list/items_inside = list(
-		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/storage/pill_bottle/libital_patch = 1,

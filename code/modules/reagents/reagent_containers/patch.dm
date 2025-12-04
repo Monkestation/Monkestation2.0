@@ -14,6 +14,9 @@
 
 	skips_attack = TRUE
 
+	/// the intial volume of the patch, this is for more uniform application chemicals overtime
+	var/initial_volume
+
 	///rate at which chemicals are injected per process in a percentage
 	var/reagent_consumption_rate = 0.1
 
@@ -39,6 +42,9 @@
 	return .
 
 /obj/item/reagent_containers/pill/patch/proc/stick(atom/target, mob/living/user, px,py)
+	if(!initial_volume)
+		initial_volume = reagents.total_volume
+
 	patch_overlay = mutable_appearance(icon, icon_state , layer = target.layer + 1, appearance_flags = RESET_COLOR)
 	var/matrix/new_matrix = matrix()
 	new_matrix.Scale(0.5, 0.5)
@@ -109,7 +115,7 @@
 		qdel(src)
 		return
 
-	reagents.trans_to(attached, reagents.total_volume * reagent_consumption_rate, methods = PATCH)
+	reagents.trans_to(attached, initial_volume * reagent_consumption_rate, methods = PATCH)
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
