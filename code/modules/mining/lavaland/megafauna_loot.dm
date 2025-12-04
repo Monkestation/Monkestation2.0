@@ -277,6 +277,8 @@
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+	clothing_traits = list(TRAIT_ALLOW_WINGS_THRU_CLOTHES)
+
 /datum/armor/hooded_hostile_environment
 	melee = 70
 	bullet = 40

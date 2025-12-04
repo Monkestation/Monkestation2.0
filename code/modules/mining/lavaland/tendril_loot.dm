@@ -683,6 +683,7 @@
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor_type = /datum/armor/hooded_berserker
+	clothing_traits = list(TRAIT_ALLOW_WINGS_THRU_CLOTHES)
 
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 

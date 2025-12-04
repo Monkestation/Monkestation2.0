@@ -674,6 +674,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes user able to absorb food through any exposed body part.
 #define TRAIT_FOOD_ABSORPTION "food_absorbtion"
 
+/// Allows wings to be extended regardless of if their clothes have HIDEJUMPSUIT.
+#define TRAIT_ALLOW_WINGS_THRU_CLOTHES "allow_wings_thru_clothes"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
