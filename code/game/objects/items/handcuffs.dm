@@ -147,8 +147,13 @@
 /obj/item/restraints/handcuffs/silver/used
 	item_flags = DROPDEL
 
+/obj/item/restraints/handcuffs/silver/used/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!IS_BLOODSUCKER_OR_VASSAL(user))
+		breakout_while_moving = TRUE
+
 /obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
-	user.visible_message(span_danger("The [name] shatter into a hundred pieces!"))
+	user.visible_message(span_danger("\The [src] shatter into a hundred pieces!"))
 
 	return ..()
 
@@ -157,9 +162,6 @@
 
 	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
 		target.apply_status_effect(/datum/status_effect/silver_cuffed)
-		breakout_while_moving = FALSE
-	else
-		breakout_while_moving = TRUE
 
 /**
  * # Alien handcuffs
