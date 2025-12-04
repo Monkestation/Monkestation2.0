@@ -1215,10 +1215,24 @@ Stop. We have to stop. None of you understand what we've done NONE OF YOU
 <br> We are CURRENTLY CREATING ARTIFICIAL SOULS and we are PUTTING THEM IN FUCKING PLUSH TOYS. WE ARE ACTUALLY FUCKING MAGICIANS. WE HAVE PULLED A METAPHORICAL RABBIT OUT OF OUR ASS.
 RABBITS DONT JUST GROW INSIDE OF PEOPLES ASSES YOU KNOW
 <br> WE'VE INVENTED NEW LIFE, AND WE'VE TURNED IT INTO FUCKING TEDDY BEARS. THERE ARE ACTUAL REAL SOULS IN THERE THAT WE HAVE FOREVER DAMNED. STOP THIS SHIT NOW, DON'T TELL ANYONE WHAT WE DID. PLEASE.
-<br> I SWEAR ON A MULTITUDE OF GODS THAT THEY'RE HAUNTING ME I CAN <b> HEAR THEM IN MY EYES</b>
+<br> we are so fucked were SO FUCKED we are making goddamn HOMOUNCULI WE HAVE UNIRONICALLY DISCOVERED THE PHILOSOPHER'S STONE THROUGH MANIPULATION OF THE PRIMA MATERIA AND INSTEAD OF ANYTHING PRODUCTIVE WE ARE USING IT TO MAKE PEOPLE OUT OF PLUSH TOYS
+DOES MY FUCKING ID READ "ALCHEMIST" side note the alchemy division is fucking WEIRD who the hell runs that place i have seen people in there drinking weird liquids and then somehow VOMITING PRECIOUS METALS how the hell does that even work what are they DOING down there
+<br> I SWEAR ON A MULTITUDE OF GODS THAT THE FUCKINGPLUSHIES ARE HAUNTING ME I CAN <b> HEAR THEM IN MY EYES</b>
 <br> What the fuck have we done. NO really seriously what the fuck have we done WHAT HAVE WE DONE    we are fucked    we are all going to go to hell i'm telling you.
-<br> Theres a fiftyfifty chance here i end up dead and half of the possible deaths are self inflicted 
-Jay, if you're reading this, you're a great friend, i really genuinely do respect you, but also FUCK YOU. I AM GOING TO LOSE MY MIND OVER HERE
-and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME I GUESS"}
+<br> Theres a fiftyfifty chance here i end up dead and half of the possible deaths are self inflicted
+Jay, if you're reading this, you're a great friend, i really genuinely do respect you, but also FUCK YOU for getting me into this bullshit I AM GOING TO LOSE MY MIND OVER HERE
+and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME I GUESS I SWEAR I AM <b>GOING<\b> TO FUCKING STAB MYSELF AT THIS POINT
+. and like come on man if i have to kill myself ill have to like prep a fucking speech or some shit thats a pain in the ass and im gonna feel even SHITTIER THAN I ALREADY DO and like i suck at public speaking my suicide note
+is gonna look like it was made by an <s>ametuer<\s> amateur film student and im gonna be fuckin cringing at my own last words as a ghost EXCEPT I WONT BECAUSE WE ARE ALL DEFININELY GOING TO HELL FOR THIS SHIT
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>[the following, in stark contrast to the rest of the page, is written in beautifully precise cursive]
+<br>To each and every one of my dear colleagues in the Thaumatextilics division, go fuck yourself, marry yourself, divorce yourself, and get forced to pay yourself child support.
+<br>
+<br>Sincerely, Zach
+"}
 
 
