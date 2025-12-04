@@ -437,7 +437,7 @@
 					</span>"
 
 		else
-			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(D.disease_flags & DISEASE_DORMANT)))
+			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
 				render_list += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
 				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 				</span>"
