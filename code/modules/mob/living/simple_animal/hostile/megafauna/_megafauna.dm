@@ -114,8 +114,8 @@
 	if(!force && health > 0)
 		return
 
-	crusher_loot.Cut()
-	loot.Cut()
+	crusher_loot?.Cut()
+	loot?.Cut()
 
 	return ..()
 

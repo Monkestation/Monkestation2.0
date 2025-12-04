@@ -41,7 +41,7 @@
 #define ITEM_INTERACT_ANY_BLOCKER (ITEM_INTERACT_SUCCESS | ITEM_INTERACT_BLOCKING)
 
 /// How many seconds between each fuel depletion tick ("use" proc)
-#define TOOL_FUEL_BURN_INTERVAL 5
+#define TOOL_FUEL_BURN_INTERVAL 1 SECOND
 
 ///This is a number I got by quickly searching up the temperature to melt iron/glass, though not really realistic.
 ///This is used for places where lighters should not be hot enough to be used as a welding tool on.
