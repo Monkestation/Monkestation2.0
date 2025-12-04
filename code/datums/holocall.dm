@@ -281,6 +281,8 @@
 				record.entries += list(list(HOLORECORD_SAY,value))
 			if("SOUND")
 				record.entries += list(list(HOLORECORD_SOUND,value))
+			if("EMOTE")
+				record.entries += list(list(HOLORECORD_EMOTE,value))
 			if("LANGUAGE")
 				var/lang_type = text2path(value)
 				if(ispath(lang_type,/datum/language))
