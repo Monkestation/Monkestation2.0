@@ -151,7 +151,7 @@
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
-	var/overlay_color = "#048fc1"
+	var/overlay_color = "#1ab0e7"
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
@@ -199,7 +199,9 @@
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
-
+	if(!patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+		patient.balloon_alert(user, "no treatable area!")
+		return
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
 	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
@@ -263,8 +265,6 @@
 		)
 	limb.apply_gauze(src)
 	if(iscarbon(patient) && !used)
-		if(!patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
-			return
 		var/mob/living/carbon/carbon_patient = patient
 		heal_carbon(carbon_patient, user, heal_brute, heal_burn, TRUE)
 		heal_burn = 0

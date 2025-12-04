@@ -762,12 +762,12 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
 #define BACK_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
 #define HAIR_LAYER 13 //TODO: make part of head layer?
-/// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 12
-/// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 11
 /// Bandage layer (gauze and other medical overlays)
-#define BANDAGE_LAYER 10
+#define BANDAGE_LAYER 12
+/// Facemask layer (gas masks, breath masks, etc.)
+#define FACEMASK_LAYER 11
+/// Head layer (hats, helmets, etc.)
+#define HEAD_LAYER 10
 /// Handcuff layer (when your hands are cuffed)
 #define HANDCUFF_LAYER 9
 /// Legcuff layer (when your feet are cuffed)

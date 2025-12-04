@@ -114,7 +114,8 @@
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
 		return FALSE
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
-		patient.balloon_alert(user, "it's not organic!")
+		if(!silent)
+			patient.balloon_alert(user, "it's not organic!")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		if(!silent)
@@ -127,7 +128,8 @@
 			patient.update_damage_overlays()
 		post_heal_effects(max(previous_damage - affecting.get_damage(), 0), patient, user)
 		return TRUE
-	patient.balloon_alert(user, "can't heal that!")
+	if(!silent)
+		patient.balloon_alert(user, "can't heal that!")
 	return FALSE
 
 ///Override this proc for special post heal effects.
