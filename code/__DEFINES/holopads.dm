@@ -6,5 +6,6 @@
 #define HOLORECORD_LANGUAGE "lang"
 #define HOLORECORD_PRESET "preset"
 #define HOLORECORD_RENAME "rename"
+#define HOLORECORD_EMOTE "emote"
 
 #define HOLORECORD_MAX_LENGTH 200
