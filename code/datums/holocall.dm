@@ -365,6 +365,10 @@
 /datum/preset_holoimage/assistant
 	outfit_type = /datum/outfit/job/assistant
 
+/datum/preset_holoimage/dr_zachary
+	outfit_type = /datum/outfit/dr_zachary
+
+
 /obj/item/disk/holodisk/example
 	preset_image_type = /datum/preset_holoimage/clown
 	preset_record_text = {"
@@ -594,3 +598,27 @@
 		DELAY 40
 		SOUND sparks
 	"}
+
+/obj/item/disk/holodisk/plushie_madness_end
+	name = "17-12-2523: 'Farewell'"
+	desc = "A non-descript holodisk. Scribbled hastily on the front of the housing is a date, and a single word. 'Farewell.'"
+	preset_image_type = /datum/preset_holoimage/dr_zachary
+	preset_record_text = {"
+		NAME Space Adventurer
+		SOUND PING
+		DELAY 20
+		SAY Hey, I left you this message for when you come back.
+		DELAY 50
+		SAY I picked up an emergency signal from a freighter and I'm going there to search for some goodies.
+		DELAY 50
+		SAY You can crash here if you need to, but make sure to check the anchor cables before you leave.
+		DELAY 50
+		SAY If you don't, this thing might drift off into space.
+		DELAY 50
+		SAY Then some weirdo could find it and potentially claim it as their own.
+		DELAY 50
+		SAY Anyway, gotta go, see ya!
+		DELAY 40
+		SOUND sparks
+	"}
+
