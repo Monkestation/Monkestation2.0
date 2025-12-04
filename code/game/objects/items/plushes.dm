@@ -1117,7 +1117,6 @@
 
 
 
-
 /datum/plush_trait/puce
 	name = "Pucetrifying"
 	desc = "releases a wave of... Puce? what the fuck is puce?"
@@ -1126,17 +1125,30 @@
 
 /datum/plush_trait/puce/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(COOLDOWN_FINISHED(src, puceify))
-		for(var/atom/ough in oview(5, plush))
+		for(var/atom/ough in range(5, plush))
 			plush.visible_message(span_danger("As [squeezer] hugs [plush], it releases a devastating wave of pucetrifacting energy!"))
 			ough.add_atom_colour("#cc8899", FIXED_COLOUR_PRIORITY) // woe, for you are puce forever
 			if(isliving(ough))
 				to_chat(ough, span_reallybig(span_hypnophrase("P U C E")))
 		COOLDOWN_START(src, puceify, 30 SECONDS)
 
+/datum/plush_trait/putrifying
+	name = "Putrifying"
+	desc = "releases waves of putrifacting energies."
+	processes = TRUE
+
+
+	for(var/obj/item/food/grown/crop in range(2 * multiplier,mob))
+		crop.visible_message(span_warning("\The [crop] rots at an alarming rate!"))
+		new /obj/item/food/badrecipe(get_turf(crop))
+		qdel(crop)
+		if(prob(30 / multiplier))
+			break
+
 /obj/item/paper/fluff/plushmagic
-	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
+	name = "An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton - 2512"
 	default_raw_text = {"
-An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton.
+An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton. Zachary M. Faust PhD, 2512
 <br>
 <br>Metaphysics:
 <br>
@@ -1167,7 +1179,7 @@ Severing the Heart-string will yield similar results, as the Construct's Cloth a
 <br>
 <br>A Brief Remark On Thaumatextilics As A Legitimate Field Of Study:
 <br>
-<br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels who's work, both theorhetical and practicalwith Cord preservation was intrumental to my later advances in direct Heart-string manipulation instruments.)
+<br>Some less accepting academics condemn my work, and that of my colleagues in the Thaumatextilic sciences. (To whom, incidentally, I credit with a significant portion of the knowledge involved in most of my previous discoveries and those catalogued in this text. I wish particularly to name one Dr. Jay Michaels who's work, both theorhetical and practical, with Cord preservation was intrumental to my later advances in direct Heart-string manipulation instruments.)
 Before our research was formalized we had no recognition whatsoever, or often ridicule. They laughed at us, called us mad, so on. Most dismissed our burgeoning practice as nothing more than an immensely elaborate practical joke at the expense of the bursar, a symbol of the inexhaustable catataxia found within every academic institution. Scientific minds can prove to be unbelievably mutable when shown definitive practical proof of the violation of basic thermodynamic models.
 Since then we've typically recieved a begrudging acceptance from offical types. The real point I wish to extol here is that just because something is nonsense, does not mean it contains no sense, even if you <i>feel</i> that it cannot be possible. Feelings are not the way of research. (With the possible exception of social psychologists, but Social Psychology is a silly science for silly scientists. Rich, perhaps, coming from the 'teddy-bear guy', but nonetheless true.)
 <br>
@@ -1189,6 +1201,39 @@ Excepting the concerning implications of the previous discovery, it is a vital c
 The gist of such is that through the implementation of these modern methodologies, a reliable, practical method of Construct manipulation can be devised. The fundamental instrument in this process is a Heart-string extractor, a tool first divised in a 2507 paper as a theorhetical solution to the problem of Cord dispersal, and then actually invented over the following 5 years.
 An extractor is, in effect, a specially prepared set of sewing shears designed to 'seal the leak', as it were, in the linkage between Heart-string and Construct and subsequently between Heart-string and Shape-string. Attempting to simply cut a Construct's Heart-string free of it nigh-invariably results in the disconnection between Heart-string bundle and Construct. This effect is theorhetically interesting in that it is able to create Constructs that continue to exist while devoid of a Heart-string or Soul-string.
 These Constructs' Cloth appears to hold a remnant of its physical form though losing its Shapes. Research is currently being conducted into the possibilty of artificial Heart-string and/or Soul-string synthesis using such Constructs.
+With the use of a Heart-string extractor, the Heart-string can be excised from the Construct. The Shape-strings can then be carefully seperated from the Heart-string and woven into the Heart-strings of other Constructs. Attempting to perform a Shape transplant in this manner without a heart-string extractor or other Cord-stabilizing implement would most likely lead to the destruction of the Heart-string.
 
 "}
+
+/obj/item/paper/fluff/plushwarning
+	name = "A Warning - 17-12-2512"
+	desc = "A creased piece of ruled notebook paper, it seems to have been manually ironed out some time after it was written."
+	default_raw_text = {"
+Stop. We have to stop. None of you understand what we've done NONE OF YOU
+<br>They can think. <i>IT</i> can think. Nobody in this fucking department except me seems to be aware of the shit WE'VE ALREADY FOUND
+<br>THe Constructs they think they have MINDS    none of you fucks understand what we've been doing all this bullshit with the plush toys and the archaic terminology
+\[the handwriting gets noticably sloppier\] DID ANYONE EVER FUCKING CONSIDER WHAT ALL THE ARCHAIC TERMINOLOGY AND PLUSHIE BULLSHIT WAS COMING FROM? EVEN THAT STUPID THING WHERE YOU MAKE CONSTRUCTS BY LIKE, MAKING IT LOOK LIKE THEY'RE FUCKING
+<br> We are CURRENTLY CREATING ARTIFICIAL SOULS and we are PUTTING THEM IN FUCKING PLUSH TOYS. WE ARE ACTUALLY FUCKING MAGICIANS. WE HAVE PULLED A METAPHORICAL RABBIT OUT OF OUR ASS.
+RABBITS DONT JUST GROW INSIDE OF PEOPLES ASSES YOU KNOW
+<br> WE'VE INVENTED NEW LIFE, AND WE'VE TURNED IT INTO FUCKING TEDDY BEARS. THERE ARE ACTUAL REAL SOULS IN THERE THAT WE HAVE FOREVER DAMNED. STOP THIS SHIT NOW, DON'T TELL ANYONE WHAT WE DID. PLEASE.
+<br> we are so fucked were SO FUCKED we are making goddamn HOMOUNCULI WE HAVE UNIRONICALLY DISCOVERED THE PHILOSOPHER'S STONE THROUGH MANIPULATION OF THE PRIMA MATERIA AND INSTEAD OF ANYTHING PRODUCTIVE WE ARE USING IT TO MAKE PEOPLE OUT OF PLUSH TOYS
+DOES MY FUCKING ID READ "ALCHEMIST" side note the alchemy division is fucking WEIRD who the hell runs that place i have seen people in there drinking weird liquids and then somehow VOMITING PRECIOUS METALS how the hell does that even work what are they DOING down there
+<br> I SWEAR ON A MULTITUDE OF GODS THAT THE FUCKINGPLUSHIES ARE HAUNTING ME I CAN <b> HEAR THEM IN MY EYES</b>
+<br> What the fuck have we done. NO really seriously what the fuck have we done WHAT HAVE WE DONE    we are fucked    we are all going to go to hell i'm telling you.
+<br> Theres a fiftyfifty chance here i end up dead and half of the possible deaths are self inflicted
+Jay, if you're reading this, you're a great friend, i really genuinely do respect you, but also FUCK YOU for getting me into this bullshit I AM GOING TO LOSE MY MIND OVER HERE
+and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME I GUESS I SWEAR I AM <b>GOING<\b> TO FUCKING STAB MYSELF AT THIS POINT
+. and like come on man if i have to kill myself ill have to like prep a fucking speech or some shit thats a pain in the ass and im gonna feel even SHITTIER THAN I ALREADY DO and like i suck at public speaking my suicide note
+is gonna look like it was made by an <s>ametuer<\s> amateur film student and im gonna be fuckin cringing at my own last words as a ghost EXCEPT I WONT BECAUSE WE ARE ALL DEFININELY GOING TO HELL FOR THIS SHIT
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>\[the following, in stark contrast to the rest of the page, is written in beautifully precise cursive\]
+<br>To each and every one of my dear colleagues in the Thaumatextilics division, go fuck yourself, marry yourself, divorce yourself, and get forced to pay yourself child support.
+<br>
+<br>Sincerely, Zach
+"}
+
 

@@ -816,6 +816,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				replay_holo.say(message, sanitize = FALSE)
 		if(HOLORECORD_SOUND)
 			playsound(src,entry[2],50,TRUE)
+		if(HOLORECORD_EMOTE)
+			if(replay_holo)
+				var/emote = entry[2]
+				replay_holo.emote(emote)
 		if(HOLORECORD_DELAY)
 			addtimer(CALLBACK(src, PROC_REF(replay_entry),entry_number+1),entry[2])
 			return

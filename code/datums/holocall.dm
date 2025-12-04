@@ -281,6 +281,8 @@
 				record.entries += list(list(HOLORECORD_SAY,value))
 			if("SOUND")
 				record.entries += list(list(HOLORECORD_SOUND,value))
+			if("EMOTE")
+				record.entries += list(list(HOLORECORD_EMOTE,value))
 			if("LANGUAGE")
 				var/lang_type = text2path(value)
 				if(ispath(lang_type,/datum/language))
@@ -362,6 +364,10 @@
 
 /datum/preset_holoimage/assistant
 	outfit_type = /datum/outfit/job/assistant
+
+/datum/preset_holoimage/dr_zachary
+	outfit_type = /datum/outfit/dr_zachary
+
 
 /obj/item/disk/holodisk/example
 	preset_image_type = /datum/preset_holoimage/clown
@@ -592,3 +598,142 @@
 		DELAY 40
 		SOUND sparks
 	"}
+
+/obj/item/disk/holodisk/suicide_note
+	name = "17-12-2515: 'I Was.'"
+	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
+	preset_image_type = /datum/preset_holoimage/dr_zachary
+	preset_record_text = {"
+		NAME Human Man
+		SOUND PING
+		DELAY 20
+		EMOTE sighs, clenches his hands, then relaxes. He has the face of a man who died and forgot to fall over
+		DELAY 20
+		SAY I was Doctor Zachary Marshall Faust of The Spinward Institute for Applied Esoterica.
+		NAME Zachary Faust
+		DELAY 20
+		SAY I was of sound mind and able body.
+		DELAY 10
+		EMOTE swallows. He's breathing heavily
+		DELAY 20
+		SAY I was born thirty-one years and...
+		DELAY 10
+		EMOTE glances at something out of frame
+		DELAY 10
+		SAY ...Seventeen minutes ago.
+		DELAY 20
+		SAY #Happy `fucking` birthday...
+		DELAY 20
+		SAY I was raised on a planetary colony.
+		DELAY 20
+		SAY I was a good kid.
+		DELAY 20
+		SAY I-
+		DELAY 5
+		EMOTE pauses
+		DELAY 5
+		SAY #I'm so sorry. Forgive me. Please.
+		DELAY 20
+		SAY I was a student at the best college that a minimum-wage 19 year-old could hypothetically have provided for, were the minimum wage set at a reasonable value
+		DELAY 20
+		SAY I was awarded a variety of honors.
+		DELAY 20
+		SAY I was handed a doctoral certificate at the age of 25.
+		DELAY 20
+		SAY I was introduced to the field I worked in, until the time of my death, by a friend.
+		DELAY 20
+		EMOTE is trembling now. He's trying not to cry
+		DELAY 10
+		SAY #...Sorry, Jay. God. I'm actually doing this, aren't I.
+		DELAY 10
+		SAY I was a prodigy in the eyes of some.
+		DELAY 20
+		SAY I was a madman in the eyes of others.
+		DELAY 20
+		SAY I was too curious. I was learning more than was good for me.
+		DELAY 10
+		EMOTE is hyperventilating. His face is pale. He's crying.
+		DELAY 20
+		SAY I was working on- on a project.
+		DELAY 20
+		SAY I was credited with the development of a tool instrumental to my field.
+		DELAY 20
+		SAY I was the definition of success.
+		DELAY 20
+		SAY I was the |perfect target|.
+		DELAY 10
+		EMOTE clenches his hands into fists. His fingernails draw blood
+		DELAY 10
+		SAY I was starting to have delusional episodes.
+		DELAY 20
+		SAY I was told it was probably plasma exposure.
+		DELAY 20
+		SAY I was given some neurine IVs and some anti-psychotic pills. 
+		DELAY 20
+		SAY I was definitely not suffering from plasma exposure.
+		DELAY 20
+		SAY I was told I was seeing things that weren't real.
+		DELAY 20
+		SAY I was sure they were.
+		DELAY 20
+		SAY I was told I was hallucinating.
+		DELAY 20
+		EMOTE squeezes his eyes shut
+		DELAY 10
+		SAY I was not halucinating.
+		DELAY 10
+		SAY I was seeing things that I was not meant to see.
+		DELAY 20
+		SAY I was unable to stop seeing them.
+		DELAY 20
+		SAY I was taught by the things I saw.
+		DELAY 20
+		SAY I was taught that we knew nothing.
+		DELAY 20
+		SAY I was taught that they could think.
+		DELAY 20
+		SAY I was taught that the things we studied were studying us.
+		DELAY 20
+		SAY I was not ready.
+		DELAY 20
+		EMOTE reaches outside of the frame of the recording. There's a rattling noise. He produces a flat-head screwdriver.
+		DELAY 20
+		SAY I was given psychiatric care.
+		DELAY 20
+		SAY I was not improving.
+		DELAY 20
+		SAY I was confined to my quarters.
+		DELAY 20
+		EMOTE stares at the screwdriver. He's gripping it so tightly that all the color has drained from his hand.
+		DELAY 20
+		SAY I was not okay.
+		DELAY 20
+		SAY I was compelled to warn others of what we had done, and what those in future must never do.
+		DELAY 20
+		SAY I was probably ignored.
+		DELAY 20
+		SAY I was alive.
+		DELAY 20
+		EMOTE raises the screwdriver to his face, gripping it with both hands.
+		DELAY 20
+		EMOTE squeezes his eyes shut.
+		DELAY 20
+		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
+		DELAY 20
+		SAY I am dying on my birthday, December Seventeenth, 2515, due to a self-inflicted tracheal puncture.
+		DELAY 20
+		EMOTE yanks his hands back, forcing the shaft of screwdriver straight through his throat.
+		SOUND stab
+		DELAY 20
+		EMOTE shivers. His eyes widen. He clutches at his neck.
+		DELAY 20
+		EMOTE stumbles forwards. Falls. He's no longer visible in the recording.
+		SOUND bodyfall
+		DELAY 50
+		PRESET /datum/preset_holoimage/ai
+		NAME ZX-20 Holorecorder
+		SAY User absent. Terminating recording.
+		SOUND PING
+		DELAY 20
+	"}
+
