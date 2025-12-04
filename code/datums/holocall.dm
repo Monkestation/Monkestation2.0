@@ -600,8 +600,8 @@
 	"}
 
 /obj/item/disk/holodisk/plushie_madness_end
-	name = "17-12-2523: 'Farewell'"
-	desc = "A non-descript holodisk. Scribbled hastily on the front of the housing is a date, and a single word. 'Farewell.'"
+	name = "17-12-2523: 'I Was.'"
+	desc = "A non-descript holodisk. Scribbled hastily on the front of the housing is a date, and a two words. 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
 	preset_record_text = {"
 		NAME Human Man
@@ -609,14 +609,14 @@
 		DELAY 20
 		EMOTE sighs, clenches his hands, then relaxes. He has the face of a man who died and forgot to fall over
 		DELAY 20
-		SAY I was Doctor Zachary Marshal Faust of The Spinward Institute for Applied Esoterica.
+		SAY I was Doctor Zachary Marshall Faust of The Spinward Institute for Applied Esoterica.
 		NAME Zachary Faust
 		DELAY 20
 		SAY I was of sound mind and able body.
 		DELAY 10
 		EMOTE swallows. He's breathing heavily
 		DELAY 20
-		SAY I was born thirty-seven years and...
+		SAY I was born thirty-one years and...
 		DELAY 10
 		EMOTE glances at something out of frame
 		DELAY 10
@@ -626,10 +626,48 @@
 		DELAY 20
 		SAY I was raised on a planetary colony.
 		DELAY 20
+		SAY I was a good kid.
+		DELAY 20
+		SAY I-
+		DELAY 5
+		EMOTE pauses
+		DELAY 5
+		SAY #I'm so sorry. Forgive me. Please.
+		DELAY 20
+		SAY I was a student at the best college that a minimum-wage 19 year-old could hypothetically have provided for, were the minimum wage a reasonable value.
+		DELAY 20
+		SAY I was awarded a variety of honors.
+		DELAY 20
+		SAY I was handed a doctoral certificate at the age of 25.
+		DELAY 20
+		SAY I was introduced to the field I worked in, until the time of my death, by a friend.
+		DELAY 20
+		EMOTE is trembling now. He's trying not to cry
+		DELAY 10
+		SAY #...Sorry, Jay. God. I'm actually doing this, aren't I.
+		DELAY 10
 		SAY I was a prodigy in the eyes of some.
 		DELAY 20
 		SAY I was a madman in the eyes of others.
-		EMOTE 
+		DELAY 20
+		SAY I was too curious. I was learning more than was good for me.
+		EMOTE is hyperventilating. His face is pale. He's crying.
+		DELAY 20
+		SAY I was working on- on a project.
+		DELAY 20
+		SAY I was the definition of success.
+		DELAY 20
+		SAY I was the |perfect target|.
+		DELAY 10
+		EMOTE clenches his hands into fists. His fingernails draw blood
+		DELAY 10
+		SAY I was having unusual episodes.
+		DELAY 20
+		SAY I was told it was probably after-effects of chemical exposure.
+		DELAY 20
+		SAY I was given some pills and some IVs.
+		DELAY 20
+		SAY I was definitely not suffering from chemical exposure.
 		
 		
 	"}
