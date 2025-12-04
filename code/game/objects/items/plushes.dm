@@ -752,7 +752,7 @@
 	worn_icon_state = "plushie_h"
 	slot_flags = ITEM_SLOT_HEAD // Monkestation Edit
 	body_parts_covered = HEAD // Monkestation Edit
-	starting_traits = list(/datum/plush_trait/prickly = 100, /datum/plush_trait/ominous_levitation = 50)
+	starting_traits = list(/datum/plush_trait/prickly = 25, /datum/plush_trait/ominous_levitation = 10)
 
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
@@ -1009,6 +1009,7 @@
 	var/removable = TRUE
 	var/processes = FALSE
 	var/shapestring_icon_state = ""
+	var/recipe = list()
 
 /datum/plush_trait/proc/activate(obj/item/toy/plush/plush)
 	return
@@ -1125,7 +1126,7 @@
 
 /datum/plush_trait/puce/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(COOLDOWN_FINISHED(src, puceify))
-		for(var/atom/ough in oview(5, plush)
+		for(var/atom/ough in oview(5, plush))
 			plush.visible_message(span_danger("As [squeezer] hugs [plush], it releases a devastating wave of pucetrifacting energy!"))
 			ough.add_atom_colour("#cc8899", FIXED_COLOUR_PRIORITY) // woe, for you are puce forever
 			if(isliving(ough))
