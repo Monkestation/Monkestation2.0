@@ -1145,9 +1145,9 @@
 			break
 
 /obj/item/paper/fluff/plushmagic
-	name = "\improper An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton"
+	name = "An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton - 2512"
 	default_raw_text = {"
-An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton.
+An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton. Zachary M. Faust PhD, 2512
 <br>
 <br>Metaphysics:
 <br>
@@ -1204,5 +1204,21 @@ With the use of a Heart-string extractor, the Heart-string can be excised from t
 
 "}
 
+/obj/item/paper/fluff/plushwarning
+	name = "A Warning - 17-12-2512"
+	desc = "A creased piece of ruled notebook paper, it seems to have been manually ironed out some time after it was written."
+	default_raw_text = {"
+Stop. We have to stop. None of you understand what we've done NONE OF YOU
+<br>They can think. <i>IT</i> can think. Nobody in this fucking department except me seems to be aware of the shit WE'VE ALREADY FOUND
+<br>THe Constructs they think they have MINDS    none of you fucks understand what we've been doing all this bullshit with the plush toys and the archaic terminology
+\[the handwriting gets noticably sloppier\] DID ANYONE EVER FUCKING CONSIDER WHAT ALL THE ARCHAIC TERMINOLOGY AND PLUSHIE BULLSHIT WAS COMING FROM? EVEN THAT STUPID THING WHERE YOU MAKE CONSTRUCTS BY LIKE, MAKING IT LOOK LIKE THEY'RE FUCKING
+<br> We are CURRENTLY CREATING ARTIFICIAL SOULS and we are PUTTING THEM IN FUCKING PLUSH TOYS. WE ARE ACTUALLY FUCKING MAGICIANS. WE HAVE PULLED A METAPHORICAL RABBIT OUT OF OUR ASS.
+RABBITS DONT JUST GROW INSIDE OF PEOPLES ASSES YOU KNOW
+<br> WE'VE INVENTED NEW LIFE, AND WE'VE TURNED IT INTO FUCKING TEDDY BEARS. THERE ARE ACTUAL REAL SOULS IN THERE THAT WE HAVE FOREVER DAMNED. STOP THIS SHIT NOW, DON'T TELL ANYONE WHAT WE DID. PLEASE.
+<br> I SWEAR ON A MULTITUDE OF GODS THAT THEY'RE HAUNTING ME I CAN <b> HEAR THEM IN MY EYES</b>
+<br> What the fuck have we done. NO really seriously what the fuck have we done WHAT HAVE WE DONE    we are fucked    we are all going to go to hell i'm telling you.
+<br> Theres a fiftyfifty chance here i end up dead and half of the possible deaths are self inflicted 
+Jay, if you're reading this, you're a great friend, i really genuinely do respect you, but also FUCK YOU. I AM GOING TO LOSE MY MIND OVER HERE
+and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME I GUESS"}
 
 
