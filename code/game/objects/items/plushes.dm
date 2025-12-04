@@ -128,17 +128,7 @@
 /obj/item/toy/plush/examine(mob/user)
 	. = ..()
 	if(has_heartstring == FALSE)
-		if(lover
-	if(traumatized)
-		. += span_warning("...[src.p_are()] [src.p_they()]... crying? Why [src.p_are()] [src.p_they()]-")
-		. += span_hypnophrase("Oh. God.")
-		if(iscarbon(user))
-			var/mob/living/carbon/nerd = user
-			if(HAS_TRAIT(nerd, TRAIT_EMPATH)) // see, your lover dying by your side is one thing. Standing helpless as their body and soul are utterly obliterated on a metaphysical level is an entirely different, much worse thing.
-				. += span_hypnophrase("True love, once. Then burning. Then oblivion. More than death. Worse than death. So. Much. Worse. It hurts to imagine. You can't stop imagining. Eyes squeeze shut. You still see it. You cry.")
-				nerd.emote("pauses. Shivers. Weeps.")
-				nerd.emote("cry")
-				nerd.set_temp_blindness(5 SECONDS)
+		. += "It looks sad."
 
 
 /obj/item/toy/plush/attack_self(mob/user)
