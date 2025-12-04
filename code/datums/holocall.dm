@@ -600,7 +600,7 @@
 	"}
 
 /obj/item/disk/holodisk/plushie_madness_end
-	name = "17-12-2523: 'I Was.'"
+	name = "17-12-2515: 'I Was.'"
 	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
 	preset_record_text = {"
@@ -656,6 +656,8 @@
 		DELAY 20
 		SAY I was working on- on a project.
 		DELAY 20
+		SAY I was credited with the development of a tool instrumental to my field.
+		DELAY 20
 		SAY I was the definition of success.
 		DELAY 20
 		SAY I was the |perfect target|.
@@ -706,9 +708,11 @@
 		DELAY 20
 		SAY I was not okay.
 		DELAY 20
-		SAY I was compelled to warn others of what we had done.
+		SAY I was compelled to warn others of what we had done, and what those in future must never do.
 		DELAY 20
 		SAY I was probably ignored.
+		DELAY 20
+		SAY I was alive.
 		DELAY 20
 		EMOTE raises the screwdriver to his face, gripping it with both hands.
 		DELAY 20
@@ -716,9 +720,7 @@
 		DELAY 20
 		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
 		DELAY 20
-		SAY I was alive.
-		DELAY 20
-		SAY I died December Seventeenth, 2523, by self-inflicted tracheal puncture.
+		SAY I am dying  on my birthday, December Seventeenth, 2515, due to `self-inflicted tracheal puncture`.
 		DELAY 20
 		EMOTE inhales sharply, forcing the shaft of screwdriver straight through his throat.
 		SOUND stab
@@ -732,7 +734,6 @@
 		NAME ZX-20 Holorecorder
 		SAY User absent. Terminating recording.
 		SOUND PING
-		
-		
+		DELAY 20
 	"}
 
