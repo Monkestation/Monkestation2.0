@@ -1200,7 +1200,9 @@ Excepting the concerning implications of the previous discovery, it is a vital c
 The gist of such is that through the implementation of these modern methodologies, a reliable, practical method of Construct manipulation can be devised. The fundamental instrument in this process is a Heart-string extractor, a tool first divised in a 2507 paper as a theorhetical solution to the problem of Cord dispersal, and then actually invented over the following 5 years.
 An extractor is, in effect, a specially prepared set of sewing shears designed to 'seal the leak', as it were, in the linkage between Heart-string and Construct and subsequently between Heart-string and Shape-string. Attempting to simply cut a Construct's Heart-string free of it nigh-invariably results in the disconnection between Heart-string bundle and Construct. This effect is theorhetically interesting in that it is able to create Constructs that continue to exist while devoid of a Heart-string or Soul-string.
 These Constructs' Cloth appears to hold a remnant of its physical form though losing its Shapes. Research is currently being conducted into the possibilty of artificial Heart-string and/or Soul-string synthesis using such Constructs.
-With the use of a Heart-string extractor, 
+With the use of a Heart-string extractor, the Heart-string can be excised from the Construct. The Shape-strings can then be carefully seperated from the Heart-string and woven into the Heart-strings of other Constructs. Attempting to perform a Shape transplant in this manner without a heart-string extractor or other Cord-stabilizing implement would most likely lead to the destruction of the Heart-string.
 
 "}
+
+
 
