@@ -1229,7 +1229,7 @@ is gonna look like it was made by an <s>ametuer<\s> amateur film student and im 
 <br>
 <br>
 <br>
-<br>[the following, in stark contrast to the rest of the page, is written in beautifully precise cursive]
+<br>\[the following, in stark contrast to the rest of the page, is written in beautifully precise cursive\]
 <br>To each and every one of my dear colleagues in the Thaumatextilics division, go fuck yourself, marry yourself, divorce yourself, and get forced to pay yourself child support.
 <br>
 <br>Sincerely, Zach
