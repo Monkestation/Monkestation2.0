@@ -60,6 +60,8 @@
 	. = current_gauze
 	if(current_gauze.sanitization)
 		current_gauze.sanitization = current_gauze.sanitization * 0.25
+	if(current_gauze.burn_cleanliness_bonus)
+		current_gauze.burn_cleanliness_bonus = 1.25 //dirty bandages aren't good for wounds
 	current_gauze.update_appearance(UPDATE_NAME)
 	current_gauze = null
 	owner.update_bandage_overlays()
@@ -190,6 +192,7 @@
 	if(!(clean_types & CLEAN_TYPE_HARD_DECAL)) // gotta scrub realllly hard to clean gauze
 		return .
 	times_cleaned += 1
+	burn_cleanliness_bonus = min(initial(burn_cleanliness_bonus)*2, 1)
 	var/clean_to = initial(absorption_capacity) * (3 / (times_cleaned + 3))
 	if(absorption_capacity < clean_to)
 		absorption_capacity = clean_to
