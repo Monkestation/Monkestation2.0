@@ -152,29 +152,12 @@
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
-
-/obj/item/storage/belt/holster/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
-	. = ..()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/storage/belt,\
+		"Belt",\
+	)
 	atom_storage.max_slots = 2
 	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.set_holdable(list(
@@ -200,23 +183,10 @@
 
 	atom_storage.silent = TRUE
 
-// MONKESTATION ADDITION START
-/obj/item/storage/belt/holster/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
 
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon holster ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon holster ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
+/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
