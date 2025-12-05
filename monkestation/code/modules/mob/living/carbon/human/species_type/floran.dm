@@ -57,7 +57,7 @@
 		return TRUE
 	if(chem.type == /datum/reagent/potassium) //Floran "blood" is water, water does not like potassium
 		to_chat(H, span_danger("You feel your skin bubble and pop painfully!"))
-		H.adjustBurnLoss(10*REM, FALSE)
+		H.adjustBruteLoss(10*REM, FALSE)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	return ..()
