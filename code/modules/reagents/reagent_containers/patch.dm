@@ -29,6 +29,11 @@
 	if(!isliving(target))
 		return ..()
 
+	if(resistance_flags & ON_FIRE)
+		balloon_alert(user, "on fire!")
+		forceMove(drop_location())
+		return
+
 	if(target != user && !do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
 		return ITEM_INTERACT_BLOCKING
 
@@ -67,27 +72,51 @@
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
 	RegisterSignal(attached, COMSIG_QDELETING, PROC_REF(on_attached_qdel))
+	RegisterSignal(attached, COMSIG_HUMAN_BURNING, PROC_REF(on_burn))
 
 //Unregisters signals from the object it is attached to
 /obj/item/reagent_containers/pill/patch/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_QDELETING))
+	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_QDELETING, COMSIG_HUMAN_BURNING))
 
 /obj/item/reagent_containers/pill/patch/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(resistance_flags & ON_FIRE)
+		return
 	if(!. && prob(10) && isliving(hit_atom))
 		stick(hit_atom, throwingdatum.thrower, rand(-7,7), rand(-7,7))
 		to_chat(attached, span_bolddanger("[src] has stuck to you."))
 		attached.balloon_alert_to_viewers("[src] lands on its sticky side!")
+
+/obj/item/reagent_containers/pill/patch/fire_act(temperature, volume)
+	if(isturf(loc))
+		var/turf/our_turf = loc
+		if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+			return
+	if(temperature && !(resistance_flags & FIRE_PROOF))
+		take_damage(clamp(0.02 * temperature, 0, 20), BURN, FIRE, 0)
+	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
+		return
+	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
+		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
+		START_PROCESSING(SSobj, src)
+		return TRUE
+	return ..()
 
 ///Signal handler for COMSIG_LIVING_IGNITED, deletes this patch, if it is flammable
 /obj/item/reagent_containers/pill/patch/proc/on_ignite(datum/source)
 	SIGNAL_HANDLER
 	if(!(resistance_flags & FLAMMABLE))
 		return
-	to_chat(attached, span_warning("The [src] burns away!"))
-	peel()
-	qdel(src)
+	to_chat(attached, span_warning("The [src] burns!"))
+	reagents.expose_temperature(2000)
+
+/obj/item/reagent_containers/pill/patch/proc/on_burn()
+	SIGNAL_HANDLER
+	if(!(resistance_flags & FLAMMABLE))
+		return
+	to_chat(attached, span_warning("The [src] burns!"))
+	reagents.expose_temperature(2000)
 
 /// Signal handler for COMSIG_QDELETING, deletes this patch if the attached object is deleted
 /obj/item/reagent_containers/pill/patch/proc/on_attached_qdel(datum/source)
@@ -110,6 +139,10 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/reagent_containers/pill/patch/process(seconds_per_tick)
+	if(resistance_flags & ON_FIRE)
+		reagents.expose_temperature(2000)
+		return
+
 	if(!reagents.total_volume)
 		peel()
 		qdel(src)
@@ -121,6 +154,11 @@
 	if(!iscarbon(eater))
 		return FALSE
 	return TRUE // Masks were stopping people from "eating" patches. Thanks, inheritance.
+
+/obj/item/reagent_containers/pill/patch/Destroy(force)
+	. = ..()
+	if(attached)
+		peel()
 
 /obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"
