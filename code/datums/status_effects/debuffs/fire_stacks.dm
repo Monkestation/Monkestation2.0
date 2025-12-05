@@ -18,6 +18,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
+	/// how long have we been ON FIRE?
+	var/ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -170,7 +172,8 @@
 		qdel(src)
 		return TRUE
 
-	deal_damage(seconds_between_ticks)
+	ticks_on_fire += 1 * seconds_between_ticks
+	deal_damage(seconds_between_ticks, ticks_on_fire)
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
 	if (!on_fire)
@@ -244,6 +247,7 @@
 	for(var/obj/item/equipped in owner.get_equipped_items())
 		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
+	ticks_on_fire = 0
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)
