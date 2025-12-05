@@ -1,3 +1,8 @@
+#define GAUZE_OVERLAY_COLOR "#2aa9d7"
+#define IMPROVISED_GAUZE_OVERLAY_COLOR "#93acb5"
+#define PLASTISEAL_OVERLAY_COLOR "#86d8be"
+
+
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart
  *
@@ -114,9 +119,7 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 
-	helper.balloon_alert(helper, "gauzed removed")
-	if(helper != owner)
-		helper.balloon_alert(owner, "gauze removed")
+	helper.balloon_alert(owner, "gauze removed")
 
 	helper.put_in_hands(remove_gauze(drop_location()))
 
@@ -149,7 +152,7 @@
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
-	var/overlay_color = "#2aa9d7"
+	var/overlay_color = GAUZE_OVERLAY_COLOR
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
@@ -281,8 +284,9 @@
 			visible_message(span_notice("[attacking_item] cuts [src] into pieces of cloth."), \
 				blind_message = span_hear("You hear cutting."))
 		use(2)
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins tightening [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!"))
@@ -308,7 +312,7 @@
 	heal_burn = 5
 	heal_brute = 5
 	merge_type = /obj/item/stack/medical/gauze/improvised
-	overlay_color = "#93acb5"
+	overlay_color = IMPROVISED_GAUZE_OVERLAY_COLOR
 
 ////////////////
 // Plastiseal //
@@ -329,7 +333,11 @@
 	flesh_regeneration = 15
 	heal_brute = 15
 	can_clean = FALSE
-	overlay_color = "#86d8be"
+	overlay_color = PLASTISEAL_OVERLAY_COLOR
 
 /obj/item/stack/medical/gauze/plastiseal/twelve
 	amount = 12
+
+#undef GAUZE_OVERLAY_COLOR
+#undef IMPROVISED_GAUZE_OVERLAY_COLOR
+#undef PLASTISEAL_OVERLAY_COLOR
