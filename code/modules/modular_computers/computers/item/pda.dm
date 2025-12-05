@@ -44,6 +44,7 @@
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/secureye/spesstv,
 		// monkestation end
+		/datum/computer_file/program/chatclient,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
