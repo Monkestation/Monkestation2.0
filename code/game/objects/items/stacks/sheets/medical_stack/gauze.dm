@@ -151,7 +151,7 @@
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
-	var/overlay_color = "#1ab0e7"
+	var/overlay_color = "#1f9cc9"
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
@@ -267,8 +267,6 @@
 	if(iscarbon(patient) && !used)
 		var/mob/living/carbon/carbon_patient = patient
 		heal_carbon(carbon_patient, user, heal_brute, heal_burn, TRUE)
-		heal_burn = 0
-		heal_brute = 0
 	return TRUE //for flesh burn wound code
 
 /obj/item/stack/medical/gauze/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
