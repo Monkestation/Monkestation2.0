@@ -142,13 +142,13 @@
 	absorption_capacity = 4
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
+	heal_burn = 10
+	heal_brute = 10
+	merge_type = /obj/item/stack/medical/gauze
 	/// has this gauze been used? set to true in apply_gauze()
 	var/used = FALSE
 	/// can we clean this to restore capacity?
 	var/can_clean = TRUE
-	heal_burn = 10
-	heal_brute = 10
-	merge_type = /obj/item/stack/medical/gauze
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
