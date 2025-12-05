@@ -388,3 +388,11 @@
 	results = list(/datum/reagent/medicine/painkiller/robopiates = 3)
 	required_reagents = list(/datum/reagent/silver = 1, /datum/reagent/dinitrogen_plasmide = 1, /datum/reagent/acetone = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_DRUG
+
+/datum/chemical_reaction/medicine/styptic_powder
+    results = list(/datum/reagent/medicine/c2/styptic_powder = 4)
+    required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1, /datum/reagent/toxin/acid = 1)
+    required_temp = 250
+    optimal_temp = 310
+    overheat_temp = 325
+    reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
