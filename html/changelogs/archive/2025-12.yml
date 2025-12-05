@@ -48,3 +48,10 @@
   Absolucy:
   - rscdel: You can no longer deep fry brains, unless they're soulless (deep fried
       Pun Pun brain is still on the menu, don't worry).
+  - bugfix: Fixed voice of god just not working sometimes.
+  - balance: Changelings now need 1 absorb in order to obtain transformation sting.
+  - rscadd: Mutadone can be used to heavily reduce the duration of transformation
+      sting while it's in your system.
+  Tractor-Maam:
+  - rscadd: Chat Client is now a stock PDA app.
+  - balance: Chat Client is now 4GQ, down from 8GQ.
