@@ -1467,7 +1467,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ayz" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
@@ -3372,17 +3371,10 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -6;
-	pixel_y = 9
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 7;
 	pixel_y = 6
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 3;
-	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 1
@@ -5929,7 +5921,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cdL" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
@@ -6654,6 +6645,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/security/prison)
+"csh" = (
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/carpet/red,
+/area/station/cargo/quartermaster)
 "cst" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
@@ -21229,7 +21224,9 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "hAx" = (
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/machinery/modular_computer/preset/id{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "hAE" = (
@@ -35987,6 +35984,7 @@
 "mxO" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "mxQ" = (
@@ -36164,7 +36162,7 @@
 	name = "Security E.V.A. Storage"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "mAr" = (
@@ -49036,7 +49034,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 7;
 	pixel_y = -2
 	},
@@ -59117,6 +59115,15 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"usv" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/purple/half{
+	dir = 1
+	},
+/obj/item/storage/box/disks_nanite,
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white,
+/area/station/science/circuits)
 "usA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -88577,7 +88584,7 @@ qIK
 suJ
 bor
 iLV
-cjJ
+csh
 lud
 hAx
 kQP
@@ -105589,7 +105596,7 @@ hXd
 gwf
 itC
 uvh
-tKZ
+usv
 fZm
 mfL
 xiu

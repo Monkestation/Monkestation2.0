@@ -207,7 +207,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize()
+/obj/machinery/LateInitialize(mapload_arg)
 	. = ..()
 	post_machine_initialize()
 

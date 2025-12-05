@@ -23,6 +23,7 @@
 	var/do_special_check = TRUE
 	config_tag = "AI"
 	antag_capacity_points = 3
+	allow_overflow = FALSE // We have Triumvirate event for this. 
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

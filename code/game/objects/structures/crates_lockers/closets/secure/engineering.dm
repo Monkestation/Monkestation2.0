@@ -26,9 +26,9 @@
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
 	. = ..()
 
-	// Traitor steal objective
-	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/gun/ballistic/SRN_rocketlauncher(src)
+	// Traitor steal objective
+	new /obj/item/blueprints(src)
 	new /obj/item/pipe_dispenser(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical

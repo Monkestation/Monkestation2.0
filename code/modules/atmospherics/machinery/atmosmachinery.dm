@@ -77,7 +77,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/LateInitialize()
+/obj/machinery/atmospherics/LateInitialize(mapload_arg)
 	. = ..()
 	update_name()
 
@@ -150,8 +150,20 @@
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
+/**
+ * Turns the machine on/off
+ * Arguments
+ *
+ * * active - the state of the machine
+ */
 /obj/machinery/atmospherics/proc/set_on(active)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(active == on)
+		return
+
 	on = active
+	update_appearance(UPDATE_ICON)
 	SEND_SIGNAL(src, COMSIG_ATMOS_MACHINE_SET_ON, on)
 
 /// This should only be called by SSair as part of the rebuild queue.

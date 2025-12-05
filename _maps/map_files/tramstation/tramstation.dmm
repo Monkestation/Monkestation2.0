@@ -7947,9 +7947,8 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "buQ" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/machinery/status_display/evac/directional/east,
-/obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "buW" = (
@@ -15488,7 +15487,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/nanite_cloud_controller,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
@@ -23923,11 +23921,11 @@
 /turf/open/floor/plating/airless,
 /area/station/asteroid)
 "gwQ" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /obj/structure/closet{
 	name = "Evidence Closet 4"
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "gwR" = (
@@ -25292,7 +25290,11 @@
 /area/station/engineering/storage/tech)
 "gSi" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "gSj" = (
@@ -26510,7 +26512,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "hmZ" = (
-/obj/structure/sign/poster/official/space_cops/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
@@ -28172,7 +28173,11 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "hQA" = (
@@ -29604,6 +29609,17 @@
 "int" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment,
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/stamp/qm,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "inC" = (
@@ -33814,6 +33830,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/office{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "jAY" = (
@@ -36048,11 +36067,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"kkV" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "kld" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/light_switch/directional/south{
@@ -36838,10 +36852,9 @@
 /turf/open/space/openspace,
 /area/space)
 "kzg" = (
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "kzq" = (
@@ -43518,7 +43531,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "mzH" = (
-/obj/machinery/suit_storage_unit/security,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -48255,7 +48267,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "nZS" = (
-/obj/structure/closet/l3closet/security,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/clock/directional/north,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "nZW" = (
@@ -50687,10 +50702,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "oQr" = (
-/obj/effect/landmark/secequipment,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/bot,
-/obj/structure/sign/clock/directional/north,
+/obj/structure/sign/poster/official/space_cops/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "oQs" = (
@@ -50705,17 +50717,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/item/folder/yellow,
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/structure/table,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/stamp/head/qm,
+/obj/item/clipboard,
 /turf/open/floor/carpet,
 /area/station/cargo/quartermaster)
 "oQW" = (
@@ -52349,6 +52352,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/office{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "pta" = (
@@ -55497,6 +55503,7 @@
 	dir = 10
 	},
 /obj/machinery/airalarm/directional/west,
+/obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "qmL" = (
@@ -55719,13 +55726,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "qqw" = (
-/obj/structure/table,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "qqx" = (
 /obj/effect/turf_decal/stripes/line{
@@ -57404,7 +57407,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "qQc" = (
@@ -62286,7 +62288,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/nanite_programmer,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "stL" = (
@@ -63647,8 +63649,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "sOq" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/status_display/ai/directional/west,
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "sOr" = (
@@ -67526,11 +67528,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tYg" = (
-/obj/structure/closet{
-	name = "Evidence Closet 1"
-	},
 /obj/item/storage/secure/safe/directional/east,
-/obj/effect/spawner/random/contraband/cannabis,
+/obj/structure/closet{
+	name = "Evidence Closet 3"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
 "tYp" = (
@@ -70665,6 +70666,7 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "uTN" = (
@@ -72176,6 +72178,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
+"vpk" = (
+/obj/machinery/status_display/evac/directional/east,
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/lockers)
 "vpo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio{
@@ -72343,10 +72351,7 @@
 	id = "ordnancestorage";
 	name = "Ordance Storage Shutters"
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 9
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/food/cherrycupcake{
 	pixel_x = -6;
 	pixel_y = 1
@@ -75804,8 +75809,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "wtP" = (
+/obj/effect/spawner/random/contraband/cannabis,
 /obj/structure/closet{
-	name = "Evidence Closet 2"
+	name = "Evidence Closet 4"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -75874,10 +75880,8 @@
 	dir = 8
 	},
 /obj/structure/sign/calendar/directional/west,
-/obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
+/obj/machinery/modular_computer/preset/id{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -166205,7 +166209,7 @@ sne
 lUo
 hgn
 hgn
-kkV
+hgn
 dEv
 bwg
 fXP
@@ -168249,7 +168253,7 @@ jhd
 aaa
 aaa
 aaa
-aaa
+tag
 tag
 rmB
 mAT
@@ -168506,13 +168510,13 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
 sOq
 aRk
+buQ
 kzg
-nZS
 hHf
+idF
 auR
 auW
 uYd
@@ -168763,8 +168767,8 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
+oQr
 hmZ
 peO
 jwT
@@ -169020,9 +169024,9 @@ jhd
 aaa
 aaa
 aaa
-aaa
 tag
-oQr
+nZS
+mJw
 mJw
 mJw
 idF
@@ -169277,9 +169281,9 @@ jhd
 jhd
 aaa
 aaa
-aaa
 tag
 auG
+idF
 idF
 idF
 idF
@@ -169534,9 +169538,9 @@ jhd
 jhd
 jhd
 aaa
-aaa
 tag
-buQ
+vpk
+aJk
 aJk
 aJk
 aJk
@@ -169791,7 +169795,7 @@ jhd
 jhd
 jhd
 aaa
-aaa
+tag
 tag
 tag
 tag
@@ -190905,9 +190909,9 @@ mur
 qza
 vTH
 aAJ
+aAJ
 riJ
 aAJ
-qqw
 byL
 whL
 ged
@@ -191165,7 +191169,7 @@ nms
 int
 oQQ
 gSi
-byL
+qqw
 whL
 ulh
 vNv

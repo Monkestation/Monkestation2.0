@@ -989,7 +989,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
 		parts += "<ul class='playerlist'>"
 		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
-			parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+			var/show_key = GLOB.roundend_hidden_ckeys[cheevo_report.winner_key]
+			parts += "<BR>[show_key ? "[cheevo_report.winner_key] was " : ""]<b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
 		parts += "</ul>"
 		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 

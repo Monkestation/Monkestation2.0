@@ -5575,6 +5575,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "bFv" = (
@@ -9450,7 +9454,7 @@
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -12828,6 +12832,7 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/carpet/black,
 /area/station/cargo/quartermaster)
 "dLE" = (
@@ -25250,7 +25255,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/nanite_programmer,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
@@ -29840,15 +29844,7 @@
 /obj/item/gun_maintenance_supplies{
 	pixel_y = 4
 	},
-/obj/item/gps/mining{
-	gpstag = "QM0";
-	pixel_y = 4
-	},
 /obj/machinery/light_switch/directional/south,
-/obj/item/folder/yellow{
-	pixel_x = -15;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "ivQ" = (
@@ -32305,7 +32301,6 @@
 /area/station/medical/pathology/isolation)
 "jfs" = (
 /obj/item/radio/intercom/directional/north,
-/obj/effect/landmark/secequipment,
 /obj/machinery/button/door/directional/east{
 	id = "brigprison";
 	name = "Prison Lockdown";
@@ -32313,6 +32308,7 @@
 	},
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/office)
 "jfw" = (
@@ -45343,7 +45339,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -48537,7 +48532,6 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -50228,10 +50222,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nYI" = (
-/obj/effect/landmark/secequipment,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/office)
 "nYT" = (
@@ -56353,14 +56347,6 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 5;
-	pixel_y = 12
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 7;
-	pixel_y = 3
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 7;
 	pixel_y = 18
@@ -59259,6 +59245,9 @@
 /obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/sign/poster/random/directional/south,
+/obj/structure/table,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -79202,7 +79191,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -81545,9 +81533,9 @@
 	name = "cargo camera"
 	},
 /obj/machinery/status_display/ai/directional/south,
-/obj/structure/table/wood,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer/preset/id{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
@@ -83355,8 +83343,13 @@
 "xfD" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/structure/table/wood/fancy/black,
+/obj/item/gps/mining{
+	gpstag = "QM0";
+	pixel_y = 4
+	},
+/obj/item/folder/yellow,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "xfM" = (

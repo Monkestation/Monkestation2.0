@@ -187,7 +187,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		GLOB.valid_cryopods += src
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
 
-/obj/machinery/cryopod/LateInitialize()
+/obj/machinery/cryopod/LateInitialize(mapload_arg)
 	update_icon()
 	find_control_computer()
 
@@ -209,7 +209,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		COOLDOWN_START(src, last_no_computer_message, 5 MINUTES)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
-		last_no_computer_message = world.time
 
 	return control_computer_weakref != null
 

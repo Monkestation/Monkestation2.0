@@ -42,8 +42,6 @@ SUBSYSTEM_DEF(job)
 	 * Assumed Captain is always the highest in the chain of command.
 	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
 	 */
-	// Monkestation Edit Start: QM IS NOT A HEAD! removed this line 		JOB_QUARTERMASTER = 7,
-
 	var/list/chain_of_command = list(
 		JOB_CAPTAIN = 1,
 		JOB_HEAD_OF_PERSONNEL = 2,
@@ -51,8 +49,9 @@ SUBSYSTEM_DEF(job)
 		JOB_CHIEF_ENGINEER = 4,
 		JOB_CHIEF_MEDICAL_OFFICER = 5,
 		JOB_HEAD_OF_SECURITY = 6,
+		JOB_QUARTERMASTER = 7,
+		JOB_WARDEN = 8,
 	)
-	// Monkestation Edit End
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
@@ -979,8 +978,14 @@ SUBSYSTEM_DEF(job)
 		if(length(available_turfs))
 			return pick(available_turfs)
 
-	stack_trace("Unable to find last resort spawn point.")
-	return GET_ERROR_ROOM
+	// stupid snowflake thing
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		var/turf/hallway_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
+		if(hallway_turf)
+			return hallway_turf
+
+	. = GET_ERROR_ROOM
+	CRASH("Unable to find last resort spawn point.")
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)

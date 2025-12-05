@@ -8002,6 +8002,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/science/explab)
 "bPR" = (
@@ -9415,6 +9416,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction)
+"cfU" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Science - Artifact Storage";
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "cfV" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/shower/directional/south,
@@ -22376,6 +22385,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/entry)
+"flW" = (
+/obj/effect/artifact_spawner,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "fmh" = (
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/camera/directional/north{
@@ -26474,7 +26488,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/photocopier,
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "gkT" = (
@@ -32846,6 +32860,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "hJs" = (
@@ -34085,6 +34100,7 @@
 /obj/machinery/artifact_zapper{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "hZz" = (
@@ -41503,7 +41519,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/circuits)
 "jKU" = (
@@ -41563,9 +41578,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
 /area/station/security/evidence)
 "jLs" = (
@@ -49841,6 +49856,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "lHu" = (
@@ -50842,9 +50858,6 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "lRI" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 8
-	},
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -50856,6 +50869,9 @@
 	id = "qmroom";
 	name = "Privacy Control";
 	pixel_y = -6
+	},
+/obj/machinery/computer/cargo{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -51056,6 +51072,7 @@
 	name = "Artifact Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "lUB" = (
@@ -65898,20 +65915,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/machinery/newscaster/directional/west,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -6;
-	pixel_y = 12
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -7;
-	pixel_y = 12
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 8;
 	pixel_y = 12
 	},
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
+/obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "pDt" = (
@@ -72472,7 +72483,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
 /obj/item/folder/yellow,
-/obj/item/stamp/head/qm,
+/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/stamp/granted{
 	pixel_y = 4;
@@ -76097,6 +76108,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"rWI" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/photocopier,
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "rWK" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -77321,6 +77339,7 @@
 	pixel_y = 5;
 	pixel_x = 8
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "snC" = (
@@ -80277,6 +80296,9 @@
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/modular_computer/preset/id{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
@@ -88608,6 +88630,17 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
+"uXq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/east{
+	c_tag = "Science - Experimentation Lab";
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "uXy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -89568,7 +89601,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/cold/directional/west,
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "vkc" = (
@@ -131119,7 +131151,7 @@ mne
 wDA
 hZw
 igg
-ntA
+flW
 ntA
 ntA
 igg
@@ -131627,14 +131659,14 @@ ipD
 bPP
 lHp
 vEj
-vEj
+uXq
 xft
 hJp
 tLH
 xQy
 aBq
 ntA
-fBX
+cfU
 xWV
 igg
 uYH
@@ -147719,7 +147751,7 @@ awl
 ivt
 krp
 haq
-iWR
+rWI
 jmp
 cQo
 gkP

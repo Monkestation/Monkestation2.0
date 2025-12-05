@@ -8,7 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///A list of currently active station traits
 	var/list/station_traits = list()
 	///Assoc list of trait type || assoc list of traits with weighted value. Used for picking traits from a specific category.
-	var/list/selectable_traits_by_types = list(STATION_TRAIT_POSITIVE = list(), STATION_TRAIT_NEUTRAL = list(), STATION_TRAIT_NEGATIVE = list())
+	var/alist/selectable_traits_by_types = alist(STATION_TRAIT_POSITIVE = list(), STATION_TRAIT_NEUTRAL = list(), STATION_TRAIT_NEGATIVE = list())
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
 
@@ -88,9 +88,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
 		selectable_traits_by_types[trait_sign] -= trait_type
-		if(istype(trait_type, /datum/station_trait/late_arrivals) && SSmapping.current_map.map_name == "Oshan Station")
-			amount++
-			continue
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
