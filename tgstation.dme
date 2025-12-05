@@ -1776,6 +1776,7 @@
 #include "code\datums\quirks\neutral_quirks\gamer.dm"
 #include "code\datums\quirks\neutral_quirks\heterochromatic.dm"
 #include "code\datums\quirks\neutral_quirks\introvert.dm"
+#include "code\datums\quirks\neutral_quirks\irc_user.dm"
 #include "code\datums\quirks\neutral_quirks\language.dm"
 #include "code\datums\quirks\neutral_quirks\monochromatic.dm"
 #include "code\datums\quirks\neutral_quirks\no_taste.dm"
