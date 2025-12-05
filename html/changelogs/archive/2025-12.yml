@@ -10,3 +10,41 @@
   - map: Oshan transfer centre is now connected to power.
   - map: Oshan Ai sat ai can now see its APC.
   - map: Oshan AI now has additional cameras in various public blind spots
+2025-12-03:
+  Absolucy:
+  - bugfix: Fixed flux and vortex anomalies being able to run on Oshan, when they
+      weren't supposed to.
+  - bugfix: Fixed some turfs (i.e ocean tiles, lava, etc) having liquid on them when
+      they shouldn't have any.
+  - code_imp: Some slight cleanups to liquid code.
+  - qol: Your own asay/msay messages will no longer be highlighted in chat.
+  Absolucy, timothymtorres, SmArtKar, mcbalaam:
+  - sound: Add burning sound loop to bonfires and fireplaces.
+  - code_imp: Improved fireplaces to only process when lit.
+  - qol: Add smoke particles to burning fireplaces.
+  - bugfix: Now trying to light a fireplace will not make you attack it.
+  EssentialTomato:
+  - bugfix: (Metekillot) Atmos machines should no longer remove labels when you adjust
+      their settings.
+  - code_imp: (SyncIt21) Atmos machines turns on/off correctly from the code perspective.
+  - bugfix: (JohnFulpWillard) Airlock pumps no longer draw massive amounts of power.
+  KittyNoodle:
+  - balance: AIs can now examine through their eye.
+  - bugfix: Dullahans can also examine through their head again.
+  Loiosh42:
+  - bugfix: Bomb actualizer now requires a radio to construct, preventing infinite
+      radio generation
+  SmArtKar:
+  - bugfix: Fixed Eldritch Pulse not working
+  Snack-Max:
+  - rscadd: Added two clothing items, Officer's Casual and Adventurer's Cap
+  SyncIt21]:
+  - bugfix: Crafting Menu Should Consistently Craft Items
+  Tractor-Maam:
+  - rscadd: Mouse cubes can now be shaken to create rats.
+  notghosti:
+  - bugfix: Anchoring crystals now apply forced toxin healing rather than regular.
+2025-12-05:
+  Absolucy:
+  - rscdel: You can no longer deep fry brains, unless they're soulless (deep fried
+      Pun Pun brain is still on the menu, don't worry).
