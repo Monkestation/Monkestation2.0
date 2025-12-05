@@ -99,9 +99,7 @@
 		span_notice("You start carefully removing [current_gauze] from [whose] [plaintext_zone]..."),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
-	helper.balloon_alert(helper, "removing gauze...")
-	if(helper != owner)
-		helper.balloon_alert(owner, "removing your gauze...")
+	helper.balloon_alert(owner, "removing gauze...")
 
 	if(!do_after(helper, 3 SECONDS, owner))
 		return
