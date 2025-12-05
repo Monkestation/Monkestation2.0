@@ -74,7 +74,7 @@
 				continue
 			if((monke.timeofdeath + (5 MINUTES)) <= world.time)
 				monke.visible_message(span_warning("[monke] is automatically dissolved by the slime corral."))
-				monke.dust(just_ash = TRUE)
+				monke.dust(just_ash = TRUE, drop_items = TRUE)
 
 /datum/corral_data/proc/check_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(!isslime(arrived))
