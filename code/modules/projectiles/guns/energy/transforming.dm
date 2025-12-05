@@ -84,7 +84,6 @@
 	chat_color = DEFAULT_RUNECHAT_GUN_COLOR
 	chat_color_darkened = process_chat_color(DEFAULT_RUNECHAT_GUN_COLOR, sat_shift = 0.85, lum_shift = 0.85)
 	last_charge = cell.charge
-	tracked_soulcatcher = AddComponent(/datum/component/soulcatcher/modular_laser)
 	create_weapon_mode_stuff()
 
 /obj/item/gun/energy/modular_laser_rifle/examine(mob/user)
@@ -199,6 +198,8 @@
 
 /obj/item/gun/energy/modular_laser_rifle/equipped(mob/user, slot, initial)
 	. = ..()
+	if(user.client)
+		tracked_soulcatcher = LoadComponent(/datum/component/soulcatcher/modular_laser)
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE))
 		speak_up("worn")
 	else if(slot & ITEM_SLOT_HANDS)

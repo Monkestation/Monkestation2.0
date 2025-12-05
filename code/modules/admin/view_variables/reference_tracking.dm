@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		/atom/movable/outdoor_effect,
 		// these hard delete but holy shit these trigger the reftracker CONSTANTLY
 		/atom/movable/screen/map_view/char_preview,
+		// STOP IT
+		/obj/item/pen/fountain,
 	))
 		for(var/type in typesof(base_type))
 			.[type] = TRUE
