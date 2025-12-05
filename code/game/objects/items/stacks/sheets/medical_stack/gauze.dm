@@ -151,7 +151,7 @@
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
-	var/overlay_color = "#1f9cc9"
+	var/overlay_color = "#2aa9d7"
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
