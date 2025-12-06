@@ -273,37 +273,37 @@
 
 
 /obj/item/ammo_box/c980grenade
-	name = "ammo box (.980 Tydhouer practice)"
-	desc = "A box of four .980 Tydhouer practice grenades. Instructions on the box indicate these are dummy practice rounds that will disintegrate into sparks on detonation. Neat!"
+	name = "ammo box (.980 Tydhouer flashbang)"
+	desc = "A box of six .980 Tydhouer flashbang grenades. Instructions on the box indicate these are short-range flashbang rounds for riot control. Neat!"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
 	icon_state = "980box_solid"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	w_class = WEIGHT_CLASS_NORMAL
 	caliber = CALIBER_980TYDHOUER
 	ammo_type = /obj/item/ammo_casing/c980grenade
-	max_ammo = 4
+	max_ammo = 6
 
 /obj/item/ammo_box/c980grenade/smoke
 	name = "ammo box (.980 Tydhouer smoke)"
-	desc = "A box of four .980 Tydhouer smoke grenades. Instructions on the box indicate these are smoke rounds that will make a small cloud of laser-dampening smoke on detonation."
+	desc = "A box of six .980 Tydhouer smoke grenades. Instructions on the box indicate these are smoke rounds that will make a small cloud of laser-dampening smoke on detonation."
 	icon_state = "980box_smoke"
 	ammo_type = /obj/item/ammo_casing/c980grenade/smoke
 
 /obj/item/ammo_box/c980grenade/shrapnel
 	name = "ammo box (.980 Tydhouer shrapnel)"
-	desc = "A box of four .980 Tydhouer shrapnel grenades. Instructions on the box indicate these are shrapnel rounds. Its also covered in hazard signs, odd."
+	desc = "A box of six .980 Tydhouer shrapnel grenades. Instructions on the box indicate these are shrapnel rounds. Its also covered in hazard signs, odd."
 	icon_state = "980box_explosive"
 	ammo_type = /obj/item/ammo_casing/c980grenade/shrapnel
 
 /obj/item/ammo_box/c980grenade/shrapnel/phosphor
 	name = "ammo box (.980 Tydhouer phosphor)"
-	desc = "A box of four .980 Tydhouer phosphor grenades. Instructions on the box indicate these are incendiary explosive rounds. Its also covered in hazard signs, odd."
+	desc = "A box of six .980 Tydhouer phosphor grenades. Instructions on the box indicate these are incendiary explosive rounds. Its also covered in hazard signs, odd."
 	icon_state = "980box_gas_alternate"
 	ammo_type = /obj/item/ammo_casing/c980grenade/shrapnel/phosphor
 
 /obj/item/ammo_box/c980grenade/riot
 	name = "ammo box (.980 Tydhouer tear gas)"
-	desc = "A box of four .980 Tydhouer tear gas grenades. Instructions on the box indicate these are smoke rounds that will make a small cloud of laser-dampening smoke on detonation."
+	desc = "A box of six .980 Tydhouer tear gas grenades. Instructions on the box indicate these are smoke rounds that will make a small cloud of laser-dampening smoke on detonation."
 	icon_state = "980box_gas"
 	ammo_type = /obj/item/ammo_casing/c980grenade/riot
 
@@ -417,7 +417,6 @@
 	name = "stripper clip (.310 Surplus)"
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 
-
 ///MISC
 
 /obj/item/ammo_box/foambox
@@ -442,7 +441,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/shotbox.dmi'
 	icon_state = "slug"
 	ammo_type = /obj/item/ammo_casing/shotgun
-	max_ammo = 16
+	max_ammo = 14
 	multitype = FALSE // if you enable this and set the box's caliber var to CALIBER_SHOTGUN (at time of writing, "shotgun"), then you can have the fabled any-ammo shellbox
 	var/old_ammo_count
 	//var for how long it takes to reload from this ammo box
@@ -479,84 +478,84 @@
 	desc = "A box of buckshot shells. These have a modest spread of weaker projectiles."
 	icon_state = "buckshot"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/rubber
 	name = "rubbershot ammo box"
 	desc = "A box of rubbershot shells. These have a modest spread of weaker, less-lethal projectiles."
 	icon_state = "rubber"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/bean
 	name = "beanbag Slug ammo box"
 	desc = "A box of beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
 	icon_state = "bean"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/magnum
 	name = "magnum blockshot ammo box"
 	desc = "A box of magnum blockshot shells. The size of the pellet is larger in diameter than the typical shot, but there are less of them inside each shell."
 	icon_state = "magnum"
 	ammo_type = /obj/item/ammo_casing/shotgun/magnum
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/express
 	name = "express pelletshot ammo box"
 	desc = "A box of express pelletshot shells. The size of the pellet is smaller in diameter than the typical shot, but there are more of them inside each shell."
 	icon_state = "express"
 	ammo_type = /obj/item/ammo_casing/shotgun/express
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/hunter
 	name = "hunter slug ammo box"
 	desc = "A box of hunter slug shells. These shotgun slugs excel at damaging the local fauna."
 	icon_state = "hunter"
 	ammo_type = /obj/item/ammo_casing/shotgun/hunter
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/apds
 	name = "AP sabot-slug ammo box"
 	desc = "A box of tungsten sabot-slugs. A vastly higher velocity combined with greater sectional density renders most armor irrelevant."
 	icon_state = "apshell"
 	ammo_type = /obj/item/ammo_casing/shotgun/apds
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/flechette
 	name = "flechette ammo box"
 	desc = "A box of flechette shells. Each shell contains a small group of tumbling blades that excel at causing terrible wounds."
 	icon_state = "flechette"
 	ammo_type = /obj/item/ammo_casing/shotgun/flechette
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/beehive
 	name = "hornet's nest ammo box"
 	desc = "A box of hornet's nest shells. These are less-lethal shells that will bounce off walls and direct themselves toward nearby targets."
 	icon_state = "beehive"
 	ammo_type = /obj/item/ammo_casing/shotgun/beehive
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/antitide
 	name = "stardust ammo box"
 	desc = "A box of express pelletshot shells. These are less-lethal and will embed in targets, causing pain on movement."
 	icon_state = "antitide"
 	ammo_type = /obj/item/ammo_casing/shotgun/antitide
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/incendiary
 	name = "incendiary Slug ammo box"
 	desc = "A box of incendiary slug shells. These will ignite targets and leave a trail of fire behind them."
 	icon_state = "incendiary"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
-	max_ammo = 16
+	max_ammo = 14
 
 /obj/item/ammo_box/advanced/s12gauge/honkshot
 	name = "confetti Honkshot ammo box"
 	desc = "A box of 35 Honkshot TM shells."
 	icon_state = "honk"
 	ammo_type = /obj/item/ammo_casing/shotgun/honkshot
-	max_ammo = 40
+	max_ammo = 35
 	reload_delay = 0.1 SECONDS
 
 

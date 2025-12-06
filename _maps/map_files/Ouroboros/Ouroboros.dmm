@@ -7992,23 +7992,20 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/table/reinforced,
-/obj/item/grenade/barrier{
-	pixel_y = 10;
-	pixel_x = 6
-	},
-/obj/item/grenade/barrier{
-	pixel_y = 9;
-	pixel_x = -6
-	},
-/obj/item/grenade/barrier{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/box/handcuffs{
-	pixel_x = 9;
-	pixel_y = -1
+/obj/structure/rack/shelf,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -8
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = -2
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 5
 	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
@@ -44608,12 +44605,15 @@
 /area/station/maintenance/solars/port/fore)
 "mZx" = (
 /obj/item/storage/box/teargas{
-	pixel_x = 3;
+	pixel_x = 7;
 	pixel_y = 3
 	},
-/obj/item/storage/box/handcuffs,
+/obj/item/storage/box/handcuffs{
+	pixel_x = 5;
+	pixel_y = 0
+	},
 /obj/item/storage/box/flashbangs{
-	pixel_x = -3;
+	pixel_x = 3;
 	pixel_y = -3
 	},
 /obj/structure/table,
@@ -44621,6 +44621,18 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/grenade/barrier{
+	pixel_y = 11;
+	pixel_x = -8
+	},
+/obj/item/grenade/barrier{
+	pixel_y = 5;
+	pixel_x = -8
+	},
+/obj/item/grenade/barrier{
+	pixel_y = -1;
+	pixel_x = -8
+	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "mZy" = (
