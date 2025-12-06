@@ -253,23 +253,35 @@
 
 /// Paramedic UV penlights
 /datum/wound/burn/flesh/proc/uv(obj/item/flashlight/pen/medical_pen, mob/user)
-	if(!COOLDOWN_FINISHED(medical_pen, uv_cooldown))
-		to_chat(user, span_notice("[medical_pen] is still recharging!"))
-		return TRUE
+	if(medical_pen.uv_ing)
+		return FALSE
+
 	if(!medical_pen.on)
-		to_chat(user, span_notice("Turn the [medical_pen] on first!"))
-		return TRUE
+		to_chat(user, span_warning("Turn the [medical_pen] on first!"))
+		return FALSE
+
 	if(infestation <= 0 || infestation < sanitization)
 		to_chat(user, span_notice("There's no infection to treat on [victim]'s [limb.plaintext_zone]!"))
-		return TRUE
+		return FALSE
 
-	if(!do_after(user, 5 SECONDS))
-		to_chat(user, span_notice("You begin flashing the burns with the [medical_pen]..."))
-		return
+	to_chat(user, span_notice("You begin flashing the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with the [medical_pen]..."))
+	playsound(medical_pen, 'sound/machines/microwave/microwave-mid2.ogg', 60, TRUE, 30)
+	medical_pen.uv_ing = TRUE
+	if(!do_after(user, 5 SECONDS, interaction_key = medical_pen))
+		medical_pen.uv_ing = FALSE
+		return FALSE
+
+	if(!medical_pen.on)
+		to_chat(user, span_warning("Turn the [medical_pen] on!"))
+		medical_pen.uv_ing = FALSE
+		return FALSE
 
 	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with the [medical_pen]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [medical_pen]."), vision_distance=COMBAT_MESSAGE_RANGE)
 	sanitization += medical_pen.uv_power
-	COOLDOWN_START(medical_pen, uv_cooldown, medical_pen.uv_cooldown_length)
+	medical_pen.uv_ing = FALSE
+	if(infestation > 0 || infestation > sanitization)
+		uv(medical_pen, user)
+
 	return TRUE
 
 /datum/wound/burn/flesh/treat(obj/item/I, mob/user)

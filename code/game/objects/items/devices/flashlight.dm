@@ -290,12 +290,10 @@
 	flags_1 = CONDUCT_1
 	light_outer_range = 2
 	COOLDOWN_DECLARE(holosign_cooldown)
-	/// Our current UV cooldown
-	COOLDOWN_DECLARE(uv_cooldown)
-	/// How long between UV fryings
-	var/uv_cooldown_length = 5 SECONDS
 	/// How much sanitization to apply to the burn wound
 	var/uv_power = 1 // see: [/datum/wound/burn/flesh/proc/uv()]
+	/// Are we curring sanitizing with UV
+	var/uv_ing = FALSE
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
