@@ -117,7 +117,8 @@ const Basics = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Shortcuts">
           Click = Expand Blob | Middle Mouse Click = Rally Spores | Ctrl Click =
-          Create Shield Blob | Alt Click = Remove Blob
+          Create Shield Blob on normal blobs and make sub overminds on nodes |
+          Alt Click = Remove Blob
         </LabeledList.Item>
         <LabeledList.Item label="Comms">
           Attempting to talk will send a message to all other overminds,

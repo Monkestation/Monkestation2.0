@@ -9,6 +9,7 @@
 	give_uplink = FALSE
 	give_objectives = TRUE // We give them their own custom objective.
 	give_secondary_objectives = FALSE
+	antag_count_points = 5
 	/// Team datum that contains the contractor and the support unit
 	var/datum/team/contractor_team/contractor_team
 

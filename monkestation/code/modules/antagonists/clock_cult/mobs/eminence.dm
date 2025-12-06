@@ -79,10 +79,10 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		return
 
 	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
-		send_clock_message(src, span_bigbrass(message), sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
+		send_clock_message(span_bigbrass(message), src, sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
 		COOLDOWN_START(src, command_sound_cooldown, 40 SECONDS)
 	else
-		send_clock_message(src, span_bigbrass(message))
+		send_clock_message(span_bigbrass(message), src)
 
 /mob/living/eminence/get_status_tab_items()
 	. = ..()
