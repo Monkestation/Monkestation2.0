@@ -20,7 +20,6 @@
 		/obj/item/storage/medkit,
 		/obj/item/healthanalyzer,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 	)
 	armor_type = /datum/armor/hardsuit/medical
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/medical

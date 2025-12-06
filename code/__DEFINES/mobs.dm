@@ -91,12 +91,6 @@
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
 
-// limb_flags
-///Flag for if the wound is currently bandaged by a bruise kit
-#define LIMB_KITTED_BRUTE (1<<0)
-///Flag for if the wound is currently bandaged by a burn kit
-#define LIMB_KITTED_BURN (1<<1)
-
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
 #define GIB_TYPE_ROBOTIC "robotic"
@@ -721,57 +715,59 @@ GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 34
+#define TOTAL_LAYERS 35
 /// Mutant race multiparts - Lbelly
-#define ACCESSORIES_LAYER 34
+#define ACCESSORIES_LAYER 35
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 33
+#define MUTATIONS_LAYER 34
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 32
+#define BODY_BEHIND_LAYER 33
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 31
+#define BODYPARTS_LOW_LAYER 32
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 30
+#define BODYPARTS_LAYER 31
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 29
+#define BODY_ADJ_LAYER 30
 /// Underwear, undershirts, socks
-#define BODY_LAYER 28
+#define BODY_LAYER 29
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 27
+#define FRONT_MUTATIONS_LAYER 28
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 26
+#define DAMAGE_LAYER 27
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 25
+#define UNIFORM_LAYER 26
 /// ID card layer
-#define ID_LAYER 24
+#define ID_LAYER 25
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 23
+#define ID_CARD_LAYER 24
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 22
+#define BODYPARTS_HIGH_LAYER 23
 /// Gloves layer
-#define GLOVES_LAYER 21
+#define GLOVES_LAYER 22
 /// Shoes layer
-#define SHOES_LAYER 20
+#define SHOES_LAYER 21
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 19
+#define EARS_LAYER 20
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 18
+#define SUIT_LAYER 19
 /// Glasses layer
-#define GLASSES_LAYER 17
+#define GLASSES_LAYER 18
 /// Belt layer
-#define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER 17 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 15
+#define SUIT_STORE_LAYER 16
 /// Neck layer (for wearing ties and bedsheets)
-#define NECK_LAYER 14
+#define NECK_LAYER 15
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 13
+#define BACK_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 12 //TODO: make part of head layer?
+#define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 11
+#define FACEMASK_LAYER 12
 /// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 10
+#define HEAD_LAYER 11
+/// Bandage layer (gauze and other medical overlays)
+#define BANDAGE_LAYER 10
 /// Handcuff layer (when your hands are cuffed)
 #define HANDCUFF_LAYER 9
 /// Legcuff layer (when your feet are cuffed)
