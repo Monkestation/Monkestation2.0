@@ -403,3 +403,58 @@
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/obj/item/modular_computer/pda/ipc
+	name = "internal framework"
+	icon_state = "tablet-silicon"
+	base_icon_state = "tablet-silicon"
+	greyscale_config = null
+	greyscale_colors = null
+
+	has_light = FALSE
+	comp_light_luminosity = 0
+	inserted_item = null
+	has_pda_programs = TRUE
+	starting_programs = list(
+		/datum/computer_file/program/ntnetdownload,
+	)
+
+	///Ref to the ipc we're installed in. Set by the ipc when the species happens
+	var/mob/living/carbon/human/goober
+
+/obj/item/modular_computer/pda/ipc/Initialize(mapload)
+	. = ..()
+	vis_flags |= VIS_INHERIT_ID
+	goober = loc
+	if(!istype(goober))
+		goober = null
+		stack_trace("[type] initialized outside of an ipc, deleting.")
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/modular_computer/pda/ipc/Destroy()
+	goober = null
+	return ..()
+
+/obj/item/modular_computer/pda/ipc/turn_on(mob/user, open_ui = FALSE)
+	if(goober?.stat != DEAD)
+		return ..()
+	return FALSE
+
+/obj/item/modular_computer/pda/ipc/GetAccess()
+	. = ..()
+	if(goober.get_access())
+		return goober.get_access()
+	return .
+
+/obj/item/modular_computer/pda/ipc/use_power(amount)
+	if(!goober)
+		return FALSE
+	if(goober?.nutrition > ((amount JOULES) / 10000))
+		goober.adjust_nutrition(-(amount JOULES) / 10000) //10 kj = 1 nutrition in IPC charging and amount is in joules so 10000 joules to the nutrition point.
+		return TRUE
+	to_chat(goober, span_warning("Internal bio-reactor cannot supply computation. Deactivating."))
+	return FALSE
+
+/obj/item/modular_computer/pda/ipc/proc/tab_no_detonate()
+	SIGNAL_HANDLER
+	return COMPONENT_TABLET_NO_DETONATE
