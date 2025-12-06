@@ -588,7 +588,7 @@
 	if(ishuman(carbies))
 		var/mob/living/carbon/human/humans = carbies
 		if(is_type_in_list(humans.dna.species, list(/datum/species/ipc, /datum/species/oozeling)))
-				return
+			return
 
 	if(carbies.stat == DEAD)
 		show_message = 0
