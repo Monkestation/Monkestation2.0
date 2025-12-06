@@ -426,7 +426,7 @@
 		if(istype(disease, /datum/disease/acute))
 			var/datum/disease/acute/acute_disease = disease
 			acute_disease.Refresh_Acute()
-			if(!(((disease.visibility_flags & HIDDEN_SCANNER)) && (disease.disease_flags & DISEASE_ANALYZED)))
+			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
 				if(disease.severity == DISEASE_SEVERITY_POSITIVE || DISEASE_SEVERITY_NONTHREAT)
 					render_list += "<span class='info ml-1'><b>[acute_disease.origin] disease detected</b>\n\
 					<div class='ml-2'>Name: [acute_disease.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
@@ -437,7 +437,7 @@
 					</span>"
 
 		else
-			if(!(((disease.visibility_flags & HIDDEN_SCANNER)) && (disease.disease_flags & DISEASE_ANALYZED)))
+			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
 				render_list += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
 				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 				</span>"
