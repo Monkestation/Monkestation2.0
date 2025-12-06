@@ -596,7 +596,7 @@
 	if(methods & (INGEST|INJECT))
 		carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
 		if(prob(reac_volume))
-    		var/obj/item/bodypart/random_limb = pick(carbies.bodyparts)
+			var/obj/item/bodypart/random_limb = pick(carbies.bodyparts)
 			random_limb.force_wound_upwards(/datum/wound/bleed_internal, wound_source = src) // good news bucko, you got internal bleeding
 		if(show_message)
 			to_chat(carbies, span_warning("You feel nauseaous as your insides burn!"))
