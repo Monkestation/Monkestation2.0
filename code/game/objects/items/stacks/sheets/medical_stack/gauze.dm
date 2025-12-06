@@ -203,9 +203,6 @@
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
-	if(!patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
-		patient.balloon_alert(user, "no treatable area!")
-		return
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
 	var/obj/item/bodypart/limb = patient.get_bodypart(check_zone(user.zone_selected))
