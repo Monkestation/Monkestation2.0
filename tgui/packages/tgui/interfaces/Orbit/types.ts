@@ -1,3 +1,5 @@
+import { BooleanLike } from 'common/react';
+
 export type Antagonist = Observable & { antag: string; antag_group: string };
 
 export type AntagGroup = [string, Antagonist[]];
@@ -10,6 +12,7 @@ export type OrbitData = {
   ghosts: Observable[];
   misc: Observable[];
   npcs: Observable[];
+  can_observe: BooleanLike;
 };
 
 export type Observable = {
