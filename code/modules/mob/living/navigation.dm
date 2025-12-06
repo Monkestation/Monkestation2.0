@@ -1,4 +1,5 @@
-#define MAX_NAVIGATE_RANGE 125
+#define MAX_NAVIGATE_NODES 145
+#define MAX_NAVIGATE_DEPTH 60
 
 /mob/living
 	/// Cooldown of the navigate() verb.
@@ -26,7 +27,7 @@
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
 	for(var/atom/destination as anything in GLOB.navigate_destinations)
-		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE || !are_zs_connected(destination, src)) // monkestation edit: check to ensure that Z-levels are connected, so we don't get centcom destinations while on station and vice-versa
+		if(get_dist(destination, src) > MAX_NAVIGATE_NODES || !are_zs_connected(destination, src)) // monkestation edit: check to ensure that Z-levels are connected, so we don't get centcom destinations while on station and vice-versa
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
 		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
@@ -34,12 +35,14 @@
 
 		destination_list[destination_name] = destination
 
+/*
 	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
 	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	if(can_go_down)
 		destination_list["Nearest Way Down"] = DOWN
 	if(can_go_up)
 		destination_list["Nearest Way Up"] = UP
+*/
 
 	if(!length(destination_list))
 		balloon_alert(src, "no navigation signals!")
@@ -51,6 +54,7 @@
 	if(isnull(navigate_target) || incapacitated())
 		return
 
+/*
 	var/finding_zchange = FALSE
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
 	if(navigate_target == UP || navigate_target == DOWN || (isatom(navigate_target) && navigate_target.z != z))
@@ -67,12 +71,13 @@
 
 		navigate_target = new_target
 		finding_zchange = TRUE
+*/
 
 	if(!isatom(navigate_target))
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
+	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_NODES, maxnodedepth = MAX_NAVIGATE_DEPTH, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE) // diagonals look kind of weird when visualized for now
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -101,8 +106,10 @@
 		animate(path_image, 0.5 SECONDS, alpha = 150)
 	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
+/*
 	if(finding_zchange)
 		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
+*/
 	balloon_alert(src, "navigation path created")
 	var/atom/movable/screen/navigate/navigate_hud = locate() in hud_used?.static_inventory
 	navigate_hud?.update_icon_state()
@@ -165,4 +172,5 @@
 
 	return target
 
-#undef MAX_NAVIGATE_RANGE
+#undef MAX_NAVIGATE_DEPTH
+#undef MAX_NAVIGATE_NODES
