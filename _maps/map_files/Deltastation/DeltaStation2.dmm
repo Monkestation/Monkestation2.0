@@ -3924,6 +3924,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/toilet)
+"aRY" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/photocopier,
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "aRZ" = (
 /obj/structure/dresser,
 /obj/item/radio/intercom/directional/east,
@@ -13419,6 +13426,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"dex" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "deA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17114,6 +17128,14 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
+"eaA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/pdapainter/supply,
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "eaC" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
@@ -22542,6 +22564,27 @@
 /obj/structure/sign/departments/rndserver/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"foa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/stamp/qm,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/stamp/granted{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/obj/item/stamp/denied{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "foh" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "Ports to Distro"
@@ -26483,14 +26526,6 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/lobby)
-"gkP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/pdapainter/supply,
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "gkT" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/reagent_dispensers/fueltank,
@@ -40271,6 +40306,24 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
+"jwN" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/east{
+	pixel_y = 3
+	},
+/obj/machinery/button/door/directional/east{
+	id = "qmroom";
+	name = "Privacy Control";
+	pixel_y = -6
+	},
+/obj/machinery/computer/cargo{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "jwT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -50857,24 +50910,6 @@
 /obj/structure/closet/crate/mod,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"lRI" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
-	},
-/obj/item/radio/intercom/directional/east{
-	pixel_y = 3
-	},
-/obj/machinery/button/door/directional/east{
-	id = "qmroom";
-	name = "Privacy Control";
-	pixel_y = -6
-	},
-/obj/machinery/computer/cargo{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "lRP" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/soup,
@@ -58205,13 +58240,6 @@
 /obj/item/storage/dice,
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
-"nIY" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "nJb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -72477,27 +72505,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"rfs" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table,
-/obj/item/folder/yellow,
-/obj/item/stamp/qm,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/stamp/granted{
-	pixel_y = 4;
-	pixel_x = 5
-	},
-/obj/item/stamp/denied{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "rfH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -76108,13 +76115,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"rWI" = (
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/photocopier,
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "rWK" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
@@ -80290,18 +80290,6 @@
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
-"sWD" = (
-/obj/machinery/light_switch/directional/east{
-	pixel_x = 22
-	},
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/modular_computer/preset/id{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "sWI" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Central Hallway - Starboard";
@@ -101842,6 +101830,18 @@
 	},
 /turf/open/floor/carpet/grimey,
 /area/station/maintenance/port/fore)
+"yeu" = (
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 22
+	},
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/modular_computer/preset/id{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "yex" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
@@ -147751,10 +147751,10 @@ awl
 ivt
 krp
 haq
-rWI
+aRY
 jmp
 cQo
-gkP
+eaA
 krp
 llJ
 ljQ
@@ -148523,7 +148523,7 @@ aad
 aJE
 ejX
 aAU
-rfs
+foa
 xhJ
 vMd
 tgX
@@ -149038,7 +149038,7 @@ ljS
 aPo
 bdF
 wob
-sWD
+yeu
 sNp
 tgX
 aad
@@ -150065,7 +150065,7 @@ aad
 ofx
 udI
 tpE
-lRI
+jwN
 ilx
 ofx
 aad
@@ -150117,7 +150117,7 @@ tcb
 oaB
 cXv
 dfZ
-nIY
+dex
 szh
 szh
 guf

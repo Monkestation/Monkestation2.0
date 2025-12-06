@@ -15999,6 +15999,14 @@
 /obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
+"eNV" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/green,
+/area/station/service/library/upper)
 "eOw" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
@@ -19284,14 +19292,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"fLw" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet/green,
-/area/station/service/library/upper)
 "fLx" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -7
@@ -22351,6 +22351,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/service/barber)
+"gHS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor{
+	id = "cargosort";
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/station/cargo/sorting)
 "gHV" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /obj/structure/disposalpipe/segment{
@@ -48921,17 +48932,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
-"onf" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/conveyor{
-	id = "cargosort";
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/trash/mess,
-/obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating,
-/area/station/cargo/sorting)
 "ong" = (
 /obj/structure/chair{
 	dir = 1
@@ -89213,7 +89213,7 @@ iEZ
 rtj
 iRD
 xme
-fLw
+eNV
 saq
 byd
 pXO
@@ -132518,7 +132518,7 @@ jkr
 ilj
 ilj
 hZi
-onf
+gHS
 qaw
 ilj
 ars

@@ -59,3 +59,6 @@
 
 /datum/log_category/silo
 	category = LOG_CATEGORY_SILO
+
+/datum/log_category/floxy
+	category = LOG_CATEGORY_FLOXY

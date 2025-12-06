@@ -1,3 +1,5 @@
+#warn TODO: spawn mixtape
+/*
 ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mixtape to spawn at your location.", ADMIN_CATEGORY_GAME)
 	var/datum/mixtape_spawner/tgui = new(user)//create the datum
 	tgui.ui_interact(user.mob)//datum has a tgui component, here we open the window
@@ -46,3 +48,5 @@ ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mix
 				new/obj/item/device/cassette_tape(usr.loc, params["id"])
 				SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Mixtape")
 				log_admin("[key_name(usr)] created mixtape [params["id"]] at [usr.loc].")
+
+*/
