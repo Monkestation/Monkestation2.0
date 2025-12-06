@@ -390,17 +390,17 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_DRUG
 
 /datum/chemical_reaction/medicine/styptic_powder
-    results = list(/datum/reagent/medicine/c2/styptic_powder = 4)
-    required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1, /datum/reagent/toxin/acid = 1)
-    required_temp = 250
-    optimal_temp = 310
-    overheat_temp = 325
-    reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
+	results = list(/datum/reagent/medicine/c2/styptic_powder = 4)
+	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1, /datum/reagent/toxin/acid = 1)
+	required_temp = 250
+	optimal_temp = 310
+	overheat_temp = 325
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/silver_sulfadiazine
-    results = list(/datum/reagent/medicine/c2/silver_sulfadiazine = 5)
-    required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1, /datum/reagent/sulfur = 1, /datum/reagent/silver = 1)
-    required_temp = 250
-    optimal_temp = 310
-    overheat_temp = 325
-    reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
+	results = list(/datum/reagent/medicine/c2/silver_sulfadiazine = 5)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1, /datum/reagent/sulfur = 1, /datum/reagent/silver = 1)
+	required_temp = 250
+	optimal_temp = 310
+	overheat_temp = 325
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN

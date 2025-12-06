@@ -572,79 +572,79 @@
 /******NICHE******/
 //todo
 /datum/reagent/medicine/c2/styptic_powder
-    name = "Styptic Powder"
-    description = "Styptic (aluminum sulfate) powder helps control bleeding and heal physical wounds."
-    reagent_state = SOLID
-    color = "#FF9696"
-    metabolization_rate = 3
-    taste_description = "wound cream"
-    chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	name = "Styptic Powder"
+	description = "Styptic (aluminum sulfate) powder helps control bleeding and heal physical wounds."
+	reagent_state = SOLID
+	color = "#FF9696"
+	metabolization_rate = 3
+	taste_description = "wound cream"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/styptic_powder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE)
-    . = ..()
-    if(!iscarbon(exposed_mob))
-        return
-    var/mob/living/carbon/carbies = exposed_mob
-    if(ishuman(carbies))
-        var/mob/living/carbon/human/humans = carbies
-        if(is_type_in_list(humans.dna.species, list(/datum/species/ipc, /datum/species/oozeling)))
-            return
+	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
+	var/mob/living/carbon/carbies = exposed_mob
+	if(ishuman(carbies))
+		var/mob/living/carbon/human/humans = carbies
+	if(is_type_in_list(humans.dna.species, list(/datum/species/ipc, /datum/species/oozeling)))
+			return
 
-    if(carbies.stat == DEAD)
-        show_message = 0
+	if(carbies.stat == DEAD)
+		show_message = 0
 
-    if(methods & (INGEST|INJECT))
-        carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
-        if(prob(reac_volume))
-            var/obj/item/bodypart/random_limb = pick(carbies.bodyparts)
-            random_limb.force_wound_upwards(/datum/wound/bleed_internal, wound_source = src) // good news bucko, you got internal bleeding
-        if(show_message)
-            to_chat(carbies, span_warning("You feel nauseaous as your insides burn!"))
-        if(prob(5 * reac_volume))
-            carbies.vomit(harm = FALSE, force = TRUE)
+	if(methods & (INGEST|INJECT))
+		carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
+		if(prob(reac_volume))
+    		var/obj/item/bodypart/random_limb = pick(carbies.bodyparts)
+			random_limb.force_wound_upwards(/datum/wound/bleed_internal, wound_source = src) // good news bucko, you got internal bleeding
+		if(show_message)
+			to_chat(carbies, span_warning("You feel nauseaous as your insides burn!"))
+		if(prob(5 * reac_volume))
+			carbies.vomit(harm = FALSE, force = TRUE)
 
-    if(!(methods & (PATCH|TOUCH|VAPOR)))
-        return
-    if(reac_volume > 10)
-        reac_volume = 10
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	if(reac_volume > 10)
+		reac_volume = 10
 
-    var/has_wound = FALSE
-    for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
-        iter_wound.styptic_powder_react(reac_volume, carbies)
-        has_wound = TRUE
+	var/has_wound = FALSE
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		iter_wound.styptic_powder_react(reac_volume, carbies)
+		has_wound = TRUE
 
-    if(show_message && (!carbies.getBruteLoss() || has_wound))
-        to_chat(carbies, span_danger("You feel your cuts and bruises healing! It stings like hell!"))
-        carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
+	if(show_message && (!carbies.getBruteLoss() || has_wound))
+		to_chat(carbies, span_danger("You feel your cuts and bruises healing! It stings like hell!"))
+		carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
-    carbies.adjustBruteLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
+	carbies.adjustBruteLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
 
 /datum/wound/proc/styptic_powder_react(reac_volume, mob/living/carbon/carbies)
-    return
+	return
 
 /datum/wound/pierce/bleed/styptic_powder_react(reac_volume, mob/living/carbon/carbies)
-    var/little_or_some = "a little bit"
-    if(reac_volume > 5)
-        little_or_some = "some"
+	var/little_or_some = "a little bit"
+	if(reac_volume > 5)
+		little_or_some = "some"
 
-    if(blood_flow <= 2 && prob(50 + reac_volume))
-        adjust_blood_flow(-0.15 * reac_volume)
-        to_chat(carbies, span_notice("The styptic powder seeps into [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
-    else if(blood_flow > 2 && prob(5 + reac_volume))
-        adjust_blood_flow(-0.15 * reac_volume)
-        to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
+	if(blood_flow <= 2 && prob(50 + reac_volume))
+		adjust_blood_flow(-0.15 * reac_volume)
+		to_chat(carbies, span_notice("The styptic powder seeps into [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
+	else if(blood_flow > 2 && prob(5 + reac_volume))
+		adjust_blood_flow(-0.15 * reac_volume)
+		to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
 
 /datum/wound/slash/flesh/styptic_powder_react(reac_volume, mob/living/carbon/carbies)
-    var/little_or_some = "a little bit"
-    if(reac_volume > 5)
-        little_or_some = "some"
+	var/little_or_some = "a little bit"
+	if(reac_volume > 5)
+		little_or_some = "some"
 
-    if(blood_flow <= 2 && prob(50 + reac_volume))
-        adjust_blood_flow(-0.15 * reac_volume)
-        to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
-    else if(blood_flow > 2 && prob(5 + reac_volume))
-        adjust_blood_flow(-0.15 * reac_volume)
-        to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
+	if(blood_flow <= 2 && prob(50 + reac_volume))
+		adjust_blood_flow(-0.15 * reac_volume)
+		to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
+	else if(blood_flow > 2 && prob(5 + reac_volume))
+		adjust_blood_flow(-0.15 * reac_volume)
+		to_chat(carbies, span_notice("The styptic powder seeps into your [lowertext(src.name)], drying it up and absorbing [little_or_some] of the blood."))
 
 /datum/reagent/medicine/c2/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
