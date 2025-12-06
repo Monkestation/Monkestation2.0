@@ -656,39 +656,39 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/medicine/c2/silver_sulfadiazine/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE)
-    . = ..()
-    if(!iscarbon(exposed_mob))
-        return
-    var/mob/living/carbon/carbies = exposed_mob
-    if(ishuman(carbies))
-        var/mob/living/carbon/human/humans = carbies
-        if(is_type_in_list(humans.dna.species, list(/datum/species/ipc, /datum/species/oozeling)))
-            return
+	. = ..()
+	if(!iscarbon(exposed_mob))
+		return
+	var/mob/living/carbon/carbies = exposed_mob
+	if(ishuman(carbies))
+		var/mob/living/carbon/human/humans = carbies
+		if(is_type_in_list(humans.dna.species, list(/datum/species/ipc, /datum/species/oozeling)))
+			return
 
-    if(carbies.stat == DEAD)
-        show_message = 0
+	if(carbies.stat == DEAD)
+		show_message = 0
 
-    if(methods & (INGEST|INJECT))
-        carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
-        if(show_message)
-            to_chat(carbies, span_warning("You feel nauseaous as your insides swirl!"))
-        if(prob(5 * reac_volume))
-            carbies.vomit(harm = TRUE, force = TRUE, purge_ratio = 0.5)
+	if(methods & (INGEST|INJECT))
+		carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
+		if(show_message)
+			to_chat(carbies, span_warning("You feel nauseaous as your insides swirl!"))
+		if(prob(5 * reac_volume))
+			carbies.vomit(harm = TRUE, force = TRUE, purge_ratio = 0.5)
 
-    if(!(methods & (PATCH|TOUCH|VAPOR)))
-        return
-    if(reac_volume > 10)
-        reac_volume = 10
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	if(reac_volume > 10)
+		reac_volume = 10
 
-    var/has_wound = FALSE
-    for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
-        has_wound = TRUE
+	var/has_wound = FALSE
+	for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
+		has_wound = TRUE
 
-    if(show_message && (!carbies.getFireLoss() || has_wound))
-        to_chat(carbies, span_danger("You feel your burns healing! It stings like hell!"))
-        carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
+	if(show_message && (!carbies.getFireLoss() || has_wound))
+		to_chat(carbies, span_danger("You feel your burns healing! It stings like hell!"))
+		carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
-    carbies.adjustFireLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
+	carbies.adjustFireLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
 
 /datum/reagent/medicine/c2/silver_sulfadiazine/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.8
