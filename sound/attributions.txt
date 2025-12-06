@@ -155,3 +155,6 @@ https://pixabay.com/sound-effects/straw-slurp-7066/
 
 paper_flip.ogg is made by gynation from Freesound.org, CC0
 https://freesound.org/people/gynation/sounds/82378/
+
+roaring_fire.ogg made from: 10835 big fire loop.wav by Robinhood76 -- https://freesound.org/s/612277/ -- License: Attribution NonCommercial 4.0
+fire_puff made from: Bonfire Being Lit by samararaine -- https://freesound.org/s/186374/ -- License: Creative Commons 0
