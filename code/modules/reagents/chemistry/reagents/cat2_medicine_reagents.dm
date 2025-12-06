@@ -653,7 +653,7 @@
 	metabolization_rate = 3
 	color = "#F0DC00"
 	taste_description = "burn cream"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 
 /datum/reagent/medicine/c2/silver_sulfadiazine/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE)
     . = ..()
@@ -670,13 +670,10 @@
 
     if(methods & (INGEST|INJECT))
         carbies.adjustToxLoss(0.5 * reac_volume, FALSE, required_biotype = affected_biotype)
-        if(prob(reac_volume))
-            var/obj/item/bodypart/random_limb = pick(carbies.bodyparts)
-            random_limb.force_wound_upwards(/datum/wound/bleed_internal, wound_source = src) // good news bucko, you got internal bleeding
         if(show_message)
-            to_chat(carbies, span_warning("You feel nauseaous as your insides burn!"))
+            to_chat(carbies, span_warning("You feel nauseaous as your insides swirl!"))
         if(prob(5 * reac_volume))
-            carbies.vomit(harm = FALSE, force = TRUE)
+            carbies.vomit(harm = TRUE, force = TRUE, purge_ratio = 0.5)
 
     if(!(methods & (PATCH|TOUCH|VAPOR)))
         return
@@ -685,11 +682,14 @@
 
     var/has_wound = FALSE
     for(var/datum/wound/iter_wound as anything in carbies.all_wounds)
-        iter_wound.styptic_powder_react(reac_volume, carbies)
         has_wound = TRUE
 
-    if(show_message && (!carbies.getBruteLoss() || has_wound))
-        to_chat(carbies, span_danger("You feel your cuts and bruises healing! It stings like hell!"))
+    if(show_message && (!carbies.getFireLoss() || has_wound))
+        to_chat(carbies, span_danger("You feel your burns healing! It stings like hell!"))
         carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
-    carbies.adjustBruteLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
+    carbies.adjustFireLoss(-1 * reac_volume, required_bodytype = affected_bodytype)
+
+/datum/reagent/medicine/c2/silver_sulfadiazine/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	burn_wound.sanitization += 0.8
+
