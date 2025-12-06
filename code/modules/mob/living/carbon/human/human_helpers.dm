@@ -243,7 +243,7 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
-	if(client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if((client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse) && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
