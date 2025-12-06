@@ -263,6 +263,10 @@
 		to_chat(user, span_notice("There's no infection to treat on [victim]'s [limb.plaintext_zone]!"))
 		return TRUE
 
+	if(!do_after(user, 5 SECONDS))
+		to_chat(user, span_notice("You begin flashing the burns with the [medical_pen]..."))
+		return
+
 	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with the [medical_pen]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [medical_pen]."), vision_distance=COMBAT_MESSAGE_RANGE)
 	sanitization += medical_pen.uv_power
 	COOLDOWN_START(medical_pen, uv_cooldown, medical_pen.uv_cooldown_length)
