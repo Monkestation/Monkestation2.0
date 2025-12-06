@@ -58,6 +58,7 @@
 #define SKIN_PIXEL_Y "skin_pixel_y"
 #define SKIN_LIGHT_KEY "skin_light_key"
 #define SKIN_HAT_OFFSET "skin_hat_offset"
+#define SKIN_BADGE_OFFSET "skin_badge_offset"
 #define SKIN_TRAITS "skin_traits"
 
 /** Simple Animal BOT defines */

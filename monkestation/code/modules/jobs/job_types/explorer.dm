@@ -67,6 +67,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+	accessory = /obj/item/clothing/accessory/badge/cargo
 
 /obj/item/storage/box/emergency_eva/explorer
 	name = "boxed explorer's EVA kit"

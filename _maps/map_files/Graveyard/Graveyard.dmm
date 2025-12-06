@@ -24376,7 +24376,7 @@
 /area/station/science/research)
 "jyB" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jyF" = (

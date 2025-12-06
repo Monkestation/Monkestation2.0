@@ -12612,7 +12612,6 @@
 /obj/structure/closet/secure_closet/warden,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/clothing/accessory/badge/holo/warden,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
@@ -68634,7 +68633,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tWo" = (
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "tWp" = (
