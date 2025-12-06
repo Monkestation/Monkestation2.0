@@ -940,8 +940,8 @@
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/tbrute = clamp(round((brute_dam/max_damage)*4, 1), 0, 3)
-	var/tburn = clamp(round((burn_dam/max_damage)*4, 1), 0, 3)
+	var/tbrute = clamp(round((brute_dam/max_damage)*5, 1), 0, 3)
+	var/tburn = clamp(round((burn_dam/max_damage)*5, 1), 0, 3)
 
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
