@@ -196,12 +196,12 @@
 		laying_down_bonus = 1.5
 
 	if(stored_heal_brute > 0)
-		current_limb.heal_damage(stored_heal_brute_rate * laying_down_bonus, 0)
-		stored_heal_brute = max(stored_heal_brute - stored_heal_brute_rate, 0)
+		current_limb.heal_damage(stored_heal_brute_rate * laying_down_bonus * seconds_per_tick, 0)
+		stored_heal_brute = max(stored_heal_brute - (stored_heal_brute_rate * seconds_per_tick), 0)
 
 	if(stored_heal_burn > 0)
-		current_limb.heal_damage(0, stored_heal_burn_rate * laying_down_bonus)
-		stored_heal_burn = max(stored_heal_burn - stored_heal_burn_rate, 0)
+		current_limb.heal_damage(0, stored_heal_burn_rate * laying_down_bonus * seconds_per_tick)
+		stored_heal_burn = max(stored_heal_burn - (stored_heal_burn_rate * seconds_per_tick), 0)
 
 	current_limb.owner.update_damage_overlays()
 
