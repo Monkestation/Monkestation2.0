@@ -158,13 +158,13 @@
 	/// the color of the bandage overlay
 	var/overlay_color = GAUZE_OVERLAY_COLOR
 	/// the amount of stored brute healing this gauze has
-	var/stored_heal_brute = 20
+	var/stored_heal_brute = 10
 	/// the amount of stored burn healing this gauze has
-	var/stored_heal_burn = 20
+	var/stored_heal_burn = 10
 	/// the amount of stored brute healing applied each tick to the gauzed limb
-	var/stored_heal_brute_rate = 1
+	var/stored_heal_brute_rate = 0.5
 	/// the amount of stored burn healing applied each tick to the gauzed limb
-	var/stored_heal_burn_rate = 1
+	var/stored_heal_burn_rate = 0.5
 	/// the current limb we are healing
 	var/obj/item/bodypart/current_limb
 
@@ -360,8 +360,8 @@
 	absorption_capacity = 2
 	merge_type = /obj/item/stack/medical/gauze/improvised
 	overlay_color = IMPROVISED_GAUZE_OVERLAY_COLOR
-	stored_heal_brute = 10
-	stored_heal_burn = 10
+	stored_heal_brute = 5
+	stored_heal_burn = 5
 
 ////////////////
 // Plastiseal //
@@ -381,10 +381,10 @@
 	flesh_regeneration = 15
 	can_clean = FALSE
 	overlay_color = PLASTISEAL_OVERLAY_COLOR
-	stored_heal_brute = 30
-	stored_heal_burn = 50
-	stored_heal_brute_rate = 6
-	stored_heal_burn_rate = 10
+	stored_heal_brute = 15
+	stored_heal_burn = 30
+	stored_heal_brute_rate = 1.5
+	stored_heal_burn_rate = 3
 
 /obj/item/stack/medical/gauze/plastiseal/twelve
 	amount = 12
