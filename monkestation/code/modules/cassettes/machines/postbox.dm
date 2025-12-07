@@ -13,53 +13,32 @@
 /obj/machinery/cassette/mailbox/Initialize(mapload)
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	AddComponent(/datum/component/hovering_information, /datum/hover_data/mailbox)
 
+/obj/machinery/cassette/mailbox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/device/cassette_tape))
+		return NONE
+	balloon_alert(user, "cassette submissions are currently suspended!")
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/device/cassette_tape) || !user.client)
-		return
+/datum/hover_data/mailbox
+	var/obj/effect/overlay/hover/text_holder
 
-	var/obj/item/device/cassette_tape/attacked_tape = weapon
+/datum/hover_data/mailbox/Destroy(force)
+	. = ..()
+	QDEL_NULL(text_holder)
 
-	var/list/admin_count = get_admin_counts(R_FUN)
-	if(!length(admin_count["present"]))
-		to_chat(user, span_notice("The postbox refuses your cassette, it seems the Space Board is out for lunch."))
-		return
+/datum/hover_data/mailbox/New(datum/component/hovering_information, atom/parent)
+	. = ..()
+	text_holder = new(null)
+	text_holder.maptext = MAPTEXT("<span style='text-align:center'>Cassette submissions are currently suspended, sorry!</span>")
+	text_holder.maptext_width = 96
+	text_holder.maptext_y = 32
+	text_holder.maptext_x = -32
 
-	if(attacked_tape.name == "A blank cassette")
-		to_chat(user, span_notice("Please name your tape before submitting it, you can't change this later!"))
-		return
-
-	if(attacked_tape.cassette_desc_string == "Generic Desc")
-		to_chat(user, span_notice("Please add a description to your tape before submitting it, you can't change this later!"))
-		return
-
-	var/list/side1 = attacked_tape.songs["side1"]
-	var/list/side2 = attacked_tape.songs["side2"]
-
-	if(!length(side1) && !length(side2))
-		to_chat(user, span_notice("Please add some songs to your tape before submitting it, you can't change this later!"))
-		return
-
-	if(attacked_tape.approved_tape)
-		to_chat(user, span_notice("This tape has already been approved by the Board, it would be a waste of money to send it in again."))
-		return
-	var/choice = tgui_alert(user, "Are you sure? This costs 5k Monkecoins", "Mailbox", list("Yes", "No"))
-	if(choice != "Yes")
-		return
-
-	// are you sure
-	var/secondchoice = tgui_alert(user, "Please make sure to Adminhelp and check for any available admins that can review your cassette before submitting, you will not be refunded if it is denied. If an admin does not review your cassette, and you are connected at the end of the round, you may be refunded.", "Mailbox", list("Acknowledge", "Cancel"))
-	if(secondchoice != "Acknowledge")
-		return
-	///these two parts here should be commented out for local testing without a db
-	if(user.client.prefs.metacoins < 5000)
-		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
-		return
-
-	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -5000, "Submitted a mixtape", donator_multiplier = FALSE))
-		return
-	/// this is where it ends
-	attacked_tape.moveToNullspace()
-	submit_cassette_for_review(attacked_tape, user)
-	return TRUE
+/datum/hover_data/mailbox/setup_data(obj/machinery/source, mob/enterer)
+	. = ..()
+	var/image/new_image = new(text_holder.appearance)
+	SET_PLANE_EXPLICIT(new_image, new_image.plane, source)
+	new_image.loc = source
+	add_client_image(new_image, enterer.client)
