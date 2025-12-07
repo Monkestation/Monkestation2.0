@@ -19,7 +19,6 @@
 	if(!anchored)
 		return
 	fire("[relay_speaker ? "[speaker.GetVoice()]:" : ""][html_decode(raw_message)]")
-	log_message("heard [key_name(speaker)] say [raw_message]", LOG_MECHCOMP)
 
 /obj/item/mcobject/messaging/microphone/proc/toggle_source(mob/user, obj/item/tool)
 	relay_speaker = !relay_speaker
