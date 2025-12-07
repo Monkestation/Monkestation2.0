@@ -4564,6 +4564,7 @@
 #include "code\modules\mapfluff\ruins\icemoonruin_code\hotsprings.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\library.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\mailroom.dm"
+#include "code\modules\mapfluff\ruins\icemoonruin_code\mining_site.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\oldstation.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\wrath.dm"
 #include "code\modules\mapfluff\ruins\lavalandruin_code\biodome_clown_planet.dm"

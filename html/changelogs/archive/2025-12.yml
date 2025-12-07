@@ -44,3 +44,63 @@
   - rscadd: Mouse cubes can now be shaken to create rats.
   notghosti:
   - bugfix: Anchoring crystals now apply forced toxin healing rather than regular.
+2025-12-05:
+  Absolucy:
+  - rscdel: You can no longer deep fry brains, unless they're soulless (deep fried
+      Pun Pun brain is still on the menu, don't worry).
+  - bugfix: Fixed voice of god just not working sometimes.
+  - balance: Changelings now need 1 absorb in order to obtain transformation sting.
+  - rscadd: Mutadone can be used to heavily reduce the duration of transformation
+      sting while it's in your system.
+  - balance: When a non-bloodsucker/vassal is breaking out of silver cuffs, the resist
+      will not be canceled by moving them.
+  Absolucy, Ical92, lizardqueenlexi:
+  - map: Demonic-Frost Miner's ruin has received an aesthetic refresh!
+  Absolucy, Melbert:
+  - image: The animation for being dusted now takes into account your sprite, rather
+      than being a normal nude spaceman
+  EssentialTomato:
+  - bugfix: Aux base construction console now builds selected structures instead of
+      just walls.
+  - bugfix: Aux base construction console can be restocked again.
+  - bugfix: Fixed ashwalker clothing storage being invisible.
+  Evalence0:
+  - balance: Potassium now depletes at a reasonable rate from floran's blood, instead
+      of staying forever and causing damage.
+  - bugfix: added metabolism rate to potassium for florans.
+  Gboster-0:
+  - bugfix: the robot wabbajack list is actually weighted now as it was supposed to
+      be
+  Shoddd:
+  - balance: pka pistol capacity returned to 200%
+  Tractor-Maam:
+  - rscadd: Chat Client is now a stock PDA app.
+  - balance: Chat Client is now 4GQ, down from 8GQ.
+2025-12-06:
+  Absolucy:
+  - qol: Xenobio pens now automatically dissolve dead monkeys after 5 minutes.
+  - qol: Larger xenobio pens now have a higher slime capacity.
+2025-12-07:
+  00-Steven, SirNightKnight:
+  - bugfix: Latejoiners with heterochromatic eyes no longer have the wrong fingerprint
+      in the security records.
+  - bugfix: Latejoiners actually have their quirks visible in the medical records.
+  Absolucy:
+  - admin: Microphone mechcomp components no longer spam logs with everything they
+      hear.
+  Absolucy, TheBoondock, GoblinBackwards, SmArtKar:
+  - sound: added ignition and roaring fire sound to plasma/tritium fire
+  SirNightKnight, ghost:
+  - rscadd: Paramedics are now issued black work boots as standard workwear.
+  - image: Paramedic Jackets now match in color to the rest of the Paramedic's gear.
+  - rscdel: squashed the paramedic penlight uv function into the standard penlight.
+  - rscadd: penlights are printable at medical lathes.
+  - balance: turns the penlight UV function into a repeating do after.
+  - qol: treating a burn with UV from a penlight auto-repeats.
+  flleeppyy:
+  - rscadd: Mobs can now pixel tilt, default binding is J
+  kuricityy:
+  - rscadd: Adds the ability to change prisoner ID names through right clicking ID
+      with a secoff or higher ID card.
+  notghosti:
+  - rscadd: Defib Blacklisting now shows as soulless
