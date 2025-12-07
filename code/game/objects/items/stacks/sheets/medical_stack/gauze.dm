@@ -176,8 +176,7 @@
 
 /obj/item/stack/medical/gauze/process(seconds_per_tick)
 	if(!istype(loc, /obj/item/bodypart))
-		STOP_PROCESSING(SSobj, src)
-		return
+		return PROCESS_KILL
 
 	if(!current_limb)
 		current_limb = loc
