@@ -206,7 +206,7 @@
 	current_limb.owner.update_damage_overlays()
 
 	if(stored_heal_brute <= 0 && stored_heal_burn <= 0)
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 
 /obj/item/stack/medical/gauze/update_name(updates)
